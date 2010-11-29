@@ -1,0 +1,14 @@
+2010-11-08  chaostone  <chaostone.duan@gmail.com>
+
+	* description更名为remark
+	* 重新组织了数据权限模式
+	*   重命名ParamGroup为RestrictObject，增加type,remark属性
+	*   重命名Param为RestrictField，删除了ParamEditor(idProperty,properties),multiValue属性,保留source属性
+	*   重命名Pattern为RestrictPattern
+	* 重新组织了菜单权限
+	*   MenuProfile中增加了enable
+	*   删除了MenuAuthority，刪除了Group.menuAuthorities
+	
+2010-11-02  chaostone  <chaostone.duan@gmail.com>
+
+	* 将用户组的管理关系扩展至成员/管理者/授权者三种

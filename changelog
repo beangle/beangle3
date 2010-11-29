@@ -1,0 +1,29 @@
+2010-11-06  duantihua   <chaostone.duan@gmail.com>
+	* 采用Maven3构建系统
+	* 借鉴acegi重构了security部分
+	* 升级了部分依赖包(Spring 3.0.5.RELEASE;Testng 5.14.2;Logback 0.9.26;Hibernate 3.6.0.Final,Javassist 3.12.0.GA;Echcache 2.3.0;POI 3.7;Ognl 3.0)
+
+2010-07-03  duantihua   <chaostone.duan@gmail.com>
+	* 增加了ConfigResource支持多配置文件统一管理
+	* 重构了UrlConfigProvider,ConfigProcessor,TableNameConfig,ProfileServiceImpl,MimeTypeProvider,支持统一的多配置方式
+
+2010-06-25  duantihua   <chaostone.duan@gmail.com>
+	* 增加了GenericDao
+
+2010-06-14	duantihua	<chaostone.duan@gmail.com>
+	* 修复了多线程情况下多次loadprofile的错误
+	* 完善了分页页面程序(ftl,javascript),将simplePageBar改为基于主题的分页方式，独立出@page标签
+
+2010-06-01	duantihua	<chaostone.duan@gmail.com>
+
+	* 完成对项目类型泛化的要求
+	* 合并精简bundle
+
+2010-04-11	duantihua	<chaostone.duan@gmail.com>
+
+	* 固定了项目pom中的plugin依赖的版本
+	* 将权限部分重新构建，独立出beangle-security-auth包
+
+2010-03-28	duantihua	<chaostone.duan@gmail.com>
+
+	* 将项目整体结构改为library,database,notification,struts2,blueprint,security等几项，每一项采用类似osgi风格的命名方式。

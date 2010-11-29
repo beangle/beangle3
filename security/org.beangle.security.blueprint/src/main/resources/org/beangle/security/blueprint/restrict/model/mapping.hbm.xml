@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.beangle.security.blueprint.restrict.model">
+	<class name="RestrictFieldBean" entity-name="org.beangle.security.blueprint.restrict.RestrictField">
+		<cache usage="read-write" region="beangle.security"/>
+		<id name="id" unsaved-value="null">
+			<generator class="org.beangle.model.persist.hibernate.support.TableSeqGenerator"/>
+		</id>
+		<property name="name" not-null="true"/>
+		<property name="type" not-null="true"/>
+		<property name="remark" not-null="true"/>
+		<property name="source"/>
+		<set name="objects" table="restrict_objects_fields">
+			<key column="field_id"/>
+			<many-to-many entity-name="org.beangle.security.blueprint.restrict.RestrictObject" column="object_id"/>
+		</set>
+	</class>
+	
+	<class name="RestrictObjectBean" entity-name="org.beangle.security.blueprint.restrict.RestrictObject">
+		<cache usage="read-write" region="beangle.security"/>
+		<id name="id" unsaved-value="null">
+			<generator class="org.beangle.model.persist.hibernate.support.TableSeqGenerator"/>
+		</id>
+		<property name="name" not-null="true"/>
+		<set name="fields" table="restrict_objects_fields">
+			<key column="object_id"/>
+			<many-to-many entity-name="org.beangle.security.blueprint.restrict.RestrictField" column="field_id"/>
+		</set>
+	</class>
+	
+	<class name="RestrictPatternBean" entity-name="org.beangle.security.blueprint.restrict.RestrictPattern">
+		<cache usage="read-write" region="beangle.security"/>
+		<id name="id" unsaved-value="null">
+			<generator class="org.beangle.model.persist.hibernate.support.TableSeqGenerator"/>
+		</id>
+		<property name="content" not-null="true"/>
+		<property name="remark" not-null="true"/>
+		<many-to-one name="object" not-null="true"/>
+	</class>
+	
+	<class name="RestrictionBean" entity-name="org.beangle.security.blueprint.restrict.UserRestriction">
+		<id name="id" unsaved-value="null">
+			<generator class="org.beangle.model.persist.hibernate.support.TableSeqGenerator"/>
+		</id>
+		<property name="enabled" not-null="true"/>
+		<map name="items" table="user_restrictions_items" cascade="all">
+			<key column="restriction_id"/>
+			<map-key type="long" column="param_id"/>
+			<element type="string" column="content"/>
+		</map>
+		<many-to-one name="holder" entity-name="org.beangle.security.blueprint.User"/>
+		<many-to-one name="pattern" not-null="true"/>
+	</class>
+	
+	<class name="RestrictionBean" entity-name="org.beangle.security.blueprint.restrict.GroupRestriction">
+		<id name="id" unsaved-value="null">
+			<generator class="org.beangle.model.persist.hibernate.support.TableSeqGenerator"/>
+		</id>
+		<property name="enabled" not-null="true"/>
+		<map name="items" cascade="all">
+			<key column="restriction_id"/>
+			<map-key type="long" column="param_id"/>
+			<element type="string" column="content"/>
+		</map>
+		<many-to-one name="holder" entity-name="org.beangle.security.blueprint.Group"/>
+		<many-to-one name="pattern" not-null="true"/>
+	</class>
+	
+	<class name="RestrictionBean" entity-name="org.beangle.security.blueprint.restrict.AuthorityRestriction">
+		<id name="id" unsaved-value="null">
+			<generator class="org.beangle.model.persist.hibernate.support.TableSeqGenerator"/>
+		</id>
+		<property name="enabled" not-null="true"/>
+		<map name="items" table="auth_restrictions_items" cascade="all">
+			<key column="restriction_id"/>
+			<map-key type="long" column="param_id"/>
+			<element type="string" column="content"/>
+		</map>
+		<many-to-one name="holder" entity-name="org.beangle.security.blueprint.Authority"/>
+		<many-to-one name="pattern" not-null="true"/>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>org.beangle</groupId>
+		<artifactId>beangle-parent</artifactId>
+		<version>2.0.2-SNAPSHOT</version>
+        <relativePath>../parent/pom.xml</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.beangle</groupId>
+	<artifactId>beangle-security-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>Beangle Security Parent</name>
+	
+	<modules>
+		<module>org.beangle.security.core</module>
+		<module>org.beangle.security.web</module>
+		<module>org.beangle.security.ldap</module>
+		<module>org.beangle.security.cas</module>
+		<module>org.beangle.security.blueprint</module>
+	</modules>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.beangle</groupId>
+			<artifactId>beangle-commons</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.beangle</groupId>
+			<artifactId>beangle-model</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.beangle</groupId>
+			<artifactId>beangle-test</artifactId>
+			<version>${project.version}</version>
+   		    <scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

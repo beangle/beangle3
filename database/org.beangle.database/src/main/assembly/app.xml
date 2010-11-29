@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+
+<assembly>
+  <id>app</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+  
+  <fileSets>
+    <fileSet>
+      <directory>src/main/shell</directory>
+      <outputDirectory>/</outputDirectory>
+    </fileSet>
+    
+    <fileSet>
+      <directory>${basedir}/target/</directory>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+      <outputDirectory>/</outputDirectory>
+    </fileSet>
+
+  </fileSets>
+  
+  <dependencySets>
+    <dependencySet>
+      <scope>runtime</scope>
+      <outputDirectory>/lib</outputDirectory>
+    </dependencySet>
+    <dependencySet>
+      <scope>provided</scope>
+      <outputDirectory>/lib</outputDirectory>
+    </dependencySet>
+  </dependencySets>
+
+</assembly>
+

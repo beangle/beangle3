@@ -1,0 +1,345 @@
+body{
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-left:0;
+	margin-right:0;
+}
+/* A ---------------------------------------------------------------------*/
+ a:link {
+	color: #000080;
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+}
+
+a:hover {
+	color: red;
+}
+/* Grid  ---------------------------------------------------------------
+ *  数据列表的样式单*/
+.grid {
+	border-collapse: collapse;
+	border:solid;
+	border-width:1px;
+	border-color:#006CB2;
+	vertical-align: middle;
+	font-style: normal;
+}
+.grid td{
+	border-color:#006CB2;;
+	border-style:solid;
+	border-width:0 1px 1px 0;
+}
+
+.gridhead{
+	color: #000000; 
+	text-decoration: none;
+	text-align:center;
+	font-weight:bolder;
+	letter-spacing:0;
+	background-color: #c7dbff;
+}
+/* 排序表使用*/
+td.gridhead-asc{
+	background-color: #308dbb;
+	cursor:pointer;
+}
+td.gridhead-desc{
+	background-color: #308dbb;
+	cursor:pointer;
+}
+td.gridhead-sort{
+	cursor:pointer;
+}
+/*鼠标覆盖改变颜色*/      
+tr.roll_down {
+	text-decoration: none; 
+	letter-spacing:0;
+	background-color: #BFFFBF;
+}
+
+tr.highlight {
+	text-decoration: none; 
+	letter-spacing:0;
+	background-color: #BFFFBF;
+}
+tr.bright{  
+	color: #000000; 
+	text-decoration: none; 
+	letter-spacing:0;
+	background-color: white;
+}
+tr.gray{
+	color: #000000; 
+	text-decoration: none; 
+	letter-spacing:0;
+	background-color: #EBEBEB;
+}
+/*数据列表中，选择框(radio or checkbox)的样式单*/
+td.select{
+	text-align:center;
+	background-color: #e0ecff;
+	width:3%;
+}
+.pagebar{
+	color: #000000; 
+	text-decoration: none; 
+	letter-spacing:0;
+	background-color: #c7dbff;
+}
+/* FormTable ------------------------------------------------
+ */
+/*数据表单的样式*/
+.formTable{
+	border-collapse: collapse;
+	border:solid;
+	border-width:1px;
+	border-color:#006CB2;
+	text-align: left;
+	font-style: normal; 
+	font-size: 10pt; 
+}
+table.formTable td{
+	border:solid;
+	border-width:0px;
+	border-right-width:1;
+	border-bottom-width:1;
+	border-color:#006CB2;
+	color: #000000; 
+	text-decoration: none; 
+	letter-spacing:0;
+}
+.formTable .title{
+	text-align: right;
+	background-color: #EBEBEB;
+}
+.formTable .content{
+	text-align: left;
+	background-color: white
+}
+
+/*详细信息页面*/
+table.infoTable {
+	vertical-align: middle;
+	width:100%;
+	border-collapse: collapse;
+	background-color: #EEEEEE;
+}
+
+table.infoTable td {
+	border: 1px solid #FFFFFF;
+}
+table.infoTable th {
+	background-color: #E1ECFF;
+	height: 22px;
+}
+.infoTable .title{
+	height: 22px;
+	width: 110px;
+	background-color:F5EDDB;
+	padding-left: 2px;
+	padding-right: 2px;
+	text-align:right;
+}
+.infoTable .content{
+	padding-left: 1px;
+	padding-right: 1px;
+}
+.infoTitle{
+}
+
+tr.thead {
+	color: #000000; 
+	text-decoration: none; 
+	letter-spacing:0;
+	background-color: #c7dbff;
+	font-weight:bolder;
+}
+tr.tfoot{
+	color: #000000; 
+	text-decoration: none;
+	text-align:center;
+	letter-spacing:0;
+	background-color: #c7dbff;
+	font-weight:bolder;
+}
+thead.thead {
+	color: #000000; 
+	text-decoration: none; 
+	letter-spacing:0;
+	background-color: #c7dbff;
+	font-weight:bolder;
+}
+/* Frame --------------------------------------------------------- */
+/*展示框架*/
+.frameTableStyle{
+	width:100%;
+	border-collapse:collapse;
+	border:0;
+}
+.iconStyle {vertical-align:middle;margin-top:1px;border:0px}
+
+.frameTable{
+	border-collapse: collapse;
+	border:solid;
+	border-width:1px;
+	border-color:#006CB2;
+	margin-top:0px;
+	margin-bottom:0px;
+	width:100%;	
+	font-size: 10pt;
+}
+.frameTable_title{
+	font-size: 12px;
+	border:solid;
+	border-width:1px;	
+	margin-top:0px;
+	margin-bottom:0px;
+	background-color :#E1ECFF;
+	border-color:#006CB2;
+	width:100%;
+}
+.frameTable_view{
+    font-size: 10pt;
+	border:solid;
+	border-width:0px;
+	border-right-width:1;
+	border-color:#006CB2;
+    vertical-align: top; 
+	background-color: #E1ECFF;
+}
+.frameTable_content{
+	vertical-align: top; 
+}
+/*没有间隔和边框的表格*/
+.searchTable{
+	border-collapse: collapse;
+	border-width:0px;
+}
+/*参数设置页面*/
+.settingTable {
+	border-collapse: collapse;
+	border:solid;
+	border-width:1px;
+	border-color:#006CB2;
+	text-align: left;
+	font-style: normal; 
+	width:100%;
+	background-color: #E1ECFF
+}
+table.settingTable td{
+	border:solid;
+	border-width:0px;
+	border-color:#006CB2;
+	height:30px;
+}
+
+/* ToolBar---------------------------------------------------
+ */
+.padding{PADDING-LEFT:4px;PADDING-RIGHT:4px;PADDING-TOP:2px;PADDING-BOTTOM:2px;cursor:pointer;}
+.transfer{PADDING-LEFT:3px;PADDING-RIGHT:3px;BACKGROUND-COLOR:#e9f2f8;BORDER:1px solid #336699;cursor:pointer;}
+.Q{COLOR:#FFFFFF;PADDING-LEFT:4px;PADDING-RIGHT:4px;BACKGROUND-COLOR:#4791C5;}
+
+.separator{PADDING-LEFT:0px;WIDTH:1px}
+.icon{vertical-align:middle;margin-top:1px;border:0px}
+.ToolBar{font-size: 12px;border-collapse:separate;}
+.ToolBarDiv {position:absolute;top:0px;left:0px;width:0px;height:0px;}
+.ToolBar TD	{HEIGHT:22px;WHITE-SPACE:nowrap}
+.ToolBar A	{COLOR:#000000;TEXT-DECORATION:none !important}
+.barMenu{BACKGROUND-COLOR:#e9f2f8;VISIBILITY:hidden;POSITION:absolute;Z-INDEX:100;PADDING:1px;OVERFLOW:visible;BORDER:solid 1px #4791C5;TOP:0px;LEFT:-200px;WHITE-SPACE:nowrap;}
+.barMenuPadding{BACKGROUND-COLOR:#FFFFFF;PADDING-LEFT:5px;PADDING-RIGHT:5px;PADDING-TOP:1px;;PADDING-BOTTOM:1px;font-size: 12px;cursor:pointer;}
+.barMenuPadding A{TEXT-DECORATION:none !important;COLOR:#000000;cursor:pointer;}
+.barMenuTransfer{PADDING-LEFT:5px;PADDING-RIGHT:5px;PADDING-TOP:1px;;PADDING-BOTTOM:1px;font-size: 12px;cursor:pointer;}
+.barMenuTransfer A{TEXT-DECORATION:none;COLOR:#000000;cursor:pointer;}
+TD.keyLine {HEIGHT:1px;font-size:0pt;}
+.V {HEIGHT:1px;font-size:0pt;PADDING:0px;BORDER-TOP:1px solid #4791C5;}
+
+/* Message ------------------------------------------------
+ * This is the style for the informational messages presented to the user */
+
+div.error, div.message {
+	background-color: #ECD83C;
+	border: 0px solid #000;
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: bottom;
+}
+
+
+/* use a different color for the errors */
+div.error {
+	border: 0px solid red;
+}
+
+img.validationWarning, div.errors img.icon, div.messages img.icon {
+	border: 0;
+	width: 14px;
+	height: 13px;
+	vertical-align: top;
+}
+
+div.message a {
+	background: transparent;
+	color: #0000FF;
+}
+
+div.message a:visited {
+	background: transparent;
+	color: #0000FF;
+}
+
+div.message a:hover {
+	background: transparent;
+	color: #008000;
+}
+
+div.message a:active {
+	text-decoration: underline overline;
+}
+
+div.message img.icon {
+	vertical-align: middle;
+}
+
+span.fieldError {
+	color: red;
+	font-size: .95em;
+	font-weight: bold;
+}
+/*Print ----------------------------------------------
+ */
+@media print {
+	.notprint {
+		display:none;
+	}
+	.ToolBar {
+		display:none;
+	}
+}
+
+@media screen {
+	.notprint {
+		display:inline;
+	}
+	.ToolBar {
+		display:inline;
+	}
+}
+/*-验证框架使用的两个class------------------------------*/
+.tfvHighlight {
+	font-weight: bold; 
+	font-style: normal; 
+	color: red; 
+	background-color: #EBEBEB;
+	text-align: right;
+}
+.tfvNormal {
+	font-weight: normal;
+	font-style: normal; 
+	color: black; 
+	background-color: #EBEBEB;
+	text-align: right;
+}

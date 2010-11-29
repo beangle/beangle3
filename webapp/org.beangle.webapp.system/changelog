@@ -1,0 +1,27 @@
+2010-11-03  duantihua  <chaostone.duan@gmail.com>
+	* 记录在线用户记录os,useragent
+	* 统一使用jquery-ui的主题
+	* 重新命名了security命名空间下的action
+	* 基于新的管理模式下的用户组关系
+	* 基于模式的数据限制界面
+	* doc/static-download 更名为staticfile/download
+	
+2010-08-19  duantihua  <chaostone.duan@gmail.com>
+
+	* 完善了avatarBase的设计
+
+2010-08-15  duantihua  <chaostone.duan@gmail.com>
+
+	* 完善了数据权限的设置，增加支持*设置的功能
+
+2010-07-71  duantihua  <chaostone.duan@gmail.com>
+
+	* 整合了权限管理的界面
+
+2010-06-15  duantihua  <chaostone.duan@gmail.com>
+
+	* 增加了用户类别和超级管理员的管理界面
+
+2010-04-12  duantihua  <chaostone.duan@gmail.com>
+
+	* 重构了首页面布局，增加了我的登录活动链接，取出了上下可以调整宽度的不实用功能

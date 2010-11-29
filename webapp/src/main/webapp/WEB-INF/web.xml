@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app id="WebApp_1249444525385">	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	<context-param>
+		<param-name>webappTemplatePath</param-name>
+		<param-value>/pages</param-value>
+	</context-param>
+    <!--设置字符集-->
+    <filter>
+        <filter-name>SetCharacterEncoding</filter-name>
+        <filter-class>org.beangle.struts2.filter.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>	
+	<!--过滤权限-->
+	<filter>
+		<filter-name>SecurityFilter</filter-name>
+		<filter-class>org.beangle.security.daemon.monitor.SecurityFilter</filter-class>
+		<init-param>
+			<param-name>loginFailPath</param-name>
+			<param-value>login.action</param-value>
+		</init-param>
+		<init-param>
+			<param-name>noAuthorityPath</param-name>
+			<param-value>error.action?errorCode=error.notEnoughAuthority</param-value>
+		</init-param>
+	</filter>
+
+	<!--首先打开hibernate Session-->
+	<filter>
+		<filter-name>OpenSessionInViewFilter</filter-name>
+		<filter-class>
+			org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+		<init-param>
+			<param-name>singleSession</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	
+    <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>
+            org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter
+        </filter-class>
+        <init-param>
+			<param-name>packages</param-name>
+			<param-value>static</param-value>
+		</init-param>
+    </filter>
+	
+	<filter-mapping>
+        <filter-name>SetCharacterEncoding</filter-name>
+        <url-pattern>*.action</url-pattern>
+    </filter-mapping>
+	<filter-mapping>
+		<filter-name>SecurityFilter</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>OpenSessionInViewFilter</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>*.action</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>/static/*</url-pattern>
+    </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>/struts/*</url-pattern>
+    </filter-mapping>
+	<!---->
+	
+    
+	<!--记录在线用户-->
+	<listener id="OnlineUserListener">
+		<listener-class>org.beangle.security.daemon.monitor.OnlineUserListener</listener-class>
+	</listener>
+	<listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	<!--数据源配置
+    <resource-ref>
+		<res-ref-name>jdbc/datasource</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>-->
+</web-app>

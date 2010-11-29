@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="captchaService" class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService">
+		<property name="captchaEngine">
+			<bean class="org.beangle.webapp.captcha.service.GmailEngine"/>
+		</property>
+		<property name="minGuarantedStorageDelayInSeconds" value="600"/>
+	</bean>
+	
+	<bean name="classpathDocLoader" scope="prototype" 
+	class="org.beangle.webapp.staticfile.service.ClasspathDocLoader" autowire="byName">
+	</bean>
+	
+	<bean name="defaultAvatarBase" autowire="byName" 
+		class="org.beangle.webapp.avatar.service.FileSystemAvatarBase">
+	</bean>
+	
+	<bean name="urlConfigProvider" autowire="byName"
+		class="org.beangle.commons.config.property.UrlConfigProvider">
+		<property name="resource">
+			<bean class="org.beangle.commons.config.ConfigResource">
+				<property name="globals" value="classpath*:system-default.properties"/>
+				<property name="locations" value="classpath*:META-INF/system.properties"/>
+				<property name="users" value="classpath*:system.properties"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean name="mimeTypeProvider" autowire="byName"
+		class="org.beangle.web.mime.MimeTypeProvider">
+		<property name="resource">
+			<bean class="org.beangle.commons.config.ConfigResource">
+				<property name="globals" value="classpath*:org/beangle/web/mime/mimetypes.properties"/>
+				<property name="locations" value="classpath*:META-INF/mimetypes.properties"/>
+			</bean>
+		</property>
+	</bean>
+		
+	<bean name="propertyConfigProvider" autowire="byName"
+		class="org.beangle.webapp.system.service.PropertyConfigProvider">
+	</bean>
+	
+	<bean name="configFactory" autowire="byName"
+		class="org.beangle.commons.config.property.DefaultConfigFactory">
+			<property name="providers">
+				<list>
+					<ref bean="urlConfigProvider"/>
+					<ref bean="propertyConfigProvider"/>
+				</list>
+			</property>
+	</bean>
+</beans>
