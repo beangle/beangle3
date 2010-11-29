@@ -1,0 +1,13 @@
+# Typically *NIX text editors, by default, append '~' to files on saving to make backups
+*~
+
+# Build output directies
+/target
+*/target
+
+# Eclipse specific files/directories
+.classpath
+.project
+.settings
+.metadata
+
