@@ -2,12 +2,10 @@
 *~
 
 # Build output directies
-/target
-*/target
+target
 
 # Eclipse specific files/directories
 .classpath
 .project
 .settings
 .metadata
-
