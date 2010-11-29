@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 业务规则表参数 -->
+<hibernate-mapping package="org.beangle.rule.model" >
+	<class name="RuleParameter" entity-name="org.beangle.rule.Parameter">
+		<id name="id" unsaved-value="null">
+			<generator class="org.beangle.model.persist.hibernate.support.TableSeqGenerator"/>
+		</id>
+		<many-to-one name="rule"/>
+		<property name="name" not-null="true" length="100"/>
+		<property name="type" not-null="true" length="100"/>	
+		<property name="title" not-null="true" length="100"/>
+		<property name="description" length="100"/>
+		
+		<many-to-one name="parent" not-null="false"/>	
+		<set name="children" cascade="all">
+			<key column="parent_id"/>
+			<one-to-many entity-name="org.beangle.rule.Parameter"/>
+		</set>
+	</class>
+</hibernate-mapping>

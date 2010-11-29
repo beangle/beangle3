@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="beangleConfig"
+	 class="org.beangle.commons.config.spring.ReconfigProcessor">
+		<property name="resource">
+			<bean class="org.beangle.commons.config.ConfigResource">
+				<property name="locations" value="classpath*:spring-config-test.xml" />
+			</bean>
+		</property>
+	</bean>
+	<import resource="classpath*:META-INF/spring/*.xml"/>
+	<import resource="classpath*:META-INF/spring-override/*.xml"/>
+	<import resource="classpath*:spring-local.xml"/>
+</beans>

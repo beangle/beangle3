@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- 业务规则表参数 -->
+<hibernate-mapping package="org.beangle.rule.model" >
+	<class name="RuleConfig">
+		<id name="id" unsaved-value="null">
+			<generator class="org.beangle.model.persist.hibernate.support.TableSeqGenerator"/>
+		</id>
+		<many-to-one name="rule" column="rule_id"/>
+		<property name="enabled" not-null="true"/>
+		<set name="params" inverse="true" cascade="all-delete-orphan">
+			<key column="rule_config_id"/>
+			<one-to-many class="org.beangle.rule.model.RuleConfigParam"/>
+		</set>
+	</class>
+</hibernate-mapping>
