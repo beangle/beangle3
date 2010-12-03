@@ -1,3 +1,7 @@
+2010-12-3  duantihua  <chaostone.duan@gmail.com>
+
+	* change entityDao.count returntype from int to long
+	
 2010-10-24  duantihua  <chaostone.duan@gmail.com>
 
 	* 删除了entityService,将其他方法合并到entityDao

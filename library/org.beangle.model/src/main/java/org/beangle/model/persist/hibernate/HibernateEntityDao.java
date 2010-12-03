@@ -495,7 +495,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 		return (executeUpdateHql(hql.toString(), params) > 0);
 	}
 
-	public int count(String entityName, String keyName, Object value) {
+	public long count(String entityName, String keyName, Object value) {
 		String hql = "select count(*) from " + entityName + " where " + keyName + "=:value";
 		Map<String, Object> params = CollectUtils.newHashMap();
 		params.put("value", value);
@@ -503,15 +503,15 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 		if (rs.isEmpty()) {
 			return 0;
 		} else {
-			return ((Number) rs.get(0)).intValue();
+			return ((Number) rs.get(0)).longValue();
 		}
 	}
 
-	public int count(Class<?> entityClass, String keyName, Object value) {
+	public long count(Class<?> entityClass, String keyName, Object value) {
 		return count(entityClass.getName(), keyName, value);
 	}
 
-	public int count(Class<?> entityClass, String[] attrs, Object[] values, String countAttr) {
+	public long count(Class<?> entityClass, String[] attrs, Object[] values, String countAttr) {
 		String entityName = entityClass.getName();
 		StringBuilder hql = new StringBuilder();
 		if (StringUtils.isNotEmpty(countAttr)) {
@@ -540,7 +540,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 			}
 		}
 		hql.append(" (1=1) ");
-		return ((Number) searchHQLQuery(hql.toString(), params).get(0)).intValue();
+		return ((Number) searchHQLQuery(hql.toString(), params).get(0)).longValue();
 	}
 
 	public boolean exist(Class<?> entityClass, String attr, Object value) {

@@ -371,11 +371,11 @@ public interface EntityDao {
 
 	public void refresh(Object entity);
 
-	public int count(String entityName, String keyName, Object value);
+	public long count(String entityName, String keyName, Object value);
 
-	public int count(Class<?> entityClass, String keyName, Object value);
+	public long count(Class<?> entityClass, String keyName, Object value);
 
-	public int count(Class<?> entityClass, String[] attrs, Object[] values, String countAttr);
+	public long count(Class<?> entityClass, String[] attrs, Object[] values, String countAttr);
 
 	public boolean exist(Class<?> entityClass, String attr, Object value);
 
