@@ -20,7 +20,7 @@ public class ProviderManager extends AbstractAuthenticationManager implements In
 
 	protected List<AuthenticationProvider> providers = CollectUtils.newArrayList();
 
-	//protected SessionController sessionController;
+	// protected SessionController sessionController;
 
 	public void afterPropertiesSet() throws Exception {
 		if (providers.isEmpty()) { throw new RuntimeException(
@@ -43,19 +43,19 @@ public class ProviderManager extends AbstractAuthenticationManager implements In
 				result = provider.authenticate(auth);
 				if (result != null) {
 					copyDetails(auth, result);
-					//sessionController.checkAuthenticationAllowed(result);
+					// sessionController.checkAuthenticationAllowed(result);
 				}
 			} catch (AuthenticationException ae) {
 				lastException = ae;
 				result = null;
 			}
-			if (lastException instanceof AccountStatusException){
-					//|| lastException instanceof ConcurrentLoginException) {
+			if (lastException instanceof AccountStatusException) {
+				// || lastException instanceof ConcurrentLoginException) {
 				break;
 			}
 
 			if (null != result) {
-//				sessionController.registerAuthentication(result);
+				// sessionController.registerAuthentication(result);
 				return result;
 			}
 		}
@@ -81,12 +81,12 @@ public class ProviderManager extends AbstractAuthenticationManager implements In
 		this.providers = providers;
 	}
 
-//	public void setSessionController(SessionController sessionController) {
-//		this.sessionController = sessionController;
-//	}
-//
-//	public SessionController getSessionController() {
-//		return sessionController;
-//	}
+	// public void setSessionController(SessionController sessionController) {
+	// this.sessionController = sessionController;
+	// }
+	//
+	// public SessionController getSessionController() {
+	// return sessionController;
+	// }
 
 }

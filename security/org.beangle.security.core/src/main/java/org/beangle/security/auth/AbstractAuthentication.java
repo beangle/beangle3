@@ -53,11 +53,11 @@ public abstract class AbstractAuthentication implements Authentication {
 	public boolean equals(Object obj) {
 		if (obj instanceof AbstractAuthentication) {
 			AbstractAuthentication test = (AbstractAuthentication) obj;
-			return new EqualsBuilder().append(getPrincipal(), test.getPrincipal()).append(
-					getCredentials(), test.getCredentials())
-					.append(getDetails(), test.getDetails()).append(isAuthenticated(),
-							test.isAuthenticated()).append(getAuthorities(), test.getAuthorities())
-					.isEquals();
+			return new EqualsBuilder().append(getPrincipal(), test.getPrincipal())
+					.append(getCredentials(), test.getCredentials())
+					.append(getDetails(), test.getDetails())
+					.append(isAuthenticated(), test.isAuthenticated())
+					.append(getAuthorities(), test.getAuthorities()).isEquals();
 		}
 
 		return false;

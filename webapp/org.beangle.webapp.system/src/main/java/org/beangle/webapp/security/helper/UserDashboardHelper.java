@@ -56,7 +56,7 @@ public class UserDashboardHelper {
 	}
 
 	private void populateOnlineActivities(User user) {
-		Collection<?> onlineActivities = sessionRegistry.getSessionInfos(user,true);
+		Collection<?> onlineActivities = sessionRegistry.getSessionInfos(user, true);
 		ContextHelper.put("onlineActivities", onlineActivities);
 	}
 
@@ -83,8 +83,7 @@ public class UserDashboardHelper {
 		if (null != menuProfileId) {
 			MenuProfile menuProfile = (MenuProfile) entityDao.get(MenuProfile.class, menuProfileId);
 			List<Menu> menus = authorityService.getMenus(menuProfile, user);
-			Set<Resource> resources = CollectUtils
-					.newHashSet(authorityService.getResources(user));
+			Set<Resource> resources = CollectUtils.newHashSet(authorityService.getResources(user));
 			Map<String, Group> groupMap = CollectUtils.newHashMap();
 			Map<String, List<Menu>> groupMenusMap = CollectUtils.newHashMap();
 

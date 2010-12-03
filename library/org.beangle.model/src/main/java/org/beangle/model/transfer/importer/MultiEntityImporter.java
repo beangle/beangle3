@@ -176,8 +176,8 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
 				String entityName = entityType.getEntityName();
 				String attr = processAttr(attrs[i]);
 				if (attr.indexOf('.') > -1) {
-					populator.initProperty(example, entityName, StringUtils.substringBeforeLast(
-							attr, "."));
+					populator.initProperty(example, entityName,
+							StringUtils.substringBeforeLast(attr, "."));
 				}
 				rightAttrs.add(attrs[i]);
 			} catch (Exception e) {

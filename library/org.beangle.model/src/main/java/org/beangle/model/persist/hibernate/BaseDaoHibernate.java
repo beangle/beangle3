@@ -62,7 +62,7 @@ public abstract class BaseDaoHibernate extends HibernateDaoSupport {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> Page<T> paginateQuery(Query query, Map<String,Object> params, PageLimit limit) {
+	public <T> Page<T> paginateQuery(Query query, Map<String, Object> params, PageLimit limit) {
 		QuerySupport.setParameter(query, params);
 		query.setFirstResult((limit.getPageNo() - 1) * limit.getPageSize()).setMaxResults(
 				limit.getPageSize());
@@ -77,8 +77,8 @@ public abstract class BaseDaoHibernate extends HibernateDaoSupport {
 		}
 		QuerySupport.setParameter(countQuery, params);
 		// 返回结果
-		return new SinglePage<T>(limit.getPageNo(), limit.getPageSize(), ((Number) (countQuery
-				.uniqueResult())).intValue(), targetList);
+		return new SinglePage<T>(limit.getPageNo(), limit.getPageSize(),
+				((Number) (countQuery.uniqueResult())).intValue(), targetList);
 	}
 
 	/**
@@ -93,8 +93,8 @@ public abstract class BaseDaoHibernate extends HibernateDaoSupport {
 			queryStr += "from (" + query.getQueryString() + ")";
 		} else {
 			String lowerCaseQueryStr = query.getQueryString().toLowerCase();
-			String selectWhich = lowerCaseQueryStr.substring(0, query.getQueryString().indexOf(
-					"from"));
+			String selectWhich = lowerCaseQueryStr.substring(0,
+					query.getQueryString().indexOf("from"));
 			int indexOfDistinct = selectWhich.indexOf("distinct");
 			int indexOfFrom = lowerCaseQueryStr.indexOf("from");
 			// 如果含有distinct

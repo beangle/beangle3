@@ -3,26 +3,27 @@
  * http://www.gnu.org/licenses
  */
 package org.beangle.web;
+
 /**
- *
  * @author chaostone
  * @version $Id: Useragent.java Nov 15, 2010 7:39:29 AM chaostone $
  */
 public class Useragent {
 
 	private String ip;
-	
+
 	private String os;
-	
+
 	private String osVersion;
-	
+
 	private String agent;
-	
+
 	private String agentVersion;
 
 	/**
 	 * Indicates the TCP/IP address the authentication request was received
 	 * from.
+	 * 
 	 * @return
 	 */
 	public String getIp() {
@@ -64,5 +65,5 @@ public class Useragent {
 	public void setAgentVersion(String agentVersion) {
 		this.agentVersion = agentVersion;
 	}
-	
+
 }

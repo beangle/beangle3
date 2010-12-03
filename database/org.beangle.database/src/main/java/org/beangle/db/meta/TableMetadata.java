@@ -95,8 +95,8 @@ public class TableMetadata {
 	}
 
 	public String sqlCreateString(Dialect dialect) {
-		StringBuilder buf = new StringBuilder(dialect.getCreateTableString()).append(' ').append(
-				identifier()).append(" (");
+		StringBuilder buf = new StringBuilder(dialect.getCreateTableString()).append(' ')
+				.append(identifier()).append(" (");
 		Iterator<ColumnMetadata> iter = columns.values().iterator();
 		while (iter.hasNext()) {
 			ColumnMetadata col = iter.next();

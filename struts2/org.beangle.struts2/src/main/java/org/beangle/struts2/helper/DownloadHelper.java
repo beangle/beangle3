@@ -72,8 +72,8 @@ public class DownloadHelper {
 				response.setContentType(contentType);
 				logger.debug("set content type {} for {}", contentType, attch_name);
 			}
-			response.addHeader("Content-Disposition", "attachment; filename=\""
-					+ encodeAttachName(request, attch_name) + "\"");
+			response.addHeader("Content-Disposition",
+					"attachment; filename=\"" + encodeAttachName(request, attch_name) + "\"");
 			while ((len = inStream.read(b)) > 0) {
 				response.getOutputStream().write(b, 0, len);
 			}

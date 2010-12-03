@@ -119,7 +119,8 @@ public interface AuthorityService {
 	 * @param groupId
 	 * @return
 	 */
-	public List<Menu> getMenus(MenuProfile profile, Group group,Boolean enabled);
+	public List<Menu> getMenus(MenuProfile profile, Group group, Boolean enabled);
+
 	/**
 	 * 保存新的权限设置
 	 * 

@@ -12,10 +12,12 @@ public class BitStrUtilsTest {
 
 	@Test
 	public void binValueOf() {
-		assertEquals(BitStrUtils
-				.binValueOf("00000000000000000000000000000000011111111111111111111"), 1048575);
+		assertEquals(
+				BitStrUtils.binValueOf("00000000000000000000000000000000011111111111111111111"),
+				1048575);
 
-		assertEquals(BitStrUtils
-				.binValueOf("00000000000000000000000000000000000011100000000000000"), 114688);
+		assertEquals(
+				BitStrUtils.binValueOf("00000000000000000000000000000000000011100000000000000"),
+				114688);
 	}
 }

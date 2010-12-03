@@ -50,10 +50,10 @@ public class GmailEngine extends ListImageCaptchaEngine {
 						new Color(220, 34, 11), new Color(23, 67, 172) }), new TextDecorator[] {});
 		BackgroundGenerator background = new UniColorBackgroundGenerator(imageWidth, imageHeight,
 				Color.white);
-		FontGenerator font = new RandomFontGenerator(new Integer(fontSize), Integer
-				.valueOf(fontSize), new Font[] { new Font("nyala", Font.BOLD, fontSize),
-				new Font("Bell MT", Font.PLAIN, fontSize),
-				new Font("Credit valley", Font.BOLD, fontSize) });
+		FontGenerator font = new RandomFontGenerator(new Integer(fontSize),
+				Integer.valueOf(fontSize), new Font[] { new Font("nyala", Font.BOLD, fontSize),
+						new Font("Bell MT", Font.PLAIN, fontSize),
+						new Font("Credit valley", Font.BOLD, fontSize) });
 
 		ImageDeformation postDef = new ImageDeformationByFilters(new ImageFilter[] {});
 		ImageDeformation backDef = new ImageDeformationByFilters(new ImageFilter[] {});

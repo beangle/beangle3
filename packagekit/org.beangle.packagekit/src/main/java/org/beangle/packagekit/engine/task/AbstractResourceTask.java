@@ -61,8 +61,8 @@ public abstract class AbstractResourceTask implements ResourceTask {
 			Repository repository = resource.getRepository();
 			if (null != repository) {
 				Wagon wagon = WagonFactory.getWagon(repository.getProtocal());
-				wagon.transfer(repository.getLocation(resource), cacheDir + "/"
-						+ resource.getPackageName());
+				wagon.transfer(repository.getLocation(resource),
+						cacheDir + "/" + resource.getPackageName());
 			}
 		}
 	}

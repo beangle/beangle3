@@ -98,8 +98,8 @@ public abstract class AbstractItemExporter implements Exporter {
 			} else {
 				this.fail++;
 			}
-			logger.debug("tranfer item:{}  take time:{}", String.valueOf(getTranferIndex()), String
-					.valueOf(System.currentTimeMillis() - transferItemStart));
+			logger.debug("tranfer item:{}  take time:{}", String.valueOf(getTranferIndex()),
+					String.valueOf(System.currentTimeMillis() - transferItemStart));
 			// 实体转换结束
 			for (final TransferListener listener : listeners) {
 				listener.onItemFinish(tr);

@@ -30,8 +30,8 @@ public class SimpleRegistry implements Registry {
 	public void load(URL url) {
 		resourceMap.put("beangle-commons", MavenUtils.build("beangle-commons-1.0.0"));
 		resourceMap.put("beangle-packagekit", MavenUtils.build("beangle-packagekit-1.0.0"));
-		resourceMap.put("beangle-packagekit-webapp", MavenUtils
-				.build("beangle-packagekit-webapp-1.0.0"));
+		resourceMap.put("beangle-packagekit-webapp",
+				MavenUtils.build("beangle-packagekit-webapp-1.0.0"));
 	}
 
 	public Resource getResource(String name) {

@@ -51,6 +51,7 @@ public final class CollectUtils {
 		}
 		return subIdLists;
 	}
+
 	public static <K, V> Map<K, V> newHashMap() {
 		return new HashMap<K, V>();
 	}

@@ -29,39 +29,43 @@ import org.springframework.context.ApplicationEventPublisherAware;
 /**
  * Abstract processor of browser-based HTTP-based authentication requests.
  * <p>
- * This filter is responsible for processing authentication requests. If authentication is
- * successful, the resulting {@link Authentication} object will be placed into the
- * <code>SecurityContext</code>, which is guaranteed to have already been created by an earlier
- * filter.
+ * This filter is responsible for processing authentication requests. If
+ * authentication is successful, the resulting {@link Authentication} object
+ * will be placed into the <code>SecurityContext</code>, which is guaranteed to
+ * have already been created by an earlier filter.
  * <p>
- * If authentication fails, the <code>AuthenticationException</code> will be placed into the
- * <code>HttpSession</code> with the attribute defined by {@link #SECURITY_LAST_EXCEPTION_KEY}.
+ * If authentication fails, the <code>AuthenticationException</code> will be
+ * placed into the <code>HttpSession</code> with the attribute defined by
+ * {@link #SECURITY_LAST_EXCEPTION_KEY}.
  * <p>
  * To use this filter, it is necessary to specify the following properties:
  * <ul>
- * <li><code>defaultTargetUrl</code> indicates the URL that should be used for redirection if the
- * <code>HttpSession</code> attribute named {@link #SECURITY_SAVED_REQUEST_KEY} does not indicate
- * the target URL once authentication is completed successfully. eg: <code>/</code>. The
- * <code>defaultTargetUrl</code> will be treated as relative to the web-app's context path, and
- * should include the leading <code>/</code>. Alternatively, inclusion of a scheme name (eg http://
- * or https://) as the prefix will denote a fully-qualified URL and this is also supported. More
- * complex behaviour can be implemented by using a customised {@link TargetUrlResolver}.</li>
- * <li><code>authenticationFailureUrl</code> (optional) indicates the URL that should be used for
- * redirection if the authentication request fails. eg: <code>/login.jsp?login_error=1</code>. If
- * not configured, <tt>sendError</tt> will be called on the response, with the error code
- * SC_UNAUTHORIZED.</li>
- * <li><code>filterProcessesUrl</code> indicates the URL that this filter will respond to. This
- * parameter varies by subclass.</li>
- * <li><code>alwaysUseDefaultTargetUrl</code> causes successful authentication to always redirect to
- * the <code>defaultTargetUrl</code>, even if the <code>HttpSession</code> attribute named
- * {@link # SECURITY_SAVED_REQUEST_KEY} defines the intended target URL.</li>
+ * <li><code>defaultTargetUrl</code> indicates the URL that should be used for
+ * redirection if the <code>HttpSession</code> attribute named
+ * {@link #SECURITY_SAVED_REQUEST_KEY} does not indicate the target URL once
+ * authentication is completed successfully. eg: <code>/</code>. The
+ * <code>defaultTargetUrl</code> will be treated as relative to the web-app's
+ * context path, and should include the leading <code>/</code>. Alternatively,
+ * inclusion of a scheme name (eg http:// or https://) as the prefix will denote
+ * a fully-qualified URL and this is also supported. More complex behaviour can
+ * be implemented by using a customised {@link TargetUrlResolver}.</li>
+ * <li><code>authenticationFailureUrl</code> (optional) indicates the URL that
+ * should be used for redirection if the authentication request fails. eg:
+ * <code>/login.jsp?login_error=1</code>. If not configured, <tt>sendError</tt>
+ * will be called on the response, with the error code SC_UNAUTHORIZED.</li>
+ * <li><code>filterProcessesUrl</code> indicates the URL that this filter will
+ * respond to. This parameter varies by subclass.</li>
+ * <li><code>alwaysUseDefaultTargetUrl</code> causes successful authentication
+ * to always redirect to the <code>defaultTargetUrl</code>, even if the
+ * <code>HttpSession</code> attribute named {@link # SECURITY_SAVED_REQUEST_KEY}
+ * defines the intended target URL.</li>
  * </ul>
  * <p>
- * To configure this filter to redirect to specific pages as the result of specific
- * {@link AuthenticationException}s you can do the following. Configure the
- * <code>exceptionMappings</code> property in your application xml. This property is a
- * java.util.Properties object that maps a fully-qualified exception class name to a redirection url
- * target. For example:
+ * To configure this filter to redirect to specific pages as the result of
+ * specific {@link AuthenticationException}s you can do the following. Configure
+ * the <code>exceptionMappings</code> property in your application xml. This
+ * property is a java.util.Properties object that maps a fully-qualified
+ * exception class name to a redirection url target. For example:
  * 
  * <pre>
  *  &lt;property name=&quot;exceptionMappings&quot;&gt;
@@ -72,28 +76,33 @@ import org.springframework.context.ApplicationEventPublisherAware;
  * </pre>
  * 
  * The example above would redirect all
- * {@link org.beangle.security.auth.BadCredentialsException}s thrown, to a page in the
- * web-application called /bad_credentials.jsp.
+ * {@link org.beangle.security.auth.BadCredentialsException}s thrown, to a page
+ * in the web-application called /bad_credentials.jsp.
  * <p>
  * Any {@link AuthenticationException} thrown that cannot be matched in the
- * <code>exceptionMappings</code> will be redirected to the <code>authenticationFailureUrl</code>
+ * <code>exceptionMappings</code> will be redirected to the
+ * <code>authenticationFailureUrl</code>
  * <p>
  * If authentication is successful, an
- * {@link org.beangle.security.event.authentication.InteractiveAuthenticationSuccessEvent} will be
- * published to the application context. No events will be published if authentication was
- * unsuccessful, because this would generally be recorded via an <code>AuthenticationManager</code>
- * -specific application event.
+ * {@link org.beangle.security.event.authentication.InteractiveAuthenticationSuccessEvent}
+ * will be published to the application context. No events will be published if
+ * authentication was unsuccessful, because this would generally be recorded via
+ * an <code>AuthenticationManager</code> -specific application event.
  * <p>
- * The filter has an optional attribute <tt>invalidateSessionOnSuccessfulAuthentication</tt> that
- * will invalidate the current session on successful authentication. This is to protect against
- * session fixation attacks (see <a href="http://en.wikipedia.org/wiki/Session_fixation">this
- * Wikipedia article</a> for more information). The behaviour is turned off by default. Additionally
- * there is a property <tt>migrateInvalidatedSessionAttributes</tt> which tells if on session
- * invalidation we are to migrate all session attributes from the old session to a newly created
- * one. This is turned on by default, but not used unless
- * <tt>invalidateSessionOnSuccessfulAuthentication</tt> is true. If you are using this feature in
- * combination with concurrent session control, you should set the <tt>sessionRegistry</tt> property
- * to make sure that the session information is updated consistently.
+ * The filter has an optional attribute
+ * <tt>invalidateSessionOnSuccessfulAuthentication</tt> that will invalidate the
+ * current session on successful authentication. This is to protect against
+ * session fixation attacks (see <a
+ * href="http://en.wikipedia.org/wiki/Session_fixation">this Wikipedia
+ * article</a> for more information). The behaviour is turned off by default.
+ * Additionally there is a property <tt>migrateInvalidatedSessionAttributes</tt>
+ * which tells if on session invalidation we are to migrate all session
+ * attributes from the old session to a newly created one. This is turned on by
+ * default, but not used unless
+ * <tt>invalidateSessionOnSuccessfulAuthentication</tt> is true. If you are
+ * using this feature in combination with concurrent session control, you should
+ * set the <tt>sessionRegistry</tt> property to make sure that the session
+ * information is updated consistently.
  * 
  * @author chaostone
  * @version $Id: AbstractProcessingFilter.java 3280 2008-09-12 14:57:21Z luke_t
@@ -130,16 +139,18 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilterBean
 	private String filterUrl = getDefaultFilterProcessesUrl();
 
 	/**
-	 * If <code>true</code>, will always redirect to the value of {@link #getDefaultTargetUrl} upon
-	 * successful authentication, irrespective
-	 * of the page that caused the authentication request (defaults to <code>false</code>).
+	 * If <code>true</code>, will always redirect to the value of
+	 * {@link #getDefaultTargetUrl} upon successful authentication, irrespective
+	 * of the page that caused the authentication request (defaults to
+	 * <code>false</code>).
 	 */
 	private boolean alwaysUseDefaultTargetUrl = false;
 
 	/**
 	 * Indicates if the filter chain should be continued prior to delegation to
-	 * {@link #successfulAuthentication(HttpServletRequest, HttpServletResponse, Authentication)} ,
-	 * which may be useful in certain environment (eg Tapestry). Defaults to <code>false</code>.
+	 * {@link #successfulAuthentication(HttpServletRequest, HttpServletResponse, Authentication)}
+	 * , which may be useful in certain environment (eg Tapestry). Defaults to
+	 * <code>false</code>.
 	 */
 	private boolean continueChainBeforeSuccessfulAuthentication = false;
 
@@ -209,24 +220,26 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilterBean
 
 	/**
 	 * <p>
-	 * Indicates whether this filter should attempt to process a login request for the current
-	 * invocation.
+	 * Indicates whether this filter should attempt to process a login request
+	 * for the current invocation.
 	 * </p>
 	 * <p>
-	 * It strips any parameters from the "path" section of the request URL (such as the jsessionid
-	 * parameter in <em>http://host/myapp/index.html;jsessionid=blah</em>) before matching against
-	 * the <code>filterProcessesUrl</code> property.
+	 * It strips any parameters from the "path" section of the request URL (such
+	 * as the jsessionid parameter in
+	 * <em>http://host/myapp/index.html;jsessionid=blah</em>) before matching
+	 * against the <code>filterProcessesUrl</code> property.
 	 * </p>
 	 * <p>
-	 * Subclasses may override for special requirements, such as Tapestry integration.
+	 * Subclasses may override for special requirements, such as Tapestry
+	 * integration.
 	 * </p>
 	 * 
 	 * @param request
 	 *            as received from the filter chain
 	 * @param response
 	 *            as received from the filter chain
-	 * @return <code>true</code> if the filter should attempt authentication, <code>false</code>
-	 *         otherwise
+	 * @return <code>true</code> if the filter should attempt authentication,
+	 *         <code>false</code> otherwise
 	 */
 	protected boolean requiresAuthentication(HttpServletRequest request,
 			HttpServletResponse response) {

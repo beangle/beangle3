@@ -34,8 +34,8 @@ public class ConditionUtilsTest {
 		List<Condition> conditions = CollectUtils.newArrayList();
 		conditions.add(new Condition("user.id=:user_id", 1L));
 		conditions.add(new Condition("user.name=:std_name", "name"));
-		Assert.assertEquals("(user.id=:user_id) and (user.name=:std_name)", ConditionUtils
-				.toQueryString(conditions));
+		Assert.assertEquals("(user.id=:user_id) and (user.name=:std_name)",
+				ConditionUtils.toQueryString(conditions));
 	}
 
 }

@@ -50,8 +50,8 @@ public class CasEntryPoint implements AuthenticationEntryPoint, InitializingBean
 		final HttpServletResponse response = (HttpServletResponse) servletResponse;
 		final String urlEncodedService = CommonUtils.constructServiceUrl(request, response, null,
 				config.getLocalServer(), "ticket", config.isEncode());
-		final String redirectUrl = CommonUtils.constructRedirectUrl(config.getLoginUrl(), "service",
-				urlEncodedService, config.isRenew(), false);
+		final String redirectUrl = CommonUtils.constructRedirectUrl(config.getLoginUrl(),
+				"service", urlEncodedService, config.isRenew(), false);
 		response.sendRedirect(redirectUrl);
 	}
 

@@ -55,7 +55,7 @@ public class UserToken extends User implements CategoryPrincipal {
 	}
 
 	public void changeCategory(Object newCategory) {
-		Validate.isTrue(newCategory instanceof UserCategory, 
+		Validate.isTrue(newCategory instanceof UserCategory,
 				"newCategory should be instanceof UserCategory");
 		this.category = (UserCategory) newCategory;
 	}

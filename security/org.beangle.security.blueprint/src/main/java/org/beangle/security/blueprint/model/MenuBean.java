@@ -18,7 +18,7 @@ public class MenuBean extends LongIdObject implements Menu {
 	private static final long serialVersionUID = 3864556621041443066L;
 
 	private String code;
-	
+
 	private String title;
 
 	private String engTitle;
@@ -37,7 +37,6 @@ public class MenuBean extends LongIdObject implements Menu {
 
 	private List<Menu> children;
 
-
 	/**
 	 * 不同级的菜单按照他们固有的级联顺序排序.
 	 * 
@@ -46,6 +45,7 @@ public class MenuBean extends LongIdObject implements Menu {
 	public int compareTo(Menu other) {
 		return getCode().compareTo(other.getCode());
 	}
+
 	public String getCode() {
 		return code;
 	}

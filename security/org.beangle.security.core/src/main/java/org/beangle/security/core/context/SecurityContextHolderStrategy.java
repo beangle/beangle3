@@ -4,7 +4,6 @@
  */
 package org.beangle.security.core.context;
 
-
 /**
  * A strategy for storing security context information against a thread.
  * <p>

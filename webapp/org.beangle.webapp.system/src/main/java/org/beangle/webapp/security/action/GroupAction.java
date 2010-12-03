@@ -81,8 +81,8 @@ public class GroupAction extends SecurityActionSupport {
 	public String remove() {
 		String groupIdSeq = get("groupIds");
 		User curUser = userService.get(getUserId());
-		List<Group> toBeRemoved = entityDao.get(Group.class, SeqStrUtils
-				.transformToLong(groupIdSeq));
+		List<Group> toBeRemoved = entityDao.get(Group.class,
+				SeqStrUtils.transformToLong(groupIdSeq));
 		userService.removeGroup(curUser, toBeRemoved);
 		return redirect("search", "info.delete.success");
 	}
@@ -100,7 +100,7 @@ public class GroupAction extends SecurityActionSupport {
 		Long fromGroupId = getLong("groupId");
 		Group fromGroup = entityDao.get(Group.class, fromGroupId);
 		put("fromGroup", fromGroup);
-		//put("toGroups", getUser().getMngGroups());
+		// put("toGroups", getUser().getMngGroups());
 		return forward();
 	}
 

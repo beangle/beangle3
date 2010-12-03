@@ -192,7 +192,6 @@ public class BaseAction extends DispatchAction {
 		entityDao.saveOrUpdate(obj);
 	}
 
-	
 	@SuppressWarnings("rawtypes")
 	protected List search(QueryBuilder<?> query) {
 		return entityDao.search(query);
@@ -212,8 +211,8 @@ public class BaseAction extends DispatchAction {
 
 	protected void addCookie(String name, String value, String path, int age) {
 		try {
-			CookieUtils.addCookie(ServletActionContext.getRequest(), ServletActionContext
-					.getResponse(), name, value, path, age);
+			CookieUtils.addCookie(ServletActionContext.getRequest(),
+					ServletActionContext.getResponse(), name, value, path, age);
 		} catch (Exception e) {
 			logger.error("setCookie error", e);
 		}
@@ -221,15 +220,15 @@ public class BaseAction extends DispatchAction {
 
 	protected void addCookie(String name, String value, int age) {
 		try {
-			CookieUtils.addCookie(ServletActionContext.getRequest(), ServletActionContext
-					.getResponse(), name, value, age);
+			CookieUtils.addCookie(ServletActionContext.getRequest(),
+					ServletActionContext.getResponse(), name, value, age);
 		} catch (Exception e) {
 			logger.error("setCookie error", e);
 		}
 	}
 
 	protected void deleteCookie(String name) {
-		CookieUtils.deleteCookieByName(ServletActionContext.getRequest(), ServletActionContext
-				.getResponse(), name);
+		CookieUtils.deleteCookieByName(ServletActionContext.getRequest(),
+				ServletActionContext.getResponse(), name);
 	}
 }

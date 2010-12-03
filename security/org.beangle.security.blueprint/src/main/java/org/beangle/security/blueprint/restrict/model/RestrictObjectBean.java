@@ -18,9 +18,9 @@ public class RestrictObjectBean extends LongIdObject implements RestrictObject {
 	private String name;
 
 	private String type;
-	
+
 	private String remark;
-	
+
 	private Set<RestrictField> fields = CollectUtils.newHashSet();
 
 	public RestrictField getField(String paramName) {

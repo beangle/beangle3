@@ -160,16 +160,17 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 			if (!user.isEnabled()) { throw new DisabledException(textResource.getText(
 					"AbstractUserDetailsAuthenticationProvider.disabled", "User is disabled"), user); }
 
-			if (user.isAccountExpired()) { throw new AccountExpiredException(textResource
-					.getText("AbstractUserDetailsAuthenticationProvider.expired",
+			if (user.isAccountExpired()) { throw new AccountExpiredException(
+					textResource.getText("AbstractUserDetailsAuthenticationProvider.expired",
 							"User account has expired"), user); }
 		}
 	}
 
 	private class DefaultPostAuthenticationChecker implements UserDetailChecker {
 		public void check(UserDetail user) {
-			if (user.isCredentialsExpired()) { throw new CredentialsExpiredException(textResource
-					.getText("AbstractUserDetailsAuthenticationProvider.credentialsExpired",
+			if (user.isCredentialsExpired()) { throw new CredentialsExpiredException(
+					textResource.getText(
+							"AbstractUserDetailsAuthenticationProvider.credentialsExpired",
 							"User credentials have expired"), user); }
 		}
 	}

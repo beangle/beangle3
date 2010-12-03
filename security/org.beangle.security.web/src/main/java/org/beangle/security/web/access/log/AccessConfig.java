@@ -16,13 +16,7 @@ public class AccessConfig {
 
 	private static final Logger logger = LoggerFactory.getLogger(AccessConfig.class);
 
-	private String userKey;
-
 	private Long minDuration;
-
-	private String accessorClass;
-
-	private String accesslogClass;
 
 	private Integer cacheSize;
 
@@ -61,28 +55,8 @@ public class AccessConfig {
 	}
 
 	public String toString() {
-		String toStr = "{minDuration=" + minDuration + ";accessorClass=" + accessorClass
-				+ ";accesslogClass=" + accesslogClass + ";userKey=" + userKey + ";cacheSize="
-				+ cacheSize + "}";
+		String toStr = "{minDuration=" + minDuration + ";cacheSize=" + cacheSize + "}";
 		return toStr;
-	}
-
-	public ResourceAccessor getAccessor() {
-		ResourceAccessor accessor = null;
-		try {
-			accessor = (ResourceAccessor) Class.forName(accessorClass).newInstance();
-		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage());
-		}
-		return accessor;
-	}
-
-	public String getUserKey() {
-		return userKey;
-	}
-
-	public void setUserKey(String userKey) {
-		this.userKey = userKey;
 	}
 
 	public Long getMinDuration() {
@@ -91,22 +65,6 @@ public class AccessConfig {
 
 	public void setMinDuration(Long minDuration) {
 		this.minDuration = minDuration;
-	}
-
-	public String getAccessorClass() {
-		return accessorClass;
-	}
-
-	public void setAccessorClass(String accessorClass) {
-		this.accessorClass = accessorClass;
-	}
-
-	public String getAccessLogClass() {
-		return accesslogClass;
-	}
-
-	public void setAccessLogClass(String accesslogClass) {
-		this.accesslogClass = accesslogClass;
 	}
 
 	public Integer getCacheSize() {

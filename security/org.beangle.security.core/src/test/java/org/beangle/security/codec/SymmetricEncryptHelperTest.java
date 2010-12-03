@@ -14,7 +14,9 @@ public class SymmetricEncryptHelperTest {
 		String encryptText = SymmetricEncryptHelper.toHexString(SymmetricEncryptHelper.encypt(
 				"ABCDEFGH".getBytes(), value.getBytes()));
 		Assert.assertEquals("37E23121FBA00D576224161E50870CAB", encryptText);
-		Assert.assertEquals("2005122338", new String(SymmetricEncryptHelper.decrypt("ABCDEFGH"
-				.getBytes(), SymmetricEncryptHelper.fromHexString(encryptText))));
+		Assert.assertEquals(
+				"2005122338",
+				new String(SymmetricEncryptHelper.decrypt("ABCDEFGH".getBytes(),
+						SymmetricEncryptHelper.fromHexString(encryptText))));
 	}
 }

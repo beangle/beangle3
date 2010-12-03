@@ -4,7 +4,6 @@
  */
 package org.beangle.model.entity;
 
-
 public interface Type {
 	/**
 	 * Is this type a collection type.

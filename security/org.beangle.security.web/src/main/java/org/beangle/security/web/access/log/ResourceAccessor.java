@@ -6,7 +6,6 @@ package org.beangle.security.web.access.log;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 public interface ResourceAccessor {
 
 	public Accesslog beginAccess(HttpServletRequest request, long time);

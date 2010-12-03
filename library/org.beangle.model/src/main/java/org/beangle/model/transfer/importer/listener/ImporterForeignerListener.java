@@ -78,8 +78,8 @@ public class ImporterForeignerListener extends ItemImporterListener {
 				}
 
 				attr = importer.processAttr(attr);
-				Object nestedForeigner = PropertyUtils.getProperty(entity, StringUtils.substring(
-						attr, 0, attr.lastIndexOf(".")));
+				Object nestedForeigner = PropertyUtils.getProperty(entity,
+						StringUtils.substring(attr, 0, attr.lastIndexOf(".")));
 
 				if (nestedForeigner instanceof Entity<?>) {
 					String className = EntityUtils.getEntityClassName(nestedForeigner.getClass());

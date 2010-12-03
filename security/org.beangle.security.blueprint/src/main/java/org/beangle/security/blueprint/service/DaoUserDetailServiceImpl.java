@@ -30,9 +30,9 @@ public class DaoUserDetailServiceImpl extends BaseServiceImpl implements UserDet
 				authorities[i] = new GrantedAuthorityBean(group);
 				i++;
 			}
-			return new UserToken(user.getId(), user.getName(), user.getFullname(), user
-					.getPassword(), entityDao.get(UserCategory.class, user.getDefaultCategory()
-					.getId()), user.getStatus() > 0, false, false, false, authorities);
+			return new UserToken(user.getId(), user.getName(), user.getFullname(),
+					user.getPassword(), entityDao.get(UserCategory.class, user.getDefaultCategory()
+							.getId()), user.getStatus() > 0, false, false, false, authorities);
 		}
 	}
 

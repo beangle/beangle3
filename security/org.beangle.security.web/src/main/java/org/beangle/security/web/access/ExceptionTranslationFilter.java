@@ -84,8 +84,8 @@ public class ExceptionTranslationFilter extends GenericHttpFilterBean {
 	}
 
 	/**
-	 * If <code>true</code>, indicates that <code>SecurityEnforcementFilter</code> is permitted to
-	 * store the target
+	 * If <code>true</code>, indicates that
+	 * <code>SecurityEnforcementFilter</code> is permitted to store the target
 	 * URL and exception information in the <code>HttpSession</code> (the
 	 * default). In situations where you do not wish to unnecessarily create
 	 * <code>HttpSession</code>s - because the user agent will know the failed

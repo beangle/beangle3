@@ -14,7 +14,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author chaostone
- * @version $Id: MemCategorySessionController.java Nov 21, 2010 3:46:25 PM chaostone $
+ * @version $Id: MemCategorySessionController.java Nov 21, 2010 3:46:25 PM
+ *          chaostone $
  */
 public class MemCategorySessionController implements CategorySessionController {
 

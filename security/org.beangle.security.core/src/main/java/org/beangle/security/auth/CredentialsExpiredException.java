@@ -4,7 +4,6 @@
  */
 package org.beangle.security.auth;
 
-
 /**
  * 凭证过期异常
  * 

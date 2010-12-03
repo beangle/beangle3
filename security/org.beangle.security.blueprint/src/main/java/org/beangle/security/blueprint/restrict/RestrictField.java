@@ -21,7 +21,7 @@ public interface RestrictField extends LongIdEntity {
 	public String getRemark();
 
 	public void setRemark(String remark);
-	
+
 	public String getSource();
 
 	public void setSource(String source);

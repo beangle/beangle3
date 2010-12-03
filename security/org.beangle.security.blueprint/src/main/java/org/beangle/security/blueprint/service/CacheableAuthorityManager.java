@@ -24,8 +24,8 @@ import org.springframework.beans.factory.InitializingBean;
 
 public class CacheableAuthorityManager extends BaseServiceImpl implements AuthorityManager,
 		InitializingBean {
-	
-	//登录入口点
+
+	// 登录入口点
 	protected AuthenticationEntryPoint authenticationEntryPoint;
 	/** 用户组权限 */
 	protected Map<GrantedAuthority, Set<?>> authorities = CollectUtils.newHashMap();
@@ -98,10 +98,10 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 	 */
 	public void refreshCache() {
 		publicResources = authorityService.getResourceNames(Resource.Scope.PUBLIC);
-		if(null!=authenticationEntryPoint && authenticationEntryPoint instanceof UrlEntryPoint){
-			UrlEntryPoint fep=(UrlEntryPoint)authenticationEntryPoint;
+		if (null != authenticationEntryPoint && authenticationEntryPoint instanceof UrlEntryPoint) {
+			UrlEntryPoint fep = (UrlEntryPoint) authenticationEntryPoint;
 			String loginResource = resourceExtractor.extract(fep.getLoginUrl());
-			if(null!=loginResource){
+			if (null != loginResource) {
 				publicResources.add(loginResource);
 			}
 		}
@@ -116,8 +116,9 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 	public void setAuthorityService(AuthorityService authorityService) {
 		this.authorityService = authorityService;
 	}
-	public void setAuthenticationEntryPoint(AuthenticationEntryPoint authenticationEntryPoint){
-		this.authenticationEntryPoint=authenticationEntryPoint;
+
+	public void setAuthenticationEntryPoint(AuthenticationEntryPoint authenticationEntryPoint) {
+		this.authenticationEntryPoint = authenticationEntryPoint;
 	}
 
 }

@@ -20,7 +20,7 @@ import java.util.TreeMap;
  * @since 2.0
  * @version $Id: ThrowableAnalyzer.java 2559 2008-01-30 16:15:02Z luke_t $
  */
-@SuppressWarnings({"rawtypes","unchecked"})
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class ThrowableAnalyzer {
 
 	/**

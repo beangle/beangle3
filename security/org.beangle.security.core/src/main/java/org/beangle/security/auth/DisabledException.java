@@ -4,7 +4,6 @@
  */
 package org.beangle.security.auth;
 
-
 /**
  * 账户禁用异常
  * 

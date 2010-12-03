@@ -21,6 +21,7 @@ public interface MenuProfile extends LongIdEntity {
 	public UserCategory getCategory();
 
 	public void setCategory(UserCategory category);
+
 	/**
 	 * 资源状态
 	 * 

@@ -51,8 +51,8 @@ public interface GroupMember extends LongIdTimeEntity {
 
 	/**
 	 * 成员关系
+	 * 
 	 * @author chaostone
-	 *
 	 */
 	public enum Ship {
 		/**

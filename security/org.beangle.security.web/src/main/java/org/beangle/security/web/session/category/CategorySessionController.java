@@ -12,12 +12,14 @@ import org.beangle.security.core.session.SessionController;
  * 登录会话控制器
  * 
  * @author chaostone
- * @version $Id: ConcurrentSessionController.java Nov 21, 2010 3:44:13 PM chaostone $
+ * @version $Id: ConcurrentSessionController.java Nov 21, 2010 3:44:13 PM
+ *          chaostone $
  */
-public interface CategorySessionController  extends SessionController{
+public interface CategorySessionController extends SessionController {
 
 	/**
 	 * load profile
+	 * 
 	 * @return
 	 */
 	public List<LimitProfile> getProfiles();
@@ -32,6 +34,7 @@ public interface CategorySessionController  extends SessionController{
 
 	/**
 	 * reserve space for given sessionid
+	 * 
 	 * @param category
 	 * @param sessionId
 	 * @return
@@ -40,6 +43,7 @@ public interface CategorySessionController  extends SessionController{
 
 	/**
 	 * left given category
+	 * 
 	 * @param category
 	 */
 	public void left(Object category);

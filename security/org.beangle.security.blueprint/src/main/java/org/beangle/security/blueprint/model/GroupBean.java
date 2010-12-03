@@ -127,7 +127,6 @@ public class GroupBean extends LongIdTimeObject implements Group {
 		this.children = children;
 	}
 
-	
 	public Set<GroupMember> getMembers() {
 		return members;
 	}

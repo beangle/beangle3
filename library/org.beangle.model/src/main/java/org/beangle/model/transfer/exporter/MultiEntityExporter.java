@@ -64,7 +64,8 @@ public class MultiEntityExporter extends AbstractItemExporter {
 				try {
 					propValues[i] = propertyExtractor.getPropertyValue(item, metadata.attrs[i]);
 				} catch (Exception e) {
-					transferResult.addFailure(TransferMessage.ERROR_ATTRS_EXPORT,
+					transferResult.addFailure(
+							TransferMessage.ERROR_ATTRS_EXPORT,
 							"occur in get property :" + metadata.attrs[i] + " and exception:"
 									+ e.getMessage());
 				}

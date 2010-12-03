@@ -82,7 +82,7 @@ public class BeangleTagLibraryTest {
 		loadButAdd(type, Container.DEFAULT_NAME, impl);
 	}
 
-	@SuppressWarnings({"unchecked","rawtypes"})
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	protected void loadButAdd(final Class<?> type, final String name, final Object impl) {
 		loadConfigurationProviders(new StubConfigurationProvider() {
 			@Override

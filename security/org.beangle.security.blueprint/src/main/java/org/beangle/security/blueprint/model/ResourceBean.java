@@ -43,8 +43,8 @@ public class ResourceBean extends LongIdObject implements Resource {
 
 	private Set<UserCategory> categories = CollectUtils.newHashSet();
 
-	private Set<RestrictObject> objects=CollectUtils.newHashSet();
-	
+	private Set<RestrictObject> objects = CollectUtils.newHashSet();
+
 	public String getRemark() {
 		return remark;
 	}

@@ -71,7 +71,7 @@ public interface Group extends LongIdTimeEntity, RestrictionHolder {
 	 * @param authorities
 	 */
 	public void setAuthorities(Set<Authority> authorities);
-	
+
 	/**
 	 * 关联的系统用户
 	 * 

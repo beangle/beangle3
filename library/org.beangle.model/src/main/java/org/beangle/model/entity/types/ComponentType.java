@@ -45,8 +45,8 @@ public class ComponentType extends AbstractType {
 	public Type getPropertyType(String propertyName) {
 		Type type = (Type) propertyTypes.get(propertyName);
 		if (null == type) {
-			Method getMethod = MethodUtils.getAccessibleMethod(componentClass, "get"
-					+ StringUtils.capitalize(propertyName), (Class[]) null);
+			Method getMethod = MethodUtils.getAccessibleMethod(componentClass,
+					"get" + StringUtils.capitalize(propertyName), (Class[]) null);
 			if (null != getMethod) { return new IdentifierType(getMethod.getReturnType()); }
 		}
 		return type;

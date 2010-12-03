@@ -84,6 +84,7 @@ public class ConfigResource {
 
 	/**
 	 * 提供0到多个的global配置方法
+	 * 
 	 * @param resources
 	 */
 	public void setGlobals(Resource[] resources) {

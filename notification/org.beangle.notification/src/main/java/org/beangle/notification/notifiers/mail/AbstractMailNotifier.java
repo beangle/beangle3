@@ -63,8 +63,8 @@ public abstract class AbstractMailNotifier implements Notifier {
 		try {
 			mimeMsg.setSentDate(new Date());
 			MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMsg);
-			messageHelper.setText(buildText(mailConext), Message.HTML.equals(mailConext
-					.getContentType()));
+			messageHelper.setText(buildText(mailConext),
+					Message.HTML.equals(mailConext.getContentType()));
 			String subject = buildSubject(mailConext);
 			messageHelper.setSubject(subject);
 			messageHelper.setFrom(fromMailbox, fromName);

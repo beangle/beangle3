@@ -82,9 +82,9 @@ public class ActivityAction extends SecurityActionSupport {
 		OqlBuilder<SessionActivity> query = OqlBuilder.from(SessionActivity.class,
 				"sessionActivity");
 		addConditions(query);
-		query.select("sessionActivity.name,sessionActivity.fullname,count(*)").groupBy(
-				"sessionActivity.name,sessionActivity.fullname").orderBy(get("orderBy")).limit(
-				getPageLimit());
+		query.select("sessionActivity.name,sessionActivity.fullname,count(*)")
+				.groupBy("sessionActivity.name,sessionActivity.fullname").orderBy(get("orderBy"))
+				.limit(getPageLimit());
 
 		put("loginCountStats", entityDao.search(query));
 		return forward();

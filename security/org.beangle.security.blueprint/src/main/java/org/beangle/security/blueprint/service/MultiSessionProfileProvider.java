@@ -24,8 +24,9 @@ public class MultiSessionProfileProvider extends AbstractBaseDao implements Limi
 		for (CategoryProfile profile : profiles) {
 			UserCategory category = entityDao
 					.get(UserCategory.class, profile.getCategory().getId());
-			profileMap.put(category, new LimitProfile(category, profile.getCapacity(),
-					profile.getInactiveInterval(), profile.getInactiveInterval()));
+			profileMap.put(category,
+					new LimitProfile(category, profile.getCapacity(),
+							profile.getInactiveInterval(), profile.getInactiveInterval()));
 		}
 		return profileMap;
 	}

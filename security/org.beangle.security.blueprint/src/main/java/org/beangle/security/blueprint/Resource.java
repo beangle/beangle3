@@ -79,6 +79,7 @@ public interface Resource extends LongIdEntity {
 	 * @param categories
 	 */
 	public void setCategories(Set<UserCategory> categories);
+
 	/**
 	 * 资源访问范围
 	 * 

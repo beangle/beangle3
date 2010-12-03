@@ -5,6 +5,6 @@
 package org.beangle.security.auth;
 
 public interface AuthenticationDetailsSource<C, T> {
-	
+
 	T buildDetails(C context);
 }

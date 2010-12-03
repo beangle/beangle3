@@ -135,8 +135,8 @@ public class MapConverter {
 		for (final Map.Entry<String, Object> entry : data.entrySet()) {
 			final String attr = entry.getKey();
 			if ((attr.indexOf(prefix + ".") == 0) && (!excludes.contains(attr))) {
-				newParams.put((stripPrefix ? attr.substring(prefix.length() + 1) : attr), get(data,
-						attr));
+				newParams.put((stripPrefix ? attr.substring(prefix.length() + 1) : attr),
+						get(data, attr));
 			}
 		}
 		return newParams;

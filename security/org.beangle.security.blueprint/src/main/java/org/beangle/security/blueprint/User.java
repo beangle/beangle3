@@ -151,6 +151,7 @@ public interface User extends LongIdTimeEntity {
 	 * @param creator
 	 */
 	public void setCreator(User creator);
+
 	/**
 	 * 是否启用
 	 * 

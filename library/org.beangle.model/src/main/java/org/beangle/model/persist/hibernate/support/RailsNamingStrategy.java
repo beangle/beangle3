@@ -26,8 +26,7 @@ import org.slf4j.LoggerFactory;
 public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	private static final long serialVersionUID = -2656604564223895758L;
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(RailsNamingStrategy.class);
+	private static final Logger logger = LoggerFactory.getLogger(RailsNamingStrategy.class);
 	/**
 	 * 是否对表名进行复数化
 	 */
@@ -54,8 +53,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 			tableName = tblPrefix + tableName;
 		}
 		if (tableName.length() > 30) {
-			logger.warn(
-					"{}'s length has greate more then 30, database will not be supported!",
+			logger.warn("{}'s length has greate more then 30, database will not be supported!",
 					tableName);
 		}
 		return tableName;
@@ -110,20 +108,16 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 * @param propertyName
 	 */
 	public String propertyToColumnName(String propertyName) {
-		StringBuilder sb = new StringBuilder(
-				addUnderscores(unqualify(propertyName)));
-		if (!StringUtils.endsWithIgnoreCase(propertyName, "id")
-				&& isManyToOne()) {
+		StringBuilder sb = new StringBuilder(addUnderscores(unqualify(propertyName)));
+		if (!StringUtils.endsWithIgnoreCase(propertyName, "id") && isManyToOne()) {
 			sb.append("_id");
 		}
 		return sb.toString();
 	}
 
-	public String collectionTableName(String ownerEntity,
-			String ownerEntityTable, String associatedEntity,
-			String associatedEntityTable, String propertyName) {
-		return tableName(ownerEntityTable + '_')
-				+ addUnderscores(unqualify(propertyName));
+	public String collectionTableName(String ownerEntity, String ownerEntityTable,
+			String associatedEntity, String associatedEntityTable, String propertyName) {
+		return tableName(ownerEntityTable + '_') + addUnderscores(unqualify(propertyName));
 	}
 
 	/**
@@ -136,14 +130,10 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	/**
 	 * Return the property name or propertyTableName
 	 */
-	public String foreignKeyColumnName(String propertyName,
-			String propertyEntityName, String propertyTableName,
-			String referencedColumnName) {
-		String header = null == propertyName ? propertyTableName
-				: unqualify(propertyName);
-		if (header == null) {
-			throw new AssertionFailure("NamingStrategy not properly filled");
-		}
+	public String foreignKeyColumnName(String propertyName, String propertyEntityName,
+			String propertyTableName, String referencedColumnName) {
+		String header = null == propertyName ? propertyTableName : unqualify(propertyName);
+		if (header == null) { throw new AssertionFailure("NamingStrategy not properly filled"); }
 		return columnName(header) + "_" + referencedColumnName;
 	}
 
@@ -153,9 +143,8 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 * otherwise the concatenation of owner entity table and the unqualified
 	 * property name
 	 */
-	public String logicalCollectionTableName(String tableName,
-			String ownerEntityTable, String associatedEntityTable,
-			String propertyName) {
+	public String logicalCollectionTableName(String tableName, String ownerEntityTable,
+			String associatedEntityTable, String propertyName) {
 		if (tableName == null) {
 			// use of a stringbuilder to workaround a JDK bug
 			return new StringBuilder(ownerEntityTable)
@@ -171,10 +160,10 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 * Return the column name if explicit or the concatenation of the property
 	 * name and the referenced column
 	 */
-	public String logicalCollectionColumnName(String columnName,
-			String propertyName, String referencedColumn) {
-		return StringHelper.isNotEmpty(columnName) ? columnName
-				: unqualify(propertyName) + "_" + referencedColumn;
+	public String logicalCollectionColumnName(String columnName, String propertyName,
+			String referencedColumn) {
+		return StringHelper.isNotEmpty(columnName) ? columnName : unqualify(propertyName) + "_"
+				+ referencedColumn;
 	}
 
 	public Pluralizer getPluralizer() {
@@ -232,9 +221,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 		StackTraceElement[] trace = Thread.currentThread().getStackTrace();
 		if (trace.length >= 7) {
 			for (int i = 5; i <= 7; i++) {
-				if (trace[i].getMethodName().equals("bindManyToOne")) {
-					return true;
-				}
+				if (trace[i].getMethodName().equals("bindManyToOne")) { return true; }
 			}
 		}
 		return false;

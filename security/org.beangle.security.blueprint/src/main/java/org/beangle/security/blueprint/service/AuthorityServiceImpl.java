@@ -130,13 +130,13 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 		params.clear();
 		for (final Group group : groups) {
 			params.put("groupId", group.getId());
-			List<Resource> groupResources=entityDao.searchHQLQuery(hql, params);
+			List<Resource> groupResources = entityDao.searchHQLQuery(hql, params);
 			resources.addAll(groupResources);
 		}
 		return CollectUtils.newArrayList(resources);
 	}
 
-	@SuppressWarnings({"unchecked","rawtypes"})
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Set<String> getResourceNames(int scope) {
 		OqlBuilder query = OqlBuilder.from(Resource.class, "resource");
 		query.where("resource.scope=:scope and resource.enabled=true", Integer.valueOf(scope));
@@ -147,7 +147,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 	/**
 	 * 找到该组内激活的资源id
 	 */
-	@SuppressWarnings({"unchecked","rawtypes"})
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Set<String> getResourceNamesByGroup(String group) {
 		String hql = "select m.name from Group as r join r.authorities as a"
 				+ " join a.resource as m where  r.name = :groupName and m.enabled = true";
@@ -182,7 +182,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 		entityDao.saveOrUpdate(group);
 	}
 
-	@SuppressWarnings({"unchecked","rawtypes"})
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void updateState(Long[] resourceIds, boolean isEnabled) {
 		OqlBuilder query = OqlBuilder.from(Resource.class, "resource");
 		query.where("resource.id in (:ids)", resourceIds);
@@ -208,6 +208,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 		params.put("groupId", group.getId());
 		return entityDao.searchNamedQuery("getAuthorities", params, false);
 	}
+
 	/**
 	 * 查询用户组对应的模块
 	 */

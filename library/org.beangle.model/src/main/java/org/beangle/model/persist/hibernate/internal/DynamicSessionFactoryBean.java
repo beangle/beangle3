@@ -131,8 +131,8 @@ public class DynamicSessionFactoryBean extends LocalSessionFactoryBean implement
 	public void logService() {
 		for (Bundle bundle : context.getBundles()) {
 			if (null != bundle.getRegisteredServices() && bundle.getRegisteredServices().length > 0) {
-				logger.debug("============================== in bundle {}", bundle
-						.getSymbolicName());
+				logger.debug("============================== in bundle {}",
+						bundle.getSymbolicName());
 				int i = 0;
 				for (ServiceReference sr : bundle.getRegisteredServices()) {
 					// Object s = context.getService(sr);
@@ -152,8 +152,9 @@ public class DynamicSessionFactoryBean extends LocalSessionFactoryBean implement
 		super.afterPropertiesSet();
 		if (null != context) {
 			context.addBundleListener(this);
-			loader = new ChainedClassLoader(new ClassLoader[] { BundleDelegatingClassLoader
-					.createBundleClassLoaderFor(context.getBundle()) });
+			loader = new ChainedClassLoader(
+					new ClassLoader[] { BundleDelegatingClassLoader
+							.createBundleClassLoaderFor(context.getBundle()) });
 
 			boolean added = false;
 			for (Bundle bundle : context.getBundles()) {

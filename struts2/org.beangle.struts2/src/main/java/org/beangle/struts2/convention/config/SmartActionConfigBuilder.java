@@ -52,8 +52,7 @@ import com.opensymphony.xwork2.util.finder.Test;
  * </p>
  */
 public class SmartActionConfigBuilder implements ActionConfigBuilder {
-	private static final Logger logger = LoggerFactory
-			.getLogger(SmartActionConfigBuilder.class);
+	private static final Logger logger = LoggerFactory.getLogger(SmartActionConfigBuilder.class);
 	private final Configuration configuration;
 	private final ObjectFactory objectFactory;
 	private final String defaultParentPackage;
@@ -107,8 +106,9 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 		initReloadClassLoader();
 		@SuppressWarnings("rawtypes")
 		Set<Class> classes = findActions();
-		int newActions=buildConfiguration(classes);
-		logger.info("Action scan completely,create {} action in {} ms", newActions,System.currentTimeMillis() - start);
+		int newActions = buildConfiguration(classes);
+		logger.info("Action scan completely,create {} action in {} ms", newActions,
+				System.currentTimeMillis() - start);
 	}
 
 	protected ClassLoaderInterface getClassLoaderInterface() {
@@ -188,7 +188,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 	@SuppressWarnings("rawtypes")
 	protected int buildConfiguration(Set<Class> classes) {
 		Map<String, PackageConfig.Builder> packageConfigs = new HashMap<String, PackageConfig.Builder>();
-		int createCount=0;
+		int createCount = 0;
 		for (Class<?> actionClass : classes) {
 			// Skip classes that can't be instantiated
 			if (cannotInstantiate(actionClass)) {
@@ -214,7 +214,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 				Action action = actionBuilder.build(actionClass.getName());
 				PackageConfig.Builder packageConfig = getPackageConfig(profile, packageConfigs,
 						action, actionClass);
-				if(createActionConfig(packageConfig, action, actionClass, beanNames[0])){
+				if (createActionConfig(packageConfig, action, actionClass, beanNames[0])) {
 					createCount++;
 				}
 				break;
@@ -222,7 +222,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 				logger.warn("Duplicated action definition for {}", actionClass);
 			}
 		}
-		createCount+=buildIndexActions(packageConfigs);
+		createCount += buildIndexActions(packageConfigs);
 		// Add the new actions to the configuration
 		Set<String> packageNames = packageConfigs.keySet();
 		for (String packageName : packageNames) {
@@ -262,8 +262,8 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 		}
 		if (create) {
 			pkgCfg.addActionConfig(actionName, actionConfig.build());
-			logger.debug("Add {}/{} for {} in {}", new Object[] { pkgCfg.getNamespace(), actionName,
-					actionClass.getName(), pkgCfg.getName() });
+			logger.debug("Add {}/{} for {} in {}", new Object[] { pkgCfg.getNamespace(),
+					actionName, actionClass.getName(), pkgCfg.getName() });
 		}
 		return create;
 	}
@@ -318,7 +318,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 	 *            Used to store the actions.
 	 */
 	protected int buildIndexActions(Map<String, PackageConfig.Builder> packageConfigs) {
-		int createCount=0;
+		int createCount = 0;
 		Map<String, PackageConfig.Builder> byNamespace = new HashMap<String, PackageConfig.Builder>();
 		Collection<PackageConfig.Builder> values = packageConfigs.values();
 		for (PackageConfig.Builder packageConfig : values) {

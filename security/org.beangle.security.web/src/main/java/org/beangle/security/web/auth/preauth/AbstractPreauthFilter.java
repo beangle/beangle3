@@ -28,12 +28,14 @@ import org.springframework.beans.factory.InitializingBean;
  * authentication requests. Subclasses must implement the
  * getPreAuthenticatedPrincipal() and getPreAuthenticatedCredentials() methods.
  * <p>
- * By default, the filter chain will proceed when an authentication attempt fails in order to allow
- * other authentication mechanisms to process the request. To reject the credentials immediately,
- * set the <tt>continueFilterChainOnUnsuccessfulAuthentication</tt> flag to false. The exception
- * raised by the <tt>AuthenticationManager</tt> will the be re-thrown. Note that this will not
- * affect cases where the principal returned by {@link #getPreauthAuthentication} is null, when the
- * chain will still proceed as normal.
+ * By default, the filter chain will proceed when an authentication attempt
+ * fails in order to allow other authentication mechanisms to process the
+ * request. To reject the credentials immediately, set the
+ * <tt>continueFilterChainOnUnsuccessfulAuthentication</tt> flag to false. The
+ * exception raised by the <tt>AuthenticationManager</tt> will the be re-thrown.
+ * Note that this will not affect cases where the principal returned by
+ * {@link #getPreauthAuthentication} is null, when the chain will still proceed
+ * as normal.
  */
 public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implements
 		InitializingBean {

@@ -4,7 +4,6 @@
  */
 package org.beangle.security.cas.auth;
 
-
 /**
  * Implementation of @link {@link StatelessTicketCache} that has no backing
  * cache. Useful in instances where storing of tickets for stateless session

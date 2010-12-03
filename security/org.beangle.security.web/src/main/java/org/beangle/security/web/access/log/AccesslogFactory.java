@@ -6,7 +6,6 @@ package org.beangle.security.web.access.log;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 public class AccesslogFactory {
 
 	public static Accesslog getLog(HttpServletRequest request) {

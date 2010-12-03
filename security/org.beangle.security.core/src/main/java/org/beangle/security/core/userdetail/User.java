@@ -23,7 +23,8 @@ public class User implements UserDetail {
 
 	/**
 	 * Construct the <code>User</code> with the details required by
-	 * {@link org.beangle.security.auth.dao.providers.dao.DaoAuthenticationProvider} .
+	 * {@link org.beangle.security.auth.dao.providers.dao.DaoAuthenticationProvider}
+	 * .
 	 * 
 	 * @param username
 	 *            the username presented to the

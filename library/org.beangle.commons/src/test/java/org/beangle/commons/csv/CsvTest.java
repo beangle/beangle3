@@ -14,8 +14,8 @@ public class CsvTest {
 
 	public void testFormat() {
 		CsvFormat.Builder builder = new CsvFormat.Builder();
-		builder.separator(CsvConstants.COMMA).separator(CsvConstants.SEMICOLON).delimiter(
-				CsvConstants.QUOTE);
+		builder.separator(CsvConstants.COMMA).separator(CsvConstants.SEMICOLON)
+				.delimiter(CsvConstants.QUOTE);
 
 		Csv csv = new Csv(builder.build());
 		assertTrue(csv.getFormat().isSeparator(CsvConstants.COMMA));

@@ -69,8 +69,9 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 		if (limit.getPageNo() == 1) {
 			return query(limitSql, new Object[] { limit.getPageSize() });
 		} else {
-			return query(limitSql, new Object[] { limit.getPageNo() * limit.getPageSize(),
-					(limit.getPageNo() - 1) * limit.getPageSize() });
+			return query(limitSql,
+					new Object[] { limit.getPageNo() * limit.getPageSize(),
+							(limit.getPageNo() - 1) * limit.getPageSize() });
 		}
 	}
 

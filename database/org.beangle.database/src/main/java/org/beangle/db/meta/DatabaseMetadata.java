@@ -70,12 +70,12 @@ public class DatabaseMetadata {
 				try {
 					if (meta.storesUpperCaseQuotedIdentifiers()
 							&& meta.storesUpperCaseIdentifiers()) {
-						rs = meta.getTables(StringUtils.upperCase(catalog), StringUtils
-								.upperCase(schema), StringUtils.upperCase(name), TYPES);
+						rs = meta.getTables(StringUtils.upperCase(catalog),
+								StringUtils.upperCase(schema), StringUtils.upperCase(name), TYPES);
 					} else if (meta.storesLowerCaseQuotedIdentifiers()
 							&& meta.storesLowerCaseIdentifiers()) {
-						rs = meta.getTables(StringUtils.lowerCase(catalog), StringUtils
-								.lowerCase(schema), StringUtils.lowerCase(name), TYPES);
+						rs = meta.getTables(StringUtils.lowerCase(catalog),
+								StringUtils.lowerCase(schema), StringUtils.lowerCase(name), TYPES);
 					} else {
 						rs = meta.getTables(catalog, schema, name, TYPES);
 					}
@@ -106,12 +106,12 @@ public class DatabaseMetadata {
 			ResultSet rs = null;
 			try {
 				if (meta.storesUpperCaseQuotedIdentifiers() && meta.storesUpperCaseIdentifiers()) {
-					rs = meta.getTables(StringUtils.upperCase(catalog), StringUtils
-							.upperCase(schema), null, TYPES);
+					rs = meta.getTables(StringUtils.upperCase(catalog),
+							StringUtils.upperCase(schema), null, TYPES);
 				} else if (meta.storesLowerCaseQuotedIdentifiers()
 						&& meta.storesLowerCaseIdentifiers()) {
-					rs = meta.getTables(StringUtils.lowerCase(catalog), StringUtils
-							.lowerCase(schema), null, TYPES);
+					rs = meta.getTables(StringUtils.lowerCase(catalog),
+							StringUtils.lowerCase(schema), null, TYPES);
 				} else {
 					rs = meta.getTables(catalog, schema, null, TYPES);
 				}

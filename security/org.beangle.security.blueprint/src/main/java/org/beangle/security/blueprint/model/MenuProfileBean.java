@@ -24,7 +24,7 @@ public class MenuProfileBean extends LongIdObject implements MenuProfile {
 	private UserCategory category;
 
 	private boolean enabled;
-	
+
 	public String getName() {
 		return name;
 	}

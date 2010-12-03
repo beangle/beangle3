@@ -37,17 +37,20 @@ import org.springframework.util.Assert;
  * Filter required by concurrent session handling package.
  * <p>
  * This filter performs two functions. First, it calls
- * {@link org.springframework.security.core.session.SessionRegistry#refreshLastRequest(String)} for
- * each request so that registered sessions always have a correct "last update" date/time. Second,
- * it retrieves a {@link org.springframework.security.core.session.SessionInformation} from the
- * <code>SessionRegistry</code> for each request and checks if the session has been marked as
- * expired. If it has been marked as expired, the configured logout handlers will be called (as
- * happens with {@link org.springframework.security.web.auth.logout.LogoutFilter}),
- * typically to invalidate the session. A redirect to the expiredURL specified will be performed,
- * and the session invalidation will cause an
- * {@link org.springframework.security.web.session.HttpSessionDestroyedEvent} to be published via
- * the {@link org.springframework.security.web.session.HttpSessionEventPublisher} registered in
- * <code>web.xml</code>.
+ * {@link org.springframework.security.core.session.SessionRegistry#refreshLastRequest(String)}
+ * for each request so that registered sessions always have a correct
+ * "last update" date/time. Second, it retrieves a
+ * {@link org.springframework.security.core.session.SessionInformation} from the
+ * <code>SessionRegistry</code> for each request and checks if the session has
+ * been marked as expired. If it has been marked as expired, the configured
+ * logout handlers will be called (as happens with
+ * {@link org.springframework.security.web.auth.logout.LogoutFilter}), typically
+ * to invalidate the session. A redirect to the expiredURL specified will be
+ * performed, and the session invalidation will cause an
+ * {@link org.springframework.security.web.session.HttpSessionDestroyedEvent} to
+ * be published via the
+ * {@link org.springframework.security.web.session.HttpSessionEventPublisher}
+ * registered in <code>web.xml</code>.
  * </p>
  * 
  * @author chaostone
@@ -61,8 +64,8 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 	@Override
 	protected void initFilterBean() {
 		Assert.notNull(sessionRegistry, "SessionRegistry required");
-		Assert.isTrue(expiredUrl == null || RedirectUtils.isValidRedirectUrl(expiredUrl), expiredUrl
-				+ " isn't a valid redirect URL");
+		Assert.isTrue(expiredUrl == null || RedirectUtils.isValidRedirectUrl(expiredUrl),
+				expiredUrl + " isn't a valid redirect URL");
 	}
 
 	@Override

@@ -283,7 +283,8 @@ public interface EntityDao {
 	public void saveOrUpdate(String entityName, Collection<?> entities);
 
 	/**
-	 * Update entity's property value describe in upateParams where attr in values.
+	 * Update entity's property value describe in upateParams where attr in
+	 * values.
 	 * 
 	 * @param entityClass
 	 * @param attr

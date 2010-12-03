@@ -14,6 +14,7 @@ public interface DataProvider {
 
 	/**
 	 * extract data from source
+	 * 
 	 * @param <T>
 	 * @param type
 	 * @param source
@@ -23,13 +24,15 @@ public interface DataProvider {
 
 	/**
 	 * transform object to String
+	 * 
 	 * @param objects
 	 * @return
 	 */
 	public String asString(List<?> objects);
-	
+
 	/**
 	 * provider's unique name
+	 * 
 	 * @return
 	 */
 	public String getName();

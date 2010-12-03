@@ -21,7 +21,8 @@ import org.springframework.context.ApplicationListener;
 
 /**
  * @author chaostone
- * @version $Id: CategorySessionRegistryImpl.java Nov 21, 2010 3:20:36 PM chaostone $
+ * @version $Id: CategorySessionRegistryImpl.java Nov 21, 2010 3:20:36 PM
+ *          chaostone $
  */
 public class CategorySessionRegistry implements SessionRegistry, InitializingBean,
 		ApplicationListener<SessionDestroyedEvent> {

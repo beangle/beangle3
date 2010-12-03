@@ -162,8 +162,9 @@ public abstract class AbstractSecurityInterceptor implements InitializingBean {
 	/**
 	 * Checks the current authentication token and passes it to the
 	 * AuthenticationManager if
-	 * {@link org.beangle.security.core.Authentication#isAuthenticated()} returns
-	 * false or the property <tt>alwaysReauthenticate</tt> has been set to true.
+	 * {@link org.beangle.security.core.Authentication#isAuthenticated()}
+	 * returns false or the property <tt>alwaysReauthenticate</tt> has been set
+	 * to true.
 	 * 
 	 * @return an authenticated <tt>Authentication</tt> object.
 	 */

@@ -20,13 +20,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ConcurrentSessionStrategy implements SessionStrategy {
-	
+
 	private final Logger logger = LoggerFactory.getLogger(ConcurrentSessionStrategy.class);
 
 	protected SessionRegistry sessionRegistry;
 
 	protected SessionController sessionController;
-	
+
 	private boolean exceptionIfMaximumExceeded = false;
 
 	public void onAuthentication(Authentication authentication, HttpServletRequest request,

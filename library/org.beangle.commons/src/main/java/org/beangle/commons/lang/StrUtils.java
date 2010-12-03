@@ -127,32 +127,29 @@ public final class StrUtils {
 	public static String unCamel(String str) {
 		return unCamel(str, '-', true);
 	}
-	
-	public static String[] split(String target){
-		return split(target,new char[]{',',';','\r','\n',' '});
+
+	public static String[] split(String target) {
+		return split(target, new char[] { ',', ';', '\r', '\n', ' ' });
 	}
-	
-	public static String[] split(String target,char[] separatorChars){
-		if(null==target){
-			return new String[0];
-		}
-		char[] sb=target.toCharArray();
-		for(char separator:separatorChars){
-			if(separator!=',')
-			for(int i=0;i<sb.length;i++){
-				if(sb[i]==separator){
-					sb[i]= ',';
+
+	public static String[] split(String target, char[] separatorChars) {
+		if (null == target) { return new String[0]; }
+		char[] sb = target.toCharArray();
+		for (char separator : separatorChars) {
+			if (separator != ',') for (int i = 0; i < sb.length; i++) {
+				if (sb[i] == separator) {
+					sb[i] = ',';
 				}
 			}
 		}
-		String [] targets=StringUtils.split(new String(sb), ',');
-		List<String> list=CollectUtils.newArrayList();
-		for(String one:targets){
-			if(StringUtils.isNotBlank(one)){
+		String[] targets = StringUtils.split(new String(sb), ',');
+		List<String> list = CollectUtils.newArrayList();
+		for (String one : targets) {
+			if (StringUtils.isNotBlank(one)) {
 				list.add(one.trim());
 			}
 		}
-		String [] rs=new String[list.size()];
+		String[] rs = new String[list.size()];
 		list.toArray(rs);
 		return rs;
 	}

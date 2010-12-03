@@ -94,6 +94,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 
 	/**
 	 * 获取数据限制的某个属性的值
+	 * 
 	 * @param restriction
 	 * @param field
 	 * @return
@@ -141,11 +142,12 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 				return selected;
 			}
 			@SuppressWarnings("unchecked")
-			final Set<T> paramValue = (Set<T>) getValue(restriction,param);
+			final Set<T> paramValue = (Set<T>) getValue(restriction, param);
 			for (T obj : values) {
 				try {
-//					if (paramValue.contains(PropertyUtils.getProperty(obj, param.getEditor()
-//							.getIdProperty()))) {
+					// if (paramValue.contains(PropertyUtils.getProperty(obj,
+					// param.getEditor()
+					// .getIdProperty()))) {
 					if (paramValue.contains(obj)) {
 						selected.add(obj);
 					}
@@ -157,8 +159,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		return selected;
 	}
 
-	public void apply(OqlBuilder<?> query,
-			Collection<? extends Restriction> restrictions) {
+	public void apply(OqlBuilder<?> query, Collection<? extends Restriction> restrictions) {
 		String prefix = "(";
 		StringBuilder conBuffer = new StringBuilder();
 		List<Object> paramValues = CollectUtils.newArrayList();
@@ -171,7 +172,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 				continue;
 			}
 			// FIXME pattern.getObject().getType().equals(anObject))
-//			if(pattern.getObject().getType().equals(anObject))
+			// if(pattern.getObject().getType().equals(anObject))
 			String patternContent = pattern.getContent();
 			patternContent = StringUtils.replace(patternContent, "{alias}", query.getAlias());
 			String[] contents = StringUtils.split(
@@ -191,7 +192,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 						} else {
 							content = StringUtils.replace(content, ":" + param.getName(), ":"
 									+ param.getName() + index);
-							paramValues.add(getValue(restriction,param));
+							paramValues.add(getValue(restriction, param));
 						}
 					} else {
 						throw new RuntimeException(paramName + " had not been initialized");

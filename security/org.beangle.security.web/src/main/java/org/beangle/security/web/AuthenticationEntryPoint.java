@@ -19,8 +19,8 @@ public interface AuthenticationEntryPoint {
 	 * <p>
 	 * <code>ExceptionTranslationFilter</code> will populate the
 	 * <code>HttpSession</code> attribute named
-	 * <code>AbstractProcessingFilter.SECURITY_SAVED_REQUEST_KEY</code>
-	 * with the requested target URL before calling this method.
+	 * <code>AbstractProcessingFilter.SECURITY_SAVED_REQUEST_KEY</code> with the
+	 * requested target URL before calling this method.
 	 * </p>
 	 * <p>
 	 * Implementations should modify the headers on the

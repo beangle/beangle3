@@ -28,8 +28,8 @@ public class StrUtilsTest {
 	public void testSplit() {
 		String target = " abc ,; def ,;; ghi\r\n opq";
 		String[] codes = StrUtils.split(target);
-		assertEquals(codes.length,4);
-		assertEquals(codes[3],"opq");
+		assertEquals(codes.length, 4);
+		assertEquals(codes[3], "opq");
 	}
-	
+
 }

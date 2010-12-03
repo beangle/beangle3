@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FileWagon implements Wagon {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(FileWagon.class);
 
 	public void transfer(String from, String to) {

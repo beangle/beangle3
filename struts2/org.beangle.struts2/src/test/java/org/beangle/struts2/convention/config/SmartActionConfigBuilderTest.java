@@ -54,8 +54,8 @@ public class SmartActionConfigBuilderTest {
 		// mockContainer.setResultMapBuilder(resultMapBuilder);
 		// mockContainer.setConventionsService(new ConventionsServiceImpl(""));
 
-		SmartActionConfigBuilder builder = new SmartActionConfigBuilder(
-				configuration, mockContainer, of);
+		SmartActionConfigBuilder builder = new SmartActionConfigBuilder(configuration,
+				mockContainer, of);
 		builder.setActionBuilder(actionNameBuilder);
 		builder.buildActionConfigs();
 		Set<String> names = configuration.getPackageConfigNames();

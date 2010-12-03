@@ -32,7 +32,7 @@ public class LoginAction extends BaseAction implements ServletRequestAware {
 	private AuthenticationManager authenticationManager;
 
 	private SessionStrategy sessionStrategy;
-	
+
 	public static final String LOGIN_FAILURE_COUNT = "loginFailureCount";
 
 	public String index() {
@@ -75,12 +75,11 @@ public class LoginAction extends BaseAction implements ServletRequestAware {
 		String password = get("password");
 		if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) { return "failure"; }
 		username = username.trim();
-		UsernamePasswordAuthentication auth= new UsernamePasswordAuthentication(username,
-				password);
+		UsernamePasswordAuthentication auth = new UsernamePasswordAuthentication(username, password);
 		auth.setDetails(authenticationDetailsSource.buildDetails(request));
-		Authentication authRequest =auth;
+		Authentication authRequest = auth;
 		try {
-			authRequest= authenticationManager.authenticate(authRequest);
+			authRequest = authenticationManager.authenticate(authRequest);
 			sessionStrategy.onAuthentication(authRequest, request, null);
 			SecurityContextHolder.getContext().setAuthentication(authRequest);
 		} catch (AuthenticationException e) {

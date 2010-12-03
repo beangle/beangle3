@@ -14,10 +14,11 @@ import org.beangle.model.pojo.LongIdEntity;
  * 
  * @author chaostone
  */
-public interface Menu extends LongIdEntity,Comparable<Menu> {
+public interface Menu extends LongIdEntity, Comparable<Menu> {
 
 	/**
 	 * 菜单代码
+	 * 
 	 * @return
 	 */
 	public String getCode();

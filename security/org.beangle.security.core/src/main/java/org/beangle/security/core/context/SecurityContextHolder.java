@@ -12,11 +12,11 @@ import java.lang.reflect.Constructor;
  * Associates a given {@link SecurityContext} with the current execution thread.
  * <p>
  * This class provides a series of static methods that delegate to an instance
- * of {@link org.beangle.security.core.context.SecurityContextHolderStrategy} . The
- * purpose of the class is to provide a convenient way to specify the strategy
- * that should be used for a given JVM. This is a JVM-wide setting, since
- * everything in this class is <code>static</code> to facilitate ease of use in
- * calling code.
+ * of {@link org.beangle.security.core.context.SecurityContextHolderStrategy} .
+ * The purpose of the class is to provide a convenient way to specify the
+ * strategy that should be used for a given JVM. This is a JVM-wide setting,
+ * since everything in this class is <code>static</code> to facilitate ease of
+ * use in calling code.
  * </p>
  * <p>
  * To specify which strategy should be used, you must provide a mode setting. A

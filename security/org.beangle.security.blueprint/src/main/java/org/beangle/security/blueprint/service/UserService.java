@@ -59,13 +59,16 @@ public interface UserService {
 	 * @return
 	 */
 	public List<Group> getGroups(User user, GroupMember.Ship ship);
+
 	/**
 	 * 查找关联组关系
+	 * 
 	 * @param user
 	 * @param ship
 	 * @return
 	 */
 	public List<GroupMember> getGroupMembers(User user, GroupMember.Ship ship);
+
 	/**
 	 * 设置用户状态
 	 * 

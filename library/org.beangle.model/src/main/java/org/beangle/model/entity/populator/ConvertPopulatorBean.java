@@ -56,8 +56,8 @@ public class ConvertPopulatorBean implements Populator {
 				Type propertyType = type.getPropertyType(attrs[index]);
 				// 初始化
 				if (null == propertyType) {
-					logger.error("Cannot find property type [{}] of {}", attrs[index], propObj
-							.getClass());
+					logger.error("Cannot find property type [{}] of {}", attrs[index],
+							propObj.getClass());
 					throw new RuntimeException("Cannot find property type " + attrs[index] + " of "
 							+ propObj.getClass().getName());
 				}

@@ -7,13 +7,14 @@ package org.beangle.security.core.session;
 import java.util.Date;
 
 import org.beangle.security.core.Authentication;
+
 /**
  * 用户会话信息
+ * 
  * @author chaostone
- *
  */
 public class SessionInfo {
-	
+
 	private static final long serialVersionUID = -4828041170356897582L;
 
 	/** login */

@@ -63,9 +63,11 @@ public class DashboardAction extends SecurityActionSupport {
 		put("resourceStat", entityDao.search(resourceQuery));
 
 		// stat pattern and restriction
-		put("patternStat", entityDao.search(OqlBuilder.from(RestrictPattern.class, "pattern").select(
-				"count(*)")));
-		put("paramStat", entityDao.search(OqlBuilder.from(RestrictField.class, "param").select("count(*)")));
+		put("patternStat",
+				entityDao.search(OqlBuilder.from(RestrictPattern.class, "pattern").select(
+						"count(*)")));
+		put("paramStat",
+				entityDao.search(OqlBuilder.from(RestrictField.class, "param").select("count(*)")));
 		return forward();
 	}
 

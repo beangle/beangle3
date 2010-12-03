@@ -18,9 +18,9 @@ import org.beangle.security.core.AuthenticationException;
  * Login forms must present two parameters to this filter: a username and
  * password. The default parameter names to use are contained in the static
  * fields {@link #SECURITY_FORM_USERNAME_KEY} and
- * {@link #SECURITY_FORM_PASSWORD_KEY}. The parameter names can also be
- * changed by setting the <tt>usernameParameter</tt> and
- * <tt>passwordParameter</tt> properties.
+ * {@link #SECURITY_FORM_PASSWORD_KEY}. The parameter names can also be changed
+ * by setting the <tt>usernameParameter</tt> and <tt>passwordParameter</tt>
+ * properties.
  * 
  * @author chaostone
  */

@@ -188,8 +188,8 @@ public class RestrictionAction extends SecurityActionSupport {
 		}
 		populate(Params.sub("restriction"), restriction, entityName);
 		if (null == restrictionId) {
-			restriction.setPattern((RestrictPattern) entityDao.get(RestrictPattern.class, restriction.getPattern()
-					.getId()));
+			restriction.setPattern((RestrictPattern) entityDao.get(RestrictPattern.class,
+					restriction.getPattern().getId()));
 		}
 		return restriction;
 	}

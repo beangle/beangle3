@@ -4,11 +4,10 @@
  */
 package org.beangle.security.core.session;
 
-
 /**
  * Over max session limit Exception
+ * 
  * @author chaostone
- *
  */
 public class OvermaxSessionException extends SessionException {
 	private static final long serialVersionUID = -2827989849698493720L;

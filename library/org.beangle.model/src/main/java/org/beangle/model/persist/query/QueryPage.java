@@ -26,7 +26,7 @@ public class QueryPage<T> extends AbstractQueryPage<T> {
 
 	public Page<T> moveTo(int pageNo) {
 		query.getLimit().setPageNo(pageNo);
-		SinglePage<T> datas=(SinglePage<T>)entityDao.search(query);
+		SinglePage<T> datas = (SinglePage<T>) entityDao.search(query);
 		setPageData(datas);
 		return this;
 	}

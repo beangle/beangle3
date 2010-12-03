@@ -68,20 +68,22 @@ public final class RequestUtils {
 
 	/**
 	 * FIXME just for firefox
+	 * 
 	 * @param request
 	 * @return
 	 */
 	public static Useragent getUserAgent(HttpServletRequest request) {
 		StringBuilder head = new StringBuilder(request.getHeader("USER-AGENT"));
-		//delete char in (),then split
-		int start=head.indexOf("(");
-		int end=head.indexOf(")",start);
-		head.delete(start, end+1);
-		//String remark=head.substring(start, end);
-		String[] headers=StrUtils.split(head.toString());
-		String browser=headers[headers.length-1];
-		String os=headers[headers.length-2];
-		//Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.12) Gecko/20101027 Fedora/3.6.12-1.fc14 Firefox/3.6.12
+		// delete char in (),then split
+		int start = head.indexOf("(");
+		int end = head.indexOf(")", start);
+		head.delete(start, end + 1);
+		// String remark=head.substring(start, end);
+		String[] headers = StrUtils.split(head.toString());
+		String browser = headers[headers.length - 1];
+		String os = headers[headers.length - 2];
+		// Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.12) Gecko/20101027
+		// Fedora/3.6.12-1.fc14 Firefox/3.6.12
 		Useragent agent = new Useragent();
 		agent.setIp(getIpAddr(request));
 		agent.setOs(StringUtils.substringBefore(os, "/"));

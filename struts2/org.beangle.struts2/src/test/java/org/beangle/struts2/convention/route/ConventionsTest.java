@@ -68,8 +68,8 @@ public class ConventionsTest {
 	public void testGetSimpleName() {
 		Profile profile = new Profile();
 		profile.setActionSuffix("Action");
-		assertEquals("org/beangle/struts2/convention/example/action/anotherNested/third", profile
-				.getSimpleName(ThirdAction.class.getName()));
+		assertEquals("org/beangle/struts2/convention/example/action/anotherNested/third",
+				profile.getSimpleName(ThirdAction.class.getName()));
 
 	}
 }

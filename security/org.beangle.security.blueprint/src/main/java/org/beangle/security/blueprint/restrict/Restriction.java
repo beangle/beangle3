@@ -32,12 +32,14 @@ public interface Restriction extends LongIdEntity, Cloneable {
 
 	/**
 	 * 限制模式
+	 * 
 	 * @return
 	 */
 	public RestrictPattern getPattern();
 
 	/**
 	 * 设置限制模式
+	 * 
 	 * @param pattern
 	 */
 	public void setPattern(RestrictPattern pattern);
@@ -51,6 +53,7 @@ public interface Restriction extends LongIdEntity, Cloneable {
 
 	/**
 	 * 设置限制项
+	 * 
 	 * @param items
 	 */
 	public void setItems(Map<Long, String> items);

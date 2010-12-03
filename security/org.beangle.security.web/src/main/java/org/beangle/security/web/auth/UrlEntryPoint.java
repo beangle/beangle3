@@ -6,7 +6,6 @@ package org.beangle.security.web.auth;
 
 import org.beangle.security.web.AuthenticationEntryPoint;
 
-
 /**
  * @author chaostone
  * @version $Id: UrlAuthenticationEntryPoint.java Nov 6, 2010 11:48:34 AM

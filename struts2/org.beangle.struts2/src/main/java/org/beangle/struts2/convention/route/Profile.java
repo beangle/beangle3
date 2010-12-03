@@ -295,10 +295,10 @@ public class Profile implements Comparable<Profile> {
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("name", name)
 				.append("actionPattern", actionPattern).append("actionSuffix", actionSuffix)
-				.append("actionScan", actionScan).append("viewPath", viewPath).append(
-						"viewPathStyle", viewPathStyle).append("viewExtension", viewExtension)
-				.append("uriPath", uriPath).append("uriPathStyle", uriPathStyle).append(
-						"uriExtension", uriExtension).append("defaultMethod", defaultMethod)
+				.append("actionScan", actionScan).append("viewPath", viewPath)
+				.append("viewPathStyle", viewPathStyle).append("viewExtension", viewExtension)
+				.append("uriPath", uriPath).append("uriPathStyle", uriPathStyle)
+				.append("uriExtension", uriExtension).append("defaultMethod", defaultMethod)
 				.toString();
 	}
 

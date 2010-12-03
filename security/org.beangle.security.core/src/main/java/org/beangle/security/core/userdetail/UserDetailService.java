@@ -6,7 +6,7 @@ package org.beangle.security.core.userdetail;
 
 import org.beangle.security.core.Authentication;
 
-public interface UserDetailService <T extends Authentication> {
+public interface UserDetailService<T extends Authentication> {
 
 	public UserDetail loadDetail(T token);
 }

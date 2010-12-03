@@ -74,8 +74,8 @@ public class SqlAction extends SecurityActionSupport {
 				PageLimit limit = getPageLimit();
 				String newSql = sqlService.getLimitString(sqlString, limit);
 				List<Map<String, Object>> datas = sqlService.queryForList(newSql);
-				Page<?> page = new SinglePage<Map<String, Object>>(limit.getPageNo(), limit
-						.getPageSize(), sqlService.count(sqlString), datas);
+				Page<?> page = new SinglePage<Map<String, Object>>(limit.getPageNo(),
+						limit.getPageSize(), sqlService.count(sqlString), datas);
 				if (!datas.isEmpty()) {
 					result.setColumns(new ArrayList<String>(datas.get(0).keySet()));
 				}
@@ -88,8 +88,8 @@ public class SqlAction extends SecurityActionSupport {
 			result.setMsg(ExceptionUtils.getStackTrace(e));
 		}
 		@SuppressWarnings("unchecked")
-		List<String> history = (List<String>) ActionContext.getContext().getSession().get(
-				"sql_history");
+		List<String> history = (List<String>) ActionContext.getContext().getSession()
+				.get("sql_history");
 		if (null == history) {
 			history = CollectUtils.newArrayList();
 			ActionContext.getContext().getSession().put("sql_history", history);

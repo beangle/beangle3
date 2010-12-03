@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *根据报名动态设置schema,prefix名字
+ * 根据报名动态设置schema,prefix名字
  * 
  * @author chaostone
  */

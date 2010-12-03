@@ -307,9 +307,8 @@ public class BeanDefinitionParser {
 			}
 		} else if (ele.hasAttribute(SINGLETON_ATTRIBUTE)) {
 			// Spring 1.x "singleton" attribute
-			bd
-					.setScope(TRUE_VALUE.equals(ele.getAttribute(SINGLETON_ATTRIBUTE)) ? BeanDefinition.SCOPE_SINGLETON
-							: BeanDefinition.SCOPE_PROTOTYPE);
+			bd.setScope(TRUE_VALUE.equals(ele.getAttribute(SINGLETON_ATTRIBUTE)) ? BeanDefinition.SCOPE_SINGLETON
+					: BeanDefinition.SCOPE_PROTOTYPE);
 		} else if (containingBean != null) {
 			// Take default from containing bean in case of an inner bean
 			// definition.
@@ -664,9 +663,8 @@ public class BeanDefinitionParser {
 		boolean hasValueAttribute = ele.hasAttribute(VALUE_ATTRIBUTE);
 		if ((hasRefAttribute && hasValueAttribute)
 				|| ((hasRefAttribute || hasValueAttribute) && subElement != null)) {
-			error(
-					elementName
-							+ " is only allowed to contain either 'ref' attribute OR 'value' attribute OR sub-element",
+			error(elementName
+					+ " is only allowed to contain either 'ref' attribute OR 'value' attribute OR sub-element",
 					ele);
 		}
 
@@ -910,8 +908,7 @@ public class BeanDefinitionParser {
 					Element candidateEle = (Element) node;
 					if (nodeNameEquals(candidateEle, KEY_ELEMENT)) {
 						if (keyEle != null) {
-							error(
-									"<entry> element is only allowed to contain one <key> sub-element",
+							error("<entry> element is only allowed to contain one <key> sub-element",
 									entryEle);
 						} else {
 							keyEle = candidateEle;
@@ -919,8 +916,7 @@ public class BeanDefinitionParser {
 					} else {
 						// Child element is what we're looking for.
 						if (valueEle != null) {
-							error(
-									"<entry> element must not contain more than one value sub-element",
+							error("<entry> element must not contain more than one value sub-element",
 									entryEle);
 						} else {
 							valueEle = candidateEle;

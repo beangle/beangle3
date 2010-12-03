@@ -25,8 +25,8 @@ public class MyAction extends SecurityActionSupport {
 		String userName = getUsername();
 		Avatar avatar = avatarBase.getAvatar(userName);
 		if (null == avatar) {
-			ServletActionContext.getResponse().getWriter().write(
-					"without you avatar [" + userName + "]");
+			ServletActionContext.getResponse().getWriter()
+					.write("without you avatar [" + userName + "]");
 		} else {
 			AvatarUtil.copyTo(avatar, ServletActionContext.getResponse());
 		}

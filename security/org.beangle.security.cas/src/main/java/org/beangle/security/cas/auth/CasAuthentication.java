@@ -72,14 +72,14 @@ public class CasAuthentication extends PreauthAuthentication {
 				"Cannot pass null or empty values to constructor"); }
 		this.keyHash = key.hashCode();
 		this.assertion = assertion;
-		this.loginUrl=null;
+		this.loginUrl = null;
 	}
 
-	public CasAuthentication( final Object principal, final Object credentials,String loginUrl) {
+	public CasAuthentication(final Object principal, final Object credentials, String loginUrl) {
 		super(principal, credentials);
-		this.loginUrl=loginUrl;
-		this.assertion=null;
-		this.keyHash=0;
+		this.loginUrl = loginUrl;
+		this.assertion = null;
+		this.keyHash = 0;
 	}
 
 	public boolean equals(final Object obj) {

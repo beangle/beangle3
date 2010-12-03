@@ -36,7 +36,8 @@ public class BeanDefinitionReader {
 					Node node = nl.item(i);
 					if (node instanceof Element) {
 						Element ele = (Element) node;
-						ReconfigBeanDefinitionHolder holder = parser.parseBeanDefinitionElement(ele);
+						ReconfigBeanDefinitionHolder holder = parser
+								.parseBeanDefinitionElement(ele);
 						holders.add(holder);
 					}
 				}

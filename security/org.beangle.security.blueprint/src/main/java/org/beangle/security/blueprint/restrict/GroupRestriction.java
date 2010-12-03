@@ -4,7 +4,6 @@
  */
 package org.beangle.security.blueprint.restrict;
 
-
 public interface GroupRestriction extends Restriction {
 
 }

@@ -15,7 +15,6 @@
 
 package org.beangle.security.cas.auth;
 
-
 /**
  * Caches CAS service tickets and CAS proxy tickets for stateless connections.
  * <p>
@@ -83,8 +82,8 @@ public interface StatelessTicketCache {
 	 * {@link #remove(String)}.
 	 * <P>
 	 * Implementations should use {@link CasAuthentication#getCredentials()} to
-	 * obtain the ticket and then delegate to to the
-	 * {@link #remove(String)} method.
+	 * obtain the ticket and then delegate to to the {@link #remove(String)}
+	 * method.
 	 * </p>
 	 * 
 	 * @param token

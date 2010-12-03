@@ -35,5 +35,4 @@ public class UserCategoryBean extends LongIdObject implements UserCategory {
 		return name;
 	}
 
-	
 }

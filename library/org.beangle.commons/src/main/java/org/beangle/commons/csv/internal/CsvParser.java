@@ -117,7 +117,8 @@ public class CsvParser {
 					// a,bc"d"ef,g
 					if (!format.isStrictQuotes()) {
 						if (i > 2 // not on the beginning of the line
-								// not at the beginning of an escape sequence
+									// not at the beginning of an escape
+									// sequence
 								&& !format.isSeparator(nextLine.charAt(i - 1))
 								&& nextLine.length() > (i + 1)
 								// not at the end of an escape sequence

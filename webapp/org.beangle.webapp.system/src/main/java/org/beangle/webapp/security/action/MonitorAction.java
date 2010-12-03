@@ -29,7 +29,7 @@ import com.opensymphony.xwork2.ActionContext;
 public class MonitorAction extends SecurityActionSupport {
 
 	private CategorySessionRegistry sessionRegistry;
-	
+
 	public String profiles() {
 		put("onlineProfiles", sessionRegistry.getProfiles());
 		return forward();
@@ -63,8 +63,8 @@ public class MonitorAction extends SecurityActionSupport {
 			profile.setInactiveInterval(inactiveInterval);
 		}
 		entityDao.saveOrUpdate(categories);
-		//FIXME
-		//sessionController.loadProfiles();
+		// FIXME
+		// sessionController.loadProfiles();
 		return redirect("profiles", "info.save.success");
 	}
 

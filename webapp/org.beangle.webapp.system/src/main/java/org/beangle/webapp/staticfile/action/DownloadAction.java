@@ -23,8 +23,7 @@ import org.beangle.webapp.staticfile.StaticFileLoader;
  * 
  * @author chaostone
  */
-public class DownloadAction extends BaseAction implements ServletRequestAware,
-		ServletResponseAware {
+public class DownloadAction extends BaseAction implements ServletRequestAware, ServletResponseAware {
 
 	private List<StaticFileLoader> loaders = CollectUtils.newArrayList();
 

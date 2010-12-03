@@ -36,8 +36,8 @@ public class ReconfigProcessor implements BeanFactoryPostProcessor {
 					try {
 						definition = factory.getBeanDefinition(holder.getBeanName());
 					} catch (NoSuchBeanDefinitionException e) {
-						logger.warn("reconfig error,no such bean {}.defined in {}.", holder
-								.getBeanName(), url);
+						logger.warn("reconfig error,no such bean {}.defined in {}.",
+								holder.getBeanName(), url);
 						continue;
 					}
 					mergeDefinition(definition, holder);
@@ -63,8 +63,8 @@ public class ReconfigProcessor implements BeanFactoryPostProcessor {
 		for (PropertyValue pv : pvs.getPropertyValueList()) {
 			String name = pv.getName();
 			target.getPropertyValues().addPropertyValue(name, pv.getValue());
-			logger.debug("config {}.{} = {}", new Object[] { source.getBeanName(), name,
-					pv.getValue() });
+			logger.debug("config {}.{} = {}",
+					new Object[] { source.getBeanName(), name, pv.getValue() });
 		}
 		logger.info("Reconfig bean {} ", source.getBeanName());
 	}

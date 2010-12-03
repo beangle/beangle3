@@ -4,8 +4,7 @@
  */
 package org.beangle.security.core.userdetail;
 
-
 public interface UserDetailChecker {
-	
+
 	void check(UserDetail toCheck);
 }

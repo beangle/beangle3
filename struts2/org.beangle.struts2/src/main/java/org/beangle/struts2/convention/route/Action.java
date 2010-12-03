@@ -227,8 +227,8 @@ public class Action {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("namespace",
-				namespace).append("name", name).append("method", method).append("params", params)
-				.toString();
+		return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+				.append("namespace", namespace).append("name", name).append("method", method)
+				.append("params", params).toString();
 	}
 }

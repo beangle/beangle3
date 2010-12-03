@@ -95,7 +95,7 @@ public abstract class SecurityActionSupport extends EntityDrivenAction implement
 	}
 
 	protected void applyRestriction(OqlBuilder<?> query) {
-		//Resource resource = getResource();
+		// Resource resource = getResource();
 		restrictionService.apply(query, getRestrictions());
 	}
 

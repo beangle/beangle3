@@ -10,12 +10,12 @@ import org.beangle.security.core.GrantedAuthority;
 public class PreauthAuthentication extends UsernamePasswordAuthentication {
 
 	public PreauthAuthentication(Object aPrincipal, Object aCredentials) {
-		super(aPrincipal,aCredentials);
+		super(aPrincipal, aCredentials);
 	}
 
 	public PreauthAuthentication(Object aPrincipal, Object aCredentials,
 			GrantedAuthority[] anAuthorities) {
-		super(aPrincipal,aCredentials,anAuthorities);
+		super(aPrincipal, aCredentials, anAuthorities);
 	}
 
 }

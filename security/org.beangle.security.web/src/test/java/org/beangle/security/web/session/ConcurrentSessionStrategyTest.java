@@ -36,13 +36,13 @@ public class ConcurrentSessionStrategyTest {
 		profileProvider = new LimitProfileProviderImpl();
 		profileProvider.setProfiles(profiles);
 		controller = new ConcurrentSessionStrategy();
-		//controller.setProfileProvider(profileProvider);
+		// controller.setProfileProvider(profileProvider);
 	}
 
 	// 保证loadProfile只进行一次
 	@Test(threadPoolSize = 10, invocationCount = 20)
 	public void testLoadProfiles() {
-		//controller.loadProfilesWhenNecessary();
+		// controller.loadProfilesWhenNecessary();
 	}
 
 	private class MockPrincipal implements CategoryPrincipal {
@@ -80,18 +80,20 @@ public class ConcurrentSessionStrategyTest {
 			registry.register(random, authentication);
 		}
 
-//		ConcurrentSessionStrategy controller = new ConcurrentSessionStrategy();
-//		controller.setProfileProvider(profileProvider);
-//		controller.setSessionRegistry(registry);
-//		controller.loadProfiles();
-//		for (int i = 0; i < 5; i++) {
-//			long start = System.currentTimeMillis();
-//			controller.calculateOnline();
-//			long elipse1 = System.currentTimeMillis() - start;
-//			// start = System.currentTimeMillis();
-//			// controller.reCalculateOnline();
-//			// long elipse2 = System.currentTimeMillis() - start;
-//			System.out.println(+sessionNum + "*" + profileNum + " consume:" + elipse1);
-//		}
+		// ConcurrentSessionStrategy controller = new
+		// ConcurrentSessionStrategy();
+		// controller.setProfileProvider(profileProvider);
+		// controller.setSessionRegistry(registry);
+		// controller.loadProfiles();
+		// for (int i = 0; i < 5; i++) {
+		// long start = System.currentTimeMillis();
+		// controller.calculateOnline();
+		// long elipse1 = System.currentTimeMillis() - start;
+		// // start = System.currentTimeMillis();
+		// // controller.reCalculateOnline();
+		// // long elipse2 = System.currentTimeMillis() - start;
+		// System.out.println(+sessionNum + "*" + profileNum + " consume:" +
+		// elipse1);
+		// }
 	}
 }

@@ -36,12 +36,12 @@ public class ReplicatorMain {
 			throw new RuntimeException("cannot find database.properties");
 		}
 		DatabaseWrapper source = new DatabaseWrapper(props.getProperty("source.schema"));
-		source.connect(DataSourceUtil.getDataSource("source"), (Dialect) (Class.forName(props
-				.getProperty("source.dialect")).newInstance()));
+		source.connect(DataSourceUtil.getDataSource("source"),
+				(Dialect) (Class.forName(props.getProperty("source.dialect")).newInstance()));
 
 		DatabaseWrapper target = new DatabaseWrapper(props.getProperty("target.schema"));
-		target.connect(DataSourceUtil.getDataSource("target"), (Dialect) (Class.forName(props
-				.getProperty("target.dialect")).newInstance()));
+		target.connect(DataSourceUtil.getDataSource("target"),
+				(Dialect) (Class.forName(props.getProperty("target.dialect")).newInstance()));
 
 		Replicator replicator = new DatabaseReplicator(source, target);
 

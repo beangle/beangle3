@@ -39,7 +39,7 @@ public class SqlServerDialect extends AbstractDialect {
 
 	public String getLimitString(String sql, boolean hasOffset) {
 		if (hasOffset) { throw new UnsupportedOperationException("sql server has no offset"); }
-		return new StringBuilder(sql.length() + 8).append(sql).insert(
-				getAfterSelectInsertPoint(sql), " top ?").toString();
+		return new StringBuilder(sql.length() + 8).append(sql)
+				.insert(getAfterSelectInsertPoint(sql), " top ?").toString();
 	}
 }

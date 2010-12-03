@@ -51,7 +51,7 @@ public class PostgreSQLDialect extends AbstractDialect {
 	}
 
 	public String getLimitString(String sql, boolean hasOffset) {
-		return new StringBuilder(sql.length() + 20).append(sql).append(
-				hasOffset ? " limit ? offset ?" : " limit ?").toString();
+		return new StringBuilder(sql.length() + 20).append(sql)
+				.append(hasOffset ? " limit ? offset ?" : " limit ?").toString();
 	}
 }
