@@ -9,19 +9,26 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.Validate;
 import org.beangle.commons.collection.CollectUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 
-public class CachedResourceAccessor implements ResourceAccessor {
-	private static final Logger logger = LoggerFactory.getLogger(CachedResourceAccessor.class);
-
+public class CachedResourceAccessor extends DefaultResourceAccessor implements InitializingBean {
 	private List<Accesslog> accesslogs = CollectUtils.newArrayList();
 
-	private int cacheSize = AccessConfig.getInstance().getCacheSize();
+	//3000 milliseconds
+	private long minDuration=3000;
+
+	// default 500
+	private int cacheSize=500;
+
+	public void afterPropertiesSet() throws Exception {
+		Validate.isTrue(minDuration>0,"minDuration must greater then 0");
+		Validate.isTrue(cacheSize>100,"cacheSize should greate then 100");
+	}
 
 	public Accesslog beginAccess(HttpServletRequest request, long time) {
-		Accesslog accesslog = AccesslogFactory.getLog(request);
+		Accesslog accesslog = buildLog(request);
 		accesslog.setBeginAt(time);
 		synchronized (accesslogs) {
 			accesslogs.add(accesslog);
@@ -54,7 +61,6 @@ public class CachedResourceAccessor implements ResourceAccessor {
 	}
 
 	protected void shrink(List<Accesslog> accesslogs) {
-		long minDuration = AccessConfig.getInstance().getMinDuration().longValue();
 		for (Iterator<Accesslog> iterator = accesslogs.iterator(); iterator.hasNext();) {
 			Accesslog accesslog = (Accesslog) iterator.next();
 			if (accesslog.getDuration() < minDuration) {
@@ -68,5 +74,21 @@ public class CachedResourceAccessor implements ResourceAccessor {
 			logger.info(accesslog.toString());
 		}
 		accesslogs.clear();
+	}
+
+	public Long getMinDuration() {
+		return minDuration;
+	}
+
+	public void setMinDuration(Long minDuration) {
+		this.minDuration = minDuration;
+	}
+
+	public Integer getCacheSize() {
+		return cacheSize;
+	}
+
+	public void setCacheSize(Integer cacheSize) {
+		this.cacheSize = cacheSize;
 	}
 }

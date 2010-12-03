@@ -6,14 +6,25 @@ package org.beangle.security.web.access.log;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.beangle.security.core.context.SecurityContextHolder;
+import org.beangle.web.util.RequestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DefaultResourceAccessor implements ResourceAccessor {
-	private static final Logger logger = LoggerFactory.getLogger(DefaultResourceAccessor.class);
+
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
+
+	protected static Accesslog buildLog(HttpServletRequest request) {
+		Accesslog log = new Accesslog();
+		log.setUser(SecurityContextHolder.getContext().getAuthentication());
+		log.setUri(RequestUtils.getRequestURI(request));
+		log.setParams(request.getQueryString());
+		return log;
+	}
 
 	public Accesslog beginAccess(HttpServletRequest request, long time) {
-		Accesslog accesslog = AccesslogFactory.getLog(request);
+		Accesslog accesslog = buildLog(request);
 		accesslog.setBeginAt(time);
 		if (logger.isDebugEnabled()) {
 			logger.debug(accesslog.toString());
