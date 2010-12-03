@@ -14,6 +14,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.springframework.beans.factory.InitializingBean;
 
 public class CachedResourceAccessor extends DefaultResourceAccessor implements InitializingBean {
+	
 	private List<Accesslog> accesslogs = CollectUtils.newArrayList();
 
 	//3000 milliseconds

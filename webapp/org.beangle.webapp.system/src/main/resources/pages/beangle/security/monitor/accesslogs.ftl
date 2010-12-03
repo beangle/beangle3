@@ -14,7 +14,7 @@
 	<@table.tbody datas=accesslogs;accesslog,accesslog_index>
 		<td>${accesslog_index+1}</td>
 		<td title="${accesslog.params!}">${accesslog.uri!}</td>
-		<td><#if accesslog.user??><A target="_blank" href="user.action?method=info&loginName=${accesslog.user}">${(accesslog.user)}</A></#if></td>
+		<td><#if accesslog.user??><A target="_blank" href="user.action?method=info&loginName=${accesslog.user.name}">${(accesslog.user.name)}</A></#if></td>
 		<td>${accesslog.beginTime?string("yy-MM-dd")}  ${accesslog.beginTime?string("HH:mm:ss")}~${(accesslog.endTime?string("HH:mm:ss"))!}</td>
 		<td>${accesslog.duration!}</td>
 	</@>

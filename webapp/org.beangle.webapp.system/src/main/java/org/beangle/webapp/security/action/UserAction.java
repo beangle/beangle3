@@ -272,7 +272,7 @@ public class UserAction extends SecurityActionSupport {
 			User user = userService.get(loginName);
 			if (null != user) {
 				put("user", user);
-				return forward();
+				return forward(new Action((Class)null,"dashboard","&user.id="+user.getId()));
 			} else {
 				return null;
 			}

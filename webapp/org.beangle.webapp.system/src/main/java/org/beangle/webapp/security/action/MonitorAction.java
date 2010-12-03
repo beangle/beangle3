@@ -19,8 +19,6 @@ import org.beangle.security.web.access.log.Accesslog;
 import org.beangle.security.web.access.log.CachedResourceAccessor;
 import org.beangle.security.web.session.category.CategorySessionRegistry;
 
-import com.opensymphony.xwork2.ActionContext;
-
 /**
  * 系统在线用户管理
  * 
@@ -30,6 +28,8 @@ public class MonitorAction extends SecurityActionSupport {
 
 	private CategorySessionRegistry sessionRegistry;
 
+	private CachedResourceAccessor resourceAccessor;
+	
 	public String profiles() {
 		put("onlineProfiles", sessionRegistry.getProfiles());
 		return forward();
@@ -84,13 +84,11 @@ public class MonitorAction extends SecurityActionSupport {
 	 * 访问记录
 	 */
 	public String accesslogs() {
-		CachedResourceAccessor ra = (CachedResourceAccessor) ActionContext.getContext()
-				.getApplication().get("ResourceAccessor");
 		List<Accesslog> accessLogs = null;
-		if (null == ra) {
+		if (null == resourceAccessor) {
 			accessLogs = Collections.emptyList();
 		} else {
-			accessLogs = CollectUtils.newArrayList(ra.getAccessLogs());
+			accessLogs = CollectUtils.newArrayList(resourceAccessor.getAccessLogs());
 		}
 		String orderBy = get("orderBy");
 		if (StringUtils.isEmpty(orderBy)) {
@@ -103,6 +101,10 @@ public class MonitorAction extends SecurityActionSupport {
 
 	public void setSessionRegistry(CategorySessionRegistry sessionRegistry) {
 		this.sessionRegistry = sessionRegistry;
+	}
+
+	public void setResourceAccessor(CachedResourceAccessor resourceAccessor) {
+		this.resourceAccessor = resourceAccessor;
 	}
 
 }

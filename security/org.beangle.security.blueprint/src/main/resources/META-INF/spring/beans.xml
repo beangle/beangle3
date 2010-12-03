@@ -60,6 +60,12 @@
 		<property name="accessDeniedHandler" ref="accessDeniedHandler"/>
 	</bean>
 	
+	<bean id="resourceAccessor" class="org.beangle.security.web.access.log.CachedResourceAccessor"/>
+	
+	<bean id="accessLogFilter" class="org.beangle.security.web.access.log.AccessLogFilter">
+		<property name="accessor" ref="resourceAccessor"/>
+	</bean>
+	
 	<bean id="authenticationEntryPoint" class="org.beangle.security.web.auth.LoginUrlEntryPoint">
 		<property name="loginUrl" value="/login.action"/>
 	</bean>
@@ -75,6 +81,7 @@
 					</key>
 					<list>
 						<ref bean="httpSessionContextIntegrationFilter"/>
+						<ref bean="accessLogFilter"/>
 						<ref bean="usernamePreauthFilter"/>
 						<ref bean="anonymousFilter"/>
 						<ref bean="exceptionTranslationFilter"/>
