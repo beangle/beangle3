@@ -84,12 +84,8 @@ public final class RequestUtils {
 		String os = headers[headers.length - 2];
 		// Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.12) Gecko/20101027
 		// Fedora/3.6.12-1.fc14 Firefox/3.6.12
-		Useragent agent = new Useragent();
-		agent.setIp(getIpAddr(request));
-		agent.setOs(StringUtils.substringBefore(os, "/"));
-		agent.setOsVersion(StringUtils.substringAfterLast(os, "."));
-		agent.setAgent(StringUtils.substringBefore(browser, "/"));
-		agent.setAgentVersion(StringUtils.substringAfter(browser, "/"));
-		return agent;
+		return new Useragent(getIpAddr(request), StringUtils.substringBefore(browser, "/"),
+				StringUtils.substringAfter(browser, "/"), StringUtils.substringBefore(os, "/"),
+				StringUtils.substringAfterLast(os, "."));
 	}
 }

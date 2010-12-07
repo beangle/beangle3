@@ -94,9 +94,13 @@
 	
 	<bean id="securityContextLogoutHandler" class="org.beangle.security.web.auth.logout.SecurityContextLogoutHandler"/>
 	
+	<bean id="sessionInfoPersistHandler" class="org.beangle.security.blueprint.session.SessionInfoPersistHandler"
+	  autowire="byName"/>
+	
 	<bean id="logoutHandlerStack" class="org.beangle.security.web.auth.logout.LogoutHandlerStack">
 		<property name="handlers">
 			<list>
+				<ref bean="sessionInfoPersistHandler"/>
 				<ref bean="securityContextLogoutHandler"/>
 			</list>
 		</property>

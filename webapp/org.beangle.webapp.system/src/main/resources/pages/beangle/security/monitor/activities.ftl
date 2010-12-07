@@ -19,7 +19,7 @@
 		<@table.sortTd width="8%" text="在线时间" id="onlineTime"/>
 		<@table.sortTd width="15%" text="地址" id="details.agent.ip"/>
 		<@table.sortTd width="10%" text="操作系统" id="details.agent.os"/>
-		<@table.sortTd width="10%" text="浏览器" id="details.agent.agent"/>
+		<@table.sortTd width="10%" text="浏览器" id="details.agent.name"/>
 		<@table.sortTd width="8%" text="身份" id="category.name"/>
 		<@table.sortTd width="8%" text="状态" id="expired"/>
 	</@>
@@ -30,8 +30,8 @@
 		<td>${activity.lastAccessAt?string("yy-MM-dd HH:mm")}</td>
 		<td>${(activity.onlineTime)/1000/60}min</td>
 		<td>${activity.authentication.details.agent.ip!('')}</td>
-		<td>${activity.authentication.details.agent.os!('')}/${activity.authentication.details.agent.osVersion!('')}</td>
-		<td>${activity.authentication.details.agent.agent!('')}/${activity.authentication.details.agent.agentVersion!('')}</td>
+		<td>${activity.authentication.details.agent.os!('')}</td>
+		<td>${activity.authentication.details.agent.fullname!('')}</td>
 		<td>${activity.authentication.principal.category.name}</td>
 		<td>${activity.expired?string("过期","在线")}</td>
 	</@>

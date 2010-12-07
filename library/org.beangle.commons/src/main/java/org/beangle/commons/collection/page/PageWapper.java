@@ -13,6 +13,10 @@ public abstract class PageWapper<E> implements Page<E> {
 
 	private Page<E> page;
 
+	public int getFirstPageNo() {
+		return 1;
+	}
+	
 	public Page<E> getPage() {
 		return page;
 	}

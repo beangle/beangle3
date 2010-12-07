@@ -13,12 +13,11 @@ import org.apache.commons.lang.StringUtils;
  */
 public class MultiPropertyComparator<T> extends ChainComparator<T> {
 
-	@SuppressWarnings("unchecked")
 	public MultiPropertyComparator(final String propertyStr) {
 		super();
 		final String[] properties = StringUtils.split(propertyStr, ",");
 		for (int i = 0; i < properties.length; i++) {
-			addComparator(new PropertyComparator(properties[i].trim()));
+			addComparator(new PropertyComparator<T>(properties[i].trim()));
 		}
 	}
 

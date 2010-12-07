@@ -6,6 +6,7 @@ package org.beangle.commons.comparators;
 
 import java.util.Comparator;
 
+import org.apache.commons.beanutils.NestedNullException;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -84,9 +85,16 @@ public class PropertyComparator<T> implements Comparator<T> {
 		if (StringUtils.isNotEmpty(cmpWhat)) {
 			try {
 				what0 = PropertyUtils.getProperty(arg0, cmpWhat);
-				what1 = PropertyUtils.getProperty(arg1, cmpWhat);
+			} catch (NestedNullException e) {
+				what0 = null;
 			} catch (Exception e) {
-				// 可能遇到了空的中间属性
+				throw new RuntimeException(e);
+			}
+			try {
+				what1 = PropertyUtils.getProperty(arg1, cmpWhat);
+			} catch (NestedNullException e) {
+				what1 = null;
+			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
 		}

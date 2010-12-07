@@ -18,25 +18,25 @@ public class SessionInfo {
 	private static final long serialVersionUID = -4828041170356897582L;
 
 	/** login */
-	private Authentication authentication;
+	private final Authentication authentication;
 
 	/** 会话id */
-	private String sessionid;
+	private final String sessionid;
 
 	/** 登录时间 */
-	private Date loginAt;
+	private final Date loginAt = new Date();
 
-	private Date lastAccessAt;
+	/**最后访问的系统微秒数*/
+	private long lastAccessMillis;
 
 	private String remark;
 
 	private boolean expired = false;
 
-	public SessionInfo(Authentication auth) {
-		setAuthentication(auth);
-		Date now = new Date();
-		setLoginAt(now);
-		setLastAccessAt(now);
+	public SessionInfo(final String sessionid, final Authentication auth) {
+		this.sessionid = sessionid;
+		this.authentication = auth;
+		refreshLastRequest();
 	}
 
 	public void expireNow() {
@@ -44,31 +44,31 @@ public class SessionInfo {
 	}
 
 	public void refreshLastRequest() {
-		this.lastAccessAt = new Date();
+		this.lastAccessMillis = System.currentTimeMillis();
 	}
 
 	public Date getLastAccessAt() {
-		return lastAccessAt;
-	}
-
-	public void setLastAccessAt(Date lastRequest) {
-		this.lastAccessAt = lastRequest;
+		return new Date(lastAccessMillis);
 	}
 
 	public String getSessionid() {
 		return sessionid;
 	}
 
-	public void setSessionid(String sessionid) {
-		this.sessionid = sessionid;
-	}
-
 	public boolean isExpired() {
 		return expired;
 	}
 
-	public void setExpired(boolean expired) {
-		this.expired = expired;
+	public Date getLoginAt() {
+		return loginAt;
+	}
+
+	public Long getOnlineTime() {
+		return Long.valueOf(System.currentTimeMillis() - getLoginAt().getTime());
+	}
+
+	public Authentication getAuthentication() {
+		return authentication;
 	}
 
 	public void appendRemark(String added) {
@@ -85,26 +85,6 @@ public class SessionInfo {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}
-
-	public Date getLoginAt() {
-		return loginAt;
-	}
-
-	public void setLoginAt(Date loginAt) {
-		this.loginAt = loginAt;
-	}
-
-	public Long getOnlineTime() {
-		return Long.valueOf(System.currentTimeMillis() - getLoginAt().getTime());
-	}
-
-	public Authentication getAuthentication() {
-		return authentication;
-	}
-
-	public void setAuthentication(Authentication authentication) {
-		this.authentication = authentication;
 	}
 
 }

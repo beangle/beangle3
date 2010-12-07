@@ -81,9 +81,8 @@ public class MemSessionRegistry implements SessionRegistry {
 	}
 
 	public void register(String sessionId, Authentication authentication) {
-		SessionInfo newOne = new SessionInfo(authentication);
-		newOne.setSessionid(sessionId);
-		register(sessionId, authentication.getPrincipal(), newOne);
+		register(sessionId, authentication.getPrincipal(), new SessionInfo(sessionId,
+				authentication));
 	}
 
 	public SessionInfo remove(String sessionId) {

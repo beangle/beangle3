@@ -54,7 +54,7 @@ public class WebAuthenticationDetails implements SessionIdAware, Serializable {
 		sb.append("SessionId: ").append(getSessionId()).append("; ");
 		sb.append("RemoteIpAddress: ").append(agent.getIp()).append("; ");
 		sb.append("Operation System: ").append(agent.getOs()).append("; ");
-		sb.append("Agent: ").append(agent.getAgent());
+		sb.append("Agent: ").append(agent.getFullname());
 		return sb.toString();
 	}
 

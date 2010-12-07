@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.struts2.filter;
+package org.beangle.web.filter;
 
 import java.io.IOException;
 
@@ -13,7 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-public class EncodingFilter implements Filter {
+import org.apache.commons.lang.StringUtils;
+
+public class CharacterEncodingFilter implements Filter {
 
 	protected String encoding = "utf-8";
 
@@ -24,7 +26,10 @@ public class EncodingFilter implements Filter {
 	}
 
 	public void init(FilterConfig filterConfig) throws ServletException {
-		this.encoding = filterConfig.getInitParameter("encoding");
+		String  initEncoding=filterConfig.getInitParameter("encoding");
+		if(StringUtils.isNotBlank(initEncoding)){
+			this.encoding = initEncoding;
+		}
 	}
 
 	public void destroy() {

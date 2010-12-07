@@ -12,11 +12,7 @@
 	<!--设置字符集-->
 	<filter>
 		<filter-name>SetCharacterEncoding</filter-name>
-		<filter-class>org.beangle.struts2.filter.EncodingFilter</filter-class>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
+		<filter-class>org.beangle.web.filter.CharacterEncodingFilter</filter-class>
 	</filter>
 	
 	<!---->

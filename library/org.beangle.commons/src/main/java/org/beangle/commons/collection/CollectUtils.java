@@ -27,6 +27,14 @@ public final class CollectUtils {
 		return new ArrayList<E>(c);
 	}
 
+	public static <E> List<E> newArrayList(E ... values) {
+		List<E> list= new ArrayList<E>(values.length);
+		for(E e:values){
+			list.add(e);
+		}
+		return list;
+	}
+
 	/**
 	 * 将一个集合按照固定大小查分成若干个集合。
 	 * 

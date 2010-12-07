@@ -58,4 +58,12 @@ public interface SessionActivity extends LongIdEntity {
 	public String getRemark();
 
 	public void setRemark(String remark);
+
+	public String getOs();
+
+	public void setOs(String os);
+
+	public String getAgent();
+
+	public void setAgent(String agent);
 }

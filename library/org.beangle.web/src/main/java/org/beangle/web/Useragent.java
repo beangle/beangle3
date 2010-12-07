@@ -10,15 +10,24 @@ package org.beangle.web;
  */
 public class Useragent {
 
-	private String ip;
+	private final String ip;
 
-	private String os;
+	private final String osName;
 
-	private String osVersion;
+	private final String osVersion;
 
-	private String agent;
+	private final String name;
 
-	private String agentVersion;
+	private final String version;
+
+	public Useragent(String ip, String name, String version, String osName, String osVersion) {
+		super();
+		this.ip = ip;
+		this.name = name;
+		this.version = version;
+		this.osName = osName;
+		this.osVersion = osVersion;
+	}
 
 	/**
 	 * Indicates the TCP/IP address the authentication request was received
@@ -30,40 +39,30 @@ public class Useragent {
 		return ip;
 	}
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
 	public String getOs() {
-		return os;
+		if (null == osName) return null;
+		return osName + ((null == osVersion) ? "" : "/" + osVersion);
 	}
 
-	public void setOs(String os) {
-		this.os = os;
+	public String getFullname() {
+		if (null == name) return null;
+		return name + ((null == version) ? "" : "/" + version);
+	}
+
+	public String getOsName() {
+		return osName;
 	}
 
 	public String getOsVersion() {
 		return osVersion;
 	}
 
-	public void setOsVersion(String osVersion) {
-		this.osVersion = osVersion;
+	public String getName() {
+		return name;
 	}
 
-	public String getAgent() {
-		return agent;
-	}
-
-	public void setAgent(String agent) {
-		this.agent = agent;
-	}
-
-	public String getAgentVersion() {
-		return agentVersion;
-	}
-
-	public void setAgentVersion(String agentVersion) {
-		this.agentVersion = agentVersion;
+	public String getVersion() {
+		return version;
 	}
 
 }

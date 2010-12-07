@@ -33,10 +33,12 @@
 		<id name="id" unsaved-value="null">
 			<generator class="org.beangle.model.persist.hibernate.support.TableSeqGenerator"/>
 		</id>
-		<property name="sessionid" not-null="true"/>
+		<property name="sessionid" length="100" not-null="true" />
 		<property name="name" length="40" not-null="true"/>
 		<property name="fullname" length="50" not-null="true"/>
 		<property name="host" length="40" not-null="true"/>
+		<property name="os" length="40" />
+		<property name="agent" length="40"/>
 		<property name="loginAt" not-null="true"/>
 		<property name="logoutAt" not-null="true"/>
 		<property name="lastAccessAt" not-null="true"/>

@@ -35,10 +35,6 @@ public class PagedList<E> extends PageWapper<E> {
 		this.next();
 	}
 
-	public int getFirstPageNo() {
-		return 1;
-	}
-
 	public int getMaxPageNo() {
 		return maxPageNo;
 	}
