@@ -6,8 +6,8 @@
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
 	<context-param>
-		<param-name>webappTemplatePath</param-name>
-		<param-value>/pages</param-value>
+		<param-name>templatePath</param-name>
+		<param-value>webapp://pages;class://pages</param-value>
 	</context-param>
 	<!--设置字符集-->
 	<filter>

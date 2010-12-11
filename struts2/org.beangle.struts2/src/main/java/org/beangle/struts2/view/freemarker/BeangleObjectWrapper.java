@@ -60,7 +60,6 @@ public class BeangleObjectWrapper extends DefaultObjectWrapper {
 	@SuppressWarnings("rawtypes")
 	protected ModelFactory getModelFactory(Class clazz) {
 		if (altMapWrapper && Map.class.isAssignableFrom(clazz)) { return FriendlyMapModel.FACTORY; }
-
 		return super.getModelFactory(clazz);
 	}
 
@@ -82,7 +81,7 @@ public class BeangleObjectWrapper extends DefaultObjectWrapper {
 			super(map, wrapper);
 		}
 
-		// 将父类的&& super.isEmpty()省去了，原因不知
+		// Struts2将父类的&& super.isEmpty()省去了，原因不知
 		public boolean isEmpty() {
 			return ((Map<?, ?>) object).isEmpty();
 		}

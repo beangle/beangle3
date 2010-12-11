@@ -38,7 +38,7 @@
 	 <#nested>
 	</form>
 	<script>
-	actionForms['${name}']=new ActionForm('${name}','${entity}','${action}','<@queryStr/>');
+	entityActions['${name}']=new EntityAction('${name}','${entity}','${action}','<@queryStr/>');
 	</script>
 </#macro>
 

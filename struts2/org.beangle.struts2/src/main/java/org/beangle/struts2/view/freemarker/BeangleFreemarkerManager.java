@@ -10,11 +10,13 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 
 import javax.servlet.ServletContext;
 
-import org.apache.struts2.views.freemarker.StrutsClassTemplateLoader;
+import org.apache.commons.lang.StringUtils;
+import org.beangle.commons.collection.CollectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,22 +25,35 @@ import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.cache.WebappTemplateLoader;
 import freemarker.ext.beans.BeansWrapper;
+import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateException;
 
+/**
+ * BeangleFreemarkerManager provide:
+ * <p>
+ * <li>Better template loader sequence like class://;file://;file//;webapp://</li>
+ * <li>Multi freemark properties
+ * loading(META-INF/freemarker.properties,freemarker.properties)</li>
+ * <li>Friendly Collection/Map/Object objectwrapper</li>
+ * 
+ * @author chaostone
+ */
 public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarker.FreemarkerManager {
 
 	private final Logger logger = LoggerFactory.getLogger(BeangleFreemarkerManager.class);
 
-	protected BeansWrapper getObjectWrapper() {
+	@Override
+	protected ObjectWrapper createObjectWrapper(ServletContext servletContext) {
 		BeansWrapper wrapper = new BeangleObjectWrapper(altMapWrapper);
 		wrapper.setUseCache(cacheBeanWrapper);
 		return wrapper;
 	}
 
 	/**
-	 * The default template loader is a MultiTemplateLoader which includes a
-	 * ClassTemplateLoader and a WebappTemplateLoader (and a FileTemplateLoader
-	 * depending on the init-parameter 'TemplatePath').
+	 * The default template loader is a MultiTemplateLoader which includes
+	 * BeangleClassTemplateLoader(class://) and a WebappTemplateLoader
+	 * (webapp://) and FileTemplateLoader(file://) . All template path described
+	 * in init parameter templatePath or TemplatePlath
 	 * <p/>
 	 * The ClassTemplateLoader will resolve fully qualified template includes
 	 * that begin with a slash. for example /com/company/template/common.ftl
@@ -46,53 +61,41 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 	 * The WebappTemplateLoader attempts to resolve templates relative to the
 	 * web root folder
 	 */
-	protected TemplateLoader getTemplateLoader(ServletContext servletContext) {
+	@Override
+	protected TemplateLoader createTemplateLoader(ServletContext servletContext, String templatePath) {
 		// construct a FileTemplateLoader for the init-param 'TemplatePath'
-		FileTemplateLoader templatePathLoader = null;
-
-		String templatePath = servletContext.getInitParameter("TemplatePath");
-		if (templatePath == null) {
-			templatePath = servletContext.getInitParameter("templatePath");
-		}
-
-		if (templatePath != null) {
-			try {
-				templatePathLoader = new FileTemplateLoader(new File(templatePath));
-			} catch (IOException e) {
-				logger.error("Invalid template path specified:{} ", e.getMessage(), e);
+		String[] paths = StringUtils.split(templatePath, ";");
+		List<TemplateLoader> loaders = CollectUtils.newArrayList();
+		for (String path : paths) {
+			if (path.startsWith("class://")) {
+				// substring(7) is intentional as we "reuse" the last slash
+				loaders.add(new BeangleClassTemplateLoader(path.substring(7)));
+			} else if (path.startsWith("file://")) {
+				try {
+					loaders.add(new FileTemplateLoader(new File(path)));
+				} catch (IOException e) {
+					throw new RuntimeException("templatePath: " + path + " cannot be accessed", e);
+				}
+			} else if (path.startsWith("webapp://")) {
+				loaders.add(new WebappTemplateLoader(servletContext, path.substring(8)));
+			} else {
+				throw new RuntimeException("templatePath: " + path
+						+ " is not well-formed. Use [class://|file://|webapp://] seperated with ;");
 			}
+
 		}
-
-		String webappTemplatePath = servletContext.getInitParameter("webappTemplatePath");
-		WebappTemplateLoader wtl = null;
-
-		if (null != webappTemplatePath) {
-			wtl = new WebappTemplateLoader(servletContext, webappTemplatePath);
-		} else {
-			wtl = new WebappTemplateLoader(servletContext);
-		}
-		StrutsClassTemplateLoader strutsClassTemplateLoader = new StrutsClassTemplateLoader();
-
-		// 带有固定前缀的类模板加载器
-		PrefixClassTemplateLoader prefixClassTemplateLoader = new PrefixClassTemplateLoader(
-				webappTemplatePath);
-		// presume that most apps will require the class and
-		// webapp template loader if people wish to
-		return templatePathLoader != null ? new MultiTemplateLoader(new TemplateLoader[] {
-				templatePathLoader, wtl, strutsClassTemplateLoader, prefixClassTemplateLoader })
-				: new MultiTemplateLoader(new TemplateLoader[] { wtl, strutsClassTemplateLoader,
-						prefixClassTemplateLoader });
+		return new MultiTemplateLoader(loaders.toArray(new TemplateLoader[loaders.size()]));
 	}
 
 	/**
-	 * Load the settings from the /META-INF/freemarker.properties and
+	 * Load the multi settings from the /META-INF/freemarker.properties and
 	 * /freemarker.properties file on the classpath
 	 * 
 	 * @see freemarker.template.Configuration#setSettings for the definition of
 	 *      valid settings
 	 */
-	protected void loadSettings(ServletContext servletContext,
-			freemarker.template.Configuration configuration) {
+	@Override
+	protected void loadSettings(ServletContext servletContext) {
 		try {
 			Properties properties = new Properties();
 			Enumeration<?> em = BeangleFreemarkerManager.class.getClassLoader().getResources(
@@ -105,12 +108,17 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 			while (em.hasMoreElements()) {
 				properties.putAll(getProperties((URL) em.nextElement()));
 			}
-			configuration.setSettings(properties);
 			for (Iterator<Object> iter = properties.keySet().iterator(); iter.hasNext();) {
 				String key = (String) iter.next();
-				logger.info("{}={}", key, properties.get(key));
+				String value = (String) properties.get(key);
+				if (key == null) { throw new IOException(
+						"init-param without param-name.  Maybe the freemarker.properties is not well-formed?"); }
+				if (value == null) { throw new IOException(
+						"init-param without param-value.  Maybe the freemarker.properties is not well-formed?"); }
+				addSetting(key, value);
+				logger.info("freemarker's {} = {}", key, value);
 			}
-			configuration.setSharedVariable("pagechecker", new PageChecker());
+			this.config.setSharedVariable("pagechecker", new PageChecker());
 		} catch (IOException e) {
 			logger.error("Error while loading freemarker.properties", e);
 		} catch (TemplateException e) {

@@ -297,6 +297,7 @@ function addMenuItem(title,action,imageName,alt){
  */
 function setAction(itemTd,action){
 	if(null==action){
+		alert("action should not be null");
 		return;
 	}
 	if(typeof action=='function'){
@@ -827,19 +828,39 @@ function EntityAction(formId,entity,action,actionQueryStr){
 	}
 	
 	this.edit = function (){
-		return "singleAction('"+formId+"','edit')";
+		return new NamedFunction('edit',function(){
+			singleAction(formId,'edit');
+		});
 	}
 	
-	this.single = function(methodName,confirmMsg){
+	this.single = function(methodName,confirmMsg,extparams){
 		return new NamedFunction(methodName,function(){
+			form=getEntityAction(formId).getForm();
+			addHiddens(form,extparams);
 			singleAction(formId,methodName,confirmMsg);
 		});
 	}
 	
-	this.method=function(methodName){
+	this.multi = function(methodName,confirmMsg,extparams){
+		return new NamedFunction(methodName,function(){
+		alert(extparams)
+			try {
+				form = getEntityAction(formId).getForm();
+				addHiddens(form, extparams);
+				submitIdAction(formId, methodName, true, confirmMsg);
+			}catch(e){
+				alert(e)
+			}
+		});
+	}
+	
+	this.method=function(methodName,confirmMsg,extparams){
 		return  new NamedFunction(methodName,function(){
 			aform=getEntityAction(formId);
 			form=aform.getForm();
+			if(null!=extparams){
+				addHiddens(form,extparams);
+			}
 			if(""!=aform.actionQueryStr){
 				addHiddens(form,aform.actionQueryStr);
 				addParamsInput(form,aform.actionQueryStr);
