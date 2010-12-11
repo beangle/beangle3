@@ -28,7 +28,7 @@ public class HSQLDialectTest extends DialectTestCase {
 		Map<String, TableMetadata> tables = meta.getTables();
 		for (Map.Entry<String, TableMetadata> entry : tables.entrySet()) {
 			TableMetadata m = entry.getValue();
-			log.info(m.sqlCreateString(meta.getDialect()));
+			log.info(m.genCreateSql(meta.getDialect()));
 		}
 	}
 }

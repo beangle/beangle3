@@ -80,10 +80,10 @@ public class TableMetadata {
 		return qualifiedName.append(table).toString();
 	}
 
-	public String sqlInsertString() {
+	public String genInsertSql() {
 		String[] columnNames = getColumnNames();
 		StringBuilder sb = new StringBuilder("insert into ");
-		sb.append(identifier()).append("(");
+		sb.append(name).append("(");
 		for (int i = 0; i < columnNames.length; i++) {
 			sb.append(columnNames[i]).append(',');
 		}
@@ -94,12 +94,20 @@ public class TableMetadata {
 		return sb.toString();
 	}
 
-	public String sqlCreateString(Dialect dialect) {
+	/**
+	 * FIXME reserved key words
+	 * @param dialect
+	 * @return
+	 */
+	public String genCreateSql(Dialect dialect) {
 		StringBuilder buf = new StringBuilder(dialect.getCreateTableString()).append(' ')
-				.append(identifier()).append(" (");
+				.append(name).append(" (");
 		Iterator<ColumnMetadata> iter = columns.values().iterator();
 		while (iter.hasNext()) {
 			ColumnMetadata col = iter.next();
+//			if(col.getName().equals("RESOURCE")){
+//				continue;
+//			}
 			buf.append(col.getName()).append(' ');
 			buf.append(col.getSqlType(dialect));
 

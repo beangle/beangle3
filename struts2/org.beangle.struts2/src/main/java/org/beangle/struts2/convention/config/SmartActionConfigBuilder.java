@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -26,7 +27,6 @@ import org.beangle.struts2.convention.factory.SpringBeanNameFinder;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.struts2.convention.route.ActionBuilder;
 import org.beangle.struts2.convention.route.Profile;
-import org.beangle.struts2.convention.route.impl.ProfileServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +39,6 @@ import com.opensymphony.xwork2.config.entities.PackageConfig;
 import com.opensymphony.xwork2.inject.Container;
 import com.opensymphony.xwork2.inject.Inject;
 import com.opensymphony.xwork2.spring.SpringObjectFactory;
-import com.opensymphony.xwork2.util.TextParseUtil;
 import com.opensymphony.xwork2.util.classloader.ReloadingClassLoader;
 import com.opensymphony.xwork2.util.finder.ClassFinder;
 import com.opensymphony.xwork2.util.finder.ClassLoaderInterface;
@@ -131,9 +130,15 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 	protected Set<Class> findActions() {
 		Set<Class> classes = CollectUtils.newHashSet();
 		try {
-			Set<String> fileProtocols = TextParseUtil.commaDelimitedStringToSet("jar");
+			@SuppressWarnings("serial")
+			Set<String> jarProtocols = new HashSet<String>() {
+				@Override
+				public boolean contains(Object o) {
+					return !String.valueOf(o).startsWith("file:");
+				}
+			};
 			ClassFinder finder = new ClassFinder(getClassLoaderInterface(), buildUrls(), false,
-					fileProtocols);
+					jarProtocols);
 			for (String packageName : actionPackages) {
 				Test<ClassFinder.ClassInfo> test = getPackageFinderTest(packageName);
 				classes.addAll(finder.findClasses(test));
@@ -168,13 +173,14 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 	private Set<URL> buildUrls() {
 		Set<URL> urls = CollectUtils.newHashSet();
 		Enumeration<URL> em;
+		ClassLoaderInterface classloader = getClassLoaderInterface();
 		try {
-			em = ProfileServiceImpl.class.getClassLoader().getResources("struts-plugin.xml");
+			em = classloader.getResources("struts-plugin.xml");
 			while (em.hasMoreElements()) {
 				URL url = em.nextElement();
 				urls.add(new URL(substringBeforeLast(url.toExternalForm(), "struts-plugin.xml")));
 			}
-			em = ProfileServiceImpl.class.getClassLoader().getResources("struts.xml");
+			em = classloader.getResources("struts.xml");
 			while (em.hasMoreElements()) {
 				URL url = em.nextElement();
 				urls.add(new URL(substringBeforeLast(url.toExternalForm(), "struts.xml")));
@@ -182,6 +188,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+		logger.info("build action from {}", urls);
 		return urls;
 	}
 

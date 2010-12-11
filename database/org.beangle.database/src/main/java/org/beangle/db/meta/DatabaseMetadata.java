@@ -55,8 +55,8 @@ public class DatabaseMetadata {
 
 	private static final String[] TYPES = { "TABLE", "VIEW" };
 
-	public TableMetadata getTableMetadata(String qualifiedName) {
-		return getTableMetadata(qualifiedName, null, null);
+	public TableMetadata getTableMetadata(String name) {
+		return getTableMetadata(name,null,null);
 	}
 
 	public TableMetadata getTableMetadata(String name, String schema, String catalog) {

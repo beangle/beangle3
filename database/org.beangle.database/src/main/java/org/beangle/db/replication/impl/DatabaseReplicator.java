@@ -81,20 +81,18 @@ public class DatabaseReplicator implements Replicator {
 	public void start() {
 		for (final TableMetadata table : tables) {
 			try {
-				String sourceSchema = source.getSchema();
 				int count = source.count(table);
 				if (count == 0) {
-					table.setSchema(target.getSchema());
+					//table.setSchema(target.getSchema());
 					target.pushData(table, Collections.emptyList());
 					logger.info("replicate {} data {}", table, 0);
 				} else {
 					int curr = 0;
 					PageLimit limit = new PageLimit(0, 5000);
 					while (curr < count) {
-						table.setSchema(sourceSchema);
 						limit.setPageNo(limit.getPageNo() + 1);
 						List<Object> data = source.getData(table, limit);
-						table.setSchema(target.getSchema());
+						//table.setSchema(target.getSchema());
 						int successed = target.pushData(table, data);
 						curr += data.size();
 						if (successed == data.size()) {
@@ -105,7 +103,6 @@ public class DatabaseReplicator implements Replicator {
 						}
 					}
 				}
-				table.setSchema(sourceSchema);
 			} catch (Exception e) {
 				logger.error("replicate  " + table.identifier(), e);
 			}

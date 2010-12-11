@@ -15,7 +15,6 @@
 /home/chaostone/.m2/repository/org/hsqldb/hsqldb/2.0.0/hsqldb-2.0.0.jar
 /home/chaostone/.m2/repository/org/slf4j/jcl-over-slf4j/1.6.1/jcl-over-slf4j-1.6.1.jar
 /home/chaostone/.m2/repository/com/beust/jcommander/1.10/jcommander-1.10.jar
-/home/chaostone/.m2/repository/junit/junit/3.8.1/junit-3.8.1.jar
 /home/chaostone/.m2/repository/ch/qos/logback/logback-classic/0.9.26/logback-classic-0.9.26.jar
 /home/chaostone/.m2/repository/ch/qos/logback/logback-core/0.9.26/logback-core-0.9.26.jar
 /home/chaostone/.m2/repository/org/osgi/osgi_R4_compendium/1.0/osgi_R4_compendium-1.0.jar
@@ -33,12 +32,13 @@
 /home/chaostone/.m2/repository/org/springframework/spring-orm/3.0.5.RELEASE/spring-orm-3.0.5.RELEASE.jar
 /home/chaostone/.m2/repository/org/springframework/spring-test/3.0.5.RELEASE/spring-test-3.0.5.RELEASE.jar
 /home/chaostone/.m2/repository/org/springframework/spring-tx/3.0.5.RELEASE/spring-tx-3.0.5.RELEASE.jar
-/home/chaostone/.m2/repository/org/testng/testng/5.14.2/testng-5.14.2.jar
 /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/resources.jar
 /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/rt.jar
 /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/jsse.jar
 /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/jce.jar
 /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/charsets.jar
+/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/netx.jar
+/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/plugin.jar
 /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/rhino.jar
 /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/ext/dnsns.jar
 /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/ext/pulse-java.jar
@@ -93,14 +93,13 @@
 /home/chaostone/.m2/repository/org/freemarker/freemarker/2.3.16/freemarker-2.3.16.jar
 /home/chaostone/.m2/repository/mockobjects/mockobjects-core/0.09/mockobjects-core-0.09.jar
 /home/chaostone/.m2/repository/mockobjects/mockobjects-jdk1.4/0.09/mockobjects-jdk1.4-0.09.jar
-/home/chaostone/.m2/repository/ognl/ognl/2.7.3/ognl-2.7.3.jar
 /home/chaostone/.m2/repository/oro/oro/2.0.8/oro-2.0.8.jar
-/home/chaostone/.m2/repository/org/apache/struts/struts2-core/2.1.8.1/struts2-core-2.1.8.1.jar
+/home/chaostone/.m2/repository/org/apache/struts/struts2-core/2.2.1/struts2-core-2.2.1.jar
 /home/chaostone/.m2/repository/com/jgeppert/struts2/jquery/struts2-jquery-plugin/2.2.2/struts2-jquery-plugin-2.2.2.jar
-/home/chaostone/.m2/repository/org/apache/struts/struts2-spring-plugin/2.1.8.1/struts2-spring-plugin-2.1.8.1.jar
+/home/chaostone/.m2/repository/org/apache/struts/struts2-spring-plugin/2.2.1/struts2-spring-plugin-2.2.1.jar
 /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/lib/tools.jar
 /home/chaostone/.m2/repository/org/apache/velocity/velocity/1.5/velocity-1.5.jar
-/home/chaostone/.m2/repository/com/opensymphony/xwork-core/2.1.6/xwork-core-2.1.6.jar
+/home/chaostone/.m2/repository/org/apache/struts/xwork/xwork-core/2.2.1/xwork-core-2.2.1.jar
 /home/chaostone/beangle/webapp/org.beangle.webapp.database/target/classes
 /home/chaostone/beangle/webapp/org.beangle.webapp.system/target/classes
 /home/chaostone/.m2/repository/commons-io/commons-io/1.4/commons-io-1.4.jar
@@ -108,5 +107,5 @@
 /home/chaostone/.m2/repository/com/octo/captcha/jcaptcha/1.0/jcaptcha-1.0.jar
 /home/chaostone/.m2/repository/com/octo/captcha/jcaptcha-api/1.0/jcaptcha-api-1.0.jar
 /home/chaostone/.m2/repository/org/jasig/cas/cas-client-core/3.1.9/cas-client-core-3.1.9.jar
-/home/chaostone/.m2/repository/org/apache/struts/struts2-config-browser-plugin/2.1.8.1/struts2-config-browser-plugin-2.1.8.1.jar
+/home/chaostone/.m2/repository/org/apache/struts/struts2-config-browser-plugin/2.2.1/struts2-config-browser-plugin-2.2.1.jar
 /home/chaostone/beangle/security/org.beangle.security.cas/target/classes

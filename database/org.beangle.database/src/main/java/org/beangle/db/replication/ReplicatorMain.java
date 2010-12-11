@@ -47,7 +47,7 @@ public class ReplicatorMain {
 
 		Set<String> tables = source.getMetadata().getTables().keySet();
 		DefaultTableFilter filter = new DefaultTableFilter();
-		filter.addInclude("EAMS_USST.CJ_T");
+		filter.addInclude("PUBLIC.PUBLIC.sys_authorities");
 		replicator.addTables(filter.filter(tables));
 		// replicator.addTables(tablenames);
 		replicator.start();

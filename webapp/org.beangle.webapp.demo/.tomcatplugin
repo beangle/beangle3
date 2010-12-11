@@ -30,6 +30,8 @@
         <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/ext/sunpkcs11.jar</webClassPathEntry>
         <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/jce.jar</webClassPathEntry>
         <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/jsse.jar</webClassPathEntry>
+        <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/netx.jar</webClassPathEntry>
+        <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/plugin.jar</webClassPathEntry>
         <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/resources.jar</webClassPathEntry>
         <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/rhino.jar</webClassPathEntry>
         <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/rt.jar</webClassPathEntry>
@@ -49,7 +51,6 @@
         <webClassPathEntry>M2_REPO/com/linuxense/javadbf/0.4.0/javadbf-0.4.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/com/octo/captcha/jcaptcha-api/1.0/jcaptcha-api-1.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/com/octo/captcha/jcaptcha/1.0/jcaptcha-1.0.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/com/opensymphony/xwork-core/2.1.6/xwork-core-2.1.6.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/com/oracle/jdbc/ojdbc14/10.2.0.1.0/ojdbc14-10.2.0.1.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-cli/commons-cli/1.2/commons-cli-1.2.jar</webClassPathEntry>
@@ -68,21 +69,20 @@
         <webClassPathEntry>M2_REPO/javassist/javassist/3.12.0.GA/javassist-3.12.0.GA.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/javax/servlet/jsp-api/2.0/jsp-api-2.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/javax/transaction/jta/1.1/jta-1.1.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/mockobjects/mockobjects-core/0.09/mockobjects-core-0.09.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/mockobjects/mockobjects-jdk1.4/0.09/mockobjects-jdk1.4-0.09.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/net/java/dev/inflector/inflector/0.7.0/inflector-0.7.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/net/sf/ehcache/ehcache-core/2.3.0/ehcache-core-2.3.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/net/sf/jxls/jxls-core/0.9.9/jxls-core-0.9.9.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/ognl/ognl/2.7.3/ognl-2.7.3.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/ognl/ognl/3.0/ognl-3.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/aopalliance/com.springsource.org.aopalliance/1.0.0/com.springsource.org.aopalliance-1.0.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/ant/ant-launcher/1.7.0/ant-launcher-1.7.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/ant/ant/1.7.0/ant-1.7.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/poi/poi/3.7/poi-3.7.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/apache/struts/struts2-config-browser-plugin/2.1.8.1/struts2-config-browser-plugin-2.1.8.1.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/apache/struts/struts2-core/2.1.8.1/struts2-core-2.1.8.1.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/apache/struts/struts2-spring-plugin/2.1.8.1/struts2-spring-plugin-2.1.8.1.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/apache/struts/struts2-config-browser-plugin/2.2.1/struts2-config-browser-plugin-2.2.1.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/apache/struts/struts2-core/2.2.1/struts2-core-2.2.1.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/apache/struts/struts2-spring-plugin/2.2.1/struts2-spring-plugin-2.2.1.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/apache/struts/xwork/xwork-core/2.2.1/xwork-core-2.2.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/velocity/velocity/1.5/velocity-1.5.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/beanshell/bsh/2.0b4/bsh-2.0b4.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/dbunit/dbunit/2.2/dbunit-2.2.jar</webClassPathEntry>
@@ -118,7 +118,6 @@
         <webClassPathEntry>M2_REPO/org/springframework/spring-test/3.0.5.RELEASE/spring-test-3.0.5.RELEASE.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/springframework/spring-tx/3.0.5.RELEASE/spring-tx-3.0.5.RELEASE.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/springframework/spring-web/3.0.5.RELEASE/spring-web-3.0.5.RELEASE.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/testng/testng/5.14.2/testng-5.14.2.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/oro/oro/2.0.8/oro-2.0.8.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/postgresql/postgresql/8.4-701.jdbc3/postgresql-8.4-701.jdbc3.jar</webClassPathEntry>
     </webClassPathEntries>

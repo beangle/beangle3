@@ -33,7 +33,6 @@
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-client-core</artifactId>
 			<version>3.1.9</version>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

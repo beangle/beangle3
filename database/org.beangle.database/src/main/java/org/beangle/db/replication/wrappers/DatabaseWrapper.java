@@ -92,16 +92,16 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 	}
 
 	public int pushData(final TableMetadata table, List<Object> datas) {
-		if (null == meta.getTableMetadata(table.identifier())) {
+		if (null == meta.getTableMetadata(TableMetadata.qualify(catalog, schema, table.getName()))) {
 			try {
-				execute(table.sqlCreateString(meta.getDialect()));
+				execute(table.genCreateSql(meta.getDialect()));
 			} catch (Exception e) {
-				logger.warn("cannot create table {}", table.identifier());
+				logger.warn("cannot create table {}", table.getName());
 				e.printStackTrace();
 			}
 		}
 		final String[] columnNames = table.getColumnNames();
-		String insertSql = table.sqlInsertString();
+		String insertSql = table.genInsertSql();
 		int successed = 0;
 		try {
 			Connection conn = getDataSource().getConnection();

@@ -26,7 +26,6 @@ public class DefaultTableFilter implements TableFilter {
 		for (String tableName : tables) {
 			boolean passed = includes.isEmpty();
 			for (String pattern : includes) {
-				// if (tableName.equalsIgnoreCase(pattern.toLowerCase())) {
 				if (StringUtils.startsWithIgnoreCase(tableName, pattern)) {
 					passed = true;
 				}

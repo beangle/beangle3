@@ -45,6 +45,7 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 	@Override
 	protected ObjectWrapper createObjectWrapper(ServletContext servletContext) {
 		BeansWrapper wrapper = new BeangleObjectWrapper(altMapWrapper);
+		// cacheBeanWrapper should be false in most case.
 		wrapper.setUseCache(cacheBeanWrapper);
 		return wrapper;
 	}
