@@ -11,11 +11,11 @@ import org.apache.commons.collections.Predicate;
  * 
  * @author chaostone
  */
-public class ValidNumScopePredicate implements Predicate {
+public class NumRangePredicate implements Predicate {
 
 	private final int floor, upper;
 
-	public ValidNumScopePredicate(final int floor, final int upper) {
+	public NumRangePredicate(final int floor, final int upper) {
 		this.floor = floor;
 		this.upper = upper;
 	}

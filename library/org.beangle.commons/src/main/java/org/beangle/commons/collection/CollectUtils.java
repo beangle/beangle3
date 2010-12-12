@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang.UnhandledException;
+
 public final class CollectUtils {
 
 	public static <E> List<E> newArrayList() {
@@ -27,9 +30,9 @@ public final class CollectUtils {
 		return new ArrayList<E>(c);
 	}
 
-	public static <E> List<E> newArrayList(E ... values) {
-		List<E> list= new ArrayList<E>(values.length);
-		for(E e:values){
+	public static <E> List<E> newArrayList(E... values) {
+		List<E> list = new ArrayList<E>(values.length);
+		for (E e : values) {
 			list.add(e);
 		}
 		return list;
@@ -82,5 +85,36 @@ public final class CollectUtils {
 
 	public static <E> Set<E> newHashSet(Collection<? extends E> c) {
 		return new HashSet<E>(c);
+	}
+
+	public static Map<?, ?> convertToMap(Collection<?> coll, String keyProperty) {
+		Map<Object, Object> map = newHashMap();
+		for (Object obj : coll) {
+			Object key = null;
+			try {
+				key = PropertyUtils.getProperty(obj, keyProperty);
+			} catch (Exception e) {
+				throw new UnhandledException(e);
+			}
+			map.put(key, obj);
+		}
+		return map;
+	}
+
+	public static Map<?, ?> convertToMap(Collection<?> coll, String keyProperty,
+			String valueProperty) {
+		Map<Object, Object> map = newHashMap();
+		for (Object obj : coll) {
+			Object key = null;
+			Object value = null;
+			try {
+				key = PropertyUtils.getProperty(obj, keyProperty);
+				value = PropertyUtils.getProperty(obj, valueProperty);
+			} catch (Exception e) {
+				throw new UnhandledException(e);
+			}
+			map.put(key, value);
+		}
+		return map;
 	}
 }

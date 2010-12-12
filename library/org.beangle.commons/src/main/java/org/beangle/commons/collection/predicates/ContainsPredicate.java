@@ -8,11 +8,11 @@ import java.util.Collection;
 
 import org.apache.commons.collections.Predicate;
 
-public class InCollectionPredicate implements Predicate {
+public class ContainsPredicate implements Predicate {
 
 	private final Collection<?> objs;
 
-	public InCollectionPredicate(Collection<?> objs) {
+	public ContainsPredicate(Collection<?> objs) {
 		super();
 		this.objs = objs;
 	}
