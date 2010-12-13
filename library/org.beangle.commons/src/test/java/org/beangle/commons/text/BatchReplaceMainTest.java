@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import org.testng.annotations.Test;
 
 @Test
-public class BatchReplacerTest {
+public class BatchReplaceMainTest {
 
 	public void test(){
 		String clause="<#include \"/template/head.ftl\"/>";

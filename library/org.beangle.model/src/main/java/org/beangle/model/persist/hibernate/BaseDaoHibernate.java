@@ -41,7 +41,7 @@ public abstract class BaseDaoHibernate extends HibernateDaoSupport {
 			Projection projection = null;
 			criteria.setFirstResult(0).setMaxResults(1);
 			projection = Projections.rowCount();
-			totalCount = ((Integer) criteria.setProjection(projection).uniqueResult()).intValue();
+			totalCount = ((Number) criteria.setProjection(projection).uniqueResult()).intValue();
 		} else {
 			List<T> list = criteria.list();
 			totalCount = list.size();
