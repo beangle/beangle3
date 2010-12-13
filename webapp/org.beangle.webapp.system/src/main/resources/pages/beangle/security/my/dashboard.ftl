@@ -1,7 +1,8 @@
-<#include "/template/head.ftl"/>
+[#ftl]
+[#include "/template/head.ftl"/]
 <link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css">
 
-<@sj.head />
+[@sj.head /]
 <body>
   <style>
 	.column {
@@ -18,28 +19,28 @@
   </style>
   <table id="userInfoBar"></table>
   
-  <@sj.div id="column1" cssClass="column" sortable="true"
+  [@sj.div id="column1" cssClass="column" sortable="true"
    sortableConnectWith=".column" sortablePlaceholder="ui-state-highlight"
     sortableForcePlaceholderSize="true" sortableHandle="div.ui-widget-header"
-     sortableCursor="crosshair" sortableOnUpdateTopics="onupdate">
-    <#include "../user/panels/info_portlet.ftl"/>
-	<#include "../user/panels/manage_portlet.ftl"/>
-	<#include "../user/panels/online_portlet.ftl"/>
-	<#include "../user/panels/session_portlet.ftl"/>
-  </@sj.div>
+     sortableCursor="crosshair" sortableOnUpdateTopics="onupdate"]
+    [#include "../user/panels/info_portlet.ftl"/]
+	[#include "../user/panels/manage_portlet.ftl"/]
+	[#include "../user/panels/online_portlet.ftl"/]
+	[#include "../user/panels/session_portlet.ftl"/]
+  [/@]
   
-  <@sj.div id="column2" cssClass="column" sortable="true"
+  [@sj.div id="column2" cssClass="column" sortable="true"
    sortableConnectWith=".column" sortablePlaceholder="ui-state-highlight"
     sortableForcePlaceholderSize="true" sortableHandle="div.ui-widget-header"
-     sortableCursor="crosshair" sortableOnUpdateTopics="onupdate">
-	<#include "../user/panels/restriction_portlet.ftl"/>
-	<#include "../user/panels/menu_portlet.ftl"/>
-  </@sj.div>
+     sortableCursor="crosshair" sortableOnUpdateTopics="onupdate"]
+	[#include "../user/panels/restriction_portlet.ftl"/]
+	[#include "../user/panels/menu_portlet.ftl"/]
+  [/@]
 
   <script type="text/javascript">
    var bar = new ToolBar('userInfoBar','用户权限面板',null,true,true);
-   bar.setMessage('<@getMessage/>');
-   bar.addClose("<@text name="action.close"/>");
+   bar.setMessage('[@getMessage/]');
+   bar.addClose("[@text name="action.close"/]");
    
    function _wi_tm(moudleId){
        var id= document.getElementById(moudleId);   
@@ -57,4 +58,4 @@
     });
   </script>
  </body>
-<#include "/template/foot.ftl"/>
+[#include "/template/foot.ftl"/]

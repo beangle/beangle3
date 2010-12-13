@@ -1,7 +1,8 @@
-<#include "/template/head.ftl"/>
+[#ftl]
+[#include "/template/head.ftl"/]
 <BODY LEFTMARGIN="0" TOPMARGIN="0">
-<#assign labInfo>限制参数和参数组管理</#assign>  
-<#include "/template/back.ftl"/> 
+[#assign labInfo]限制参数和参数组管理[/#assign]  
+[#include "/template/back.ftl"/] 
 <script language="JavaScript" type="text/JavaScript" src="${base}/static/scripts/itemSelect.js"></script>
 <table width="100%">
    <tr>
@@ -21,12 +22,12 @@
 	      </td>
 	   </tr>
 	  </table>
-   <@table.table width="100%" id="paramListTable">
-     <@table.thead>
-      <@table.td text="序号"/>
-      <@table.td width="70%" text="名称"/>
-      <@table.td text="操作"/>
-     </@>
+   [@table.table width="100%" id="paramListTable"]
+     [@table.thead]
+      [@table.td text="序号"/]
+      [@table.td width="70%" text="名称"/]
+      [@table.td text="操作"/]
+     [/@]
 	 <tr>
 	   <td align="center">0</td>
 	   <td align="center" class="padding" style="height:20px;"id="defaultGroup"
@@ -34,15 +35,15 @@
         onmouseover="MouseOver(event)" onmouseout="MouseOut(event)">所有参数</td>
        <td></td>
 	 </tr>
-     <@table.tbody simplePageBar=true datas=paramGroups;paramGroup,paramGroup_index>
+     [@table.tbody simplePageBar=true datas=paramGroups;paramGroup,paramGroup_index]
       <td>${paramGroup_index + 1}</td>
       <td class="padding" style="height:20px;" onclick="javascript:setSelectedRow(paramListTable,this);searchParam('${paramGroup.id}')">
         ${paramGroup.name}
       </td>
       <td><a href="#" onclick="removeGroup(${paramGroup.id})">删除</a></td>
     </tr>
-	</@>
-   </@>
+	[/@]
+   [/@]
    </td>
    <td>
    <iframe  src="param.action?method=search" id="paramFrame" name="paramFrame" 

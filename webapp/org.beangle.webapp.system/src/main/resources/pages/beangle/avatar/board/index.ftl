@@ -1,6 +1,6 @@
-<#include "/template/head.ftl"/>
-<html>
-<@sj.head />
+[#ftl]
+[#include "/template/head.ftl"/]
+[@sj.head /]
 
 <BODY LEFTMARGIN="0" TOPMARGIN="0">
 <table width="100%" border="0">
@@ -10,7 +10,7 @@
           <B>照片库信息</B>
       </td>
       <td class="infoTitle" width="20%" style="height:22px;">
- 		<font color="red">&nbsp;<@s.actionmessage/></font>
+ 		<font color="red">&nbsp;[@s.actionmessage/]</font>
       </td>
     </tr>
 </table>
@@ -23,34 +23,34 @@
 	     <tr>
 	       <td align="right">照片总数量:</td><td>${names.total!}</td>
 	     </tr>
-	     <#if !avatarBase.readOnly>
+	     [#if !avatarBase.readOnly]
 	     <tr>
 	       <td align="right">打包上传</td><td>
-		    <@s.form name="uploadForm" action="board!uploadBatch.action" theme="simple" method="POST"  enctype="multipart/form-data">
-		        <@s.file name="avatar"/><@s.submit value="提交" />
-		    </@s.form>
+		    [@s.form name="uploadForm" action="board!uploadBatch.action" theme="simple" method="POST"  enctype="multipart/form-data"]
+		        [@s.file name="avatar"/][@s.submit value="提交" /]
+		    [/@s.form]
    	       </td>
 	     </tr>
 	     <tr>
 	       <td colspan="2" align="center">上传文件为zip，不接受rar。大小在50M以内</td>
 	     </tr>
-	     </#if>
+	     [/#if]
 	   <table>
 	</div>
 
 	<div class="result ui-widget-content ui-corner-all" style="width:700px" align="left">
 	<table align="center" id="avatarPanel" width="90%">
-	    <#list names?chunk(5) as nameList>
+	    [#list names?chunk(5) as nameList]
 	    <tr>
-	      <#list nameList as name>
+	      [#list nameList as name]
 	      <td style="padding:5px" align="center">
 	          <img src="${base}/avatar/user.action?user.name=${name}" title="${name}" alt="${name}" width="120px" align="top"><br>
 	          <a href="board!info.action?user.name=${name}" title="点击查看照片详情">${name}</a>
 	      </td>
-	      </#list>
+	      [/#list]
 	   </tr>
-	   </#list>
-	   <@page.bar pageId="avatarPanel" curPage=names/>
+	   [/#list]
+	   [@page.bar pageId="avatarPanel" curPage=names/]
 	</table>
 	</div>
 </div>
@@ -61,4 +61,4 @@ function pageGoWithSize(pageNo,pageSize){
 }
 </script>
 </body>
-<#include "/template/foot.ftl"/>
+[#include "/template/foot.ftl"/]

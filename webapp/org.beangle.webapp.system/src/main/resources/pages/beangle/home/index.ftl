@@ -1,4 +1,5 @@
-<#include "/template/simpleHead.ftl"/>
+[#ftl]
+[#include "/template/simpleHead.ftl"/]
 <style>
 #BakcGroup_image_td {
   background-repeat: repeat;
@@ -12,39 +13,39 @@
 		<td ></td>
      	<td>
      		<a href="${base}/security/my.action" target="_blank" title="查看登录记录">${user.fullname}(${user.name})</a>&nbsp;&nbsp;
-     		身份:<#if categories?size==1>${categories?first.name}<#else>
+     		身份:[#if categories?size==1]${categories?first.name}[#else]
      		<select name="security.categoryId" onchange="changeUserCategory(this.value);" style="width:100px" >
-     		<#list categories as category><option value="${category.id}" <#if Session['security.categoryId']==category.id>selected</#if>>${category.name}</option></#list>
+     		[#list categories as category]<option value="${category.id}" [#if (Session['security.categoryId']!0)==category.id]selected[/#if]>${category.name}</option>[/#list]
      		</select>
-     		</#if>
+     		[/#if]
         </td>
         <td width="140px">
-         <a href="#" onclick="editAccount()"><@text 'action.myAccount'/></a>&nbsp;&nbsp;
-         <a href="#" onclick="home()"><@text 'action.backHome'/></a>&nbsp;&nbsp;
-         <a href="#" onclick="logout()"><@text 'action.logout'/></a>
+         <a href="#" onclick="editAccount()">[@text 'action.myAccount'/]</a>&nbsp;&nbsp;
+         <a href="#" onclick="home()">[@text 'action.backHome'/]</a>&nbsp;&nbsp;
+         <a href="#" onclick="logout()">[@text 'action.logout'/]</a>
         </td>
         <td width="5px"><td>
 	</tr>
 </table>
-<#--
+[#--
 <table  style="width:100%;background-color:#e0ecff" border="0" cellpadding="0" cellspacing="0">
 	<tr height='20px'>
-		<#macro i18nNameTitle(entity)><#if language?index_of("en")!=-1><#if (entity.engTitle!"")?trim=="">${entity.title!}<#else>${entity.engTitle!}</#if><#else><#if entity.title!?trim!="">${entity.title!}<#else>${entity.engTitle!}</#if></#if></#macro>      
-		<#list menus! as module>
+		[#macro i18nNameTitle(entity)][#if language?index_of("en")!=-1][#if (entity.engTitle!"")?trim==""]${entity.title!}[#else]${entity.engTitle!}[/#if][#else][#if entity.title!?trim!=""]${entity.title!}[#else]${entity.engTitle!}[/#if][/#if][/#macro]      
+		[#list menus! as module]
 		<td align="center" width="100">
         <A style="cursor:hand" HREF="home.action?method=moduleList&parentCode=${module.code}" target="leftFrame" >
-          <@i18nNameTitle module/>
+          [@i18nNameTitle module/]
         </A>
 		</td>
-		</#list>
+		[/#list]
 		<td>&nbsp;</td>
 	</tr>
 </table>
- -->
+ --]
 <table id="mainTable" style="width:100%;height:95%" cellpadding="0" cellspacing="0" border="0">
  <tr>
    <td style="HEIGHT:100%;width:14%" border="0" id="leftTD" valign="top">
-	   <#include "menus.ftl"/>
+	   [#include "menus.ftl"/]
    </td>
    <td width="0%" height="100%" bgcolor="#ffffff" style="cursor:w-resize;">
 	   <a onClick="horizontalSwitch('left_tag')">
@@ -95,4 +96,4 @@
       }
    }
 </script>
-<#include "/template/foot.ftl"/>
+[#include "/template/foot.ftl"/]

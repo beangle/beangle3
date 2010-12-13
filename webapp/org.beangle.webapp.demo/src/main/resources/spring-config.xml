@@ -1,22 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
-	<!--
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName">
-			<value>org.hsqldb.jdbcDriver</value>
-		</property>
-		<property name="url">
-			<value>jdbc:hsqldb:file:/home/chaostone/apache-tomcat-6.0.26/db/beangle</value>
-		</property>
-		<property name="username">
-			<value>sa</value>
-		</property>
-		<property name="password">
-			<value></value>
-		</property>
-	</bean>
-	-->
-	
 	<bean id="dataSource"
 		class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName">

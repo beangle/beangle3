@@ -1,4 +1,5 @@
-<#include "/template/head.ftl"/>
+[#ftl]
+[#include "/template/head.ftl"/]
 <body> 
  <table id="passwordBar"></table>
  <form name="pageGoForm" method="post" action="" target="contentFrame"></form>
@@ -22,8 +23,8 @@
    changePassword();
    
    var bar = new ToolBar('passwordBar','密码修改',null,true,true);
-   bar.setMessage('<@getMessage/>');
+   bar.setMessage('[@getMessage/]');
    bar.addHelp();
   </script>
 </body>
-<#include "/template/head.ftl"/>
+[#include "/template/head.ftl"/]

@@ -1,3 +1,4 @@
+[#ftl]
    <table class="searchTable" onkeypress="DWRUtil.onReturn(event, search)">
     <tr>
       <td  colspan="2" class="infoTitle" align="left" valign="bottom" >
@@ -21,16 +22,16 @@
    </tr>
    <tr>
     <td class="title">可见范围:</td>
-    <td><@resourceScopeSelect -1/></td>
+    <td>[@resourceScopeSelect -1/]</td>
    </tr>
-   <tr><td><@text "common.status"/>:</td><td><select  name="resource.enabled" style="width:100px;" >
+   <tr><td>[@text "common.status"/]:</td><td><select  name="resource.enabled" style="width:100px;" >
 	   		<option value="" selected>..</option>
-	   		<option value="true"><@text "action.activate"/></option>
-	   		<option value="false" ><@text "action.freeze"/></option>
+	   		<option value="true">[@text "action.activate"/]</option>
+	   		<option value="false" >[@text "action.freeze"/]</option>
 	  </select>
 	</td>
    </tr>
-   <tr><td colspan="2" align="center"><button onclick="search();"><@text name="action.query"/></button></td></tr>
+   <tr><td colspan="2" align="center"><button onclick="search();">[@text name="action.query"/]</button></td></tr>
    </form>
   </table>
 

@@ -1,4 +1,5 @@
-<#include "/template/head.ftl"/>
+[#ftl]
+[#include "/template/head.ftl"/]
 <html>
  <BODY LEFTMARGIN="0" TOPMARGIN="0">
 <table width="100%">
@@ -8,7 +9,7 @@
           <B>上传自己的照片</B>
       </td>
       <td class="infoTitle" width="20%" style="height:22px;">
- 		<font color="red">&nbsp;<@s.actionerror/></font>
+ 		<font color="red">&nbsp;[@s.actionerror/]</font>
       </td>
     </tr>
     <tr>
@@ -20,9 +21,9 @@
    <table  align='center' width="100%">
      <tr>
       <td>
-	    <@s.form name="uploadForm" action="/avatar/my-upload!upload.action" method="POST"  enctype="multipart/form-data">
-	        <@s.file name="avatar" label="文件目录"/><@s.submit value="提交"/>
-	    </@s.form>
+	    [@s.form name="uploadForm" action="/avatar/my-upload!upload.action" method="POST"  enctype="multipart/form-data"]
+	        [@s.file name="avatar" label="文件目录"/][@s.submit value="提交"/]
+	    [/@s.form]
      </td>
     </tr>
    </form>
@@ -52,4 +53,4 @@
   }
 </script>
  </body>
-<#include "/template/foot.ftl"/>
+[#include "/template/foot.ftl"/]

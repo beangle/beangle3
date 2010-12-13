@@ -806,13 +806,16 @@ function EntityAction(formId,entity,action,actionQueryStr){
 	this.entity=entity;
 	this.action=action;
 	this.actionQueryStr=actionQueryStr;
+	this.addParam=function(name,value){
+		addInput(this.getForm(),name,value);
+	}
 	this.getForm=function (){
 		return  document.getElementById(this.formId);
 	};
 	
 	this.remove=function(){
 		return new NamedFunction('remove',function(){
-			singleAction(formId,'remove','确认删除?');
+			submitIdAction(formId,'remove',false,'确认删除?');
 		});
 	}
 	this.add = function(){
@@ -823,13 +826,13 @@ function EntityAction(formId,entity,action,actionQueryStr){
 	
 	this.info = function(){
 		return new NamedFunction('info',function(){
-			singleAction(formId,'info');
+			submitIdAction(formId,'info',false)
 		});
 	}
 	
 	this.edit = function (){
 		return new NamedFunction('edit',function(){
-			singleAction(formId,'edit');
+			submitIdAction(formId,'edit',false);
 		});
 	}
 	
@@ -837,13 +840,12 @@ function EntityAction(formId,entity,action,actionQueryStr){
 		return new NamedFunction(methodName,function(){
 			form=getEntityAction(formId).getForm();
 			addHiddens(form,extparams);
-			singleAction(formId,methodName,confirmMsg);
+			submitIdAction(formId,method,false,confirmMsg);
 		});
 	}
 	
 	this.multi = function(methodName,confirmMsg,extparams){
 		return new NamedFunction(methodName,function(){
-		alert(extparams)
 			try {
 				form = getEntityAction(formId).getForm();
 				addHiddens(form, extparams);
@@ -895,12 +897,12 @@ function submitIdAction(formId,method,multiId,confirmMsg){
 		submitId(aform.getForm(),aform.entity + "Id",multiId);
 	}
 }
-function multiAction(formId,method,confirmMsg){
-	submitIdAction(formId,method,true,confirmMsg);
+function multiAction(method,confirmMsg){
+	submitIdAction(null,method,true,confirmMsg);
 }
 
-function singleAction(formId,method,confirmMsg){
-	submitIdAction(formId,method,false,confirmMsg);
+function singleAction(method,confirmMsg){
+	submitIdAction(null,method,false,confirmMsg);
 }
 
 function edit(formId) {
@@ -933,24 +935,24 @@ function add(formId){
 	submit(form,aform.action + "?method=edit");
 }
 
-function exportList(format,formId){
-	aform=getEntityAction(formId);
-	form=aform.getForm();
-	form.action=action + "?method=export";
-	if(null==format){
-		format="xls";
+function exportList(format, formId){
+	aform = getEntityAction(formId);
+	form = aform.getForm();
+	form.action = action + "?method=export";
+	if (null == format) {
+		format = "xls";
 	}
-	if(!confirm("是否导出查询条件内的所有数据?")) return;
+	if (!confirm("是否导出查询条件内的所有数据?")) return;
 	if (typeof keys != "undefined") {
 		addInput(form, "keys", keys);
 	}
-	if(typeof titles != "undefined"){
-		addInput(form,"titles",titles);
+	if (typeof titles != "undefined") {
+		addInput(form, "titles", titles);
 	}
-	addInput(form,"format",format);
-	addHiddens(form,actionQueryStr);
+	addInput(form, "format", format);
+	addHiddens(form, actionQueryStr);
 	
-	if(typeof configExport =="function"){
+	if (typeof configExport == "function") {
 		configExport();
 	}
 	form.submit();

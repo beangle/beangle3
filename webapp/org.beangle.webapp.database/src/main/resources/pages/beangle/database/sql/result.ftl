@@ -33,19 +33,19 @@
 	</div>
 [/@]
 
-[#if (results?size>0)]
+[#if (results?size]0)]
 <label style="padding-left:20px;"><B>查询结果</B></label>
 [@sj.tabbedpanel id="datatabs"]
 [#list results  as result]
 	[@sj.tab id="datatab${result_index}" target="datat${result_index}" label="sql${result_index+1}"/]
 	<div id="datat${result_index}" class="data">
 	${result.sql}
-	[#if result.datas?? && (result.datas?size>0)]
+	[#if result.datas?? && (result.datas?size]0)]
 		<button onclick="exportData(${result_index},0)">-导出全部-</button>
 		<button onclick="exportData(${result_index},1)">-导出本页-</button>
 	[/#if]
 	[#if result.datas??]
-		[#if (result.datas?size>0)]
+		[#if (result.datas?size]0)]
 			[@table.table id="table${result_index}" width="100%" sortable="false" align="center"]
 			  [@table.thead]
 			      [@table.td width="5%" text="序号"/]
@@ -64,7 +64,7 @@
 			无数据
 		[/#if]
 	[#else]
-	  [#if (result.updateCount>0)]影响记录数:<B>${result.updateCount}</B>[/#if]
+	  [#if (result.updateCount]0)]影响记录数:<B>${result.updateCount}</B>[/#if]
 	[/#if]
 	[#if result.msg??]
 	[@sj.div id="msg" cssClass="result ui-widget-content ui-corner-all data" ]

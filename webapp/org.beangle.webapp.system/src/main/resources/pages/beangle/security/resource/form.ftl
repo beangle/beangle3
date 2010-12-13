@@ -1,9 +1,10 @@
-<#include "/template/head.ftl"/>
-<#include "scope.ftl"/>
+[#ftl]
+[#include "/template/head.ftl"/]
+[#include "scope.ftl"/]
  <script language="JavaScript" type="text/JavaScript" src="${base}/static/scripts/validator.js"></script>
  <body>
- <#assign labInfo><@text name="security.resource.info"/></#assign>  
-<#include "/template/back.ftl"/> 
+ [#assign labInfo][@text name="security.resource.info"/][/#assign]  
+[#include "/template/back.ftl"/] 
    <form name="moduleForm" action="resource.action?method=save" method="post">
    <input type="hidden" name="resource.id" value="${(resource.id)!}" style="width:200px;" />
    <input type="hidden" name="restrictObjectIds" value=""/>
@@ -11,10 +12,10 @@
     <td>
      <table width="80%" class="formTable" align="center">
 	   <tr class="thead">
-	     <td  colspan="2"><@text name="security.resource.info"/></td>
+	     <td  colspan="2">[@text name="security.resource.info"/]</td>
 	   </tr>
 	   <tr>
-	     <td class="title" width="25%" id="f_name"><@text name="common.name"/><font color="red">*</font>:</td>
+	     <td class="title" width="25%" id="f_name">[@text name="common.name"/]<font color="red">*</font>:</td>
 	     <td >
           <input type="text" name="resource.name" value="${resource.name!}" style="width:200px;" />     
          </td>
@@ -26,7 +27,7 @@
          </td>
 	   </tr>
 	   <tr>
-	     <td class="title" id="f_description"><@text name="common.description"/>:</td>
+	     <td class="title" id="f_description">[@text name="common.description"/]:</td>
 	     <td >
 	        <input type="text" name="resource.description" value="${resource.description!}"/>
          </td>
@@ -34,25 +35,25 @@
 	   <tr>
 	     <td class="title" >可见范围:</td>
 	     <td>
-	        <@resourceScopeRadio resource.scope/>
+	        [@resourceScopeRadio resource.scope/]
          </td>
 	   </tr>
 		<tr>
-			<td class="title"><@text "common.status"/>:</td>
+			<td class="title">[@text "common.status"/]:</td>
 			<td>
-				<input type="radio" id="status_enabled" name="resource.enabled" value='1' <#if resource.enabled!true>checked</#if>>
-				<label for="status_enabled"><@text "action.activate"/></label>
-				<input type="radio" id="status_disabled" name="resource.enabled" value='0' <#if !(resource.enabled!true)>checked</#if>>
-				<label for="status_disabled"><@text "action.freeze"/></label>
+				<input type="radio" id="status_enabled" name="resource.enabled" value='1' [#if resource.enabled!true]checked[/#if]>
+				<label for="status_enabled">[@text "action.activate"/]</label>
+				<input type="radio" id="status_disabled" name="resource.enabled" value='0' [#if !(resource.enabled!true)]checked[/#if]>
+				<label for="status_disabled">[@text "action.freeze"/]</label>
 			</td>
 		</tr>
 		 <tr>
 	     <td class="title">适用用户:</td>
 	     <td>
-	      <#list categories as category>
-	      <input name="categoryIds" value="${category.id}" type="checkbox" id="categoryIds${category.id}" <#if resource.categories?seq_contains(category)>checked</#if>/>
+	      [#list categories as category]
+	      <input name="categoryIds" value="${category.id}" type="checkbox" id="categoryIds${category.id}" [#if resource.categories?seq_contains(category)]checked[/#if]/]
 	       <label for="categoryIds${category.id}" >${category.name}</label>
-	      </#list>
+	      [/#list]
 	   </tr>
 		<tr>
 	    <td class="title" >数据限制对象:</td>
@@ -61,9 +62,9 @@
 	      <tr>
 	       <td>
 	        <select name="RestrictObjects" MULTIPLE size="10" style="width:200px" onDblClick="JavaScript:moveSelectedOption(this.form['RestrictObjects'], this.form['SelectedRestrictObjects'])" >
-	         <#list restrictObjects as object>
+	         [#list restrictObjects as object]
 	          <option value="${object.id}">${object.name}</option>
-	         </#list>
+	         [/#list]
 	        </select>
 	       </td>
 	       <td  valign="middle">
@@ -75,9 +76,9 @@
 	       </td> 
 	       <td  class="normalTextStyle">
 	        <select name="SelectedRestrictObjects" MULTIPLE size="10" style="width:200px;" onDblClick="JavaScript:moveSelectedOption(this.form['SelectedRestrictObjects'], this.form['RestrictObjects'])">
-	         <#list resource.objects! as object>
+	         [#list resource.objects! as object]
 	          <option value="${object.id}">${object.name}</option>
-	         </#list>
+	         [/#list]
 	        </select>
 	       </td>
 	      </tr>
@@ -86,8 +87,8 @@
 	   </tr>
 	   <tr class="tfoot">
 	     <td colspan="6" >
-	       <input type="button" value="<@text name="action.submit"/>" name="button1" onClick="save(this.form)" class="buttonStyle" />
-	       <input type="reset"  name="reset1" value="<@text name="action.reset"/>" class="buttonStyle" />
+	       <input type="button" value="[@text name="action.submit"/]" name="button1" onClick="save(this.form)" class="buttonStyle" />
+	       <input type="reset"  name="reset1" value="[@text name="action.reset"/]" class="buttonStyle" />
 	     </td>
 	   </tr>
      </table>
@@ -100,7 +101,7 @@
      form['restrictObjectIds'].value = getAllOptionValue(form.SelectedRestrictObjects);  
      var a_fields = {
          'resource.title':{'l':'标题', 'r':true, 't':'f_title'},
-         'resource.name':{'l':'<@text name="common.name"/>', 'r':true,'t':'f_name'}
+         'resource.name':{'l':'[@text name="common.name"/]', 'r':true,'t':'f_name'}
      };
      var v = new validator(form, a_fields, null);
      if (v.exec()) {
@@ -109,4 +110,4 @@
    }
   </script>
  </body>
-<#include "/template/foot.ftl"/>
+[#include "/template/foot.ftl"/]

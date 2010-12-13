@@ -9,6 +9,7 @@
 /home/chaostone/.m2/repository/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar
 /home/chaostone/.m2/repository/commons-codec/commons-codec/1.4/commons-codec-1.4.jar
 /home/chaostone/.m2/repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar
+/home/chaostone/.m2/repository/commons-io/commons-io/1.4/commons-io-1.4.jar
 /home/chaostone/.m2/repository/commons-lang/commons-lang/2.5/commons-lang-2.5.jar
 /home/chaostone/.m2/repository/commons-logging/commons-logging/99.0-does-not-exist/commons-logging-99.0-does-not-exist.jar
 /home/chaostone/.m2/repository/com/google/inject/guice/2.0/guice-2.0.jar
@@ -85,6 +86,8 @@
 /home/chaostone/beangle/security/org.beangle.security.web/target/classes
 /home/chaostone/beangle/library/org.beangle.web/target/classes
 /home/chaostone/.m2/repository/org/springframework/spring-web/3.0.5.RELEASE/spring-web-3.0.5.RELEASE.jar
+/home/chaostone/beangle/security/org.beangle.security.cas/target/classes
+/home/chaostone/.m2/repository/org/jasig/cas/cas-client-core/3.1.9/cas-client-core-3.1.9.jar
 /home/chaostone/beangle/struts2/org.beangle.struts2/target/classes
 /home/chaostone/.m2/repository/javax/servlet/jsp-api/2.0/jsp-api-2.0.jar
 /home/chaostone/.m2/repository/commons-fileupload/commons-fileupload/1.2.1/commons-fileupload-1.2.1.jar
@@ -102,10 +105,7 @@
 /home/chaostone/.m2/repository/org/apache/struts/xwork/xwork-core/2.2.1/xwork-core-2.2.1.jar
 /home/chaostone/beangle/webapp/org.beangle.webapp.database/target/classes
 /home/chaostone/beangle/webapp/org.beangle.webapp.system/target/classes
-/home/chaostone/.m2/repository/commons-io/commons-io/1.4/commons-io-1.4.jar
 /home/chaostone/.m2/repository/com/jhlabs/imaging/01012005/imaging-01012005.jar
 /home/chaostone/.m2/repository/com/octo/captcha/jcaptcha/1.0/jcaptcha-1.0.jar
 /home/chaostone/.m2/repository/com/octo/captcha/jcaptcha-api/1.0/jcaptcha-api-1.0.jar
-/home/chaostone/.m2/repository/org/jasig/cas/cas-client-core/3.1.9/cas-client-core-3.1.9.jar
 /home/chaostone/.m2/repository/org/apache/struts/struts2-config-browser-plugin/2.2.1/struts2-config-browser-plugin-2.2.1.jar
-/home/chaostone/beangle/security/org.beangle.security.cas/target/classes

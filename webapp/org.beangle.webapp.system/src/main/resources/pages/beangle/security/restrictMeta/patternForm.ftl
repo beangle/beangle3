@@ -1,7 +1,8 @@
+[#ftl]
 <script language="JavaScript" type="text/JavaScript" src="${base}/static/scripts/validator.js"></script>
-<#assign labInfo><@msg.text name="security.restrictionPattern.info"/></#assign>  
-<#include "/template/back.ftl"/>
-   <@s.form id="moduleForm" action="restrict-meta!savePattern" theme="simple" target="ui-tabs-1">
+[#assign labInfo][@msg.text name="security.restrictionPattern.info"/][/#assign]  
+[#include "/template/back.ftl"/]
+   [@s.form id="moduleForm" action="restrict-meta!savePattern" theme="simple" target="ui-tabs-1"]
    <input type="hidden" name="pattern.id" value="${(pattern.id)!}" style="width:200px;" />
    <tr>
     <td>
@@ -25,22 +26,22 @@
     <td class="title" id="f_params">适应对象:</td>
     <td >
         <select name="pattern.object.id"  style="width:200px">
-         <#list objects as group>
-          <option value="${group.id}" <#if group.id=(pattern.object.id)!(0)>selected</#if>>${group.name}</option>
-         </#list>
+         [#list objects as group]
+          <option value="${group.id}" [#if group.id=(pattern.object.id)!(0)]selected[/#if]>${group.name}</option>
+         [/#list]
         </select>
     </td>
    </tr>
 	   <tr class="tfoot">
 	     <td colspan="6">
-	       <input type="button" value="<@msg.text name="action.submit"/>" name="button1" onClick="save(this.form)" class="buttonStyle" />
-	       <input type="reset"  name="reset1" value="<@msg.text name="action.reset"/>" class="buttonStyle" />
+	       <input type="button" value="[@msg.text name="action.submit"/]" name="button1" onClick="save(this.form)" class="buttonStyle" />
+	       <input type="reset"  name="reset1" value="[@msg.text name="action.reset"/]" class="buttonStyle" />
 	     </td>
 	   </tr>
      </table>
     </td>
    </tr>
-   </@s.form>
+   [/@s.form]
   </table>
   <script language="javascript" >
    function save(form){

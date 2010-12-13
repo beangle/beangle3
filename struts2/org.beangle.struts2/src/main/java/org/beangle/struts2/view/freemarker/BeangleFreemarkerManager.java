@@ -109,6 +109,7 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 			while (em.hasMoreElements()) {
 				properties.putAll(getProperties((URL) em.nextElement()));
 			}
+			StringBuilder sb = new StringBuilder();
 			for (Iterator<Object> iter = properties.keySet().iterator(); iter.hasNext();) {
 				String key = (String) iter.next();
 				String value = (String) properties.get(key);
@@ -117,8 +118,9 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 				if (value == null) { throw new IOException(
 						"init-param without param-value.  Maybe the freemarker.properties is not well-formed?"); }
 				addSetting(key, value);
-				logger.info("freemarker's {} = {}", key, value);
+				sb.append(StringUtils.leftPad(key, 21)).append(" : ").append(value).append('\n');
 			}
+			logger.info("Freemarker properties: ->\n{} ", sb);
 			this.config.setSharedVariable("pagechecker", new PageChecker());
 		} catch (IOException e) {
 			logger.error("Error while loading freemarker.properties", e);

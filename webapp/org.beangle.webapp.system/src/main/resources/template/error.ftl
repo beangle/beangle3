@@ -1,12 +1,13 @@
-<#include "/template/head.ftl"/>
+[#ftl]
+[#include "/template/head.ftl"/]
 <BODY >
 <table  width="100%" height="20" border="0" cellpadding="0" cellspacing="0">
   <tr> 
     <td align="center">     
       <span class="contentTableTitleTextStyle">
-       <font color="red"><@s.actionerror/></font>
+       <font color="red">[@s.actionerror/]</font>
       </span><br><br>
-      [<a href="javascript:history.back();"> <@text name="attr.backPage"/> </a>]     
+      [<a href="javascript:history.back();"> [@text name="attr.backPage"/]</a>]     
       [<a href="javascript:displayStactTrace()">显示日志</a>]      
     </td>
   </tr>
@@ -41,4 +42,4 @@ function displayStactTrace(){
 }
 </script>
 </BODY>
-<#include "/template/foot.ftl"/>
+[#include "/template/foot.ftl"/]

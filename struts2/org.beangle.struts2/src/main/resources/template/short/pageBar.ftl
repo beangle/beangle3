@@ -1,3 +1,4 @@
+[#ftl]
 <table width="100%" class="pagebar">
 	<tr class="tfoot">
 		<td colspan="13" align="center">

@@ -1,20 +1,21 @@
-    <@sj.tabbedpanel id="localtabs">
-      <@sj.tab id="tab1" target="tone" label="java"/>
-      <@sj.tab id="tab2" target="ttwo" label="os"/>
-      <@sj.tab id="tab3" target="tthree" label="user"/>
-      <@sj.tab id="tab4" target="tfour" label="extra"/>
+[#ftl]
+    [@sj.tabbedpanel id="localtabs"]
+      [@sj.tab id="tab1" target="tone" label="java"/]
+      [@sj.tab id="tab2" target="ttwo" label="os"/]
+      [@sj.tab id="tab3" target="tthree" label="user"/]
+      [@sj.tab id="tab4" target="tfour" label="extra"/]
       <div id="tone">
 		<table >
 			<thead class="thead">
 				<td>系统属性</td>
 				<td>值</td>
 			</thead>
-			<#list javaProps?keys?sort as key>
+			[#list javaProps?keys?sort as key]
 			<tr>
-				<td><@msg.text name=key/></td>
+				<td>[@msg.text name=key/]</td>
 				<td>${javaProps[key]}</td>
 			</tr>
-			</#list>
+			[/#list]
 		</table>
       </div>
       <div id="ttwo">
@@ -23,12 +24,12 @@
 				<td>系统属性</td>
 				<td>值</td>
 			</thead>
-			<#list osProps?keys?sort as key>
+			[#list osProps?keys?sort as key]
 			<tr>
-				<td><@msg.text name=key/></td>
+				<td>[@msg.text name=key/]</td>
 				<td>${osProps[key]}</td>
 			</tr>
-			</#list>
+			[/#list]
 			
 		</table>
 	</div>
@@ -38,12 +39,12 @@
 				<td>系统属性</td>
 				<td>值</td>
 			</tr>
-			<#list userProps?keys?sort as key>
+			[#list userProps?keys?sort as key]
 			<tr>
-				<td><@msg.text name=key/></td>
+				<td>[@msg.text name=key/]</td>
 				<td>${userProps[key]}</td>
 			</tr>
-			</#list>
+			[/#list]
 		</table>
       </div>
       <div id="tfour">
@@ -52,12 +53,12 @@
 				<td>系统属性</td>
 				<td>值</td>
 			</thead>
-			<#list extraProps?keys?sort as key>
+			[#list extraProps?keys?sort as key]
 			<tr>
-				<td><@msg.text name=key/></td>
+				<td>[@msg.text name=key/]</td>
 				<td>${extraProps[key]}</td>
 			</tr>
-			</#list>
+			[/#list]
 		</table>
       </div>
-    </@>
+    [/@]

@@ -134,7 +134,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 			Set<String> jarProtocols = new HashSet<String>() {
 				@Override
 				public boolean contains(Object o) {
-					return !String.valueOf(o).startsWith("file:");
+					return !ObjectUtils.equals(o, "file");
 				}
 			};
 			ClassFinder finder = new ClassFinder(getClassLoaderInterface(), buildUrls(), false,

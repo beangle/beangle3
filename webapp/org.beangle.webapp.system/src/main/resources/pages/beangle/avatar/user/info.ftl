@@ -1,4 +1,5 @@
-<#include "/template/head.ftl"/>
+[#ftl]
+[#include "/template/head.ftl"/]
 <html>
  <BODY LEFTMARGIN="0" TOPMARGIN="0">
 <table width="100%" border="0">
@@ -8,7 +9,7 @@
           <B>照片信息</B>
       </td>
       <td class="infoTitle" width="20%" style="height:22px;">
- 		<font color="red">&nbsp;<@s.actionmessage/></font>
+ 		<font color="red">&nbsp;[@s.actionmessage/]</font>
       </td>
     </tr>
     <tr>
@@ -23,14 +24,14 @@
       <td width="95%">
          用户名:${user.name}<br>
          姓名:${user.fullname}<br>
-        <#if length??>
+        [#if length??]
          文件大小:${length}KB<br>
          更新时间:${lastModified?string("yyyy-MM-dd HH:mm:ss")}
-        <#else>
+        [#else]
          <B>尚无照片</B>
-        </#if>
+        [/#if]
       </td>
    </tr>
 </table>
 </body>
-<#include "/template/foot.ftl"/>
+[#include "/template/foot.ftl"/]

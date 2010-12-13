@@ -1,1 +1,2 @@
-<@bg.text name="ui.name"/>
+[#ftl]
+[@bg.text name="ui.name"/]

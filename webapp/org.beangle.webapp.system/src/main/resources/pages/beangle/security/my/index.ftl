@@ -1,1 +1,2 @@
-<#include "dashboard.ftl"/>
+[#ftl]
+[#include "dashboard.ftl"/]

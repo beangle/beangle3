@@ -1,12 +1,13 @@
+[#ftl]
 <script language="JavaScript" type="text/JavaScript" src="${base}/static/scripts/validator.js"></script>
-<#assign labInfo>修改参数信息</#assign>
-<#include "/template/back.ftl"/>
+[#assign labInfo]修改参数信息[/#assign]
+[#include "/template/back.ftl"/]
 <form name="fieldForm" action="restrict-meta!saveField.action" method="post" target="ui-tabs-2">
 	<input type="hidden" name="field.id" value="${(field.id)!}" style="width:200px;" />
 	<table width="80%" class="formTable" align="center">
 		<tr class="thead"><td  colspan="2">数据限制参数</td></tr>
 		<tr>
-	     <td class="title" id="f_name"><@msg.text name="common.name"/><font color="red">*</font>:</td>
+	     <td class="title" id="f_name">[@msg.text name="common.name"/]<font color="red">*</font>:</td>
 	     <td>
           <input type="text" name="field.name" value="${field.name!}" style="width:200px;" />
          </td>
@@ -36,9 +37,9 @@
       <tr>
        <td>
         <select name="Objects" MULTIPLE size="10" style="width:200px" onDblClick="JavaScript:moveSelectedOption(this.form['Objects'], this.form['SelectedObject'])" >
-         <#list objects?sort_by('name') as o>
+         [#list objects?sort_by('name') as o]
           <option value="${o.id}">${o.name}</option>
-         </#list>
+         [/#list]
         </select>
        </td>
        <td  valign="middle">
@@ -50,9 +51,9 @@
        </td> 
        <td  class="normalTextStyle">
         <select name="SelectedObject" MULTIPLE size="10" style="width:200px;" onDblClick="JavaScript:moveSelectedOption(this.form['SelectedObject'], this.form['Objects'])">
-         <#list field.objects! as o>
+         [#list field.objects! as o]
           <option value="${o.id}">${o.name}</option>
-         </#list>
+         [/#list]
         </select>
        </td>
       </tr>
@@ -62,8 +63,8 @@
 	   <tr class="tfoot">
 	     <td colspan="6"  >
 	       <input type="hidden" name="objectIds" value=""/>
-	       <input type="button" value="<@msg.text name="action.submit"/>" name="button1" onClick="save(this.form)" class="buttonStyle" />
-	       <input type="reset"  name="reset1" value="<@msg.text name="action.reset"/>" class="buttonStyle" />
+	       <input type="button" value="[@msg.text name="action.submit"/]" name="button1" onClick="save(this.form)" class="buttonStyle" />
+	       <input type="reset"  name="reset1" value="[@msg.text name="action.reset"/]" class="buttonStyle" />
 	     </td>
 	   </tr>
      </table>
@@ -72,7 +73,7 @@
    function save(form){
      form['objectIds'].value = getAllOptionValue(form.SelectedObject);
      var a_fields = {
-         'field.name':{'l':'<@msg.text name="common.name"/>', 'r':true,'t':'f_name'},
+         'field.name':{'l':'[@msg.text name="common.name"/]', 'r':true,'t':'f_name'},
          'field.remark':{'l':'标题', 'r':true, 't':'f_remark'},
          'field.type':{'l':'类型', 'r':true, 't':'f_type'}
      };

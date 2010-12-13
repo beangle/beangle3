@@ -1,4 +1,5 @@
-<#include "/template/head.ftl"/>
+[#ftl]
+[#include "/template/head.ftl"/]
 <body>
 <table  width="100%" cellpadding="0" cellspacing="0">
     <tr>
@@ -27,4 +28,4 @@
 		setTimeout("window.close()",2000);
 	}
 </script>
-<#include "/template/foot.ftl"/>
+[#include "/template/foot.ftl"/]

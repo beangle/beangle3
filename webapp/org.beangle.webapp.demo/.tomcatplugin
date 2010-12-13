@@ -6,7 +6,7 @@
     <redirectLogger>true</redirectLogger>
     <updateXml>true</updateXml>
     <warLocation></warLocation>
-    <extraInfo></extraInfo>
+    <extraInfo>%3CResource+%0A++name%3D%22jdbc%2Fbeangle%22%0A++driverClassName%3D%22org.hsqldb.jdbcDriver%22%0A++url%3D%22jdbc%3Ahsqldb%3Afile%3A%2Fhome%2Fchaostone%2Fapache-tomcat-6.0.26%2Fdb%2Fbeangle%22+%0A++type%3D%22javax.sql.DataSource%22%0A++username%3D%22sa%22%0A++password%3D%22%22%0A++%2F%3E</extraInfo>
     <webPath>/demo</webPath>
     <webClassPathEntries>
         <webClassPathEntry>/beangle-commons/target/classes</webClassPathEntry>

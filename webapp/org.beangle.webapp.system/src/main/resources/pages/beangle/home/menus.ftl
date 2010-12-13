@@ -1,6 +1,7 @@
+[#ftl]
 <script language="javascript" src="${base}/static/scripts/common/SelectableTree.js"></script>
 <script language="JavaScript" type="text/JavaScript" src="${base}/static/scripts/common/ieemu.js"></script> 
- <#macro i18nNameTitle(entity)><#if language?index_of("en")!=-1><#if entity.engTitle!?trim=="">${entity.title!}<#else>${entity.engTitle!}</#if><#else><#if entity.title!?trim!="">${entity.title!}<#else>${entity.engTitle!}</#if></#if></#macro>
+ [#macro i18nNameTitle(entity)][#if language?index_of("en")!=-1][#if entity.engTitle!?trim==""]${entity.title!}[#else]${entity.engTitle!}[/#if][#else][#if entity.title!?trim!=""]${entity.title!}[#else]${entity.engTitle!}[/#if][/#if][/#macro]
  <table id="menu_panel">
   <tr>
    <td height="10"></td>
@@ -38,28 +39,28 @@
 		menuTree.iconFolderCollapsed = 'static/images/tree/entityfolder.gif';
 		menuTree.iconFolderExpanded = 'static/images/tree/entityfolder.gif';
         try{
-        <#assign nodeIndex=0>
+        [#assign nodeIndex=0]
 		menuTree.node${Parameters['parentCode']!} = menuTree.makeFolder('root','','','','1');
 		
-		<#list menus! as module>
-		 <#assign nodeIndex=nodeIndex+1>
-		 <#if module.entry??>
-		     menuTree.node${module.code} = menuTree.makeItem('<@i18nNameTitle module/>','${(module.entry)!}','main','','<@i18nNameTitle module/>', 'javascript:menuTree.nodeClickedAndSelected(${module_index + 1})');
+		[#list menus! as module]
+		 [#assign nodeIndex=nodeIndex+1]
+		 [#if module.entry??]
+		     menuTree.node${module.code} = menuTree.makeItem('[@i18nNameTitle module/]','${(module.entry)!}','main','','[@i18nNameTitle module/]', 'javascript:menuTree.nodeClickedAndSelected(${module_index + 1})');
 		     menuTree.insertNode(menuTree.node${module.code[0..module.code?length-3]}, menuTree.node${module.code});
-         <#else>
-		     menuTree.node${module.code} = menuTree.makeFolder('<@i18nNameTitle module/>','javascript:menuTree.nodeClicked(${nodeIndex})','','','<@i18nNameTitle module/>');
-		     <#if module.code?length==2>
-		         <#assign superCode=''>
-		     <#else>
-		         <#assign superCode=module.code[0..module.code?length-3]>
-		     </#if>
+         [#else]
+		     menuTree.node${module.code} = menuTree.makeFolder('[@i18nNameTitle module/]','javascript:menuTree.nodeClicked(${nodeIndex})','','','[@i18nNameTitle module/]');
+		     [#if module.code?length==2]
+		         [#assign superCode='']
+		     [#else]
+		         [#assign superCode=module.code[0..module.code?length-3]]
+		     [/#if]
 		     if(typeof menuTree.node${superCode} != "undefined"){
 		     	menuTree.insertNode(menuTree.node${superCode}, menuTree.node${module.code});
 		     }else{
 		        menuTree.insertNode(menuTree.node${Parameters['parentCode']!}, menuTree.node${module.code});
 		     }
-		  </#if>
-		</#list>
+		  [/#if]
+		[/#list]
 		}catch(e){
 		alert("菜单加载出错!");
 		}

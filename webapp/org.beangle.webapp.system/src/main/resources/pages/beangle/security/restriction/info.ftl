@@ -1,24 +1,25 @@
-<#include "/template/head.ftl"/>
+[#ftl]
+[#include "/template/head.ftl"/]
  <body>
  <table id="restrictionBar"></table>
- <#if (restrictions?size==0)>没有设置</#if>
- <#list restrictions as restriction>
+ [#if (restrictions?size==0)]没有设置[/#if]
+ [#list restrictions as restriction]
     <fieldSet  align=center> 
     <legend>${restriction.paramGroup.name}(${restriction.enabled?string("启用","禁用")}) <a href="#" onclick="edit('${restriction.id}')">修改</a>    <a href="#" onclick="remove('${restriction.id}')">删除</a></legend>
-    <#list restriction.paramGroup.params  as param>
+    [#list restriction.paramGroup.params  as param]
       <li>${param.description}</li>
-          <#if param.editor??>
-          <br><#list paramMaps[restriction.id?string][param.name]! as value>${value[param.editor.properties]}<#if value_has_next>,</#if></#list></td>
-          <#else>
+          [#if param.editor??]
+          <br>[#list paramMaps[restriction.id?string][param.name]! as value]${value[param.editor.properties]}[#if value_has_next],[/#if][/#list]</td>
+          [#else]
           <br>${paramMaps[restriction.id?string][param.name]!}
-          </#if>
-    </#list>
+          [/#if]
+    [/#list]
     </fieldSet>
-</#list>
+[/#list]
 <br>
-<#list paramGroups! as paramGroup>
+[#list paramGroups! as paramGroup]
  <li>${paramGroup.name} <a onclick="add('${paramGroup.id}')" href='#'>添加</a></li>
-</#list>
+[/#list]
 <form name="actionForm" method="post">
 	<input type="hidden" name="restrictionType" value="${Parameters['restrictionType']}"/>
 	<input type="hidden" name="restriction.holder.id" value="${Parameters['restriction.holder.id']}"/>
@@ -26,7 +27,7 @@
 </form>
 <script> 
    var bar = new ToolBar('restrictionBar','数据权限',null,true,true);
-   bar.setMessage('<@getMessage/>');
+   bar.setMessage('[@getMessage/]');
    bar.addHelp();
    function edit(){
       self.location="restriction.action?method=edit&restriction.id=";
@@ -52,4 +53,4 @@
    }  
  </script>
  </body>
-<#include "/template/foot.ftl"/>
+[#include "/template/foot.ftl"/]

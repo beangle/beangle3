@@ -1,3 +1,4 @@
+[#ftl]
     摘要
     <hr>
     <table width="100%">
@@ -11,16 +12,16 @@
     		<td>处理器个数:</td><td>${osMBean.availableProcessors}</td><td>系统负载:</td><td>${osMBean.systemLoadAverage}</td>
     	</tr>
     	<tr>
-    		<td><@msg.text name="server.info"/>:</td><td>${serverProps["server.info"]}</td><td>协议/端口:</td><td>${serverProps["server.protocol"]} ${serverProps["server.port"]}</td>
+    		<td>[@msg.text name="server.info"/]:</td><td>${serverProps["server.info"]}</td><td>协议/端口:</td><td>${serverProps["server.protocol"]} ${serverProps["server.port"]}</td>
     	</tr>
     	<tr>
-    		<td><@msg.text name="user.dir"/>:</td><td colspan="3">${serverProps["user.dir"]}</td>
+    		<td>[@msg.text name="user.dir"/]:</td><td colspan="3">${serverProps["user.dir"]}</td>
     	</tr>
     	<tr>
-    		<td><@msg.text name="server.path"/>:</td><td colspan="3">${serverProps["server.path"]}</td>
+    		<td>[@msg.text name="server.path"/]:</td><td colspan="3">${serverProps["server.path"]}</td>
     	</tr>
     	<tr>
-    		<td>启动于:</td><td>${upAt?string("yyyy-MM-dd HH:mm:ss")}(当前:${now?string("yyyy-MM-dd HH:mm:ss")})</td><td>运行时间:</td><td><#assign upsecond=runtimeMBean.uptime/1000?int><#if (upsecond>3600)>${(upsecond/3600)?int}小时</#if>${((upsecond%3600)/60)?int}分${(upsecond%60)}秒</td>
+    		<td>启动于:</td><td>${upAt?string("yyyy-MM-dd HH:mm:ss")}(当前:${now?string("yyyy-MM-dd HH:mm:ss")})</td><td>运行时间:</td><td>[#assign upsecond=runtimeMBean.uptime/1000?int][#if (upsecond>3600)]${(upsecond/3600)?int}小时[/#if]${((upsecond%3600)/60)?int}分${(upsecond%60)}秒</td>
     	</tr>
 	</table>
 	<br>
@@ -45,7 +46,7 @@
     		<td>初始:</td>
     		<td>最大:</td>
     	</tr>
-		<#list memPoolMBeans as memPoolMBean>
+		[#list memPoolMBeans as memPoolMBean]
     	<tr>
     		<td>${memPoolMBean.name}</td>
     		<td>${memPoolMBean.type}</td>
@@ -53,7 +54,7 @@
     		<td>${memPoolMBean.usage.init/1024/1024}</td>
     		<td>${memPoolMBean.usage.max/1024/1024}</td>
     	</tr>
-		</#list>
+		[/#list]
 	</table>
 	<br>
     线程
@@ -69,7 +70,7 @@
     <hr>
     <table width="100%">
     	<tr>
-    		<td>虚拟机参数:</td><td colspan="3"><#list runtimeMBean.inputArguments as inputArgument>${inputArgument}<#if inputArgument_has_next><br></#if></#list></td>
+    		<td>虚拟机参数:</td><td colspan="3">[#list runtimeMBean.inputArguments as inputArgument]${inputArgument}[#if inputArgument_has_next]<br>[/#if][/#list]</td>
     	</tr>
     	<tr>
     		<td>启动类路径:</td><td colspan="3">${runtimeMBean.bootClassPath?replace(":","<br>:")!}</td>

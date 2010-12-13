@@ -1,4 +1,5 @@
-<#include "/template/head.ftl"/>
+[#ftl]
+[#include "/template/head.ftl"/]
 <body>
 <table  width="100%" cellpadding="0" cellspacing="0">
     <tr>
@@ -14,9 +15,9 @@
    </tr>
    <tr>
      <td id="errorTD"><font color="green">
-      <#if ctrlMsg??>
-         <@text name="${ctrlMsg}"/>&nbsp;
-      </#if>
+      [#if ctrlMsg??]
+         [@text name="${ctrlMsg}"/]&nbsp;
+      [/#if]
       </font>
       </td>
    </tr>
@@ -29,4 +30,4 @@
 		setTimeout("window.close()",2000);
 	}
 </script>
-<#include "/template/foot.ftl"/>
+[#include "/template/foot.ftl"/]

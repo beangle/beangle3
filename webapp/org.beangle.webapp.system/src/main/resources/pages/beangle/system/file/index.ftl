@@ -1,3 +1,4 @@
+[#ftl]
   <style>
     .file-browser {
     	width: 800px;
@@ -19,11 +20,11 @@
 	<table width="80%" align="center">
 		<tr>
 		  <td class="banner">
-		    <@s.form  id="pathForm" action="file" theme="simple">
+		    [@s.form  id="pathForm" action="file" theme="simple"]
 		    Path:<input type="text"  name="path" value="${path!}" style="width:80%;font-weight: bold"/>
 		    <input name="method" type="hidden" value="list"/>
-		    <@sj.submit id="fileSubmit" targets="filelist" value="Go"/>
-		    </@s.form>
+		    [@sj.submit id="fileSubmit" targets="filelist" value="Go"/]
+		    [/@s.form]
 		  </td>
 		</tr>
 		<tr>
@@ -33,7 +34,7 @@
 	    </tr>
 	</table>
 	
-    <@sj.div id="filelist" href="${base}/system/file!list.action?path=${path?js_string!}" indicator="indicator" >
+    [@sj.div id="filelist" href="${base}/system/file!list.action?path=${path?js_string!}" indicator="indicator" ]
         <img id="indicator" src="images/indicator.gif" alt="Loading..." style="display:none"/>
-    </@>
+    [/@]
 	</div>

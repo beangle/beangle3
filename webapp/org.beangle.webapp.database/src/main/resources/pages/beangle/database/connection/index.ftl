@@ -1,16 +1,17 @@
-<#include "/template/head.ftl"/>
-<@sj.head />
+[#ftl]
+[#include "/template/head.ftl"/]
+[@sj.head /]
 
-<#if Parameters['connection-scripts']??>
-<#assign connection_scripts=Parameters['connection-scripts']/>
-<#else>
-<#assign connection_scripts>
+[#if Parameters['connection-scripts']??]
+[#assign connection_scripts=Parameters['connection-scripts']/]
+[#else]
+[#assign connection_scripts]
 driverClassName=
 url=
 username=
 password=
-</#assign>
-</#if>
+[/#assign]
+[/#if]
 
 <div id="t1">
 <form name="form1" method="post" action="${base}/database/connection-test.action">
@@ -24,4 +25,4 @@ password=
   </table>
 </form>
 </div>
-<#include "/template/foot.ftl"/>
+[#include "/template/foot.ftl"/]

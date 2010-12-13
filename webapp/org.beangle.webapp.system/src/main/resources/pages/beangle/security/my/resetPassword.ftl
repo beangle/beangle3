@@ -1,4 +1,5 @@
-<#include "/template/head.ftl"/>
+[#ftl]
+[#include "/template/head.ftl"/]
 <script language="JavaScript" type="text/JavaScript" src="${base}/static/scripts/validator.js"></script>
 <body LEFTMARGIN="0" TOPMARGIN="0" scroll=no>
  <TABLE WIDTH="100%" BORDER="0" ALIGN="LEFT" CELLPADDING="0" CELLSPACING="0">
@@ -10,7 +11,7 @@
        <TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
         <TR> 
          <TD WIDTH="15%" HEIGHT="42">&nbsp;</TD>
-         <TD WIDTH="85%"><FONT COLOR="red"><@text name="field.user.suggestive"/></FONT></TD>
+         <TD WIDTH="85%"><FONT COLOR="red">[@text name="field.user.suggestive"/]</FONT></TD>
         </TR>
        </TABLE>
       </TD>
@@ -24,18 +25,18 @@
         <tr><td colspan="3"><div class="message fade-ffff00"  id="error"></div></td></tr>
         <tr> 
          <td>&nbsp;</td>
-         <td id="f_name"  valign="top" width="30%"><@text name="user.name"/>:</td>
+         <td id="f_name"  valign="top" width="30%">[@text name="user.name"/]:</td>
          <td class="text1"><input type="text" name="name" value="${Parameters['loginName']!}" maxLength="64"/></td>
         </tr>
         <tr><td>&nbsp;</td>
-         <td id="f_mail"  valign="top" width="30%"><@text name="common.email"/>:</td>
+         <td id="f_mail"  valign="top" width="30%">[@text name="common.email"/]:</td>
          <td class="text1"><input type="text" name="mail" maxLength="100"/></td>
         </tr>
         <tr><td colspan="3">&nbsp;</td></tr>
         <tr>
          <td colspan="3" align="right"> 
-          <input type="button" class="buttonStyle" name="button1" value="<@text name="action.submit"/>" onClick="submitForm()" class="form1">
-          <input type="reset" class="buttonStyle" name="reset" value="<@text name="action.reset"/>" class="form1">
+          <input type="button" class="buttonStyle" name="button1" value="[@text name="action.submit"/]" onClick="submitForm()" class="form1">
+          <input type="reset" class="buttonStyle" name="reset" value="[@text name="action.reset"/]" class="form1">
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          </td>
         </tr>
@@ -50,8 +51,8 @@
 <script>
    function submitForm(){
      var a_fields = {
-         'name':{'l':'<@text name="user.name"/>', 'r':true, 't':'f_name'},
-         'mail':{'l':'<@text name="common.email"/>', 'r':true, 't':'f_mail','f':'email'}
+         'name':{'l':'[@text name="user.name"/]', 'r':true, 't':'f_name'},
+         'mail':{'l':'[@text name="common.email"/]', 'r':true, 't':'f_mail','f':'email'}
      };
 
      var v = new validator(document.commonForm , a_fields, null);
@@ -62,4 +63,4 @@
 </script>
 </BODY>
 </body>
-<#include "/template/foot.ftl"/>
+[#include "/template/foot.ftl"/]
