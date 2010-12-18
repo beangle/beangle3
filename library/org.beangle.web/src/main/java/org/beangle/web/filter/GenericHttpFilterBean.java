@@ -270,6 +270,8 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, Se
 	 */
 	private static class FilterConfigPropertyValues extends MutablePropertyValues {
 
+		private static final long serialVersionUID = -8941593023343028404L;
+
 		/**
 		 * Create new FilterConfigPropertyValues.
 		 * 

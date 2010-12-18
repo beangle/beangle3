@@ -20,9 +20,10 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.struts2.action.BaseAction;
-import org.beangle.struts2.helper.DownloadHelper;
+import org.beangle.web.io.StreamDownloader;
 import org.beangle.web.mime.MimeTypeProvider;
 
+@SuppressWarnings("serial")
 public class FileAction extends BaseAction implements ServletRequestAware, ServletResponseAware {
 
 	private HttpServletRequest request;
@@ -30,6 +31,8 @@ public class FileAction extends BaseAction implements ServletRequestAware, Servl
 
 	private MimeTypeProvider mimeTypeProvider;
 
+	private StreamDownloader streamDownloader;
+	
 	public String index() {
 		put("path", getPath());
 		return forward();
@@ -71,7 +74,7 @@ public class FileAction extends BaseAction implements ServletRequestAware, Servl
 				reader.close();
 				return forward("content");
 			} else {
-				DownloadHelper.download(request, response, file);
+				streamDownloader.download(request, response, file);
 			}
 		}
 		return null;
@@ -129,4 +132,9 @@ public class FileAction extends BaseAction implements ServletRequestAware, Servl
 	public void setMimeTypeProvider(MimeTypeProvider mimeTypeProvider) {
 		this.mimeTypeProvider = mimeTypeProvider;
 	}
+
+	public void setStreamDownloader(StreamDownloader streamDownloader) {
+		this.streamDownloader = streamDownloader;
+	}
+	
 }

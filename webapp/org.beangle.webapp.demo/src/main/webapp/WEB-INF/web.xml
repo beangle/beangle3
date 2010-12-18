@@ -11,7 +11,7 @@
 	</context-param>
 	<!--设置字符集-->
 	<filter>
-		<filter-name>SetCharacterEncoding</filter-name>
+		<filter-name>characterEncoding</filter-name>
 		<filter-class>org.beangle.web.filter.CharacterEncodingFilter</filter-class>
 	</filter>
 	
@@ -44,7 +44,7 @@
 	</filter>
 	
 	<filter-mapping>
-		<filter-name>SetCharacterEncoding</filter-name>
+		<filter-name>characterEncoding</filter-name>
 		<url-pattern>*.action</url-pattern>
 	</filter-mapping>
 	

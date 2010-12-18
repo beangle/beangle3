@@ -9,7 +9,7 @@
     		<td>名称:</td><td>${osMBean.name} ${osMBean.version}</td><td>体系结构:</td><td>${osMBean.arch}</td>
     	</tr>
     	<tr>
-    		<td>处理器个数:</td><td>${osMBean.availableProcessors}</td><td>系统负载:</td><td>${osMBean.systemLoadAverage}</td>
+    		<td>处理器个数:</td><td>${osMBean.availableProcessors}</td><td>系统负载:</td><td>${osMBean.systemLoadAverage!}</td>
     	</tr>
     	<tr>
     		<td>[@msg.text name="server.info"/]:</td><td>${serverProps["server.info"]}</td><td>协议/端口:</td><td>${serverProps["server.protocol"]} ${serverProps["server.port"]}</td>

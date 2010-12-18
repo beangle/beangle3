@@ -29,6 +29,8 @@
 		</property>
 	</bean>
 
+	<bean name="streamDownloader" autowire="byName" class="org.beangle.web.io.SplitStreamDownloader"/>
+	
 	<bean name="mimeTypeProvider" autowire="byName"
 		class="org.beangle.web.mime.MimeTypeProvider">
 		<property name="resource">

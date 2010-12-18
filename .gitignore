@@ -9,3 +9,6 @@ target
 .project
 .settings
 .metadata
+
+RemoteSystemsTempFiles
+Servers

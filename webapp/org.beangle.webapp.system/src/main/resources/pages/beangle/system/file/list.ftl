@@ -28,18 +28,19 @@
 		<td>大小</td>
 		<td>最后修改时间</td>
 	</thead>
+	[#setting url_escaping_charset='UTF-8']
 	[#list files as file]
 	<tr>
 		<td class="file-name">
 		    [#if file.file]
 		    <img src="${base}/static/icons/beangle/48x48/mimetypes/${mimeType.getMimeType(file)}.png" width="18px" heigth="18px"/>
-		    [#if mimeType.isTextType(file)][@sj.a href="${base}/system/file!download.action?path=${file.absolutePath?js_string}"  targets="filelist" title="download"]${file.name}[/@]
+		    [#if mimeType.isTextType(file)][@sj.a href="${base}/system/file!download.action?path=${file.absolutePath?url}"  targets="filelist" title="download"]${file.name}[/@]
 		    [#else]
-		    <a href="${base}/system/file!download.action?path=${file.absolutePath?js_string}"  title="download">${file.name}</a>
+		    <a href="${base}/system/file!download.action?path=${file.absolutePath?url}"  title="download">${file.name}</a>
 		    [/#if]
 		    [#else]
 		    <img src="${base}/static/icons/beangle/22x22/places/folder.png" width="18px" height="18px"/>
-		    [@sj.a id="file${file_index}" href="${base}/system/file!list.action?path=${file.absolutePath?js_string}" targets="filelist"]${file.name}[/@sj.a]
+		    [@sj.a id="file${file_index}" href="${base}/system/file!list.action?path=${file.absolutePath?url}" targets="filelist"]${file.name}[/@sj.a]
 		    [/#if]
 		</td>
 		<td align="right">[#if file.file]${file.length()/1024}KB[/#if]</td>

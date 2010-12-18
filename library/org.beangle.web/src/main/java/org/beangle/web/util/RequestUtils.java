@@ -12,8 +12,12 @@ import org.apache.commons.codec.net.BCodec;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.lang.StrUtils;
 import org.beangle.web.Useragent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class RequestUtils {
+
+	private static final Logger logger = LoggerFactory.getLogger(RequestUtils.class);
 
 	private RequestUtils() {
 	}
@@ -53,15 +57,18 @@ public final class RequestUtils {
 		return actionName;
 	}
 
-	public static String encodeAttachName(HttpServletRequest request, String attch_name)
-			throws Exception {
+	public static String encodeAttachName(HttpServletRequest request, String attach_name) {
 		String agent = request.getHeader("USER-AGENT");
 		String newName = null;
-		if (null != agent && -1 != agent.indexOf("MSIE")) {
-			newName = URLEncoder.encode(attch_name, "UTF-8");
-		} else if (null != agent && -1 != agent.indexOf("Mozilla")) {
-			newName = new BCodec("UTF-8").encode(attch_name);
-			// newName = MimeUtility.encodeText(attch_name, "UTF-8", "B");
+		try {
+			if (null != agent && -1 != agent.indexOf("MSIE")) {
+				newName = URLEncoder.encode(attach_name, "UTF-8");
+			} else if (null != agent && -1 != agent.indexOf("Mozilla")) {
+				newName = new BCodec("UTF-8").encode(attach_name);
+			}
+		} catch (Exception e) {
+			logger.error("cannot encode " + attach_name, e);
+			return attach_name;
 		}
 		return newName;
 	}
