@@ -10,7 +10,7 @@
 	[@sj.tab id="monitorTab4" label="访问日志" href="${base}/security/monitor!accesslogs.action?ordreBy=duration desc"/]
 [/@]
 <script>
- var menuBar=new ToolBar('menuBar','<a href="dashboard.action">权限管理</a>-->访问监控',null,true,true);
+ var menuBar=bg.ui.toolbar('menuBar','<a href="dashboard.action">权限管理</a>-->访问监控',null,true,true);
  menuBar.addHelp();
  //标签卡刷新定时器
  var refreshTime=null;

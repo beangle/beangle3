@@ -4,7 +4,7 @@
 [#include "../status.ftl"/]
 <body>
  <table id="resourceBar"></table>
-[@table.table id="listTable" width="100%" sortable="true" headIndex="1"]
+[@b.grid id="listTable" width="100%" sortable="true" headIndex="1"]
     <tr class="thead">
     <form name="pageGoForm" method="post" action="resource!search.action">
     <td class="select"><img src="${base}/static/images/action/search.png" onclick="document.pageGoForm.submit()"/></td>
@@ -27,15 +27,15 @@
 	</td>
 	</form>
     </tr>
-	[@table.thead]
-      [@table.selectAllTd id="resourceId"/]  
-      [@table.sortTd  width="20%" id="resource.title" text="标题" /]
-      [@table.sortTd  width="55%" id="resource.name" text="名称" /]
-      [@table.sortTd  width="10%" id="resource.scope" text="可见范围" /]
-      [@table.sortTd  width="10%" id="resource.enabled" text="状态" /]
+	[@b.gridhead]
+      [@b.selectAllTd name="resourceId"/]  
+      [@b.sortTd  width="20%" id="resource.title" text="标题" /]
+      [@b.sortTd  width="55%" id="resource.name" text="名称" /]
+      [@b.sortTd  width="10%" id="resource.scope" text="可见范围" /]
+      [@b.sortTd  width="10%" id="resource.enabled" text="状态" /]
     [/@]
-    [@table.tbody datas=resources;resource]
-     [@table.selectTd id="resourceId" value=resource.id/]
+    [@b.gridbody datas=resources;resource]
+     [@b.selectTd name="resourceId" value=resource.id/]
          <input type="hidden" name="${resource.id}" id="${resource.id}" />
      </td>
      <td><a href="resource.action?method=info&resource.id=${resource.id}">${(resource.title)!}</a></td>
@@ -59,7 +59,7 @@
    function preview(){
       window.open(action+"?method=preview");
    }
-   var bar = new ToolBar('resourceBar','<a href="dashboard.action">权限管理</a>->系统资源',null,true,true);
+   var bar = bg.ui.toolbar('resourceBar','<a href="dashboard.action">权限管理</a>->系统资源',null,true,true);
    bar.setMessage('[@getMessage/]');
    bar.addItem("[@text "action.add"/]","add()");
    bar.addItem("[@text "action.edit"/]","edit()");

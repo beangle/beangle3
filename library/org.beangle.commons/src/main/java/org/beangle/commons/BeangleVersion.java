@@ -11,7 +11,7 @@ public class BeangleVersion {
 	}
 
 	public static final String getVersion() {
-		return "2.2.0";
+		return "2.0.2-SNAPSHOT";
 	}
 
 	public static final int getMajorVersion() {

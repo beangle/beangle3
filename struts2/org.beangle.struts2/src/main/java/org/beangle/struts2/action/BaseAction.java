@@ -44,6 +44,7 @@ public class BaseAction extends DispatchAction {
 	}
 
 	/**
+	 * @FIXME JUST FOR PAGE
 	 * @return requestUri
 	 */
 	public String getRequestURI() {

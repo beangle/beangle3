@@ -38,7 +38,7 @@
   [/@]
 
   <script type="text/javascript">
-   var bar = new ToolBar('userInfoBar','用户权限面板',null,true,true);
+   var bar = bg.ui.toolbar('userInfoBar','用户权限面板',null,true,true);
    bar.setMessage('[@getMessage/]');
    bar.addClose("[@text name="action.close"/]");
    

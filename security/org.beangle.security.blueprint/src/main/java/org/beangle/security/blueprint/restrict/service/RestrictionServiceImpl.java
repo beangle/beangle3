@@ -80,6 +80,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		if (null == param.getSource()) return Collections.emptyList();
 		String source = param.getSource();
 		String prefix = StringUtils.substringBefore(source, ":");
+		source=StringUtils.substringAfter(source, ":");
 		DataProvider provider = providers.get(prefix);
 		if (null != provider) {
 			try {
@@ -88,7 +89,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 				throw new RuntimeException(e);
 			}
 		} else {
-			throw new RuntimeException("not support data provider :" + prefix);
+			throw new RuntimeException("not support data provider:" + prefix);
 		}
 	}
 
@@ -222,6 +223,14 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	public Map<String, DataProvider> getProviders() {
+		return providers;
+	}
+
+	public void setProviders(Map<String, DataProvider> providers) {
+		this.providers = providers;
 	}
 
 }

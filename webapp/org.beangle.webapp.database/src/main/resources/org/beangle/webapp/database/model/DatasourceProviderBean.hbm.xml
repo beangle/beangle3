@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="org.beangle.webapp.database.model">
+	
+	<class name="DatasourceProviderBean">
+		<id name="id" unsaved-value="null">
+			<generator class="org.beangle.model.persist.hibernate.support.TableSeqGenerator"/>
+		</id>
+		<property name="name" length="50" />
+		<property name="dialect" length="100" />
+	</class>
+	
+</hibernate-mapping>

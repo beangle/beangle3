@@ -22,11 +22,11 @@
 	      </td>
 	   </tr>
 	  </table>
-   [@table.table width="100%" id="paramListTable"]
-     [@table.thead]
-      [@table.td text="序号"/]
-      [@table.td width="70%" text="名称"/]
-      [@table.td text="操作"/]
+   [@b.grid width="100%" id="paramListTable"]
+     [@b.gridhead]
+      [@b.td text="序号"/]
+      [@b.td width="70%" text="名称"/]
+      [@b.td text="操作"/]
      [/@]
 	 <tr>
 	   <td align="center">0</td>
@@ -35,7 +35,7 @@
         onmouseover="MouseOver(event)" onmouseout="MouseOut(event)">所有参数</td>
        <td></td>
 	 </tr>
-     [@table.tbody simplePageBar=true datas=paramGroups;paramGroup,paramGroup_index]
+     [@b.gridbody simplePageBar=true datas=paramGroups;paramGroup,paramGroup_index]
       <td>${paramGroup_index + 1}</td>
       <td class="padding" style="height:20px;" onclick="javascript:setSelectedRow(paramListTable,this);searchParam('${paramGroup.id}')">
         ${paramGroup.name}

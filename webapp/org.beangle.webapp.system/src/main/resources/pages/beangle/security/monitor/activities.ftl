@@ -5,27 +5,27 @@
 [/#list]
 <table id="activityBar"></table>
 <script>
-	var bar = new ToolBar('activityBar','在线${online}/上限${max} ([#list onlineProfiles?sort_by(["category"]) as profile]${profile.category.name}${profile.online}/${profile.capacity}  [/#list]) ${now?string("yyyy-MM-dd HH:mm:ss")}',null,true,true);
+	var bar = bg.ui.toolbar('activityBar','在线${online}/上限${max} ([#list onlineProfiles?sort_by(["category"]) as profile]${profile.category.name}${profile.online}/${profile.capacity}  [/#list]) ${now?string("yyyy-MM-dd HH:mm:ss")}',null,true,true);
 	bar.setMessage('[@s.actionmessage theme="beangle"/]');
 	bar.addItem("刷新","refresh()",'refresh.gif');
 	bar.addItem("结束会话","invalidateSession()",'delete.gif');
 </script>
 [@s.form name="invalidateForm" theme="simple" id="invalidateForm" action="monitor!invalidate"]
-[@table.table width="100%" id="activityListTable" sortable="true" target="ui-tabs-1"]
-	[@table.thead]
-		[@table.selectAllTd id="sessionId"/]
-		[@table.sortTd width="15%" text="用户名" id="authentication.username"/]
-		[@table.sortTd width="12%" text="登录时间" id="loginAt"/]
-		[@table.sortTd width="12%" text="最近访问时间" id="lastAccessAt"/]
-		[@table.sortTd width="8%" text="在线时间" id="onlineTime"/]
-		[@table.sortTd width="15%" text="地址" id="details.agent.ip"/]
-		[@table.sortTd width="10%" text="操作系统" id="details.agent.os"/]
-		[@table.sortTd width="10%" text="浏览器" id="details.agent.name"/]
-		[@table.sortTd width="8%" text="身份" id="category.name"/]
-		[@table.sortTd width="8%" text="状态" id="expired"/]
+[@b.grid width="100%" id="activityListTable" sortable="true" target="ui-tabs-1"]
+	[@b.gridhead]
+		[@b.selectAllTd name="sessionId"/]
+		[@b.sortTd width="15%" text="用户名" id="authentication.username"/]
+		[@b.sortTd width="12%" text="登录时间" id="loginAt"/]
+		[@b.sortTd width="12%" text="最近访问时间" id="lastAccessAt"/]
+		[@b.sortTd width="8%" text="在线时间" id="onlineTime"/]
+		[@b.sortTd width="15%" text="地址" id="details.agent.ip"/]
+		[@b.sortTd width="10%" text="操作系统" id="details.agent.os"/]
+		[@b.sortTd width="10%" text="浏览器" id="details.agent.name"/]
+		[@b.sortTd width="8%" text="身份" id="category.name"/]
+		[@b.sortTd width="8%" text="状态" id="expired"/]
 	[/@]
-	[@table.tbody datas=onlineActivities;activity]
-		[@table.selectTd id="sessionId" value=activity.sessionid/]
+	[@b.gridbody datas=onlineActivities;activity]
+		[@b.selectTd name="sessionId" value=activity.sessionid/]
 		<td><A href="user!dashboard.action?user.id=${activity.authentication.principal.id}" target="_blank">&nbsp;${activity.authentication.principal.fullname!('')}(${activity.authentication.principal.username!})</a></td>
 		<td>${activity.loginAt?string("yy-MM-dd HH:mm")}</td>
 		<td>${activity.lastAccessAt?string("yy-MM-dd HH:mm")}</td>
@@ -43,7 +43,7 @@
 	定时每${refreshInterval}秒刷新
 <script>
 	function refresh(){
-		goPage("activityListTable");
+		bg.page.goPage("activityListTable");
 	}
 	function invalidateSession(){
 		$('#invalidateBtn').click();

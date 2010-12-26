@@ -23,7 +23,7 @@
   <td valign="top">
   <table id="authorityBar"></table>
   <script>
-	var bar = new ToolBar('authorityBar','<a href="group.action">用户组</a>->菜单和资源权限',null,true,true);
+	var bar = bg.ui.toolbar('authorityBar','<a href="group.action">用户组</a>->菜单和资源权限',null,true,true);
 	bar.setMessage('[@getMessage/]');
 	bar.addItem("[@text name="action.spread"/]","displayAllRowsFor(2);f_frameStyleResize(self)",'contract.gif');
 	bar.addItem("[@text name="action.collapse"/]","collapseAllRowsFor(2);f_frameStyleResize(self)",'expand.gif');
@@ -54,14 +54,14 @@
              [#assign mngGroups=manager.mngGroups/]
              [#if allGroups??][#assign mngGroups=allGroups/][/#if]
              [#list mngGroups?sort_by("name")! as group]
-              <option value="${group.id}" [#if group.id=ao.id]selected[/#if]]${group.name}</option>
+              <option value="${group.id}" [#if group.id=ao.id]selected[/#if]>${group.name}</option>
              [/#list]
         </select>
 	    </td>
 	    <td class="title">
 	    菜单配置:<select name="menuProfileId" style="width:150px;" onchange="this.form.submit();">
 	        [#list menuProfiles as profile]
-	        <option value="${profile.id}" [#if profile=menuProfile]selected[/#if]]${profile.name}</optino>
+	        <option value="${profile.id}" [#if profile=menuProfile]selected[/#if]>${profile.name}</optino>
 	        [/#list]
 	        </select>
 	    </td>
@@ -108,7 +108,7 @@
        <td>
        	[#list menu.resources as resource]
        	   [#if resources?seq_contains(resource)]
-       	   <input type="checkBox" name="resourceId" id="checkBox_${menu_index}_${resource_index}" [#if aoResources?seq_contains(resource)]checked[/#if] value="${resource.id}"][#rt]
+       	   <input type="checkBox" name="resourceId" id="checkBox_${menu_index}_${resource_index}" [#if aoResources?seq_contains(resource)]checked[/#if] value="${resource.id}">[#rt]
 	       [#if ((resource.objects?size)>0)&&aoResources?seq_contains(resource)]
 	       <a href="restriction.action?method=info&forEdit=1&restrictionType=authority&restriction.holder.id=${aoResourceAuthorityMap[resource.id?string]}" target="restictionFrame" ><font color="red">${resource.title}</font></a>[#rt]
 	       [#else][#lt]${resource.title}[/#if]

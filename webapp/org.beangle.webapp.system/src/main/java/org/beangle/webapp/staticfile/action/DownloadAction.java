@@ -17,6 +17,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.struts2.action.BaseAction;
 import org.beangle.web.io.StreamDownloader;
 import org.beangle.webapp.staticfile.StaticFileLoader;
+import org.springframework.util.Assert;
 
 /**
  * 静态资源下载
@@ -32,6 +33,7 @@ public class DownloadAction extends BaseAction implements ServletRequestAware, S
 	private HttpServletResponse response;
 
 	private StreamDownloader streamDownloader;
+	
 	public String index() throws Exception {
 		String name = get("file");
 		String displayName = get("display");

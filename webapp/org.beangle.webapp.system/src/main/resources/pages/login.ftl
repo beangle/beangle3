@@ -113,7 +113,7 @@
      document.getElementById('engVersion').checked=true;
   }
   
-  var username=getCookie("username");
+  var username=beangle.cookie.get("username");
   if(null!=username){
     form['username'].value=username;
   }

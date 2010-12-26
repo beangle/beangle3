@@ -22,7 +22,7 @@
    }
    changePassword();
    
-   var bar = new ToolBar('passwordBar','密码修改',null,true,true);
+   var bar = bg.ui.toolbar('passwordBar','密码修改',null,true,true);
    bar.setMessage('[@getMessage/]');
    bar.addHelp();
   </script>

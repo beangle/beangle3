@@ -12,4 +12,16 @@
 	 class="org.beangle.webapp.database.action.ConnectionAction" 
 	    autowire="byName">
 	</bean>
+	
+	<bean name="database.datasource" scope="prototype"
+	 class="org.beangle.webapp.database.action.DatasourceAction" 
+	    autowire="byName">
+	    <property name="entityName" value="org.beangle.webapp.database.model.DatasourceBean"/>
+	</bean>
+	
+	<bean name="database.provider" scope="prototype"
+	 class="org.beangle.webapp.database.action.ProviderAction" 
+	    autowire="byName">
+	    <property name="entityName" value="org.beangle.webapp.database.model.DatasourceProviderBean"/>
+	</bean>
 </beans>

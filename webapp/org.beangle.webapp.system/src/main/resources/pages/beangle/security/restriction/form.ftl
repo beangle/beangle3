@@ -37,12 +37,12 @@
        </div>
 		[/#if]
        [#if param.editor??]
-       [@table.table width="100%"]
-         [@table.thead]
-		     [@table.selectAllTd id="${param.name}"/]
-		     [@table.td text="可选值"/]
+       [@b.grid width="100%"]
+         [@b.gridhead]
+		     [@b.selectAllTd name="${param.name}"/]
+		     [@b.td text="可选值"/]
 	     [/@]
-	     [@table.tbody datas=mngParams[param.name];value]
+	     [@b.gridbody datas=mngParams[param.name];value]
             <td width="10%"><input type="checkbox" name="${param.name}" [#if aoParams[param.name]!?seq_contains(value)]checked[/#if] value="${value["${param.editor.idProperty}"]}"]</td>
             <td>${value["${param.editor.properties}"]}</td>
          [/@]
@@ -58,7 +58,7 @@
     </form>
     <script type="text/javascript">setupAllTabs();</script>
 <script> 
-   var bar = new ToolBar('restrictionBar','数据权限',null,true,true);
+   var bar = bg.ui.toolbar('restrictionBar','数据权限',null,true,true);
    bar.setMessage('[@getMessage/]');
    bar.addItem("[@text name="action.save"/]",save,'save.gif');
    bar.addBack();

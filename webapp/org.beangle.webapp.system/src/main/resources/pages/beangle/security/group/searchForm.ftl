@@ -1,5 +1,5 @@
 [#ftl]
-   <table class="searchTable" onkeypress="DWRUtil.onReturn(event, searchGroup)">
+   <table class="searchTable">
     <tr>
       <td  colspan="2" class="infoTitle" align="left" valign="bottom" >
        <img src="${base}/static/images/action/info.gif" align="top"/>
@@ -24,6 +24,6 @@
 		  	</select>
 		  	</td>
  	 </tr>
-     <tr><td colspan="2" align="center"><button onclick="searchGroup();">[@text name="action.query"/]</button></td></tr>
+     <tr><td colspan="2" align="center"><button onclick="search();">[@text name="action.query"/]</button></td></tr>
      </form>
  </table>

@@ -6,12 +6,12 @@
 		bar.addItem("[@b.text "action.edit"/]",action.single('editPattern'));
 	[/@]
 	[@b.gridhead]
-		[@b.selectAllTd id="patternId"/]
+		[@b.selectAllTd name="patternId"/]
 		[@b.sortTd  width="10%" id="pattern.remark" text="描述" /]
 		[@b.sortTd  width="70%" id="pattern.content" text="内容" /]
 	[/@]
 	[@b.gridbody datas=patterns;pattern]
-	  [@b.selectTd id="patternId" value=pattern.id/]
+	  [@b.selectTd name="patternId" value=pattern.id/]
 	  <td>${pattern.remark!}</td>
 	  <td>${pattern.content!}</td>
 	[/@]

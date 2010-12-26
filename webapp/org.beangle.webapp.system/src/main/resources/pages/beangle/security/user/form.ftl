@@ -78,17 +78,17 @@
 	 </table>
 	</div>
 	<div id="groupmember">
-	[@table.table id="memberTable"  width="100%" ]
-		[@table.thead]
+	[@b.grid id="memberTable"  width="100%" ]
+		[@b.gridhead]
 			<td></td>
-			[@table.td text="序号"/]
-			[@table.td text="用户组"/]
-			[@table.td text="成员"/]
-			[@table.td text="授权"/]
-			[@table.td text="管理"/]
-			[@table.td text="加入时间"/]
+			[@b.td text="序号"/]
+			[@b.td text="用户组"/]
+			[@b.td text="成员"/]
+			[@b.td text="授权"/]
+			[@b.td text="管理"/]
+			[@b.td text="加入时间"/]
 		[/@]
-		[@table.tbody datas=members;m,m_index]
+		[@b.gridbody datas=members;m,m_index]
 			<td><input name="groupId" type="checkbox" onchange="changeMember(${m.group.id},this)"/></td>
 			<td>${m_index+1}</td>
 			<td>${m.group.name}</td>

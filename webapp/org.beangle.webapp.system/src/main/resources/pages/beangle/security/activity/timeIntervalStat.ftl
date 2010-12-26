@@ -1,11 +1,11 @@
 [#ftl]
-[@table.table width="100%" ]
-	[@table.thead]
+[@b.grid width="100%" ]
+	[@b.gridhead]
 		<td><b>时间段</b></td>
 		<td><b>登录次数</b></td>
 	[/@]
 	[#assign total=0]
-	[@table.tbody datas=logonStats;logonStat]
+	[@b.gridbody datas=logonStats;logonStat]
 		<td align="center">${logonStat[0]}:00-${(logonStat[0]+1)%24}:00</td>
 		<td align="center">${logonStat[1]}</td>
 		[#assign total=total+logonStat[1]]

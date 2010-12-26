@@ -20,7 +20,7 @@
 	[/#list]
 </table>
   <script>
-   var bar = new ToolBar('menuInfoBar','菜单列表',null,true,true);
+   var bar = bg.ui.toolbar('menuInfoBar','菜单列表',null,true,true);
    bar.setMessage('[@getMessage/]');
    bar.addPrint("[@text "action.print"/]");
    bar.addClose("[@text "action.close"/]");  

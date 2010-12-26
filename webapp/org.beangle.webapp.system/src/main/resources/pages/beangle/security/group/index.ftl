@@ -15,13 +15,13 @@
 </body>
 <script>
 	var form=document.groupSearchForm;
-	var action="group.action";
-	function searchGroup(pageNo,pageSize,orderBy){
-		form.action=action+"?method=search";
-		goToPage(form,pageNo,pageSize,orderBy);
+	var action="group!search.action";
+	function search(){
+		form.action=action;
+		form.submit();
 	}
-	searchGroup();
-	var bar = new ToolBar('groupBar','<a href="dashboard.action">权限管理</a>-->用户组管理',null,true,true);
+	search();
+	var bar = bg.ui.toolbar('groupBar','<a href="dashboard.action">权限管理</a>-->用户组管理',null,true,true);
 	bar.addHelp("[@text name="action.help"/]");
 </script>
 </html>

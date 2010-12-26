@@ -13,7 +13,7 @@ function addElemement(ele){
   // 设置焦点
   function setFocus(event){
      if(event.keyCode==13){
-        var target = getEventTarget(portableEvent(event));
+        var target = beangle.event.getTarget(event);
         var name=target.name;
         for(var i=0;i<this.elemts.length-1;i++){
           if(name==this.elemts[i]){

@@ -3,7 +3,7 @@
 [@sj.head /]
 <table id="systemBar"></table>
 <script>
-   var bar = new ToolBar('systemBar','系统状态查看',null,true,true);
+   var bar = bg.ui.toolbar('systemBar','系统状态查看',null,true,true);
    bar.addHelp();
 </script>
 	[@sj.tabbedpanel id="systemTabs"]

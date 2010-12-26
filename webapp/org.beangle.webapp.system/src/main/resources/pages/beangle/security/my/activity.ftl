@@ -28,7 +28,7 @@
   [/@sj.div]
 
   <script type="text/javascript">
-   var bar = new ToolBar('userInfoBar','我最近的登录情况',null,true,true);
+   var bar = bg.ui.toolbar('userInfoBar','我最近的登录情况',null,true,true);
    bar.setMessage('[@getMessage/]');
    bar.addClose("[@text name="action.close"/]");
    

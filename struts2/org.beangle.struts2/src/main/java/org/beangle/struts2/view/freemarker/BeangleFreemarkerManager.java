@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -95,6 +96,7 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 	 * @see freemarker.template.Configuration#setSettings for the definition of
 	 *      valid settings
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void loadSettings(ServletContext servletContext) {
 		try {
@@ -110,8 +112,11 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 				properties.putAll(getProperties((URL) em.nextElement()));
 			}
 			StringBuilder sb = new StringBuilder();
-			for (Iterator<Object> iter = properties.keySet().iterator(); iter.hasNext();) {
-				String key = (String) iter.next();
+			@SuppressWarnings("rawtypes")
+			List keys=CollectUtils.newArrayList(properties.keySet());
+			Collections.sort(keys);
+			for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
+				String key =iter.next();
 				String value = (String) properties.get(key);
 				if (key == null) { throw new IOException(
 						"init-param without param-name.  Maybe the freemarker.properties is not well-formed?"); }

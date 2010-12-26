@@ -1,6 +1,5 @@
 [#ftl]
 [#include "/template/head.ftl"/]
- <script language="JavaScript" type="text/JavaScript" src="${base}/static/scripts/Menu.js"></script> 
  <body>
    <table id="userBar"></table>
    <table class="frameTable">
@@ -16,15 +15,13 @@
  </body>
   <script>
 	var form=document.userSearchForm;
-
-	var action="user.action";
-	function searchUser(pageNo,pageSize,orderBy){
-		form.action=action+"?method=search";
-		goToPage(form,pageNo,pageSize,orderBy);
+	var action="user!search.action";
+	function search(pageNo,pageSize,orderBy){
+		form.action=action;
+		form.submit();
 	}
-
-	searchUser();
-	var bar = new ToolBar('userBar','<a href="dashboard.action">权限管理</a>-->[@text "ui.userIndex"/]',null,true,true);
+	search();
+	var bar = bg.ui.toolbar('userBar','<a href="dashboard.action">权限管理</a>-->[@text "ui.userIndex"/]',null,true,true);
 	bar.setMessage('[@getMessage/]');
 	bar.addHelp();
   </script>

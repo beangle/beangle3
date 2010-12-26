@@ -42,5 +42,5 @@
  [#macro getMessage][@s.actionmessage theme="beangle"/][@s.actionerror theme="beangle"/][/#macro]
  [#macro searchParams]<input name="params" type="hidden" value="${Parameters['params']!('')}"][/#macro]
  <script>
- if (window.addEventListener) {window.addEventListener("load", adaptFrameSize, false);}else if (window.attachEvent) {window.attachEvent("onload", adaptFrameSize);}else {window.onload = adaptFrameSize;}
+	beangle.ready(beangle.iframe.adaptSelf);
  </script>

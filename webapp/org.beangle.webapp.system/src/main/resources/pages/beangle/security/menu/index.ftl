@@ -25,7 +25,7 @@
 	function redirectTo(url){
 		window.open(url);
 	}
-	var bar = new ToolBar('menuBar','<a href="dashboard.action">权限管理</a>-->菜单资源',null,true,true);
+	var bar = bg.ui.toolbar('menuBar','<a href="dashboard.action">权限管理</a>-->菜单资源',null,true,true);
 	bar.setMessage('[@getMessage/]');
 	bar.addItem("系统功能","redirectTo('resource.action')");
 	bar.addItem("菜单配置","redirectTo('menu-profile.action?method=search')");

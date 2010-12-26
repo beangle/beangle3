@@ -71,7 +71,7 @@
        <td align="center">[@enableInfo menu.enabled/]</td>
 	  </tr>
 	[/#list]
-	[@page.bar curPage=menus pageId="menuTable"/]
+	[@b.pagebar curPage=menus pageId="menuTable"/]
 	</tbody>
 </table>
 

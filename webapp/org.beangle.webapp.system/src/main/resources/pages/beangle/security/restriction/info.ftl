@@ -5,7 +5,7 @@
  [#if (restrictions?size==0)]没有设置[/#if]
  [#list restrictions as restriction]
     <fieldSet  align=center> 
-    <legend>${restriction.paramGroup.name}(${restriction.enabled?string("启用","禁用")}) <a href="#" onclick="edit('${restriction.id}')">修改</a>    <a href="#" onclick="remove('${restriction.id}')">删除</a></legend>
+    <legend>${restriction.pattern.name}(${restriction.enabled?string("启用","禁用")}) <a href="#" onclick="edit('${restriction.id}')">修改</a>    <a href="#" onclick="remove('${restriction.id}')">删除</a></legend>
     [#list restriction.paramGroup.params  as param]
       <li>${param.description}</li>
           [#if param.editor??]
@@ -26,7 +26,7 @@
 	<input type="hidden" name="params" value="&restriction.holder.id=${Parameters['restriction.holder.id']}&restrictionType=${Parameters['restrictionType']}"/>
 </form>
 <script> 
-   var bar = new ToolBar('restrictionBar','数据权限',null,true,true);
+   var bar = bg.ui.toolbar('restrictionBar','数据权限',null,true,true);
    bar.setMessage('[@getMessage/]');
    bar.addHelp();
    function edit(){

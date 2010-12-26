@@ -5,13 +5,13 @@
  [@sj.head /]
  [@sj.accordion id="accordion"]
 	 [@sj.accordionItem title="固定参数"]
-	 [@table.table id="saticTable" align="center" width="90%"]
-	   [@table.thead]
-	     [@table.td text="序号" width="10%"/]
-	     [@table.td text="参数名称" width="20%"/]
-	     [@table.td text="参数值" width="25%"/]
+	 [@b.grid id="saticTable" align="center" width="90%"]
+	   [@b.gridhead]
+	     [@b.td text="序号" width="10%"/]
+	     [@b.td text="参数名称" width="20%"/]
+	     [@b.td text="参数值" width="25%"/]
 	   [/@]
-	   [@table.tbody datas=staticNames;name,name_index]
+	   [@b.gridbody datas=staticNames;name,name_index]
 	   	<td>${name_index+1}</td>
 	   	<td>${name}</td>
 	   	<td>${config.get(name)}</td>
@@ -21,16 +21,16 @@
 	  
 	 [@sj.accordionItem title="可编辑参数"]
 	 <form name="systemConfigForm" method="post" action="" onsubmit="return false;">
-	 [@table.table id="listTable" align="center" width="95%"]
-	   [@table.thead]
-	     [@table.td text="序号" width="7%"/]
-	     [@table.td text="参数名称" width="20%"/]
-	     [@table.td text="类型" width="15%"/]
-	     [@table.td text="参数值" width="35%"/]
-	     [@table.td text="说明" width="15%"/]
-	     [@table.td text="删除" width="8%"/]
+	 [@b.grid id="listTable" align="center" width="95%"]
+	   [@b.gridhead]
+	     [@b.td text="序号" width="7%"/]
+	     [@b.td text="参数名称" width="20%"/]
+	     [@b.td text="类型" width="15%"/]
+	     [@b.td text="参数值" width="35%"/]
+	     [@b.td text="说明" width="15%"/]
+	     [@b.td text="删除" width="8%"/]
 	   [/@]
-	   [@table.tbody datas=propertyConfigs;config,config_index]
+	   [@b.gridbody datas=propertyConfigs;config,config_index]
 	     <td>${config_index+1}</td>
 	     <td style="text-align:left"><input name="config${config.id}.name"  value="${config.name}" style="width:100%"></td>
 	     <td><input name="config${config.id}.type" value="${config.type!}" style="width:100%"></td>
@@ -69,7 +69,7 @@
 
  [/@sj.accordion]
 <script>
-   var bar = new ToolBar('userBar','&nbsp;系统参数',null,true,true);
+   var bar = bg.ui.toolbar('userBar','&nbsp;系统参数',null,true,true);
    bar.setMessage('[@getMessage/]');
    bar.addBack();
    

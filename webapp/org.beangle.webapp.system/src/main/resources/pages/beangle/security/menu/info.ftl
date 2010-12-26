@@ -38,7 +38,7 @@
    document.menuInfoForm.action="menu.action?method=edit&menuId=${menu.id}";
    document.menuInfoForm.submit();
   }
-   var bar = new ToolBar('menuInfoBar','[@text name="info.module.detail"/]',null,true,true);
+   var bar = bg.ui.toolbar('menuInfoBar','[@text name="info.module.detail"/]',null,true,true);
    bar.setMessage('[@getMessage/]');
    bar.addBack("[@text name="action.back"/]");  
   </script>

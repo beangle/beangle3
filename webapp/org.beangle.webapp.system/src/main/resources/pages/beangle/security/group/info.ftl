@@ -42,7 +42,7 @@
        </tr>
       </table>
   <script>
-   var bar = new ToolBar('groupInfoBar','[@text name="info.group"/]',null,true,true);
+   var bar = bg.ui.toolbar('groupInfoBar','[@text name="info.group"/]',null,true,true);
    bar.setMessage('[@getMessage/]');
    bar.addBack("[@text name="action.back"/]");  
   </script>

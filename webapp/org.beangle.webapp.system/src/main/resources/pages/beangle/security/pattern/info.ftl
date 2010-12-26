@@ -17,7 +17,7 @@
        </tr>
       </table>
   <script>
-   var bar = new ToolBar('resourceInfoBar','[@text name="security.restrictionPattern.info"/]',null,true,true);
+   var bar = bg.ui.toolbar('resourceInfoBar','[@text name="security.restrictionPattern.info"/]',null,true,true);
    bar.setMessage('[@getMessage/]');
    bar.addBack("[@text name="action.back"/]");  
   </script>

@@ -8,7 +8,7 @@
 	[@sj.tab id="tab2" label="限制参数" href="restrict-meta!fields.action"/]
 [/@]
 <script>
- var menuBar=new ToolBar('menuBar','<a href="dashboard.action">权限管理</a>-->限制模式和参数',null,true,true);
+ var menuBar=bg.ui.toolbar('menuBar','<a href="dashboard.action">权限管理</a>-->限制模式和参数',null,true,true);
  menuBar.addHelp();
 </script>
 </body>

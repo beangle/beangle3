@@ -50,7 +50,7 @@
 	      [/#list]
 	   </tr>
 	   [/#list]
-	   [@page.bar pageId="avatarPanel" curPage=names/]
+	   [@b.pagebar pageId="avatarPanel" curPage=names/]
 	</table>
 	</div>
 </div>

@@ -59,7 +59,7 @@
        </tr>
       </table>
   <script>
-   var bar = new ToolBar('userInfoBar','[@text name="user" /][@text name="common.detail" /]',null,true,true);
+   var bar = bg.ui.toolbar('userInfoBar','[@text name="user" /][@text name="common.detail" /]',null,true,true);
    bar.setMessage('[@getMessage/]');
    bar.addBack("[@text name="action.back"/]");
   </script>

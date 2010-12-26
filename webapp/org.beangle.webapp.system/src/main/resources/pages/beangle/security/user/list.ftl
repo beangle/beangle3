@@ -19,7 +19,7 @@
 		}
 	[/@]
    [@b.gridhead]
-     [@b.selectAllTd id="userId"/]
+     [@b.selectAllTd name="userId"/]
      [@b.sortTd width="10%" id="user.name" name="user.name"/]
      [@b.sortTd width="10%" id="user.fullname" name="user.fullname"/]
      [@b.sortTd width="30%" id="user.mail" name="common.email" /]
@@ -29,7 +29,7 @@
    	 [@b.sortTd width="10%" id="user.status" name="common.status" /]
    [/@]
    [@b.gridbody datas=users;user]
-     [@b.selectTd id="userId" value="${user.id}"/]
+     [@b.selectTd name="userId" value="${user.id}"/]
      <td><A href="user!dashboard.action?user.id=${user.id}" target="_blank">&nbsp;${user.name} </a></td>
      <td>${user.fullname!("")}</td>
      <td>${user.mail}</td>
