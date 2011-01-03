@@ -12,26 +12,21 @@
 	}
 	/**
 	 * 生成一个工具栏
-	 * 
-	 * @param tableId
-	 *            工具栏对应的表格
-	 * @param title
-	 *            工具栏的标题
-	 * @param imageName
-	 *            工具栏顶头的图片名称
-	 * @param hasSeparator
-	 *            工具栏中是否添加分隔符 bug1,不要把toolbar对应的表格放在form内
+	 * @param divId 工具栏对应的div
+	 * @param title  工具栏的标题
+	 * @param imageName  工具栏顶头的图片名称
+	 * @param hasSeparator 工具栏中是否添加分隔符 bug1,不要把toolbar对应的表格放在form内
 	 */
-	function ToolBar(tableId,title,imageName,hasKeyLine,hasSeparator){
-		this.hasKeyLine=(null==hasKeyLine)?true:hasKeyLine;
+	function ToolBar(divId,title,imageName,hasSeparator){
 		this.hasSeparator=(null==hasSeparator)?true:hasSeparator;
 		this.itemCount=0;
-		this.table=document.getElementById(tableId);
-		if(null==this.table){
-			bg.alert("cannot find table with id " + tableId);
+		this.bar=document.getElementById(divId);
+		if(null==this.bar){
+			bg.alert("cannot find div with id " + divId);
 			return;
 		}
-		this.table.className="toolBar";
+		this.id=divId;
+		this.bar.className="toolbar";
 		var defaultToolBarImageName="info.gif";
 		var defaultItemImageName="action.gif";
 		var helpImageName="help.gif";
@@ -42,27 +37,22 @@
 		 * 
 		 */
 		this.init = function (title,imageName){
-		 	var tr = document.createElement('tr');
-			var titleTd = document.createElement('td');
+			var title_div = document.createElement('div');
+			title_div.className="toolbar-title";
 			if(imageName==null){
 				imageName=defaultToolBarImageName;
 			}
-			titleTd.innerHTML='<img class="icon" src="'+getImagePath(imagePath,imageName)+'"><B>'+title+"</B>";
-			titleTd.align="left";
-			tr.appendChild(titleTd);
-			tr.align="center";
-			addTR(this.table,tr);
-			this.tr=tr;
-			bg.logger.debug("generator tr");
-			if(this.hasKeyLine){
-				var keyLineTR = document.createElement('tr');
-				var keyLineTd = document.createElement('td');
-				keyLineTd.innerHTML='<img height="2" width="100%" align="top" src="'+imagePath+'keyline.gif"/>';
-				keyLineTd.className="keyLine";
-				keyLineTd.colSpan=40;
-				keyLineTR.appendChild(keyLineTd);
-				addTR(this.table,keyLineTR);
-			}
+			title_div.innerHTML='<img class="toolbar-icon" src="'+getImagePath(imagePath,imageName)+'" /><strong>'+title+"</strong>";
+			this.bar.appendChild(title_div);
+			var msg_div = document.createElement('div');
+			msg_div.className="toolbar-msg";
+			msg_div.id=this.id+"_msg";
+			this.bar.appendChild(msg_div);
+			var items_div = document.createElement('div');
+			items_div.className="toolbar-items";
+			items_div.id=this.id+"_items";
+			this.items_div=items_div;
+			this.bar.appendChild(items_div);
 		}
 		this.init(title,imageName);
 		
@@ -97,27 +87,27 @@
 		 * 设置按钮的动作
 		 * 
 		 */
-		function setAction(itemTd,action){
+		function setAction(item,action){
 			if(null==action){
 				bg.alert("action should not be null");
 				return;
 			}
 			if(typeof action=='function'){
-				itemTd.onclick=action;
+				item.onclick=action;
 				return;
 			}
 			if(typeof action=='string'){
 				if (action.indexOf('(')!=-1){
-					itemTd.onclick= function (){eval(action);}
+					item.onclick= function (){eval(action);}
 				}
 				else if(action.indexOf('.action')!=-1){
-					itemTd.onclick=function (){Go(action)}	 
+					item.onclick=function (){Go(action)}	 
 				}else{
 					bg.alert("unsuported action description:"+action);
 				}
 			}
 			if(typeof action=='object'){
-				itemTd.onclick=action.func;
+				item.onclick=action.func;
 				return;
 			}
 		}
@@ -155,34 +145,33 @@
 		 */
 		this.addItem = function(title,action,imageName,alt){
 			this.addSeparatorAsNeed();
-			var itemTd = document.createElement('td');
+			var item_div = document.createElement('div');
 			if(null==imageName){
 				imageName=getDefaultImageName(action);
 			}
 			if(alt==""||alt==null){
 				alt=title;
 			}
-			itemTd.innerHTML='<img class="icon" src="'+getImagePath(imagePath,imageName)+'" alt="' +alt+'">'+title;
+			item_div.innerHTML='<img class="toolbar-icon" src="'+getImagePath(imagePath,imageName)+'" alt="' +alt+'" />'+title;
 
-			itemTd.onmouseout=MouseOut;
-			itemTd.onmouseover=MouseOver;
-			setAction(itemTd,action);
-			itemTd.className="padding";
-			itemTd.width="1%";// adaptive
-			itemTd.title=alt;
-			this.tr.appendChild(itemTd);
+			item_div.onmouseout=MouseOutItem;
+			item_div.onmouseover=MouseOverItem;
+			setAction(item_div,action);
+			item_div.className="toolbar-item";
+			item_div.title=alt;
+			this.items_div.appendChild(item_div);
 			this.itemCount++;
-			return itemTd;
+			return item_div;
 		}
 		/**
 		 * 添加分隔符
 		 * 
 		 */
 		this.addSeparator = function (){  
-			var separatorTd = document.createElement('td');
-			separatorTd.innerHTML="|";
-			separatorTd.className="separator";
-			this.tr.appendChild(separatorTd);  
+			var separator = document.createElement('div');
+			separator.innerHTML="|";
+			separator.className="toolbar-separator";
+			this.items_div.appendChild(separator);
 		}
 		
 		this.addSeparatorAsNeed = function (){
@@ -206,77 +195,60 @@
 			this.tr.appendChild(itemTd);
 			this.itemCount++;
 		}
+		/**
+		 * 设置工具栏的消息区
+		 * 
+		 */
+		this.setMessage = function (msg){
+			if (typeof msg == "undefined") return;
+			document.getElementById(this.id+"_msg").innerHTML=msg;
+		}
 		
-		var MOL=new Array();
 		/**
 		 * 在工具栏中添加一个菜单
 		 */
 		this.addMenu = function(title,action,imageName,alt){
 			this.addSeparatorAsNeed();
-			var itemTd = document.createElement('td');
-			if(null==imageName){
-				imageName=getDefaultImageName(action);
-			}
-			if(alt==""||alt==null){
-				alt=title;
-			}
-			var menuTableId="NewMenu"+this.itemCount;
-			var innerHTML='<img class="icon" src="'+getImagePath(imagePath,imageName)+'" alt="' +alt+'">'+title;
-			itemTd.className="padding";
-			itemTd.width="1%";// adaptive
-			itemTd.id=menuTableId+"_TD";
-			itemTd.onmouseout=function (event){MourseMenuEvent(event,menu_str);}
-			itemTd.onmouseover=function (event){MourseMenuEvent(event,menu_str);}
-			itemTd.onblur=function (event){MourseMenuEvent(event,menu_str);}
-			itemTd.className="padding";
-			this.tr.appendChild(itemTd);
-
-			var menu = new Menu(menuTableId);
-			var menu_str="MOL["+MOL.length+"]";
-			var newMenu_obj=	null;
-			
-			if(null!=action){
-				itemTd.innerHTML=innerHTML;
-				var downarrow = document.createElement('td');
-				downarrow.innerHTML='<img class="icon" src="'+imagePath+'downarrow.gif" >';
-				downarrow.id=menuTableId+"_DdTD";
-				this.tr.appendChild(downarrow);
-				newMenu_obj = new MenuObj(title,menu.table.id, itemTd.id,downarrow.id, "transfer", "padding", "Q");
-
-				setAction(itemTd,action);
-				downarrow.onclick=function (event){MCH(event,menu_str);};
-				downarrow.onmouseout=function (event){MourseMenuEvent(event,menu_str);}
-				downarrow.onmouseover=function (event){MourseMenuEvent(event,menu_str);}
-				downarrow.onblur=function (event){MourseMenuEvent(event,menu_str);}
-				downarrow.className="padding";
-				downarrow.width="8px";
-			}else{
-				newMenu_obj = new MenuObj(title,menu.table.id, itemTd.id,"", "transfer", "padding", "Q");
-				itemTd.innerHTML=innerHTML+'<img src="'+imagePath+'downarrow.gif" class="icon">';;
-				itemTd.onclick=function (event){MCH(event,menu_str);};
-			}
+			var item_div = document.createElement('div');
+			alt=alt||title;
+			item_div.className="toolbar-item";
+			var menuTableId=this.id+this.itemCount+"_menu";
+			item_div.id=menuTableId;
+			item_div.onmouseout=MouseOutItem;
+			item_div.onmouseover=MouseOverItem;
+			this.items_div.appendChild(item_div);
+			item_div.innerHTML=title+'<img src="'+imagePath+'downarrow.gif" class="toolbar-icon" />';
+			var menu = new Menu(menuTableId,item_div);
+			item_div.onclick=function (event){displayMenu(event);};
 			this.itemCount++;
-			bg.logger.debug("after new menu");
 			return menu;
 		}
-
+		
+		function displayMenu(event){
+			div=bg.event.getTarget(event);
+			while(div&&div.tagName!='div'){
+				div=div.parentNode;
+			}
+			menu=div.lastElementChild;
+			if(null==menu){alert('menu is null then return and target is '+div);return;}
+			if(menu.style.visibility!=""&&menu.style.visibility!="hidden"){
+				menu.style.visibility="hidden";
+				div.className="toolbar-item-transfer";
+			}else{
+				menu.style.visibility="visible";
+				div.className="toolbar-item-selected";
+			}
+		}
 		/**
 		 * 生成一个菜单
 		 */
-		function Menu(id){
+		function Menu(id,item_div){
 			var table=document.createElement("table");
-			table.className="barMenu";
+			table.className="toolbar-menu";
 			table.id=id;
-			// table.border="1"
-			var tr = document.createElement('tr');
-			var td = document.createElement('td');
-			td.innerHTML="";
-			tr.appendChild(td);
-			var mytablebody = document.createElement("TBODY");
-			mytablebody.appendChild(tr);
+			var mytablebody = document.createElement("tbody");
 			table.appendChild(mytablebody);
-			document.getElementsByTagName("body").item(0).appendChild(table);
-
+			item_div.appendChild(table);
 			this.table=table; 
 			/**
 			 * 在菜单中添加一个条目
@@ -289,220 +261,49 @@
 				if(alt==""||alt==null){
 					alt=title;
 				}
-				itemTd.innerHTML='<img class="icon" src="'+getImagePath(imagePath,imageName)+'" alt="' +alt+'">'+title;
-
-				itemTd.onmouseout=MU_D;
-				itemTd.onmouseover=MO_D;
+				itemTd.innerHTML='<img class="toolbar-icon" src="'+getImagePath(imagePath,imageName)+'" alt="' +alt+'" />'+title;
+				itemTd.onmouseout=MouseOutMenuItem;
+				itemTd.onmouseover=MouseOverMenuItem;
 				setAction(itemTd,action);
-				itemTd.className="barMenuTransfer";
+				itemTd.className="toolbar-menuitem";
 				itemTd.width="100%";
 				var tr = document.createElement('tr');
 				tr.appendChild(itemTd);
-				addTR(this.table,tr);
-			}
-		}
-		/**
-		 * 设置工具栏的消息区
-		 * 
-		 */
-		this.setMessage = function (msg){
-			if (typeof msg == "undefined") return;
-			var itemTd = document.createElement('td');
-			itemTd.innerHTML = msg;
-			this.tr.appendChild(itemTd);
-		}
-		/**
-		 * 一个下拉菜单对象
-		 * 
-		 * @param name
-		 *            名称
-		 * @param tableId
-		 *            悬挂的表格id
-		 * @param tdId
-		 *            悬挂的单元格id
-		 * @param
-		 * @param
-		 * 
-		 */
-		function MenuObj(name,tableId,tdId,_D,_E,_F,_G,_I){
-			this.name=name;
-			this.divObj=eval('document.getElementById("' + tableId + '")');
-			this.divStyleObj=eval('document.getElementById("' + tableId + '").style');
-			this.refTDObj=eval('document.getElementById("' + tdId + '")');
-			if (_D)
-			this.DdTDObj=eval('document.getElementById("' + _D + '")');
-			
-			this.bOn=_E;
-			this.bOf=_F;
-			this.bA=_G;
-			
-			this.SBS=SBS;
-			this.showing=false;
-			this.TM=TM;
-			document.onclick=MCH;
-			this.Direction=_I;
-			MOL[MOL.length]=this;	
-			this.strShow='visible';
-			this.strHide='hidden';
-		}
-		/**
-		 * 获得表达式对应的对象
-		 */
-		function ReferOfPoint(ObjRef){
-		    var theObj=null;
-			if (ObjRef){
-				if (typeof ObjRef != 'object'){
-					theObj=eval(ObjRef);
-			    }
-				else{
-					theObj=ObjRef;
-			    }
-				return theObj;
-			} else{
-				return false;
-			}
-		}
-		function TM(){
-			if (!this.showing){
-				var RelObjCords=getXY(this.refTDObj);
-				if (this.Direction){
-					this.divStyleObj.top =  RelObjCords.top + -this.divObj.offsetHeight;
-					this.divStyleObj.left =  RelObjCords.left;
+				if(this.table.tBodies.length==0){
+					this.table.appendChild(document.createElement("tbody"));
 				}
-				else{
-					this.divStyleObj.top =  RelObjCords.top + 18;
-					this.divStyleObj.left =  RelObjCords.left;
-				}		
-				var pCurrMenuObj=ReferOfPoint(this);
-				CM(this);
-				this.SBS('clicked');
-				this.divStyleObj.visibility =  this.strShow;
-				this.showing=true;
+				this.table.tBodies[0].appendChild(tr);
 			}
-			else{
-				this.divStyleObj.visibility =  this.strHide;
-				this.showing=false;
-				this.SBS();
-			}
+		}
+		
+		// /菜单条目的鼠标进入和离开事件响应方法
+		function MouseOutMenuItem(e){
+			var S=bg.event.getTarget(e);
+			while (S&&S.tagName!="td"){S=S.parentNode;}
+			if(S)S.className="toolbar-menuitem";
+		}
+		
+		function MouseOverMenuItem(e){
+			var S=bg.event.getTarget(e);
+			while (S.tagName!="td"){S=S.parentNode;}
+			if(S)S.className="toolbar-menuitem-transfer";
 		}
 		/**
 		 * 当鼠标经过工具栏的按钮时
 		 * 
 		 */
-		function MouseOver(e){
+		function MouseOverItem(e){
 			var S=bg.event.getTarget(e);
-			while (S.tagName!="TD")
-			{S=S.parentNode;}
-			S.className="transfer";
+			while (S&&S.tagName!="div"){S=S.parentNode;}
+			if(S)S.className="toolbar-item-transfer";
 		}
 		/**
 		 * 当鼠标离开工具栏的按钮时
 		 */
-		function MouseOut(e){
+		function MouseOutItem(e){
 			var S=bg.event.getTarget(e);
-			while (S.tagName!="TD")
-			{S=S.parentNode;}
-			S.className="padding";
-		}
-
-		function MouseUp(e){
-			var S=bg.event.getTarget(e);
-			while (S.tagName!="TD")
-			{S=S.parentNode;}
-			S.className="padding";
-		}
-		/**
-		 * 当鼠标经过或离开菜单时的事件响应类
-		 */
-		function MourseMenuEvent(e, srcObj){
-			if (!e) 
-			var e=window.event;
-			var pCurrMenuObj=ReferOfPoint(srcObj);
-			if (!pCurrMenuObj.showing){
-				if (e.type == 'mouseover')
-					pCurrMenuObj.SBS('on');
-				else if ((e.type == 'mouseout') || (e.type == 'blur'))
-					pCurrMenuObj.SBS();
-			}
-		}
-
-		function SBS(wS){
-			if (typeof this.refTDObj != "undefined"){
-				if (wS == 'on')	{
-					if (this.bOn){
-						if (typeof this.DdTDObj != "undefined")
-							this.DdTDObj.className=this.bOn;
-						this.refTDObj.className=this.bOn;
-					}
-				}
-				else if (wS == 'clicked'){
-					if (this.bA){
-						if (typeof this.DdTDObj != "undefined")
-							this.DdTDObj.className=this.bA;
-						this.refTDObj.className=this.bA;
-					}
-				}else{
-					if (this.bOf){
-						if (typeof this.DdTDObj != "undefined")
-							this.DdTDObj.className=this.bOf;
-						this.refTDObj.className=this.bOf;
-					}
-				}
-			}
-		}
-		function getXY(Obj){
-			for (var sumTop=0,sumLeft=0;Obj!=document.body;sumTop+=Obj.offsetTop,sumLeft+=Obj.offsetLeft, Obj=Obj.offsetParent);
-			return {left:sumLeft,top:sumTop}
-		}
-
-		function CM(callerObj){
-			for (aIndex=0;aIndex < MOL.length; aIndex++){
-				if ((callerObj) && (callerObj.name != MOL[aIndex].name)){	
-					if (MOL[aIndex].showing){
-						MOL[aIndex].TM();
-						MOL[aIndex].SBS();
-					}
-				}else{
-					if (MOL[aIndex].showing){
-					MOL[aIndex].TM();
-					MOL[aIndex].SBS();
-					}
-				}
-			}
-		}
-		function MCH(e, srcObj, srcIsMenuDiv){
-			var srcElem;
-			portableEvent(e).cancelBubble=true;
-			if (srcObj){
-				var pCurrMenuObj=ReferOfPoint(srcObj); 
-				if (!srcIsMenuDiv){
-				   pCurrMenuObj.divObj.onclick="MCH(event,"+srcObj+",true)";
-				}
-				pCurrMenuObj.TM();
-			}else{
-				CM();
-			}
-
-		}
-		// /菜单条目的鼠标进入和离开事件响应方法
-		function MO_D(e){
-			var S=bg.event.getTarget(e);
-			while (S.tagName!="TD")
-			{S=S.parentNode;}
-			S.className="barMenuPadding";
-		}
-		function MU_D(e){
-			var S=bg.event.getTarget(e);
-			while (S.tagName!="TD")
-			{S=S.parentNode;}
-			S.className="barMenuTransfer";
-		}
-		
-		function addTR(table,tr){
-			if(table.tBodies.length==0){
-				table.appendChild(document.createElement("TBODY"));   
-			}
-			table.tBodies[0].appendChild(tr);
+			while (S&&S.tagName!="div"){S=S.parentNode;}
+			if(S)S.className="toolbar-item";
 		}
 	}
 	bg.extend({'ui.toolbar':function (tableId,title,imageName,hasKeyLine,hasSeparator){
@@ -542,13 +343,13 @@
 			onRowChange : function (event){    
 				ele =  bg.event.getTarget(event);
 				var changed=true;
-				if(null!=ele&&ele.tagName=="TD"){
+				if(null!=ele&&ele.tagName=="td"){
 					var firstChild = ele.parentNode.firstChild;
-					if(firstChild.tagName!="TD"){
+					if(firstChild.tagName!="td"){
 						firstChild=firstChild.nextSibling;
 					}
 					ele=firstChild.firstChild;
-					while(((typeof ele.tagName)=="undefined")||ele.tagName!="INPUT"){
+					while(((typeof ele.tagName)=="undefined")||ele.tagName!="input"){
 						ele=ele.nextSibling;
 						if(ele==null)return;
 					}
@@ -576,14 +377,14 @@
 					bg.alert("无法找到元素对应的排序表格！");return;
 				}
 				var orderByStr=null;
-				if(ele.className=="gridhead-sort"){
+				if(ele.className=="gridhead-item-sort"){
 					if(typeof ele.asc!="undefined"){
 						orderByStr=ele.asc;
 					}
 					else{
 						orderByStr=ele.id+" asc";
 					}
-				}else if(ele.className=="gridhead-asc"){
+				}else if(ele.className=="gridhead-item-asc"){
 					if(typeof ele.desc!="undefined"){
 						orderByStr=ele.desc;
 					}
@@ -597,55 +398,55 @@
 			},
 
 			/**
-			 * 初始化排序表格<br>
+			 * 初始化排序表格<br/>
 			 * 此函数主要是向已经待排序表格的列头1)添加鼠标事件响应和显示效果. 2)负责将事件传递到用户定义的函数中.
 			 * 
-			 * 凡是要排序的列,请注名排序单元格的id 和class. 其中id是排序要传递的字段,class为定值gridhead-sort.
+			 * 凡是要排序的列,请注名排序单元格的id 和class. 其中id是排序要传递的字段,class为定值gridhead-item-sort.
 			 * 除此之外,用户(使用该方法的人)需要自定义一个钩子函数"sortBy(what)",以备调用.
 			 * 
 			 * @param tableId
 			 *            待排序表格的id
-			 * @param rowIndex
-			 *            标题行的位置
 			 * @param orderBy
 			 *            orderBy 字句 用法: <table>
 			 */
-			init : function (tableId,rowIndex,orderBy){
+			init : function (tableId,orderBy){
 				var table= document.getElementById(tableId);
-				if(null==rowIndex)
-					rowIndex=0;
-				var head=table.tBodies[0].rows[rowIndex];
-				if(null==head){
-					bg.alert("sortTable ["+tableId+"] with out thead"); 
+				var thead=table.tHead;
+				if(!thead || thead.rows.length==0){
+					bg.alert("sortTable ["+tableId+"] without thead"); 
 					return;
 				}
 				columnSort = function(event){
-					// this is a td
+					// this is a td/th
 					bg.ui.grid.sort(tableId,this);
 				}
-				for(var i=0;i<head.cells.length;i++){
-					if(head.cells[i].className=="gridhead-sort" && null!=head.cells[i].id){
-						head.cells[i].onclick = columnSort;
-						head.cells[i].onmouseover=bg.ui.grid.overSortTableHeader;
-						head.cells[i].onmouseout=bg.ui.grid.outSortTableHeader;
-						head.cells[i].title="点击按 ["+head.cells[i].innerHTML+"] 排序";
-						var desc=head.cells[i].id.replace(/\,/g," desc,")+" desc";
-						if(typeof head.cells[i].desc !="undefined"){
-							desc=head.cells[i].desc;
-						}
-						if(orderBy.indexOf(desc)!=-1){
-							head.cells[i].className="gridhead-desc"
-							head.cells[i].innerHTML=head.cells[i].innerHTML+'<img src="'+bg.getContextPath()+'/static/images/action/sortDesc.gif"  style="border:0"  alt="Arrow" />'
-							continue;
-						}
-						var asc=head.cells[i].id+" asc";
-						if(typeof head.cells[i].asc !="undefined"){
-							asc=head.cells[i].asc;
-						}
-						if(orderBy==asc){
-							head.cells[i].className="gridhead-asc"
-							head.cells[i].innerHTML=head.cells[i].innerHTML+'<img src="'+bg.getContextPath()+'/static/images/action/sortAsc.gif"  style="border:0"  alt="Arrow" />'
-							continue;
+				for(var j=0;j<thead.rows.length;j++){
+					head=thead.rows[j];
+					for(var i=0;i<head.cells.length;i++){
+						cell=head.cells[i];
+						if(cell.className=="gridhead-item-sort" && null!=cell.id){
+							cell.onclick = columnSort;
+							cell.onmouseover=bg.ui.grid.overSortTableHeader;
+							cell.onmouseout=bg.ui.grid.outSortTableHeader;
+							cell.title="点击按 ["+cell.innerHTML+"] 排序";
+							var desc=cell.id.replace(/\,/g," desc,")+" desc";
+							if(typeof cell.desc !="undefined"){
+								desc=cell.desc;
+							}
+							if(orderBy.indexOf(desc)!=-1){
+								cell.className="gridhead-item-desc"
+									cell.innerHTML=cell.innerHTML+'<img src="'+bg.getContextPath()+'/static/images/action/sortDesc.gif"  style="border:0"  alt="Arrow" />'
+								continue;
+							}
+							var asc=cell.id+" asc";
+							if(typeof cell.asc !="undefined"){
+								asc=cell.asc;
+							}
+							if(orderBy==asc){
+								cell.className="gridhead-item-asc"
+									cell.innerHTML=cell.innerHTML+'<img src="'+bg.getContextPath()+'/static/images/action/sortAsc.gif"  style="border:0"  alt="Arrow" />'
+								continue;
+							}
 						}
 					}
 				}
@@ -653,16 +454,16 @@
 			/**
 			 * 将pagebar 扩大到表格宽度
 			 */
-			spanPagebar : function (pageId){
+			spanPagebar : function (pageBarId){
 				var colspanNumber=30;
-				var pageBarTd=document.getElementById(pageId);
+				var pageBarTd=document.getElementById(pageBarId);
 				if(null == pageBarTd) return ;
 				parentEle=pageBarTd.parentNode;
-				while(null!=parentEle && parentEle.tagName!='TABLE'){
+				while(parentEle && parentEle.tagName!='table'){
 					parentEle=parentEle.parentNode;
 				}
-				if(typeof parentEle.tBodies[0].rows[0].cells.length!=undefined){
-					colspanNumber=parentEle.tBodies[0].rows[0].cells.length;
+				if(typeof parentEle.tHead.rows[0].cells.length!=undefined){
+					colspanNumber=parentEle.tHead.rows[0].cells.length;
 				}
 				pageBarTd.colSpan=colspanNumber;
 			}
@@ -673,31 +474,39 @@
 	if (typeof entityActions == "undefined") {
 		entityActions = new Object();
 	}
-	function getEntityAction(formId){
-		if (null == formId || typeof formId != "string") {
-			for (var id in entityActions) {
-				return entityActions[id];
+	function getEntityAction(id){
+		if (null == id || typeof id != "string") {
+			for (var fid in entityActions) {
+				return entityActions[fid];
 			}
 		}
 		else {
-			if (typeof entityActions[formId] == "undefined") {
-				bg.alert("without actionform with id" + formId);
+			if (typeof entityActions[id] == "undefined") {
+				bg.alert("without actionform with id" + id);
 			}
 			else {
-				return entityActions[formId];
+				return entityActions[id];
 			}
 		}
 	}
-	function EntityAction(formId,entity,action,actionQueryStr,target){
-		this.formId=formId;
+	function EntityAction(id,entity,action,actionQueryStr,target){
+		this.id=id;
 		this.entity=entity;
 		this.action=action;
 		this.actionQueryStr=actionQueryStr;
 		this.target=target;
-		entityActions[formId]=this;
+		entityActions[id]=this;
 		this.getForm=function (){
-			return  document.getElementById(this.formId);
-		};	
+			actionForm=document.getElementById(id+"_form");
+			if(null==actionForm){
+				actionForm=document.createElement("form");
+				actionForm.setAttribute("id",id+"_form");
+				actionForm.setAttribute("action",this.action);
+				actionForm.setAttribute("method","POST");
+				document.body.appendChild(actionForm);
+			}
+			return  actionForm;
+		};
 		this.addParam=function(name,value){
 			bg.form.addInput(this.getForm(),name,value);
 		}
@@ -705,8 +514,8 @@
 			var fm = this.getForm();
 			if(null!=fm) fm.target=target;
 		}
-		function beforeSubmmitId(formId,method) {
-			aform=getEntityAction(formId);
+		function beforeSubmmitId(id,method) {
+			aform=getEntityAction(id);
 			var ids = bg.input.getCheckBoxValues(aform.entity+"Id");
 			if (ids == null || ids == "") {
 				bg.alert("你没有选择要操作的记录！");
@@ -720,57 +529,58 @@
 			}
 			return true;
 		}
-		function submitIdAction(formId,method,multiId,confirmMsg){
-			aform=getEntityAction(formId);
-			if (beforeSubmmitId(aform.formId,method)) {
+		function submitIdAction(id,method,multiId,confirmMsg){
+			aform=getEntityAction(id);
+			if (beforeSubmmitId(aform.id,method)) {
 				if(null!=confirmMsg && ''!=confirmMsg){
 					if(!confirm(confirmMsg))return;
 				}
 				bg.form.submitId(aform.getForm(),aform.entity + "Id",multiId);
 			}
 		}
-		this.remove=function(){
+		this.remove=function(confirmMsg){
+			confirmMsg=confirmMsg||'确认删除?';
 			return new NamedFunction('remove',function(){
-				submitIdAction(formId,'remove',false,'确认删除?');
+				submitIdAction(id,'remove',false,confirmMsg);
 			});
 		}
 		this.add = function(){
 			return new NamedFunction('add',function(){
-				aform=getEntityAction(formId);
+				aform=getEntityAction(id);
 				form=aform.getForm();
-				if(""!=aform.actionQueryStr) addHiddens(form,aform.actionQueryStr);
+				if(""!=aform.actionQueryStr) bg.form.addHiddens(form,aform.actionQueryStr);
 				bg.form.addInput(form,aform.entity + 'Id',"");
-				if(""!=aform.actionQueryStr) addParamsInput(form,aform.actionQueryStr);
+				if(""!=aform.actionQueryStr) bg.form.addParamsInput(form,aform.actionQueryStr);
 				bg.form.submit(form,aform.action + "?method=edit");
 			});
 		}
 		
 		this.info = function(){
 			return new NamedFunction('info',function(){
-				submitIdAction(formId,'info',false)
+				submitIdAction(id,'info',false)
 			});
 		}
 		
 		this.edit = function (){
 			return new NamedFunction('edit',function(){
-				submitIdAction(formId,'edit',false);
+				submitIdAction(id,'edit',false);
 			});
 		}
 		
 		this.single = function(methodName,confirmMsg,extparams){
 			return new NamedFunction(methodName,function(){
-				form=getEntityAction(formId).getForm();
+				form=getEntityAction(id).getForm();
 				if(null!=extparams) addHiddens(form,extparams);
-				submitIdAction(formId,methodName,false,confirmMsg);
+				submitIdAction(id,methodName,false,confirmMsg);
 			});
 		}
 		
 		this.multi = function(methodName,confirmMsg,extparams){
 			return new NamedFunction(methodName,function(){
 				try {
-					form = getEntityAction(formId).getForm();
+					form = getEntityAction(id).getForm();
 					if(null!=extparams) bg.form.addHiddens(form, extparams);
-					submitIdAction(formId, methodName, true, confirmMsg);
+					submitIdAction(id, methodName, true, confirmMsg);
 				}catch(e){
 					bg.alert(e)
 				}
@@ -778,7 +588,7 @@
 		}
 		this.method=function(methodName,confirmMsg,extparams){
 			return  new NamedFunction(methodName,function(){
-				aform=getEntityAction(formId);
+				aform=getEntityAction(id);
 				form=aform.getForm();
 				if(null!=extparams){
 					bg.form.addHiddens(form,extparams);

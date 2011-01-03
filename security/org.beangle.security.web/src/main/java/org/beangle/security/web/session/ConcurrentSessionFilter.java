@@ -75,8 +75,8 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 		if (session != null) {
 			SessionInfo info = sessionRegistry.getSessionInfo(session.getId());
 			if (info != null) {
+				// Expired - abort processing
 				if (info.isExpired()) {
-					// Expired - abort processing
 					doLogout(request, response);
 					String targetUrl = determineExpiredUrl(request, info);
 					if (targetUrl != null) {

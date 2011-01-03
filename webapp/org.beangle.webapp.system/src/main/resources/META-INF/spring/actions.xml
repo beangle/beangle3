@@ -39,8 +39,9 @@
 	 class="org.beangle.webapp.system.action.StatusAction"
 	 autowire="byName"></bean>
 	
-	<bean name="system/property" scope="prototype" autowire="byName"
-	 class="org.beangle.webapp.system.action.PropertyAction"></bean>
+	<bean name="system/property" scope="prototype" autowire="byName" class="org.beangle.webapp.system.action.PropertyAction">
+		<property name="configFactory" ref="&amp;propertyConfig" />
+	</bean>
 	
 	<bean name="staticfile.download" scope="prototype"
 	 class="org.beangle.webapp.staticfile.action.DownloadAction"

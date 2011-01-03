@@ -1,5 +1,5 @@
 [#ftl]
-[#include "/template/head.ftl"/]
+[@b.xhtmlhead/]
 [@sj.head /]
 
 [#if Parameters['connection-scripts']??]
@@ -15,13 +15,13 @@ password=
 
 <div id="t1">
 <form name="form1" method="post" action="${base}/database/connection-test.action">
-  <table cellpadding="0" cellspacing="0">
-    <tr>
-      <td><textarea name="connection-scripts" cols="80" rows="4" id="scripts">${connection_scripts!}</textarea></td>
-    </tr>
-    <tr>
-      <td align="right"><input type="submit" name="Submit" value="-提交-"></td>
-    </tr>
+  <table >
+	<tr>
+	  <td><textarea name="connection-scripts" cols="80" rows="4" id="scripts">${connection_scripts!}</textarea></td>
+	</tr>
+	<tr>
+	  <td align="right"><input type="submit" name="Submit" value="-提交-"/></td>
+	</tr>
   </table>
 </form>
 </div>

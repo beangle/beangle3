@@ -13,7 +13,7 @@
 
 	<properties>
 		<struts.version>2.2.1</struts.version>
-		<jqueryplugin.version>2.2.2</jqueryplugin.version>
+		<jqueryplugin.version>2.5.0</jqueryplugin.version>
 		<freemarker.version>2.3.16</freemarker.version>
 		<servletapi.version>2.4</servletapi.version>
 	</properties>

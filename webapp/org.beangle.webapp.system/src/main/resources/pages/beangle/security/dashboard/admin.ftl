@@ -1,8 +1,9 @@
 [#ftl]
-[#include "/template/head.ftl"/]
-<link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css">
-<body>
-<div>[@getMessage/]</div>
+[@b.xhtmlhead title="Security Dashboard"]
+<link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css"/>
+[/@]
+<body class="autoadapt">
+<div>[@b.messages/]</div>
 <div id="categoryDiv" class="module expanded">
 	<h2 class="header">
 		<a href="#" class="toggle" onclick="_wi_tm('categoryDiv');">用户类别列表</a>
@@ -12,8 +13,8 @@
 	<li>${category.name}&nbsp;<a href="?removeCategoryId=${category.id}"><img style="border:0px" src="${base}/static/images/action/delete.gif"/></a></li>
 	[/#list]
 	<form name="dashboard!admin.action" method="post">
-		<label for="newCategoryInput">输入新的用户类别:</label><input name="newCategory" style="width:100px" id="newCategoryInput">
-		<input type="submit" value="提交">
+		<label for="newCategoryInput">输入新的用户类别:</label><input name="newCategory" style="width:100px" id="newCategoryInput"/>
+		<input type="submit" value="提交"/>
 	</form>
 	</div>
 </div>
@@ -29,8 +30,8 @@
 	</li>
 	[/#list]
 	<form name="dashboard!admin.action" method="post">
-		<label for="newAdminInput">输入用户名，加入超级管理员:</label><input name="newAdmin" style="width:100px" id="newAdminInput">
-		<input type="submit" value="提交">
+		<label for="newAdminInput">输入用户名，加入超级管理员:</label><input name="newAdmin" style="width:100px" id="newAdminInput"/>
+		<input type="submit" value="提交"/>
 	</form>
 	</div>
 </div>

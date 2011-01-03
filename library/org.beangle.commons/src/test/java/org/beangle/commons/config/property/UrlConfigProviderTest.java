@@ -15,12 +15,12 @@ import org.testng.annotations.Test;
 public class UrlConfigProviderTest {
 
 	public void testConfig() {
-		Config config = new ConfigBean();
-		UrlConfigProvider provider = new UrlConfigProvider();
+		PropertyConfig config = new PropertyConfigBean();
+		UrlPropertyConfigProvider provider = new UrlPropertyConfigProvider();
 		ConfigResource location = new ConfigResource();
 		// META-INF/system.properties
-		location.setGlobal(UrlConfigProvider.class.getResource("/system-default.properties"));
-		location.setUser(UrlConfigProvider.class.getResource("/system.properties"));
+		location.setGlobal(UrlPropertyConfigProvider.class.getResource("/system-default.properties"));
+		location.setUser(UrlPropertyConfigProvider.class.getResource("/system.properties"));
 		provider.setResource(location);
 		Properties properties = provider.getConfig();
 		config.set(properties);

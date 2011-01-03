@@ -1,12 +1,12 @@
 [#ftl]
-[#include "/template/head.ftl"/]
-<body>
-<style>
-img {
-	border:0 none;
-	vertical-align:middle
-}
-</style>
+[@b.xhtmlhead title="Dashboard"]
+	<link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css"/>
+	<style type="text/css">
+	img {border:0 none;vertical-align:middle}
+	.module{margin:0 3 5px;line-height:1.3em;float:left;width:42%;}
+	</style>
+[/@]
+<body class="autoadapt">
 [#macro menuitem image="" link="" name="" remark=""]
 <tr>
 	<td><a href="${link}"><img height="48" style="margin-right:1em" alt="" width="48" src="${base}/static/icons/beangle/48x48/${image!}" /></a></td>

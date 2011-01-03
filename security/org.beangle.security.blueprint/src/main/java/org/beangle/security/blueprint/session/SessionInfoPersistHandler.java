@@ -25,26 +25,24 @@ public class SessionInfoPersistHandler extends BaseServiceImpl implements Logout
 		Validate.notNull(sessionRegistry, "sessionRegistry must be set");
 	}
 
-	public void logout(HttpServletRequest request, HttpServletResponse response,
-			Authentication auth) {
+	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication auth) {
 		SessionActivity record = (SessionActivity) Model.newInstance(SessionActivity.class);
-		Object details=auth.getDetails();
-		if(!(details instanceof WebAuthenticationDetails))
-			return;
-		WebAuthenticationDetails webDetails=(WebAuthenticationDetails)details;
-		SessionInfo info=sessionRegistry.getSessionInfo(webDetails.getSessionId());
-		if(null==info) return;
+		Object details = auth.getDetails();
+		if (!(details instanceof WebAuthenticationDetails)) return;
+		WebAuthenticationDetails webDetails = (WebAuthenticationDetails) details;
+		SessionInfo info = sessionRegistry.getSessionInfo(webDetails.getSessionId());
+		if (null == info) return;
 		record.setSessionid(info.getSessionid());
 		record.setName(auth.getName());
-		UserToken token=(UserToken)auth.getPrincipal();
+		UserToken token = (UserToken) auth.getPrincipal();
 		record.setFullname(token.getFullname());
 		record.setCategory(token.getCategory());
 		record.setLoginAt(info.getLoginAt());
 		record.setLastAccessAt(info.getLastAccessAt());
 		record.setLogoutAt(new Timestamp(System.currentTimeMillis()));
-		
-		record.setOs(webDetails.getAgent().getOs());
-		record.setAgent(webDetails.getAgent().getFullname());
+
+		record.setOs(webDetails.getAgent().getOs().toString());
+		record.setAgent(webDetails.getAgent().getBrowser().toString());
 		record.setHost(webDetails.getAgent().getIp());
 		record.setRemark(info.getRemark());
 		record.calcOnlineTime();

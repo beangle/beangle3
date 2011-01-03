@@ -4,6 +4,7 @@
  */
 package org.beangle.commons;
 
+import org.beangle.commons.meta.BeangleVersion;
 import org.springframework.core.SpringVersion;
 import org.testng.annotations.Test;
 

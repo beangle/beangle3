@@ -100,7 +100,7 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implem
 		try {
 			auth.setDetails(authenticationDetailsSource.buildDetails(request));
 			authResult = authenticationManager.authenticate(auth);
-			sessionStrategy.onAuthentication(auth, request, response);
+			sessionStrategy.onAuthentication(authResult, request, response);
 			successfulAuthentication(request, response, authResult);
 		} catch (AuthenticationException failed) {
 			unsuccessfulAuthentication(request, response, failed);

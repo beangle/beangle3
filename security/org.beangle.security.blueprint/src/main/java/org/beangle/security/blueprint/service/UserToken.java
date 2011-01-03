@@ -11,11 +11,14 @@ import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.userdetail.User;
 import org.beangle.security.web.session.category.CategoryPrincipal;
 
-public class UserToken extends User implements CategoryPrincipal {
+public class UserToken extends User implements CategoryPrincipal,Comparable<UserToken> {
+
+	private static final long serialVersionUID = 63829183922466239L;
 
 	private Long id;
 
 	private String fullname;
+	
 	/** 用户类别 */
 	private UserCategory category;
 
@@ -65,6 +68,10 @@ public class UserToken extends User implements CategoryPrincipal {
 	 */
 	public int hashCode() {
 		return new HashCodeBuilder(-64900959, -454788261).append(this.id).toHashCode();
+	}
+
+	public int compareTo(UserToken o) {
+		return this.fullname.compareTo(o.fullname);
 	}
 
 	/**

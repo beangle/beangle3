@@ -14,4 +14,4 @@
 <%		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) { %>
 			Authentication object as a String: <%= auth.toString() %><BR><BR>
-<%      } %>
+<%	  } %>

@@ -113,10 +113,10 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 			}
 			StringBuilder sb = new StringBuilder();
 			@SuppressWarnings("rawtypes")
-			List keys=CollectUtils.newArrayList(properties.keySet());
+			List keys = CollectUtils.newArrayList(properties.keySet());
 			Collections.sort(keys);
 			for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
-				String key =iter.next();
+				String key = iter.next();
 				String value = (String) properties.get(key);
 				if (key == null) { throw new IOException(
 						"init-param without param-name.  Maybe the freemarker.properties is not well-formed?"); }
@@ -132,6 +132,15 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 			logger.error("Error while loading freemarker.properties", e);
 		} catch (TemplateException e) {
 			logger.error("Error while setting freemarker.properties", e);
+		}
+	}
+
+	public void addSetting(String name, String value) throws TemplateException {
+		if (name.equals("content_type") || name.equals(INITPARAM_CONTENT_TYPE)) {
+			contentType = value;
+			config.setCustomAttribute("content_type", value);
+		} else {
+			super.addSetting(name, value);
 		}
 	}
 

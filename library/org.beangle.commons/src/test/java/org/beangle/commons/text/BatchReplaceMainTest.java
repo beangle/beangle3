@@ -36,5 +36,10 @@ public class BatchReplaceMainTest {
 		 System.out.println(sb1.toString());
 		 System.out.println("one cat two cats in the yard".replaceAll("cat", "dog"));
 		 System.out.println(clause.replaceAll("<#(.*)/>", "[#$1/]"));
+		 
+		 String test="aaa    \nbbaad\n";
+		 Replacer replacer=new Replacer("( +?)\\n","\n");
+		 System.out.print(test);
+		 System.out.print(replacer.process(test));
 	}
 }

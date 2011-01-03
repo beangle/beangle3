@@ -46,7 +46,7 @@
         <webClassPathEntry>M2_REPO/com/ibm/jdbc/db2jcc/1.3.1/db2jcc-1.3.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/com/ibm/jdbc/db2jcc_license_cisuz/1.3.1/db2jcc_license_cisuz-1.3.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/com/ibm/jdbc/db2jcc_license_cu/1.3.1/db2jcc_license_cu-1.3.1.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/com/jgeppert/struts2/jquery/struts2-jquery-plugin/2.2.2/struts2-jquery-plugin-2.2.2.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/com/jgeppert/struts2/jquery/struts2-jquery-plugin/2.5.0/struts2-jquery-plugin-2.5.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/com/jhlabs/imaging/01012005/imaging-01012005.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/com/linuxense/javadbf/0.4.0/javadbf-0.4.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/com/octo/captcha/jcaptcha-api/1.0/jcaptcha-api-1.0.jar</webClassPathEntry>

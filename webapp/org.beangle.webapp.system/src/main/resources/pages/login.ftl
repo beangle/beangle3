@@ -1,129 +1,84 @@
 [#ftl]
-﻿[#include "/template/simpleHead.ftl"/]
-<script language="JavaScript" type="text/JavaScript" src="${base}/static/scripts/common/OnReturn.js"></script>
-<script>
-   if(this.parent!=this){
-      this.top.location="loginForm.action";
-   }
+[@b.xhtmlhead title="Login"/]
+<body>
+<script type="text/javascript" src="${base}/static/scripts/common/OnReturn.js"></script>
+<script type="text/javascript">
+	if(this.parent!=this){ this.top.location="loginForm.action"; }
 </script>
-  [#if ((Session['loginFailureCount'])?default(0)>1)]
-  [#assign needCaptcha=true]
-  [#else]
-  [#assign needCaptcha=false]
-  [/#if]
-
-<body LEFTMARGIN="0" TOPMARGIN="0" scroll=no>
-<TABLE WIDTH="100%" HEIGHT="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
- <TR>
-  <TD ALIGN="CENTER" VALIGN="MIDDLE" BACKGROUND="${base}/static/images/loginForm/idx_4.gif">
-   <TABLE WIDTH="651" BORDER="0" CELLPADDING="0" CELLSPACING="0" onkeypress="ret.focus(event)">
-    <tr>
-     <td align="center">权限系统</td>
-    </tr>
-    <TR>
-     <TD height="157" ALIGN="CENTER" VALIGN="MIDDLE"  style="background-attachment: fixed;background-repeat: no-repeat;background-position: center;">
-      <TABLE width="50%" BORDER="0" CELLSPACING="0" CELLPADDING="0"  width="651"   >
-       <tr>
-        <td colspan="3">[@s.actionerror/]</td>
-       </tr>
-       [@s.form name="loginForm" action="login"]
-       <tr>
-         <td colspan="2">
-         <TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0" style="font-size:16px">       
-         <tr>
-          <td ALIGN="right" height="30"><STRONG>用户名[#--[@text name="user.name"/]--]:</STRONG></td>
-          <td width="45">
-           <INPUT NAME="username" TYPE="text" value="${name!}" style="width:150px;background-color:#B0B0B0">
-          </td>
-         </tr>
-         <tr>
-          <td ALIGN="right" height="30"><STRONG>密码:</STRONG></td>
-          <td><INPUT NAME="password" TYPE="password"   style="width:150px;background-color:#B0B0B0">
-          <INPUT NAME="encodedPassword" type="hidden" value=""></td>
-         </tr>
-         [#if needCaptcha]
-         <tr>
-          <td ALIGN="right" height="30"><STRONG>验证码:</STRONG></td>
-          <td align="bottom"><INPUT NAME="captcha" TYPE="text" style="width:85px;background-color:#B0B0B0">
-              <img src="captcha/image.action" title="验证码,点击更换一张" onclick="changeCaptcha(this)" 
-              width="60" height="25" style="vertical-align:top;"></td>
-         </tr>
-         [/#if]
-         <tr>
-          <td ALIGN="right"><INPUT NAME="request_locale" TYPE="radio" value="zh_CN" checked >中文</td>
-          <td><INPUT NAME="request_locale"  id="engVersion" TYPE="radio" value="en_US">ENGLISH</td>
-         </tr> 
-         </table>
-        </td>
-        <td colspan="2">
-        <TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
-        	<tr>
-          		<td >&nbsp;&nbsp;&nbsp;
-          		  <button name="submitButton"  onclick ="submitLogin()" style="height:35pt;width:38pt;" BORDER="0"><B>登录</B></button>
-          		</td>
-         </tr>
-         </table>
-        </td>
-       </tr>
-       [/@]
-      </TABLE>
-     </TD>
-    </TR>
- 	<form name="formsubmit" method="post" action="" onsubmit="return false;">
-    <tr>
-     <td ALIGN="right" height="30">
-      <span class="menu_blue_14px2">
-       <a href="#" onClick="window.open('password.action?method=resetPassword', 'new', 'toolbar=no,top=250,left=250,location=no,directories=no,statue=no,menubar=no,resizable=no,scrollbars=no,width=400,height=200')">
-        取回密码
-       </a>
-      </span>      
-     </td>
-    </tr>
-    </form>
-   </TABLE>   
-  </TD>
- </TR>
-</TABLE>
-<script>
-  var ret = new OnReturn(document.loginForm);
-  ret.add("username");
-  ret.add("password");
-  [#if needCaptcha]
-  ret.add("captcha");
-  [/#if]
-  ret.add("submitButton");
-  var form  = document.loginForm;
-  
-  function submitLogin(){
-     if(form['username'].value==""){
-        alert("用户名称不能为空");return;
-     }
-     if(form['password'].value==""){
-        alert("密码不能为空");return;
-     }
+[#if ((Session['loginFailureCount'])?default(0)>1)][#assign needCaptcha=true][#else][#assign needCaptcha=false][/#if]
+<div style="text-align:center;margin-top:150px;border:4px">权限系统</div>
+<div style="text-align:center;">[@s.actionerror/]</div>
+<div >
+	[@s.form id="loginForm" action="login" theme="simple" onsubmit="return checkLogin()"]
+	<table onkeypress="ret.focus(event)" style="margin:auto;">
+		<tr>
+			<td><label for="username"><strong>用户名:</strong></label></td>
+			<td><input name="username" id="username" tabindex="1" title="请输入用户名" type="text" value="${name!}" style="width:150px;background-color:#B0B0B0"/></td>
+			<td rowspan="3" valign="top">
+			<button name="submitBtn"  type="submit" tabindex="6" style="height:35pt;width:38pt;"><em>登录</em></button>
+			</td>
+		</tr>
+		<tr>
+			<td><label for="password"><strong>密码:</strong></label></td>
+			<td><input id="password" name="password"  tabindex="2" type="password" style="width:150px;background-color:#B0B0B0"/>
+			<input name="encodedPassword" type="hidden" value=""/></td>
+		</tr>
+		[#if needCaptcha]
+		<tr>
+			<td><label for="captcha"><strong>验证码:</strong></label></td>
+			<td align="right"><input id="captcha" name="captcha"  tabindex="3" type="text" style="width:85px;background-color:#B0B0B0"/>
+			<img src="captcha/image.action" title="验证码,点击更换一张" onclick="changeCaptcha(this)" alt="验证码" width="60" height="25" style="vertical-align:top;"/></td>
+		</tr>
+		[/#if]
+		<tr>
+			<td colspan="3" align="center">
+				<fieldset>
+				<legend>语言</legend>
+				<input name="request_locale" id="local_zh" type="radio" tabindex="4" value="zh_CN" checked="checked"/><label for="local_zh">中文</label>
+				<input name="request_locale" id="local_en" type="radio" tabindex="5" value="en_US"/><label for="local_en">ENGLISH</label>
+				</fieldset>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" align="right"><a href="#" onclick="window.open('password.action?method=resetPassword', 'new', 'toolbar=no,top=250,left=250,location=no,directories=no,statue=no,menubar=no,resizable=no,scrollbars=no,width=400,height=200')">取回密码</a></td>
+		</tr>
+	</table>
+	[/@]
+</div>
+<script type="text/javascript">
+	var ret = new OnReturn(document.loginForm);
+	ret.add("username");
+	ret.add("password");
 	[#if needCaptcha]
-	 if(form['captcha'].value==""){
-        alert("验证码不能为空");return;
-     }
+	ret.add("captcha");
 	[/#if]
-     form.submit();
-  }
-  
-  if("${language}".indexOf("en")!=-1){
-     document.getElementById('engVersion').checked=true;
-  }
-  
-  var username=beangle.cookie.get("username");
-  if(null!=username){
-    form['username'].value=username;
-  }
-  function changeCaptcha(obj) {  
-     //获取当前的时间作为参数，无具体意义  
-     var timenow = new Date().getTime();  
-     //每次请求需要一个不同的参数，否则可能会返回同样的验证码  
-     //这和浏览器的缓存机制有关系，也可以把页面设置为不缓存，这样就不用这个参数了。  
-     obj.src="captcha/image.action?d="+timenow;  
-  }
+	ret.add("submitBtn");
+	var form  = document.loginForm;
+
+	function checkLogin(){
+		if(!form['username'].value){
+			alert("用户名称不能为空");return false;
+		}
+		if(!form['password'].value){
+			alert("密码不能为空");return false;
+		}
+		[#if needCaptcha]
+		if(!form['captcha'].value){
+			alert("验证码不能为空");return false;
+		}
+		[/#if]
+		return true;
+	}
+	if("${locale.language}".indexOf("en")!=-1){document.getElementById('local_en').checked=true;}
+	var username=beangle.cookie.get("username");
+	if(null!=username){ form['username'].value=username;}
+	function changeCaptcha(obj) {
+		//获取当前的时间作为参数，无具体意义
+		var timenow = new Date().getTime();
+		//每次请求需要一个不同的参数，否则可能会返回同样的验证码
+		//这和浏览器的缓存机制有关系，也可以把页面设置为不缓存，这样就不用这个参数了。
+		obj.src="captcha/image.action?d="+timenow;
+	}
 </script>
 </body>
 [#include "/template/foot.ftl"/]

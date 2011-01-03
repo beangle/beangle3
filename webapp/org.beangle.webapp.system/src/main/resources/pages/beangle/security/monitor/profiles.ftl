@@ -1,7 +1,7 @@
 [#ftl]
 [@s.actionmessage theme="beangle"/]
 [@s.form name="profileForm" id="profileForm" theme="simple" action="monitor!saveProfile"]
-<table  border="0" cellpadding="0" cellspacing="0" width="50%">
+<table   width="50%">
 	<tr>
 		<td colspan="5" align="center">
 		[#assign online=0][#assign max=0]
@@ -34,7 +34,7 @@
 	</tr>
 </table>
 [/@]
-<script>
+<script type="text/javascript">
 	function validateProfile(){
 		var form=document.profileForm;
 		[#list onlineProfiles as profile]

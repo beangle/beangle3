@@ -9,9 +9,9 @@ import java.net.URLEncoder;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.net.BCodec;
-import org.apache.commons.lang.StringUtils;
-import org.beangle.commons.lang.StrUtils;
-import org.beangle.web.Useragent;
+import org.beangle.web.agent.Browser;
+import org.beangle.web.agent.Os;
+import org.beangle.web.agent.Useragent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,25 +74,11 @@ public final class RequestUtils {
 	}
 
 	/**
-	 * FIXME just for firefox
-	 * 
 	 * @param request
 	 * @return
 	 */
 	public static Useragent getUserAgent(HttpServletRequest request) {
-		StringBuilder head = new StringBuilder(request.getHeader("USER-AGENT"));
-		// delete char in (),then split
-		int start = head.indexOf("(");
-		int end = head.indexOf(")", start);
-		head.delete(start, end + 1);
-		// String remark=head.substring(start, end);
-		String[] headers = StrUtils.split(head.toString());
-		String browser = headers[headers.length - 1];
-		String os = headers[headers.length - 2];
-		// Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.12) Gecko/20101027
-		// Fedora/3.6.12-1.fc14 Firefox/3.6.12
-		return new Useragent(getIpAddr(request), StringUtils.substringBefore(browser, "/"),
-				StringUtils.substringAfter(browser, "/"), StringUtils.substringBefore(os, "/"),
-				StringUtils.substringAfterLast(os, "."));
+		String head = request.getHeader("USER-AGENT");
+		return new Useragent(getIpAddr(request), Browser.parse(head), Os.parse(head));
 	}
 }

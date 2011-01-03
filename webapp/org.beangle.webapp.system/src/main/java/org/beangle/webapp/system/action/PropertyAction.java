@@ -10,22 +10,22 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.interceptor.NoParameters;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.config.property.ConfigFactory;
+import org.beangle.commons.config.property.PropertyConfigFactory;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.struts2.action.BaseAction;
-import org.beangle.webapp.system.model.PropertyConfig;
+import org.beangle.webapp.system.model.PropertyConfigItemBean;
 
 public class PropertyAction extends BaseAction implements NoParameters {
 
-	private ConfigFactory configFactory;
+	private PropertyConfigFactory configFactory;
 
 	public String index() {
-		OqlBuilder<PropertyConfig> builder = OqlBuilder.from(PropertyConfig.class, "config");
+		OqlBuilder<PropertyConfigItemBean> builder = OqlBuilder.from(PropertyConfigItemBean.class, "config");
 		builder.orderBy("config.name");
-		List<PropertyConfig> configs = entityDao.search(builder);
+		List<PropertyConfigItemBean> configs = entityDao.search(builder);
 		put("propertyConfigs", configs);
 		Set<String> staticNames = configFactory.getConfig().getNames();
-		for (PropertyConfig config : configs) {
+		for (PropertyConfigItemBean config : configs) {
 			staticNames.remove(config.getName());
 		}
 		put("config", configFactory.getConfig());
@@ -34,33 +34,32 @@ public class PropertyAction extends BaseAction implements NoParameters {
 	}
 
 	public String save() {
-		List<PropertyConfig> configs = entityDao.getAll(PropertyConfig.class);
+		List<PropertyConfigItemBean> configs = entityDao.getAll(PropertyConfigItemBean.class);
 		Set<String> names = CollectUtils.newHashSet();
-		for (PropertyConfig config : configs) {
+		for (PropertyConfigItemBean config : configs) {
 			populate(config, "config" + config.getId());
 			names.add(config.getName());
 		}
 		entityDao.saveOrUpdate(configs);
 
 		String msg = "info.save.success";
-		PropertyConfig newConfig = populate(PropertyConfig.class, "configNew");
+		PropertyConfigItemBean newConfig = populate(PropertyConfigItemBean.class, "configNew");
 		if (StringUtils.isNotBlank(newConfig.getName())
 				&& StringUtils.isNotBlank(newConfig.getValue())
 				&& !names.contains(newConfig.getName())) {
 			entityDao.saveOrUpdate(newConfig);
 		}
 		configFactory.reload();
-		configFactory.multicast();
 		return redirect("index", msg);
 	}
 
 	public String remove() {
-		PropertyConfig config = entityDao.get(PropertyConfig.class, getLong("config.id"));
+		PropertyConfigItemBean config = entityDao.get(PropertyConfigItemBean.class, getLong("config.id"));
 		if (null != config) entityDao.remove(config);
 		return redirect("index", "info.save.success");
 	}
 
-	public void setConfigFactory(ConfigFactory configFactory) {
+	public void setConfigFactory(PropertyConfigFactory configFactory) {
 		this.configFactory = configFactory;
 	}
 

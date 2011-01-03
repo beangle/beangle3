@@ -18,17 +18,6 @@
 		class="org.beangle.webapp.avatar.service.FileSystemAvatarBase">
 	</bean>
 	
-	<bean name="urlConfigProvider" autowire="byName"
-		class="org.beangle.commons.config.property.UrlConfigProvider">
-		<property name="resource">
-			<bean class="org.beangle.commons.config.ConfigResource">
-				<property name="globals" value="classpath*:system-default.properties"/>
-				<property name="locations" value="classpath*:META-INF/system.properties"/>
-				<property name="users" value="classpath*:system.properties"/>
-			</bean>
-		</property>
-	</bean>
-
 	<bean name="streamDownloader" autowire="byName" class="org.beangle.web.io.SplitStreamDownloader"/>
 	
 	<bean name="mimeTypeProvider" autowire="byName"
@@ -41,16 +30,27 @@
 		</property>
 	</bean>
 		
-	<bean name="propertyConfigProvider" autowire="byName"
-		class="org.beangle.webapp.system.service.PropertyConfigProvider">
+	<bean name="daoPropertyConfigProvider" autowire="byName"
+		class="org.beangle.webapp.system.service.DaoPropertyConfigProvider">
 	</bean>
 	
-	<bean name="configFactory" autowire="byName"
-		class="org.beangle.commons.config.property.DefaultConfigFactory">
+	<bean name="urlPropertyConfigProvider" autowire="byName"
+		class="org.beangle.commons.config.property.UrlPropertyConfigProvider">
+		<property name="resource">
+			<bean class="org.beangle.commons.config.ConfigResource">
+				<property name="globals" value="classpath*:system-default.properties"/>
+				<property name="locations" value="classpath*:META-INF/system.properties"/>
+				<property name="users" value="classpath*:system.properties"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="propertyConfig" name="propertyConfig" autowire="byName"
+		class="org.beangle.commons.config.property.DefaultPropertyConfigFactory">
 			<property name="providers">
 				<list>
-					<ref bean="urlConfigProvider"/>
-					<ref bean="propertyConfigProvider"/>
+					<ref bean="urlPropertyConfigProvider"/>
+					<ref bean="daoPropertyConfigProvider"/>
 				</list>
 			</property>
 	</bean>

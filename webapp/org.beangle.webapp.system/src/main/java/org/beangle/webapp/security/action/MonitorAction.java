@@ -38,7 +38,7 @@ public class MonitorAction extends SecurityActionSupport {
 	public String activities() {
 		String orderBy = get("orderBy");
 		if (StringUtils.isEmpty(orderBy)) {
-			orderBy = "principal asc";
+			orderBy = "authentication.principal asc";
 		}
 		List<SessionInfo> onlineActivities = sessionRegistry.getAll();
 		Collections.sort(onlineActivities, new PropertyComparator<Object>(orderBy));

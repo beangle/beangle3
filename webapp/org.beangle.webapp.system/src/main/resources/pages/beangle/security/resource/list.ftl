@@ -1,72 +1,59 @@
 [#ftl]
-[#include "/template/head.ftl"/]
+[@b.xhtmlhead/]
 [#include "scope.ftl"/]
 [#include "../status.ftl"/]
 <body>
- <table id="resourceBar"></table>
-[@b.grid id="listTable" width="100%" sortable="true" headIndex="1"]
-    <tr class="thead">
-    <form name="pageGoForm" method="post" action="resource!search.action">
-    <td class="select"><img src="${base}/static/images/action/search.png" onclick="document.pageGoForm.submit()"/></td>
-    <td><input type="text" name="resource.title" value="${Parameters['resource.title']!}" style="width:100%;"/></td>
-    <td><input type="text" name="resource.name" value="${Parameters['resource.name']!}" style="width:100%;"/></td>
-    <td>
-	<select name="resource.scope" style="width:100px" onchange="this.form.submit()">
-	<option value="">...</option>
-	[#list 0..2 as i]
-	  <option value="${i}">[@resourceScope i/]</option>
-	[/#list]
-	</select>
-	</td>
-    <td>
-    <select  name="resource.enabled" style="width:100%;" onchange="this.form.submit()">
-	   <option value="" [#if (Parameters['resource.enabled']!"")=""]selected[/#if]>..</option>
-	   <option value="true" [#if (Parameters['resource.enabled']!"")="true"]selected[/#if]>[@text "action.activate"/]</option>
-	   <option value="false" [#if (Parameters['resource.enabled']!"")="false"]selected[/#if] ][@text "action.freeze"/]</option>
-	  </select>
-	</td>
-	</form>
-    </tr>
+	[@b.entitybar id="resourcebar" title='<a href="dashboard.action">权限管理</a>->系统资源' entity="resource" action="resource.action"]
+	function activate(enabled){
+		return action.multi('activate','确定操作?','&amp;enabled='+enabled);
+	}
+	bar.addItem("[@b.text "action.add"/]",action.add());
+	bar.addItem("[@b.text "action.edit"/]",action.edit());
+	bar.addItem("[@b.text "action.freeze"/]",activate(0),'${base}/static/icons/beangle/16x16/actions/freeze.png');
+	bar.addItem("[@b.text "action.activate"/]",activate(1),'${base}/static/icons/beangle/16x16/actions/activate.png');
+	bar.addItem("[@b.text "action.delete"/]",action.remove(),'delete.gif');
+	bar.addItem("[@b.text "action.export"/]",action.exportData(null,"title,name,description,enabled","标题,名称,描述,状态"));
+	[/@]
+
+<form name="pageGoForm" id="pageGoForm" method="post" action="resource!search.action">
+[@b.grid id="listTable" width="100%" ]
 	[@b.gridhead]
-      [@b.selectAllTd name="resourceId"/]  
-      [@b.sortTd  width="20%" id="resource.title" text="标题" /]
-      [@b.sortTd  width="55%" id="resource.name" text="名称" /]
-      [@b.sortTd  width="10%" id="resource.scope" text="可见范围" /]
-      [@b.sortTd  width="10%" id="resource.enabled" text="状态" /]
-    [/@]
-    [@b.gridbody datas=resources;resource]
-     [@b.selectTd name="resourceId" value=resource.id/]
-         <input type="hidden" name="${resource.id}" id="${resource.id}" />
-     </td>
-     <td><a href="resource.action?method=info&resource.id=${resource.id}">${(resource.title)!}</a></td>
-     <td align="left" title="${resource.description!}">${(resource.name)!}</td>
-     <td>[@resourceScope resource.scope/]</td>
-     <td>[@enableInfo resource.enabled/]</td>
-    [/@]
+	<tr>
+		<td class="select"><img src="${base}/static/images/action/search.png" onclick="document.getElementById('pageGoForm').submit()"/></td>
+		<td><input type="text" name="resource.title" value="${Parameters['resource.title']!}" style="width:95%;"/></td>
+		<td><input type="text" name="resource.name" value="${Parameters['resource.name']!}" style="width:95%;"/></td>
+		<td>
+		<select name="resource.scope" style="width:95%;" onchange="this.form.submit()">
+		<option value="">...</option>
+		[#list 0..2 as i]
+		<option value="${i}" [#if (Parameters['resource.scope']!"")="${i}"]selected="selected"[/#if]>[@resourceScope i/]</option>
+		[/#list]
+		</select>
+		</td>
+		<td>
+		<select  name="resource.enabled" style="width:95%;" onchange="this.form.submit()">
+		   <option value="" [#if (Parameters['resource.enabled']!"")=""]selected="selected"[/#if]>..</option>
+		   <option value="true" [#if (Parameters['resource.enabled']!"")="true"]selected="selected"[/#if]>[@b.text "action.activate"/]</option>
+		   <option value="false" [#if (Parameters['resource.enabled']!"")="false"]selected="selected"[/#if]>[@b.text "action.freeze"/]</option>
+		  </select>
+		</td>
+	</tr>
+	<tr>
+		[@b.selectAllTh name="resourceId"/]
+		[@b.gridth  width="20%" sort="resource.title" text="标题" /]
+		[@b.gridth  width="55%" sort="resource.name" text="名称" /]
+		[@b.gridth  width="10%" sort="resource.scope" text="可见范围" /]
+		[@b.gridth  width="10%" sort="resource.enabled" text="状态" /]
+	</tr>
+	[/@]
+	[@b.gridbody datas=resources;resource]
+	 [@b.selectTd name="resourceId" value=resource.id/]
+	 <td><a href="resource!info.action?resource.id=${resource.id}">${(resource.title)!}</a></td>
+	 <td align="left" title="${resource.description!}">${(resource.name)!}</td>
+	 <td>[@resourceScope resource.scope/]</td>
+	 <td>[@enableInfo resource.enabled/]</td>
+	[/@]
   [/@]
-  </body>
- [@htm.actionForm name="resourceForm" entity="resource" action="resource.action"/]
-  <script>
-   function activate(enabled){
-       addInput( document.resourceForm,"enabled",enabled);
-       multiAction("activate","确定操作?");
-   }
-   function exportData(){
-       addInput(form,"titles","标题,名称,描述,状态");
-       addInput(form,"keys","title,name,description,enabled");
-       exportList();
-   }
-   function preview(){
-      window.open(action+"?method=preview");
-   }
-   var bar = bg.ui.toolbar('resourceBar','<a href="dashboard.action">权限管理</a>->系统资源',null,true,true);
-   bar.setMessage('[@getMessage/]');
-   bar.addItem("[@text "action.add"/]","add()");
-   bar.addItem("[@text "action.edit"/]","edit()");
-   bar.addItem("[@text "action.freeze"/]","activate(0)",'${base}/static/icons/beangle/16x16/actions/freeze.png');
-   bar.addItem("[@text "action.activate"/]","activate(1)",'${base}/static/icons/beangle/16x16/actions/activate.png');
-   bar.addItem("[@text "action.delete"/]","multiAction('remove')",'delete.gif');
-   bar.addItem("[@text "action.export"/]","exportData()");
-  </script>
-  </body>
- [#include "/template/foot.ftl"/]
+</form>
+</body>
+[#include "/template/foot.ftl"/]

@@ -95,7 +95,7 @@
 				bg.input.boxAction(chk, "toggle",event);
 			},
 			/**
-			 * 返回单选列表中选择的值<br>
+			 * 返回单选列表中选择的值<br/>
 			 * @return 没有选中时,返回""
 			 */
 			getRadioValue : function (radioName){
@@ -103,7 +103,7 @@
 			},
 			
 			/**
-			 * 返回多选列表中选择的值<br>
+			 * 返回多选列表中选择的值<br/>
 			 * @return 多个值以,相隔.没有选中时,返回"" 
 			 */
 			getCheckBoxValues : function (chkname){
@@ -169,15 +169,18 @@
 	beangle.extend({
 		iframe:{
 			adaptSelf:function (){
-				bg.iframe.adapt(self);
+				if(document.body && document.body.className=="autoadapt"){
+					bg.iframe.adapt(self);
+				}
 			},
-			/* iframe 页面自适应大小
+			/** iframe 页面自适应大小
 			 * @targObj    iframe
 			 * @extraHight 
 			 */
 			adapt: function (targObj,extraHight){
 				if(null==targObj || targObj.name=="")
 					return;
+				if(targObj.parent == targObj) return;
 				if (targObj.parent == window.top) {
 					if(targObj.parent.document.body.style.overflowY=="hidden") return;
 				}
@@ -185,10 +188,10 @@
 				if(frames.length<1) return;
 				var targWin=frames[0];
 				if(targWin != null) {
-					var HeightValue = targObj.document.body.scrollHeight;
+					var heightValue = targObj.document.body.scrollHeight;
 					if(null==extraHight)
 						extraHight=0;
-					targWin.style.height = HeightValue+extraHight;
+					targWin.style.height = (heightValue+extraHight)+"px";
 				}
 				bg.iframe.adapt(targObj.parent);
 			}
@@ -544,12 +547,24 @@
 		this.action=action;
 		this.target=target;
 		this.paramMap={};
-		this.params= function(){
+		this.params = function(){
 			return this.paramMap;
 		}
 		this.maxPageNo=1;
 		pages[id]=this;
 		
+		this.addParams = function(paramSeq){
+			bg.assert.notNull(paramSeq,"paramSeq for addHiddens must not be null");
+			var paramArray = paramSeq.split("&");
+			for(var i=0;i<paramArray.length;i++){
+				oneParam=paramArray[i];
+				if(oneParam!=""){
+					var name = oneParam.substr(0,oneParam.indexOf("="));
+					var value = oneParam.substr(oneParam.indexOf("=")+1);
+					this.paramMap[name]=value;
+				}
+			}
+		}
 		// 检查分页参数
 		this.checkPageParams = function (pageNo, pageSize,orderBy){
 			if(null!=pageNo){
@@ -648,4 +663,6 @@
 			}
 		}
 	});
+	//alert(document.body);
+	beangle.ready(beangle.iframe.adaptSelf);
 })(window);

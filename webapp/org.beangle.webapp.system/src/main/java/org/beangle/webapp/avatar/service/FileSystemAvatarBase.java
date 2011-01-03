@@ -16,10 +16,9 @@ import org.beangle.commons.collection.page.Page;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.commons.collection.page.PagedList;
 import org.beangle.commons.collection.page.Pages;
-import org.beangle.commons.config.property.ConfigEvent;
-import org.beangle.commons.config.property.ConfigFactory;
-import org.beangle.commons.config.property.ConfigFactoryAware;
-import org.beangle.commons.config.property.ConfigListener;
+import org.beangle.commons.config.property.PropertyConfig;
+import org.beangle.commons.config.property.PropertyConfigEvent;
+import org.beangle.commons.config.property.PropertyConfigListener;
 import org.beangle.webapp.avatar.Avatar;
 import org.beangle.webapp.avatar.model.FileAvatar;
 import org.slf4j.Logger;
@@ -30,8 +29,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author chaostone
  */
-public class FileSystemAvatarBase extends AbstractAvatarBase implements ConfigFactoryAware,
-		ConfigListener {
+public class FileSystemAvatarBase extends AbstractAvatarBase implements PropertyConfigListener {
 
 	private static final Logger logger = LoggerFactory.getLogger(FileSystemAvatarBase.class);
 	// 照片路径
@@ -105,14 +103,14 @@ public class FileSystemAvatarBase extends AbstractAvatarBase implements ConfigFa
 		return "File:" + avatarDir + " <br>config system using:fileSystemAvatarBase.avatarDir";
 	}
 
-	public void setConfigFactory(ConfigFactory factory) {
-		if (null != factory) {
-			factory.addConfigListener(this);
-			setAvatarDir(factory.getConfig().get(String.class, "fileSystemAvatarBase.avatarDir"));
+	public void setPropertyConfig(PropertyConfig config) {
+		if (null != config) {
+			config.addConfigListener(this);
+			setAvatarDir(config.get(String.class, "fileSystemAvatarBase.avatarDir"));
 		}
 	}
 
-	public void onConfigEvent(ConfigEvent event) {
+	public void onConfigEvent(PropertyConfigEvent event) {
 		setAvatarDir(event.getSource().get(String.class, "fileSystemAvatarBase.avatarDir"));
 	}
 

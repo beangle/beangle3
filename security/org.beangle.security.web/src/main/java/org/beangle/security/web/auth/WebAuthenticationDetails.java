@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.beangle.security.core.session.SessionIdAware;
-import org.beangle.web.Useragent;
+import org.beangle.web.agent.Useragent;
 import org.beangle.web.util.RequestUtils;
 
 public class WebAuthenticationDetails implements SessionIdAware, Serializable {
+
+	private static final long serialVersionUID = -8543528078535952987L;
 
 	private String sessionId;
 	private Useragent agent;
@@ -54,7 +56,7 @@ public class WebAuthenticationDetails implements SessionIdAware, Serializable {
 		sb.append("SessionId: ").append(getSessionId()).append("; ");
 		sb.append("RemoteIpAddress: ").append(agent.getIp()).append("; ");
 		sb.append("Operation System: ").append(agent.getOs()).append("; ");
-		sb.append("Agent: ").append(agent.getFullname());
+		sb.append("Browser: ").append(agent.getBrowser());
 		return sb.toString();
 	}
 

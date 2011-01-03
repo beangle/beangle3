@@ -1,7 +1,9 @@
-2010-11-06  duantihua   <chaostone.duan@gmail.com>
+2010-12-27  duantihua   <chaostone.duan@gmail.com>
 	* 采用Maven3构建系统
-	* 借鉴acegi重构了security部分
+	* 借鉴acegi重构了security部分,增加支持cas部分
 	* 升级了部分依赖包(Spring 3.0.5.RELEASE;Testng 5.14.2;Logback 0.9.26;Hibernate 3.6.0.Final,Javassist 3.12.0.GA;Echcache 2.3.0;POI 3.7;Ognl 3.0)
+	* 更好的struts2支持(freemaker,tag,javascript ui)
+	* 丰富了webapp的样例应用(database,system)，支持xhtml 1.0
 
 2010-07-03  duantihua   <chaostone.duan@gmail.com>
 	* 增加了ConfigResource支持多配置文件统一管理

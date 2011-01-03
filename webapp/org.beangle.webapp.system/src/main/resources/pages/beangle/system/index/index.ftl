@@ -1,9 +1,9 @@
 [#ftl]
-[#include "/template/head.ftl"/]
+[@b.xhtmlhead/]
 [@sj.head /]
 <table id="systemBar"></table>
-<script>
-   var bar = bg.ui.toolbar('systemBar','系统状态查看',null,true,true);
+<script type="text/javascript">
+   var bar = bg.ui.toolbar('systemBar','系统状态查看');
    bar.addHelp();
 </script>
 	[@sj.tabbedpanel id="systemTabs"]

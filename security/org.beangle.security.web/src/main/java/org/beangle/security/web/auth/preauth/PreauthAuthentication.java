@@ -9,6 +9,8 @@ import org.beangle.security.core.GrantedAuthority;
 
 public class PreauthAuthentication extends UsernamePasswordAuthentication {
 
+	private static final long serialVersionUID = 7456187250318208972L;
+
 	public PreauthAuthentication(Object aPrincipal, Object aCredentials) {
 		super(aPrincipal, aCredentials);
 	}

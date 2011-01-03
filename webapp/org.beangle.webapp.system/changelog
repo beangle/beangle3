@@ -1,3 +1,6 @@
+2011-01-01  duantihua  <chaostone.duan@gmail.com>
+	* delete scripts/common/SelectableTree.js and images/tree,construct menu by xhtml ul/li
+	* delete images/login
 2010-11-03  duantihua  <chaostone.duan@gmail.com>
 	* 记录在线用户记录os,useragent
 	* 统一使用jquery-ui的主题

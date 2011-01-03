@@ -17,7 +17,7 @@ import javax.servlet.Filter;
 import org.beangle.security.web.FilterChainProxy;
 import org.beangle.security.web.auth.UsernamePasswordAuthenticationFilter;
 import org.beangle.security.web.context.HttpSessionContextIntegrationFilter;
-import org.beangle.web.mock.MockFilter;
+import org.beangle.web.filter.MockFilter;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockFilterConfig;
 import org.springframework.mock.web.MockHttpServletRequest;

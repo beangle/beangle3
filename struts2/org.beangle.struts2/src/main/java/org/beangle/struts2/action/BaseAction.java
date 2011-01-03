@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.Validate;
 import org.apache.struts2.ServletActionContext;
 import org.beangle.commons.collection.page.PageLimit;
+import org.beangle.commons.meta.SystemVersion;
+import org.beangle.commons.meta.SystemVersionBean;
 import org.beangle.commons.text.TextResource;
 import org.beangle.model.Entity;
 import org.beangle.model.entity.Model;
@@ -36,6 +38,16 @@ public class BaseAction extends DispatchAction {
 	protected static final Logger logger = LoggerFactory.getLogger(BaseAction.class);
 
 	protected EntityDao entityDao;
+
+	protected SystemVersion systemVersion;
+
+	public SystemVersion getSystemVersion() {
+		return systemVersion;
+	}
+
+	public void setSystemVersion(SystemVersion systemVersion) {
+		this.systemVersion = systemVersion;
+	}
 
 	protected String getRemoteAddr() {
 		HttpServletRequest request = ServletActionContext.getRequest();

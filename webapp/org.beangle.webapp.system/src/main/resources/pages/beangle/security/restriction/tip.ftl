@@ -1,11 +1,11 @@
 [#ftl]
-[#include "/template/head.ftl"/]
+[@b.xhtmlhead/]
 <body>
-<table width="100%" height="100%" border="0" cellpadding="0" style="font-size:12px"> 
+<table width="100%" height="100%"  style="font-size:12px">
   <tr>
-    <td valign="top" >
-    [@text name="info.module.dataRealmTip"/]
-    </td>
+	<td valign="top" >
+	[@b.text name="info.module.dataRealmTip"/]
+	</td>
   </tr>
 </table>
 </body>
