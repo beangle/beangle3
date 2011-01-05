@@ -5,8 +5,8 @@
 package org.beangle.security.access.intercept;
 
 import org.apache.commons.lang.Validate;
-import org.beangle.security.AuthorityManager;
-import org.beangle.security.AuthorizationException;
+import org.beangle.security.access.AuthorityManager;
+import org.beangle.security.access.AccessDeniedException;
 import org.beangle.security.auth.AuthenticationManager;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.SecurityContextHolder;
@@ -127,7 +127,7 @@ public abstract class AbstractSecurityInterceptor implements InitializingBean {
 		Authentication authenticated = authenticateIfRequired();
 
 		// Attempt authorization
-		if (!authorityManager.isAuthorized(authenticated, object)) { throw new AuthorizationException(
+		if (!authorityManager.isAuthorized(authenticated, object)) { throw new AccessDeniedException(
 				object, "access denied"); }
 		logger.debug("Authorization successful");
 

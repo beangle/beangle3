@@ -8,7 +8,7 @@
 </style>
 [@sj.head /]
 [/@]
-<body>
+
 [@b.toolbar id="userInfoBar" title="用户权限面板"]
 	bar.addClose("[@b.text name="action.close"/]");
 [/@]
@@ -46,5 +46,5 @@
 		});
 	});
   </script>
- </body>
+ 
 [#include "/template/foot.ftl"/]

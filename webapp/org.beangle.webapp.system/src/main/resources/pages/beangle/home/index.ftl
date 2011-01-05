@@ -5,7 +5,7 @@
 .banner_area{float:right;padding-right:10px}
 </style>
 [/@]
-<body>
+
 <div class="banner">
 	<div class="banner_area">
 	<a href="#" onclick="editAccount()">[@b.text 'action.myAccount'/]</a>&nbsp;&nbsp;
@@ -30,7 +30,7 @@
 	   [#include "menus.ftl"/]
    </td>
    <td style="width:86%" id="rightTD" valign="top">
-	[@b.iframe src="home!welcome.action" name="main" id="main" width="100%"]main content frame[/@]
+	[@b.iframe src="home!welcome.action" name="main" id="main" class="autoadapt" width="100%"]main content frame[/@]
    </td>
  </tr>
 </table>
@@ -43,5 +43,5 @@
 	  selector.resizeTo(350,250);
   }
 </script>
-</body>
+
 [#include "/template/foot.ftl"/]

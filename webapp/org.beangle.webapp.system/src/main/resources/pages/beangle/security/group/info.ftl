@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead/]
-<body>
+
  <table id="groupInfoBar"></table>
 	 <table class="infoTable">
 	   <tr>
@@ -46,5 +46,5 @@
    bar.setMessage('[@b.messages/]');
    bar.addBack("[@b.text name="action.back"/]");
   </script>
- </body>
+ 
 [#include "/template/foot.ftl"/]

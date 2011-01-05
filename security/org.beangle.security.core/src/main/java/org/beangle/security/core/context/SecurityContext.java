@@ -16,7 +16,7 @@ import org.beangle.security.core.Authentication;
  * </p>
  * 
  * @author chaostone
- * @version $Id: SecurityContext.java 2217 2007-10-27 00:45:30Z luke_t $
+ * @version $Id: SecurityContext.java 2217 2007-10-27 00:45:30Z  $
  */
 public interface SecurityContext extends Serializable {
 

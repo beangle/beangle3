@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead/]
-<body class="autoadapt">
+
 [@b.toolbar id="groupbar" title="<a href='dashboard.action'>权限管理</a>-->用户组管理"]
 	bar.addHelp("[@b.text name="action.help"/]");
 [/@]
@@ -20,5 +20,5 @@
 	}
 	search();
 </script>
-</body>
+
 </html>

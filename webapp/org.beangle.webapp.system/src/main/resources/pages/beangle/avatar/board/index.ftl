@@ -1,8 +1,7 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.xhtmlhead]
 [@sj.head /]
-
-<body >
+[/@]
 <table width="100%">
 	<tr>
 	  <td class="infoTitle" width="20%" style="height:22px;">
@@ -60,5 +59,4 @@ function pageGoWithSize(pageNo,pageSize){
   goToPage(queryForm,pageNo,pageSize);
 }
 </script>
-</body>
 [#include "/template/foot.ftl"/]

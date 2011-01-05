@@ -2,7 +2,7 @@
 [@b.xhtmlhead title="Security Dashboard"]
 <link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css"/>
 [/@]
-<body class="autoadapt">
+
 <div>[@b.messages/]</div>
 <div id="categoryDiv" class="module expanded">
 	<h2 class="header">
@@ -35,5 +35,5 @@
 	</form>
 	</div>
 </div>
-</body>
+
 </html>

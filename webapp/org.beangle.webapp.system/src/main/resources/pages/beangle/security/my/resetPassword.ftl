@@ -1,7 +1,7 @@
 [#ftl]
 [@b.xhtmlhead/]
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
-<body >
+
  <table width="100%">
   <tr>
    <td height="100%" valign="TOP" background="${base}/static/images/loginForm/ifr_mainBg_0.gif">
@@ -26,11 +26,11 @@
 		<tr>
 		 <td>&nbsp;</td>
 		 <td id="f_name"  valign="top" width="30%">[@b.text name="user.name"/]:</td>
-		 <td class="text1"><input type="text" name="name" value="${Parameters['loginName']!}" maxLength="64"/></td>
+		 <td class="text1"><input type="text" name="name" value="${Parameters['loginName']!}" maxlength="64"/></td>
 		</tr>
 		<tr><td>&nbsp;</td>
 		 <td id="f_mail"  valign="top" width="30%">[@b.text name="common.email"/]:</td>
-		 <td class="text1"><input type="text" name="mail" maxLength="100"/></td>
+		 <td class="text1"><input type="text" name="mail" maxlength="100"/></td>
 		</tr>
 		<tr><td colspan="3">&nbsp;</td></tr>
 		<tr>
@@ -61,6 +61,6 @@
 	 }
    }
 </script>
-</body>
-</body>
+
+
 [#include "/template/foot.ftl"/]

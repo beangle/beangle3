@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead/]
-<body>
+
 <table  width="100%" >
 	<tr>
 	  <td  class="infoTitle" style="height:22px;" >
@@ -17,7 +17,7 @@
 	 <td id="errorTD">[@s.actionmessage/] [@s.actionerror/]</td>
    </tr>
   </table>
-<body>
+
 <script type="text/javascript">
 	if(!self.name){
 		setTimeout("window.close()",2000);

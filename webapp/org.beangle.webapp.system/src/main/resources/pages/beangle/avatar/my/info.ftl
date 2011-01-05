@@ -1,7 +1,7 @@
 [#ftl]
 [@b.xhtmlhead/]
 <html>
- <body >
+ 
 <table width="100%">
 	<tr>
 	  <td class="infoTitle" width="20%" style="height:22px;">
@@ -33,5 +33,5 @@
 	  </td>
    </tr>
 </table>
-</body>
+
 [#include "/template/foot.ftl"/]

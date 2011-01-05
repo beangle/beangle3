@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.components.UIBean;
-import org.beangle.security.AuthorityManager;
+import org.beangle.security.access.AuthorityManager;
 import org.beangle.security.core.context.SecurityContextHolder;
 
 import com.opensymphony.xwork2.util.ValueStack;

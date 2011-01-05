@@ -1,7 +1,7 @@
 [#ftl]
 [@b.xhtmlhead/]
 <html>
- <body >
+ 
 <table width="100%">
 	<tr>
 	  <td class="infoTitle" width="20%" style="height:22px;">
@@ -52,5 +52,5 @@
 	form.submit();
   }
 </script>
- </body>
+ 
 [#include "/template/foot.ftl"/]

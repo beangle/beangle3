@@ -1,11 +1,11 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.xhtmlhead]
 [@sj.head /]
-<table id="systemBar"></table>
-<script type="text/javascript">
-   var bar = bg.ui.toolbar('systemBar','系统状态查看');
-   bar.addHelp();
-</script>
+[/@]
+
+[@b.toolbar id="systemBar" title="系统状态查看"]
+	bar.addHelp();
+[/@]
 	[@sj.tabbedpanel id="systemTabs"]
 		[@sj.tab id="systemTab1" href="${base}/system/status.action" label="系统状态"/]
 		[@sj.tab id="systemTab2" href="${base}/system/status!properties.action" label="系统属性"/]
@@ -16,4 +16,5 @@
 		<li>用户代理:${clientProps['client.useragent']}</li>
 		</div>
 	[/@]
+
 [#include "/template/foot.ftl"/]

@@ -2,7 +2,7 @@
 [@b.xhtmlhead/]
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 <script  type="text/javascript" src="${base}/static/scripts/common/md5.js"></script>
-<body>
+
 <br/>
    <table width="80%" align="center" class="formTable">
 	 <tr  class="thead">
@@ -11,19 +11,19 @@
 	<form name="commonForm" action="my!save.action" method="post" onsubmit="return false;">
 	<tr>
 	 <td id="f_oldPassword" class="title" width="40%">[@b.text name="user.oldPassword"/]:</td>
-	 <td class="text1"><input type="password" name="oldPassword" maxLength="64"/><input type="hidden" name="oldPassword_encoded" value="${user.password}"/></td>
+	 <td class="text1"><input type="password" name="oldPassword" maxlength="64"/><input type="hidden" name="oldPassword_encoded" value="${user.password}"/></td>
 	</tr>
 	<tr>
 	 <td id="f_newPassword" class="title">[@b.text name="user.newPassword"/]:</td>
-	 <td class="text1"><input type="password" name="password"  maxLength="64"/></td>
+	 <td class="text1"><input type="password" name="password"  maxlength="64"/></td>
 	</tr>
 	<tr>
 	 <td id="f_repeatedPassword" class="title">[@b.text name="user.repeatPassword"/]:</td>
-	 <td class="text1"><input type="password" name="repeatedPassword" maxLength="64"/></td>
+	 <td class="text1"><input type="password" name="repeatedPassword" maxlength="64"/></td>
 	</tr>
 	<tr>
 	 <td id="f_mail"  class="title" width="40%">[@b.text name="common.email"/]:</td>
-	 <td class="text1"><input type="text" name="mail"  value="${user.mail!('')}" maxLength="100"/></td>
+	 <td class="text1"><input type="text" name="mail"  value="${user.mail!('')}" maxlength="100"/></td>
 	</tr>
 	<tr>
 	 <td colspan="2" align="center" class="tfoot">
@@ -55,5 +55,5 @@
 	 }
    }
 </script>
-</body>
+
 [#include "/template/foot.ftl"/]

@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead/]
-<body>
+
 <table  width="100%" height="20" >
   <tr>
 	<td align="center">
@@ -41,5 +41,5 @@ function displayStactTrace(){
 	}
 }
 </script>
-</body>
+
 [#include "/template/foot.ftl"/]

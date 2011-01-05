@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead/]
-<body>
+
 [@b.toolbar id="menubar" title='<a href="dashboard.action">权限管理</a>-->菜单资源']
 	function redirectTo(url){window.open(url);}
 	bar.addItem("系统功能","redirectTo('resource.action')");
@@ -19,5 +19,5 @@
 		</td>
 	</tr>
 </table>
-</body>
+
 [#include "/template/foot.ftl"/]

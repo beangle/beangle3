@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead title="Dashboard"/]
-<body >
+
 <style  type="text/css">
 /* Copyright 2006 Google, Inc.  All Rights Reserved */
  .module{margin:1 5 15px;line-height:1.3em;float:left;width:48%;}
@@ -100,5 +100,5 @@
    </div>
    </div>
   [/#if]
-</body>
+
 [#include "/template/foot.ftl"/]

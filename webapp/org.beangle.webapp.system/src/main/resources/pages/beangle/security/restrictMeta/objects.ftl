@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead/]
-<body >
+
 [#assign labInfo]限制参数和参数组管理[/#assign]
 [#include "/template/back.ftl"/]
 <script  type="text/javascript" src="${base}/static/scripts/itemSelect.js"></script>
@@ -51,7 +51,7 @@
    </td>
    </tr>
   </table>
- </body>
+ 
 <script type="text/javascript">
 
    function searchParam(groupId){

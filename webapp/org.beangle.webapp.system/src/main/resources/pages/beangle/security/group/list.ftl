@@ -1,7 +1,7 @@
 [#ftl]
 [@b.xhtmlhead/]
 [#include "../status.ftl"/]
-<body >
+
 [@b.grid width="100%" id="groupListTable" ]
 [@b.entitybar id="groupbar" title="用户组列表" entity="group" action="group.action"]
 	bar.addItem("[@b.text "action.new"/]",action.add(),'new.gif');
@@ -28,5 +28,5 @@
 		<td><a target="_blank" href="authority!edit.action?group.id=${group.id}"><img style="border:0px" src="${base}/static/icons/beangle/16x16/actions/config.png"/>设置权限</a></td>
 	[/@]
 [/@]
-</body>
+
 [#include "/template/foot.ftl"/]

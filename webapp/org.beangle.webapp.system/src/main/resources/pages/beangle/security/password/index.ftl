@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead/]
-<body>
+
  <table id="passwordBar"></table>
  <form name="pageGoForm" method="post" action="" target="contentFrame"></form>
  <table  class="frameTable">
@@ -26,5 +26,5 @@
    bar.setMessage('[@b.messages/]');
    bar.addHelp();
   </script>
-</body>
+
 [@b.xhtmlhead/]

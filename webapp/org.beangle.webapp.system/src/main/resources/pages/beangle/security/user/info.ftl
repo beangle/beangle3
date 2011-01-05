@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead/]
-<body>
+
   <table id="userInfoBar"></table>
 	 <table class="infoTable">
 	   <tr>
@@ -35,19 +35,11 @@
 	   </tr>
 	   <tr>
 		<td class="title" >&nbsp;[@b.text name="group" /]:</td>
-		<td  class="content" colspan="3">
-			 [#list user.groups! as group]
-				  ${group.name}&nbsp;
-			 [/#list]
-		 </td>
+		<td  class="content" colspan="3">[#list user.groups! as g]${g.group.name}([#if g.member]成员[/#if][#if g.manager] 管理[/#if][#if g.granter] 授权[/#if])&nbsp;[/#list]</td>
 	   </tr>
 	   <tr>
 		<td class="title" >&nbsp;[@b.text name="user.mngGroups" /]:</td>
-		<td  class="content" colspan="3">
-			 [#list user.mngGroups! as group]
-				  ${group.name}&nbsp;
-			 [/#list]
-		 </td>
+		<td  class="content" colspan="3">[#list user.mngGroups! as group]${group.name}&nbsp;[/#list]</td>
 	   </tr>
 	   <tr>
 		<td class="title" >&nbsp;[@b.text name="common.remark" /]:</td>
@@ -63,5 +55,5 @@
    bar.setMessage('[@b.messages/]');
    bar.addBack("[@b.text name="action.back"/]");
   </script>
- </body>
+ 
 [#include "/template/foot.ftl"/]

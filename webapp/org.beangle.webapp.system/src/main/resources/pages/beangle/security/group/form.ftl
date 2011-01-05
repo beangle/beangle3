@@ -1,7 +1,7 @@
 [#ftl]
 [@b.xhtmlhead/]
  <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
- <body >
+ 
  [#assign labInfo][@b.text name="ui.groupInfo"/][/#assign]
  [#include "/template/back.ftl"]
 	 <table width="80%"  class="formTable" align="center">
@@ -62,5 +62,5 @@
 	 }
 	}
   </script>
- </body>
+ 
 [#include "/template/foot.ftl"/]

@@ -3,9 +3,10 @@ body{
 	margin-bottom: 0;
 	margin-left:0;
 	margin-right:0;
+	font-size: 1 em;
 }
-/* A ---------------------------------------------------------------------*/
- a:link {
+
+a:link {
 	color: #000080;
 	text-decoration: none;
 }
@@ -17,55 +18,105 @@ a:hover {
 	color: red;
 }
 
-/* Grid*/
-.grid {
-	border-collapse: collapse;
-	border:solid;
-	border-width:1px;
-	border-color:#006CB2;
+/* grid*/
+.grid {border-collapse: collapse;border:solid;border-width:1px;border-color:#006CB2;vertical-align: middle;}
+
+.grid td{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;}
+
+.grid th{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;}
+
+.gridselect{text-align:center;background-color: #e0ecff;width:3%;}
+
+.gridhead{color: #000000;text-decoration: none;text-align:center;letter-spacing:0;background-color: #c7dbff;}
+
+.gridhead-item-asc{background-color: #308dbb;cursor:pointer;}
+
+.gridhead-item-desc{background-color: #308dbb;cursor:pointer;}
+
+.gridhead-item-sort{cursor:pointer;}
+
+/*pagebar*/
+.pagebar{text-align: center;background-color: #c7dbff;border:solid;border-color:#006CB2;border-width:0px;border-right-width:1px;border-bottom-width:1px;border-left-width:1px;}
+
+/*toolbar*/
+.toolbar{height:22px;border-collapse:separate;}
+
+.toolbar-icon{vertical-align:bottom;margin-top:2px;margin-right:2px;border:0px}
+
+.toolbar-separator{padding-left:0px;width:1px;float:left;}
+
+.toolbar-title{float:left;}
+
+.toolbar-msg{float:left}
+
+.toolbar-items{float:right;}
+
+.toolbar-item{float:left;padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:2px;cursor:pointer;}
+
+.toolbar-item-selected{background-color:#4791C5;float:left;padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:2px;cursor:pointer;}
+
+.toolbar-item-transfer{float:left;padding-left:4px;padding-right:4px;padding-top:1px;padding-bottom:1px;background-color:#e9f2f8;border:1px solid #336699;cursor:pointer;}
+
+.toolbar-menu{margin-top:1px;margin-left:0px;background-color:#e9f2f8;visibility:hidden;position:absolute;z-index:100;padding:1px;overflow:visible;border:solid 1px #4791C5;white-space:nowrap;}
+
+.toolbar-menuitem{padding-left:2px;padding-right:2px;padding-top:1px;padding-bottom:1px;cursor:pointer;}
+
+.toolbar-menuitem-transfer{background-color:#FFFFFF;padding-left:2px;padding-right:2px;padding-top:1px;padding-bottom:1px;cursor:pointer;}
+
+/* Message ------------------------------------------------
+ * This is the style for the informational messages presented to the user */
+
+div.error, div.message {
+	background-color: #ECD83C;
+	border: 0px solid #000;
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: bottom;
+}
+
+
+/* use a different color for the errors */
+div.error {
+	border: 0px solid red;
+}
+
+div.message a {
+	background: transparent;
+	color: #0000FF;
+}
+
+div.message a:visited {
+	background: transparent;
+	color: #0000FF;
+}
+
+div.message a:hover {
+	background: transparent;
+	color: #008000;
+}
+
+div.message a:active {
+	text-decoration: underline overline;
+}
+
+div.message img.icon {
 	vertical-align: middle;
-	font-style: normal;
-}
-.grid td{
-	border-color:#006CB2;;
-	border-style:solid;
-	border-width:0 1px 1px 0;
-}
-.grid th{
-	border-color:#006CB2;;
-	border-style:solid;
-	border-width:0 1px 1px 0;
 }
 
-.gridhead{
-	color: #000000; 
-	text-decoration: none;
-	text-align:center;
-	letter-spacing:0;
-	background-color: #c7dbff;
-}
-/* 排序表使用*/
-.gridhead-item-asc{
-	background-color: #308dbb;
-	cursor:pointer;
-}
-.gridhead-item-desc{
-	background-color: #308dbb;
-	cursor:pointer;
-}
-.gridhead-item-sort{
-	cursor:pointer;
-}
-
-.pagebar{
-	text-align: center; 
-	background-color: #c7dbff;
-	border:solid;
-	border-color:#006CB2;
+.search-widget{
+	border-collapse: collapse;
 	border-width:0px;
-	border-right-width:1px;
-	border-bottom-width:1px;
-	border-left-width:1px;
+}
+.search-widget .search-item{
+	text-align:right;
+}
+.search-item input{
+	width:100px;
+}
+.search-item select{
+	width:105px;
 }
 
 /*鼠标覆盖改变颜色*/      
@@ -80,6 +131,7 @@ tr.highlight {
 	letter-spacing:0;
 	background-color: #BFFFBF;
 }
+
 tr.bright{  
 	color: #000000; 
 	text-decoration: none; 
@@ -92,12 +144,9 @@ tr.gray{
 	letter-spacing:0;
 	background-color: #EBEBEB;
 }
-/*数据列表中，选择框(radio or checkbox)的样式单*/
-td.select{
-	text-align:center;
-	background-color: #e0ecff;
-	width:3%;
-}
+
+TD.keyLine {height:1px;font-size:0pt;}
+.V {height:1px;font-size:0pt;padding:0px;border-top:1px solid #4791C5;}
 
 /* FormTable */
 .formTable{
@@ -106,8 +155,6 @@ td.select{
 	border-width:1px;
 	border-color:#006CB2;
 	text-align: left;
-	font-style: normal; 
-	font-size: 10pt; 
 }
 table.formTable td{
 	border:solid;
@@ -197,10 +244,8 @@ thead.thead {
 	margin-top:0px;
 	margin-bottom:0px;
 	width:100%;	
-	font-size: 10pt;
 }
 .frameTable_title{
-	font-size: 12px;
 	border:solid;
 	border-width:1px;	
 	margin-top:0px;
@@ -210,7 +255,6 @@ thead.thead {
 	width:100%;
 }
 .frameTable_view{
-    font-size: 10pt;
 	border:solid;
 	border-width:0px;
 	border-right-width:1px;
@@ -233,7 +277,7 @@ thead.thead {
 	border-width:1px;
 	border-color:#006CB2;
 	text-align: left;
-	font-style: normal; 
+	 
 	width:100%;
 	background-color: #E1ECFF
 }
@@ -244,41 +288,6 @@ table.settingTable td{
 	height:30px;
 }
 
-/*toolbar*/
-.toolbar{font-size: 12px;height:22px;border-collapse:separate;}
-.toolbar-icon{vertical-align:bottom;margin-top:2px;margin-right:2px;border:0px}
-.toolbar-separator{padding-left:0px;width:1px;float:left;}
-.toolbar-title{float:left;}
-.toolbar-msg{float:left}
-.toolbar-items{float:right;}
-.toolbar-item{float:left;padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:2px;cursor:pointer;}
-.toolbar-item-selected{background-color:#4791C5;float:left;padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:2px;cursor:pointer;}
-.toolbar-item-transfer{float:left;padding-left:4px;padding-right:4px;padding-top:1px;padding-bottom:1px;background-color:#e9f2f8;border:1px solid #336699;cursor:pointer;}
-.toolbar-menu{margin-top:1px;margin-left:0px;background-color:#e9f2f8;visibility:hidden;position:absolute;z-index:100;padding:1px;overflow:visible;border:solid 1px #4791C5;white-space:nowrap;}
-.toolbar-menuitem{padding-left:2px;padding-right:2px;padding-top:1px;padding-bottom:1px;cursor:pointer;}
-.toolbar-menuitem-transfer{background-color:#FFFFFF;padding-left:2px;padding-right:2px;padding-top:1px;padding-bottom:1px;cursor:pointer;}
-
-TD.keyLine {height:1px;font-size:0pt;}
-.V {height:1px;font-size:0pt;padding:0px;border-top:1px solid #4791C5;}
-
-/* Message ------------------------------------------------
- * This is the style for the informational messages presented to the user */
-
-div.error, div.message {
-	background-color: #ECD83C;
-	border: 0px solid #000;
-	color: #000000;
-	font-family: Arial, Helvetica, sans-serif;
-	font-weight: normal;
-	text-align: center;
-	vertical-align: bottom;
-}
-
-
-/* use a different color for the errors */
-div.error {
-	border: 0px solid red;
-}
 
 img.validationWarning, div.errors img.icon, div.messages img.icon {
 	border: 0;
@@ -287,32 +296,8 @@ img.validationWarning, div.errors img.icon, div.messages img.icon {
 	vertical-align: top;
 }
 
-div.message a {
-	background: transparent;
-	color: #0000FF;
-}
-
-div.message a:visited {
-	background: transparent;
-	color: #0000FF;
-}
-
-div.message a:hover {
-	background: transparent;
-	color: #008000;
-}
-
-div.message a:active {
-	text-decoration: underline overline;
-}
-
-div.message img.icon {
-	vertical-align: middle;
-}
-
 span.fieldError {
 	color: red;
-	font-size: .95em;
 	font-weight: bold;
 }
 /*Print ----------------------------------------------
@@ -337,14 +322,12 @@ span.fieldError {
 /*-验证框架使用的两个class------------------------------*/
 .tfvHighlight {
 	font-weight: bold; 
-	font-style: normal; 
 	color: red; 
 	background-color: #EBEBEB;
 	text-align: right;
 }
 .tfvNormal {
 	font-weight: normal;
-	font-style: normal; 
 	color: black; 
 	background-color: #EBEBEB;
 	text-align: right;

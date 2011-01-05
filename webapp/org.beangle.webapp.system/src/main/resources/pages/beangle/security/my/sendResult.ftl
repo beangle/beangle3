@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead/]
-<body>
+
 <table  width="100%" >
 	<tr>
 	  <td  class="infoTitle" style="height:22px;" >
@@ -20,7 +20,7 @@
 	  </td>
    </tr>
   </table>
-<body>
+
 <script type="text/javascript">
 	if(!self.name){
 		window.resizeTo(300,200);

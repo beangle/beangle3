@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.Validate;
-import org.beangle.security.AuthorizationException;
 import org.beangle.security.BeangleSecurityException;
+import org.beangle.security.access.AccessDeniedException;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.context.AuthenticationUtils;
@@ -69,12 +69,12 @@ public class ExceptionTranslationFilter extends GenericHttpFilterBean {
 		if (exception instanceof AuthenticationException) {
 			logger.debug("Authentication exception occurred", exception);
 			sendStartAuthentication(request, response, chain, (AuthenticationException) exception);
-		} else if (exception instanceof AuthorizationException) {
-			AuthorizationException ae = (AuthorizationException) exception;
+		} else if (exception instanceof AccessDeniedException) {
+			AccessDeniedException ae = (AccessDeniedException) exception;
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			if (AuthenticationUtils.isValid(auth)) {
 				logger.debug("{} access {} is denied", auth.getName(), ae.getResource());
-				accessDeniedHandler.handle(request, response, (AuthorizationException) exception);
+				accessDeniedHandler.handle(request, response, (AccessDeniedException) exception);
 			} else {
 				logger.debug("anonymous access {} is denied", ae.getResource());
 				sendStartAuthentication(request, response, chain,

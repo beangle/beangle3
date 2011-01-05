@@ -3,7 +3,7 @@
 <link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css"/>
 [@sj.head /]
 
-<body>
+
   <style type="text/css">
 	.column {
 		width: 600px;
@@ -47,5 +47,5 @@
 		});
 	});
   </script>
- </body>
+ 
 [#include "/template/foot.ftl"/]

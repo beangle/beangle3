@@ -2,7 +2,7 @@
 [@b.xhtmlhead/]
 [#include "scope.ftl"/]
 [#include "../status.ftl"/]
-<body>
+
 	[@b.entitybar id="resourcebar" title='<a href="dashboard.action">权限管理</a>->系统资源' entity="resource" action="resource.action"]
 	function activate(enabled){
 		return action.multi('activate','确定操作?','&amp;enabled='+enabled);
@@ -19,7 +19,7 @@
 [@b.grid id="listTable" width="100%" ]
 	[@b.gridhead]
 	<tr>
-		<td class="select"><img src="${base}/static/images/action/search.png" onclick="document.getElementById('pageGoForm').submit()"/></td>
+		<td class="gridselect"><img src="${base}/static/images/action/search.png" onclick="document.getElementById('pageGoForm').submit()"/></td>
 		<td><input type="text" name="resource.title" value="${Parameters['resource.title']!}" style="width:95%;"/></td>
 		<td><input type="text" name="resource.name" value="${Parameters['resource.name']!}" style="width:95%;"/></td>
 		<td>
@@ -55,5 +55,5 @@
 	[/@]
   [/@]
 </form>
-</body>
+
 [#include "/template/foot.ftl"/]

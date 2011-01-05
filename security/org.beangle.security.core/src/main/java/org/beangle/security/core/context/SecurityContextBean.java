@@ -14,10 +14,12 @@ import org.beangle.security.core.Authentication;
  * </p>
  * 
  * @author chaostone
- * @version $Id: SecurityContextImpl.java 2217 2007-10-27 00:45:30Z luke_t $
+ * @version $Id: SecurityContextImpl.java 2217 2007-10-27 00:45:30Z  $
  */
 public class SecurityContextBean implements SecurityContext {
 
+	private static final long serialVersionUID = 3146265469090172129L;
+	
 	private Authentication authentication;
 
 	public boolean equals(Object obj) {

@@ -226,7 +226,7 @@
 		
 		function displayMenu(event){
 			div=bg.event.getTarget(event);
-			while(div&&div.tagName!='div'){
+			while(div && div.tagName.toLowerCase()!='div'){
 				div=div.parentNode;
 			}
 			menu=div.lastElementChild;
@@ -278,32 +278,32 @@
 		
 		// /菜单条目的鼠标进入和离开事件响应方法
 		function MouseOutMenuItem(e){
-			var S=bg.event.getTarget(e);
-			while (S&&S.tagName!="td"){S=S.parentNode;}
-			if(S)S.className="toolbar-menuitem";
+			var o=bg.event.getTarget(e);
+			while (o && o.tagName.toLowerCase()!="td"){o=o.parentNode;}
+			if(o)o.className="toolbar-menuitem";
 		}
 		
 		function MouseOverMenuItem(e){
-			var S=bg.event.getTarget(e);
-			while (S.tagName!="td"){S=S.parentNode;}
-			if(S)S.className="toolbar-menuitem-transfer";
+			var o=bg.event.getTarget(e);
+			while (o && o.tagName.toLowerCase()!="td"){o=o.parentNode;}
+			if(o)o.className="toolbar-menuitem-transfer";
 		}
 		/**
 		 * 当鼠标经过工具栏的按钮时
 		 * 
 		 */
 		function MouseOverItem(e){
-			var S=bg.event.getTarget(e);
-			while (S&&S.tagName!="div"){S=S.parentNode;}
-			if(S)S.className="toolbar-item-transfer";
+			var o=bg.event.getTarget(e);
+			while (o&&o.tagName.toLowerCase()!="div"){o=o.parentNode;}
+			if(o)o.className="toolbar-item-transfer";
 		}
 		/**
 		 * 当鼠标离开工具栏的按钮时
 		 */
 		function MouseOutItem(e){
-			var S=bg.event.getTarget(e);
-			while (S&&S.tagName!="div"){S=S.parentNode;}
-			if(S)S.className="toolbar-item";
+			var o=bg.event.getTarget(e);
+			while (o&&o.tagName.toLowerCase()!="div"){o=o.parentNode;}
+			if(o)o.className="toolbar-item";
 		}
 	}
 	bg.extend({'ui.toolbar':function (tableId,title,imageName,hasKeyLine,hasSeparator){
@@ -343,13 +343,13 @@
 			onRowChange : function (event){    
 				ele =  bg.event.getTarget(event);
 				var changed=true;
-				if(null!=ele&&ele.tagName=="td"){
+				if(null!=ele && ele.tagName.toLowerCase()=="td"){
 					var firstChild = ele.parentNode.firstChild;
-					if(firstChild.tagName!="td"){
+					while(firstChild.tagName ==null || firstChild.tagName.toLowerCase()!="td"){
 						firstChild=firstChild.nextSibling;
 					}
 					ele=firstChild.firstChild;
-					while(((typeof ele.tagName)=="undefined")||ele.tagName!="input"){
+					while(((typeof ele.tagName)=="undefined")||ele.tagName.toLowerCase()!="input"){
 						ele=ele.nextSibling;
 						if(ele==null)return;
 					}
@@ -459,7 +459,7 @@
 				var pageBarTd=document.getElementById(pageBarId);
 				if(null == pageBarTd) return ;
 				parentEle=pageBarTd.parentNode;
-				while(parentEle && parentEle.tagName!='table'){
+				while(parentEle && parentEle.tagName.toLowerCase()!='table'){
 					parentEle=parentEle.parentNode;
 				}
 				if(typeof parentEle.tHead.rows[0].cells.length!=undefined){

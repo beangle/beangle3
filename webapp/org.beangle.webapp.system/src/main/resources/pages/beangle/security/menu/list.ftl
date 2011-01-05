@@ -5,7 +5,7 @@
 <script type="text/javascript">defaultColumn=1;</script>
 [/@]
 [#include "../status.ftl"/]
-<body>
+
 [@b.entitybar id="menu" title="菜单列表" entity="menu" action="menu.action"]
 	action.addParam('menu.profile.id',"${Parameters['menu.profile.id']}");
 	function activate(isActivate){
@@ -15,7 +15,7 @@
 		return action.method("export",null,"keys=code,title,entry,description,enabled&amp;titles=代码,标题,入口,描述,是否可用");
 	}
 	function preview(){
-		window.open(action+"?method=preview[@b.paramStr/]");
+		window.open("menu.action?method=preview[@b.paramStr/]");
 	}
 	bar.addItem("[@b.text "action.new"/]",action.add(),'new.gif');
 	bar.addItem("[@b.text "action.edit"/]",action.edit(),'update.gif');
@@ -27,7 +27,7 @@
 [/@]
 <table width="100%" class="grid" id="menuTable">
 	<tr class="gridhead">
-		<td class="select"><input type="checkbox" onclick="treeToggleAll(this)"/></td>
+		<td class="gridselect"><input type="checkbox" onclick="treeToggleAll(this)"/></td>
 		<td>标题</td>
 		<td>英文标题</td>
 		<td width="10%">[@b.text name="common.code"/]</td>
@@ -54,7 +54,7 @@
 	<tr [#if (menu.code?length >firstLevel)]style="display: none;"[/#if] id="${tdid}"  onmouseover="bg.ui.grid.swapOverTR(this,this.className)"
 		 onmouseout="bg.ui.grid.swapOutTR(this)" onclick="bg.ui.grid.onRowChange(event);"
 		 title="${menu.entry!}">
-	   <td class="select">
+	   <td class="gridselect">
 		   <input type="checkbox" name="menuId" value="${menu.id}" onclick="treeToggle(this,false)"/>
 	   </td>
 	   <td>
@@ -80,5 +80,5 @@
    //展开所有菜单
    displayAllRowsFor(1);
 </script>
-</body>
+
 [#include "/template/foot.ftl"/]

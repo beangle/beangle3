@@ -17,7 +17,7 @@ import javax.servlet.ServletResponse;
  * A simple filter that the test case can delegate to.
  * 
  * @author chaostone
- * @version $Id: MockFilter.java 2217 2007-10-27 00:45:30Z luke_t $
+ * @version $Id: MockFilter.java 2217 2007-10-27 00:45:30Z  $
  */
 public class MockFilter implements Filter {
 

@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead/]
- <body>
+ 
  <table id="userBar" width="100%"></table>
  [@sj.head /]
  [@sj.accordion id="accordion"]

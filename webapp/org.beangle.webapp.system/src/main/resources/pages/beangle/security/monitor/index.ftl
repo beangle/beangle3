@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead/]
-<body>
+
 [@sj.head /]
 [@b.toolbar id="menuBar" title='<a href="dashboard.action">权限管理</a>-->访问监控']
 	bar.addHelp();
@@ -14,5 +14,5 @@
 	[@sj.tab id="monitorTab3" label="历史会话" href="${base}/security/activity.action"/]
 	[@sj.tab id="monitorTab4" label="访问日志" href="${base}/security/monitor!accesslogs.action?ordreBy=duration desc"/]
 [/@]
-</body>
+
 [#include "/template/foot.ftl"/]

@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead/]
-<body class="autoadapt">
+
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 [#assign labInfo][@b.text name="info.moduleUpdate"/][/#assign]
 [#include "/template/back.ftl"/]
@@ -124,5 +124,5 @@
 		}
 	}
 </script>
-</body>
+
 [#include "/template/foot.ftl"/]

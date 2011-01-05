@@ -1,7 +1,7 @@
 [#ftl]
 [@b.xhtmlhead/]
 [#include "scope.ftl"/]
-<body>
+
 <table id="resourceInfoBar"></table>
 	 <table class="infoTable">
 	   <tr>
@@ -61,5 +61,5 @@
    bar.setMessage('[@b.messages/]');
    bar.addBack("[@b.text name="action.back"/]");
   </script>
- </body>
+ 
 [#include "/template/foot.ftl"/]

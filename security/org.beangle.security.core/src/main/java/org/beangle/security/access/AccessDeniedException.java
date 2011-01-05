@@ -2,19 +2,21 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.security;
+package org.beangle.security.access;
+
+import org.beangle.security.BeangleSecurityException;
 
 /**
  * 授权异常
  * 
  * @author chaostone
  */
-public class AuthorizationException extends BeangleSecurityException {
+public class AccessDeniedException extends BeangleSecurityException {
 	private static final long serialVersionUID = -2403784040888146039L;
 
 	private Object resource;
 
-	public AuthorizationException(Object resource, String message) {
+	public AccessDeniedException(Object resource, String message) {
 		super(message);
 		this.resource = resource;
 	}

@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead title="Login"/]
-<body>
+
 <script type="text/javascript" src="${base}/static/scripts/common/OnReturn.js"></script>
 <script type="text/javascript">
 	if(this.parent!=this){ this.top.location="loginForm.action"; }
@@ -80,5 +80,5 @@
 		obj.src="captcha/image.action?d="+timenow;
 	}
 </script>
-</body>
+
 [#include "/template/foot.ftl"/]

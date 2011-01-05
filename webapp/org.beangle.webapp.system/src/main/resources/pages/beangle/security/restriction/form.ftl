@@ -12,7 +12,7 @@
 	   }
 	}
  </script>
- <body>
+ 
  <table id="restrictionBar"></table>
   <form name="restrictionForm" method="post" action="restriction.action?method=save">
 	<input type="hidden" name="restriction.id" value="${restriction.id!}"/>
@@ -63,6 +63,6 @@
    bar.addItem("[@b.text name="action.save"/]",save,'save.gif');
    bar.addBack();
  </script>
- </body>
+ 
 [#include "/template/foot.ftl"/]
 

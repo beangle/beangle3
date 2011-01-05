@@ -10,7 +10,7 @@ import java.util.Set;
 import org.apache.commons.lang.Validate;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.persist.impl.BaseServiceImpl;
-import org.beangle.security.AuthorityManager;
+import org.beangle.security.access.AuthorityManager;
 import org.beangle.security.auth.AnonymousAuthentication;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.core.Authentication;

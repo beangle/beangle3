@@ -10,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import org.beangle.security.AuthorizationException;
+import org.beangle.security.access.AccessDeniedException;
 
 public interface AccessDeniedHandler {
 
@@ -29,5 +29,5 @@ public interface AccessDeniedHandler {
 	 *             in the event of a ServletException
 	 */
 	void handle(ServletRequest request, ServletResponse response,
-			AuthorizationException accessDeniedException) throws IOException, ServletException;
+			AccessDeniedException accessDeniedException) throws IOException, ServletException;
 }

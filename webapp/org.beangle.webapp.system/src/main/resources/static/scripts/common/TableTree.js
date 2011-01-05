@@ -61,9 +61,9 @@ function toggleRows(elm) {
    if (matchStart(s.id, thisID, matchDirectChildrenOnly)) {
      s.style.display = newDisplay;
      // chang 0 to defaultColumn by chaostone for add a checkbox before tree sometime
-     var cell = s.getElementsByTagName("TD")[defaultColumn]; 
-     var tier = cell.getElementsByTagName("DIV")[0];
-     var folder = tier.getElementsByTagName("A")[0];
+     var cell = s.getElementsByTagName("td")[defaultColumn]; 
+     var tier = cell.getElementsByTagName("div")[0];
+     var folder = tier.getElementsByTagName("a")[0];
 
      if (folder.getAttribute("onclick") != null) {
       folder.style.backgroundImage = "url("+treeImagePath+"plus.gif)";
@@ -81,7 +81,7 @@ function matchStart(target, pattern, matchDirectChildrenOnly) {
 }
 
 function collapseAllRows() {
- var rows = document.getElementsByTagName("TR");
+ var rows = document.getElementsByTagName("tr");
  for (var j = 0; j < rows.length; j++) {
    var r = rows[j];
    if (r.id.indexOf("-") >1 ) {
@@ -94,7 +94,7 @@ function collapseAllRows() {
   2005-10-11 
 */
 function collapseAllRowsFor(depth) {
- var rows = document.getElementsByTagName("TR");
+ var rows = document.getElementsByTagName("tr");
  for (var j = 0; j < rows.length; j++) {
    var r = rows[j];
    if (r.id.lastIndexOf("-") >depth ) {
@@ -107,7 +107,7 @@ function collapseAllRowsFor(depth) {
   2005-10-11
 */
 function displayAllRowsFor(depth) {
- var rows = document.getElementsByTagName("TR");
+ var rows = document.getElementsByTagName("tr");
  for (var j = 0; j < rows.length; j++) {
    var r = rows[j];
    if (r.id.lastIndexOf("-") > depth) {
@@ -121,7 +121,7 @@ function displayAllRowsFor(depth) {
      * @params toggleParent是否在选中时,级联选中父节点
      */
     function treeToggle(elm,toggleParent){
-       var rows = document.getElementsByTagName("TR");
+       var rows = document.getElementsByTagName("tr");
        var thisID = elm.parentNode.parentNode.id;
        var checked = elm.checked;
        if(null==toggleParent){
@@ -130,8 +130,8 @@ function displayAllRowsFor(depth) {
        for (var i = 0; i < rows.length; i++) {
              var r = rows[i];             
              if (r.id!=""&&((r.id.indexOf(thisID)==0)||(thisID.indexOf(r.id)==0))){
-                 var cell = r.getElementsByTagName("TD")[0];
-                 var input = cell.getElementsByTagName("INPUT")[0];                 
+                 var cell = r.getElementsByTagName("td")[0];
+                 var input = cell.getElementsByTagName("input")[0];                 
                  if(thisID.indexOf(r.id)==0){
                     if(checked&&toggleParent)
                        input.checked=true;
@@ -142,14 +142,14 @@ function displayAllRowsFor(depth) {
        }             
     }
     function treeToggleAll(elm){
-     var rows = document.getElementsByTagName("TR");
+     var rows = document.getElementsByTagName("tr");
        var thisID = elm.parentNode.parentNode.id;
        var checked = elm.checked;
         for (var i = 0; i < rows.length; i++) {
              var r = rows[i];     
              if (r.id.indexOf("1")>-1){
-                 var cell = r.getElementsByTagName("TD")[0];
-                 var input = cell.getElementsByTagName("INPUT")[0];
+                 var cell = r.getElementsByTagName("td")[0];
+                 var input = cell.getElementsByTagName("input")[0];
                  input.checked = checked; 
              }             
         } 

@@ -1,7 +1,7 @@
 [#ftl]
 [@b.xhtmlhead/]
 [#include "../status.ftl"/]
-<body class="autoadapt">
+
 [@b.grid width="100%" id="listTable"]
 	[@b.entitybar id="userBar" title="用户列表" entity="user" action="user.action"]
 		bar.addItem("[@b.text "action.new"/]",action.add(),'new.gif');
@@ -40,5 +40,5 @@
 		<td>[@enableInfo user.enabled/]</td>
 	[/@]
 [/@]
-</body>
+
 </html>

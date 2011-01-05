@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead/]
- <body>
+ 
  <table id="restrictionBar"></table>
  [#if (restrictions?size==0)]没有设置[/#if]
  [#list restrictions as restriction]
@@ -52,5 +52,5 @@
    		form.submit();
    }
  </script>
- </body>
+ 
 [#include "/template/foot.ftl"/]

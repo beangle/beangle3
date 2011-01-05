@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.beangle.security.AuthorizationException;
+import org.beangle.security.access.AccessDeniedException;
 
 /**
  * Base implementation of {@link AccessDeniedHandler}.
@@ -43,7 +43,7 @@ public class DefaultAccessDeniedHandler implements AccessDeniedHandler {
 	private String location;
 
 	public void handle(ServletRequest request, ServletResponse response,
-			AuthorizationException exception) throws IOException, ServletException {
+			AccessDeniedException exception) throws IOException, ServletException {
 		if (null != location) {
 
 		}

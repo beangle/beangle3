@@ -1,6 +1,6 @@
 [#ftl]
 [@b.xhtmlhead/]
-<body>
+
 [@sj.head /]
 <table id="menuBar"></table>
 [@sj.tabbedpanel id="tabs"]
@@ -11,5 +11,5 @@
  var menuBar=bg.ui.toolbar('menuBar','<a href="dashboard.action">权限管理</a>-->限制模式和参数');
  menuBar.addHelp();
 </script>
-</body>
+
 [#include "/template/foot.ftl"/]

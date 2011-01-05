@@ -2,7 +2,7 @@
 [@b.xhtmlhead/]
  <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 <script  type="text/javascript" src="${base}/static/scripts/common/md5.js"></script>
-<body >
+
 <center>
  <table width="50%" align="center" >
   <tr>
@@ -28,17 +28,17 @@
 		<tr>
 		 <td>&nbsp;</td>
 		 <td id="f_newPassword"  valign="top" width="40%">[@b.text name="user.newPassword"/]:</td>
-		 <td class="text1"><input type="password" name="password" maxLength="64"/></td>
+		 <td class="text1"><input type="password" name="password" maxlength="64"/></td>
 		</tr>
 		<tr>
 		 <td>&nbsp;</td>
 		 <td id="f_repeatedPassword"  valign="top" width="40%">[@b.text name="user.repeatPassword"/]:</td>
-		 <td class="text1"><input type="password" name="repeatedPassword" maxLength="64"/></td>
+		 <td class="text1"><input type="password" name="repeatedPassword" maxlength="64"/></td>
 		</tr>
 		<tr>
 		 <td>&nbsp;</td>
 		 <td id="f_mail"  valign="top" width="40%">[@b.text name="common.email"/]:</td>
-		 <td class="text1"><input type="text" name="mail"  value="${user.mail}" maxLength="100"/></td>
+		 <td class="text1"><input type="text" name="mail"  value="${user.mail}" maxlength="100"/></td>
 		</tr>
 		<tr><td colspan="3" height="5"></td></tr>
 		<tr>
@@ -76,5 +76,5 @@
 	 }
    }
 </script>
-</body>
+
 [#include "/template/foot.ftl"/]

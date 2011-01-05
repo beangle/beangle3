@@ -16,7 +16,7 @@
 [/#macro]
 
 [#macro paramStr]
-[#list Parameters?keys as key][#if (Parameters[key]?length>0)&&key!="method"]&amp;${key}=${Parameters[key]?js_string}[/#if][/#list][#rt/]
+[#list Parameters?keys as key][#if (Parameters[key]?length>0)&&key!="method"]&${key}=${Parameters[key]?js_string}[/#if][/#list][#rt/]
 [/#macro]
 
 [#macro gridhead extra...]
@@ -35,7 +35,7 @@
 [/#macro]
 
 [#macro selectTd name value extra...]
-	<td class="select"><input class="box" name="${name}" value="${value}" [#if (extra?size!=0)][#list extra?keys as attr][#if attr != "type"] ${attr}="${extra[attr]}"[/#if][/#list][/#if] type="${extra['type']!("checkbox")}" title="select me"/>[#nested]</td>
+	<td class="gridselect"><input class="box" name="${name}" value="${value}" [#if (extra?size!=0)][#list extra?keys as attr][#if attr != "type"] ${attr}="${extra[attr]}"[/#if][/#list][/#if] type="${extra['type']!("checkbox")}" title="select me"/>[#nested]</td>
 [/#macro]
 
 [#macro grid extra...]
@@ -95,7 +95,7 @@
 <div id="${id}"></div>
 <script type="text/javascript">
 [#if name?length>0][#local bartitle][@text name/][/#local][#else][#local bartitle=title /][/#if]
-bar = bg.ui.toolbar('${id}','${bartitle?replace("'","\"")?html}');
+bar = bg.ui.toolbar('${id}','${bartitle?replace("'","\"")}');
 bar.setMessage('[@messages/]');
 [#if  entity?length>0]
 action=new bg.entityaction('${id}','${entity}','${action}','[@paramStr/]',[#if !(extra['target']??)&&(ajaxTarget!'')?length>0]"${ajaxTarget}"[#else]null[/#if]);
@@ -107,21 +107,24 @@ action=new bg.entityaction('${id}','${entity}','${action}','[@paramStr/]',[#if !
 [#macro toolbar id title=""]
 <div id="${id}"></div>
 <script type="text/javascript">
-bar = bg.ui.toolbar("${id}",'${title?replace("'","\"")?html}');
+bar = bg.ui.toolbar("${id}",'${title?replace("'","\"")}');
 bar.setMessage('[@messages/]');
 [#nested/]
 </script>
 [/#macro]
 
+[#--[#assign content_type]application/xhtml+xml[/#assign]--]
+[#assign content_type]text/html[/#assign]
+
 [#macro xhtmlhead title="" name=""]
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-[#--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">--]
+[#--<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">--]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="${locale.language}" xml:lang="${locale.language}">
 <head>
 [#if name?length>0][#local htmltitle][@text name/][/#local][#else][#local htmltitle=title /][/#if]
 	<title>${htmltitle}[#if htmltitle?length>0] - [/#if]${(systemVersion.name)!} ${(systemVersion.version)!}</title>
-	<meta http-equiv="content-type" content="application/xhtml+xml;charset=utf-8" />
+	<meta http-equiv="content-type" content="${content_type};charset=utf-8" />
 	<meta http-equiv="pragma" content="no-cache"/>
 	<meta http-equiv="cache-control" content="no-cache"/>
 	<meta http-equiv="expires" content="0"/>
@@ -132,6 +135,7 @@ bar.setMessage('[@messages/]');
 	<script type="text/javascript" src="${base}/static/scripts/beangle-ui.js?ver=1"></script>
 	[#nested/]
 </head>
+<body>
 [/#macro]
 
 [#macro magicParams]<input name="params" type="hidden" value="${(Parameters['params']!(''))?html}" />[/#macro]
@@ -141,6 +145,7 @@ bar.setMessage('[@messages/]');
 [#if request.getHeader('USER-AGENT')?contains('MSIE')]
 <iframe src="${src}" ${extraAttrs}>[#nested/]</iframe>
 [#else]
-<object type="application/xhtml+xml" data="${src}" ${extraAttrs}>[#nested/]</object>
+[#--<iframe src="${src}" ${extraAttrs} frameborder="0">[#nested/]</iframe>--]
+<object type="${content_type}" data="${src}" ${extraAttrs}>[#nested/]</object>
 [/#if]
 [/#macro]

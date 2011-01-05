@@ -16,7 +16,7 @@
 		}
 	}
 </script>
-<body>
+
 <div>
   <table width="90%" align="center">
   <tr>
@@ -91,7 +91,7 @@
 	[#assign tdid = tdid[0..tdid?length-2]]
 
 	<tr class="grayStyle" id="${tdid}">
-	   <td   class="select">
+	   <td   class="gridselect">
 		   <input type="checkbox" id="checkbox_${menu_index}" onclick="treeToggle(this);selectListen('checkbox_${menu_index}');"  name="menuId" [#if (aoMenus??)&&(aoMenus?seq_contains(menu))]checked="checked"[/#if] value="${menu.id}"]
 	   </td>
 	   <td>
@@ -131,5 +131,5 @@
 	</td>
    </tr>
   </table>
- </body>
+ 
 [#include "/template/foot.ftl"/]

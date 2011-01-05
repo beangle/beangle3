@@ -2,7 +2,7 @@
 [@b.xhtmlhead/]
 [#include "scope.ftl"/]
  <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
- <body>
+ 
  [#assign labInfo][@b.text name="security.resource.info"/][/#assign]
 [#include "/template/back.ftl"/]
    <form name="moduleForm" action="resource.action?method=save" method="post">
@@ -109,5 +109,5 @@
 	 }
    }
   </script>
- </body>
+ 
 [#include "/template/foot.ftl"/]

@@ -13,7 +13,7 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.NoParameters;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.security.AuthorizationException;
+import org.beangle.security.access.AccessDeniedException;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.restrict.RestrictField;
@@ -63,7 +63,7 @@ public abstract class SecurityActionSupport extends EntityDrivenAction implement
 			restrictionMap.put(resource.getId(), realms);
 		}
 		// 没有权限就报错
-		if (realms.isEmpty()) { throw new AuthorizationException(SecurityContextHolder.getContext()
+		if (realms.isEmpty()) { throw new AccessDeniedException(SecurityContextHolder.getContext()
 				.getAuthentication(), resource.getName()); }
 		return realms;
 	}

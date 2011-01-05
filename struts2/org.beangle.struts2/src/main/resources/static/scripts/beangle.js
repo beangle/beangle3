@@ -169,9 +169,7 @@
 	beangle.extend({
 		iframe:{
 			adaptSelf:function (){
-				if(document.body && document.body.className=="autoadapt"){
-					bg.iframe.adapt(self);
-				}
+				bg.iframe.adapt(self);
 			},
 			/** iframe 页面自适应大小
 			 * @targObj    iframe
@@ -180,18 +178,24 @@
 			adapt: function (targObj,extraHight){
 				if(null==targObj || targObj.name=="")
 					return;
-				if(targObj.parent == targObj) return;
+				if(targObj.parent == targObj)return;
 				if (targObj.parent == window.top) {
 					if(targObj.parent.document.body.style.overflowY=="hidden") return;
 				}
 				var frames = targObj.parent.document.getElementsByName(targObj.name);
 				if(frames.length<1) return;
 				var targWin=frames[0];
-				if(targWin != null) {
+				if(targWin != null && (targWin.scrolling=="no" || targWin.className=="autoadapt")) {
 					var heightValue = targObj.document.body.scrollHeight;
-					if(null==extraHight)
-						extraHight=0;
-					targWin.style.height = (heightValue+extraHight)+"px";
+					totalHeight=heightValue + ((null==extraHight)?0:extraHight);
+					myHeight=0;
+					if(targWin.style.height){
+						myHeight=parseInt(targWin.style.height.substring(0,targWin.style.height.length-2));
+					}
+					if((totalHeight>0) &&  totalHeight> myHeight){
+						targWin.style.height = totalHeight+"px";
+						bg.logger.debug('adapt frame:'+targObj.name+" height "+targWin.style.height);
+					}
 				}
 				bg.iframe.adapt(targObj.parent);
 			}

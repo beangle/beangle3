@@ -6,7 +6,7 @@
 <script  type="text/javascript" src="${base}/static/scripts/common/TableTree.js"></script>
 <script type="text/javascript"> defaultColumn=1;</script>
 
- <body>
+ 
  [#assign labInfo][@b.text name="info.moduleUpdate"/][/#assign]
  [#include "/template/back.ftl"/]
    <form name="moduleForm" action="menu-profile.action?method=save" method="post">
@@ -60,5 +60,5 @@
 	 }
    }
   </script>
- </body>
+ 
 [#include "/template/foot.ftl"/]
