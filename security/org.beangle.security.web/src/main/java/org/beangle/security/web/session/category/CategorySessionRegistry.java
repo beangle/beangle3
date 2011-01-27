@@ -126,6 +126,10 @@ public class CategorySessionRegistry implements SessionRegistry, InitializingBea
 		innerRegistry.refreshLastRequest(sessionId);
 	}
 
+	public CategorySessionController getSessionController() {
+		return sessionController;
+	}
+
 	public int count() {
 		return innerRegistry.count();
 	}

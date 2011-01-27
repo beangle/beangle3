@@ -34,6 +34,7 @@ public class MemCategorySessionController implements CategorySessionController {
 	 * @return max session for given auth
 	 */
 	public int getMaximumSessions(Authentication auth) {
+		loadProfilesWhenNecessary();
 		Object category = ((CategoryPrincipal) auth.getPrincipal()).getCategory();
 		LimitProfile profile = getProfile(category);
 		if (null == profile) {

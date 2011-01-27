@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.lang.SeqStrUtils;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.RestrictPattern;
@@ -89,11 +89,11 @@ public class RestrictionBean extends LongIdObject implements Restriction {
 	}
 
 	public void merge(RestrictField param, String value) {
-		setItem(param, evictComma(SeqStrUtils.mergeSeq(getItem(param), value)));
+		setItem(param, evictComma(StrUtils.mergeSeq(getItem(param), value)));
 	}
 
 	public void shrink(RestrictField param, String value) {
-		setItem(param, evictComma(SeqStrUtils.subtractSeq(getItem(param), value)));
+		setItem(param, evictComma(StrUtils.subtractSeq(getItem(param), value)));
 	}
 
 	private static String evictComma(String str) {
