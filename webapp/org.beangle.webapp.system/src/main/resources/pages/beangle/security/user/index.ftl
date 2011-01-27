@@ -1,16 +1,17 @@
 [#ftl]
-[@b.xhtmlhead/]
-
-[@b.toolbar id="userbar" title="<a href='dashboard.action'>权限管理</a>-->用户管理"]
-	bar.addHelp("[@b.text name="action.help"/]");
+[@b.head/]
+<div>
+[@b.toolbar id="userbar"]
+	bar.setTitle('[@b.a href='dashboard']权限管理[/@]-->用户管理');
+	bar.addHelp("${b.text("action.help")}");
 [/@]
 <table class="frameTable">
 <tr>
 	<td style="width:180px"  class="frameTable_view">[#include "searchForm.ftl"/]</td>
 	<td valign="top">
-	[@b.iframe src="user!search.action?user.status=1" id="contentFrame" name="contentFrame" width="100%" scrolling="no"]list[/@]
+	[@sj.div id="userlist" href="${b.url('user!search?user.status=1')}" /]
 	</td>
 </tr>
 </table>
-
-</html>
+</div>
+[@b.foot/]

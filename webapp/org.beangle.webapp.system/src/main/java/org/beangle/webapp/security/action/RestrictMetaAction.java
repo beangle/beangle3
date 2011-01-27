@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.lang.SeqStrUtils;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.RestrictObject;
@@ -90,8 +90,7 @@ public class RestrictMetaAction extends SecurityActionSupport {
 		String objectIds = get("objectIds");
 		List<RestrictObject> paramGroups = CollectUtils.newArrayList();
 		if (StringUtils.isNotBlank(objectIds)) {
-			paramGroups = entityDao.get(RestrictObject.class,
-					SeqStrUtils.transformToLong(objectIds));
+			paramGroups = entityDao.get(RestrictObject.class, StrUtils.splitToLong(objectIds));
 		}
 		RestrictField field = populateEntity(RestrictField.class, "field");
 		field.getObjects().clear();

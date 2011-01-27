@@ -1,5 +1,5 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.head/]
  <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 <script  type="text/javascript" src="${base}/static/scripts/common/md5.js"></script>
 
@@ -13,7 +13,7 @@
 	   <table width="100%" align="CENTER" >
 		<tr>
 		 <td width="15%" height="42">&nbsp;</td>
-		 <td width="85%"><FONT COLOR="red"><em>[@b.text name="ui.changePasswordIndex"/]</em></FONT></td>
+		 <td width="85%"><FONT COLOR="red"><em>${b.text("ui.changePasswordIndex")}</em></FONT></td>
 		</tr>
 	   </table>
 	  </td>
@@ -23,29 +23,29 @@
 	 <tr>
 	  <td height="100%" valign="TOP">
 	   <table width="100%" align="CENTER" >
-		<form name="commonForm" action="password.action?method=updateUser" method="post" onsubmit="return false;">
+		<form name="commonForm" action="${b.url('!updateUser')}" method="post" onsubmit="return false;">
 		 <input type="hidden" name="user.id" value="${user.id}"/>
 		<tr>
 		 <td>&nbsp;</td>
-		 <td id="f_newPassword"  valign="top" width="40%">[@b.text name="user.newPassword"/]:</td>
+		 <td id="f_newPassword"  valign="top" width="40%">${b.text("user.newPassword")}:</td>
 		 <td class="text1"><input type="password" name="password" maxlength="64"/></td>
 		</tr>
 		<tr>
 		 <td>&nbsp;</td>
-		 <td id="f_repeatedPassword"  valign="top" width="40%">[@b.text name="user.repeatPassword"/]:</td>
+		 <td id="f_repeatedPassword"  valign="top" width="40%">${b.text("user.repeatPassword")}:</td>
 		 <td class="text1"><input type="password" name="repeatedPassword" maxlength="64"/></td>
 		</tr>
 		<tr>
 		 <td>&nbsp;</td>
-		 <td id="f_mail"  valign="top" width="40%">[@b.text name="common.email"/]:</td>
+		 <td id="f_mail"  valign="top" width="40%">${b.text("common.email")}:</td>
 		 <td class="text1"><input type="text" name="mail"  value="${user.mail}" maxlength="100"/></td>
 		</tr>
 		<tr><td colspan="3" height="5"></td></tr>
 		<tr>
 		 <td colspan="3" align="center">
 		  <input type="hidden" name="method" value="change"/>
-		   <input type="button" value="[@b.text name="action.submit" /]" name="button1" onclick="doAction(this.form)" class="buttonStyle" />&nbsp;
-		   <input type="reset" value="[@b.text name="action.reset" /]" name="reset1"  class="buttonStyle" />
+		   <input type="button" value="${b.text("action.submit")}" name="button1" onclick="doAction(this.form)" class="buttonStyle" />&nbsp;
+		   <input type="reset" value="${b.text("action.reset")}" name="reset1"  class="buttonStyle" />
 		 </td>
 		</tr>
 		</form>
@@ -60,9 +60,9 @@
 <script type="text/javascript">
    function doAction(form){
 	 var a_fields = {
-		 'password':{'l':'[@b.text name="user.newPassword"/]', 'r':true, 't':'f_newPassword'},
-		 'repeatedPassword':{'l':'[@b.text name="user.repeatPassword"/]', 'r':true, 't':'f_repeatedPassword'},
-		 'mail':{'l':'[@b.text name="common.email"/]', 'r':true, 'f':'email', 't':'f_mail'}
+		 'password':{'l':'${b.text("user.newPassword")}', 'r':true, 't':'f_newPassword'},
+		 'repeatedPassword':{'l':'${b.text("user.repeatPassword")}', 'r':true, 't':'f_repeatedPassword'},
+		 'mail':{'l':'${b.text("common.email")}', 'r':true, 'f':'email', 't':'f_mail'}
 	 };
 
 	 var v = new validator(document.commonForm , a_fields, null);
@@ -77,4 +77,4 @@
    }
 </script>
 
-[#include "/template/foot.ftl"/]
+[@b.foot/]

@@ -15,7 +15,6 @@ import org.apache.commons.lang.Validate;
 import org.apache.struts2.ServletActionContext;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.commons.meta.SystemVersion;
-import org.beangle.commons.meta.SystemVersionBean;
 import org.beangle.commons.text.TextResource;
 import org.beangle.model.Entity;
 import org.beangle.model.entity.Model;
@@ -53,16 +52,6 @@ public class BaseAction extends DispatchAction {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		if (null == request) return null;
 		return RequestUtils.getIpAddr(request);
-	}
-
-	/**
-	 * @FIXME JUST FOR PAGE
-	 * @return requestUri
-	 */
-	public String getRequestURI() {
-		HttpServletRequest request = ServletActionContext.getRequest();
-		if (null == request) return null;
-		return request.getRequestURI();
 	}
 
 	protected TextResource getTextResource() {

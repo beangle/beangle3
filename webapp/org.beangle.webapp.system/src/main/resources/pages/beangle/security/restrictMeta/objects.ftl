@@ -1,5 +1,5 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.head/]
 
 [#assign labInfo]限制参数和参数组管理[/#assign]
 [#include "/template/back.ftl"/]
@@ -23,10 +23,10 @@
 	   </tr>
 	  </table>
    [@b.grid width="100%" id="paramListTable"]
-	 [@b.gridhead]
-	  [@b.gridth text="序号"/]
-	  [@b.gridth width="70%" text="名称"/]
-	  [@b.gridth text="操作"/]
+	 [@b.row]
+	  [@b.col name="序号"/]
+	  [@b.col width="70%" text="名称"/]
+	  [@b.col name="操作"/]
 	 [/@]
 	 <tr>
 	   <td align="center">0</td>
@@ -46,7 +46,7 @@
    [/@]
    </td>
    <td>
-   <iframe  src="param.action?method=search" id="paramFrame" name="paramFrame"
+   <iframe  src="${b.url('param!search')}" id="paramFrame" name="paramFrame"
    marginwidth="0" marginheight="0" scrolling="no" frameborder="0" height="100%" width="100%"></iframe>
    </td>
    </tr>
@@ -55,7 +55,7 @@
 <script type="text/javascript">
 
    function searchParam(groupId){
-	  paramFrame.location="param.action?method=search&paramGroup.id="+groupId;
+	  paramFrame.location="${b.url('param!search')}?paramGroup.id="+groupId;
    }
 
 </script>

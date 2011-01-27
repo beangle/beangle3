@@ -1,16 +1,15 @@
 [#ftl]
-[@b.xhtmlhead]
+[@b.head]
 <link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 .column {width: 440px;float: left;padding-bottom: 100px;}
 .column div {margin:5px;}
 .ui-icon {float: right;}
 </style>
-[@sj.head /]
 [/@]
 
 [@b.toolbar id="userInfoBar" title="用户权限面板"]
-	bar.addClose("[@b.text name="action.close"/]");
+	bar.addClose("${b.text("action.close")}");
 [/@]
 
 [@sj.div id="column1" cssClass="column" sortable="true"
@@ -47,4 +46,4 @@
 	});
   </script>
  
-[#include "/template/foot.ftl"/]
+[@b.foot/]

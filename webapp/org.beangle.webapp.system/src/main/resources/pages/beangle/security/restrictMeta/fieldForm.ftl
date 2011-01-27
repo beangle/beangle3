@@ -2,12 +2,12 @@
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 [#assign labInfo]修改参数信息[/#assign]
 [#include "/template/back.ftl"/]
-<form name="fieldForm" action="restrict-meta!saveField.action" method="post" target="ui-tabs-2">
+<form name="fieldForm" action="${b.url('!saveField')}" method="post" target="ui-tabs-2">
 	<input type="hidden" name="field.id" value="${(field.id)!}" style="width:200px;" />
 	<table width="80%" class="formTable" align="center">
 		<tr class="thead"><td  colspan="2">数据限制参数</td></tr>
 		<tr>
-		 <td class="title" id="f_name">[@b.text name="common.name"/]<font color="red">*</font>:</td>
+		 <td class="title" id="f_name">${b.text("common.name")}<font color="red">*</font>:</td>
 		 <td>
 		  <input type="text" name="field.name" value="${field.name!}" style="width:200px;" />
 		 </td>
@@ -36,7 +36,7 @@
 	 <table>
 	  <tr>
 	   <td>
-		<select name="Objects" multiple="multiple" size="10" style="width:200px" onDblClick="JavaScript:moveSelectedOption(this.form['Objects'], this.form['SelectedObject'])" >
+		<select name="Objects" multiple="multiple" size="10" style="width:200px" onDblClick="JavaScript:bg.select.moveSelected(this.form['Objects'], this.form['SelectedObject'])" >
 		 [#list objects?sort_by('name') as o]
 		  <option value="${o.id}">${o.name}</option>
 		 [/#list]
@@ -44,13 +44,13 @@
 	   </td>
 	   <td  valign="middle">
 		<br/><br/>
-		<input onclick="JavaScript:moveSelectedOption(this.form['Objects'], this.form['SelectedObject'])" type="button" value="&gt;"/>
+		<input onclick="JavaScript:bg.select.moveSelected(this.form['Objects'], this.form['SelectedObject'])" type="button" value="&gt;"/>
 		<br/><br/>
-		<input onclick="JavaScript:moveSelectedOption(this.form['SelectedObject'], this.form['Objects'])" type="button" value="&lt;"/>
+		<input onclick="JavaScript:bg.select.moveSelected(this.form['SelectedObject'], this.form['Objects'])" type="button" value="&lt;"/>
 		<br/>
 	   </td>
 	   <td  class="normalTextStyle">
-		<select name="SelectedObject" multiple="multiple" size="10" style="width:200px;" onDblClick="JavaScript:moveSelectedOption(this.form['SelectedObject'], this.form['Objects'])">
+		<select name="SelectedObject" multiple="multiple" size="10" style="width:200px;" onDblClick="JavaScript:bg.select.moveSelected(this.form['SelectedObject'], this.form['Objects'])">
 		 [#list field.objects! as o]
 		  <option value="${o.id}">${o.name}</option>
 		 [/#list]
@@ -63,17 +63,17 @@
 	   <tr class="tfoot">
 		 <td colspan="6"  >
 		   <input type="hidden" name="objectIds" value=""/>
-		   <input type="button" value="[@b.text name="action.submit"/]" name="button1" onclick="save(this.form)" class="buttonStyle" />
-		   <input type="reset"  name="reset1" value="[@b.text name="action.reset"/]" class="buttonStyle" />
+		   <input type="button" value="${b.text("action.submit")}" name="button1" onclick="save(this.form)" class="buttonStyle" />
+		   <input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />
 		 </td>
 	   </tr>
 	 </table>
    </form>
   <script  >
    function save(form){
-	 form['objectIds'].value = getAllOptionValue(form.SelectedObject);
+	 form['objectIds'].value = bg.select.getValues(form.SelectedObject);
 	 var a_fields = {
-		 'field.name':{'l':'[@b.text name="common.name"/]', 'r':true,'t':'f_name'},
+		 'field.name':{'l':'${b.text("common.name")}', 'r':true,'t':'f_name'},
 		 'field.remark':{'l':'标题', 'r':true, 't':'f_remark'},
 		 'field.type':{'l':'类型', 'r':true, 't':'f_type'}
 	 };

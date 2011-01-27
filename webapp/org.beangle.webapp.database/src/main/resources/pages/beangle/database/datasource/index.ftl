@@ -1,7 +1,5 @@
 [#ftl]
-[@b.xhtmlhead]
-[@sj.head /]
-[/@]
-[@sj.div href="provider!search.action" id="provider_div"/]
+[@b.head/]
+[@sj.div href="${b.url('provider!search')}" id="provider_div"/]
 <div id="datasource_div"></div>
-[#include "/template/foot.ftl"/]
+[@b.foot/]

@@ -1,9 +1,8 @@
 [#ftl]
-[@b.xhtmlhead title="Login"/]
-
+[@b.head title="Login"/]
 <script type="text/javascript" src="${base}/static/scripts/common/OnReturn.js"></script>
 <script type="text/javascript">
-	if(this.parent!=this){ this.top.location="loginForm.action"; }
+	if(this.parent!=this){ this.top.location="${b.url('login')}"; }
 </script>
 [#if ((Session['loginFailureCount'])?default(0)>1)][#assign needCaptcha=true][#else][#assign needCaptcha=false][/#if]
 <div style="text-align:center;margin-top:150px;border:4px">权限系统</div>
@@ -27,7 +26,7 @@
 		<tr>
 			<td><label for="captcha"><strong>验证码:</strong></label></td>
 			<td align="right"><input id="captcha" name="captcha"  tabindex="3" type="text" style="width:85px;background-color:#B0B0B0"/>
-			<img src="captcha/image.action" title="验证码,点击更换一张" onclick="changeCaptcha(this)" alt="验证码" width="60" height="25" style="vertical-align:top;"/></td>
+			<img src="${b.url('captcha/image')}" title="验证码,点击更换一张" onclick="changeCaptcha(this)" alt="验证码" width="60" height="25" style="vertical-align:top;"/></td>
 		</tr>
 		[/#if]
 		<tr>
@@ -40,7 +39,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="3" align="right"><a href="#" onclick="window.open('password.action?method=resetPassword', 'new', 'toolbar=no,top=250,left=250,location=no,directories=no,statue=no,menubar=no,resizable=no,scrollbars=no,width=400,height=200')">取回密码</a></td>
+			<td colspan="3" align="right"><a href="#" onclick="window.open('${b.url('password!resetPassword')}', 'new', 'toolbar=no,top=250,left=250,location=no,directories=no,statue=no,menubar=no,resizable=no,scrollbars=no,width=400,height=200')">取回密码</a></td>
 		</tr>
 	</table>
 	[/@]
@@ -77,8 +76,8 @@
 		var timenow = new Date().getTime();
 		//每次请求需要一个不同的参数，否则可能会返回同样的验证码
 		//这和浏览器的缓存机制有关系，也可以把页面设置为不缓存，这样就不用这个参数了。
-		obj.src="captcha/image.action?d="+timenow;
+		obj.src="${b.url('captcha/image')}?d="+timenow;
 	}
 </script>
 
-[#include "/template/foot.ftl"/]
+[@b.foot/]

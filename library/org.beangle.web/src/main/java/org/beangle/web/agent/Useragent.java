@@ -4,16 +4,20 @@
  */
 package org.beangle.web.agent;
 
+import java.io.Serializable;
+
 /**
  * @author chaostone
  * @version $Id: Useragent.java Nov 15, 2010 7:39:29 AM chaostone $
  */
-public class Useragent {
+public class Useragent implements Serializable {
+
+	private static final long serialVersionUID = 367387526753100612L;
 
 	private final String ip;
 
 	private final Os os;
-	
+
 	private final Browser browser;
 
 	public Useragent(String ip, Browser browser, Os os) {

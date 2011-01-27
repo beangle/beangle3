@@ -1,5 +1,5 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.head/]
 
 <table  width="100%" height="20" >
   <tr>
@@ -7,7 +7,7 @@
 	  <span class="contentTableTitleTextStyle">
 	   <font color="red">[@s.actionerror/]</font>
 	  </span><br/><br/>
-	  [<a href="javascript:history.back();"> [@b.text name="attr.backPage"/]</a>]
+	  [<a href="javascript:history.back();"> ${b.text("attr.backPage")}</a>]
 	  [<a href="javascript:displayStactTrace()">显示日志</a>]
 	</td>
   </tr>
@@ -42,4 +42,4 @@ function displayStactTrace(){
 }
 </script>
 
-[#include "/template/foot.ftl"/]
+[@b.foot/]

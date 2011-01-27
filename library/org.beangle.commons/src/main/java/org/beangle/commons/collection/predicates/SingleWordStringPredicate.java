@@ -5,12 +5,12 @@
 package org.beangle.commons.collection.predicates;
 
 import org.apache.commons.collections.Predicate;
-import org.beangle.commons.lang.SeqStrUtils;
+import org.beangle.commons.lang.StrUtils;
 
 public class SingleWordStringPredicate implements Predicate {
 
 	public boolean evaluate(final Object str) {
-		return (str instanceof String) && (((String) str).indexOf(SeqStrUtils.DELIMITER) == -1);
+		return (str instanceof String) && (((String) str).indexOf(StrUtils.DELIMITER) == -1);
 	}
 
 }

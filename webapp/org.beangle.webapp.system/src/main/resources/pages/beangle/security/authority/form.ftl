@@ -1,5 +1,5 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.head/]
 [#include "../status.ftl"/]
 <script  type="text/javascript" src="static/scripts/validator.js"></script>
 <link href="${base}/static/css/tableTree.css" rel="stylesheet" type="text/css"/>
@@ -10,8 +10,8 @@
 	   return(getCheckBoxValue(document.getElementsByName("menuId")));
 	}
 	function save(){
-		document.actionForm.action="authority.action?method=save";
-		if(confirm("[@b.text name="alert.authoritySave" arg0="${ao.name}"/]")){
+		document.actionForm.action="${b.url('!save')}";
+		if(confirm("${b.text("alert.authoritySave",ao.name)}")){
 		   document.actionForm.submit();
 		}
 	}
@@ -21,14 +21,13 @@
   <table width="90%" align="center">
   <tr>
   <td valign="top">
-  <table id="authorityBar"></table>
+[@b.toolbar id="authorityBar"]
+	bar.setTitle("[@b.a href="group"]用户组[/@]-->菜单和资源权限");
+	bar.addItem("${b.text("action.spread")}","displayAllRowsFor(2);",'contract.gif');
+	bar.addItem("${b.text("action.collapse")}","collapseAllRowsFor(2);",'expand.gif');
+	bar.addItem("${b.text("action.save")}",save,'save.gif');
+[/@]
   <script type="text/javascript">
-	var bar = bg.ui.toolbar('authorityBar','<a href="group.action">用户组</a>->菜单和资源权限');
-	bar.setMessage('[@b.messages/]');
-	bar.addItem("[@b.text name="action.spread"/]","displayAllRowsFor(2);f_frameStyleResize(self)",'contract.gif');
-	bar.addItem("[@b.text name="action.collapse"/]","collapseAllRowsFor(2);f_frameStyleResize(self)",'expand.gif');
-	bar.addItem("[@b.text  "action.save"/]",save,'save.gif');
-
    function selectListen(targetId){
    	var tempTarget ;
    	tempTarget = document.getElementById(targetId);
@@ -47,7 +46,7 @@
   </script>
 
   <table width="100%" class="searchTable" id="meunAuthorityTable">
-	<form name="actionForm" method="post" action="authority!edit.action" onsubmit="return false;">
+	<form name="actionForm" method="post" action="${b.url('!edit')}" onsubmit="return false;">
 	   <tr>
 		<td>
 		用户组:<select name="group.id" onchange="this.form.submit()" style="width:150px">
@@ -73,10 +72,10 @@
   <tbody>
   <tr class="thead">
 	<th width="6%"><input type="checkbox" onclick="treeToggleAll(this)"/></th>
-	<th width="34%">[@b.text name="common.name"/]</th>
-	<th width="13%">[@b.text name="common.id"/]</th>
+	<th width="34%">${b.text("common.name")}</th>
+	<th width="13%">${b.text("common.id")}</th>
 	<th width="40%">可用资源</th>
-	<th width="6%">[@b.text name="common.status"/]</th>
+	<th width="6%">${b.text("common.status")}</th>
   </tr>
 	[#macro i18nTitle(entity)][#if locale.language?index_of("en")!=-1][#if entity.engTitle!?trim==""]${entity.title!}[#else]${entity.engTitle!}[/#if][#else][#if entity.title!?trim!=""]${entity.title!}[#else]${entity.engTitle!}[/#if][/#if][/#macro]
 	[#list menus?sort_by("code") as menu]
@@ -99,7 +98,7 @@
 		   [#if menu.children?size==0]
 		   <a href="#" class="doc"></a>[#rt]
 		   [#else]
-		   <a href="#" class="folder" onclick="toggleRows(this);f_frameStyleResize(self)"></a>[#rt]
+		   <a href="#" class="folder" onclick="toggleRows(this);"></a>[#rt]
 		   [/#if]
 			 [@i18nTitle menu/]
 		</div>
@@ -110,7 +109,7 @@
 	   	   [#if resources?seq_contains(resource)]
 	   	   <input type="checkbox" name="resourceId" id="checkbox_${menu_index}_${resource_index}" [#if aoResources?seq_contains(resource)]checked="checked"[/#if] value="${resource.id}">[#rt]
 		   [#if ((resource.objects?size)>0)&&aoResources?seq_contains(resource)]
-		   <a href="restriction.action?method=info&forEdit=1&restrictionType=authority&restriction.holder.id=${aoResourceAuthorityMap[resource.id?string]}" target="restictionFrame" ><font color="red">${resource.title}</font></a>[#rt]
+		   [@b.a href="restriction!info?forEdit=1&restrictionType=authority&restriction.holder.id=${aoResourceAuthorityMap[resource.id?string]}" target="restictionFrame" ]<font color="red">${resource.title}</font>[/@][#rt]
 		   [#else][#lt]${resource.title}[/#if]
 	   	   [/#if]
 	   	   [#if resource_index%2==1]<br/>[/#if]
@@ -125,11 +124,11 @@
 </div>
    </td>
    <td id="dataRealmTD" style="width:300px" valign="top" >
-	 <iframe  src="restriction.action?method=tip" id="restictionFrame" name="restictionFrame"
+	 <iframe  src="${b.url('restriction!tip')}" id="restictionFrame" name="restictionFrame"
 	  marginwidth="0" marginheight="0"
 	  scrolling="no" 	 frameborder="0"  height="100%" width="100%"></iframe>
 	</td>
    </tr>
   </table>
  
-[#include "/template/foot.ftl"/]
+[@b.foot/]

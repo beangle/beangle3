@@ -8,12 +8,12 @@ import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.lang.StrUtils;
+import org.beangle.commons.text.inflector.Pluralizer;
+import org.beangle.commons.text.inflector.lang.en.EnNounPluralizer;
 import org.hibernate.AssertionFailure;
 import org.hibernate.cfg.DefaultNamingStrategy;
 import org.hibernate.cfg.NamingStrategy;
 import org.hibernate.util.StringHelper;
-import org.jvnet.inflector.Pluralizer;
-import org.jvnet.inflector.lang.en.NounPluralizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +32,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 */
 	private boolean enablePluralize = true;
 
-	private Pluralizer pluralizer = new NounPluralizer();
+	private Pluralizer pluralizer = new EnNounPluralizer();
 
 	private TableNameConfig tableNameConfig;
 

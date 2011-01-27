@@ -6,7 +6,7 @@ package org.beangle.db.replication;
 
 import java.util.List;
 
-import org.beangle.db.meta.TableMetadata;
+import org.beangle.db.meta.Table;
 
 public interface DataWrapper {
 	/**
@@ -23,7 +23,7 @@ public interface DataWrapper {
 	 * @param table
 	 * @return
 	 */
-	public List<Object> getData(TableMetadata tableMetadata);
+	public List<Object> getData(Table tableMetadata);
 
 	/**
 	 * 插入单独表的数据
@@ -32,7 +32,7 @@ public interface DataWrapper {
 	 * @param data
 	 * @return 返回成功数量
 	 */
-	public int pushData(TableMetadata tableMetadata, List<Object> data);
+	public int pushData(Table tableMetadata, List<Object> data);
 
 	/**
 	 * 关闭数据链接
@@ -45,6 +45,6 @@ public interface DataWrapper {
 	 * @param table
 	 * @return
 	 */
-	public int count(TableMetadata table);
+	public int count(Table table);
 
 }

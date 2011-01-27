@@ -1,5 +1,5 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.head/]
 
 <table  width="100%" >
 	<tr>
@@ -15,9 +15,7 @@
    </tr>
    <tr>
 	 <td id="errorTD"><font color="green">
-	  [#if ctrlMsg??]
-		 [@b.text name="${ctrlMsg}"/]&nbsp;
-	  [/#if]
+	  [#if ctrlMsg??]${b.text(ctrlMsg)}&nbsp;[/#if]
 	  </font>
 	  </td>
    </tr>
@@ -30,4 +28,4 @@
 		setTimeout("window.close()",2000);
 	}
 </script>
-[#include "/template/foot.ftl"/]
+[@b.foot/]

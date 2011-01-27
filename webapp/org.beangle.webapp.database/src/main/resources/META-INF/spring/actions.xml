@@ -3,13 +3,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<bean name="database.sql" scope="prototype"
-	 class="org.beangle.webapp.database.action.SqlAction" 
-	    autowire="byName">
-	</bean>
-	
-	<bean name="database.connection" scope="prototype"
-	 class="org.beangle.webapp.database.action.ConnectionAction" 
+	<bean name="database.query" scope="prototype"
+	 class="org.beangle.webapp.database.action.QueryAction" 
 	    autowire="byName">
 	</bean>
 	
@@ -23,5 +18,15 @@
 	 class="org.beangle.webapp.database.action.ProviderAction" 
 	    autowire="byName">
 	    <property name="entityName" value="org.beangle.webapp.database.model.DatasourceProviderBean"/>
+	</bean>
+	
+	<bean name="database.browser" scope="prototype"
+	 class="org.beangle.webapp.database.action.BrowserAction" 
+	    autowire="byName">
+	</bean>
+	
+	<bean name="database.index" scope="prototype"
+	 class="org.beangle.webapp.database.action.IndexAction" 
+	    autowire="byName">
 	</bean>
 </beans>

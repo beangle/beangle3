@@ -1,9 +1,6 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.head/]
 <link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css"/>
-[@sj.head /]
-
-
   <style type="text/css">
 	.column {
 		width: 600px;
@@ -30,7 +27,7 @@
   <script type="text/javascript">
    var bar = bg.ui.toolbar('userInfoBar','我最近的登录情况');
    bar.setMessage('[@b.messages/]');
-   bar.addClose("[@b.text name="action.close"/]");
+   bar.addClose("${b.text("action.close")}");
 
    function _wi_tm(moudleId){
 	   var id= document.getElementById(moudleId);
@@ -48,4 +45,4 @@
 	});
   </script>
  
-[#include "/template/foot.ftl"/]
+[@b.foot/]

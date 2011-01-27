@@ -8,12 +8,28 @@ public interface Dialect {
 
 	public SequenceSupport getSequenceSupport();
 
-	String getTypeName(int typecode, int size, int precision, int scale);
+	public String getTypeName(int typecode, int size, int precision, int scale);
 
-	String getTypeName(int typecode);
+	public String getTypeName(int typecode);
 
-	String getCreateTableString();
+	public String getCreateTableString();
 
-	String getLimitString(String sql, boolean hasOffset);
+	public String getLimitString(String sql, boolean hasOffset);
 
+	public String getAddForeignKeyConstraintString(String constraintName, String[] foreignKey,
+			String referencedTable, String[] primaryKey, boolean referencesPrimaryKey);
+
+	public boolean supportsCascadeDelete();
+
+	public String getNullColumnString();
+
+	public String getTableComment(String comment);
+
+	public String getColumnComment(String comment);
+
+	public boolean supportsUnique();
+
+	public boolean supportsNullUnique();
+	
+	public boolean supportsColumnCheck();
 }

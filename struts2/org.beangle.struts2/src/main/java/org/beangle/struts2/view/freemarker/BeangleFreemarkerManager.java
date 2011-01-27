@@ -127,7 +127,6 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 				if (iter.hasNext()) sb.append('\n');
 			}
 			logger.info("Freemarker properties: ->\n{} ", sb);
-			this.config.setSharedVariable("pagechecker", new PageChecker());
 		} catch (IOException e) {
 			logger.error("Error while loading freemarker.properties", e);
 		} catch (TemplateException e) {

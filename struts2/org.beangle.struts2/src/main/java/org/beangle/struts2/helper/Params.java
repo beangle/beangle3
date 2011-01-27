@@ -14,7 +14,7 @@ import com.opensymphony.xwork2.ActionContext;
 
 public class Params {
 
-	static final MapConverter converter = new MapConverter(Converter.getDefault());
+	public static final MapConverter converter = new MapConverter(Converter.getDefault());
 
 	public static Map<String, Object> getParams() {
 		return ActionContext.getContext().getParameters();
@@ -34,6 +34,10 @@ public class Params {
 
 	public static Object[] getAll(String attr) {
 		return converter.getAll(getParams(), attr);
+	}
+
+	public static <T> T[] getAll(String attr, Class<T> clazz) {
+		return converter.getAll(getParams(), attr, clazz);
 	}
 
 	public static boolean getBool(String name) {

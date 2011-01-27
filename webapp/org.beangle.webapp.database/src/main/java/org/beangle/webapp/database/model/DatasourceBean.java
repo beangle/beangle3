@@ -14,6 +14,8 @@ import org.beangle.model.pojo.LongIdObject;
  */
 public class DatasourceBean extends LongIdObject {
 	
+	private static final long serialVersionUID = -6769975441732211022L;
+
 	private DatasourceProviderBean provider;
 	
 	private String name;
@@ -24,7 +26,7 @@ public class DatasourceBean extends LongIdObject {
 	
 	private String password;
 	
-	private String diverClassName;
+	private String driverClassName;
 	
 	private Set<DatasourcePropertyBean> properties;
 
@@ -60,12 +62,12 @@ public class DatasourceBean extends LongIdObject {
 		this.password = password;
 	}
 
-	public String getDiverClassName() {
-		return diverClassName;
+	public String getDriverClassName() {
+		return driverClassName;
 	}
 
-	public void setDiverClassName(String diverClassName) {
-		this.diverClassName = diverClassName;
+	public void setDriverClassName(String driverClassName) {
+		this.driverClassName = driverClassName;
 	}
 
 	public Set<DatasourcePropertyBean> getProperties() {

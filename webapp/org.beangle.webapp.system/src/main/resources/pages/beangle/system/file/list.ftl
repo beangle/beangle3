@@ -4,13 +4,13 @@
 	<tr>
 	  <td colspan="3">
 		  <img src="${base}/static/icons/beangle/48x48/actions/go-up.png" width="18px" height="18px"/>
-		  [@sj.a id="action_parent" href="${base}/system/file!list.action?path=${(path?js_string)!}.." targets="filelist"]上级目录[/@sj.a]
+		  [@sj.a id="action_parent" href="${b.url('!list')}?path=${(path?js_string)!}.." targets="filelist"]上级目录[/@sj.a]
 		  <img src="${base}/static/icons/beangle/48x48/actions/go-home.png" width="18px" height="18px"/>
-		  [@sj.a id="action_home" href="${base}/system/file!list.action" targets="filelist"]home[/@]
+		  [@sj.a id="action_home" href="${b.url('!list')}" targets="filelist"]home[/@]
 		  [#--<img src="${base}/static/icons/beangle/48x48/actions/folder-new.png" width="18px" height="18px"/]
 		  [@sj.a id="action_newFolder" formId="pathForm" targets="filelist"]创建目录[/@]
 		  <img src="${base}/static/images/action/new.gif"/>
-		  [@sj.a id="action_newFile"  href="${base}/system/file!newFile.action" targets="filelist"]创建文件[/@]
+		  [@sj.a id="action_newFile"  href="${b.url('!newFile')}" targets="filelist"]创建文件[/@]
 		  <img src="${base}/static/icons/beangle/48x48/actions/edit-delete.png" width="18px" height="18px"/><a href="?"/>删除</a>
 		  <img src="${base}/static/icons/beangle/48x48/actions/edit-rename.png" width="18px" height="18px"/><a href="?"/>重命名</a>
 		  <img src="${base}/static/icons/beangle/48x48/actions/edit-copy.png" width="18px" height="18px"/><a href="?"/>复制</a>
@@ -34,13 +34,13 @@
 		<td class="file-name">
 			[#if file.file]
 			<img src="${base}/static/icons/beangle/48x48/mimetypes/${mimeType.getMimeType(file)}.png" width="18px" heigth="18px"/>
-			[#if mimeType.isTextType(file)][@sj.a href="${base}/system/file!download.action?path=${file.absolutePath?url}"  targets="filelist" title="download"]${file.name}[/@]
+			[#if mimeType.isTextType(file)][@sj.a href="${b.url('!download')}?path=${file.absolutePath?url}"  targets="filelist" title="download"]${file.name}[/@]
 			[#else]
-			<a href="${base}/system/file!download.action?path=${file.absolutePath?url}"  title="download">${file.name}</a>
+			<a href="${b.url('!download')}?path=${file.absolutePath?url}"  title="download">${file.name}</a>
 			[/#if]
 			[#else]
 			<img src="${base}/static/icons/beangle/22x22/places/folder.png" width="18px" height="18px"/>
-			[@sj.a id="file${file_index}" href="${base}/system/file!list.action?path=${file.absolutePath?url}" targets="filelist"]${file.name}[/@sj.a]
+			[@sj.a id="file${file_index}" href="${b.url('!list')}?path=${file.absolutePath?url}" targets="filelist"]${file.name}[/@sj.a]
 			[/#if]
 		</td>
 		<td align="right">[#if file.file]${file.length()/1024}KB[/#if]</td>

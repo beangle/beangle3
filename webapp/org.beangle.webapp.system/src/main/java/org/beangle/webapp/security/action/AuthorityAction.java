@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.lang.SeqStrUtils;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.entity.Model;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.blueprint.Authority;
@@ -155,7 +155,7 @@ public class AuthorityAction extends SecurityActionSupport {
 		MenuProfile menuProfile = (MenuProfile) entityDao.get(MenuProfile.class,
 				getLong("menuProfileId"));
 		Set<Resource> newResources = CollectUtils.newHashSet(entityDao.get(Resource.class,
-				SeqStrUtils.transformToLong(get("resourceId"))));
+				StrUtils.splitToLong(get("resourceId"))));
 
 		// 管理员拥有的菜单权限和系统资源
 		User manager = getUser();

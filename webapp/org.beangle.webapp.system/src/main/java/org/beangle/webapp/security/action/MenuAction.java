@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.lang.SeqStrUtils;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.Entity;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.blueprint.Authority;
@@ -50,8 +50,7 @@ public class MenuAction extends SecurityActionSupport {
 			List<Resource> resources = CollectUtils.newArrayList();
 			String resourceIdSeq = get("resourceIds");
 			if (null != resourceIdSeq && resourceIdSeq.length() > 0) {
-				resources = entityDao.get(Resource.class,
-						SeqStrUtils.transformToLong(resourceIdSeq));
+				resources = entityDao.get(Resource.class, StrUtils.splitToLong(resourceIdSeq));
 			}
 			menu.getResources().clear();
 			menu.getResources().addAll(resources);
@@ -73,7 +72,7 @@ public class MenuAction extends SecurityActionSupport {
 	 */
 	public String activate() {
 		String menuIdSeq = get("menuIds");
-		Long[] menuIds = SeqStrUtils.transformToLong(menuIdSeq);
+		Long[] menuIds = StrUtils.splitToLong(menuIdSeq);
 		Boolean enabled = getBoolean("isActivate");
 		if (null == enabled) {
 			enabled = Boolean.TRUE;

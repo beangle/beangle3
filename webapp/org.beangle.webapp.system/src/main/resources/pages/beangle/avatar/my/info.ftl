@@ -1,7 +1,5 @@
 [#ftl]
-[@b.xhtmlhead/]
-<html>
- 
+[@b.head/]
 <table width="100%">
 	<tr>
 	  <td class="infoTitle" width="20%" style="height:22px;">
@@ -19,7 +17,7 @@
    </tr>
 	<tr>
 	  <td>
-		  <img src="${base}/avatar/my.action" width="100px" align="top"/>
+		  <img src="${b.url('my')}" width="100px" align="top"/>
 	  </td>
 	  <td width="95%">
 		 用户名:${user.name}<br/>
@@ -34,4 +32,4 @@
    </tr>
 </table>
 
-[#include "/template/foot.ftl"/]
+[@b.foot/]

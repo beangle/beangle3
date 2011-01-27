@@ -12,11 +12,12 @@
 		<property name="url" length="300" />
 		<property name="username" length="50" />
 		<property name="password" length="100" />
-		<property name="diverClassName" length="100" />
+		<property name="driverClassName" length="100" />
 		<set name="properties" inverse="true" cascade="all">
 			<key column="source_id"/>
 			<one-to-many class="DatasourcePropertyBean"/>
 		</set>
+		<many-to-one name="provider" not-null="true"/>
 	</class>
 	
 </hibernate-mapping>

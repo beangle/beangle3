@@ -1,5 +1,5 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.head/]
  <link href="${base}/static/css/tab.css" rel="stylesheet" type="text/css"/>
  <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
  <script  type="text/javascript" src="${base}/static/scripts/tabpane.js"></script>
@@ -14,7 +14,7 @@
  </script>
  
  <table id="restrictionBar"></table>
-  <form name="restrictionForm" method="post" action="restriction.action?method=save">
+  <form name="restrictionForm" method="post" action="${b.url('!save')}">
 	<input type="hidden" name="restriction.id" value="${restriction.id!}"/>
 	<input type="hidden" name="restrictionType" value="${Parameters['restrictionType']}"/>
 	<input type="hidden" name="restriction.paramGroup.id" value="${restriction.paramGroup.id}"/>
@@ -38,9 +38,9 @@
 		[/#if]
 	   [#if param.editor??]
 	   [@b.grid width="100%"]
-		 [@b.gridhead]
+		 [@b.row]
 			 [@b.selectAllTh name="${param.name}"/]
-			 [@b.gridth text="可选值"/]
+			 [@b.col name="可选值"/]
 		 [/@]
 		 [@b.gridbody datas=mngParams[param.name];value]
 			<td width="10%"><input type="checkbox" name="${param.name}" [#if aoParams[param.name]!?seq_contains(value)]checked="checked"[/#if] value="${value["${param.editor.idProperty}"]}"]</td>
@@ -60,9 +60,9 @@
 <script type="text/javascript">
    var bar = bg.ui.toolbar('restrictionBar','数据权限');
    bar.setMessage('[@b.messages/]');
-   bar.addItem("[@b.text name="action.save"/]",save,'save.gif');
+   bar.addItem("${b.text("action.save")}",save,'save.gif');
    bar.addBack();
  </script>
  
-[#include "/template/foot.ftl"/]
+[@b.foot/]
 

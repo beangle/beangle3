@@ -71,7 +71,6 @@
         <webClassPathEntry>M2_REPO/javax/transaction/jta/1.1/jta-1.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/mockobjects/mockobjects-core/0.09/mockobjects-core-0.09.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/mockobjects/mockobjects-jdk1.4/0.09/mockobjects-jdk1.4-0.09.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/net/java/dev/inflector/inflector/0.7.0/inflector-0.7.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/net/sf/ehcache/ehcache-core/2.3.0/ehcache-core-2.3.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/net/sf/jxls/jxls-core/0.9.9/jxls-core-0.9.9.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/ognl/ognl/3.0/ognl-3.0.jar</webClassPathEntry>

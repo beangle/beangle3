@@ -1,25 +1,14 @@
 [#ftl]
-[@b.grid width="100%"  id="sessionActivityListTable" target="sessionActivityResult"]
-	[@b.gridhead]
-		[@b.gridth width="5%" text="序号"/]
-		[@b.gridth width="20%" text="登录名(姓名)" sort="sessionActivity.name"/]
-		[@b.gridth width="15%" text="登录时间"  sort="sessionActivity.loginAt"/]
-		[@b.gridth width="15%" text="退出时间" sort="sessionActivity.logoutAt"/]
-		[@b.gridth width="10%" text="在线时间" sort="sessionActivity.onlineTime"/]
-		[@b.gridth text="ip" sort="sessionActivity.host"/]
-		[@b.gridth text="操作系统" sort="sessionActivity.os"/]
-		[@b.gridth text="用户代理" sort="sessionActivity.agent"/]
-		[@b.gridth text="备注"/]
-	[/@]
-	[@b.gridbody datas=sessionActivitys;sessionActivity,sessionActivity_index]
-		<td>${sessionActivity_index+1}</td>
-		<td>${sessionActivity.name}(${sessionActivity.fullname})</td>
-		<td>${sessionActivity.loginAt?string("yy-MM-dd HH:mm")}</td>
-		<td>${sessionActivity.logoutAt?string("yy-MM-dd HH:mm")}</td>
-		<td>${(sessionActivity.onlineTime/60000)?int}分${(sessionActivity.onlineTime/1000)%60}秒</td>
-		<td>${sessionActivity.host}</td>
-		<td>${sessionActivity.os!}</td>
-		<td>${sessionActivity.agent!}</td>
-		<td>${sessionActivity.remark!('')}</td>
+[@b.grid width="100%" datas=sessionActivitys var="sessionActivity" id="sessionActivityListTable" target="sessionActivityResult" sortable="true"]
+	[@b.row]
+		[@b.col width="5%" name="序号"]${sessionActivity_index+1}[/@]
+		[@b.col width="20%" name="登录名(姓名)" property="name"]${sessionActivity.name}(${sessionActivity.fullname})[/@]
+		[@b.col width="15%" name="登录时间"  property="loginAt"]${sessionActivity.loginAt?string("yy-MM-dd HH:mm")}[/@]
+		[@b.col width="15%" name="退出时间" property="logoutAt"]${sessionActivity.logoutAt?string("yy-MM-dd HH:mm")}[/@]
+		[@b.col width="10%" name="在线时间" property="onlineTime"]${(sessionActivity.onlineTime/60000)?int}分${(sessionActivity.onlineTime/1000)%60}秒[/@]
+		[@b.col name="ip" property="host"/]
+		[@b.col name="操作系统" property="os"/]
+		[@b.col name="用户代理" property="agent"/]
+		[@b.col name="备注" property="remark"/]
 	[/@]
 [/@]

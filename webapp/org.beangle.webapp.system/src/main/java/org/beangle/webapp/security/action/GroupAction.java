@@ -7,7 +7,7 @@ package org.beangle.webapp.security.action;
 import java.sql.Date;
 import java.util.List;
 
-import org.beangle.commons.lang.SeqStrUtils;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.Entity;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.model.transfer.exporter.PropertyExtractor;
@@ -81,8 +81,7 @@ public class GroupAction extends SecurityActionSupport {
 	public String remove() {
 		String groupIdSeq = get("groupIds");
 		User curUser = userService.get(getUserId());
-		List<Group> toBeRemoved = entityDao.get(Group.class,
-				SeqStrUtils.transformToLong(groupIdSeq));
+		List<Group> toBeRemoved = entityDao.get(Group.class, StrUtils.splitToLong(groupIdSeq));
 		userService.removeGroup(curUser, toBeRemoved);
 		return redirect("search", "info.delete.success");
 	}

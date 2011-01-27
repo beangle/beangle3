@@ -12,7 +12,7 @@
 			</thead>
 			[#list javaProps?keys?sort as key]
 			<tr>
-				<td>[@b.text name=key/]</td>
+				<td>${b.text(key)}</td>
 				<td>${javaProps[key]}</td>
 			</tr>
 			[/#list]
@@ -26,7 +26,7 @@
 			</thead>
 			[#list osProps?keys?sort as key]
 			<tr>
-				<td>[@b.text name=key/]</td>
+				<td>${b.text(key)}</td>
 				<td>${osProps[key]}</td>
 			</tr>
 			[/#list]
@@ -41,7 +41,7 @@
 			</tr>
 			[#list userProps?keys?sort as key]
 			<tr>
-				<td>[@b.text name=key/]</td>
+				<td>${b.text(key)}</td>
 				<td>${userProps[key]}</td>
 			</tr>
 			[/#list]
@@ -55,7 +55,7 @@
 			</thead>
 			[#list extraProps?keys?sort as key]
 			<tr>
-				<td>[@b.text name=key/]</td>
+				<td>${b.text(key)}</td>
 				<td>${extraProps[key]}</td>
 			</tr>
 			[/#list]

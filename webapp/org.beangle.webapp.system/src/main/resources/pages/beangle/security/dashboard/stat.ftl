@@ -5,16 +5,11 @@
 	<a href="#" class="toggle" onclick="_wi_tm('userStat');">用户统计</a>
 	</h2>
 	<div class="modulebody">
-	[@b.grid width="94%" id="userStatTable"]
-		[@b.gridhead]
-			[@b.gridth width="35%" text="类别"/]
-			[@b.gridth width="10%" text="状态"/]
-			[@b.gridth width="15%" text="数量"/]
-		[/@]
-		[@b.gridbody datas=groupStat;stat]
-			<td>${categories.get(stat[0]).name}</td>
-			<td>${stat[1]?string("激活","禁用")}</td>
-			<td>${stat[2]}</td>
+	[@b.grid  datas=groupStat var="stat" width="94%" id="userStatTable"]
+		[@b.row]
+			[@b.col width="35%" name="类别"]${categories.get(stat[0]).name}[/@]
+			[@b.col width="10%" name="状态"]${stat[1]?string("激活","禁用")}[/@]
+			[@b.col width="15%" name="数量"]${stat[2]}[/@]
 		[/@]
 	[/@]
 	</div>
@@ -25,16 +20,11 @@
 		<a href="#" class="toggle" onclick="_wi_tm('groupStat');">用户组统计</a>
 	</h2>
 	<div class="modulebody">
-	[@b.grid width="94%" id="groupStatTable"]
-		[@b.gridhead]
-			[@b.gridth width="35%" text="类别"/]
-			[@b.gridth width="10%" text="状态"/]
-			[@b.gridth width="15%" text="数量"/]
-		[/@]
-		[@b.gridbody datas=groupStat;stat]
-			<td>${categories.get(stat[0]).name}</td>
-			<td>${stat[1]?string("激活","禁用")}</td>
-			<td>${stat[2]}</td>
+	[@b.grid width="94%" datas=groupStat var="stat" id="groupStatTable"]
+		[@b.row]
+			[@b.col width="35%" name="类别"]${categories.get(stat[0]).name}[/@]
+			[@b.col width="10%" name="状态"]${stat[1]?string("激活","禁用")}[/@]
+			[@b.col width="15%" name="数量"]${stat[2]}[/@]
 		[/@]
 	[/@]
 	</div>
@@ -45,14 +35,10 @@
 		<a href="#" class="toggle" onclick="_wi_tm('resource');">系统资源</a>
 	</h2>
 	<div class="modulebody">
-	[@b.grid width="94%" id="resourceStat"]
-		[@b.gridhead]
-			[@b.gridth width="10%" text="状态"/]
-			[@b.gridth width="15%" text="资源数"/]
-		[/@]
-		[@b.gridbody datas=resourceStat;stat]
-			<td>${stat[0]?string("激活","禁用")}</td>
-			<td>${stat[1]}</td>
+	[@b.grid width="94%" datas=resourceStat var="stat" id="resourceStat"]
+		[@b.row]
+			[@b.col width="10%" name="状态"]${stat[0]?string("激活","禁用")}[/@]
+			[@b.col width="15%" name="资源数"]${stat[1]}[/@]
 		[/@]
 	[/@]
 	</div>
@@ -63,19 +49,11 @@
 		<a href="#" class="toggle" onclick="_wi_tm('menu');">菜单设置</a>
 	</h2>
 	<div class="modulebody">
-		[@b.grid width="94%" id="menuStatTable"]
-			[@b.gridhead]
-				[@b.gridth width="30%" text="类别"/]
-				[@b.gridth width="10%" text="状态"/]
-				[@b.gridth width="15%" text="菜单数"/]
+		[@b.grid width="94%" id="menuStatTable" datas=menuProfiles var="profile"]
+			[@b.row]
+				[@b.col width="30%" name="类别" property="name"/]
+				[@b.col width="10%" name="状态/菜单数"][#list menuStats.get(profile.id) as stat]${stat[0]?string("激活","禁用")}/${stat[1]}&nbsp;[/#list][/@]
 			[/@]
-		[#list menuProfiles as profile]
-			[@b.gridbody datas=menuStats.get(profile.id);stat]
-				<td>${profile.name}</td>
-				<td>${stat[0]?string("激活","禁用")}</td>
-				<td>${stat[1]}</td>
-			[/@]
-		[/#list]
 		[/@]
 	</div>
 </div>

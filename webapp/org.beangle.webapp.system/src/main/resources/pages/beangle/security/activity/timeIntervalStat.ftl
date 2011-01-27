@@ -1,16 +1,12 @@
 [#ftl]
-[@b.grid width="100%" ]
-	[@b.gridhead]
-		<td><b>时间段</b></td>
-		<td><b>登录次数</b></td>
-	[/@]
+[@b.grid width="100%" datas=logonStats var="logonStat"]
 	[#assign total=0]
-	[@b.gridbody datas=logonStats;logonStat]
-		<td align="center">${logonStat[0]}:00-${(logonStat[0]+1)%24}:00</td>
-		<td align="center">${logonStat[1]}</td>
+	[@b.row]
+		[@b.col name="时间段"]${logonStat[0]}:00-${(logonStat[0]+1)%24}:00[/@]
+		[@b.col name="登录次数"]${logonStat[1]}[/@]
 		[#assign total=total+logonStat[1]]
 	[/@]
-	<tr align="center">
+	<tr style="font-weight: bold;">
 		<td>合计</td>
 		<td>${total}</td>
 	</tr>

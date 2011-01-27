@@ -1,7 +1,8 @@
 [#ftl]
+<div id="profile_div">
 [@s.actionmessage theme="beangle"/]
 [@s.form name="profileForm" id="profileForm" theme="simple" action="monitor!saveProfile"]
-<table   width="50%">
+<table width="50%">
 	<tr>
 		<td colspan="5" align="center">
 		[#assign online=0][#assign max=0]
@@ -12,7 +13,7 @@
 		</td>
 	</tr>
 	<tr style="background-color:#e1e8f5">
-		<td>用户种类</td>
+		<td>用户种类${max}</td>
 		<td>在线</td>
 		<td>上限</td>
 		<td>过期时间</td>
@@ -29,7 +30,7 @@
 	[/#list]
 	<tr>
 		<td  colspan="5">注:最大会话数指单个用户同时在线数量&nbsp;&nbsp;
-		[@sj.submit type="button" targets="ui-tabs-2" label="提交" /]
+		[@sj.submit type="button" targets="profile_div" label="提交" /]
 		</td>
 	</tr>
 </table>
@@ -45,3 +46,4 @@
 		return true;
 	}
 </script>
+<div>

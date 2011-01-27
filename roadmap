@@ -1,0 +1,14 @@
+2011-1-20(beangle 2.1)
+	* 实现监控每个记录的访问时间和细节 ok
+	* 实现在线用户和访问记录 ok
+	* 记录在线用户记录os,useragent ok
+	* 更新菜单的code/parent 
+	* 实现数据权限
+	* implement group/parent relation in security
+	* better web browser support(xhtml1.0 transitional)
+	* remove unnessasery archiver code
+	* add inflector feature
+
+2010-2-20(beangle 2.2)
+	* better database query ui support.
+	

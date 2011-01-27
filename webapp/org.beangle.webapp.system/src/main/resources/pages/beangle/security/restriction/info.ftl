@@ -1,5 +1,5 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.head/]
  
  <table id="restrictionBar"></table>
  [#if (restrictions?size==0)]没有设置[/#if]
@@ -30,27 +30,27 @@
    bar.setMessage('[@b.messages/]');
    bar.addHelp();
    function edit(){
-	  self.location="restriction.action?method=edit&restriction.id=";
+	  self.location="${b.url('!edit')}?restriction.id=";
    }
    function add(patternId){
    		var form =document.actionForm;
    		addInput(form,"restriction.paramGroup.id",patternId);
-   		form.action="restriction.action?method=edit";
+   		form.action="${b.url('!edit')}";
    		form.submit();
    }
    function edit(restrictionId){
    		var form =document.actionForm;
    		addInput(form,"restriction.id",restrictionId);
-   		form.action="restriction.action?method=edit";
+   		form.action="${b.url('!edit')}";
    		form.submit();
    }
    function remove(restrictionId){
    		if(!confirm("确定删除?")) return;
    		var form =document.actionForm;
    		addInput(form,"restriction.id",restrictionId);
-   		form.action="restriction.action?method=remove";
+   		form.action="${b.url('!remove')}";
    		form.submit();
    }
  </script>
  
-[#include "/template/foot.ftl"/]
+[@b.foot/]

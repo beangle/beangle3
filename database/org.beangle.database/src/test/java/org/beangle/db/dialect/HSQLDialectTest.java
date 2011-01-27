@@ -6,8 +6,8 @@ package org.beangle.db.dialect;
 
 import java.util.Map;
 
-import org.beangle.db.meta.DatabaseMetadata;
-import org.beangle.db.meta.TableMetadata;
+import org.beangle.db.meta.Database;
+import org.beangle.db.meta.Table;
 import org.beangle.db.util.DataSourceUtil;
 import org.testng.annotations.BeforeClass;
 
@@ -18,17 +18,17 @@ public class HSQLDialectTest extends DialectTestCase {
 		// DatabaseMetadata(DataSourceUtil.getDataSource("oracle").getConnection(),
 		// new OracleDialect());
 		// meta.loadAllMetadata("EAMS_NEW",null,false);
-		meta = new DatabaseMetadata(DataSourceUtil.getDataSource("hsqldb").getConnection(),
-				new HSQLDialect());
-		meta.loadAllMetadata(null, null, false);
+		database = new Database(new HSQLDialect(), null, null);
+		database.loadTables(DataSourceUtil.getDataSource("hsqldb").getConnection().getMetaData(),
+				false);
 	}
 
 	public void testlistMetadata() {
-		listMetadata();
-		Map<String, TableMetadata> tables = meta.getTables();
-		for (Map.Entry<String, TableMetadata> entry : tables.entrySet()) {
-			TableMetadata m = entry.getValue();
-			log.info(m.genCreateSql(meta.getDialect()));
+		listTableAndSequences();
+		Map<String, Table> tables = database.getTables();
+		for (Map.Entry<String, Table> entry : tables.entrySet()) {
+			Table m = entry.getValue();
+			log.info(m.sqlCreateString(database.getDialect()));
 		}
 	}
 }

@@ -7,7 +7,7 @@ package org.beangle.webapp.security.action;
 import java.util.Collections;
 import java.util.List;
 
-import org.beangle.commons.lang.SeqStrUtils;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.Entity;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.blueprint.Authority;
@@ -37,7 +37,7 @@ public class ResourceAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String activate() {
-		Long[] resourceIds = SeqStrUtils.transformToLong(get("resourceIds"));
+		Long[] resourceIds = StrUtils.splitToLong(get("resourceIds"));
 		Boolean enabled = getBoolean("enabled");
 		if (null == enabled) {
 			enabled = Boolean.FALSE;
@@ -67,7 +67,7 @@ public class ResourceAction extends SecurityActionSupport {
 					"edit", "error.notUnique"); }
 		}
 
-		Long[] patternIds = SeqStrUtils.transformToLong(get("restrictObjectIds"));
+		Long[] patternIds = StrUtils.splitToLong(get("restrictObjectIds"));
 		List<RestrictObject> objects = Collections.emptyList();
 		if (null != patternIds) {
 			objects = entityDao.get(RestrictObject.class, patternIds);
@@ -77,7 +77,7 @@ public class ResourceAction extends SecurityActionSupport {
 
 		String categoryIds = get("categoryIds");
 		List<UserCategory> categories = entityDao.get(UserCategory.class,
-				SeqStrUtils.transformToLong(categoryIds));
+				StrUtils.splitToLong(categoryIds));
 		resource.getCategories().clear();
 		resource.getCategories().addAll(categories);
 

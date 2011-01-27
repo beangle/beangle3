@@ -11,4 +11,7 @@
 		<property name="dialect" ref="sqlDialect"/>
 	</bean>
 	
+	<bean name="datasourceService"	class="org.beangle.webapp.database.service.DatasourceService" 
+		autowire="byName">
+	</bean>
 </beans>

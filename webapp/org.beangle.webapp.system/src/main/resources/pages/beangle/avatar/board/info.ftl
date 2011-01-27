@@ -1,7 +1,5 @@
 [#ftl]
-[@b.xhtmlhead/]
-<html>
- 
+[@b.head/]
 <table width="100%">
 	<tr>
 	  <td class="infoTitle" width="20%" style="height:22px;">
@@ -19,7 +17,7 @@
    </tr>
 	<tr>
 	  <td>
-		  <img src="${base}/avatar/user.action?user.name=${user.name}" width="100px" align="top"/>
+		  <img src="${b.url('user')}?user.name=${user.name}" width="100px" align="top"/>
 	  </td>
 	  <td width="95%">
 		 用户名:${user.name}<br/>
@@ -46,7 +44,7 @@
 	 </tr>
 	 <tr>
 	  <td>
-		[@s.form name="uploadForm" action="/avatar/board!upload.action" method="POST"  enctype="multipart/form-data"]
+		[@s.form name="uploadForm" action="${b.url('!upload')}" method="POST"  enctype="multipart/form-data"]
 			<input type="hidden" name="user.name" value="${Parameters['user.name']}"/>
 			[@s.file name="avatar" label="文件目录"/][@s.submit value="提交" /]
 		[/@s.form]
@@ -55,4 +53,4 @@
    </table>
 
 
-[#include "/template/foot.ftl"/]
+[@b.foot/]

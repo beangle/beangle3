@@ -3,7 +3,7 @@ body{
 	margin-bottom: 0;
 	margin-left:0;
 	margin-right:0;
-	font-size: 1 em;
+	font-size: 13px;
 }
 
 a:link {
@@ -17,13 +17,15 @@ a:visited {
 a:hover {
 	color: red;
 }
+.grid{border-color:#006CB2;margin: 0px 0px 0px 0px ;}
 
+.gridempty{border:solid;border-width:1px;border-top-width:0px;border-color:#006CB2;}
 /* grid*/
-.grid {border-collapse: collapse;border:solid;border-width:1px;border-color:#006CB2;vertical-align: middle;}
+.gridtable {border-collapse: collapse;border:solid;border-width:1px;border-color:#006CB2;vertical-align: middle;}
 
-.grid td{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;}
+.gridtable td{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;}
 
-.grid th{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;}
+.gridtable th{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;}
 
 .gridselect{text-align:center;background-color: #e0ecff;width:3%;}
 
@@ -33,10 +35,25 @@ a:hover {
 
 .gridhead-item-desc{background-color: #308dbb;cursor:pointer;}
 
-.gridhead-item-sort{cursor:pointer;}
+.gridhead-sortable{cursor:pointer;}
 
-/*pagebar*/
-.pagebar{text-align: center;background-color: #c7dbff;border:solid;border-color:#006CB2;border-width:0px;border-right-width:1px;border-bottom-width:1px;border-left-width:1px;}
+.griddata{text-align:center;}
+
+.griddata-odd{text-align:center;text-decoration: none;letter-spacing:0;background-color: #EBEBEB;}
+
+.griddata-even{text-align:center;text-decoration: none;letter-spacing:0;background-color: white;}
+
+.griddata-selected{background-color: #BFFFBF;}
+
+.griddata-over{background-color: #BFFFBF;}
+
+.gridbar{height:22px;background-color: #c7dbff;border:solid;border-color:#006CB2;border-width:0px;}
+
+.gridbar-items{float:left;}
+
+.gridbar-pagebar{float:right;margin-top:2px;margin-right:5px;}
+
+.gridbar-pagebar-label{background-color:#e9f2f8;}
 
 /*toolbar*/
 .toolbar{height:22px;border-collapse:separate;}
@@ -51,21 +68,22 @@ a:hover {
 
 .toolbar-items{float:right;}
 
-.toolbar-item{float:left;padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:2px;cursor:pointer;}
+.toolbar-item{float:left;padding:2px 3px 2px 3px;cursor:pointer;}
 
-.toolbar-item-selected{background-color:#4791C5;float:left;padding-left:5px;padding-right:5px;padding-top:2px;padding-bottom:2px;cursor:pointer;}
+.toolbar-item-selected{background-color:#4791C5;float:left;padding:2px 3px 2px 3px;cursor:pointer;}
 
-.toolbar-item-transfer{float:left;padding-left:4px;padding-right:4px;padding-top:1px;padding-bottom:1px;background-color:#e9f2f8;border:1px solid #336699;cursor:pointer;}
+.toolbar-item-transfer{float:left;padding:1px 2px 1px 2px;background-color:#e9f2f8;border:1px solid #336699;cursor:pointer;}
 
 .toolbar-menu{margin-top:1px;margin-left:0px;background-color:#e9f2f8;visibility:hidden;position:absolute;z-index:100;padding:1px;overflow:visible;border:solid 1px #4791C5;white-space:nowrap;}
 
-.toolbar-menuitem{padding-left:2px;padding-right:2px;padding-top:1px;padding-bottom:1px;cursor:pointer;}
+.toolbar-menuitem{padding:1px 2px 1px 2px;cursor:pointer;}
 
-.toolbar-menuitem-transfer{background-color:#FFFFFF;padding-left:2px;padding-right:2px;padding-top:1px;padding-bottom:1px;cursor:pointer;}
+.toolbar-menuitem-transfer{background-color:#FFFFFF;padding:1px 2px 1px 2px;cursor:pointer;}
+
+.toolbar-group-separator{float:left;margin:0px 10px 0px 10px;}
 
 /* Message ------------------------------------------------
  * This is the style for the informational messages presented to the user */
-
 div.error, div.message {
 	background-color: #ECD83C;
 	border: 0px solid #000;

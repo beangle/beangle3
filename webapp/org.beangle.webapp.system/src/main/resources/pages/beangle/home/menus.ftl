@@ -6,7 +6,7 @@
 [#if !(displayed[menu.id?string]??)][#assign displayed=displayed+{menu.id?string:menu}/][#else][#return/][/#if]
 <li>
 [#if menu.entry??]
-<a href="${(menu.entry)!}" target="main">[@i18nNameTitle menu/]</a>
+[@sj.a href="${(menu.entry)!}" targets="main"][@i18nNameTitle menu/][/@]
 [#else]
 	[@i18nNameTitle menu/]
 	<ul style="padding-left: 20px;">

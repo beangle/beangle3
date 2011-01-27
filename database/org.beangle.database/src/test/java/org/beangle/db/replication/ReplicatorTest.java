@@ -20,24 +20,23 @@ public class ReplicatorTest {
 	@SuppressWarnings("unused")
 	@BeforeClass
 	private void init() {
-		source = new DatabaseWrapper("PUBLIC");
-		source.connect(DataSourceUtil.getDataSource("hsqldb"), new HSQLDialect());
+		source = new DatabaseWrapper();
+		source.connect(DataSourceUtil.getDataSource("hsqldb"), new HSQLDialect(), null, "PUBLIC");
 	}
 
 	@Test(dataProvider = "tables")
 	public void hsqlReplication(String table) {
-		DatabaseWrapper target = new DatabaseWrapper("PUBLIC");
-		target.connect(DataSourceUtil.getDataSource("hsqldb_target"), new HSQLDialect());
-
+		DatabaseWrapper target = new DatabaseWrapper();
+		target.connect(DataSourceUtil.getDataSource("hsqldb_target"), new HSQLDialect(), null,
+				"PUBLIC");
 		Replicator replicator = new DatabaseReplicator(source, target);
 		replicator.addTable(table);
 		replicator.start();
 	}
 
 	public void testOracleReplication(String table) {
-		DatabaseWrapper target = new DatabaseWrapper("test");
-		target.connect(DataSourceUtil.getDataSource("oracle"), new OracleDialect());
-
+		DatabaseWrapper target = new DatabaseWrapper();
+		target.connect(DataSourceUtil.getDataSource("oracle"), new OracleDialect(), null, "test");
 		Replicator replicator = new DatabaseReplicator(source, target);
 		replicator.addTable(table);
 		replicator.start();

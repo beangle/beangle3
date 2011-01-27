@@ -26,9 +26,9 @@
 		<td>ip:</td>
 		<td><input name="sessionActivity.host" value="" style="width:100px" maxlength="32"/></td>
 		<td align="center" colspan="10">
-			[@sj.submit type="button" targets="sessionActivityResult" href="${base}/security/activity!search.action" label="登录明细"/]
-			[@sj.submit type="button" targets="sessionActivityResult" href="${base}/security/activity!loginCountStat.action" label="次数统计"/]
-			[@sj.submit type="button" targets="sessionActivityResult" href="${base}/security/activity!timeIntervalStat.action" label="时段统计"/]
+			[@sj.submit type="button" targets="sessionActivityResult" href="${b.url('!search')}" label="登录明细"/]
+			[@sj.submit type="button" targets="sessionActivityResult" href="${b.url('!loginCountStat')}" label="次数统计"/]
+			[@sj.submit type="button" targets="sessionActivityResult" href="${b.url('!timeIntervalStat')}" label="时段统计"/]
 		</td>
 	</tr>
 </table>

@@ -2,21 +2,15 @@
 <div class="ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
 	<div class="ui-widget-header ui-corner-all"><span class="title">最近的历史登录信息</span><span class="ui-icon ui-icon-plusthick"></span></div>
 	<div class="portlet-content">
-	  [#if (sessionActivities?size==0)]没有登录过系统[#else]
-  	  [@b.grid width="100%"  id="listTable" fixPageSize="1"]
-  	  [@b.gridhead]
-  		[@b.gridth width="15%" text="登录时间" /]
-  		[@b.gridth width="15%" text="退出时间" /]
-  		[@b.gridth width="10%" text="在线时间"/]
- 		[@b.gridth width="10%" text="主机"/]
-	  [/@]
-   	  [@b.gridbody datas=sessionActivities;sessionActivity]
-   		 <td title="${sessionActivity.remark!('')}">${sessionActivity.loginAt?string("yy-MM-dd HH:mm")}</td>
-   		 <td>${sessionActivity.logoutAt?string("yy-MM-dd HH:mm")}</td>
-   		 <td>${(sessionActivity.onlineTime/60000)?int}分${(sessionActivity.onlineTime/1000)%60}秒</td>
-   		 <td>${sessionActivity.host}</td>
-  	  [/@]
-  	 [/@]
-  	 [/#if]
+	[#if (sessionActivities?size==0)]没有登录过系统[#else]
+	[@b.grid width="100%"  fixPageSize="1" datas=sessionActivities var="sessionActivity"]
+		[@b.row]
+		[@b.col width="15%" name="登录时间" ]${sessionActivity.loginAt?string("yy-MM-dd HH:mm")}[/@]
+		[@b.col width="15%" name="退出时间" ]<span title="${sessionActivity.remark!('')}">${sessionActivity.logoutAt?string("yy-MM-dd HH:mm")}</span>[/@]
+		[@b.col width="10%" name="在线时间"]${(sessionActivity.onlineTime/60000)?int}分${(sessionActivity.onlineTime/1000)%60}秒[/@]
+		[@b.col width="10%" name="主机" property="host"/]
+		[/@]
+	[/@]
+	[/#if]
 	</div>
 </div>

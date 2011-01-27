@@ -5,7 +5,7 @@
 package org.beangle.webapp.database.action;
 
 import java.sql.Connection;
-import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -19,32 +19,33 @@ public class DatasourceAction extends SecurityActionSupport {
 	private DatasourceService datasourceService;
 
 	public String test() {
-		String name = get("name");
-		DataSource dataSource = datasourceService.getDatasources(name);
-		List<String> result = CollectUtils.newArrayList();
+		Long datasourceId = getEntityId("datasource");
+		DataSource dataSource = datasourceService.getDatasource(datasourceId);
+		Map<String,String> driverinfo=CollectUtils.newHashMap();
+		Map<String,Object> dbinfo=CollectUtils.newHashMap();
+		Map<String,Object> jdbcinfo=CollectUtils.newHashMap();
 		Connection con = null;
 		try {
 			con = dataSource.getConnection();
 			if (con != null) {
 				java.sql.DatabaseMetaData dm = con.getMetaData();
-				result.add("Driver Information");
-				result.add("\tDriver Name: " + dm.getDriverName());
-				result.add("\tDriver Version: " + dm.getDriverVersion());
-				result.add("\nDatabase Information ");
-				result.add("\tDatabase Name: " + dm.getDatabaseProductName());
-				result.add("\tDatabase Version: " + dm.getDatabaseProductVersion());
-				result.add("Avalilable Catalogs ");
+				driverinfo.put("Driver Name", dm.getDriverName());
+				driverinfo.put("Driver Version" , dm.getDriverVersion());
+				dbinfo.put("Database Name", dm.getDatabaseProductName());
+				dbinfo.put("Database Version",dm.getDatabaseProductVersion());
+				jdbcinfo.put("JDBC Version", dm.getJDBCMajorVersion()+"."+dm.getJDBCMinorVersion());
+				StringBuilder catelogs=new StringBuilder();
+				dbinfo.put("Avalilable Catalogs",catelogs);
 				java.sql.ResultSet rs = dm.getCatalogs();
 				while (rs.next()) {
-					result.add("\tcatalog: " + rs.getString(1));
+					catelogs.append(rs.getString(1));
+					if(rs.next())
+						catelogs.append(',');
 				}
 				rs.close();
-			} else {
-				result.add("Error: No active Connection");
 			}
 		} catch (Exception e) {
-			result.add(ExceptionUtils.getFullStackTrace(e));
-			e.printStackTrace();
+			put("exceptionStack",ExceptionUtils.getFullStackTrace(e));
 		} finally {
 			try {
 				if (con != null) con.close();
@@ -53,7 +54,9 @@ public class DatasourceAction extends SecurityActionSupport {
 				e.printStackTrace();
 			}
 		}
-		put("result", result);
+		put("driverinfo", driverinfo);
+		put("dbinfo", dbinfo);
+		put("jdbcinfo", jdbcinfo);
 		return forward();
 	}
 

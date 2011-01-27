@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
 
-import org.beangle.db.meta.TableMetadata;
+import org.beangle.db.meta.Table;
 import org.beangle.db.replication.DataWrapper;
 
 import com.linuxense.javadbf.DBFException;
@@ -61,17 +61,17 @@ public class DBFDataWrapper implements DataWrapper {
 		}
 	}
 
-	public List<Object> getData(TableMetadata tableMetaData) {
+	public List<Object> getData(Table tableMetaData) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public int pushData(TableMetadata tableMetadata, List<Object> data) {
+	public int pushData(Table tableMetadata, List<Object> data) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public int count(TableMetadata table) {
+	public int count(Table table) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

@@ -4,6 +4,7 @@
  */
 package org.beangle.commons.collection;
 
+import java.lang.reflect.Array;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
@@ -26,6 +27,10 @@ public class MapConverter {
 
 	public Object[] getAll(Map<String, Object> data, String attr) {
 		return (Object[]) data.get(attr);
+	}
+
+	public <T> T[] getAll(Map<String, Object> data, String attr, Class<T> clazz) {
+		return convert((Object[]) data.get(attr),clazz);
 	}
 
 	/**
@@ -62,8 +67,7 @@ public class MapConverter {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T get(Map<String, Object> data, String name, Class<T> clazz) {
-		Object value = get(data, name);
+	public <T> T convert(Object value, Class<T> clazz) {
 		if (null == value) return null;
 		if (value instanceof String && StringUtils.isEmpty((String) value)) { return null; }
 		if (value.getClass().isArray()) {
@@ -73,6 +77,20 @@ public class MapConverter {
 			}
 		}
 		return (T) convertUtils.convert(value, clazz);
+	}
+
+	public <T> T[] convert(Object[] datas, Class<T> clazz) {
+		if (null == datas) { return null; }
+		@SuppressWarnings("unchecked")
+		T[] newDatas = (T[]) Array.newInstance(clazz, datas.length);
+		for (int i = 0; i < datas.length; i++) {
+			newDatas[i] = convert(datas[i], clazz);
+		}
+		return newDatas;
+	}
+
+	public <T> T get(Map<String, Object> data, String name, Class<T> clazz) {
+		return convert(get(data, name), clazz);
 	}
 
 	public Boolean getBoolean(Map<String, Object> data, String name) {

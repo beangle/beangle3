@@ -23,5 +23,5 @@
 [/#macro]
 
 [#macro enableInfo enabled]
-[#if enabled]<img height="15px" width="15px" src="${base}/static/icons/beangle/16x16/actions/activate.png"/>[@b.text name="action.activate" /][#else]<font color="red"]<img height="15px" width="15px" src="${base}/static/icons/beangle/16x16/actions/freeze.png"/>[@b.text name="action.freeze"/]</font>[/#if]
+[#if enabled]<img height="15px" width="15px" src="${base}/static/icons/beangle/16x16/actions/activate.png"/>${b.text("action.activate")}[#else]<font color="red"]<img height="15px" width="15px" src="${base}/static/icons/beangle/16x16/actions/freeze.png"/>${b.text("action.freeze")}</font>[/#if]
 [/#macro]

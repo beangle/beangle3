@@ -1,5 +1,5 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.head/]
 
 <table  width="100%" >
 	<tr>
@@ -28,4 +28,4 @@
 		setTimeout("window.close()",2000);
 	}
 </script>
-[#include "/template/foot.ftl"/]
+[@b.foot/]

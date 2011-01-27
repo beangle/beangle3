@@ -1,7 +1,5 @@
 [#ftl]
-[@b.xhtmlhead]
-[@sj.head /]
-[/@]
+[@b.head/]
 <table width="100%">
 	<tr>
 	  <td class="infoTitle" width="20%" style="height:22px;">
@@ -25,7 +23,7 @@
 		 [#if !avatarBase.readOnly]
 		 <tr>
 		   <td align="right">打包上传</td><td>
-			[@s.form name="uploadForm" action="board!uploadBatch.action" theme="simple" method="POST"  enctype="multipart/form-data"]
+			[@s.form name="uploadForm" action="${b.url('!uploadBatch')}" theme="simple" method="POST"  enctype="multipart/form-data"]
 				[@s.file name="avatar"/][@s.submit value="提交" /]
 			[/@s.form]
    		   </td>
@@ -43,8 +41,8 @@
 		<tr>
 		  [#list nameList as name]
 		  <td style="padding:5px" align="center">
-			  <img src="${base}/avatar/user.action?user.name=${name}" title="${name}" alt="${name}" width="120px" align="top"/><br/>
-			  <a href="board!info.action?user.name=${name}" title="点击查看照片详情">${name}</a>
+			  <img src="${b.url('user')}?user.name=${name}" title="${name}" alt="${name}" width="120px" align="top"/><br/>
+			  <a href="${b.url('board!info')}?user.name=${name}" title="点击查看照片详情">${name}</a>
 		  </td>
 		  [/#list]
 	   </tr>
@@ -53,10 +51,10 @@
 	</table>
 	</div>
 </div>
-<form name="queryForm" action="${base}/avatar/board.action" method="post"/>
+<form name="queryForm" action="${b.url('board')}" method="post"/>
 <script type="text/javascript">
 function pageGoWithSize(pageNo,pageSize){
   goToPage(queryForm,pageNo,pageSize);
 }
 </script>
-[#include "/template/foot.ftl"/]
+[@b.foot/]

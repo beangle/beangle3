@@ -1,9 +1,6 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.head/]
 <link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css"/>
-
-[@sj.head /]
-
   <style type="text/css">
 	.column {
 		width: 440px;
@@ -40,7 +37,7 @@
   <script type="text/javascript">
    var bar = bg.ui.toolbar('userInfoBar','用户权限面板');
    bar.setMessage('[@b.messages/]');
-   bar.addClose("[@b.text name="action.close"/]");
+   bar.addClose("${b.text("action.close")}");
 
    function _wi_tm(moudleId){
 	   var id= document.getElementById(moudleId);
@@ -58,4 +55,4 @@
 	});
   </script>
  
-[#include "/template/foot.ftl"/]
+[@b.foot/]

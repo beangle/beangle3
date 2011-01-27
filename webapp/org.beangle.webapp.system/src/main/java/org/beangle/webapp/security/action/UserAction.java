@@ -13,7 +13,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
-import org.beangle.commons.lang.SeqStrUtils;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.Entity;
 import org.beangle.model.query.builder.Condition;
 import org.beangle.model.query.builder.OqlBuilder;
@@ -201,7 +201,7 @@ public class UserAction extends SecurityActionSupport {
 	 */
 	public String remove() {
 		String userIdSeq = get("userIds");
-		Long[] userIds = SeqStrUtils.transformToLong(userIdSeq);
+		Long[] userIds = StrUtils.splitToLong(userIdSeq);
 		User creator = userService.get(getUserId());
 		List<User> toBeRemoved = userService.getUsers(userIds);
 		try {
@@ -227,8 +227,7 @@ public class UserAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String activate() {
-		String userIdSeq = get("userIds");
-		Long[] userIds = SeqStrUtils.transformToLong(userIdSeq);
+		Long[] userIds = getEntityIds("user");
 		String isActivate = get("isActivate");
 		try {
 			if (StringUtils.isNotEmpty(isActivate) && "false".equals(isActivate)) {
@@ -272,7 +271,7 @@ public class UserAction extends SecurityActionSupport {
 			User user = userService.get(loginName);
 			if (null != user) {
 				put("user", user);
-				return forward(new Action((Class)null,"dashboard","&user.id="+user.getId()));
+				return forward(new Action((Class) null, "dashboard", "&user.id=" + user.getId()));
 			} else {
 				return null;
 			}

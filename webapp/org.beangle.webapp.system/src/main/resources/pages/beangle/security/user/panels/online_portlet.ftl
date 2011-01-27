@@ -4,22 +4,14 @@
 	<span class="ui-icon ui-icon-plusthick"></span></div>
 	<div class="portlet-content">
 	   [#if (onlineActivities?size==0)]没有在线[#else]
-  		[@b.grid width="100%" id="onLineUserTable"]
-		[@b.gridhead]
-		  [@b.gridth width="15%" text="登录时间" id="loginAt"/]
-		  [@b.gridth width="15%" text="最近访问时间" id="lastAccessAt"/]
-		  [@b.gridth width="10%" text="在线时间" id="onlineTime"/]
-		  [@b.gridth width="15%" text="地址" id="host"/]
-		  [@b.gridth width="10%" text="用户身份" id="category"/]
-		  [@b.gridth width="10%" text="状态" id="expired"/]
-	   [/@]
-	   [@b.gridbody datas=onlineActivities;activity]
-		  <td>${activity.loginAt?string("MM-dd HH:mm")}</td>
-		  <td>${activity.lastAccessAt?string("MM-dd HH:mm")}</td>
-		  <td>${(activity.onlineTime)/1000/60}min</td>
-		  <td>${activity.host!('')}</td>
-		  <td>${activity.category.name}</td>
-		  <td>${activity.expired?string("过期","在线")}</td>
+  		[@b.grid width="100%" datas=onlineActivities var="activity" id="onLineUserTable"]
+		[@b.row]
+		  [@b.col width="15%" name="登录时间"]${activity.loginAt?string("MM-dd HH:mm")}[/@]
+		  [@b.col width="15%" name="最近访问时间"]${activity.lastAccessAt?string("MM-dd HH:mm")}[/@]
+		  [@b.col width="10%" name="在线时间"]${(activity.onlineTime)/1000/60}min[/@]
+		  [@b.col width="15%" name="地址" property="host"/]
+		  [@b.col width="10%" name="用户身份" property="category.name"/]
+		  [@b.col width="10%" name="状态"]${activity.expired?string("过期","在线")}[/@]
 	   [/@]
 	  [/@]
 	  [/#if]

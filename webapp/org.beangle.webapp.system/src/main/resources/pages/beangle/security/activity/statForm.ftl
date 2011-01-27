@@ -1,8 +1,4 @@
 [#ftl]
-
-
-
-
    <div style="display: none;" id="view2">
 	<table width="100%" class="searchTable">
 	<form name="numForm" method="post" target="statFrame" action="" onsubmit="return false;">

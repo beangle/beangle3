@@ -5,6 +5,8 @@
 package org.beangle.commons.lang;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.Test;
 
@@ -31,5 +33,36 @@ public class StrUtilsTest {
 		assertEquals(codes.length, 4);
 		assertEquals(codes[3], "opq");
 	}
+	
+	public void testIsEqualSeq() {
+		String first = "123,4546,";
+		String second = ",4546,123";
+		assertTrue(StrUtils.isEqualSeq(first, second));
+		assertTrue(StrUtils.isEqualSeq(first, second, ","));
+	}
 
+	
+	public void testMergeSeq() {
+		String first = ",1,2,";
+		String second = "3,";
+		String third = "";
+		String forth = null;
+		assertTrue(StrUtils.isEqualSeq(StrUtils.mergeSeq(first, second), ",1,2,3,"));
+		assertTrue(StrUtils.isEqualSeq(StrUtils.mergeSeq(first, second), ",1,2,3,"));
+		assertTrue(StrUtils.isEqualSeq(StrUtils.mergeSeq(first, third), ",1,2,"));
+		assertTrue(StrUtils.isEqualSeq(StrUtils.mergeSeq(first, forth), ",1,2,"));
+	}
+
+	
+	public void testSplitNumSeq() throws Exception {
+		String a = "1-2,3,5-9,3,";
+		Integer[] nums = StrUtils.splitNumSeq(a);
+		assertEquals(nums.length, 8);
+	}
+
+	
+	public void testMisc() {
+		assertEquals(",2,", StrUtils.subtractSeq("1,2", "1"));
+		assertFalse(StrUtils.isEqualSeq(",2005-9,", ",2005-9,2006-9,"));
+	}
 }

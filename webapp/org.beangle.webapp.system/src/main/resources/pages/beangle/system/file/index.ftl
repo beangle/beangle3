@@ -34,7 +34,7 @@
 		</tr>
 	</table>
 
-	[@sj.div id="filelist" href="${base}/system/file!list.action?path=${path?js_string!}" indicator="indicator" ]
+	[@sj.div id="filelist" href="${b.url('!list')}?path=${path?js_string!}" indicator="indicator" ]
 		<img id="indicator" src="images/indicator.gif" alt="Loading..." style="display:none"/>
 	[/@]
 	</div>

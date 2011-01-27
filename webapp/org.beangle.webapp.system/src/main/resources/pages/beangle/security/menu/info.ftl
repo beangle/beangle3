@@ -1,12 +1,12 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.head/]
 
 <table id="menuInfoBar"></table>
 	 <table class="infoTable">
 	   <tr>
-		 <td class="title" >&nbsp;[@b.text name="common.id"/]:</td>
+		 <td class="title" >&nbsp;${b.text("common.id")}:</td>
 		 <td class="content">${menu.code}  </td>
-		 <td class="title" >&nbsp;[@b.text name="menu.entry"/]:</td>
+		 <td class="title" >&nbsp;${b.text("menu.entry")}:</td>
 		 <td class="content">${menu.entry!}</td>
 	   </tr>
 	   <tr>
@@ -16,11 +16,11 @@
 		 <td class="content">${menu.engtitle!}</td>
 	   </tr>
 	   <tr>
-		<td class="title" >&nbsp;[@b.text name="common.description"/]:</td>
+		<td class="title" >&nbsp;${b.text("common.description")}:</td>
 		<td  class="content" >${menu.description!}</td>
-		<td class="title" >&nbsp;[@b.text name="common.status"/]:</td>
+		<td class="title" >&nbsp;${b.text("common.status")}:</td>
 		<td class="content">
-			[#if menu.enabled][@b.text name="action.activate" /][#else][@b.text name="action.unactivate"/][/#if]
+			[#if menu.enabled]${b.text("action.activate")}[#else]${b.text("action.unactivate")}[/#if]
 		</td>
 	   </tr>
 	   <tr>
@@ -35,12 +35,12 @@
    <form name="menuInfoForm" method="post"></form>
   <script type="text/javascript">
   function edit(){
-   document.menuInfoForm.action="menu.action?method=edit&menuId=${menu.id}";
+   document.menuInfoForm.action="${b.url('!edit?id=${menu.id}')}";
    document.menuInfoForm.submit();
   }
-   var bar = bg.ui.toolbar('menuInfoBar','[@b.text name="info.module.detail"/]');
+   var bar = bg.ui.toolbar('menuInfoBar','${b.text("info.module.detail")}');
    bar.setMessage('[@b.messages/]');
-   bar.addBack("[@b.text name="action.back"/]");
+   bar.addBack("${b.text("action.back")}");
   </script>
  
-[#include "/template/foot.ftl"/]
+[@b.foot/]

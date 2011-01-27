@@ -16,17 +16,17 @@
 </table>
 
 [@b.grid id="listTable2"  target="ui-tabs-2"]
-	[@b.entitybar id="fieldBar" title="数据权限 对象和参数" entity="field" action="restrict-meta.action" target="ui-tabs-2"]
-		bar.addItem("[@b.text "action.new"/]",action.method('editField'));
-		bar.addItem("[@b.text "action.edit"/]",action.single('editField'));
-		//bar.addItem("[@b.text "action.delete"/]","remove('fieldForm')");
+	[@b.entitybar id="fieldBar" title="数据权限 对象和参数" entity="field" action="restrict-meta" target="ui-tabs-2"]
+		bar.addItem("${b.text("action.new")}",action.method('editField'));
+		bar.addItem("${b.text("action.edit")}",action.single('editField'));
+		//bar.addItem("${b.text("action.delete")}","remove('fieldForm')");
 	[/@]
-	[@b.gridhead]
+	[@b.row]
 	  [@b.selectAllTh name="fieldId"/]
-	  [@b.gridth  width="10%" sort="field.name" text="名称" /]
-	  [@b.gridth  width="10%" sort="field.remark" text="描述" /]
-	  [@b.gridth  width="10%" sort="field.type" text="类型" /]
-	  [@b.gridth  width="10%" sort="field.source" text="来源" /]
+	  [@b.col  width="10%" sort="field.name" text="名称" /]
+	  [@b.col  width="10%" sort="field.remark" text="描述" /]
+	  [@b.col  width="10%" sort="field.type" text="类型" /]
+	  [@b.col  width="10%" sort="field.source" text="来源" /]
 	[/@]
 	[@b.gridbody datas=fields;param]
 	 [@b.selectTd name="fieldId" value=param.id/]

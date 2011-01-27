@@ -16,9 +16,9 @@ import javax.sql.DataSource;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.db.dialect.Dialect;
-import org.beangle.db.meta.ColumnMetadata;
-import org.beangle.db.meta.DatabaseMetadata;
-import org.beangle.db.meta.TableMetadata;
+import org.beangle.db.meta.Column;
+import org.beangle.db.meta.Database;
+import org.beangle.db.meta.Table;
 import org.beangle.db.meta.TypeUtils;
 import org.beangle.db.replication.DataWrapper;
 import org.slf4j.Logger;
@@ -30,11 +30,8 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 
 	protected static final Logger logger = LoggerFactory.getLogger(DatabaseWrapper.class.getName());
 
-	protected DatabaseMetadata meta;
-	protected String catalog;
+	protected Database database;
 	protected String productName;
-	protected String schema;
-
 	protected List<String> tableNames = CollectUtils.newArrayList();
 	protected List<String> viewNames = CollectUtils.newArrayList();
 	protected List<String> sequenceNames = CollectUtils.newArrayList();
@@ -43,13 +40,8 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 		super();
 	}
 
-	public DatabaseWrapper(String schema) {
-		super();
-		this.schema = schema;
-	}
-
 	public List<Object> getData(String tableName) {
-		TableMetadata tableMeta = meta.getTables().get(tableName);
+		Table tableMeta = database.getTables().get(tableName);
 		if (null == tableMeta) {
 			return Collections.emptyList();
 		} else {
@@ -57,15 +49,15 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 		}
 	}
 
-	public int count(TableMetadata table) {
+	public int count(Table table) {
 		String sql = getQueryString(table);
 		String countStr = "select count(*) from (" + sql + ")";
 		return queryForInt(countStr);
 	}
 
-	public List<Object> getData(TableMetadata table, PageLimit limit) {
+	public List<Object> getData(Table table, PageLimit limit) {
 		String sql = getQueryString(table);
-		String limitSql = meta.getDialect().getLimitString(sql, limit.getPageNo() > 1);
+		String limitSql = database.getDialect().getLimitString(sql, limit.getPageNo() > 1);
 		if (limit.getPageNo() == 1) {
 			return query(limitSql, new Object[] { limit.getPageSize() });
 		} else {
@@ -75,11 +67,11 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 		}
 	}
 
-	public List<Object> getData(TableMetadata table) {
+	public List<Object> getData(Table table) {
 		return query(getQueryString(table));
 	}
 
-	private String getQueryString(TableMetadata table) {
+	private String getQueryString(Table table) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("select ");
 		String[] columnNames = table.getColumnNames();
@@ -91,10 +83,10 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 		return sb.toString();
 	}
 
-	public int pushData(final TableMetadata table, List<Object> datas) {
-		if (null == meta.getTableMetadata(TableMetadata.qualify(catalog, schema, table.getName()))) {
+	public int pushData(final Table table, List<Object> datas) {
+		if (null == database.getTable(Table.qualify(database.getSchema(), table.getName()))) {
 			try {
-				execute(table.genCreateSql(meta.getDialect()));
+				execute(table.sqlCreateString(database.getDialect()));
 			} catch (Exception e) {
 				logger.warn("cannot create table {}", table.getName());
 				e.printStackTrace();
@@ -111,7 +103,7 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 				try {
 					final Object[] data = (Object[]) item;
 					for (int i = 0; i < columnNames.length; i++) {
-						ColumnMetadata cm = table.getColumnMetadata(columnNames[i]);
+						Column cm = table.getColumn(columnNames[i]);
 						TypeUtils.setValue(ps, i + 1, data[i], cm.getTypeCode());
 					}
 					ps.execute();
@@ -154,37 +146,30 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 		});
 	}
 
-	public void setMetadata(DatabaseMetadata metadata) {
-		this.meta = metadata;
+	public void setDatabase(Database metadata) {
+		this.database = metadata;
 	}
 
-	public DatabaseMetadata getMetadata() {
-		return meta;
-	}
-
-	public String getSchema() {
-		return schema;
-	}
-
-	public void setSchema(String schema) {
-		this.schema = schema;
+	public Database getDatabase() {
+		return database;
 	}
 
 	public Dialect getDialect() {
-		return meta.getDialect();
+		return database.getDialect();
 	}
 
 	/**
 	 * conntect to data source
-	 * 
-	 * @param targetDB
 	 * @param dialect
+	 * @param catalog TODO
+	 * @param schema TODO
+	 * @param targetDB
 	 */
-	public void connect(DataSource dataSource, Dialect dialect) {
+	public void connect(DataSource dataSource, Dialect dialect, String catalog, String schema) {
 		try {
 			setDataSource(dataSource);
-			meta = new DatabaseMetadata(dataSource.getConnection(), dialect);
-			meta.loadAllMetadata(getSchema(), null, false);
+			database = new Database(dialect,catalog,schema);
+			database.loadTables(dataSource.getConnection().getMetaData(), false);
 		} catch (SQLException e) {
 			logger.error("cannot build connection using:{} under dialect {}", dataSource, dialect);
 			throw new RuntimeException(e);

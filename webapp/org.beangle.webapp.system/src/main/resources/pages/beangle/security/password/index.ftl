@@ -1,5 +1,5 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.head/]
 
  <table id="passwordBar"></table>
  <form name="pageGoForm" method="post" action="" target="contentFrame"></form>
@@ -17,7 +17,7 @@
  <script type="text/javascript">
    var form=document.pageGoForm;
    function changePassword(){
-   	  form.action="password.action?method=changePassword";
+   	  form.action="${b.url('!changePassword')}";
 	  form.submit();
    }
    changePassword();
@@ -27,4 +27,4 @@
    bar.addHelp();
   </script>
 
-[@b.xhtmlhead/]
+[@b.head/]

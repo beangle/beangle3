@@ -4,7 +4,7 @@
 	<div class="portlet-content">
 	  <table class="infoTable">
 	   <tr>
-		<td class="title">[@b.text name="group" /]</td>
+		<td class="title">${b.text("group")}</td>
 		<td class="title">成员</td>
 		<td class="title">授权</td>
 		<td class="title">管理</td>

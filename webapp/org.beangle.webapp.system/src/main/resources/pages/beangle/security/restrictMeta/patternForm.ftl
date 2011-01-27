@@ -1,6 +1,6 @@
 [#ftl]
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
-[#assign labInfo][@b.text name="security.restrictionPattern.info"/][/#assign]
+[#assign labInfo]${b.text("security.restrictionPattern.info")}[/#assign]
 [#include "/template/back.ftl"/]
    [@s.form id="moduleForm" action="restrict-meta!savePattern" theme="simple" target="ui-tabs-1"]
    <input type="hidden" name="pattern.id" value="${(pattern.id)!}" style="width:200px;" />
@@ -34,8 +34,8 @@
    </tr>
 	   <tr class="tfoot">
 		 <td colspan="6">
-		   <input type="button" value="[@b.text name="action.submit"/]" name="button1" onclick="save(this.form)" class="buttonStyle" />
-		   <input type="reset"  name="reset1" value="[@b.text name="action.reset"/]" class="buttonStyle" />
+		   <input type="button" value="${b.text("action.submit")}" name="button1" onclick="save(this.form)" class="buttonStyle" />
+		   <input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />
 		 </td>
 	   </tr>
 	 </table>

@@ -15,10 +15,8 @@
 	 * @param divId 工具栏对应的div
 	 * @param title  工具栏的标题
 	 * @param imageName  工具栏顶头的图片名称
-	 * @param hasSeparator 工具栏中是否添加分隔符 bug1,不要把toolbar对应的表格放在form内
 	 */
-	function ToolBar(divId,title,imageName,hasSeparator){
-		this.hasSeparator=(null==hasSeparator)?true:hasSeparator;
+	function ToolBar(divId,title,imageName){
 		this.itemCount=0;
 		this.bar=document.getElementById(divId);
 		if(null==this.bar){
@@ -26,12 +24,21 @@
 			return;
 		}
 		this.id=divId;
+		this.separator="|";
 		this.bar.className="toolbar";
 		var defaultToolBarImageName="info.gif";
 		var defaultItemImageName="action.gif";
 		var helpImageName="help.gif";
 		var imagePath=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/images/action/";
-
+		
+		this.setTitle=function(newTitle,imageName){
+			if(!newTitle) return;
+			if(imageName==null)imageName=defaultToolBarImageName;
+			this.title_div.innerHTML='<img class="toolbar-icon" src="'+getImagePath(imagePath,imageName)+'" /><strong>'+newTitle+"</strong>";
+		}
+		this.setSeparator=function(separator){
+			this.separator=separator;
+		}
 		/**
 		 * 设置抬头
 		 * 
@@ -39,11 +46,9 @@
 		this.init = function (title,imageName){
 			var title_div = document.createElement('div');
 			title_div.className="toolbar-title";
-			if(imageName==null){
-				imageName=defaultToolBarImageName;
-			}
-			title_div.innerHTML='<img class="toolbar-icon" src="'+getImagePath(imagePath,imageName)+'" /><strong>'+title+"</strong>";
 			this.bar.appendChild(title_div);
+			this.title_div=title_div;
+			this.setTitle(title);
 			var msg_div = document.createElement('div');
 			msg_div.className="toolbar-msg";
 			msg_div.id=this.id+"_msg";
@@ -73,7 +78,7 @@
 				if(action.indexOf("add")!=-1||action.indexOf("new")!=-1) return "new.gif";
 				if(action.indexOf("remove")!=-1||action.indexOf("delete")!=-1) return "delete.gif";
 				if(action.indexOf("update")!=-1||action.indexOf("edit")!=-1||action.indexOf("Edit")!=-1) return "update.gif";
-				if(action.indexOf("export")!=-1) return "excel.png";
+				if(action.indexOf("export")!=-1) return "excel.gif";
 				if(action.indexOf("copy")!=-1) return "copy.gif";
 				if(action.indexOf("print")!=-1) return "print.gif";
 				if(action.indexOf("refresh")!=-1) return "refresh.gif";
@@ -163,19 +168,31 @@
 			this.itemCount++;
 			return item_div;
 		}
+		this.addDiv=function(className){
+			var newDiv = document.createElement('div');
+			if(className)newDiv.className=className;
+			this.items_div.appendChild(newDiv);
+			return newDiv;
+		}
+		this.appendDiv=function(id,className){
+			var newDiv = document.createElement('div');
+			if(id)newDiv.setAttribute("id",id);
+			if(className)newDiv.className=className;
+			document.getElementById(this.id).appendChild(newDiv);
+			return newDiv;
+		}
 		/**
 		 * 添加分隔符
 		 * 
 		 */
-		this.addSeparator = function (){  
-			var separator = document.createElement('div');
-			separator.innerHTML="|";
-			separator.className="toolbar-separator";
-			this.items_div.appendChild(separator);
+		this.addSeparator = function (){
+			if(this.separator){
+				this.addDiv("toolbar-separator").innerHTML=this.separator;
+			}
 		}
 		
 		this.addSeparatorAsNeed = function (){
-			if(this.itemCount!=0&&this.hasSeparator){
+			if(this.itemCount!=0){
 				this.addSeparator();
 			}
 		}
@@ -188,11 +205,7 @@
 		}
 		// 增加空白功能点
 		this.addBlankItem = function () {
-			this.addSeparatorAsNeed();
-			var itemTd = document.createElement('td');
-			itemTd.innerHTML="";
-			itemTd.width="100%";
-			this.tr.appendChild(itemTd);
+			this.addDiv("toolbar-group-separator").innerHTML="&nbsp;";
 			this.itemCount++;
 		}
 		/**
@@ -306,9 +319,129 @@
 			if(o)o.className="toolbar-item";
 		}
 	}
-	bg.extend({'ui.toolbar':function (tableId,title,imageName,hasKeyLine,hasSeparator){
-		return new ToolBar(tableId,title,imageName,hasKeyLine,hasSeparator);
+	bg.extend({'ui.toolbar':function (divId,title,imageName){
+		return new ToolBar(divId,title,imageName);
 		}
+	});
+	
+	bg.extend({'ui.gridbar':function(divIds,title){
+		this.divIds=divIds;
+		this.pageId=null;
+		this.title=title;
+		this.toolbars=[];
+		for(var i=0;i<divIds.length;i++){
+			this.toolbars[i]=bg.ui.toolbar(divIds[i],title);
+			this.toolbars[i].setSeparator("");
+			document.getElementById(divIds[i]).className="gridbar";
+			document.getElementById(divIds[i]+"_items").className="gridbar-items";
+		}
+		this.pageId=function(givenId){
+			this.pageId=givenId;
+			return this;
+		}
+		this.target=function(givenTarget){
+			if(givenTarget){
+				this.target=givenTarget;
+			}else{
+				this.target=null;
+			}
+			return this;
+		}
+		this.action=function(action){
+			this.action=action;
+			return this;
+		}
+		this.paramstring=function(newstring){
+			this.paramstring=newstring;
+			return this;
+		}
+		this.addItem=function(title,action,imageName,alt){
+			for(var i=0;i<this.toolbars.length;i++){
+				this.toolbars[i].addItem(title,action,imageName,alt);
+			}
+		}
+		this.addBlankItem=function(title,action,imageName,alt){
+			for(var i=0;i<this.toolbars.length;i++){
+				this.toolbars[i].addBlankItem(title,action,imageName,alt);
+			}
+		}
+		this.addPage=function(pageNo,pageSize,total,ranks){
+			page=bg.page(this.pageId,this.action,this.target);
+			quotient=Math.floor(total/pageSize);
+			page.maxPageNo = (0 == total%pageSize) ? quotient : (quotient + 1);
+			page.addParams(this.paramstring);
+			for(var i=0;i<this.toolbars.length;i++){
+				pageDiv=this.toolbars[i].appendDiv(divIds[i]+'_page',"gridbar-pagebar");
+				bg.ui.pagebar(this.pageId,pageDiv,pageNo,pageSize,total,ranks);
+			}
+			return this;
+		}
+		this.addEntityAction=function(entity){
+			return new bg.entityaction(this.id,entity,this.action,this.paramstring,this.target);
+		}
+		this.addPrint=function(msg){
+			for(var i=0;i<this.toolbars.length;i++){
+				this.toolbars[i].addPrint(msg);
+			}
+		}
+	}});
+	
+	bg.extend({'ui.pagebar':function (pageId,pageDiv,pageNo,pageSize,total,ranks){
+		if(total==0) return;
+		quotient=Math.floor(total/pageSize);
+		maxPageNo= (0 == total%pageSize) ? quotient : (quotient + 1);
+		startNo=(pageNo-1)*pageSize+1;
+		endNo=(startNo+pageSize-1)<=total?(startNo+pageSize-1):total;
+		
+		addAnchor=function(text,pageNumber){
+			pageHref=document.createElement('a');
+			pageHref.setAttribute("href","#");
+			pageHref.setAttribute("onclick","bg.page.goPage('" + pageId + "'," + pageNumber+ ")");
+			pageHref.innerHTML=text;
+			pageDiv.appendChild(pageHref);
+		}
+		if(pageNo>1){
+			addAnchor("  « First ",1);
+			addAnchor("  ‹ Previous ",pageNo-1);
+		}
+		labelspan=document.createElement('span');
+		labelspan.setAttribute("title","Click me to change page size");
+		labelspan.innerHTML="<strong>" + startNo +"</strong> - <strong>"+ endNo + "</strong> of <strong>" + total + "</strong>";
+		labelspan.setAttribute("onclick","this.nextSibling.style.display='';this.style.display='none'");
+		labelspan.setAttribute("onmouseover","this.className='gridbar-pagebar-label'");
+		labelspan.setAttribute("onmouseout","this.className=''");
+		pageDiv.appendChild(labelspan);
+		
+		pagespan=document.createElement('span');
+		pagespan.style.display="none";
+		pageInput=document.createElement('input');
+		pageInput.setAttribute("value",pageNo+"/"+maxPageNo);
+		pageInput.setAttribute("type","text");
+		pageInput.setAttribute("onfocus","this.value=''");
+		pageInput.setAttribute("onblur","if(!this.value) this.value='" + pageNo+"/"+maxPageNo+"'");
+		pageInput.setAttribute("onchange","bg.page.goPage('" + pageId + "',this.value)");
+		pageInput.style.width="30px";
+		pageInput.style.height="10px";
+		pagespan.appendChild(pageInput);
+		if(ranks && (ranks.length>0)){
+			pageNoSelect=document.createElement('select');
+			pageNoSelect.setAttribute("onchange","bg.page.goPage('"+ pageId +"',1,this.value)");
+			pageNoSelect.style.width="45px";
+			pageNoSelect.style.height="20px";
+			pageNoSelect.title="page size";
+			for(var i=0;i<ranks.length;i++){
+				op=new Option(ranks[i], ranks[i]);
+				if(ranks[i]==pageSize){ op.setAttribute("selected","selected");}
+				pageNoSelect.options[pageNoSelect.length]=op;
+			}
+			pagespan.appendChild(pageNoSelect);
+		}
+		pageDiv.appendChild(pagespan);
+		if(pageNo<maxPageNo){
+			addAnchor("  Next › ",pageNo+1);
+			addAnchor("  Last »",maxPageNo);
+		}
+	}
 	});
 	bg.extend({
 		'ui.grid':{
@@ -323,18 +456,16 @@
 				this.style.backgroundColor ='';
 			},
 			// 鼠标经过数据行的效果
-			currClass:"",
-			swapClass:"",
-			swapOverTR : function (obj,objClass){
-				if(objClass!="roll_down"){
-					bg.ui.grid.currClass=objClass;
-					obj.className="highlight";
-					bg.ui.grid.swapClass=objClass;
-				}
-			},
-			swapOutTR : function (obj){
-				if(obj.className!="roll_down"){
-				obj.className=bg.ui.grid.swapClass;
+			mouseOverGrid : function (){
+				if((typeof this.className)=="undefined") return;
+				myclass=this.className;
+				selectIndex=myclass.indexOf("griddata-selected");
+				if(-1 != selectIndex) return;
+				overIndex=myclass.indexOf("griddata-over");
+				if(-1 == overIndex){
+					this.className=myclass+" "+ "griddata-over"
+				}else{
+					this.className=myclass.substring(0,overIndex);
 				}
 			},
 			/**
@@ -364,10 +495,13 @@
 						ele.onchange();
 					}
 					if(ele.type=="radio") return;
-					if(ele.checked){
-						ele.parentNode.parentNode.className="roll_down";
+					row=ele.parentNode.parentNode;
+					if((typeof row.className)=="undefined") return;
+					selectIndex=row.className.indexOf("griddata-selected");
+					if(ele.checked && -1 == selectIndex){
+						row.className=row.className +" "+ "griddata-selected";
 					}else{
-						ele.parentNode.parentNode.className="bright";
+						row.className=row.className.substring(0,selectIndex);
 					}
 				}
 			},
@@ -450,22 +584,36 @@
 						}
 					}
 				}
+				var tbody=document.getElementById(tableId+"_data");
+				if(!tbody)	return;
+				for(var j=0;j<tbody.rows.length;j++){
+					var row=tbody.rows[j];
+					orignClassName=row.className;
+					if(orignClassName){
+						orignClassName=" "+orignClassName;
+					}else{
+						orignClassName="";
+					}
+					if(j%2==1){
+						row.className="griddata-odd" + orignClassName;
+					}else{
+						row.className="griddata-even" + orignClassName;
+					}
+					row.onclick = bg.ui.grid.onRowChange;
+					row.onmouseover=bg.ui.grid.mouseOverGrid;
+					row.onmouseout=bg.ui.grid.mouseOverGrid;
+				}
 			},
-			/**
-			 * 将pagebar 扩大到表格宽度
-			 */
-			spanPagebar : function (pageBarId){
-				var colspanNumber=30;
-				var pageBarTd=document.getElementById(pageBarId);
-				if(null == pageBarTd) return ;
-				parentEle=pageBarTd.parentNode;
-				while(parentEle && parentEle.tagName.toLowerCase()!='table'){
-					parentEle=parentEle.parentNode;
+			fillEmpty : function (divId,pageSize,size){
+				emptydiv=document.getElementById(divId);
+				var emptyCnt=pageSize-size;
+				if(emptyCnt>7) emptyCnt=7;
+				if(size==0){
+					emptyLabel=document.createElement("label");
+					emptyLabel.innerHTML="No result matched your search.";
+					emptydiv.appendChild(emptyLabel);
 				}
-				if(typeof parentEle.tHead.rows[0].cells.length!=undefined){
-					colspanNumber=parentEle.tHead.rows[0].cells.length;
-				}
-				pageBarTd.colSpan=colspanNumber;
+				for(var i=0;i<emptyCnt;i++){ emptydiv.appendChild(document.createElement("br")); }
 			}
 		}
 	});
@@ -495,6 +643,19 @@
 		this.action=action;
 		this.actionQueryStr=actionQueryStr;
 		this.target=target;
+		function applyMethod(action,method){
+			last1=action.lastIndexOf("!");
+			lastDot=action.lastIndexOf(".");
+			shortAction=action;
+			sufix="";
+			if(-1!=last1){
+				shortAction=action.substring(0,last1);
+			}
+			if(-1!=lastDot){
+				sufix=action.substring(lastDot);
+			}
+			return shortAction+"!"+method+sufix;
+		}
 		entityActions[id]=this;
 		this.getForm=function (){
 			actionForm=document.getElementById(id+"_form");
@@ -514,16 +675,17 @@
 			var fm = this.getForm();
 			if(null!=fm) fm.target=target;
 		}
+		
 		function beforeSubmmitId(id,method) {
 			aform=getEntityAction(id);
-			var ids = bg.input.getCheckBoxValues(aform.entity+"Id");
+			var ids = bg.input.getCheckBoxValues(aform.entity+".id");
 			if (ids == null || ids == "") {
 				bg.alert("你没有选择要操作的记录！");
 				return false;
 			}
 			form=aform.getForm();
-			form.action = aform.action + "?method=" + method;
-			if(""!=aform.actionQueryStr){
+			form.action = applyMethod(aform.action, method);
+			if(aform.actionQueryStr){
 				bg.form.addHiddens(form,aform.actionQueryStr);
 				bg.form.addParamsInput(form,aform.actionQueryStr);
 			}
@@ -535,7 +697,7 @@
 				if(null!=confirmMsg && ''!=confirmMsg){
 					if(!confirm(confirmMsg))return;
 				}
-				bg.form.submitId(aform.getForm(),aform.entity + "Id",multiId);
+				bg.form.submitId(aform.getForm(),aform.entity + ".id",multiId);
 			}
 		}
 		this.remove=function(confirmMsg){
@@ -551,7 +713,7 @@
 				if(""!=aform.actionQueryStr) bg.form.addHiddens(form,aform.actionQueryStr);
 				bg.form.addInput(form,aform.entity + 'Id',"");
 				if(""!=aform.actionQueryStr) bg.form.addParamsInput(form,aform.actionQueryStr);
-				bg.form.submit(form,aform.action + "?method=edit");
+				bg.form.submit(form,applyMethod(aform.action,"edit"));
 			});
 		}
 		
@@ -597,7 +759,7 @@
 					bg.form.addHiddens(form,aform.actionQueryStr);
 					bg.form.addParamsInput(form,aform.actionQueryStr);
 				}
-				bg.form.submit(form,aform.action + "?method=" + methodName);
+				bg.form.submit(form,applyMethod(aform.action ,methodName));
 			});
 		}
 		this.exportData=function (format,keys,titles,extparams){
@@ -609,5 +771,6 @@
 			return this.method('export',null,extparams);
 		}
 	}
+	
 	bg.extend({entityaction:EntityAction});
 })(beangle)

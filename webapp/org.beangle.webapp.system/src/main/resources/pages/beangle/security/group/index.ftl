@@ -1,8 +1,9 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.head/]
 
-[@b.toolbar id="groupbar" title="<a href='dashboard.action'>权限管理</a>-->用户组管理"]
-	bar.addHelp("[@b.text name="action.help"/]");
+[@b.toolbar id="groupbar"]
+	bar.setTitle('[@b.a href='dashboard']权限管理[/@]-->用户组管理');
+	bar.addHelp("${b.text("action.help")}");
 [/@]
 <table  class="frameTable">
 	<tr>
@@ -21,4 +22,4 @@
 	search();
 </script>
 
-</html>
+[@b.foot/]

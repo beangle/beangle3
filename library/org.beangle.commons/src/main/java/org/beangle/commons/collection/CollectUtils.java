@@ -117,4 +117,14 @@ public final class CollectUtils {
 		}
 		return map;
 	}
+	
+	public static Map<String, String> toMap(String[]... wordMappings) {
+		Map<String, String> mappings = new HashMap<String, String>();
+		for (int i = 0; i < wordMappings.length; i++) {
+			String singular = wordMappings[i][0];
+			String plural = wordMappings[i][1];
+			mappings.put(singular, plural);
+		}
+		return mappings;
+	}
 }

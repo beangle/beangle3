@@ -18,6 +18,8 @@ import org.beangle.security.core.session.SessionInfo;
 import org.beangle.security.web.access.log.Accesslog;
 import org.beangle.security.web.access.log.CachedResourceAccessor;
 import org.beangle.security.web.session.category.CategorySessionRegistry;
+import org.beangle.security.web.session.category.LimitProfile;
+import org.beangle.security.web.session.category.MemCategorySessionController;
 
 /**
  * 系统在线用户管理
@@ -29,7 +31,7 @@ public class MonitorAction extends SecurityActionSupport {
 	private CategorySessionRegistry sessionRegistry;
 
 	private CachedResourceAccessor resourceAccessor;
-	
+
 	public String profiles() {
 		put("onlineProfiles", sessionRegistry.getProfiles());
 		return forward();
@@ -55,16 +57,18 @@ public class MonitorAction extends SecurityActionSupport {
 		List<CategoryProfileBean> categories = entityDao.getAll(CategoryProfileBean.class);
 		for (final CategoryProfileBean profile : categories) {
 			Long categoryId = profile.getCategory().getId();
-			int max = getInteger("max_" + categoryId).intValue();
-			int maxSessions = getInteger("maxSessions_" + categoryId).intValue();
-			int inactiveInterval = getInteger("inactiveInterval_" + categoryId).intValue();
-			profile.setCapacity(max);
-			profile.setUserMaxSessions(maxSessions);
-			profile.setInactiveInterval(inactiveInterval);
+			Integer max = getInteger("max_" + categoryId);
+			Integer maxSessions = getInteger("maxSessions_" + categoryId);
+			Integer inactiveInterval = getInteger("inactiveInterval_" + categoryId);
+			if (null != max && null != maxSessions && null != inactiveInterval) {
+				profile.setCapacity(max);
+				profile.setUserMaxSessions(maxSessions);
+				profile.setInactiveInterval(inactiveInterval);
+			}
 		}
-		entityDao.saveOrUpdate(categories);
-		// FIXME
-		// sessionController.loadProfiles();
+		MemCategorySessionController m=	(MemCategorySessionController)sessionRegistry.getSessionController();
+		m.loadProfiles();
+		// FIXME sessionController.loadProfiles();
 		return redirect("profiles", "info.save.success");
 	}
 

@@ -1,5 +1,5 @@
 [#ftl]
-[@b.xhtmlhead title="Dashboard"/]
+[@b.head title="Dashboard"/]
 
 <style  type="text/css">
 /* Copyright 2006 Google, Inc.  All Rights Reserved */
@@ -30,13 +30,13 @@
 	   }
   }
   function getMessageInfo(id){
-	 window.open("systemMessage!info.action?systemMessage.id="+id, '', 'scrollbars=yes,left=0,top=0,width=600,height=350,status=yes');
+	 window.open("${b.url('systemMessage!info')}?systemMessage.id="+id, '', 'scrollbars=yes,left=0,top=0,width=600,height=350,status=yes');
   }
   function getNoticeInfo(id){
 	 window.open("notice.action!info?notice.id="+id, '', 'scrollbars=yes,left=0,top=0,width=600,height=350,status=yes');
   }
   function changePassword(){
-	  var url = "changePassword!changePassword.action";
+	  var url = "${b.url('changePassword!changePassword')}";
 	  var selector= window.open(url, 'selector', 'scrollbars=yes,status=yes,width=1,height=1,left=1000,top=1000');
 	  selector.moveTo(200,200);
 	  selector.resizeTo(300,250);
@@ -49,7 +49,6 @@
 	 <div class="modulebody">
 	 	欢迎您:[#if Session['user.key']??]${Session['user.key'].fullname!}[/#if]
 	 	今天是${date}
-	 	<a target="_blank" href="home.action">home</a>
 	 </div>
    </div>
 
@@ -91,14 +90,14 @@
 	   </tr>
 	  [#list downloadFileList as file]
 	   <tr>
-		<td><image src="${base}/static/images/file/${extMap[file.fileExt]!("generic.gif")}">&nbsp;<a style="color:blue" href="download.action?method=download&document.id=${file.id}">${file.name}</a></td>
+		<td><image src="${base}/static/images/file/${extMap[file.fileExt]!("generic.gif")}">&nbsp;[@b.a href="download!download?document.id=${file.id}" style="color:blue"]${file.name}[/@]</td>
 		<td>${file.uploadOn?string("yyyy-MM-dd")}</td>
 	   </tr>
 	   [/#list]
 	  </table>
-	  <a href="download.action?method=index"/>&nbsp;更多....</a>
+	[@b.a href="download!index"]&nbsp;更多....[/@]
    </div>
    </div>
   [/#if]
 
-[#include "/template/foot.ftl"/]
+[@b.foot/]

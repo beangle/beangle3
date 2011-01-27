@@ -1,5 +1,5 @@
 [#ftl]
-[@b.xhtmlhead title="Security Dashboard"]
+[@b.head title="Security Dashboard"]
 <link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css"/>
 [/@]
 
@@ -12,7 +12,7 @@
 	[#list categories as category]
 	<li>${category.name}&nbsp;<a href="?removeCategoryId=${category.id}"><img style="border:0px" src="${base}/static/images/action/delete.gif"/></a></li>
 	[/#list]
-	<form name="dashboard!admin.action" method="post">
+	<form name="${b.url('!admin')}" method="post">
 		<label for="newCategoryInput">输入新的用户类别:</label><input name="newCategory" style="width:100px" id="newCategoryInput"/>
 		<input type="submit" value="提交"/>
 	</form>
@@ -29,11 +29,11 @@
 	&nbsp;<a href="?removeAdminId=${adminUser.id}"><img  style="border:0px" src="${base}/static/images/action/delete.gif"/></a>
 	</li>
 	[/#list]
-	<form name="dashboard!admin.action" method="post">
+	<form name="${b.url('!admin')}" method="post">
 		<label for="newAdminInput">输入用户名，加入超级管理员:</label><input name="newAdmin" style="width:100px" id="newAdminInput"/>
 		<input type="submit" value="提交"/>
 	</form>
 	</div>
 </div>
 
-</html>
+[@b.foot/]

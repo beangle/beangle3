@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.beangle.commons.collection.Order;
-import org.beangle.commons.lang.SeqStrUtils;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.Entity;
 import org.beangle.model.EntityUtils;
 import org.beangle.model.entity.Model;
@@ -51,6 +51,8 @@ import com.opensymphony.xwork2.util.ClassLoaderUtil;
 
 @SuppressWarnings("deprecation")
 public class EntityDrivenAction extends BaseAction {
+
+	private static final long serialVersionUID = -7730343164100140802L;
 
 	protected String entityName;
 
@@ -110,7 +112,7 @@ public class EntityDrivenAction extends BaseAction {
 		Collection<?> entities = null;
 		if (null == entityId) {
 			String entityIdSeq = get(getShortName() + "Ids");
-			entities = getModels(getEntityName(), SeqStrUtils.transformToLong(entityIdSeq));
+			entities = getModels(getEntityName(), StrUtils.splitToLong(entityIdSeq));
 		} else {
 			Entity<?> entity = getModel(getEntityName(), entityId);
 			entities = Collections.singletonList(entity);
@@ -141,6 +143,32 @@ public class EntityDrivenAction extends BaseAction {
 			entityId = getLong(shortName + "Id");
 		}
 		return entityId;
+	}
+
+	/**
+	 * Get entity's id
+	 * shortname.id[],shortname.ids,shortnameIds
+	 * @param <T>
+	 * @param shortName
+	 * @param clazz
+	 * @return
+	 */
+	protected <T> T[] getEntityIds(String shortName, Class<T> clazz) {
+		T[] datas = Params.getAll(shortName + ".id", clazz);
+		if (null == datas) {
+			String datastring = Params.get(shortName + ".ids");
+			if (null == datastring) datastring = Params.get(shortName + "Ids");
+			if (null != datastring) { return Params.converter.convert(
+					StringUtils.split(datastring, ","), clazz); }
+		}
+		return datas;
+	}
+
+	protected Long[] getEntityIds(String shortName) {
+		return getEntityIds(shortName, Long.class);
+	}
+
+	protected <T> void foo(Class<T> a) {
 	}
 
 	protected Entity<?> populateEntity(String entityName, String shortName) {

@@ -11,10 +11,12 @@ import org.apache.struts2.dispatcher.Dispatcher;
 import org.apache.struts2.util.StrutsTestCaseHelper;
 import org.apache.struts2.views.freemarker.StrutsClassTemplateLoader;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.struts2.view.components.BeangleModels;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletContext;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionProxyFactory;
@@ -34,7 +36,7 @@ import com.opensymphony.xwork2.util.location.LocatableProperties;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 
-//@Test
+@Test
 public class BeangleTagLibraryTest {
 
 	protected ConfigurationManager configurationManager;
@@ -42,7 +44,7 @@ public class BeangleTagLibraryTest {
 	protected Container container;
 	protected ActionProxyFactory actionProxyFactory;
 
-	// @BeforeClass
+	@BeforeClass
 	public void setUp() throws Exception {
 		configurationManager = XWorkTestCaseHelper.setUp();
 		configuration = configurationManager.getConfiguration();
@@ -60,7 +62,7 @@ public class BeangleTagLibraryTest {
 		return du;
 	}
 
-	// @AfterClass
+	@AfterClass
 	public void tearDown() throws Exception {
 		XWorkTestCaseHelper.tearDown(configurationManager);
 		configurationManager = null;

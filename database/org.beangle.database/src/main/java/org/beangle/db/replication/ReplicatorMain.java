@@ -35,19 +35,22 @@ public class ReplicatorMain {
 		} catch (IOException e) {
 			throw new RuntimeException("cannot find database.properties");
 		}
-		DatabaseWrapper source = new DatabaseWrapper(props.getProperty("source.schema"));
+		
+		DatabaseWrapper source = new DatabaseWrapper();
 		source.connect(DataSourceUtil.getDataSource("source"),
-				(Dialect) (Class.forName(props.getProperty("source.dialect")).newInstance()));
+				(Dialect) (Class.forName(props.getProperty("source.dialect")).newInstance()), null,
+				props.getProperty("source.schema"));
 
-		DatabaseWrapper target = new DatabaseWrapper(props.getProperty("target.schema"));
+		DatabaseWrapper target = new DatabaseWrapper();
 		target.connect(DataSourceUtil.getDataSource("target"),
-				(Dialect) (Class.forName(props.getProperty("target.dialect")).newInstance()));
+				(Dialect) (Class.forName(props.getProperty("target.dialect")).newInstance()), null,
+				props.getProperty("target.schema"));
 
 		Replicator replicator = new DatabaseReplicator(source, target);
 
-		Set<String> tables = source.getMetadata().getTables().keySet();
+		Set<String> tables = source.getDatabase().getTables().keySet();
 		DefaultTableFilter filter = new DefaultTableFilter();
-		filter.addInclude("PUBLIC.PUBLIC.sys_authorities");
+		filter.addInclude("PUBLIC.sys_authorities");
 		replicator.addTables(filter.filter(tables));
 		// replicator.addTables(tablenames);
 		replicator.start();

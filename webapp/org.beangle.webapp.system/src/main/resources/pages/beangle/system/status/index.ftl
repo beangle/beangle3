@@ -12,13 +12,13 @@
 			<td>处理器个数:</td><td>${osMBean.availableProcessors}</td><td>系统负载:</td><td>${osMBean.systemLoadAverage!}</td>
 		</tr>
 		<tr>
-			<td>[@b.text name="server.info"/]:</td><td>${serverProps["server.info"]}</td><td>协议/端口:</td><td>${serverProps["server.protocol"]} ${serverProps["server.port"]}</td>
+			<td>${b.text("server.info")}:</td><td>${serverProps["server.info"]}</td><td>协议/端口:</td><td>${serverProps["server.protocol"]} ${serverProps["server.port"]}</td>
 		</tr>
 		<tr>
-			<td>[@b.text name="user.dir"/]:</td><td colspan="3">${serverProps["user.dir"]}</td>
+			<td>${b.text("user.dir")}:</td><td colspan="3">${serverProps["user.dir"]}</td>
 		</tr>
 		<tr>
-			<td>[@b.text name="server.path"/]:</td><td colspan="3">${serverProps["server.path"]}</td>
+			<td>${b.text("server.path")}:</td><td colspan="3">${serverProps["server.path"]}</td>
 		</tr>
 		<tr>
 			<td>启动于:</td><td>${upAt?string("yyyy-MM-dd HH:mm:ss")}(当前:${now?string("yyyy-MM-dd HH:mm:ss")})</td><td>运行时间:</td><td>[#assign upsecond=runtimeMBean.uptime/1000?int][#if (upsecond>3600)]${(upsecond/3600)?int}小时[/#if]${((upsecond%3600)/60)?int}分${(upsecond%60)}秒</td>

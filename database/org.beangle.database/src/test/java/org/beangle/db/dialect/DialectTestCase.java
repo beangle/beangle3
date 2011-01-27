@@ -7,26 +7,26 @@ package org.beangle.db.dialect;
 import java.util.Map;
 import java.util.Set;
 
-import org.beangle.db.meta.DatabaseMetadata;
-import org.beangle.db.meta.SequenceMetadata;
-import org.beangle.db.meta.TableMetadata;
+import org.beangle.db.meta.Database;
+import org.beangle.db.meta.Sequence;
+import org.beangle.db.meta.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DialectTestCase {
 	protected Dialect dialect;
-	protected DatabaseMetadata meta;
+	protected Database database;
 
 	protected static final Logger log = LoggerFactory.getLogger(DialectTestCase.class.getName());
 
-	protected void listMetadata() {
-		Map<String, TableMetadata> tables = meta.getTables();
+	protected void listTableAndSequences() {
+		Map<String, Table> tables = database.getTables();
 		for (String name : tables.keySet()) {
 			log.info("table found {}", name);
 		}
 
-		Set<SequenceMetadata> seqs = meta.getSequences();
-		for (SequenceMetadata obj : seqs) {
+		Set<Sequence> seqs = database.getSequences();
+		for (Sequence obj : seqs) {
 			log.info("sequence found {}", obj);
 		}
 	}

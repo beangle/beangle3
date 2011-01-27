@@ -1,5 +1,5 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.head/]
 [#include "scope.ftl"/]
 
 <table id="resourceInfoBar"></table>
@@ -7,15 +7,15 @@
 	   <tr>
 		 <td class="title">标题:</td>
 		 <td class="content">${resource.title}</td>
-		 <td class="title">[@b.text name="common.name"/]:</td>
+		 <td class="title">${b.text("common.name")}:</td>
 		 <td class="content">${resource.name}</td>
 	   </tr>
 	   <tr>
-		<td class="title">[@b.text name="common.description"/]:</td>
+		<td class="title">${b.text("common.description")}:</td>
 		<td  class="content">${resource.description!}</td>
-		<td class="title">&nbsp;[@b.text name="common.status"/]:</td>
+		<td class="title">&nbsp;${b.text("common.status")}:</td>
 		<td class="content">
-			[#if resource.enabled][@b.text name="action.activate" /][#else][@b.text name="action.unactivate"/][/#if]
+			[#if resource.enabled]${b.text("action.activate")}[#else]${b.text("action.unactivate")}[/#if]
 		</td>
 	   </tr>
 	   <tr>
@@ -57,9 +57,9 @@
 	  </fieldSet>
 	  [/#list]
   <script type="text/javascript">
-   var bar = bg.ui.toolbar('resourceInfoBar','[@b.text name="security.resource.info"/]');
+   var bar = bg.ui.toolbar('resourceInfoBar','${b.text("security.resource.info")}');
    bar.setMessage('[@b.messages/]');
-   bar.addBack("[@b.text name="action.back"/]");
+   bar.addBack("${b.text("action.back")}");
   </script>
  
-[#include "/template/foot.ftl"/]
+[@b.foot/]

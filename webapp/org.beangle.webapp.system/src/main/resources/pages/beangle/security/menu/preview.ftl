@@ -1,9 +1,9 @@
 [#ftl]
-[@b.xhtmlhead/]
+[@b.head/]
 
 [@b.toolbar id="menuInfoBar" title="菜单列表"]
-	bar.addPrint("[@b.text "action.print"/]");
-	bar.addClose("[@b.text "action.close"/]");
+	bar.addPrint("${b.text("action.print")}");
+	bar.addClose("${b.text("action.close")}");
 [/@]
 <table class="grid" align="center" width="90%">
 	<tr class="thead">
@@ -23,4 +23,4 @@
 	[/#list]
 </table>
  
-[#include "/template/foot.ftl"/]
+[@b.foot/]

@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.PageLimit;
-import org.beangle.db.meta.TableMetadata;
+import org.beangle.db.meta.Table;
 import org.beangle.db.replication.DataWrapper;
 import org.beangle.db.replication.Replicator;
 import org.beangle.db.replication.wrappers.DatabaseWrapper;
@@ -22,7 +22,7 @@ public class DatabaseReplicator implements Replicator {
 
 	private static final Logger logger = LoggerFactory.getLogger(DatabaseReplicator.class);
 
-	List<TableMetadata> tables = CollectUtils.newArrayList();
+	List<Table> tables = CollectUtils.newArrayList();
 	DatabaseWrapper source;
 	DatabaseWrapper target;
 
@@ -38,10 +38,10 @@ public class DatabaseReplicator implements Replicator {
 
 	public boolean addTable(String table) {
 		String newTable = table.toUpperCase();
-		if (!StringUtils.contains(table, '.') && null != source.getSchema()) {
-			newTable = source.getSchema() + "." + newTable;
+		if (!StringUtils.contains(table, '.') && null != source.getDatabase().getSchema()) {
+			newTable =  source.getDatabase().getSchema() + "." + newTable;
 		}
-		TableMetadata tm = source.getMetadata().getTableMetadata(newTable);
+		Table tm = source.getDatabase().getTable(newTable);
 		if (null == tm) {
 			logger.error("cannot find metadata for {}", newTable);
 		} else {
@@ -79,7 +79,7 @@ public class DatabaseReplicator implements Replicator {
 	}
 
 	public void start() {
-		for (final TableMetadata table : tables) {
+		for (final Table table : tables) {
 			try {
 				int count = source.count(table);
 				if (count == 0) {

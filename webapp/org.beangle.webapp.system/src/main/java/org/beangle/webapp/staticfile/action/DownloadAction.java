@@ -17,7 +17,6 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.struts2.action.BaseAction;
 import org.beangle.web.io.StreamDownloader;
 import org.beangle.webapp.staticfile.StaticFileLoader;
-import org.springframework.util.Assert;
 
 /**
  * 静态资源下载

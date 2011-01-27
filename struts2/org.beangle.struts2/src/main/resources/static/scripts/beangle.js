@@ -214,8 +214,14 @@
 				if(action.indexOf("http://")==0){
 					action=action.substring(action.indexOf("/",7));
 				}
+				myForm.action=action;
 				if(submitTarget==""||submitTarget=="new"||submitTarget=="_blank"||submitTarget=="_self"||submitTarget=="_parent"){
 					myForm.target=submitTarget;
+					myForm.action=action;
+					myForm.submit();
+					return;
+				}else if(submitTarget && !document.getElementById(submitTarget)){
+					myForm.target="";
 					myForm.action=action;
 					myForm.submit();
 					return;
@@ -226,13 +232,12 @@
 				}
 				var sumbitBtnId=myForm.id+"_submit";
 				var submitx=document.getElementById(sumbitBtnId);
-				
 				if(null==submitx){
 					if(document.all){
 						var inputHTML="<button id='"+sumbitBtnId+"' type='submit' style='display:none'></button>";
 						submitx = myForm.document.createElement(inputHTML);
 					}else{
-						submitx = document.createElement('button');
+						submitx = document.createElement('input');
 						submitx.setAttribute("id",sumbitBtnId);
 						submitx.setAttribute("type",'submit');
 						submitx.setAttribute("style",'display:none');
@@ -244,10 +249,9 @@
 				options_submit.jqueryaction = "button";
 				options_submit.id = sumbitBtnId;
 				options_submit.targets = submitTarget;
-				options_submit.href = action;
-				options_submit.formids = myForm.id;
-				if (typeof $ != "undefined") {
-					$.struts2_jquery.bind($('#'+sumbitBtnId), options_submit);
+				options_submit.href = "#";
+				if (typeof jQuery != "undefined") {
+					jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
 				}
 				//myForm.submit();
 				submitx.click();
@@ -474,9 +478,8 @@
 			moveSelected : function (srcSelect, destSelect){
 				for (var i=0; i<srcSelect.length; i++){
 					if (srcSelect.options[i].selected){ 
-					 
 						var op = srcSelect.options[i];
-						if (!hasOption(destSelect, op)){
+						if (!bg.select.hasOption(destSelect, op)){
 						   destSelect.options[destSelect.length]= new Option(op.text, op.value);
 						}
 					 }
@@ -638,7 +641,6 @@
 				}
 				myForm.appendChild(submitx);
 			}
-			
 			var options_submit = {};
 			options_submit.jqueryaction = "button";
 			options_submit.id = "submitx";
@@ -659,7 +661,7 @@
 			}
 			onePage=pages[id];
 			if(onePage.checkPageParams(pageNo,pageSize,orderBy)){
-				if(typeof onePage.target != undefined && null!=pages[id].target && ""!=onePage.target){
+				if(onePage.target && document.getElementById(onePage.target)){
 					onePage.goPageAjax(pageNo,pageSize,orderBy);
 				}else{
 					onePage.goPageNormal(pageNo,pageSize,orderBy);
