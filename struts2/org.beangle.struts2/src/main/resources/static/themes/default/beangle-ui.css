@@ -31,9 +31,9 @@ a:hover {
 
 .gridhead{color: #000000;text-decoration: none;text-align:center;letter-spacing:0;background-color: #c7dbff;}
 
-.gridhead-item-asc{background-color: #308dbb;cursor:pointer;}
+.gridhead-asc{background-color: #308dbb;cursor:pointer;}
 
-.gridhead-item-desc{background-color: #308dbb;cursor:pointer;}
+.gridhead-desc{background-color: #308dbb;cursor:pointer;}
 
 .gridhead-sortable{cursor:pointer;}
 

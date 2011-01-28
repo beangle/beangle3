@@ -511,14 +511,14 @@
 					bg.alert("无法找到元素对应的排序表格！");return;
 				}
 				var orderByStr=null;
-				if(ele.className=="gridhead-item-sort"){
+				if(ele.className=="gridhead-sortable"){
 					if(typeof ele.asc!="undefined"){
 						orderByStr=ele.asc;
 					}
 					else{
 						orderByStr=ele.id+" asc";
 					}
-				}else if(ele.className=="gridhead-item-asc"){
+				}else if(ele.className=="gridhead-asc"){
 					if(typeof ele.desc!="undefined"){
 						orderByStr=ele.desc;
 					}
@@ -535,7 +535,7 @@
 			 * 初始化排序表格<br/>
 			 * 此函数主要是向已经待排序表格的列头1)添加鼠标事件响应和显示效果. 2)负责将事件传递到用户定义的函数中.
 			 * 
-			 * 凡是要排序的列,请注名排序单元格的id 和class. 其中id是排序要传递的字段,class为定值gridhead-item-sort.
+			 * 凡是要排序的列,请注名排序单元格的id 和class. 其中id是排序要传递的字段,class为定值gridhead-sortable.
 			 * 除此之外,用户(使用该方法的人)需要自定义一个钩子函数"sortBy(what)",以备调用.
 			 * 
 			 * @param tableId
@@ -558,7 +558,7 @@
 					head=thead.rows[j];
 					for(var i=0;i<head.cells.length;i++){
 						cell=head.cells[i];
-						if(cell.className=="gridhead-item-sort" && null!=cell.id){
+						if(cell.className=="gridhead-sortable" && null!=cell.id){
 							cell.onclick = columnSort;
 							cell.onmouseover=bg.ui.grid.overSortTableHeader;
 							cell.onmouseout=bg.ui.grid.outSortTableHeader;
@@ -568,7 +568,7 @@
 								desc=cell.desc;
 							}
 							if(orderBy.indexOf(desc)!=-1){
-								cell.className="gridhead-item-desc"
+								cell.className="gridhead-desc"
 									cell.innerHTML=cell.innerHTML+'<img src="'+bg.getContextPath()+'/static/images/action/sortDesc.gif"  style="border:0"  alt="Arrow" />'
 								continue;
 							}
@@ -577,7 +577,7 @@
 								asc=cell.asc;
 							}
 							if(orderBy==asc){
-								cell.className="gridhead-item-asc"
+								cell.className="gridhead-asc"
 									cell.innerHTML=cell.innerHTML+'<img src="'+bg.getContextPath()+'/static/images/action/sortAsc.gif"  style="border:0"  alt="Arrow" />'
 								continue;
 							}

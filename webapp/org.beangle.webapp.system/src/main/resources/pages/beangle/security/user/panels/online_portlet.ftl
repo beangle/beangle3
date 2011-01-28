@@ -4,7 +4,7 @@
 	<span class="ui-icon ui-icon-plusthick"></span></div>
 	<div class="portlet-content">
 	   [#if (onlineActivities?size==0)]没有在线[#else]
-  		[@b.grid width="100%" datas=onlineActivities var="activity" id="onLineUserTable"]
+  		[@b.grid width="100%" items=onlineActivities var="activity" id="onLineUserTable"]
 		[@b.row]
 		  [@b.col width="15%" name="登录时间"]${activity.loginAt?string("MM-dd HH:mm")}[/@]
 		  [@b.col width="15%" name="最近访问时间"]${activity.lastAccessAt?string("MM-dd HH:mm")}[/@]

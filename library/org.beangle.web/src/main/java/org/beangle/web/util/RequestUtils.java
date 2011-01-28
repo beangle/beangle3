@@ -59,11 +59,12 @@ public final class RequestUtils {
 
 	public static String encodeAttachName(HttpServletRequest request, String attach_name) {
 		String agent = request.getHeader("USER-AGENT");
-		String newName = null;
+		String newName = attach_name;
 		try {
 			if (null != agent && -1 != agent.indexOf("MSIE")) {
 				newName = URLEncoder.encode(attach_name, "UTF-8");
-			} else if (null != agent && -1 != agent.indexOf("Mozilla")) {
+			} else {
+				//if (null != agent && -1 != agent.indexOf("Mozilla")) 
 				newName = new BCodec("UTF-8").encode(attach_name);
 			}
 		} catch (Exception e) {

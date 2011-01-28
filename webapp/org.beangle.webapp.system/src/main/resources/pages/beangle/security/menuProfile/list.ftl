@@ -1,6 +1,6 @@
 [#ftl]
 [@b.head/]
-[@b.grid width="100%" datas=menuProfiles var="menuProfile" sortable="true"]
+[@b.grid width="100%" items=menuProfiles var="menuProfile" sortable="true"]
 	[@b.gridbar]
 	bar.addItem("${b.text("action.new")}",action.add());
 	bar.addItem("${b.text("action.edit")}",action.edit());

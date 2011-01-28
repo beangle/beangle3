@@ -3,7 +3,7 @@
  <table id="userBar" width="100%"></table>
  [@sj.accordion id="accordion"]
 	[@sj.accordionItem title="固定参数"]
-	[@b.grid datas=staticNames var="name" width="90%"]
+	[@b.grid items=staticNames var="name" width="90%"]
 		[@b.row]
 		 [@b.col name="序号" width="10%"]${name_index+1}[/@]
 		 [@b.col name="参数名称" width="20%"]${name}[/@]
@@ -14,7 +14,7 @@
 
 	 [@sj.accordionItem title="可编辑参数"]
 	 <form name="systemConfigForm" method="post" action="" onsubmit="return false;">
-	[@b.grid width="95%" datas=propertyConfigs var="config"]
+	[@b.grid width="95%" items=propertyConfigs var="config"]
 		[@b.row]
 		 [@b.col name="序号" width="7%"]${config_index+1}[/@]
 		 [@b.col name="参数名称" width="20%" style="text-align:left"]<input name="config${config.id}.name"  value="${config.name}" style="width:100%"/>[/@]

@@ -37,16 +37,12 @@
 	   </div>
 		[/#if]
 	   [#if param.editor??]
-	   [@b.grid width="100%"]
-		 [@b.row]
-			 [@b.selectAllTh name="${param.name}"/]
-			 [@b.col name="可选值"/]
-		 [/@]
-		 [@b.gridbody datas=mngParams[param.name];value]
-			<td width="10%"><input type="checkbox" name="${param.name}" [#if aoParams[param.name]!?seq_contains(value)]checked="checked"[/#if] value="${value["${param.editor.idProperty}"]}"]</td>
-			<td>${value["${param.editor.properties}"]}</td>
-		 [/@]
-	  [/@]
+		[@b.grid width="100%" items=mngParams[param.name] var="value"]
+			[@b.row]
+				[@b.boxcol width="10%" name="${param.name}"]<input type="checkbox" name="${param.name}" [#if aoParams[param.name]!?seq_contains(value)]checked="checked"[/#if] value="${value["${param.editor.idProperty}"]}" />[/@]
+				[@b.col name="可选值"]${value["${param.editor.properties}"]}[/@]
+			[/@]
+		[/@]
 	   [#else]
 	   <table class="grid" width="100%">
 		  <tr><td colspan="2"><input type="text" name="${param.name}" value="${aoParams[param.name]!}"/>[#if param.multiValue]多个值请用,格开[/#if]</td></tr>

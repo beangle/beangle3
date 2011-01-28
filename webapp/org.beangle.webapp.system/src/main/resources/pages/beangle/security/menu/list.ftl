@@ -16,7 +16,7 @@
 	[#return tdid[0..tdid?length-2]]
 [/#function]
 
-[@b.grid width="100%" datas=menus var="menu"]
+[@b.grid width="100%" items=menus var="menu"]
 [@b.gridbar title="菜单列表"]
 	action.addParam('menu.profile.id',"${Parameters['menu.profile.id']!}");
 	function activate(isActivate){

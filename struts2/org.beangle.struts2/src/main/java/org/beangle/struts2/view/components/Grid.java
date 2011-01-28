@@ -41,20 +41,27 @@ public class Grid extends ClosingUIBean {
 	final private static transient Random RANDOM = new Random();
 	private List<Col> cols = CollectUtils.newArrayList();
 	private Set<Object> colNames = CollectUtils.newHashSet();
-	private Object datas;
+	private Object items;
 	private String var;
 	// gridbar
 	private String bar;
-	private String sortable;
+	private String sortable="true";
 
 	public Grid(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
 		super(stack, req, res);
 	}
 
 	public boolean getHasbar() {
-		return (null != bar || datas instanceof Page);
+		return (null != bar || items instanceof Page);
 	}
 
+	public boolean isPageable(){
+		return items instanceof Page<?>; 
+	}
+	
+	public boolean isNotFullPage(){
+		return ((Page<?>)items).size()<((Page<?>)items).getPageSize();
+	}
 	public String defaultSort(String property) {
 		return StrUtils.concat(var, ".", property);
 	}
@@ -99,12 +106,12 @@ public class Grid extends ClosingUIBean {
 		this.var = var;
 	}
 
-	public void setDatas(Object datas) {
-		this.datas = datas;
+	public void setItems(Object datas) {
+		this.items = datas;
 	}
 
-	public Object getDatas() {
-		return datas;
+	public Object getItems() {
+		return items;
 	}
 
 	public String getSortable() {
@@ -149,9 +156,9 @@ public class Grid extends ClosingUIBean {
 		public Row(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
 			super(stack, req, res);
 			table = (Grid) findAncestor(Grid.class);
-			Object iteratorTarget = table.datas;
-			if (table.datas instanceof String) {
-				iteratorTarget = findValue((String) table.datas);
+			Object iteratorTarget = table.items;
+			if (table.items instanceof String) {
+				iteratorTarget = findValue((String) table.items);
 			}
 			iterator = MakeIterator.convert(iteratorTarget);
 			this.var_index = table.var + "_index";
@@ -184,6 +191,8 @@ public class Grid extends ClosingUIBean {
 	 */
 	public static class Col extends ClosingUIBean {
 		String property;
+		String name;
+		String width;
 		Row row;
 
 		public Col(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
@@ -193,7 +202,9 @@ public class Grid extends ClosingUIBean {
 		@Override
 		public boolean start(Writer writer) {
 			row = (Row) findAncestor(Row.class);
-			row.table.addCol(this);
+			if(row.index==0){
+				row.table.addCol(this);
+			}
 			return true;
 		}
 
@@ -219,13 +230,13 @@ public class Grid extends ClosingUIBean {
 			}
 		}
 
+		public void setName(String name) {
+			this.name = name;
+		}
+
 		public String getName() {
-			Object nameParam = parameters.get("name");
-			String name;
-			if (null == nameParam) {
+			if (null == name) {
 				name = StrUtils.concat(row.table.var, ".", property);
-			} else {
-				name = nameParam.toString();
 			}
 			if (-1 == name.indexOf('.')) {
 				return name;
@@ -234,6 +245,15 @@ public class Grid extends ClosingUIBean {
 						.getText(name, name, Collections.emptyList(), stack, false);
 			}
 		}
+
+		public String getWidth() {
+			return width;
+		}
+
+		public void setWidth(String width) {
+			this.width = width;
+		}
+		
 	}
 
 	public static class Boxcol extends Col {
@@ -249,9 +269,14 @@ public class Grid extends ClosingUIBean {
 		@Override
 		public boolean start(Writer writer) {
 			row = (Row) findAncestor(Row.class);
-			row.table.addCol(this);
+			if(row.index==0){
+				row.table.addCol(this);
+			}
 			if (null == boxname) {
 				boxname = row.table.var + "." + property;
+			}
+			if(null==property){
+				this.property="id";
 			}
 			return true;
 		}

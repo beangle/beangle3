@@ -14,7 +14,6 @@
 			  <em>参数组列表</em>
 		  </td>
 		  <td  class="infoTitle" align="left" valign="bottom">
-
 		  </td>
 		<tr>
 		  <td  colspan="8" style="font-size:0px">
@@ -25,7 +24,7 @@
    [@b.grid width="100%" id="paramListTable"]
 	 [@b.row]
 	  [@b.col name="序号"/]
-	  [@b.col width="70%" text="名称"/]
+	  [@b.col width="70%" name="名称"/]
 	  [@b.col name="操作"/]
 	 [/@]
 	 <tr>
@@ -35,7 +34,7 @@
 		onmouseover="MouseOver(event)" onmouseout="MouseOut(event)">所有参数</td>
 	   <td></td>
 	 </tr>
-	 [@b.gridbody simplePageBar=true datas=paramGroups;paramGroup,paramGroup_index]
+	 [@b.gridbody simplePageBar=true items=paramGroups;paramGroup,paramGroup_index]
 	  <td>${paramGroup_index + 1}</td>
 	  <td class="padding" style="height:20px;" onclick="javascript:setSelectedRow(paramListTable,this);searchParam('${paramGroup.id}')">
 		${paramGroup.name}

@@ -33,6 +33,6 @@ public class OsTest {
 		assertEquals(os.version,"Vista");
 		
 		os = Os.parse(linux[0]);
-		assertEquals(os.version,"3.6.12-1.fc14");
+		assertEquals(os.version,"Fedora fc14");
 	}
 }
