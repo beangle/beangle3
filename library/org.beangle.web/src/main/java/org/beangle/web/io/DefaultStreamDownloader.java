@@ -93,7 +93,7 @@ public class DefaultStreamDownloader implements InitializingBean, StreamDownload
 		}
 	}
 
-	protected String getAttachName(String name, String display) {
+	public static String getAttachName(String name, String display) {
 		String attch_name = "";
 		String ext = StringUtils.substringAfterLast(name, ".");
 		if (StringUtils.isBlank(display)) {
@@ -113,7 +113,7 @@ public class DefaultStreamDownloader implements InitializingBean, StreamDownload
 	 * @param file_name
 	 * @return
 	 */
-	protected String getFileName(String file_name) {
+	protected static String getFileName(String file_name) {
 		if (file_name == null) return "";
 		file_name = file_name.trim();
 		int iPos = 0;

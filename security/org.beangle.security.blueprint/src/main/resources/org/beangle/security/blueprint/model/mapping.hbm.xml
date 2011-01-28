@@ -109,9 +109,9 @@
 		<property name="remark" length="100"/>
 		<property name="enabled" not-null="true"/>
 		<property name="scope" not-null="true"/>
-		<set name="objects">
+		<set name="entities">
 			<key column="resource_id" not-null="true"/>
-			<many-to-many column="object_id" class="org.beangle.security.blueprint.restrict.RestrictObject"/>
+			<many-to-many column="entity_id" class="org.beangle.security.blueprint.restrict.RestrictEntity"/>
 		</set>
 		<set name="categories">
 			<key column="resource_id" not-null="true"/>

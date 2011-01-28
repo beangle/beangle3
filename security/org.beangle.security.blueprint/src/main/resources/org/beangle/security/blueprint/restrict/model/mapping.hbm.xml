@@ -12,20 +12,20 @@
 		<property name="type" not-null="true"/>
 		<property name="remark" not-null="true"/>
 		<property name="source"/>
-		<set name="objects" table="restrict_objects_fields">
+		<set name="entities" table="restrict_entities_fields">
 			<key column="field_id"/>
-			<many-to-many entity-name="org.beangle.security.blueprint.restrict.RestrictObject" column="object_id"/>
+			<many-to-many entity-name="org.beangle.security.blueprint.restrict.RestrictEntity" column="entity_id"/>
 		</set>
 	</class>
 	
-	<class name="RestrictObjectBean" entity-name="org.beangle.security.blueprint.restrict.RestrictObject">
+	<class name="RestrictEntityBean" entity-name="org.beangle.security.blueprint.restrict.RestrictEntity">
 		<cache usage="read-write" region="beangle.security"/>
 		<id name="id" unsaved-value="null">
 			<generator class="org.beangle.model.persist.hibernate.support.TableSeqGenerator"/>
 		</id>
 		<property name="name" not-null="true"/>
-		<set name="fields" table="restrict_objects_fields">
-			<key column="object_id"/>
+		<set name="fields" table="restrict_entities_fields">
+			<key column="entity_id"/>
 			<many-to-many entity-name="org.beangle.security.blueprint.restrict.RestrictField" column="field_id"/>
 		</set>
 	</class>
@@ -37,7 +37,7 @@
 		</id>
 		<property name="content" not-null="true"/>
 		<property name="remark" not-null="true"/>
-		<many-to-one name="object" not-null="true"/>
+		<many-to-one name="entity" not-null="true"/>
 	</class>
 	
 	<class name="RestrictionBean" entity-name="org.beangle.security.blueprint.restrict.UserRestriction">

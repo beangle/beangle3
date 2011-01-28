@@ -16,7 +16,7 @@ import org.beangle.security.blueprint.Authority;
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.restrict.RestrictField;
-import org.beangle.security.blueprint.restrict.RestrictObject;
+import org.beangle.security.blueprint.restrict.RestrictEntity;
 import org.beangle.security.blueprint.restrict.Restriction;
 import org.beangle.security.blueprint.restrict.RestrictionHolder;
 import org.beangle.security.blueprint.restrict.service.RestrictionService;
@@ -64,7 +64,7 @@ public class RestrictionHelper {
 		Map<String, Map<String, Object>> paramMaps = CollectUtils.newHashMap();
 		for (final Restriction restriction : restrictions) {
 			Map<String, Object> aoParams = CollectUtils.newHashMap();
-			for (RestrictField param : restriction.getPattern().getObject().getFields()) {
+			for (RestrictField param : restriction.getPattern().getEntity().getFields()) {
 				String value = restriction.getItem(param);
 				if (StringUtils.isNotEmpty(value)) {
 					if (null == param.getSource()) {
@@ -79,12 +79,12 @@ public class RestrictionHelper {
 		}
 		String forEdit = Params.get("forEdit");
 		if (StringUtils.isNotEmpty(forEdit)) {
-			List<RestrictObject> restrictObjects = CollectUtils.newArrayList();
+			List<RestrictEntity> restrictObjects = CollectUtils.newArrayList();
 			if (holder instanceof Authority) {
 				Authority au = (Authority) holder;
-				restrictObjects.addAll(au.getResource().getObjects());
+				restrictObjects.addAll(au.getResource().getEntities());
 			} else {
-				restrictObjects = entityDao.getAll(RestrictObject.class);
+				restrictObjects = entityDao.getAll(RestrictEntity.class);
 			}
 			ContextHelper.put("restrictObjects", restrictObjects);
 		}

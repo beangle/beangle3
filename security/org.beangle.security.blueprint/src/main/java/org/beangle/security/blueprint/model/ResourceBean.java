@@ -11,7 +11,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.UserCategory;
-import org.beangle.security.blueprint.restrict.RestrictObject;
+import org.beangle.security.blueprint.restrict.RestrictEntity;
 
 /**
  * 系统模块，代表一组系统功能点的集合.<br>
@@ -43,7 +43,7 @@ public class ResourceBean extends LongIdObject implements Resource {
 
 	private Set<UserCategory> categories = CollectUtils.newHashSet();
 
-	private Set<RestrictObject> objects = CollectUtils.newHashSet();
+	private Set<RestrictEntity> entities = CollectUtils.newHashSet();
 
 	public String getRemark() {
 		return remark;
@@ -98,12 +98,12 @@ public class ResourceBean extends LongIdObject implements Resource {
 				.append("remark", this.remark).toString();
 	}
 
-	public Set<RestrictObject> getObjects() {
-		return objects;
+	public Set<RestrictEntity> getEntities() {
+		return entities;
 	}
 
-	public void setObjects(Set<RestrictObject> objects) {
-		this.objects = objects;
+	public void setEntities(Set<RestrictEntity> entities) {
+		this.entities = entities;
 	}
 
 }

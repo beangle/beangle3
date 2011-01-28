@@ -9,9 +9,9 @@ import java.util.Set;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.restrict.RestrictField;
-import org.beangle.security.blueprint.restrict.RestrictObject;
+import org.beangle.security.blueprint.restrict.RestrictEntity;
 
-public class RestrictObjectBean extends LongIdObject implements RestrictObject {
+public class RestrictEntityBean extends LongIdObject implements RestrictEntity {
 
 	private static final long serialVersionUID = -5761007041977213647L;
 

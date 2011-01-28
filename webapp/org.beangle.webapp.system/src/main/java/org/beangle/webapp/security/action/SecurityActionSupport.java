@@ -55,7 +55,7 @@ public abstract class SecurityActionSupport extends EntityDrivenAction implement
 			session.put("security.restriction", restrictionMap);
 		}
 		Resource resource = getResource();
-		if (resource.getObjects().isEmpty()) { return Collections.emptyList(); }
+		if (resource.getEntities().isEmpty()) { return Collections.emptyList(); }
 		List<Restriction> realms = restrictionMap.get(resource.getId());
 		User user = getUser();
 		if (null == realms) {
@@ -73,7 +73,7 @@ public abstract class SecurityActionSupport extends EntityDrivenAction implement
 		Set<Object> values = CollectUtils.newHashSet();
 		boolean gotIt = false;
 		for (Restriction restiction : restrictions) {
-			RestrictField param = restiction.getPattern().getObject().getField(name);
+			RestrictField param = restiction.getPattern().getEntity().getField(name);
 			if (null != param) {
 				String value = restiction.getItem(param);
 				if (null != value) {

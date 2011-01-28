@@ -26,8 +26,8 @@ public interface RestrictField extends LongIdEntity {
 
 	public void setSource(String source);
 
-	public Set<RestrictObject> getObjects();
+	public Set<RestrictEntity> getEntities();
 
-	public void setObjects(Set<RestrictObject> objects);
+	public void setEntities(Set<RestrictEntity> objects);
 
 }

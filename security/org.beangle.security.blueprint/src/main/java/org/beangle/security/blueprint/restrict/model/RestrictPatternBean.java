@@ -5,7 +5,7 @@
 package org.beangle.security.blueprint.restrict.model;
 
 import org.beangle.model.pojo.LongIdObject;
-import org.beangle.security.blueprint.restrict.RestrictObject;
+import org.beangle.security.blueprint.restrict.RestrictEntity;
 import org.beangle.security.blueprint.restrict.RestrictPattern;
 
 public class RestrictPatternBean extends LongIdObject implements RestrictPattern {
@@ -16,7 +16,7 @@ public class RestrictPatternBean extends LongIdObject implements RestrictPattern
 
 	private String content;
 
-	private RestrictObject object;
+	private RestrictEntity entity;
 
 	public String getContent() {
 		return content;
@@ -34,12 +34,12 @@ public class RestrictPatternBean extends LongIdObject implements RestrictPattern
 		this.remark = discription;
 	}
 
-	public RestrictObject getObject() {
-		return object;
+	public RestrictEntity getEntity() {
+		return entity;
 	}
 
-	public void setObject(RestrictObject paramGroup) {
-		this.object = paramGroup;
+	public void setEntity(RestrictEntity entity) {
+		this.entity = entity;
 	}
 
 }

@@ -54,7 +54,7 @@ public class RestrictionAction extends SecurityActionSupport {
 		List<Restriction> myRestrictions = getMyRestrictions(restriction.getPattern(), holder);
 		Set<RestrictField> ignoreParams = getIgnoreParams(myRestrictions);
 		boolean isAdmin = isAdmin(getUser());
-		for (RestrictField param : restriction.getPattern().getObject().getFields()) {
+		for (RestrictField param : restriction.getPattern().getEntity().getFields()) {
 			String value = get(param.getName());
 			if ((ignoreParams.contains(param) || isAdmin) && getBool("ignoreParam" + param.getId())) {
 				restriction.setItem(param, "*");
@@ -98,7 +98,7 @@ public class RestrictionAction extends SecurityActionSupport {
 		put("ignoreParams", ignores);
 		Set<RestrictField> holderIgnoreParams = CollectUtils.newHashSet();
 		put("holderIgnoreParams", holderIgnoreParams);
-		for (RestrictField param : restriction.getPattern().getObject().getFields()) {
+		for (RestrictField param : restriction.getPattern().getEntity().getFields()) {
 			List<Object> mngParam = restrictionService.getValues(param);
 			if (!isAdmin) {
 				mngParam.retainAll(getMyRestrictionValues(myRestricitons, param.getName()));
@@ -151,7 +151,7 @@ public class RestrictionAction extends SecurityActionSupport {
 	private Set<RestrictField> getIgnoreParams(List<Restriction> restrictions) {
 		Set<RestrictField> ignores = CollectUtils.newHashSet();
 		for (Restriction restriction : restrictions) {
-			for (RestrictField param : restriction.getPattern().getObject().getFields()) {
+			for (RestrictField param : restriction.getPattern().getEntity().getFields()) {
 				String value = restriction.getItem(param);
 				if ("*".equals(value)) {
 					ignores.add(param);
@@ -164,7 +164,7 @@ public class RestrictionAction extends SecurityActionSupport {
 	private List<Object> getMyRestrictionValues(List<Restriction> restrictions, String name) {
 		List<Object> values = CollectUtils.newArrayList();
 		for (Restriction restriction : restrictions) {
-			RestrictField param = restriction.getPattern().getObject().getField(name);
+			RestrictField param = restriction.getPattern().getEntity().getField(name);
 			if (null != param) {
 				String value = restriction.getItem(param);
 				if (null != value) {

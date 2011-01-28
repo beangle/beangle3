@@ -24,7 +24,7 @@ import org.beangle.security.blueprint.GroupMember;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.restrict.RestrictField;
-import org.beangle.security.blueprint.restrict.RestrictObject;
+import org.beangle.security.blueprint.restrict.RestrictEntity;
 import org.beangle.security.blueprint.restrict.RestrictPattern;
 import org.beangle.security.blueprint.restrict.Restriction;
 import org.beangle.security.blueprint.restrict.RestrictionHolder;
@@ -42,7 +42,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 	@SuppressWarnings("unchecked")
 	public List<Restriction> getRestrictions(final User user, final Resource resource) {
 		List<Restriction> restrictions = CollectUtils.newArrayList();
-		final Set<RestrictObject> objects = CollectUtils.newHashSet(resource.getObjects());
+		final Set<RestrictEntity> entities = CollectUtils.newHashSet(resource.getEntities());
 		// 权限上的限制
 		restrictions.addAll(getAuthorityRestrictions(user, resource));
 		List<Group> groups = userService.getGroups(user, GroupMember.Ship.MEMBER);
@@ -58,7 +58,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 			public boolean evaluate(Object obj) {
 				Restriction restriciton = (Restriction) obj;
 				if (restriciton.isEnabled()
-						&& objects.contains(restriciton.getPattern().getObject())) return true;
+						&& entities.contains(restriciton.getPattern().getEntity())) return true;
 				else return false;
 			}
 		});
@@ -185,7 +185,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 				Condition c = new Condition(content);
 				List<String> params = c.getParamNames();
 				for (final String paramName : params) {
-					RestrictField param = pattern.getObject().getField(paramName);
+					RestrictField param = pattern.getEntity().getField(paramName);
 					String value = restriction.getItem(param);
 					if (StringUtils.isNotEmpty(value)) {
 						if (value.equals(Restriction.ALL)) {

@@ -9,7 +9,7 @@ import java.util.Set;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.restrict.RestrictField;
-import org.beangle.security.blueprint.restrict.RestrictObject;
+import org.beangle.security.blueprint.restrict.RestrictEntity;
 
 public class RestrictFieldBean extends LongIdObject implements RestrictField {
 	private static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ public class RestrictFieldBean extends LongIdObject implements RestrictField {
 
 	private String source;
 
-	private Set<RestrictObject> objects = CollectUtils.newHashSet();
+	private Set<RestrictEntity> entities = CollectUtils.newHashSet();
 
 	public String getName() {
 		return name;
@@ -48,12 +48,12 @@ public class RestrictFieldBean extends LongIdObject implements RestrictField {
 		this.type = type;
 	}
 
-	public Set<RestrictObject> getObjects() {
-		return objects;
+	public Set<RestrictEntity> getEntities() {
+		return entities;
 	}
 
-	public void setObjects(Set<RestrictObject> objects) {
-		this.objects = objects;
+	public void setEntities(Set<RestrictEntity> objects) {
+		this.entities = objects;
 	}
 
 	public String getSource() {

@@ -14,7 +14,7 @@ import org.beangle.security.blueprint.Authority;
 import org.beangle.security.blueprint.Menu;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.UserCategory;
-import org.beangle.security.blueprint.restrict.RestrictObject;
+import org.beangle.security.blueprint.restrict.RestrictEntity;
 import org.beangle.security.blueprint.service.CacheableAuthorityManager;
 import org.beangle.struts2.convention.route.Action;
 
@@ -54,8 +54,8 @@ public class ResourceAction extends SecurityActionSupport {
 
 	protected void editSetting(Entity<?> entity) {
 		Resource resource = (Resource) entity;
-		List<RestrictObject> objects = entityDao.getAll(RestrictObject.class);
-		objects.removeAll(resource.getObjects());
+		List<RestrictEntity> objects = entityDao.getAll(RestrictEntity.class);
+		objects.removeAll(resource.getEntities());
 		put("restrictObjects", objects);
 		put("categories", entityDao.getAll(UserCategory.class));
 	}
@@ -68,12 +68,12 @@ public class ResourceAction extends SecurityActionSupport {
 		}
 
 		Long[] patternIds = StrUtils.splitToLong(get("restrictObjectIds"));
-		List<RestrictObject> objects = Collections.emptyList();
+		List<RestrictEntity> objects = Collections.emptyList();
 		if (null != patternIds) {
-			objects = entityDao.get(RestrictObject.class, patternIds);
+			objects = entityDao.get(RestrictEntity.class, patternIds);
 		}
-		resource.getObjects().clear();
-		resource.getObjects().addAll(objects);
+		resource.getEntities().clear();
+		resource.getEntities().addAll(objects);
 
 		String categoryIds = get("categoryIds");
 		List<UserCategory> categories = entityDao.get(UserCategory.class,

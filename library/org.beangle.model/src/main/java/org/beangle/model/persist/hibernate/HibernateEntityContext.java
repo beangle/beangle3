@@ -124,6 +124,10 @@ public class HibernateEntityContext extends AbstractEntityContext {
 	private CollectionType buildCollectionType(SessionFactory sessionFactory,
 			Class<?> collectionClass, String role) {
 		CollectionMetadata cm = sessionFactory.getCollectionMetadata(role);
+		//FIXME buildCollectionType
+		if(null==cm){
+			return null;
+		}
 		org.hibernate.type.Type type = cm.getElementType();
 		EntityType elementType = null;
 		if (type.isEntityType()) {

@@ -68,7 +68,7 @@ public class RestrictionBean extends LongIdObject implements Restriction {
 	}
 
 	public String getItem(String paramName) {
-		RestrictField param = getPattern().getObject().getField(paramName);
+		RestrictField param = getPattern().getEntity().getField(paramName);
 		if (null == param) {
 			return null;
 		} else {

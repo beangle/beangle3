@@ -7,7 +7,7 @@ package org.beangle.security.blueprint;
 import java.util.Set;
 
 import org.beangle.model.pojo.LongIdEntity;
-import org.beangle.security.blueprint.restrict.RestrictObject;
+import org.beangle.security.blueprint.restrict.RestrictEntity;
 
 /**
  * 系统资源.<br>
@@ -103,7 +103,7 @@ public interface Resource extends LongIdEntity {
 		public static final int PRIVATE = 2;
 	}
 
-	public Set<RestrictObject> getObjects();
+	public Set<RestrictEntity> getEntities();
 
-	public void setObjects(Set<RestrictObject> objects);
+	public void setEntities(Set<RestrictEntity> entities);
 }

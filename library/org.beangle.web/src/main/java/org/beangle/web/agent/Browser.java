@@ -4,27 +4,30 @@
  */
 package org.beangle.web.agent;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 /**
  * Web browser
+ * 
  * @author chaostone
- *
  */
-public class Browser {
+public class Browser implements Serializable {
 
+	private static final long serialVersionUID = -6200607575108416928L;
+	
 	private static Logger logger = LoggerFactory.getLogger(BrowserCategory.class);
 	public static Map<String, Browser> browsers = CollectUtils.newHashMap();
-	public static final Browser UNKNOWN=new Browser(BrowserCategory.UNKNOWN,null);
+	public static final Browser UNKNOWN = new Browser(BrowserCategory.UNKNOWN, null);
 
 	public final BrowserCategory category;
 	public final String version;
 
-	
 	public Browser(BrowserCategory category, String version) {
 		super();
 		this.category = category;
@@ -58,7 +61,7 @@ public class Browser {
 
 	@Override
 	public String toString() {
-		return category.getName() + " " + (version==null?"":version);
+		return category.getName() + " " + (version == null ? "" : version);
 	}
-	
+
 }

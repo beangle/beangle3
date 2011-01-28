@@ -4,6 +4,7 @@
  */
 package org.beangle.web.agent;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -11,8 +12,10 @@ import org.beangle.commons.collection.CollectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Os {
+public class Os implements Serializable {
 
+	private static final long serialVersionUID = -7506270303767154240L;
+	
 	private static Logger logger = LoggerFactory.getLogger(Os.class);
 	public static Map<String, Os> osMap = CollectUtils.newHashMap();
 	public static final Os UNKNOWN = new Os(OsCategory.UNKNOWN, null);

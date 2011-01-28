@@ -13,7 +13,7 @@ import org.beangle.model.pojo.LongIdEntity;
  * 
  * @author chaostone
  */
-public interface RestrictObject extends LongIdEntity {
+public interface RestrictEntity extends LongIdEntity {
 
 	public String getName();
 

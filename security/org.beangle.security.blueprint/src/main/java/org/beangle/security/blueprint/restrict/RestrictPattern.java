@@ -21,8 +21,8 @@ public interface RestrictPattern extends LongIdEntity {
 
 	public void setRemark(String remark);
 
-	public RestrictObject getObject();
+	public RestrictEntity getEntity();
 
-	public void setObject(RestrictObject object);
+	public void setEntity(RestrictEntity object);
 
 }
