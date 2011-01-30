@@ -1,3 +1,6 @@
+2011-01-25  duantihua  <chaostone.duan@gmail.com>
+	* 添加了一套基于java的taglibrary
+
 2010-09-18  duantihua  <chaostone.duan@gmail.com>
 
 	* 重新规划了提供的几个web组件和js.合并page.js,action.js,common.js到beangle.js和beangle-ui.js

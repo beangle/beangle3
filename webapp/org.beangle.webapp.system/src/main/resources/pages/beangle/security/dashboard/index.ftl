@@ -1,11 +1,11 @@
 [#ftl]
 [@b.head title="Dashboard"]
+[/@]
 	<link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css"/>
 	<style type="text/css">
 	img {border:0 none;vertical-align:middle}
 	.module{margin:0 3 5px;line-height:1.3em;float:left;width:42%;}
 	</style>
-[/@]
 
 [#macro menuitem image="" link="" name="" remark=""]
 <tr>

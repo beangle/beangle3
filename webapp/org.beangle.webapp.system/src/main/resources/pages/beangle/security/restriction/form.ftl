@@ -37,7 +37,7 @@
 	   </div>
 		[/#if]
 	   [#if param.editor??]
-		[@b.grid width="100%" items=mngParams[param.name] var="value"]
+		[@b.grid  items=mngParams[param.name] var="value"]
 			[@b.row]
 				[@b.boxcol width="10%" name="${param.name}"]<input type="checkbox" name="${param.name}" [#if aoParams[param.name]!?seq_contains(value)]checked="checked"[/#if] value="${value["${param.editor.idProperty}"]}" />[/@]
 				[@b.col name="可选值"]${value["${param.editor.properties}"]}[/@]

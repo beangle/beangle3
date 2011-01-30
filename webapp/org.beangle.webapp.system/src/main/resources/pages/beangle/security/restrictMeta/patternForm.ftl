@@ -25,9 +25,9 @@
    <tr>
 	<td class="title" id="f_params">适应对象:</td>
 	<td >
-		<select name="pattern.object.id"  style="width:200px">
-		 [#list objects as group]
-		  <option value="${group.id}" [#if group.id=(pattern.object.id)!(0)]selected="selected"[/#if]>${group.name}</option>
+		<select name="pattern.entity.id"  style="width:200px">
+		 [#list entities as entity]
+		  <option value="${entity.id}" [#if entity.id=(pattern.entity.id)!(0)]selected="selected"[/#if]>${entity.name}</option>
 		 [/#list]
 		</select>
 	</td>

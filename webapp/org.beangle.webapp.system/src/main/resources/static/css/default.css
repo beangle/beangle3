@@ -1,0 +1,353 @@
+/*tag stle*/
+body {
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-left:0;
+      margin-right:0;
+	  /*font-family: "宋体";*/
+	  font-size: 12px;
+}
+table {
+ font-size: 12px;
+}
+/*鼠标覆盖改变颜色*/      
+tr.roll_down {
+	text-decoration: none; 
+	letter-spacing:0;
+	background-color: #BFFFBF;
+	/*background-color: #6988D8;*/
+}
+
+tr.highlight {
+	text-decoration: none; 
+	letter-spacing:0;
+	background-color: #BFFFBF;
+}
+/*输入框style*/
+input.box { border: none; }
+
+input.text {
+  line-height:130%;height:22px;
+  border:#B2D0EA 1px solid ;
+}
+/*按钮*/
+button {
+	BORDER-RIGHT: #0065ce 1px solid; 
+    BORDER-TOP: #0065ce 1px solid; 
+    FONT-SIZE: 10pt; 
+    BORDER-LEFT: #0065ce 1px solid; 
+    BORDER-BOTTOM: #0065ce 1px solid; 
+    FONT-FAMILY: verdana;
+    line-height: 15px; 
+    HEIGHT: 20px;
+    BACKGROUND-COLOR: #EFF0EA;
+    cursor:pointer;
+}
+.buttonStyle {
+	BORDER-RIGHT: #0065ce 1px solid; 
+    BORDER-TOP: #0065ce 1px solid; 
+    FONT-SIZE: 10pt; 
+    BORDER-LEFT: #0065ce 1px solid; 
+    BORDER-BOTTOM: #0065ce 1px solid; 
+    FONT-FAMILY: verdana;
+    line-height: 15px; 
+    HEIGHT: 20px;
+    BACKGROUND-COLOR: #EFF0EA;
+    cursor:pointer;
+}
+/*文字连接样式*/
+a:link {
+	color: #000080;
+	text-decoration: none;
+}
+
+/*文字连接已经访问过的样式*/
+a:visited {
+ text-decoration: none;
+}
+
+/*鼠标悬停在文字连接上的样式*/
+a:hover {
+	color: red;
+	/*text-decoration: none;*/
+}
+
+/*查询按钮style*/
+.searchPicStyle{
+	background-image: url(../images/search.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+	cursor: pointer;
+	width: 67;
+	height: 25;
+}
+
+.searchWindowClosePicStyle{
+	background-image: url(../images/close.gif);
+    background-repeat: no-repeat;
+    background-position: right;
+	width: 20;
+}
+
+.contentSearchShowLayer{
+	position:relative; 
+	visibility: visible;
+}
+
+.contentSearchHiddenLayer{
+	position:relative; 
+	visibility: hidden;
+}
+
+/* 验证框架使用的两个class */
+.tfvHighlight {
+	font-weight: bold; 
+    font-style: normal; 
+    font-size: 10pt; 
+    color: red; 
+    background-color: #EBEBEB;
+    text-align: right;
+}
+.tfvNormal {
+	font-weight: normal;
+    font-style: normal; 
+    font-size: 10pt; 
+    color: black; 
+    background-color: #EBEBEB;
+    text-align: right;
+}
+/*title */	
+
+.title_font_black20px 				{font-family: "仿宋";font-size: 20px;color: #000000;text-decoration: none;}
+.title_font_black20px  a			{font-size: 20px;color: #000000;text-decoration: none;}
+.title_font_black20px  a:hover		{font-size: 20px;color: #000000;text-decoration: underline;}
+
+/*数据列表的样式单*/
+.listTable {
+	border-collapse: collapse;
+    border:solid;
+	border-width:1px;
+    border-color:#006CB2;
+  	vertical-align: middle;
+  	font-style: normal; 
+	font-size: 10pt; 	
+}
+table.listTable td{
+	border:solid;
+	border-width:0px;
+	border-right-width:1;
+	border-bottom-width:1;
+	border-color:#006CB2;
+}
+.brightStyle {  
+	color: #000000; 
+	text-decoration: none; 
+	letter-spacing:0;
+	background-color: white;
+} 
+.grayStyle   {
+	color: #000000; 
+	text-decoration: none; 
+	letter-spacing:0;
+	background-color: #EBEBEB;
+}
+.darkColumn{
+	color: #000000; 
+	text-decoration: none; 
+	letter-spacing:0;
+	background-color: #c7dbff;
+}
+/*数据列表中，选择框(radio or checkbox)的样式单*/
+td.select{
+    text-align:center;
+    background-color: #e0ecff;
+    width:3%;
+}
+/* 排序表使用*/
+td.tableHeaderSortAsc{
+	background-color: #308dbb;
+	cursor:pointer;
+}
+td.tableHeaderSortDesc{
+	background-color: #308dbb;
+	cursor:pointer;
+}
+td.tableHeaderSort{
+	cursor:pointer;
+}
+
+/*数据表单的样式*/
+.formTable{
+	border-collapse: collapse;
+    border:solid;
+	border-width:1px;
+    border-color:#006CB2;
+	text-align: left;
+  	font-style: normal; 
+	font-size: 10pt; 
+}
+table.formTable td{
+	border:solid;
+	border-width:0px;
+	border-right-width:1;
+	border-bottom-width:1;
+	border-color:#006CB2;
+	color: #000000; 
+	text-decoration: none; 
+	letter-spacing:0;
+}
+.formTable .title{
+   text-align: right;
+   background-color: #EBEBEB;
+}
+.formTable .content{
+   text-align: left;
+   background-color: white
+}
+
+
+/*详细信息页面*/
+table.infoTable {
+    vertical-align: middle;
+	width:100%;
+	border-collapse: collapse;
+	background-color: #EEEEEE;
+}
+
+table.infoTable td {
+	border: 1px solid #FFFFFF;
+}
+table.infoTable th {
+	background-color: #E1ECFF;
+	height: 22px;
+}
+.infoTable .title{
+	height: 22px;
+	width: 110px;
+	background-color:F5EDDB;
+	padding-left: 2px;
+	padding-right: 2px;
+	text-align:right;
+}
+.infoTable .content{
+	padding-left: 1px;
+	padding-right: 1px;
+}
+.infoTitle{
+   font-size: 12px;
+}
+
+.contentTableTitleTextStyle{
+	 color: #1f3d83; 
+     font-style: normal; 
+     font-size: 15pt; 
+     line-height: 16pt; 
+     text-decoration: none; 
+     font-weight: bold; 
+     letter-spacing:0
+}
+
+/*打印相关*/
+@media print {
+   .notprint {
+           display:none;
+           }
+   .ToolBar {
+           display:none;
+           }
+}
+
+@media screen {
+   .notprint {
+           display:inline;
+           }
+   .ToolBar {
+           display:inline;
+           }
+}
+
+/*展示框架*/
+.frameTableStyle{
+	width:100%;
+	border-collapse:collapse;
+	border:0;
+}
+.iconStyle {vertical-align:middle;margin-top:1px;border:0px}
+
+.frameTable{
+	border-collapse: collapse;
+	border:solid;
+	border-width:1px;
+	border-color:#006CB2;
+	margin-top:0px;
+	margin-bottom:0px;
+	width:100%;	
+	font-size: 10pt;
+}
+.frameTable_title{
+	font-size: 12px;
+	border:solid;
+	border-width:1px;	
+	margin-top:0px;
+	margin-bottom:0px;
+	background-color :#E1ECFF;
+	border-color:#006CB2;
+	width:100%;
+}
+.frameTable_view{
+    font-size: 10pt;
+	border:solid;
+	border-width:0px;
+	border-right-width:1;
+	border-color:#006CB2;
+    vertical-align: top; 
+	background-color: #E1ECFF;
+}
+.frameTable_content{
+    font-size: 10pt;
+    vertical-align: top; 
+}
+/*没有间隔和边框的表格*/
+.searchTable{
+    border-collapse: collapse;
+	border-width:0px;
+    font-size: 12px;
+}
+/*参数设置页面*/
+.settingTable {
+	border-collapse: collapse;
+    border:solid;
+	border-width:1px;
+    border-color:#006CB2;
+	text-align: left;
+  	font-style: normal; 
+	font-size: 10pt; 	
+	width:100%;
+	background-color: #E1ECFF
+}
+table.settingTable td{
+	border:solid;
+	border-width:0px;
+	border-color:#006CB2;
+	height:30px;
+}
+/**课表中的各时段的颜色*/
+.timeSeq1{
+background-color:#eeff00;
+}
+.timeSeq2{
+background-color: #E1ECFF
+}
+.timeSeq3{
+background-color:  #33bb00
+}
+.timeSeq4{
+background-color: pink
+}
+
+
+.pinkFontTD{
+	color: #ff0044;
+	text-decoration: none;
+	letter-spacing:0;
+}

@@ -1,5 +1,5 @@
 [#ftl]
-[@b.grid width="100%" items=datasources var="datasource" target="datasource_grid_div"]
+[@b.grid items=datasources var="datasource" target="datasource_grid_div"]
 	[@b.gridbar]
 		bar.addItem("添加",action.add());
 		bar.addItem("修改",action.edit());

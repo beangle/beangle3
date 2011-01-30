@@ -3,7 +3,7 @@
 	<div class="ui-widget-header ui-corner-all"><span class="title">最近的历史登录信息</span><span class="ui-icon ui-icon-plusthick"></span></div>
 	<div class="portlet-content">
 	[#if (sessionActivities?size==0)]没有登录过系统[#else]
-	[@b.grid width="100%"  fixPageSize="1" items=sessionActivities var="sessionActivity"]
+	[@b.grid   fixPageSize="1" items=sessionActivities var="sessionActivity"]
 		[@b.row]
 		[@b.col width="15%" name="登录时间" ]${sessionActivity.loginAt?string("yy-MM-dd HH:mm")}[/@]
 		[@b.col width="15%" name="退出时间" ]<span title="${sessionActivity.remark!('')}">${sessionActivity.logoutAt?string("yy-MM-dd HH:mm")}</span>[/@]

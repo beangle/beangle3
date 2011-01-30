@@ -35,7 +35,7 @@ public final class StrUtils {
 	 * @param charactor
 	 * @return
 	 */
-	public static int countChar(final String host, final char charactor) {
+	public static int count(final String host, final char charactor) {
 		int count = 0;
 		for (int i = 0; i < host.length(); i++) {
 			if (host.charAt(i) == charactor) {
@@ -52,7 +52,7 @@ public final class StrUtils {
 	 * @param searchStr
 	 * @return
 	 */
-	public static int countStr(final String host, final String searchStr) {
+	public static int count(final String host, final String searchStr) {
 		int count = 0;
 		for (int startIndex = 0; startIndex < host.length(); startIndex++) {
 			int findLoc = host.indexOf(searchStr, startIndex);

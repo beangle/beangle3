@@ -13,11 +13,12 @@
 /home/chaostone/.m2/repository/commons-lang/commons-lang/2.5/commons-lang-2.5.jar
 /home/chaostone/.m2/repository/commons-logging/commons-logging/99.0-does-not-exist/commons-logging-99.0-does-not-exist.jar
 /home/chaostone/.m2/repository/com/google/inject/guice/2.0/guice-2.0.jar
+/home/chaostone/.m2/repository/com/h2database/h2/1.3.148/h2-1.3.148.jar
 /home/chaostone/.m2/repository/org/hsqldb/hsqldb/2.0.0/hsqldb-2.0.0.jar
 /home/chaostone/.m2/repository/org/slf4j/jcl-over-slf4j/1.6.1/jcl-over-slf4j-1.6.1.jar
-/home/chaostone/.m2/repository/com/beust/jcommander/1.10/jcommander-1.10.jar
-/home/chaostone/.m2/repository/ch/qos/logback/logback-classic/0.9.26/logback-classic-0.9.26.jar
-/home/chaostone/.m2/repository/ch/qos/logback/logback-core/0.9.26/logback-core-0.9.26.jar
+/home/chaostone/.m2/repository/com/beust/jcommander/1.12/jcommander-1.12.jar
+/home/chaostone/.m2/repository/ch/qos/logback/logback-classic/0.9.28/logback-classic-0.9.28.jar
+/home/chaostone/.m2/repository/ch/qos/logback/logback-core/0.9.28/logback-core-0.9.28.jar
 /home/chaostone/.m2/repository/org/osgi/osgi_R4_compendium/1.0/osgi_R4_compendium-1.0.jar
 /home/chaostone/.m2/repository/org/osgi/osgi_R4_core/1.0/osgi_R4_core-1.0.jar
 /home/chaostone/.m2/repository/postgresql/postgresql/8.4-701.jdbc3/postgresql-8.4-701.jdbc3.jar

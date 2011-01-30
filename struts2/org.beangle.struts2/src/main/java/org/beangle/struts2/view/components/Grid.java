@@ -25,14 +25,11 @@ import org.beangle.commons.lang.StrUtils;
 import com.opensymphony.xwork2.util.ValueStack;
 
 /**
- * Data table FIXME
+ * Data table
  * 
  * <pre>
- * rename table to grid ----ok
- * move var and data to row ---ok
  * performance column rendering
- * double bar with page ---ok
- * filter
+ * filter  FIXME
  * </pre>
  * 
  * @author chaostone
@@ -75,7 +72,7 @@ public class Grid extends ClosingUIBean {
 	}
 
 	protected void addCol(Col column) {
-		Object name = column.getParameters().get("name");
+		Object name = column.getName();
 		if (null == name) {
 			name = column.getProperty();
 		}

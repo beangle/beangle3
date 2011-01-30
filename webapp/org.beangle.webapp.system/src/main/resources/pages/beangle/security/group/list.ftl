@@ -1,7 +1,7 @@
 [#ftl]
 [@b.head/]
 [#include "../status.ftl"/]
-[@b.grid width="100%" items=groups var="group" id="groupListTable" sortable="true" ]
+[@b.grid  items=groups var="group"  sortable="true" ]
 [@b.gridbar]
 	bar.addItem("${b.text("action.new")}",action.add(),'new.gif');
 	bar.addItem("${b.text("action.modify")}",action.edit(),'update.gif');

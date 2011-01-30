@@ -3,7 +3,7 @@
 [#include "scope.ftl"/]
 [#include "../status.ftl"/]
 <form name="pageGoForm" id="pageGoForm" method="post" action="${b.url('!search')}">
-[@b.grid id="listTable" items=resources var="resource" width="100%" sortable="true" ]
+[@b.grid  items=resources var="resource"  sortable="true" ]
 	[@b.gridbar title='系统资源']
 	function activate(enabled){return action.multi('activate','确定操作?','&amp;enabled='+enabled);}
 	bar.addItem("${b.text("action.add")}",action.add());

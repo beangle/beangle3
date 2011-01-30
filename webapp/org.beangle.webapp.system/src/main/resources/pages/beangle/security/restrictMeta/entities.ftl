@@ -21,7 +21,7 @@
 		  </td>
 	   </tr>
 	  </table>
-   [@b.grid width="100%" id="paramListTable"]
+   [@b.grid  ]
 	 [@b.row]
 	  [@b.col name="序号"/]
 	  [@b.col width="70%" name="名称"/]

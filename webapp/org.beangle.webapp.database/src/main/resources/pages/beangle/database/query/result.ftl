@@ -48,7 +48,7 @@
 	[/#if]
 	[#if result.datas??]
 		[#if (result.datas?size>0)]
-		[@b.grid id="table${result_index}" items=result.datas  var="data" width="100%" sortable="false"]
+		[@b.grid  items=result.datas  var="data" sortable="false"]
 			[@b.row]
 				[@b.col width="5%" name="序号"]${data_index+1}[/@]
 				[#list result.columns?if_exists as columnName]

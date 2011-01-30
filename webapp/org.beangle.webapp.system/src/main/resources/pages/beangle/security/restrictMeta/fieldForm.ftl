@@ -36,22 +36,22 @@
 	 <table>
 	  <tr>
 	   <td>
-		<select name="Objects" multiple="multiple" size="10" style="width:200px" onDblClick="JavaScript:bg.select.moveSelected(this.form['Objects'], this.form['SelectedObject'])" >
-		 [#list objects?sort_by('name') as o]
+		<select name="Entitys" multiple="multiple" size="10" style="width:200px" onDblClick="JavaScript:bg.select.moveSelected(this.form['Entitys'], this.form['SelectedEntity'])" >
+		 [#list entities?sort_by('name') as o]
 		  <option value="${o.id}">${o.name}</option>
 		 [/#list]
 		</select>
 	   </td>
 	   <td  valign="middle">
 		<br/><br/>
-		<input onclick="JavaScript:bg.select.moveSelected(this.form['Objects'], this.form['SelectedObject'])" type="button" value="&gt;"/>
+		<input onclick="JavaScript:bg.select.moveSelected(this.form['Entitys'], this.form['SelectedEntity'])" type="button" value="&gt;"/>
 		<br/><br/>
-		<input onclick="JavaScript:bg.select.moveSelected(this.form['SelectedObject'], this.form['Objects'])" type="button" value="&lt;"/>
+		<input onclick="JavaScript:bg.select.moveSelected(this.form['SelectedEntity'], this.form['Entitys'])" type="button" value="&lt;"/>
 		<br/>
 	   </td>
 	   <td  class="normalTextStyle">
-		<select name="SelectedObject" multiple="multiple" size="10" style="width:200px;" onDblClick="JavaScript:bg.select.moveSelected(this.form['SelectedObject'], this.form['Objects'])">
-		 [#list field.objects! as o]
+		<select name="SelectedEntity" multiple="multiple" size="10" style="width:200px;" onDblClick="JavaScript:bg.select.moveSelected(this.form['SelectedEntity'], this.form['Entitys'])">
+		 [#list field.entities! as o]
 		  <option value="${o.id}">${o.name}</option>
 		 [/#list]
 		</select>
@@ -62,7 +62,7 @@
    </tr>
 	   <tr class="tfoot">
 		 <td colspan="6"  >
-		   <input type="hidden" name="objectIds" value=""/>
+		   <input type="hidden" name="entityIds" value=""/>
 		   <input type="button" value="${b.text("action.submit")}" name="button1" onclick="save(this.form)" class="buttonStyle" />
 		   <input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />
 		 </td>
@@ -71,7 +71,7 @@
    </form>
   <script  >
    function save(form){
-	 form['objectIds'].value = bg.select.getValues(form.SelectedObject);
+	 form['entityIds'].value = bg.select.getValues(form.SelectedEntity);
 	 var a_fields = {
 		 'field.name':{'l':'${b.text("common.name")}', 'r':true,'t':'f_name'},
 		 'field.remark':{'l':'标题', 'r':true, 't':'f_remark'},

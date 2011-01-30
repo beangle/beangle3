@@ -1,5 +1,5 @@
 [#ftl]
-[@b.grid width="100%" items=logonStats var="logonStat"]
+[@b.grid  items=logonStats var="logonStat"]
 	[#assign total=0]
 	[@b.row]
 		[@b.col name="时间段"]${logonStat[0]}:00-${(logonStat[0]+1)%24}:00[/@]

@@ -1,5 +1,5 @@
 [#ftl]
-[@b.grid width="100%"  id="listTable"]
+[@b.grid  ]
 	[@b.row]
 		[@b.col name="登录名" sort="sessionActivity.name"]${logonStat[0]}[/@]
 		[@b.col name="姓名" sort="sessionActivity.fullname"]${logonStat[1]}[/@]

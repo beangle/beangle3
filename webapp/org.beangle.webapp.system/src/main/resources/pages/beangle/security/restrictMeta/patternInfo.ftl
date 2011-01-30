@@ -7,7 +7,7 @@ bar.addBack("${b.text("action.back")}");
 	 <td class="title" >${b.text("common.description")}:</td>
 	 <td  class="content">${pattern.remark!}</td>
 	 <td class="title" >使用参数:</td>
-	 <td class="content" colspan="3">[#if pattern.object??]${pattern.object.remark!}(${pattern.object.name!})[/#if]</td>
+	 <td class="content" colspan="3">[#if pattern.entity??]${pattern.entity.remark!}(${pattern.entity.name!})[/#if]</td>
    </tr>
    <tr>
 	 <td class="title" >限制模式:</td>

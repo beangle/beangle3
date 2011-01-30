@@ -76,7 +76,7 @@
 	 </table>
 	</div>
 	<div id="groupmember">
-	[@b.grid id="memberTable"  width="100%" items=members var="m"]
+	[@b.grid    items=members var="m"]
 		[@b.row]
 			[@b.col name=""]<input name="groupId" type="checkbox" onchange="changeMember(${m.group.id},this)"/>[/@]
 			[@b.col name="序号"]${m_index+1}[/@]

@@ -13,10 +13,10 @@ import org.testng.annotations.Test;
 @Test
 public class StrUtilsTest {
 
-	public void testCountStr() {
+	public void testCount() {
 		String targetStr = "11001101101111";
 		String searchStr = "11";
-		assertEquals(StrUtils.countStr(targetStr, searchStr), 5);
+		assertEquals(StrUtils.count(targetStr, searchStr), 5);
 	}
 
 	public void testUnCamel() {
@@ -33,7 +33,7 @@ public class StrUtilsTest {
 		assertEquals(codes.length, 4);
 		assertEquals(codes[3], "opq");
 	}
-	
+
 	public void testIsEqualSeq() {
 		String first = "123,4546,";
 		String second = ",4546,123";
@@ -41,7 +41,6 @@ public class StrUtilsTest {
 		assertTrue(StrUtils.isEqualSeq(first, second, ","));
 	}
 
-	
 	public void testMergeSeq() {
 		String first = ",1,2,";
 		String second = "3,";
@@ -53,14 +52,12 @@ public class StrUtilsTest {
 		assertTrue(StrUtils.isEqualSeq(StrUtils.mergeSeq(first, forth), ",1,2,"));
 	}
 
-	
 	public void testSplitNumSeq() throws Exception {
 		String a = "1-2,3,5-9,3,";
 		Integer[] nums = StrUtils.splitNumSeq(a);
 		assertEquals(nums.length, 8);
 	}
 
-	
 	public void testMisc() {
 		assertEquals(",2,", StrUtils.subtractSeq("1,2", "1"));
 		assertFalse(StrUtils.isEqualSeq(",2005-9,", ",2005-9,2006-9,"));
