@@ -25,7 +25,7 @@ public class DefaultPropertyConfigFactory implements PropertyConfigFactory,Facto
 	}
 
 	public PropertyConfig getObject() throws Exception {
-		return null;
+		return config;
 	}
 
 	public Class<?> getObjectType() {
