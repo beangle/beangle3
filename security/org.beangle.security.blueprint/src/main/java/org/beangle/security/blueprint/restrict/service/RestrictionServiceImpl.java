@@ -66,8 +66,8 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 
 	public List<Restriction> getAuthorityRestrictions(User user, Resource resource) {
 		OqlBuilder<Restriction> query = OqlBuilder.hql("select restriction from Authority r "
-				+ "join r.group.users as user join r.restrictions as restriction"
-				+ " where user=:user and r.resource=:resource" + " and restriction.enabled=true");
+				+ "join r.group.members as gmember join r.restrictions as restriction"
+				+ " where gmember.user=:user and gmember.member=true and r.resource=:resource" + " and restriction.enabled=true");
 		Map<String, Object> params = CollectUtils.newHashMap();
 		params.put("user", user);
 		params.put("resource", resource);
@@ -76,15 +76,15 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List getValues(RestrictField param) {
-		if (null == param.getSource()) return Collections.emptyList();
-		String source = param.getSource();
+	public List getValues(RestrictField field) {
+		if (null == field.getSource()) return Collections.emptyList();
+		String source = field.getSource();
 		String prefix = StringUtils.substringBefore(source, ":");
 		source=StringUtils.substringAfter(source, ":");
 		DataProvider provider = providers.get(prefix);
 		if (null != provider) {
 			try {
-				return provider.getData(Class.forName(param.getType()), source);
+				return provider.getData(Class.forName(field.getType()), source);
 			} catch (ClassNotFoundException e) {
 				throw new RuntimeException(e);
 			}

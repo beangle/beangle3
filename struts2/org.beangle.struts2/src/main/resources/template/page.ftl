@@ -9,7 +9,7 @@
 	}
 	
 	pages["${pageId}"].id="${pageId}";
-	pages["${pageId}"].action="${requestURI}";
+	pages["${pageId}"].action="${request.requestURI}";
 	pages["${pageId}"].target="${extra['target']!""}";
 	pages["${pageId}"].params=new Object();
 	[#list Parameters?keys as key]
@@ -24,7 +24,7 @@
 	[#else]
 		[#assign fixPageSize=false]
 	[/#if]
-	[#if pagechecker.isPage(curPage)]
+	[#if b.isPage(curPage)]
 		[#local pageBaseTemplate]/template/${extra['scheme']!"xhtml"}/pageBar.ftl[/#local]
 		[#include pageBaseTemplate/]
 	[/#if]

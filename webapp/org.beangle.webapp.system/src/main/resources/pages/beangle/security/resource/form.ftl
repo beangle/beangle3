@@ -76,8 +76,8 @@
 		   </td>
 		   <td  class="normalTextStyle">
 			<select name="SelectedRestrictObjects" multiple="multiple" size="10" style="width:200px;" onDblClick="JavaScript:bg.select.moveSelected(this.form['SelectedRestrictObjects'], this.form['RestrictObjects'])">
-			 [#list resource.objects! as object]
-			  <option value="${object.id}">${object.name}</option>
+			 [#list resource.entities! as entity]
+			  <option value="${entity.id}">${entity.name}</option>
 			 [/#list]
 			</select>
 		   </td>
