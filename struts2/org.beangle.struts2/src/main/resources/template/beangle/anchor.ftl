@@ -1,2 +1,2 @@
 [#ftl/]
-<a href="${b.url(tag.href)}" >${nested_body!}</a>
+<a href="${b.url(tag.href)}" [#list parameters?keys as k] ${k}="${parameters[k]}"[/#list]>${nested_body!}</a>

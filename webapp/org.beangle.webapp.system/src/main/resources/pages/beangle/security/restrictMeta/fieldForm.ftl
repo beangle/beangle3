@@ -2,7 +2,7 @@
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 [#assign labInfo]修改参数信息[/#assign]
 [#include "/template/back.ftl"/]
-<form name="fieldForm" action="${b.url('!saveField')}" method="post" target="ui-tabs-2">
+<form name="fieldForm" action="${b.url('!saveField')}" method="post" target="限制参数">
 	<input type="hidden" name="field.id" value="${(field.id)!}" style="width:200px;" />
 	<table width="80%" class="formTable" align="center">
 		<tr class="thead"><td  colspan="2">数据限制参数</td></tr>
@@ -79,7 +79,7 @@
 	 };
 	 var v = new validator(form, a_fields, null);
 	 if (v.exec()) {
-		submit(form);
+		bg.form.submit(form);
 	 }
    }
   </script>

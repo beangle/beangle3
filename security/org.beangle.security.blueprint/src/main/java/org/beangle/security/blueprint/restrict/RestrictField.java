@@ -30,4 +30,8 @@ public interface RestrictField extends LongIdEntity {
 
 	public void setEntities(Set<RestrictEntity> objects);
 
+	public boolean isMultiple();
+
+	public void setMultiple(boolean multiple);
+
 }

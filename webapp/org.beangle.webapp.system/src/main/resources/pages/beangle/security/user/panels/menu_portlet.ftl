@@ -22,7 +22,7 @@
 		   <td>
 		   	[#list menu.resources as resource]
 		   	   [#if resources?seq_contains(resource)]
-			   [#if ((resource.objects?size)>0)&&resources?seq_contains(resource)]
+			   [#if ((resource.entities?size)>0)&&resources?seq_contains(resource)]
 				[@b.a href="restriction!info?forEdit=1&restrictionType=user&restriction.holder.id=${user.id}" target="restictionFrame"]<font color="red">${resource.title}</font>[/@][#rt]
 			   [#else][#lt]${resource.title}[/#if][#if resource_has_next]<br/>[/#if]
 		   	   [/#if]

@@ -4,6 +4,7 @@
  */
 package org.beangle.webapp.security.action;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -52,17 +53,17 @@ public class RestrictionAction extends SecurityActionSupport {
 		Restriction restriction = getRestriction();
 		RestrictionHolder holder = new RestrictionHelper(entityDao).getHolder();
 		List<Restriction> myRestrictions = getMyRestrictions(restriction.getPattern(), holder);
-		Set<RestrictField> ignoreParams = getIgnoreParams(myRestrictions);
+		Set<RestrictField> ignoreFields = getIgnoreFields(myRestrictions);
 		boolean isAdmin = isAdmin(getUser());
-		for (RestrictField param : restriction.getPattern().getEntity().getFields()) {
-			String value = get(param.getName());
-			if ((ignoreParams.contains(param) || isAdmin) && getBool("ignoreParam" + param.getId())) {
-				restriction.setItem(param, "*");
+		for (RestrictField field : restriction.getPattern().getEntity().getFields()) {
+			String value = get(field.getName());
+			if ((ignoreFields.contains(field) || isAdmin) && getBool("ignoreField" + field.getId())) {
+				restriction.setItem(field, "*");
 			} else {
 				if (StringUtils.isEmpty(value)) {
-					restriction.getItems().remove(param.getId());
+					restriction.getItems().remove(field.getId());
 				} else {
-					restriction.setItem(param, value);
+					restriction.setItem(field, value);
 				}
 			}
 		}
@@ -90,36 +91,34 @@ public class RestrictionAction extends SecurityActionSupport {
 		// 取得各参数的值
 		Restriction restriction = getRestriction();
 		boolean isAdmin = isAdmin(getUser());
-		Map<String, Object> mngParams = CollectUtils.newHashMap();
-		Map<String, Object> aoParams = CollectUtils.newHashMap();
+		Map<String, Object> mngFields = CollectUtils.newHashMap();
+		Map<String, Object> aoFields = CollectUtils.newHashMap();
 		List<Restriction> myRestricitons = getMyRestrictions(restriction.getPattern(),
 				restriction.getHolder());
-		Set<RestrictField> ignores = getIgnoreParams(myRestricitons);
-		put("ignoreParams", ignores);
-		Set<RestrictField> holderIgnoreParams = CollectUtils.newHashSet();
-		put("holderIgnoreParams", holderIgnoreParams);
-		for (RestrictField param : restriction.getPattern().getEntity().getFields()) {
-			List<Object> mngParam = restrictionService.getValues(param);
+		Set<RestrictField> ignores = getIgnoreFields(myRestricitons);
+		put("ignoreFields", ignores);
+		Set<RestrictField> holderIgnoreFields = CollectUtils.newHashSet();
+		put("holderIgnoreFields", holderIgnoreFields);
+		for (RestrictField field : restriction.getPattern().getEntity().getFields()) {
+			List<?> mngField = restrictionService.getFieldValues(field.getName());
 			if (!isAdmin) {
-				mngParam.retainAll(getMyRestrictionValues(myRestricitons, param.getName()));
+				mngField.retainAll(getMyRestrictionValues(myRestricitons, field.getName()));
 			} else {
-				ignores.add(param);
+				ignores.add(field);
 			}
-			String paramValue = restriction.getItem(param);
-			if ("*".equals(paramValue)) {
-				holderIgnoreParams.add(param);
+			String fieldValue = restriction.getItem(field);
+			if ("*".equals(fieldValue)) {
+				holderIgnoreFields.add(field);
 			}
-			mngParams.put(param.getName(), mngParam);
-			if (null == param.getSource()) {
-				aoParams.put(param.getName(), paramValue);
+			mngFields.put(field.getName(), mngField);
+			if (null == field.getSource()) {
+				aoFields.put(field.getName(), fieldValue);
 			} else {
-				Set<Object> aoParam = restrictionService.select(
-						restrictionService.getValues(param), restriction, param);
-				aoParams.put(param.getName(), aoParam);
+				aoFields.put(field.getName(), restrictionService.getFieldValue(field, restriction));
 			}
 		}
-		put("mngParams", mngParams);
-		put("aoParams", aoParams);
+		put("mngFields", mngFields);
+		put("aoFields", aoFields);
 		put("restriction", restriction);
 		return forward();
 	}
@@ -148,14 +147,12 @@ public class RestrictionAction extends SecurityActionSupport {
 		return rt;
 	}
 
-	private Set<RestrictField> getIgnoreParams(List<Restriction> restrictions) {
+	private Set<RestrictField> getIgnoreFields(List<Restriction> restrictions) {
 		Set<RestrictField> ignores = CollectUtils.newHashSet();
 		for (Restriction restriction : restrictions) {
-			for (RestrictField param : restriction.getPattern().getEntity().getFields()) {
-				String value = restriction.getItem(param);
-				if ("*".equals(value)) {
-					ignores.add(param);
-				}
+			for (RestrictField field : restriction.getPattern().getEntity().getFields()) {
+				String value = restriction.getItem(field);
+				if ("*".equals(value)) ignores.add(field);
 			}
 		}
 		return ignores;
@@ -164,12 +161,16 @@ public class RestrictionAction extends SecurityActionSupport {
 	private List<Object> getMyRestrictionValues(List<Restriction> restrictions, String name) {
 		List<Object> values = CollectUtils.newArrayList();
 		for (Restriction restriction : restrictions) {
-			RestrictField param = restriction.getPattern().getEntity().getField(name);
-			if (null != param) {
-				String value = restriction.getItem(param);
+			RestrictField field = restriction.getPattern().getEntity().getField(name);
+			if (null != field) {
+				String value = restriction.getItem(field);
 				if (null != value) {
-					values.addAll(restrictionService.select(restrictionService.getValues(param),
-							restriction, param));
+					if (field.isMultiple()) {
+						values.addAll((Collection<?>) restrictionService.getFieldValue(field,
+								restriction));
+					} else {
+						values.add(restrictionService.getFieldValue(field, restriction));
+					}
 				}
 			}
 		}

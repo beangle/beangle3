@@ -56,7 +56,7 @@
 	drop table sys_resources_patterns;
 	
 	alter table sys_params rename to sys_restrict_fields;
-	alter table sys_restrict_fields drop column multi_value;
+	alter table sys_restrict_fields rename multi_value multiple;
 	alter table sys_restrict_fields drop column id_property;
 	alter table sys_restrict_fields drop column properties;
 	alter table sys_restrict_fields add  remark varchar2(200);
@@ -76,3 +76,6 @@
 	delete from sys_resources_entities where resource_id in(select id from sys_resources where  name='security/param');
 	delete from sys_authorities where resource_id in(select id from sys_resources where  name='security/param');
 	delete from sys_resources where name='security/param';
+
+	alter table sys_session_activities add os varchar2(40);
+	alter table sys_session_activities add agent varchar2(40);

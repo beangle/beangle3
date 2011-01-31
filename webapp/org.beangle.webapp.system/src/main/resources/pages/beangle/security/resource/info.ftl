@@ -41,17 +41,17 @@
 		 </td>
 	   </tr>
 	  </table>
-	  [#list resource.objects as object]
+	  [#list resource.entities as entity]
 	  <fieldSet  align="center">
  	   <legend>数据权限 限制对象</legend>
 	   <table class="infoTable">
 	   <tr>
 		 <td class="title">名称:</td>
-		 <td class="content">${object.name}</td>
+		 <td class="content">${entity.name}</td>
 		 <td class="title">类型:</td>
-		 <td class="content">${object.type!}</td>
+		 <td class="content">${entity.type!}</td>
 		 <td class="title">描述:</td>
-		 <td class="content">${object.remark!}</td>
+		 <td class="content">${entity.remark!}</td>
 	   </tr>
 	   </table>
 	  </fieldSet>

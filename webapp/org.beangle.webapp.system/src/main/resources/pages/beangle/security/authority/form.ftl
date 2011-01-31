@@ -22,7 +22,7 @@
   <tr>
   <td valign="top">
 [@b.toolbar id="authorityBar"]
-	bar.setTitle("[@b.a href="group"]用户组[/@]-->菜单和资源权限");
+	bar.setTitle('[@b.a href="group"]用户组[/@]-->菜单和资源权限');
 	bar.addItem("${b.text("action.spread")}","displayAllRowsFor(2);",'contract.gif');
 	bar.addItem("${b.text("action.collapse")}","collapseAllRowsFor(2);",'expand.gif');
 	bar.addItem("${b.text("action.save")}",save,'save.gif');
@@ -64,11 +64,11 @@
 			[/#list]
 			</select>
 		</td>
-		<td><input name="displayFreezen" [#if Parameters['displayFreezen']??]checked="checked"[/#if] onclick="this.form.submit();" id="displayFreezen" type="checkbox"]<label for="displayFreezen">显示冻结菜单</label></td>
+		<td><input name="displayFreezen" [#if Parameters['displayFreezen']??]checked="checked"[/#if] onclick="this.form.submit();" id="displayFreezen" type="checkbox"><label for="displayFreezen">显示冻结菜单</label></td>
 	   </tr>
   </table>
 
-  <table width="100%" class="grid">
+  <table width="100%" class="gridtable">
   <tbody>
   <tr class="thead">
 	<th width="6%"><input type="checkbox" onclick="treeToggleAll(this)"/></th>
@@ -91,7 +91,7 @@
 
 	<tr class="grayStyle" id="${tdid}">
 	   <td   class="gridselect">
-		   <input type="checkbox" id="checkbox_${menu_index}" onclick="treeToggle(this);selectListen('checkbox_${menu_index}');"  name="menuId" [#if (aoMenus??)&&(aoMenus?seq_contains(menu))]checked="checked"[/#if] value="${menu.id}"]
+		   <input type="checkbox" id="checkbox_${menu_index}" onclick="treeToggle(this);selectListen('checkbox_${menu_index}');"  name="menuId" [#if (aoMenus??)&&(aoMenus?seq_contains(menu))]checked="checked"[/#if] value="${menu.id}">
 	   </td>
 	   <td>
 		<div class="tier${menu.code?length/2}">

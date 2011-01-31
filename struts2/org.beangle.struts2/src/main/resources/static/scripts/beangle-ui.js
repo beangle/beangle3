@@ -61,6 +61,10 @@
 		}
 		this.init(title,imageName);
 		
+		this.addHr=function(){
+			hrdiv=this.appendDiv(null,"keyLine");
+			hrdiv.innerHTML='<img height="2" width="100%" align="top" src="'+imagePath+'keyline.gif"/>';
+		}
 		function getImagePath(path,imageName){
 			if(imageName.charAt(0)=='/'){
 				return imageName;
@@ -498,10 +502,10 @@
 					row=ele.parentNode.parentNode;
 					if((typeof row.className)=="undefined") return;
 					selectIndex=row.className.indexOf("griddata-selected");
-					if(ele.checked && -1 == selectIndex){
-						row.className=row.className +" "+ "griddata-selected";
+					if(ele.checked){
+						if(-1 == selectIndex) row.className=row.className +" "+ "griddata-selected";
 					}else{
-						row.className=row.className.substring(0,selectIndex);
+						if(-1 != selectIndex) row.className=row.className.substring(0,selectIndex);
 					}
 				}
 			},
@@ -648,6 +652,7 @@
 			lastDot=action.lastIndexOf(".");
 			shortAction=action;
 			sufix="";
+			if(-1 == last1) last1 = lastDot;
 			if(-1!=last1){
 				shortAction=action.substring(0,last1);
 			}

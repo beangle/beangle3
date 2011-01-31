@@ -15,7 +15,7 @@
 	</tr>
 </table>
 
-[@b.grid items=fields var="field"  target="ui-tabs-2"]
+[@b.grid items=fields var="field"  target="限制参数"]
 	[@b.gridbar ]
 		bar.addItem("${b.text("action.new")}",action.method('editField'));
 		bar.addItem("${b.text("action.edit")}",action.single('editField'));

@@ -27,9 +27,9 @@ public class RestrictionHelper {
 
 	public static final Map<String, String> restrictionTypeMap = CollectUtils.newHashMap();
 	static {
-		restrictionTypeMap.put("user", "org.beangle.security.blueprint.UserRestriction");
-		restrictionTypeMap.put("group", "org.beangle.security.blueprint.GroupRestriction");
-		restrictionTypeMap.put("authority", "org.beangle.security.blueprint.AuthorityRestriction");
+		restrictionTypeMap.put("user", "org.beangle.security.blueprint.restrict.UserRestriction");
+		restrictionTypeMap.put("group", "org.beangle.security.blueprint.restrict.GroupRestriction");
+		restrictionTypeMap.put("authority", "org.beangle.security.blueprint.restrict.AuthorityRestriction");
 	}
 
 	EntityDao entityDao;
@@ -60,35 +60,35 @@ public class RestrictionHelper {
 	 */
 	public void populateInfo(RestrictionHolder holder) {
 		List<Restriction> restrictions = CollectUtils.newArrayList(holder.getRestrictions());
-		Collections.sort(restrictions, new PropertyComparator<Object>("paramGroup.name"));
-		Map<String, Map<String, Object>> paramMaps = CollectUtils.newHashMap();
+		Collections.sort(restrictions, new PropertyComparator<Object>("pattern.entity.name"));
+		Map<String, Map<String, Object>> fieldMaps = CollectUtils.newHashMap();
 		for (final Restriction restriction : restrictions) {
-			Map<String, Object> aoParams = CollectUtils.newHashMap();
-			for (RestrictField param : restriction.getPattern().getEntity().getFields()) {
-				String value = restriction.getItem(param);
+			Map<String, Object> aoFields = CollectUtils.newHashMap();
+			for (RestrictField field : restriction.getPattern().getEntity().getFields()) {
+				String value = restriction.getItem(field);
 				if (StringUtils.isNotEmpty(value)) {
-					if (null == param.getSource()) {
-						aoParams.put(param.getName(), value);
+					if (null == field.getSource()) {
+						aoFields.put(field.getName(), value);
 					} else {
-						aoParams.put(param.getName(), restrictionService.select(
-								restrictionService.getValues(param), restriction, param));
+						aoFields.put(field.getName(),
+								restrictionService.getFieldValue(field, restriction));
 					}
 				}
 			}
-			paramMaps.put(restriction.getId().toString(), aoParams);
+			fieldMaps.put(restriction.getId().toString(), aoFields);
 		}
 		String forEdit = Params.get("forEdit");
 		if (StringUtils.isNotEmpty(forEdit)) {
-			List<RestrictEntity> restrictObjects = CollectUtils.newArrayList();
+			List<RestrictEntity> restrictEntities = CollectUtils.newArrayList();
 			if (holder instanceof Authority) {
 				Authority au = (Authority) holder;
-				restrictObjects.addAll(au.getResource().getEntities());
+				restrictEntities.addAll(au.getResource().getEntities());
 			} else {
-				restrictObjects = entityDao.getAll(RestrictEntity.class);
+				restrictEntities = entityDao.getAll(RestrictEntity.class);
 			}
-			ContextHelper.put("restrictObjects", restrictObjects);
+			ContextHelper.put("restrictEntities", restrictEntities);
 		}
-		ContextHelper.put("paramMaps", paramMaps);
+		ContextHelper.put("fieldMaps", fieldMaps);
 		ContextHelper.put("restrictions", restrictions);
 	}
 

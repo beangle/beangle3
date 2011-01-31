@@ -4,61 +4,53 @@
  <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
  <script  type="text/javascript" src="${base}/static/scripts/tabpane.js"></script>
  <script  type="text/javascript" src="${base}/static/scripts/common/TabPane.js"></script>
- <script type="text/javascript">
+[@b.toolbar title="数据权限"]
 	function save(){
-	   var form=document.restrictionForm;
-	   if(confirm("确定设置?")){
-		  form.submit();
-	   }
+		var form=document.restrictionForm;
+		if(confirm("确定设置?")){form.submit();}
 	}
- </script>
- 
- <table id="restrictionBar"></table>
-  <form name="restrictionForm" method="post" action="${b.url('!save')}">
+  bar.addItem("${b.text("action.save")}",save,'save.gif');
+  bar.addBack();
+[/@]
+<form name="restrictionForm" method="post" action="${b.url('!save')}">
 	<input type="hidden" name="restriction.id" value="${restriction.id!}"/>
 	<input type="hidden" name="restrictionType" value="${Parameters['restrictionType']}"/>
-	<input type="hidden" name="restriction.paramGroup.id" value="${restriction.paramGroup.id}"/>
+	<input type="hidden" name="restriction.pattern.id" value="${restriction.pattern.id}"/>
 	<input type="hidden" name="restriction.holder.id" value="${restriction.holder.id}"/>
 	<input type="hidden" name="params" value="&restrictionType=${Parameters['restrictionType']}&restriction.holder.id=${Parameters['restriction.holder.id']}"/>
  <div>是否启用:
-  <input type="radio" [#if (restriction.enabled)!(true)]checked="checked"[/#if] value="1" name="restriction.enabled"]启用
-  <input type="radio" [#if !(restriction.enabled)!(true)]checked="checked"[/#if] value="0" name="restriction.enabled"]禁用
+  <input type="radio" [#if (restriction.enabled)!(true)]checked="checked"[/#if] value="1" name="restriction.enabled"  id="restriction.enabled1"/><label for="restriction.enabled1">启用</label>
+  <input type="radio" [#if !(restriction.enabled)!(true)]checked="checked"[/#if] value="0" name="restriction.enabled" id="restriction.enabled0"/><label for="restriction.enabled0">禁用</label>
  </div>
  <div class="dynamic-tab-pane-control tab-pane" id="tabPane1" >
    <script type="text/javascript">tp1 = new WebFXTabPane( document.getElementById( "tabPane1") ,false );</script>
-	[#list restriction.paramGroup.params?sort_by("description") as param]
-	 <div style="display: block;" class="tab-page" id="tabPage${param_index}">
-	  <h2 class="tab"><a href="#" style="font-size:12px"> ${param.description}</a></h2>
-	  <script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage${param_index}" ) );</script>
-	   [#if ignoreParams?seq_contains(param)]
+	[#list restriction.pattern.entity.fields?sort_by("remark") as field]
+	 <div style="display: block;" class="tab-page" id="tabPage${field_index}">
+	  <h2 class="tab"><a href="#" style="font-size:12px"> ${field.remark}</a></h2>
+	  <script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage${field_index}" ) );</script>
+	[#if ignoreFields?seq_contains(field)]
 	   <div>
-	   	<input name="ignoreParam${param.id}" type="radio" value="1" [#if holderIgnoreParams?seq_contains(param)]checked="checked"[/#if] id="ignoreParam${param.id}_1"]<label for="ignoreParam${param.id}_1"]使用通配符*</label>
-	   	<input name="ignoreParam${param.id}" type="radio" value="0" [#if !holderIgnoreParams?seq_contains(param)]checked="checked"[/#if] id="ignoreParam${param.id}_2"]<label for="ignoreParam${param.id}_2"]选择或填写具体值</label>
+	   	<input name="ignoreField${field.id}" type="radio" value="1" [#if holderIgnoreFields?seq_contains(field)]checked="checked"[/#if] id="ignoreField${field.id}_1"><label for="ignoreField${field.id}_1">使用通配符*</label>
+	   	<input name="ignoreField${field.id}" type="radio" value="0" [#if !holderIgnoreFields?seq_contains(field)]checked="checked"[/#if] id="ignoreField${field.id}_2"><label for="ignoreField${field.id}_2">选择或填写具体值</label>
 	   </div>
-		[/#if]
-	   [#if param.editor??]
-		[@b.grid  items=mngParams[param.name] var="value"]
+	[/#if]
+	   [#if field.multiple]
+		[@b.grid items=mngFields[field.name] var="value"]
 			[@b.row]
-				[@b.boxcol width="10%" name="${param.name}"]<input type="checkbox" name="${param.name}" [#if aoParams[param.name]!?seq_contains(value)]checked="checked"[/#if] value="${value["${param.editor.idProperty}"]}" />[/@]
-				[@b.col name="可选值"]${value["${param.editor.properties}"]}[/@]
+				[@b.boxcol width="10%" property="id" boxname=field.name checked=(aoFields[field.name]?seq_contains(value))!false /]
+				[@b.col name="可选值"]${value}[/@]
 			[/@]
 		[/@]
 	   [#else]
 	   <table class="grid" width="100%">
-		  <tr><td colspan="2"><input type="text" name="${param.name}" value="${aoParams[param.name]!}"/>[#if param.multiValue]多个值请用,格开[/#if]</td></tr>
+		  <tr><td colspan="2"><input type="text" name="${field.name}" value="${aoFields[field.name]!}"/>[#if field.multiple]多个值请用,格开[/#if]</td></tr>
 	   </table>
 	   [/#if]
 	   </div>
 	[/#list]
 	</div>
 	</form>
-	<script type="text/javascript">setupAllTabs();</script>
 <script type="text/javascript">
-   var bar = bg.ui.toolbar('restrictionBar','数据权限');
-   bar.setMessage('[@b.messages/]');
-   bar.addItem("${b.text("action.save")}",save,'save.gif');
-   bar.addBack();
+	setupAllTabs();
  </script>
- 
 [@b.foot/]
-

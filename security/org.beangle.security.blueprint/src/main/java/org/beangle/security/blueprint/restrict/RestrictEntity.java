@@ -29,8 +29,8 @@ public interface RestrictEntity extends LongIdEntity {
 
 	public Set<RestrictField> getFields();
 
-	public void setFields(Set<RestrictField> params);
+	public void setFields(Set<RestrictField> fields);
 
-	public RestrictField getField(String paramName);
+	public RestrictField getField(String fieldName);
 
 }

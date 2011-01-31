@@ -22,6 +22,8 @@ public class RestrictFieldBean extends LongIdObject implements RestrictField {
 
 	private String source;
 
+	private boolean multiple;
+	
 	private Set<RestrictEntity> entities = CollectUtils.newHashSet();
 
 	public String getName() {
@@ -62,6 +64,14 @@ public class RestrictFieldBean extends LongIdObject implements RestrictField {
 
 	public void setSource(String source) {
 		this.source = source;
+	}
+
+	public boolean isMultiple() {
+		return multiple;
+	}
+
+	public void setMultiple(boolean multiple) {
+		this.multiple = multiple;
 	}
 
 }

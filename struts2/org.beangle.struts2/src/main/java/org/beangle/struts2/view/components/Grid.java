@@ -262,7 +262,8 @@ public class Grid extends ClosingUIBean {
 		String type = "checkbox";
 		// checkbox or radiobox name
 		String boxname = null;
-
+		boolean checked;
+		
 		@Override
 		public boolean start(Writer writer) {
 			row = (Row) findAncestor(Row.class);
@@ -293,5 +294,14 @@ public class Grid extends ClosingUIBean {
 		public void setType(String type) {
 			this.type = type;
 		}
+
+		public boolean isChecked() {
+			return checked;
+		}
+
+		public void setChecked(boolean checked) {
+			this.checked = checked;
+		}
+		
 	}
 }

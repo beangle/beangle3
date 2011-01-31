@@ -144,8 +144,7 @@ public class GroupBean extends LongIdTimeObject implements Group {
 	}
 
 	public String toString() {
-		return new ToStringBuilder(this).append("name", this.getName()).append("id", this.id)
-				.toString();
+		return name;
 	}
 
 }

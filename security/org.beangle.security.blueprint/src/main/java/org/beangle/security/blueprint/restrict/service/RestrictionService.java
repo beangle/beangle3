@@ -25,30 +25,47 @@ public interface RestrictionService {
 
 	public List<Restriction> getAuthorityRestrictions(User user, Resource resource);
 
-	public List<Object> getValues(RestrictField param);
-
 	/**
-	 * 从总的集合中找出item中规定的集合
-	 * 
-	 * @param values
-	 * @param item
+	 * Get field enumerated values.
+	 * @param fieldName
 	 * @return
 	 */
-	public <T> Set<T> select(Collection<T> values, Restriction res, RestrictField param);
-
+	public List<?> getFieldValues(String fieldName);
+	
 	/**
-	 * 从总的集合中找出items中规定的集合的并集
-	 * 
-	 * @param values
-	 * @param items
+	 * Extract field values;
+	 * @param restrictions
+	 * @param fieldName
 	 * @return
 	 */
-	public <T> Set<T> select(Collection<T> values, List<? extends Restriction> restrictions,
-			RestrictField param);
+	public List<?> getFieldValues(String fieldName,List<? extends Restriction> restrictions);
 
-	public void apply(OqlBuilder<?> builder, /*
-											 * Collection<? extends
-											 * RestrictPattern> patterns,
-											 */
-	Collection<? extends Restriction> restrictions);
+	/**
+	 * 
+	 * @param field
+	 * @param restriction
+	 * @return
+	 */
+	public Object getFieldValue(RestrictField field, Restriction restriction);
+//	/**
+//	 * 从总的集合中找出item中规定的集合
+//	 * 
+//	 * @param values
+//	 * @param item
+//	 * @return
+//	 */
+//	public <T> Set<T> select(Collection<T> values, Restriction res, RestrictField param);
+//
+//	/**
+//	 * 从总的集合中找出items中规定的集合的并集
+//	 * 
+//	 * @param values
+//	 * @param items
+//	 * @return
+//	 */
+//	public <T> Set<T> select(Collection<T> values, List<? extends Restriction> restrictions,
+//			RestrictField param);
+
+	public void apply(OqlBuilder<?> builder, Collection<? extends Restriction> restrictions);
+
 }

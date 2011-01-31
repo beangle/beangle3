@@ -10,6 +10,7 @@
 		</id>
 		<property name="name" not-null="true"/>
 		<property name="type" not-null="true"/>
+		<property name="multiple" not-null="true"/>
 		<property name="remark" not-null="true"/>
 		<property name="source"/>
 		<set name="entities" table="restrict_entities_fields">
@@ -78,7 +79,7 @@
 			<map-key type="long" column="param_id"/>
 			<element type="string" column="content"/>
 		</map>
-		<many-to-one name="holder" entity-name="org.beangle.security.blueprint.Authority"/>
+		<many-to-one name="holder" entity-name="org.beangle.security.blueprint.Authority" />
 		<many-to-one name="pattern" not-null="true"/>
 	</class>
 </hibernate-mapping>

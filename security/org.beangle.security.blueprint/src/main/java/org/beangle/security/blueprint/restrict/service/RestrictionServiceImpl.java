@@ -16,6 +16,8 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.StrUtils;
+import org.beangle.model.Entity;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.Condition;
 import org.beangle.model.query.builder.OqlBuilder;
@@ -23,8 +25,8 @@ import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.GroupMember;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.RestrictEntity;
+import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.RestrictPattern;
 import org.beangle.security.blueprint.restrict.Restriction;
 import org.beangle.security.blueprint.restrict.RestrictionHolder;
@@ -53,7 +55,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		// 用户自身限制
 		RestrictionHolder userHolder = (RestrictionHolder) user;
 		restrictions.addAll(userHolder.getRestrictions());
-		// 模式过滤
+		// 实体过滤
 		return (List<Restriction>) CollectionUtils.select(restrictions, new Predicate() {
 			public boolean evaluate(Object obj) {
 				Restriction restriciton = (Restriction) obj;
@@ -67,7 +69,8 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 	public List<Restriction> getAuthorityRestrictions(User user, Resource resource) {
 		OqlBuilder<Restriction> query = OqlBuilder.hql("select restriction from Authority r "
 				+ "join r.group.members as gmember join r.restrictions as restriction"
-				+ " where gmember.user=:user and gmember.member=true and r.resource=:resource" + " and restriction.enabled=true");
+				+ " where gmember.user=:user and gmember.member=true and r.resource=:resource"
+				+ " and restriction.enabled=true");
 		Map<String, Object> params = CollectUtils.newHashMap();
 		params.put("user", user);
 		params.put("resource", resource);
@@ -75,12 +78,11 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		return entityDao.search(query);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List getValues(RestrictField field) {
+	private List<?> getFieldValues(RestrictField field) {
 		if (null == field.getSource()) return Collections.emptyList();
 		String source = field.getSource();
 		String prefix = StringUtils.substringBefore(source, ":");
-		source=StringUtils.substringAfter(source, ":");
+		source = StringUtils.substringAfter(source, ":");
 		DataProvider provider = providers.get(prefix);
 		if (null != provider) {
 			try {
@@ -93,30 +95,62 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		}
 	}
 
+	public List<?> getFieldValues(String fieldName) {
+		return getFieldValues(getRestrictField(fieldName));
+	}
+
+	public List<?> getFieldValues(String fieldName, List<? extends Restriction> restrictions) {
+		Set<Object> values = CollectUtils.newHashSet();
+		RestrictField field = getRestrictField(fieldName);
+		boolean gotIt = false;
+		for (Restriction restriction : restrictions) {
+			Object value = getFieldValue(field, restriction);
+			if (null != value) {
+				gotIt = true;
+				if (value instanceof Collection<?>) {
+					values.addAll((Collection<?>) value);
+				} else {
+					values.add(value);
+				}
+			}
+		}
+		if (!gotIt) {
+			return getFieldValues(field);
+		} else {
+			return CollectUtils.newArrayList(values);
+		}
+	}
+
 	/**
 	 * 获取数据限制的某个属性的值
 	 * 
-	 * @param restriction
 	 * @param field
+	 * @param restriction
 	 * @return
 	 */
-	public Object getValue(Restriction restriction, RestrictField field) {
+	public Object getFieldValue(RestrictField field, Restriction restriction) {
 		String value = restriction.getItem(field);
-		if (null == value) { return null; }
-		if (ObjectUtils.equals(Restriction.ALL, value)) { return Restriction.ALL; }
+		if (StringUtils.isEmpty(value)) return null;
+		if (ObjectUtils.equals(Restriction.ALL, value)) { return getFieldValues(field); }
 		try {
-			Constructor<?> con = Class.forName(field.getType()).getConstructor(
-					new Class[] { String.class });
-			if (StringUtils.isEmpty(value)) { return null; }
-			if (StringUtils.contains(value, ',')) {
-				Set<Object> valueSet = CollectUtils.newHashSet();
+			List<Object> returned = null;
+			Class clazz = Class.forName(field.getType());
+			if (Entity.class.isAssignableFrom(clazz)) {
+				OqlBuilder<Object> b = OqlBuilder.from(clazz, "e");
+				b.where("e.id in(:ids)", StrUtils.splitToLong(value));
+				returned = entityDao.search(b);
+			} else {
+				Constructor<?> con = clazz.getConstructor(new Class[] { String.class });
+				returned = CollectUtils.newArrayList();
 				String[] values = StringUtils.split(value, ",");
 				for (int i = 0; i < values.length; i++) {
-					valueSet.add(con.newInstance(new Object[] { values[i] }));
+					returned.add(con.newInstance(new Object[] { values[i] }));
 				}
-				return valueSet;
+			}
+			if (field.isMultiple()) {
+				return returned;
 			} else {
-				return con.newInstance(new Object[] { value });
+				return (1 != returned.size()) ? null : returned.get(0);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("exception with param type:" + field.getType() + " value:"
@@ -124,7 +158,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		}
 	}
 
-	public <T> Set<T> select(Collection<T> values, List<? extends Restriction> restrictions,
+	private <T> Set<T> select(Collection<T> values, List<? extends Restriction> restrictions,
 			RestrictField param) {
 		Set<T> selected = CollectUtils.newHashSet();
 		for (final Restriction restriction : restrictions) {
@@ -133,17 +167,17 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		return selected;
 	}
 
-	public <T> Set<T> select(Collection<T> values, final Restriction restriction,
-			RestrictField param) {
+	private <T> Set<T> select(Collection<T> values, final Restriction restriction,
+			RestrictField field) {
 		Set<T> selected = CollectUtils.newHashSet();
-		String value = restriction.getItem(param);
+		String value = restriction.getItem(field);
 		if (StringUtils.isNotEmpty(value)) {
 			if (value.equals(Restriction.ALL)) {
 				selected.addAll(values);
 				return selected;
 			}
 			@SuppressWarnings("unchecked")
-			final Set<T> paramValue = (Set<T>) getValue(restriction, param);
+			final Set<T> paramValue = (Set<T>) getFieldValue(field, restriction);
 			for (T obj : values) {
 				try {
 					// if (paramValue.contains(PropertyUtils.getProperty(obj,
@@ -193,7 +227,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 						} else {
 							content = StringUtils.replace(content, ":" + param.getName(), ":"
 									+ param.getName() + index);
-							paramValues.add(getValue(restriction, param));
+							paramValues.add(getFieldValue(param, restriction));
 						}
 					} else {
 						throw new RuntimeException(paramName + " had not been initialized");
@@ -219,6 +253,13 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 			con.params(paramValues);
 			query.where(con);
 		}
+	}
+
+	private RestrictField getRestrictField(String fieldName) {
+		List<RestrictField> fields = entityDao.get(RestrictField.class, "name", fieldName);
+		if (1 != fields.size()) { throw new RuntimeException("bad pattern parameter named :"
+				+ fieldName); }
+		return fields.get(0);
 	}
 
 	public void setUserService(UserService userService) {

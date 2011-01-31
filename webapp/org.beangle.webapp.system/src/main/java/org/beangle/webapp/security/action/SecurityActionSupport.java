@@ -7,7 +7,6 @@ package org.beangle.webapp.security.action;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.NoParameters;
@@ -15,14 +14,11 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.access.AccessDeniedException;
 import org.beangle.security.blueprint.Resource;
+import org.beangle.security.blueprint.SecurityUtils;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.Restriction;
 import org.beangle.security.blueprint.restrict.service.RestrictionService;
 import org.beangle.security.blueprint.service.AuthorityService;
-import org.beangle.security.blueprint.service.UserToken;
-import org.beangle.security.core.Authentication;
-import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.security.web.access.DefaultResourceExtractor;
 import org.beangle.struts2.action.EntityDrivenAction;
@@ -30,6 +26,8 @@ import org.beangle.struts2.action.EntityDrivenAction;
 import com.opensymphony.xwork2.ActionContext;
 
 public abstract class SecurityActionSupport extends EntityDrivenAction implements NoParameters {
+
+	private static final long serialVersionUID = 8321873197609852795L;
 
 	protected AuthorityService authorityService;
 
@@ -68,30 +66,8 @@ public abstract class SecurityActionSupport extends EntityDrivenAction implement
 		return realms;
 	}
 
-	protected List<Object> getRestricitonValues(String name) {
-		List<Restriction> restrictions = getRestrictions();
-		Set<Object> values = CollectUtils.newHashSet();
-		boolean gotIt = false;
-		for (Restriction restiction : restrictions) {
-			RestrictField param = restiction.getPattern().getEntity().getField(name);
-			if (null != param) {
-				String value = restiction.getItem(param);
-				if (null != value) {
-					gotIt = true;
-					values.addAll(restrictionService.select(restrictionService.getValues(param),
-							restiction, param));
-				}
-			}
-		}
-		if (!gotIt) {
-			List<RestrictField> params = entityDao.get(RestrictField.class, "name", name);
-			if (params.isEmpty()) { throw new RuntimeException("bad pattern parameter named :"
-					+ name); }
-			RestrictField param = (RestrictField) params.get(0);
-			return restrictionService.getValues(param);
-		} else {
-			return CollectUtils.newArrayList(values);
-		}
+	protected List<?> getRestricitonValues(String name) {
+		return restrictionService.getFieldValues(name, getRestrictions());
 	}
 
 	protected void applyRestriction(OqlBuilder<?> query) {
@@ -99,24 +75,16 @@ public abstract class SecurityActionSupport extends EntityDrivenAction implement
 		restrictionService.apply(query, getRestrictions());
 	}
 
-	protected UserToken getAuthentication() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (null == auth) throw new AuthenticationException();
-		UserToken user = (UserToken) auth.getPrincipal();
-		if (null == user.getId()) throw new AuthenticationException();
-		return user;
-	}
-
 	protected Long getUserId() {
-		return getAuthentication().getId();
+		return SecurityUtils.getUserId();
 	}
 
 	protected String getUsername() {
-		return getAuthentication().getUsername();
+		return SecurityUtils.getUsername();
 	}
 
-	protected String getFullName() {
-		return getAuthentication().getFullname();
+	protected String getFullname() {
+		return SecurityUtils.getFullname();
 	}
 
 	protected User getUser() {
@@ -124,7 +92,7 @@ public abstract class SecurityActionSupport extends EntityDrivenAction implement
 	}
 
 	protected Long getUserCategoryId() {
-		return getAuthentication().getCategory().getId();
+		return SecurityUtils.getUserCategoryId();
 	}
 
 	public void setAuthorityService(AuthorityService authorityService) {
