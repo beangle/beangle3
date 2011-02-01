@@ -2,10 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.struts2.view.components;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+package org.beangle.struts2.view.component;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
@@ -13,8 +10,8 @@ public class Iframe extends ClosingUIBean {
 
 	String src;
 
-	public Iframe(ValueStack stack, HttpServletRequest request, HttpServletResponse response) {
-		super(stack, request, response);
+	public Iframe(ValueStack stack) {
+		super(stack);
 	}
 
 	public String getSrc() {

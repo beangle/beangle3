@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import org.apache.struts2.components.Component;
+import org.beangle.struts2.view.component.Component;
 
 import freemarker.template.TemplateModelException;
 import freemarker.template.TransformControl;
@@ -34,11 +34,11 @@ public class ResetCallbackWriter extends Writer implements TransformControl {
 		}
 	}
 
+	/**
+	 * let's just not do it (it will be flushed eventually anyway)
+	 */
 	public void flush() throws IOException {
-		writer.flush();
-		if (bean.usesBody()) {
-			body.flush();
-		}
+		//writer.flush();
 	}
 
 	public void write(char cbuf[], int off, int len) throws IOException {
@@ -62,8 +62,8 @@ public class ResetCallbackWriter extends Writer implements TransformControl {
 		afterBody = true;
 		boolean result = bean.end(this, bean.usesBody() ? body.toString() : "");
 		if (result) {
-			if(bean.usesBody()){
-				afterBody=false;
+			if (bean.usesBody()) {
+				afterBody = false;
 				body.getBuffer().delete(0, body.getBuffer().length());
 			}
 			return REPEAT_EVALUATION;

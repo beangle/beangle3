@@ -51,7 +51,7 @@ public class BeangleTagLibraryTest {
 		container = configuration.getContainer();
 		actionProxyFactory = container.getInstance(ActionProxyFactory.class);
 		buildCfg();
-		initDispatcher(null);
+		//initDispatcher(null);
 	}
 
 	protected Dispatcher initDispatcher(Map<String, String> params) {
@@ -71,34 +71,34 @@ public class BeangleTagLibraryTest {
 		actionProxyFactory = null;
 		StrutsTestCaseHelper.tearDown();
 	}
-
-	protected void loadConfigurationProviders(ConfigurationProvider... providers) {
-		configurationManager = XWorkTestCaseHelper.loadConfigurationProviders(configurationManager,
-				providers);
-		configuration = configurationManager.getConfiguration();
-		container = configuration.getContainer();
-		actionProxyFactory = container.getInstance(ActionProxyFactory.class);
-	}
-
-	protected void loadButAdd(final Class<?> type, final Object impl) {
-		loadButAdd(type, Container.DEFAULT_NAME, impl);
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	protected void loadButAdd(final Class<?> type, final String name, final Object impl) {
-		loadConfigurationProviders(new StubConfigurationProvider() {
-			@Override
-			public void register(ContainerBuilder builder, LocatableProperties props)
-					throws ConfigurationException {
-				builder.factory(type, name, new Factory() {
-					public Object create(Context context) throws Exception {
-						return impl;
-					}
-
-				}, Scope.SINGLETON);
-			}
-		});
-	}
+//
+//	protected void loadConfigurationProviders(ConfigurationProvider... providers) {
+//		configurationManager = XWorkTestCaseHelper.loadConfigurationProviders(configurationManager,
+//				providers);
+//		configuration = configurationManager.getConfiguration();
+//		container = configuration.getContainer();
+//		actionProxyFactory = container.getInstance(ActionProxyFactory.class);
+//	}
+//
+//	protected void loadButAdd(final Class<?> type, final Object impl) {
+//		loadButAdd(type, Container.DEFAULT_NAME, impl);
+//	}
+//
+//	@SuppressWarnings({ "unchecked", "rawtypes" })
+//	protected void loadButAdd(final Class<?> type, final String name, final Object impl) {
+//		loadConfigurationProviders(new StubConfigurationProvider() {
+//			@Override
+//			public void register(ContainerBuilder builder, LocatableProperties props)
+//					throws ConfigurationException {
+//				builder.factory(type, name, new Factory() {
+//					public Object create(Context context) throws Exception {
+//						return impl;
+//					}
+//
+//				}, Scope.SINGLETON);
+//			}
+//		});
+//	}
 
 	freemarker.template.Configuration cfg;
 
@@ -114,7 +114,7 @@ public class BeangleTagLibraryTest {
 		Template template = cfg.getTemplate("beangle-tags.ftl");
 		StringWriter writer = new StringWriter();
 		Map<String, Object> datas = CollectUtils.newHashMap();
-		datas.put("bg", new BeangleModels(ActionContext.getContext().getValueStack(),
+		datas.put("b", new BeangleModels(ActionContext.getContext().getValueStack(),
 				new MockHttpServletRequest(), new MockHttpServletResponse()));
 		template.process(datas, writer);
 	}

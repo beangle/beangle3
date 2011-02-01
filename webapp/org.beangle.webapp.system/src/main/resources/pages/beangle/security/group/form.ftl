@@ -5,7 +5,7 @@
  [#assign labInfo]${b.text("ui.groupInfo")}[/#assign]
  [#include "/template/back.ftl"]
 	 <table width="80%"  class="formTable" align="center">
-	  <form name="groupForm" action="${b.url('group!save')}" method="post">
+	  <form name="groupForm" action="${b.url('!save')}" method="post">
 	   [@b.redirectParams/]
 	   <tr class="thead">
 		 <td  colspan="2">${b.text("ui.groupInfo")}</td>

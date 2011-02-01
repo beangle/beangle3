@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.StopWatch;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
 import org.beangle.commons.lang.StrUtils;
@@ -42,6 +43,7 @@ public class UserAction extends SecurityActionSupport {
 	private UserDashboardHelper userDashboardHelper;
 
 	protected void indexSetting() {
+		put("watch",new StopWatch());
 		put("categories", entityDao.getAll(UserCategory.class));
 	}
 

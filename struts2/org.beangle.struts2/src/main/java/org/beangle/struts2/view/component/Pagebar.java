@@ -2,10 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.struts2.view.components;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+package org.beangle.struts2.view.component;
 
 import org.beangle.commons.collection.page.Page;
 
@@ -15,8 +12,8 @@ public class Pagebar extends UIBean {
 
 	private Page<?> page;
 
-	public Pagebar(ValueStack stack, HttpServletRequest request, HttpServletResponse response) {
-		super(stack, request, response);
+	public Pagebar(ValueStack stack) {
+		super(stack);
 	}
 
 	public Page<?> getPage() {

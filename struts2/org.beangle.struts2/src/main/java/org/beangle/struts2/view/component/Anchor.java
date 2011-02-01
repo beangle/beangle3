@@ -2,19 +2,16 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.struts2.view.components;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+package org.beangle.struts2.view.component;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
 public class Anchor extends ClosingUIBean {
 
-	String href;
+	private String href;
 	
-	public Anchor(ValueStack stack, HttpServletRequest request, HttpServletResponse response) {
-		super(stack, request, response);
+	public Anchor(ValueStack stack) {
+		super(stack);
 	}
 	public String getHref() {
 		return href;

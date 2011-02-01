@@ -2,19 +2,18 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.struts2.view.components;
+package org.beangle.struts2.view.component;
 
 import java.io.Writer;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.beangle.struts2.view.component.template.TemplateHelper;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
 public abstract class IterableUIBean extends ClosingUIBean {
 
-	public IterableUIBean(ValueStack stack, HttpServletRequest request, HttpServletResponse response) {
-		super(stack, request, response);
+	public IterableUIBean(ValueStack stack) {
+		super(stack);
 	}
 
 	protected abstract boolean next();
@@ -22,7 +21,7 @@ public abstract class IterableUIBean extends ClosingUIBean {
 	protected void iterator(Writer writer, String body) {
 		stack.getContext().put("nested_body", body);
 		try {
-			mergeTemplate(writer, buildTemplateName(template, getDefaultTemplate()));
+			mergeTemplate(writer, TemplateHelper.buildFullName(getTheme(), getClass()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

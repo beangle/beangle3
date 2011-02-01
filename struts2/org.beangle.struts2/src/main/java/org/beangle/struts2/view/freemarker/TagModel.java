@@ -6,19 +6,15 @@ package org.beangle.struts2.view.freemarker;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.struts2.components.Component;
+import org.beangle.struts2.view.component.Component;
+import org.beangle.struts2.view.component.ComponentHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.inject.Container;
 import com.opensymphony.xwork2.util.ValueStack;
 
 import freemarker.ext.beans.BeansWrapper;
@@ -31,27 +27,25 @@ public abstract class TagModel implements TemplateTransformModel {
 	private static final Logger logger = LoggerFactory.getLogger(TagModel.class);
 
 	protected ValueStack stack;
-	protected HttpServletRequest req;
-	protected HttpServletResponse res;
 
-	public TagModel(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
-		this.stack = stack;
-		this.req = req;
-		this.res = res;
+	public TagModel(ValueStack stack){
+		this.stack=stack;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Writer getWriter(Writer writer, Map params) throws TemplateModelException, IOException {
 		Component bean = getBean();
-		Container container = (Container) stack.getContext().get(ActionContext.CONTAINER);
-		container.inject(bean);
+//		Container container = (Container) stack.getContext().get(ActionContext.CONTAINER);
+//		container.inject(bean);
 		BeansWrapper objectWrapper = BeansWrapper.getDefaultInstance();
+
 		for (Iterator iterator = params.entrySet().iterator(); iterator.hasNext();) {
 			Map.Entry<String, Object> entry = (Map.Entry<String, Object>) iterator.next();
 			String key = entry.getKey();
 			Object value = entry.getValue();
 			if (value != null) {
-				if (PropertyUtils.isWriteable(bean, key)) {
+				Method m = ComponentHelper.getWriteMethod(bean, key);
+				if (null != m) {
 					if (value instanceof TemplateModel) {
 						try {
 							value = objectWrapper.unwrap((TemplateModel) value);
@@ -60,7 +54,7 @@ public abstract class TagModel implements TemplateTransformModel {
 						}
 					}
 					try {
-						PropertyUtils.setProperty(bean, key, value);
+						m.invoke(bean, value);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -69,9 +63,6 @@ public abstract class TagModel implements TemplateTransformModel {
 				}
 			}
 		}
-		// Map unwrappedParameters = unwrapParameters(params);
-		// bean.copyParams(unwrappedParameters);
-		// bean.getParameters().putAll(unwrappedParameters);
 		return new ResetCallbackWriter(bean, writer);
 	}
 

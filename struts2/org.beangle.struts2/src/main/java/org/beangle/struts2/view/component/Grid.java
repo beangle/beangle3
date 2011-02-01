@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.struts2.view.components;
+package org.beangle.struts2.view.component;
 
 import java.io.Writer;
 import java.util.Collections;
@@ -10,9 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.xwork.ObjectUtils;
 import org.apache.commons.lang.xwork.StringUtils;
@@ -42,23 +39,24 @@ public class Grid extends ClosingUIBean {
 	private String var;
 	// gridbar
 	private String bar;
-	private String sortable="true";
+	private String sortable = "true";
 
-	public Grid(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
-		super(stack, req, res);
+	public Grid(ValueStack stack) {
+		super(stack);
 	}
 
 	public boolean getHasbar() {
 		return (null != bar || items instanceof Page);
 	}
 
-	public boolean isPageable(){
-		return items instanceof Page<?>; 
+	public boolean isPageable() {
+		return items instanceof Page<?>;
 	}
-	
-	public boolean isNotFullPage(){
-		return ((Page<?>)items).size()<((Page<?>)items).getPageSize();
+
+	public boolean isNotFullPage() {
+		return ((Page<?>) items).size() < ((Page<?>) items).getPageSize();
 	}
+
 	public String defaultSort(String property) {
 		return StrUtils.concat(var, ".", property);
 	}
@@ -126,8 +124,8 @@ public class Grid extends ClosingUIBean {
 	public static class Bar extends ClosingUIBean {
 		private Grid table;
 
-		public Bar(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
-			super(stack, req, res);
+		public Bar(ValueStack stack) {
+			super(stack);
 			table = (Grid) findAncestor(Grid.class);
 		}
 
@@ -150,8 +148,8 @@ public class Grid extends ClosingUIBean {
 		private Object obj;
 		private Boolean hasInnerTr;
 
-		public Row(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
-			super(stack, req, res);
+		public Row(ValueStack stack) {
+			super(stack);
 			table = (Grid) findAncestor(Grid.class);
 			Object iteratorTarget = table.items;
 			if (table.items instanceof String) {
@@ -192,14 +190,14 @@ public class Grid extends ClosingUIBean {
 		String width;
 		Row row;
 
-		public Col(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
-			super(stack, req, res);
+		public Col(ValueStack stack) {
+			super(stack);
 		}
 
 		@Override
 		public boolean start(Writer writer) {
 			row = (Row) findAncestor(Row.class);
-			if(row.index==0){
+			if (row.index == 0) {
 				row.table.addCol(this);
 			}
 			return true;
@@ -250,37 +248,42 @@ public class Grid extends ClosingUIBean {
 		public void setWidth(String width) {
 			this.width = width;
 		}
-		
+
 	}
 
 	public static class Boxcol extends Col {
 
-		public Boxcol(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
-			super(stack, req, res);
+		public Boxcol(ValueStack stack) {
+			super(stack);
 		}
 
 		String type = "checkbox";
 		// checkbox or radiobox name
 		String boxname = null;
 		boolean checked;
-		
+
 		@Override
 		public boolean start(Writer writer) {
 			row = (Row) findAncestor(Row.class);
-			if(row.index==0){
+			if (row.index == 0) {
 				row.table.addCol(this);
 			}
 			if (null == boxname) {
 				boxname = row.table.var + "." + property;
 			}
-			if(null==property){
-				this.property="id";
+			if (null == property) {
+				this.property = "id";
 			}
 			return true;
 		}
 
 		public String getType() {
 			return type;
+		}
+
+		@Override
+		public String getName() {
+			return StrUtils.concat(row.table.var, "_", property);
 		}
 
 		public String getBoxname() {
@@ -302,6 +305,6 @@ public class Grid extends ClosingUIBean {
 		public void setChecked(boolean checked) {
 			this.checked = checked;
 		}
-		
+
 	}
 }

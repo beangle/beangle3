@@ -1,11 +1,11 @@
 [#ftl/]
 <script type="text/javascript">
-	page=bg.page("${tag.id}","${request.requestURI}","${parameters['target']!""}");
+	page=bg.page("${tag.id}","${request.requestURI}","${tag.parameters['target']!""}");
 	page.maxPageNo=${tag.page.maxPageNo};
 	page.addParams('${b.paramstring}');
 </script>
-[#if parameters['fixPageSize']?? && (parameters['fixPageSize']=='1' || parameters['fixPageSize']=='true')][#assign fixPageSize=true][#else][#assign fixPageSize=false][/#if]
-<div [#if parameters['cssClass']??]class="${parameters['cssClass']}"[#else]class="pagebar"[/#if] [#if parameters['cssStyle']??]style="${parameters['style']}"[/#if]>
+[#if tag.parameters['fixPageSize']?? && (tag.parameters['fixPageSize']=='1' || tag.parameters['fixPageSize']=='true')][#assign fixPageSize=true][#else][#assign fixPageSize=false][/#if]
+<div [#if tag.parameters['cssClass']??]class="${tag.parameters['cssClass']}"[#else]class="pagebar"[/#if] [#if tag.parameters['cssStyle']??]style="${tag.parameters['style']}"[/#if]>
 	[#if tag.page.pageNo==1]${b.text("page.first")} [#else]
 	<a href="#" onclick="bg.page.goPage('${tag.id}',1)">${b.text("page.first")}</a>
 	<a href="#" onclick="bg.page.goPage('${tag.id}',${tag.page.previousPageNo})" >${b.text("page.previous")}</a>

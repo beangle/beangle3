@@ -1,2 +1,2 @@
 [#ftl]
-[@bg.text name="ui.name"/]
+${b.text("ui.name")}
