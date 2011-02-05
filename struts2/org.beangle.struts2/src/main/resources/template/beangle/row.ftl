@@ -1,2 +1,2 @@
 [#ftl]
-[#if tag.hasInnerTr(nested_body)]${nested_body}[#else]<tr>${nested_body!}</tr>[/#if]
+[#if tag.hasTr]${tag.body}[#else]<tr>${tag.body}</tr>[/#if]

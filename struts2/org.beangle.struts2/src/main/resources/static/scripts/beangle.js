@@ -206,6 +206,7 @@
 	beangle.extend({
 		form:{
 			submit : function (myForm,action,target){
+				if((typeof myForm)=='string') myForm=document.getElementById(myForm);
 				//FIXME check target is(iframe,reserved,div)
 				var submitTarget=(null!=target)?target:myForm.target;
 				if(action==null){

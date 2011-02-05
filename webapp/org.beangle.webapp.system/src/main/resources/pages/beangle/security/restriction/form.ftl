@@ -38,7 +38,7 @@
 		[@b.grid items=mngFields[field.name] var="value"]
 			[@b.row]
 				[@b.boxcol width="10%" property="id" boxname=field.name checked=(aoFields[field.name]?seq_contains(value))!false /]
-				[@b.col name="可选值"]${value}[/@]
+				[@b.col title="可选值"]${value}[/@]
 			[/@]
 		[/@]
 	   [#else]

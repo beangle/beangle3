@@ -65,6 +65,7 @@ public class UserAction extends SecurityActionSupport {
 	}
 
 	protected OqlBuilder<User> getQueryBuilder() {
+		put("watch",new StopWatch());
 		User manager = getUser();
 		OqlBuilder<User> userQuery = OqlBuilder.from(entityName, "user");
 		// 查询用户组

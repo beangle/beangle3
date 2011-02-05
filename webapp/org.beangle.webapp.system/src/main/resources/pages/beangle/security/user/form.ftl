@@ -78,19 +78,19 @@
 	<div id="groupmember">
 	[@b.grid    items=members var="m"]
 		[@b.row]
-			[@b.col name=""]<input name="groupId" type="checkbox" onchange="changeMember(${m.group.id},this)"/>[/@]
-			[@b.col name="序号"]${m_index+1}[/@]
-			[@b.col name="用户组" property="group.name"/]
-			[@b.col name="成员"]
+			[@b.col title=""]<input name="groupId" type="checkbox" onchange="changeMember(${m.group.id},this)"/>[/@]
+			[@b.col title="序号"]${m_index+1}[/@]
+			[@b.col title="用户组" property="group.name"/]
+			[@b.col title="成员"]
 			<input type="checkbox" name="member${m.group.id}" ${(memberMap.get(m.group).member)?default(false)?string('checked="checked"','')}/>
 			[/@]
-			[@b.col name="授权"]
+			[@b.col title="授权"]
 			[#if m.granter]<input type="checkbox" name="granter${m.group.id}" ${(memberMap.get(m.group).granter)?default(false)?string('checked="checked"','')}/>[/#if]
 			[/@]
-			[@b.col name="管理"]
+			[@b.col title="管理"]
 			<input type="checkbox" name="manager${m.group.id}" ${(memberMap.get(m.group).manager)?default(false)?string('checked="checked"','')}/>
 			[/@]
-			[@b.col name="加入时间"]${(m.updatedAt?string("yyyy-MM-dd HH:mm"))!}[/@]
+			[@b.col title="加入时间"]${(m.updatedAt?string("yyyy-MM-dd HH:mm"))!}[/@]
 		[/@]
 	[/@]
 	</div>

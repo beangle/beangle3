@@ -25,8 +25,15 @@ import org.beangle.struts2.view.component.Grid;
 import org.beangle.struts2.view.component.Head;
 import org.beangle.struts2.view.component.Messages;
 import org.beangle.struts2.view.component.Pagebar;
+import org.beangle.struts2.view.component.Qfield;
+import org.beangle.struts2.view.component.Qfields;
+import org.beangle.struts2.view.component.Qform;
+import org.beangle.struts2.view.component.Qitem;
+import org.beangle.struts2.view.component.Qselect;
 import org.beangle.struts2.view.component.RedirectParams;
+import org.beangle.struts2.view.component.TextField;
 import org.beangle.struts2.view.component.Toolbar;
+import org.beangle.struts2.view.template.Theme;
 import org.beangle.web.url.UrlRender;
 
 import com.opensymphony.xwork2.util.ValueStack;
@@ -37,12 +44,14 @@ public class BeangleModels {
 	protected HttpServletRequest req;
 	protected HttpServletResponse res;
 	protected Map<Class<?>, TagModel> models = CollectUtils.newHashMap();
-	private static final UrlRender render = new UrlRender(".action");
+
+	public static final UrlRender render = new UrlRender(".action");
 
 	public BeangleModels(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
 		this.stack = stack;
 		this.req = req;
 		this.res = res;
+		this.stack.getContext().put(Theme.THEME, new Theme(Theme.DEFAULT_THEME));
 	}
 
 	public String url(String url) {
@@ -90,93 +99,43 @@ public class BeangleModels {
 		return getText(name, name, CollectUtils.newArrayList(arg0, arg1), stack, false);
 	}
 
-	public TagModel getHead() {
-		TagModel model = models.get(Head.class);
+	private TagModel get(final Class<? extends Component> clazz) {
+		TagModel model = models.get(clazz);
 		if (null == model) {
-			model = new TagModel(stack) {
-				@Override
-				protected Component getBean() {
-					return new Head(stack);
-				}
-			};
-			models.put(Head.class, model);
+			model = new TagModel(stack, clazz);
+			models.put(clazz, model);
 		}
 		return model;
+	}
+
+	public TagModel getHead() {
+		return get(Head.class);
 	}
 
 	public TagModel getFoot() {
-		TagModel model = models.get(Foot.class);
-		if (null == model) {
-			model = new TagModel(stack) {
-				@Override
-				protected Component getBean() {
-					return new Foot(stack);
-				}
-			};
-			models.put(Foot.class, model);
-		}
-		return model;
+		return get(Foot.class);
 	}
 
 	public TagModel getToolbar() {
-		TagModel model = models.get(Toolbar.class);
-		if (null == model) {
-			model = new TagModel(stack) {
-				@Override
-				protected Component getBean() {
-					return new Toolbar(stack);
-				}
-			};
-			models.put(Toolbar.class, model);
-		}
-		return model;
+		return get(Toolbar.class);
 	}
 
 	public TagModel getGrid() {
-		TagModel model = models.get(Grid.class);
-		if (null == model) {
-			model = new TagModel(stack) {
-				@Override
-				protected Component getBean() {
-					return new Grid(stack);
-				}
-			};
-			models.put(Grid.class, model);
-		}
-		return model;
+		return get(Grid.class);
 	}
 
 	public TagModel getGridbar() {
-		TagModel model = models.get(Grid.Bar.class);
-		if (null == model) {
-			model = new TagModel(stack) {
-				@Override
-				protected Component getBean() {
-					return new Grid.Bar(stack);
-				}
-			};
-			models.put(Grid.Bar.class, model);
-		}
-		return model;
+		return get(Grid.Bar.class);
 	}
 
 	public TagModel getRow() {
-		TagModel model = models.get(Grid.Row.class);
-		if (null == model) {
-			model = new TagModel(stack) {
-				@Override
-				protected Component getBean() {
-					return new Grid.Row(stack);
-				}
-			};
-			models.put(Grid.Row.class, model);
-		}
-		return model;
+		return get(Grid.Row.class);
 	}
 
 	public TagModel getCol() {
 		TagModel model = models.get(Grid.Col.class);
 		if (null == model) {
+			// just for performance
 			model = new TagModel(stack) {
 				@Override
 				protected Component getBean() {
@@ -189,38 +148,17 @@ public class BeangleModels {
 	}
 
 	public TagModel getBoxcol() {
-		TagModel model = models.get(Grid.Boxcol.class);
-		if (null == model) {
-			model = new TagModel(stack) {
-				@Override
-				protected Component getBean() {
-					return new Grid.Boxcol(stack);
-				}
-			};
-			models.put(Grid.Boxcol.class, model);
-		}
-		return model;
+		return get(Grid.Boxcol.class);
 	}
 
 	public TagModel getPagebar() {
-		TagModel model = models.get(Pagebar.class);
-		if (null == model) {
-			model = new TagModel(stack) {
-				@Override
-				protected Component getBean() {
-					return new Pagebar(stack);
-				}
-			};
-			models.put(Pagebar.class, model);
-		}
-		return model;
+		return get(Pagebar.class);
 	}
 
 	public TagModel getA() {
 		TagModel model = models.get(Anchor.class);
 		if (null == model) {
 			model = new TagModel(stack) {
-				@Override
 				protected Component getBean() {
 					return new Anchor(stack);
 				}
@@ -231,30 +169,34 @@ public class BeangleModels {
 	}
 
 	public TagModel getRedirectParams() {
-		TagModel model = models.get(RedirectParams.class);
-		if (null == model) {
-			model = new TagModel(stack) {
-				@Override
-				protected Component getBean() {
-					return new RedirectParams(stack);
-				}
-			};
-			models.put(RedirectParams.class, model);
-		}
-		return model;
+		return get(RedirectParams.class);
 	}
 
 	public TagModel getMessages() {
-		TagModel model = models.get(Messages.class);
-		if (null == model) {
-			model = new TagModel(stack) {
-				@Override
-				protected Component getBean() {
-					return new Messages(stack);
-				}
-			};
-			models.put(Messages.class, model);
-		}
-		return model;
+		return get(Messages.class);
+	}
+
+	public TagModel getTextfield() {
+		return get(TextField.class);
+	}
+
+	public TagModel getQform() {
+		return get(Qform.class);
+	}
+
+	public TagModel getQitem() {
+		return get(Qitem.class);
+	}
+
+	public TagModel getQfield() {
+		return get(Qfield.class);
+	}
+
+	public TagModel getQfields() {
+		return get(Qfields.class);
+	}
+
+	public TagModel getQselect() {
+		return get(Qselect.class);
 	}
 }

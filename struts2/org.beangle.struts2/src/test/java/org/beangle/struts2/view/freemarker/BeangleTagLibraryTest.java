@@ -7,9 +7,13 @@ package org.beangle.struts2.view.freemarker;
 import java.io.StringWriter;
 import java.util.Map;
 
+import org.apache.commons.lang.time.StopWatch;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.Dispatcher;
+import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import org.apache.struts2.util.StrutsTestCaseHelper;
 import org.apache.struts2.views.freemarker.StrutsClassTemplateLoader;
+import org.apache.struts2.views.freemarker.tags.StrutsModels;
 import org.beangle.commons.collection.CollectUtils;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -21,17 +25,9 @@ import org.testng.annotations.Test;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionProxyFactory;
 import com.opensymphony.xwork2.config.Configuration;
-import com.opensymphony.xwork2.config.ConfigurationException;
 import com.opensymphony.xwork2.config.ConfigurationManager;
-import com.opensymphony.xwork2.config.ConfigurationProvider;
 import com.opensymphony.xwork2.inject.Container;
-import com.opensymphony.xwork2.inject.ContainerBuilder;
-import com.opensymphony.xwork2.inject.Context;
-import com.opensymphony.xwork2.inject.Factory;
-import com.opensymphony.xwork2.inject.Scope;
-import com.opensymphony.xwork2.test.StubConfigurationProvider;
 import com.opensymphony.xwork2.util.XWorkTestCaseHelper;
-import com.opensymphony.xwork2.util.location.LocatableProperties;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
@@ -71,34 +67,6 @@ public class BeangleTagLibraryTest {
 		actionProxyFactory = null;
 		StrutsTestCaseHelper.tearDown();
 	}
-//
-//	protected void loadConfigurationProviders(ConfigurationProvider... providers) {
-//		configurationManager = XWorkTestCaseHelper.loadConfigurationProviders(configurationManager,
-//				providers);
-//		configuration = configurationManager.getConfiguration();
-//		container = configuration.getContainer();
-//		actionProxyFactory = container.getInstance(ActionProxyFactory.class);
-//	}
-//
-//	protected void loadButAdd(final Class<?> type, final Object impl) {
-//		loadButAdd(type, Container.DEFAULT_NAME, impl);
-//	}
-//
-//	@SuppressWarnings({ "unchecked", "rawtypes" })
-//	protected void loadButAdd(final Class<?> type, final String name, final Object impl) {
-//		loadConfigurationProviders(new StubConfigurationProvider() {
-//			@Override
-//			public void register(ContainerBuilder builder, LocatableProperties props)
-//					throws ConfigurationException {
-//				builder.factory(type, name, new Factory() {
-//					public Object create(Context context) throws Exception {
-//						return impl;
-//					}
-//
-//				}, Scope.SINGLETON);
-//			}
-//		});
-//	}
 
 	freemarker.template.Configuration cfg;
 
@@ -111,11 +79,14 @@ public class BeangleTagLibraryTest {
 	}
 
 	public void testText() throws Exception {
-		Template template = cfg.getTemplate("beangle-tags.ftl");
-		StringWriter writer = new StringWriter();
 		Map<String, Object> datas = CollectUtils.newHashMap();
 		datas.put("b", new BeangleModels(ActionContext.getContext().getValueStack(),
 				new MockHttpServletRequest(), new MockHttpServletResponse()));
-		template.process(datas, writer);
+		datas.put("s", new StrutsModels(ActionContext.getContext().getValueStack(),
+				new MockHttpServletRequest(), new MockHttpServletResponse()));
+		datas.put("watch", new StopWatch());
+		StringWriter writer = new StringWriter();
+		Template template = cfg.getTemplate("comp.ftl");
+		//template.process(datas, writer);
 	}
 }

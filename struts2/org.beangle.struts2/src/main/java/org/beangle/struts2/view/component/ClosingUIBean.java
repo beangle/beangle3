@@ -6,11 +6,11 @@ package org.beangle.struts2.view.component;
 
 import java.io.Writer;
 
-import org.beangle.struts2.view.component.template.TemplateHelper;
-
 import com.opensymphony.xwork2.util.ValueStack;
 
 public class ClosingUIBean extends UIBean {
+
+	protected String body;
 
 	public ClosingUIBean(ValueStack stack) {
 		super(stack);
@@ -18,21 +18,23 @@ public class ClosingUIBean extends UIBean {
 
 	@Override
 	public boolean start(Writer writer) {
-		evaluateExtraParams();
+		evaluateParams();
 		return true;
 	}
 
 	@Override
 	public boolean end(Writer writer, String body) {
-		int length = body.length();
-		if (length > 0) stack.getContext().put("nested_body", body);
+		this.body = body;
 		try {
-			mergeTemplate(writer, TemplateHelper.buildFullName(getTheme(), getClass()));
+			mergeTemplate(writer);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (length > 0) stack.getContext().remove("nested_body");
 		return false;
+	}
+
+	public String getBody() {
+		return body;
 	}
 
 	@Override

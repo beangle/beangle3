@@ -34,6 +34,8 @@ import com.opensymphony.xwork2.ActionContext;
 
 public class BaseAction extends DispatchAction {
 
+	private static final long serialVersionUID = 4899924584565460018L;
+
 	protected static final Logger logger = LoggerFactory.getLogger(BaseAction.class);
 
 	protected EntityDao entityDao;
@@ -113,7 +115,7 @@ public class BaseAction extends DispatchAction {
 	 * 
 	 * @param request
 	 * @param clazz
-	 * @param name
+	 * @param title
 	 * @return
 	 */
 	protected <T> T populate(Class<T> clazz, String shortName) {

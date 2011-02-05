@@ -1,2 +1,2 @@
 [#ftl/]
-<td class="gridselect"[#if tag.id??] id="${tag.id}"[/#if]><input class="box" name="${tag.boxname}" value="${tag.value}"[#if tag.checked] checked="checked"[/#if] [#list tag.parameters?keys as attr]${attr}="${tag.parameters[attr]}"[/#list] type="${tag.type}" title="select me"/>${nested_body!}</td>
+<td class="gridselect"[#if tag.id??] id="${tag.id}"[/#if]${tag.parameterString}><input class="box" name="${tag.boxname}" value="${tag.value}"[#if tag.checked] checked="checked"[/#if] type="${tag.type}" title="select me"/>${tag.body}</td>

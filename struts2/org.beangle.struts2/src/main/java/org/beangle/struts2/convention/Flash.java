@@ -14,6 +14,7 @@ import org.beangle.commons.collection.CollectUtils;
 
 public class Flash implements Map<Object, Object>, Serializable {
 
+	private static final long serialVersionUID = -5292283953338410228L;
 	public static final String MESSAGES = "messages";
 	public static final String ERRORS = "errors";
 

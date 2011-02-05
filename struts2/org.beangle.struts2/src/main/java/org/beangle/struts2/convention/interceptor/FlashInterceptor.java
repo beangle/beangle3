@@ -16,6 +16,8 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
  */
 public class FlashInterceptor extends AbstractInterceptor {
 
+	private static final long serialVersionUID = 8451445989084058881L;
+
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
 		String result = invocation.invoke();

@@ -39,7 +39,7 @@
 	[@b.row ]
 		<tr title="${menu.entry!}" id="${convert_code(menu.code)}">
 		[@b.boxcol property="id" onclick="treeToggle(this,false)" /]
-		[@b.col property="title" name="标题"]
+		[@b.col property="title" title="标题"]
 		<div class="tier${menu.code?length/2}" align="left">
 		[#if (menu.children?size==0)]
 			<a href="#" class="doc"/>
@@ -49,9 +49,9 @@
 			[@b.a href="!info?menu.id=${menu.id}"]${menu.title}[/@]
 		</div>
 		[/@]
-		[@b.col property="engTitle" name="英文标题"/]
-		[@b.col property="code" width="10%" name="common.code"/]
-		[@b.col property="enabled" width="10%" name="common.status"][@enableInfo menu.enabled/][/@]
+		[@b.col property="engTitle" title="英文标题"/]
+		[@b.col property="code" width="10%" title="common.code"/]
+		[@b.col property="enabled" width="10%" title="common.status"][@enableInfo menu.enabled/][/@]
 		</tr>
 	[/@]
 [/@]

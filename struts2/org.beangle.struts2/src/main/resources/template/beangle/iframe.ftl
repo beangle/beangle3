@@ -1,6 +1,6 @@
 [#ftl/]
 [#if request.getHeader('USER-AGENT')?contains('MSIE')]
-<iframe src="${tag.src}" [#list tag.parameters?keys as attr]${attr}="${tag.parameters[attr]?html}" [/#list]>${nested_body!}</iframe>
+<iframe src="${tag.src}"${tag.parameterString}>${tag.body}</iframe>
 [#else]
-<object type="text/html" data="${tag.src}" [#list tag.parameters?keys as attr]${attr}="${tag.parameters[attr]?html}" [/#list]>[#nested/]</object>
+<object type="text/html" data="${tag.src}"${tag.parameterString}>[#nested/]</object>
 [/#if]

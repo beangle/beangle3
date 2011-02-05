@@ -15,7 +15,7 @@
 	<link id="beangle_theme_link" href="${base}/static/themes/default/beangle-ui.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="${base}/static/scripts/beangle.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/beangle-ui.js?ver=1"></script>
-${nested_body!}
+${tag.body}
 </head>
 <body>
 [/#if]

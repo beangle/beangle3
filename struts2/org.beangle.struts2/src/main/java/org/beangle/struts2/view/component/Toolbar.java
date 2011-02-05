@@ -17,7 +17,7 @@ public class Toolbar extends ClosingUIBean {
 		super(stack);
 	}
 
-	public void evaluateExtraParams() {
+	public void evaluateParams() {
 		if (StringUtils.isEmpty(this.id)) {
 			int nextInt = RANDOM.nextInt();
 			nextInt = (nextInt == Integer.MIN_VALUE) ? Integer.MAX_VALUE : Math.abs(nextInt);

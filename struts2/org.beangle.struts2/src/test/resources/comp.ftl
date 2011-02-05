@@ -19,7 +19,7 @@ ${watch.reset()!}${watch.start()!}
 ${watch.time}&nbsp;
 [/#list]
 <br/>
-[#list 1..2 as b]
+[#list 1..10 as b]
 ${watch.reset()!}${watch.start()!}
 [#list 1..1000 as i]
 [@anchor href="user"  target="_blank${i}"][/@]

@@ -6,6 +6,7 @@ package org.beangle.struts2.view.freemarker;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Map;
@@ -22,21 +23,30 @@ import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 import freemarker.template.TemplateTransformModel;
 
-public abstract class TagModel implements TemplateTransformModel {
-
+public class TagModel implements TemplateTransformModel {
 	private static final Logger logger = LoggerFactory.getLogger(TagModel.class);
 
-	protected ValueStack stack;
+	private Constructor<? extends Component> componentCon;
+	private ValueStack stack;
+	
+	public TagModel(ValueStack stack) {
+	}
 
-	public TagModel(ValueStack stack){
-		this.stack=stack;
+	public TagModel(ValueStack stack, Class<? extends Component> clazz) {
+		this.stack = stack;
+		try {
+			componentCon = clazz.getConstructor(ValueStack.class);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Writer getWriter(Writer writer, Map params) throws TemplateModelException, IOException {
 		Component bean = getBean();
-//		Container container = (Container) stack.getContext().get(ActionContext.CONTAINER);
-//		container.inject(bean);
+		// Container container = (Container)
+		// stack.getContext().get(ActionContext.CONTAINER);
+		// container.inject(bean);
 		BeansWrapper objectWrapper = BeansWrapper.getDefaultInstance();
 
 		for (Iterator iterator = params.entrySet().iterator(); iterator.hasNext();) {
@@ -66,5 +76,11 @@ public abstract class TagModel implements TemplateTransformModel {
 		return new ResetCallbackWriter(bean, writer);
 	}
 
-	protected abstract Component getBean();
+	protected Component getBean() {
+		try {
+			return componentCon.newInstance(stack);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

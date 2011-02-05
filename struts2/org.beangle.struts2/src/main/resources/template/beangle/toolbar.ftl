@@ -3,6 +3,6 @@
 <script type="text/javascript">
 bar = bg.ui.toolbar("${tag.id}",'${(tag.parameters['title']?default(''))?replace("'","\"")}');
 bar.setMessage('[@s.actionmessage theme="beangle"/][@s.actionerror theme="beangle"/]');
-${nested_body!}
+${tag.body}
 bar.addHr();
 </script>

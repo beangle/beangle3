@@ -3,16 +3,16 @@
 <div>[@s.actionmessage theme="beangle"/][@s.actionerror theme="beangle"/]</div>
 [#if tag.hasbar]<div id="${tag.id}_bar1" class="gridbar"></div>[/#if]
 
-<table id="${tag.id}" class="gridtable" [#list tag.parameters?keys as k] ${k}="${tag.parameters[k]}"[/#list]>
+<table id="${tag.id}" class="gridtable"${tag.parameterString}>
 <thead class="gridhead">
 <tr>
 [#list tag.cols as cln]
-<th [#if cln.width??]width="${cln.width}" [/#if][#if cln.type??]><input type="${cln.type}" name="${cln.boxname}box" onclick="bg.input.toggleCheckBox(document.getElementsByName('${cln.boxname}'),event)" title="select all"/>[#else][#if tag.isSortable(cln)]class="gridhead-sortable" id="${cln.parameters['sort']!(tag.defaultSort(cln.property))}"[/#if]>${cln.name}[/#if]</th>
+<th [#if cln.width??]width="${cln.width}" [/#if][#if cln.type??]><input type="${cln.type}" name="${cln.boxname}box" onclick="bg.input.toggleCheckBox(document.getElementsByName('${cln.boxname}'),event)" title="select all"/>[#else][#if tag.isSortable(cln)]class="gridhead-sortable" id="${cln.parameters['sort']!(tag.defaultSort(cln.property))}"[/#if]>${cln.title}[/#if]</th>
 [/#list]
 </tr>
 </thead>
 <tbody id="${tag.id}_data">
-${nested_body!}
+${tag.body}
 </tbody>
 </table>
 

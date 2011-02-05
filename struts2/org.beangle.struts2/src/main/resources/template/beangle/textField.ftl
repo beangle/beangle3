@@ -1,0 +1,1 @@
+<label for="${tag.name}">${tag.title}:</label><input type="text" id="${tag.id}" name="${tag.name}"${tag.parameterString}/>

@@ -6,8 +6,6 @@ package org.beangle.struts2.view.component;
 
 import java.io.Writer;
 
-import org.beangle.struts2.view.component.template.TemplateHelper;
-
 import com.opensymphony.xwork2.util.ValueStack;
 
 public abstract class IterableUIBean extends ClosingUIBean {
@@ -19,18 +17,17 @@ public abstract class IterableUIBean extends ClosingUIBean {
 	protected abstract boolean next();
 
 	protected void iterator(Writer writer, String body) {
-		stack.getContext().put("nested_body", body);
+		this.body = body;
 		try {
-			mergeTemplate(writer, TemplateHelper.buildFullName(getTheme(), getClass()));
+			mergeTemplate(writer);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		stack.getContext().remove("nested_body");
 	}
 
 	@Override
 	public boolean start(Writer writer) {
-		evaluateExtraParams();
+		evaluateParams();
 		return next();
 	}
 

@@ -5,7 +5,6 @@
 package org.beangle.struts2.view.component;
 
 import java.io.Writer;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -14,10 +13,10 @@ import java.util.Set;
 import org.apache.commons.lang.xwork.ObjectUtils;
 import org.apache.commons.lang.xwork.StringUtils;
 import org.apache.struts2.util.MakeIterator;
-import org.apache.struts2.util.TextProviderHelper;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.Page;
 import org.beangle.commons.lang.StrUtils;
+import org.beangle.struts2.view.template.Theme;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
@@ -25,7 +24,6 @@ import com.opensymphony.xwork2.util.ValueStack;
  * Data table
  * 
  * <pre>
- * performance column rendering
  * filter  FIXME
  * </pre>
  * 
@@ -34,7 +32,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 public class Grid extends ClosingUIBean {
 	final private static transient Random RANDOM = new Random();
 	private List<Col> cols = CollectUtils.newArrayList();
-	private Set<Object> colNames = CollectUtils.newHashSet();
+	private Set<Object> colTitles = CollectUtils.newHashSet();
 	private Object items;
 	private String var;
 	// gridbar
@@ -70,12 +68,12 @@ public class Grid extends ClosingUIBean {
 	}
 
 	protected void addCol(Col column) {
-		Object name = column.getName();
-		if (null == name) {
-			name = column.getProperty();
+		Object title = column.getTitle();
+		if (null == title) {
+			title = column.getProperty();
 		}
-		if (!colNames.contains(name)) {
-			colNames.add(name);
+		if (!colTitles.contains(title)) {
+			colTitles.add(title);
 			cols.add(column);
 		}
 	}
@@ -146,7 +144,7 @@ public class Grid extends ClosingUIBean {
 		private Iterator<?> iterator;
 		private int index = -1;
 		private Object obj;
-		private Boolean hasInnerTr;
+		private Boolean innerTr;
 
 		public Row(ValueStack stack) {
 			super(stack);
@@ -159,10 +157,10 @@ public class Grid extends ClosingUIBean {
 			this.var_index = table.var + "_index";
 		}
 
-		public Boolean hasInnerTr(String nestedBody) {
-			if (null != hasInnerTr) return hasInnerTr;
-			hasInnerTr = StringUtils.contains(nestedBody, "<tr");
-			return hasInnerTr;
+		public boolean isHasTr() {
+			if (null != innerTr) return innerTr;
+			innerTr = StringUtils.contains(body, "<tr");
+			return innerTr;
 		}
 
 		@Override
@@ -186,7 +184,7 @@ public class Grid extends ClosingUIBean {
 	 */
 	public static class Col extends ClosingUIBean {
 		String property;
-		String name;
+		String title;
 		String width;
 		Row row;
 
@@ -203,6 +201,27 @@ public class Grid extends ClosingUIBean {
 			return true;
 		}
 
+		@Override
+		public boolean end(Writer writer, String body) {
+			if (getTheme().equals(Theme.DEFAULT_THEME)) {
+				try {
+					writer.append("<td").append(getParameterString()).append(">");
+					if (StringUtils.isNotEmpty(body)) {
+						writer.append(body);
+					} else if (null != property) {
+						Object val = getValue();
+						if (null != val) writer.append(val.toString());
+					}
+					writer.append("</td>");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return false;
+			} else {
+				return super.end(writer, body);
+			}
+		}
+
 		public String getProperty() {
 			return property;
 		}
@@ -217,28 +236,18 @@ public class Grid extends ClosingUIBean {
 		 * @return
 		 */
 		public Object getValue() {
-			stack.push(row.obj);
-			try {
-				return stack.findValue(property);
-			} finally {
-				stack.pop();
-			}
+			return getValue(row.obj, property);
 		}
 
-		public void setName(String name) {
-			this.name = name;
+		public void setTitle(String title) {
+			this.title = title;
 		}
 
-		public String getName() {
-			if (null == name) {
-				name = StrUtils.concat(row.table.var, ".", property);
+		public String getTitle() {
+			if (null == title) {
+				title = StrUtils.concat(row.table.var, ".", property);
 			}
-			if (-1 == name.indexOf('.')) {
-				return name;
-			} else {
-				return TextProviderHelper
-						.getText(name, name, Collections.emptyList(), stack, false);
-			}
+			return getText(title);
 		}
 
 		public String getWidth() {
@@ -277,12 +286,37 @@ public class Grid extends ClosingUIBean {
 			return true;
 		}
 
+		@Override
+		public boolean end(Writer writer, String body) {
+			if (getTheme().equals(Theme.DEFAULT_THEME)) {
+				try {
+					writer.append("<td class=\"gridselect\"");
+					if (null != id) writer.append(" id=\"").append(id).append("\"");
+					writer.append(getParameterString()).append(">");
+					writer.append("<input class=\"box\" name=\"").append(boxname)
+							.append("\" value=\"").append(String.valueOf(getValue()))
+							.append("\" type=\"").append(type).append("\"");
+					if (checked) writer.append(" checked=\"checked\"");
+					writer.append("/>");
+					if (StringUtils.isNotEmpty(body)) {
+						writer.append(body);
+					}
+					writer.append("</td>");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return false;
+			} else {
+				return super.end(writer, body);
+			}
+		}
+
 		public String getType() {
 			return type;
 		}
 
 		@Override
-		public String getName() {
+		public String getTitle() {
 			return StrUtils.concat(row.table.var, "_", property);
 		}
 

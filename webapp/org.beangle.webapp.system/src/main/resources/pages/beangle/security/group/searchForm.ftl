@@ -9,7 +9,7 @@
 	<tr>
 		<td  colspan="2" style="font-size:0px"><img src="${base}/static/images/action/keyline.gif" height="2" width="100%" align="top"/></td>
 	</tr>
-	<tr><td>${b.text("common.name")}:</td><td><input type="text" name="userGroup.name" style="width:100px;" /></td></tr>
+	<tr><td>[@b.textfield name="userGroup.name" title="common.name" /] ${b.text("common.name")}:</td><td><input type="text" name="userGroup.name" style="width:100px;" /></td></tr>
 	<tr><td>${b.text("common.creator")}:</td><td><input type="text" name="userGroup.creator.name" style="width:100px;" /></td></tr>
 	<tr>
 		<td>${b.text("userCategory")}:</td>
