@@ -1,26 +1,19 @@
-body{
-	margin-top: 0;
-	margin-bottom: 0;
-	margin-left:0;
-	margin-right:0;
-	font-size: 13px;
-}
+/*
+ * Beangle UI CSS Framework
+ * GLPL version 3.
+ */
 
-a:link {
-	color: #000080;
-	text-decoration: none;
-}
-a:visited {
-	text-decoration: none;
-}
+body{margin-top: 0;margin-bottom: 0;margin-left:0;margin-right:0;font-size: 13px;}
 
-a:hover {
-	color: red;
-}
+a:link {color: #000080;text-decoration: none;}
+a:visited {text-decoration: none;}
+a:hover {color: red;}
+
+/* grid */
 .grid{border-color:#006CB2;margin: 0px 0px 0px 0px ;}
 
 .gridempty{border:solid;border-width:1px;border-top-width:0px;border-color:#006CB2;}
-/* grid*/
+
 .gridtable {width:100%;border-collapse: collapse;border:solid;border-width:1px;border-color:#006CB2;vertical-align: middle;}
 
 .gridtable td{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;}
@@ -82,8 +75,7 @@ a:hover {
 
 .toolbar-group-separator{float:left;margin:0px 10px 0px 10px;}
 
-/* Message ------------------------------------------------
- * This is the style for the informational messages presented to the user */
+/* message */
 div.error, div.message {
 	background-color: #ECD83C;
 	border: 0px solid #000;
@@ -94,12 +86,22 @@ div.error, div.message {
 	vertical-align: bottom;
 }
 
-
 /* use a different color for the errors */
 div.error {
 	border: 0px solid red;
 }
 
+img.validationWarning, div.errors img.icon, div.messages img.icon {
+	border: 0;
+	width: 14px;
+	height: 13px;
+	vertical-align: top;
+}
+
+span.fieldError {
+	color: red;
+	font-weight: bold;
+}
 div.message a {
 	background: transparent;
 	color: #0000FF;
@@ -137,32 +139,6 @@ div.message img.icon {
 	width:105px;
 }
 
-/*鼠标覆盖改变颜色*/      
-tr.roll_down {
-	text-decoration: none; 
-	letter-spacing:0;
-	background-color: #BFFFBF;
-}
-
-tr.highlight {
-	text-decoration: none; 
-	letter-spacing:0;
-	background-color: #BFFFBF;
-}
-
-tr.bright{  
-	color: #000000; 
-	text-decoration: none; 
-	letter-spacing:0;
-	background-color: white;
-}
-tr.gray{
-	color: #000000; 
-	text-decoration: none; 
-	letter-spacing:0;
-	background-color: #EBEBEB;
-}
-
 TD.keyLine {height:1px;font-size:0pt;}
 .V {height:1px;font-size:0pt;padding:0px;border-top:1px solid #4791C5;}
 
@@ -174,7 +150,24 @@ TD.keyLine {height:1px;font-size:0pt;}
 	border-color:#006CB2;
 	text-align: left;
 }
-table.formTable td{
+
+.formTable .thead {
+	color: #000000; 
+	text-decoration: none; 
+	letter-spacing:0;
+	background-color: #c7dbff;
+	font-weight:bolder;
+}
+.formTable .tfoot{
+	color: #000000; 
+	text-decoration: none;
+	text-align:center;
+	letter-spacing:0;
+	background-color: #c7dbff;
+	font-weight:bolder;
+}
+
+.formTable td{
 	border:solid;
 	border-width:0px;
 	border-right-width:1px;
@@ -184,6 +177,7 @@ table.formTable td{
 	text-decoration: none; 
 	letter-spacing:0;
 }
+
 .formTable .title{
 	text-align: right;
 	background-color: #EBEBEB;
@@ -208,6 +202,7 @@ table.infoTable th {
 	background-color: #E1ECFF;
 	height: 22px;
 }
+
 .infoTable .title{
 	height: 22px;
 	width: 110px;
@@ -223,82 +218,37 @@ table.infoTable th {
 .infoTitle{
 }
 
-tr.thead {
-	color: #000000; 
-	text-decoration: none; 
-	letter-spacing:0;
-	background-color: #c7dbff;
-	font-weight:bolder;
-}
-tr.tfoot{
-	color: #000000; 
-	text-decoration: none;
-	text-align:center;
-	letter-spacing:0;
-	background-color: #c7dbff;
-	font-weight:bolder;
-}
-thead.thead {
-	color: #000000; 
-	text-decoration: none; 
-	letter-spacing:0;
-	background-color: #c7dbff;
-	font-weight:bolder;
-}
-/* Frame --------------------------------------------------------- */
-/*展示框架*/
-.frameTableStyle{
-	width:100%;
-	border-collapse:collapse;
-	border:0;
-}
-.iconStyle {vertical-align:middle;margin-top:1px;border:0px}
-
-.frameTable{
+/** Index Panel*/
+.indexpanel{
 	border-collapse: collapse;
 	border:solid;
 	border-width:1px;
 	border-color:#006CB2;
-	margin-top:0px;
-	margin-bottom:0px;
-	width:100%;	
-}
-.frameTable_title{
-	border:solid;
-	border-width:1px;	
-	margin-top:0px;
-	margin-bottom:0px;
-	background-color :#E1ECFF;
-	border-color:#006CB2;
+	margin:0px,0px,0px,0px;
 	width:100%;
 }
-.frameTable_view{
+.index_view{
 	border:solid;
 	border-width:0px;
 	border-right-width:1px;
 	border-color:#006CB2;
-    vertical-align: top; 
+	vertical-align: top; 
 	background-color: #E1ECFF;
 }
-.frameTable_content{
+
+.index_content{
 	vertical-align: top; 
 }
-/*没有间隔和边框的表格*/
-.searchTable{
-	border-collapse: collapse;
-	border-width:0px;
-}
-/*参数设置页面*/
-.settingTable {
-	border-collapse: collapse;
+
+.index_title{
 	border:solid;
 	border-width:1px;
+	margin:0px,0px,0px,0px;
+	background-color :#E1ECFF;
 	border-color:#006CB2;
-	text-align: left;
-	 
 	width:100%;
-	background-color: #E1ECFF
 }
+
 table.settingTable td{
 	border:solid;
 	border-width:0px;
@@ -306,20 +256,7 @@ table.settingTable td{
 	height:30px;
 }
 
-
-img.validationWarning, div.errors img.icon, div.messages img.icon {
-	border: 0;
-	width: 14px;
-	height: 13px;
-	vertical-align: top;
-}
-
-span.fieldError {
-	color: red;
-	font-weight: bold;
-}
-/*Print ----------------------------------------------
- */
+/** Print */
 @media print {
 	.notprint {
 		display:none;
@@ -337,7 +274,7 @@ span.fieldError {
 		display:inline;
 	}
 }
-/*-验证框架使用的两个class------------------------------*/
+/** 验证框架使用的两个class */
 .tfvHighlight {
 	font-weight: bold; 
 	color: red; 

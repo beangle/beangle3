@@ -1,35 +1,24 @@
 [#ftl]
 [@b.head/]
 <link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css"/>
-  <style type="text/css">
-	.column {
-		width: 600px;
-		float: left;
-		padding-bottom: 100px;
-	}
-	.column div {
-		margin:5px;
-	}
-	.column div div .ui-icon {
-		float: right;
-	}
-  </style>
-  <table id="userInfoBar"></table>
+<style type="text/css">
+.column {width: 440px;float: left;padding-bottom: 100px;}
+div .ui-widget {margin:5px;}
+div .ui-widget-header{margin:2px;}
+div .portlet-content{margin:2px;}
+.ui-icon {float: right;}
+</style>
+[@b.toolbar title="我最近的登录情况"]
+bar.addClose("${b.text("action.close")}");
+[/@]
 
-  [@sj.div id="column1" cssClass="column" sortable="true"
-   sortableConnectWith=".column" sortablePlaceholder="ui-state-highlight"
-	sortableForcePlaceholderSize="true" sortableHandle="div.ui-widget-header"
-	 sortableCursor="crosshair" sortableOnUpdateTopics="onupdate"]
+<div id="column1" class="column" >
 	[#include "online_portlet.ftl"/]
 	[#include "../user/panels/session_portlet.ftl"/]
-  [/@sj.div]
+</div>
 
-  <script type="text/javascript">
-   var bar = bg.ui.toolbar('userInfoBar','我最近的登录情况');
-   bar.setMessage('[@b.messages/]');
-   bar.addClose("${b.text("action.close")}");
-
-   function _wi_tm(moudleId){
+<script type="text/javascript">
+	function _wi_tm(moudleId){
 	   var id= document.getElementById(moudleId);
 	   if(id.className=="module collapsed"){
 		 id.className="module expanded";
@@ -44,5 +33,4 @@
 		});
 	});
   </script>
- 
 [@b.foot/]

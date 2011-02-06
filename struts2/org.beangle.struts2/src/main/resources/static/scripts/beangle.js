@@ -3,7 +3,7 @@
 	var beangle=function (){
 		return true;
 	};
-	/**extend function*/
+	/** extend function */
 	beangle.extend= function(map){
 		for(attr in map){
 			var attrs=attr.split(".");
@@ -18,8 +18,17 @@
 	window.beangle=beangle;
 	window.bg=beangle;
 	beangle.extend({
-		Go : function (url){
-			self.location=url;
+		Go : function (url,target){
+			if(target){
+				if(!bg.isAjaxTarget(target)){
+					document.getElementById(target).src=url;
+				}else{
+					jQuery('#'+target).load(url);
+					// jQuery.get(url, function(data){jQuery('#'+target).html(data)});
+				}
+			}else{
+				self.location=url;
+			}
 		},
 		getContextPath : function (){
 			return self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)
@@ -30,10 +39,29 @@
 			}else if (window.attachEvent) {
 				window.attachEvent("onload", fn);
 			}else {window.onload = fn;}
+		},
+		isAjaxTarget : function (target){
+			if(!target) return false;
+			if(target==""||target=="new"||target=="_blank"||target=="_self"||target=="_parent"){
+				return false;
+			}
+			targetEle=document.getElementById(target);
+			if(!targetEle) return false;
+			tagName=targetEle.tagName.toLowerCase();
+			if(tagName=="iframe" || tagName=="object"){
+				return false;
+			}
+			return true;
+		},
+		normalTarget : function(target){
+			if(target==""||target=="new"||target=="_blank"||target=="_self"||target=="_parent"){
+				return target;
+			}
+			if(!document.getElementById(target)) return "_self";
 		}
 	});
 	
-	//Assert------------------------
+	// Assert------------------------
 	beangle.extend({
 		assert:{
 			notNull : function(object,message){
@@ -44,10 +72,10 @@
 		}
 	});
 	
-	//Logger----------------------------
+	// Logger----------------------------
 	beangle.extend({
 		logger:{
-			//debug=0;info=1;warn=2;error=3;fatal=4;disabled=5
+			// debug=0;info=1;warn=2;error=3;fatal=4;disabled=5
 			level : 1,
 			debug : function(message){
 				if(beangle.logger.level<=0){
@@ -64,7 +92,7 @@
 		}
 	});
 	
-	//Event--------------------------------------------------
+	// Event--------------------------------------------------
 	beangle.extend({
 		event:{
 			portable: function (e){
@@ -88,14 +116,14 @@
 		}
 	});
 	
-	//Input----------------------------------------------------
+	// Input----------------------------------------------------
 	beangle.extend({
 		input:{
 			toggleCheckBox : function (chk,event){
 				bg.input.boxAction(chk, "toggle",event);
 			},
 			/**
-			 * 返回单选列表中选择的值<br/>
+			 * 返回单选列表中选择的值
 			 * @return 没有选中时,返回""
 			 */
 			getRadioValue : function (radioName){
@@ -103,7 +131,7 @@
 			},
 			
 			/**
-			 * 返回多选列表中选择的值<br/>
+			 * 返回多选列表中选择的值
 			 * @return 多个值以,相隔.没有选中时,返回"" 
 			 */
 			getCheckBoxValues : function (chkname){
@@ -201,7 +229,6 @@
 			}
 		}
 	});
-	
 	//About From
 	beangle.extend({
 		form:{
@@ -216,13 +243,9 @@
 					action=action.substring(action.indexOf("/",7));
 				}
 				myForm.action=action;
-				if(submitTarget==""||submitTarget=="new"||submitTarget=="_blank"||submitTarget=="_self"||submitTarget=="_parent"){
-					myForm.target=submitTarget;
-					myForm.action=action;
-					myForm.submit();
-					return;
-				}else if(submitTarget && !document.getElementById(submitTarget)){
-					myForm.target="";
+				
+				if(!bg.isAjaxTarget(submitTarget)){
+					myForm.target=bg.normalTarget(submitTarget);
 					myForm.action=action;
 					myForm.submit();
 					return;
@@ -520,7 +543,7 @@
 		}
 	});
 
-	//Cookie----------------------------------------------------------------------------------------
+	// Cookie----------------------------------------------------------------------------------------
 	beangle.extend({
 		cookie:{
 			get : function (cookieName) {
@@ -670,6 +693,6 @@
 			}
 		}
 	});
-	//alert(document.body);
+	// alert(document.body);
 	beangle.ready(beangle.iframe.adaptSelf);
 })(window);

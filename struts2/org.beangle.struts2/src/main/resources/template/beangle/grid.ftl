@@ -1,6 +1,6 @@
 [#ftl/]
 <div class="grid">
-<div>[@s.actionmessage theme="beangle"/][@s.actionerror theme="beangle"/]</div>
+<div>[@b.messages /]</div>
 [#if tag.hasbar]<div id="${tag.id}_bar1" class="gridbar"></div>[/#if]
 
 <table id="${tag.id}" class="gridtable"${tag.parameterString}>

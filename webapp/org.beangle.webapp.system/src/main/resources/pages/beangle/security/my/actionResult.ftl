@@ -14,7 +14,7 @@
 	  </td>
    </tr>
    <tr>
-	 <td id="errorTD">[@s.actionmessage/] [@s.actionerror/]</td>
+	 <td id="errorTD">[@b.messages/]</td>
    </tr>
   </table>
 

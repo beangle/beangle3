@@ -3,10 +3,10 @@
 
  <table id="passwordBar"></table>
  <form name="pageGoForm" method="post" action="" target="contentFrame"></form>
- <table  class="frameTable">
+ <table  class="indexpanel">
    <tr>
-	<td style="width:160px"  class="frameTable_view"></td>
-	<td valign="top">
+	<td style="width:160px"  class="index_view"></td>
+	<td class="index_content">
 	<iframe  src="#" id="contentFrame" name="contentFrame"
 	  marginwidth="0" marginheight="0"
 	  scrolling="no" frameborder="0"  height="100%" width="100%">

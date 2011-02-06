@@ -30,7 +30,7 @@
 	   [#include "menus.ftl"/]
    </td>
    <td style="width:86%" id="rightTD" valign="top">
-   [@sj.div id="main" href="${b.url('!welcome')}"/]
+   [@b.div id="main" href="!welcome"/]
    </td>
  </tr>
 </table>

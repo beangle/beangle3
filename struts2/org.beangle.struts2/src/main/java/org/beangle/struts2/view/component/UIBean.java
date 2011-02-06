@@ -7,9 +7,11 @@ package org.beangle.struts2.view.component;
 import java.io.Writer;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.xwork.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.util.TextProviderHelper;
 import org.beangle.struts2.view.template.TemplateEngine;
@@ -23,6 +25,7 @@ import com.opensymphony.xwork2.util.ValueStack;
  * @author chaostone
  */
 public abstract class UIBean extends Component {
+	final protected static transient Random RANDOM = new Random();
 	protected String id;
 
 	protected Theme theme;
@@ -102,6 +105,14 @@ public abstract class UIBean extends Component {
 			return stack.findValue(property);
 		} finally {
 			stack.pop();
+		}
+	}
+
+	protected void generateIdIfEmpty() {
+		if (StringUtils.isEmpty(this.id)) {
+			int nextInt = RANDOM.nextInt();
+			nextInt = (nextInt == Integer.MIN_VALUE) ? Integer.MAX_VALUE : Math.abs(nextInt);
+			this.id = Theme.getTemplateName(getClass()) + "_" + String.valueOf(nextInt);
 		}
 	}
 }

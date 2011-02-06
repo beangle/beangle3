@@ -1,5 +1,5 @@
 [#ftl]
-[#if !(request.getHeader('x-requested-with')??)]
+[#if !(request.getHeader('x-requested-with')??) && !Parameters['x-requested-with']??]
 [#--<p align="right">
 	<a href="http://validator.w3.org/check?uri=referer"><img
 		src="http://www.w3.org/Icons/valid-xhtml11"

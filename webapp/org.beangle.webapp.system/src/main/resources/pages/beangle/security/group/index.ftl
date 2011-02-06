@@ -1,25 +1,18 @@
 [#ftl]
 [@b.head/]
-
 [@b.toolbar id="groupbar"]
 	bar.setTitle('[@b.a href='dashboard']权限管理[/@]-->用户组管理');
 	bar.addHelp("${b.text("action.help")}");
 [/@]
-<table  class="frameTable">
+<table  class="indexpanel">
 	<tr>
-		<td style="width:160px"  class="frameTable_view">[#include "searchForm.ftl"/]</td>
-		<td valign="top">
-		<iframe  src="#" id="contentFrame" name="contentFrame"
-			marginwidth="0" marginheight="0"
-			scrolling="no" frameborder="0"  height="100%" width="100%"></iframe>
+		<td style="width:160px"  class="index_view">
+		[@b.qform name="groupSearchForm"  action="!search" target="grouplist" title="ui.searchForm"]
+			[@b.qfields names="userGroup.name;common.name,userGroup.owner.name;common.creator"/]
+			[@b.qselect items=categories empty="请选择身份" name="userGroup.category.id" title="entity.userCategory"/]
+		[/@]
 		</td>
+		<td class="index_content">[@b.div id="grouplist" href="!search" /]</td>
 	</tr>
 </table>
-<script type="text/javascript">
-	function search(){
-		document.getElementById('groupSearchForm').submit();
-	}
-	search();
-</script>
-
 [@b.foot/]

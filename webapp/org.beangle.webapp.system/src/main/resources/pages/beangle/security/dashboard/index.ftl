@@ -30,7 +30,7 @@
 		</table>
 	</td>
 	<td valign="top">
-	[@sj.div id="data" href="${b.url('!stat')}" /]
+	[@b.div id="data" href="!stat" /]
 	</td>
 </tr>
 </table>

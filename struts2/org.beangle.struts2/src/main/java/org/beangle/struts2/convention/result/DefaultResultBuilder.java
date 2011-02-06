@@ -7,6 +7,8 @@ package org.beangle.struts2.convention.result;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.ServletRedirectResult;
@@ -100,8 +102,14 @@ public class DefaultResultBuilder implements ResultBuilder {
 				if (StringUtils.contains(targetResource, ':')) { return new ServletRedirectResult(
 						targetResource); }
 				Action action = buildAction(targetResource);
-				String redirectParamStr = ServletActionContext.getRequest().getParameter("params");
+				// add special param and ajax tag for redirect
+				HttpServletRequest request = ServletActionContext.getRequest();
+				String redirectParamStr = request.getParameter("params");
 				action.params(redirectParamStr);
+				// x-requested-with->XMLHttpRequest
+				if (null != request.getHeader("x-requested-with")) {
+					action.param("x-requested-with", "1");
+				}
 				Map<String, String> params = buildResultParams(path, resultTypeConfig);
 				if (null != action.getParams().get("method")) {
 					params.put("method", (String) action.getParams().get("method"));

@@ -6,7 +6,7 @@
 [#assign bartitle]在线${online}/上限${max} ([#list onlineProfiles?sort_by(["category"]) as profile]${profile.category.name}${profile.online}/${profile.capacity}  [/#list]) ${now?string("yyyy-MM-dd HH:mm:ss")}[/#assign]
 [@b.toolbar id="activityBar" title=bartitle][/@]
 [@s.form name="invalidateForm" theme="simple" id="invalidateForm" action="monitor!invalidate"]
-[@b.grid  items=onlineActivities var="activity"   target="当前会话" sortable="true"]
+[@b.grid  id="activityListTable" items=onlineActivities var="activity"   target="当前会话" sortable="true"]
 	[@b.gridbar]
 	bar.addItem("刷新","refresh()",'refresh.gif');
 	bar.addItem("结束会话","invalidateSession()",'delete.gif');
@@ -28,11 +28,17 @@
 [/@]
 [@sj.submit type="button" id="invalidateBtn" cssStyle="display:none" targets="当前会话"/]
 [/@]
-	[#assign refreshInterval=Parameters['interval']!"4"/]
+[#assign refreshInterval=Parameters['interval']!"4"/]
 <div>定时每${refreshInterval}秒刷新</div>
 <script type="text/javascript">
 	function refresh(){
-		bg.page.goPage("activityListTable");
+		if(document.getElementById("activityListTable")){
+			bg.page.goPage("activityListTable");
+		}else{
+			if(typeof refreshTime != undefined){
+				clearTimeout(refreshTime);
+			}
+		}
 	}
 	function invalidateSession(){
 		$('#invalidateBtn').click();

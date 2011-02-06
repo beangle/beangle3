@@ -15,6 +15,8 @@ public class Anchor extends ClosingUIBean {
 
 	private String href;
 
+	private String target;
+	
 	public Anchor(ValueStack stack) {
 		super(stack);
 	}
@@ -27,12 +29,23 @@ public class Anchor extends ClosingUIBean {
 		this.href = href;
 	}
 
+	public String getTarget() {
+		return target;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
+	}
+
 	@Override
 	public boolean end(Writer writer, String body) {
 		if (getTheme().equals(Theme.DEFAULT_THEME)) {
 			try {
 				writer.append("<a href=\"");
 				writer.append(BeangleModels.render.render(getRequestURI(), this.href)).append("\"");
+				if(null!=target){
+					writer.append(" onclick=\"bg.Go(this.href,'").append(target).append("');return false;\"");
+				}
 				writer.append(getParameterString());
 				writer.append(">").append(body).append("</a>");
 			} catch (Exception e) {

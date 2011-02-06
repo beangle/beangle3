@@ -1,6 +1,6 @@
 [#ftl]
 <div id="profile_div">
-[@s.actionmessage theme="beangle"/]
+[@b.messages/]
 [@s.form name="profileForm" id="profileForm" theme="simple" action="monitor!saveProfile"]
 <table width="50%">
 	<tr>

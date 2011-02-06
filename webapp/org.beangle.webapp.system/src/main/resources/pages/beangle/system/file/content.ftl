@@ -8,10 +8,10 @@
 		</tr>
 		<tr>
 		  <td>
-			  <img src="${base}/static/icons/beangle/48x48/actions/go-previous.png" width="18px" height="18px"/>
-			  [@sj.a href="${b.url('!list')}?path=${file.parent?js_string}" targets="filelist"]返回[/@sj.a]
-			  <img src="${base}/static/images/action/download.gif"/>
-			  <a href="${b.url('!download')}?path=${file.absolutePath?js_string}&download=1">下载</a>
+			<img src="${base}/static/icons/beangle/48x48/actions/go-previous.png" width="18px" height="18px"/>
+			[@b.a href="!list?path=${file.parent?js_string}" target="filelist"]返回[/@]
+			<img src="${base}/static/images/action/download.gif"/>
+			<a href="${b.url('!download')}?path=${file.absolutePath?js_string}&download=1">下载</a>
 		  </td>
 		</tr>
 		<tr>

@@ -3,7 +3,9 @@
 <link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 .column {width: 440px;float: left;padding-bottom: 100px;}
-.column div {margin:5px;}
+div .ui-widget {margin:5px;}
+div .ui-widget-header{margin:2px;}
+div .portlet-content{margin:2px;}
 .ui-icon {float: right;}
 </style>
 [/@]
@@ -12,23 +14,17 @@
 	bar.addClose("${b.text("action.close")}");
 [/@]
 
-[@sj.div id="column1" cssClass="column" sortable="true"
-   sortableConnectWith=".column" sortablePlaceholder="ui-state-highlight"
-	sortableForcePlaceholderSize="true" sortableHandle="div.ui-widget-header"
-	 sortableCursor="crosshair" sortableOnUpdateTopics="onupdate"]
+<div id="column1" class="column">
 	[#include "panels/info_portlet.ftl"/]
 	[#include "panels/group_portlet.ftl"/]
 	[#include "panels/online_portlet.ftl"/]
 	[#include "panels/session_portlet.ftl"/]
-[/@]
+</div>
 
-  [@sj.div id="column2" cssClass="column" sortable="true"
-   sortableConnectWith=".column" sortablePlaceholder="ui-state-highlight"
-	sortableForcePlaceholderSize="true" sortableHandle="div.ui-widget-header"
-	 sortableCursor="crosshair" sortableOnUpdateTopics="onupdate"]
+<div id="column2" class="column" >
 	[#include "panels/restriction_portlet.ftl"/]
 	[#include "panels/menu_portlet.ftl"/]
-  [/@]
+</div>
   <script type="text/javascript">
    function _wi_tm(moudleId){
 	   var id= document.getElementById(moudleId);
@@ -45,5 +41,4 @@
 		});
 	});
   </script>
- 
 [@b.foot/]

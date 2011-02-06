@@ -2,7 +2,7 @@
 <div class="ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
 	<div class="ui-widget-header ui-corner-all"><span class="title">菜单权限</span><span class="ui-icon ui-icon-plusthick"></span></div>
 	<div class="portlet-content">
-	<table width="100%" class="grid">
+	<table width="100%" class="gridtable">
 	  <tbody>
 	  <tr class="gridhead">
 		<th width="5%">${b.text("common.id")}</th>
@@ -13,7 +13,7 @@
 	  </tr>
 		[#macro i18nTitle(entity)][#if locale.language?index_of("en")!=-1][#if entity.engTitle!?trim==""]${entity.title!}[#else]${entity.engTitle!}[/#if][#else][#if entity.title!?trim!=""]${entity.title!}[#else]${entity.engTitle!}[/#if][/#if][/#macro]
 		[#list menus?sort_by("code") as menu]
-		<tr class="gray">
+		<tr class="[#if menu_index%2==0]griddata-even[#else]griddata-odd[/#if]">
 		   <td>${menu.code}</td>
 		   <td>[#list 1..(menu.code?length) as i]&nbsp;[/#list][@i18nTitle menu/]</td>
 		   <td>

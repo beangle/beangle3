@@ -4,9 +4,9 @@
 	<tr>
 	  <td colspan="3">
 		  <img src="${base}/static/icons/beangle/48x48/actions/go-up.png" width="18px" height="18px"/>
-		  [@sj.a id="action_parent" href="${b.url('!list')}?path=${(path?js_string)!}.." targets="filelist"]上级目录[/@sj.a]
+		  [@b.a href="!list?path=${(path?js_string)!}.." target="filelist"]上级目录[/@]
 		  <img src="${base}/static/icons/beangle/48x48/actions/go-home.png" width="18px" height="18px"/>
-		  [@sj.a id="action_home" href="${b.url('!list')}" targets="filelist"]home[/@]
+		  [@b.a href="!list" target="filelist"]home[/@]
 		  [#--<img src="${base}/static/icons/beangle/48x48/actions/folder-new.png" width="18px" height="18px"/]
 		  [@sj.a id="action_newFolder" formId="pathForm" targets="filelist"]创建目录[/@]
 		  <img src="${base}/static/images/action/new.gif"/>
@@ -34,13 +34,13 @@
 		<td class="file-name">
 			[#if file.file]
 			<img src="${base}/static/icons/beangle/48x48/mimetypes/${mimeType.getMimeType(file)}.png" width="18px" heigth="18px"/>
-			[#if mimeType.isTextType(file)][@sj.a href="${b.url('!download')}?path=${file.absolutePath?url}"  targets="filelist" title="download"]${file.name}[/@]
+			[#if mimeType.isTextType(file)][@b.a href="!download?path=${file.absolutePath?url}"  target="filelist" title="download"]${file.name}[/@]
 			[#else]
 			<a href="${b.url('!download')}?path=${file.absolutePath?url}"  title="download">${file.name}</a>
 			[/#if]
 			[#else]
 			<img src="${base}/static/icons/beangle/22x22/places/folder.png" width="18px" height="18px"/>
-			[@sj.a id="file${file_index}" href="${b.url('!list')}?path=${file.absolutePath?url}" targets="filelist"]${file.name}[/@sj.a]
+			[@b.a href="!list?path=${file.absolutePath?url}" target="filelist"]${file.name}[/@]
 			[/#if]
 		</td>
 		<td align="right">[#if file.file]${file.length()/1024}KB[/#if]</td>

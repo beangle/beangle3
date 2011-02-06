@@ -6,7 +6,6 @@ package org.beangle.security.blueprint.model;
 
 import java.util.Set;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdTimeObject;
 import org.beangle.security.blueprint.Authority;

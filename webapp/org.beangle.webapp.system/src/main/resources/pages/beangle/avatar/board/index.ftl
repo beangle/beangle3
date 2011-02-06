@@ -1,16 +1,6 @@
 [#ftl]
 [@b.head/]
-<table width="100%">
-	<tr>
-	  <td class="infoTitle" width="20%" style="height:22px;">
-	   <img src="${base}/static/images/action/info.gif" align="top"/><em>
-		  <em>照片库信息</em>
-	  </td>
-	  <td class="infoTitle" width="20%" style="height:22px;">
- 		<font color="red">&nbsp;[@s.actionmessage/]</font>
-	  </td>
-	</tr>
-</table>
+[@b.toolbar title="照片库信息"/]
 <div align="center">
 	<div class="result ui-widget-content ui-corner-all" style="width:700px" align="left">
 	   <table width="100%">
@@ -47,7 +37,7 @@
 		  [/#list]
 	   </tr>
 	   [/#list]
-	   [@b.pagebar pageId="avatarPanel" curPage=names/]
+	   [@b.pagebar id="avatarPanel" page=names/]
 	</table>
 	</div>
 </div>

@@ -20,6 +20,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.Page;
 import org.beangle.struts2.view.component.Anchor;
 import org.beangle.struts2.view.component.Component;
+import org.beangle.struts2.view.component.Div;
 import org.beangle.struts2.view.component.Foot;
 import org.beangle.struts2.view.component.Grid;
 import org.beangle.struts2.view.component.Head;
@@ -198,5 +199,9 @@ public class BeangleModels {
 
 	public TagModel getQselect() {
 		return get(Qselect.class);
+	}
+
+	public TagModel getDiv() {
+		return get(Div.class);
 	}
 }

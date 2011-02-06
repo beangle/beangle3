@@ -3,7 +3,7 @@
 <script type="text/javascript">
 	var bar = bg.ui.toolbar('accesslogBar','系统资源访问记录(耗时最长的500条)');
 </script>
-[@b.grid   items=accesslogs var="accesslog"  target="访问日志"]
+[@b.grid  id="accesslogTable" items=accesslogs var="accesslog" target="访问日志"]
 	[@b.gridbar]
 	bar.addPrint("${b.text("action.print")}");
 	[/@]

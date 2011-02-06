@@ -7,7 +7,6 @@ package org.beangle.struts2.view.component;
 import java.io.Writer;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.lang.xwork.ObjectUtils;
@@ -30,7 +29,6 @@ import com.opensymphony.xwork2.util.ValueStack;
  * @author chaostone
  */
 public class Grid extends ClosingUIBean {
-	final private static transient Random RANDOM = new Random();
 	private List<Col> cols = CollectUtils.newArrayList();
 	private Set<Object> colTitles = CollectUtils.newHashSet();
 	private Object items;
@@ -79,11 +77,7 @@ public class Grid extends ClosingUIBean {
 	}
 
 	public boolean start(Writer writer) {
-		if (StringUtils.isEmpty(this.id)) {
-			int nextInt = RANDOM.nextInt();
-			nextInt = (nextInt == Integer.MIN_VALUE) ? Integer.MAX_VALUE : Math.abs(nextInt);
-			this.id = "grid_" + String.valueOf(nextInt);
-		}
+		generateIdIfEmpty();
 		return true;
 	}
 
