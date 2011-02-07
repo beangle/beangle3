@@ -8,19 +8,19 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.struts2.interceptor.NoParameters;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.config.property.PropertyConfigFactory;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.struts2.action.BaseAction;
 import org.beangle.webapp.system.model.PropertyConfigItemBean;
 
-public class PropertyAction extends BaseAction implements NoParameters {
+public class PropertyAction extends BaseAction {
 
 	private PropertyConfigFactory configFactory;
 
 	public String index() {
-		OqlBuilder<PropertyConfigItemBean> builder = OqlBuilder.from(PropertyConfigItemBean.class, "config");
+		OqlBuilder<PropertyConfigItemBean> builder = OqlBuilder.from(PropertyConfigItemBean.class,
+				"config");
 		builder.orderBy("config.name");
 		List<PropertyConfigItemBean> configs = entityDao.search(builder);
 		put("propertyConfigs", configs);
@@ -54,7 +54,8 @@ public class PropertyAction extends BaseAction implements NoParameters {
 	}
 
 	public String remove() {
-		PropertyConfigItemBean config = entityDao.get(PropertyConfigItemBean.class, getLong("config.id"));
+		PropertyConfigItemBean config = entityDao.get(PropertyConfigItemBean.class,
+				getLong("config.id"));
 		if (null != config) entityDao.remove(config);
 		return redirect("index", "info.save.success");
 	}

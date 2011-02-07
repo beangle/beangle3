@@ -11,13 +11,11 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts2.interceptor.ServletRequestAware;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.struts2.action.BaseAction;
 
-public class StatusAction extends BaseAction implements ServletRequestAware {
+public class StatusAction extends BaseAction {
 
-	private HttpServletRequest request;
 
 	public String index() {
 		put("MaxMem", Runtime.getRuntime().maxMemory());
@@ -32,6 +30,7 @@ public class StatusAction extends BaseAction implements ServletRequestAware {
 		put("threadMBean", ManagementFactory.getThreadMXBean());
 
 		Map<String, Object> serverProps = CollectUtils.newHashMap();
+		HttpServletRequest request=getRequest();
 		serverProps.put("server.hostname", request.getServerName());
 		serverProps.put("server.port", request.getServerPort());
 		serverProps.put("server.protocol", request.getProtocol());
@@ -67,10 +66,6 @@ public class StatusAction extends BaseAction implements ServletRequestAware {
 		put("userProps", userProps);
 		put("extraProps", extraProps);
 		return forward();
-	}
-
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
 	}
 
 }

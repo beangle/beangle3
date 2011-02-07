@@ -7,7 +7,6 @@ package org.beangle.webapp.portal.action;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.struts2.interceptor.ServletRequestAware;
 import org.beangle.security.auth.AuthenticationDetailsSource;
 import org.beangle.security.auth.AuthenticationManager;
 import org.beangle.security.auth.UsernamePasswordAuthentication;
@@ -21,9 +20,7 @@ import org.beangle.struts2.action.BaseAction;
 import com.octo.captcha.service.CaptchaService;
 import com.octo.captcha.service.CaptchaServiceException;
 
-public class LoginAction extends BaseAction implements ServletRequestAware {
-
-	private HttpServletRequest request;
+public class LoginAction extends BaseAction {
 
 	private CaptchaService captchaService;
 
@@ -56,7 +53,7 @@ public class LoginAction extends BaseAction implements ServletRequestAware {
 		// 校验验证码
 		if (null != captchaService) {
 			try {
-				String sessionId = request.getSession().getId();
+				String sessionId = getRequest().getSession().getId();
 				Boolean valid = captchaService.validateResponseForID(sessionId, get("captcha"));
 				if (Boolean.FALSE.equals(valid)) {
 					addActionError(getText("error.captcha"));
@@ -75,6 +72,7 @@ public class LoginAction extends BaseAction implements ServletRequestAware {
 		String password = get("password");
 		if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) { return "failure"; }
 		username = username.trim();
+		HttpServletRequest request = getRequest();
 		UsernamePasswordAuthentication auth = new UsernamePasswordAuthentication(username, password);
 		auth.setDetails(authenticationDetailsSource.buildDetails(request));
 		Authentication authRequest = auth;
@@ -89,8 +87,7 @@ public class LoginAction extends BaseAction implements ServletRequestAware {
 	}
 
 	private boolean notFailEnough() {
-		Integer loginFailureCount = (Integer) request.getSession()
-				.getAttribute(LOGIN_FAILURE_COUNT);
+		Integer loginFailureCount = (Integer) getSession().get(LOGIN_FAILURE_COUNT);
 		if (null == loginFailureCount) {
 			loginFailureCount = Integer.valueOf(0);
 		}
@@ -99,21 +96,16 @@ public class LoginAction extends BaseAction implements ServletRequestAware {
 	}
 
 	private void increaseLoginFailure() {
-		Integer loginFailureCount = (Integer) request.getSession()
-				.getAttribute(LOGIN_FAILURE_COUNT);
+		Integer loginFailureCount = (Integer) getSession().get(LOGIN_FAILURE_COUNT);
 		if (null == loginFailureCount) {
 			loginFailureCount = Integer.valueOf(0);
 		}
 		loginFailureCount++;
-		request.getSession().setAttribute(LOGIN_FAILURE_COUNT, loginFailureCount);
+		getSession().put(LOGIN_FAILURE_COUNT, loginFailureCount);
 	}
 
 	private void clearLoginFailure() {
-		request.getSession().removeAttribute(LOGIN_FAILURE_COUNT);
-	}
-
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
+		getSession().remove(LOGIN_FAILURE_COUNT);
 	}
 
 	public void setCaptchaService(CaptchaService captchaService) {

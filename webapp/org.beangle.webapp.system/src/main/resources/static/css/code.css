@@ -29,8 +29,9 @@ table.filecontent td.line-code pre {
     white-space: pre-wrap; /* CSS2.1 compliant */
     white-space: -moz-pre-wrap; /* Mozilla-based browsers */
     white-space: -o-pre-wrap; /* Opera 7+ */
+    font-family:Monospace;
+    font-size:12px;
 }
-
 
 table.CodeRay {
   background-color: #fafafa;

@@ -9,8 +9,6 @@ import java.util.Locale;
 import org.beangle.commons.text.AbstractTextResource;
 import org.beangle.commons.text.TextResource;
 
-import com.opensymphony.xwork2.ActionSupport;
-
 public class ActionTextResource extends AbstractTextResource implements TextResource {
 
 	ActionSupport action;

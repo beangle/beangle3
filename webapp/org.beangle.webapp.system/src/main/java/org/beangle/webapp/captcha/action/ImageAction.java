@@ -10,9 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts2.interceptor.ServletRequestAware;
 import org.beangle.struts2.action.BaseAction;
 
 import com.octo.captcha.service.image.ImageCaptchaService;
@@ -22,20 +20,18 @@ import com.octo.captcha.service.image.ImageCaptchaService;
  * 
  * @author chaostone
  */
-public class ImageAction extends BaseAction implements ServletRequestAware {
-
-	private HttpServletRequest request;
+public class ImageAction extends BaseAction {
 
 	private ByteArrayInputStream inputStream;
 
 	private ImageCaptchaService captchaService;
 
 	public String index() throws IOException {
-		String captchaId = request.getSession().getId();
+		String captchaId = getRequest().getSession().getId();
 		BufferedImage challenge = captchaService.getImageChallengeForID(captchaId, getLocale());
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		ImageIO.write(challenge, "JPEG", os);
-		setInputStream(new ByteArrayInputStream(os.toByteArray()));
+		inputStream = new ByteArrayInputStream(os.toByteArray());
 		return "success";
 	}
 
@@ -45,14 +41,6 @@ public class ImageAction extends BaseAction implements ServletRequestAware {
 
 	public ByteArrayInputStream getInputStream() {
 		return inputStream;
-	}
-
-	public void setInputStream(ByteArrayInputStream inputStream) {
-		this.inputStream = inputStream;
-	}
-
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
 	}
 
 }

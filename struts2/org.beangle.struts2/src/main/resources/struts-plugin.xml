@@ -18,19 +18,23 @@
 	
 	<package name="beangle" extends="struts-default">
 		<interceptors>
-			<interceptor name="flash" class="org.beangle.struts2.convention.interceptor.FlashInterceptor"/>
+			<interceptor name="flash" class="org.beangle.struts2.interceptor.FlashInterceptor"/>
+			<interceptor name="i18n2" class="org.beangle.struts2.interceptor.I18nInterceptor"/>
+			
 			<interceptor-stack name="beangleStack">
 				<interceptor-ref name="exception"/>
-				<interceptor-ref name="alias"/>
+				<interceptor-ref name="i18n2"/>
+				<interceptor-ref name="fileUpload"/>
+				<interceptor-ref name="flash"/>
+				<!--
 				<interceptor-ref name="servletConfig"/>
-				<interceptor-ref name="i18n"/>
-				<interceptor-ref name="prepare"/>
 				<interceptor-ref name="chain"/>
+				<interceptor-ref name="alias"/>
+				<interceptor-ref name="prepare"/>
 				<interceptor-ref name="debugging"/>
 				<interceptor-ref name="profiling"/>
 				<interceptor-ref name="scopedModelDriven"/>
 				<interceptor-ref name="modelDriven"/>
-				<interceptor-ref name="fileUpload"/>
 				<interceptor-ref name="checkbox"/>
 				<interceptor-ref name="staticParams"/>
 				<interceptor-ref name="actionMappingParams"/>
@@ -50,8 +54,7 @@
 						input,back,cancel,browse
 					</param>
 				</interceptor-ref>
-				<!--add flash plugin to struts2 default interceptor stack-->
-				<interceptor-ref name="flash"/>
+				 -->
 			</interceptor-stack>
 		</interceptors>
 		<default-interceptor-ref name="beangleStack"/>

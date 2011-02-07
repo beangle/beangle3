@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.struts2.convention.interceptor;
+package org.beangle.struts2.interceptor;
 
 import org.beangle.struts2.convention.Flash;
 
@@ -22,9 +22,7 @@ public class FlashInterceptor extends AbstractInterceptor {
 	public String intercept(ActionInvocation invocation) throws Exception {
 		String result = invocation.invoke();
 		Flash flash = (Flash) invocation.getInvocationContext().getSession().get("flash");
-		if (null != flash) {
-			flash.nextToNow();
-		}
+		if (null != flash) flash.nextToNow();
 		return result;
 	}
 

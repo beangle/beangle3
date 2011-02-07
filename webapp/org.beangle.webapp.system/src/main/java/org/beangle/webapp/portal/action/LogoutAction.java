@@ -5,11 +5,8 @@
 package org.beangle.webapp.portal.action;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.dispatcher.SessionMap;
-import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.ServletResponseAware;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.AuthenticationUtils;
 import org.beangle.security.core.context.SecurityContextHolder;
@@ -18,19 +15,17 @@ import org.beangle.struts2.action.BaseAction;
 
 import com.opensymphony.xwork2.ActionContext;
 
-public class LogoutAction extends BaseAction implements ServletRequestAware, ServletResponseAware {
+public class LogoutAction extends BaseAction {
 
 	private LogoutHandlerStack handlerStack;
-	private HttpServletRequest request;
-	private HttpServletResponse response;
 
 	public String index() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String result = "success";
 		if (AuthenticationUtils.isValid(auth)) {
-			handlerStack.logout(request, response, auth);
+			handlerStack.logout(getRequest(), getResponse(), auth);
 			((SessionMap<?, ?>) ActionContext.getContext().getSession()).invalidate();
-			String targetUrl = determineTargetUrl(request);
+			String targetUrl = determineTargetUrl(getRequest());
 			if (null != targetUrl) {
 				result = "redirect:" + targetUrl;
 			}
@@ -39,20 +34,11 @@ public class LogoutAction extends BaseAction implements ServletRequestAware, Ser
 	}
 
 	protected String determineTargetUrl(HttpServletRequest request) {
-		return request.getParameter("logoutSuccessUrl");
-	}
-
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
-
-	public void setServletResponse(HttpServletResponse response) {
-		this.response = response;
+		return get("logoutSuccessUrl");
 	}
 
 	public void setHandlerStack(LogoutHandlerStack handlerStack) {
 		this.handlerStack = handlerStack;
 	}
 
-	
 }

@@ -7,12 +7,7 @@ package org.beangle.webapp.staticfile.action;
 import java.net.URL;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
-import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.ServletResponseAware;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.struts2.action.BaseAction;
 import org.beangle.web.io.StreamDownloader;
@@ -23,16 +18,12 @@ import org.beangle.webapp.staticfile.StaticFileLoader;
  * 
  * @author chaostone
  */
-public class DownloadAction extends BaseAction implements ServletRequestAware, ServletResponseAware {
+public class DownloadAction extends BaseAction {
 
 	private List<StaticFileLoader> loaders = CollectUtils.newArrayList();
 
-	private HttpServletRequest request;
-
-	private HttpServletResponse response;
-
 	private StreamDownloader streamDownloader;
-	
+
 	public String index() throws Exception {
 		String name = get("file");
 		String displayName = get("display");
@@ -45,7 +36,7 @@ public class DownloadAction extends BaseAction implements ServletRequestAware, S
 				}
 			}
 			if (null != url) {
-				streamDownloader.download(request, response, url, displayName);
+				streamDownloader.download(getRequest(), getResponse(), url, displayName);
 			}
 		}
 		if (null == url) {
@@ -53,14 +44,6 @@ public class DownloadAction extends BaseAction implements ServletRequestAware, S
 		} else {
 			return null;
 		}
-	}
-
-	public void setServletResponse(HttpServletResponse resp) {
-		this.response = resp;
-	}
-
-	public void setServletRequest(HttpServletRequest req) {
-		this.request = req;
 	}
 
 	public List<StaticFileLoader> getLoaders() {

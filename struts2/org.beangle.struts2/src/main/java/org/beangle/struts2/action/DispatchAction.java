@@ -12,11 +12,8 @@ import org.beangle.struts2.convention.Flash;
 import org.beangle.struts2.convention.route.Action;
 
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 
 public class DispatchAction extends ActionSupport {
-
-	private static final long serialVersionUID = 3140029723064486267L;
 
 	public String execute() throws Exception {
 		return forward(new Action(this, "index"));

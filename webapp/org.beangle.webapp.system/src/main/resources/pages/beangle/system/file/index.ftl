@@ -1,5 +1,5 @@
 [#ftl]
-  <style type="text/css">
+<style type="text/css">
 	.file-browser {
 		width: 800px;
 		margin:0 auto;
@@ -11,15 +11,15 @@
 	   padding-bottom: 2px;
 	   text-align:left
 	}
-	.banner {
+	.file_location {
 	  padding-top: 30px;
 	  font-weight: bold;
 	}
-  </style>
+</style>
   <div class="result ui-widget-content ui-corner-all file-browser">
-	<table width="80%" align="center">
+	<table width="90%" align="center">
 		<tr>
-		  <td class="banner">
+		  <td class="file_location">
 			[@s.form  id="pathForm" action="file" theme="simple"]
 			Path:<input type="text"  name="path" value="${path!}" style="width:80%;font-weight: bold"/>
 			<input name="method" type="hidden" value="list"/>

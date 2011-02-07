@@ -11,23 +11,15 @@ import java.io.LineNumberReader;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.ServletResponseAware;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.struts2.action.BaseAction;
 import org.beangle.web.io.StreamDownloader;
 import org.beangle.web.mime.MimeTypeProvider;
 
 @SuppressWarnings("serial")
-public class FileAction extends BaseAction implements ServletRequestAware, ServletResponseAware {
-
-	private HttpServletRequest request;
-	private HttpServletResponse response;
+public class FileAction extends BaseAction  {
 
 	private MimeTypeProvider mimeTypeProvider;
 
@@ -74,7 +66,7 @@ public class FileAction extends BaseAction implements ServletRequestAware, Servl
 				reader.close();
 				return forward("content");
 			} else {
-				streamDownloader.download(request, response, file);
+				streamDownloader.download(getRequest(), getResponse(), file);
 			}
 		}
 		return null;
@@ -98,7 +90,7 @@ public class FileAction extends BaseAction implements ServletRequestAware, Servl
 	private String getPath() {
 		String path = get("path");
 		if (StringUtils.isEmpty(path)) {
-			path = request.getSession().getServletContext().getRealPath("");
+			path = getRequest().getSession().getServletContext().getRealPath("");
 		}
 		String sRet = path;// .replace('\\', '/');
 		File file = new File(path);
@@ -119,14 +111,6 @@ public class FileAction extends BaseAction implements ServletRequestAware, Servl
 		File file = new File(path + newFolder);
 		file.createNewFile();
 		return redirect("list", "info.action.success", "&path=" + path);
-	}
-
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
-
-	public void setServletResponse(HttpServletResponse response) {
-		this.response = response;
 	}
 
 	public void setMimeTypeProvider(MimeTypeProvider mimeTypeProvider) {

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.Validate;
 import org.apache.struts2.ServletActionContext;
@@ -33,8 +34,6 @@ import org.slf4j.LoggerFactory;
 import com.opensymphony.xwork2.ActionContext;
 
 public class BaseAction extends DispatchAction {
-
-	private static final long serialVersionUID = 4899924584565460018L;
 
 	protected static final Logger logger = LoggerFactory.getLogger(BaseAction.class);
 
@@ -234,5 +233,17 @@ public class BaseAction extends DispatchAction {
 	protected void deleteCookie(String name) {
 		CookieUtils.deleteCookieByName(ServletActionContext.getRequest(),
 				ServletActionContext.getResponse(), name);
+	}
+
+	protected HttpServletRequest getRequest() {
+		return ServletActionContext.getRequest();
+	}
+
+	protected HttpServletResponse getResponse() {
+		return ServletActionContext.getResponse();
+	}
+
+	protected Map<String,Object> getSession() {
+		return ActionContext.getContext().getSession();
 	}
 }

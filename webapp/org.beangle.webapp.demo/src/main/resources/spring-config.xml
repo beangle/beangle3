@@ -17,12 +17,12 @@
 		</property>
 	</bean>
 	
-	<bean id="usernamePreauthFilter">
+	<!--<bean id="usernamePreauthFilter">
 		<property name="usernameSource" >
 			<bean class="org.beangle.webapp.demo.GivenUsernameSource"/>
 		</property>
 	</bean>
-	<!--
+	
 	<bean id="securityFilterChain">
 		<property name="filterChainMap">
 			<map>
