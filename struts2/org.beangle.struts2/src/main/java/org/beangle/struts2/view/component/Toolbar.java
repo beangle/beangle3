@@ -8,17 +8,25 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 public class Toolbar extends ClosingUIBean {
 
+	private String title;
+
 	public Toolbar(ValueStack stack) {
 		super(stack);
 	}
 
 	public void evaluateParams() {
 		generateIdIfEmpty();
-//		if (StringUtils.isEmpty(this.id)) {
-//			int nextInt = RANDOM.nextInt();
-//			nextInt = (nextInt == Integer.MIN_VALUE) ? Integer.MAX_VALUE : Math.abs(nextInt);
-//			this.id = "toolbar_" + String.valueOf(nextInt);
-//		}
+		if (null != title) {
+			title = getText(title);
+		}
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }

@@ -9,6 +9,8 @@ import org.beangle.rule.Parameter;
 
 public class RuleConfigParam extends LongIdObject {
 
+	private static final long serialVersionUID = 8711866530914907008L;
+
 	/** 标准-规则 */
 	private RuleConfig ruleConfig;
 

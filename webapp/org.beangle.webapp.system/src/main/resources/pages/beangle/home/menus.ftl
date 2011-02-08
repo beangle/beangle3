@@ -19,7 +19,11 @@
 [/#macro]
 
 <div id="menu_panel">
+[#if menus?size>0]
 <ul style="padding-left: 20px;">
-[#list menus! as menu][@displayMenu menu/][/#list]
+[#list menus as menu][@displayMenu menu/][/#list]
 </ul>
+[#else]
+without any menu!
+[/#if]
 </div>

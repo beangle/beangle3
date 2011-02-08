@@ -18,16 +18,25 @@
 	window.beangle=beangle;
 	window.bg=beangle;
 	beangle.extend({
-		Go : function (url,target){
-			if(target){
+		//jump to href or anchor
+		Go : function (obj,target){
+			url=obj;
+			if(typeof obj =="object" && obj.tagName.toLowerCase()=="a"){
+				url=obj.href;
+				if(!target){
+					target=bg.findTarget(obj);
+				}
+			}
+			if(!target) target="_self";
+			if("_self"==target){ self.location=url;}
+			else if("_parent"==target){self.parent.location=url;}
+			else{
 				if(!bg.isAjaxTarget(target)){
+					//FIXME _blank,_top
 					document.getElementById(target).src=url;
 				}else{
 					jQuery('#'+target).load(url);
-					// jQuery.get(url, function(data){jQuery('#'+target).html(data)});
 				}
-			}else{
-				self.location=url;
 			}
 		},
 		getContextPath : function (){
@@ -58,6 +67,22 @@
 				return target;
 			}
 			if(!document.getElementById(target)) return "_self";
+			else return target;
+		},
+		findTarget : function(ele){
+			p=ele.parentNode;
+			finalTarget="_self";
+			while(p){
+				if(p.id && p.className  && p.className.indexOf("_ajax_container")>-1){
+					finalTarget = p.id;
+					break;
+				}else{
+					if(p==p.parentNode) p=null;
+					else p=p.parentNode;
+				}
+			}
+			ele.target=finalTarget;
+			return finalTarget;
 		}
 	});
 	
@@ -232,8 +257,20 @@
 	//About From
 	beangle.extend({
 		form:{
-			submit : function (myForm,action,target){
+			submit : function (myForm,action,target,onsubmit){
 				if((typeof myForm)=='string') myForm=document.getElementById(myForm);
+				if(onsubmit){
+					var rs=null;
+					if(typeof onsubmit == "function"){
+						rs=onsubmit(myForm);
+					}else{
+						rs=eval(onsubmit);
+					}
+					if(!rs){
+						//if(rs == undefined) alert("ensure onsubmit function return true/false");
+						return;
+					}
+				}
 				//FIXME check target is(iframe,reserved,div)
 				var submitTarget=(null!=target)?target:myForm.target;
 				if(action==null){
@@ -243,7 +280,9 @@
 					action=action.substring(action.indexOf("/",7));
 				}
 				myForm.action=action;
-				
+				if(!submitTarget){
+					submitTarget=bg.findTarget(myForm);
+				}
 				if(!bg.isAjaxTarget(submitTarget)){
 					myForm.target=bg.normalTarget(submitTarget);
 					myForm.action=action;
@@ -268,12 +307,7 @@
 					}
 					myForm.appendChild(submitx);
 				}
-	
-				var options_submit = {};
-				options_submit.jqueryaction = "button";
-				options_submit.id = sumbitBtnId;
-				options_submit.targets = submitTarget;
-				options_submit.href = "#";
+				var options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#'};
 				if (typeof jQuery != "undefined") {
 					jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
 				}

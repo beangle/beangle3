@@ -16,6 +16,8 @@ import org.beangle.security.web.context.HttpSessionContextIntegrationFilter;
  */
 public class HttpSessionDestroyedEvent extends SessionDestroyedEvent {
 
+	private static final long serialVersionUID = 1L;
+
 	public HttpSessionDestroyedEvent(HttpSession o) {
 		super(o);
 	}

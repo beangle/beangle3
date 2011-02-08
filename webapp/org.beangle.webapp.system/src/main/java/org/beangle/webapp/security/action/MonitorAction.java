@@ -18,7 +18,6 @@ import org.beangle.security.core.session.SessionInfo;
 import org.beangle.security.web.access.log.Accesslog;
 import org.beangle.security.web.access.log.CachedResourceAccessor;
 import org.beangle.security.web.session.category.CategorySessionRegistry;
-import org.beangle.security.web.session.category.LimitProfile;
 import org.beangle.security.web.session.category.MemCategorySessionController;
 
 /**

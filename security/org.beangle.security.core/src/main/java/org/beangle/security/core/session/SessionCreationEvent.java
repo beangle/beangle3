@@ -14,6 +14,8 @@ import org.springframework.context.ApplicationEvent;
  */
 public abstract class SessionCreationEvent extends ApplicationEvent {
 
+	private static final long serialVersionUID = 1L;
+
 	public SessionCreationEvent(Object source) {
 		super(source);
 	}

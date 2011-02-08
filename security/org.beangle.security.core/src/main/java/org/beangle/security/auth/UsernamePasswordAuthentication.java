@@ -8,6 +8,8 @@ import org.beangle.security.core.GrantedAuthority;
 
 public class UsernamePasswordAuthentication extends AbstractAuthentication {
 
+	private static final long serialVersionUID = 1L;
+	
 	private final Object principal;
 	private final Object credentials;
 

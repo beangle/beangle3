@@ -49,12 +49,6 @@ public class AuthorityAction extends SecurityActionSupport {
 	 * 根据菜单配置来分配权限
 	 * 
 	 * @author 鄂州蚊子
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
 	 */
 	public String edit() {
 		Long groupId = getLong("group.id");
@@ -128,13 +122,6 @@ public class AuthorityAction extends SecurityActionSupport {
 
 	/**
 	 * 显示权限操作提示界面
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
 	 */
 	public String prompt() {
 		return forward();
@@ -143,12 +130,6 @@ public class AuthorityAction extends SecurityActionSupport {
 	/**
 	 * 保存模块级权限
 	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
 	 */
 	public String save() {
 		Group mao = entityDao.get(Group.class, getLong("group.id"));

@@ -14,7 +14,7 @@
 	<properties>
 		<bundle.symbolicName>org.beangle.model</bundle.symbolicName>
 		<bundle.namespace>org.beangle.model</bundle.namespace>
-		<hibernate.version>3.6.0.Final</hibernate.version>
+		<hibernate.version>3.6.1.Final</hibernate.version>
 		<ehcache.version>2.3.0</ehcache.version>
 		<jta.version>1.1</jta.version>
 	</properties>

@@ -9,19 +9,16 @@
 <div class="banner">
 	<div class="banner_area">
 	<a href="#" onclick="editAccount()">${b.text('action.myAccount')}</a>&nbsp;&nbsp;
-	<a href="${b.url('!welcome')}" target="main">${b.text('action.backHome')}</a>&nbsp;&nbsp;
-	<a href="${b.url('logout')}" target="top">${b.text('action.logout')}</a>
+	[@b.a href="!welcome" target="main"]${b.text('action.backHome')}[/@]&nbsp;&nbsp;
+	[@b.a href="logout" target="top"]${b.text('action.logout')}[/@]
 	</div>
-	<form id="categoryForm" name="categoryForm" method="post" action="${b.url('!index')}">
+	[@b.form]
 	<div class="banner_area">
-		<a href="${b.url('/security/my')}" target="_blank" title="查看登录记录">${user.fullname}(${user.name})</a>&nbsp;&nbsp;
-		<label for="security.categoryId">身份:</label> 
-		<select id="security.categoryId" name="security.categoryId" style="width:100px" >
-		[#list categories as category]<option value="${category.id}" [#if (Session['security.categoryId']!0)==category.id]selected="selected"[/#if]>${category.name}</option>[/#list]
-		</select>
+		[@b.a href="/security/my" target="_blank" title="查看登录记录"]${user.fullname}(${user.name})[/@]&nbsp;&nbsp;
+		[@b.select name="security.categoryId" items=categories title="entity.userCategory"  style="width:100px" value=categoryId/]
 		<input type="submit" value="切换"/>
 	</div>
-	</form>
+	[/@]
 </div>
 
 <table id="mainTable" style="width:100%;height:95%" >

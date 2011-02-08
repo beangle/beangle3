@@ -11,6 +11,8 @@ package org.beangle.security.auth;
  */
 public class AccountExpiredException extends AccountStatusException {
 
+	private static final long serialVersionUID = 1L;
+
 	public AccountExpiredException(String msg) {
 		super(msg);
 	}

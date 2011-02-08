@@ -1,8 +1,6 @@
 [#ftl]
 [@b.head/]
-
-[#assign labInfo]限制参数和参数组管理[/#assign]
-[#include "/template/back.ftl"/]
+[@b.toolbar title="限制参数和参数组管理"]bar.addBack();[/@]
 <script  type="text/javascript" src="${base}/static/scripts/itemSelect.js"></script>
 <table width="100%">
    <tr>
@@ -21,7 +19,7 @@
 		  </td>
 	   </tr>
 	  </table>
-   [@b.grid  ]
+	[@b.grid  ]
 	 [@b.row]
 	  [@b.col title="序号"/]
 	  [@b.col width="70%" title="名称"/]
@@ -50,11 +48,9 @@
    </td>
    </tr>
   </table>
- 
 <script type="text/javascript">
-
-   function searchParam(groupId){
-	  paramFrame.location="${b.url('param!search')}?paramGroup.id="+groupId;
-   }
-
+	function searchParam(groupId){
+		paramFrame.location="${b.url('param!search')}?paramGroup.id="+groupId;
+	}
 </script>
+[@b.foot/]

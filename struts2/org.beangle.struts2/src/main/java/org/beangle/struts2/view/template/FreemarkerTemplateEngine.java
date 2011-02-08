@@ -23,6 +23,7 @@ import com.opensymphony.xwork2.inject.Inject;
 import com.opensymphony.xwork2.util.ValueStack;
 
 import freemarker.core.Environment;
+import freemarker.core.ParseException;
 import freemarker.template.Configuration;
 import freemarker.template.SimpleHash;
 import freemarker.template.Template;
@@ -67,6 +68,8 @@ public class FreemarkerTemplateEngine implements TemplateEngine {
 				Template template = config.getTemplate(templateName);
 				env = template.createProcessingEnvironment(model, writer);
 				envs.put(templateName, env);
+			} catch (ParseException pe) {
+				throw pe;
 			} catch (IOException e) {
 				logger.error("Could not load the FreeMarker template named '{}'", templateName);
 				logger.error("The TemplateLoader provided by the FreeMarker Configuration was a: "

@@ -68,14 +68,12 @@
         <webClassPathEntry>M2_REPO/commons-pool/commons-pool/1.3/commons-pool-1.3.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/javassist/javassist/3.12.0.GA/javassist-3.12.0.GA.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/javax/servlet/jsp-api/2.0/jsp-api-2.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/javax/transaction/jta/1.1/jta-1.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/mockobjects/mockobjects-core/0.09/mockobjects-core-0.09.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/mockobjects/mockobjects-jdk1.4/0.09/mockobjects-jdk1.4-0.09.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/net/sf/ehcache/ehcache-core/2.3.0/ehcache-core-2.3.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/net/sf/jxls/jxls-core/0.9.9/jxls-core-0.9.9.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/ognl/ognl/3.0/ognl-3.0.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/aopalliance/com.springsource.org.aopalliance/1.0.0/com.springsource.org.aopalliance-1.0.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/ant/ant-launcher/1.7.0/ant-launcher-1.7.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/ant/ant/1.7.0/ant-1.7.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/poi/poi/3.7/poi-3.7.jar</webClassPathEntry>
@@ -92,7 +90,7 @@
         <webClassPathEntry>M2_REPO/org/eclipse/gemini/blueprint/gemini-blueprint-io/1.0.0.M1/gemini-blueprint-io-1.0.0.M1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/freemarker/freemarker/2.3.16/freemarker-2.3.16.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/hibernate/hibernate-commons-annotations/3.2.0.Final/hibernate-commons-annotations-3.2.0.Final.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/hibernate/hibernate-core/3.6.0.Final/hibernate-core-3.6.0.Final.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/hibernate/hibernate-core/3.6.1.Final/hibernate-core-3.6.1.Final.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.0.Final/hibernate-jpa-2.0-api-1.0.0.Final.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/hsqldb/hsqldb/2.0.0/hsqldb-2.0.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/jasig/cas/cas-client-core/3.1.9/cas-client-core-3.1.9.jar</webClassPathEntry>
@@ -100,12 +98,6 @@
         <webClassPathEntry>M2_REPO/org/osgi/osgi_R4_core/1.0/osgi_R4_core-1.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/slf4j/jcl-over-slf4j/1.6.1/jcl-over-slf4j-1.6.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/slf4j/slf4j-api/1.6.1/slf4j-api-1.6.1.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/springframework/org.springframework.aop/3.0.3.RELEASE/org.springframework.aop-3.0.3.RELEASE.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/springframework/org.springframework.asm/3.0.3.RELEASE/org.springframework.asm-3.0.3.RELEASE.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/springframework/org.springframework.beans/3.0.3.RELEASE/org.springframework.beans-3.0.3.RELEASE.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/springframework/org.springframework.context/3.0.3.RELEASE/org.springframework.context-3.0.3.RELEASE.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/springframework/org.springframework.core/3.0.3.RELEASE/org.springframework.core-3.0.3.RELEASE.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/springframework/org.springframework.expression/3.0.3.RELEASE/org.springframework.expression-3.0.3.RELEASE.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/springframework/spring-aop/3.0.5.RELEASE/spring-aop-3.0.5.RELEASE.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/springframework/spring-asm/3.0.5.RELEASE/spring-asm-3.0.5.RELEASE.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/springframework/spring-beans/3.0.5.RELEASE/spring-beans-3.0.5.RELEASE.jar</webClassPathEntry>

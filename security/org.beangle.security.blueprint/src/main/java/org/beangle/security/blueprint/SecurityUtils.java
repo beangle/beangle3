@@ -11,7 +11,7 @@ import org.beangle.security.core.context.SecurityContextHolder;
 
 public final class SecurityUtils {
 
-	private static UserToken getPrincipal() {
+	public static UserToken getPrincipal() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (null == auth) throw new AuthenticationException();
 		UserToken user = (UserToken) auth.getPrincipal();

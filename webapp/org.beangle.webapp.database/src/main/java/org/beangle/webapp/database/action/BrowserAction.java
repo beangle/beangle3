@@ -17,7 +17,6 @@ import org.beangle.db.dialect.Dialect;
 import org.beangle.db.meta.MetadataLoader;
 import org.beangle.db.meta.Table;
 import org.beangle.webapp.database.model.DatasourceBean;
-import org.beangle.webapp.database.service.DatasourceService;
 import org.beangle.webapp.security.action.SecurityActionSupport;
 
 import com.opensymphony.xwork2.ActionContext;

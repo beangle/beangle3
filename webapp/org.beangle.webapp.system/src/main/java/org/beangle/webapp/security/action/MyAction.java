@@ -86,8 +86,7 @@ public class MyAction extends SecurityActionSupport {
 		valueMap.put("password", pwd);
 		valueMap.put("mail", email);
 		entityDao.update(User.class, "id", new Object[] { userId }, valueMap);
-		addMessage("ok.passwordChanged");
-		return "actionResult";
+		return redirect("edit","ok.passwordChanged");
 	}
 
 	/**

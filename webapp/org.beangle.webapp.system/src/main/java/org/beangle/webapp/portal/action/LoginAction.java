@@ -24,7 +24,7 @@ public class LoginAction extends BaseAction {
 
 	private CaptchaService captchaService;
 
-	private AuthenticationDetailsSource authenticationDetailsSource;
+	private AuthenticationDetailsSource<HttpServletRequest, Object> authenticationDetailsSource;
 
 	private AuthenticationManager authenticationManager;
 
@@ -113,7 +113,7 @@ public class LoginAction extends BaseAction {
 	}
 
 	public void setAuthenticationDetailsSource(
-			AuthenticationDetailsSource authenticationDetailsSource) {
+			AuthenticationDetailsSource<HttpServletRequest, Object> authenticationDetailsSource) {
 		this.authenticationDetailsSource = authenticationDetailsSource;
 	}
 

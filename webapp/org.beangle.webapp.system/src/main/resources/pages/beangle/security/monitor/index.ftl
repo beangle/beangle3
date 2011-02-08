@@ -1,7 +1,7 @@
 [#ftl]
 [@b.head/]
 
-[@b.toolbar id="menuBar" title="<a href='${b.url('dashboard')}'>权限管理</a>-->访问监控"]
+[@b.toolbar id="menuBar" title="<a href='${b.url('index')}'>权限管理</a>-->访问监控"]
 	bar.addHelp();
 	//标签卡刷新定时器
 	var refreshTime=null;

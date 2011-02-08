@@ -192,11 +192,6 @@ public class UserAction extends SecurityActionSupport {
 
 	/**
 	 * 删除一个或多个用户
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	public String remove() {
@@ -219,11 +214,6 @@ public class UserAction extends SecurityActionSupport {
 
 	/**
 	 * 禁用或激活一个或多个用户
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	public String activate() {
@@ -271,7 +261,7 @@ public class UserAction extends SecurityActionSupport {
 			User user = userService.get(loginName);
 			if (null != user) {
 				put("user", user);
-				return forward(new Action((Class) null, "dashboard", "&user.id=" + user.getId()));
+				return forward(new Action((Class<?>) null, "dashboard", "&user.id=" + user.getId()));
 			} else {
 				return null;
 			}

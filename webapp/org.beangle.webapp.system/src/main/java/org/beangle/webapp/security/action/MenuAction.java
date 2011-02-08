@@ -63,11 +63,6 @@ public class MenuAction extends SecurityActionSupport {
 
 	/**
 	 * 禁用或激活一个或多个模块
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	public String activate() {
@@ -88,12 +83,7 @@ public class MenuAction extends SecurityActionSupport {
 	/**
 	 * 打印预览功能列表
 	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
 	 * @return
-	 * @throws Exception
 	 */
 	public String preview() {
 		OqlBuilder<Menu> query = OqlBuilder.from(Menu.class, "menu");

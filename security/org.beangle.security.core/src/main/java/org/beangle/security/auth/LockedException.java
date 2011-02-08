@@ -8,6 +8,8 @@ package org.beangle.security.auth;
  * 账户锁定异常
  */
 public class LockedException extends AccountStatusException {
+	private static final long serialVersionUID = 1L;
+
 	public LockedException(String msg) {
 		super(msg);
 	}

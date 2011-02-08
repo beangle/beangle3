@@ -8,9 +8,7 @@ import java.io.StringWriter;
 import java.util.Map;
 
 import org.apache.commons.lang.time.StopWatch;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.Dispatcher;
-import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import org.apache.struts2.util.StrutsTestCaseHelper;
 import org.apache.struts2.views.freemarker.StrutsClassTemplateLoader;
 import org.apache.struts2.views.freemarker.tags.StrutsModels;

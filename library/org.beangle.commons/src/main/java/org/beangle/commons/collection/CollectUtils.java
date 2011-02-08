@@ -88,6 +88,14 @@ public final class CollectUtils {
 		return new HashSet<E>();
 	}
 
+	public static <E> Set<E> newHashSet(E... values) {
+		Set<E> set = new HashSet<E>(values.length);
+		for (E e : values) {
+			set.add(e);
+		}
+		return set;
+	}
+
 	public static <E> Set<E> newHashSet(Collection<? extends E> c) {
 		return new HashSet<E>(c);
 	}
@@ -122,7 +130,7 @@ public final class CollectUtils {
 		}
 		return map;
 	}
-	
+
 	public static Map<String, String> toMap(String[]... wordMappings) {
 		Map<String, String> mappings = new HashMap<String, String>();
 		for (int i = 0; i < wordMappings.length; i++) {

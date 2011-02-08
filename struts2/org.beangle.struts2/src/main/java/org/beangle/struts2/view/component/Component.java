@@ -28,6 +28,7 @@ public class Component {
 	public static final String COMPONENT_STACK = "b__component_stack";
 	protected ValueStack stack;
 	protected Map<String, Object> parameters;
+
 	/**
 	 * Constructor.
 	 * 
@@ -138,15 +139,15 @@ public class Component {
 	 *            the class to look for, or if assignable from.
 	 * @return the component if found, <tt>null</tt> if not.
 	 */
-	protected Component findAncestor(Class<?> clazz) {
+	protected <T extends Component> T findAncestor(Class<T> clazz) {
 		Stack<? extends Component> componentStack = getComponentStack();
 		int currPosition = componentStack.search(this);
 		if (currPosition >= 0) {
 			int start = componentStack.size() - currPosition - 1;
 			// for (int i = componentStack.size() - 2; i >= 0; i--) {
 			for (int i = start; i >= 0; i--) {
-				Component component = (Component) componentStack.get(i);
-				if (clazz.isAssignableFrom(component.getClass()) && component != this) { return component; }
+				Component component = componentStack.get(i);
+				if (clazz.isAssignableFrom(component.getClass()) && component != this) { return (T) component; }
 			}
 		}
 

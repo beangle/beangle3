@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
  * Parent class for published HttpSession events
  */
 public abstract class HttpSessionApplicationEvent extends ApplicationEvent {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Base constructor for all subclasses must have an HttpSession
 	 * 

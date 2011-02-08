@@ -12,6 +12,8 @@ import org.beangle.rule.Rule;
 
 public class RuleConfig extends LongIdTimeObject {
 
+	private static final long serialVersionUID = -5404097831423072886L;
+
 	/** 业务规则 */
 	private Rule rule;
 

@@ -5,14 +5,13 @@
  <script  type="text/javascript" src="${base}/static/scripts/tabpane.js"></script>
  <script  type="text/javascript" src="${base}/static/scripts/common/TabPane.js"></script>
 [@b.toolbar title="数据权限"]
-	function save(){
-		var form=document.restrictionForm;
-		if(confirm("确定设置?")){form.submit();}
-	}
-  bar.addItem("${b.text("action.save")}",save,'save.gif');
-  bar.addBack();
+function save(){
+	if(confirm("确定设置?")){bg.form.submit(document.restrictionForm);}
+}
+bar.addItem("${b.text("action.save")}",save,'save.gif');
+bar.addBack();
 [/@]
-<form name="restrictionForm" method="post" action="${b.url('!save')}">
+[@b.form name="restrictionForm" action="!save"]
 	<input type="hidden" name="restriction.id" value="${restriction.id!}"/>
 	<input type="hidden" name="restrictionType" value="${Parameters['restrictionType']}"/>
 	<input type="hidden" name="restriction.pattern.id" value="${restriction.pattern.id}"/>
@@ -49,7 +48,7 @@
 	   </div>
 	[/#list]
 	</div>
-	</form>
+[/@]
 <script type="text/javascript">
 	setupAllTabs();
  </script>

@@ -128,8 +128,8 @@
 	<bean name="security/monitor" scope="prototype" autowire="byName"
 	 class="org.beangle.webapp.security.action.MonitorAction"></bean>
 	
-	<bean name="security/dashboard" scope="prototype" autowire="byName"
-	 class="org.beangle.webapp.security.action.DashboardAction"></bean>
+	<bean name="security/index" scope="prototype" autowire="byName"
+	 class="org.beangle.webapp.security.action.IndexAction"></bean>
 	
 	<bean name="security/my" scope="prototype" autowire="byName"
 	 class="org.beangle.webapp.security.action.MyAction"></bean>

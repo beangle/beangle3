@@ -14,6 +14,8 @@ import org.beangle.security.core.session.SessionCreationEvent;
  */
 public class HttpSessionCreationEvent extends SessionCreationEvent {
 
+	private static final long serialVersionUID = 1L;
+
 	public HttpSessionCreationEvent(HttpSession o) {
 		super(o);
 	}

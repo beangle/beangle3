@@ -5,11 +5,14 @@
 package org.beangle.webapp.portal.action;
 
 import java.sql.Date;
+import java.util.Collections;
 import java.util.List;
 
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.blueprint.MenuProfile;
+import org.beangle.security.blueprint.SecurityUtils;
 import org.beangle.security.blueprint.User;
+import org.beangle.security.blueprint.UserCategory;
 import org.beangle.webapp.security.action.SecurityActionSupport;
 
 /**
@@ -24,8 +27,19 @@ public class HomeAction extends SecurityActionSupport {
 		Long categoryId = getLong("security.categoryId");
 		if (null == categoryId) {
 			categoryId = getUserCategoryId();
+		} else {
+			if (!categoryId.equals(getUserCategoryId())) {
+				UserCategory newCategory = entityDao.get(UserCategory.class, categoryId);
+				SecurityUtils.getPrincipal().changeCategory(newCategory);
+			}
 		}
-		put("menus", authorityService.getMenus(getMenuProfile(categoryId), user));
+		put("categoryId", categoryId);
+		MenuProfile profile = getMenuProfile(categoryId);
+		if (null != profile) {
+			put("menus", authorityService.getMenus(profile, user));
+		} else {
+			put("menus", Collections.EMPTY_LIST);
+		}
 		put("user", user);
 		put("categories", user.getCategories());
 		return forward();

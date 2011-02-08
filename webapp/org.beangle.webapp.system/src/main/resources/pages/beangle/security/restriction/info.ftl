@@ -22,30 +22,27 @@
 [#list restrictEntities! as entity]
  <li>${entity.remark!} <a onclick="add('${entity.id}')" href='#'>添加</a></li>
 [/#list]
-<form name="actionForm" method="post">
+[@b.form name="restrictionForm" ]
 	<input type="hidden" name="restrictionType" value="${Parameters['restrictionType']}"/>
 	<input type="hidden" name="restriction.holder.id" value="${Parameters['restriction.holder.id']}"/>
 	<input type="hidden" name="params" value="&restriction.holder.id=${Parameters['restriction.holder.id']}&restrictionType=${Parameters['restrictionType']}"/>
-</form>
+[/@]
 <script type="text/javascript">
-	function edit(){
-		self.location="${b.url('!edit')}?restriction.id=";
-	}
 	function add(patternId){
-		var form =document.actionForm;
+		var form =document.restrictionForm;
 		bg.form.addInput(form,"restriction.pattern.id",patternId);
 		form.action="${b.url('!edit')}";
 		form.submit();
 	}
 	function edit(restrictionId){
-		var form =document.actionForm;
+		var form = document.restrictionForm;
 		bg.form.addInput(form,"restriction.id",restrictionId);
 		form.action="${b.url('!edit')}";
-		form.submit();
+		bg.form.submit(form);
 	}
 	function remove(restrictionId){
 		if(!confirm("确定删除?")) return;
-		var form =document.actionForm;
+		var form =document.restrictionForm;
 		bg.form.addInput(form,"restriction.id",restrictionId);
 		form.action="${b.url('!remove')}";
 		form.submit();

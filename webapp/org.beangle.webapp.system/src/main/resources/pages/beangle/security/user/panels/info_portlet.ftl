@@ -28,7 +28,7 @@
 		 <td class="content">${user.updatedAt?string("yyyy-MM-dd")}</td>
 	   </tr>
 	   <tr>
-		<td class="title" >&nbsp;${b.text("userCategory")}:</td>
+		<td class="title" >&nbsp;${b.text("entity.userCategory")}:</td>
 		<td  class="content">
 			[#list user.categories as category]${category.name}[#if category.id==user.defaultCategory.id](默认)[/#if][#if category_has_next],[/#if][/#list]
 		</td>

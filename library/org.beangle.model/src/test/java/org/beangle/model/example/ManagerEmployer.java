@@ -10,6 +10,8 @@ import org.beangle.model.pojo.LongIdObject;
 
 public class ManagerEmployer extends LongIdObject implements Employer {
 
+	private static final long serialVersionUID = 1L;
+
 	Name name;
 
 	ContractInfo contractInfo;

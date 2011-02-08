@@ -331,7 +331,6 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 		for (PackageConfig.Builder packageConfig : values) {
 			byNamespace.put(packageConfig.getNamespace(), packageConfig);
 		}
-		// Step #1
 		Set<String> namespaces = byNamespace.keySet();
 		for (String namespace : namespaces) {
 			// First see if the namespace has an index action
@@ -340,13 +339,10 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 			if (indexActionConfig == null) {
 				continue;
 			}
-			// Step #3
 			if (pkgConfig.build().getAllActionConfigs().get("") == null) {
-				if (logger.isTraceEnabled()) {
-					logger.trace(
-							"Creating index ActionConfig with an action name of [] for the action "
-									+ "class [#0]", indexActionConfig.getClassName());
-				}
+				logger.debug(
+						"Creating index ActionConfig with an action name of [] for the action class {}",
+						indexActionConfig.getClassName());
 				pkgConfig.addActionConfig("", indexActionConfig);
 				createCount++;
 			}

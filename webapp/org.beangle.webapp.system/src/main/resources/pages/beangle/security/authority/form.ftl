@@ -1,7 +1,7 @@
 [#ftl]
 [@b.head/]
 [#include "../status.ftl"/]
-<script  type="text/javascript" src="static/scripts/validator.js"></script>
+<script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 <link href="${base}/static/css/tableTree.css" rel="stylesheet" type="text/css"/>
 <script  type="text/javascript" src="${base}/static/scripts/common/TableTree.js"></script>
 <script type="text/javascript"> defaultColumn=1;</script>
@@ -16,7 +16,6 @@
 		}
 	}
 </script>
-
 <div>
   <table width="90%" align="center">
   <tr>
@@ -124,11 +123,8 @@
 </div>
    </td>
    <td id="dataRealmTD" style="width:300px" valign="top" >
-	 <iframe  src="${b.url('restriction!tip')}" id="restictionFrame" name="restictionFrame"
-	  marginwidth="0" marginheight="0"
-	  scrolling="no" 	 frameborder="0"  height="100%" width="100%"></iframe>
+	 [@b.div  href="restriction!tip" id="restictionFrame"/]
 	</td>
    </tr>
   </table>
- 
 [@b.foot/]

@@ -10,6 +10,8 @@ package org.beangle.security.auth;
  * @author chaostone
  */
 public class CredentialsExpiredException extends AccountStatusException {
+	private static final long serialVersionUID = 1L;
+
 	public CredentialsExpiredException(String msg) {
 		super(msg);
 	}

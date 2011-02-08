@@ -4,12 +4,10 @@
  */
 package org.beangle.webapp.database.action;
 
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.struts2.ServletActionContext;
 import org.beangle.webapp.database.model.DatasourceBean;
 import org.beangle.webapp.database.service.DatasourceService;
 import org.beangle.webapp.security.action.SecurityActionSupport;

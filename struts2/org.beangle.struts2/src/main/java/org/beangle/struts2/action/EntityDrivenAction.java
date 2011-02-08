@@ -470,13 +470,8 @@ public class EntityDrivenAction extends BaseAction {
 	}
 
 	/**
-	 * 导入班级信息
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
-	 * @return @
+	 * 导入信息
+	 * @return 
 	 */
 	public String importData() {
 		TransferResult tr = new TransferResult();

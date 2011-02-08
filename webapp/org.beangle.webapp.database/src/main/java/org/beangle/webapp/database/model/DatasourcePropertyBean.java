@@ -7,7 +7,7 @@ package org.beangle.webapp.database.model;
 import org.beangle.model.pojo.LongIdObject;
 
 public class DatasourcePropertyBean extends LongIdObject {
-
+	private static final long serialVersionUID = 1L;
 	private DatasourceBean source;
 	private String name;
 	private String value;

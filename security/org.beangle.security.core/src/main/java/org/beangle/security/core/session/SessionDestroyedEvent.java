@@ -15,6 +15,8 @@ import org.springframework.context.ApplicationEvent;
  */
 public abstract class SessionDestroyedEvent extends ApplicationEvent {
 
+	private static final long serialVersionUID = 1L;
+
 	public SessionDestroyedEvent(Object source) {
 		super(source);
 	}

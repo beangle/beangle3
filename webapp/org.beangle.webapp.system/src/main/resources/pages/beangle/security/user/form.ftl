@@ -3,7 +3,7 @@
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 [#assign labInfo][#if user.name??]${b.text("action.modify")}[#else]${b.text("action.new")}[/#if] ${b.text("user")}[/#assign]
 [#include "/template/back.ftl"]
-<form name="userForm" action="${b.url('!save')}" method="post" target="userlist">
+[@b.form name="userForm" action="!save" target="userlist"]
 [@sj.tabbedpanel id="userTabs"]
 	[@sj.tab id="userTab1" label="用户信息" target="userInfo"/]
 	[@sj.tab id="userTab2" label="所在用户组" target="groupmember"/]
@@ -47,7 +47,7 @@
 		 <td ><input type="text" name="user.mail" value="${user.mail!}" style="width:300px;" maxlength="70" /></td>
 	   </tr>
 	   <tr>
-		 <td class="title">&nbsp;<font color="red">*</font>${b.text("userCategory")}:</td>
+		 <td class="title">&nbsp;<font color="red">*</font>${b.text("entity.userCategory")}:</td>
 		 <td>
 		  [#list categories as category]
 		  <input name="categoryIds" id="categoryIds${category.id}" value="${category.id}" type="checkbox" [#if user.categories?seq_contains(category)]checked="checked"[/#if] />
@@ -66,12 +66,12 @@
 		 <td><textarea cols="50" rows="1" name="user.remark">${user.remark!}</textarea></td>
 	   </tr>
 	   <tr class="tfoot">
-		 <td colspan="6">
-		   <input type="hidden" name="user.id" value="${user.id!}" />
-		   <input type="button" value="${b.text("action.submit")}" name="button1" onclick="save(this.form)" class="buttonStyle" />&nbsp;
-		   <input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />
-		   [@b.redirectParams/]
-		 </td>
+		<td colspan="6">
+			<input type="hidden" name="user.id" value="${user.id!}" />
+			[@b.redirectParams/]
+			[@b.submit value="action.submit" onsubmit="validate" /]&nbsp;
+			<input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />
+		</td>
 	   </tr>
 	 </table>
 	</div>
@@ -95,9 +95,9 @@
 	[/@]
 	</div>
 [/@]
-</form>
+[/@]
 <script  type="text/javascript">
-	function save(form){
+	function validate(form){
 		var a_fields = {
 			 'user.mail':{'l':'${b.text("common.email")}', 'r':true, 'f':'email', 't':'f_email'},
 			  [#if !(user.id??)]
@@ -111,7 +111,7 @@
 		if (v.exec()) {
 			var cIds = bg.input.getCheckBoxValues("categoryIds");
 			if(""==cIds){
-			   alert("请选择身份");return;
+			   alert("请选择身份");return false;
 			}
 			var arr = cIds.split(",");
 			var defaultValue = form["user.defaultCategory.id"].value;
@@ -124,9 +124,9 @@
 			}
 			if(!isIn){
 				alert("默认身份必须在所选身份中！");
-				return ;
+				return false;
 			}
-			bg.form.submit(form);
+			return true;
 		}
 	}
 	/**

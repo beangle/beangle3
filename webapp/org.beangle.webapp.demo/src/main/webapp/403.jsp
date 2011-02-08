@@ -1,4 +1,3 @@
-[#ftl]
 <%@ page import="org.beangle.security.context.SecurityContextHolder" %>
 <%@ page import="org.beangle.security.core.Authentication" %>
 <%@ page import="org.beangle.security.ui.DefaultAccessDeniedHandler" %>

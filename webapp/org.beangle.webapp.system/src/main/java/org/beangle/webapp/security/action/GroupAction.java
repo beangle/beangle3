@@ -72,10 +72,6 @@ public class GroupAction extends SecurityActionSupport {
 	/**
 	 * 删除一个或多个用户组
 	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	public String remove() {
@@ -88,11 +84,6 @@ public class GroupAction extends SecurityActionSupport {
 
 	/**
 	 * 设置拷贝权限的起始用户组和目标用户组
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	public String copyAuthSetting() {
@@ -105,11 +96,6 @@ public class GroupAction extends SecurityActionSupport {
 
 	/**
 	 * 拷贝权限
-	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	public String copyAuth() {

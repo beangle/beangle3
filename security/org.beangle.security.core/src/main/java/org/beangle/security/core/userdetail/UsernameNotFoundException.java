@@ -7,6 +7,8 @@ package org.beangle.security.core.userdetail;
 import org.beangle.security.auth.BadCredentialsException;
 
 public class UsernameNotFoundException extends BadCredentialsException {
+	private static final long serialVersionUID = 1L;
+
 	public UsernameNotFoundException(String msg) {
 		super(msg);
 	}

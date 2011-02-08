@@ -19,7 +19,7 @@
    <table  align='center' width="100%">
 	 <tr>
 	  <td>
-		[@s.form name="uploadForm" action="${b.url('!upload')}" method="POST"  enctype="multipart/form-data"]
+		[@s.form name="uploadForm" action="${b.url('!upload')}" method="post" enctype="multipart/form-data"]
 			[@s.file name="avatar" label="文件目录"/][@s.submit value="提交"/]
 		[/@s.form]
 	 </td>

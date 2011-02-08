@@ -8,6 +8,8 @@ import org.beangle.model.pojo.LongIdObject;
 
 public class DatasourceProviderBean  extends LongIdObject{
 
+	private static final long serialVersionUID = -7792635675766559389L;
+
 	private String dialect;
 	
 	private String name;

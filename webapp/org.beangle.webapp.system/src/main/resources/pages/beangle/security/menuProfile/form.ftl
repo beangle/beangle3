@@ -26,7 +26,7 @@
 		 </td>
 	   </tr>
 	   <tr>
-	 		<td class="title" width="25%" id="f_category">&nbsp;${b.text("userCategory")}<font color="red">*</font>:</td>
+	 		<td class="title" width="25%" id="f_category">&nbsp;${b.text("entity.userCategory")}<font color="red">*</font>:</td>
 	 		<td>
 	 		<select  name="menuProfile.category.id" style="width:100px;" >
 		 		[#list categories as category]
@@ -51,7 +51,7 @@
    function save(form){
 	 var a_fields = {
 	 	 'menuProfile.name':{'l':'${b.text("common.name")}', 'r':true,'t':'f_name'},
-	 	 'menuProfile.category.id':{'l':'${b.text("userCategory")}', 'r':true,'t':'f_category'}
+	 	 'menuProfile.category.id':{'l':'${b.text("entity.userCategory")}', 'r':true,'t':'f_category'}
 	 };
 	 var v = new validator(form, a_fields, null);
 	 if (v.exec()) {

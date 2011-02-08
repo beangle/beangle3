@@ -15,9 +15,9 @@ public class UserToken extends User implements CategoryPrincipal,Comparable<User
 
 	private static final long serialVersionUID = 63829183922466239L;
 
-	private Long id;
+	private final Long id;
 
-	private String fullname;
+	private final String fullname;
 	
 	/** 用户类别 */
 	private UserCategory category;
@@ -37,24 +37,12 @@ public class UserToken extends User implements CategoryPrincipal,Comparable<User
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public String getFullname() {
 		return fullname;
 	}
 
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
-	}
-
 	public UserCategory getCategory() {
 		return category;
-	}
-
-	public void setCategory(UserCategory category) {
-		this.category = category;
 	}
 
 	public void changeCategory(Object newCategory) {

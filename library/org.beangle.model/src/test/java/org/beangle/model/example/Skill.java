@@ -8,6 +8,8 @@ import org.beangle.model.pojo.LongIdObject;
 
 public class Skill extends LongIdObject {
 
+	private static final long serialVersionUID = 1L;
+
 	String name;
 
 	SkillType skillType;

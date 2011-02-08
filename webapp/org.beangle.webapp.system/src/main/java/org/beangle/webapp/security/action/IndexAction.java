@@ -23,11 +23,7 @@ import org.beangle.security.blueprint.model.UserCategoryBean;
 import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.RestrictPattern;
 
-public class DashboardAction extends SecurityActionSupport {
-
-	public String index() {
-		return forward();
-	}
+public class IndexAction extends SecurityActionSupport {
 
 	public String stat() {
 		OqlBuilder<UserCategory> cquery = OqlBuilder.from(UserCategory.class, "category");

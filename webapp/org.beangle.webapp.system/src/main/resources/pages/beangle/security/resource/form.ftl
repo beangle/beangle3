@@ -1,9 +1,8 @@
 [#ftl]
 [@b.head/]
 [#include "scope.ftl"/]
- <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
- 
- [#assign labInfo]${b.text("security.resource.info")}[/#assign]
+<script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
+[#assign labInfo]${b.text("security.resource.info")}[/#assign]
 [#include "/template/back.ftl"/]
    <form name="moduleForm" action="${b.url('!save')}" method="post">
    <input type="hidden" name="resource.id" value="${(resource.id)!}" style="width:200px;" />

@@ -1,10 +1,8 @@
 [#ftl]
 [@b.head/]
-
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
-[#assign labInfo]${b.text("info.moduleUpdate")}[/#assign]
-[#include "/template/back.ftl"/]
-<form name="moduleForm" action="${b.url('!save')}" method="post">
+[@b.toolbar title="info.moduleUpdate"]bar.addBack();[/@]
+[@b.form name="moduleForm" action="!save" target="menulist"]
 <table width="90%" class="formTable" align="center">
 	<tr class="thead">
 	[#assign userMsg]${b.text("menu")}[/#assign]
@@ -90,7 +88,7 @@
 	</tr>
 	<tr class="tfoot">
 		<td colspan="6"  >
-		<input type="button" value="${b.text("action.submit")}" name="button1" onclick="save(this.form)" class="buttonStyle" />&nbsp;
+		[@b.submit value="action.submit"  onsubmit="validateMenu"/]&nbsp;
 		<input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />
 		[@b.redirectParams/]
 		<input type="hidden" name="menu.id" value="${menu.id!}" />
@@ -98,12 +96,12 @@
 	</td>
 	</tr>
 </table>
-</form>
+[/@]
 <script  type="text/javascript">
 	function validCode(codeValue){
 		return codeValue.replace(/[^\d]/g,'')
 	}
-	function save(form){
+	function validateMenu(form){
 		form.resourceIds.value = bg.select.getValues(form.SelectedResource);
 		var a_fields = {
 			'menu.code':{'l':'${b.text("common.id")}', 'r':true,'t':'f_id'},
@@ -117,11 +115,8 @@
 			 alert("代码必须为双数位!");
 			 return;
 		}
-	
 		var v = new validator(form, a_fields, null);
-		if (v.exec()) {
-			form.submit();
-		}
+		return v.exec();
 	}
 </script>
 

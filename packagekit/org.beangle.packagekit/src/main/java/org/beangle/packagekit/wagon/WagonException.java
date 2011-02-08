@@ -6,6 +6,8 @@ package org.beangle.packagekit.wagon;
 
 public class WagonException extends RuntimeException {
 
+	private static final long serialVersionUID = -8844123628638795912L;
+
 	public WagonException() {
 		super();
 	}

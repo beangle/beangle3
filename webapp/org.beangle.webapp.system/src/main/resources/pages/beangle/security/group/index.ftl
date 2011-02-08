@@ -1,7 +1,7 @@
 [#ftl]
 [@b.head/]
 [@b.toolbar id="groupbar"]
-	bar.setTitle('[@b.a href='dashboard']权限管理[/@]-->用户组管理');
+	bar.setTitle('[@b.a href='index']权限管理[/@]-->用户组管理');
 	bar.addHelp("${b.text("action.help")}");
 [/@]
 <table  class="indexpanel">

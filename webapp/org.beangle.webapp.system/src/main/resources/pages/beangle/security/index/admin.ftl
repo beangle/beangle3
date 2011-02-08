@@ -2,7 +2,6 @@
 [@b.head title="Security Dashboard"]
 <link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css"/>
 [/@]
-
 <div>[@b.messages/]</div>
 <div id="categoryDiv" class="module expanded">
 	<h2 class="header">
@@ -12,10 +11,10 @@
 	[#list categories as category]
 	<li>${category.name}&nbsp;<a href="?removeCategoryId=${category.id}"><img style="border:0px" src="${base}/static/images/action/delete.gif"/></a></li>
 	[/#list]
-	<form name="${b.url('!admin')}" method="post">
+	[@b.form action="!admin"]
 		<label for="newCategoryInput">输入新的用户类别:</label><input name="newCategory" style="width:100px" id="newCategoryInput"/>
 		<input type="submit" value="提交"/>
-	</form>
+	[/@]
 	</div>
 </div>
 <div id="adminDiv" class="module expanded">
@@ -29,10 +28,10 @@
 	&nbsp;<a href="?removeAdminId=${adminUser.id}"><img  style="border:0px" src="${base}/static/images/action/delete.gif"/></a>
 	</li>
 	[/#list]
-	<form name="${b.url('!admin')}" method="post">
+	[@b.form action="!admin"]
 		<label for="newAdminInput">输入用户名，加入超级管理员:</label><input name="newAdmin" style="width:100px" id="newAdminInput"/>
 		<input type="submit" value="提交"/>
-	</form>
+	[/@]
 	</div>
 </div>
 

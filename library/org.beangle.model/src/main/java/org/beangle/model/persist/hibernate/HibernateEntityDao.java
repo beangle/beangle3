@@ -411,7 +411,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 	public void saveOrUpdate(String entityName, Object... entities) {
 		if (null == entities) return;
 		for (Object entity : entities) {
-			persistEntity(entity, null);
+			persistEntity(entity, entityName);
 		}
 	}
 

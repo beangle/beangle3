@@ -30,10 +30,6 @@ public class ResourceAction extends SecurityActionSupport {
 	/**
 	 * 禁用或激活一个或多个模块
 	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
 	 * @return
 	 */
 	public String activate() {

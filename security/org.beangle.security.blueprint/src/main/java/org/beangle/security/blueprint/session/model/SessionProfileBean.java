@@ -18,6 +18,8 @@ import org.beangle.security.blueprint.session.SessionProfile;
  */
 public class SessionProfileBean extends LongIdObject implements SessionProfile {
 
+	private static final long serialVersionUID = 7877599995789627073L;
+
 	/** 配置名称 */
 	private String name;
 

@@ -28,7 +28,7 @@ public class ClosingUIBean extends UIBean {
 		try {
 			mergeTemplate(writer);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		return false;
 	}

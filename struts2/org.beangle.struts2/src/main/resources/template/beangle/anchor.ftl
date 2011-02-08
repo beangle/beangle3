@@ -1,2 +1,2 @@
 [#ftl/]
-<a href="${b.url(tag.href)}" [#if tag.target??]onclick="alert(1)"[/#if] ${tag.parameterString}>${tag.body}</a>
+<a href="${b.url(tag.href)}" [#if tag.target??][#if tag.reserved]target="${tag.target}"[#else]onclick="bg.Go(this.href,'_blank');return false;"[/#if][/#if] ${tag.parameterString}>${tag.body}</a>

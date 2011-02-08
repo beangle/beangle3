@@ -1,5 +1,5 @@
 [#ftl]
-[@b.toolbar id="info" name='security.restrictionPattern.info']
+[@b.toolbar id="info" title='security.restrictionPattern.info']
 bar.addBack("${b.text("action.back")}");
 [/@]
 <table class="infoTable">

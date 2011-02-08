@@ -13,6 +13,9 @@ import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.userdetail.UserDetail;
 
 public abstract class AbstractAuthentication implements Authentication {
+	
+	private static final long serialVersionUID = 3966615358056184985L;
+	
 	private Object details;
 	private GrantedAuthority[] authorities;
 	private boolean authenticated = false;

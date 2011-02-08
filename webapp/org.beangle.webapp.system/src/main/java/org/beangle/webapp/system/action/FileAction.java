@@ -18,7 +18,6 @@ import org.beangle.struts2.action.BaseAction;
 import org.beangle.web.io.StreamDownloader;
 import org.beangle.web.mime.MimeTypeProvider;
 
-@SuppressWarnings("serial")
 public class FileAction extends BaseAction  {
 
 	private MimeTypeProvider mimeTypeProvider;

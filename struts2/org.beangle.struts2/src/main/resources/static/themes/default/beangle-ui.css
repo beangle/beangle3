@@ -75,6 +75,10 @@ a:hover {color: red;}
 
 .toolbar-group-separator{float:left;margin:0px 10px 0px 10px;}
 
+.toolbar-line {height:1px;font-size:0pt;}
+
+._ajax_container{}
+
 /* message */
 div.error, div.message {
 	background-color: #ECD83C;
@@ -139,7 +143,6 @@ div.message img.icon {
 	width:105px;
 }
 
-TD.keyLine {height:1px;font-size:0pt;}
 .V {height:1px;font-size:0pt;padding:0px;border-top:1px solid #4791C5;}
 
 /* FormTable */
@@ -224,7 +227,7 @@ table.infoTable th {
 	border:solid;
 	border-width:1px;
 	border-color:#006CB2;
-	margin:0px,0px,0px,0px;
+	margin:0px 0px 0px 0px;
 	width:100%;
 }
 .index_view{
@@ -243,7 +246,7 @@ table.infoTable th {
 .index_title{
 	border:solid;
 	border-width:1px;
-	margin:0px,0px,0px,0px;
+	margin:0px 0px 0px 0px;
 	background-color :#E1ECFF;
 	border-color:#006CB2;
 	width:100%;

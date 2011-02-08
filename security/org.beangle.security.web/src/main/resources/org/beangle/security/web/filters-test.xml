@@ -3,9 +3,9 @@
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<bean id="mockFilter" class="org.beangle.web.mock.MockFilter"/>
+	<bean id="mockFilter" class="org.beangle.web.filter.MockFilter"/>
 	
-	<bean id="mockFilter2" class="org.beangle.web.mock.MockFilter"/>
+	<bean id="mockFilter2" class="org.beangle.web.filter.MockFilter"/>
 	
 	<!-- These are just here so we have filters of a specfic type to check the ordering is as expected -->
 	<bean id="sif" class="org.beangle.security.web.context.HttpSessionContextIntegrationFilter"/>

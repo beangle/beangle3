@@ -10,6 +10,8 @@ package org.beangle.security.auth;
  * @author chaostone
  */
 public class DisabledException extends AccountStatusException {
+	private static final long serialVersionUID = 1L;
+
 	public DisabledException(String msg) {
 		super(msg);
 	}

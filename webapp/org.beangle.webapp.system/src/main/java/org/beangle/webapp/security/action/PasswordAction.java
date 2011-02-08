@@ -18,29 +18,19 @@ public class PasswordAction extends SecurityActionSupport {
 	/**
 	 * 显示修改用户帐户界面
 	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
 	 * @return
-	 * @throws Exception
 	 */
-	public String editUser() {
-		put("user", userService.get(getLong("user.id")));
+	public String edit() {
+		put("user", userService.get(getEntityId("id")));
 		return forward();
 	}
 
 	/**
 	 * 更新其他用户帐户
 	 * 
-	 * @param mapping
-	 * @param form
-	 * @param request
-	 * @param response
 	 * @return
-	 * @throws Exception
 	 */
-	public String updateUser() {
+	public String save() {
 		Long userId = getLong("user.id");
 		if (ValidEntityKeyPredicate.INSTANCE.evaluate(userId)) {
 			User user = userService.get(userId);
@@ -52,15 +42,13 @@ public class PasswordAction extends SecurityActionSupport {
 			}
 		} else {
 			addError("error.parameters.needed");
-			return (ERROR);
+			return ERROR;
 		}
 	}
 
 	/**
 	 * 更新指定帐户的密码和邮箱
 	 * 
-	 * @param mapping
-	 * @param request
 	 * @param userId
 	 * @return
 	 */
@@ -72,7 +60,7 @@ public class PasswordAction extends SecurityActionSupport {
 		valueMap.put("mail", email);
 		entityDao.update(User.class, "id", new Object[] { userId }, valueMap);
 		addMessage("ok.passwordChanged");
-		return "actionResult";
+		return redirect("edit", "ok.passwordChanged", "&id=" + userId);
 	}
 
 	public void setUserService(UserService userService) {

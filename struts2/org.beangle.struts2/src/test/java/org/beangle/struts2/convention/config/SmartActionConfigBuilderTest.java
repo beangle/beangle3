@@ -84,6 +84,8 @@ public class SmartActionConfigBuilderTest {
 	// }
 
 	public class MyPackageConfig extends PackageConfig {
+		private static final long serialVersionUID = 1L;
+
 		protected MyPackageConfig(PackageConfig packageConfig) {
 			super(packageConfig);
 		}

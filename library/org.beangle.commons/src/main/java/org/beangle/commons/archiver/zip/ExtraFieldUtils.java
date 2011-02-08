@@ -73,7 +73,7 @@ public class ExtraFieldUtils {
 	 */
 	public static ZipExtraField createExtraField(ZipShort headerId) throws InstantiationException,
 			IllegalAccessException {
-		Class c = (Class) implementations.get(headerId);
+		Class<?> c = (Class<?>) implementations.get(headerId);
 		if (c != null) { return (ZipExtraField) c.newInstance(); }
 		UnrecognizedExtraField u = new UnrecognizedExtraField();
 		u.setHeaderId(headerId);

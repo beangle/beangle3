@@ -4,6 +4,7 @@
  */
 package org.beangle.struts2.view.component;
 
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.struts2.view.freemarker.BeangleModels;
 
 import com.opensymphony.xwork2.util.ValueStack;
@@ -21,8 +22,12 @@ public class Div extends ClosingUIBean {
 		if (null != this.href) {
 			this.href = BeangleModels.render.render(getRequestURI(), this.href);
 			generateIdIfEmpty();
+			String className = "";
+			if (null != parameters.get("class")) {
+				className = " " + parameters.get("class").toString();
+			}
+			parameters.put("class", StrUtils.concat("_ajax_container", className));
 		}
-
 	}
 
 	public String getHref() {

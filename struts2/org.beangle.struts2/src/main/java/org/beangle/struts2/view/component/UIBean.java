@@ -43,7 +43,7 @@ public abstract class UIBean extends Component {
 		try {
 			mergeTemplate(writer);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		return false;
 	}
@@ -112,7 +112,7 @@ public abstract class UIBean extends Component {
 		if (StringUtils.isEmpty(this.id)) {
 			int nextInt = RANDOM.nextInt();
 			nextInt = (nextInt == Integer.MIN_VALUE) ? Integer.MAX_VALUE : Math.abs(nextInt);
-			this.id = Theme.getTemplateName(getClass()) + "_" + String.valueOf(nextInt);
+			this.id = Theme.getTemplateName(getClass()) + String.valueOf(nextInt);
 		}
 	}
 }

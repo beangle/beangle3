@@ -1,7 +1,7 @@
 [#ftl]
 [@b.head/]
-[@b.toolbar title='${b.text("info.group")}']
-	bar.addBack("${b.text("action.back")}");
+[@b.toolbar title='info.group']
+bar.addBack("${b.text("action.back")}");
 [/@]
 <table class="infoTable">
 	<tr>
@@ -35,11 +35,7 @@
 	<td  class="content" colspan="3">${group.description!}</td>
 	</tr>
 	<tr>
-	 <td colspan="4">
-	<iframe  src="${b.url('restriction!info')}?restriction.holder.id=${group.id}&restrictionType=group" id="contentFrame" name="contentFrame" marginwidth="0" marginheight="0"
-  scrolling="no" frameborder="0"  height="100%" width="100%">
-	</iframe>
-	</td>
+		<td colspan="4">[@b.div href="restriction!info?restriction.holder.id=${group.id}&restrictionType=group" /]</td>
 	</tr>
 </table>
 [@b.foot/]

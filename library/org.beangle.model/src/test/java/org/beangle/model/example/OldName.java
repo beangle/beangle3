@@ -13,6 +13,7 @@ import org.beangle.model.pojo.LongIdObject;
  */
 public class OldName extends LongIdObject {
 
+	private static final long serialVersionUID = -8986611679625767768L;
 	String name;
 
 	public String getName() {

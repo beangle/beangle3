@@ -20,7 +20,12 @@ public class Form extends ClosingUIBean {
 
 	@Override
 	protected void evaluateParams() {
-		if (null == id) id = name;
+		if (null == name && null == id) {
+			generateIdIfEmpty();
+			name=id;
+		} else if (null == id) {
+			id = name;
+		}
 		action = BeangleModels.render.render(getRequestURI(), action);
 	}
 

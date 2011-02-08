@@ -22,8 +22,10 @@ import org.beangle.struts2.view.component.Anchor;
 import org.beangle.struts2.view.component.Component;
 import org.beangle.struts2.view.component.Div;
 import org.beangle.struts2.view.component.Foot;
+import org.beangle.struts2.view.component.Form;
 import org.beangle.struts2.view.component.Grid;
 import org.beangle.struts2.view.component.Head;
+import org.beangle.struts2.view.component.Iframe;
 import org.beangle.struts2.view.component.Messages;
 import org.beangle.struts2.view.component.Pagebar;
 import org.beangle.struts2.view.component.Qfield;
@@ -32,6 +34,8 @@ import org.beangle.struts2.view.component.Qform;
 import org.beangle.struts2.view.component.Qitem;
 import org.beangle.struts2.view.component.Qselect;
 import org.beangle.struts2.view.component.RedirectParams;
+import org.beangle.struts2.view.component.Select;
+import org.beangle.struts2.view.component.Submit;
 import org.beangle.struts2.view.component.TextField;
 import org.beangle.struts2.view.component.Toolbar;
 import org.beangle.struts2.view.template.Theme;
@@ -113,8 +117,20 @@ public class BeangleModels {
 		return get(Head.class);
 	}
 
+	public TagModel getIframe() {
+		return get(Iframe.class);
+	}
+
 	public TagModel getFoot() {
 		return get(Foot.class);
+	}
+
+	public TagModel getForm() {
+		return get(Form.class);
+	}
+
+	public TagModel getSubmit() {
+		return get(Submit.class);
 	}
 
 	public TagModel getToolbar() {
@@ -203,5 +219,9 @@ public class BeangleModels {
 
 	public TagModel getDiv() {
 		return get(Div.class);
+	}
+
+	public TagModel getSelect() {
+		return get(Select.class);
 	}
 }

@@ -5,7 +5,9 @@
 package org.beangle.struts2.view.component;
 
 import java.io.Writer;
+import java.util.Set;
 
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.struts2.view.freemarker.BeangleModels;
 import org.beangle.struts2.view.template.Theme;
 
@@ -13,10 +15,13 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 public class Anchor extends ClosingUIBean {
 
+	public static final Set<String> reservedTargets = CollectUtils.newHashSet("_blank", "_top",
+			"_self", "_parent", "new");
+
 	private String href;
 
 	private String target;
-	
+
 	public Anchor(ValueStack stack) {
 		super(stack);
 	}
@@ -37,14 +42,25 @@ public class Anchor extends ClosingUIBean {
 		this.target = target;
 	}
 
+	public boolean isReserved() {
+		return reservedTargets.contains(target);
+	}
+
 	@Override
 	public boolean end(Writer writer, String body) {
 		if (getTheme().equals(Theme.DEFAULT_THEME)) {
 			try {
 				writer.append("<a href=\"");
 				writer.append(BeangleModels.render.render(getRequestURI(), this.href)).append("\"");
-				if(null!=target){
-					writer.append(" onclick=\"bg.Go(this.href,'").append(target).append("');return false;\"");
+				if (null != target) {
+					if (isReserved()) {
+						writer.append(" target=\"" + target + "\"");
+					} else {
+						writer.append(" onclick=\"bg.Go(this,'").append(target)
+								.append("');return false;\"");
+					}
+				}else{
+					writer.append(" onclick=\"bg.Go(this);return false;\"");
 				}
 				writer.append(getParameterString());
 				writer.append(">").append(body).append("</a>");

@@ -17,6 +17,7 @@ import org.beangle.security.blueprint.User;
  */
 public class GroupMemberBean extends LongIdTimeObject implements GroupMember {
 
+	private static final long serialVersionUID = -3882917413656652492L;
 	private Group group;
 	private User user;
 	private boolean member;

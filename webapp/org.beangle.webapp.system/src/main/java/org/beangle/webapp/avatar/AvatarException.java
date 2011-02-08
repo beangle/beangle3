@@ -6,6 +6,8 @@ package org.beangle.webapp.avatar;
 
 public class AvatarException extends RuntimeException {
 
+	private static final long serialVersionUID = -923476532971742640L;
+
 	public AvatarException() {
 		super();
 	}

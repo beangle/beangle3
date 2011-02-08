@@ -62,8 +62,8 @@
 		this.init(title,imageName);
 		
 		this.addHr=function(){
-			hrdiv=this.appendDiv(null,"keyLine");
-			hrdiv.innerHTML='<img height="2" width="100%" align="top" src="'+imagePath+'keyline.gif"/>';
+			hrdiv=this.appendDiv(null,"toolbar-line");
+			hrdiv.innerHTML='<img height="1" width="100%" align="top" src="' + imagePath + 'keyline.gif" />';
 		}
 		function getImagePath(path,imageName){
 			if(imageName.charAt(0)=='/'){

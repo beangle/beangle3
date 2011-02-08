@@ -1,7 +1,8 @@
 [#ftl]
 [@b.head/]
- <table id="userBar" width="100%"></table>
- [@sj.accordion id="accordion"]
+[@b.toolbar title="&nbsp;系统参数"]bar.addBack();[/@]
+
+[@sj.accordion id="accordion"]
 	[@sj.accordionItem title="固定参数"]
 	[@b.grid items=staticNames var="name" width="90%"]
 		[@b.row]
@@ -13,7 +14,7 @@
 	 [/@sj.accordionItem]
 
 	 [@sj.accordionItem title="可编辑参数"]
-	 <form name="systemConfigForm" method="post" action="" onsubmit="return false;">
+	<form name="systemConfigForm" method="post" action="" onsubmit="return false;">
 	[@b.grid width="95%" items=propertyConfigs var="config"]
 		[@b.row]
 		 [@b.col title="序号" width="7%"]${config_index+1}[/@]
@@ -26,9 +27,9 @@
 	[/@]
 	[#if propertyConfigs?size>0]<div align="center"><br/><br/><input type="button" onclick="save()" value="保存"/></div>[/#if]
 	 [/@sj.accordionItem]
-	 
-	 [@sj.accordionItem title="新增参数"]
-	 <table class="grid" align="center" width="90%">
+
+	[@sj.accordionItem title="新增参数"]
+	<table class="grid" align="center" width="90%">
 	   <tr>
 		 <td width="20%"  class="title">参数名称*</td>
 		 <td style="text-align:left"><input name="configNew.name"  value=""/></td>
@@ -52,12 +53,8 @@
 	 </form>
 	 [/@sj.accordionItem]
 
- [/@sj.accordion]
+[/@sj.accordion]
 <script type="text/javascript">
-   var bar = bg.ui.toolbar('userBar','&nbsp;系统参数');
-   bar.setMessage('[@b.messages/]');
-   bar.addBack();
-   
    var form = document.systemConfigForm;
    function save(){
 	  form.action="${b.url('!save')}";
