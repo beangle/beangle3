@@ -14,7 +14,6 @@
 		<module>struts2</module>
 		<module>security</module>
 		<module>database</module>
-		<module>packagekit</module>
 		<module>webapp</module>
 	</modules>
 	<build>
