@@ -85,11 +85,21 @@ public abstract class UIBean extends Component {
 	}
 
 	protected String getText(String text) {
-		if (null == text) return null;
-		if (-1 == text.indexOf('.')) {
+		if (StringUtils.isEmpty(text)) return text;
+		if (-1 == text.indexOf('.') || -1 < text.indexOf(' ')) {
 			return text;
 		} else {
 			return TextProviderHelper.getText(text, text, Collections.emptyList(), stack, false);
+		}
+	}
+
+	protected String getText(String text, String defaultText) {
+		if (StringUtils.isEmpty(text)) return text;
+		if (-1 == text.indexOf('.') || -1 < text.indexOf(' ')) {
+			return text;
+		} else {
+			return TextProviderHelper.getText(text, defaultText, Collections.emptyList(), stack,
+					false);
 		}
 	}
 

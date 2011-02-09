@@ -2,19 +2,12 @@
 <style type="text/css">
 .data {margin:0 auto;padding-bottom: 5px;overflow-y:auto;}
 </style>
-<script type="text/javascript">
-	function executeSql(isBatch){
-		var form=document.form1;
-		form.action=${b.url('query')}";
-		bg.form.submit(form);
-	}
-</script>
 [#if !(Parameters['sql']??)]
 [@sj.tabbedpanel id="localtabs" ]
 	[@sj.tab id="tab1" target="t1" label="SQL语句"/]
 	[@sj.tab id="tab2" href="${b.url('!history')}" label="SQL历史"/]
 	<div id="t1">
-	<form name="form1" method="post" action="${b.url('query')}" onsubmit="return false;" target="sqlResult">
+	[@b.form action="query" target="sqlResult">
 	  <table cellpadding="1" cellspacing="1">
 		<tr>
 		  <td>
@@ -24,7 +17,7 @@
 		<tr>
 		  <td align="right">
 		  输入sql语句进行查询,使用分号分隔多条语句。更新语句自动提交，无法会滚!
-		  <button onclick="executeSql(1)">-执行-</button>
+		[@b.submit value="-执行"/]
 		  <input type="checkbox" value="1" name="isBatch"/>批量
 		  </td>
 		</tr>
@@ -32,7 +25,7 @@
 	</form>
 	</div>
 [/@]
-<div id="sqlResult"></div>
+[@b.div id="sqlResult"/]
 [#else]
 
 [#if (results?size>0)]

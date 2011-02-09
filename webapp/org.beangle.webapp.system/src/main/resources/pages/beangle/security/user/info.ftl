@@ -1,8 +1,6 @@
 [#ftl]
 [@b.head/]
-[@b.toolbar title='${b.text("user")}${b.text("common.detail")}']
-bar.addBack("${b.text("action.back")}");
-[/@]
+[@b.toolbar title='${b.text("entity.user")}${b.text("common.detail")}']bar.addBack("${b.text("action.back")}");[/@]
 <table class="infoTable">
 	<tr>
 	 <td class="title">${b.text("common.name")}:</td>
@@ -48,7 +46,7 @@ bar.addBack("${b.text("action.back")}");
 	</tr>
 	<tr>
 	<td class="title" >权限控制台:</td>
-	<td class="content" colspan="3"><a target="_blank" href="${b.url('user!dashboard')}?user.id=${user.id}" id="dashboardHref" >查看权限用户控制台</a></td>
+	<td class="content" colspan="3">[@b.a target="_blank" href="user!dashboard?user.id=${user.id}"]查看权限用户控制台[/@]</td>
 	</tr>
 </table>
 [@b.foot/]

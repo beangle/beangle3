@@ -1,7 +1,6 @@
 [#ftl]
 [@b.head/]
 [@b.toolbar title="&nbsp;系统参数"]bar.addBack();[/@]
-
 [@sj.accordion id="accordion"]
 	[@sj.accordionItem title="固定参数"]
 	[@b.grid items=staticNames var="name" width="90%"]
@@ -13,8 +12,8 @@
 	 [/@]
 	 [/@sj.accordionItem]
 
-	 [@sj.accordionItem title="可编辑参数"]
-	<form name="systemConfigForm" method="post" action="" onsubmit="return false;">
+	[@b.form name="systemConfigForm" action="!save" ]
+	[@sj.accordionItem title="可编辑参数"]
 	[@b.grid width="95%" items=propertyConfigs var="config"]
 		[@b.row]
 		 [@b.col title="序号" width="7%"]${config_index+1}[/@]
@@ -25,8 +24,8 @@
 		 [@b.col title="删除" width="8%"]<button onclick="remove(${config.id})">删除</button>[/@]
 		[/@]
 	[/@]
-	[#if propertyConfigs?size>0]<div align="center"><br/><br/><input type="button" onclick="save()" value="保存"/></div>[/#if]
-	 [/@sj.accordionItem]
+	[#if propertyConfigs?size>0]<div align="center"><br/><br/>[@b.submit value="保存"/]</div>[/#if]
+	[/@sj.accordionItem]
 
 	[@sj.accordionItem title="新增参数"]
 	<table class="grid" align="center" width="90%">
@@ -47,24 +46,17 @@
 		 <td><input name="configNew.description" value="" style="width:100%"/></td>
 	   </tr>
 	   <tr>
-		 <td colspan="2" align="center"><input type="button" onclick="save()" value="保存"/></td>
+		<td colspan="2" align="center">[@b.submit value="保存"/]</td>
 	   </tr>
 	 </table>
-	 </form>
-	 [/@sj.accordionItem]
-
+	[/@sj.accordionItem]
+	[/@]
 [/@sj.accordion]
 <script type="text/javascript">
-   var form = document.systemConfigForm;
-   function save(){
-	  form.action="${b.url('!save')}";
-	  form.submit();
-   }
-   function remove(id){
+function remove(id){
 	if(confirm("确定删除?")){
-   		form.action="${b.url('!remove')}?config.id="+id;
-   		form.submit();
-   	}
-   }
+		bg.Go("${b.url('!remove')}?config.id="+id);
+	}
+}
 </script>
 [@b.foot/]

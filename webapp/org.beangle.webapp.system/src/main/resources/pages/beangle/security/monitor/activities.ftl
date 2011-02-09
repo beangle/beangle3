@@ -3,10 +3,11 @@
 [#list onlineProfiles as profile]
 [#assign online=online+profile.online/][#assign max=max+profile.capacity/]
 [/#list]
+
 [#assign bartitle]在线${online}/上限${max} ([#list onlineProfiles?sort_by(["category"]) as profile]${profile.category.name}${profile.online}/${profile.capacity}  [/#list]) ${now?string("yyyy-MM-dd HH:mm:ss")}[/#assign]
-[@b.toolbar id="activityBar" title=bartitle][/@]
-[@s.form name="invalidateForm" theme="simple" id="invalidateForm" action="monitor!invalidate"]
-[@b.grid  id="activityListTable" items=onlineActivities var="activity"   target="当前会话" sortable="true"]
+[@b.toolbar title=bartitle][/@]
+[@b.form name="invalidateForm" id="invalidateForm" action="!invalidate"]
+[@b.grid  id="activityListTable" items=onlineActivities var="activity"]
 	[@b.gridbar]
 	bar.addItem("刷新","refresh()",'refresh.gif');
 	bar.addItem("结束会话","invalidateSession()",'delete.gif');
@@ -26,7 +27,7 @@
 		[@b.col width="8%" title="状态" property="expired"]${activity.expired?string("过期","在线")}[/@]
 	[/@]
 [/@]
-[@sj.submit type="button" id="invalidateBtn" cssStyle="display:none" targets="当前会话"/]
+[@b.submit id="invalidateBtn" style="display:none" value=""/]
 [/@]
 [#assign refreshInterval=Parameters['interval']!"4"/]
 <div>定时每${refreshInterval}秒刷新</div>

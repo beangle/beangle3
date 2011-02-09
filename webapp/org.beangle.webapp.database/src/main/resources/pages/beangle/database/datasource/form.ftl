@@ -1,5 +1,5 @@
 [#ftl]
-[@s.form name="datasourceForm" action="datasource!save" ]
+[@b.form name="datasourceForm" action="!save" ]
 <table>
 	<tr>
 		<td>
@@ -28,8 +28,8 @@
 	</tr>
 	<tr>
 		<td>
-		[@sj.submit value="保存" targets="datasource_div"/]
+		[@b.submit value="保存"/]
 		</td>
-	</tr>	
-</table>	
-[/@s.form]
+	</tr>
+</table>
+[/@]

@@ -10,17 +10,13 @@ div .portlet-content{margin:2px;}
 </style>
 [/@]
 
-[@b.toolbar id="userInfoBar" title="用户权限面板"]
-	bar.addClose("${b.text("action.close")}");
-[/@]
-
+[@b.toolbar title="用户权限面板"]bar.addClose("${b.text("action.close")}");[/@]
 <div id="column1" class="column">
 	[#include "panels/info_portlet.ftl"/]
 	[#include "panels/group_portlet.ftl"/]
 	[#include "panels/online_portlet.ftl"/]
 	[#include "panels/session_portlet.ftl"/]
 </div>
-
 <div id="column2" class="column" >
 	[#include "panels/restriction_portlet.ftl"/]
 	[#include "panels/menu_portlet.ftl"/]

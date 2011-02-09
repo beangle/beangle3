@@ -6,15 +6,15 @@
 </script>
 [#if ((Session['loginFailureCount'])?default(0)>1)][#assign needCaptcha=true][#else][#assign needCaptcha=false][/#if]
 <div style="text-align:center;margin-top:150px;border:4px">权限系统</div>
-<div style="text-align:center;">[@s.actionerror/]</div>
+<div style="text-align:center;">[@b.messages/]</div>
 <div >
-	[@s.form id="loginForm" action="login" theme="simple" onsubmit="return checkLogin()"]
+	[@b.form name="loginForm" action="login"]
 	<table onkeypress="ret.focus(event)" style="margin:auto;">
 		<tr>
 			<td><label for="username"><strong>用户名:</strong></label></td>
 			<td><input name="username" id="username" tabindex="1" title="请输入用户名" type="text" value="${name!}" style="width:150px;background-color:#B0B0B0"/></td>
 			<td rowspan="3" valign="top">
-			<button name="submitBtn"  type="submit" tabindex="6" style="height:35pt;width:38pt;"><em>登录</em></button>
+			[@b.submit name="submitBtn" tabindex="6" style="height:35pt;width:38pt;" value="登录" onsubmit="checkLogin"][/@]
 			</td>
 		</tr>
 		<tr>
@@ -54,7 +54,7 @@
 	ret.add("submitBtn");
 	var form  = document.loginForm;
 
-	function checkLogin(){
+	function checkLogin(form){
 		if(!form['username'].value){
 			alert("用户名称不能为空");return false;
 		}

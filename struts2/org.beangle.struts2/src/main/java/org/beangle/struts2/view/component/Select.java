@@ -38,15 +38,14 @@ public class Select extends UIBean {
 				valueName = "name";
 			}
 		}
-		if (null == title) title = name;
+		title = (null == title) ? getText(name, null) : getText(title);
 		if (null == this.id) id = name;
-		title = getText(title);
 	}
 
 	public boolean isSelected(Object obj) {
 		if (null == value) return false;
 		else try {
-			return value.equals(obj)||value.equals(PropertyUtils.getSimpleProperty(obj, keyName));
+			return value.equals(obj) || value.equals(PropertyUtils.getSimpleProperty(obj, keyName));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

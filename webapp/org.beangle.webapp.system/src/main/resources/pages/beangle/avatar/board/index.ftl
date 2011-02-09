@@ -3,7 +3,7 @@
 [@b.toolbar title="照片库信息"/]
 <div align="center">
 	<div class="result ui-widget-content ui-corner-all" style="width:700px" align="left">
-	   <table width="100%">
+		<table width="100%">
 		 <tr>
 		   <td align="right" width="20%">照片库信息:</td><td>${avatarBase.description!}</td>
 		 </tr>
@@ -13,10 +13,11 @@
 		 [#if !avatarBase.readOnly]
 		 <tr>
 		   <td align="right">打包上传</td><td>
-			[@s.form name="uploadForm" action="${b.url('!uploadBatch')}" theme="simple" method="POST"  enctype="multipart/form-data"]
-				[@s.file name="avatar"/][@s.submit value="提交" /]
-			[/@s.form]
-   		   </td>
+			[@b.form action="!uploadBatch" enctype="multipart/form-data"]
+				<input type="file" id="avatar" value="" name="avatar">
+				[@b.submit value="提交" /]
+			[/@]
+			</td>
 		 </tr>
 		 <tr>
 		   <td colspan="2" align="center">上传文件为zip，不接受rar。大小在50M以内</td>
@@ -24,7 +25,6 @@
 		 [/#if]
 	   <table>
 	</div>
-
 	<div class="result ui-widget-content ui-corner-all" style="width:700px" align="left">
 	<table align="center" id="avatarPanel" width="90%">
 		[#list names?chunk(5) as nameList]
@@ -41,10 +41,4 @@
 	</table>
 	</div>
 </div>
-<form name="queryForm" action="${b.url('board')}" method="post"/>
-<script type="text/javascript">
-function pageGoWithSize(pageNo,pageSize){
-  goToPage(queryForm,pageNo,pageSize);
-}
-</script>
 [@b.foot/]

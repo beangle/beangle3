@@ -97,6 +97,9 @@ public class MonitorAction extends SecurityActionSupport {
 		if (StringUtils.isEmpty(orderBy)) {
 			orderBy = "duration desc";
 		}
+		if(orderBy.startsWith("accesslog.")){
+			orderBy=StringUtils.substringAfter(orderBy, "accesslog.");
+		}
 		Collections.sort(accessLogs, new PropertyComparator<Object>(orderBy));
 		put("accesslogs", new PagedList<Accesslog>(accessLogs, getPageLimit()));
 		return forward();

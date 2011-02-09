@@ -44,10 +44,11 @@
 	 </tr>
 	 <tr>
 	  <td>
-		[@s.form name="uploadForm" action="${b.url('!upload')}" method="POST"  enctype="multipart/form-data"]
+		[@b.form name="uploadForm" action="!upload" enctype="multipart/form-data"]
 			<input type="hidden" name="user.name" value="${Parameters['user.name']}"/>
-			[@s.file name="avatar" label="文件目录"/][@s.submit value="提交" /]
-		[/@s.form]
+			[@s.file name="avatar" label="文件目录" theme="simple"/]
+			[@b.submit value="提交" /]
+		[/@]
 	 </td>
 	</tr>
    </table>

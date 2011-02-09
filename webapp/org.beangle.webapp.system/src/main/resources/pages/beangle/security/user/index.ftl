@@ -1,7 +1,7 @@
 [#ftl]
 [@b.head/]
 <div>
-[@b.toolbar id="userbar"]
+[@b.toolbar]
 	bar.setTitle('[@b.a href='index']权限管理[/@]-->用户管理');
 	bar.addHelp("${b.text("action.help")}");
 [/@]

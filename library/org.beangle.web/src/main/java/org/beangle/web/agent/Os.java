@@ -12,7 +12,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Os implements Serializable {
+public class Os implements Serializable,Comparable<Os>{
 
 	private static final long serialVersionUID = -7506270303767154240L;
 	
@@ -58,4 +58,9 @@ public class Os implements Serializable {
 		logger.debug("unknown browser: {}", agentString);
 		return Os.UNKNOWN;
 	}
+
+	public int compareTo(Os o) {
+		return category.compareTo(o.category);
+	}
+	
 }

@@ -347,7 +347,7 @@
 			if(givenTarget){
 				this.target=givenTarget;
 			}else{
-				this.target=null;
+				this.target=bg.findTarget(document.getElementById(this.pageId));
 			}
 			return this;
 		}

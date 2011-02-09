@@ -17,10 +17,10 @@ import org.slf4j.LoggerFactory;
  * 
  * @author chaostone
  */
-public class Browser implements Serializable {
+public class Browser implements Serializable, Comparable<Browser> {
 
 	private static final long serialVersionUID = -6200607575108416928L;
-	
+
 	private static Logger logger = LoggerFactory.getLogger(BrowserCategory.class);
 	public static Map<String, Browser> browsers = CollectUtils.newHashMap();
 	public static final Browser UNKNOWN = new Browser(BrowserCategory.UNKNOWN, null);
@@ -64,4 +64,7 @@ public class Browser implements Serializable {
 		return category.getName() + " " + (version == null ? "" : version);
 	}
 
+	public int compareTo(Browser o) {
+		return category.compareTo(o.category);
+	}
 }

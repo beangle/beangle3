@@ -1,5 +1,5 @@
 [#ftl]
-[@b.grid   items=patterns var="pattern" target="ui-tabs-1"]
+[@b.grid   items=patterns var="pattern"]
 	[@b.gridbar]
 		bar.addItem("${b.text("action.info")}",action.single('patternInfo'));
 		bar.addItem("${b.text("action.add")}",action.method('editPattern'));

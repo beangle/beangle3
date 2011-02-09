@@ -38,6 +38,7 @@
 					jQuery('#'+target).load(url);
 				}
 			}
+			return false;
 		},
 		getContextPath : function (){
 			return self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)
@@ -73,7 +74,8 @@
 			p=ele.parentNode;
 			finalTarget="_self";
 			while(p){
-				if(p.id && p.className  && p.className.indexOf("_ajax_container")>-1){
+				//FIXME ui-tabs-panel
+				if(p.id && p.className  && (p.className.indexOf("_ajax_container")>-1||p.className.indexOf("ui-tabs-panel")>-1)){
 					finalTarget = p.id;
 					break;
 				}else{
@@ -267,12 +269,14 @@
 						rs=eval(onsubmit);
 					}
 					if(!rs){
-						//if(rs == undefined) alert("ensure onsubmit function return true/false");
 						return;
 					}
 				}
 				//FIXME check target is(iframe,reserved,div)
-				var submitTarget=(null!=target)?target:myForm.target;
+				var submitTarget = (null!=target)?target:myForm.target;
+				if(!submitTarget){
+					submitTarget=bg.findTarget(myForm);
+				}
 				if(action==null){
 					action=myForm.action;
 				}
@@ -280,9 +284,7 @@
 					action=action.substring(action.indexOf("/",7));
 				}
 				myForm.action=action;
-				if(!submitTarget){
-					submitTarget=bg.findTarget(myForm);
-				}
+				
 				if(!bg.isAjaxTarget(submitTarget)){
 					myForm.target=bg.normalTarget(submitTarget);
 					myForm.action=action;

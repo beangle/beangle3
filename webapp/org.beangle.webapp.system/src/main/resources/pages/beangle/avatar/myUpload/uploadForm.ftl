@@ -7,7 +7,7 @@
 		  <em>上传自己的照片</em>
 	  </td>
 	  <td class="infoTitle" width="20%" style="height:22px;">
- 		<font color="red">&nbsp;[@s.actionerror/]</font>
+ 		<font color="red">&nbsp;[@b.messages/]</font>
 	  </td>
 	</tr>
 	<tr>
@@ -19,9 +19,10 @@
    <table  align='center' width="100%">
 	 <tr>
 	  <td>
-		[@s.form name="uploadForm" action="${b.url('!upload')}" method="post" enctype="multipart/form-data"]
-			[@s.file name="avatar" label="文件目录"/][@s.submit value="提交"/]
-		[/@s.form]
+		[@b.form name="uploadForm" action="!upload" enctype="multipart/form-data"]
+			[@s.file name="avatar" label="文件目录" theme="simple"/]
+			[@b.submit value="提交"/]
+		[/@]
 	 </td>
 	</tr>
    </form>

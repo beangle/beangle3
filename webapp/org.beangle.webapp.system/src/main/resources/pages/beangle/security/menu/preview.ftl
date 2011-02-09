@@ -1,7 +1,7 @@
 [#ftl]
 [@b.head/]
 
-[@b.toolbar id="menuInfoBar" title="菜单列表"]
+[@b.toolbar title="菜单列表"]
 	bar.addPrint("${b.text("action.print")}");
 	bar.addClose("${b.text("action.close")}");
 [/@]

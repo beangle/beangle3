@@ -1,5 +1,5 @@
 [#ftl]
-[@b.grid items=sessionActivitys var="sessionActivity"  target="sessionActivityResult" sortable="true"]
+[@b.grid items=sessionActivitys var="sessionActivity"]
 	[@b.row]
 		[@b.col width="5%" title="序号"]${sessionActivity_index+1}[/@]
 		[@b.col width="20%" title="登录名(姓名)" property="name"]${sessionActivity.name}(${sessionActivity.fullname})[/@]

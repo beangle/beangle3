@@ -76,7 +76,7 @@ public class ActivityAction extends SecurityActionSupport {
 	}
 
 	/**
-	 * 显示用户组某时间段的登陆记录
+	 * 显示登陆次数
 	 */
 	public String loginCountStat() {
 		OqlBuilder<SessionActivity> query = OqlBuilder.from(SessionActivity.class,
@@ -85,7 +85,6 @@ public class ActivityAction extends SecurityActionSupport {
 		query.select("sessionActivity.name,sessionActivity.fullname,count(*)")
 				.groupBy("sessionActivity.name,sessionActivity.fullname").orderBy(get("orderBy"))
 				.limit(getPageLimit());
-
 		put("loginCountStats", entityDao.search(query));
 		return forward();
 	}
@@ -102,7 +101,7 @@ public class ActivityAction extends SecurityActionSupport {
 	}
 
 	/**
-	 * 显示登陆次数
+	 * 显示用户组某时间段的登陆记录
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public String timeIntervalStat() {

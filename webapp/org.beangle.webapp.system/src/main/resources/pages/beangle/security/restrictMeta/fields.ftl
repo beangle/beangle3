@@ -1,5 +1,4 @@
 [#ftl]
-<table id="fieldBar"></table>
 <table >
 	<tr>
 		<td>
@@ -15,7 +14,7 @@
 	</tr>
 </table>
 
-[@b.grid items=fields var="field"  target="限制参数"]
+[@b.grid items=fields var="field"]
 	[@b.gridbar ]
 		bar.addItem("${b.text("action.new")}",action.method('editField'));
 		bar.addItem("${b.text("action.edit")}",action.single('editField'));

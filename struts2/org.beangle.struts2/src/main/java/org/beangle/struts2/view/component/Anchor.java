@@ -56,11 +56,11 @@ public class Anchor extends ClosingUIBean {
 					if (isReserved()) {
 						writer.append(" target=\"" + target + "\"");
 					} else {
-						writer.append(" onclick=\"bg.Go(this,'").append(target)
-								.append("');return false;\"");
+						writer.append(" onclick=\"return bg.Go(this,'").append(target)
+								.append("')\"");
 					}
 				}else{
-					writer.append(" onclick=\"bg.Go(this);return false;\"");
+					writer.append(" onclick=\"return bg.Go(this)\"");
 				}
 				writer.append(getParameterString());
 				writer.append(">").append(body).append("</a>");

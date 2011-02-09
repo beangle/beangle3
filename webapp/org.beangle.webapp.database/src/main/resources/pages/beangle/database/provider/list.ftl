@@ -1,5 +1,5 @@
 [#ftl]
-[@b.grid  items=providers var="provider" target="provider_div"]
+[@b.grid  items=providers var="provider"]
 	[@b.gridbar  title="数据源提供者列表" entity="provider" action="provider" ]
 		bar.addItem("添加",action.add());
 		bar.addItem("修改",action.edit());
@@ -8,7 +8,7 @@
 	[@b.row]
 		[@b.boxcol property="id"/]
 		[@b.col property="name" title="提供者名称"]
-			[@sj.a targets="datasource_div" href="${b.url('datasource!search')}?datasource.provider.id=${provider.id}"]${provider.name!}[/@]
+			[@b.a href="datasource!search?datasource.provider.id=${provider.id}"]${provider.name!}[/@]
 		[/@]
 		[@b.col property="dialect" title="方言"/]
 	[/@]

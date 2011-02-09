@@ -5,7 +5,7 @@
   <tr>
 	<td align="center">
 	  <span class="contentTableTitleTextStyle">
-	   <font color="red">[@s.actionerror/]</font>
+	   <font color="red">[@b.messages/]</font>
 	  </span><br/><br/>
 	  [<a href="javascript:history.back();"> ${b.text("attr.backPage")}</a>]
 	  [<a href="javascript:displayStactTrace()">显示日志</a>]
@@ -13,7 +13,7 @@
   </tr>
 </table>
 <input type="hidden" name="stackTrace" value="${stackTrace?if_exists}"/>
-<input type="hidden" name="recorder" value="${Session['user.key']?if_exists.loginName?if_exists}"/>
+[#--<input type="hidden" name="recorder" value="${Session['user.key']?if_exists.loginName?if_exists}"/>--]
 <table  width="100%" height="20" >
 <tr>
 <td align="center">

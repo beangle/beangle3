@@ -5,6 +5,7 @@
 package org.beangle.struts2.view.component;
 
 import org.beangle.commons.lang.StrUtils;
+import org.beangle.struts2.view.freemarker.BeangleModels;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
@@ -12,7 +13,9 @@ public class Submit extends UIBean {
 
 	String formId;
 	String onsubmit;
+	String action;
 	String value;
+
 	public Submit(ValueStack stack) {
 		super(stack);
 	}
@@ -26,8 +29,11 @@ public class Submit extends UIBean {
 		if (null != onsubmit && -1 != onsubmit.indexOf('(')) {
 			onsubmit = StrUtils.concat("'", onsubmit, "'");
 		}
-		if(null!=value){
-			value=getText(value);
+		if (null != value) {
+			value = getText(value);
+		}
+		if (null != action) {
+			action = BeangleModels.render.render(getRequestURI(), action);
 		}
 	}
 
@@ -53,6 +59,14 @@ public class Submit extends UIBean {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String href) {
+		this.action = href;
 	}
 
 }

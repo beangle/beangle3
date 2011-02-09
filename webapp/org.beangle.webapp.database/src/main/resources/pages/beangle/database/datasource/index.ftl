@@ -1,5 +1,5 @@
 [#ftl]
 [@b.head/]
-[@sj.div href="${b.url('provider!search')}" id="provider_div"/]
-<div id="datasource_div"></div>
+[@b.div href="provider!search" id="provider_div" /]
+[@b.div id="datasource_div"/]
 [@b.foot/]

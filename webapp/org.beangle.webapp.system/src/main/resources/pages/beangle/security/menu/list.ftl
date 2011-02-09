@@ -16,7 +16,7 @@
 	[#return tdid[0..tdid?length-2]]
 [/#function]
 
-[@b.grid  items=menus var="menu" target="menulist"]
+[@b.grid  items=menus var="menu"]
 [@b.gridbar title="菜单列表"]
 	action.addParam('menu.profile.id',"${Parameters['menu.profile.id']!}");
 	function activate(isActivate){
@@ -59,5 +59,4 @@
    //展开所有菜单
    displayAllRowsFor(1);
 </script>
-
 [@b.foot/]

@@ -2,8 +2,8 @@
 [@b.head/]
 [#include "scope.ftl"/]
 [#include "../status.ftl"/]
-<form name="pageGoForm" id="pageGoForm" method="post" action="${b.url('!search')}">
-[@b.grid  items=resources var="resource"  sortable="true" ]
+[@b.form name="resourceForm" action="!search"]
+[@b.grid items=resources var="resource" sortable="true" ]
 	[@b.gridbar title='系统资源']
 	function activate(enabled){return action.multi('activate','确定操作?','&amp;enabled='+enabled);}
 	bar.addItem("${b.text("action.add")}",action.add());
@@ -14,7 +14,7 @@
 	bar.addItem("${b.text("action.export")}",action.exportData(null,"title,name,description,enabled","标题,名称,描述,状态"));
 	[/@]
 	<tr>
-		<td><img src="${base}/static/images/action/search.png" onclick="document.getElementById('pageGoForm').submit()"/></td>
+		<td><img src="${base}/static/images/action/search.png" onclick="document.getElementById('resourceForm').submit()"/></td>
 		<td><input type="text" name="resource.title" value="${Parameters['resource.title']!}" style="width:95%;"/></td>
 		<td><input type="text" name="resource.name" value="${Parameters['resource.name']!}" style="width:95%;"/></td>
 		<td>
@@ -41,5 +41,5 @@
 		[@b.col  width="10%" property="enabled" title="状态"][@enableInfo resource.enabled/][/@]
 	[/@]
 [/@]
-</form>
+[/@]
 [@b.foot/]

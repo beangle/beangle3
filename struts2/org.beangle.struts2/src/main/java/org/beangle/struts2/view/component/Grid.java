@@ -58,7 +58,7 @@ public class Grid extends ClosingUIBean {
 	}
 
 	public boolean isSortable(Col cln) {
-		String sortby = (String) cln.getParameters().get("sort");
+		Object sortby =  cln.getParameters().get("sort");
 		if (null != sortby) return true;
 		return ("true".equals(sortable)
 				&& !ObjectUtils.equals(cln.getParameters().get("sortable"), "false") && null != cln

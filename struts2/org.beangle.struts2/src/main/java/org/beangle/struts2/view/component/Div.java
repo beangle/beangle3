@@ -4,6 +4,7 @@
  */
 package org.beangle.struts2.view.component;
 
+import org.apache.commons.lang.xwork.ObjectUtils;
 import org.beangle.commons.lang.StrUtils;
 import org.beangle.struts2.view.freemarker.BeangleModels;
 
@@ -13,15 +14,19 @@ public class Div extends ClosingUIBean {
 
 	private String href;
 
+	private String container;
+
 	public Div(ValueStack stack) {
 		super(stack);
 	}
 
 	@Override
 	protected void evaluateParams() {
-		if (null != this.href) {
-			this.href = BeangleModels.render.render(getRequestURI(), this.href);
+		if (null != href) {
 			generateIdIfEmpty();
+			href = BeangleModels.render.render(getRequestURI(), this.href);
+		}
+		if (!ObjectUtils.equals(container, "false")) {
 			String className = "";
 			if (null != parameters.get("class")) {
 				className = " " + parameters.get("class").toString();
@@ -37,4 +42,13 @@ public class Div extends ClosingUIBean {
 	public void setHref(String href) {
 		this.href = href;
 	}
+
+	public String getContainer() {
+		return container;
+	}
+
+	public void setContainer(String container) {
+		this.container = container;
+	}
+
 }

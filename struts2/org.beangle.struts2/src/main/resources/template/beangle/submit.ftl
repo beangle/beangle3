@@ -1,2 +1,2 @@
 [#ftl]
-<input type="submit" value="${tag.value!'Submit'}" onclick="bg.form.submit('${tag.formId}',null,null[#if tag.onsubmit??],${tag.onsubmit}[/#if]);return false;"/>
+<input type="submit" value="${tag.value!'Submit'}" onclick="bg.form.submit('${tag.formId}',[#if tag.action??]'${tag.action}'[#else]null[/#if],null[#if tag.onsubmit??],${tag.onsubmit}[/#if]);return false;"${tag.parameterString}/>

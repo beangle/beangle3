@@ -2,11 +2,11 @@
 [@b.head/]
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 [@b.toolbar title="info.moduleUpdate"]bar.addBack();[/@]
-[@b.form name="moduleForm" action="!save" target="menulist"]
+[@b.form name="moduleForm" action="!save"]
 <table width="90%" class="formTable" align="center">
 	<tr class="thead">
-	[#assign userMsg]${b.text("menu")}[/#assign]
-	<td  colspan="2"> ${b.text("ui.editForm")}</td>
+		[#assign userMsg]${b.text("entity.menu")}[/#assign]
+		<td colspan="2"> ${b.text("ui.editForm",userMsg)}</td>
 	</tr>
 	<tr>
 	<td class="title">菜单配置<font color="red">*</font></td>
@@ -119,5 +119,4 @@
 		return v.exec();
 	}
 </script>
-
 [@b.foot/]

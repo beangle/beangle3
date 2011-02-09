@@ -3,7 +3,7 @@
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 [#assign labInfo][#if user.name??]${b.text("action.modify")}[#else]${b.text("action.new")}[/#if] ${b.text("user")}[/#assign]
 [#include "/template/back.ftl"]
-[@b.form name="userForm" action="!save" target="userlist"]
+[@b.form name="userForm" action="!save"]
 [@sj.tabbedpanel id="userTabs"]
 	[@sj.tab id="userTab1" label="用户信息" target="userInfo"/]
 	[@sj.tab id="userTab2" label="所在用户组" target="groupmember"/]

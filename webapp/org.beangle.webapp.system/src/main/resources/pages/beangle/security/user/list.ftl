@@ -1,7 +1,7 @@
 [#ftl]
 [@b.head/]
 [#include "../status.ftl"/]
-[@b.grid items=users var="user"  target="userlist"]
+[@b.grid items=users var="user"]
 	[@b.gridbar]
 	bar.addItem("${b.text("action.new")}",action.add());
 	bar.addItem("${b.text("action.modify")}",action.edit());

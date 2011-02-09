@@ -32,7 +32,7 @@
 		onmouseover="MouseOver(event)" onmouseout="MouseOut(event)">所有参数</td>
 	   <td></td>
 	 </tr>
-	 [@b.gridbody simplePageBar=true items=paramGroups;paramGroup,paramGroup_index]
+	 [@b.gridbody items=paramGroups;paramGroup,paramGroup_index]
 	  <td>${paramGroup_index + 1}</td>
 	  <td class="padding" style="height:20px;" onclick="javascript:setSelectedRow(paramListTable,this);searchParam('${paramGroup.id}')">
 		${paramGroup.name}

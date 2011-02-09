@@ -2,7 +2,7 @@
 [@b.head/]
 <div>
 [#if datasources??]
-[@s.form name="dsform" action="datasource!info" theme="simple"]
+[@b.form name="dsform" action="datasource!info" target="datasource_info"]
 <table>
 <tr>
 	<td>
@@ -13,15 +13,14 @@
 		<option value="${ds.id}" title="${ds.url!}">${ds.name}</option>
 		[/#list]
 	</select>
-	[@sj.submit  value="display" targets="datasource_info"/]
+	[@b.submit  value="display" /]
 	</td>
 </tr>
 </table>
 [/@]
 <hr/>
-<div id="datasource_info"></div>
+[@b.div id="datasource_info" /]
 [#else]
-
 You has connected to ${QueryContext.datasourceBean.name}!
 <hr/>
 [#assign ds=QueryContext.datasourceBean]

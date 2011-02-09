@@ -7,7 +7,7 @@
 		  <em>我的照片</em>
 	  </td>
 	  <td class="infoTitle" width="20%" style="height:22px;">
- 		<font color="red">&nbsp;[@s.actionerror/]</font>
+ 		<font color="red">&nbsp;[@b.messages/]</font>
 	  </td>
 	</tr>
 	<tr>

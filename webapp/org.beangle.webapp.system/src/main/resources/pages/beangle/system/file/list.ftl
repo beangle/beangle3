@@ -2,24 +2,12 @@
 [#if !files??]bad path[#else]
 <table  width="80%" align="center">
 	<tr>
-	  <td colspan="3">
-		  <img src="${base}/static/icons/beangle/48x48/actions/go-up.png" width="18px" height="18px"/>
-		  [@b.a href="!list?path=${(path?js_string)!}.." target="filelist"]上级目录[/@]
-		  <img src="${base}/static/icons/beangle/48x48/actions/go-home.png" width="18px" height="18px"/>
-		  [@b.a href="!list" target="filelist"]home[/@]
-		  [#--<img src="${base}/static/icons/beangle/48x48/actions/folder-new.png" width="18px" height="18px"/]
-		  [@sj.a id="action_newFolder" formId="pathForm" targets="filelist"]创建目录[/@]
-		  <img src="${base}/static/images/action/new.gif"/>
-		  [@sj.a id="action_newFile"  href="${b.url('!newFile')}" targets="filelist"]创建文件[/@]
-		  <img src="${base}/static/icons/beangle/48x48/actions/edit-delete.png" width="18px" height="18px"/><a href="?"/>删除</a>
-		  <img src="${base}/static/icons/beangle/48x48/actions/edit-rename.png" width="18px" height="18px"/><a href="?"/>重命名</a>
-		  <img src="${base}/static/icons/beangle/48x48/actions/edit-copy.png" width="18px" height="18px"/><a href="?"/>复制</a>
-		  <img src="${base}/static/icons/beangle/48x48/actions/edit-cut.png" width="18px" height="18px"/><a href="?"/>剪切</a>
-		  [#if paste_target??]
-		  <img src="${base}/static/icons/beangle/48x48/actions/edit-paste.png" width="18px" height="18px"/><a href="?"/>粘帖</a>
-		  [/#if]
-		  --]
-	  </td>
+	<td colspan="3">
+		<img src="${base}/static/icons/beangle/48x48/actions/go-up.png" width="18px" height="18px"/>
+		[@b.a href="!list?path=${(path?js_string)!}.."]上级目录[/@]
+		<img src="${base}/static/icons/beangle/48x48/actions/go-home.png" width="18px" height="18px"/>
+		[@b.a href="!list"]home[/@]
+	</td>
 	</tr>
 </table>
 <table width="80%" align="center">
@@ -34,13 +22,13 @@
 		<td class="file-name">
 			[#if file.file]
 			<img src="${base}/static/icons/beangle/48x48/mimetypes/${mimeType.getMimeType(file)}.png" width="18px" heigth="18px"/>
-			[#if mimeType.isTextType(file)][@b.a href="!download?path=${file.absolutePath?url}"  target="filelist" title="download"]${file.name}[/@]
+			[#if mimeType.isTextType(file)][@b.a href="!download?path=${file.absolutePath?url}" title="download"]<span[#if file.hidden] style="color:#999999"[/#if]>${file.name}</span>[/@]
 			[#else]
-			<a href="${b.url('!download')}?path=${file.absolutePath?url}"  title="download">${file.name}</a>
+			[@b.a href="!download?path=${file.absolutePath?url}" title="download" target="_self"]<span[#if file.hidden] style="color:#999999"[/#if]>${file.name}</span>[/@]
 			[/#if]
 			[#else]
 			<img src="${base}/static/icons/beangle/22x22/places/folder.png" width="18px" height="18px"/>
-			[@b.a href="!list?path=${file.absolutePath?url}" target="filelist"]${file.name}[/@]
+			[@b.a href="!list?path=${file.absolutePath?url}"]<span[#if file.hidden] style="color:#999999"[/#if]>${file.name}</span>[/@]
 			[/#if]
 		</td>
 		<td align="right">[#if file.file]${file.length()/1024}KB[/#if]</td>
@@ -51,12 +39,5 @@
 </table>
 [/#if]
 <script type="text/javascript">
-	document.pathForm['path'].value='${(path?js_string)!}';
-	$.subscribe('beforeNewFolder', function(event,data) {
-		var folderName=prompt("new folder name:");
-		if(null!=folderName){
-		   addInput(document.pathForm,"method","newFolder");
-		   addInput(document.pathForm,"newFolder",folderName);
-		}
-	});
+	document.filePathForm['path'].value='${(path?js_string)!}';
 </script>

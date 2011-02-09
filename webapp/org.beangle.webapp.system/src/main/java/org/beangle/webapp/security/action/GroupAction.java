@@ -28,6 +28,11 @@ public class GroupAction extends SecurityActionSupport {
 
 	private UserService userService;
 
+	@Override
+	protected String getShortName() {
+		return "userGroup";
+	}
+
 	protected void indexSetting() {
 		put("categories", entityDao.getAll(UserCategory.class));
 	}
@@ -84,6 +89,7 @@ public class GroupAction extends SecurityActionSupport {
 
 	/**
 	 * 设置拷贝权限的起始用户组和目标用户组
+	 * 
 	 * @return
 	 */
 	public String copyAuthSetting() {
@@ -96,6 +102,7 @@ public class GroupAction extends SecurityActionSupport {
 
 	/**
 	 * 拷贝权限
+	 * 
 	 * @return
 	 */
 	public String copyAuth() {

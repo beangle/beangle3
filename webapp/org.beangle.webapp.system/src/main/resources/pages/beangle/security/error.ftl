@@ -13,7 +13,7 @@
   </tr>
 </table>
 <input type="hidden" name="stackTrace" value="${stackTrace!}"/>
-<input type="hidden" name="recorder" value="${Session['user.key']!.loginName!}"/>
+[#--<input type="hidden" name="recorder" value="${Session['user.key']!.loginName!}"/>--]
 <table  width="100%" height="20" >
 <tr>
 <td align="center">

@@ -192,6 +192,7 @@ public class UserAction extends SecurityActionSupport {
 
 	/**
 	 * 删除一个或多个用户
+	 * 
 	 * @return
 	 */
 	public String remove() {
@@ -214,6 +215,7 @@ public class UserAction extends SecurityActionSupport {
 
 	/**
 	 * 禁用或激活一个或多个用户
+	 * 
 	 * @return
 	 */
 	public String activate() {
@@ -256,9 +258,9 @@ public class UserAction extends SecurityActionSupport {
 	}
 
 	public String info() throws Exception {
-		String loginName = get("loginName");
-		if (StringUtils.isNotBlank(loginName)) {
-			User user = userService.get(loginName);
+		String name = get("name");
+		if (StringUtils.isNotBlank(name)) {
+			User user = userService.get(name);
 			if (null != user) {
 				put("user", user);
 				return forward(new Action((Class<?>) null, "dashboard", "&user.id=" + user.getId()));

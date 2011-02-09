@@ -1,7 +1,6 @@
 [#ftl]
-<div id="profile_div">
 [@b.messages/]
-[@s.form name="profileForm" id="profileForm" theme="simple" action="monitor!saveProfile"]
+[@b.form action="!saveProfile"]
 <table width="50%">
 	<tr>
 		<td colspan="5" align="center">
@@ -30,14 +29,13 @@
 	[/#list]
 	<tr>
 		<td  colspan="5">注:最大会话数指单个用户同时在线数量&nbsp;&nbsp;
-		[@sj.submit type="button" targets="profile_div" label="提交" /]
+		[@b.submit value="提交" onsubmit="validateProfile"/]
 		</td>
 	</tr>
 </table>
 [/@]
 <script type="text/javascript">
-	function validateProfile(){
-		var form=document.profileForm;
+	function validateProfile(form){
 		[#list onlineProfiles as profile]
 		if(!(/^\d+$/.test(form['max_${profile.category.id}'].value))){alert("${profile.category.name}最大用户数限制应为整数");return false;}
 		if(!(/^\d+$/.test(form['maxSessions_${profile.category.id}'].value))){alert("${profile.category.name}最大会话数应为整数");return false;}
@@ -46,4 +44,3 @@
 		return true;
 	}
 </script>
-<div>
