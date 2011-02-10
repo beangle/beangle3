@@ -369,14 +369,14 @@
 				this.toolbars[i].addBlankItem(title,action,imageName,alt);
 			}
 		}
-		this.addPage=function(pageNo,pageSize,total,ranks){
+		this.addPage=function(pageNo,pageSize,total,ranks,titles){
 			page=bg.page(this.pageId,this.action,this.target);
 			quotient=Math.floor(total/pageSize);
 			page.maxPageNo = (0 == total%pageSize) ? quotient : (quotient + 1);
 			page.addParams(this.paramstring);
 			for(var i=0;i<this.toolbars.length;i++){
 				pageDiv=this.toolbars[i].appendDiv(divIds[i]+'_page',"gridbar-pagebar");
-				bg.ui.pagebar(this.pageId,pageDiv,pageNo,pageSize,total,ranks);
+				bg.ui.pagebar(this.pageId,pageDiv,pageNo,pageSize,total,ranks,titles);
 			}
 			return this;
 		}
@@ -390,30 +390,34 @@
 		}
 	}});
 	
-	bg.extend({'ui.pagebar':function (pageId,pageDiv,pageNo,pageSize,total,ranks){
+	bg.extend({'ui.pagebar':function (pageId,pageDiv,pageNo,pageSize,total,ranks,titles){
 		if(total==0) return;
 		quotient=Math.floor(total/pageSize);
 		maxPageNo= (0 == total%pageSize) ? quotient : (quotient + 1);
 		startNo=(pageNo-1)*pageSize+1;
 		endNo=(startNo+pageSize-1)<=total?(startNo+pageSize-1):total;
-		
+		if(!titles){
+			titles={first:'« First',previous:'‹ Previous',next:'Next ›',last:'Last »',no:'No:',size:'Size:',change:'Click me to change page size'}
+		}
 		addAnchor=function(text,pageNumber){
 			pageHref=document.createElement('a');
 			pageHref.setAttribute("href","#");
 			pageHref.setAttribute("onclick","bg.page.goPage('" + pageId + "'," + pageNumber+ ")");
 			pageHref.innerHTML=text;
+			pageHref.style.padding="0px 2px 0px 2px";
 			pageDiv.appendChild(pageHref);
 		}
 		if(pageNo>1){
-			addAnchor("  « First ",1);
-			addAnchor("  ‹ Previous ",pageNo-1);
+			addAnchor(titles['first'],1);
+			addAnchor(titles['previous'],pageNo-1);
 		}
 		labelspan=document.createElement('span');
-		labelspan.setAttribute("title","Click me to change page size");
+		labelspan.setAttribute("title",titles['change']);
 		labelspan.innerHTML="<strong>" + startNo +"</strong> - <strong>"+ endNo + "</strong> of <strong>" + total + "</strong>";
 		labelspan.setAttribute("onclick","this.nextSibling.style.display='';this.style.display='none'");
 		labelspan.setAttribute("onmouseover","this.className='gridbar-pagebar-label'");
 		labelspan.setAttribute("onmouseout","this.className=''");
+		labelspan.style.padding="0px 2px 0px 2px";
 		pageDiv.appendChild(labelspan);
 		
 		pagespan=document.createElement('span');
@@ -424,8 +428,9 @@
 		pageInput.setAttribute("onfocus","this.value=''");
 		pageInput.setAttribute("onblur","if(!this.value) this.value='" + pageNo+"/"+maxPageNo+"'");
 		pageInput.setAttribute("onchange","bg.page.goPage('" + pageId + "',this.value)");
-		pageInput.style.width="30px";
-		pageInput.style.height="10px";
+		pageInput.style.width="35px";
+		pageInput.style.height="12px";
+		pagespan.innerHTML=titles['no'];
 		pagespan.appendChild(pageInput);
 		if(ranks && (ranks.length>0)){
 			pageNoSelect=document.createElement('select');
@@ -442,8 +447,8 @@
 		}
 		pageDiv.appendChild(pagespan);
 		if(pageNo<maxPageNo){
-			addAnchor("  Next › ",pageNo+1);
-			addAnchor("  Last »",maxPageNo);
+			addAnchor(titles['next'],pageNo+1);
+			addAnchor(titles['last'],maxPageNo);
 		}
 	}
 	});

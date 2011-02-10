@@ -36,7 +36,7 @@ public class RestrictionAction extends SecurityActionSupport {
 		RestrictionHolder holer = new RestrictionHelper(entityDao).getHolder();
 		holer.getRestrictions().remove(restriction);
 		entityDao.saveOrUpdate(holer);
-		return redirect("info", "info.delete.success");
+		return redirect("info", "info.remove.success");
 	}
 
 	/**

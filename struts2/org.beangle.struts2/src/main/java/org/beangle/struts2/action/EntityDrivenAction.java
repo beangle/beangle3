@@ -280,7 +280,7 @@ public class EntityDrivenAction extends BaseAction {
 			logger.info("removeAndForwad failure", e);
 			return redirect("search", "info.delete.failure");
 		}
-		return redirect("search", "info.delete.success");
+		return redirect("search", "info.remove.success");
 	}
 
 	protected QueryBuilder<?> getQueryBuilder() {

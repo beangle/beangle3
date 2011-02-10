@@ -158,12 +158,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public void removeGroup(User manager, List<Group> groups) {
 		List<Object> removed = CollectUtils.newArrayList();
 		for (final Group group : groups) {
-			for (GroupMember m : manager.getGroups()) {
-				if (m.getUser().equals(manager)) {
-					manager.getGroups().remove(m);
-					removed.add(m);
-				}
-			}
 			if (group.getOwner().equals(manager) || isAdmin(manager)) entityDao.remove(group);
 		}
 		entityDao.remove(removed);

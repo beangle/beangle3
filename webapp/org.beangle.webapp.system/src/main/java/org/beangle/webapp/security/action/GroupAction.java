@@ -5,9 +5,7 @@
 package org.beangle.webapp.security.action;
 
 import java.sql.Date;
-import java.util.List;
 
-import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.Entity;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.model.transfer.exporter.PropertyExtractor;
@@ -79,38 +77,10 @@ public class GroupAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String remove() {
-		String groupIdSeq = get("groupIds");
+		Long[] groupIds = getEntityIds(getShortName());
 		User curUser = userService.get(getUserId());
-		List<Group> toBeRemoved = entityDao.get(Group.class, StrUtils.splitToLong(groupIdSeq));
-		userService.removeGroup(curUser, toBeRemoved);
-		return redirect("search", "info.delete.success");
-	}
-
-	/**
-	 * 设置拷贝权限的起始用户组和目标用户组
-	 * 
-	 * @return
-	 */
-	public String copyAuthSetting() {
-		Long fromGroupId = getLong("groupId");
-		Group fromGroup = entityDao.get(Group.class, fromGroupId);
-		put("fromGroup", fromGroup);
-		// put("toGroups", getUser().getMngGroups());
-		return forward();
-	}
-
-	/**
-	 * 拷贝权限
-	 * 
-	 * @return
-	 */
-	public String copyAuth() {
-		// Long fromGroupId = getLong("fromGroupId");
-		// Long[] toGroupIds = SeqStringUtil.transformToLong(get("toGroupIds"));
-		// Group fromGroup = groupService.get(fromGroupId);
-		// List toGroups = groupService.get(toGroupIds);
-		// authorityService.copyAuthority(fromGroup, toGroups);
-		return redirect("search", "info.set.success");
+		userService.removeGroup(curUser, entityDao.get(Group.class, groupIds));
+		return redirect("search", "info.remove.success");
 	}
 
 	public void setAuthorityService(AuthorityService authorityService) {

@@ -32,7 +32,7 @@
 		var form =document.restrictionForm;
 		bg.form.addInput(form,"restriction.pattern.id",patternId);
 		form.action="${b.url('!edit')}";
-		form.submit();
+		bg.form.submit(form);
 	}
 	function edit(restrictionId){
 		var form = document.restrictionForm;
@@ -45,7 +45,7 @@
 		var form =document.restrictionForm;
 		bg.form.addInput(form,"restriction.id",restrictionId);
 		form.action="${b.url('!remove')}";
-		form.submit();
+		bg.form.submit(form);
 	}
 </script>
 [@b.foot/]

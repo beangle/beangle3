@@ -146,7 +146,6 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 		} catch (Exception ex) {
 			logger.error("Unable to scan named packages", ex);
 		}
-
 		return classes;
 	}
 
