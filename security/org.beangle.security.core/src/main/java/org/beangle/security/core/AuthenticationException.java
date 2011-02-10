@@ -4,7 +4,9 @@
  */
 package org.beangle.security.core;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.security.BeangleSecurityException;
 
 /**
@@ -55,6 +57,17 @@ public class AuthenticationException extends BeangleSecurityException {
 
 	public void clearExtraInfo() {
 		this.extraInfo = null;
+	}
+
+	@Override
+	public String getMessage() {
+		String msg = super.getMessage();
+		if (null == msg) {
+			return StrUtils.concat("security."
+					+ StringUtils.substringBefore(getClass().getSimpleName(), "Exception"));
+		} else {
+			return msg;
+		}
 	}
 
 }

@@ -146,8 +146,8 @@ public class EntityDrivenAction extends BaseAction {
 	}
 
 	/**
-	 * Get entity's id
-	 * shortname.id[],shortname.ids,shortnameIds
+	 * Get entity's id shortname.id[],shortname.ids,shortnameIds
+	 * 
 	 * @param <T>
 	 * @param shortName
 	 * @param clazz
@@ -377,7 +377,7 @@ public class EntityDrivenAction extends BaseAction {
 	}
 
 	protected PropertyExtractor getPropertyExtractor() {
-		return new DefaultPropertyExtractor(new ActionTextResource(this));
+		return new DefaultPropertyExtractor(getTextResource());
 	}
 
 	protected URL getResource(String name) {
@@ -471,7 +471,8 @@ public class EntityDrivenAction extends BaseAction {
 
 	/**
 	 * 导入信息
-	 * @return 
+	 * 
+	 * @return
 	 */
 	public String importData() {
 		TransferResult tr = new TransferResult();

@@ -10,6 +10,10 @@ package org.beangle.security.auth;
 public class LockedException extends AccountStatusException {
 	private static final long serialVersionUID = 1L;
 
+	public LockedException() {
+		super("security.principalLocked");
+	}
+
 	public LockedException(String msg) {
 		super(msg);
 	}

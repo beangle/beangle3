@@ -56,7 +56,7 @@ public class BaseAction extends DispatchAction {
 	}
 
 	protected TextResource getTextResource() {
-		return new ActionTextResource(this);
+		return new ActionTextResource(this,this);
 	}
 
 	protected void put(String key, Object value) {

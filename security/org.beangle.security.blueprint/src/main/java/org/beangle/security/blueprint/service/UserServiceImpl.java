@@ -97,6 +97,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return entityDao.search(builder);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List<String> getGroupMemberNames(User user){
+		OqlBuilder builder = OqlBuilder.from(GroupMember.class, "gm");
+		builder.where("gm.user=:user and gm.member=true", user);
+		builder.select("gm.group.name");
+		return entityDao.search(builder);
+	}
+	
 	public List<GroupMember> getGroupMembers(User user, GroupMember.Ship ship) {
 		if (isAdmin(user)) {
 			List<GroupMember> members = CollectUtils.newArrayList();

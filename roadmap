@@ -3,14 +3,14 @@
 	* support online user and activity
 	* better web browser support(xhtml1.0 transitional) 
 	* add inflector feature
-	* provider outbox ajax ui support
-	* support online user stat on multi server --
-	* update menu's code when change parent 
+	* provider outbox ajax ui support(form,submit,div,a)
+	* update menu's parent when update code
 	* support better data restriciton
-	* implement group/parent relation in security
 	* remove unnessasery archiver code
-	* support more elegant export attribute setting
 
 2010-2-20(beangle 2.2)
 	* better database query ui support.
-	* support runas in security
+	* support runAs in security
+	* support online user stat on multi server --
+	* implement group/parent relation in security
+	* support more elegant export attribute setting

@@ -7,6 +7,7 @@ package org.beangle.webapp.security.action;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.xwork.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.Entity;
@@ -54,6 +55,15 @@ public class MenuAction extends SecurityActionSupport {
 			}
 			menu.getResources().clear();
 			menu.getResources().addAll(resources);
+			String parentCode = menu.getCode().substring(0, menu.getCode().length() - 2);
+			Menu parent = null;
+			if (StringUtils.isNotEmpty(parentCode)) {
+				List<Menu> parents = entityDao.get(Menu.class, "code", parentCode);
+				if (1 == parents.size()) {
+					parent = parents.get(0);
+				}
+			}
+			menu.setParent(parent);
 			entityDao.saveOrUpdate(menu);
 		} catch (Exception e) {
 			return forward(ERROR);
@@ -63,6 +73,7 @@ public class MenuAction extends SecurityActionSupport {
 
 	/**
 	 * 禁用或激活一个或多个模块
+	 * 
 	 * @return
 	 */
 	public String activate() {

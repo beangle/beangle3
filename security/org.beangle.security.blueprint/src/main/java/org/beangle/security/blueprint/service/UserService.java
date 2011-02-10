@@ -70,6 +70,12 @@ public interface UserService {
 	public List<GroupMember> getGroupMembers(User user, GroupMember.Ship ship);
 
 	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public List<String> getGroupMemberNames(User user);
+	/**
 	 * 设置用户状态
 	 * 
 	 * @param userIds
@@ -126,4 +132,5 @@ public interface UserService {
 	 * @return
 	 */
 	public boolean isAdmin(User user);
+
 }

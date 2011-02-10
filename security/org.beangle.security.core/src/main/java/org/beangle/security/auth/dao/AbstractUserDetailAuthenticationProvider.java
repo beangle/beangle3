@@ -4,8 +4,6 @@
  */
 package org.beangle.security.auth.dao;
 
-import org.beangle.commons.text.NullTextResource;
-import org.beangle.commons.text.TextResource;
 import org.beangle.security.auth.AccountExpiredException;
 import org.beangle.security.auth.AuthenticationProvider;
 import org.beangle.security.auth.CredentialsExpiredException;
@@ -19,7 +17,6 @@ import org.beangle.security.core.userdetail.UserDetailChecker;
 import org.beangle.security.core.userdetail.UsernameNotFoundException;
 
 public abstract class AbstractUserDetailAuthenticationProvider implements AuthenticationProvider {
-	private TextResource textResource = new NullTextResource();
 	private boolean forcePrincipalAsString = false;
 	private UserDetailChecker preAuthenticationChecker = new DefaultPreAuthenticationChecker();
 	private UserDetailChecker postAuthenticationChecker = new DefaultPostAuthenticationChecker();
@@ -35,8 +32,7 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 
 		UserDetail user = retrieveUser(username, (UsernamePasswordAuthentication) authentication);
 
-		if (null == user) { throw new UsernameNotFoundException(textResource.getText(
-				"AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials")); }
+		if (null == user) { throw new UsernameNotFoundException(); }
 		preAuthenticationChecker.check(user);
 
 		additionalAuthenticationChecks(user, (UsernamePasswordAuthentication) authentication);
@@ -147,31 +143,19 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 		this.postAuthenticationChecker = postAuthenticationChecks;
 	}
 
-	public void setTextResource(TextResource textResource) {
-		this.textResource = textResource;
-	}
-
 	private class DefaultPreAuthenticationChecker implements UserDetailChecker {
 		public void check(UserDetail user) {
-			if (user.isAccountLocked()) { throw new LockedException(textResource.getText(
-					"AbstractUserDetailsAuthenticationProvider.locked", "User account is locked"),
-					user); }
+			if (user.isAccountLocked()) { throw new LockedException(null, user); }
 
-			if (!user.isEnabled()) { throw new DisabledException(textResource.getText(
-					"AbstractUserDetailsAuthenticationProvider.disabled", "User is disabled"), user); }
+			if (!user.isEnabled()) { throw new DisabledException(null, user); }
 
-			if (user.isAccountExpired()) { throw new AccountExpiredException(
-					textResource.getText("AbstractUserDetailsAuthenticationProvider.expired",
-							"User account has expired"), user); }
+			if (user.isAccountExpired()) { throw new AccountExpiredException(null, user); }
 		}
 	}
 
 	private class DefaultPostAuthenticationChecker implements UserDetailChecker {
 		public void check(UserDetail user) {
-			if (user.isCredentialsExpired()) { throw new CredentialsExpiredException(
-					textResource.getText(
-							"AbstractUserDetailsAuthenticationProvider.credentialsExpired",
-							"User credentials have expired"), user); }
+			if (user.isCredentialsExpired()) { throw new CredentialsExpiredException(null, user); }
 		}
 	}
 

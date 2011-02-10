@@ -14,7 +14,10 @@ import org.beangle.security.core.authority.GrantedAuthorityBean;
 import org.beangle.security.core.userdetail.UserDetail;
 import org.beangle.security.core.userdetail.UserDetailService;
 
-public class DaoUserDetailServiceImpl extends BaseServiceImpl implements UserDetailService {
+public class DaoUserDetailServiceImpl extends BaseServiceImpl implements
+		UserDetailService<Authentication> {
+
+	protected UserService userService;
 
 	public UserDetail loadDetail(Authentication auth) {
 		List<User> users = entityDao.get(User.class, "name", auth.getName());
@@ -22,8 +25,7 @@ public class DaoUserDetailServiceImpl extends BaseServiceImpl implements UserDet
 			return null;
 		} else {
 			User user = users.get(0);
-			String hql = "select g.group.name from User u join u.groups as g where u.id=?";
-			List<String> groupNames = entityDao.searchHQLQuery(hql, user.getId());
+			List<String> groupNames = userService.getGroupMemberNames(user);
 			GrantedAuthorityBean[] authorities = new GrantedAuthorityBean[groupNames.size()];
 			int i = 0;
 			for (String group : groupNames) {
@@ -34,6 +36,10 @@ public class DaoUserDetailServiceImpl extends BaseServiceImpl implements UserDet
 					user.getPassword(), entityDao.get(UserCategory.class, user.getDefaultCategory()
 							.getId()), user.getStatus() > 0, false, false, false, authorities);
 		}
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 
 }

@@ -9,17 +9,23 @@ import java.util.Locale;
 import org.beangle.commons.text.AbstractTextResource;
 import org.beangle.commons.text.TextResource;
 
+import com.opensymphony.xwork2.LocaleProvider;
+import com.opensymphony.xwork2.TextProvider;
+
 public class ActionTextResource extends AbstractTextResource implements TextResource {
 
-	ActionSupport action;
+	TextProvider textProvider;
 
-	public ActionTextResource(ActionSupport action) {
+	LocaleProvider localeProvider;
+
+	public ActionTextResource(TextProvider textProvider, LocaleProvider localeProvider) {
 		super();
-		this.action = action;
+		this.textProvider = textProvider;
+		this.localeProvider = localeProvider;
 	}
 
 	public Locale getLocale() {
-		return action.getLocale();
+		return localeProvider.getLocale();
 	}
 
 	public String getText(String key, Object[] args) {
@@ -27,11 +33,11 @@ public class ActionTextResource extends AbstractTextResource implements TextReso
 		for (int i = 0; i < args.length; i++) {
 			params[i] = String.valueOf(args[i]);
 		}
-		return action.getText(key, params);
+		return textProvider.getText(key, params);
 	}
 
 	public String getText(String key) {
-		return action.getText(key);
+		return textProvider.getText(key);
 	}
 
 	public void setLocale(Locale locale) {

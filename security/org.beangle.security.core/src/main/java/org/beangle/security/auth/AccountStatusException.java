@@ -9,6 +9,10 @@ import org.beangle.security.core.AuthenticationException;
 public class AccountStatusException extends AuthenticationException {
 	private static final long serialVersionUID = 5750259152188732891L;
 
+	public AccountStatusException() {
+		super();
+	}
+
 	public AccountStatusException(String message) {
 		super(message);
 	}

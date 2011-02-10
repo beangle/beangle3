@@ -26,7 +26,6 @@ import org.beangle.security.blueprint.model.GroupMemberBean;
 import org.beangle.security.blueprint.service.UserPropertyExtractor;
 import org.beangle.security.blueprint.service.UserService;
 import org.beangle.security.codec.EncryptUtil;
-import org.beangle.struts2.action.ActionTextResource;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.webapp.security.helper.UserDashboardHelper;
 
@@ -106,7 +105,7 @@ public class UserAction extends SecurityActionSupport {
 	}
 
 	protected PropertyExtractor getPropertyExtractor() {
-		return new UserPropertyExtractor(new ActionTextResource(this));
+		return new UserPropertyExtractor(getTextResource());
 	}
 
 	/**

@@ -6,10 +6,10 @@
 </script>
 [#if ((Session['loginFailureCount'])?default(0)>1)][#assign needCaptcha=true][#else][#assign needCaptcha=false][/#if]
 <div style="text-align:center;margin-top:150px;border:4px">权限系统</div>
-<div style="text-align:center;">[@b.messages/]</div>
 <div >
 	[@b.form name="loginForm" action="login"]
 	<table onkeypress="ret.focus(event)" style="margin:auto;">
+		<tr><td colspan="3">[@b.messages/]</td></tr>
 		<tr>
 			<td><label for="username"><strong>用户名:</strong></label></td>
 			<td><input name="username" id="username" tabindex="1" title="请输入用户名" type="text" value="${name!}" style="width:150px;background-color:#B0B0B0"/></td>
@@ -33,8 +33,8 @@
 			<td colspan="3" align="center">
 				<fieldset>
 				<legend>语言</legend>
-				<input name="request_locale" id="local_zh" type="radio" tabindex="4" value="zh_CN" checked="checked"/><label for="local_zh">中文</label>
-				<input name="request_locale" id="local_en" type="radio" tabindex="5" value="en_US"/><label for="local_en">ENGLISH</label>
+				<input name="session_locale" id="local_zh" type="radio" tabindex="4" value="zh_CN" checked="checked"/><label for="local_zh">中文</label>
+				<input name="session_locale" id="local_en" type="radio" tabindex="5" value="en_US"/><label for="local_en">ENGLISH</label>
 				</fieldset>
 			</td>
 		</tr>

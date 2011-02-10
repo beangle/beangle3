@@ -17,7 +17,6 @@ import org.beangle.security.blueprint.UserCategory;
 import org.beangle.security.blueprint.service.AuthorityService;
 import org.beangle.security.blueprint.service.GroupPropertyExtractor;
 import org.beangle.security.blueprint.service.UserService;
-import org.beangle.struts2.action.ActionTextResource;
 
 /**
  * 用户组信息维护响应类
@@ -54,7 +53,7 @@ public class GroupAction extends SecurityActionSupport {
 	}
 
 	protected PropertyExtractor getPropertyExtractor() {
-		return new GroupPropertyExtractor(new ActionTextResource(this));
+		return new GroupPropertyExtractor(getTextResource());
 	}
 
 	protected String saveAndForward(Entity<?> entity) {
