@@ -8,7 +8,7 @@
 	bar.addHelp();
 	[/@]
 	[@b.row]
-		[@b.boxcol property="id"/]
+		[@b.boxcol/]
 		[@b.col title="名称" property="name" sortable="false"/]
 		[@b.col title="使用的用户类别" property="category.name"/]
 	[/@]

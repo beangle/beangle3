@@ -38,7 +38,7 @@
 [/@]
 	[@b.row ]
 		<tr title="${menu.entry!}" id="${convert_code(menu.code)}">
-		[@b.boxcol property="id" onclick="treeToggle(this,false)" /]
+		[@b.boxcol onclick="treeToggle(this,false)" /]
 		[@b.col property="title" title="标题"]
 		<div class="tier${menu.code?length/2}" align="left">
 		[#if (menu.children?size==0)]

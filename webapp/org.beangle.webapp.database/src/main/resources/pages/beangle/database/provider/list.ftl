@@ -6,7 +6,7 @@
 		bar.addItem("删除",action.remove());
 	[/@b.gridbar]
 	[@b.row]
-		[@b.boxcol property="id"/]
+		[@b.boxcol/]
 		[@b.col property="name" title="提供者名称"]
 			[@b.a href="datasource!search?datasource.provider.id=${provider.id}"]${provider.name!}[/@]
 		[/@]

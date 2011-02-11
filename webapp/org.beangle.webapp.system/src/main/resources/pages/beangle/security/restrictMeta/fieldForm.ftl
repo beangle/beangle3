@@ -30,7 +30,7 @@
 	 </td>
 	</tr>
 	<tr>
-		<td class="title" id="f_group"><font color="red">*</font>限制对象:</td>
+		<td class="title" id="f_group"><font color="red">*</font>${b.text('restriction.entities')}:</td>
 		<td>
 		 <table>
 		  <tr>

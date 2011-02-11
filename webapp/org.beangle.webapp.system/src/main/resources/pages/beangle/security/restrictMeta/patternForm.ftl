@@ -18,7 +18,7 @@
 	 </td>
 	</tr>
 	<tr>
-		<td class="title" id="f_params">适应对象:</td>
+		<td class="title" id="f_params">${b.text('entity.restrictEntity')}:</td>
 		<td >
 			<select name="pattern.entity.id"  style="width:200px">
 			 [#list entities as entity]

@@ -16,7 +16,7 @@ bg.ui.grid.init('${tag.id}',"${Parameters['orderBy']!('null')}");
 bar=new bg.ui.gridbar(['${tag.id}_bar1','${tag.id}_bar2'],'${(tag.parameters['title']?default(''))?replace("'","\"")}');
 bar.pageId('${tag.id}').target("${tag.parameters['target']!""}").action("${request.requestURI}").paramstring('${b.paramstring}');
 [#if tag.pageable]
-bar.addPage(${tag.items.pageNo},${tag.items.pageSize},${tag.items.total}[#if !parameters['fixPageSize']??],[10,15,20,25,30,50,70,90,100,150,300,1000][/#if],{${b.text('page.description')}});
+bar.addPage(${tag.items.pageNo},${tag.items.pageSize},${tag.items.total},[#if parameters['fixPageSize']??][][#else]null[/#if],{${b.text('page.description')}});
 [#if tag.notFullPage]bg.ui.grid.fillEmpty('${tag.id}_empty',${tag.items.pageSize},${tag.items?size});[/#if]
 [/#if]
 [#if tag.var??]action=bar.addEntityAction('${tag.var}');[/#if]

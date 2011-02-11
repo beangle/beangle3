@@ -19,7 +19,7 @@
 	}
 	[/@]
 	[@b.row]
-		[@b.boxcol property="id"/]
+		[@b.boxcol/]
 		[@b.col property="name"][@b.a href="!dashboard?user.id=${user.id}" target="_blank"]${user.name}[/@][/@]
 		[@b.col property="fullname"/]
 		[@b.col property="mail" title="common.email" /]

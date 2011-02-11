@@ -58,7 +58,7 @@ public class Grid extends ClosingUIBean {
 	}
 
 	public boolean isSortable(Col cln) {
-		Object sortby =  cln.getParameters().get("sort");
+		Object sortby = cln.getParameters().get("sort");
 		if (null != sortby) return true;
 		return ("true".equals(sortable)
 				&& !ObjectUtils.equals(cln.getParameters().get("sortable"), "false") && null != cln
@@ -267,15 +267,15 @@ public class Grid extends ClosingUIBean {
 
 		@Override
 		public boolean start(Writer writer) {
-			row = (Row) findAncestor(Row.class);
-			if (row.index == 0) {
-				row.table.addCol(this);
+			if (null == property) {
+				this.property = "id";
 			}
+			row = (Row) findAncestor(Row.class);
 			if (null == boxname) {
 				boxname = row.table.var + "." + property;
 			}
-			if (null == property) {
-				this.property = "id";
+			if (row.index == 0) {
+				row.table.addCol(this);
 			}
 			return true;
 		}

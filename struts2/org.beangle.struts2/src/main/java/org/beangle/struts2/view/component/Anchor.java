@@ -8,6 +8,7 @@ import java.io.Writer;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.struts2.view.freemarker.BeangleModels;
 import org.beangle.struts2.view.template.Theme;
 
@@ -21,6 +22,8 @@ public class Anchor extends ClosingUIBean {
 	private String href;
 
 	private String target;
+
+	private String onclick;
 
 	public Anchor(ValueStack stack) {
 		super(stack);
@@ -47,20 +50,31 @@ public class Anchor extends ClosingUIBean {
 	}
 
 	@Override
+	protected void evaluateParams() {
+		this.href = BeangleModels.render.render(getRequestURI(), this.href);
+		if (!isReserved()) {
+			if (null == onclick) {
+				if (null != target) {
+					onclick = StrUtils.concat("return bg.Go(this,'", target, "')");
+					target = null;
+				} else {
+					onclick = "return bg.Go(this)";
+				}
+			}
+		}
+	}
+
+	@Override
 	public boolean end(Writer writer, String body) {
 		if (getTheme().equals(Theme.DEFAULT_THEME)) {
 			try {
 				writer.append("<a href=\"");
-				writer.append(BeangleModels.render.render(getRequestURI(), this.href)).append("\"");
+				writer.append(href).append("\"");
 				if (null != target) {
-					if (isReserved()) {
-						writer.append(" target=\"" + target + "\"");
-					} else {
-						writer.append(" onclick=\"return bg.Go(this,'").append(target)
-								.append("')\"");
-					}
-				}else{
-					writer.append(" onclick=\"return bg.Go(this)\"");
+					writer.append(" target=\"").append(target).append("\"");
+				}
+				if (null != onclick) {
+					writer.append(" onclick=\"").append(onclick).append("\"");
 				}
 				writer.append(getParameterString());
 				writer.append(">").append(body).append("</a>");
@@ -71,6 +85,14 @@ public class Anchor extends ClosingUIBean {
 		} else {
 			return super.end(writer, body);
 		}
+	}
+
+	public String getOnclick() {
+		return onclick;
+	}
+
+	public void setOnclick(String onclick) {
+		this.onclick = onclick;
 	}
 
 }

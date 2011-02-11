@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.EntityExistException;
@@ -86,7 +87,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	// workgroup for no session
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<Group> getGroups(User user, GroupMember.Ship ship) {
-		if (isAdmin(user)) return entityDao.getAll(Group.class);
+		if (isAdmin(user) && !ObjectUtils.equals(ship, GroupMember.Ship.MEMBER)) return entityDao
+				.getAll(Group.class);
 		OqlBuilder builder = OqlBuilder.from(GroupMember.class, "gm");
 		builder.where("gm.user=:user", user).select("gm.group");
 		if (null != ship) {
@@ -97,16 +99,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return entityDao.search(builder);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List<String> getGroupMemberNames(User user){
-		OqlBuilder builder = OqlBuilder.from(GroupMember.class, "gm");
-		builder.where("gm.user=:user and gm.member=true", user);
-		builder.select("gm.group.name");
-		return entityDao.search(builder);
-	}
-	
 	public List<GroupMember> getGroupMembers(User user, GroupMember.Ship ship) {
-		if (isAdmin(user)) {
+		if (isAdmin(user) && !ObjectUtils.equals(ship, GroupMember.Ship.MEMBER)) {
 			List<GroupMember> members = CollectUtils.newArrayList();
 			List<Group> groups = entityDao.getAll(Group.class);
 			for (Group group : groups) {

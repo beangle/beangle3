@@ -61,10 +61,12 @@ public class RestrictMetaAction extends SecurityActionSupport {
 	}
 
 	public String saveEntity() {
-		RestrictEntity group = (RestrictEntity) populateEntity(RestrictEntity.class, "entity");
-		entityDao.saveOrUpdate(group);
-		logger.info("save restrict entity with name {}", group.getName());
-		return redirect("index", "info.save.success");
+		RestrictEntity entity = (RestrictEntity) populateEntity(RestrictEntity.class, "entity");
+		if (null != entity.getName()) {
+			entityDao.saveOrUpdate(entity);
+			logger.info("save restrict entity with name {}", entity.getName());
+		}
+		return redirect("fields", "info.save.success");
 	}
 
 	public String removeEntity() {
@@ -74,7 +76,7 @@ public class RestrictMetaAction extends SecurityActionSupport {
 			entityDao.remove(group);
 			logger.info("remove group with name {}", group.getName());
 		}
-		return redirect("index", "info.remove.success");
+		return redirect("fields", "info.remove.success");
 	}
 
 	public String editField() {

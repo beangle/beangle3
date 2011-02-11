@@ -392,13 +392,12 @@
 	
 	bg.extend({'ui.pagebar':function (pageId,pageDiv,pageNo,pageSize,total,ranks,titles){
 		if(total==0) return;
+		if(!ranks) ranks=[10,20,30,50,70,100,200,500,1000];
+		if(!titles) titles={first:'« First',previous:'‹ Previous',next:'Next ›',last:'Last »',no:'No:',size:'Size:',change:'Click me to change page size'};
 		quotient=Math.floor(total/pageSize);
 		maxPageNo= (0 == total%pageSize) ? quotient : (quotient + 1);
 		startNo=(pageNo-1)*pageSize+1;
 		endNo=(startNo+pageSize-1)<=total?(startNo+pageSize-1):total;
-		if(!titles){
-			titles={first:'« First',previous:'‹ Previous',next:'Next ›',last:'Last »',no:'No:',size:'Size:',change:'Click me to change page size'}
-		}
 		addAnchor=function(text,pageNumber){
 			pageHref=document.createElement('a');
 			pageHref.setAttribute("href","#");

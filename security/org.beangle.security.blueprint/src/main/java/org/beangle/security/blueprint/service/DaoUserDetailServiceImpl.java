@@ -7,6 +7,8 @@ package org.beangle.security.blueprint.service;
 import java.util.List;
 
 import org.beangle.model.persist.impl.BaseServiceImpl;
+import org.beangle.security.blueprint.Group;
+import org.beangle.security.blueprint.GroupMember;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.UserCategory;
 import org.beangle.security.core.Authentication;
@@ -25,11 +27,11 @@ public class DaoUserDetailServiceImpl extends BaseServiceImpl implements
 			return null;
 		} else {
 			User user = users.get(0);
-			List<String> groupNames = userService.getGroupMemberNames(user);
-			GrantedAuthorityBean[] authorities = new GrantedAuthorityBean[groupNames.size()];
+			List<Group> groups = userService.getGroups(user, GroupMember.Ship.MEMBER);
+			GrantedAuthorityBean[] authorities = new GrantedAuthorityBean[groups.size()];
 			int i = 0;
-			for (String group : groupNames) {
-				authorities[i] = new GrantedAuthorityBean(group);
+			for (Group g : groups) {
+				authorities[i] = new GrantedAuthorityBean(g.getName());
 				i++;
 			}
 			return new UserToken(user.getId(), user.getName(), user.getFullname(),

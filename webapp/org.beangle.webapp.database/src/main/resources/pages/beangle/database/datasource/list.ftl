@@ -6,7 +6,7 @@
 		bar.addItem("删除",action.remove());
 	[/@b.gridbar]
 	[@b.row]
-	[@b.boxcol property="id"/]
+	[@b.boxcol/]
 	[@b.col property="name" title="名称"/]
 	[@b.col property="username" title="用户名"/]
 	[@b.col property="password" title="密码"/]

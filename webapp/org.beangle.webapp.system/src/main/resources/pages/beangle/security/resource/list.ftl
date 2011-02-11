@@ -34,7 +34,7 @@
 		</td>
 	</tr>
 	[@b.row]
-		[@b.boxcol property="id"/]
+		[@b.boxcol/]
 		[@b.col  width="20%" property="title" title="标题" ][@b.a href="resource!info?resource.id=${resource.id}"]${(resource.title)!}[/@][/@]
 		[@b.col  width="55%" property="name" align="left" title="名称"]<span title="${resource.description!}">${resource.name!}</span>[/@]
 		[@b.col  width="10%" property="scope" title="可见范围"][@resourceScope resource.scope/][/@]
