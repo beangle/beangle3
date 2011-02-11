@@ -23,7 +23,7 @@
 		return action.multi("activate","确定操作?","isActivate="+isActivate);
 	}
 	function exportData(){
-		return action.method("export",null,"keys=code,title,entry,description,enabled&amp;titles=代码,标题,入口,描述,是否可用");
+		return action.method("export",null,"keys=code,title,entry,description,enabled&titles=代码,标题,入口,描述,是否可用");
 	}
 	function preview(){
 		window.open("${b.url('!preview')}?${b.paramstring}");

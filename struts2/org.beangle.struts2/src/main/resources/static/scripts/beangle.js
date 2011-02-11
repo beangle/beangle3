@@ -259,8 +259,8 @@
 	//About From
 	beangle.extend({
 		form:{
-			submit : function (myForm,action,target,onsubmit){
-				if((typeof myForm)=='string') myForm=document.getElementById(myForm);
+			submit : function (myForm,action,target,onsubmit,ajax){
+				if((typeof myForm)=='string') myForm = document.getElementById(myForm);
 				if(onsubmit){
 					var rs=null;
 					if(typeof onsubmit == "function"){
@@ -284,8 +284,10 @@
 					action=action.substring(action.indexOf("/",7));
 				}
 				myForm.action=action;
-				
-				if(!bg.isAjaxTarget(submitTarget)){
+				if(!ajax){
+					ajax=bg.isAjaxTarget(submitTarget)
+				}
+				if(!ajax){
 					myForm.target=bg.normalTarget(submitTarget);
 					myForm.action=action;
 					myForm.submit();

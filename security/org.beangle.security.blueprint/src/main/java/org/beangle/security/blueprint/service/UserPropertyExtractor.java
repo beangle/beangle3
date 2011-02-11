@@ -34,7 +34,7 @@ public class UserPropertyExtractor extends DefaultPropertyExtractor {
 			}
 		}
 		if ("groups".equals(property)) {
-			return getPropertyIn(user.getGroups(), "name");
+			return getPropertyIn(user.getGroups(), "group.name");
 		} else {
 			return super.getPropertyValue(target, property);
 		}

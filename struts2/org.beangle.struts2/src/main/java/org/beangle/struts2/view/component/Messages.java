@@ -11,5 +11,4 @@ public class Messages extends UIBean {
 	public Messages(ValueStack stack) {
 		super(stack);
 	}
-
 }

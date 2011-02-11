@@ -5,7 +5,7 @@
 [@b.form name="resourceForm" action="!search"]
 [@b.grid items=resources var="resource" sortable="true" ]
 	[@b.gridbar title='系统资源']
-	function activate(enabled){return action.multi('activate','确定操作?','&amp;enabled='+enabled);}
+	function activate(enabled){return action.multi('activate','确定操作?','&enabled='+enabled);}
 	bar.addItem("${b.text("action.add")}",action.add());
 	bar.addItem("${b.text("action.edit")}",action.edit());
 	bar.addItem("${b.text("action.freeze")}",activate(0),'${base}/static/icons/beangle/16x16/actions/freeze.png');

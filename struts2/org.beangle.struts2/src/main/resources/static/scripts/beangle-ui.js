@@ -757,7 +757,7 @@
 				}
 			});
 		}
-		this.method=function(methodName,confirmMsg,extparams){
+		this.method=function(methodName,confirmMsg,extparams,ajax){
 			return  new NamedFunction(methodName,function(){
 				aform=getEntityAction(id);
 				form=aform.getForm();
@@ -768,7 +768,7 @@
 					bg.form.addHiddens(form,aform.actionQueryStr);
 					bg.form.addParamsInput(form,aform.actionQueryStr);
 				}
-				bg.form.submit(form,applyMethod(aform.action ,methodName));
+				bg.form.submit(form,applyMethod(aform.action ,methodName),ajax);
 			});
 		}
 		this.exportData=function (format,keys,titles,extparams){
@@ -777,7 +777,7 @@
 			titles = titles||"";
 			extparams = extparams||"";
 			extparams = "&format=" + format +"&keys=" + keys + "&titles=" + titles + extparams;
-			return this.method('export',null,extparams);
+			return this.method('export',null,extparams,false);
 		}
 	}
 	

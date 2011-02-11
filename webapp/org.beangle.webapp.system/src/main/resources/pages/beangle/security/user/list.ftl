@@ -13,9 +13,9 @@
 		return action.multi("activate","确定提交?","isActivate="+isActivate);
 	}
 	function exportUserList(){
-		extParams="&amp;keys="+"name,password,status,mail,creator.name,createdAt,updatedAt,groups,mngGroups";
-		extParams+="&amp;titles="+"登录名,密码,状态,电子邮件,创建者,创建时间,修改时间,用户组,管理用户组";
-		return action.method("export",null,extParams);
+		extParams="keys="+"name,fullname,mail,groups,creator.fullname,createdAt,updatedAt,status";
+		extParams+="&titles="+"登录名,姓名,电子邮件,用户组,创建者,创建时间,修改时间,状态";
+		return action.method("export",null,extParams,false);
 	}
 	[/@]
 	[@b.row]
