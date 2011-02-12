@@ -112,14 +112,14 @@
 	
 	<bean id="authorityService" class="org.beangle.security.blueprint.service.AuthorityServiceImpl" autowire="byName"/>
 	
-	<bean id="constDataProvider" class="org.beangle.security.blueprint.restrict.service.ConstDataProvider" autowire="byName"/>
+	<bean id="csvDataResolver" class="org.beangle.security.blueprint.restrict.service.CsvDataResolver" autowire="byName"/>
 
 	<bean id="oqlDataProvider" class="org.beangle.security.blueprint.restrict.service.OqlDataProvider" autowire="byName"/>
 	
 	<bean id="restrictionService" class="org.beangle.security.blueprint.restrict.service.RestrictionServiceImpl" autowire="byName">
 		<property name="providers">
 			<map>
-				<entry key="const" value-ref="constDataProvider"/>
+				<entry key="csv" value-ref="csvDataResolver"/>
 				<entry key="oql" value-ref="oqlDataProvider"/>
 			</map>
 		</property>
