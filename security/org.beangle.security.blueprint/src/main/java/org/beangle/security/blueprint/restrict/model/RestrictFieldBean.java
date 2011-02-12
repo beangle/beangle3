@@ -16,6 +16,10 @@ public class RestrictFieldBean extends LongIdObject implements RestrictField {
 
 	private String name;
 
+	private String keyName;
+	
+	private String propertyNames;
+	
 	private String type;
 
 	private String remark;
@@ -23,8 +27,36 @@ public class RestrictFieldBean extends LongIdObject implements RestrictField {
 	private String source;
 
 	private boolean multiple;
-	
+
 	private Set<RestrictEntity> entities = CollectUtils.newHashSet();
+
+	public RestrictFieldBean() {
+		super();
+	}
+
+	public RestrictFieldBean(String name, String type, String source) {
+		super();
+		this.name = name;
+		this.type = type;
+		this.source = source;
+		this.multiple = true;
+	}
+
+	public String getKeyName() {
+		return keyName;
+	}
+
+	public void setKeyName(String keyName) {
+		this.keyName = keyName;
+	}
+
+	public String getPropertyNames() {
+		return propertyNames;
+	}
+
+	public void setPropertyNames(String propertyNames) {
+		this.propertyNames = propertyNames;
+	}
 
 	public String getName() {
 		return name;

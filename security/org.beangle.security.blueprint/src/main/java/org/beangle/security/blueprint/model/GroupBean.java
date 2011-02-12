@@ -62,6 +62,11 @@ public class GroupBean extends LongIdTimeObject implements Group {
 		setId(id);
 	}
 
+	public GroupBean(Long id, String name) {
+		setId(id);
+		this.name = name;
+	}
+
 	public String getName() {
 		return name;
 	}

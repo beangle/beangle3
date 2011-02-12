@@ -7,15 +7,13 @@ package org.beangle.security.blueprint.restrict.service;
 import java.util.List;
 
 import org.beangle.model.persist.impl.BaseServiceImpl;
+import org.beangle.security.blueprint.restrict.RestrictField;
 
 public class OqlDataProvider extends BaseServiceImpl implements DataProvider {
 
-	public <T> List<T> getData(Class<T> type, String source) {
+	@SuppressWarnings("unchecked")
+	public <T> List<T> getData(RestrictField field, String source) {
 		return (List<T>) entityDao.searchHQLQuery(source);
-	}
-
-	public String asString(List<?> objects) {
-		return null;
 	}
 
 	public String getName() {

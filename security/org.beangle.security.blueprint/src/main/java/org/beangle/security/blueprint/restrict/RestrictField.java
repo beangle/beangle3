@@ -18,6 +18,14 @@ public interface RestrictField extends LongIdEntity {
 
 	public void setType(String type);
 
+	public String getKeyName();
+
+	public void setKeyName(String keyName);
+
+	public String getPropertyNames();
+
+	public void setPropertyNames(String propertyNames);
+
 	public String getRemark();
 
 	public void setRemark(String remark);

@@ -19,7 +19,7 @@ public class ReflectorTest {
 		System.out.println(a.getReturnType());
 	}
 
-	private static Method getterMethod(Class theClass, String propertyName) {
+	private static Method getterMethod(Class<?> theClass, String propertyName) {
 		Method[] methods = theClass.getDeclaredMethods();
 		ArrayUtils.reverse(methods);
 		for (Method method : methods) {

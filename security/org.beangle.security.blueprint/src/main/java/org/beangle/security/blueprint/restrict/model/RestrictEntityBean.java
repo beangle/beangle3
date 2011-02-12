@@ -23,6 +23,21 @@ public class RestrictEntityBean extends LongIdObject implements RestrictEntity {
 
 	private Set<RestrictField> fields = CollectUtils.newHashSet();
 
+	public RestrictEntityBean() {
+		super();
+	}
+
+	public RestrictEntityBean(String name, String type) {
+		super();
+		this.name = name;
+		this.type = type;
+	}
+
+	public RestrictEntityBean(String name, Class<?> type) {
+		super();
+		this.name = name;
+		this.type = type.getName();
+	}
 	public RestrictField getField(String paramName) {
 		for (final RestrictField param : fields) {
 			if (param.getName().equals(paramName)) { return param; }

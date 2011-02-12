@@ -18,6 +18,15 @@ public class RestrictPatternBean extends LongIdObject implements RestrictPattern
 
 	private RestrictEntity entity;
 
+	public RestrictPatternBean() {
+		super();
+	}
+
+	public RestrictPatternBean(RestrictEntity entity, String content) {
+		this.entity = entity;
+		this.content = content;
+	}
+
 	public String getContent() {
 		return content;
 	}

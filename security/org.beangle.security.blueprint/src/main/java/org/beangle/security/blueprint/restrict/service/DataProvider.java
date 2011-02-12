@@ -6,6 +6,8 @@ package org.beangle.security.blueprint.restrict.service;
 
 import java.util.List;
 
+import org.beangle.security.blueprint.restrict.RestrictField;
+
 /**
  * @author chaostone
  * @version $Id: SourceProvider.java Nov 9, 2010 7:18:38 PM chaostone $
@@ -20,15 +22,7 @@ public interface DataProvider {
 	 * @param source
 	 * @return
 	 */
-	public <T> List<T> getData(Class<T> type, String source);
-
-	/**
-	 * transform object to String
-	 * 
-	 * @param objects
-	 * @return
-	 */
-	public String asString(List<?> objects);
+	public <T> List<T> getData(RestrictField field, String source);
 
 	/**
 	 * provider's unique name

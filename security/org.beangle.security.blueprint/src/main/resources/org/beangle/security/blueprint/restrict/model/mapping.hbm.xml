@@ -9,6 +9,8 @@
 			<generator class="org.beangle.model.persist.hibernate.support.TableSeqGenerator"/>
 		</id>
 		<property name="name" not-null="true"/>
+		<property name="keyName" not-null="true"/>
+		<property name="propertyNames" not-null="true"/>
 		<property name="type" not-null="true"/>
 		<property name="multiple" not-null="true"/>
 		<property name="remark" not-null="true"/>

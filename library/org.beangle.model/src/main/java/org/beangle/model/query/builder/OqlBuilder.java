@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
 import org.beangle.commons.collection.page.PageLimit;
+import static org.beangle.commons.lang.StrUtils.*;
 import org.beangle.model.EntityUtils;
 import org.beangle.model.entity.Model;
 import org.beangle.model.entity.types.EntityType;
@@ -51,8 +52,8 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 		OqlBuilder<E> query = new OqlBuilder<E>();
 		query.entityClass = (Class<E>) type.getEntityClass();
 		query.alias = alias;
-		query.select = "select " + alias + " ";
-		query.from = "from " + entityName + " " + alias;
+		query.select = "select " + alias;
+		query.from = concat("from ", entityName, " ", alias);
 		return query;
 	}
 
@@ -73,8 +74,8 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 		OqlBuilder<E> query = new OqlBuilder<E>();
 		query.entityClass = (Class<E>) type.getEntityClass();
 		query.alias = alias;
-		query.select = "select " + alias + " ";
-		query.from = "from " + type.getEntityName() + " " + alias;
+		query.select = "select " + alias;
+		query.from = concat("from ", type.getEntityName(), " ", alias);
 		return query;
 	}
 
@@ -84,12 +85,12 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 	}
 
 	public OqlBuilder<T> join(final String path, final String alias) {
-		from += " join " + path + " " + alias;
+		from = concat(from, " join ", path, " ", alias);
 		return this;
 	}
 
 	public OqlBuilder<T> join(final String joinMode, final String path, final String alias) {
-		from += " " + joinMode + " join " + path + " " + alias;
+		from = concat(from, " ", joinMode, " join ", path, " ", alias);
 		return this;
 	}
 

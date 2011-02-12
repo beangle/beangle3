@@ -31,6 +31,16 @@ public class RestrictionBean extends LongIdObject implements Restriction {
 
 	private Map<Long, String> items = CollectUtils.newHashMap();
 
+	public RestrictionBean() {
+		super();
+	}
+
+	public RestrictionBean(RestrictionHolder holder, RestrictPattern pattern) {
+		super();
+		this.holder = holder;
+		this.pattern = pattern;
+	}
+
 	public RestrictionHolder getHolder() {
 		return holder;
 	}

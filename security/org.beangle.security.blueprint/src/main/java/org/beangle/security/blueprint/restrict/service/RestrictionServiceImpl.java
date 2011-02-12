@@ -4,7 +4,6 @@
  */
 package org.beangle.security.blueprint.restrict.service;
 
-import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -16,8 +15,6 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.lang.StrUtils;
-import org.beangle.model.Entity;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.Condition;
 import org.beangle.model.query.builder.OqlBuilder;
@@ -37,6 +34,8 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 	protected UserService userService;
 
 	protected Map<String, DataProvider> providers = CollectUtils.newHashMap();
+
+	protected DataResolver dataResolver;
 
 	/**
 	 * 查询用户在指定模块的数据权限
@@ -85,11 +84,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		source = StringUtils.substringAfter(source, ":");
 		DataProvider provider = providers.get(prefix);
 		if (null != provider) {
-			try {
-				return provider.getData(Class.forName(field.getType()), source);
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException(e);
-			}
+			return provider.getData(field, source);
 		} else {
 			throw new RuntimeException("not support data provider:" + prefix);
 		}
@@ -133,20 +128,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		if (StringUtils.isEmpty(value)) return null;
 		if (ObjectUtils.equals(Restriction.ALL, value)) { return getFieldValues(field); }
 		try {
-			List<Object> returned = null;
-			Class clazz = Class.forName(field.getType());
-			if (Entity.class.isAssignableFrom(clazz)) {
-				OqlBuilder<Object> b = OqlBuilder.from(clazz, "e");
-				b.where("e.id in(:ids)", StrUtils.splitToLong(value));
-				returned = entityDao.search(b);
-			} else {
-				Constructor<?> con = clazz.getConstructor(new Class[] { String.class });
-				returned = CollectUtils.newArrayList();
-				String[] values = StringUtils.split(value, ",");
-				for (int i = 0; i < values.length; i++) {
-					returned.add(con.newInstance(new Object[] { values[i] }));
-				}
-			}
+			List<Object> returned = dataResolver.unmarshal(field, value);
 			if (field.isMultiple()) {
 				return returned;
 			} else {
@@ -158,62 +140,22 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		}
 	}
 
-	private <T> Set<T> select(Collection<T> values, List<? extends Restriction> restrictions,
-			RestrictField param) {
-		Set<T> selected = CollectUtils.newHashSet();
-		for (final Restriction restriction : restrictions) {
-			selected.addAll(select(values, restriction, param));
-		}
-		return selected;
-	}
-
-	private <T> Set<T> select(Collection<T> values, final Restriction restriction,
-			RestrictField field) {
-		Set<T> selected = CollectUtils.newHashSet();
-		String value = restriction.getItem(field);
-		if (StringUtils.isNotEmpty(value)) {
-			if (value.equals(Restriction.ALL)) {
-				selected.addAll(values);
-				return selected;
-			}
-			@SuppressWarnings("unchecked")
-			final Set<T> paramValue = (Set<T>) getFieldValue(field, restriction);
-			for (T obj : values) {
-				try {
-					// if (paramValue.contains(PropertyUtils.getProperty(obj,
-					// param.getEditor()
-					// .getIdProperty()))) {
-					if (paramValue.contains(obj)) {
-						selected.add(obj);
-					}
-				} catch (Exception e) {
-					throw new RuntimeException(e.getMessage());
-				}
-			}
-		}
-		return selected;
-	}
-
 	public void apply(OqlBuilder<?> query, Collection<? extends Restriction> restrictions) {
-		String prefix = "(";
 		StringBuilder conBuffer = new StringBuilder();
 		List<Object> paramValues = CollectUtils.newArrayList();
 		int index = 0;
-
 		for (final Restriction restriction : restrictions) {
 			// 处理限制对应的模式
 			RestrictPattern pattern = restriction.getPattern();
 			if (null == pattern || StringUtils.isEmpty(pattern.getContent())) {
 				continue;
 			}
-			// FIXME pattern.getObject().getType().equals(anObject))
-			// if(pattern.getObject().getType().equals(anObject))
 			String patternContent = pattern.getContent();
 			patternContent = StringUtils.replace(patternContent, "{alias}", query.getAlias());
 			String[] contents = StringUtils.split(
 					StringUtils.replace(patternContent, " and ", "$"), "$");
 
-			StringBuilder singleConBuf = new StringBuilder(prefix);
+			StringBuilder singleConBuf = new StringBuilder("(");
 			for (int i = 0; i < contents.length; i++) {
 				String content = contents[i];
 				Condition c = new Condition(content);
@@ -272,6 +214,14 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 
 	public void setProviders(Map<String, DataProvider> providers) {
 		this.providers = providers;
+	}
+
+	public DataResolver getDataResolver() {
+		return dataResolver;
+	}
+
+	public void setDataResolver(DataResolver dataResolver) {
+		this.dataResolver = dataResolver;
 	}
 
 }
