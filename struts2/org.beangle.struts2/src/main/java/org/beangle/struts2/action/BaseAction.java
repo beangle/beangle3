@@ -56,7 +56,7 @@ public class BaseAction extends DispatchAction {
 	}
 
 	protected TextResource getTextResource() {
-		return new ActionTextResource(this,this);
+		return new ActionTextResource(this, this);
 	}
 
 	protected void put(String key, Object value) {
@@ -243,7 +243,7 @@ public class BaseAction extends DispatchAction {
 		return ServletActionContext.getResponse();
 	}
 
-	protected Map<String,Object> getSession() {
+	protected Map<String, Object> getSession() {
 		return ActionContext.getContext().getSession();
 	}
 }

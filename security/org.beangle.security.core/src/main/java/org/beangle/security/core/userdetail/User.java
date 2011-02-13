@@ -4,10 +4,10 @@
  */
 package org.beangle.security.core.userdetail;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.Collection;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.beangle.security.core.GrantedAuthority;
 
 public class User implements UserDetail {
@@ -15,11 +15,15 @@ public class User implements UserDetail {
 	private static final long serialVersionUID = 1L;
 	private String password;
 	private String username;
-	private GrantedAuthority[] authorities;
+	private Collection<GrantedAuthority> authorities;
 	private boolean accountExpired;
 	private boolean accountLocked;
 	private boolean credentialsExpired;
 	private boolean enabled;
+
+	public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+		this(username, password, true, false, false, false, authorities);
+	}
 
 	/**
 	 * Construct the <code>User</code> with the details required by
@@ -35,11 +39,11 @@ public class User implements UserDetail {
 	 * @param enabled
 	 *            set to <code>true</code> if the user is enabled
 	 * @param accountExpired
-	 *            set to <code>true</code> if the account has not expired
+	 *            set to <code>true</code> if the account has expired
 	 * @param credentialsExpired
-	 *            set to <code>true</code> if the credentials have not expired
+	 *            set to <code>true</code> if the credentials have expired
 	 * @param accountLocked
-	 *            set to <code>true</code> if the account is not locked
+	 *            set to <code>true</code> if the account is locked
 	 * @param authorities
 	 *            the authorities that should be granted to the caller if they
 	 *            presented the correct username and password and the user is
@@ -48,9 +52,10 @@ public class User implements UserDetail {
 	 *             if a <code>null</code> value was passed either as a parameter
 	 *             or as an element in the <code>GrantedAuthority[]</code> array
 	 */
+	@SuppressWarnings("unchecked")
 	public User(String username, String password, boolean enabled, boolean accountExpired,
-			boolean credentialsExpired, boolean accountLocked, GrantedAuthority[] authorities)
-			throws IllegalArgumentException {
+			boolean credentialsExpired, boolean accountLocked,
+			Collection<? extends GrantedAuthority> authorities) throws IllegalArgumentException {
 		if (((username == null) || "".equals(username)) || (password == null)) { throw new IllegalArgumentException(
 				"Cannot pass null or empty values to constructor"); }
 
@@ -60,30 +65,22 @@ public class User implements UserDetail {
 		this.accountExpired = accountExpired;
 		this.credentialsExpired = credentialsExpired;
 		this.accountLocked = accountLocked;
-		setAuthorities(authorities);
+		this.authorities = (Collection<GrantedAuthority>) authorities;
 	}
 
 	public boolean equals(Object rhs) {
 		if (!(rhs instanceof User) || (rhs == null)) { return false; }
 		User user = (User) rhs;
-		// We rely on constructor to guarantee any User has non-null and >0
-		// authorities
-		if (user.getAuthorities().length != this.getAuthorities().length) { return false; }
-
-		for (int i = 0; i < this.getAuthorities().length; i++) {
-			if (!this.getAuthorities()[i].equals(user.getAuthorities()[i])) { return false; }
-		}
-
-		// We rely on constructor to guarantee non-null username and password
-		return (this.getPassword().equals(user.getPassword())
-				&& this.getUsername().equals(user.getUsername())
-				&& (this.isAccountExpired() == user.isAccountExpired())
-				&& (this.isAccountLocked() == user.isAccountLocked())
-				&& (this.isCredentialsExpired() == user.isCredentialsExpired()) && (this
-				.isEnabled() == user.isEnabled()));
+		return new EqualsBuilder().append(getUsername(), user.getUsername())
+				.append(getPassword(), user.getPassword())
+				.append(isAccountExpired(), user.isAccountLocked())
+				.append(isAccountLocked(), user.isAccountLocked())
+				.append(isCredentialsExpired(), user.isCredentialsExpired())
+				.append(getAuthorities(), user.getAuthorities())
+				.append(isEnabled(), user.isEnabled()).isEquals();
 	}
 
-	public GrantedAuthority[] getAuthorities() {
+	public Collection<GrantedAuthority> getAuthorities() {
 		return authorities;
 	}
 
@@ -96,38 +93,9 @@ public class User implements UserDetail {
 	}
 
 	public int hashCode() {
-		int code = 9792;
-
-		if (this.getAuthorities() != null) {
-			for (int i = 0; i < this.getAuthorities().length; i++) {
-				code = code * (this.getAuthorities()[i].hashCode() % 7);
-			}
-		}
-		if (this.getPassword() != null) {
-			code = code * (this.getPassword().hashCode() % 7);
-		}
-
-		if (this.getUsername() != null) {
-			code = code * (this.getUsername().hashCode() % 7);
-		}
-
-		if (this.isAccountExpired()) {
-			code = code * -2;
-		}
-
-		if (this.isAccountLocked()) {
-			code = code * -3;
-		}
-
-		if (this.isCredentialsExpired()) {
-			code = code * -5;
-		}
-
-		if (this.isEnabled()) {
-			code = code * -7;
-		}
-
-		return code;
+		return new HashCodeBuilder().append(getAuthorities()).append(getPassword())
+				.append(getUsername()).append(isAccountExpired()).append(isAccountLocked())
+				.append(isCredentialsExpired()).append(isEnabled()).toHashCode();
 	}
 
 	public boolean isAccountExpired() {
@@ -146,17 +114,6 @@ public class User implements UserDetail {
 		return enabled;
 	}
 
-	protected void setAuthorities(GrantedAuthority[] authorities) {
-		Validate.notNull(authorities, "Cannot pass a null GrantedAuthority array");
-		SortedSet<GrantedAuthority> sorter = new TreeSet<GrantedAuthority>();
-		for (int i = 0; i < authorities.length; i++) {
-			Validate.notNull(authorities[i], "Granted authority element " + i
-					+ " is null - GrantedAuthority[] cannot contain any null elements");
-			sorter.add(authorities[i]);
-		}
-		this.authorities = (GrantedAuthority[]) sorter.toArray(new GrantedAuthority[sorter.size()]);
-	}
-
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append(super.toString()).append(": ");
@@ -167,20 +124,15 @@ public class User implements UserDetail {
 		sb.append("credentialsExpired: ").append(this.credentialsExpired).append("; ");
 		sb.append("AccountLocked: ").append(this.accountLocked).append("; ");
 
-		if (this.getAuthorities() != null) {
+		if (!getAuthorities().isEmpty()) {
 			sb.append("Granted Authorities: ");
-
-			for (int i = 0; i < this.getAuthorities().length; i++) {
-				if (i > 0) {
-					sb.append(", ");
-				}
-
-				sb.append(this.getAuthorities()[i].toString());
+			for (GrantedAuthority authority : getAuthorities()) {
+				sb.append(authority.toString()).append(", ");
 			}
+			sb.deleteCharAt(sb.length() - 1);
 		} else {
 			sb.append("Not granted any authorities");
 		}
-
 		return sb.toString();
 	}
 }

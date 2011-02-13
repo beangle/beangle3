@@ -44,8 +44,8 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 * @param className
 	 */
 	public String classToTableName(String className) {
-		if(className.endsWith("Bean")){
-			className=StringUtils.substringBeforeLast(className, "Bean");
+		if (className.endsWith("Bean")) {
+			className = StringUtils.substringBeforeLast(className, "Bean");
 		}
 		String tableName = addUnderscores(unqualify(className));
 		if (enablePluralize) {

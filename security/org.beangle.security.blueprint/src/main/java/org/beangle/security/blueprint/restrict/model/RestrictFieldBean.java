@@ -17,9 +17,9 @@ public class RestrictFieldBean extends LongIdObject implements RestrictField {
 	private String name;
 
 	private String keyName;
-	
+
 	private String propertyNames;
-	
+
 	private String type;
 
 	private String remark;

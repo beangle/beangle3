@@ -43,7 +43,7 @@ public class IndexAction extends SecurityActionSupport {
 	}
 
 	public String index() {
-		
+
 		return forward();
 	}
 

@@ -15,8 +15,11 @@ import com.opensymphony.xwork2.ActionContext;
 
 public class DispatchAction extends ActionSupport {
 
+	/**
+	 * forward to index method
+	 */
 	public String execute() throws Exception {
-		return forward(new Action(this, "index"));
+		return forward(new Action((Class<?>) null, "index"));
 	}
 
 	protected String forward() {

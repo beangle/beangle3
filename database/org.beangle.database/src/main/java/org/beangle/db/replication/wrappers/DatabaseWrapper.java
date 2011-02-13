@@ -160,15 +160,18 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 
 	/**
 	 * conntect to data source
+	 * 
 	 * @param dialect
-	 * @param catalog TODO
-	 * @param schema TODO
+	 * @param catalog
+	 *            TODO
+	 * @param schema
+	 *            TODO
 	 * @param targetDB
 	 */
 	public void connect(DataSource dataSource, Dialect dialect, String catalog, String schema) {
 		try {
 			setDataSource(dataSource);
-			database = new Database(dialect,catalog,schema);
+			database = new Database(dialect, catalog, schema);
 			database.loadTables(dataSource.getConnection().getMetaData(), false);
 		} catch (SQLException e) {
 			logger.error("cannot build connection using:{} under dialect {}", dataSource, dialect);

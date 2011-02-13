@@ -9,11 +9,11 @@ import javax.sql.DataSource;
 import org.beangle.webapp.database.model.DatasourceBean;
 
 public class QueryContext {
-	
+
 	private DataSource dataSource;
-	
+
 	private DatasourceBean datasourceBean;
-	
+
 	private String schema;
 
 	public QueryContext() {
@@ -49,7 +49,5 @@ public class QueryContext {
 	public void setSchema(String schema) {
 		this.schema = schema;
 	}
-	
-	
 
 }

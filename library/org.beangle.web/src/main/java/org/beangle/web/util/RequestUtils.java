@@ -64,7 +64,7 @@ public final class RequestUtils {
 			if (null != agent && -1 != agent.indexOf("MSIE")) {
 				newName = URLEncoder.encode(attach_name, "UTF-8");
 			} else {
-				//if (null != agent && -1 != agent.indexOf("Mozilla")) 
+				// if (null != agent && -1 != agent.indexOf("Mozilla"))
 				newName = new BCodec("UTF-8").encode(attach_name);
 			}
 		} catch (Exception e) {

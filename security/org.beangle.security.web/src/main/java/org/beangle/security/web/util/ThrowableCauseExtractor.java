@@ -10,7 +10,7 @@ package org.beangle.security.web.util;
  * 
  * @author Andreas Senft
  * @since 2.0
- * @version $Id: ThrowableCauseExtractor.java 2559 2008-01-30 16:15:02Z  $
+ * @version $Id: ThrowableCauseExtractor.java 2559 2008-01-30 16:15:02Z $
  * @see ThrowableAnalyzer
  */
 public interface ThrowableCauseExtractor {

@@ -4,6 +4,7 @@
  */
 package org.beangle.security.blueprint.service;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -54,10 +55,10 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 		if (publicResources.contains(resourceName)) { return true; }
 		if (AnonymousAuthentication.class.isAssignableFrom(auth.getClass())) { return false; }
 		if (protectedResources.contains(resourceName)) { return true; }
-		GrantedAuthority[] groups = auth.getAuthorities();
-		if (null == groups) { return false; }
-		for (int i = 0; i < groups.length; i++) {
-			if (isAuthorizedByGroup(groups[i], resourceName)) { return true; }
+		Collection<? extends GrantedAuthority> authories = auth.getAuthorities();
+		if (authories.isEmpty()) { return false; }
+		for (GrantedAuthority authorty : authories) {
+			if (isAuthorizedByGroup(authorty, resourceName)) { return true; }
 		}
 		return false;
 	}
@@ -65,14 +66,14 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 	/**
 	 * 判断组内是否含有该资源
 	 * 
-	 * @param group
+	 * @param authority
 	 * @param resource
 	 * @return
 	 */
-	private boolean isAuthorizedByGroup(GrantedAuthority group, Object resource) {
-		Set<?> actions = authorities.get(group);
+	private boolean isAuthorizedByGroup(GrantedAuthority authority, Object resource) {
+		Set<?> actions = authorities.get(authority);
 		if (null == actions) {
-			actions = refreshGroupAuthorities(group);
+			actions = refreshGroupAuthorities(authority);
 		}
 		return actions.contains(resource);
 	}

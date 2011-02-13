@@ -24,5 +24,4 @@ public class ForeignKeyTest {
 		System.out.println(fk.sqlConstraintString(dialect));
 	}
 
-
 }

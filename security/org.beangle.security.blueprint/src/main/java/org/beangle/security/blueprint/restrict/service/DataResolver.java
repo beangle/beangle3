@@ -12,14 +12,16 @@ public interface DataResolver {
 
 	/**
 	 * Marshal list of objects to text format
+	 * 
 	 * @param field
 	 * @param items
 	 * @return
 	 */
-	public String marshal(RestrictField field,List<?> items);
+	public String marshal(RestrictField field, List<?> items);
 
 	/**
 	 * Convert text to list of objects
+	 * 
 	 * @param <T>
 	 * @param field
 	 * @param text

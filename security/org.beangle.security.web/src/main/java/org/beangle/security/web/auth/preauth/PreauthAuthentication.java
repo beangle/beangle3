@@ -4,6 +4,8 @@
  */
 package org.beangle.security.web.auth.preauth;
 
+import java.util.Collection;
+
 import org.beangle.security.auth.UsernamePasswordAuthentication;
 import org.beangle.security.core.GrantedAuthority;
 
@@ -16,7 +18,7 @@ public class PreauthAuthentication extends UsernamePasswordAuthentication {
 	}
 
 	public PreauthAuthentication(Object aPrincipal, Object aCredentials,
-			GrantedAuthority[] anAuthorities) {
+			Collection<? extends GrantedAuthority> anAuthorities) {
 		super(aPrincipal, aCredentials, anAuthorities);
 	}
 

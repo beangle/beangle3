@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 @Test
 public class BeangleVersionTest {
 
-	public void testGetVersion(){
+	public void testGetVersion() {
 		System.out.println(BeangleVersion.getName());
 		System.out.println(SpringVersion.getVersion());
 	}

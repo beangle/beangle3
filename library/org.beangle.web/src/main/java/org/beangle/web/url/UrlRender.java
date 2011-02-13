@@ -65,13 +65,13 @@ public class UrlRender {
 	}
 
 	public String render(String referer, String uri) {
-		return renderUri(referer,uri).toString();
+		return renderUri(referer, uri).toString();
 	}
-	
+
 	private StringBuilder renderUri(String referer, String uri) {
 		Validate.notNull(referer);
 		StringBuilder sb = new StringBuilder();
-		if(StringUtils.isEmpty(uri)){
+		if (StringUtils.isEmpty(uri)) {
 			sb.append(referer);
 			return sb;
 		}

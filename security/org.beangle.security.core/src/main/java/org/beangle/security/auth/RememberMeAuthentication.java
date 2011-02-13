@@ -4,6 +4,8 @@
  */
 package org.beangle.security.auth;
 
+import java.util.Collection;
+
 import org.beangle.security.core.GrantedAuthority;
 
 public class RememberMeAuthentication extends AbstractAuthentication {
@@ -11,9 +13,9 @@ public class RememberMeAuthentication extends AbstractAuthentication {
 	private Object principal;
 	private int keyHash;
 
-	public RememberMeAuthentication(String key, Object principal, GrantedAuthority[] authorities) {
+	public RememberMeAuthentication(String key, Object principal,
+			Collection<? extends GrantedAuthority> authorities) {
 		super(authorities);
-
 		if ((key == null) || ("".equals(key)) || (principal == null) || "".equals(principal)) { throw new IllegalArgumentException(
 				"Cannot pass null or empty values to constructor"); }
 

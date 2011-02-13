@@ -4,6 +4,8 @@
  */
 package org.beangle.security.cas.auth;
 
+import java.util.Collection;
+
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.userdetail.UserDetail;
 import org.beangle.security.web.auth.preauth.PreauthAuthentication;
@@ -22,7 +24,7 @@ public class CasAuthentication extends PreauthAuthentication {
 	 * Used to identify a CAS request for a stateful user agent, such as a web
 	 * browser.
 	 */
-	public static final String CAS_STATEFUL_IDENTIFIER = "_cas_stateful_";
+	public static final String STATEFUL_ID = "_cas_stateful_";
 
 	/**
 	 * Used to identify a CAS request for a stateless user agent, such as a
@@ -31,7 +33,7 @@ public class CasAuthentication extends PreauthAuthentication {
 	 * <code>HttpSession</code> will result in a new authentication attempt on
 	 * every request.
 	 */
-	public static final String CAS_STATELESS_IDENTIFIER = "_cas_stateless_";
+	public static final String STATELESS_ID = "_cas_stateless_";
 
 	private final int keyHash;
 	private final Assertion assertion;
@@ -63,7 +65,7 @@ public class CasAuthentication extends PreauthAuthentication {
 	 *             if a <code>null</code> was passed
 	 */
 	public CasAuthentication(final String key, final Object principal, final Object credentials,
-			final GrantedAuthority[] authorities, final UserDetail userDetail,
+			final Collection<? extends GrantedAuthority> authorities, final UserDetail userDetail,
 			final Assertion assertion) {
 		super(principal, credentials, authorities);
 		if ((key == null) || ("".equals(key)) || (principal == null) || "".equals(principal)

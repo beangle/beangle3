@@ -35,7 +35,7 @@ public class ReplicatorMain {
 		} catch (IOException e) {
 			throw new RuntimeException("cannot find database.properties");
 		}
-		
+
 		DatabaseWrapper source = new DatabaseWrapper();
 		source.connect(DataSourceUtil.getDataSource("source"),
 				(Dialect) (Class.forName(props.getProperty("source.dialect")).newInstance()), null,

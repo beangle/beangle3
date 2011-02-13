@@ -30,6 +30,6 @@ public interface Dialect {
 	public boolean supportsUnique();
 
 	public boolean supportsNullUnique();
-	
+
 	public boolean supportsColumnCheck();
 }

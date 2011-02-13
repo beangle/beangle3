@@ -10,7 +10,7 @@ public class UsernameNotFoundException extends BadCredentialsException {
 	private static final long serialVersionUID = 1L;
 
 	public UsernameNotFoundException() {
-		
+
 	}
 
 	public UsernameNotFoundException(String msg) {

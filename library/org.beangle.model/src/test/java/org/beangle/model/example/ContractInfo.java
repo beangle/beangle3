@@ -9,7 +9,7 @@ import org.beangle.model.pojo.LongIdObject;
 public class ContractInfo extends LongIdObject {
 
 	private static final long serialVersionUID = 5751822654667684436L;
-	
+
 	String add1;
 	String add2;
 

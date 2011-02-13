@@ -38,7 +38,7 @@ public class ResetCallbackWriter extends Writer implements TransformControl {
 	 * let's just not do it (it will be flushed eventually anyway)
 	 */
 	public void flush() throws IOException {
-		//writer.flush();
+		// writer.flush();
 	}
 
 	public void write(char cbuf[], int off, int len) throws IOException {

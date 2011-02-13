@@ -33,9 +33,9 @@ import org.jasig.cas.client.validation.TicketValidator;
  * </p>
  * <p>
  * Processing the service ticket involves creating a
- * <code>PreauthAuthentication</code> which uses
- * {@link #CAS_STATEFUL_IDENTIFIER} for the <code>principal</code> and the
- * opaque ticket string as the <code>credentials</code>.
+ * <code>PreauthAuthentication</code> which uses {@link #STATEFUL_ID} for the
+ * <code>principal</code> and the opaque ticket string as the
+ * <code>credentials</code>.
  * </p>
  * <p>
  * The configured <code>AuthenticationManager</code> is expected to provide a
@@ -74,7 +74,7 @@ public class CasPreauthFilter extends AbstractPreauthFilter {
 	@Override
 	protected PreauthAuthentication getPreauthAuthentication(HttpServletRequest request,
 			HttpServletResponse response) {
-		final String username = CasAuthentication.CAS_STATEFUL_IDENTIFIER;
+		final String username = CasAuthentication.STATEFUL_ID;
 		String password = request.getParameter("ticket");
 		if (password == null) {
 			return null;

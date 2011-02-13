@@ -28,7 +28,7 @@ public class TagModel implements TemplateTransformModel {
 
 	private Constructor<? extends Component> componentCon;
 	private ValueStack stack;
-	
+
 	public TagModel(ValueStack stack) {
 	}
 

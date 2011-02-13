@@ -29,7 +29,8 @@ public class RestrictionHelper {
 	static {
 		restrictionTypeMap.put("user", "org.beangle.security.blueprint.restrict.UserRestriction");
 		restrictionTypeMap.put("group", "org.beangle.security.blueprint.restrict.GroupRestriction");
-		restrictionTypeMap.put("authority", "org.beangle.security.blueprint.restrict.AuthorityRestriction");
+		restrictionTypeMap.put("authority",
+				"org.beangle.security.blueprint.restrict.AuthorityRestriction");
 	}
 
 	EntityDao entityDao;

@@ -4,6 +4,8 @@
  */
 package org.beangle.security.blueprint.service;
 
+import java.util.Collection;
+
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.beangle.security.blueprint.UserCategory;
@@ -11,21 +13,21 @@ import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.userdetail.User;
 import org.beangle.security.web.session.category.CategoryPrincipal;
 
-public class UserToken extends User implements CategoryPrincipal,Comparable<UserToken> {
+public class UserToken extends User implements CategoryPrincipal, Comparable<UserToken> {
 
 	private static final long serialVersionUID = 63829183922466239L;
 
 	private final Long id;
 
 	private final String fullname;
-	
+
 	/** 用户类别 */
 	private UserCategory category;
 
 	public UserToken(Long id, String username, String fullname, String password,
 			UserCategory category, boolean enabled, boolean accountExpired,
-			boolean credentialsExpired, boolean accountLocked, GrantedAuthority[] authorities)
-			throws IllegalArgumentException {
+			boolean credentialsExpired, boolean accountLocked,
+			Collection<? extends GrantedAuthority> authorities) throws IllegalArgumentException {
 		super(username, password, enabled, accountExpired, credentialsExpired, accountLocked,
 				authorities);
 		this.id = id;

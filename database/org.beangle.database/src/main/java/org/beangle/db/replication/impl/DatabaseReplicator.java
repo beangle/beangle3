@@ -39,7 +39,7 @@ public class DatabaseReplicator implements Replicator {
 	public boolean addTable(String table) {
 		String newTable = table.toUpperCase();
 		if (!StringUtils.contains(table, '.') && null != source.getDatabase().getSchema()) {
-			newTable =  source.getDatabase().getSchema() + "." + newTable;
+			newTable = source.getDatabase().getSchema() + "." + newTable;
 		}
 		Table tm = source.getDatabase().getTable(newTable);
 		if (null == tm) {
@@ -83,7 +83,7 @@ public class DatabaseReplicator implements Replicator {
 			try {
 				int count = source.count(table);
 				if (count == 0) {
-					//table.setSchema(target.getSchema());
+					// table.setSchema(target.getSchema());
 					target.pushData(table, Collections.emptyList());
 					logger.info("replicate {} data {}", table, 0);
 				} else {
@@ -92,7 +92,7 @@ public class DatabaseReplicator implements Replicator {
 					while (curr < count) {
 						limit.setPageNo(limit.getPageNo() + 1);
 						List<Object> data = source.getData(table, limit);
-						//table.setSchema(target.getSchema());
+						// table.setSchema(target.getSchema());
 						int successed = target.pushData(table, data);
 						curr += data.size();
 						if (successed == data.size()) {

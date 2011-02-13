@@ -4,4 +4,3 @@
  */
 package org.beangle.commons;
 
-

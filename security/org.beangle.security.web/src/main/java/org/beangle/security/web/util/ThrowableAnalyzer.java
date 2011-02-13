@@ -18,7 +18,7 @@ import java.util.TreeMap;
  * 
  * @author chaostone
  * @since 2.0
- * @version $Id: ThrowableAnalyzer.java 2559 2008-01-30 16:15:02Z  $
+ * @version $Id: ThrowableAnalyzer.java 2559 2008-01-30 16:15:02Z $
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class ThrowableAnalyzer {

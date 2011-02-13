@@ -50,7 +50,7 @@ public class MetadataLoader {
 				while (rs.next()) {
 					String tableName = rs.getString("TABLE_NAME");
 					try {
-						String tableSchema=rs.getString("TABLE_SCHEM");
+						String tableSchema = rs.getString("TABLE_SCHEM");
 						Table table = loadTable(tableSchema, tableName, extras);
 						tables.put(table.identifier(), table);
 					} catch (Exception e) {

@@ -129,7 +129,6 @@ public class AuthorityAction extends SecurityActionSupport {
 
 	/**
 	 * 保存模块级权限
-	 * 
 	 */
 	public String save() {
 		Group mao = entityDao.get(Group.class, getLong("group.id"));

@@ -105,8 +105,7 @@ import org.springframework.context.ApplicationEventPublisherAware;
  * information is updated consistently.
  * 
  * @author chaostone
- * @version $Id: AbstractProcessingFilter.java 3280 2008-09-12 14:57:21Z 
- *          $
+ * @version $Id: AbstractProcessingFilter.java 3280 2008-09-12 14:57:21Z $
  */
 public abstract class AbstractAuthenticationFilter extends GenericHttpFilterBean implements
 		InitializingBean, ApplicationEventPublisherAware {

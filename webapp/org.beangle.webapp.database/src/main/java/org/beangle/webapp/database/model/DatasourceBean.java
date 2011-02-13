@@ -10,24 +10,23 @@ import org.beangle.model.pojo.LongIdObject;
 
 /**
  * @author chaostone
- *
  */
 public class DatasourceBean extends LongIdObject {
-	
+
 	private static final long serialVersionUID = -6769975441732211022L;
 
 	private DatasourceProviderBean provider;
-	
+
 	private String name;
-	
+
 	private String url;
-	
+
 	private String username;
-	
+
 	private String password;
-	
+
 	private String driverClassName;
-	
+
 	private Set<DatasourcePropertyBean> properties;
 
 	public String getName() {
@@ -85,5 +84,5 @@ public class DatasourceBean extends LongIdObject {
 	public void setProvider(DatasourceProviderBean provider) {
 		this.provider = provider;
 	}
-	
+
 }

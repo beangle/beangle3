@@ -34,13 +34,14 @@ public class ReplicatorTest {
 		replicator.start();
 	}
 
-//	public void testOracleReplication(String table) {
-//		DatabaseWrapper target = new DatabaseWrapper();
-//		target.connect(DataSourceUtil.getDataSource("oracle"), new OracleDialect(), null, "test");
-//		Replicator replicator = new DatabaseReplicator(source, target);
-//		replicator.addTable(table);
-//		replicator.start();
-//	}
+	// public void testOracleReplication(String table) {
+	// DatabaseWrapper target = new DatabaseWrapper();
+	// target.connect(DataSourceUtil.getDataSource("oracle"), new
+	// OracleDialect(), null, "test");
+	// Replicator replicator = new DatabaseReplicator(source, target);
+	// replicator.addTable(table);
+	// replicator.start();
+	// }
 
 	@SuppressWarnings("unused")
 	@DataProvider

@@ -3,10 +3,11 @@
  * http://www.gnu.org/licenses
  */
 package org.beangle.commons.meta;
+
 /**
  * System version
+ * 
  * @author chaostone
- *
  */
 public interface SystemVersion {
 

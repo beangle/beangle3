@@ -7,10 +7,11 @@ package org.beangle.security.web.access.log;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 /**
  * Access log entry
+ * 
  * @author chaostone
- *
  */
 public class Accesslog {
 	private String uri;

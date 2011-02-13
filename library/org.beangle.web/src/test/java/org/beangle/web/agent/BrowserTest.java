@@ -14,7 +14,7 @@ public class BrowserTest {
 	String[] firefox4 = new String[] {
 			"Mozilla/5.0 (X11; Linux x86_64; rv:2.0b4) Gecko/20100818 Firefox/4.0b4",
 			"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:2.0b9pre) Gecko/20101228 Firefox/4.0b9pre",
-			"Firefox"};
+			"Firefox" };
 
 	String[] ie = new String[] {
 			"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; T312461)",
@@ -23,12 +23,10 @@ public class BrowserTest {
 
 	String[] chrome = new String[] {
 			"Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US) AppleWebKit/532.9 (KHTML, like Gecko) Chrome/5.0.310.0 Safari/532.9",
-			"Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/532.9 (KHTML, like Gecko) Chrome/5.0.309.0 Safari/532.9"
-	};
+			"Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/532.9 (KHTML, like Gecko) Chrome/5.0.309.0 Safari/532.9" };
 
-	String[] validator = new String[] {
-			"Total Validator"
-	};
+	String[] validator = new String[] { "Total Validator" };
+
 	public void testPaser() {
 		Browser browser = Browser.parse(firefox3);
 		assertEquals(browser.version, "3.0.14");
@@ -38,11 +36,11 @@ public class BrowserTest {
 		assertEquals(browser.version, "4.0b4");
 		browser = Browser.parse(firefox4[1]);
 		assertEquals(browser.version, "4.0b9pre");
-		
+
 		browser = Browser.parse(firefox4[2]);
 		assertEquals(browser.version, "");
-		assertEquals(browser.category,BrowserCategory.FIREFOX);
-		
+		assertEquals(browser.category, BrowserCategory.FIREFOX);
+
 		browser = Browser.parse(ie[0]);
 		assertEquals(browser.version, "6.0");
 		assertEquals(browser.category, BrowserCategory.IE);
@@ -50,7 +48,7 @@ public class BrowserTest {
 		browser = Browser.parse(chrome[0]);
 		assertEquals(browser.version, "5.0.310.0");
 		assertEquals(browser.category, BrowserCategory.CHROME);
-		
+
 		browser = Browser.parse(validator[0]);
 		assertEquals(browser.version, null);
 		assertEquals(browser.category, BrowserCategory.UNKNOWN);

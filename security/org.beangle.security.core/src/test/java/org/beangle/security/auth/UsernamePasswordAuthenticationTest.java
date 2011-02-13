@@ -8,7 +8,8 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-import org.beangle.security.auth.UsernamePasswordAuthentication;
+import java.util.Iterator;
+
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.authority.GrantedAuthorityBean;
 import org.testng.annotations.Test;
@@ -49,12 +50,18 @@ public class UsernamePasswordAuthenticationTest {
 
 	public void testGetters() {
 		UsernamePasswordAuthentication token = new UsernamePasswordAuthentication("Test",
-				"Password", new GrantedAuthority[] { new GrantedAuthorityBean("ROLE_ONE"),
-						new GrantedAuthorityBean("ROLE_TWO") });
+				"Password", GrantedAuthorityBean.build("ROLE_ONE", "ROLE_TWO"));
 		assertEquals("Test", token.getPrincipal());
 		assertEquals("Password", token.getCredentials());
-		assertEquals("ROLE_ONE", token.getAuthorities()[0].getAuthority());
-		assertEquals("ROLE_TWO", token.getAuthorities()[1].getAuthority());
+		// ensure authority order
+		Iterator<GrantedAuthority> iter = token.getAuthorities().iterator();
+		for (int i = 0; i < 2; i++) {
+			if (i == 0) {
+				assertEquals(iter.next().getAuthority(), "ROLE_ONE");
+			} else {
+				assertEquals(iter.next().getAuthority(), "ROLE_TWO");
+			}
+		}
 	}
 
 	public void testNoArgConstructorDoesntExist() {

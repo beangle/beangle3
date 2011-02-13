@@ -26,8 +26,8 @@ public class CharacterEncodingFilter implements Filter {
 	}
 
 	public void init(FilterConfig filterConfig) throws ServletException {
-		String  initEncoding=filterConfig.getInitParameter("encoding");
-		if(StringUtils.isNotBlank(initEncoding)){
+		String initEncoding = filterConfig.getInitParameter("encoding");
+		if (StringUtils.isNotBlank(initEncoding)) {
 			this.encoding = initEncoding;
 		}
 	}

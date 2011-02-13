@@ -5,8 +5,10 @@
 package org.beangle.security.core.authority;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.apache.commons.lang.Validate;
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.security.core.GrantedAuthority;
 
 /**
@@ -21,6 +23,14 @@ public class GrantedAuthorityBean implements GrantedAuthority, Serializable {
 	public GrantedAuthorityBean(String role) {
 		Validate.notEmpty(role, "A granted authority textual representation is required");
 		this.role = role;
+	}
+
+	public static List<GrantedAuthority> build(String... roles) {
+		List<GrantedAuthority> authorities = CollectUtils.newArrayList(roles.length);
+		for (String role : roles) {
+			authorities.add(new GrantedAuthorityBean(role));
+		}
+		return authorities;
 	}
 
 	public boolean equals(Object obj) {

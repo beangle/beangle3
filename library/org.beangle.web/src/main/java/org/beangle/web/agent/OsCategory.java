@@ -23,7 +23,8 @@ public enum OsCategory {
 			"Windows CE->Mobile", "Windows"),
 
 	// CamelHttpStream is being used by Evolution, an email client for Linux\
-	LINUX("Linux", "Fedora/(\\S*)\\.fc(\\S*)->Fedora fc$2","Ubuntu/(\\S*)->Ubuntu $1","Fedora","Ubuntu","Linux", "CamelHttpStream"),
+	LINUX("Linux", "Fedora/(\\S*)\\.fc(\\S*)->Fedora fc$2", "Ubuntu/(\\S*)->Ubuntu $1", "Fedora",
+			"Ubuntu", "Linux", "CamelHttpStream"),
 
 	ANDROID("Android", "Android 2->2.x", "GT-P1000->2.x Tablet", "SCH-I800->2.x Tablet",
 			"Android 1->1.x", "Android"),

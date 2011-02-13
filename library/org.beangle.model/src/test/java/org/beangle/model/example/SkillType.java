@@ -9,7 +9,7 @@ import org.beangle.model.pojo.LongIdObject;
 public class SkillType extends LongIdObject {
 
 	private static final long serialVersionUID = -3940729242045562128L;
-	
+
 	String name;
 
 	public String getName() {

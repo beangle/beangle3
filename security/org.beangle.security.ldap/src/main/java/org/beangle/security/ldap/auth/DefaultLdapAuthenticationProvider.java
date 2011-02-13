@@ -62,7 +62,8 @@ public class DefaultLdapAuthenticationProvider extends AbstractUserDetailAuthent
 			logger.info("cannot found {} in ldap", username);
 			throw new AuthenticationException("ldap user " + username + " not found");
 		}
-		return new User(username, ldapPassword, false, false, false, false, null);
+		// FIXME user authorities
+		return new User(username, ldapPassword, null);
 	}
 
 	public String getNameAttrName() {

@@ -3,12 +3,13 @@
  * http://www.gnu.org/licenses
  */
 package org.beangle.db.meta;
+
 /**
  * Unique Key
+ * 
  * @author chaostone
- *
  */
-public class UniqueKey extends Constraint{
+public class UniqueKey extends Constraint {
 
 	public UniqueKey() {
 		super();

@@ -16,7 +16,6 @@ import org.beangle.struts2.action.BaseAction;
 
 public class StatusAction extends BaseAction {
 
-
 	public String index() {
 		put("MaxMem", Runtime.getRuntime().maxMemory());
 		put("FreeMem", Runtime.getRuntime().freeMemory());
@@ -30,7 +29,7 @@ public class StatusAction extends BaseAction {
 		put("threadMBean", ManagementFactory.getThreadMXBean());
 
 		Map<String, Object> serverProps = CollectUtils.newHashMap();
-		HttpServletRequest request=getRequest();
+		HttpServletRequest request = getRequest();
 		serverProps.put("server.hostname", request.getServerName());
 		serverProps.put("server.port", request.getServerPort());
 		serverProps.put("server.protocol", request.getProtocol());

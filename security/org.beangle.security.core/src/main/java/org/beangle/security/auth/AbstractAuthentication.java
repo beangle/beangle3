@@ -5,29 +5,33 @@
 package org.beangle.security.auth;
 
 import java.security.Principal;
+import java.util.Collection;
+import java.util.Collections;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.userdetail.UserDetail;
 
 public abstract class AbstractAuthentication implements Authentication {
-	
+
 	private static final long serialVersionUID = 3966615358056184985L;
-	
+
 	private Object details;
-	private GrantedAuthority[] authorities;
+	private final Collection<GrantedAuthority> authorities;
 	private boolean authenticated = false;
 
-	public AbstractAuthentication(GrantedAuthority[] authorities) {
-		if (authorities != null) {
-			for (int i = 0; i < authorities.length; i++) {
-				Validate.notNull(authorities[i], "Granted authority element " + i
-						+ " is null - GrantedAuthority[] cannot contain any null elements");
-			}
+	public AbstractAuthentication(Collection<? extends GrantedAuthority> authorities) {
+		if (authorities == null) {
+			this.authorities = Collections.emptyList();
+		} else {
+			Validate.noNullElements(authorities, "authorities cannot contain any null element");
+			this.authorities = Collections.unmodifiableCollection(CollectUtils
+					.newArrayList(authorities));
 		}
-		this.authorities = authorities;
 	}
 
 	public Object getDetails() {
@@ -38,11 +42,8 @@ public abstract class AbstractAuthentication implements Authentication {
 		this.details = details;
 	}
 
-	public GrantedAuthority[] getAuthorities() {
-		if (authorities == null) { return null; }
-		GrantedAuthority[] copy = new GrantedAuthority[authorities.length];
-		System.arraycopy(authorities, 0, copy, 0, authorities.length);
-		return copy;
+	public Collection<GrantedAuthority> getAuthorities() {
+		return authorities;
 	}
 
 	public boolean isAuthenticated() {
@@ -62,8 +63,14 @@ public abstract class AbstractAuthentication implements Authentication {
 					.append(isAuthenticated(), test.isAuthenticated())
 					.append(getAuthorities(), test.getAuthorities()).isEquals();
 		}
-
 		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(getPrincipal()).append(getCredentials())
+				.append(getDetails()).append(isAuthenticated()).append(getAuthorities())
+				.toHashCode();
 	}
 
 	public String getName() {

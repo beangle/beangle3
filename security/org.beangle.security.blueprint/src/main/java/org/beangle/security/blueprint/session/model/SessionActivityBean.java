@@ -34,10 +34,10 @@ public class SessionActivityBean extends LongIdObject implements SessionActivity
 
 	/** OS */
 	private String os;
-	
+
 	/** agent */
 	private String agent;
-	
+
 	/** 登录时间 */
 	private Date loginAt;
 
@@ -182,5 +182,5 @@ public class SessionActivityBean extends LongIdObject implements SessionActivity
 	public void setAgent(String agent) {
 		this.agent = agent;
 	}
-	
+
 }

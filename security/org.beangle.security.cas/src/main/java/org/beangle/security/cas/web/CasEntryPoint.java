@@ -38,8 +38,17 @@ public class CasEntryPoint implements AuthenticationEntryPoint, InitializingBean
 
 	private CasConfig config;
 
+	public CasEntryPoint() {
+		super();
+	}
+
+	public CasEntryPoint(CasConfig config) {
+		super();
+		this.config = config;
+	}
+
 	public void afterPropertiesSet() throws Exception {
-		Validate.notNull(this.config, "serviceProperties must be specified");
+		Validate.notNull(this.config, "cas config must be specified");
 	}
 
 	public void commence(final ServletRequest servletRequest,
@@ -48,10 +57,10 @@ public class CasEntryPoint implements AuthenticationEntryPoint, InitializingBean
 			ServletException {
 		final HttpServletRequest request = (HttpServletRequest) servletRequest;
 		final HttpServletResponse response = (HttpServletResponse) servletResponse;
-		final String urlEncodedService = CommonUtils.constructServiceUrl(request, response, null,
-				config.getLocalServer(), "ticket", config.isEncode());
+		final String encodedServiceUrl = CommonUtils.constructServiceUrl(request, response, null,
+				config.getLocalServer(), config.getArtifactName(), config.isEncode());
 		final String redirectUrl = CommonUtils.constructRedirectUrl(config.getLoginUrl(),
-				"service", urlEncodedService, config.isRenew(), false);
+				"service", encodedServiceUrl, config.isRenew(), false);
 		response.sendRedirect(redirectUrl);
 	}
 

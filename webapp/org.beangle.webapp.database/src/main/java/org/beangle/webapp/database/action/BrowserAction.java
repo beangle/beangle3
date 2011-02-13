@@ -32,10 +32,11 @@ public class BrowserAction extends SecurityActionSupport {
 		loadObjects();
 		return forward();
 	}
-	
+
 	private QueryContext getQueryContext() {
 		return (QueryContext) ActionContext.getContext().getSession().get("QueryContext");
 	}
+
 	private void loadObjects() throws Exception {
 		QueryContext queryConext = getQueryContext();
 		DataSource datasource = queryConext.getDataSource();

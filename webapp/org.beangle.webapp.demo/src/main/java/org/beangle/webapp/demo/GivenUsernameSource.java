@@ -1,4 +1,5 @@
 package org.beangle.webapp.demo;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.beangle.security.web.auth.preauth.UsernameSource;

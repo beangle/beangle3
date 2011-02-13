@@ -45,7 +45,7 @@ public abstract class AbstractDialect implements Dialect {
 		}
 		return res.toString();
 	}
-	
+
 	public String getNullColumnString() {
 		return "";
 	}
@@ -61,15 +61,15 @@ public abstract class AbstractDialect implements Dialect {
 	public boolean supportsUnique() {
 		return true;
 	}
-	
-	public boolean supportsNullUnique(){
+
+	public boolean supportsNullUnique() {
 		return true;
 	}
-	
+
 	public boolean supportsColumnCheck() {
 		return true;
 	}
-	
+
 	public boolean supportsCascadeDelete() {
 		return true;
 	}

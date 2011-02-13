@@ -6,6 +6,7 @@ package org.beangle.security.core;
 
 import java.io.Serializable;
 import java.security.Principal;
+import java.util.Collection;
 
 public interface Authentication extends Principal, Serializable {
 
@@ -13,7 +14,7 @@ public interface Authentication extends Principal, Serializable {
 
 	public Object getCredentials();
 
-	public GrantedAuthority[] getAuthorities();
+	public Collection<? extends GrantedAuthority> getAuthorities();
 
 	public Object getDetails();
 

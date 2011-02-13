@@ -12,7 +12,8 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 public interface TemplateEngine {
 
-	public void render(String template, ValueStack stack, Writer writer, Component component) throws Exception;
-	
+	public void render(String template, ValueStack stack, Writer writer, Component component)
+			throws Exception;
+
 	public String getSuffix();
 }

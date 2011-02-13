@@ -3,6 +3,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
+	<bean id="proxyGrantingTicketStorage" class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl"/>
+	
+	<bean id="casConfig" class="org.beangle.security.cas.CasConfig">
+		<property name="casServer" value="http://uias.stiei.edu.cn/cas"/>
+		<property name="localServer" value="localhost:8080"/>
+		<property name="renew" value="false"/>
+		<property name="proxyReceptor" value="/demo/secure/receptor"/>
+	</bean>
+	
 	<bean id="casPreauthFilter" class="org.beangle.security.cas.web.CasPreauthFilter">
 		<property name="authenticationManager" ref="authenticationManager"/>
 		<property name="sessionStrategy" ref="sessionStrategy"/>
@@ -24,14 +33,4 @@
 		</property>
 		<property name="key" value="an_id_for_this_auth_provider_only"/>
 	</bean>
-	
-	<bean id="proxyGrantingTicketStorage" class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl"/>
-	
-	<bean id="casConfig" class="org.beangle.security.cas.CasConfig">
-		<property name="casServer" value="http://uias.stiei.edu.cn/cas"/>
-		<property name="localServer" value="localhost:8080"/>
-		<property name="renew" value="false"/>
-		<property name="proxyReceptor" value="/demo/secure/receptor"/>
-	</bean>
-	
 </beans>

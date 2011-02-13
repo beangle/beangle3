@@ -10,7 +10,7 @@ import org.beangle.security.blueprint.User;
 
 public class AdminUserBean extends LongIdTimeObject implements AdminUser {
 	private static final long serialVersionUID = 6491945157573106200L;
-	
+
 	private User user;
 
 	public User getUser() {

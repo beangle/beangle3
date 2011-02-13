@@ -70,14 +70,16 @@ public class BatchReplaceMain {
 				replacers = CollectUtils.newArrayList();
 				profiles.put(line, replacers);
 			} else {
-				line=StringUtils.replace(line, "\\=", "~~~~");
-				String older=StringUtils.replace(StringUtils.substringBefore(line, "="),"~~~~","=");
-				String newer=StringUtils.replace(StringUtils.substringAfter(line, "="),"~~~~","=");
-				older=StringUtils.replace(older,"\\n","\n");
-				older=StringUtils.replace(older,"\\t","\t");
-				newer=StringUtils.replace(newer,"\\n","\n");
-				newer=StringUtils.replace(newer,"\\t","\t");
-				Replacer pair = new Replacer(older,newer);
+				line = StringUtils.replace(line, "\\=", "~~~~");
+				String older = StringUtils.replace(StringUtils.substringBefore(line, "="), "~~~~",
+						"=");
+				String newer = StringUtils.replace(StringUtils.substringAfter(line, "="), "~~~~",
+						"=");
+				older = StringUtils.replace(older, "\\n", "\n");
+				older = StringUtils.replace(older, "\\t", "\t");
+				newer = StringUtils.replace(newer, "\\n", "\n");
+				newer = StringUtils.replace(newer, "\\t", "\t");
+				Replacer pair = new Replacer(older, newer);
 				replacers.add(pair);
 			}
 		}

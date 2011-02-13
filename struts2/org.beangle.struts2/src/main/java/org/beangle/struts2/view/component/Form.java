@@ -22,7 +22,7 @@ public class Form extends ClosingUIBean {
 	protected void evaluateParams() {
 		if (null == name && null == id) {
 			generateIdIfEmpty();
-			name=id;
+			name = id;
 		} else if (null == id) {
 			id = name;
 		}

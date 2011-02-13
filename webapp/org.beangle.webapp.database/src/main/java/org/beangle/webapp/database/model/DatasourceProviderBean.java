@@ -6,12 +6,12 @@ package org.beangle.webapp.database.model;
 
 import org.beangle.model.pojo.LongIdObject;
 
-public class DatasourceProviderBean  extends LongIdObject{
+public class DatasourceProviderBean extends LongIdObject {
 
 	private static final long serialVersionUID = -7792635675766559389L;
 
 	private String dialect;
-	
+
 	private String name;
 
 	public String getDialect() {

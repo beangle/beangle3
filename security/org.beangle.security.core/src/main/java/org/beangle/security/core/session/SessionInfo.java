@@ -26,7 +26,7 @@ public class SessionInfo {
 	/** 登录时间 */
 	private final Date loginAt = new Date();
 
-	/**最后访问的系统微秒数*/
+	/** 最后访问的系统微秒数 */
 	private long lastAccessMillis;
 
 	private String remark;

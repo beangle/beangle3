@@ -7,15 +7,19 @@ package org.beangle.commons.text.inflector.rule;
 import java.util.regex.Matcher;
 
 public class RegexReplacementRule extends AbstractRegexReplacementRule {
-	
+
 	private final String replacement;
-	
+
 	/**
-	 * Construct a rule using the given regular expression and replacement string.
-	 * @param regex the regular expression used to match words
-	 * @param replacement the string to use during replacement.
-	 * The replacement string may contain references to subsequences captured matching.
-	 * See {@link Matcher#appendReplacement}.
+	 * Construct a rule using the given regular expression and replacement
+	 * string.
+	 * 
+	 * @param regex
+	 *            the regular expression used to match words
+	 * @param replacement
+	 *            the string to use during replacement. The replacement string
+	 *            may contain references to subsequences captured matching. See
+	 *            {@link Matcher#appendReplacement}.
 	 */
 	public RegexReplacementRule(String regex, String replacement) {
 		super(regex);
@@ -26,5 +30,5 @@ public class RegexReplacementRule extends AbstractRegexReplacementRule {
 	public String replace(Matcher matcher) {
 		return matcher.replaceFirst(replacement);
 	}
-	
+
 }

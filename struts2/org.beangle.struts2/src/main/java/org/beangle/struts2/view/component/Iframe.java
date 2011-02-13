@@ -18,7 +18,7 @@ public class Iframe extends ClosingUIBean {
 
 	@Override
 	protected void evaluateParams() {
-		src=BeangleModels.render.render(getRequestURI(), src);
+		src = BeangleModels.render.render(getRequestURI(), src);
 	}
 
 	public String getSrc() {

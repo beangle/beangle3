@@ -38,6 +38,7 @@ public class RestrictEntityBean extends LongIdObject implements RestrictEntity {
 		this.name = name;
 		this.type = type.getName();
 	}
+
 	public RestrictField getField(String paramName) {
 		for (final RestrictField param : fields) {
 			if (param.getName().equals(paramName)) { return param; }

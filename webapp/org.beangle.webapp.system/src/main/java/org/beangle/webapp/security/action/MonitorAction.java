@@ -65,7 +65,8 @@ public class MonitorAction extends SecurityActionSupport {
 				profile.setInactiveInterval(inactiveInterval);
 			}
 		}
-		MemCategorySessionController m=	(MemCategorySessionController)sessionRegistry.getSessionController();
+		MemCategorySessionController m = (MemCategorySessionController) sessionRegistry
+				.getSessionController();
 		m.loadProfiles();
 		// FIXME sessionController.loadProfiles();
 		return redirect("profiles", "info.save.success");
@@ -97,8 +98,8 @@ public class MonitorAction extends SecurityActionSupport {
 		if (StringUtils.isEmpty(orderBy)) {
 			orderBy = "duration desc";
 		}
-		if(orderBy.startsWith("accesslog.")){
-			orderBy=StringUtils.substringAfter(orderBy, "accesslog.");
+		if (orderBy.startsWith("accesslog.")) {
+			orderBy = StringUtils.substringAfter(orderBy, "accesslog.");
 		}
 		Collections.sort(accessLogs, new PropertyComparator<Object>(orderBy));
 		put("accesslogs", new PagedList<Accesslog>(accessLogs, getPageLimit()));

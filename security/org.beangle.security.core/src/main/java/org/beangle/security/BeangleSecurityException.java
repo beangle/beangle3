@@ -7,7 +7,7 @@ package org.beangle.security;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
 public class BeangleSecurityException extends RuntimeException {
-	
+
 	private static final long serialVersionUID = 1521217606839712065L;
 
 	public BeangleSecurityException() {

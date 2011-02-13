@@ -16,7 +16,7 @@ public abstract class PageWapper<E> implements Page<E> {
 	public int getFirstPageNo() {
 		return 1;
 	}
-	
+
 	public Page<E> getPage() {
 		return page;
 	}

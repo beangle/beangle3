@@ -14,18 +14,18 @@ import org.beangle.commons.collection.CollectUtils;
 import org.springframework.beans.factory.InitializingBean;
 
 public class CachedResourceAccessor extends DefaultResourceAccessor implements InitializingBean {
-	
+
 	private List<Accesslog> accesslogs = CollectUtils.newArrayList();
 
-	//3000 milliseconds
-	private long minDuration=3000;
+	// 3000 milliseconds
+	private long minDuration = 3000;
 
 	// default 500
-	private int cacheSize=500;
+	private int cacheSize = 500;
 
 	public void afterPropertiesSet() throws Exception {
-		Validate.isTrue(minDuration>0,"minDuration must greater then 0");
-		Validate.isTrue(cacheSize>100,"cacheSize should greate then 100");
+		Validate.isTrue(minDuration > 0, "minDuration must greater then 0");
+		Validate.isTrue(cacheSize > 100, "cacheSize should greate then 100");
 	}
 
 	public Accesslog beginAccess(HttpServletRequest request, long time) {

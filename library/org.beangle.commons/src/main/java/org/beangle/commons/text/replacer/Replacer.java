@@ -6,10 +6,11 @@ package org.beangle.commons.text.replacer;
 
 import java.util.List;
 import java.util.regex.Pattern;
+
 /**
  * Replace target with value on any input.
+ * 
  * @author chaostone
- *
  */
 public class Replacer {
 

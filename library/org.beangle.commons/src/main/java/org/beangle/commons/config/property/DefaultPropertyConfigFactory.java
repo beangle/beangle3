@@ -14,7 +14,8 @@ import org.springframework.beans.factory.FactoryBean;
  * 
  * @author chaostone
  */
-public class DefaultPropertyConfigFactory implements PropertyConfigFactory,FactoryBean<PropertyConfig> {
+public class DefaultPropertyConfigFactory implements PropertyConfigFactory,
+		FactoryBean<PropertyConfig> {
 
 	private List<PropertyConfigFactory.Provider> providers = new ArrayList<PropertyConfigFactory.Provider>();
 

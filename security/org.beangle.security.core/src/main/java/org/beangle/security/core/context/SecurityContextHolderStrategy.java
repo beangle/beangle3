@@ -12,8 +12,7 @@ package org.beangle.security.core.context;
  * </p>
  * 
  * @author chaostone
- * @version $Id: SecurityContextHolderStrategy.java 2142 2007-09-21 18:18:21Z
- *           $
+ * @version $Id: SecurityContextHolderStrategy.java 2142 2007-09-21 18:18:21Z $
  */
 public interface SecurityContextHolderStrategy {
 	/**

@@ -4,7 +4,7 @@
  */
 package org.beangle.security.cas.auth;
 
-import static org.beangle.security.cas.auth.CasAuthentication.CAS_STATELESS_IDENTIFIER;
+import static org.beangle.security.cas.auth.CasAuthentication.STATELESS_ID;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
@@ -33,16 +33,15 @@ import org.springframework.beans.factory.InitializingBean;
  * This <code>AuthenticationProvider</code> is capable of validating
  * {@link UsernamePasswordAuthenticationToken} requests which contain a
  * <code>principal</code> name equal to either
- * {@link CasPreauthFilter#CAS_STATEFUL_IDENTIFIER} or
- * {@link CasPreauthFilter#CAS_STATELESS_IDENTIFIER}. It can also validate a
- * previously created {@link CasAuthentication}.
+ * {@link CasPreauthFilter#STATEFUL_ID} or {@link CasPreauthFilter#STATELESS_ID}
+ * . It can also validate a previously created {@link CasAuthentication}.
  * 
  * @author chaostone
  */
 public class CasAuthenticationProvider implements AuthenticationProvider, InitializingBean {
 	private static final Logger logger = LoggerFactory.getLogger(CasAuthenticationProvider.class);
 
-	private UserDetailService userDetailService;
+	private UserDetailService<Authentication> userDetailService;
 	private UserDetailChecker userDetailChecker;
 	protected TextResource textResource = new NullTextResource();
 	private StatelessTicketCache statelessTicketCache = new NullTicketCache();
@@ -80,7 +79,7 @@ public class CasAuthenticationProvider implements AuthenticationProvider, Initia
 				textResource.getText("CasAuthenticationProvider.noServiceTicket",
 						"Failed to provide a CAS service ticket to validate")); }
 		boolean stateless = false;
-		if (CAS_STATELESS_IDENTIFIER.equals(casauth.getPrincipal())) {
+		if (STATELESS_ID.equals(casauth.getPrincipal())) {
 			stateless = true;
 		}
 		CasAuthentication result = null;
@@ -114,11 +113,11 @@ public class CasAuthenticationProvider implements AuthenticationProvider, Initia
 		}
 	}
 
-	protected UserDetailService getUserDetailService() {
+	protected UserDetailService<Authentication> getUserDetailService() {
 		return userDetailService;
 	}
 
-	public void setUserDetailService(UserDetailService userDetailsService) {
+	public void setUserDetailService(UserDetailService<Authentication> userDetailsService) {
 		this.userDetailService = userDetailsService;
 	}
 

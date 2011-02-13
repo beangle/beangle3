@@ -11,14 +11,15 @@ import org.beangle.commons.collection.CollectUtils;
 
 public class Theme {
 
-	public static final String THEME=".ui_theme";
-	
-	public static final String DEFAULT_THEME="beangle";
-	
+	public static final String THEME = ".ui_theme";
+
+	public static final String DEFAULT_THEME = "beangle";
+
 	public Theme() {
 		super();
 		this.name = DEFAULT_THEME;
 	}
+
 	public Theme(String name) {
 		super();
 		this.name = name;
@@ -57,7 +58,7 @@ public class Theme {
 	public String toString() {
 		return name;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return name.hashCode();

@@ -19,7 +19,8 @@ public class UrlConfigProviderTest {
 		UrlPropertyConfigProvider provider = new UrlPropertyConfigProvider();
 		ConfigResource location = new ConfigResource();
 		// META-INF/system.properties
-		location.setGlobal(UrlPropertyConfigProvider.class.getResource("/system-default.properties"));
+		location.setGlobal(UrlPropertyConfigProvider.class
+				.getResource("/system-default.properties"));
 		location.setUser(UrlPropertyConfigProvider.class.getResource("/system.properties"));
 		provider.setResource(location);
 		Properties properties = provider.getConfig();

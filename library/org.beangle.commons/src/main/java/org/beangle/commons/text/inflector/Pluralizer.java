@@ -10,7 +10,7 @@ package org.beangle.commons.text.inflector;
  * @author chaostone
  */
 public interface Pluralizer {
-	
+
 	public String pluralize(String word);
 
 	public String pluralize(String word, int number);

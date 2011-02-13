@@ -28,14 +28,14 @@ public class SplitStreamDownloaderTest {
 
 		Assert.assertEquals(response.getContentLength(), 59);
 
-		File file=new File(testDoc.toURI());
+		File file = new File(testDoc.toURI());
 		request = new MockHttpServletRequest();
 		response = new MockHttpServletResponse();
 		request.addHeader("Range", "bytes=5-12");
 		streamDownloader.download(request, response, testDoc, null);
 		Assert.assertEquals(response.getStatus(), 206);
-		Assert.assertEquals(response.getHeader("Content-Range"), "bytes 5-12/"+file.length());
-		String content=response.getContentAsString();
-		Assert.assertEquals(content,"document");
+		Assert.assertEquals(response.getHeader("Content-Range"), "bytes 5-12/" + file.length());
+		String content = response.getContentAsString();
+		Assert.assertEquals(content, "document");
 	}
 }

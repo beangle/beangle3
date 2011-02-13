@@ -27,11 +27,28 @@ public class CasConfig implements InitializingBean {
 
 	private boolean encode = true;
 
+	private String artifactName = "ticket";
+
 	private String proxyReceptor;
+
+	private String loginUri = "/login";
+
+	public CasConfig() {
+		super();
+	}
+
+	public CasConfig(String casServer, String localServer) {
+		super();
+		this.casServer = casServer;
+		this.localServer = localServer;
+	}
 
 	public void afterPropertiesSet() throws Exception {
 		Validate.notEmpty(this.casServer, "cas server must be specified.");
+		Validate.isTrue(!this.casServer.endsWith("/"), "cas server should not end with /");
 		Validate.notEmpty(this.localServer, "local server must be specified.");
+		Validate.notEmpty(this.loginUri, "loginUri must be specified. like /login");
+		Validate.notEmpty(this.artifactName, "artifact name  must be specified.etc. ticket");
 	}
 
 	public String getCasServer() {
@@ -57,11 +74,7 @@ public class CasConfig implements InitializingBean {
 	 * @return the enterprise-wide CAS login URL
 	 */
 	public String getLoginUrl() {
-		if (casServer.endsWith("/")) {
-			return casServer + "login";
-		} else {
-			return casServer + "/login";
-		}
+		return casServer + loginUri;
 	}
 
 	public String getProxyCallbackUrl() {
@@ -111,6 +124,22 @@ public class CasConfig implements InitializingBean {
 
 	public void setProxyReceptor(String proxyReceptor) {
 		this.proxyReceptor = proxyReceptor;
+	}
+
+	public String getLoginUri() {
+		return loginUri;
+	}
+
+	public void setLoginUri(String loginUri) {
+		this.loginUri = loginUri;
+	}
+
+	public String getArtifactName() {
+		return artifactName;
+	}
+
+	public void setArtifactName(String artifactName) {
+		this.artifactName = artifactName;
 	}
 
 }

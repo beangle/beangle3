@@ -18,12 +18,12 @@ import org.beangle.struts2.action.BaseAction;
 import org.beangle.web.io.StreamDownloader;
 import org.beangle.web.mime.MimeTypeProvider;
 
-public class FileAction extends BaseAction  {
+public class FileAction extends BaseAction {
 
 	private MimeTypeProvider mimeTypeProvider;
 
 	private StreamDownloader streamDownloader;
-	
+
 	public String index() {
 		put("path", getPath());
 		return forward();
@@ -119,5 +119,5 @@ public class FileAction extends BaseAction  {
 	public void setStreamDownloader(StreamDownloader streamDownloader) {
 		this.streamDownloader = streamDownloader;
 	}
-	
+
 }

@@ -7,6 +7,7 @@ package org.beangle.web.agent;
 import static org.testng.Assert.assertEquals;
 
 import org.testng.annotations.Test;
+
 @Test
 public class OsTest {
 
@@ -17,22 +18,20 @@ public class OsTest {
 			"Mozilla/5.0 (compatible; MSIE 7.0; Windows NT 5.2; WOW64; .NET CLR 2.0.50727)",
 			"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; SLCC1; .NET CLR 2.0.50727; .NET CLR 3.0.04506)" };
 
-	String [] linux={
-			"Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.12) Gecko/20101027 Fedora/3.6.12-1.fc14 Firefox/3.6.12"
-	};
-	
+	String[] linux = { "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.12) Gecko/20101027 Fedora/3.6.12-1.fc14 Firefox/3.6.12" };
+
 	public void testParse() {
 		Os os = Os.parse(windows[0]);
 		assertEquals(os.category, OsCategory.WINDOWS);
-		assertEquals(os.version,"98");
-		
+		assertEquals(os.version, "98");
+
 		os = Os.parse(windows[2]);
-		assertEquals(os.version,"XP");
-		
+		assertEquals(os.version, "XP");
+
 		os = Os.parse(windows[4]);
-		assertEquals(os.version,"Vista");
-		
+		assertEquals(os.version, "Vista");
+
 		os = Os.parse(linux[0]);
-		assertEquals(os.version,"Fedora fc14");
+		assertEquals(os.version, "Fedora fc14");
 	}
 }

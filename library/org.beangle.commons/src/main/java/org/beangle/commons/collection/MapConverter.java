@@ -30,7 +30,7 @@ public class MapConverter {
 	}
 
 	public <T> T[] getAll(Map<String, Object> data, String attr, Class<T> clazz) {
-		return convert((Object[]) data.get(attr),clazz);
+		return convert((Object[]) data.get(attr), clazz);
 	}
 
 	/**

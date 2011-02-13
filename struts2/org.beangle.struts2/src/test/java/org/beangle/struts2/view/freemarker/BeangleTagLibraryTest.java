@@ -45,7 +45,7 @@ public class BeangleTagLibraryTest {
 		container = configuration.getContainer();
 		actionProxyFactory = container.getInstance(ActionProxyFactory.class);
 		buildCfg();
-		//initDispatcher(null);
+		// initDispatcher(null);
 	}
 
 	protected Dispatcher initDispatcher(Map<String, String> params) {
@@ -85,6 +85,6 @@ public class BeangleTagLibraryTest {
 		datas.put("watch", new StopWatch());
 		StringWriter writer = new StringWriter();
 		Template template = cfg.getTemplate("comp.ftl");
-		//template.process(datas, writer);
+		// template.process(datas, writer);
 	}
 }

@@ -11,8 +11,8 @@ import org.apache.commons.lang.Validate;
 
 /**
  * Property Equals Predicate
+ * 
  * @author chaostone
- *
  */
 public class PropertyEqualPredicate {
 	private String propertyName;
@@ -26,8 +26,7 @@ public class PropertyEqualPredicate {
 
 	public boolean evaluate(Object arg0) {
 		try {
-			return ObjectUtils.equals(PropertyUtils.getProperty(arg0,
-					propertyName), propertyValue);
+			return ObjectUtils.equals(PropertyUtils.getProperty(arg0, propertyName), propertyValue);
 		} catch (Exception e) {
 			throw new UnhandledException(e);
 		}

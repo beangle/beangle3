@@ -5,6 +5,7 @@
 package org.beangle.security.core.userdetail;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import org.beangle.security.core.GrantedAuthority;
 
@@ -34,7 +35,7 @@ public interface UserDetail extends Serializable {
 	 * 
 	 * @return the authorities, sorted by natural key (never <code>null</code>)
 	 */
-	GrantedAuthority[] getAuthorities();
+	Collection<? extends GrantedAuthority> getAuthorities();
 
 	/**
 	 * Indicates whether the user's account has expired. An expired account

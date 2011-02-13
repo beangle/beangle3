@@ -12,10 +12,10 @@ import org.beangle.commons.collection.CollectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Os implements Serializable,Comparable<Os>{
+public class Os implements Serializable, Comparable<Os> {
 
 	private static final long serialVersionUID = -7506270303767154240L;
-	
+
 	private static Logger logger = LoggerFactory.getLogger(Os.class);
 	public static Map<String, Os> osMap = CollectUtils.newHashMap();
 	public static final Os UNKNOWN = new Os(OsCategory.UNKNOWN, null);
@@ -31,7 +31,7 @@ public class Os implements Serializable,Comparable<Os>{
 
 	@Override
 	public String toString() {
-		return category.getName() + " " + (version==null?"":version);
+		return category.getName() + " " + (version == null ? "" : version);
 	}
 
 	/**
@@ -62,5 +62,5 @@ public class Os implements Serializable,Comparable<Os>{
 	public int compareTo(Os o) {
 		return category.compareTo(o.category);
 	}
-	
+
 }

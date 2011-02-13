@@ -29,5 +29,5 @@ public interface PropertyConfig {
 	public void removeConfigListener(PropertyConfigListener listener);
 
 	public void multicast();
-	
+
 }

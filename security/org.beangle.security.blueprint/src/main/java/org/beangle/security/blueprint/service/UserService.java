@@ -68,6 +68,7 @@ public interface UserService {
 	 * @return
 	 */
 	public List<GroupMember> getGroupMembers(User user, GroupMember.Ship ship);
+
 	/**
 	 * 设置用户状态
 	 * 

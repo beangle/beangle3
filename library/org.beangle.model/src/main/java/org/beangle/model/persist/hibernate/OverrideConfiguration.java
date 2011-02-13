@@ -11,10 +11,11 @@ import org.hibernate.mapping.Collection;
 import org.hibernate.mapping.PersistentClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 /**
  * Provide overriderable mapping in sessionFactory
+ * 
  * @author chaostone
- *
  */
 @SuppressWarnings("serial")
 public class OverrideConfiguration extends Configuration {

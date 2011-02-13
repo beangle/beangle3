@@ -6,7 +6,7 @@ public class AirPlan {
 
 	public AirPlan(String name) {
 		super();
-		this.name=name;
+		this.name = name;
 	}
 
 	public String getName() {
@@ -16,5 +16,5 @@ public class AirPlan {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 }
