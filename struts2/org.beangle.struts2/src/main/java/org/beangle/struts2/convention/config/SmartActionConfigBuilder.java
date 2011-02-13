@@ -137,8 +137,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 					return !ObjectUtils.equals(o, "file");
 				}
 			};
-			ClassFinder finder = new ClassFinder(getClassLoaderInterface(), buildUrls(), false,
-					jarProtocols);
+			ClassFinder finder = new ClassFinder(getClassLoaderInterface(), buildUrls(), false, jarProtocols);
 			for (String packageName : actionPackages) {
 				Test<ClassFinder.ClassInfo> test = getPackageFinderTest(packageName);
 				classes.addAll(finder.findClasses(test));
@@ -206,8 +205,8 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 				objectFactory.getClassInstance(actionClass.getName());
 			} catch (ClassNotFoundException e) {
 				logger.error("Object Factory was unable to load class {}", actionClass.getName());
-				throw new StrutsException("Object Factory was unable to load class "
-						+ actionClass.getName(), e);
+				throw new StrutsException("Object Factory was unable to load class " + actionClass.getName(),
+						e);
 			}
 			String[] beanNames = beanNameFinder.getBeanNames(actionClass);
 			switch (beanNames.length) {
@@ -215,11 +214,10 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 				logger.warn("Cannot find bean definition for {}.", actionClass);
 				break;
 			case 1:
-				Profile profile = actionBuilder.getProfileService().getProfile(
-						actionClass.getName());
+				Profile profile = actionBuilder.getProfileService().getProfile(actionClass.getName());
 				Action action = actionBuilder.build(actionClass.getName());
-				PackageConfig.Builder packageConfig = getPackageConfig(profile, packageConfigs,
-						action, actionClass);
+				PackageConfig.Builder packageConfig = getPackageConfig(profile, packageConfigs, action,
+						actionClass);
 				if (createActionConfig(packageConfig, action, actionClass, beanNames[0])) {
 					createCount++;
 				}
@@ -249,14 +247,13 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 	 */
 	protected boolean cannotInstantiate(Class<?> actionClass) {
 		return actionClass.isAnnotation() || actionClass.isInterface() || actionClass.isEnum()
-				|| (actionClass.getModifiers() & Modifier.ABSTRACT) != 0
-				|| actionClass.isAnonymousClass();
+				|| (actionClass.getModifiers() & Modifier.ABSTRACT) != 0 || actionClass.isAnonymousClass();
 	}
 
-	protected boolean createActionConfig(PackageConfig.Builder pkgCfg, Action action,
-			Class<?> actionClass, String beanName) {
-		ActionConfig.Builder actionConfig = new ActionConfig.Builder(pkgCfg.getName(),
-				action.getName(), beanName);
+	protected boolean createActionConfig(PackageConfig.Builder pkgCfg, Action action, Class<?> actionClass,
+			String beanName) {
+		ActionConfig.Builder actionConfig = new ActionConfig.Builder(pkgCfg.getName(), action.getName(),
+				beanName);
 		actionConfig.methodName(action.getMethod());
 		String actionName = action.getName();
 		// check action exists on that package (from XML config probably)
@@ -268,15 +265,14 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 		}
 		if (create) {
 			pkgCfg.addActionConfig(actionName, actionConfig.build());
-			logger.debug("Add {}/{} for {} in {}", new Object[] { pkgCfg.getNamespace(),
-					actionName, actionClass.getName(), pkgCfg.getName() });
+			logger.debug("Add {}/{} for {} in {}", new Object[] { pkgCfg.getNamespace(), actionName,
+					actionClass.getName(), pkgCfg.getName() });
 		}
 		return create;
 	}
 
 	protected PackageConfig.Builder getPackageConfig(Profile profile,
-			final Map<String, PackageConfig.Builder> packageConfigs, Action action,
-			final Class<?> actionClass) {
+			final Map<String, PackageConfig.Builder> packageConfigs, Action action, final Class<?> actionClass) {
 		// 循环查找父包
 		String actionPkg = actionClass.getPackage().getName();
 		PackageConfig parentPkg = null;
@@ -292,8 +288,8 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 			actionPkg = defaultParentPackage;
 			parentPkg = configuration.getPackageConfig(actionPkg);
 		}
-		if (parentPkg == null) { throw new ConfigurationException(
-				"Unable to locate parent package [" + actionClass.getPackage().getName() + "]"); }
+		if (parentPkg == null) { throw new ConfigurationException("Unable to locate parent package ["
+				+ actionClass.getPackage().getName() + "]"); }
 		String actionPackage = actionClass.getPackage().getName();
 		PackageConfig.Builder pkgConfig = packageConfigs.get(actionPackage);
 		if (pkgConfig == null) {
@@ -301,8 +297,8 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 			if (null != myPkg) {
 				pkgConfig = new PackageConfig.Builder(myPkg);
 			} else {
-				pkgConfig = new PackageConfig.Builder(actionPackage).namespace(
-						action.getNamespace()).addParent(parentPkg);
+				pkgConfig = new PackageConfig.Builder(actionPackage).namespace(action.getNamespace())
+						.addParent(parentPkg);
 				logger.debug("Created package config named {} with a namespace {}", actionPackage,
 						action.getNamespace());
 			}
@@ -339,8 +335,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 				continue;
 			}
 			if (pkgConfig.build().getAllActionConfigs().get("") == null) {
-				logger.debug(
-						"Creating index ActionConfig with an action name of [] for the action class {}",
+				logger.debug("Creating index ActionConfig with an action name of [] for the action class {}",
 						indexActionConfig.getClassName());
 				pkgConfig.addActionConfig("", indexActionConfig);
 				createCount++;

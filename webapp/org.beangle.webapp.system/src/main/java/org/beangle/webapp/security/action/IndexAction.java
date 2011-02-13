@@ -60,10 +60,8 @@ public class IndexAction extends SecurityActionSupport {
 
 		// stat pattern and restriction
 		put("patternStat",
-				entityDao.search(OqlBuilder.from(RestrictPattern.class, "pattern").select(
-						"count(*)")));
-		put("paramStat",
-				entityDao.search(OqlBuilder.from(RestrictField.class, "param").select("count(*)")));
+				entityDao.search(OqlBuilder.from(RestrictPattern.class, "pattern").select("count(*)")));
+		put("paramStat", entityDao.search(OqlBuilder.from(RestrictField.class, "param").select("count(*)")));
 		return forward();
 	}
 

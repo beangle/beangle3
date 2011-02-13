@@ -53,8 +53,8 @@ public class SplitStreamDownloader extends DefaultStreamDownloader {
 	}
 
 	@Override
-	public void download(HttpServletRequest request, HttpServletResponse response,
-			InputStream input, String name, String display) {
+	public void download(HttpServletRequest request, HttpServletResponse response, InputStream input,
+			String name, String display) {
 		String attach = getAttachName(name, display);
 		response.reset();
 		addContent(request, response, attach);

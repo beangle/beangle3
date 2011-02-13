@@ -61,8 +61,7 @@ public class UserDashboardHelper {
 	}
 
 	private void populateSessionActivities(User user) {
-		OqlBuilder<SessionActivity> onlineQuery = OqlBuilder.from(SessionActivity.class,
-				"sessionActivity");
+		OqlBuilder<SessionActivity> onlineQuery = OqlBuilder.from(SessionActivity.class, "sessionActivity");
 		onlineQuery.where("sessionActivity.name =:name", user.getName());
 		PageLimit limit = QueryHelper.getPageLimit();
 		limit.setPageSize(10);

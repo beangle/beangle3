@@ -94,8 +94,7 @@ public class BeangleObjectWrapper extends DefaultObjectWrapper {
 
 		// add feature
 		public TemplateCollectionModel values() {
-			return new CollectionAndSequence(new SimpleSequence(((Map<?, ?>) object).values(),
-					wrapper));
+			return new CollectionAndSequence(new SimpleSequence(((Map<?, ?>) object).values(), wrapper));
 		}
 	}
 }

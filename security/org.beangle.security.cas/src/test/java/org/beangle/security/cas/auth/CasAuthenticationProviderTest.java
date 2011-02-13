@@ -50,8 +50,7 @@ public class CasAuthenticationProviderTest {
 
 	@Test
 	public void statefulAuthenticationIsSuccessful() throws Exception {
-		CasAuthentication token = new CasAuthentication(CasAuthentication.STATEFUL_ID, "ST-123",
-				null);
+		CasAuthentication token = new CasAuthentication(CasAuthentication.STATEFUL_ID, "ST-123", null);
 		token.setDetails("details");
 		Authentication result = cap.authenticate(token);
 
@@ -79,8 +78,7 @@ public class CasAuthenticationProviderTest {
 
 	@Test
 	public void statelessAuthenticationIsSuccessful() throws Exception {
-		CasAuthentication token = new CasAuthentication(CasAuthentication.STATELESS_ID, "ST-456",
-				null);
+		CasAuthentication token = new CasAuthentication(CasAuthentication.STATELESS_ID, "ST-456", null);
 		token.setDetails("details");
 		Authentication result = cap.authenticate(token);
 		// Confirm ST-456 was added to the cache
@@ -141,8 +139,7 @@ public class CasAuthenticationProviderTest {
 			this.returnTicket = returnTicket;
 		}
 
-		public Assertion validate(final String ticket, final String service)
-				throws TicketValidationException {
+		public Assertion validate(final String ticket, final String service) throws TicketValidationException {
 			if (returnTicket) { return new AssertionImpl("rod"); }
 			throw new BadCredentialsException("As requested from mock");
 		}

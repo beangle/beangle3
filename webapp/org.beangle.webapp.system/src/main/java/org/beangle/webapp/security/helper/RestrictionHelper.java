@@ -29,8 +29,7 @@ public class RestrictionHelper {
 	static {
 		restrictionTypeMap.put("user", "org.beangle.security.blueprint.restrict.UserRestriction");
 		restrictionTypeMap.put("group", "org.beangle.security.blueprint.restrict.GroupRestriction");
-		restrictionTypeMap.put("authority",
-				"org.beangle.security.blueprint.restrict.AuthorityRestriction");
+		restrictionTypeMap.put("authority", "org.beangle.security.blueprint.restrict.AuthorityRestriction");
 	}
 
 	EntityDao entityDao;
@@ -71,8 +70,7 @@ public class RestrictionHelper {
 					if (null == field.getSource()) {
 						aoFields.put(field.getName(), value);
 					} else {
-						aoFields.put(field.getName(),
-								restrictionService.getFieldValue(field, restriction));
+						aoFields.put(field.getName(), restrictionService.getFieldValue(field, restriction));
 					}
 				}
 			}

@@ -29,10 +29,8 @@ public class ConventionsTest {
 
 	@Test
 	public void testGetActionName() throws Exception {
-		assertEquals(actionNameBuilder.build(FirstAction.class.getName()).getUri(),
-				"/first!index.html");
-		assertEquals(actionNameBuilder.build(SecondAction.class.getName()).getUri(),
-				"/second!index.action");
+		assertEquals(actionNameBuilder.build(FirstAction.class.getName()).getUri(), "/first!index.html");
+		assertEquals(actionNameBuilder.build(SecondAction.class.getName()).getUri(), "/second!index.action");
 		assertEquals(actionNameBuilder.build(ThirdAction.class.getName()).getUri(),
 				"/another-nested/third!index.action");
 	}
@@ -44,8 +42,7 @@ public class ConventionsTest {
 		assertEquals(profile.getActionPattern(), "org.beangle.struts2.convention.example.action");
 		profile = profileService.getProfile(SecondAction.class);
 		assertNotNull(profile);
-		assertEquals(profile.getActionPattern(),
-				"org.beangle.struts2.convention.example.action.nested");
+		assertEquals(profile.getActionPattern(), "org.beangle.struts2.convention.example.action.nested");
 		profile = profileService.getProfile(ThirdAction.class);
 		assertNotNull(profile);
 		assertEquals(profile.getActionPattern(),

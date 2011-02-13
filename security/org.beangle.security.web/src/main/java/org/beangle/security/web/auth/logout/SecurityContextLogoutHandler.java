@@ -16,9 +16,8 @@ import org.beangle.security.core.context.SecurityContextHolder;
  * Performs a logout by modifying the
  * {@link org.beangle.security.core.context.SecurityContextHolder}.
  * <p>
- * Will also invalidate the {@link HttpSession} if
- * {@link #isInvalidateHttpSession()} is <code>true</code> and the session is
- * not <code>null</code>.
+ * Will also invalidate the {@link HttpSession} if {@link #isInvalidateHttpSession()} is
+ * <code>true</code> and the session is not <code>null</code>.
  */
 public class SecurityContextLogoutHandler implements LogoutHandler {
 	private boolean invalidateHttpSession = false;
@@ -33,8 +32,7 @@ public class SecurityContextLogoutHandler implements LogoutHandler {
 	 * @param authentication
 	 *            not used (can be <code>null</code>)
 	 */
-	public void logout(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) {
+	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 		Validate.notNull(request, "HttpServletRequest required");
 		if (invalidateHttpSession) {
 			HttpSession session = request.getSession(false);
@@ -50,8 +48,8 @@ public class SecurityContextLogoutHandler implements LogoutHandler {
 	}
 
 	/**
-	 * Causes the {@link HttpSession} to be invalidated when this
-	 * {@link LogoutHandler} is invoked. Defaults to true.
+	 * Causes the {@link HttpSession} to be invalidated when this {@link LogoutHandler} is invoked.
+	 * Defaults to true.
 	 * 
 	 * @param invalidateHttpSession
 	 *            true if you wish the session to be invalidated (default) or

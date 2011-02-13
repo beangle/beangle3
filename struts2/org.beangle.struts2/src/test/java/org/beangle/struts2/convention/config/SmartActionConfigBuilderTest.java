@@ -44,8 +44,7 @@ public class SmartActionConfigBuilderTest {
 				return mockContainer;
 			}
 		};
-		PackageConfig strutsDefault = makePackageConfig("beangle", null, null, "dispatcher", null,
-				null, null);
+		PackageConfig strutsDefault = makePackageConfig("beangle", null, null, "dispatcher", null, null, null);
 		configuration.addPackageConfig("beangle", strutsDefault);
 		// ResultMapBuilder resultMapBuilder =
 		// createStrictMock(ResultMapBuilder.class);
@@ -54,8 +53,7 @@ public class SmartActionConfigBuilderTest {
 		// mockContainer.setResultMapBuilder(resultMapBuilder);
 		// mockContainer.setConventionsService(new ConventionsServiceImpl(""));
 
-		SmartActionConfigBuilder builder = new SmartActionConfigBuilder(configuration,
-				mockContainer, of);
+		SmartActionConfigBuilder builder = new SmartActionConfigBuilder(configuration, mockContainer, of);
 		builder.setActionBuilder(actionNameBuilder);
 		builder.buildActionConfigs();
 		Set<String> names = configuration.getPackageConfigNames();
@@ -100,8 +98,8 @@ public class SmartActionConfigBuilderTest {
 	}
 
 	private PackageConfig makePackageConfig(String name, String namespace, PackageConfig parent,
-			String defaultResultType, ResultTypeConfig[] results,
-			List<InterceptorConfig> interceptors, List<InterceptorStackConfig> interceptorStacks) {
+			String defaultResultType, ResultTypeConfig[] results, List<InterceptorConfig> interceptors,
+			List<InterceptorStackConfig> interceptorStacks) {
 		PackageConfig.Builder builder = new PackageConfig.Builder(name);
 		if (namespace != null) {
 			builder.namespace(namespace);

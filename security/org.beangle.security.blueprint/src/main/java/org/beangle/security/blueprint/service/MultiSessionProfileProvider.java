@@ -22,11 +22,11 @@ public class MultiSessionProfileProvider extends AbstractBaseDao implements Limi
 		List<CategoryProfile> profiles = entityDao.getAll(CategoryProfile.class);
 		Map<Object, LimitProfile> profileMap = CollectUtils.newHashMap();
 		for (CategoryProfile profile : profiles) {
-			UserCategory category = entityDao
-					.get(UserCategory.class, profile.getCategory().getId());
-			profileMap.put(category,
-					new LimitProfile(category, profile.getCapacity(),
-							profile.getInactiveInterval(), profile.getInactiveInterval()));
+			UserCategory category = entityDao.get(UserCategory.class, profile.getCategory().getId());
+			profileMap.put(
+					category,
+					new LimitProfile(category, profile.getCapacity(), profile.getInactiveInterval(), profile
+							.getInactiveInterval()));
 		}
 		return profileMap;
 	}

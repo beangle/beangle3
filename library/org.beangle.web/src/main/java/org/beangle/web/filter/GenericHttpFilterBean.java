@@ -73,8 +73,8 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, Se
 	/**
 	 * Stores the bean name as defined in the Spring bean factory.
 	 * <p>
-	 * Only relevant in case of initialization as bean, to have a name as
-	 * fallback to the filter name usually provided by a FilterConfig instance.
+	 * Only relevant in case of initialization as bean, to have a name as fallback to the filter
+	 * name usually provided by a FilterConfig instance.
 	 * 
 	 * @see org.springframework.beans.factory.BeanNameAware
 	 * @see #getFilterName()
@@ -86,8 +86,8 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, Se
 	/**
 	 * Stores the ServletContext that the bean factory runs in.
 	 * <p>
-	 * Only relevant in case of initialization as bean, to have a ServletContext
-	 * as fallback to the context usually provided by a FilterConfig instance.
+	 * Only relevant in case of initialization as bean, to have a ServletContext as fallback to the
+	 * context usually provided by a FilterConfig instance.
 	 * 
 	 * @see org.springframework.web.context.ServletContextAware
 	 * @see #getServletContext()
@@ -116,8 +116,8 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, Se
 	 * supplied as a config parameter. This should be called from the
 	 * constructor of a subclass.
 	 * <p>
-	 * This method is only relevant in case of traditional initialization driven
-	 * by a FilterConfig instance.
+	 * This method is only relevant in case of traditional initialization driven by a FilterConfig
+	 * instance.
 	 * 
 	 * @param property
 	 *            name of the required property
@@ -147,17 +147,15 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, Se
 
 		// Set bean properties from init parameters.
 		try {
-			PropertyValues pvs = new FilterConfigPropertyValues(filterConfig,
-					this.requiredProperties);
+			PropertyValues pvs = new FilterConfigPropertyValues(filterConfig, this.requiredProperties);
 			BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(this);
-			ResourceLoader resourceLoader = new ServletContextResourceLoader(
-					filterConfig.getServletContext());
+			ResourceLoader resourceLoader = new ServletContextResourceLoader(filterConfig.getServletContext());
 			bw.registerCustomEditor(Resource.class, new ResourceEditor(resourceLoader));
 			initBeanWrapper(bw);
 			bw.setPropertyValues(pvs, true);
 		} catch (BeansException ex) {
-			String msg = "Failed to set bean properties on filter '" + filterConfig.getFilterName()
-					+ "': " + ex.getMessage();
+			String msg = "Failed to set bean properties on filter '" + filterConfig.getFilterName() + "': "
+					+ ex.getMessage();
 			logger.error(msg, ex);
 			throw new NestedServletException(msg, ex);
 		}
@@ -189,8 +187,8 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, Se
 	 * Make the FilterConfig of this filter available, if any. Analogous to
 	 * GenericServlet's <code>getServletConfig()</code>.
 	 * <p>
-	 * Public to resemble the <code>getFilterConfig()</code> method of the
-	 * Servlet Filter version that shipped with WebLogic 6.1.
+	 * Public to resemble the <code>getFilterConfig()</code> method of the Servlet Filter version
+	 * that shipped with WebLogic 6.1.
 	 * 
 	 * @return the FilterConfig instance, or <code>null</code> if none available
 	 * @see javax.servlet.GenericServlet#getServletConfig()
@@ -203,9 +201,8 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, Se
 	 * Make the name of this filter available to subclasses. Analogous to
 	 * GenericServlet's <code>getServletName()</code>.
 	 * <p>
-	 * Takes the FilterConfig's filter name by default. If initialized as bean
-	 * in a Spring application context, it falls back to the bean name as
-	 * defined in the bean factory.
+	 * Takes the FilterConfig's filter name by default. If initialized as bean in a Spring
+	 * application context, it falls back to the bean name as defined in the bean factory.
 	 * 
 	 * @return the filter name, or <code>null</code> if none available
 	 * @see javax.servlet.GenericServlet#getServletName()
@@ -220,9 +217,8 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, Se
 	 * Make the ServletContext of this filter available to subclasses. Analogous
 	 * to GenericServlet's <code>getServletContext()</code>.
 	 * <p>
-	 * Takes the FilterConfig's ServletContext by default. If initialized as
-	 * bean in a Spring application context, it falls back to the ServletContext
-	 * that the bean factory runs in.
+	 * Takes the FilterConfig's ServletContext by default. If initialized as bean in a Spring
+	 * application context, it falls back to the ServletContext that the bean factory runs in.
 	 * 
 	 * @return the ServletContext instance, or <code>null</code> if none
 	 *         available
@@ -231,8 +227,7 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, Se
 	 * @see #setServletContext
 	 */
 	protected final ServletContext getServletContext() {
-		return (this.filterConfig != null ? this.filterConfig.getServletContext()
-				: this.servletContext);
+		return (this.filterConfig != null ? this.filterConfig.getServletContext() : this.servletContext);
 	}
 
 	/**
@@ -240,9 +235,9 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, Se
 	 * properties of this filter will have been set before this method is
 	 * invoked.
 	 * <p>
-	 * Note: This method will be called from standard filter initialization as
-	 * well as filter bean initialization in a Spring application context.
-	 * Filter name and ServletContext will be available in both cases.
+	 * Note: This method will be called from standard filter initialization as well as filter bean
+	 * initialization in a Spring application context. Filter name and ServletContext will be
+	 * available in both cases.
 	 * <p>
 	 * This default implementation is empty.
 	 * 
@@ -257,8 +252,8 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, Se
 	/**
 	 * Subclasses may override this to perform custom filter shutdown.
 	 * <p>
-	 * Note: This method will be called from standard filter destruction as well
-	 * as filter bean destruction in a Spring application context.
+	 * Note: This method will be called from standard filter destruction as well as filter bean
+	 * destruction in a Spring application context.
 	 * <p>
 	 * This default implementation is empty.
 	 */

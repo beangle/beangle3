@@ -28,11 +28,9 @@ public abstract class AbstractUnicodeExtraField implements ZipExtraField {
 	 * @param bytes
 	 *            The encoded of the filename or comment in the zip file.
 	 * @param off
-	 *            The offset of the encoded filename or comment in
-	 *            <code>bytes</code>.
+	 *            The offset of the encoded filename or comment in <code>bytes</code>.
 	 * @param len
-	 *            The length of the encoded filename or commentin
-	 *            <code>bytes</code>.
+	 *            The length of the encoded filename or commentin <code>bytes</code>.
 	 */
 	protected AbstractUnicodeExtraField(String text, byte[] bytes, int off, int len) {
 		CRC32 crc32 = new CRC32();
@@ -128,8 +126,7 @@ public abstract class AbstractUnicodeExtraField implements ZipExtraField {
 
 	public void parseFromLocalFileData(byte[] buffer, int offset, int length) throws ZipException {
 
-		if (length < 5) { throw new ZipException("UniCode path extra data must have at least"
-				+ " 5 bytes."); }
+		if (length < 5) { throw new ZipException("UniCode path extra data must have at least" + " 5 bytes."); }
 
 		int version = buffer[offset];
 

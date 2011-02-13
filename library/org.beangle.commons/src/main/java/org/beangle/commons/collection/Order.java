@@ -32,8 +32,7 @@ public class Order {
 	}
 
 	public Order(String property) {
-		if (StringUtils.contains(property, ",")) { throw new RuntimeException(
-				"user parser for multiorder"); }
+		if (StringUtils.contains(property, ",")) { throw new RuntimeException("user parser for multiorder"); }
 		if (StringUtils.contains(property, " desc")) {
 			this.ascending = false;
 			this.property = StringUtils.substringBefore(property, " desc");

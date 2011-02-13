@@ -128,16 +128,15 @@ public class Profile implements Comparable<Profile> {
 	 * 子包优先
 	 */
 	public int compareTo(Profile other) {
-		return new CompareToBuilder().append(other.actionPattern, this.actionPattern)
-				.toComparison();
+		return new CompareToBuilder().append(other.actionPattern, this.actionPattern).toComparison();
 	}
 
 	public String getSimpleName(String className) {
 		String postfix = getActionSuffix();
 		String simpleName = className.substring(className.lastIndexOf('.') + 1);
 		if (StringUtils.contains(simpleName, postfix)) {
-			simpleName = StringUtils.uncapitalize(simpleName.substring(0, simpleName.length()
-					- postfix.length()));
+			simpleName = StringUtils.uncapitalize(simpleName.substring(0,
+					simpleName.length() - postfix.length()));
 		} else {
 			simpleName = StringUtils.uncapitalize(simpleName);
 		}
@@ -168,8 +167,8 @@ public class Profile implements Comparable<Profile> {
 		String postfix = getActionSuffix();
 		String simpleName = className.substring(className.lastIndexOf('.') + 1);
 		if (StringUtils.contains(simpleName, postfix)) {
-			simpleName = StringUtils.uncapitalize(simpleName.substring(0, simpleName.length()
-					- postfix.length()));
+			simpleName = StringUtils.uncapitalize(simpleName.substring(0,
+					simpleName.length() - postfix.length()));
 		} else {
 			simpleName = StringUtils.uncapitalize(simpleName);
 		}
@@ -298,8 +297,7 @@ public class Profile implements Comparable<Profile> {
 				.append("actionScan", actionScan).append("viewPath", viewPath)
 				.append("viewPathStyle", viewPathStyle).append("viewExtension", viewExtension)
 				.append("uriPath", uriPath).append("uriPathStyle", uriPathStyle)
-				.append("uriExtension", uriExtension).append("defaultMethod", defaultMethod)
-				.toString();
+				.append("uriExtension", uriExtension).append("defaultMethod", defaultMethod).toString();
 	}
 
 }

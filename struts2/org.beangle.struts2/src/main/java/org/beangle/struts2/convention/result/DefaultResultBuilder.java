@@ -72,8 +72,7 @@ public class DefaultResultBuilder implements ResultBuilder {
 		// prefix
 		// TODO jsp,vm,ftl
 		if (!StringUtils.contains(resultCode, ':')) {
-			String className = context.getActionInvocation().getProxy().getAction().getClass()
-					.getName();
+			String className = context.getActionInvocation().getProxy().getAction().getClass().getName();
 			String methodName = context.getActionInvocation().getProxy().getMethod();
 			if (StringUtils.isEmpty(resultCode)) {
 				resultCode = "index";
@@ -177,8 +176,7 @@ public class DefaultResultBuilder implements ResultBuilder {
 		params.put("actionName", action.getName());
 	}
 
-	protected Map<String, String> buildResultParams(String defaultParam,
-			ResultTypeConfig resultTypeConfig) {
+	protected Map<String, String> buildResultParams(String defaultParam, ResultTypeConfig resultTypeConfig) {
 		Map<String, String> params = new LinkedHashMap<String, String>();
 		if (resultTypeConfig.getParams() != null) {
 			params.putAll(resultTypeConfig.getParams());
@@ -197,10 +195,10 @@ public class DefaultResultBuilder implements ResultBuilder {
 	 * @param extraParams
 	 * @return
 	 */
-	protected Result buildResult(String resultCode, ResultTypeConfig resultTypeConfig,
-			ActionContext context, Map<String, String> params) {
-		ResultConfig resultConfig = new ResultConfig.Builder(resultCode,
-				resultTypeConfig.getClassName()).addParams(params).build();
+	protected Result buildResult(String resultCode, ResultTypeConfig resultTypeConfig, ActionContext context,
+			Map<String, String> params) {
+		ResultConfig resultConfig = new ResultConfig.Builder(resultCode, resultTypeConfig.getClassName())
+				.addParams(params).build();
 		try {
 			return objectFactory.buildResult(resultConfig, context.getContextMap());
 		} catch (Exception e) {

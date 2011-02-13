@@ -61,8 +61,7 @@ public interface TextResource {
 	 * @param key
 	 *            the resource bundle key that is to be searched for
 	 * @param args
-	 *            a list args to be used in a {@link java.text.MessageFormat}
-	 *            message
+	 *            a list args to be used in a {@link java.text.MessageFormat} message
 	 * @return the message as found in the resource bundle, or null if none is
 	 *         found.
 	 */
@@ -75,8 +74,7 @@ public interface TextResource {
 	 * @param key
 	 *            the resource bundle key that is to be searched for
 	 * @param args
-	 *            an array args to be used in a {@link java.text.MessageFormat}
-	 *            message
+	 *            an array args to be used in a {@link java.text.MessageFormat} message
 	 * @return the message as found in the resource bundle, or null if none is
 	 *         found.
 	 */
@@ -93,8 +91,7 @@ public interface TextResource {
 	 *            the default value which will be returned if no message is
 	 *            found
 	 * @param args
-	 *            a list args to be used in a {@link java.text.MessageFormat}
-	 *            message
+	 *            a list args to be used in a {@link java.text.MessageFormat} message
 	 * @return the message as found in the resource bundle, or defaultValue if
 	 *         none is found
 	 */
@@ -111,8 +108,7 @@ public interface TextResource {
 	 *            the default value which will be returned if no message is
 	 *            found
 	 * @param args
-	 *            an array args to be used in a {@link java.text.MessageFormat}
-	 *            message
+	 *            an array args to be used in a {@link java.text.MessageFormat} message
 	 * @return the message as found in the resource bundle, or defaultValue if
 	 *         none is found
 	 */

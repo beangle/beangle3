@@ -15,8 +15,8 @@ public final class ReflectHelper {
 	}
 
 	public static Class<?> getProperty(Class<?> clazz, String property) {
-		Method getMethod = MethodUtils.getAccessibleMethod(clazz,
-				"get" + StringUtils.capitalize(property), (Class[]) null);
+		Method getMethod = MethodUtils.getAccessibleMethod(clazz, "get" + StringUtils.capitalize(property),
+				(Class[]) null);
 		if (null == getMethod) {
 			return null;
 		} else {

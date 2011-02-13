@@ -134,8 +134,8 @@ public class RestrictionAction extends SecurityActionSupport {
 				restrictions.addAll(group.getGroup().getRestrictions());
 			}
 		} else if (type.equals("authority")) {
-			restrictions = restrictionService.getAuthorityRestrictions(me,
-					((Authority) holder).getResource());
+			restrictions = restrictionService
+					.getAuthorityRestrictions(me, ((Authority) holder).getResource());
 		}
 		List<Restriction> rt = CollectUtils.newArrayList();
 		for (Restriction restriction : restrictions) {
@@ -166,8 +166,7 @@ public class RestrictionAction extends SecurityActionSupport {
 				String value = restriction.getItem(field);
 				if (null != value) {
 					if (field.isMultiple()) {
-						values.addAll((Collection<?>) restrictionService.getFieldValue(field,
-								restriction));
+						values.addAll((Collection<?>) restrictionService.getFieldValue(field, restriction));
 					} else {
 						values.add(restrictionService.getFieldValue(field, restriction));
 					}
@@ -180,8 +179,7 @@ public class RestrictionAction extends SecurityActionSupport {
 	private Restriction getRestriction() {
 		Long restrictionId = getLong("restriction.id");
 		Restriction restriction = null;
-		String entityName = (String) RestrictionHelper.restrictionTypeMap
-				.get(get("restrictionType"));
+		String entityName = (String) RestrictionHelper.restrictionTypeMap.get(get("restrictionType"));
 		if (null == restrictionId) {
 			restriction = (Restriction) Model.getEntityType(entityName).newInstance();
 		} else {
@@ -189,8 +187,8 @@ public class RestrictionAction extends SecurityActionSupport {
 		}
 		populate(Params.sub("restriction"), restriction, entityName);
 		if (null == restrictionId) {
-			restriction.setPattern((RestrictPattern) entityDao.get(RestrictPattern.class,
-					restriction.getPattern().getId()));
+			restriction.setPattern((RestrictPattern) entityDao.get(RestrictPattern.class, restriction
+					.getPattern().getId()));
 		}
 		return restriction;
 	}

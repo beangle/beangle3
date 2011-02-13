@@ -38,12 +38,11 @@ public class MetadataLoader {
 			ResultSet rs = null;
 			try {
 				if (meta.storesUpperCaseQuotedIdentifiers() && meta.storesUpperCaseIdentifiers()) {
-					rs = meta.getTables(StringUtils.upperCase(catalog),
-							StringUtils.upperCase(schema), null, TYPES);
-				} else if (meta.storesLowerCaseQuotedIdentifiers()
-						&& meta.storesLowerCaseIdentifiers()) {
-					rs = meta.getTables(StringUtils.lowerCase(catalog),
-							StringUtils.lowerCase(schema), null, TYPES);
+					rs = meta.getTables(StringUtils.upperCase(catalog), StringUtils.upperCase(schema), null,
+							TYPES);
+				} else if (meta.storesLowerCaseQuotedIdentifiers() && meta.storesLowerCaseIdentifiers()) {
+					rs = meta.getTables(StringUtils.lowerCase(catalog), StringUtils.lowerCase(schema), null,
+							TYPES);
 				} else {
 					rs = meta.getTables(catalog, schema, null, TYPES);
 				}
@@ -121,14 +120,12 @@ public class MetadataLoader {
 				if (fk == null) continue;
 				ForeignKey info = table.getForeignKey(fk);
 				if (info != null) continue;
-				info = new ForeignKey(rs.getString("FK_NAME"), table.getColumn(rs
-						.getString("FKCOLUMN_NAME")));
+				info = new ForeignKey(rs.getString("FK_NAME"), table.getColumn(rs.getString("FKCOLUMN_NAME")));
 				info.addReferencedColumn(new Column(rs.getString("PKCOLUMN_NAME")));
 				Table referencedTable = tables.get(Table.qualify(rs.getString("PKTABLE_SCHEM"),
 						rs.getString("PKTABLE_NAME")));
 				if (null == referencedTable) {
-					referencedTable = new Table(rs.getString("PKTABLE_SCHEM"),
-							rs.getString("PKTABLE_NAME"));
+					referencedTable = new Table(rs.getString("PKTABLE_SCHEM"), rs.getString("PKTABLE_NAME"));
 				}
 				info.setReferencedTable(referencedTable);
 				info.setCascadeDelete((rs.getInt("DELETE_RULE") != 3));

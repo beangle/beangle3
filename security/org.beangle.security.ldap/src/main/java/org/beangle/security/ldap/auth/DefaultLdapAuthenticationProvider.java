@@ -25,8 +25,7 @@ import org.springframework.ldap.support.DistinguishedName;
  * @author chaostone
  */
 public class DefaultLdapAuthenticationProvider extends AbstractUserDetailAuthenticationProvider {
-	private static final Logger logger = LoggerFactory
-			.getLogger(DefaultLdapAuthenticationProvider.class);
+	private static final Logger logger = LoggerFactory.getLogger(DefaultLdapAuthenticationProvider.class);
 
 	protected LdapTemplate ldapTemplate;
 

@@ -25,7 +25,7 @@ public interface StreamDownloader {
 
 	public void download(HttpServletRequest req, HttpServletResponse res, File file, String display);
 
-	public void download(HttpServletRequest req, HttpServletResponse res, InputStream inStream,
-			String name, String display);
+	public void download(HttpServletRequest req, HttpServletResponse res, InputStream inStream, String name,
+			String display);
 
 }

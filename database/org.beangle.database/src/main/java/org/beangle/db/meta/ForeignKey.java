@@ -61,8 +61,7 @@ public class ForeignKey extends Constraint {
 				Table.qualify(getTable().getSchema(), referencedTable.getName()), refcols,
 				isReferenceToPrimaryKey());
 
-		return cascadeDelete && dialect.supportsCascadeDelete() ? result + " on delete cascade"
-				: result;
+		return cascadeDelete && dialect.supportsCascadeDelete() ? result + " on delete cascade" : result;
 	}
 
 	public void addReferencedColumn(Column column) {

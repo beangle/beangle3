@@ -10,9 +10,8 @@ import org.apache.commons.lang.Validate;
  * A <code>static</code> field-based implementation of
  * {@link org.beangle.security.core.context.SecurityContextHolderStrategy}.
  * <p>
- * This means that all instances in the JVM share the same
- * <code>SecurityContext</code>. This is generally useful with rich clients,
- * such as Swing.
+ * This means that all instances in the JVM share the same <code>SecurityContext</code>. This is
+ * generally useful with rich clients, such as Swing.
  * </p>
  * 
  * @author chaostone

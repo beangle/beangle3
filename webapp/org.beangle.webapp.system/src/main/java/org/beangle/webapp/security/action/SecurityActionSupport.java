@@ -35,8 +35,8 @@ public abstract class SecurityActionSupport extends EntityDrivenAction implement
 
 	// FIXME new DefaultResourceExtractor
 	protected Resource getResource() {
-		return authorityService.getResource(new DefaultResourceExtractor()
-				.extract(ServletActionContext.getRequest()));
+		return authorityService.getResource(new DefaultResourceExtractor().extract(ServletActionContext
+				.getRequest()));
 	}
 
 	protected boolean isAdmin(User user) {

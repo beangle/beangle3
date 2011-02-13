@@ -77,10 +77,8 @@ public final class CriterionUtils {
 		return getExampleCriterion(entity, null, MatchMode.ANYWHERE);
 	}
 
-	public static Example getExampleCriterion(Object entity, String[] excludePropertes,
-			MatchMode mode) {
-		Example example = Example.create(entity)
-				.setPropertySelector(new NotEmptyPropertySelector());
+	public static Example getExampleCriterion(Object entity, String[] excludePropertes, MatchMode mode) {
+		Example example = Example.create(entity).setPropertySelector(new NotEmptyPropertySelector());
 		if (null != mode) {
 			example.enableLike(mode);
 		}
@@ -123,8 +121,8 @@ public final class CriterionUtils {
 				continue;
 			}
 			Object value = map.get(propertyName);
-			addCriterion(nestedName, entity, excludePropertes, propertyName, value, criterions,
-					mode, ignoreZero);
+			addCriterion(nestedName, entity, excludePropertes, propertyName, value, criterions, mode,
+					ignoreZero);
 		}
 		return criterions;
 	}
@@ -143,8 +141,7 @@ public final class CriterionUtils {
 		return getForeignerCriterions(entity, map.keySet());
 	}
 
-	public static List<Criterion> getForeignerCriterions(Object entity,
-			Collection<String> properties) {
+	public static List<Criterion> getForeignerCriterions(Object entity, Collection<String> properties) {
 		List<Criterion> criterions = CollectUtils.newArrayList();
 		BeanMap map = new BeanMap(entity);
 		for (Iterator<String> iter = properties.iterator(); iter.hasNext();) {
@@ -179,8 +176,7 @@ public final class CriterionUtils {
 	 * @param mode
 	 * @return
 	 */
-	public static List<Criterion> getLikeCriterions(Object entity, String[] properties,
-			MatchMode mode) {
+	public static List<Criterion> getLikeCriterions(Object entity, String[] properties, MatchMode mode) {
 		List<Criterion> criterions = CollectUtils.newArrayList();
 		BeanMap map = new BeanMap(entity);
 		for (int i = 0; i < properties.length; i++) {
@@ -238,8 +234,8 @@ public final class CriterionUtils {
 			}
 			return datas;
 		} catch (Exception e) {
-			logger.error("[converToMap]:error occur in converToMap of bean" + entity
-					+ "with attr named " + attr, e);
+			logger.error("[converToMap]:error occur in converToMap of bean" + entity + "with attr named "
+					+ attr, e);
 		}
 		return Collections.emptyMap();
 	}
@@ -265,8 +261,7 @@ public final class CriterionUtils {
 	 * @param mode
 	 */
 	private static void addCriterion(String nestedName, Object entity, String[] excludePropertes,
-			String path, Object value, List<Criterion> criterions, MatchMode mode,
-			boolean ignoreZero) {
+			String path, Object value, List<Criterion> criterions, MatchMode mode, boolean ignoreZero) {
 		if (null == value) { return; }
 		addPrimativeCriterion(nestedName + path, value, criterions, ignoreZero);
 
@@ -283,8 +278,8 @@ public final class CriterionUtils {
 				criterions.add(eqCriterion(nestedName + path + ".id", foreignKey));
 			}
 		} else if (value instanceof Component) {
-			criterions.addAll(getComponentCriterions(nestedName, entity, path, excludePropertes,
-					mode, ignoreZero));
+			criterions.addAll(getComponentCriterions(nestedName, entity, path, excludePropertes, mode,
+					ignoreZero));
 		}
 	}
 
@@ -295,8 +290,8 @@ public final class CriterionUtils {
 	 * @param value
 	 * @param criterions
 	 */
-	private static void addPrimativeCriterion(String name, Object value,
-			List<Criterion> criterions, boolean ignoreZero) {
+	private static void addPrimativeCriterion(String name, Object value, List<Criterion> criterions,
+			boolean ignoreZero) {
 		Criterion criterion = null;
 		if (value instanceof Number) {
 			if (ignoreZero) {
@@ -326,8 +321,7 @@ public final class CriterionUtils {
 	 * @param value
 	 * @param mode
 	 */
-	private static void addTrivialAttr(Map<String, Object> datas, String name, Object value,
-			MatchMode mode) {
+	private static void addTrivialAttr(Map<String, Object> datas, String name, Object value, MatchMode mode) {
 		if (value instanceof Number && ((Number) value).intValue() != 0) {
 			datas.put(name, value);
 		}
@@ -358,8 +352,7 @@ public final class CriterionUtils {
 		}
 	}
 
-	private static Map<String, Object> converToMap(String prefix, Component component,
-			MatchMode mode) {
+	private static Map<String, Object> converToMap(String prefix, Component component, MatchMode mode) {
 		if (null == component) { return Collections.EMPTY_MAP; }
 		Map<String, Object> datas = CollectUtils.newHashMap();
 		String attr = "";
@@ -395,8 +388,8 @@ public final class CriterionUtils {
 	 * @param enableLike
 	 * @return
 	 */
-	private static List<Criterion> getComponentCriterions(String nestedName, Object entity,
-			String property, String[] excludePropertes, MatchMode mode, boolean ignoreZero) {
+	private static List<Criterion> getComponentCriterions(String nestedName, Object entity, String property,
+			String[] excludePropertes, MatchMode mode, boolean ignoreZero) {
 		List<Criterion> criterions = CollectUtils.newArrayList();
 		Component component = null;
 		try {
@@ -425,14 +418,13 @@ public final class CriterionUtils {
 			}
 			Object value = map.get(propertyName);
 
-			addCriterion(nestedName, entity, excludePropertes, cascadeName, value, criterions,
-					mode, ignoreZero);
+			addCriterion(nestedName, entity, excludePropertes, cascadeName, value, criterions, mode,
+					ignoreZero);
 		}
 		return criterions;
 	}
 
-	public static void addSortListFor(Criteria criteria,
-			List<org.beangle.commons.collection.Order> sortList) {
+	public static void addSortListFor(Criteria criteria, List<org.beangle.commons.collection.Order> sortList) {
 		if (null == sortList) { return; }
 		for (final org.beangle.commons.collection.Order order : sortList) {
 			if (order.isAscending()) {

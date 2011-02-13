@@ -14,8 +14,8 @@ public class SuffixInflectionRule implements Rule {
 
 	/**
 	 * <p>
-	 * Construct a rule for words with suffix <code>singularSuffix</code> which
-	 * becomes <code>pluralSuffix</code> in the plural.
+	 * Construct a rule for words with suffix <code>singularSuffix</code> which becomes
+	 * <code>pluralSuffix</code> in the plural.
 	 * </p>
 	 * 
 	 * @param singularSuffix
@@ -29,9 +29,8 @@ public class SuffixInflectionRule implements Rule {
 
 	/**
 	 * <p>
-	 * Construct a rule for words with suffix <code>suffix</code>, where
-	 * <code>singularSuffix</code> becomes <code>pluralSuffix</code> in the
-	 * plural.
+	 * Construct a rule for words with suffix <code>suffix</code>, where <code>singularSuffix</code>
+	 * becomes <code>pluralSuffix</code> in the plural.
 	 * 
 	 * @param suffix
 	 *            the suffix, starting with a "-" character, which the end of
@@ -39,8 +38,7 @@ public class SuffixInflectionRule implements Rule {
 	 *            be used.
 	 * @param singularSuffix
 	 *            the singular suffix, starting with a "-" character. Note that
-	 *            it must be true that <code>suffix</code> ends with
-	 *            <code>singularSuffix</code>.
+	 *            it must be true that <code>suffix</code> ends with <code>singularSuffix</code>.
 	 * @param pluralSuffix
 	 *            the plural suffix, starting with a "-" character
 	 *            </p>

@@ -37,8 +37,8 @@ public class ExceptionTranslationFilter extends GenericHttpFilterBean {
 		Validate.notNull(throwableAnalyzer, "throwableAnalyzer must be specified");
 	}
 
-	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
+	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		try {
 			chain.doFilter(request, response);
 		} catch (IOException ex) {
@@ -63,9 +63,8 @@ public class ExceptionTranslationFilter extends GenericHttpFilterBean {
 		}
 	}
 
-	private void handleException(ServletRequest request, ServletResponse response,
-			FilterChain chain, BeangleSecurityException exception) throws IOException,
-			ServletException {
+	private void handleException(ServletRequest request, ServletResponse response, FilterChain chain,
+			BeangleSecurityException exception) throws IOException, ServletException {
 		if (exception instanceof AuthenticationException) {
 			logger.debug("Authentication exception occurred", exception);
 			sendStartAuthentication(request, response, chain, (AuthenticationException) exception);
@@ -84,8 +83,8 @@ public class ExceptionTranslationFilter extends GenericHttpFilterBean {
 	}
 
 	/**
-	 * If <code>true</code>, indicates that
-	 * <code>SecurityEnforcementFilter</code> is permitted to store the target
+	 * If <code>true</code>, indicates that <code>SecurityEnforcementFilter</code> is permitted to
+	 * store the target
 	 * URL and exception information in the <code>HttpSession</code> (the
 	 * default). In situations where you do not wish to unnecessarily create
 	 * <code>HttpSession</code>s - because the user agent will know the failed

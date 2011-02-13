@@ -27,12 +27,10 @@ public class User implements UserDetail {
 
 	/**
 	 * Construct the <code>User</code> with the details required by
-	 * {@link org.beangle.security.auth.dao.providers.dao.DaoAuthenticationProvider}
-	 * .
+	 * {@link org.beangle.security.auth.dao.providers.dao.DaoAuthenticationProvider} .
 	 * 
 	 * @param username
-	 *            the username presented to the
-	 *            <code>DaoAuthenticationProvider</code>
+	 *            the username presented to the <code>DaoAuthenticationProvider</code>
 	 * @param password
 	 *            the password that should be presented to the
 	 *            <code>DaoAuthenticationProvider</code>
@@ -72,12 +70,11 @@ public class User implements UserDetail {
 		if (!(rhs instanceof User) || (rhs == null)) { return false; }
 		User user = (User) rhs;
 		return new EqualsBuilder().append(getUsername(), user.getUsername())
-				.append(getPassword(), user.getPassword())
-				.append(isAccountExpired(), user.isAccountLocked())
+				.append(getPassword(), user.getPassword()).append(isAccountExpired(), user.isAccountLocked())
 				.append(isAccountLocked(), user.isAccountLocked())
 				.append(isCredentialsExpired(), user.isCredentialsExpired())
-				.append(getAuthorities(), user.getAuthorities())
-				.append(isEnabled(), user.isEnabled()).isEquals();
+				.append(getAuthorities(), user.getAuthorities()).append(isEnabled(), user.isEnabled())
+				.isEquals();
 	}
 
 	public Collection<GrantedAuthority> getAuthorities() {
@@ -93,9 +90,9 @@ public class User implements UserDetail {
 	}
 
 	public int hashCode() {
-		return new HashCodeBuilder().append(getAuthorities()).append(getPassword())
-				.append(getUsername()).append(isAccountExpired()).append(isAccountLocked())
-				.append(isCredentialsExpired()).append(isEnabled()).toHashCode();
+		return new HashCodeBuilder().append(getAuthorities()).append(getPassword()).append(getUsername())
+				.append(isAccountExpired()).append(isAccountLocked()).append(isCredentialsExpired())
+				.append(isEnabled()).toHashCode();
 	}
 
 	public boolean isAccountExpired() {

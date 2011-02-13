@@ -129,8 +129,7 @@ public class ClassUtils {
 		// framework is embedded
 
 		final Map<ClassLoader, Boolean> lookupMap = new ConcurrentHashMap<ClassLoader, Boolean>(8);
-		final List<ClassLoader> lookupList = Collections
-				.synchronizedList(new ArrayList<ClassLoader>());
+		final List<ClassLoader> lookupList = Collections.synchronizedList(new ArrayList<ClassLoader>());
 
 		final ClassLoader classLoader = getFwkClassLoader();
 
@@ -218,8 +217,8 @@ public class ClassUtils {
 		}
 
 		public boolean canSee(String className) {
-			return (bundle == null ? org.springframework.util.ClassUtils.isPresent(className,
-					classLoader) : isPresent(className, bundle));
+			return (bundle == null ? org.springframework.util.ClassUtils.isPresent(className, classLoader)
+					: isPresent(className, bundle));
 		}
 	}
 
@@ -421,8 +420,7 @@ public class ClassUtils {
 		Set<Class<?>> classes = new LinkedHashSet<Class<?>>(classNames.length);
 
 		for (int i = 0; i < classNames.length; i++) {
-			classes.add(org.springframework.util.ClassUtils.resolveClassName(classNames[i],
-					classLoader));
+			classes.add(org.springframework.util.ClassUtils.resolveClassName(classNames[i], classLoader));
 		}
 
 		return (Class[]) classes.toArray(new Class[classes.size()]);

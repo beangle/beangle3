@@ -19,8 +19,7 @@ public class PropertyAction extends BaseAction {
 	private PropertyConfigFactory configFactory;
 
 	public String index() {
-		OqlBuilder<PropertyConfigItemBean> builder = OqlBuilder.from(PropertyConfigItemBean.class,
-				"config");
+		OqlBuilder<PropertyConfigItemBean> builder = OqlBuilder.from(PropertyConfigItemBean.class, "config");
 		builder.orderBy("config.name");
 		List<PropertyConfigItemBean> configs = entityDao.search(builder);
 		put("propertyConfigs", configs);
@@ -44,8 +43,7 @@ public class PropertyAction extends BaseAction {
 
 		String msg = "info.save.success";
 		PropertyConfigItemBean newConfig = populate(PropertyConfigItemBean.class, "configNew");
-		if (StringUtils.isNotBlank(newConfig.getName())
-				&& StringUtils.isNotBlank(newConfig.getValue())
+		if (StringUtils.isNotBlank(newConfig.getName()) && StringUtils.isNotBlank(newConfig.getValue())
 				&& !names.contains(newConfig.getName())) {
 			entityDao.saveOrUpdate(newConfig);
 		}
@@ -54,8 +52,7 @@ public class PropertyAction extends BaseAction {
 	}
 
 	public String remove() {
-		PropertyConfigItemBean config = entityDao.get(PropertyConfigItemBean.class,
-				getLong("config.id"));
+		PropertyConfigItemBean config = entityDao.get(PropertyConfigItemBean.class, getLong("config.id"));
 		if (null != config) entityDao.remove(config);
 		return redirect("index", "info.save.success");
 	}

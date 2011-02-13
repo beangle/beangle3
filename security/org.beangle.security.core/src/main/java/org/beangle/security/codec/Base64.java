@@ -64,8 +64,8 @@ public class Base64 {
 			}
 		}
 
-		if (index != out.length) throw new Error("Miscalculated data length (wrote " + index
-				+ " instead of " + out.length + ")");
+		if (index != out.length) throw new Error("Miscalculated data length (wrote " + index + " instead of "
+				+ out.length + ")");
 		else return out;
 	}
 

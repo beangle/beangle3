@@ -7,8 +7,7 @@ package org.beangle.commons.archiver.zip;
 /**
  * Simple placeholder for all those extra fields we don't want to deal with.
  * <p>
- * Assumes local file data and central directory entries are identical - unless
- * told the opposite.
+ * Assumes local file data and central directory entries are identical - unless told the opposite.
  * </p>
  */
 public class UnrecognizedExtraField implements CentralDirectoryParsingZipExtraField {

@@ -51,9 +51,8 @@ public abstract class AbstractRegexReplacementRule implements Rule {
 
 	/**
 	 * <p>
-	 * Form the disjunction of the given regular expression patterns. For
-	 * example if patterns contains "a" and "b" then the disjunction is "(a|b)",
-	 * that is, "a or b".
+	 * Form the disjunction of the given regular expression patterns. For example if patterns
+	 * contains "a" and "b" then the disjunction is "(a|b)", that is, "a or b".
 	 * </p>
 	 * 
 	 * @param patterns
@@ -73,9 +72,8 @@ public abstract class AbstractRegexReplacementRule implements Rule {
 
 	/**
 	 * <p>
-	 * Form the disjunction of the given regular expression patterns. For
-	 * example if patterns contains "a" and "b" then the disjunction is "(a|b)",
-	 * that is, "a or b".
+	 * Form the disjunction of the given regular expression patterns. For example if patterns
+	 * contains "a" and "b" then the disjunction is "(a|b)", that is, "a or b".
 	 * </p>
 	 * 
 	 * @param patterns

@@ -14,24 +14,21 @@ import org.beangle.security.core.GrantedAuthority;
  */
 public interface UserDetail extends Serializable {
 	/**
-	 * Returns the username used to authenticate the user. Cannot return
-	 * <code>null</code>.
+	 * Returns the username used to authenticate the user. Cannot return <code>null</code>.
 	 * 
 	 * @return the username (never <code>null</code>)
 	 */
 	String getUsername();
 
 	/**
-	 * Returns the password used to authenticate the user. Cannot return
-	 * <code>null</code>.
+	 * Returns the password used to authenticate the user. Cannot return <code>null</code>.
 	 * 
 	 * @return the password (never <code>null</code>)
 	 */
 	String getPassword();
 
 	/**
-	 * Returns the authorities granted to the user. Cannot return
-	 * <code>null</code>.
+	 * Returns the authorities granted to the user. Cannot return <code>null</code>.
 	 * 
 	 * @return the authorities, sorted by natural key (never <code>null</code>)
 	 */
@@ -50,8 +47,7 @@ public interface UserDetail extends Serializable {
 	 * Indicates whether the user is locked or unlocked. A locked user cannot be
 	 * authenticated.
 	 * 
-	 * @return <code>true</code> if the user is not locked, <code>false</code>
-	 *         otherwise
+	 * @return <code>true</code> if the user is not locked, <code>false</code> otherwise
 	 */
 	boolean isAccountLocked();
 
@@ -68,8 +64,7 @@ public interface UserDetail extends Serializable {
 	 * Indicates whether the user is enabled or disabled. A disabled user cannot
 	 * be authenticated.
 	 * 
-	 * @return <code>true</code> if the user is enabled, <code>false</code>
-	 *         otherwise
+	 * @return <code>true</code> if the user is enabled, <code>false</code> otherwise
 	 */
 	boolean isEnabled();
 }

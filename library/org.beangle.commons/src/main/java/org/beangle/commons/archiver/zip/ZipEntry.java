@@ -163,8 +163,7 @@ public class ZipEntry extends java.util.zip.ZipEntry implements Cloneable {
 	 * @since Ant 1.6
 	 */
 	public int getUnixMode() {
-		return platform != PLATFORM_UNIX ? 0
-				: (int) ((getExternalAttributes() >> SHORT_SHIFT) & SHORT_MASK);
+		return platform != PLATFORM_UNIX ? 0 : (int) ((getExternalAttributes() >> SHORT_SHIFT) & SHORT_MASK);
 	}
 
 	/**
@@ -221,8 +220,7 @@ public class ZipEntry extends java.util.zip.ZipEntry implements Cloneable {
 	 * Adds an extra fields - replacing an already present extra field of the
 	 * same type.
 	 * <p>
-	 * If no extra field of the same type exists, the field will be added as
-	 * last field.
+	 * If no extra field of the same type exists, the field will be added as last field.
 	 * </p>
 	 * 
 	 * @param ze
@@ -350,8 +348,7 @@ public class ZipEntry extends java.util.zip.ZipEntry implements Cloneable {
 	/**
 	 * Make this class work in JDK 1.1 like a 1.2 class.
 	 * <p>
-	 * This either stores the size for later usage or invokes setCompressedSize
-	 * via reflection.
+	 * This either stores the size for later usage or invokes setCompressedSize via reflection.
 	 * </p>
 	 * 
 	 * @param size
@@ -444,8 +441,8 @@ public class ZipEntry extends java.util.zip.ZipEntry implements Cloneable {
 						existing.parseFromLocalFileData(b, 0, b.length);
 					} else {
 						byte[] b = f[i].getCentralDirectoryData();
-						((CentralDirectoryParsingZipExtraField) existing)
-								.parseFromCentralDirectoryData(b, 0, b.length);
+						((CentralDirectoryParsingZipExtraField) existing).parseFromCentralDirectoryData(b, 0,
+								b.length);
 					}
 				}
 			}

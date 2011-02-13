@@ -72,8 +72,7 @@ public class ResourceAction extends SecurityActionSupport {
 		resource.getEntities().addAll(objects);
 
 		String categoryIds = get("categoryIds");
-		List<UserCategory> categories = entityDao.get(UserCategory.class,
-				StrUtils.splitToLong(categoryIds));
+		List<UserCategory> categories = entityDao.get(UserCategory.class, StrUtils.splitToLong(categoryIds));
 		resource.getCategories().clear();
 		resource.getCategories().addAll(categories);
 

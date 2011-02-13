@@ -14,8 +14,7 @@ import org.apache.commons.lang.Validate;
  * @see java.lang.ThreadLocal
  * @see org.beangle.security.web.context.security.context.HttpSessionContextIntegrationFilter
  */
-public class InheritableThreadLocalSecurityContextHolderStrategy implements
-		SecurityContextHolderStrategy {
+public class InheritableThreadLocalSecurityContextHolderStrategy implements SecurityContextHolderStrategy {
 
 	private static ThreadLocal<SecurityContext> contextHolder = new InheritableThreadLocal<SecurityContext>();
 

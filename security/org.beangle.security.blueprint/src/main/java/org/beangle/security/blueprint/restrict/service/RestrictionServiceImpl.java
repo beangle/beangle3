@@ -58,8 +58,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		return (List<Restriction>) CollectionUtils.select(restrictions, new Predicate() {
 			public boolean evaluate(Object obj) {
 				Restriction restriciton = (Restriction) obj;
-				if (restriciton.isEnabled()
-						&& entities.contains(restriciton.getPattern().getEntity())) return true;
+				if (restriciton.isEnabled() && entities.contains(restriciton.getPattern().getEntity())) return true;
 				else return false;
 			}
 		});
@@ -135,8 +134,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 				return (1 != returned.size()) ? null : returned.get(0);
 			}
 		} catch (Exception e) {
-			throw new RuntimeException("exception with param type:" + field.getType() + " value:"
-					+ value, e);
+			throw new RuntimeException("exception with param type:" + field.getType() + " value:" + value, e);
 		}
 	}
 
@@ -152,8 +150,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 			}
 			String patternContent = pattern.getContent();
 			patternContent = StringUtils.replace(patternContent, "{alias}", query.getAlias());
-			String[] contents = StringUtils.split(
-					StringUtils.replace(patternContent, " and ", "$"), "$");
+			String[] contents = StringUtils.split(StringUtils.replace(patternContent, " and ", "$"), "$");
 
 			StringBuilder singleConBuf = new StringBuilder("(");
 			for (int i = 0; i < contents.length; i++) {
@@ -167,8 +164,8 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 						if (value.equals(Restriction.ALL)) {
 							content = "";
 						} else {
-							content = StringUtils.replace(content, ":" + param.getName(), ":"
-									+ param.getName() + index);
+							content = StringUtils.replace(content, ":" + param.getName(),
+									":" + param.getName() + index);
 							paramValues.add(getFieldValue(param, restriction));
 						}
 					} else {
@@ -199,8 +196,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 
 	private RestrictField getRestrictField(String fieldName) {
 		List<RestrictField> fields = entityDao.get(RestrictField.class, "name", fieldName);
-		if (1 != fields.size()) { throw new RuntimeException("bad pattern parameter named :"
-				+ fieldName); }
+		if (1 != fields.size()) { throw new RuntimeException("bad pattern parameter named :" + fieldName); }
 		return fields.get(0);
 	}
 

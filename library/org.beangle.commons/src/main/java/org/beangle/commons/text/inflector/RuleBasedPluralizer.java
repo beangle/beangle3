@@ -30,8 +30,7 @@ public class RuleBasedPluralizer implements Pluralizer {
 
 	/**
 	 * <p>
-	 * Constructs a pluralizer with an empty list of rules. Use the setters to
-	 * configure.
+	 * Constructs a pluralizer with an empty list of rules. Use the setters to configure.
 	 * </p>
 	 */
 	@SuppressWarnings("unchecked")
@@ -41,9 +40,8 @@ public class RuleBasedPluralizer implements Pluralizer {
 
 	/**
 	 * <p>
-	 * Constructs a pluralizer that uses a list of rules then an identity
-	 * {@link Pluralizer} if none of the rules match. This is useful to build
-	 * your own {@link Pluralizer} from scratch.
+	 * Constructs a pluralizer that uses a list of rules then an identity {@link Pluralizer} if none
+	 * of the rules match. This is useful to build your own {@link Pluralizer} from scratch.
 	 * </p>
 	 * 
 	 * @param rules
@@ -57,9 +55,8 @@ public class RuleBasedPluralizer implements Pluralizer {
 
 	/**
 	 * <p>
-	 * Constructs a pluralizer that uses first a list of rules then a fallback
-	 * {@link Pluralizer}. This is useful to override the behaviour of an
-	 * existing {@link Pluralizer}.
+	 * Constructs a pluralizer that uses first a list of rules then a fallback {@link Pluralizer}.
+	 * This is useful to override the behaviour of an existing {@link Pluralizer}.
 	 * </p>
 	 * 
 	 * @param rules
@@ -120,9 +117,8 @@ public class RuleBasedPluralizer implements Pluralizer {
 
 	/**
 	 * <p>
-	 * Converts a noun or pronoun to its plural form for the given number of
-	 * instances. If <code>number</code> is 1, <code>word</code> is returned
-	 * unchanged.
+	 * Converts a noun or pronoun to its plural form for the given number of instances. If
+	 * <code>number</code> is 1, <code>word</code> is returned unchanged.
 	 * </p>
 	 * <p>
 	 * The return value is not defined if this method is passed a plural form.
@@ -152,9 +148,8 @@ public class RuleBasedPluralizer implements Pluralizer {
 
 	/**
 	 * <p>
-	 * Goes through the rules in turn until a match is found at which point the
-	 * rule is applied and the result returned. If no rule matches, returns
-	 * <code>null</code>.
+	 * Goes through the rules in turn until a match is found at which point the rule is applied and
+	 * the result returned. If no rule matches, returns <code>null</code>.
 	 * </p>
 	 * 
 	 * @param word
@@ -171,14 +166,12 @@ public class RuleBasedPluralizer implements Pluralizer {
 
 	/**
 	 * <p>
-	 * Apply processing to <code>pluralizedWord</code>. This implementation
-	 * ensures the case of the plural is consistent with the case of the input
-	 * word.
+	 * Apply processing to <code>pluralizedWord</code>. This implementation ensures the case of the
+	 * plural is consistent with the case of the input word.
 	 * </p>
 	 * <p>
-	 * If <code>trimmedWord</code> is all uppercase, then
-	 * <code>pluralizedWord</code> is uppercased. If <code>trimmedWord</code> is
-	 * titlecase, then <code>pluralizedWord</code> is titlecased.
+	 * If <code>trimmedWord</code> is all uppercase, then <code>pluralizedWord</code> is uppercased.
+	 * If <code>trimmedWord</code> is titlecase, then <code>pluralizedWord</code> is titlecased.
 	 * </p>
 	 * 
 	 * @param trimmedWord
@@ -190,8 +183,9 @@ public class RuleBasedPluralizer implements Pluralizer {
 	protected String postProcess(String trimmedWord, String pluralizedWord) {
 		if (trimmedWord.matches("^\\p{Lu}+$")) {
 			return pluralizedWord.toUpperCase(locale);
-		} else if (trimmedWord.matches("^\\p{Lu}.*")) { return pluralizedWord.substring(0, 1)
-				.toUpperCase(locale) + pluralizedWord.substring(1); }
+		} else if (trimmedWord.matches("^\\p{Lu}.*")) { return pluralizedWord.substring(0, 1).toUpperCase(
+				locale)
+				+ pluralizedWord.substring(1); }
 		return pluralizedWord;
 	}
 

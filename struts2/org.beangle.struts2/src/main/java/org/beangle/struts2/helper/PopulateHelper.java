@@ -45,8 +45,7 @@ public class PopulateHelper {
 
 	public static Object populate(String entityName) {
 		EntityType type = Model.getEntityType(entityName);
-		return populate(type.newInstance(), type.getEntityName(),
-				EntityUtils.getCommandName(entityName));
+		return populate(type.newInstance(), type.getEntityName(), EntityUtils.getCommandName(entityName));
 	}
 
 	public static Object populate(String entityName, String name) {

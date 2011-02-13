@@ -38,8 +38,7 @@ public abstract class AbstractDialect implements Dialect {
 			String referencedTable, String[] primaryKey, boolean referencesPrimaryKey) {
 		StringBuffer res = new StringBuffer(30);
 		res.append(" add constraint ").append(constraintName).append(" foreign key (")
-				.append(StrUtils.join(foreignKey, ", ")).append(") references ")
-				.append(referencedTable);
+				.append(StrUtils.join(foreignKey, ", ")).append(") references ").append(referencedTable);
 		if (!referencesPrimaryKey) {
 			res.append(" (").append(StrUtils.join(primaryKey, ", ")).append(')');
 		}

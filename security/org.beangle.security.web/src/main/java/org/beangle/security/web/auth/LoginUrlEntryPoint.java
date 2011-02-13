@@ -22,18 +22,16 @@ import org.springframework.beans.factory.InitializingBean;
 
 /**
  * <p>
- * Used by the <code>SecurityEnforcementFilter</code> to commence authentication
- * via the {@link UsernamePasswordAuthenticationFilter}. This object holds the
- * location of the login form, relative to the web app context path, and is used
- * to commence a redirect to that form.
+ * Used by the <code>SecurityEnforcementFilter</code> to commence authentication via the
+ * {@link UsernamePasswordAuthenticationFilter}. This object holds the location of the login form,
+ * relative to the web app context path, and is used to commence a redirect to that form.
  * <p>
- * By setting the <em>forceHttps</em> property to true, you may configure the
- * class to force the protocol used for the login form to be <code>HTTPS</code>,
- * even if the original intercepted request for a resource used the
- * <code>HTTP</code> protocol. When this happens, after a successful login (via
- * HTTPS), the original resource will still be accessed as HTTP, via the
- * original request URL. For the forced HTTPS feature to work, the
- * {@link PortMapper} is consulted to determine the HTTP:HTTPS pairs.
+ * By setting the <em>forceHttps</em> property to true, you may configure the class to force the
+ * protocol used for the login form to be <code>HTTPS</code>, even if the original intercepted
+ * request for a resource used the <code>HTTP</code> protocol. When this happens, after a successful
+ * login (via HTTPS), the original resource will still be accessed as HTTP, via the original request
+ * URL. For the forced HTTPS feature to work, the {@link PortMapper} is consulted to determine the
+ * HTTP:HTTPS pairs.
  * 
  * @author chaostone
  */
@@ -59,8 +57,7 @@ public class LoginUrlEntryPoint implements UrlEntryPoint, InitializingBean {
 	 *            the response
 	 * @param exception
 	 *            the exception
-	 * @return the URL (cannot be null or empty; defaults to
-	 *         {@link #getLoginFormUrl()})
+	 * @return the URL (cannot be null or empty; defaults to {@link #getLoginFormUrl()})
 	 */
 	protected String determineUrlToUseForThisRequest(HttpServletRequest request,
 			HttpServletResponse response, AuthenticationException exception) {
@@ -77,8 +74,7 @@ public class LoginUrlEntryPoint implements UrlEntryPoint, InitializingBean {
 
 		String redirectUrl = null;
 		if (serverSideRedirect) {
-			String loginForm = determineUrlToUseForThisRequest(httpRequest, httpResponse,
-					authException);
+			String loginForm = determineUrlToUseForThisRequest(httpRequest, httpResponse, authException);
 			logger.debug("Server side forward to: {}", loginForm);
 			RequestDispatcher dispatcher = httpRequest.getRequestDispatcher(loginForm);
 			dispatcher.forward(request, response);
@@ -104,8 +100,8 @@ public class LoginUrlEntryPoint implements UrlEntryPoint, InitializingBean {
 	}
 
 	/**
-	 * Tells if we are to do a server side include of the
-	 * <code>loginFormUrl</code> instead of a 302 redirect.
+	 * Tells if we are to do a server side include of the <code>loginFormUrl</code> instead of a 302
+	 * redirect.
 	 * 
 	 * @param serverSideRedirect
 	 */

@@ -21,8 +21,7 @@ public class OrderTest {
 			sorts.add(new Order(" teachPlan.major.code "));
 			// sorts.add(new Order("teachPlan.stdType"));
 		}
-		assertEquals(Order.toSortString(sorts),
-				"order by teachPlan.grade desc,teachPlan.major.code");
+		assertEquals(Order.toSortString(sorts), "order by teachPlan.grade desc,teachPlan.major.code");
 	}
 
 	@Test
@@ -59,12 +58,10 @@ public class OrderTest {
 
 	@Test
 	public void testParserComplexOrder() {
-		List<Order> sorts = Order
-				.parse("(case when ware.price is null then 0 else ware.price end) desc");
+		List<Order> sorts = Order.parse("(case when ware.price is null then 0 else ware.price end) desc");
 		assertEquals(sorts.size(), 1);
 		Order order = (Order) sorts.get(0);
-		assertEquals(order.getProperty(),
-				"(case when ware.price is null then 0 else ware.price end)");
+		assertEquals(order.getProperty(), "(case when ware.price is null then 0 else ware.price end)");
 		assertFalse(order.isAscending());
 	}
 }

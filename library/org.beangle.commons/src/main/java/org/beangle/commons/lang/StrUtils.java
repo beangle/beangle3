@@ -302,8 +302,7 @@ public final class StrUtils {
 	 * @param delimiter
 	 * @return
 	 */
-	public static String intersectSeq(final String first, final String second,
-			final String delimiter) {
+	public static String intersectSeq(final String first, final String second, final String delimiter) {
 		if (StringUtils.isEmpty(first) || StringUtils.isEmpty(second)) { return ""; }
 		List<String> firstSeq = Arrays.asList(StringUtils.split(first, ","));
 		List<String> secondSeq = Arrays.asList(StringUtils.split(second, ","));

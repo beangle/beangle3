@@ -35,14 +35,12 @@ public class FilterChainProxy extends GenericFilterBean {
 		if (filters == null || filters.size() == 0) {
 			if (logger.isDebugEnabled()) {
 				logger.debug(fi.getRequestUrl()
-						+ (filters == null ? " has no matching filters"
-								: " has an empty filter list"));
+						+ (filters == null ? " has no matching filters" : " has an empty filter list"));
 			}
 			chain.doFilter(request, response);
 			return;
 		}
-		VirtualFilterChain virtualFilterChain = new VirtualFilterChain(fi.getRequestUrl(), chain,
-				filters);
+		VirtualFilterChain virtualFilterChain = new VirtualFilterChain(fi.getRequestUrl(), chain, filters);
 		virtualFilterChain.doFilter(fi.getRequest(), fi.getResponse());
 	}
 
@@ -86,11 +84,11 @@ public class FilterChainProxy extends GenericFilterBean {
 
 	/**
 	 * A <code>FilterChain</code> that records whether or not
-	 * {@link FilterChain#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse)}
-	 * is called.
+	 * {@link FilterChain#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse)} is
+	 * called.
 	 * <p>
-	 * This <code>FilterChain</code> is used by <code>FilterChainProxy</code> to
-	 * determine if the next <code>Filter</code> should be called or not.
+	 * This <code>FilterChain</code> is used by <code>FilterChainProxy</code> to determine if the
+	 * next <code>Filter</code> should be called or not.
 	 * </p>
 	 */
 	private static class VirtualFilterChain implements FilterChain {
@@ -109,16 +107,14 @@ public class FilterChainProxy extends GenericFilterBean {
 				ServletException {
 			if (currentPosition == additionalFilters.size()) {
 				if (logger.isDebugEnabled()) {
-					logger.debug("{} reached end of filter chain; proceeding with original chain",
-							url);
+					logger.debug("{} reached end of filter chain; proceeding with original chain", url);
 				}
 				originalChain.doFilter(request, response);
 			} else {
 				currentPosition++;
 				Filter nextFilter = (Filter) additionalFilters.get(currentPosition - 1);
 				if (logger.isDebugEnabled()) {
-					logger.debug(url + " at position " + currentPosition + " of "
-							+ additionalFilters.size()
+					logger.debug(url + " at position " + currentPosition + " of " + additionalFilters.size()
 							+ " in additional filter chain; firing Filter: '" + nextFilter + "'");
 				}
 				nextFilter.doFilter(request, response, this);

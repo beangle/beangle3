@@ -84,8 +84,7 @@ public final class ConditionUtils {
 				}
 			}
 		} catch (Exception e) {
-			logger.debug("error occur in extractConditions for  bean {} with attr named {}",
-					entity, attr);
+			logger.debug("error occur in extractConditions for  bean {} with attr named {}", entity, attr);
 		}
 		return conditions;
 	}
@@ -132,8 +131,7 @@ public final class ConditionUtils {
 	 * @param value
 	 * @param mode
 	 */
-	private static void addAttrCondition(final List<Condition> conditions, final String name,
-			Object value) {
+	private static void addAttrCondition(final List<Condition> conditions, final String name, Object value) {
 		if (value instanceof String) {
 			if (StringUtils.isBlank((String) value)) { return; }
 			StringBuilder content = new StringBuilder(name);
@@ -148,8 +146,8 @@ public final class ConditionUtils {
 				Object property = PropertyUtils.getProperty(value, key);
 				if (ValidEntityKeyPredicate.getInstance().evaluate(property)) {
 					StringBuilder content = new StringBuilder(name);
-					content.append('.').append(key).append(" = :").append(name.replace('.', '_'))
-							.append('_').append(key);
+					content.append('.').append(key).append(" = :").append(name.replace('.', '_')).append('_')
+							.append(key);
 					conditions.add(new Condition(content.toString(), property));
 				}
 			} catch (Exception e) {
@@ -188,8 +186,8 @@ public final class ConditionUtils {
 			}
 
 		} catch (Exception e) {
-			logger.warn("error occur in extractComponent of component:" + component
-					+ "with attr named :" + attr);
+			logger.warn("error occur in extractComponent of component:" + component + "with attr named :"
+					+ attr);
 		}
 		return conditions;
 	}

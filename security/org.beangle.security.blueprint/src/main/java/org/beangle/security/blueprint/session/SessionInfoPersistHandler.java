@@ -16,8 +16,7 @@ import org.beangle.security.web.auth.WebAuthenticationDetails;
 import org.beangle.security.web.auth.logout.LogoutHandler;
 import org.springframework.beans.factory.InitializingBean;
 
-public class SessionInfoPersistHandler extends BaseServiceImpl implements LogoutHandler,
-		InitializingBean {
+public class SessionInfoPersistHandler extends BaseServiceImpl implements LogoutHandler, InitializingBean {
 
 	private SessionRegistry sessionRegistry;
 

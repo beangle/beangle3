@@ -25,7 +25,7 @@ public class HibernateEntityDaoTest extends ConfigurationTest {
 	 */
 	public void testUpdate() {
 		EntityDao entityDao = (EntityDao) applicationContext.getBean("entityDao");
-		entityDao.update(Employer.class, "id", new Long[] { 1L },
-				new String[] { "name.firstName" }, new Object[] { "me" });
+		entityDao.update(Employer.class, "id", new Long[] { 1L }, new String[] { "name.firstName" },
+				new Object[] { "me" });
 	}
 }

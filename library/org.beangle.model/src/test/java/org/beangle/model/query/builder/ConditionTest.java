@@ -20,8 +20,7 @@ public class ConditionTest {
 	}
 
 	public void testVarArgs() {
-		Condition c = new Condition("entity.code =:code  entity.id in (:ids)", "aa",
-				new Long[] { 1L });
+		Condition c = new Condition("entity.code =:code  entity.id in (:ids)", "aa", new Long[] { 1L });
 		assertEquals(2, ConditionUtils.getParamMap(c).size());
 
 		Condition c1 = new Condition("entity.id in (:ids)", new Long[] { 1L, 2L });

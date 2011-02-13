@@ -47,8 +47,7 @@ public class MyAction extends SecurityActionSupport {
 	}
 
 	public String activity() {
-		OqlBuilder<SessionActivity> query = OqlBuilder.from(SessionActivity.class,
-				"sessionActivity");
+		OqlBuilder<SessionActivity> query = OqlBuilder.from(SessionActivity.class, "sessionActivity");
 		query.where("sessionActivity.name=:name", getUsername());
 		query.orderBy(Order.parse("sessionActivity.loginAt desc"));
 		PageLimit limit = getPageLimit();

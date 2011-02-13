@@ -61,8 +61,7 @@ public class CsvWriter implements Closeable {
 			if (nextElement == null) continue;
 			if (!format.isDelimiter(NO_QUOTE_CHARACTER)) sb.append(format.getDelimiter());
 
-			sb.append(stringContainsSpecialCharacters(nextElement) ? processLine(nextElement)
-					: nextElement);
+			sb.append(stringContainsSpecialCharacters(nextElement) ? processLine(nextElement) : nextElement);
 
 			if (!format.isDelimiter(NO_QUOTE_CHARACTER)) sb.append(format.getDelimiter());
 		}
@@ -72,8 +71,7 @@ public class CsvWriter implements Closeable {
 	}
 
 	private boolean stringContainsSpecialCharacters(String line) {
-		return line.indexOf(format.getDelimiter()) != -1
-				|| line.indexOf(format.getDelimiter()) != -1;
+		return line.indexOf(format.getDelimiter()) != -1 || line.indexOf(format.getDelimiter()) != -1;
 	}
 
 	protected StringBuilder processLine(String nextElement) {

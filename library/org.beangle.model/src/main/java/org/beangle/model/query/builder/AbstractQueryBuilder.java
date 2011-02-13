@@ -52,8 +52,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
 	protected boolean cacheable = false;
 
 	public Map<String, Object> getParams() {
-		return (null == params) ? ConditionUtils.getParamMap(conditions) : CollectUtils
-				.newHashMap(params);
+		return (null == params) ? ConditionUtils.getParamMap(conditions) : CollectUtils.newHashMap(params);
 	}
 
 	/**

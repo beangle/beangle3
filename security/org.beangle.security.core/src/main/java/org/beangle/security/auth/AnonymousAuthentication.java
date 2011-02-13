@@ -14,8 +14,7 @@ public class AnonymousAuthentication extends AbstractAuthentication {
 
 	private Object principal;
 
-	public AnonymousAuthentication(Object principal,
-			Collection<? extends GrantedAuthority> authorities) {
+	public AnonymousAuthentication(Object principal, Collection<? extends GrantedAuthority> authorities) {
 		super(authorities);
 		this.principal = principal;
 		setAuthenticated(true);

@@ -37,8 +37,8 @@ public class ExtraFieldUtils {
 	/**
 	 * Register a ZipExtraField implementation.
 	 * <p>
-	 * The given class must have a no-arg constructor and implement the
-	 * {@link ZipExtraField ZipExtraField interface}.
+	 * The given class must have a no-arg constructor and implement the {@link ZipExtraField
+	 * ZipExtraField interface}.
 	 * </p>
 	 * 
 	 * @param c
@@ -59,8 +59,8 @@ public class ExtraFieldUtils {
 	}
 
 	/**
-	 * Create an instance of the approriate ExtraField, falls back to
-	 * {@link UnrecognizedExtraField UnrecognizedExtraField}.
+	 * Create an instance of the approriate ExtraField, falls back to {@link UnrecognizedExtraField
+	 * UnrecognizedExtraField}.
 	 * 
 	 * @param headerId
 	 *            the header identifier
@@ -113,15 +113,15 @@ public class ExtraFieldUtils {
 		while (start <= data.length - WORD) {
 			ZipShort headerId = new ZipShort(data, start);
 			int length = (new ZipShort(data, start + 2)).getValue();
-			if (start + WORD + length > data.length) { throw new ZipException("data starting at "
-					+ start + " is in unknown format"); }
+			if (start + WORD + length > data.length) { throw new ZipException("data starting at " + start
+					+ " is in unknown format"); }
 			try {
 				ZipExtraField ze = createExtraField(headerId);
 				if (local || !(ze instanceof CentralDirectoryParsingZipExtraField)) {
 					ze.parseFromLocalFileData(data, start + WORD, length);
 				} else {
-					((CentralDirectoryParsingZipExtraField) ze).parseFromCentralDirectoryData(data,
-							start + WORD, length);
+					((CentralDirectoryParsingZipExtraField) ze).parseFromCentralDirectoryData(data, start
+							+ WORD, length);
 				}
 				v.add(ze);
 			} catch (InstantiationException ie) {
@@ -178,8 +178,7 @@ public class ExtraFieldUtils {
 		int start = 0;
 		for (int i = 0; i < data.length; i++) {
 			System.arraycopy(data[i].getHeaderId().getBytes(), 0, result, start, 2);
-			System.arraycopy(data[i].getCentralDirectoryLength().getBytes(), 0, result, start + 2,
-					2);
+			System.arraycopy(data[i].getCentralDirectoryLength().getBytes(), 0, result, start + 2, 2);
 			byte[] local = data[i].getCentralDirectoryData();
 			System.arraycopy(local, 0, result, start + WORD, local.length);
 			start += (local.length + WORD);

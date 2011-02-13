@@ -38,8 +38,8 @@ public class AnonymousAuthenticationFilter extends GenericHttpFilterBean {
 	 *            to assist the method determine request details
 	 * @return <code>true</code> if the anonymous token should be setup for this
 	 *         request (provided that the request doesn't already have some
-	 *         other <code>Authentication</code> inside it), or
-	 *         <code>false</code> if no anonymous token should be setup for this
+	 *         other <code>Authentication</code> inside it), or <code>false</code> if no anonymous
+	 *         token should be setup for this
 	 *         request
 	 */
 	protected boolean applyAnonymousForThisRequest(HttpServletRequest request) {
@@ -52,8 +52,8 @@ public class AnonymousAuthenticationFilter extends GenericHttpFilterBean {
 		return auth;
 	}
 
-	protected void doFilterHttp(HttpServletRequest request, HttpServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
+	protected void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		boolean addedToken = false;
 
 		if (applyAnonymousForThisRequest(request)) {
@@ -108,10 +108,9 @@ public class AnonymousAuthenticationFilter extends GenericHttpFilterBean {
 	 * HttpSessionContextIntegrationFilter} simply to store the Anonymous
 	 * authentication token.
 	 * <p>
-	 * Defaults to <code>true</code>, being the most optimal and appropriate
-	 * option (ie <code>AnonymousProcessingFilter</code> will clear the token at
-	 * the end of each request, thus avoiding the session creation overhead in a
-	 * typical configuration.
+	 * Defaults to <code>true</code>, being the most optimal and appropriate option (ie
+	 * <code>AnonymousProcessingFilter</code> will clear the token at the end of each request, thus
+	 * avoiding the session creation overhead in a typical configuration.
 	 * </p>
 	 * 
 	 * @param removeAfterRequest

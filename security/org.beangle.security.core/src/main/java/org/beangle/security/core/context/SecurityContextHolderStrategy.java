@@ -34,8 +34,7 @@ public interface SecurityContextHolderStrategy {
 	 * @param context
 	 *            to the new argument (should never be <code>null</code>,
 	 *            although implementations must check if <code>null</code> has
-	 *            been passed and throw an <code>IllegalArgumentException</code>
-	 *            in such cases)
+	 *            been passed and throw an <code>IllegalArgumentException</code> in such cases)
 	 */
 	void setContext(SecurityContext context);
 }

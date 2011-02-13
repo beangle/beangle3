@@ -9,10 +9,9 @@ package org.beangle.security.cas.auth;
  * cache. Useful in instances where storing of tickets for stateless session
  * management is not required.
  * <p>
- * This is the default StatelessTicketCache of the @link
- * {@link CasAuthenticationProvider} to eliminate the unnecessary dependency on
- * EhCache that applications have even if they are not using the stateless
- * session management.
+ * This is the default StatelessTicketCache of the @link {@link CasAuthenticationProvider} to
+ * eliminate the unnecessary dependency on EhCache that applications have even if they are not using
+ * the stateless session management.
  * 
  * @author chaostone
  * @see CasAuthenticationProvider

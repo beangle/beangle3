@@ -51,8 +51,8 @@ public class HibernateEntityContext extends AbstractEntityContext {
 				ClassMetadata cm = (ClassMetadata) iter.next();
 				buildEntityType(sessionFactory, cm.getEntityName());
 			}
-			logger.info("Find {} entities,{} collections from hibernate in {} ms", new Object[] {
-					entityTypes.size(), collectionTypes.size(), watch.getTime() });
+			logger.info("Find {} entities,{} collections from hibernate in {} ms",
+					new Object[] { entityTypes.size(), collectionTypes.size(), watch.getTime() });
 			if (logger.isDebugEnabled()) {
 				loggerTypeInfo();
 			}
@@ -65,10 +65,8 @@ public class HibernateEntityContext extends AbstractEntityContext {
 		Collections.sort(names);
 		for (final String entityName : names) {
 			EntityType entityType = (EntityType) entityTypes.get(entityName);
-			logger.debug("entity:{}-->{}", entityType.getEntityName(), entityType.getEntityClass()
-					.getName());
-			logger.debug("propertyType size:{}",
-					Integer.valueOf(entityType.getPropertyTypes().size()));
+			logger.debug("entity:{}-->{}", entityType.getEntityName(), entityType.getEntityClass().getName());
+			logger.debug("propertyType size:{}", Integer.valueOf(entityType.getPropertyTypes().size()));
 		}
 		names.clear();
 		names.addAll(collectionTypes.keySet());
@@ -113,16 +111,16 @@ public class HibernateEntityContext extends AbstractEntityContext {
 				} else if (type.isCollectionType()) {
 					propertyTypes.put(
 							ps[i],
-							buildCollectionType(sessionFactory, defaultCollectionClass(type),
-									entityName + "." + ps[i]));
+							buildCollectionType(sessionFactory, defaultCollectionClass(type), entityName
+									+ "." + ps[i]));
 				}
 			}
 		}
 		return entityType;
 	}
 
-	private CollectionType buildCollectionType(SessionFactory sessionFactory,
-			Class<?> collectionClass, String role) {
+	private CollectionType buildCollectionType(SessionFactory sessionFactory, Class<?> collectionClass,
+			String role) {
 		CollectionMetadata cm = sessionFactory.getCollectionMetadata(role);
 		// FIXME buildCollectionType
 		if (null == cm) { return null; }
@@ -163,21 +161,19 @@ public class HibernateEntityContext extends AbstractEntityContext {
 		ComponentType cType = new ComponentType(hcType.getReturnedClass());
 		Map<String, Type> propertyTypes = cType.getPropertyTypes();
 		for (int j = 0; j < propertyNames.length; j++) {
-			org.hibernate.type.Type type = cm
-					.getPropertyType(propertyName + "." + propertyNames[j]);
+			org.hibernate.type.Type type = cm.getPropertyType(propertyName + "." + propertyNames[j]);
 			if (type.isEntityType()) {
-				propertyTypes
-						.put(propertyNames[j], buildEntityType(sessionFactory, type.getName()));
+				propertyTypes.put(propertyNames[j], buildEntityType(sessionFactory, type.getName()));
 			} else if (type.isComponentType()) {
-				propertyTypes.put(
-						propertyNames[j],
-						buildComponentType(sessionFactory, entityName, propertyName + "."
-								+ propertyNames[j]));
+				propertyTypes
+						.put(propertyNames[j],
+								buildComponentType(sessionFactory, entityName, propertyName + "."
+										+ propertyNames[j]));
 			} else if (type.isCollectionType()) {
 				propertyTypes.put(
 						propertyNames[j],
-						buildCollectionType(sessionFactory, defaultCollectionClass(type),
-								entityName + "." + propertyName + "." + propertyNames[j]));
+						buildCollectionType(sessionFactory, defaultCollectionClass(type), entityName + "."
+								+ propertyName + "." + propertyNames[j]));
 			}
 		}
 		return cType;

@@ -6,10 +6,9 @@ package org.beangle.struts2.convention.config;
 
 /**
  * <p>
- * This interface defines how the action configurations for the current web
- * application can be constructed. This must find all actions that are not
- * specifically defined in the struts XML files or any plugins. Furthermore, it
- * must make every effort to locate all action results as well.
+ * This interface defines how the action configurations for the current web application can be
+ * constructed. This must find all actions that are not specifically defined in the struts XML files
+ * or any plugins. Furthermore, it must make every effort to locate all action results as well.
  * </p>
  */
 public interface ActionConfigBuilder {

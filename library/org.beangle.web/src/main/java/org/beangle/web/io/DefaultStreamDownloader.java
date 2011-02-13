@@ -45,8 +45,7 @@ public class DefaultStreamDownloader implements InitializingBean, StreamDownload
 		download(request, response, file, file.getName());
 	}
 
-	public void download(HttpServletRequest request, HttpServletResponse response, URL url,
-			String display) {
+	public void download(HttpServletRequest request, HttpServletResponse response, URL url, String display) {
 		try {
 			download(request, response, url.openStream(), url.getFile(), display);
 		} catch (Exception e) {
@@ -54,8 +53,7 @@ public class DefaultStreamDownloader implements InitializingBean, StreamDownload
 		}
 	}
 
-	public void download(HttpServletRequest request, HttpServletResponse response, File file,
-			String display) {
+	public void download(HttpServletRequest request, HttpServletResponse response, File file, String display) {
 		Validate.notNull(file, "file shouldn't be null");
 		Validate.isTrue(file.exists(), "file should exists");
 		try {
@@ -65,8 +63,7 @@ public class DefaultStreamDownloader implements InitializingBean, StreamDownload
 		}
 	}
 
-	protected void addContent(HttpServletRequest request, HttpServletResponse response,
-			String attach) {
+	protected void addContent(HttpServletRequest request, HttpServletResponse response, String attach) {
 		String contentType = response.getContentType();
 		if (null == contentType) {
 			contentType = mimeTypeProvider.getMimeType(StringUtils.substringAfterLast(attach, "."),
@@ -79,8 +76,8 @@ public class DefaultStreamDownloader implements InitializingBean, StreamDownload
 		response.setHeader("Location", encodeName);
 	}
 
-	public void download(HttpServletRequest request, HttpServletResponse response,
-			InputStream inStream, String name, String display) {
+	public void download(HttpServletRequest request, HttpServletResponse response, InputStream inStream,
+			String name, String display) {
 		String attach_name = getAttachName(name, display);
 		try {
 			response.reset();

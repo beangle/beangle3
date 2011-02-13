@@ -58,8 +58,8 @@ public enum BrowserCategory {
 
 	SEAMONKEY("SeaMonkey", Engine.GECKO, "SeaMonkey"),
 
-	BOT("Robot/Spider", Engine.OTHER, "Googlebot", "bot", "spider", "crawler", "Feedfetcher",
-			"Slurp", "Twiceler", "Nutch", "BecomeBot"),
+	BOT("Robot/Spider", Engine.OTHER, "Googlebot", "bot", "spider", "crawler", "Feedfetcher", "Slurp",
+			"Twiceler", "Nutch", "BecomeBot"),
 
 	MOZILLA("Mozilla", Engine.OTHER, "Mozilla", "Moozilla"),
 

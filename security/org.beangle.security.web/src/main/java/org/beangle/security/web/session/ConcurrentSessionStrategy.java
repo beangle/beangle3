@@ -53,8 +53,7 @@ public class ConcurrentSessionStrategy implements SessionStrategy {
 		SessionInfo leastRecentlyUsed = null;
 		for (int i = 0; i < sessions.size(); i++) {
 			if ((leastRecentlyUsed == null)
-					|| sessions.get(i).getLastAccessAt()
-							.before(leastRecentlyUsed.getLastAccessAt())) {
+					|| sessions.get(i).getLastAccessAt().before(leastRecentlyUsed.getLastAccessAt())) {
 				leastRecentlyUsed = (SessionInfo) sessions.get(i);
 			}
 		}

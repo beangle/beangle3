@@ -31,8 +31,7 @@ public class Theme {
 
 	public String getTemplatePath(Class<?> clazz, String suffix) {
 		StringBuilder sb = new StringBuilder(20);
-		sb.append("/template/").append(name).append('/').append(getTemplateName(clazz))
-				.append(suffix);
+		sb.append("/template/").append(name).append('/').append(getTemplateName(clazz)).append(suffix);
 		return sb.toString();
 	}
 

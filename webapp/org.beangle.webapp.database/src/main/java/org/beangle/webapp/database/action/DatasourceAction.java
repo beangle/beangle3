@@ -33,8 +33,7 @@ public class DatasourceAction extends SecurityActionSupport {
 				driverinfo.put("Driver Version", dm.getDriverVersion());
 				dbinfo.put("Database Name", dm.getDatabaseProductName());
 				dbinfo.put("Database Version", dm.getDatabaseProductVersion());
-				jdbcinfo.put("JDBC Version",
-						dm.getJDBCMajorVersion() + "." + dm.getJDBCMinorVersion());
+				jdbcinfo.put("JDBC Version", dm.getJDBCMajorVersion() + "." + dm.getJDBCMinorVersion());
 				StringBuilder catelogs = new StringBuilder();
 				dbinfo.put("Avalilable Catalogs", catelogs);
 				java.sql.ResultSet rs = dm.getCatalogs();

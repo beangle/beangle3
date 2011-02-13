@@ -53,7 +53,6 @@ public class ApplyTest {
 				+ "where ((exists(from user.groups as g where g.group in(:groups0))))");
 		Assert.assertNotNull(params);
 		Assert.assertEquals(params.size(), 1);
-		Assert.assertEquals(params.get("groups0"),
-				CollectUtils.newArrayList(new GroupBean(1L, "group1")));
+		Assert.assertEquals(params.get("groups0"), CollectUtils.newArrayList(new GroupBean(1L, "group1")));
 	}
 }

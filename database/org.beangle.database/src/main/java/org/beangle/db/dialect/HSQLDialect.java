@@ -39,10 +39,9 @@ public class HSQLDialect extends AbstractDialect {
 	}
 
 	public String getLimitString(String sql, boolean hasOffset) {
-		return new StringBuilder(sql.length() + 10)
-				.append(sql)
-				.insert(sql.toLowerCase().indexOf("select") + 6,
-						hasOffset ? " limit ? ?" : " top ?").toString();
+		return new StringBuilder(sql.length() + 10).append(sql)
+				.insert(sql.toLowerCase().indexOf("select") + 6, hasOffset ? " limit ? ?" : " top ?")
+				.toString();
 	}
 
 }

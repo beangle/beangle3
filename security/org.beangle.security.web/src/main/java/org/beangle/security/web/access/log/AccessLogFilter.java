@@ -20,8 +20,8 @@ public class AccessLogFilter extends GenericHttpFilterBean {
 	}
 
 	@Override
-	protected void doFilterHttp(HttpServletRequest request, HttpServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
+	protected void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		Accesslog log = accessor.beginAccess(request, System.currentTimeMillis());
 		try {
 			chain.doFilter(request, response);

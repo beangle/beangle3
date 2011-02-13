@@ -14,8 +14,7 @@ public class HanZiSeqStyle implements SeqNumStyle {
 	// 支持的最大数字
 	public static final int MAX = 99999;
 
-	public static final String[] CHINESE_NAMES = { "零", "一", "二", "三", "四", "五", "六", "七", "八",
-			"九", "十" };
+	public static final String[] CHINESE_NAMES = { "零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十" };
 
 	public static final String[] PRIORITIES = { "十", "百", "千", "万" };
 

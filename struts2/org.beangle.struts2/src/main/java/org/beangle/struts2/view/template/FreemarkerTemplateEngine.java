@@ -54,10 +54,9 @@ public class FreemarkerTemplateEngine implements TemplateEngine {
 	}
 
 	@SuppressWarnings("unchecked")
-	private Environment getEnvironment(String templateName, ValueStack stack, SimpleHash model,
-			Writer writer) throws Exception {
-		Map<String, Environment> envs = (Map<String, Environment>) stack.getContext().get(
-				UI_ENV_CACHE);
+	private Environment getEnvironment(String templateName, ValueStack stack, SimpleHash model, Writer writer)
+			throws Exception {
+		Map<String, Environment> envs = (Map<String, Environment>) stack.getContext().get(UI_ENV_CACHE);
 		if (null == envs) {
 			envs = CollectUtils.newHashMap();
 			stack.getContext().put(UI_ENV_CACHE, envs);
@@ -89,8 +88,7 @@ public class FreemarkerTemplateEngine implements TemplateEngine {
 	 */
 	private SimpleHash buildModel(ValueStack stack, Component component) {
 		Map<?, ?> context = stack.getContext();
-		HttpServletRequest req = (HttpServletRequest) context
-				.get(ServletActionContext.HTTP_REQUEST);
+		HttpServletRequest req = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);
 		// build hash
 		SimpleHash model = (SimpleHash) req.getAttribute(TEMPLATE_MODEL);
 		if (null == model) {

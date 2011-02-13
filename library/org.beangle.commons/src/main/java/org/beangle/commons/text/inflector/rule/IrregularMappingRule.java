@@ -13,8 +13,7 @@ public class IrregularMappingRule extends AbstractRegexReplacementRule {
 
 	/**
 	 * <p>
-	 * Construct a rule using the given regular expression and irregular forms
-	 * map.
+	 * Construct a rule using the given regular expression and irregular forms map.
 	 * </p>
 	 * 
 	 * @param wordMappings

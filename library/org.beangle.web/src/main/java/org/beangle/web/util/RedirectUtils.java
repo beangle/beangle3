@@ -13,16 +13,14 @@ import org.springframework.util.StringUtils;
 
 public final class RedirectUtils {
 
-	public static final void sendRedirect(HttpServletRequest request, HttpServletResponse response,
-			String url) throws IOException {
+	public static final void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url)
+			throws IOException {
 		String contextPath = request.getContextPath();
-		String redirectUrl = response.encodeRedirectURL((contextPath.equals("/") ? ""
-				: (contextPath)) + url);
+		String redirectUrl = response.encodeRedirectURL((contextPath.equals("/") ? "" : (contextPath)) + url);
 		response.sendRedirect(redirectUrl);
 	}
 
 	public static boolean isValidRedirectUrl(String url) {
-		return !StringUtils.hasText(url) || url.startsWith("/")
-				|| url.toLowerCase().startsWith("http");
+		return !StringUtils.hasText(url) || url.startsWith("/") || url.toLowerCase().startsWith("http");
 	}
 }

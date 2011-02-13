@@ -12,8 +12,7 @@ public interface Rule {
 	 * 
 	 * @param word
 	 *            the word that is being tested
-	 * @return <code>true</code> if this rule should be applied,
-	 *         <code>false</code> otherwise
+	 * @return <code>true</code> if this rule should be applied, <code>false</code> otherwise
 	 */
 	public boolean applies(String word);
 

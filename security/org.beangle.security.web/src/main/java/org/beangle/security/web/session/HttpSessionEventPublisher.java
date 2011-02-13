@@ -24,10 +24,8 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * 
  * Publishes <code>HttpSessionApplicationEvent</code>s to the Spring Root
  * WebApplicationContext. Maps
- * javax.servlet.http.HttpSessionListener.sessionCreated() to
- * {@link HttpSessionCreationEvent}. Maps
- * javax.servlet.http.HttpSessionListener.sessionDestroyed() to
- * {@link HttpSessionDestroyedEvent}.
+ * javax.servlet.http.HttpSessionListener.sessionCreated() to {@link HttpSessionCreationEvent}. Maps
+ * javax.servlet.http.HttpSessionListener.sessionDestroyed() to {@link HttpSessionDestroyedEvent}.
  */
 public class HttpSessionEventPublisher implements HttpSessionListener {
 
@@ -38,8 +36,8 @@ public class HttpSessionEventPublisher implements HttpSessionListener {
 	}
 
 	/**
-	 * Handles the HttpSessionEvent by publishing a
-	 * {@link HttpSessionCreationEvent} to the application appContext.
+	 * Handles the HttpSessionEvent by publishing a {@link HttpSessionCreationEvent} to the
+	 * application appContext.
 	 * 
 	 * @param event
 	 *            HttpSessionEvent passed in by the container
@@ -51,8 +49,8 @@ public class HttpSessionEventPublisher implements HttpSessionListener {
 	}
 
 	/**
-	 * Handles the HttpSessionEvent by publishing a
-	 * {@link HttpSessionDestroyedEvent} to the application appContext.
+	 * Handles the HttpSessionEvent by publishing a {@link HttpSessionDestroyedEvent} to the
+	 * application appContext.
 	 * 
 	 * @param event
 	 *            The HttpSessionEvent pass in by the container

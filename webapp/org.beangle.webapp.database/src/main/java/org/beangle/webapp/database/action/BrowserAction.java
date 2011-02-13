@@ -47,8 +47,8 @@ public class BrowserAction extends SecurityActionSupport {
 		while (rs.next()) {
 			schemas.add(rs.getString(1));
 		}
-		MetadataLoader loader = new MetadataLoader((Dialect) Class.forName(
-				dsbean.getProvider().getDialect()).newInstance(), meta);
+		MetadataLoader loader = new MetadataLoader((Dialect) Class.forName(dsbean.getProvider().getDialect())
+				.newInstance(), meta);
 		Set<Table> tables = CollectUtils.newHashSet();
 		if (!schemas.isEmpty()) {
 			String schema = get("schema");

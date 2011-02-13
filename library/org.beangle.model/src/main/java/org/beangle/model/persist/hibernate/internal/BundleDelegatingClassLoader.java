@@ -58,8 +58,7 @@ public class BundleDelegatingClassLoader extends ClassLoader {
 	}
 
 	/**
-	 * Private constructor. Constructs a new
-	 * <code>BundleDelegatingClassLoader</code> instance.
+	 * Private constructor. Constructs a new <code>BundleDelegatingClassLoader</code> instance.
 	 * 
 	 * @param bundle
 	 * @param bridgeLoader
@@ -109,8 +108,8 @@ public class BundleDelegatingClassLoader extends ClassLoader {
 
 		Enumeration<URL> enm = this.backingBundle.getResources(name);
 
-		if (trace && enm != null && enm.hasMoreElements()) log.trace("Found resource " + name
-				+ " at " + this.backingBundle.getLocation());
+		if (trace && enm != null && enm.hasMoreElements()) log.trace("Found resource " + name + " at "
+				+ this.backingBundle.getLocation());
 
 		return enm;
 	}

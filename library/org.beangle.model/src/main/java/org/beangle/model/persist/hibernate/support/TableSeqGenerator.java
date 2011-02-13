@@ -32,8 +32,8 @@ public class TableSeqGenerator extends SequenceStyleGenerator {
 	private String sequencePattern = "seq_{table}"; // "{table}_{pk}_seq";
 
 	/**
-	 * If the parameters do not contain a {@link SequenceGenerator#SEQUENCE}
-	 * name, we assign one based on the table name.
+	 * If the parameters do not contain a {@link SequenceGenerator#SEQUENCE} name, we assign one
+	 * based on the table name.
 	 */
 	public void configure(Type type, Properties params, Dialect dialect) {
 		if (StringUtils.isEmpty(params.getProperty(SEQUENCE_PARAM))) {

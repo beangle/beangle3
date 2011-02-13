@@ -29,8 +29,8 @@ public class CasAuthentication extends PreauthAuthentication {
 	/**
 	 * Used to identify a CAS request for a stateless user agent, such as a
 	 * remoting protocol client (eg Hessian, Burlap, SOAP etc). Results in a
-	 * more aggressive caching strategy being used, as the absence of a
-	 * <code>HttpSession</code> will result in a new authentication attempt on
+	 * more aggressive caching strategy being used, as the absence of a <code>HttpSession</code>
+	 * will result in a new authentication attempt on
 	 * every request.
 	 */
 	public static final String STATELESS_ID = "_cas_stateless_";
@@ -43,21 +43,19 @@ public class CasAuthentication extends PreauthAuthentication {
 	 * Constructor.
 	 * 
 	 * @param key
-	 *            to identify if this object made by a given
-	 *            {@link CasAuthenticationProvider}
+	 *            to identify if this object made by a given {@link CasAuthenticationProvider}
 	 * @param principal
 	 *            typically the UserDetails object (cannot be <code>null</code>)
 	 * @param credentials
-	 *            the service/proxy ticket ID from CAS (cannot be
-	 *            <code>null</code>)
+	 *            the service/proxy ticket ID from CAS (cannot be <code>null</code>)
 	 * @param authorities
 	 *            the authorities granted to the user (from the
-	 *            {@link org.springframework.security.userdetails.UserDetailsService}
-	 *            ) (cannot be <code>null</code>)
+	 *            {@link org.springframework.security.userdetails.UserDetailsService} ) (cannot be
+	 *            <code>null</code>)
 	 * @param userDetails
 	 *            the user details (from the
-	 *            {@link org.springframework.security.userdetails.UserDetailsService}
-	 *            ) (cannot be <code>null</code>)
+	 *            {@link org.springframework.security.userdetails.UserDetailsService} ) (cannot be
+	 *            <code>null</code>)
 	 * @param assertion
 	 *            the assertion returned from the CAS servers. It contains the
 	 *            principal and how to obtain a proxy ticket for the user.

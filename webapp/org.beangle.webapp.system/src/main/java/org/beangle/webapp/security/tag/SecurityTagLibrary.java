@@ -24,12 +24,10 @@ public class SecurityTagLibrary implements TagLibrary {
 
 	private AuthorityManager authorityManager;
 
-	public Object getFreemarkerModels(ValueStack stack, HttpServletRequest req,
-			HttpServletResponse res) {
+	public Object getFreemarkerModels(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
 		if (null == authorityManager) {
 			try {
-				authorityManager = (AuthorityManager) objectFactory.buildBean("authorityManager",
-						null);
+				authorityManager = (AuthorityManager) objectFactory.buildBean("authorityManager", null);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}

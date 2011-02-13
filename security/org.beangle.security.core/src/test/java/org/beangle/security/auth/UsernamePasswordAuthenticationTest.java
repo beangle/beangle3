@@ -17,8 +17,7 @@ import org.testng.annotations.Test;
 @Test
 public class UsernamePasswordAuthenticationTest {
 	public void testAuthenticated() {
-		UsernamePasswordAuthentication token = new UsernamePasswordAuthentication("Test",
-				"Password", null);
+		UsernamePasswordAuthentication token = new UsernamePasswordAuthentication("Test", "Password", null);
 
 		// check default given we passed some GrantedAuthorty[]s (well, we
 		// passed null)
@@ -49,8 +48,8 @@ public class UsernamePasswordAuthenticationTest {
 	}
 
 	public void testGetters() {
-		UsernamePasswordAuthentication token = new UsernamePasswordAuthentication("Test",
-				"Password", GrantedAuthorityBean.build("ROLE_ONE", "ROLE_TWO"));
+		UsernamePasswordAuthentication token = new UsernamePasswordAuthentication("Test", "Password",
+				GrantedAuthorityBean.build("ROLE_ONE", "ROLE_TWO"));
 		assertEquals("Test", token.getPrincipal());
 		assertEquals("Password", token.getCredentials());
 		// ensure authority order

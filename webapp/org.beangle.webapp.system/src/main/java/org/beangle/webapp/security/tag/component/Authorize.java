@@ -35,10 +35,9 @@ public class Authorize extends UIBean {
 		if (StringUtils.isEmpty(resource)) {
 			return true;
 		} else {
-			AuthorityManager authorityManager = (AuthorityManager) stack
-					.findValue("authorityManager");
-			return authorityManager.isAuthorized(SecurityContextHolder.getContext()
-					.getAuthentication(), resource);
+			AuthorityManager authorityManager = (AuthorityManager) stack.findValue("authorityManager");
+			return authorityManager.isAuthorized(SecurityContextHolder.getContext().getAuthentication(),
+					resource);
 		}
 	}
 }

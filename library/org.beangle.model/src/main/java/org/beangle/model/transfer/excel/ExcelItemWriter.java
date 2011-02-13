@@ -102,8 +102,8 @@ public class ExcelItemWriter extends AbstractItemWriter {
 						cell.setCellValue((Calendar) values[i]);
 						cell.setCellStyle(getTimeStyle());
 					} else {
-						cell.setCellValue(new HSSFRichTextString((values[i] == null) ? ""
-								: values[i].toString()));
+						cell.setCellValue(new HSSFRichTextString((values[i] == null) ? "" : values[i]
+								.toString()));
 					}
 				}
 			} else {

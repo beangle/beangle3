@@ -147,8 +147,7 @@ public class UserAction extends SecurityActionSupport {
 		Set<GroupMember> newMembers = CollectUtils.newHashSet();
 		Set<GroupMember> removedMembers = CollectUtils.newHashSet();
 		User manager = getUser();
-		Collection<GroupMember> members = userService.getGroupMembers(manager,
-				GroupMember.Ship.GRANTER);
+		Collection<GroupMember> members = userService.getGroupMembers(manager, GroupMember.Ship.GRANTER);
 		for (GroupMember member : members) {
 			GroupMember myMember = memberMap.get(member.getGroup());
 			boolean isMember = getBool("member" + member.getGroup().getId());
@@ -177,8 +176,7 @@ public class UserAction extends SecurityActionSupport {
 	protected void editSetting(Entity<?> entity) {
 		User user = (User) entity;
 		User manager = getUser();
-		Collection<GroupMember> members = userService.getGroupMembers(manager,
-				GroupMember.Ship.GRANTER);
+		Collection<GroupMember> members = userService.getGroupMembers(manager, GroupMember.Ship.GRANTER);
 		Set<GroupMember> userMembers = user.getGroups();
 		Map<Group, GroupMember> memberMap = CollectUtils.newHashMap();
 		for (GroupMember gm : userMembers) {

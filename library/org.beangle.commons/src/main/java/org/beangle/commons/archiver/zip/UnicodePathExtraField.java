@@ -7,8 +7,8 @@ package org.beangle.commons.archiver.zip;
 /**
  * Info-ZIP Unicode Path Extra Field (0x7075):
  * <p>
- * Stores the UTF-8 version of the file name field as stored in the local header
- * and central directory header.
+ * Stores the UTF-8 version of the file name field as stored in the local header and central
+ * directory header.
  * </p>
  * 
  * <pre>
@@ -39,8 +39,7 @@ public class UnicodePathExtraField extends AbstractUnicodeExtraField {
 	 * @param off
 	 *            The offset of the encoded filename in <code>bytes</code>.
 	 * @param len
-	 *            The length of the encoded filename or comment in
-	 *            <code>bytes</code>.
+	 *            The length of the encoded filename or comment in <code>bytes</code>.
 	 */
 	public UnicodePathExtraField(String text, byte[] bytes, int off, int len) {
 		super(text, bytes, off, len);

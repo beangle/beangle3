@@ -159,8 +159,8 @@ public class BeanDefinitionParser {
 	}
 
 	/**
-	 * Parses the supplied <code>&lt;bean&gt;</code> element. May return
-	 * <code>null</code> if there were errors during parse. Errors are reported
+	 * Parses the supplied <code>&lt;bean&gt;</code> element. May return <code>null</code> if there
+	 * were errors during parse. Errors are reported
 	 * to the {@link org.springframework.beans.factory.parsing.ProblemReporter}.
 	 */
 	public ReconfigBeanDefinitionHolder parseBeanDefinitionElement(Element ele) {
@@ -168,12 +168,11 @@ public class BeanDefinitionParser {
 	}
 
 	/**
-	 * Parses the supplied <code>&lt;bean&gt;</code> element. May return
-	 * <code>null</code> if there were errors during parse. Errors are reported
+	 * Parses the supplied <code>&lt;bean&gt;</code> element. May return <code>null</code> if there
+	 * were errors during parse. Errors are reported
 	 * to the {@link org.springframework.beans.factory.parsing.ProblemReporter}.
 	 */
-	public ReconfigBeanDefinitionHolder parseBeanDefinitionElement(Element ele,
-			BeanDefinition containingBean) {
+	public ReconfigBeanDefinitionHolder parseBeanDefinitionElement(Element ele, BeanDefinition containingBean) {
 		String id = ele.getAttribute(ID_ATTRIBUTE);
 		String nameAttr = ele.getAttribute(NAME_ATTRIBUTE);
 
@@ -187,8 +186,8 @@ public class BeanDefinitionParser {
 		if (!StringUtils.hasText(beanName) && !aliases.isEmpty()) {
 			beanName = aliases.remove(0);
 			if (logger.isDebugEnabled()) {
-				logger.debug("No XML 'id' specified - using '" + beanName + "' as bean name and "
-						+ aliases + " as aliases");
+				logger.debug("No XML 'id' specified - using '" + beanName + "' as bean name and " + aliases
+						+ " as aliases");
 			}
 		}
 
@@ -196,12 +195,11 @@ public class BeanDefinitionParser {
 			checkNameUniqueness(beanName, aliases, ele);
 		}
 
-		AbstractBeanDefinition beanDefinition = parseBeanDefinitionElement(ele, beanName,
-				containingBean);
+		AbstractBeanDefinition beanDefinition = parseBeanDefinitionElement(ele, beanName, containingBean);
 		if (beanDefinition != null) {
 			String[] aliasesArray = StringUtils.toStringArray(aliases);
-			ReconfigBeanDefinitionHolder bdh = new ReconfigBeanDefinitionHolder(beanDefinition,
-					beanName, aliasesArray);
+			ReconfigBeanDefinitionHolder bdh = new ReconfigBeanDefinitionHolder(beanDefinition, beanName,
+					aliasesArray);
 			String override = ele.getAttribute("override");
 			if (null != override && override.equals("remove")) {
 				bdh.setConfigType(ReconfigType.REMOVE);
@@ -500,8 +498,7 @@ public class BeanDefinitionParser {
 				List<Element> argTypeEles = DomUtils.getChildElementsByTagName(replacedMethodEle,
 						ARG_TYPE_ELEMENT);
 				for (Element argTypeEle : argTypeEles) {
-					replaceOverride.addTypeIdentifier(argTypeEle
-							.getAttribute(ARG_TYPE_MATCH_ATTRIBUTE));
+					replaceOverride.addTypeIdentifier(argTypeEle.getAttribute(ARG_TYPE_MATCH_ATTRIBUTE));
 				}
 				replaceOverride.setSource(extractSource(replacedMethodEle));
 				overrides.addOverride(replaceOverride);
@@ -537,8 +534,7 @@ public class BeanDefinitionParser {
 						if (bd.getConstructorArgumentValues().hasIndexedArgumentValue(index)) {
 							error("Ambiguous constructor-arg entries for index " + index, ele);
 						} else {
-							bd.getConstructorArgumentValues().addIndexedArgumentValue(index,
-									valueHolder);
+							bd.getConstructorArgumentValues().addIndexedArgumentValue(index, valueHolder);
 						}
 					} finally {
 						this.parseState.pop();
@@ -616,15 +612,13 @@ public class BeanDefinitionParser {
 					Element attributeEle = (Element) node;
 					String attributeName = attributeEle.getAttribute(KEY_ATTRIBUTE);
 					String attributeValue = attributeEle.getAttribute(VALUE_ATTRIBUTE);
-					if (StringUtils.hasLength(attributeName)
-							&& StringUtils.hasLength(attributeValue)) {
+					if (StringUtils.hasLength(attributeName) && StringUtils.hasLength(attributeValue)) {
 						BeanMetadataAttribute attribute = new BeanMetadataAttribute(attributeName,
 								attributeValue);
 						attribute.setSource(extractSource(attributeEle));
 						qualifier.addMetadataAttribute(attribute);
 					} else {
-						error("Qualifier 'attribute' tag must have a 'name' and 'value'",
-								attributeEle);
+						error("Qualifier 'attribute' tag must have a 'name' and 'value'", attributeEle);
 						return;
 					}
 				}
@@ -640,8 +634,8 @@ public class BeanDefinitionParser {
 	 * constructor arguments, "propertyName" being null in this case.
 	 */
 	public Object parsePropertyValue(Element ele, BeanDefinition bd, String propertyName) {
-		String elementName = (propertyName != null) ? "<property> element for property '"
-				+ propertyName + "'" : "<constructor-arg> element";
+		String elementName = (propertyName != null) ? "<property> element for property '" + propertyName
+				+ "'" : "<constructor-arg> element";
 
 		// Should only have one child element: ref, value, list, etc.
 		NodeList nl = ele.getChildNodes();
@@ -700,8 +694,8 @@ public class BeanDefinitionParser {
 	 * @param ele
 	 *            subelement of property element; we don't know which yet
 	 * @param defaultValueType
-	 *            the default type (class name) for any
-	 *            <code>&lt;value&gt;</code> tag that might be created
+	 *            the default type (class name) for any <code>&lt;value&gt;</code> tag that might be
+	 *            created
 	 */
 	public Object parsePropertySubElement(Element ele, BeanDefinition bd, String defaultValueType) {
 		if (!isDefaultNamespace(getNamespaceURI(ele))) {
@@ -929,15 +923,14 @@ public class BeanDefinitionParser {
 			Object key = null;
 			boolean hasKeyAttribute = entryEle.hasAttribute(KEY_ATTRIBUTE);
 			boolean hasKeyRefAttribute = entryEle.hasAttribute(KEY_REF_ATTRIBUTE);
-			if ((hasKeyAttribute && hasKeyRefAttribute)
-					|| ((hasKeyAttribute || hasKeyRefAttribute)) && keyEle != null) {
+			if ((hasKeyAttribute && hasKeyRefAttribute) || ((hasKeyAttribute || hasKeyRefAttribute))
+					&& keyEle != null) {
 				error("<entry> element is only allowed to contain either "
-						+ "a 'key' attribute OR a 'key-ref' attribute OR a <key> sub-element",
-						entryEle);
+						+ "a 'key' attribute OR a 'key-ref' attribute OR a <key> sub-element", entryEle);
 			}
 			if (hasKeyAttribute) {
-				key = buildTypedStringValueForMap(entryEle.getAttribute(KEY_ATTRIBUTE),
-						defaultKeyType, entryEle);
+				key = buildTypedStringValueForMap(entryEle.getAttribute(KEY_ATTRIBUTE), defaultKeyType,
+						entryEle);
 			} else if (hasKeyRefAttribute) {
 				String refName = entryEle.getAttribute(KEY_REF_ATTRIBUTE);
 				if (!StringUtils.hasText(refName)) {
@@ -956,15 +949,14 @@ public class BeanDefinitionParser {
 			Object value = null;
 			boolean hasValueAttribute = entryEle.hasAttribute(VALUE_ATTRIBUTE);
 			boolean hasValueRefAttribute = entryEle.hasAttribute(VALUE_REF_ATTRIBUTE);
-			if ((hasValueAttribute && hasValueRefAttribute)
-					|| ((hasValueAttribute || hasValueRefAttribute)) && valueEle != null) {
+			if ((hasValueAttribute && hasValueRefAttribute) || ((hasValueAttribute || hasValueRefAttribute))
+					&& valueEle != null) {
 				error("<entry> element is only allowed to contain either "
-						+ "'value' attribute OR 'value-ref' attribute OR <value> sub-element",
-						entryEle);
+						+ "'value' attribute OR 'value-ref' attribute OR <value> sub-element", entryEle);
 			}
 			if (hasValueAttribute) {
-				value = buildTypedStringValueForMap(entryEle.getAttribute(VALUE_ATTRIBUTE),
-						defaultValueType, entryEle);
+				value = buildTypedStringValueForMap(entryEle.getAttribute(VALUE_ATTRIBUTE), defaultValueType,
+						entryEle);
 			} else if (hasValueRefAttribute) {
 				String refName = entryEle.getAttribute(VALUE_REF_ATTRIBUTE);
 				if (!StringUtils.hasText(refName)) {
@@ -991,15 +983,13 @@ public class BeanDefinitionParser {
 	 * 
 	 * @see org.springframework.beans.factory.config.TypedStringValue
 	 */
-	protected final Object buildTypedStringValueForMap(String value, String defaultTypeName,
-			Element entryEle) {
+	protected final Object buildTypedStringValueForMap(String value, String defaultTypeName, Element entryEle) {
 		try {
 			TypedStringValue typedValue = buildTypedStringValue(value, defaultTypeName);
 			typedValue.setSource(extractSource(entryEle));
 			return typedValue;
 		} catch (ClassNotFoundException ex) {
-			error("Type class [" + defaultTypeName + "] not found for Map key/value type",
-					entryEle, ex);
+			error("Type class [" + defaultTypeName + "] not found for Map key/value type", entryEle, ex);
 			return value;
 		}
 	}
@@ -1065,8 +1055,8 @@ public class BeanDefinitionParser {
 		// new DefaultNamespaceHandlerResolver()
 		NamespaceHandler handler = new DefaultNamespaceHandlerResolver().resolve(namespaceUri);
 		if (handler == null) {
-			error("Unable to locate Spring NamespaceHandler for XML schema namespace ["
-					+ namespaceUri + "]", ele);
+			error("Unable to locate Spring NamespaceHandler for XML schema namespace [" + namespaceUri + "]",
+					ele);
 			return null;
 		}
 		// FIXME
@@ -1173,8 +1163,7 @@ public class BeanDefinitionParser {
 	 *            the node to compare
 	 * @param desiredName
 	 *            the name to check for
-	 * @return <code>true</code> if the names are equal otherwise
-	 *         <code>false</code>.
+	 * @return <code>true</code> if the names are equal otherwise <code>false</code>.
 	 */
 	public boolean nodeNameEquals(Node node, String desiredName) {
 		return desiredName.equals(node.getNodeName()) || desiredName.equals(getLocalName(node));

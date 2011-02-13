@@ -20,8 +20,8 @@ import org.beangle.security.web.FilterInvocation;
 /**
  * Performs security handling of HTTP resources via a filter implementation.
  * <p>
- * The <code>ObjectDefinitionSource</code> required by this security interceptor
- * is of type {@link FilterInvocationDefinitionSource}.
+ * The <code>ObjectDefinitionSource</code> required by this security interceptor is of type
+ * {@link FilterInvocationDefinitionSource}.
  * </p>
  * <p>
  * Refer to {@link AbstractSecurityInterceptor} for details on the workflow.
@@ -101,15 +101,14 @@ public class FilterSecurityInterceptor extends AbstractSecurityInterceptor imple
 
 	/**
 	 * Indicates whether once-per-request handling will be observed. By default
-	 * this is <code>true</code>, meaning the
-	 * <code>FilterSecurityInterceptor</code> will only execute
+	 * this is <code>true</code>, meaning the <code>FilterSecurityInterceptor</code> will only
+	 * execute
 	 * once-per-request. Sometimes users may wish it to execute more than once
 	 * per request, such as when JSP forwards are being used and filter security
 	 * is desired on each included fragment of the HTTP request.
 	 * 
 	 * @return <code>true</code> (the default) if once-per-request is honoured,
-	 *         otherwise <code>false</code> if
-	 *         <code>FilterSecurityInterceptor</code> will enforce
+	 *         otherwise <code>false</code> if <code>FilterSecurityInterceptor</code> will enforce
 	 *         authorizations for each and every fragment of the HTTP request.
 	 */
 	public boolean isObserveOncePerRequest() {

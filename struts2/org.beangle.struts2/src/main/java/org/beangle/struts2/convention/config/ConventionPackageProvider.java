@@ -12,10 +12,10 @@ import com.opensymphony.xwork2.inject.Inject;
 
 /**
  * <p>
- * This class is a configuration provider for the XWork configuration system.
- * This is really the only way to truly handle loading of the packages, actions
- * and results correctly. This doesn't contain any logic and instead delegates
- * to the configured instance of the {@link ActionConfigBuilder} interface.
+ * This class is a configuration provider for the XWork configuration system. This is really the
+ * only way to truly handle loading of the packages, actions and results correctly. This doesn't
+ * contain any logic and instead delegates to the configured instance of the
+ * {@link ActionConfigBuilder} interface.
  * </p>
  */
 public class ConventionPackageProvider implements PackageProvider {

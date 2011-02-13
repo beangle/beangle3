@@ -51,8 +51,7 @@ public abstract class UIBean extends Component {
 	protected void mergeTemplate(Writer writer) throws Exception {
 		Container container = (Container) stack.getContext().get(ActionContext.CONTAINER);
 		TemplateEngine engine = container.getInstance(TemplateEngine.class);
-		engine.render(getTheme().getTemplatePath(getClass(), engine.getSuffix()), stack, writer,
-				this);
+		engine.render(getTheme().getTemplatePath(getClass(), engine.getSuffix()), stack, writer, this);
 	}
 
 	public String getParameterString() {
@@ -98,8 +97,7 @@ public abstract class UIBean extends Component {
 		if (-1 == text.indexOf('.') || -1 < text.indexOf(' ')) {
 			return text;
 		} else {
-			return TextProviderHelper.getText(text, defaultText, Collections.emptyList(), stack,
-					false);
+			return TextProviderHelper.getText(text, defaultText, Collections.emptyList(), stack, false);
 		}
 	}
 

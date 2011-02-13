@@ -43,8 +43,7 @@ public class PropertyComparator<T> implements Comparator<T> {
 		if (StringUtils.isEmpty(cmpStr)) { return; }
 
 		if (StringUtils.contains(cmpStr, ',')) { throw new RuntimeException(
-				"PropertyComparator don't suport comma based order by."
-						+ " Use MultiPropertyComparator "); }
+				"PropertyComparator don't suport comma based order by." + " Use MultiPropertyComparator "); }
 		cmpWhat = cmpStr.trim();
 		// 处理带有[]符号的字符串
 		if ('[' == cmpWhat.charAt(0)) {

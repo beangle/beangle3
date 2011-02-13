@@ -30,8 +30,7 @@ public class Cas20ServiceTicketValidatorFactory implements FactoryBean<TicketVal
 	private ProxyRetriever proxyRetriever;
 
 	public TicketValidator getObject() throws Exception {
-		Cas20ServiceTicketValidator validator = new Cas20ServiceTicketValidator(
-				config.getCasServer());
+		Cas20ServiceTicketValidator validator = new Cas20ServiceTicketValidator(config.getCasServer());
 		if (null != proxyGrantingTicketStorage) {
 			validator.setProxyGrantingTicketStorage(proxyGrantingTicketStorage);
 		}

@@ -162,8 +162,8 @@ public class CsvWriterTest {
 	public void testNoQuoteChars() throws IOException {
 		String[] line = { "Foo", "Bar", "Baz" };
 		StringWriter sw = new StringWriter();
-		CsvWriter csvw = new CsvWriter(sw, new CsvFormat.Builder().delimiter(
-				CsvWriter.NO_QUOTE_CHARACTER).build());
+		CsvWriter csvw = new CsvWriter(sw, new CsvFormat.Builder().delimiter(CsvWriter.NO_QUOTE_CHARACTER)
+				.build());
 		csvw.write(line);
 		String result = sw.toString();
 
@@ -181,9 +181,8 @@ public class CsvWriterTest {
 
 		String[] line = { "Foo", "Bar", "Baz" };
 		StringWriter sw = new StringWriter();
-		CsvWriter csvw = new CsvWriter(sw, new CsvFormat.Builder()
-				.delimiter(CsvWriter.NO_QUOTE_CHARACTER).escape(CsvWriter.NO_ESCAPE_CHARACTER)
-				.build());
+		CsvWriter csvw = new CsvWriter(sw, new CsvFormat.Builder().delimiter(CsvWriter.NO_QUOTE_CHARACTER)
+				.escape(CsvWriter.NO_ESCAPE_CHARACTER).build());
 		csvw.write(line);
 		String result = sw.toString();
 
@@ -239,9 +238,8 @@ public class CsvWriterTest {
 	public void testNoQuotingNoEscaping() {
 		String[] line = { "\"Foo\",\"Bar\"" };
 		StringWriter sw = new StringWriter();
-		CsvWriter csvw = new CsvWriter(sw, new CsvFormat.Builder()
-				.delimiter(CsvWriter.NO_QUOTE_CHARACTER).escape(CsvWriter.NO_ESCAPE_CHARACTER)
-				.build());
+		CsvWriter csvw = new CsvWriter(sw, new CsvFormat.Builder().delimiter(CsvWriter.NO_QUOTE_CHARACTER)
+				.escape(CsvWriter.NO_ESCAPE_CHARACTER).build());
 		csvw.write(line);
 		assertEquals("\"Foo\",\"Bar\"\n", sw.toString());
 	}

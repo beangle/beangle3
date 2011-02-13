@@ -11,30 +11,26 @@ import java.lang.reflect.Constructor;
 /**
  * Associates a given {@link SecurityContext} with the current execution thread.
  * <p>
- * This class provides a series of static methods that delegate to an instance
- * of {@link org.beangle.security.core.context.SecurityContextHolderStrategy} .
- * The purpose of the class is to provide a convenient way to specify the
- * strategy that should be used for a given JVM. This is a JVM-wide setting,
- * since everything in this class is <code>static</code> to facilitate ease of
- * use in calling code.
+ * This class provides a series of static methods that delegate to an instance of
+ * {@link org.beangle.security.core.context.SecurityContextHolderStrategy} . The purpose of the
+ * class is to provide a convenient way to specify the strategy that should be used for a given JVM.
+ * This is a JVM-wide setting, since everything in this class is <code>static</code> to facilitate
+ * ease of use in calling code.
  * </p>
  * <p>
- * To specify which strategy should be used, you must provide a mode setting. A
- * mode setting is one of the three valid <code>MODE_</code> settings defined as
- * <code>static final</code> fields, or a fully qualified classname to a
- * concrete implementation of
- * {@link org.beangle.security.core.context.SecurityContextHolderStrategy} that
- * provides a public no-argument constructor.
+ * To specify which strategy should be used, you must provide a mode setting. A mode setting is one
+ * of the three valid <code>MODE_</code> settings defined as <code>static final</code> fields, or a
+ * fully qualified classname to a concrete implementation of
+ * {@link org.beangle.security.core.context.SecurityContextHolderStrategy} that provides a public
+ * no-argument constructor.
  * </p>
  * <p>
- * There are two ways to specify the desired strategy mode <code>String</code>.
- * The first is to specify it via the system property keyed on
- * {@link #SYSTEM_PROPERTY}. The second is to call
- * {@link #setStrategyName(String)} before using the class. If neither approach
- * is used, the class will default to using {@link #MODE_THREADLOCAL}, which is
- * backwards compatible, has fewer JVM incompatibilities and is appropriate on
- * servers (whereas {@link #MODE_GLOBAL} is definitely inappropriate for server
- * use).
+ * There are two ways to specify the desired strategy mode <code>String</code>. The first is to
+ * specify it via the system property keyed on {@link #SYSTEM_PROPERTY}. The second is to call
+ * {@link #setStrategyName(String)} before using the class. If neither approach is used, the class
+ * will default to using {@link #MODE_THREADLOCAL}, which is backwards compatible, has fewer JVM
+ * incompatibilities and is appropriate on servers (whereas {@link #MODE_GLOBAL} is definitely
+ * inappropriate for server use).
  * </p>
  * 
  * @author chaostone
@@ -73,11 +69,10 @@ public class SecurityContextHolder {
 
 	/**
 	 * Primarily for troubleshooting purposes, this method shows how many times
-	 * the class has reinitialized its
-	 * <code>SecurityContextHolderStrategy</code>.
+	 * the class has reinitialized its <code>SecurityContextHolderStrategy</code>.
 	 * 
-	 * @return the count (should be one unless you've called
-	 *         {@link #setStrategyName(String)} to switch to an alternate
+	 * @return the count (should be one unless you've called {@link #setStrategyName(String)} to
+	 *         switch to an alternate
 	 *         strategy.
 	 */
 	public static int getInitializeCount() {
@@ -103,8 +98,7 @@ public class SecurityContextHolder {
 						.forName(strategyName);
 				Constructor<SecurityContextHolderStrategy> customStrategy = clazz
 						.getConstructor(new Class[] {});
-				strategy = (SecurityContextHolderStrategy) customStrategy
-						.newInstance(new Object[] {});
+				strategy = (SecurityContextHolderStrategy) customStrategy.newInstance(new Object[] {});
 			} catch (Exception ex) {
 				ReflectionUtils.handleReflectionException(ex);
 			}
@@ -118,8 +112,7 @@ public class SecurityContextHolder {
 	 * execution.
 	 * 
 	 * @param context
-	 *            the new <code>SecurityContext</code> (may not be
-	 *            <code>null</code>)
+	 *            the new <code>SecurityContext</code> (may not be <code>null</code>)
 	 */
 	public static void setContext(SecurityContext context) {
 		strategy.setContext(context);
@@ -140,7 +133,7 @@ public class SecurityContextHolder {
 	}
 
 	public String toString() {
-		return "SecurityContextHolder[strategy='" + strategyName + "'; initializeCount="
-				+ initializeCount + "]";
+		return "SecurityContextHolder[strategy='" + strategyName + "'; initializeCount=" + initializeCount
+				+ "]";
 	}
 }

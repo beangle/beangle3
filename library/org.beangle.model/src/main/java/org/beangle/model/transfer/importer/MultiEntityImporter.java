@@ -76,8 +76,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
 					// 因此导入的是外键,只能有一个属性导入.
 					if (isForeigner) {
 						String parentPath = StringUtils.substringBeforeLast(attr, ".");
-						ObjectAndType propertyType = populator.initProperty(entity, entityName,
-								parentPath);
+						ObjectAndType propertyType = populator.initProperty(entity, entityName, parentPath);
 						Object property = propertyType.getObj();
 						if (property instanceof Entity<?>) {
 							if (((Entity<?>) property).isPersisted()) {
@@ -111,15 +110,13 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
 
 	public void addEntity(String alias, Class<?> entityClass) {
 		EntityType entityType = Model.getEntityType(entityClass);
-		if (null == entityType) { throw new RuntimeException("cannot find entity type for "
-				+ entityClass); }
+		if (null == entityType) { throw new RuntimeException("cannot find entity type for " + entityClass); }
 		entityTypes.put(alias, entityType);
 	}
 
 	public void addEntity(String alias, String entityName) {
 		EntityType entityType = Model.getEntityType(entityName);
-		if (null == entityType) { throw new RuntimeException("cannot find entity type for "
-				+ entityName); }
+		if (null == entityType) { throw new RuntimeException("cannot find entity type for " + entityName); }
 		entityTypes.put(alias, entityType);
 	}
 
@@ -176,8 +173,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
 				String entityName = entityType.getEntityName();
 				String attr = processAttr(attrs[i]);
 				if (attr.indexOf('.') > -1) {
-					populator.initProperty(example, entityName,
-							StringUtils.substringBeforeLast(attr, "."));
+					populator.initProperty(example, entityName, StringUtils.substringBeforeLast(attr, "."));
 				}
 				rightAttrs.add(attrs[i]);
 			} catch (Exception e) {

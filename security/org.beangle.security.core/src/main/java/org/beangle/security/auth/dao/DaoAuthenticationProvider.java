@@ -19,8 +19,8 @@ public class DaoAuthenticationProvider extends AbstractUserDetailAuthenticationP
 	private UserDetailService<Authentication> userDetailService;
 
 	@Override
-	protected void additionalAuthenticationChecks(UserDetail user,
-			UsernamePasswordAuthentication auth) throws AuthenticationException {
+	protected void additionalAuthenticationChecks(UserDetail user, UsernamePasswordAuthentication auth)
+			throws AuthenticationException {
 		if (!passwordEncoder.isPasswordValid(user.getPassword(), (String) auth.getCredentials())) { throw new BadCredentialsException(); }
 	}
 

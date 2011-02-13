@@ -16,8 +16,8 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 public class Anchor extends ClosingUIBean {
 
-	public static final Set<String> reservedTargets = CollectUtils.newHashSet("_blank", "_top",
-			"_self", "_parent", "new");
+	public static final Set<String> reservedTargets = CollectUtils.newHashSet("_blank", "_top", "_self",
+			"_parent", "new");
 
 	private String href;
 

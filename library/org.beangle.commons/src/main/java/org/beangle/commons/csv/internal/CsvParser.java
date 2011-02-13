@@ -119,8 +119,7 @@ public class CsvParser {
 						if (i > 2 // not on the beginning of the line
 									// not at the beginning of an escape
 									// sequence
-								&& !format.isSeparator(nextLine.charAt(i - 1))
-								&& nextLine.length() > (i + 1)
+								&& !format.isSeparator(nextLine.charAt(i - 1)) && nextLine.length() > (i + 1)
 								// not at the end of an escape sequence
 								&& !format.isSeparator(nextLine.charAt(i + 1)) // not
 						) {
@@ -201,8 +200,7 @@ public class CsvParser {
 				// quotes in here.
 				&& nextLine.length() > (i + 1) // there is indeed another
 				// character to check.
-				&& (format.isDelimiter(nextLine.charAt(i + 1)) || format.isEscape(nextLine
-						.charAt(i + 1)));
+				&& (format.isDelimiter(nextLine.charAt(i + 1)) || format.isEscape(nextLine.charAt(i + 1)));
 	}
 
 	/**

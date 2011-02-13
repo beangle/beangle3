@@ -24,11 +24,10 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 	protected abstract void additionalAuthenticationChecks(UserDetail userDetails,
 			UsernamePasswordAuthentication authentication) throws AuthenticationException;
 
-	public Authentication authenticate(Authentication authentication)
-			throws AuthenticationException {
+	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		// Determine username
-		String username = (authentication.getPrincipal() == null) ? "NONE_PROVIDED"
-				: authentication.getName();
+		String username = (authentication.getPrincipal() == null) ? "NONE_PROVIDED" : authentication
+				.getName();
 
 		UserDetail user = retrieveUser(username, (UsernamePasswordAuthentication) authentication);
 
@@ -48,8 +47,8 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 		return createSuccessAuthentication(principalToReturn, authentication, user);
 	}
 
-	protected Authentication createSuccessAuthentication(Object principal,
-			Authentication authentication, UserDetail user) {
+	protected Authentication createSuccessAuthentication(Object principal, Authentication authentication,
+			UserDetail user) {
 		UsernamePasswordAuthentication result = new UsernamePasswordAuthentication(principal,
 				authentication.getCredentials(), user.getAuthorities());
 		result.setDetails(authentication.getDetails());
@@ -68,38 +67,33 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 	 * an implementation-specific location, with the option of throwing an
 	 * <code>AuthenticationException</code> immediately if the presented
 	 * credentials are incorrect (this is especially useful if it is necessary
-	 * to bind to a resource as the user in order to obtain or generate a
-	 * <code>UserDetails</code>).
+	 * to bind to a resource as the user in order to obtain or generate a <code>UserDetails</code>).
 	 * <p>
 	 * Subclasses are not required to perform any caching, as the
-	 * <code>AbstractUserDetailsAuthenticationProvider</code> will by default
-	 * cache the <code>UserDetails</code>. The caching of
-	 * <code>UserDetails</code> does present additional complexity as this means
-	 * subsequent requests that rely on the cache will need to still have their
-	 * credentials validated, even if the correctness of credentials was assured
-	 * by subclasses adopting a binding-based strategy in this method.
-	 * Accordingly it is important that subclasses either disable caching (if
-	 * they want to ensure that this method is the only method that is capable
-	 * of authenticating a request, as no <code>UserDetails</code> will ever be
-	 * cached) or ensure subclasses implement
-	 * {@link #additionalAuthenticationChecks(UserDetail, UsernamePasswordAuthentication)}
-	 * to compare the credentials of a cached <code>UserDetails</code> with
-	 * subsequent authentication requests.
+	 * <code>AbstractUserDetailsAuthenticationProvider</code> will by default cache the
+	 * <code>UserDetails</code>. The caching of <code>UserDetails</code> does present additional
+	 * complexity as this means subsequent requests that rely on the cache will need to still have
+	 * their credentials validated, even if the correctness of credentials was assured by subclasses
+	 * adopting a binding-based strategy in this method. Accordingly it is important that subclasses
+	 * either disable caching (if they want to ensure that this method is the only method that is
+	 * capable of authenticating a request, as no <code>UserDetails</code> will ever be cached) or
+	 * ensure subclasses implement
+	 * {@link #additionalAuthenticationChecks(UserDetail, UsernamePasswordAuthentication)} to
+	 * compare the credentials of a cached <code>UserDetails</code> with subsequent authentication
+	 * requests.
 	 * </p>
 	 * <p>
-	 * Most of the time subclasses will not perform credentials inspection in
-	 * this method, instead performing it in
-	 * {@link #additionalAuthenticationChecks(UserDetail, UsernamePasswordAuthentication)}
-	 * so that code related to credentials validation need not be duplicated
-	 * across two methods.
+	 * Most of the time subclasses will not perform credentials inspection in this method, instead
+	 * performing it in
+	 * {@link #additionalAuthenticationChecks(UserDetail, UsernamePasswordAuthentication)} so that
+	 * code related to credentials validation need not be duplicated across two methods.
 	 * </p>
 	 * 
 	 * @param username
 	 *            The username to retrieve
 	 * @param authentication
 	 *            The authentication request, which subclasses <em>may</em> need
-	 *            to perform a binding-based retrieval of the
-	 *            <code>UserDetails</code>
+	 *            to perform a binding-based retrieval of the <code>UserDetails</code>
 	 * @return the user information (never <code>null</code> - instead an
 	 *         exception should the thrown)
 	 * @throws AuthenticationException
@@ -108,8 +102,8 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 	 *             <code>AuthenticationServiceException</code> or
 	 *             <code>UsernameNotFoundException</code>)
 	 */
-	protected abstract UserDetail retrieveUser(String username,
-			UsernamePasswordAuthentication authentication) throws AuthenticationException;
+	protected abstract UserDetail retrieveUser(String username, UsernamePasswordAuthentication authentication)
+			throws AuthenticationException;
 
 	public void setForcePrincipalAsString(boolean forcePrincipalAsString) {
 		this.forcePrincipalAsString = forcePrincipalAsString;
@@ -124,8 +118,8 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 	}
 
 	/**
-	 * Sets the policy will be used to verify the status of the loaded
-	 * <tt>UserDetails</tt> <em>before</em> validation of the credentials takes
+	 * Sets the policy will be used to verify the status of the loaded <tt>UserDetails</tt>
+	 * <em>before</em> validation of the credentials takes
 	 * place.
 	 * 
 	 * @param preAuthenticationChecks

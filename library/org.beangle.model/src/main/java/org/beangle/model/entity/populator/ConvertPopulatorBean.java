@@ -56,8 +56,7 @@ public class ConvertPopulatorBean implements Populator {
 				Type propertyType = type.getPropertyType(attrs[index]);
 				// 初始化
 				if (null == propertyType) {
-					logger.error("Cannot find property type [{}] of {}", attrs[index],
-							propObj.getClass());
+					logger.error("Cannot find property type [{}] of {}", attrs[index], propObj.getClass());
 					throw new RuntimeException("Cannot find property type " + attrs[index] + " of "
 							+ propObj.getClass().getName());
 				}
@@ -82,16 +81,15 @@ public class ConvertPopulatorBean implements Populator {
 	 * @param attr
 	 * @param value
 	 */
-	public void populateValue(final Object target, String entityName, final String attr,
-			final Object value) {
+	public void populateValue(final Object target, String entityName, final String attr, final Object value) {
 		try {
 			if (attr.indexOf('.') > -1) {
 				initProperty(target, entityName, StringUtils.substringBeforeLast(attr, "."));
 			}
 			beanUtils.copyProperty(target, attr, value);
 		} catch (Exception e) {
-			logger.error("copy property failure:[class:" + entityName + " attr:" + attr + " value:"
-					+ value + "]:", e);
+			logger.error("copy property failure:[class:" + entityName + " attr:" + attr + " value:" + value
+					+ "]:", e);
 		}
 	}
 
@@ -139,8 +137,7 @@ public class ConvertPopulatorBean implements Populator {
 				}
 			}
 			// 主键
-			if (null != type && type.isEntityType()
-					&& attr.equals(((EntityType) type).getIdPropertyName())) {
+			if (null != type && type.isEntityType() && attr.equals(((EntityType) type).getIdPropertyName())) {
 				if (ValidEntityKeyPredicate.INSTANCE.evaluate(value)) {
 					setValue(attr, value, entity);
 				} else {
@@ -203,8 +200,8 @@ public class ConvertPopulatorBean implements Populator {
 		try {
 			beanUtils.copyProperty(target, attr, value);
 		} catch (Exception e) {
-			logger.error("copy property failure:[class:" + target.getClass().getName() + " attr:"
-					+ attr + " value:" + value + "]:", e);
+			logger.error("copy property failure:[class:" + target.getClass().getName() + " attr:" + attr
+					+ " value:" + value + "]:", e);
 		}
 	}
 }

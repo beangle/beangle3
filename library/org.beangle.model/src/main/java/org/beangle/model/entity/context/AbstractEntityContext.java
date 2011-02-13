@@ -66,8 +66,7 @@ public abstract class AbstractEntityContext implements EntityContext {
 					matched.add(entityType);
 				}
 			}
-			if (matched.size() > 1) { throw new RuntimeException("multi-entityName for class:"
-					+ className); }
+			if (matched.size() > 1) { throw new RuntimeException("multi-entityName for class:" + className); }
 			if (matched.isEmpty()) {
 				EntityType tmp = new EntityType(entityClass);
 				classEntityTypes.put(className, tmp);

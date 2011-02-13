@@ -50,8 +50,8 @@ public class PageLimit implements Limit {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return new ToStringBuilder(this).append("pageNo", this.pageNo)
-				.append("pageSize", this.pageSize).toString();
+		return new ToStringBuilder(this).append("pageNo", this.pageNo).append("pageSize", this.pageSize)
+				.toString();
 	}
 
 }

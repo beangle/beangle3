@@ -79,7 +79,6 @@ public class DefaultPropertyExtractorTest {
 		assertEquals(age, extractor.getPropertyValue(datas, "[0]"));
 		assertEquals("jack", extractor.getPropertyValue(datas, "[1][\"firstName\"]"));
 		assertNull(extractor.getPropertyValue(datas, "[1][\"employer\"].contractInfo.add1"));
-		assertEquals("add1",
-				extractor.getPropertyValue(datas, "[1][\"employer2\"].contractInfo.add1"));
+		assertEquals("add1", extractor.getPropertyValue(datas, "[1][\"employer2\"].contractInfo.add1"));
 	}
 }

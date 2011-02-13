@@ -52,8 +52,8 @@ public class SimpleEntityExporter extends SimpleItemExporter {
 			try {
 				values[i] = propertyExtractor.getPropertyValue(getCurrent(), attrs[i]);
 			} catch (Exception e) {
-				transferResult.addFailure(TransferMessage.ERROR_ATTRS_EXPORT,
-						"occur in get property :" + attrs[i] + " and exception:" + e.getMessage());
+				transferResult.addFailure(TransferMessage.ERROR_ATTRS_EXPORT, "occur in get property :"
+						+ attrs[i] + " and exception:" + e.getMessage());
 			}
 		}
 		writer.write(values);

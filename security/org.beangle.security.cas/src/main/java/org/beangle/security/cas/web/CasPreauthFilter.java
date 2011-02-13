@@ -23,32 +23,28 @@ import org.jasig.cas.client.validation.TicketValidator;
 /**
  * Processes a CAS service ticket.
  * <p>
- * A service ticket consists of an opaque ticket string. It arrives at this
- * filter by the user's browser successfully authenticating using CAS, and then
- * receiving a HTTP redirect to a <code>service</code>. The opaque ticket string
- * is presented in the <code>ticket</code> request parameter. This filter
- * monitors the <code>service</code> URL so it can receive the service ticket
- * and process it. The CAS server knows which <code>service</code> URL to use
- * via the {@link CasConfig#getService()} method.
+ * A service ticket consists of an opaque ticket string. It arrives at this filter by the user's
+ * browser successfully authenticating using CAS, and then receiving a HTTP redirect to a
+ * <code>service</code>. The opaque ticket string is presented in the <code>ticket</code> request
+ * parameter. This filter monitors the <code>service</code> URL so it can receive the service ticket
+ * and process it. The CAS server knows which <code>service</code> URL to use via the
+ * {@link CasConfig#getService()} method.
  * </p>
  * <p>
- * Processing the service ticket involves creating a
- * <code>PreauthAuthentication</code> which uses {@link #STATEFUL_ID} for the
- * <code>principal</code> and the opaque ticket string as the
+ * Processing the service ticket involves creating a <code>PreauthAuthentication</code> which uses
+ * {@link #STATEFUL_ID} for the <code>principal</code> and the opaque ticket string as the
  * <code>credentials</code>.
  * </p>
  * <p>
- * The configured <code>AuthenticationManager</code> is expected to provide a
- * provider that can recognise <code>PreauthAuthentication</code>s containing
- * this special <code>principal</code> name, and process them accordingly by
- * validation with the CAS server.
+ * The configured <code>AuthenticationManager</code> is expected to provide a provider that can
+ * recognise <code>PreauthAuthentication</code>s containing this special <code>principal</code>
+ * name, and process them accordingly by validation with the CAS server.
  * </p>
  * <p>
- * By configuring a shared {@link ProxyGrantingTicketStorage} between the
- * {@link TicketValidator} and the CasPreauthFilter one can have the
- * CasPreauthFilter handle the proxying requirements for CAS. In addition, the
- * URI endpoint for the proxying would also need to be configured (i.e. the part
- * after protocol, hostname, and port).
+ * By configuring a shared {@link ProxyGrantingTicketStorage} between the {@link TicketValidator}
+ * and the CasPreauthFilter one can have the CasPreauthFilter handle the proxying requirements for
+ * CAS. In addition, the URI endpoint for the proxying would also need to be configured (i.e. the
+ * part after protocol, hostname, and port).
  * 
  * @author chaostone
  * @version $Id: CasPreauthFilter.java$
@@ -79,8 +75,8 @@ public class CasPreauthFilter extends AbstractPreauthFilter {
 		if (password == null) {
 			return null;
 		} else {
-			String url = CommonUtils.constructServiceUrl(request, response, null,
-					config.getLocalServer(), "ticket", config.isEncode());
+			String url = CommonUtils.constructServiceUrl(request, response, null, config.getLocalServer(),
+					"ticket", config.isEncode());
 			return new CasAuthentication(username, password, url);
 		}
 	}
@@ -89,12 +85,11 @@ public class CasPreauthFilter extends AbstractPreauthFilter {
 	 * Try to authenticate a pre-authenticated user with Beangle Security if the
 	 * user has not yet been authenticated.
 	 */
-	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain) throws IOException, ServletException {
+	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws IOException, ServletException {
 		if (null != proxyGrantingTicketStorage && CommonUtils.isNotEmpty(proxyReceptor)
 				&& request.getRequestURI().endsWith(proxyReceptor)) {
-			CommonUtils.readAndRespondToProxyReceptorRequest(request, response,
-					proxyGrantingTicketStorage);
+			CommonUtils.readAndRespondToProxyReceptorRequest(request, response, proxyGrantingTicketStorage);
 		} else {
 			super.doFilterHttp(request, response, filterChain);
 		}

@@ -71,10 +71,8 @@ public class BatchReplaceMain {
 				profiles.put(line, replacers);
 			} else {
 				line = StringUtils.replace(line, "\\=", "~~~~");
-				String older = StringUtils.replace(StringUtils.substringBefore(line, "="), "~~~~",
-						"=");
-				String newer = StringUtils.replace(StringUtils.substringAfter(line, "="), "~~~~",
-						"=");
+				String older = StringUtils.replace(StringUtils.substringBefore(line, "="), "~~~~", "=");
+				String newer = StringUtils.replace(StringUtils.substringAfter(line, "="), "~~~~", "=");
 				older = StringUtils.replace(older, "\\n", "\n");
 				older = StringUtils.replace(older, "\\t", "\t");
 				newer = StringUtils.replace(newer, "\\n", "\n");

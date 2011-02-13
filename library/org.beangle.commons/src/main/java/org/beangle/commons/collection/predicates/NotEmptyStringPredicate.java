@@ -14,8 +14,7 @@ public class NotEmptyStringPredicate implements Predicate {
 	 * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
 	 */
 	public boolean evaluate(final Object value) {
-		return (null != value) && (value instanceof String)
-				&& StringUtils.isNotEmpty((String) value);
+		return (null != value) && (value instanceof String) && StringUtils.isNotEmpty((String) value);
 	}
 
 }

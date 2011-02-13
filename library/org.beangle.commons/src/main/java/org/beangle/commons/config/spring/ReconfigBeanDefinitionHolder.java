@@ -14,8 +14,7 @@ public class ReconfigBeanDefinitionHolder extends BeanDefinitionHolder {
 
 	private ReconfigType configType = ReconfigType.UPDATE;
 
-	public ReconfigBeanDefinitionHolder(BeanDefinition beanDefinition, String beanName,
-			String[] aliases) {
+	public ReconfigBeanDefinitionHolder(BeanDefinition beanDefinition, String beanName, String[] aliases) {
 		super(beanDefinition, beanName, aliases);
 	}
 
@@ -45,8 +44,7 @@ public class ReconfigBeanDefinitionHolder extends BeanDefinitionHolder {
 		}
 		sb.append(this.getBeanName()).append("'");
 		if (null != getAliases() && getAliases().length > 0) {
-			sb.append(" aliases[").append(StringUtils.arrayToCommaDelimitedString(getAliases()))
-					.append("]");
+			sb.append(" aliases[").append(StringUtils.arrayToCommaDelimitedString(getAliases())).append("]");
 		}
 		BeanDefinition bd = getBeanDefinition();
 		if (null != bd.getBeanClassName()) {

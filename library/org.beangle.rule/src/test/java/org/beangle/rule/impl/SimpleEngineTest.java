@@ -32,8 +32,7 @@ public class SimpleEngineTest extends SpringTestCase {
 
 		// ruleBase.getRules().add(rule1);
 		ruleBase.getRules().add(rule2);
-		engine.setRuleExecutorBuilder((RuleExecutorBuilder) applicationContext
-				.getBean("ruleExecutorBuilder"));
+		engine.setRuleExecutorBuilder((RuleExecutorBuilder) applicationContext.getBean("ruleExecutorBuilder"));
 		engine.setRuleBase(ruleBase);
 		engine.setPatternMatcher(new FullPatternMatcher());
 		engine.execute(context);

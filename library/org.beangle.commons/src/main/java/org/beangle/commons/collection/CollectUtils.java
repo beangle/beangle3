@@ -114,8 +114,7 @@ public final class CollectUtils {
 		return map;
 	}
 
-	public static Map<?, ?> convertToMap(Collection<?> coll, String keyProperty,
-			String valueProperty) {
+	public static Map<?, ?> convertToMap(Collection<?> coll, String keyProperty, String valueProperty) {
 		Map<Object, Object> map = newHashMap();
 		for (Object obj : coll) {
 			Object key = null;

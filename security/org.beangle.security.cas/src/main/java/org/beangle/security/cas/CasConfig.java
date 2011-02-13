@@ -10,9 +10,9 @@ import org.springframework.beans.factory.InitializingBean;
 /**
  * Stores properties related to this CAS service.
  * <p>
- * Each web application capable of processing CAS tickets is known as a service.
- * This class stores the properties that are relevant to the local CAS service,
- * being the application that is being secured by Beangle Security.
+ * Each web application capable of processing CAS tickets is known as a service. This class stores
+ * the properties that are relevant to the local CAS service, being the application that is being
+ * secured by Beangle Security.
  * 
  * @author chaostone
  * @version $Id: ServiceProperties.java $
@@ -93,12 +93,10 @@ public class CasConfig implements InitializingBean {
 	 * Indicates whether the <code>renew</code> parameter should be sent to the
 	 * CAS login URL and CAS validation URL.
 	 * <p>
-	 * If <code>true</code>, it will force CAS to authenticate the user again
-	 * (even if the user has previously authenticated). During ticket validation
-	 * it will require the ticket was generated as a consequence of an explicit
-	 * login. High security applications would probably set this to
-	 * <code>true</code>. Defaults to <code>false</code>, providing automated
-	 * single sign on.
+	 * If <code>true</code>, it will force CAS to authenticate the user again (even if the user has
+	 * previously authenticated). During ticket validation it will require the ticket was generated
+	 * as a consequence of an explicit login. High security applications would probably set this to
+	 * <code>true</code>. Defaults to <code>false</code>, providing automated single sign on.
 	 * 
 	 * @return whether to send the <code>renew</code> parameter to CAS
 	 */

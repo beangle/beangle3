@@ -24,8 +24,7 @@ public class ConventionRouteHandler implements UnknownHandler {
 	@Inject
 	protected ResultBuilder resultBuilder;
 
-	public ActionConfig handleUnknownAction(String namespace, String actionName)
-			throws XWorkException {
+	public ActionConfig handleUnknownAction(String namespace, String actionName) throws XWorkException {
 		return null;
 	}
 

@@ -40,8 +40,8 @@ public class FilterInvocation {
 	/**
 	 * Indicates the URL that the user agent used for this request.
 	 * <P>
-	 * The returned URL does <b>not</b> reflect the port number determined from
-	 * a {@link org.beangle.security.util.PortResolver}.
+	 * The returned URL does <b>not</b> reflect the port number determined from a
+	 * {@link org.beangle.security.util.PortResolver}.
 	 * </p>
 	 * 
 	 * @return the full URL of this request

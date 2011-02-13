@@ -64,8 +64,8 @@ public abstract class BaseDaoHibernate extends HibernateDaoSupport {
 	@SuppressWarnings("unchecked")
 	public <T> Page<T> paginateQuery(Query query, Map<String, Object> params, PageLimit limit) {
 		QuerySupport.setParameter(query, params);
-		query.setFirstResult((limit.getPageNo() - 1) * limit.getPageSize()).setMaxResults(
-				limit.getPageSize());
+		query.setFirstResult((limit.getPageNo() - 1) * limit.getPageSize())
+				.setMaxResults(limit.getPageSize());
 		List<T> targetList = query.list();
 
 		String queryStr = buildCountQueryStr(query);
@@ -93,8 +93,7 @@ public abstract class BaseDaoHibernate extends HibernateDaoSupport {
 			queryStr += "from (" + query.getQueryString() + ")";
 		} else {
 			String lowerCaseQueryStr = query.getQueryString().toLowerCase();
-			String selectWhich = lowerCaseQueryStr.substring(0,
-					query.getQueryString().indexOf("from"));
+			String selectWhich = lowerCaseQueryStr.substring(0, query.getQueryString().indexOf("from"));
 			int indexOfDistinct = selectWhich.indexOf("distinct");
 			int indexOfFrom = lowerCaseQueryStr.indexOf("from");
 			// 如果含有distinct

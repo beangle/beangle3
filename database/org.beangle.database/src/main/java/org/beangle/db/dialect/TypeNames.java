@@ -61,8 +61,7 @@ public class TypeNames {
 	 */
 	public String get(int typecode) {
 		String result = defaults.get(new Integer(typecode));
-		if (result == null) throw new RuntimeException("No Dialect mapping for JDBC type: "
-				+ typecode);
+		if (result == null) throw new RuntimeException("No Dialect mapping for JDBC type: " + typecode);
 		return result;
 	}
 

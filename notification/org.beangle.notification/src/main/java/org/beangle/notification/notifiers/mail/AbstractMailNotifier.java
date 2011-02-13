@@ -63,8 +63,7 @@ public abstract class AbstractMailNotifier implements Notifier {
 		try {
 			mimeMsg.setSentDate(new Date());
 			MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMsg);
-			messageHelper.setText(buildText(mailConext),
-					Message.HTML.equals(mailConext.getContentType()));
+			messageHelper.setText(buildText(mailConext), Message.HTML.equals(mailConext.getContentType()));
 			String subject = buildSubject(mailConext);
 			messageHelper.setSubject(subject);
 			messageHelper.setFrom(fromMailbox, fromName);
@@ -72,11 +71,10 @@ public abstract class AbstractMailNotifier implements Notifier {
 			addRecipient(mimeMsg, javax.mail.Message.RecipientType.CC, mailConext.getCc());
 			addRecipient(mimeMsg, javax.mail.Message.RecipientType.BCC, mailConext.getBcc());
 			beforeSend(mailConext, mimeMsg);
-			if (mimeMsg.getAllRecipients() != null
-					&& ((Address[]) mimeMsg.getAllRecipients()).length > 0) {
+			if (mimeMsg.getAllRecipients() != null && ((Address[]) mimeMsg.getAllRecipients()).length > 0) {
 				javaMailSender.send(mimeMsg);
-				logger.info("mail sended from {} to {} with subject {}", new Object[] {
-						fromMailbox, mailConext.getRecipients(), subject });
+				logger.info("mail sended from {} to {} with subject {}", new Object[] { fromMailbox,
+						mailConext.getRecipients(), subject });
 			}
 		} catch (AddressException ex) {
 			throw new NotificationException("Exception while sending message.", ex);

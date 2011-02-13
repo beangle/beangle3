@@ -185,8 +185,7 @@ public class SqlQuery extends AbstractQuery<Object> {
 	}
 
 	public Map<String, Object> getParams() {
-		return (null == params) ? ConditionUtils.getParamMap(conditions) : CollectUtils
-				.newHashMap(params);
+		return (null == params) ? ConditionUtils.getParamMap(conditions) : CollectUtils.newHashMap(params);
 	}
 
 	public Query<Object> build() {

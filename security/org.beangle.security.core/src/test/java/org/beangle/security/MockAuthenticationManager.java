@@ -21,8 +21,7 @@ public class MockAuthenticationManager extends AbstractAuthenticationManager {
 		super();
 	}
 
-	public Authentication doAuthentication(Authentication authentication)
-			throws AuthenticationException {
+	public Authentication doAuthentication(Authentication authentication) throws AuthenticationException {
 		if (grantAccess) {
 			return authentication;
 		} else {

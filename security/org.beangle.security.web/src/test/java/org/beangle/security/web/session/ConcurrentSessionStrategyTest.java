@@ -75,8 +75,8 @@ public class ConcurrentSessionStrategyTest {
 		SessionRegistry registry = new MemSessionRegistry();
 		for (int i = 0; i < sessionNum; i++) {
 			String random = RandomStringUtils.randomAlphanumeric(21);
-			Authentication authentication = new UsernamePasswordAuthentication(new MockPrincipal(
-					random, String.valueOf(RandomUtils.nextInt(profileNum))), random);
+			Authentication authentication = new UsernamePasswordAuthentication(new MockPrincipal(random,
+					String.valueOf(RandomUtils.nextInt(profileNum))), random);
 			registry.register(random, authentication);
 		}
 

@@ -19,8 +19,7 @@ public class HierarchyEntityUtil {
 		return sort(datas, null);
 	}
 
-	public Map<HierarchyEntity<?>, String> sort(List<? extends HierarchyEntity<?>> datas,
-			String property) {
+	public Map<HierarchyEntity<?>, String> sort(List<? extends HierarchyEntity<?>> datas, String property) {
 		final Map<HierarchyEntity<?>, String> sortedMap = CollectUtils.newHashMap();
 		for (HierarchyEntity<?> de : datas) {
 			String myId = null;

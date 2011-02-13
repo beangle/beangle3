@@ -29,8 +29,7 @@ public class ExcelTools {
 	public ExcelTools() {
 	}
 
-	public HSSFWorkbook toExcel(Collection<Object[]> datas, String propertyShowKeys)
-			throws Exception {
+	public HSSFWorkbook toExcel(Collection<Object[]> datas, String propertyShowKeys) throws Exception {
 		// 建立新HSSFWorkbook对象
 		HSSFWorkbook wb = new HSSFWorkbook();
 		return toExcel(wb, "export data", datas, propertyShowKeys);
@@ -69,8 +68,7 @@ public class ExcelTools {
 			for (int j = 0; j < objs.length; j++) {
 				cell = row.createCell(j); // 建立新cell
 				// cell.setEncoding(HSSFCell.ENCODING_UTF_16);
-				cell.setCellValue(new HSSFRichTextString((objs[j] == null) ? "" : objs[j]
-						.toString()));
+				cell.setCellValue(new HSSFRichTextString((objs[j] == null) ? "" : objs[j].toString()));
 			}
 		}
 		return wb;
@@ -87,8 +85,8 @@ public class ExcelTools {
 	 * @return 返回�?个HSSFWorkbook（excel）类型数�?.
 	 * @throws Exception
 	 */
-	public <T> HSSFWorkbook object2Excel(Collection<T> list, String propertyKeys,
-			String propertyShowKeys, PropertyExtractor exporter) throws Exception {
+	public <T> HSSFWorkbook object2Excel(Collection<T> list, String propertyKeys, String propertyShowKeys,
+			PropertyExtractor exporter) throws Exception {
 		HSSFWorkbook wb = new HSSFWorkbook(); // 建立新HSSFWorkbook对象
 		object2Excel(wb, "export result", list, propertyKeys, propertyShowKeys, exporter);
 		return wb;
@@ -107,8 +105,8 @@ public class ExcelTools {
 	 * @throws Exception
 	 */
 	public <T extends Object> HSSFWorkbook object2Excel(HSSFWorkbook wb, String sheetName,
-			Collection<T> list, String propertyKeys, String propertyShowKeys,
-			PropertyExtractor exporter) throws Exception {
+			Collection<T> list, String propertyKeys, String propertyShowKeys, PropertyExtractor exporter)
+			throws Exception {
 		HSSFSheet sheet = wb.createSheet(sheetName);
 		HSSFRow row = null;
 		HSSFCell cell = null;

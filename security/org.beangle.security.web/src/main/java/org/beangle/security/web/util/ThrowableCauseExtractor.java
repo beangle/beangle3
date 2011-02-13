@@ -5,8 +5,7 @@
 package org.beangle.security.web.util;
 
 /**
- * Interface for handlers extracting the cause out of a specific
- * {@link Throwable} type.
+ * Interface for handlers extracting the cause out of a specific {@link Throwable} type.
  * 
  * @author Andreas Senft
  * @since 2.0

@@ -16,8 +16,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 public class BeangleTagLibrary implements TagLibrary {
 
-	public Object getFreemarkerModels(ValueStack stack, HttpServletRequest req,
-			HttpServletResponse res) {
+	public Object getFreemarkerModels(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
 		return new BeangleModels(stack, req, res);
 	}
 

@@ -18,8 +18,7 @@ public class DefaultResourceExtractor implements ResourceExtractor {
 	public String extract(HttpServletRequest request) {
 		String servletPath = request.getServletPath();
 		if (StringUtils.isEmpty(servletPath)) {
-			servletPath = StringUtils.substringAfter(request.getRequestURI(),
-					request.getContextPath());
+			servletPath = StringUtils.substringAfter(request.getRequestURI(), request.getContextPath());
 		}
 		return extract(servletPath);
 	}

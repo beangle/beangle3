@@ -44,8 +44,7 @@ public class DefaultActionBuilder implements ActionBuilder {
 		} else {
 			throw new RuntimeException("unsupported uri style " + profile.getUriPathStyle());
 		}
-		action.path(sb.toString()).method(profile.getDefaultMethod())
-				.extention(profile.getUriExtension());
+		action.path(sb.toString()).method(profile.getDefaultMethod()).extention(profile.getUriExtension());
 		return action;
 	}
 

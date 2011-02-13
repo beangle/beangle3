@@ -62,8 +62,7 @@ public class QueryHelper {
 	 * @param exclusiveAttrNames
 	 * @return
 	 */
-	public static List<Condition> extractConditions(Class<?> clazz, String prefix,
-			String exclusiveAttrNames) {
+	public static List<Condition> extractConditions(Class<?> clazz, String prefix, String exclusiveAttrNames) {
 		Object entity = null;
 		try {
 			if (clazz.isInterface()) {
@@ -72,8 +71,7 @@ public class QueryHelper {
 			}
 			entity = clazz.newInstance();
 		} catch (Exception e) {
-			throw new RuntimeException("[RequestUtil.extractConditions]: error in in initialize "
-					+ clazz);
+			throw new RuntimeException("[RequestUtil.extractConditions]: error in in initialize " + clazz);
 		}
 		List<Condition> conditions = CollectUtils.newArrayList();
 		Map<String, Object> params = Params.sub(prefix, exclusiveAttrNames);
@@ -93,13 +91,13 @@ public class QueryHelper {
 							conditions.add(new Condition(prefix + "." + attr + " like :"
 									+ attr.replace('.', '_'), "%" + (String) settedValue + "%"));
 						} else {
-							conditions.add(new Condition(prefix + "." + attr + "=:"
-									+ attr.replace('.', '_'), settedValue));
+							conditions.add(new Condition(prefix + "." + attr + "=:" + attr.replace('.', '_'),
+									settedValue));
 						}
 					}
 				} catch (Exception e) {
-					logger.debug("[populateFromParams]:error in populate entity " + prefix
-							+ "'s attribute " + attr);
+					logger.debug("[populateFromParams]:error in populate entity " + prefix + "'s attribute "
+							+ attr);
 				}
 			}
 		}
@@ -150,8 +148,7 @@ public class QueryHelper {
 		}
 	}
 
-	public static void addDateIntervalCondition(OqlBuilder<?> query, String attr, String beginOn,
-			String endOn) {
+	public static void addDateIntervalCondition(OqlBuilder<?> query, String attr, String beginOn, String endOn) {
 		addDateIntervalCondition(query, query.getAlias(), attr, beginOn, endOn);
 	}
 

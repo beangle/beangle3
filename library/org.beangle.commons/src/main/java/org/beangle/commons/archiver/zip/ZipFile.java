@@ -24,26 +24,23 @@ import org.beangle.commons.collection.CollectUtils;
 /**
  * Replacement for <code>java.util.ZipFile</code>.
  * <p>
- * This class adds support for file name encodings other than UTF-8 (which is
- * required to work on ZIP files created by native zip tools and is able to skip
- * a preamble like the one found in self extracting archives. Furthermore it
- * returns instances of <code>org.apache.tools.zip.ZipEntry</code> instead of
- * <code>java.util.zip.ZipEntry</code>.
+ * This class adds support for file name encodings other than UTF-8 (which is required to work on
+ * ZIP files created by native zip tools and is able to skip a preamble like the one found in self
+ * extracting archives. Furthermore it returns instances of
+ * <code>org.apache.tools.zip.ZipEntry</code> instead of <code>java.util.zip.ZipEntry</code>.
  * </p>
  * <p>
- * It doesn't extend <code>java.util.zip.ZipFile</code> as it would have to
- * reimplement all methods anyway. Like <code>java.util.ZipFile</code>, it uses
- * RandomAccessFile under the covers and supports compressed and uncompressed
- * entries.
+ * It doesn't extend <code>java.util.zip.ZipFile</code> as it would have to reimplement all methods
+ * anyway. Like <code>java.util.ZipFile</code>, it uses RandomAccessFile under the covers and
+ * supports compressed and uncompressed entries.
  * </p>
  * <p>
- * The method signatures mimic the ones of <code>java.util.zip.ZipFile</code>,
- * with a couple of exceptions:
+ * The method signatures mimic the ones of <code>java.util.zip.ZipFile</code>, with a couple of
+ * exceptions:
  * <ul>
  * <li>There is no getName method.</li>
  * <li>entries has been renamed to getEntries.</li>
- * <li>getEntries and getEntry return <code>org.apache.tools.zip.ZipEntry</code>
- * instances.</li>
+ * <li>getEntries and getEntry return <code>org.apache.tools.zip.ZipEntry</code> instances.</li>
  * <li>close is allowed to throw IOException.</li>
  * </ul>
  */
@@ -79,8 +76,8 @@ public class ZipFile {
 	 * <p>
 	 * For a list of possible values see <a
 	 * href="http://java.sun.com/j2se/1.5.0/docs/guide/intl/encoding.doc.html"
-	 * >http://java.sun.com/j2se/1.5.0/docs/guide/intl/encoding.doc.html</a>.
-	 * Defaults to the platform's default character encoding.
+	 * >http://java.sun.com/j2se/1.5.0/docs/guide/intl/encoding.doc.html</a>. Defaults to the
+	 * platform's default character encoding.
 	 * </p>
 	 */
 	private String encoding = null;
@@ -244,8 +241,7 @@ public class ZipFile {
 	 * 
 	 * @param name
 	 *            name of the entry.
-	 * @return the ZipEntry corresponding to the given name - or
-	 *         <code>null</code> if not present.
+	 * @return the ZipEntry corresponding to the given name - or <code>null</code> if not present.
 	 */
 	public ZipEntry getEntry(String name) {
 		return (ZipEntry) nameMap.get(name);
@@ -300,9 +296,8 @@ public class ZipFile {
 	 * Reads the central directory of the given archive and populates the
 	 * internal tables with ZipEntry instances.
 	 * <p>
-	 * The ZipEntrys will know all data that can be obtained from the central
-	 * directory alone, but not the data that requires the local file header or
-	 * additional data to be read.
+	 * The ZipEntrys will know all data that can be obtained from the central directory alone, but
+	 * not the data that requires the local file header or additional data to be read.
 	 * </p>
 	 * 
 	 * @return a Map&lt;ZipEntry, NameAndComment>&gt; of zipentries that didn't
@@ -334,8 +329,7 @@ public class ZipFile {
 
 			final int generalPurposeFlag = ZipShort.getValue(cfh, off);
 			final boolean hasEFS = (generalPurposeFlag & ZipOutputStream.EFS_FLAG) != 0;
-			final ZipEncoding entryEncoding = hasEFS ? ZipEncodingHelper.UTF8_ZIP_ENCODING
-					: zipEncoding;
+			final ZipEncoding entryEncoding = hasEFS ? ZipEncodingHelper.UTF8_ZIP_ENCODING : zipEncoding;
 
 			off += SHORT;
 
@@ -521,8 +515,8 @@ public class ZipFile {
 			 * LFH_OFFSET_FOR_FILENAME_LENGTH + SHORT + SHORT + fileNameLen +
 			 * extraFieldLen));
 			 */
-			offsetEntry.dataOffset = offset + LFH_OFFSET_FOR_FILENAME_LENGTH + SHORT + SHORT
-					+ fileNameLen + extraFieldLen;
+			offsetEntry.dataOffset = offset + LFH_OFFSET_FOR_FILENAME_LENGTH + SHORT + SHORT + fileNameLen
+					+ extraFieldLen;
 
 			if (entriesWithoutEFS.containsKey(ze)) {
 				setNameAndCommentFromExtraFields(ze, (NameAndComment) entriesWithoutEFS.get(ze));
@@ -596,8 +590,7 @@ public class ZipFile {
 	 * the extra field.
 	 */
 	private void setNameAndCommentFromExtraFields(ZipEntry ze, NameAndComment nc) {
-		UnicodePathExtraField name = (UnicodePathExtraField) ze
-				.getExtraField(UnicodePathExtraField.UPATH_ID);
+		UnicodePathExtraField name = (UnicodePathExtraField) ze.getExtraField(UnicodePathExtraField.UPATH_ID);
 		String originalName = ze.getName();
 		String newName = getUnicodeStringIfOriginalMatches(name, nc.name);
 		if (newName != null && !originalName.equals(newName)) {

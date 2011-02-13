@@ -19,8 +19,7 @@ import com.opensymphony.xwork2.util.TextParseUtil;
 import com.opensymphony.xwork2.util.ValueStack;
 
 /**
- * <li>remove actionMapper\determineActionURL\determineNamespace</li> <li>remove
- * copy parameter</li>
+ * <li>remove actionMapper\determineActionURL\determineNamespace</li> <li>remove copy parameter</li>
  * 
  * @author chaostone
  */
@@ -60,8 +59,7 @@ public class Component {
 	 */
 	protected Stack<Component> getComponentStack() {
 		@SuppressWarnings("unchecked")
-		Stack<Component> componentStack = (Stack<Component>) stack.getContext()
-				.get(COMPONENT_STACK);
+		Stack<Component> componentStack = (Stack<Component>) stack.getContext().get(COMPONENT_STACK);
 		if (componentStack == null) {
 			componentStack = new Stack<Component>();
 			stack.getContext().put(COMPONENT_STACK, componentStack);
@@ -169,16 +167,15 @@ public class Component {
 	 * Evaluates the OGNL stack to find a String value.
 	 * <p/>
 	 * If the given expression is <tt>null</tt/> a error is logged and a
-	 * <code>RuntimeException</code> is thrown constructed with a messaged based
-	 * on the given field and errorMsg paramter.
+	 * <code>RuntimeException</code> is thrown constructed with a messaged based on the given field
+	 * and errorMsg paramter.
 	 * 
 	 * @param expr
 	 *            OGNL expression.
 	 * @param field
 	 *            field name used when throwing <code>RuntimeException</code>.
 	 * @param errorMsg
-	 *            error message used when throwing <code>RuntimeException</code>
-	 *            .
+	 *            error message used when throwing <code>RuntimeException</code> .
 	 * @return the String value found.
 	 * @throws StrutsException
 	 *             is thrown in case of expression is <tt>null</tt>.
@@ -195,14 +192,13 @@ public class Component {
 	 * Constructs a <code>RuntimeException</code> based on the given
 	 * information.
 	 * <p/>
-	 * A message is constructed and logged at ERROR level before being returned
-	 * as a <code>RuntimeException</code>.
+	 * A message is constructed and logged at ERROR level before being returned as a
+	 * <code>RuntimeException</code>.
 	 * 
 	 * @param field
 	 *            field name used when throwing <code>RuntimeException</code>.
 	 * @param errorMsg
-	 *            error message used when throwing <code>RuntimeException</code>
-	 *            .
+	 *            error message used when throwing <code>RuntimeException</code> .
 	 * @param e
 	 *            the caused exception, can be <tt>null</tt>.
 	 * @return the constructed <code>StrutsException</code>.
@@ -219,8 +215,8 @@ public class Component {
 
 	/**
 	 * Finds a value from the OGNL stack based on the given expression. Will
-	 * always evaluate <code>expr</code> against stack except when
-	 * <code>expr</code> is null. If altsyntax (%{...}) is applied, simply strip
+	 * always evaluate <code>expr</code> against stack except when <code>expr</code> is null. If
+	 * altsyntax (%{...}) is applied, simply strip
 	 * it off.
 	 * 
 	 * @param expr
@@ -259,8 +255,7 @@ public class Component {
 		if (altSyntax(stack)) {
 			// does the expression start with %{ and end with }? if so, just cut
 			// it off!
-			if (expr.startsWith("%{") && expr.endsWith("}")) { return expr.substring(2,
-					expr.length() - 1); }
+			if (expr.startsWith("%{") && expr.endsWith("}")) { return expr.substring(2, expr.length() - 1); }
 		}
 		return expr;
 	}
@@ -271,8 +266,8 @@ public class Component {
 	 * 
 	 * @param stack
 	 *            the ValueStack where the context value is searched for.
-	 * @return true if altSyntax is activated. False otherwise. See
-	 *         <code>struts.properties</code> where the altSyntax flag is
+	 * @return true if altSyntax is activated. False otherwise. See <code>struts.properties</code>
+	 *         where the altSyntax flag is
 	 *         defined.
 	 */
 	public static boolean altSyntax(ValueStack stack) {
@@ -317,18 +312,16 @@ public class Component {
 	/**
 	 * Evaluates the OGNL stack to find an Object value.
 	 * <p/>
-	 * Function just like <code>findValue(String)</code> except that if the
-	 * given expression is <tt>null</tt/> a error is logged and a
-	 * <code>RuntimeException</code> is thrown constructed with a messaged based
-	 * on the given field and errorMsg paramter.
+	 * Function just like <code>findValue(String)</code> except that if the given expression is
+	 * <tt>null</tt/> a error is logged and a <code>RuntimeException</code> is thrown constructed
+	 * with a messaged based on the given field and errorMsg paramter.
 	 * 
 	 * @param expr
 	 *            OGNL expression.
 	 * @param field
 	 *            field name used when throwing <code>RuntimeException</code>.
 	 * @param errorMsg
-	 *            error message used when throwing <code>RuntimeException</code>
-	 *            .
+	 *            error message used when throwing <code>RuntimeException</code> .
 	 * @return the Object found, is never <tt>null</tt>.
 	 * @throws StrutsException
 	 *             is thrown in case of not found in the OGNL stack, or
@@ -412,9 +405,8 @@ public class Component {
 	/**
 	 * Adds the given key and value to this component's own parameter.
 	 * <p/>
-	 * If the provided key is <tt>null</tt> nothing happens. If the provided
-	 * value is <tt>null</tt> any existing parameter with the given key name is
-	 * removed.
+	 * If the provided key is <tt>null</tt> nothing happens. If the provided value is <tt>null</tt>
+	 * any existing parameter with the given key name is removed.
 	 * 
 	 * @param key
 	 *            the key of the new parameter to add.

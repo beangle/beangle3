@@ -9,8 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class DatabaseWrapperTestCase {
 	protected DataWrapper dataWrapper;
-	protected static final Logger log = LoggerFactory.getLogger(DatabaseWrapperTestCase.class
-			.getName());
+	protected static final Logger log = LoggerFactory.getLogger(DatabaseWrapperTestCase.class.getName());
 
 	protected void listTables() {
 		// log.info("tables {}", dataWrapper.getTableNames());

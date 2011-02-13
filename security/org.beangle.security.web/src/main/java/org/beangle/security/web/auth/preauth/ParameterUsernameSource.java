@@ -52,8 +52,8 @@ public class ParameterUsernameSource implements UsernameSource {
 			long time = t.longValue() * 1000;
 			Date now = new Date();
 			if (enableExpired && (Math.abs(now.getTime() - time) > (expiredTime * 1000))) {
-				logger.debug("user " + cid + " time expired:server time:{} and given time :{}",
-						now, new Date(time));
+				logger.debug("user " + cid + " time expired:server time:{} and given time :{}", now,
+						new Date(time));
 				return null;
 			} else {
 				logger.debug("user {} login at server time:{}", cid, now);

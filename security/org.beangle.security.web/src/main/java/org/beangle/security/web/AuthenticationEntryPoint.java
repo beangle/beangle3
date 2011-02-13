@@ -17,15 +17,13 @@ public interface AuthenticationEntryPoint {
 	/**
 	 * Commences an authentication scheme.
 	 * <p>
-	 * <code>ExceptionTranslationFilter</code> will populate the
-	 * <code>HttpSession</code> attribute named
-	 * <code>AbstractProcessingFilter.SECURITY_SAVED_REQUEST_KEY</code> with the
-	 * requested target URL before calling this method.
+	 * <code>ExceptionTranslationFilter</code> will populate the <code>HttpSession</code> attribute
+	 * named <code>AbstractProcessingFilter.SECURITY_SAVED_REQUEST_KEY</code> with the requested
+	 * target URL before calling this method.
 	 * </p>
 	 * <p>
-	 * Implementations should modify the headers on the
-	 * <code>ServletResponse</code> as necessary to commence the authentication
-	 * process.
+	 * Implementations should modify the headers on the <code>ServletResponse</code> as necessary to
+	 * commence the authentication process.
 	 * </p>
 	 * 
 	 * @param request
@@ -35,6 +33,6 @@ public interface AuthenticationEntryPoint {
 	 * @param authException
 	 *            that caused the invocation
 	 */
-	void commence(ServletRequest request, ServletResponse response,
-			AuthenticationException authException) throws IOException, ServletException;
+	void commence(ServletRequest request, ServletResponse response, AuthenticationException authException)
+			throws IOException, ServletException;
 }

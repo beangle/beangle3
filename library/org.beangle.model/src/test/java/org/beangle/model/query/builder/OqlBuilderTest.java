@@ -18,8 +18,8 @@ public class OqlBuilderTest {
 	public void testToCountString1() throws Exception {
 		OqlBuilder<TestModel> queryBuilder = OqlBuilder.from(TestModel.class, "model");
 		LimitQuery<?> query = (LimitQuery<?>) queryBuilder.build();
-		assertEquals("select count(*) from org.beangle.model.query.TestModel model", query
-				.getCountQuery().getStatement());
+		assertEquals("select count(*) from org.beangle.model.query.TestModel model", query.getCountQuery()
+				.getStatement());
 		queryBuilder.where(new Condition("name like :name", "testName"));
 		query = (LimitQuery<?>) queryBuilder.build();
 		assertTrue(query.getCountQuery().getStatement().endsWith("(name like :name)"));

@@ -56,8 +56,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 			tableName = tblPrefix + tableName;
 		}
 		if (tableName.length() > 30) {
-			logger.warn("{}'s length has greate more then 30, database will not be supported!",
-					tableName);
+			logger.warn("{}'s length has greate more then 30, database will not be supported!", tableName);
 		}
 		return tableName;
 	}
@@ -96,8 +95,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 * </pre>
 	 */
 	public String logicalColumnName(String columnName, String propertyName) {
-		return StringHelper.isNotEmpty(columnName) ? columnName
-				: propertyToColumnName(propertyName);
+		return StringHelper.isNotEmpty(columnName) ? columnName : propertyToColumnName(propertyName);
 	}
 
 	/**
@@ -118,8 +116,8 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 		return sb.toString();
 	}
 
-	public String collectionTableName(String ownerEntity, String ownerEntityTable,
-			String associatedEntity, String associatedEntityTable, String propertyName) {
+	public String collectionTableName(String ownerEntity, String ownerEntityTable, String associatedEntity,
+			String associatedEntityTable, String propertyName) {
 		return tableName(ownerEntityTable + '_') + addUnderscores(unqualify(propertyName));
 	}
 
@@ -150,10 +148,9 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 			String associatedEntityTable, String propertyName) {
 		if (tableName == null) {
 			// use of a stringbuilder to workaround a JDK bug
-			return new StringBuilder(ownerEntityTable)
-					.append("_")
-					.append(associatedEntityTable == null ? unqualify(propertyName)
-							: associatedEntityTable).toString();
+			return new StringBuilder(ownerEntityTable).append("_")
+					.append(associatedEntityTable == null ? unqualify(propertyName) : associatedEntityTable)
+					.toString();
 		} else {
 			return tableName;
 		}
@@ -163,8 +160,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 * Return the column name if explicit or the concatenation of the property
 	 * name and the referenced column
 	 */
-	public String logicalCollectionColumnName(String columnName, String propertyName,
-			String referencedColumn) {
+	public String logicalCollectionColumnName(String columnName, String propertyName, String referencedColumn) {
 		return StringHelper.isNotEmpty(columnName) ? columnName : unqualify(propertyName) + "_"
 				+ referencedColumn;
 	}

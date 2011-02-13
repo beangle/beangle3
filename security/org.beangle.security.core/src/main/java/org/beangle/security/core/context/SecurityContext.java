@@ -34,8 +34,8 @@ public interface SecurityContext extends Serializable {
 	 * authentication information.
 	 * 
 	 * @param authentication
-	 *            the new <code>Authentication</code> token, or
-	 *            <code>null</code> if no further authentication information
+	 *            the new <code>Authentication</code> token, or <code>null</code> if no further
+	 *            authentication information
 	 *            should be stored
 	 */
 	void setAuthentication(Authentication authentication);

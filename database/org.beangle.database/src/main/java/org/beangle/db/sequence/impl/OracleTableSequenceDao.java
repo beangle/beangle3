@@ -88,8 +88,7 @@ public class OracleTableSequenceDao extends JdbcTemplate implements TableSequenc
 		String updateIncrease = null;
 		if (max > current) {
 			if (max - current > 1) {
-				updateIncrease = "ALTER SEQUENCE " + sequence + " INCREMENT BY   "
-						+ (max - current - 1);
+				updateIncrease = "ALTER SEQUENCE " + sequence + " INCREMENT BY   " + (max - current - 1);
 				execute(updateIncrease);
 				queryForLong(getSql);
 				//

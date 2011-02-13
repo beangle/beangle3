@@ -63,8 +63,7 @@ public class BoardAction extends SecurityActionSupport {
 				return forward("upload");
 			}
 		}
-		return redirect(new Action(UserAction.class, "info", "&user.name=" + userName),
-				"info.save.success");
+		return redirect(new Action(UserAction.class, "info", "&user.name=" + userName), "info.save.success");
 	}
 
 	public String uploadBatch() throws Exception {

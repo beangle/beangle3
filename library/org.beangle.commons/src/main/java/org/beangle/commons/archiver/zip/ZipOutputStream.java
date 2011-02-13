@@ -28,15 +28,14 @@ import org.beangle.commons.collection.CollectUtils;
  * this package, especially internal/external file attributes and extra fields
  * with different layouts for local file data and central directory entries.
  * <p>
- * This class will try to use {@link java.io.RandomAccessFile RandomAccessFile}
- * when you know that the output is going to go to a file.
+ * This class will try to use {@link java.io.RandomAccessFile RandomAccessFile} when you know that
+ * the output is going to go to a file.
  * </p>
  * <p>
- * If RandomAccessFile cannot be used, this implementation will use a Data
- * Descriptor to store size and CRC information for {@link #DEFLATED DEFLATED}
- * entries, this means, you don't need to calculate them yourself. Unfortunately
- * this is not possible for the {@link #STORED STORED} method, here setting the
- * CRC and uncompressed size information is required before
+ * If RandomAccessFile cannot be used, this implementation will use a Data Descriptor to store size
+ * and CRC information for {@link #DEFLATED DEFLATED} entries, this means, you don't need to
+ * calculate them yourself. Unfortunately this is not possible for the {@link #STORED STORED}
+ * method, here setting the CRC and uncompressed size information is required before
  * {@link #putNextEntry putNextEntry} can be called.
  * </p>
  */
@@ -198,8 +197,8 @@ public class ZipOutputStream extends FilterOutputStream {
 	 * <p>
 	 * For a list of possible values see <a
 	 * href="http://java.sun.com/j2se/1.5.0/docs/guide/intl/encoding.doc.html"
-	 * >http://java.sun.com/j2se/1.5.0/docs/guide/intl/encoding.doc.html</a>.
-	 * Defaults to the platform's default character encoding.
+	 * >http://java.sun.com/j2se/1.5.0/docs/guide/intl/encoding.doc.html</a>. Defaults to the
+	 * platform's default character encoding.
 	 * </p>
 	 * 
 	 * @since 1.3
@@ -217,9 +216,8 @@ public class ZipOutputStream extends FilterOutputStream {
 	/**
 	 * This Deflater object is used for output.
 	 * <p>
-	 * This attribute is only protected to provide a level of API backwards
-	 * compatibility. This class used to extend
-	 * {@link java.util.zip.DeflaterOutputStream DeflaterOutputStream} up to
+	 * This attribute is only protected to provide a level of API backwards compatibility. This
+	 * class used to extend {@link java.util.zip.DeflaterOutputStream DeflaterOutputStream} up to
 	 * Revision 1.13.
 	 * </p>
 	 * 
@@ -230,9 +228,8 @@ public class ZipOutputStream extends FilterOutputStream {
 	/**
 	 * This buffer servers as a Deflater.
 	 * <p>
-	 * This attribute is only protected to provide a level of API backwards
-	 * compatibility. This class used to extend
-	 * {@link java.util.zip.DeflaterOutputStream DeflaterOutputStream} up to
+	 * This attribute is only protected to provide a level of API backwards compatibility. This
+	 * class used to extend {@link java.util.zip.DeflaterOutputStream DeflaterOutputStream} up to
 	 * Revision 1.13.
 	 * </p>
 	 * 
@@ -308,8 +305,8 @@ public class ZipOutputStream extends FilterOutputStream {
 	 * This method indicates whether this archive is writing to a seekable
 	 * stream (i.e., to a random access file).
 	 * <p>
-	 * For seekable streams, you don't need to calculate the CRC or uncompressed
-	 * size for {@link #STORED} entries before invoking {@link #putNextEntry}.
+	 * For seekable streams, you don't need to calculate the CRC or uncompressed size for
+	 * {@link #STORED} entries before invoking {@link #putNextEntry}.
 	 * 
 	 * @return true if seekable
 	 * @since 1.17
@@ -323,8 +320,8 @@ public class ZipOutputStream extends FilterOutputStream {
 	 * <p>
 	 * For a list of possible values see <a
 	 * href="http://java.sun.com/j2se/1.5.0/docs/guide/intl/encoding.doc.html"
-	 * >http://java.sun.com/j2se/1.5.0/docs/guide/intl/encoding.doc.html</a>.
-	 * Defaults to the platform's default character encoding.
+	 * >http://java.sun.com/j2se/1.5.0/docs/guide/intl/encoding.doc.html</a>. Defaults to the
+	 * platform's default character encoding.
 	 * </p>
 	 * 
 	 * @param encoding
@@ -430,9 +427,8 @@ public class ZipOutputStream extends FilterOutputStream {
 					+ entry.getName() + ": " + Long.toHexString(entry.getCrc()) + " instead of "
 					+ Long.toHexString(realCrc)); }
 
-			if (entry.getSize() != written - dataStart) { throw new ZipException(
-					"bad size for entry " + entry.getName() + ": " + entry.getSize()
-							+ " instead of " + (written - dataStart)); }
+			if (entry.getSize() != written - dataStart) { throw new ZipException("bad size for entry "
+					+ entry.getName() + ": " + entry.getSize() + " instead of " + (written - dataStart)); }
 		} else { /* method is STORED and we used RandomAccessFile */
 			long size = written - dataStart;
 
@@ -484,8 +480,8 @@ public class ZipOutputStream extends FilterOutputStream {
 		if (entry.getMethod() == STORED && raf == null) {
 			if (entry.getSize() == -1) { throw new ZipException("uncompressed size is required for"
 					+ " STORED method when not writing to a" + " file"); }
-			if (entry.getCrc() == -1) { throw new ZipException(
-					"crc checksum is required for STORED" + " method when not writing to a file"); }
+			if (entry.getCrc() == -1) { throw new ZipException("crc checksum is required for STORED"
+					+ " method when not writing to a file"); }
 			entry.setCompressedSize(entry.getSize());
 		}
 
@@ -699,8 +695,8 @@ public class ZipOutputStream extends FilterOutputStream {
 		if (createUnicodeExtraFields != UnicodeExtraFieldPolicy.NEVER) {
 
 			if (createUnicodeExtraFields == UnicodeExtraFieldPolicy.ALWAYS || !encodable) {
-				ze.addExtraField(new UnicodePathExtraField(ze.getName(), name.array(), name
-						.arrayOffset(), name.limit()));
+				ze.addExtraField(new UnicodePathExtraField(ze.getName(), name.array(), name.arrayOffset(),
+						name.limit()));
 			}
 
 			String comm = ze.getComment();
@@ -959,8 +955,8 @@ public class ZipOutputStream extends FilterOutputStream {
 		int year = time.getYear() + 1900;
 		if (year < 1980) { return DOS_TIME_MIN; }
 		int month = time.getMonth() + 1;
-		long value = ((year - 1980) << 25) | (month << 21) | (time.getDate() << 16)
-				| (time.getHours() << 11) | (time.getMinutes() << 5) | (time.getSeconds() >> 1);
+		long value = ((year - 1980) << 25) | (month << 21) | (time.getDate() << 16) | (time.getHours() << 11)
+				| (time.getMinutes() << 5) | (time.getSeconds() >> 1);
 		return ZipLong.getBytes(value);
 		// CheckStyle:MagicNumberCheck ON
 	}

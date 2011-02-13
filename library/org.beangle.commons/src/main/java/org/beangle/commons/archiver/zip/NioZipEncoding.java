@@ -13,12 +13,10 @@ import java.nio.charset.CoderResult;
 import java.nio.charset.CodingErrorAction;
 
 /**
- * A ZipEncoding, which uses a java.nio {@link java.nio.charset.Charset Charset}
- * to encode names.
+ * A ZipEncoding, which uses a java.nio {@link java.nio.charset.Charset Charset} to encode names.
  * <p>
- * This implementation works for all cases under java-1.5 or later. However, in
- * java-1.4, some charsets don't have a java.nio implementation, most notably
- * the default ZIP encoding Cp437.
+ * This implementation works for all cases under java-1.5 or later. However, in java-1.4, some
+ * charsets don't have a java.nio implementation, most notably the default ZIP encoding Cp437.
  * </p>
  * <p>
  * The methods of this class are reentrant.
@@ -97,7 +95,6 @@ class NioZipEncoding implements ZipEncoding {
 	 */
 	public String decode(byte[] data) throws IOException {
 		return this.charset.newDecoder().onMalformedInput(CodingErrorAction.REPORT)
-				.onUnmappableCharacter(CodingErrorAction.REPORT).decode(ByteBuffer.wrap(data))
-				.toString();
+				.onUnmappableCharacter(CodingErrorAction.REPORT).decode(ByteBuffer.wrap(data)).toString();
 	}
 }

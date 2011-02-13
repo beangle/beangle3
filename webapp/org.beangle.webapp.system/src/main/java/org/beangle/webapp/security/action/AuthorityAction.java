@@ -108,8 +108,7 @@ public class AuthorityAction extends SecurityActionSupport {
 			Collection<Menu> aoMenus = authorityService.getMenus(menuProfile, (Group) ao, null);
 			for (final Authority authority : authorities) {
 				aoResources.add(authority.getResource());
-				aoResourceAuthorityMap.put(authority.getResource().getId().toString(),
-						authority.getId());
+				aoResourceAuthorityMap.put(authority.getResource().getId().toString(), authority.getId());
 			}
 			put("aoMenus", CollectUtils.newHashSet(aoMenus));
 			put("aoResources", aoResources);
@@ -132,8 +131,7 @@ public class AuthorityAction extends SecurityActionSupport {
 	 */
 	public String save() {
 		Group mao = entityDao.get(Group.class, getLong("group.id"));
-		MenuProfile menuProfile = (MenuProfile) entityDao.get(MenuProfile.class,
-				getLong("menuProfileId"));
+		MenuProfile menuProfile = (MenuProfile) entityDao.get(MenuProfile.class, getLong("menuProfileId"));
 		Set<Resource> newResources = CollectUtils.newHashSet(entityDao.get(Resource.class,
 				StrUtils.splitToLong(get("resourceId"))));
 
@@ -144,8 +142,7 @@ public class AuthorityAction extends SecurityActionSupport {
 		if (isAdmin(manager)) {
 			mngMenus = CollectUtils.newHashSet(menuProfile.getMenus());
 		} else {
-			mngMenus = CollectUtils.newHashSet(authorityService.getMenus(menuProfile,
-					(User) manager));
+			mngMenus = CollectUtils.newHashSet(authorityService.getMenus(menuProfile, (User) manager));
 		}
 		for (final Menu m : mngMenus) {
 			mngResources.addAll(m.getResources());

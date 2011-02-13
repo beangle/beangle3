@@ -36,8 +36,7 @@ public class BeanDefinitionReader {
 					Node node = nl.item(i);
 					if (node instanceof Element) {
 						Element ele = (Element) node;
-						ReconfigBeanDefinitionHolder holder = parser
-								.parseBeanDefinitionElement(ele);
+						ReconfigBeanDefinitionHolder holder = parser.parseBeanDefinitionElement(ele);
 						holders.add(holder);
 					}
 				}
@@ -47,8 +46,8 @@ public class BeanDefinitionReader {
 				}
 			}
 		} catch (Exception ex) {
-			throw new RuntimeException("IOException parsing XML document from "
-					+ resource.getDescription(), ex);
+			throw new RuntimeException("IOException parsing XML document from " + resource.getDescription(),
+					ex);
 		}
 		return holders;
 	}

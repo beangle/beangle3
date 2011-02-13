@@ -18,8 +18,7 @@ import org.beangle.model.transfer.io.Reader;
  * 
  * @author chaostone
  */
-public abstract class AbstractItemImporter extends AbstractImporter implements Importer,
-		ItemTransfer {
+public abstract class AbstractItemImporter extends AbstractImporter implements Importer, ItemTransfer {
 
 	/** 属性说明[attr,description] */
 	protected Map<String, String> descriptions = new HashMap<String, String>();

@@ -84,8 +84,8 @@ public final class CookieUtils {
 	 * @param value
 	 * @param path
 	 */
-	public static void addCookie(HttpServletRequest request, HttpServletResponse response,
-			String name, String value, String path, int age) {
+	public static void addCookie(HttpServletRequest request, HttpServletResponse response, String name,
+			String value, String path, int age) {
 		LOG.debug("add cookie[name:{},value={},path={}]", new String[] { name, value, path });
 		Cookie cookie = null;
 		try {
@@ -109,8 +109,8 @@ public final class CookieUtils {
 	 * @param age
 	 * @throws Exception
 	 */
-	public static void addCookie(HttpServletRequest request, HttpServletResponse response,
-			String name, String value, int age) {
+	public static void addCookie(HttpServletRequest request, HttpServletResponse response, String name,
+			String value, int age) {
 		String contextPath = request.getContextPath();
 		if (!contextPath.endsWith("/")) {
 			contextPath += "/";

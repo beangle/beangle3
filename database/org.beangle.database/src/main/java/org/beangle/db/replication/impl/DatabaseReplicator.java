@@ -98,8 +98,8 @@ public class DatabaseReplicator implements Replicator {
 						if (successed == data.size()) {
 							logger.info("replicate {} data {}", table, successed);
 						} else {
-							logger.info("replicate {} data {} of {}", new Object[] { table,
-									successed, data.size() });
+							logger.info("replicate {} data {} of {}",
+									new Object[] { table, successed, data.size() });
 						}
 					}
 				}

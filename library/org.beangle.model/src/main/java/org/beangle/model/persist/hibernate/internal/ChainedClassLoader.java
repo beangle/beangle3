@@ -139,8 +139,7 @@ public class ChainedClassLoader extends ClassLoader {
 		}
 	}
 
-	private Class<?> doLoadClass(String name, List<ClassLoader> classLoaders)
-			throws ClassNotFoundException {
+	private Class<?> doLoadClass(String name, List<ClassLoader> classLoaders) throws ClassNotFoundException {
 		Class<?> clazz = null;
 
 		synchronized (classLoaders) {
@@ -211,8 +210,8 @@ public class ChainedClassLoader extends ClassLoader {
 						int insertIndex = 0;
 						// but consider the defined order
 						for (int i = 0; i < nonOsgiLoaders.size(); i++) {
-							int presentLoaderIndex = ClassUtils.knownNonOsgiLoaders
-									.indexOf(nonOsgiLoaders.get(i));
+							int presentLoaderIndex = ClassUtils.knownNonOsgiLoaders.indexOf(nonOsgiLoaders
+									.get(i));
 							if (presentLoaderIndex >= 0 && presentLoaderIndex < index) {
 								insertIndex = i + 1;
 							} else {

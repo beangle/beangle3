@@ -16,18 +16,16 @@ import org.apache.commons.lang.Validate;
  * <p>
  * Has additional <tt>usernameSource</tt> property.
  * <p>
- * Will create Authentication object (and attach it to the
- * SecurityContextHolder), if such object does not exist yet.
+ * Will create Authentication object (and attach it to the SecurityContextHolder), if such object
+ * does not exist yet.
  * <p>
- * As with most pre-authenticated scenarios, it is essential that the external
- * authentication system is set up correctly as this filter does no
- * authentication whatsoever. All the protection is assumed to be provided
- * externally and if this filter is included inappropriately in a configuration,
- * it would be possible to assume the identity of a user merely by setting the
- * correct header name. This also means it should not be used in combination
- * with other Spring Security authentication mechanisms such as form login, as
- * this would imply there was a means of bypassing the external system which
- * would be risky.
+ * As with most pre-authenticated scenarios, it is essential that the external authentication system
+ * is set up correctly as this filter does no authentication whatsoever. All the protection is
+ * assumed to be provided externally and if this filter is included inappropriately in a
+ * configuration, it would be possible to assume the identity of a user merely by setting the
+ * correct header name. This also means it should not be used in combination with other Spring
+ * Security authentication mechanisms such as form login, as this would imply there was a means of
+ * bypassing the external system which would be risky.
  * <p>
  */
 public class UsernamePreauthFilter extends AbstractPreauthFilter {

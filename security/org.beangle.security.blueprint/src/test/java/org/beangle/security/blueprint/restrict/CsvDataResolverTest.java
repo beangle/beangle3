@@ -28,16 +28,14 @@ public class CsvDataResolverTest {
 	}
 
 	public void testMarshal() {
-		String text = resolver
-				.marshal(field, CollectUtils.newArrayList(new GroupBean(1L, "group1"),
-						new GroupBean(2L, "group2")));
+		String text = resolver.marshal(field,
+				CollectUtils.newArrayList(new GroupBean(1L, "group1"), new GroupBean(2L, "group2")));
 		assertEquals(text, "id;name,1;group1,2;group2");
 	}
 
 	public void testUnmarshal() throws Exception {
 		List<?> rs = resolver.unmarshal(field, "id;name,1;group1,2;group2");
-		List<?> objs = CollectUtils.newArrayList(new GroupBean(1L, "group1"), new GroupBean(2L,
-				"group2"));
+		List<?> objs = CollectUtils.newArrayList(new GroupBean(1L, "group1"), new GroupBean(2L, "group2"));
 		assertEquals(rs, objs);
 	}
 }

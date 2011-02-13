@@ -95,8 +95,8 @@ public class Table {
 	 * @return
 	 */
 	public String sqlCreateString(Dialect dialect) {
-		StringBuilder buf = new StringBuilder(dialect.getCreateTableString()).append(' ')
-				.append(name).append(" (");
+		StringBuilder buf = new StringBuilder(dialect.getCreateTableString()).append(' ').append(name)
+				.append(" (");
 		Iterator<Column> iter = columns.values().iterator();
 		while (iter.hasNext()) {
 			Column col = iter.next();

@@ -90,8 +90,8 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 
 	@SuppressWarnings("unchecked")
 	public <T> List<T> get(Class<T> entityClass, String keyName, Object... values) {
-		if (entityClass == null || StringUtils.isEmpty(keyName) || values == null
-				|| values.length == 0) { return Collections.emptyList(); }
+		if (entityClass == null || StringUtils.isEmpty(keyName) || values == null || values.length == 0) { return Collections
+				.emptyList(); }
 		String entityName = Model.getEntityType(entityClass).getEntityName();
 		return (List<T>) get(entityName, keyName, values);
 	}
@@ -141,8 +141,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 				.emptyList(); }
 		String entityName = entity.getName();
 		StringBuilder hql = new StringBuilder();
-		hql.append("select entity from ").append(entityName).append(" as entity ")
-				.append(" where ");
+		hql.append("select entity from ").append(entityName).append(" as entity ").append(" where ");
 
 		Map<String, Object> m = new HashMap<String, Object>(parameterMap.keySet().size());
 		// 变量编号
@@ -156,10 +155,8 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 			String name = tempName[tempName.length - 1] + i;
 			m.put(name, keyValue);
 
-			if (keyValue != null
-					&& (keyValue.getClass().isArray() || keyValue instanceof Collection<?>)) {
-				hql.append("entity.").append(keyName).append(" in (:").append(name)
-						.append(") and ");
+			if (keyValue != null && (keyValue.getClass().isArray() || keyValue instanceof Collection<?>)) {
+				hql.append("entity.").append(keyName).append(" in (:").append(name).append(") and ");
 			} else {
 				hql.append("entity.").append(keyName).append(" = :").append(name).append(" and ");
 			}
@@ -183,8 +180,8 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 				return QuerySupport.find(limitQuery, getSession());
 			} else {
 				return new SinglePage<T>(limitQuery.getLimit().getPageNo(), limitQuery.getLimit()
-						.getPageSize(), QuerySupport.count(limitQuery, getSession()),
-						QuerySupport.find(query, getSession()));
+						.getPageSize(), QuerySupport.count(limitQuery, getSession()), QuerySupport.find(
+						query, getSession()));
 			}
 		} else {
 			return QuerySupport.find(query, getSession());
@@ -252,15 +249,13 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> List<T> searchHQLQuery(String hql, final Map<String, Object> params,
-			boolean cacheable) {
+	public <T> List<T> searchHQLQuery(String hql, final Map<String, Object> params, boolean cacheable) {
 		Query query = getSession().createQuery(hql);
 		query.setCacheable(cacheable);
 		return QuerySupport.setParameter(query, params).list();
 	}
 
-	public <T> Page<T> paginateNamedQuery(String queryName, Map<String, Object> params,
-			PageLimit limit) {
+	public <T> Page<T> paginateNamedQuery(String queryName, Map<String, Object> params, PageLimit limit) {
 		Query query = this.getSession().getNamedQuery(queryName);
 		return paginateQuery(query, params, limit);
 	}
@@ -308,8 +303,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 		return QuerySupport.setParameter(query, parameterMap).executeUpdate();
 	}
 
-	public int executeUpdateNamedQuery(final String queryName,
-			final Map<String, Object> parameterMap) {
+	public int executeUpdateNamedQuery(final String queryName, final Map<String, Object> parameterMap) {
 		Query query = getSession().getNamedQuery(queryName);
 		return QuerySupport.setParameter(query, parameterMap).executeUpdate();
 	}
@@ -356,8 +350,8 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 	@SuppressWarnings("unchecked")
 	public <T> Page<T> paginateQuery(Query query, Map<String, Object> params, PageLimit limit) {
 		QuerySupport.setParameter(query, params);
-		query.setFirstResult((limit.getPageNo() - 1) * limit.getPageSize()).setMaxResults(
-				limit.getPageSize());
+		query.setFirstResult((limit.getPageNo() - 1) * limit.getPageSize())
+				.setMaxResults(limit.getPageSize());
 		List<T> targetList = query.list();
 		String queryStr = buildCountQueryStr(query);
 		Query countQuery = null;
@@ -394,8 +388,8 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 			if (entity instanceof HibernateProxy) {
 				getHibernateTemplate().saveOrUpdate(entity);
 			} else {
-				getHibernateTemplate().saveOrUpdate(
-						Model.getEntityType(entity.getClass()).getEntityName(), entity);
+				getHibernateTemplate().saveOrUpdate(Model.getEntityType(entity.getClass()).getEntityName(),
+						entity);
 			}
 		}
 	}
@@ -426,8 +420,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 
 	}
 
-	public int update(Class<?> entityClass, String attr, Object[] values,
-			Map<String, Object> updateParams) {
+	public int update(Class<?> entityClass, String attr, Object[] values, Map<String, Object> updateParams) {
 		if (null == values || values.length == 0 || updateParams.isEmpty()) { return 0; }
 		String entityName = entityClass.getName();
 		StringBuilder hql = new StringBuilder();
@@ -463,8 +456,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 		if (clazz == null || StringUtils.isEmpty(attr) || values == null || values.length == 0) { return false; }
 		String entityName = Model.getEntityType(clazz).getEntityName();
 		StringBuilder hql = new StringBuilder();
-		hql.append("delete from ").append(entityName).append(" where ").append(attr)
-				.append(" in (:ids)");
+		hql.append("delete from ").append(entityName).append(" where ").append(attr).append(" in (:ids)");
 		Map<String, Object> parameterMap = CollectUtils.newHashMap();
 		parameterMap.put("ids", values);
 		return executeUpdateHql(hql.toString(), parameterMap) > 0;
@@ -530,13 +522,10 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 			params.put(keyName, keyValue);
 			String[] tempName = StringUtils.split(attrs[i], "\\.");
 			attrs[i] = tempName[tempName.length - 1] + i;
-			if (keyValue != null
-					&& (keyValue.getClass().isArray() || keyValue instanceof Collection<?>)) {
-				hql.append("entity.").append(keyName).append(" in (:").append(attrs[i])
-						.append(") and ");
+			if (keyValue != null && (keyValue.getClass().isArray() || keyValue instanceof Collection<?>)) {
+				hql.append("entity.").append(keyName).append(" in (:").append(attrs[i]).append(") and ");
 			} else {
-				hql.append("entity.").append(keyName).append(" = :").append(attrs[i])
-						.append(" and ");
+				hql.append("entity.").append(keyName).append(" = :").append(attrs[i]).append(" and ");
 			}
 		}
 		hql.append(" (1=1) ");
@@ -563,8 +552,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 	 * @param id
 	 * @return boolean(是否存在) 如果entityId为空或者有不一样的entity存在则认为存在。
 	 */
-	public boolean duplicate(Class<? extends Entity<?>> clazz, Long id, String codeName,
-			Object codeValue) {
+	public boolean duplicate(Class<? extends Entity<?>> clazz, Long id, String codeName, Object codeValue) {
 		if (null != codeValue && StringUtils.isNotEmpty(codeValue.toString())) {
 			List<? extends Entity<?>> list = get(clazz, codeName, new Object[] { codeValue });
 			if (list != null && !list.isEmpty()) {
@@ -618,8 +606,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 			queryStr += "from (" + query.getQueryString() + ")";
 		} else {
 			String lowerCaseQueryStr = query.getQueryString().toLowerCase();
-			String selectWhich = lowerCaseQueryStr.substring(0,
-					query.getQueryString().indexOf("from"));
+			String selectWhich = lowerCaseQueryStr.substring(0, query.getQueryString().indexOf("from"));
 			int indexOfDistinct = selectWhich.indexOf("distinct");
 			int indexOfFrom = lowerCaseQueryStr.indexOf("from");
 			// 如果含有distinct
@@ -769,8 +756,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 					hasInterrogation = true;
 				}
 				if (hasInterrogation) {
-					for (final Iterator<?> iterator = condition.getParams().iterator(); iterator
-							.hasNext();) {
+					for (final Iterator<?> iterator = condition.getParams().iterator(); iterator.hasNext();) {
 						query.setParameter(position++, iterator.next());
 					}
 				} else {

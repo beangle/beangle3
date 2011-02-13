@@ -22,8 +22,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
-public class DynamicSessionFactoryBean extends LocalSessionFactoryBean implements
-		SynchronousBundleListener, BundleContextAware {
+public class DynamicSessionFactoryBean extends LocalSessionFactoryBean implements SynchronousBundleListener,
+		BundleContextAware {
 
 	private static Logger logger = LoggerFactory.getLogger(DynamicSessionFactoryBean.class);
 
@@ -131,8 +131,7 @@ public class DynamicSessionFactoryBean extends LocalSessionFactoryBean implement
 	public void logService() {
 		for (Bundle bundle : context.getBundles()) {
 			if (null != bundle.getRegisteredServices() && bundle.getRegisteredServices().length > 0) {
-				logger.debug("============================== in bundle {}",
-						bundle.getSymbolicName());
+				logger.debug("============================== in bundle {}", bundle.getSymbolicName());
 				int i = 0;
 				for (ServiceReference sr : bundle.getRegisteredServices()) {
 					// Object s = context.getService(sr);
@@ -153,15 +152,14 @@ public class DynamicSessionFactoryBean extends LocalSessionFactoryBean implement
 		if (null != context) {
 			context.addBundleListener(this);
 			loader = new ChainedClassLoader(
-					new ClassLoader[] { BundleDelegatingClassLoader
-							.createBundleClassLoaderFor(context.getBundle()) });
+					new ClassLoader[] { BundleDelegatingClassLoader.createBundleClassLoaderFor(context
+							.getBundle()) });
 
 			boolean added = false;
 			for (Bundle bundle : context.getBundles()) {
 				if (bundle.getState() == Bundle.ACTIVE) {
 					added |= addBundle(bundle);
-					loader.addClassLoader(BundleDelegatingClassLoader
-							.createBundleClassLoaderFor(bundle));
+					loader.addClassLoader(BundleDelegatingClassLoader.createBundleClassLoaderFor(bundle));
 				}
 			}
 			if (added) {

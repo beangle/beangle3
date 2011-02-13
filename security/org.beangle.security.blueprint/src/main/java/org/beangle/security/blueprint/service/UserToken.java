@@ -24,12 +24,10 @@ public class UserToken extends User implements CategoryPrincipal, Comparable<Use
 	/** 用户类别 */
 	private UserCategory category;
 
-	public UserToken(Long id, String username, String fullname, String password,
-			UserCategory category, boolean enabled, boolean accountExpired,
-			boolean credentialsExpired, boolean accountLocked,
+	public UserToken(Long id, String username, String fullname, String password, UserCategory category,
+			boolean enabled, boolean accountExpired, boolean credentialsExpired, boolean accountLocked,
 			Collection<? extends GrantedAuthority> authorities) throws IllegalArgumentException {
-		super(username, password, enabled, accountExpired, credentialsExpired, accountLocked,
-				authorities);
+		super(username, password, enabled, accountExpired, credentialsExpired, accountLocked, authorities);
 		this.id = id;
 		this.fullname = fullname;
 		this.category = category;
@@ -48,8 +46,7 @@ public class UserToken extends User implements CategoryPrincipal, Comparable<Use
 	}
 
 	public void changeCategory(Object newCategory) {
-		Validate.isTrue(newCategory instanceof UserCategory,
-				"newCategory should be instanceof UserCategory");
+		Validate.isTrue(newCategory instanceof UserCategory, "newCategory should be instanceof UserCategory");
 		this.category = (UserCategory) newCategory;
 	}
 

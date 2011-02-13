@@ -21,14 +21,12 @@ import org.beangle.security.access.AccessDeniedException;
 /**
  * Base implementation of {@link AccessDeniedHandler}.
  * <p>
- * This implementation sends a 403 (SC_FORBIDDEN) HTTP error code. In addition,
- * if a {@link #errorPage} is defined, the implementation will perform a request
- * dispatcher "forward" to the specified error page view. Being a "forward", the
- * <code>SecurityContextHolder</code> will remain populated. This is of benefit
- * if the view (or a tag library or macro) wishes to access the
- * <code>SecurityContextHolder</code>. The request scope will also be populated
- * with the exception itself, available from the key
- * {@link #ACCESS_DENIED_EXCEPTION_KEY}.
+ * This implementation sends a 403 (SC_FORBIDDEN) HTTP error code. In addition, if a
+ * {@link #errorPage} is defined, the implementation will perform a request dispatcher "forward" to
+ * the specified error page view. Being a "forward", the <code>SecurityContextHolder</code> will
+ * remain populated. This is of benefit if the view (or a tag library or macro) wishes to access the
+ * <code>SecurityContextHolder</code>. The request scope will also be populated with the exception
+ * itself, available from the key {@link #ACCESS_DENIED_EXCEPTION_KEY}.
  * </p>
  * 
  * @author chaostone
@@ -42,8 +40,8 @@ public class DefaultAccessDeniedHandler implements AccessDeniedHandler {
 
 	private String location;
 
-	public void handle(ServletRequest request, ServletResponse response,
-			AccessDeniedException exception) throws IOException, ServletException {
+	public void handle(ServletRequest request, ServletResponse response, AccessDeniedException exception)
+			throws IOException, ServletException {
 		if (null != location) {
 
 		}

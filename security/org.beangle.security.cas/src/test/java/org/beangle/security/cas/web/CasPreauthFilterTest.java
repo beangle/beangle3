@@ -47,8 +47,7 @@ public class CasPreauthFilterTest {
 	public void testNormalOperation() throws Exception {
 		MockHttpServletRequest request = new MockHttpServletRequest("GET", "/demo/any-path");
 		request.addParameter("ticket", "ST-0-ER94xMJmn6pha35CQRoZ");
-		Authentication result = filter.getPreauthAuthentication(request,
-				new MockHttpServletResponse());
+		Authentication result = filter.getPreauthAuthentication(request, new MockHttpServletResponse());
 		assertTrue(result != null);
 	}
 

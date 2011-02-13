@@ -60,8 +60,7 @@ public class Grid extends ClosingUIBean {
 	public boolean isSortable(Col cln) {
 		Object sortby = cln.getParameters().get("sort");
 		if (null != sortby) return true;
-		return ("true".equals(sortable)
-				&& !ObjectUtils.equals(cln.getParameters().get("sortable"), "false") && null != cln
+		return ("true".equals(sortable) && !ObjectUtils.equals(cln.getParameters().get("sortable"), "false") && null != cln
 				.getProperty());
 	}
 
@@ -287,9 +286,9 @@ public class Grid extends ClosingUIBean {
 					writer.append("<td class=\"gridselect\"");
 					if (null != id) writer.append(" id=\"").append(id).append("\"");
 					writer.append(getParameterString()).append(">");
-					writer.append("<input class=\"box\" name=\"").append(boxname)
-							.append("\" value=\"").append(String.valueOf(getValue()))
-							.append("\" type=\"").append(type).append("\"");
+					writer.append("<input class=\"box\" name=\"").append(boxname).append("\" value=\"")
+							.append(String.valueOf(getValue())).append("\" type=\"").append(type)
+							.append("\"");
 					if (checked) writer.append(" checked=\"checked\"");
 					writer.append("/>");
 					if (StringUtils.isNotEmpty(body)) {

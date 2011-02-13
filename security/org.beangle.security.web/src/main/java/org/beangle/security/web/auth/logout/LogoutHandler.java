@@ -26,6 +26,5 @@ public interface LogoutHandler {
 	 * @param authentication
 	 *            the current principal details
 	 */
-	void logout(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication);
+	void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication);
 }

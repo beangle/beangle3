@@ -25,13 +25,11 @@ public class AccountStatusChecker implements UserDetailChecker {
 				"AbstractUserDetailsAuthenticationProvider.disabled", "User is disabled"), user); }
 
 		if (user.isAccountExpired()) { throw new AccountExpiredException(textResource.getText(
-				"AbstractUserDetailsAuthenticationProvider.expired", "User account has expired"),
-				user); }
+				"AbstractUserDetailsAuthenticationProvider.expired", "User account has expired"), user); }
 
-		if (user.isCredentialsExpired()) { throw new CredentialsExpiredException(
-				textResource.getText(
-						"AbstractUserDetailsAuthenticationProvider.credentialsExpired",
-						"User credentials have expired"), user); }
+		if (user.isCredentialsExpired()) { throw new CredentialsExpiredException(textResource.getText(
+				"AbstractUserDetailsAuthenticationProvider.credentialsExpired",
+				"User credentials have expired"), user); }
 	}
 
 	public void setTextResource(TextResource textResource) {

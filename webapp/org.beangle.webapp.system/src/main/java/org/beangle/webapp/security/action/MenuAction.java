@@ -34,8 +34,7 @@ public class MenuAction extends SecurityActionSupport {
 		OqlBuilder<Resource> builder = OqlBuilder.from(Resource.class, "r");
 		if (null != menu.getProfile() && null != menu.getProfile().getId()) {
 			MenuProfile profile = entityDao.get(MenuProfile.class, menu.getProfile().getId());
-			builder.where("exists(from r.categories as rc where rc=:category)",
-					profile.getCategory());
+			builder.where("exists(from r.categories as rc where rc=:category)", profile.getCategory());
 		}
 		List<Resource> resurces = entityDao.search(builder);
 		Set<Resource> existResources = menu.getResources();

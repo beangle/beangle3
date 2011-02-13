@@ -33,8 +33,7 @@ public class ActivityAction extends SecurityActionSupport {
 	 * 显示用户某时间段的登陆记录
 	 */
 	public String search() {
-		OqlBuilder<SessionActivity> query = OqlBuilder.from(SessionActivity.class,
-				"sessionActivity");
+		OqlBuilder<SessionActivity> query = OqlBuilder.from(SessionActivity.class, "sessionActivity");
 		addConditions(query);
 		String orderBy = get("orderBy");
 		if (null == orderBy) {
@@ -68,8 +67,7 @@ public class ActivityAction extends SecurityActionSupport {
 		if (null != sdate && null == edate) {
 			query.where("sessionActivity.loginAt >=:sdate", sdate);
 		} else if (null != sdate && null != edate) {
-			query.where("sessionActivity.loginAt >=:sdate and sessionActivity.loginAt <:edate",
-					sdate, edate);
+			query.where("sessionActivity.loginAt >=:sdate and sessionActivity.loginAt <:edate", sdate, edate);
 		} else if (null == sdate && null != edate) {
 			query.where("sessionActivity.loginAt <:edate", edate);
 		}
@@ -79,8 +77,7 @@ public class ActivityAction extends SecurityActionSupport {
 	 * 显示登陆次数
 	 */
 	public String loginCountStat() {
-		OqlBuilder<SessionActivity> query = OqlBuilder.from(SessionActivity.class,
-				"sessionActivity");
+		OqlBuilder<SessionActivity> query = OqlBuilder.from(SessionActivity.class, "sessionActivity");
 		addConditions(query);
 		query.select("sessionActivity.name,sessionActivity.fullname,count(*)")
 				.groupBy("sessionActivity.name,sessionActivity.fullname").orderBy(get("orderBy"))
@@ -95,8 +92,8 @@ public class ActivityAction extends SecurityActionSupport {
 		String groupName = get("groupName");
 		if (StringUtils.isNotEmpty(groupName)) {
 			query.where("exists(select u.id from User u join u.groups as group "
-					+ "where u.name=sessionActivity.name and group.name like :groupName )", "%"
-					+ groupName + "%");
+					+ "where u.name=sessionActivity.name and group.name like :groupName )", "%" + groupName
+					+ "%");
 		}
 	}
 
@@ -105,11 +102,9 @@ public class ActivityAction extends SecurityActionSupport {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public String timeIntervalStat() {
-		OqlBuilder<SessionActivity> query = OqlBuilder.from(SessionActivity.class,
-				"sessionActivity");
+		OqlBuilder<SessionActivity> query = OqlBuilder.from(SessionActivity.class, "sessionActivity");
 		addConditions(query);
-		query.select("hour(sessionActivity.loginAt),count(*)").groupBy(
-				"hour(sessionActivity.loginAt)");
+		query.select("hour(sessionActivity.loginAt),count(*)").groupBy("hour(sessionActivity.loginAt)");
 		List rs = entityDao.search(query);
 		Collections.sort(rs, new PropertyComparator<Object[]>("[0]"));
 		put("logonStats", rs);

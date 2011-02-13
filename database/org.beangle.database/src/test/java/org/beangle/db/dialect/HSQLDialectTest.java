@@ -19,8 +19,7 @@ public class HSQLDialectTest extends DialectTestCase {
 		// new OracleDialect());
 		// meta.loadAllMetadata("EAMS_NEW",null,false);
 		database = new Database(new HSQLDialect(), null, null);
-		database.loadTables(DataSourceUtil.getDataSource("hsqldb").getConnection().getMetaData(),
-				false);
+		database.loadTables(DataSourceUtil.getDataSource("hsqldb").getConnection().getMetaData(), false);
 	}
 
 	public void testlistMetadata() {

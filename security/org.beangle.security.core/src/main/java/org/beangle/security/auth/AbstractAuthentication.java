@@ -29,8 +29,7 @@ public abstract class AbstractAuthentication implements Authentication {
 			this.authorities = Collections.emptyList();
 		} else {
 			Validate.noNullElements(authorities, "authorities cannot contain any null element");
-			this.authorities = Collections.unmodifiableCollection(CollectUtils
-					.newArrayList(authorities));
+			this.authorities = Collections.unmodifiableCollection(CollectUtils.newArrayList(authorities));
 		}
 	}
 
@@ -58,8 +57,7 @@ public abstract class AbstractAuthentication implements Authentication {
 		if (obj instanceof AbstractAuthentication) {
 			AbstractAuthentication test = (AbstractAuthentication) obj;
 			return new EqualsBuilder().append(getPrincipal(), test.getPrincipal())
-					.append(getCredentials(), test.getCredentials())
-					.append(getDetails(), test.getDetails())
+					.append(getCredentials(), test.getCredentials()).append(getDetails(), test.getDetails())
 					.append(isAuthenticated(), test.isAuthenticated())
 					.append(getAuthorities(), test.getAuthorities()).isEquals();
 		}
@@ -68,14 +66,12 @@ public abstract class AbstractAuthentication implements Authentication {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getPrincipal()).append(getCredentials())
-				.append(getDetails()).append(isAuthenticated()).append(getAuthorities())
-				.toHashCode();
+		return new HashCodeBuilder().append(getPrincipal()).append(getCredentials()).append(getDetails())
+				.append(isAuthenticated()).append(getAuthorities()).toHashCode();
 	}
 
 	public String getName() {
-		if (this.getPrincipal() instanceof UserDetail) { return ((UserDetail) getPrincipal())
-				.getUsername(); }
+		if (this.getPrincipal() instanceof UserDetail) { return ((UserDetail) getPrincipal()).getUsername(); }
 
 		if (getPrincipal() instanceof Principal) { return ((Principal) getPrincipal()).getName(); }
 

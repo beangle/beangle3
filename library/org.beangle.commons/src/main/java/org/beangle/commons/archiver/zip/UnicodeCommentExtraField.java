@@ -7,8 +7,7 @@ package org.beangle.commons.archiver.zip;
 /**
  * Info-ZIP Unicode Comment Extra Field (0x6375):
  * <p>
- * Stores the UTF-8 version of the file comment as stored in the central
- * directory header.
+ * Stores the UTF-8 version of the file comment as stored in the central directory header.
  * </p>
  * 
  * <pre>
@@ -39,8 +38,7 @@ public class UnicodeCommentExtraField extends AbstractUnicodeExtraField {
 	 * @param off
 	 *            The offset of the encoded comment in <code>bytes</code>.
 	 * @param len
-	 *            The length of the encoded comment or comment in
-	 *            <code>bytes</code>.
+	 *            The length of the encoded comment or comment in <code>bytes</code>.
 	 */
 	public UnicodeCommentExtraField(String text, byte[] bytes, int off, int len) {
 		super(text, bytes, off, len);

@@ -29,8 +29,8 @@ import org.testng.annotations.Test;
 public class FilterChainProxyTest extends AbstractTestNGSpringContextTests {
 
 	public void normalOperation() throws Exception {
-		FilterChainProxy filterChainProxy = (FilterChainProxy) applicationContext.getBean(
-				"filterChain", FilterChainProxy.class);
+		FilterChainProxy filterChainProxy = (FilterChainProxy) applicationContext.getBean("filterChain",
+				FilterChainProxy.class);
 		checkPathAndFilterOrder(filterChainProxy);
 		doNormalOperation(filterChainProxy);
 	}

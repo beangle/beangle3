@@ -54,8 +54,8 @@ public class SeqPattern {
 		seq++;
 		String text = pattern;
 		for (final Integer paramLevel : params) {
-			text = StringUtils.replace(text, "{" + paramLevel + "}",
-					generator.getSytle(paramLevel.intValue()).curSeqText());
+			text = StringUtils.replace(text, "{" + paramLevel + "}", generator
+					.getSytle(paramLevel.intValue()).curSeqText());
 		}
 		return StringUtils.replace(text, "{" + level + "}", seqNumStyle.build(seq));
 	}

@@ -15,12 +15,10 @@ import org.beangle.security.core.AuthenticationException;
 /**
  * Processes an authentication form.
  * <p>
- * Login forms must present two parameters to this filter: a username and
- * password. The default parameter names to use are contained in the static
- * fields {@link #SECURITY_FORM_USERNAME_KEY} and
- * {@link #SECURITY_FORM_PASSWORD_KEY}. The parameter names can also be changed
- * by setting the <tt>usernameParameter</tt> and <tt>passwordParameter</tt>
- * properties.
+ * Login forms must present two parameters to this filter: a username and password. The default
+ * parameter names to use are contained in the static fields {@link #SECURITY_FORM_USERNAME_KEY} and
+ * {@link #SECURITY_FORM_PASSWORD_KEY}. The parameter names can also be changed by setting the
+ * <tt>usernameParameter</tt> and <tt>passwordParameter</tt> properties.
  * 
  * @author chaostone
  */
@@ -33,8 +31,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
 	private String usernameParameter = SECURITY_FORM_USERNAME_KEY;
 	private String passwordParameter = SECURITY_FORM_PASSWORD_KEY;
 
-	public Authentication attemptAuthentication(HttpServletRequest request)
-			throws AuthenticationException {
+	public Authentication attemptAuthentication(HttpServletRequest request) throws AuthenticationException {
 		String username = obtainUsername(request);
 		String password = obtainPassword(request);
 
@@ -48,8 +45,7 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
 
 		username = username.trim();
 
-		UsernamePasswordAuthentication authRequest = new UsernamePasswordAuthentication(username,
-				password);
+		UsernamePasswordAuthentication authRequest = new UsernamePasswordAuthentication(username, password);
 
 		// Place the last username attempted into HttpSession for views
 		HttpSession session = request.getSession(false);
@@ -77,18 +73,16 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
 	 * Enables subclasses to override the composition of the password, such as
 	 * by including additional values and a separator.
 	 * <p>
-	 * This might be used for example if a postcode/zipcode was required in
-	 * addition to the password. A delimiter such as a pipe (|) should be used
-	 * to separate the password and extended value(s). The
-	 * <code>AuthenticationDao</code> will need to generate the expected
-	 * password in a corresponding manner.
+	 * This might be used for example if a postcode/zipcode was required in addition to the
+	 * password. A delimiter such as a pipe (|) should be used to separate the password and extended
+	 * value(s). The <code>AuthenticationDao</code> will need to generate the expected password in a
+	 * corresponding manner.
 	 * </p>
 	 * 
 	 * @param request
 	 *            so that request attributes can be retrieved
-	 * @return the password that will be presented in the
-	 *         <code>Authentication</code> request token to the
-	 *         <code>AuthenticationManager</code>
+	 * @return the password that will be presented in the <code>Authentication</code> request token
+	 *         to the <code>AuthenticationManager</code>
 	 */
 	protected String obtainPassword(HttpServletRequest request) {
 		return request.getParameter(passwordParameter);
@@ -100,9 +94,8 @@ public class UsernamePasswordAuthenticationFilter extends AbstractAuthentication
 	 * 
 	 * @param request
 	 *            so that request attributes can be retrieved
-	 * @return the username that will be presented in the
-	 *         <code>Authentication</code> request token to the
-	 *         <code>AuthenticationManager</code>
+	 * @return the username that will be presented in the <code>Authentication</code> request token
+	 *         to the <code>AuthenticationManager</code>
 	 */
 	protected String obtainUsername(HttpServletRequest request) {
 		return request.getParameter(usernameParameter);

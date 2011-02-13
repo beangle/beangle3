@@ -27,8 +27,7 @@ public class ReplicatorTest {
 	@Test(dataProvider = "tables")
 	public void hsqlReplication(String table) {
 		DatabaseWrapper target = new DatabaseWrapper();
-		target.connect(DataSourceUtil.getDataSource("hsqldb_target"), new HSQLDialect(), null,
-				"PUBLIC");
+		target.connect(DataSourceUtil.getDataSource("hsqldb_target"), new HSQLDialect(), null, "PUBLIC");
 		Replicator replicator = new DatabaseReplicator(source, target);
 		replicator.addTable(table);
 		replicator.start();
@@ -46,7 +45,6 @@ public class ReplicatorTest {
 	@SuppressWarnings("unused")
 	@DataProvider
 	private String[][] tables() {
-		return new String[][] { { "xtqx_zy_t" }, { "xtqx_zy_lb_t" }, { "xtqx_yh_t" },
-				{ "xtqx_js_t" } };
+		return new String[][] { { "xtqx_zy_t" }, { "xtqx_zy_lb_t" }, { "xtqx_yh_t" }, { "xtqx_js_t" } };
 	}
 }

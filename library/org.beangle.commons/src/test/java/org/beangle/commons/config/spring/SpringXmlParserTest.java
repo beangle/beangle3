@@ -17,8 +17,8 @@ public class SpringXmlParserTest {
 	}
 
 	private void parser(String path) throws Exception {
-		List<ReconfigBeanDefinitionHolder> holders = new BeanDefinitionReader()
-				.load(new ClassPathResource(path));
+		List<ReconfigBeanDefinitionHolder> holders = new BeanDefinitionReader().load(new ClassPathResource(
+				path));
 		for (ReconfigBeanDefinitionHolder holder : holders) {
 			System.out.println(holder);
 		}

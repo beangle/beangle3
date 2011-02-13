@@ -9,10 +9,10 @@ import java.util.zip.ZipException;
 /**
  * General format of extra field data.
  * <p>
- * Extra fields usually appear twice per file, once in the local file data and
- * once in the central directory. Usually they are the same, but they don't have
- * to be. {@link java.util.zip.ZipOutputStream java.util.zip.ZipOutputStream}
- * will only use the local file data in both places.
+ * Extra fields usually appear twice per file, once in the local file data and once in the central
+ * directory. Usually they are the same, but they don't have to be.
+ * {@link java.util.zip.ZipOutputStream java.util.zip.ZipOutputStream} will only use the local file
+ * data in both places.
  * </p>
  */
 public interface ZipExtraField {

@@ -23,8 +23,7 @@ public class ProviderManager extends AbstractAuthenticationManager implements In
 	// protected SessionController sessionController;
 
 	public void afterPropertiesSet() throws Exception {
-		if (providers.isEmpty()) { throw new RuntimeException(
-				"authentication provider list is empty"); }
+		if (providers.isEmpty()) { throw new RuntimeException("authentication provider list is empty"); }
 		logger.info("providers:" + providers);
 	}
 

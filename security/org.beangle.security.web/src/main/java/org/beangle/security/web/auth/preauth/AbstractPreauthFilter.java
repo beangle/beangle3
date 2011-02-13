@@ -28,17 +28,14 @@ import org.springframework.beans.factory.InitializingBean;
  * authentication requests. Subclasses must implement the
  * getPreAuthenticatedPrincipal() and getPreAuthenticatedCredentials() methods.
  * <p>
- * By default, the filter chain will proceed when an authentication attempt
- * fails in order to allow other authentication mechanisms to process the
- * request. To reject the credentials immediately, set the
- * <tt>continueFilterChainOnUnsuccessfulAuthentication</tt> flag to false. The
- * exception raised by the <tt>AuthenticationManager</tt> will the be re-thrown.
- * Note that this will not affect cases where the principal returned by
- * {@link #getPreauthAuthentication} is null, when the chain will still proceed
- * as normal.
+ * By default, the filter chain will proceed when an authentication attempt fails in order to allow
+ * other authentication mechanisms to process the request. To reject the credentials immediately,
+ * set the <tt>continueFilterChainOnUnsuccessfulAuthentication</tt> flag to false. The exception
+ * raised by the <tt>AuthenticationManager</tt> will the be re-thrown. Note that this will not
+ * affect cases where the principal returned by {@link #getPreauthAuthentication} is null, when the
+ * chain will still proceed as normal.
  */
-public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implements
-		InitializingBean {
+public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implements InitializingBean {
 
 	private AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
 
@@ -65,20 +62,19 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implem
 	 * @param response
 	 * @return
 	 */
-	protected boolean requiresAuthentication(HttpServletRequest request,
-			HttpServletResponse response) {
+	protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth == null) { return true; }
-		return (null != authenticationAliveChecker) ? !authenticationAliveChecker.check(auth,
-				request) : false;
+		return (null != authenticationAliveChecker) ? !authenticationAliveChecker.check(auth, request)
+				: false;
 	}
 
 	/**
 	 * Try to authenticate a pre-authenticated user with Beangle Security if the
 	 * user has not yet been authenticated.
 	 */
-	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response,
-			FilterChain filterChain) throws IOException, ServletException {
+	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws IOException, ServletException {
 		if (requiresAuthentication(request, response)) {
 			doAuthenticate(request, response);
 		}
@@ -112,8 +108,8 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implem
 	 * Puts the <code>Authentication</code> instance returned by the
 	 * authentication manager into the secure context.
 	 */
-	protected void successfulAuthentication(HttpServletRequest request,
-			HttpServletResponse response, Authentication authResult) {
+	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+			Authentication authResult) {
 		logger.debug("PreAuthentication success: {}", authResult);
 		SecurityContextHolder.getContext().setAuthentication(authResult);
 	}
@@ -122,12 +118,11 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implem
 	 * Ensures the authentication object in the secure context is set to null
 	 * when authentication fails.
 	 */
-	protected void unsuccessfulAuthentication(HttpServletRequest request,
-			HttpServletResponse response, AuthenticationException failed) {
+	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException failed) {
 		SecurityContextHolder.clearContext();
 		logger.debug("Cleared security context due to exception", failed);
-		request.getSession().setAttribute(AbstractAuthenticationFilter.SECURITY_LAST_EXCEPTION_KEY,
-				failed);
+		request.getSession().setAttribute(AbstractAuthenticationFilter.SECURITY_LAST_EXCEPTION_KEY, failed);
 	}
 
 	/**

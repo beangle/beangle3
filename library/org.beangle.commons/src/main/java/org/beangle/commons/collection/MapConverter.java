@@ -131,8 +131,7 @@ public class MapConverter {
 	 *            要排除的属性串
 	 * @return
 	 */
-	public Map<String, Object> sub(Map<String, Object> data, String prefix,
-			String exclusiveAttrNames) {
+	public Map<String, Object> sub(Map<String, Object> data, String prefix, String exclusiveAttrNames) {
 		return sub(data, prefix, exclusiveAttrNames, true);
 	}
 
@@ -140,8 +139,8 @@ public class MapConverter {
 		return sub(data, prefix, null, true);
 	}
 
-	public Map<String, Object> sub(Map<String, Object> data, String prefix,
-			String exclusiveAttrNames, boolean stripPrefix) {
+	public Map<String, Object> sub(Map<String, Object> data, String prefix, String exclusiveAttrNames,
+			boolean stripPrefix) {
 		Set<String> excludes = CollectUtils.newHashSet();
 		if (StringUtils.isNotEmpty(exclusiveAttrNames)) {
 			String[] exclusiveAttrs = StringUtils.split(exclusiveAttrNames, ",");
@@ -153,8 +152,7 @@ public class MapConverter {
 		for (final Map.Entry<String, Object> entry : data.entrySet()) {
 			final String attr = entry.getKey();
 			if ((attr.indexOf(prefix + ".") == 0) && (!excludes.contains(attr))) {
-				newParams.put((stripPrefix ? attr.substring(prefix.length() + 1) : attr),
-						get(data, attr));
+				newParams.put((stripPrefix ? attr.substring(prefix.length() + 1) : attr), get(data, attr));
 			}
 		}
 		return newParams;

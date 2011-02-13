@@ -79,8 +79,8 @@ public class PagedList<E> extends PageWapper<E> {
 		if (pageNo < 1) { throw new RuntimeException("error pageNo:" + pageNo); }
 		this.pageNo = pageNo;
 		int toIndex = pageNo * pageSize;
-		SinglePage<E> newPage = new SinglePage<E>(pageNo, pageSize, datas.size(), datas.subList(
-				(pageNo - 1) * pageSize, (toIndex < datas.size()) ? toIndex : datas.size()));
+		SinglePage<E> newPage = new SinglePage<E>(pageNo, pageSize, datas.size(), datas.subList((pageNo - 1)
+				* pageSize, (toIndex < datas.size()) ? toIndex : datas.size()));
 		setPage(newPage);
 		return this;
 	}

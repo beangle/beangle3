@@ -12,8 +12,8 @@ import org.springframework.util.StringUtils;
 /**
  * Uses a regular expression to decide whether a supplied the URL of a supplied
  * {@code HttpServletRequest}. Can also be configured to match a specific HTTP
- * method. The match is performed against the
- * {@code servletPath + pathInfo + queryString} of the request and is
+ * method. The match is performed against the {@code servletPath + pathInfo + queryString} of the
+ * request and is
  * case-sensitive by default. Case-insensitive matching can be used by using the
  * constructor which takes the {@code caseInsentitive} argument.
  * 
@@ -47,8 +47,8 @@ public final class RegexRequestMatcher implements RequestMatcher {
 	 * @param httpMethod
 	 *            the HTTP method to match. May be null to match all methods.
 	 * @param caseInsensitive
-	 *            if true, the pattern will be compiled with the
-	 *            {@link Pattern#CASE_INSENSITIVE} flag set.
+	 *            if true, the pattern will be compiled with the {@link Pattern#CASE_INSENSITIVE}
+	 *            flag set.
 	 */
 	public RegexRequestMatcher(String pattern, String httpMethod, boolean caseInsensitive) {
 		if (caseInsensitive) {
@@ -60,8 +60,8 @@ public final class RegexRequestMatcher implements RequestMatcher {
 	}
 
 	/**
-	 * Performs the match of the request URL (
-	 * {@code servletPath + pathInfo + queryString}) against the compiled
+	 * Performs the match of the request URL ( {@code servletPath + pathInfo + queryString}) against
+	 * the compiled
 	 * pattern.
 	 * 
 	 * @param request

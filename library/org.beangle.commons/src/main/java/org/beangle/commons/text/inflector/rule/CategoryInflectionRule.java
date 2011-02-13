@@ -10,9 +10,8 @@ public class CategoryInflectionRule extends SuffixInflectionRule {
 
 	/**
 	 * <p>
-	 * Construct a rule for <code>words</code> with suffix
-	 * <code>singularSuffix</code> which becomes <code>pluralSuffix</code> in
-	 * the plural.
+	 * Construct a rule for <code>words</code> with suffix <code>singularSuffix</code> which becomes
+	 * <code>pluralSuffix</code> in the plural.
 	 * </p>
 	 * 
 	 * @param words

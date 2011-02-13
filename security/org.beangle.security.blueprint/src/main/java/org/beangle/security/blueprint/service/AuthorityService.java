@@ -15,9 +15,8 @@ import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.User;
 
 /**
- * 用户用户组权限管理服务接口. 权限实体@see <code>Authority</code> 系统资源实体@see
- * <code>Resource</code> 系统功能点实体@see <code>Action</code> 数据权限实体@see
- * <code>Restriction</code>
+ * 用户用户组权限管理服务接口. 权限实体@see <code>Authority</code> 系统资源实体@see <code>Resource</code> 系统功能点实体@see
+ * <code>Action</code> 数据权限实体@see <code>Restriction</code>
  * 
  * @author dell,chaostone 2005-9-27
  */

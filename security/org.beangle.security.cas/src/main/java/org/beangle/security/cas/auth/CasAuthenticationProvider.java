@@ -31,10 +31,9 @@ import org.springframework.beans.factory.InitializingBean;
  * Central Authentication Service (CAS).
  * <p>
  * This <code>AuthenticationProvider</code> is capable of validating
- * {@link UsernamePasswordAuthenticationToken} requests which contain a
- * <code>principal</code> name equal to either
- * {@link CasPreauthFilter#STATEFUL_ID} or {@link CasPreauthFilter#STATELESS_ID}
- * . It can also validate a previously created {@link CasAuthentication}.
+ * {@link UsernamePasswordAuthenticationToken} requests which contain a <code>principal</code> name
+ * equal to either {@link CasPreauthFilter#STATEFUL_ID} or {@link CasPreauthFilter#STATELESS_ID} .
+ * It can also validate a previously created {@link CasAuthentication}.
  * 
  * @author chaostone
  */
@@ -61,8 +60,7 @@ public class CasAuthenticationProvider implements AuthenticationProvider, Initia
 		}
 	}
 
-	public Authentication authenticate(Authentication authentication)
-			throws AuthenticationException {
+	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		CasAuthentication casauth = (CasAuthentication) authentication;
 		// If an existing CasAuthenticationToken, just check we created it
 		if (casauth.isAuthenticated()) {
@@ -98,8 +96,7 @@ public class CasAuthenticationProvider implements AuthenticationProvider, Initia
 		return result;
 	}
 
-	private CasAuthentication authenticateNow(CasAuthentication auth)
-			throws AuthenticationException {
+	private CasAuthentication authenticateNow(CasAuthentication auth) throws AuthenticationException {
 		try {
 			final Assertion assertion = ticketValidator.validate(auth.getCredentials().toString(),
 					auth.getLoginUrl());

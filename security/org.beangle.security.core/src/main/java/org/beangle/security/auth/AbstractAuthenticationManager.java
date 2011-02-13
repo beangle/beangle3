@@ -14,8 +14,7 @@ public abstract class AbstractAuthenticationManager implements AuthenticationMan
 	private boolean clearExtraInfo = false;
 	protected Logger logger = LoggerFactory.getLogger(AbstractAuthenticationManager.class);
 
-	public final Authentication authenticate(Authentication authRequest)
-			throws AuthenticationException {
+	public final Authentication authenticate(Authentication authRequest) throws AuthenticationException {
 		try {
 			Authentication auth = doAuthentication(authRequest);
 			logger.debug("Successfully Authenticated: {}", auth);

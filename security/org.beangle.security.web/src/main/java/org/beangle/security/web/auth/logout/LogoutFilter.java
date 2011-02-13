@@ -21,10 +21,10 @@ import org.springframework.util.StringUtils;
 /**
  * Logs a principal out.
  * <p>
- * Polls a series of {@link LogoutHandler}s. The handlers should be specified in
- * the order they are required. Generally you will want to call logout handlers
- * <code>TokenBasedRememberMeServices</code> and
- * <code>SecurityContextLogoutHandler</code> (in that order).
+ * Polls a series of {@link LogoutHandler}s. The handlers should be specified in the order they are
+ * required. Generally you will want to call logout handlers
+ * <code>TokenBasedRememberMeServices</code> and <code>SecurityContextLogoutHandler</code> (in that
+ * order).
  * </p>
  * <p>
  * After logout, the URL specified by {@link #logoutSuccessUrl} will be shown.
@@ -44,8 +44,8 @@ public class LogoutFilter extends GenericHttpFilterBean {
 	}
 
 	@Override
-	protected void doFilterHttp(HttpServletRequest request, HttpServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
+	protected void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		if (requiresLogout(request, response)) {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			logger.debug("Logging out user '{}' and redirecting to logout page", auth);
@@ -64,8 +64,7 @@ public class LogoutFilter extends GenericHttpFilterBean {
 	 *            the request
 	 * @param response
 	 *            the response
-	 * @return <code>true</code> if logout should occur, <code>false</code>
-	 *         otherwise
+	 * @return <code>true</code> if logout should occur, <code>false</code> otherwise
 	 */
 	protected boolean requiresLogout(HttpServletRequest request, HttpServletResponse response) {
 		String uri = request.getRequestURI();
@@ -91,10 +90,9 @@ public class LogoutFilter extends GenericHttpFilterBean {
 	/**
 	 * Returns the target URL to redirect to after logout.
 	 * <p>
-	 * By default it will check for a <tt>logoutSuccessUrl</tt> parameter in the
-	 * request and use this. If that isn't present it will use the configured
-	 * <tt>logoutSuccessUrl</tt>. If this hasn't been set it will check the
-	 * Referer header and use the URL from there.
+	 * By default it will check for a <tt>logoutSuccessUrl</tt> parameter in the request and use
+	 * this. If that isn't present it will use the configured <tt>logoutSuccessUrl</tt>. If this
+	 * hasn't been set it will check the Referer header and use the URL from there.
 	 */
 	protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response) {
 		String targetUrl = request.getParameter("logoutSuccessUrl");

@@ -156,8 +156,7 @@ public interface EntityDao {
 	 * @param cacheable
 	 * @return
 	 */
-	public <T> List<T> searchNamedQuery(String queryName, Map<String, Object> params,
-			boolean cacheable);
+	public <T> List<T> searchNamedQuery(String queryName, Map<String, Object> params, boolean cacheable);
 
 	/**
 	 * 直接查询
@@ -193,8 +192,7 @@ public interface EntityDao {
 	 * @param cacheable
 	 * @return
 	 */
-	public <T> List<T> searchHQLQuery(String hql, final Map<String, Object> params,
-			boolean cacheable);
+	public <T> List<T> searchHQLQuery(String hql, final Map<String, Object> params, boolean cacheable);
 
 	/**
 	 * 分页命名查询
@@ -215,8 +213,7 @@ public interface EntityDao {
 	 * @param limit
 	 * @return
 	 */
-	public <T> Page<T> paginateHQLQuery(final String hql, final Map<String, Object> params,
-			PageLimit limit);
+	public <T> Page<T> paginateHQLQuery(final String hql, final Map<String, Object> params, PageLimit limit);
 
 	/**
 	 * 执行HQL 进行更新或者删除
@@ -292,8 +289,7 @@ public interface EntityDao {
 	 * @param updateParams
 	 * @return
 	 */
-	public int update(Class<?> entityClass, String attr, Object[] values,
-			Map<String, Object> updateParams);
+	public int update(Class<?> entityClass, String attr, Object[] values, Map<String, Object> updateParams);
 
 	/**
 	 * Update entity set argumentName=argumentValue where attr in values.
@@ -386,7 +382,6 @@ public interface EntityDao {
 
 	public boolean duplicate(String entityName, Long id, Map<String, Object> params);
 
-	public boolean duplicate(Class<? extends Entity<?>> clazz, Long id, String codeName,
-			Object codeValue);
+	public boolean duplicate(Class<? extends Entity<?>> clazz, Long id, String codeName, Object codeValue);
 
 }

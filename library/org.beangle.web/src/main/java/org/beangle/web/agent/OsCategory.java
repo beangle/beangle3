@@ -23,11 +23,11 @@ public enum OsCategory {
 			"Windows CE->Mobile", "Windows"),
 
 	// CamelHttpStream is being used by Evolution, an email client for Linux\
-	LINUX("Linux", "Fedora/(\\S*)\\.fc(\\S*)->Fedora fc$2", "Ubuntu/(\\S*)->Ubuntu $1", "Fedora",
-			"Ubuntu", "Linux", "CamelHttpStream"),
+	LINUX("Linux", "Fedora/(\\S*)\\.fc(\\S*)->Fedora fc$2", "Ubuntu/(\\S*)->Ubuntu $1", "Fedora", "Ubuntu",
+			"Linux", "CamelHttpStream"),
 
-	ANDROID("Android", "Android 2->2.x", "GT-P1000->2.x Tablet", "SCH-I800->2.x Tablet",
-			"Android 1->1.x", "Android"),
+	ANDROID("Android", "Android 2->2.x", "GT-P1000->2.x Tablet", "SCH-I800->2.x Tablet", "Android 1->1.x",
+			"Android"),
 
 	WEBOS("WebOS", "webOS"),
 
@@ -35,14 +35,12 @@ public enum OsCategory {
 
 	IOS("iOS", "iPhone OS 4->4 (iPhone)", "like Mac OS X"),
 
-	MAC_OS("Mac OS", "iPad->(iPad)", "iPhone->(iPhone)", "iPod->(iPod)", "Mac OS X->X",
-			"CFNetwork->X", "Mac"),
+	MAC_OS("Mac OS", "iPad->(iPad)", "iPhone->(iPhone)", "iPod->(iPod)", "Mac OS X->X", "CFNetwork->X", "Mac"),
 
 	MAEMO("Maemo", "Maemo"),
 
-	SYMBIAN("Symbian OS", "SymbianOS/9->9.x", "Series60/3->9.x", "SymbianOS/8->8.x",
-			"Series60/2.6->8.x", "Series60/2.8->8.x", "SymbianOS/7->7.x", "SymbianOS/6->6.x",
-			"Symbian", "Series60"),
+	SYMBIAN("Symbian OS", "SymbianOS/9->9.x", "Series60/3->9.x", "SymbianOS/8->8.x", "Series60/2.6->8.x",
+			"Series60/2.8->8.x", "SymbianOS/7->7.x", "SymbianOS/6->6.x", "Symbian", "Series60"),
 
 	SERIES40("Series 40", "Nokia6300"),
 

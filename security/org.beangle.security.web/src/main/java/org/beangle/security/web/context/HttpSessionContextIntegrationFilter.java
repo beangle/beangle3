@@ -26,57 +26,50 @@ import org.springframework.util.ReflectionUtils;
  * the <code>HttpSession</code>.
  * <p/>
  * <p/>
- * The <code>HttpSession</code> will be queried to retrieve the
- * <code>SecurityContext</code> that should be stored against the
- * <code>SecurityContextHolder</code> for the duration of the web request. At
- * the end of the web request, any updates made to the
- * <code>SecurityContextHolder</code> will be persisted back to the
- * <code>HttpSession</code> by this filter.
+ * The <code>HttpSession</code> will be queried to retrieve the <code>SecurityContext</code> that
+ * should be stored against the <code>SecurityContextHolder</code> for the duration of the web
+ * request. At the end of the web request, any updates made to the
+ * <code>SecurityContextHolder</code> will be persisted back to the <code>HttpSession</code> by this
+ * filter.
  * </p>
  * <p/>
- * If a valid <code>SecurityContext</code> cannot be obtained from the
- * <code>HttpSession</code> for whatever reason, a fresh
- * <code>SecurityContext</code> will be created and used instead. The created
- * object will be of the instance defined by the {@link #setContextClass(Class)}
- * method (which defaults to
- * {@link org.springframework.security.context.SecurityContextImpl}.
+ * If a valid <code>SecurityContext</code> cannot be obtained from the <code>HttpSession</code> for
+ * whatever reason, a fresh <code>SecurityContext</code> will be created and used instead. The
+ * created object will be of the instance defined by the {@link #setContextClass(Class)} method
+ * (which defaults to {@link org.springframework.security.context.SecurityContextImpl}.
  * </p>
  * <p/>
- * No <code>HttpSession</code> will be created by this filter if one does not
- * already exist. If at the end of the web request the <code>HttpSession</code>
- * does not exist, a <code>HttpSession</code> will <b>only</b> be created if the
- * current contents of the <code>SecurityContextHolder</code> are not
- * {@link java.lang.Object#equals(java.lang.Object)} to a <code>new</code>
- * instance of {@link #setContextClass(Class)}. This avoids needless
- * <code>HttpSession</code> creation, but automates the storage of changes made
- * to the <code>SecurityContextHolder</code>. There is one exception to this
- * rule, that is if the {@link #forceEagerSessionCreation} property is
- * <code>true</code>, in which case sessions will always be created irrespective
- * of normal session-minimisation logic (the default is <code>false</code>, as
- * this is resource intensive and not recommended).
+ * No <code>HttpSession</code> will be created by this filter if one does not already exist. If at
+ * the end of the web request the <code>HttpSession</code> does not exist, a
+ * <code>HttpSession</code> will <b>only</b> be created if the current contents of the
+ * <code>SecurityContextHolder</code> are not {@link java.lang.Object#equals(java.lang.Object)} to a
+ * <code>new</code> instance of {@link #setContextClass(Class)}. This avoids needless
+ * <code>HttpSession</code> creation, but automates the storage of changes made to the
+ * <code>SecurityContextHolder</code>. There is one exception to this rule, that is if the
+ * {@link #forceEagerSessionCreation} property is <code>true</code>, in which case sessions will
+ * always be created irrespective of normal session-minimisation logic (the default is
+ * <code>false</code>, as this is resource intensive and not recommended).
  * </p>
  * <p/>
- * This filter will only execute once per request, to resolve servlet container
- * (specifically Weblogic) incompatibilities.
+ * This filter will only execute once per request, to resolve servlet container (specifically
+ * Weblogic) incompatibilities.
  * </p>
  * <p/>
- * If for whatever reason no <code>HttpSession</code> should <b>ever</b> be
- * created (eg this filter is only being used with Basic authentication or
- * similar clients that will never present the same <code>jsessionid</code>
- * etc), the {@link #setAllowSessionCreation(boolean)} should be set to
- * <code>false</code>. Only do this if you really need to conserve server memory
- * and ensure all classes using the <code>SecurityContextHolder</code> are
- * designed to have no persistence of the <code>SecurityContext</code> between
- * web requests. Please note that if {@link #forceEagerSessionCreation} is
- * <code>true</code>, the <code>allowSessionCreation</code> must also be
- * <code>true</code> (setting it to <code>false</code> will cause a startup time
+ * If for whatever reason no <code>HttpSession</code> should <b>ever</b> be created (eg this filter
+ * is only being used with Basic authentication or similar clients that will never present the same
+ * <code>jsessionid</code> etc), the {@link #setAllowSessionCreation(boolean)} should be set to
+ * <code>false</code>. Only do this if you really need to conserve server memory and ensure all
+ * classes using the <code>SecurityContextHolder</code> are designed to have no persistence of the
+ * <code>SecurityContext</code> between web requests. Please note that if
+ * {@link #forceEagerSessionCreation} is <code>true</code>, the <code>allowSessionCreation</code>
+ * must also be <code>true</code> (setting it to <code>false</code> will cause a startup time
  * error).
  * </p>
  * <p/>
- * This filter MUST be executed BEFORE any authentication processing mechanisms.
- * Authentication processing mechanisms (eg BASIC, CAS processing filters etc)
- * expect the <code>SecurityContextHolder</code> to contain a valid
- * <code>SecurityContext</code> by the time they execute.
+ * This filter MUST be executed BEFORE any authentication processing mechanisms. Authentication
+ * processing mechanisms (eg BASIC, CAS processing filters etc) expect the
+ * <code>SecurityContextHolder</code> to contain a valid <code>SecurityContext</code> by the time
+ * they execute.
  * </p>
  * 
  * @author chaostone
@@ -93,8 +86,8 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 
 	/**
 	 * Indicates if this filter can create a <code>HttpSession</code> if needed
-	 * (sessions are always created sparingly, but setting this value to
-	 * <code>false</code> will prohibit sessions from ever being created).
+	 * (sessions are always created sparingly, but setting this value to <code>false</code> will
+	 * prohibit sessions from ever being created).
 	 * Defaults to <code>true</code>. Do not set to <code>false</code> if you
 	 * are have set {@link #forceEagerSessionCreation} to <code>true</code>, as
 	 * the properties would be in conflict.
@@ -102,9 +95,9 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 	private boolean allowSessionCreation = true;
 
 	/**
-	 * Indicates if this filter is required to create a <code>HttpSession</code>
-	 * for every request before proceeding through the filter chain, even if the
-	 * <code>HttpSession</code> would not ordinarily have been created. By
+	 * Indicates if this filter is required to create a <code>HttpSession</code> for every request
+	 * before proceeding through the filter chain, even if the <code>HttpSession</code> would not
+	 * ordinarily have been created. By
 	 * default this is <code>false</code>, which is entirely appropriate for
 	 * most circumstances as you do not want a <code>HttpSession</code> created
 	 * unless the filter actually needs one. It is envisaged the main situation
@@ -121,15 +114,14 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 	 * the <code>HttpSession</code>. The default is to simply reference (ie the
 	 * default is <code>false</code>). The default may cause issues if
 	 * concurrent threads need to have a different security identity from other
-	 * threads being concurrently processed that share the same
-	 * <code>HttpSession</code>. In most normal environments this does not
+	 * threads being concurrently processed that share the same <code>HttpSession</code>. In most
+	 * normal environments this does not
 	 * represent an issue, as changes to the security identity in one thread is
 	 * allowed to affect the security identitiy in other threads associated with
 	 * the same <code>HttpSession</code>. For unusual cases where this is not
-	 * permitted, change this value to <code>true</code> and ensure the
-	 * {@link #contextClass} is set to a <code>SecurityContext</code> that
-	 * implements {@link Cloneable} and overrides the <code>clone()</code>
-	 * method.
+	 * permitted, change this value to <code>true</code> and ensure the {@link #contextClass} is set
+	 * to a <code>SecurityContext</code> that
+	 * implements {@link Cloneable} and overrides the <code>clone()</code> method.
 	 */
 	private boolean cloneFromHttpSession = false;
 
@@ -149,8 +141,7 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 	}
 
 	protected void initFilterBean() throws ServletException {
-		if ((this.contextClass == null)
-				|| (!SecurityContext.class.isAssignableFrom(this.contextClass))) { throw new IllegalArgumentException(
+		if ((this.contextClass == null) || (!SecurityContext.class.isAssignableFrom(this.contextClass))) { throw new IllegalArgumentException(
 				"context must be defined and implement SecurityContext "
 						+ "(typically use org.beangle.security.context.SecurityContextImpl; existing class is "
 						+ this.contextClass + ")"); }
@@ -161,8 +152,8 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 		contextObject = generateNewContext();
 	}
 
-	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
+	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 
 		if (request.getAttribute(FILTER_APPLIED) != null) {
 			// ensure that filter is only applied once per request
@@ -188,8 +179,7 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 		} else {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Obtained a valid SecurityContext from Beangle_SECURITY_CONTEXT to "
-						+ "associate with SecurityContextHolder: '" + contextBeforeChainExecution
-						+ "'");
+						+ "associate with SecurityContextHolder: '" + contextBeforeChainExecution + "'");
 			}
 		}
 
@@ -202,8 +192,7 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 		// See SEC-398
 
 		OnRedirectUpdateSessionResponseWrapper responseWrapper = new OnRedirectUpdateSessionResponseWrapper(
-				response, request, httpSessionExistedAtStartOfRequest,
-				contextHashBeforeChainExecution);
+				response, request, httpSessionExistedAtStartOfRequest, contextHashBeforeChainExecution);
 
 		// Proceed with chain
 
@@ -243,12 +232,11 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 	/**
 	 * Gets the security context from the session (if available) and returns it.
 	 * <p/>
-	 * If the session is null, the context object is null or the context object
-	 * stored in the session is not an instance of SecurityContext it will
-	 * return null.
+	 * If the session is null, the context object is null or the context object stored in the
+	 * session is not an instance of SecurityContext it will return null.
 	 * <p/>
-	 * If <tt>cloneFromHttpSession</tt> is set to true, it will attempt to clone
-	 * the context object and return the cloned instance.
+	 * If <tt>cloneFromHttpSession</tt> is set to true, it will attempt to clone the context object
+	 * and return the cloned instance.
 	 * 
 	 * @param httpSession
 	 *            the session obtained from the request.
@@ -331,9 +319,8 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 	 *            hashcode, indicating that the context changed during the
 	 *            request.
 	 */
-	private void storeSecurityContextInSession(SecurityContext securityContext,
-			HttpServletRequest request, boolean httpSessionExistedAtStartOfRequest,
-			int contextHashBeforeChainExecution) {
+	private void storeSecurityContextInSession(SecurityContext securityContext, HttpServletRequest request,
+			boolean httpSessionExistedAtStartOfRequest, int contextHashBeforeChainExecution) {
 		HttpSession httpSession = safeGetSession(request, false);
 
 		if (httpSession == null) {
@@ -433,10 +420,9 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 	}
 
 	/**
-	 * Wrapper that is applied to every request to update the
-	 * <code>HttpSession<code> with
-	 * the <code>SecurityContext</code> when a <code>sendError()</code> or
-	 * <code>sendRedirect</code> happens. See SEC-398. The class contains the
+	 * Wrapper that is applied to every request to update the <code>HttpSession<code> with
+	 * the <code>SecurityContext</code> when a <code>sendError()</code> or <code>sendRedirect</code>
+	 * happens. See SEC-398. The class contains the
 	 * fields needed to call <code>storeSecurityContextInSession()</code>
 	 */
 	private class OnRedirectUpdateSessionResponseWrapper extends HttpServletResponseWrapper {
@@ -450,8 +436,8 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 		boolean sessionUpdateDone = false;
 
 		/**
-		 * Takes the parameters required to call
-		 * <code>storeSecurityContextInSession()</code> in addition to the
+		 * Takes the parameters required to call <code>storeSecurityContextInSession()</code> in
+		 * addition to the
 		 * response object we are wrapping.
 		 * 
 		 * @see HttpSessionContextIntegrationFilter#storeSecurityContextInSession(SecurityContext,
@@ -467,8 +453,7 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 		}
 
 		/**
-		 * Makes sure the session is updated before calling the superclass
-		 * <code>sendError()</code>
+		 * Makes sure the session is updated before calling the superclass <code>sendError()</code>
 		 */
 		public void sendError(int sc) throws IOException {
 			doSessionUpdate();
@@ -476,8 +461,7 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 		}
 
 		/**
-		 * Makes sure the session is updated before calling the superclass
-		 * <code>sendError()</code>
+		 * Makes sure the session is updated before calling the superclass <code>sendError()</code>
 		 */
 		public void sendError(int sc, String msg) throws IOException {
 			doSessionUpdate();
@@ -499,14 +483,13 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 		private void doSessionUpdate() {
 			if (sessionUpdateDone) { return; }
 			SecurityContext securityContext = SecurityContextHolder.getContext();
-			storeSecurityContextInSession(securityContext, request,
-					httpSessionExistedAtStartOfRequest, contextHashBeforeChainExecution);
+			storeSecurityContextInSession(securityContext, request, httpSessionExistedAtStartOfRequest,
+					contextHashBeforeChainExecution);
 			sessionUpdateDone = true;
 		}
 
 		/**
-		 * Tells if the response wrapper has called
-		 * <code>storeSecurityContextInSession()</code>.
+		 * Tells if the response wrapper has called <code>storeSecurityContextInSession()</code>.
 		 */
 		public boolean isSessionUpdateDone() {
 			return sessionUpdateDone;

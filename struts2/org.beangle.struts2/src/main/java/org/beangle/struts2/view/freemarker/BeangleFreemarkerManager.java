@@ -33,8 +33,7 @@ import freemarker.template.TemplateException;
  * BeangleFreemarkerManager provide:
  * <p>
  * <li>Better template loader sequence like class://;file://;file//;webapp://</li>
- * <li>Multi freemark properties
- * loading(META-INF/freemarker.properties,freemarker.properties)</li>
+ * <li>Multi freemark properties loading(META-INF/freemarker.properties,freemarker.properties)</li>
  * <li>Friendly Collection/Map/Object objectwrapper</li>
  * 
  * @author chaostone
@@ -57,11 +56,10 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 	 * (webapp://) and FileTemplateLoader(file://) . All template path described
 	 * in init parameter templatePath or TemplatePlath
 	 * <p/>
-	 * The ClassTemplateLoader will resolve fully qualified template includes
-	 * that begin with a slash. for example /com/company/template/common.ftl
+	 * The ClassTemplateLoader will resolve fully qualified template includes that begin with a
+	 * slash. for example /com/company/template/common.ftl
 	 * <p/>
-	 * The WebappTemplateLoader attempts to resolve templates relative to the
-	 * web root folder
+	 * The WebappTemplateLoader attempts to resolve templates relative to the web root folder
 	 */
 	@Override
 	protected TemplateLoader createTemplateLoader(ServletContext servletContext, String templatePath) {
@@ -106,8 +104,7 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 			while (em.hasMoreElements()) {
 				properties.putAll(getProperties((URL) em.nextElement()));
 			}
-			em = BeangleFreemarkerManager.class.getClassLoader().getResources(
-					"freemarker.properties");
+			em = BeangleFreemarkerManager.class.getClassLoader().getResources("freemarker.properties");
 			while (em.hasMoreElements()) {
 				properties.putAll(getProperties((URL) em.nextElement()));
 			}

@@ -23,8 +23,7 @@ import org.beangle.security.web.access.ResourceExtractor;
 import org.beangle.security.web.auth.UrlEntryPoint;
 import org.springframework.beans.factory.InitializingBean;
 
-public class CacheableAuthorityManager extends BaseServiceImpl implements AuthorityManager,
-		InitializingBean {
+public class CacheableAuthorityManager extends BaseServiceImpl implements AuthorityManager, InitializingBean {
 
 	// 登录入口点
 	protected AuthenticationEntryPoint authenticationEntryPoint;

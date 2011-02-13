@@ -10,17 +10,15 @@ import java.nio.ByteBuffer;
 /**
  * An interface for encoders that do a pretty encoding of ZIP filenames.
  * <p>
- * There are mostly two implementations, one that uses java.nio
- * {@link java.nio.charset.Charset Charset} and one implementation, which copes
- * with simple 8 bit charsets, because java-1.4 did not support Cp437 in
- * java.nio.
+ * There are mostly two implementations, one that uses java.nio {@link java.nio.charset.Charset
+ * Charset} and one implementation, which copes with simple 8 bit charsets, because java-1.4 did not
+ * support Cp437 in java.nio.
  * </p>
  * <p>
- * The main reason for defining an own encoding layer comes from the problems
- * with {@link java.lang.String#getBytes(String) String.getBytes}, which encodes
- * unknown characters as ASCII quotation marks ('?'). Quotation marks are per
- * definition an invalid filename on some operating systems like Windows, which
- * leads to ignored ZIP entries.
+ * The main reason for defining an own encoding layer comes from the problems with
+ * {@link java.lang.String#getBytes(String) String.getBytes}, which encodes unknown characters as
+ * ASCII quotation marks ('?'). Quotation marks are per definition an invalid filename on some
+ * operating systems like Windows, which leads to ignored ZIP entries.
  * </p>
  * <p>
  * All implementations should implement this interface in a reentrant way.
@@ -41,8 +39,7 @@ interface ZipEncoding {
 	 * Encode a filename or a comment to a byte array suitable for storing it to
 	 * a serialized zip entry.
 	 * <p>
-	 * Examples for CP 437 (in pseudo-notation, right hand side is C-style
-	 * notation):
+	 * Examples for CP 437 (in pseudo-notation, right hand side is C-style notation):
 	 * </p>
 	 * 
 	 * <pre>
@@ -54,8 +51,8 @@ interface ZipEncoding {
 	 *            A filename or ZIP comment.
 	 * @return A byte buffer with a backing array containing the encoded name.
 	 *         Unmappable characters or malformed character sequences are mapped
-	 *         to a sequence of utf-16 words encoded in the format
-	 *         <code>%Uxxxx</code>. It is assumed, that the byte buffer is
+	 *         to a sequence of utf-16 words encoded in the format <code>%Uxxxx</code>. It is
+	 *         assumed, that the byte buffer is
 	 *         positioned at the beinning of the encoded result, the byte buffer
 	 *         has a backing array and the limit of the byte buffer points to
 	 *         the end of the encoded result.

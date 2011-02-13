@@ -91,8 +91,7 @@ public class ThrowableAnalyzer {
 	 * @param throwableType
 	 *            the type (has to be a subclass of <code>Throwable</code>)
 	 * @param extractor
-	 *            the associated <code>ThrowableCauseExtractor</code> (not
-	 *            <code>null</code>)
+	 *            the associated <code>ThrowableCauseExtractor</code> (not <code>null</code>)
 	 * @throws IllegalArgumentException
 	 *             if one of the arguments is invalid
 	 */
@@ -107,19 +106,17 @@ public class ThrowableAnalyzer {
 	/**
 	 * Initializes associations between <code>Throwable</code>s and
 	 * <code>ThrowableCauseExtractor</code>s. The default implementation
-	 * performs the following registrations: <li>{@link #DEFAULT_EXTRACTOR} for
-	 * {@link Throwable}</li> <li>{@link #INVOCATIONTARGET_EXTRACTOR} for
-	 * {@link InvocationTargetException}</li> <br>
+	 * performs the following registrations: <li>{@link #DEFAULT_EXTRACTOR} for {@link Throwable}</li>
+	 * <li>{@link #INVOCATIONTARGET_EXTRACTOR} for {@link InvocationTargetException}</li> <br>
 	 * Subclasses overriding this method are encouraged to invoke the super
 	 * method to perform the default registrations. They can register additional
 	 * extractors as required.
 	 * <p>
-	 * Note: An extractor registered for a specific type is applicable for that
-	 * type <i>and all subtypes thereof</i>. However, extractors registered to
-	 * more specific types are guaranteed to be resolved first. So in the
-	 * default case InvocationTargetExceptions will be handled by
-	 * {@link #INVOCATIONTARGET_EXTRACTOR} while all other throwables are
-	 * handled by {@link #DEFAULT_EXTRACTOR}.
+	 * Note: An extractor registered for a specific type is applicable for that type <i>and all
+	 * subtypes thereof</i>. However, extractors registered to more specific types are guaranteed to
+	 * be resolved first. So in the default case InvocationTargetExceptions will be handled by
+	 * {@link #INVOCATIONTARGET_EXTRACTOR} while all other throwables are handled by
+	 * {@link #DEFAULT_EXTRACTOR}.
 	 * 
 	 * @see #registerExtractor(Class, ThrowableCauseExtractor)
 	 */
@@ -148,9 +145,8 @@ public class ThrowableAnalyzer {
 	 * throwable itself. The following elements appear in their order downward
 	 * the stacktrace.
 	 * <p>
-	 * Note: If no {@link ThrowableCauseExtractor} is registered for this
-	 * instance then the returned array will always only contain the passed in
-	 * throwable.
+	 * Note: If no {@link ThrowableCauseExtractor} is registered for this instance then the returned
+	 * array will always only contain the passed in throwable.
 	 * 
 	 * @param throwable
 	 *            the <code>Throwable</code> to analyze
@@ -199,8 +195,7 @@ public class ThrowableAnalyzer {
 	 * to the provided type. A returned instance is safe to be cast to the
 	 * specified type.
 	 * <p>
-	 * If the passed in array is null or empty this method returns
-	 * <code>null</code>.
+	 * If the passed in array is null or empty this method returns <code>null</code>.
 	 * 
 	 * @param throwableType
 	 *            the type to look for
@@ -244,11 +239,11 @@ public class ThrowableAnalyzer {
 
 	/**
 	 * Verifies that the provided throwable is a valid subclass of the provided
-	 * type (or of the type itself). If <code>expectdBaseType</code> is
-	 * <code>null</code>, no check will be performed.
+	 * type (or of the type itself). If <code>expectdBaseType</code> is <code>null</code>, no check
+	 * will be performed.
 	 * <p>
-	 * Can be used for verification purposes in implementations of
-	 * {@link ThrowableCauseExtractor extractors}.
+	 * Can be used for verification purposes in implementations of {@link ThrowableCauseExtractor
+	 * extractors}.
 	 * 
 	 * @param throwable
 	 *            the <code>Throwable</code> to check
