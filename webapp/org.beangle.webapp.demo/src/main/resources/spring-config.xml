@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
-	<bean id="dataSource"
-		class="org.springframework.jndi.JndiObjectFactoryBean">
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName">
 			<value>java:comp/env/jdbc/beangle</value>
 		</property>
@@ -12,45 +11,47 @@
 		<property name="properties">
 			<props merge="true">
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto"></prop>
 			</props>
 		</property>
 	</bean>
-	
-	<!--<bean id="usernamePreauthFilter">
-		<property name="usernameSource" >
-			<bean class="org.beangle.webapp.demo.GivenUsernameSource"/>
-		</property>
-	</bean>
-	
+
+	<!--<bean id="usernamePreauthFilter"> <property name="usernameSource" > 
+		<bean class="org.beangle.webapp.demo.GivenUsernameSource"/> </property> </bean> -->
+
 	<bean id="securityFilterChain">
 		<property name="filterChainMap">
 			<map>
-				<entry key="/**">
+				<entry>
+					<key>
+						<bean class="org.beangle.web.filter.AntPathRequestMatcher">
+							<constructor-arg value="/**" />
+						</bean>
+					</key>
 					<list>
-						<ref bean="httpSessionContextIntegrationFilter"/>
-						<ref bean="casPreauthFilter"/>
-						<ref bean="anonymousProcessingFilter"/>
-						<ref bean="exceptionTranslationFilter"/>
-						<ref bean="filterSecurityInterceptor"/>
+						<ref bean="httpSessionContextIntegrationFilter" />
+						<ref bean="casPreauthFilter" />
+						<ref bean="anonymousFilter" />
+						<ref bean="exceptionTranslationFilter" />
+						<ref bean="filterSecurityInterceptor" />
 					</list>
 				</entry>
 			</map>
 		</property>
 	</bean>
-	
-	<bean id="authenticationManager">
+
+	<bean id="authenticationmanager">
 		<property name="providers">
 			<list>
-				<ref bean="preauthUserDetailProvider"/>
-				<ref bean="casAuthenticationProvider"/>
+				<ref bean="preauthUserDetailProvider" />
+				<ref bean="casAuthenticationProvider" />
+				<ref bean="daoUserProvider" />
 			</list>
 		</property>
 	</bean>
-	
-	<bean id="exceptionTranslationFilter" >
-		<property name="authenticationEntryPoint" ref="casEntryPoint"/>
+
+	<bean id="exceptionTranslationFilter">
+		<property name="authenticationEntryPoint" ref="casEntryPoint" />
 	</bean>
-	-->
 </beans>
 

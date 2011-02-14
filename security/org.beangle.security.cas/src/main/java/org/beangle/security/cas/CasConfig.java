@@ -33,6 +33,10 @@ public class CasConfig implements InitializingBean {
 
 	private String loginUri = "/login";
 
+	private String validateUri = "/serviceValidate";
+	
+	private String checkAliveUri = "/checkAlive";
+	
 	public CasConfig() {
 		super();
 	}
@@ -138,6 +142,22 @@ public class CasConfig implements InitializingBean {
 
 	public void setArtifactName(String artifactName) {
 		this.artifactName = artifactName;
+	}
+
+	public String getValidateUri() {
+		return validateUri;
+	}
+
+	public void setValidateUri(String validateUri) {
+		this.validateUri = validateUri;
+	}
+
+	public String getCheckAliveUri() {
+		return checkAliveUri;
+	}
+
+	public void setCheckAliveUri(String checkAliveUri) {
+		this.checkAliveUri = checkAliveUri;
 	}
 
 }

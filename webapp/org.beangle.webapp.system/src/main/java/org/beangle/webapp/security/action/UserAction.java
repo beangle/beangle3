@@ -133,6 +133,7 @@ public class UserAction extends SecurityActionSupport {
 			}
 			updateUserGroup(user);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return forward(ERROR);
 		}
 		return redirect("search", "info.save.success");

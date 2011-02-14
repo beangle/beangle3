@@ -6,7 +6,7 @@
 	<bean id="proxyGrantingTicketStorage" class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl"/>
 	
 	<bean id="casConfig" class="org.beangle.security.cas.CasConfig">
-		<property name="casServer" value="http://uias.stiei.edu.cn/cas"/>
+		<property name="casServer" value="http://portal.shfc.edu.cn/cas"/>
 		<property name="localServer" value="localhost:8080"/>
 		<property name="renew" value="false"/>
 		<property name="proxyReceptor" value="/demo/secure/receptor"/>
@@ -17,16 +17,22 @@
 		<property name="sessionStrategy" ref="sessionStrategy"/>
 		<property name="proxyGrantingTicketStorage" ref="proxyGrantingTicketStorage"/>
 		<property name="config" ref="casConfig"/>
+		<property name="authenticationAliveChecker" ref="authenticationAliveChecker"/>
 	</bean>
 	
 	<bean id="casEntryPoint" class="org.beangle.security.cas.web.CasEntryPoint">
 		<property name="config" ref="casConfig"/>
 	</bean>
 	
+	<bean id="authenticationAliveChecker" class="org.beangle.security.cas.auth.vendor.NeusoftCasAliveChecker">
+		<property name="config" ref="casConfig"/>
+	</bean>
+	
 	<bean id="casAuthenticationProvider" class="org.beangle.security.cas.auth.CasAuthenticationProvider">
 		<property name="userDetailService" ref="userDetailService"/>
 		<property name="ticketValidator">
-			<bean class="org.beangle.security.cas.auth.Cas20ServiceTicketValidatorFactory">
+			<!-- <bean class="org.beangle.security.cas.auth.Cas20ServiceTicketValidatorFactory"> -->
+			<bean class="org.beangle.security.cas.auth.vendor.NeusoftCasTicketValidatorFactory">
 				<property name="proxyGrantingTicketStorage" ref="proxyGrantingTicketStorage"/>
 				<property name="config" ref="casConfig"/>
 			</bean>

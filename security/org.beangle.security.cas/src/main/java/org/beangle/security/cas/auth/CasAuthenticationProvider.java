@@ -8,10 +8,9 @@ import static org.beangle.security.cas.auth.CasAuthentication.STATELESS_ID;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.beangle.commons.text.NullTextResource;
-import org.beangle.commons.text.TextResource;
 import org.beangle.security.auth.AuthenticationProvider;
 import org.beangle.security.auth.BadCredentialsException;
+import org.beangle.security.auth.UsernamePasswordAuthentication;
 import org.beangle.security.cas.web.CasPreauthFilter;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
@@ -22,8 +21,6 @@ import org.beangle.security.core.userdetail.UserDetailService;
 import org.jasig.cas.client.validation.Assertion;
 import org.jasig.cas.client.validation.TicketValidationException;
 import org.jasig.cas.client.validation.TicketValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
@@ -38,11 +35,8 @@ import org.springframework.beans.factory.InitializingBean;
  * @author chaostone
  */
 public class CasAuthenticationProvider implements AuthenticationProvider, InitializingBean {
-	private static final Logger logger = LoggerFactory.getLogger(CasAuthenticationProvider.class);
-
 	private UserDetailService<Authentication> userDetailService;
 	private UserDetailChecker userDetailChecker;
-	protected TextResource textResource = new NullTextResource();
 	private StatelessTicketCache statelessTicketCache = new NullTicketCache();
 	private String key;
 	private TicketValidator ticketValidator;
@@ -55,7 +49,6 @@ public class CasAuthenticationProvider implements AuthenticationProvider, Initia
 				"A Key is required so CasAuthenticationProvider can identify tokens it previously authenticated");
 		if (null == userDetailChecker) {
 			AccountStatusChecker checker = new AccountStatusChecker();
-			checker.setTextResource(textResource);
 			userDetailChecker = checker;
 		}
 	}
@@ -67,15 +60,12 @@ public class CasAuthenticationProvider implements AuthenticationProvider, Initia
 			if (key.hashCode() == casauth.getKeyHash()) {
 				return authentication;
 			} else {
-				throw new BadCredentialsException(textResource.getText(
-						"CasAuthenticationProvider.incorrectKey",
-						"The presented CasAuthenticationToken does not contain the expected key"));
+				throw new BadCredentialsException("CasAuthenticationProvider.incorrectKey");
 			}
 		}
 		// Ensure credentials are presented
 		if (StringUtils.isEmpty(String.valueOf(casauth.getCredentials()))) { throw new BadCredentialsException(
-				textResource.getText("CasAuthenticationProvider.noServiceTicket",
-						"Failed to provide a CAS service ticket to validate")); }
+				"CasAuthenticationProvider.noServiceTicket"); }
 		boolean stateless = false;
 		if (STATELESS_ID.equals(casauth.getPrincipal())) {
 			stateless = true;
@@ -100,13 +90,13 @@ public class CasAuthenticationProvider implements AuthenticationProvider, Initia
 		try {
 			final Assertion assertion = ticketValidator.validate(auth.getCredentials().toString(),
 					auth.getLoginUrl());
-			final UserDetail userDetails = userDetailService.loadDetail(auth);
+			final UserDetail userDetails = userDetailService.loadDetail(new UsernamePasswordAuthentication(
+					assertion.getPrincipal().getName(), null));
 			userDetailChecker.check(userDetails);
 			return new CasAuthentication(key, userDetails, auth.getCredentials(),
 					userDetails.getAuthorities(), userDetails, assertion);
 		} catch (final TicketValidationException e) {
-			logger.error("Bad credentials :" + auth.getCredentials().toString(), e);
-			throw new BadCredentialsException("", e);
+			throw new BadCredentialsException("Bad credentials :" + auth.getCredentials().toString(), e);
 		}
 	}
 

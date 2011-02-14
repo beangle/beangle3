@@ -17,13 +17,7 @@
 	   </tr>
 	   <tr>
 		 <td class="title" width="15%" id="f_name"><font color="red">*</font>${b.text("user.name")}:</td>
-		 <td >
-		 [#if !(user.id??)]
-		  <input type="text" name="user.name" value="${user.name!}" style="width:200px;" maxlength="30"/>
-		 [#else]
-		 ${user.name}
-		 [/#if]
-		 </td>
+		 <td><input type="text" name="user.name" value="${user.name!}" style="width:200px;" maxlength="30"/></td>
 		</tr>
 		<tr>
 		 <td class="title">${b.text("common.status")}:</td>
@@ -100,9 +94,7 @@
 	function validate(form){
 		var a_fields = {
 			 'user.mail':{'l':'${b.text("common.email")}', 'r':true, 'f':'email', 't':'f_email'},
-			  [#if !(user.id??)]
 			 'user.name':{'l':'${b.text("user.name")}', 'r':true, 't':'f_name'},
-			 [/#if]
 			 'user.fullname':{'l':'真实姓名', 'r':true, 't':'f_fullname'},
 			 'user.remark':{'l':'${b.text("common.remark")}','r':false,'t':'f_remark','mx':80}
 		};
