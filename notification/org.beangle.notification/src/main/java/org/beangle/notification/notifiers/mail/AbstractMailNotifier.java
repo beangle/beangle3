@@ -34,7 +34,7 @@ public abstract class AbstractMailNotifier implements Notifier {
 
 	protected static final Logger logger = LoggerFactory.getLogger(AbstractMailNotifier.class);
 
-	private JavaMailSender javaMailSender;
+	protected JavaMailSender mailSender;
 
 	private String fromMailbox;
 
@@ -59,7 +59,7 @@ public abstract class AbstractMailNotifier implements Notifier {
 			mailConext.setTo(to);
 		}
 
-		MimeMessage mimeMsg = javaMailSender.createMimeMessage();
+		MimeMessage mimeMsg = mailSender.createMimeMessage();
 		try {
 			mimeMsg.setSentDate(new Date());
 			MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMsg);
@@ -72,7 +72,7 @@ public abstract class AbstractMailNotifier implements Notifier {
 			addRecipient(mimeMsg, javax.mail.Message.RecipientType.BCC, mailConext.getBcc());
 			beforeSend(mailConext, mimeMsg);
 			if (mimeMsg.getAllRecipients() != null && ((Address[]) mimeMsg.getAllRecipients()).length > 0) {
-				javaMailSender.send(mimeMsg);
+				mailSender.send(mimeMsg);
 				logger.info("mail sended from {} to {} with subject {}", new Object[] { fromMailbox,
 						mailConext.getRecipients(), subject });
 			}
@@ -101,19 +101,17 @@ public abstract class AbstractMailNotifier implements Notifier {
 	abstract protected String buildText(Message msg);
 
 	protected void beforeSend(Message msg, MimeMessage mimeMsg) {
-
 	}
 
 	protected void afterSend(Message msg, MimeMessage mimeMsg) {
-
 	}
 
-	public JavaMailSender getJavaMailSender() {
-		return javaMailSender;
+	public JavaMailSender getMailSender() {
+		return mailSender;
 	}
 
-	public void setJavaMailSender(JavaMailSender javaMailSender) {
-		this.javaMailSender = javaMailSender;
+	public void setMailSender(JavaMailSender javaMailSender) {
+		this.mailSender = javaMailSender;
 	}
 
 	public String getFromMailbox() {

@@ -15,10 +15,10 @@ import org.testng.annotations.Test;
  * http://www.gnu.org/licenses/gpl-2.0.html
  * 
  */
+@Test
 public class DefaultMailNotifierTest {
 	private boolean online = false;
 
-	@Test
 	public void testGmail() throws Exception {
 		JavaMailSenderImpl mailSender = new org.springframework.mail.javamail.JavaMailSenderImpl();
 		mailSender.setHost("smtp.gmail.com");
@@ -37,13 +37,12 @@ public class DefaultMailNotifierTest {
 
 		MailMessage mmc = new MailMessage("eams.demon@gmail.com", "测试", "测试简单邮件发送机制");
 		DefaultMailNotifier mailNotifier = new DefaultMailNotifier();
-		mailNotifier.setJavaMailSender(mailSender);
+		mailNotifier.setMailSender(mailSender);
 		mailNotifier.setFromMailbox("eams.demon@gmail.com");
 		mailNotifier.setFromName("测试name");
 		if (online) mailNotifier.sendMessage(mmc);
 	}
 
-	@Test
 	public void testSimple() throws Exception {
 		JavaMailSenderImpl mailSender = new org.springframework.mail.javamail.JavaMailSenderImpl();
 		mailSender.setHost("mail.shufe.edu.cn");
@@ -53,9 +52,10 @@ public class DefaultMailNotifierTest {
 
 		MailMessage mmc = new MailMessage("infocms@mail.shufe.edu.cn", "测试", "测试简单邮件发送机制");
 		DefaultMailNotifier mailNotifier = new DefaultMailNotifier();
-		mailNotifier.setJavaMailSender(mailSender);
+		mailNotifier.setMailSender(mailSender);
 		mailNotifier.setFromMailbox("infocms@mail.shufe.edu.cn");
 		mailNotifier.setFromName("测试name");
 		if (online) mailNotifier.sendMessage(mmc);
 	}
+	
 }

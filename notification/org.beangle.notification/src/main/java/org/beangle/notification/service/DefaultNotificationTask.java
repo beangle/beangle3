@@ -28,7 +28,14 @@ public class DefaultNotificationTask implements NotificationTask {
 
 	private Notifier notifier;
 
+	private SendingObserver observer;
+
 	private long taskInterval = 0;
+
+	public DefaultNotificationTask() {
+		super();
+		queue = new DefaultMessageQueue();
+	}
 
 	public MessageQueue getMessageQueue() {
 		return queue;
@@ -48,9 +55,10 @@ public class DefaultNotificationTask implements NotificationTask {
 
 	public void send() {
 		while (queue.size() > 0) {
-			Message context = (Message) queue.remove();
+			Message msg = (Message) queue.remove();
 			try {
-				notifier.sendMessage(context);
+				if (null != observer) observer.onStart(msg);
+				notifier.sendMessage(msg);
 				if (taskInterval > 0) {
 					Thread.sleep(taskInterval);
 				}
@@ -59,7 +67,12 @@ public class DefaultNotificationTask implements NotificationTask {
 			} catch (InterruptedException e) {
 				logger.error("send error", e);
 			}
+			if (null != observer) observer.onFinish(msg);
 		}
+	}
+
+	public void setObserver(SendingObserver observer) {
+		this.observer = observer;
 	}
 
 }

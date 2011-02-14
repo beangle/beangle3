@@ -5,6 +5,7 @@
 package org.beangle.notification.notifiers.mail;
 
 import org.beangle.notification.Message;
+import org.springframework.mail.javamail.JavaMailSender;
 
 //$Id:DefaultMailNotifier.java Mar 22, 2009 12:36:40 PM chaostone Exp $
 /*
@@ -15,6 +16,14 @@ import org.beangle.notification.Message;
  * 
  */
 public class DefaultMailNotifier extends AbstractMailNotifier {
+
+	public DefaultMailNotifier() {
+		super();
+	}
+
+	public DefaultMailNotifier(JavaMailSender javaMailSender) {
+		this.mailSender = javaMailSender;
+	}
 
 	protected String buildSubject(Message context) {
 		return context.getSubject();

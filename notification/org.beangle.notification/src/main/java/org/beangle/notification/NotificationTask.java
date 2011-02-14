@@ -19,13 +19,13 @@ import org.beangle.notification.Notifier;
  */
 public interface NotificationTask {
 
-	Notifier getNotifier();
+	public Notifier getNotifier();
 
-	void setNotifier(Notifier notifier);
+	public void setNotifier(Notifier notifier);
 
-	MessageQueue getMessageQueue();
+	public MessageQueue getMessageQueue();
 
-	void setMessageQueue(MessageQueue messageQueue);
+	public void setMessageQueue(MessageQueue messageQueue);
 
-	void send();
+	public void send();
 }
