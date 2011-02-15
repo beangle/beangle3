@@ -80,12 +80,4 @@ public class ProviderManager extends AbstractAuthenticationManager implements In
 		this.providers = providers;
 	}
 
-	// public void setSessionController(SessionController sessionController) {
-	// this.sessionController = sessionController;
-	// }
-	//
-	// public SessionController getSessionController() {
-	// return sessionController;
-	// }
-
 }

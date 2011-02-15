@@ -4,6 +4,8 @@
  */
 package org.beangle.security.codec;
 
+import org.apache.commons.codec.binary.StringUtils;
+
 public class Base64 {
 
 	public Base64() {
@@ -39,6 +41,10 @@ public class Base64 {
 		return out;
 	}
 
+	public static byte[] decode(String pArray) {
+		return decode(pArray.toCharArray());
+	}
+	
 	public static byte[] decode(char data[]) {
 		int tempLen = data.length;
 		for (int ix = 0; ix < data.length; ix++)

@@ -16,42 +16,11 @@
 		</property>
 	</bean>
 
-	<!--<bean id="usernamePreauthFilter"> <property name="usernameSource" > 
-		<bean class="org.beangle.webapp.demo.GivenUsernameSource"/> </property> </bean> -->
-
-	<bean id="securityFilterChain">
-		<property name="filterChainMap">
-			<map>
-				<entry>
-					<key>
-						<bean class="org.beangle.web.filter.AntPathRequestMatcher">
-							<constructor-arg value="/**" />
-						</bean>
-					</key>
-					<list>
-						<ref bean="httpSessionContextIntegrationFilter" />
-						<ref bean="exceptionTranslationFilter" />
-						<ref bean="casPreauthFilter" />
-						<ref bean="anonymousFilter" />
-						<ref bean="filterSecurityInterceptor" />
-					</list>
-				</entry>
-			</map>
+	<bean id="usernamePreauthFilter">
+		<property name="usernameSource">
+			<bean class="org.beangle.webapp.demo.GivenUsernameSource" />
 		</property>
 	</bean>
 
-	<bean id="authenticationmanager">
-		<property name="providers">
-			<list>
-				<ref bean="preauthUserDetailProvider" />
-				<ref bean="casAuthenticationProvider" />
-				<ref bean="daoUserProvider" />
-			</list>
-		</property>
-	</bean>
-
-	<bean id="exceptionTranslationFilter">
-		<property name="authenticationEntryPoint" ref="casEntryPoint" />
-	</bean>
 </beans>
 

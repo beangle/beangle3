@@ -16,6 +16,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.web.filter.AntPathRequestMatcher;
 import org.beangle.web.filter.RequestMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,6 +75,13 @@ public class FilterChainProxy extends GenericFilterBean {
 	 */
 	public Map<RequestMatcher, List<Filter>> getFilterChainMap() {
 		return CollectUtils.newLinkedHashMap(filterChainMap);
+	}
+
+	public void setFilters(List<Filter> filters) {
+		if(null==filterChainMap){
+			filterChainMap=CollectUtils.newHashMap();
+		}
+		filterChainMap.put(new AntPathRequestMatcher("/**"), filters);
 	}
 
 	public String toString() {

@@ -79,8 +79,6 @@
 /home/chaostone/beangle/security/org.beangle.security.web/target/classes
 /home/chaostone/beangle/library/org.beangle.web/target/classes
 /home/chaostone/.m2/repository/org/springframework/spring-web/3.0.5.RELEASE/spring-web-3.0.5.RELEASE.jar
-/home/chaostone/beangle/security/org.beangle.security.cas/target/classes
-/home/chaostone/beangle/security/org.beangle.security.cas/target/test-classes
 /home/chaostone/.m2/repository/org/jasig/cas/cas-client-core/3.1.9/cas-client-core-3.1.9.jar
 /home/chaostone/beangle/struts2/org.beangle.struts2/target/classes
 /home/chaostone/.m2/repository/commons-fileupload/commons-fileupload/1.2.1/commons-fileupload-1.2.1.jar

@@ -13,7 +13,7 @@
 	<properties>
 		<bundle.symbolicName>org.beangle.security.ldap</bundle.symbolicName>
 		<bundle.namespace>org.beangle.security.ldap</bundle.namespace>
-		<springldap.version>1.1.2</springldap.version>
+		<springldap.version>1.3.1.RELEASE</springldap.version>
 		<sunldap.version>1.0</sunldap.version>
 	</properties>
 	<dependencies>
@@ -25,9 +25,10 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 		</dependency>
+		<!-- 
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-ldap</artifactId>
+			<groupId>org.springframework.ldap</groupId>
+			<artifactId>spring-ldap-core</artifactId>
 			<version>${springldap.version}</version>
 		</dependency>
 		<dependency>
@@ -36,6 +37,7 @@
 			<version>${sunldap.version}</version>
 			<optional>true</optional>
 		</dependency>
+		 -->
 		<dependency>
 			<groupId>org.beangle</groupId>
 			<artifactId>beangle-security-core</artifactId>

@@ -13,8 +13,6 @@
         <webClassPathEntry>/beangle-database/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-model/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-security-blueprint/target/classes</webClassPathEntry>
-        <webClassPathEntry>/beangle-security-cas/target/classes</webClassPathEntry>
-        <webClassPathEntry>/beangle-security-cas/target/test-classes</webClassPathEntry>
         <webClassPathEntry>/beangle-security-core/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-security-web/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-struts2/target/classes</webClassPathEntry>

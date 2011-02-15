@@ -71,6 +71,17 @@
 	</bean>
 	
 	<bean id="securityFilterChain" class="org.beangle.security.web.FilterChainProxy">
+		<property name="filters">
+			<list>
+				<ref bean="httpSessionContextIntegrationFilter"/>
+				<ref bean="accessLogFilter"/>
+				<ref bean="usernamePreauthFilter"/>
+				<ref bean="anonymousFilter"/>
+				<ref bean="exceptionTranslationFilter"/>
+				<ref bean="filterSecurityInterceptor"/>
+			</list>
+		</property>
+		<!--
 		<property name="filterChainMap">
 			<map>
 				<entry>
@@ -79,17 +90,11 @@
 							<constructor-arg value="/**"/>
 						</bean>
 					</key>
-					<list>
-						<ref bean="httpSessionContextIntegrationFilter"/>
-						<ref bean="accessLogFilter"/>
-						<ref bean="usernamePreauthFilter"/>
-						<ref bean="anonymousFilter"/>
-						<ref bean="exceptionTranslationFilter"/>
-						<ref bean="filterSecurityInterceptor"/>
-					</list>
+					
 				</entry>
 			</map>
 		</property>
+		 -->
 	</bean>
 	
 	<bean id="securityContextLogoutHandler" class="org.beangle.security.web.auth.logout.SecurityContextLogoutHandler"/>
