@@ -4,7 +4,6 @@
  */
 package org.beangle.security.web.auth.preauth;
 
-import org.beangle.security.auth.UsernamePasswordAuthentication;
 import org.beangle.security.auth.dao.AbstractUserDetailAuthenticationProvider;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
@@ -24,14 +23,14 @@ public class PreauthUserDetailProvider extends AbstractUserDetailAuthenticationP
 	private UserDetailService userDetailService;
 
 	@Override
-	protected void additionalAuthenticationChecks(UserDetail userDetails,
-			UsernamePasswordAuthentication authentication) throws AuthenticationException {
+	protected void additionalAuthenticationChecks(UserDetail userDetails, Authentication authentication)
+			throws AuthenticationException {
 		// preauthed token,ignore password validation;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected UserDetail retrieveUser(String username, UsernamePasswordAuthentication authentication)
+	protected UserDetail retrieveUser(String username, Authentication authentication)
 			throws AuthenticationException {
 		return userDetailService.loadDetail(authentication);
 	}

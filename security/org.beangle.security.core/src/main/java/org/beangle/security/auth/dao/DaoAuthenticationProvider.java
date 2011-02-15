@@ -5,7 +5,6 @@
 package org.beangle.security.auth.dao;
 
 import org.beangle.security.auth.BadCredentialsException;
-import org.beangle.security.auth.UsernamePasswordAuthentication;
 import org.beangle.security.auth.encoding.PasswordEncoder;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
@@ -19,13 +18,13 @@ public class DaoAuthenticationProvider extends AbstractUserDetailAuthenticationP
 	private UserDetailService<Authentication> userDetailService;
 
 	@Override
-	protected void additionalAuthenticationChecks(UserDetail user, UsernamePasswordAuthentication auth)
+	protected void additionalAuthenticationChecks(UserDetail user, Authentication auth)
 			throws AuthenticationException {
 		if (!passwordEncoder.isPasswordValid(user.getPassword(), (String) auth.getCredentials())) { throw new BadCredentialsException(); }
 	}
 
 	@Override
-	protected UserDetail retrieveUser(String username, UsernamePasswordAuthentication authentication)
+	protected UserDetail retrieveUser(String username, Authentication authentication)
 			throws AuthenticationException {
 		return userDetailService.loadDetail(authentication);
 	}

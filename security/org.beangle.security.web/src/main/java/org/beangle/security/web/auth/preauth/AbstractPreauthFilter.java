@@ -17,6 +17,7 @@ import org.beangle.security.auth.AuthenticationManager;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.context.SecurityContextHolder;
+import org.beangle.security.core.userdetail.UsernameNotFoundException;
 import org.beangle.security.web.auth.AbstractAuthenticationFilter;
 import org.beangle.security.web.auth.WebAuthenticationDetailsSource;
 import org.beangle.security.web.session.SessionStrategy;
@@ -45,6 +46,9 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implem
 
 	private AuthenticationAliveChecker authenticationAliveChecker;
 
+	/**
+	 * fail for invalid cookie/ticket etc.
+	 */
 	private boolean continueOnFail = true;
 
 	/**
@@ -123,6 +127,9 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implem
 		SecurityContextHolder.clearContext();
 		logger.debug("Cleared security context due to exception", failed);
 		request.getSession().setAttribute(AbstractAuthenticationFilter.SECURITY_LAST_EXCEPTION_KEY, failed);
+		if(failed instanceof UsernameNotFoundException){
+			throw failed;
+		}
 	}
 
 	/**

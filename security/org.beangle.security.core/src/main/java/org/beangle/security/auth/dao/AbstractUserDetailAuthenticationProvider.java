@@ -22,19 +22,19 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 	private UserDetailChecker postAuthenticationChecker = new DefaultPostAuthenticationChecker();
 
 	protected abstract void additionalAuthenticationChecks(UserDetail userDetails,
-			UsernamePasswordAuthentication authentication) throws AuthenticationException;
+			Authentication authentication) throws AuthenticationException;
 
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		// Determine username
 		String username = (authentication.getPrincipal() == null) ? "NONE_PROVIDED" : authentication
 				.getName();
 
-		UserDetail user = retrieveUser(username, (UsernamePasswordAuthentication) authentication);
+		UserDetail user = retrieveUser(username, authentication);
 
 		if (null == user) { throw new UsernameNotFoundException(); }
 		preAuthenticationChecker.check(user);
 
-		additionalAuthenticationChecks(user, (UsernamePasswordAuthentication) authentication);
+		additionalAuthenticationChecks(user, authentication);
 
 		postAuthenticationChecker.check(user);
 
@@ -102,7 +102,7 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 	 *             <code>AuthenticationServiceException</code> or
 	 *             <code>UsernameNotFoundException</code>)
 	 */
-	protected abstract UserDetail retrieveUser(String username, UsernamePasswordAuthentication authentication)
+	protected abstract UserDetail retrieveUser(String username, Authentication authentication)
 			throws AuthenticationException;
 
 	public void setForcePrincipalAsString(boolean forcePrincipalAsString) {

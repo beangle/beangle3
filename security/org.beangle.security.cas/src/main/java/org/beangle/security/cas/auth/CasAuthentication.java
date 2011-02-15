@@ -112,4 +112,5 @@ public class CasAuthentication extends PreauthAuthentication {
 		sb.append(" Credentials (Service/Proxy Ticket): ").append(getCredentials());
 		return (sb.toString());
 	}
+
 }

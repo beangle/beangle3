@@ -51,7 +51,7 @@ public class UsernamePreauthFilter extends AbstractPreauthFilter {
 		String username = usernameSource.obtainUsername(request);
 		if (null == username) return null;
 		else {
-			return new PreauthAuthentication(username, "NONE");
+			return new PreauthAuthentication(username);
 		}
 	}
 }

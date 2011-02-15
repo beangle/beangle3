@@ -8,6 +8,7 @@ import static org.beangle.security.cas.auth.CasAuthentication.STATELESS_ID;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.security.auth.AuthenticationProvider;
 import org.beangle.security.auth.BadCredentialsException;
 import org.beangle.security.auth.UsernamePasswordAuthentication;
@@ -18,9 +19,12 @@ import org.beangle.security.core.userdetail.AccountStatusChecker;
 import org.beangle.security.core.userdetail.UserDetail;
 import org.beangle.security.core.userdetail.UserDetailChecker;
 import org.beangle.security.core.userdetail.UserDetailService;
+import org.beangle.security.core.userdetail.UsernameNotFoundException;
 import org.jasig.cas.client.validation.Assertion;
 import org.jasig.cas.client.validation.TicketValidationException;
 import org.jasig.cas.client.validation.TicketValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
@@ -35,6 +39,7 @@ import org.springframework.beans.factory.InitializingBean;
  * @author chaostone
  */
 public class CasAuthenticationProvider implements AuthenticationProvider, InitializingBean {
+	private static final Logger logger = LoggerFactory.getLogger(CasAuthenticationProvider.class);
 	private UserDetailService<Authentication> userDetailService;
 	private UserDetailChecker userDetailChecker;
 	private StatelessTicketCache statelessTicketCache = new NullTicketCache();
@@ -90,11 +95,16 @@ public class CasAuthenticationProvider implements AuthenticationProvider, Initia
 		try {
 			final Assertion assertion = ticketValidator.validate(auth.getCredentials().toString(),
 					auth.getLoginUrl());
-			final UserDetail userDetails = userDetailService.loadDetail(new UsernamePasswordAuthentication(
-					assertion.getPrincipal().getName(), null));
-			userDetailChecker.check(userDetails);
-			return new CasAuthentication(key, userDetails, auth.getCredentials(),
-					userDetails.getAuthorities(), userDetails, assertion);
+			String name = assertion.getPrincipal().getName();
+			final UserDetail userDetail = userDetailService.loadDetail(new UsernamePasswordAuthentication(
+					name, null));
+			if (null == userDetail) {
+				logger.error("cannot load {}'s detail from system", name);
+				throw new UsernameNotFoundException(StrUtils.concat("user ", name, " not found in system"));
+			}
+			userDetailChecker.check(userDetail);
+			return new CasAuthentication(key, userDetail, auth.getCredentials(), userDetail.getAuthorities(),
+					userDetail, assertion);
 		} catch (final TicketValidationException e) {
 			throw new BadCredentialsException("Bad credentials :" + auth.getCredentials().toString(), e);
 		}

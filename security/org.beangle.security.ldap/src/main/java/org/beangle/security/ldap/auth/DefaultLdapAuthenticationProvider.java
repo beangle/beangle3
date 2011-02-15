@@ -6,8 +6,8 @@ package org.beangle.security.ldap.auth;
 
 import java.security.NoSuchAlgorithmException;
 
-import org.beangle.security.auth.UsernamePasswordAuthentication;
 import org.beangle.security.auth.dao.AbstractUserDetailAuthenticationProvider;
+import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.userdetail.User;
 import org.beangle.security.core.userdetail.UserDetail;
@@ -34,8 +34,8 @@ public class DefaultLdapAuthenticationProvider extends AbstractUserDetailAuthent
 	protected String passwordAttrName = "userPassword";
 
 	@Override
-	protected void additionalAuthenticationChecks(UserDetail user,
-			UsernamePasswordAuthentication authentication) throws AuthenticationException {
+	protected void additionalAuthenticationChecks(UserDetail user, Authentication authentication)
+			throws AuthenticationException {
 		try {
 			LdapPasswordHandler.getInstance().verify(user.getPassword(),
 					(String) authentication.getCredentials());
@@ -45,7 +45,7 @@ public class DefaultLdapAuthenticationProvider extends AbstractUserDetailAuthent
 	}
 
 	@Override
-	protected UserDetail retrieveUser(String username, UsernamePasswordAuthentication authentication)
+	protected UserDetail retrieveUser(String username, Authentication authentication)
 			throws AuthenticationException {
 		DistinguishedName dn = new DistinguishedName(nameAttrName + "=" + username);
 		String ldapPassword = null;

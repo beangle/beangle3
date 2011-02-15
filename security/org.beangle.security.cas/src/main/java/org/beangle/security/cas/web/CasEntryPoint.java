@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.Validate;
 import org.beangle.security.cas.CasConfig;
 import org.beangle.security.core.AuthenticationException;
+import org.beangle.security.core.userdetail.UsernameNotFoundException;
 import org.beangle.security.web.AuthenticationEntryPoint;
 import org.jasig.cas.client.util.CommonUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -50,14 +51,18 @@ public class CasEntryPoint implements AuthenticationEntryPoint, InitializingBean
 	}
 
 	public void commence(final ServletRequest servletRequest, final ServletResponse servletResponse,
-			final AuthenticationException authenticationException) throws IOException, ServletException {
+			final AuthenticationException ae) throws IOException, ServletException {
 		final HttpServletRequest request = (HttpServletRequest) servletRequest;
 		final HttpServletResponse response = (HttpServletResponse) servletResponse;
-		final String encodedServiceUrl = CommonUtils.constructServiceUrl(request, response, null,
-				config.getLocalServer(), config.getArtifactName(), config.isEncode());
-		final String redirectUrl = CommonUtils.constructRedirectUrl(config.getLoginUrl(), "service",
-				encodedServiceUrl, config.isRenew(), false);
-		response.sendRedirect(redirectUrl);
+		if (null != ae && (ae instanceof UsernameNotFoundException)) {
+			response.getWriter().append(String.valueOf(ae.getAuthentication().getPrincipal())).append(ae.getMessage());
+		} else {
+			final String encodedServiceUrl = CommonUtils.constructServiceUrl(request, response, null,
+					config.getLocalServer(), config.getArtifactName(), config.isEncode());
+			final String redirectUrl = CommonUtils.constructRedirectUrl(config.getLoginUrl(), "service",
+					encodedServiceUrl, config.isRenew(), false);
+			response.sendRedirect(redirectUrl);
+		}
 	}
 
 	public CasConfig getConfig() {
