@@ -7,76 +7,78 @@ package org.beangle.notification.notifiers.mail;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.internet.InternetAddress;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.notification.AbstractMessage;
 
-//$Id:MailMessage.java Mar 22, 2009 1:31:32 PM chaostone Exp $
-/*
- * Copyright c 2005-2009.
- * 
- * Licensed under the GPL License, Version 2.0 (the "License")
- * http://www.gnu.org/licenses/gpl-2.0.html
- * 
- */
 public class MailMessage extends AbstractMessage {
 
-	private String[] to;
+	private List<InternetAddress> to = CollectUtils.newArrayList();
 
-	private String[] cc;
+	private List<InternetAddress> cc = CollectUtils.newArrayList();
 
-	private String[] bcc;
+	private List<InternetAddress> bcc = CollectUtils.newArrayList();
 
 	public MailMessage() {
 		super();
 	}
 
+	public String getEncoding() {
+		return StringUtils.substringAfter(getContentType(), "charset=");
+	}
+
 	public List<String> getRecipients() {
 		List<String> recipients = new ArrayList<String>();
-		if (null != to) {
-			for (int i = 0; i < to.length; i++) {
-				recipients.add(to[i]);
-			}
-		}
-		if (null != cc) {
-			for (int i = 0; i < cc.length; i++) {
-				recipients.add(cc[i]);
-			}
-		}
-		if (null != bcc) {
-			for (int i = 0; i < bcc.length; i++) {
-				recipients.add(bcc[i]);
-			}
-		}
+		for (InternetAddress address : to)
+			recipients.add(address.toString());
+		for (InternetAddress address : cc)
+			recipients.add(address.toString());
+		for (InternetAddress address : bcc)
+			recipients.add(address.toString());
 		return recipients;
 	}
 
-	public MailMessage(String sendTo, String subject, String text) {
-		to = new String[] { sendTo };
+	public MailMessage(String subject, String text, String sendTo) {
+		to = MimeUtils.parseAddress(sendTo, getEncoding());
 		setSubject(subject);
 		setText(text);
 	}
 
-	public String[] getTo() {
+	public MailMessage(String subject, String text, String sendTo, String sendCc, String sendBcc) {
+		to = MimeUtils.parseAddress(sendTo, getEncoding());
+		cc = MimeUtils.parseAddress(sendCc, getEncoding());
+		bcc = MimeUtils.parseAddress(sendBcc, getEncoding());
+		setSubject(subject);
+		setText(text);
+	}
+
+	public List<InternetAddress> getTo() {
 		return to;
 	}
 
-	public void setTo(String[] to) {
-		this.to = to;
-	}
-
-	public String[] getCc() {
+	public List<InternetAddress> getCc() {
 		return cc;
 	}
 
-	public void setCc(String[] cc) {
-		this.cc = cc;
-	}
-
-	public String[] getBcc() {
+	public List<InternetAddress> getBcc() {
 		return bcc;
 	}
 
-	public void setBcc(String[] bcc) {
-		this.bcc = bcc;
+	public void addTo(String sendTo) {
+		Validate.notNull(sendTo);
+		this.to.addAll(MimeUtils.parseAddress(sendTo, getEncoding()));
 	}
 
+	public void addCc(String sendCc) {
+		Validate.notNull(sendCc);
+		this.cc.addAll(MimeUtils.parseAddress(sendCc, getEncoding()));
+	}
+
+	public void addBcc(String sendBcc) {
+		Validate.notNull(sendBcc);
+		this.bcc.addAll(MimeUtils.parseAddress(sendBcc, getEncoding()));
+	}
 }

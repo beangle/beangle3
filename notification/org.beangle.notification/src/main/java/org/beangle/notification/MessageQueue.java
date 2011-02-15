@@ -6,28 +6,19 @@ package org.beangle.notification;
 
 import java.util.List;
 
-//$Id:MessageQueue.java Mar 22, 2009 9:04:20 PM chaostone Exp $
-/*
- * Copyright c 2005-2009.
- * 
- * Licensed under the GPL License, Version 2.0 (the "License")
- * http://www.gnu.org/licenses/gpl-2.0.html
- * 
- */
-
 /**
  * 消息队列
  */
-public interface MessageQueue {
+public interface MessageQueue<T extends Message> {
 
 	public int size();
 
-	public Message remove();
+	public T remove();
 
-	public List<Message> getMessages();
+	public List<T> getMessages();
 
-	public void addMessages(List<Message> contexts);
+	public void addMessages(List<T> contexts);
 
-	public void addMessage(Message message);
+	public void addMessage(T message);
 
 }

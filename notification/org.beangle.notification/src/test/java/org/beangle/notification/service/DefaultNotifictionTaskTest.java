@@ -6,6 +6,7 @@ package org.beangle.notification.service;
 
 import static org.testng.Assert.assertEquals;
 
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.beangle.notification.notifiers.mail.AbstractMailNotifier;
@@ -22,7 +23,6 @@ import com.icegreen.greenmail.util.ServerSetupTest;
 @Test
 public class DefaultNotifictionTaskTest {
 
-	DefaultNotificationTask task = new DefaultNotificationTask();
 	GreenMail greenMail;
 
 	@BeforeClass
@@ -39,21 +39,27 @@ public class DefaultNotifictionTaskTest {
 		greenMail.stop();
 	}
 
-	public void testMail() {
+	public void testMail() throws MessagingException {
 		JavaMailSenderImpl mailSender = new org.springframework.mail.javamail.JavaMailSenderImpl();
 		mailSender.setHost("localhost");
 		mailSender.setUsername("user1");
 		mailSender.setPassword("password");
 		mailSender.setPort(3025);
 
-		AbstractMailNotifier notifier = new DefaultMailNotifier(mailSender);
-		notifier.setFromMailbox("user1@localhost");
-		notifier.setFromName("测试name");
+		AbstractMailNotifier<MailMessage> notifier = new DefaultMailNotifier<MailMessage>(mailSender);
+		notifier.setFrom("<测试name>user1@localhost");
+		DefaultNotificationTask<MailMessage> task = new DefaultNotificationTask<MailMessage>();
 		task.setNotifier(notifier);
-		MailMessage mmc = new MailMessage("user2@localhost", "测试", "测试简单邮件发送机制");
+		MailMessage mmc = new MailMessage("测试", "测试简单邮件发送机制", "user2@localhost");
 		task.getMessageQueue().addMessage(mmc);
 		task.send();
 		MimeMessage[] msgs = greenMail.getReceivedMessages();
+		//MimeMessage msg = msgs[0];
+		// Enumeration<Header> headers=msg.getAllHeaders();
+		// while(headers.hasMoreElements()){
+		// Header header=headers.nextElement();
+		// System.out.println(header.getName()+":"+ header.getValue());
+		// }
 		assertEquals(1, msgs.length);
 	}
 }

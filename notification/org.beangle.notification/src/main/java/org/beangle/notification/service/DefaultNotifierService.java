@@ -8,27 +8,19 @@ import java.util.Map;
 
 import org.beangle.notification.Notifier;
 
-//$Id:DefaultNotifierService.java Mar 22, 2009 11:27:21 AM chaostone Exp $
-/*
- * Copyright c 2005-2009.
- * 
- * Licensed under the GPL License, Version 2.0 (the "License")
- * http://www.gnu.org/licenses/gpl-2.0.html
- * 
- */
 public class DefaultNotifierService implements NotifierService {
 
-	private Map<String, Notifier> notifiers;
+	private Map<String, Notifier<?>> notifiers;
 
-	public Notifier getNotifier(String notifierId) {
+	public Notifier<?> getNotifier(String notifierId) {
 		return notifiers.get(notifierId);
 	}
 
-	public Map<String, Notifier> getNotifiers() {
+	public Map<String, Notifier<?>> getNotifiers() {
 		return notifiers;
 	}
 
-	public void setNotifiers(Map<String, Notifier> notifiers) {
+	public void setNotifiers(Map<String, Notifier<?>> notifiers) {
 		this.notifiers = notifiers;
 	}
 }

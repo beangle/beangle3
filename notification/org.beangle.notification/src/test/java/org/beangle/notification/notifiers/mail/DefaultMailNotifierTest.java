@@ -7,14 +7,6 @@ package org.beangle.notification.notifiers.mail;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.testng.annotations.Test;
 
-//$Id:DefaultMailNotifierTest.java Mar 22, 2009 1:24:04 PM chaostone Exp $
-/*
- * Copyright c 2005-2009.
- * 
- * Licensed under the GPL License, Version 2.0 (the "License")
- * http://www.gnu.org/licenses/gpl-2.0.html
- * 
- */
 @Test
 public class DefaultMailNotifierTest {
 	private boolean online = false;
@@ -35,12 +27,11 @@ public class DefaultMailNotifierTest {
 				"javax.net.ssl.SSLSocketFactory");
 		mailSender.getJavaMailProperties().put("mail.smtp.socketFactory.fallback", "false");
 
-		MailMessage mmc = new MailMessage("eams.demon@gmail.com", "测试", "测试简单邮件发送机制");
-		DefaultMailNotifier mailNotifier = new DefaultMailNotifier();
+		MailMessage mmc = new MailMessage("测试", "测试简单邮件发送机制", "eams.demon@gmail.com");
+		DefaultMailNotifier<MailMessage> mailNotifier = new DefaultMailNotifier<MailMessage>();
 		mailNotifier.setMailSender(mailSender);
-		mailNotifier.setFromMailbox("eams.demon@gmail.com");
-		mailNotifier.setFromName("测试name");
-		if (online) mailNotifier.sendMessage(mmc);
+		mailNotifier.setFrom("<测试name>eams.demon@gmail.com");
+		if (online) mailNotifier.send(mmc);
 	}
 
 	public void testSimple() throws Exception {
@@ -50,12 +41,11 @@ public class DefaultMailNotifierTest {
 		mailSender.setPassword("shufejw");
 		mailSender.getJavaMailProperties().put("mail.smtp.auth", "true");
 
-		MailMessage mmc = new MailMessage("infocms@mail.shufe.edu.cn", "测试", "测试简单邮件发送机制");
-		DefaultMailNotifier mailNotifier = new DefaultMailNotifier();
+		MailMessage mmc = new MailMessage("测试", "测试简单邮件发送机制", "infocms@mail.shufe.edu.cn");
+		DefaultMailNotifier<MailMessage> mailNotifier = new DefaultMailNotifier<MailMessage>();
 		mailNotifier.setMailSender(mailSender);
-		mailNotifier.setFromMailbox("infocms@mail.shufe.edu.cn");
-		mailNotifier.setFromName("测试name");
-		if (online) mailNotifier.sendMessage(mmc);
+		mailNotifier.setFrom("<测试name>infocms@mail.shufe.edu.cn");
+		if (online) mailNotifier.send(mmc);
 	}
-	
+
 }

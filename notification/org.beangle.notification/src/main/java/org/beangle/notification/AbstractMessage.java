@@ -6,14 +6,9 @@ package org.beangle.notification;
 
 import java.util.Properties;
 
-//$Id:AbstractMessage.java Mar 22, 2009 11:56:08 AM chaostone Exp $
-/*
- * Copyright c 2005-2009.
- * 
- * Licensed under the GPL License, Version 2.0 (the "License")
- * http://www.gnu.org/licenses/gpl-2.0.html
- * 
- */
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
+
 public abstract class AbstractMessage implements Message {
 
 	private String subject;
@@ -29,6 +24,8 @@ public abstract class AbstractMessage implements Message {
 	}
 
 	public void setContentType(String contentType) {
+		Validate.notEmpty(contentType);
+		Validate.isTrue(StringUtils.contains(contentType, "charset="), "contentType should contain charset");
 		this.contentType = contentType;
 	}
 

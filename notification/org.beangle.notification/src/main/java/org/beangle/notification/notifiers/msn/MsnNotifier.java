@@ -10,15 +10,7 @@ import org.beangle.notification.Notifier;
 import org.codehaus.plexus.msn.MsnClient;
 import org.codehaus.plexus.msn.MsnException;
 
-//$Id:MsnNotifier.java Mar 23, 2009 8:32:56 PM chaostone Exp $
-/*
- * Copyright c 2005-2009.
- * 
- * Licensed under the GPL License, Version 2.0 (the "License")
- * http://www.gnu.org/licenses/gpl-2.0.html
- * 
- */
-public class MsnNotifier implements Notifier {
+public class MsnNotifier implements Notifier<Message> {
 
 	private MsnClient msnClient;
 
@@ -26,7 +18,7 @@ public class MsnNotifier implements Notifier {
 		return "msn";
 	}
 
-	public void sendMessage(Message msg) throws NotificationException {
+	public void send(Message msg) throws NotificationException {
 		// MSNMessenger msn;
 		// msn = new MSNMessenger("youraccount@hotmail.com", "password");
 		// msn.setInitialStatus(UserStatus.ONLINE);

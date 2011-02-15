@@ -4,16 +4,18 @@
  */
 package org.beangle.notification.notifiers.mail;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
-import javax.mail.Address;
 import javax.mail.MessagingException;
-import javax.mail.Message.RecipientType;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.notification.Message;
 import org.beangle.notification.NotificationException;
 import org.beangle.notification.Notifier;
@@ -22,78 +24,80 @@ import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
-//$Id:AbstractMailNotifier.java Mar 22, 2009 12:04:05 PM chaostone Exp $
-/*
- * Copyright c 2005-2009.
- * 
- * Licensed under the GPL License, Version 2.0 (the "License")
- * http://www.gnu.org/licenses/gpl-2.0.html
- * 
- */
-public abstract class AbstractMailNotifier implements Notifier {
+public abstract class AbstractMailNotifier<T extends MailMessage> implements Notifier<T> {
 
 	protected static final Logger logger = LoggerFactory.getLogger(AbstractMailNotifier.class);
 
 	protected JavaMailSender mailSender;
 
-	private String fromMailbox;
+	private String from;
 
-	private String fromName;
+	private Map<String, InternetAddress[]> fromMap = CollectUtils.newHashMap();
 
 	public String getType() {
 		return "mail";
 	}
 
-	public void sendMessage(Message msg) throws NotificationException {
-		// contruct a MailMessage
-		MailMessage mailConext = null;
-		if (msg instanceof MailMessage) {
-			mailConext = (MailMessage) msg;
-		} else {
-			mailConext = new MailMessage();
-			mailConext.setSubject(msg.getSubject());
-			mailConext.setText(msg.getText());
-			mailConext.setProperties(msg.getProperties());
-			String[] to = new String[msg.getRecipients().size()];
-			msg.getRecipients().toArray(to);
-			mailConext.setTo(to);
-		}
-
+	public void send(T mailMsg) throws NotificationException {
 		MimeMessage mimeMsg = mailSender.createMimeMessage();
 		try {
 			mimeMsg.setSentDate(new Date());
-			MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMsg);
-			messageHelper.setText(buildText(mailConext), Message.HTML.equals(mailConext.getContentType()));
-			String subject = buildSubject(mailConext);
+			MimeMessageHelper messageHelper = null;
+			String encoding = StringUtils.substringAfter(mailMsg.getContentType(), "charset=");
+			if (StringUtils.isEmpty(encoding)) {
+				messageHelper = new MimeMessageHelper(mimeMsg);
+			} else {
+				messageHelper = new MimeMessageHelper(mimeMsg, encoding);
+			}
+			messageHelper.setText(buildText(mailMsg), StringUtils.contains(mailMsg.getContentType(), "html"));
+			String subject = buildSubject(mailMsg);
 			messageHelper.setSubject(subject);
-			messageHelper.setFrom(fromMailbox, fromName);
-			addRecipient(mimeMsg, javax.mail.Message.RecipientType.TO, mailConext.getTo());
-			addRecipient(mimeMsg, javax.mail.Message.RecipientType.CC, mailConext.getCc());
-			addRecipient(mimeMsg, javax.mail.Message.RecipientType.BCC, mailConext.getBcc());
-			beforeSend(mailConext, mimeMsg);
-			if (mimeMsg.getAllRecipients() != null && ((Address[]) mimeMsg.getAllRecipients()).length > 0) {
+			int recipients = addRecipient(mimeMsg, mailMsg);
+			beforeSend(mailMsg, mimeMsg);
+			if (recipients > 0) {
 				mailSender.send(mimeMsg);
-				logger.info("mail sended from {} to {} with subject {}", new Object[] { fromMailbox,
-						mailConext.getRecipients(), subject });
+				if (logger.isDebugEnabled()) {
+					logger.debug("mail sended from {} to {} with subject {}",
+							new Object[] { from, mailMsg.getRecipients(), subject });
+				}
+			} else {
+				logger.warn("{} without any recipients ,sending aborted!", subject);
 			}
 		} catch (AddressException ex) {
 			throw new NotificationException("Exception while sending message.", ex);
 		} catch (MessagingException ex) {
 			throw new NotificationException("Exception while sending message.", ex);
-		} catch (UnsupportedEncodingException ex) {
-			throw new NotificationException("Exception while sending message.", ex);
 		}
-		afterSend(mailConext, mimeMsg);
+		afterSend(mailMsg, mimeMsg);
 	}
 
-	private void addRecipient(MimeMessage message, RecipientType recipientType, String[] recipients)
-			throws AddressException, MessagingException {
-		if (null != recipients) {
-			for (int i = 0; i < recipients.length; i++) {
-				InternetAddress to = new InternetAddress(recipients[i].trim());
-				message.addRecipient(recipientType, to);
+	// add from and other recipients
+	private int addRecipient(MimeMessage mimeMsg, MailMessage mailMsg) throws MessagingException {
+		String encoding = mailMsg.getEncoding();
+		InternetAddress[] froms = fromMap.get(encoding);
+		if (null == froms) {
+			List<InternetAddress> addresses = MimeUtils.parseAddress(from, encoding);
+			InternetAddress[] addressArray = new InternetAddress[addresses.size()];
+			if (addressArray.length > 0) {
+				fromMap.put(encoding, addresses.toArray(addressArray));
+				froms = addressArray;
 			}
 		}
+		int recipients = 0;
+		if (null != froms) mimeMsg.addFrom(froms);
+		for (InternetAddress to : mailMsg.getTo()) {
+			mimeMsg.addRecipient(javax.mail.Message.RecipientType.TO, to);
+			recipients++;
+		}
+		for (InternetAddress cc : mailMsg.getCc()) {
+			mimeMsg.addRecipient(javax.mail.Message.RecipientType.CC, cc);
+			recipients++;
+		}
+		for (InternetAddress bcc : mailMsg.getBcc()) {
+			mimeMsg.addRecipient(javax.mail.Message.RecipientType.BCC, bcc);
+			recipients++;
+		}
+		return recipients;
 	}
 
 	abstract protected String buildSubject(Message msg);
@@ -114,20 +118,13 @@ public abstract class AbstractMailNotifier implements Notifier {
 		this.mailSender = javaMailSender;
 	}
 
-	public String getFromMailbox() {
-		return fromMailbox;
+	public String getFrom() {
+		return from;
 	}
 
-	public void setFromMailbox(String fromMailbox) {
-		this.fromMailbox = fromMailbox;
-	}
-
-	public String getFromName() {
-		return fromName;
-	}
-
-	public void setFromName(String fromName) {
-		this.fromName = fromName;
+	public void setFrom(String from) {
+		Validate.notEmpty(from);
+		this.from = from;
 	}
 
 }

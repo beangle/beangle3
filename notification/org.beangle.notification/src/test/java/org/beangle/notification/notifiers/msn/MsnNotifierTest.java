@@ -7,14 +7,6 @@ package org.beangle.notification.notifiers.msn;
 import org.codehaus.plexus.msn.DefaultMsnClient;
 import org.testng.annotations.Test;
 
-//$Id:MsnNotifier.java Mar 23, 2009 9:54:19 PM chaostone Exp $
-/*
- * Copyright c 2005-2009.
- * 
- * Licensed under the GPL License, Version 2.0 (the "License")
- * http://www.gnu.org/licenses/gpl-2.0.html
- * 
- */
 public class MsnNotifierTest {
 
 	@Test

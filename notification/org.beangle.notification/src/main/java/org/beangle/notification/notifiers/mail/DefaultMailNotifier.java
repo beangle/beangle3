@@ -7,15 +7,7 @@ package org.beangle.notification.notifiers.mail;
 import org.beangle.notification.Message;
 import org.springframework.mail.javamail.JavaMailSender;
 
-//$Id:DefaultMailNotifier.java Mar 22, 2009 12:36:40 PM chaostone Exp $
-/*
- * Copyright c 2005-2009.
- * 
- * Licensed under the GPL License, Version 2.0 (the "License")
- * http://www.gnu.org/licenses/gpl-2.0.html
- * 
- */
-public class DefaultMailNotifier extends AbstractMailNotifier {
+public class DefaultMailNotifier<T extends MailMessage> extends AbstractMailNotifier<T> {
 
 	public DefaultMailNotifier() {
 		super();

@@ -11,6 +11,10 @@
 	<name>Beangle Notification</name>
 	<dependencies>
 		<dependency>
+			<groupId>org.beangle</groupId>
+			<artifactId>beangle-commons</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.codehaus.plexus</groupId>
 			<artifactId>plexus-msn</artifactId>
 			<version>1.0-alpha-2</version>

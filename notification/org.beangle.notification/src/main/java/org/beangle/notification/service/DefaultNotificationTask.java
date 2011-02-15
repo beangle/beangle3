@@ -12,21 +12,13 @@ import org.beangle.notification.Notifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//$Id:DefaultNotificationTask.java Mar 22, 2009 8:41:54 PM chaostone Exp $
-/*
- * Copyright c 2005-2009.
- * 
- * Licensed under the GPL License, Version 2.0 (the "License")
- * http://www.gnu.org/licenses/gpl-2.0.html
- * 
- */
-public class DefaultNotificationTask implements NotificationTask {
+public class DefaultNotificationTask<T extends Message> implements NotificationTask<T> {
 
 	protected static final Logger logger = LoggerFactory.getLogger(DefaultNotificationTask.class);
 
-	private MessageQueue queue;
+	private MessageQueue<T> queue;
 
-	private Notifier notifier;
+	private Notifier<T> notifier;
 
 	private SendingObserver observer;
 
@@ -34,31 +26,31 @@ public class DefaultNotificationTask implements NotificationTask {
 
 	public DefaultNotificationTask() {
 		super();
-		queue = new DefaultMessageQueue();
+		queue = new DefaultMessageQueue<T>();
 	}
 
-	public MessageQueue getMessageQueue() {
+	public MessageQueue<T> getMessageQueue() {
 		return queue;
 	}
 
-	public void setMessageQueue(MessageQueue messageQueue) {
+	public void setMessageQueue(MessageQueue<T> messageQueue) {
 		this.queue = messageQueue;
 	}
 
-	public Notifier getNotifier() {
+	public Notifier<T> getNotifier() {
 		return notifier;
 	}
 
-	public void setNotifier(Notifier notifier) {
+	public void setNotifier(Notifier<T> notifier) {
 		this.notifier = notifier;
 	}
 
 	public void send() {
 		while (queue.size() > 0) {
-			Message msg = (Message) queue.remove();
+			T msg = queue.remove();
 			try {
 				if (null != observer) observer.onStart(msg);
-				notifier.sendMessage(msg);
+				notifier.send(msg);
 				if (taskInterval > 0) {
 					Thread.sleep(taskInterval);
 				}

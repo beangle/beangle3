@@ -11,13 +11,13 @@ import org.beangle.notification.Notifier;
 /**
  * @author chaostone
  */
-public class ConsoleNotifier implements Notifier {
+public class ConsoleNotifier implements Notifier<Message> {
 
 	public String getType() {
 		return "console";
 	}
 
-	public void sendMessage(Message context) throws NotificationException {
+	public void send(Message context) throws NotificationException {
 		System.out.println(context.getText());
 	}
 

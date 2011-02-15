@@ -6,26 +6,18 @@ package org.beangle.notification;
 
 import org.beangle.notification.Notifier;
 
-//$Id:NotificationTask.java Mar 22, 2009 8:26:06 PM chaostone Exp $
-/*
- * Copyright c 2005-2009.
- * 
- * Licensed under the GPL License, Version 2.0 (the "License")
- * http://www.gnu.org/licenses/gpl-2.0.html
- * 
- */
 /**
  * 消息通知任务
  */
-public interface NotificationTask {
+public interface NotificationTask<T extends Message> {
 
-	public Notifier getNotifier();
+	public Notifier<T> getNotifier();
 
-	public void setNotifier(Notifier notifier);
+	public void setNotifier(Notifier<T> notifier);
 
-	public MessageQueue getMessageQueue();
+	public MessageQueue<T> getMessageQueue();
 
-	public void setMessageQueue(MessageQueue messageQueue);
+	public void setMessageQueue(MessageQueue<T> messageQueue);
 
 	public void send();
 }

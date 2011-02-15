@@ -13,35 +13,28 @@ import org.apache.commons.collections.buffer.UnboundedFifoBuffer;
 import org.beangle.notification.Message;
 import org.beangle.notification.MessageQueue;
 
-//$Id:DefaultMessageQueue.java Mar 22, 2009 9:08:49 PM chaostone Exp $
-/*
- * Copyright c 2005-2009.
- * 
- * Licensed under the GPL License, Version 2.0 (the "License")
- * http://www.gnu.org/licenses/gpl-2.0.html
- * 
- */
-public class DefaultMessageQueue implements MessageQueue {
+public class DefaultMessageQueue<T extends Message> implements MessageQueue<T> {
 
 	private Buffer contextBuffer = BufferUtils.synchronizedBuffer(new UnboundedFifoBuffer());;
 
 	@SuppressWarnings("unchecked")
-	public List<Message> getMessages() {
-		return new ArrayList<Message>(contextBuffer);
+	public List<T> getMessages() {
+		return new ArrayList<T>(contextBuffer);
 	}
 
 	@SuppressWarnings("unchecked")
-	public void addMessage(Message message) {
+	public void addMessage(T message) {
 		contextBuffer.add(message);
 	}
 
 	@SuppressWarnings("unchecked")
-	public void addMessages(List<Message> contexts) {
+	public void addMessages(List<T> contexts) {
 		contextBuffer.addAll(contexts);
 	}
 
-	public Message remove() {
-		return (Message) contextBuffer.remove();
+	@SuppressWarnings("unchecked")
+	public T remove() {
+		return (T) contextBuffer.remove();
 	}
 
 	public int size() {
