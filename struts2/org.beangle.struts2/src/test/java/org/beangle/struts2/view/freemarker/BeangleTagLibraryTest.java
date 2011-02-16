@@ -13,6 +13,7 @@ import org.apache.struts2.util.StrutsTestCaseHelper;
 import org.apache.struts2.views.freemarker.StrutsClassTemplateLoader;
 import org.apache.struts2.views.freemarker.tags.StrutsModels;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.struts2.view.BeangleTagLibrary;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletContext;
@@ -78,7 +79,7 @@ public class BeangleTagLibraryTest {
 
 	public void testText() throws Exception {
 		Map<String, Object> datas = CollectUtils.newHashMap();
-		datas.put("b", new BeangleModels(ActionContext.getContext().getValueStack(),
+		datas.put("b", new BeangleTagLibrary(ActionContext.getContext().getValueStack(),
 				new MockHttpServletRequest(), new MockHttpServletResponse()));
 		datas.put("s", new StrutsModels(ActionContext.getContext().getValueStack(),
 				new MockHttpServletRequest(), new MockHttpServletResponse()));

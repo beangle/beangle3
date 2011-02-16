@@ -6,7 +6,7 @@ package org.beangle.struts2.view.component;
 
 import org.apache.commons.lang.xwork.ObjectUtils;
 import org.beangle.commons.lang.StrUtils;
-import org.beangle.struts2.view.freemarker.BeangleModels;
+import org.beangle.struts2.view.BeangleTagLibrary;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
@@ -24,7 +24,7 @@ public class Div extends ClosingUIBean {
 	protected void evaluateParams() {
 		if (null != href) {
 			generateIdIfEmpty();
-			href = BeangleModels.render.render(getRequestURI(), this.href);
+			href = BeangleTagLibrary.render.render(getRequestURI(), this.href);
 		}
 		if (!ObjectUtils.equals(container, "false")) {
 			String className = "";

@@ -4,45 +4,55 @@
  */
 package org.beangle.webapp.security.tag;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts2.views.TagLibrary;
 import org.beangle.security.access.AuthorityManager;
-import org.beangle.webapp.security.tag.freemarker.SecurityModels;
+import org.beangle.struts2.view.AbstractTagLibrary;
+import org.beangle.struts2.view.TagModel;
+import org.beangle.struts2.view.component.Component;
+import org.beangle.webapp.security.tag.component.Guard;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ObjectFactory;
-import com.opensymphony.xwork2.inject.Inject;
+import com.opensymphony.xwork2.inject.Container;
 import com.opensymphony.xwork2.util.ValueStack;
 
-public class SecurityTagLibrary implements TagLibrary {
+public class SecurityTagLibrary extends AbstractTagLibrary {
+	AuthorityManager authorityManager;
 
-	@Inject
-	private ObjectFactory objectFactory;
+	public SecurityTagLibrary() {
+		super();
+	}
 
-	private AuthorityManager authorityManager;
+	public SecurityTagLibrary(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
+		super(stack, req, res);
+	}
 
 	public Object getFreemarkerModels(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
-		if (null == authorityManager) {
-			try {
-				authorityManager = (AuthorityManager) objectFactory.buildBean("authorityManager", null);
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
+		Container container = (Container) stack.getContext().get(ActionContext.CONTAINER);
+		ObjectFactory objectFactory = container.getInstance(ObjectFactory.class);
+		try {
+			authorityManager = (AuthorityManager) objectFactory.buildBean("authorityManager", null, false);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-		stack.set("authorityManager", authorityManager);
-		return new SecurityModels(stack, req, res);
+		SecurityTagLibrary library = new SecurityTagLibrary(stack, req, res);
+		library.authorityManager = authorityManager;
+		return library;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public List<Class> getVelocityDirectiveClasses() {
-		return null;
-	}
-
-	public void setObjectFactory(ObjectFactory objectFactory) {
-		this.objectFactory = objectFactory;
+	public TagModel getGuard() {
+		TagModel model = models.get(Guard.class);
+		if (null == model) {
+			model = new TagModel(stack) {
+				protected Component getBean() {
+					return new Guard(stack, authorityManager);
+				}
+			};
+			models.put(Guard.class, model);
+		}
+		return model;
 	}
 
 }

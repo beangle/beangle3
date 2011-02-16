@@ -20,8 +20,8 @@ import org.beangle.security.blueprint.restrict.Restriction;
 import org.beangle.security.blueprint.restrict.service.RestrictionService;
 import org.beangle.security.blueprint.service.AuthorityService;
 import org.beangle.security.core.context.SecurityContextHolder;
-import org.beangle.security.web.access.DefaultResourceExtractor;
 import org.beangle.struts2.action.EntityDrivenAction;
+import org.beangle.web.util.RequestUtils;
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -33,10 +33,13 @@ public abstract class SecurityActionSupport extends EntityDrivenAction implement
 
 	protected RestrictionService restrictionService;
 
-	// FIXME new DefaultResourceExtractor
 	protected Resource getResource() {
-		return authorityService.getResource(new DefaultResourceExtractor().extract(ServletActionContext
-				.getRequest()));
+		String resourceName = SecurityUtils.getResource();
+		if (null == resourceName) {
+			resourceName = authorityService.extractResource(RequestUtils.getServletPath(ServletActionContext
+					.getRequest()));
+		}
+		return authorityService.getResource(resourceName);
 	}
 
 	protected boolean isAdmin(User user) {

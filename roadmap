@@ -11,6 +11,7 @@
 2010-2-20(beangle 2.2)
 	* better database query ui support.
 	* support runAs in security
-	* support online user stat on multi server --
+	* support online user stat on multi server
 	* implement group/parent relation in security
 	* support more elegant export attribute setting
+	* support multi account in single session

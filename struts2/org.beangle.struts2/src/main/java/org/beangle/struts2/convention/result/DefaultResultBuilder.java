@@ -4,6 +4,8 @@
  */
 package org.beangle.struts2.convention.result;
 
+import static org.beangle.web.util.RequestUtils.getServletPath;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -147,7 +149,7 @@ public class DefaultResultBuilder implements ResultBuilder {
 			action = new Action();
 			String newPath = path;
 			if (path.startsWith("?")) {
-				newPath = getServletPath() + path;
+				newPath = getServletPath(ServletActionContext.getRequest()) + path;
 			}
 			action.path(newPath);
 		} else {
@@ -156,19 +158,10 @@ public class DefaultResultBuilder implements ResultBuilder {
 				action.name(newAction.getName()).namespace(newAction.getNamespace());
 			}
 			if (StringUtils.isBlank(action.getName())) {
-				action.path(getServletPath());
+				action.path(getServletPath(ServletActionContext.getRequest()));
 			}
 		}
 		return action;
-	}
-
-	private String getServletPath() {
-		String t_path = ServletActionContext.getRequest().getServletPath();
-		if (StringUtils.isBlank(t_path)) { // 在websphere中，t_path会是空串，这是一个workaround
-			t_path = ServletActionContext.getRequest().getRequestURI();
-			t_path = t_path.substring(t_path.indexOf('/', 1));
-		}
-		return t_path;
 	}
 
 	private void addNamespaceAction(Action action, Map<String, String> params) {

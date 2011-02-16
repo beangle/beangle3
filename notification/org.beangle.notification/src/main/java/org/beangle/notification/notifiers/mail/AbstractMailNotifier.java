@@ -41,7 +41,11 @@ public abstract class AbstractMailNotifier<T extends MailMessage> implements Not
 	public void send(T mailMsg) throws NotificationException {
 		MimeMessage mimeMsg = mailSender.createMimeMessage();
 		try {
-			mimeMsg.setSentDate(new Date());
+			if (null == mailMsg.getSendAt()) {
+				mimeMsg.setSentDate(new Date());
+			} else {
+				mimeMsg.setSentDate(mailMsg.getSendAt());
+			}
 			MimeMessageHelper messageHelper = null;
 			String encoding = StringUtils.substringAfter(mailMsg.getContentType(), "charset=");
 			if (StringUtils.isEmpty(encoding)) {

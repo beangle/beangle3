@@ -143,8 +143,22 @@ public interface AuthorityService {
 	 */
 	public void authorize(Group group, Set<Resource> resources);
 
+	/**
+	 * 
+	 * @param userService
+	 */
 	public void setUserService(UserService userService);
 
+	/**
+	 * 
+	 * @return
+	 */
 	public UserService getUserService();
 
+	/**
+	 * Extract Resource from uri
+	 * @param uri with out context path
+	 * @return
+	 */
+	public String extractResource(String uri);
 }

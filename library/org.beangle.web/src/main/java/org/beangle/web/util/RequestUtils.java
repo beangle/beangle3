@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.net.BCodec;
+import org.apache.commons.lang.StringUtils;
 import org.beangle.web.agent.Browser;
 import org.beangle.web.agent.Os;
 import org.beangle.web.agent.Useragent;
@@ -44,17 +45,21 @@ public final class RequestUtils {
 
 	/**
 	 * 查找当前调用的action对应的.do<br>
-	 * 例如http://localhost/myapp/dd.do 返回dd.do<br>
-	 * http://localhost/myapp/dir/to/dd.do 返回dir/to/dd.do
+	 * 例如http://localhost/myapp/dd.do 返回/dd.do<br>
+	 * http://localhost/myapp/dir/to/dd.do 返回/dir/to/dd.do
 	 * 
 	 * @return
 	 */
-	public static String getRequestURI(HttpServletRequest request) {
-		String actionName = request.getServletPath();
-		if (actionName.startsWith("/")) {
-			actionName = actionName.substring(1);
+	public static String getServletPath(HttpServletRequest request) {
+		String servletPath = request.getServletPath();
+		if (StringUtils.isNotEmpty(servletPath)) {
+			return servletPath;
+		} else {
+			String uri = request.getRequestURI();
+			if (uri.length() == 1) return "";
+			int start = uri.indexOf('/', 1);
+			return servletPath = uri.substring(-1 == start ? 0 : start);
 		}
-		return actionName;
 	}
 
 	public static String encodeAttachName(HttpServletRequest request, String attach_name) {

@@ -13,7 +13,7 @@ import org.apache.commons.lang.Validate;
 
 public class UrlRender {
 
-	private String prefix;
+	private String suffix;
 	// encode
 	private boolean escapeAmp;
 
@@ -21,9 +21,9 @@ public class UrlRender {
 		super();
 	}
 
-	public UrlRender(String prefix) {
+	public UrlRender(String suffix) {
 		super();
-		this.prefix = prefix;
+		this.suffix = suffix;
 	}
 
 	public String render(String referer, String uri, Map<String, String> params) {
@@ -108,19 +108,19 @@ public class UrlRender {
 			}
 		}
 		// prefix
-		if (null != prefix) sb.append(prefix);
+		if (null != suffix) sb.append(suffix);
 		if (null != queryStr) {
 			sb.append('?').append(queryStr);
 		}
 		return sb;
 	}
 
-	public String getPrefix() {
-		return prefix;
+	public String getSuffix() {
+		return suffix;
 	}
 
-	public void setPrefix(String prefix) {
-		this.prefix = prefix;
+	public void setSuffix(String prefix) {
+		this.suffix = prefix;
 	}
 
 	public boolean isEscapeAmp() {

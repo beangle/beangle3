@@ -11,6 +11,8 @@ import org.beangle.security.core.context.SecurityContextHolder;
 
 public final class SecurityUtils {
 
+	private static ThreadLocal<String> resource = new ThreadLocal<String>();
+
 	public static UserToken getPrincipal() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (null == auth) throw new AuthenticationException();
@@ -35,4 +37,11 @@ public final class SecurityUtils {
 		return getPrincipal().getCategory().getId();
 	}
 
+	public static String getResource() {
+		return resource.get();
+	}
+
+	public static void setResource(String name) {
+		resource.set(name);
+	}
 }

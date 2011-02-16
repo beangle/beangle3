@@ -4,7 +4,7 @@
  */
 package org.beangle.struts2.view.component;
 
-import org.beangle.struts2.view.freemarker.BeangleModels;
+import org.beangle.struts2.view.BeangleTagLibrary;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
@@ -26,7 +26,7 @@ public class Form extends ClosingUIBean {
 		} else if (null == id) {
 			id = name;
 		}
-		action = BeangleModels.render.render(getRequestURI(), action);
+		action = BeangleTagLibrary.render.render(getRequestURI(), action);
 	}
 
 	public String getAction() {

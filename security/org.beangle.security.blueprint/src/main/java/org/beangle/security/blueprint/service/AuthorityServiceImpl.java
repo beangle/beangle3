@@ -223,6 +223,22 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 	public void remove(Authority authority) {
 		if (null != authority) entityDao.remove(authority);
 	}
+	
+
+	public String extractResource(String uri) {
+		int lastDot = -1;
+		for (int i = 0; i < uri.length(); i++) {
+			char a = uri.charAt(i);
+			if (a == '.' || a == '!') {
+				lastDot = i;
+				break;
+			}
+		}
+		if (lastDot < 0) {
+			lastDot = uri.length();
+		}
+		return uri.substring(0, lastDot);
+	}
 
 	public void saveOrUpdate(Authority authority) {
 		entityDao.saveOrUpdate(authority);

@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.StrUtils;
-import org.beangle.struts2.view.freemarker.BeangleModels;
+import org.beangle.struts2.view.BeangleTagLibrary;
 import org.beangle.struts2.view.template.Theme;
 
 import com.opensymphony.xwork2.util.ValueStack;
@@ -51,7 +51,7 @@ public class Anchor extends ClosingUIBean {
 
 	@Override
 	protected void evaluateParams() {
-		this.href = BeangleModels.render.render(getRequestURI(), this.href);
+		this.href = BeangleTagLibrary.render.render(getRequestURI(), this.href);
 		if (!isReserved()) {
 			if (null == onclick) {
 				if (null != target) {

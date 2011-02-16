@@ -66,7 +66,7 @@ public interface EntityDao {
 	 * @param values
 	 * @return
 	 */
-	public <T> List<T> get(Class<T> entityClass, Object[] values);
+	public <T> List<T> get(Class<T> entityClass, Object... values);
 
 	/**
 	 * 根据属性列举实体
@@ -76,7 +76,7 @@ public interface EntityDao {
 	 * @param values
 	 * @return
 	 */
-	public <T> List<T> get(Class<T> entityClass, List<?> values);
+	public <T> List<T> get(Class<T> entityClass, Collection<?> values);
 
 	/**
 	 * 根据属性列举实体
@@ -91,16 +91,42 @@ public interface EntityDao {
 	/**
 	 * 根据属性列举实体
 	 * 
+	 * @param <T>
+	 * @param entityClass
+	 * @param keyName
+	 * @param values
+	 * @return
+	 */
+	public <T> List<T> get(Class<T> entityClass, String keyName, Collection<?> values);
+
+	/**
+	 * 
+	 * @param <T>
+	 * @param entityClass
+	 * @param attrs
+	 * @param values
+	 * @return
+	 */
+	public <T> List<T> get(Class<T> entityClass, String[] attrs, Object... values);
+
+	/**
+	 * 
+	 * @param <T>
+	 * @param entityClass
+	 * @param parameterMap
+	 * @return
+	 */
+	public <T> List<T> get(Class<T> entityClass, Map<String, Object> parameterMap);
+
+	/**
+	 * 根据属性列举实体
+	 * 
 	 * @param entityClass
 	 * @param keyName
 	 * @param values
 	 * @return
 	 */
 	public <T> List<T> get(String entityName, String keyName, Object... values);
-
-	public <T> List<T> get(Class<T> entityClass, String[] attrs, Object... values);
-
-	public <T> List<T> get(Class<T> entityClass, Map<String, Object> parameterMap);
 
 	/**
 	 * 执行查询

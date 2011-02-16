@@ -17,9 +17,6 @@
 	<bean name="home" scope="prototype"
 	 class="org.beangle.webapp.portal.action.HomeAction" autowire="byName"></bean>
 	
-	<bean name="error" scope="prototype" autowire="byName"
-	 class="org.beangle.webapp.portal.action.ErrorAction"/>
-	
 	<!--验证码-->
 	<bean name="captcha/image" scope="prototype"
 	 class="org.beangle.webapp.captcha.action.ImageAction">

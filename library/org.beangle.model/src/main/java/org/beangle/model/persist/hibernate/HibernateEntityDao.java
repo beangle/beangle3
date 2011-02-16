@@ -84,7 +84,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 		return get(entityClass, "id", values);
 	}
 
-	public <T> List<T> get(Class<T> entityClass, List<?> values) {
+	public <T> List<T> get(Class<T> entityClass, Collection<?> values) {
 		return get(entityClass, "id", values.toArray());
 	}
 
@@ -94,6 +94,14 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 				.emptyList(); }
 		String entityName = Model.getEntityType(entityClass).getEntityName();
 		return (List<T>) get(entityName, keyName, values);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> List<T> get(Class<T> entityClass, String keyName, Collection<?> values) {
+		if (entityClass == null || StringUtils.isEmpty(keyName) || values == null || values.isEmpty()) { return Collections
+				.emptyList(); }
+		String entityName = Model.getEntityType(entityClass).getEntityName();
+		return (List<T>) get(entityName, keyName, values.toArray());
 	}
 
 	public <T> List<T> get(String entityName, String keyName, Object... values) {

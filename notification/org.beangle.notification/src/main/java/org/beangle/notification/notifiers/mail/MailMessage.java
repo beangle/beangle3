@@ -5,6 +5,7 @@
 package org.beangle.notification.notifiers.mail;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.mail.internet.InternetAddress;
@@ -22,6 +23,8 @@ public class MailMessage extends AbstractMessage {
 
 	private List<InternetAddress> bcc = CollectUtils.newArrayList();
 
+	private Date sendAt;
+	
 	public MailMessage() {
 		super();
 	}
@@ -81,4 +84,13 @@ public class MailMessage extends AbstractMessage {
 		Validate.notNull(sendBcc);
 		this.bcc.addAll(MimeUtils.parseAddress(sendBcc, getEncoding()));
 	}
+
+	public Date getSendAt() {
+		return sendAt;
+	}
+
+	public void setSendAt(Date sendAt) {
+		this.sendAt = sendAt;
+	}
+	
 }

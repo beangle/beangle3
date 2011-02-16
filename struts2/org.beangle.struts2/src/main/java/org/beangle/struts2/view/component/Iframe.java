@@ -4,7 +4,7 @@
  */
 package org.beangle.struts2.view.component;
 
-import org.beangle.struts2.view.freemarker.BeangleModels;
+import org.beangle.struts2.view.BeangleTagLibrary;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
@@ -18,7 +18,7 @@ public class Iframe extends ClosingUIBean {
 
 	@Override
 	protected void evaluateParams() {
-		src = BeangleModels.render.render(getRequestURI(), src);
+		src = BeangleTagLibrary.render.render(getRequestURI(), src);
 	}
 
 	public String getSrc() {

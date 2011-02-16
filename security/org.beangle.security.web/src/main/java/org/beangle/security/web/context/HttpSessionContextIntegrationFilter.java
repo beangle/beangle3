@@ -36,7 +36,7 @@ import org.springframework.util.ReflectionUtils;
  * If a valid <code>SecurityContext</code> cannot be obtained from the <code>HttpSession</code> for
  * whatever reason, a fresh <code>SecurityContext</code> will be created and used instead. The
  * created object will be of the instance defined by the {@link #setContextClass(Class)} method
- * (which defaults to {@link org.springframework.security.context.SecurityContextImpl}.
+ * (which defaults to {@link org.beangle.security.context.SecurityContextBean}.
  * </p>
  * <p/>
  * No <code>HttpSession</code> will be created by this filter if one does not already exist. If at
@@ -125,9 +125,6 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 	 */
 	private boolean cloneFromHttpSession = false;
 
-	// private AuthenticationTrustResolver authenticationTrustResolver = new
-	// AuthenticationTrustResolverImpl();
-
 	public boolean isCloneFromHttpSession() {
 		return cloneFromHttpSession;
 	}
@@ -143,7 +140,7 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 	protected void initFilterBean() throws ServletException {
 		if ((this.contextClass == null) || (!SecurityContext.class.isAssignableFrom(this.contextClass))) { throw new IllegalArgumentException(
 				"context must be defined and implement SecurityContext "
-						+ "(typically use org.beangle.security.context.SecurityContextImpl; existing class is "
+						+ "(typically use org.beangle.security.context.SecurityContextBean; existing class is "
 						+ this.contextClass + ")"); }
 
 		if (forceEagerSessionCreation && !allowSessionCreation) { throw new IllegalArgumentException(
@@ -172,15 +169,10 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 
 		if (contextBeforeChainExecution == null) {
 			contextBeforeChainExecution = generateNewContext();
-
-			if (logger.isDebugEnabled()) {
-				logger.debug("New SecurityContext instance will be associated with SecurityContextHolder");
-			}
+			logger.debug("New SecurityContext instance will be associated with SecurityContextHolder");
 		} else {
-			if (logger.isDebugEnabled()) {
-				logger.debug("Obtained a valid SecurityContext from Beangle_SECURITY_CONTEXT to "
-						+ "associate with SecurityContextHolder: '" + contextBeforeChainExecution + "'");
-			}
+			logger.debug("Obtained a valid SecurityContext from Beangle_SECURITY_CONTEXT to "
+					+ "associate with SecurityContextHolder: '{}'", contextBeforeChainExecution);
 		}
 
 		int contextHashBeforeChainExecution = contextBeforeChainExecution.hashCode();
@@ -190,12 +182,9 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 		// security context
 		// if anything in the chain does a sendError() or sendRedirect().
 		// See SEC-398
-
 		OnRedirectUpdateSessionResponseWrapper responseWrapper = new OnRedirectUpdateSessionResponseWrapper(
 				response, request, httpSessionExistedAtStartOfRequest, contextHashBeforeChainExecution);
-
 		// Proceed with chain
-
 		try {
 			// This is the only place in this class where
 			// SecurityContextHolder.setContext() is called
@@ -223,9 +212,7 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 						httpSessionExistedAtStartOfRequest, contextHashBeforeChainExecution);
 			}
 
-			if (logger.isDebugEnabled()) {
-				logger.debug("SecurityContextHolder now cleared, as request processing completed");
-			}
+			logger.debug("SecurityContextHolder now cleared, as request processing completed");
 		}
 	}
 
@@ -243,17 +230,12 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 	 */
 	private SecurityContext readSecurityContextFromSession(HttpSession httpSession) {
 		if (httpSession == null) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("No HttpSession currently exists");
-			}
-
+			logger.debug("No HttpSession currently exists");
 			return null;
 		}
 
 		// Session exists, so try to obtain a context from it.
-
 		Object contextFromSessionObject = httpSession.getAttribute(SECURITY_CONTEXT_KEY);
-
 		if (contextFromSessionObject == null) {
 			logger.debug("HttpSession returned null object for BEANGLE_SECURITY_CONTEXT");
 			return null;

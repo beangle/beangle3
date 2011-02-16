@@ -14,13 +14,13 @@ import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.security.access.AuthorityManager;
 import org.beangle.security.auth.AnonymousAuthentication;
 import org.beangle.security.blueprint.Resource;
+import org.beangle.security.blueprint.SecurityUtils;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.web.AuthenticationEntryPoint;
 import org.beangle.security.web.FilterInvocation;
-import org.beangle.security.web.access.DefaultResourceExtractor;
-import org.beangle.security.web.access.ResourceExtractor;
 import org.beangle.security.web.auth.UrlEntryPoint;
+import org.beangle.web.util.RequestUtils;
 import org.springframework.beans.factory.InitializingBean;
 
 public class CacheableAuthorityManager extends BaseServiceImpl implements AuthorityManager, InitializingBean {
@@ -38,8 +38,6 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 
 	protected AuthorityService authorityService;
 
-	protected ResourceExtractor resourceExtractor = new DefaultResourceExtractor();
-
 	private boolean expired = true;
 
 	/**
@@ -49,8 +47,15 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 	 */
 	public boolean isAuthorized(Authentication auth, Object resource) {
 		loadResourceNecessary();
-		FilterInvocation fi = (FilterInvocation) resource;
-		String resourceName = resourceExtractor.extract(fi.getHttpRequest());
+		String resourceName = null;
+		if (resource instanceof FilterInvocation) {
+			FilterInvocation fi = (FilterInvocation) resource;
+			resourceName = authorityService.extractResource(RequestUtils.getServletPath(fi.getHttpRequest()));
+		} else {
+			resourceName = resource.toString();
+		}
+		//registe resourceName
+		SecurityUtils.setResource(resourceName);
 		if (publicResources.contains(resourceName)) { return true; }
 		if (AnonymousAuthentication.class.isAssignableFrom(auth.getClass())) { return false; }
 		if (protectedResources.contains(resourceName)) { return true; }
@@ -100,7 +105,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 		publicResources = authorityService.getResourceNames(Resource.Scope.PUBLIC);
 		if (null != authenticationEntryPoint && authenticationEntryPoint instanceof UrlEntryPoint) {
 			UrlEntryPoint fep = (UrlEntryPoint) authenticationEntryPoint;
-			String loginResource = resourceExtractor.extract(fep.getLoginUrl());
+			String loginResource = authorityService.extractResource(fep.getLoginUrl());
 			if (null != loginResource) {
 				publicResources.add(loginResource);
 			}

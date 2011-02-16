@@ -18,7 +18,7 @@ public class DefaultResourceAccessor implements ResourceAccessor {
 	protected static Accesslog buildLog(HttpServletRequest request) {
 		Accesslog log = new Accesslog();
 		log.setUser(SecurityContextHolder.getContext().getAuthentication());
-		log.setUri(RequestUtils.getRequestURI(request));
+		log.setUri(RequestUtils.getServletPath(request));
 		log.setParams(request.getQueryString());
 		return log;
 	}
