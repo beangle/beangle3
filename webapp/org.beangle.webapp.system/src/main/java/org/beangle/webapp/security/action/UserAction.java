@@ -42,7 +42,6 @@ public class UserAction extends SecurityActionSupport {
 
 	protected void indexSetting() {
 		put("categories", entityDao.getAll(UserCategory.class));
-		throw new RuntimeException("dd");
 	}
 
 	public String dashboard() {
