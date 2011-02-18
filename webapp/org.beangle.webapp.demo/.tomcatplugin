@@ -68,6 +68,7 @@
         <webClassPathEntry>M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/javassist/javassist/3.12.0.GA/javassist-3.12.0.GA.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/javax/transaction/jta/1.1/jta-1.1.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/mockobjects/mockobjects-core/0.09/mockobjects-core-0.09.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/mockobjects/mockobjects-jdk1.4/0.09/mockobjects-jdk1.4-0.09.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/net/sf/ehcache/ehcache-core/2.3.0/ehcache-core-2.3.0.jar</webClassPathEntry>
@@ -76,7 +77,6 @@
         <webClassPathEntry>M2_REPO/org/apache/ant/ant-launcher/1.7.0/ant-launcher-1.7.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/ant/ant/1.7.0/ant-1.7.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/poi/poi/3.7/poi-3.7.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/apache/struts/struts2-config-browser-plugin/2.2.1/struts2-config-browser-plugin-2.2.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/struts/struts2-core/2.2.1/struts2-core-2.2.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/struts/struts2-spring-plugin/2.2.1/struts2-spring-plugin-2.2.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/struts/xwork/xwork-core/2.2.1/xwork-core-2.2.1.jar</webClassPathEntry>
@@ -88,11 +88,14 @@
         <webClassPathEntry>M2_REPO/org/eclipse/gemini/blueprint/gemini-blueprint-extender/1.0.0.M1/gemini-blueprint-extender-1.0.0.M1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/eclipse/gemini/blueprint/gemini-blueprint-io/1.0.0.M1/gemini-blueprint-io-1.0.0.M1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/freemarker/freemarker/2.3.16/freemarker-2.3.16.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/hibernate/hibernate-commons-annotations/3.2.0.Final/hibernate-commons-annotations-3.2.0.Final.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/hibernate/hibernate-core/3.6.1.Final/hibernate-core-3.6.1.Final.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.0.Final/hibernate-jpa-2.0-api-1.0.0.Final.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/hsqldb/hsqldb/2.0.0/hsqldb-2.0.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/jasig/cas/cas-client-core/3.1.9/cas-client-core-3.1.9.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/mockito/mockito-core/1.8.5/mockito-core-1.8.5.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/objenesis/objenesis/1.0/objenesis-1.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/osgi/osgi_R4_compendium/1.0/osgi_R4_compendium-1.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/osgi/osgi_R4_core/1.0/osgi_R4_core-1.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/slf4j/jcl-over-slf4j/1.6.1/jcl-over-slf4j-1.6.1.jar</webClassPathEntry>
@@ -109,6 +112,8 @@
         <webClassPathEntry>M2_REPO/org/springframework/spring-test/3.0.5.RELEASE/spring-test-3.0.5.RELEASE.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/springframework/spring-tx/3.0.5.RELEASE/spring-tx-3.0.5.RELEASE.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/springframework/spring-web/3.0.5.RELEASE/spring-web-3.0.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/testng/testng/5.14.7/testng-5.14.7.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/yaml/snakeyaml/1.6/snakeyaml-1.6.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/oro/oro/2.0.8/oro-2.0.8.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/postgresql/postgresql/8.4-701.jdbc3/postgresql-8.4-701.jdbc3.jar</webClassPathEntry>
     </webClassPathEntries>

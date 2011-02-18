@@ -8,71 +8,59 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.net.URL;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
+import org.testng.annotations.Test;
 
 public class ZipUtilsTest {
 
-	public void isZip() throws Exception {
-		URL url = getClass().getClassLoader().getResource("notZip.zip");
-		File f = new File(url.getPath());
-		assertFalse(ZipUtils.isZipFile(f));
+	private String testFilename = "zipsource";
 
-		url = getClass().getClassLoader().getResource("test.zip");
-		f = new File(url.getPath());
-		assertTrue(ZipUtils.isZipFile(f));
-
-		url = getClass().getClassLoader().getResource("test");
-		f = new File(url.getPath());
-		assertTrue(ZipUtils.isZipFile(f));
-
-		url = getClass().getClassLoader().getResource("test.rar");
-		f = new File(url.getPath());
-		assertFalse(ZipUtils.isZipFile(f));
-	}
-
-	public void testUnZipAndDelete() throws Exception {
-		URL url = getClass().getClassLoader().getResource("test.zip");
-		File f = new File(url.getPath());
-		FileInputStream in = new FileInputStream(f);
-		String tmp = System.getProperty("java.io.tmpdir") + File.separator + "test.zip.tmp";
+	private String getSource() {
+		URL url = ZipUtilsTest.class.getClassLoader().getResource(testFilename + ".txt");
+		File f = null;
 		try {
-			FileOutputStream out = new FileOutputStream(tmp);
-			byte[] bytes = null;
-			bytes = new byte[(int) f.length()];
-			in.read(bytes);
-			in.close();
-			out.write(bytes, 0, bytes.length);
-			out.flush();
-			out.close();
+			f = new File(url.toURI());
 		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage());
+			throw new RuntimeException(e);
 		}
-		File file = new File(tmp);
-		ZipUtils.unzip(file, file.getParentFile().getAbsolutePath());
-		assertTrue(file.delete());
+		return f.getAbsolutePath();
 	}
 
-	public void zip() throws Exception {
-		URL url = ZipUtilsTest.class.getClassLoader().getResource("测试压缩文档.txt");
-		File f = new File(url.toURI());
-		String path = f.getAbsolutePath();
-		List<String> fileNames = CollectUtils.newArrayList();
-		fileNames.add(path);
+	private String getZipTarget() {
+		return StringUtils.substringBeforeLast(getSource(), "/") + "/" + testFilename + ".zip";
+	}
 
-		ZipUtils.zip(fileNames, StringUtils.substringBeforeLast(path, "/") + "/测试压缩文档.zip", "GBK");
-		// List list = ZipUtils.unzip(new File("d:/test/她.zip"), "d:/test");
-		// for (Iterator iter = list.iterator(); iter.hasNext();) {
-		// String element = (String) iter.next();
-		// System.out.println(element);
-		// }
-		// File zipFile = new File("d:/test/她.zip");
-		// assertTrue(ZipUtils.isZipFile(zipFile));
+	@Test(dependsOnMethods = "testZip")
+	public void isZip() throws Exception {
+		File f = new File(getZipTarget());
+		assertTrue(ZipUtils.isZipFile(f));
+		f = new File(getSource());
+		assertFalse(ZipUtils.isZipFile(f));
+	}
+
+	@Test(dependsOnMethods = { "testZip", "isZip" })
+	public void testUnZipAndDelete() throws Exception {
+		File f = new File(getZipTarget());
+		String tmp = System.getProperty("java.io.tmpdir") + File.separator + "testzipdir";
+		File file = new File(tmp);
+		file.delete();
+		file.mkdirs();
+		ZipUtils.unzip(f, file.getAbsolutePath());
+		//f.delete();
+		FileUtils.deleteDirectory(file);
+	}
+
+	@Test
+	public void testZip() throws Exception {
+		List<String> fileNames = CollectUtils.newArrayList();
+		fileNames.add(getSource());
+		String filename = getZipTarget();
+		ZipUtils.zip(fileNames, filename);
 	}
 
 }

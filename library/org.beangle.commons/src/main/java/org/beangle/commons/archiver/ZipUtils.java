@@ -4,8 +4,6 @@
  */
 package org.beangle.commons.archiver;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,12 +12,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.zip.ZipException;
 
+import org.apache.commons.compress.archivers.ArchiveStreamFactory;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
+import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.beangle.commons.archiver.zip.ZipEntry;
-import org.beangle.commons.archiver.zip.ZipFile;
-import org.beangle.commons.archiver.zip.ZipOutputStream;
 import org.beangle.commons.collection.CollectUtils;
 
 public final class ZipUtils {
@@ -29,80 +28,68 @@ public final class ZipUtils {
 	private ZipUtils() {
 	}
 
+	// 文件压缩
+	public static File zip(List<String> fileNames, String zipPath) {
+		try {
+			FileOutputStream f = new FileOutputStream(zipPath);
+			ZipArchiveOutputStream zos = (ZipArchiveOutputStream) new ArchiveStreamFactory()
+					.createArchiveOutputStream(ArchiveStreamFactory.ZIP, f);
+			for (int i = 0; i < fileNames.size(); i++) {
+				String fileName = fileNames.get(i);
+				String entryName = StringUtils.substringAfterLast(fileName, File.separator);
+				ZipArchiveEntry entry = new ZipArchiveEntry(entryName);
+				zos.putArchiveEntry(entry);
+				FileInputStream fis = new FileInputStream(fileName);
+				IOUtils.copy(fis, zos);
+				fis.close();
+				zos.closeArchiveEntry();
+			}
+			zos.close();
+			return new File(zipPath);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public static List<String> unzip(final File zipFile, final String destination) {
+		return unzip(zipFile, destination, null);
+	}
+
+	public static List<String> unzip(final File zipFile, final String destination, String encoding) {
 		List<String> fileNames = CollectUtils.newArrayList();
 		String dest = destination;
 		if (!destination.endsWith(File.separator)) {
 			dest = destination + File.separator;
 		}
-
-		ZipFile zf = null;
+		ZipFile file;
 		try {
-			zf = new ZipFile(zipFile);
+			file = null;
+			if (null == encoding) file = new ZipFile(zipFile);
+			else file = new ZipFile(zipFile, encoding);
 			@SuppressWarnings("unchecked")
-			Enumeration<ZipEntry> enu = zf.getEntries();
-			while (enu.hasMoreElements()) {
-				ZipEntry entry = (ZipEntry) enu.nextElement();
-				String name = entry.getName();
-				String path = dest + name;
-				File file = new File(path);
-				if (entry.isDirectory()) {
-					file.mkdirs();
+			Enumeration<ZipArchiveEntry> en = file.getEntries();
+			ZipArchiveEntry ze = null;
+			while (en.hasMoreElements()) {
+				ze = en.nextElement();
+				File f = new File(dest, ze.getName());
+				if (ze.isDirectory()) {
+					f.mkdirs();
+					continue;
 				} else {
-					InputStream is = zf.getInputStream(entry);
-					byte[] buf1 = new byte[1024];
-					int len;
-					if (!file.exists()) {
-						file.getParentFile().mkdirs();
-						file.createNewFile();
-					}
-					OutputStream out = new FileOutputStream(file);
-					while ((len = is.read(buf1)) > 0) {
-						out.write(buf1, 0, len);
-					}
-					out.flush();
-					out.close();
+					f.getParentFile().mkdirs();
+					InputStream is = file.getInputStream(ze);
+					OutputStream os = new FileOutputStream(f);
+					IOUtils.copy(is, os);
 					is.close();
-					fileNames.add(file.getAbsolutePath());
+					os.close();
+					fileNames.add(f.getAbsolutePath());
 				}
 			}
-			zf.close();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		} finally {
-			if (null != zf) {
-				try {
-					zf.close();
-				} catch (IOException e) {
-				}
-			}
+			file.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return fileNames;
-	}
-
-	// 文件压缩
-	public static File zip(List<String> fileNames, String zipPath, String encoding) {
-		try {
-			FileOutputStream f = new FileOutputStream(zipPath);
-			ZipOutputStream out = new ZipOutputStream(new DataOutputStream(f));
-			// FIXME
-			out.setEncoding(encoding);
-			for (int i = 0; i < fileNames.size(); i++) {
-				String fileName = fileNames.get(i);
-				DataInputStream in = new DataInputStream(new FileInputStream(fileName));
-				String entryName = StringUtils.substringAfterLast(fileName, File.separator);
-				out.putNextEntry(new ZipEntry(entryName));
-				int c;
-				while ((c = in.read()) != -1) {
-					out.write(c);
-				}
-				in.close();
-			}
-			out.close();
-			return new File(zipPath);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	public static boolean isZipFile(File zipFile) {
@@ -111,9 +98,7 @@ public final class ZipUtils {
 			boolean isZip = zf.getEntries().hasMoreElements();
 			zf.close();
 			return isZip;
-		} catch (ZipException e) {
-			return false;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			return false;
 		}
 	}

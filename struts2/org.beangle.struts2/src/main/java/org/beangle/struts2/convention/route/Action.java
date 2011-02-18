@@ -4,10 +4,10 @@
  */
 package org.beangle.struts2.convention.route;
 
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.commons.codec.net.URLCodec;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
@@ -178,7 +178,6 @@ public class Action {
 			buf.append('.').append(extention);
 		}
 		if (null != getParams() && getParams().size() > 0) {
-			URLCodec codec = new URLCodec();
 			boolean first = true;
 			for (Iterator<String> iter = getParams().keySet().iterator(); iter.hasNext();) {
 				String key = iter.next();
@@ -190,7 +189,7 @@ public class Action {
 					} else {
 						buf.append('&');
 					}
-					buf.append(key).append("=").append(codec.encode(value, "UTF-8"));
+					buf.append(key).append("=").append(URLEncoder.encode(value, "UTF-8"));
 				} catch (Exception e) {
 					throw new RuntimeException(e.getMessage());
 				}

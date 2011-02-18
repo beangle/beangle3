@@ -4,7 +4,6 @@
  */
 package org.beangle.security.codec;
 
-import org.apache.commons.codec.binary.StringUtils;
 
 public class Base64 {
 

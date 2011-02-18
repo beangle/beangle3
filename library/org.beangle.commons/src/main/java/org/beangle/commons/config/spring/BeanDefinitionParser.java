@@ -102,7 +102,6 @@ import org.springframework.beans.factory.support.MethodOverrides;
 import org.springframework.beans.factory.support.ReplaceOverride;
 import org.springframework.beans.factory.xml.DefaultNamespaceHandlerResolver;
 import org.springframework.beans.factory.xml.NamespaceHandler;
-import org.springframework.util.ClassUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -810,13 +809,9 @@ public class BeanDefinitionParser {
 	 */
 	protected TypedStringValue buildTypedStringValue(String value, String targetTypeName)
 			throws ClassNotFoundException {
-		ClassLoader classLoader = null;// this.readerContext.getBeanClassLoader();
 		TypedStringValue typedValue;
 		if (!StringUtils.hasText(targetTypeName)) {
 			typedValue = new TypedStringValue(value);
-		} else if (classLoader != null) {
-			Class<?> targetType = ClassUtils.forName(targetTypeName, classLoader);
-			typedValue = new TypedStringValue(value, targetType);
 		} else {
 			typedValue = new TypedStringValue(value, targetTypeName);
 		}

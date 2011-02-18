@@ -17,18 +17,19 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>org.easymock</groupId>
-			<artifactId>easymock</artifactId>
+			<groupId>org.beangle</groupId>
+			<artifactId>beangle-web</artifactId>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
 			<version>2.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.beangle</groupId>
-			<artifactId>beangle-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jsp-api</artifactId>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
 			<version>2.0</version>
 			<scope>test</scope>
 		</dependency>
@@ -38,12 +39,12 @@
 			<version>0.09</version>
 			<scope>test</scope>
 		</dependency>
-		
 		<dependency>
 			<groupId>mockobjects</groupId>
 			<artifactId>mockobjects-jdk1.4</artifactId>
 			<version>0.09</version>
 			<scope>test</scope>
 		</dependency>
+		 -->
 	</dependencies>
 </project>
