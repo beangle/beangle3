@@ -59,7 +59,6 @@
 		<commonlang.version>2.5</commonlang.version>
 		<commoncollections.version>3.2.1</commoncollections.version>
 		<commonbeanutils.version>1.8.3</commonbeanutils.version>
-		<hsqldb.version>2.0.0</hsqldb.version>
 		<h2.version>1.3.148</h2.version>
 		<testng.version>5.14.7</testng.version>
 		<servletapi.version>2.4</servletapi.version>
@@ -305,7 +304,6 @@
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
 				<version>${h2.version}</version>
-				<scope>provided</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

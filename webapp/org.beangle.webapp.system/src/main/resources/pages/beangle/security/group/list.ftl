@@ -10,7 +10,7 @@
 	[/@]
 	[@b.row]
 		[@b.boxcol/]
-		[@b.col property="name" width="20%" title="common.name"]<a href="${b.url('!info')}?groupId=${userGroup.id}">${userGroup.name}</a>[/@]
+		[@b.col property="name" width="20%" title="common.name"]<a href="${b.url('!info')}?id=${userGroup.id}">${userGroup.name}</a>[/@]
 		[@b.col width="15%" property="owner.name" title="common.creator"/]
 		[@b.col width="15%" property="updatedAt" title="common.updatedAt"]${userGroup.updatedAt?string("yyyy-MM-dd")}[/@]
 		[@b.col width="15%" property="category.name" title="entity.userCategory" /]

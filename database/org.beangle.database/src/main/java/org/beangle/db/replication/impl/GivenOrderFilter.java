@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.db.replication.TableFilter;
 
 public class GivenOrderFilter implements TableFilter {
 

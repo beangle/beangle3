@@ -6,6 +6,7 @@ package org.beangle.db.meta;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.StringTokenizer;
 
 import org.beangle.db.dialect.Dialect;
@@ -19,7 +20,7 @@ public class Column implements Comparable<Column> {
 	private String name;
 	private String typeName;
 	private int typeCode;
-	private int columnSize;
+	private int size;
 	private int decimalDigits;
 	private boolean nullable;
 	private String defaultValue;
@@ -31,21 +32,23 @@ public class Column implements Comparable<Column> {
 		super();
 	}
 
-	public Column(String name) {
+	public Column(String name, int typeCode) {
 		super();
 		this.name = name;
+		this.typeCode = typeCode;
+		if (typeCode == Types.VARCHAR) {
+			this.size = 255;
+		}
 	}
 
 	public Column(ResultSet rs) throws SQLException {
 		name = rs.getString("COLUMN_NAME");
-		columnSize = rs.getInt("COLUMN_SIZE");
+		size = rs.getInt("COLUMN_SIZE");
 		decimalDigits = rs.getInt("DECIMAL_DIGITS");
 		nullable = "yes".equalsIgnoreCase(rs.getString("IS_NULLABLE"));
 		typeCode = rs.getInt("DATA_TYPE");
 		typeName = new StringTokenizer(rs.getString("TYPE_NAME"), "() ").nextToken();
 		comment = rs.getString("REMARKS");
-		// String COLUMN_DEF= rs.getString("COLUMN_DEF");
-		// int po=rs.getInt("ORDINAL_POSITION");
 	}
 
 	public String getName() {
@@ -56,8 +59,8 @@ public class Column implements Comparable<Column> {
 		return typeName;
 	}
 
-	public int getColumnSize() {
-		return columnSize;
+	public int getSize() {
+		return size;
 	}
 
 	public int getDecimalDigits() {
@@ -73,7 +76,7 @@ public class Column implements Comparable<Column> {
 	}
 
 	public String getSqlType(Dialect dialect) {
-		return dialect.getTypeName(typeCode, columnSize, columnSize, decimalDigits);
+		return dialect.getTypeName(typeCode, size, size, decimalDigits);
 	}
 
 	public int compareTo(Column other) {
@@ -107,4 +110,41 @@ public class Column implements Comparable<Column> {
 	public String toString() {
 		return "Column(" + name + ')';
 	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+	public void setTypeCode(int typeCode) {
+		this.typeCode = typeCode;
+	}
+
+	public void setSize(int columnSize) {
+		this.size = columnSize;
+	}
+
+	public void setDecimalDigits(int decimalDigits) {
+		this.decimalDigits = decimalDigits;
+	}
+
+	public void setNullable(boolean nullable) {
+		this.nullable = nullable;
+	}
+
+	public void setDefaultValue(String defaultValue) {
+		this.defaultValue = defaultValue;
+	}
+
+	public void setUnique(boolean unique) {
+		this.unique = unique;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 }

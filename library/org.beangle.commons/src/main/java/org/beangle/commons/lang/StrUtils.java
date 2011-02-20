@@ -356,7 +356,7 @@ public final class StrUtils {
 	 * @param delimiter
 	 * @return
 	 */
-	public static String join(final Object[] seq, final String delimiter) {
+	public static String join(final String[] seq, final String delimiter) {
 		if (null == seq || seq.length < 1) {
 			return "";
 		} else {

@@ -7,7 +7,6 @@ package org.beangle.db.replication;
 import static org.beangle.db.util.DataSourceUtil.getDataSource;
 
 import org.beangle.db.dialect.Dialects;
-import org.beangle.db.replication.impl.ReplicatorBuilder;
 import org.testng.annotations.Test;
 
 @Test

@@ -41,7 +41,7 @@ public class DataReplicator implements Replicator {
 		tables.add(table);
 	}
 
-	protected void addAll(Collection<? extends Table> newTables) {
+	public void addAll(Collection<? extends Table> newTables) {
 		tables.addAll(newTables);
 	}
 

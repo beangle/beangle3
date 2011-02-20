@@ -6,6 +6,8 @@ package org.beangle.db.replication;
 
 public class RepException extends RuntimeException {
 
+	private static final long serialVersionUID = -248678049233885426L;
+
 	public RepException() {
 		super();
 	}

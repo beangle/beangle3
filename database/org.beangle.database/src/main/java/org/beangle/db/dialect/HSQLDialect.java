@@ -45,4 +45,9 @@ public class HSQLDialect extends AbstractDialect {
 				.toString();
 	}
 
+	@Override
+	public String getColumnComment(String comment) {
+		return " comment '" + comment + "'";
+	}
+
 }

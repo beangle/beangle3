@@ -100,10 +100,6 @@ public class Table {
 		Iterator<Column> iter = columns.values().iterator();
 		while (iter.hasNext()) {
 			Column col = iter.next();
-			// FIXME reserved key words
-			// if(col.getName().equals("RESOURCE")){
-			// continue;
-			// }
 			buf.append(col.getName()).append(' ');
 			buf.append(col.getSqlType(dialect));
 
@@ -142,7 +138,6 @@ public class Table {
 			buf.append(", ").append(getPrimaryKey().sqlConstraintString());
 		}
 		buf.append(')');
-
 		if (StringUtils.isNotBlank(comment)) {
 			buf.append(dialect.getTableComment(comment));
 		}

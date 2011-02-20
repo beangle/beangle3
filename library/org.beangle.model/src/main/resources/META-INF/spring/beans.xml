@@ -10,10 +10,10 @@
 	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName">
-			<value>org.hsqldb.jdbcDriver</value>
+			<value>org.h2.Driver</value>
 		</property>
 		<property name="url">
-			<value>jdbc:hsqldb:mem:test</value>
+			<value>jdbc:h2:./target/beangle</value>
 		</property>
 		<property name="username">
 			<value>sa</value>
@@ -27,7 +27,7 @@
 	<bean id="hibernateConfig" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="properties">
 			<props>
-			    <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+			    <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
 				<prop key="hibernate.connection.provider_class">org.hibernate.connection.DatasourceConnectionProvider</prop>
 				<prop key="hibernate.query.factory_class">org.hibernate.hql.ast.ASTQueryTranslatorFactory</prop>
 				<prop key="hibernate.max_fetch_depth">1</prop>
@@ -43,7 +43,6 @@
 				<prop key="hibernate.cache.use_query_cache">true</prop>
 				<prop key="hibernate.query.substitutions">true 1, false 0, yes 'Y', no 'N'</prop>
 				<prop key="hibernate.show_sql">false</prop>
-				<!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
 			</props>
 		</property>
 	</bean>

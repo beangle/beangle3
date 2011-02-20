@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.db.replication.impl;
+package org.beangle.db.replication;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,7 +16,11 @@ import org.beangle.db.dialect.Dialects;
 import org.beangle.db.meta.Constraint;
 import org.beangle.db.meta.Sequence;
 import org.beangle.db.meta.Table;
-import org.beangle.db.replication.Replicator;
+import org.beangle.db.replication.impl.CompositeReplicator;
+import org.beangle.db.replication.impl.ConstraintReplicator;
+import org.beangle.db.replication.impl.DataReplicator;
+import org.beangle.db.replication.impl.DefaultTableFilter;
+import org.beangle.db.replication.impl.SequenceReplicator;
 import org.beangle.db.replication.wrappers.DatabaseWrapper;
 
 public final class ReplicatorBuilder {

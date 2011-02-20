@@ -6,7 +6,7 @@
     <redirectLogger>true</redirectLogger>
     <updateXml>true</updateXml>
     <warLocation></warLocation>
-    <extraInfo>%3CResource+%0A++name%3D%22jdbc%2Fbeangle%22%0A++driverClassName%3D%22org.hsqldb.jdbcDriver%22%0A++url%3D%22jdbc%3Ahsqldb%3Afile%3A%2Fhome%2Fchaostone%2Fapache-tomcat-6.0.26%2Fdb%2Fbeangle%22+%0A++type%3D%22javax.sql.DataSource%22%0A++username%3D%22sa%22%0A++password%3D%22%22%0A++%2F%3E</extraInfo>
+    <extraInfo>%3CResource+%0A++name%3D%22jdbc%2Fbeangle%22%0A++driverClassName%3D%22org.h2.Driver%22%0A++url%3D%22jdbc%3Ah2%3A%2Ftmp%2Fbeangle%3BAUTO_SERVER%3DTRUE%22+%0A++type%3D%22javax.sql.DataSource%22%0A++username%3D%22sa%22%0A++password%3D%22%22%0A++%2F%3E</extraInfo>
     <webPath>/demo</webPath>
     <webClassPathEntries>
         <webClassPathEntry>/beangle-commons/target/classes</webClassPathEntry>
@@ -43,15 +43,11 @@
         <webClassPathEntry>M2_REPO/com/google/collections/google-collections/1.0/google-collections-1.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/com/google/inject/guice/2.0/guice-2.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/com/h2database/h2/1.3.148/h2-1.3.148.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/com/ibm/jdbc/db2jcc/1.3.1/db2jcc-1.3.1.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/com/ibm/jdbc/db2jcc_license_cisuz/1.3.1/db2jcc_license_cisuz-1.3.1.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/com/ibm/jdbc/db2jcc_license_cu/1.3.1/db2jcc_license_cu-1.3.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/com/jgeppert/struts2/jquery/struts2-jquery-plugin/2.5.0/struts2-jquery-plugin-2.5.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/com/jhlabs/imaging/01012005/imaging-01012005.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/com/linuxense/javadbf/0.4.0/javadbf-0.4.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/com/octo/captcha/jcaptcha-api/1.0/jcaptcha-api-1.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/com/octo/captcha/jcaptcha/1.0/jcaptcha-1.0.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/com/oracle/jdbc/ojdbc14/10.2.0.1.0/ojdbc14-10.2.0.1.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-cli/commons-cli/1.2/commons-cli-1.2.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-codec/commons-codec/1.4/commons-codec-1.4.jar</webClassPathEntry>
@@ -61,6 +57,7 @@
         <webClassPathEntry>M2_REPO/commons-fileupload/commons-fileupload/1.2.1/commons-fileupload-1.2.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-io/commons-io/1.3.2/commons-io-1.3.2.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-io/commons-io/1.4/commons-io-1.4.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/commons-io/commons-io/2.0.1/commons-io-2.0.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-jexl/commons-jexl/1.1/commons-jexl-1.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-lang/commons-lang/2.5/commons-lang-2.5.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-logging/commons-logging/99.0-does-not-exist/commons-logging-99.0-does-not-exist.jar</webClassPathEntry>
@@ -69,13 +66,12 @@
         <webClassPathEntry>M2_REPO/javassist/javassist/3.12.0.GA/javassist-3.12.0.GA.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/javax/transaction/jta/1.1/jta-1.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/mockobjects/mockobjects-core/0.09/mockobjects-core-0.09.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/mockobjects/mockobjects-jdk1.4/0.09/mockobjects-jdk1.4-0.09.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/net/sf/ehcache/ehcache-core/2.3.0/ehcache-core-2.3.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/net/sf/jxls/jxls-core/0.9.9/jxls-core-0.9.9.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/ognl/ognl/3.0/ognl-3.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/ant/ant-launcher/1.7.0/ant-launcher-1.7.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/ant/ant/1.7.0/ant-1.7.0.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/apache/commons/commons-compress/1.1/commons-compress-1.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/poi/poi/3.7/poi-3.7.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/struts/struts2-core/2.2.1/struts2-core-2.2.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/apache/struts/struts2-spring-plugin/2.2.1/struts2-spring-plugin-2.2.1.jar</webClassPathEntry>
@@ -83,7 +79,6 @@
         <webClassPathEntry>M2_REPO/org/apache/velocity/velocity/1.5/velocity-1.5.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/beanshell/bsh/2.0b4/bsh-2.0b4.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/dbunit/dbunit/2.2/dbunit-2.2.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/easymock/easymock/2.0/easymock-2.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/eclipse/gemini/blueprint/gemini-blueprint-core/1.0.0.M1/gemini-blueprint-core-1.0.0.M1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/eclipse/gemini/blueprint/gemini-blueprint-extender/1.0.0.M1/gemini-blueprint-extender-1.0.0.M1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/eclipse/gemini/blueprint/gemini-blueprint-io/1.0.0.M1/gemini-blueprint-io-1.0.0.M1.jar</webClassPathEntry>
@@ -109,12 +104,8 @@
         <webClassPathEntry>M2_REPO/org/springframework/spring-expression/3.0.5.RELEASE/spring-expression-3.0.5.RELEASE.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/springframework/spring-jdbc/3.0.5.RELEASE/spring-jdbc-3.0.5.RELEASE.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/springframework/spring-orm/3.0.5.RELEASE/spring-orm-3.0.5.RELEASE.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/springframework/spring-test/3.0.5.RELEASE/spring-test-3.0.5.RELEASE.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/springframework/spring-tx/3.0.5.RELEASE/spring-tx-3.0.5.RELEASE.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/springframework/spring-web/3.0.5.RELEASE/spring-web-3.0.5.RELEASE.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/testng/testng/5.14.7/testng-5.14.7.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/org/yaml/snakeyaml/1.6/snakeyaml-1.6.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/oro/oro/2.0.8/oro-2.0.8.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/postgresql/postgresql/8.4-701.jdbc3/postgresql-8.4-701.jdbc3.jar</webClassPathEntry>
     </webClassPathEntries>
 </tomcatProjectProperties>

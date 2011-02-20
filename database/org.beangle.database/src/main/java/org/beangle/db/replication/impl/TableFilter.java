@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.db.replication;
+package org.beangle.db.replication.impl;
 
 import java.util.Collection;
 

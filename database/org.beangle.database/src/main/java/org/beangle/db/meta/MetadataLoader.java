@@ -9,6 +9,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.Map;
 import java.util.Set;
 
@@ -121,7 +122,7 @@ public class MetadataLoader {
 				ForeignKey info = table.getForeignKey(fk);
 				if (info != null) continue;
 				info = new ForeignKey(rs.getString("FK_NAME"), table.getColumn(rs.getString("FKCOLUMN_NAME")));
-				info.addReferencedColumn(new Column(rs.getString("PKCOLUMN_NAME")));
+				info.addReferencedColumn(new Column(rs.getString("PKCOLUMN_NAME"),Types.BIGINT));
 				Table referencedTable = tables.get(Table.qualify(rs.getString("PKTABLE_SCHEM"),
 						rs.getString("PKTABLE_NAME")));
 				if (null == referencedTable) {

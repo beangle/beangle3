@@ -24,6 +24,11 @@
 			<groupId>org.beangle</groupId>
 			<artifactId>beangle-commons</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<!--osgi dependency-->
 		<dependency>
 			<groupId>org.eclipse.gemini.blueprint</groupId>

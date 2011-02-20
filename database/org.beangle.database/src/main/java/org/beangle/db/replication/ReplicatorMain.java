@@ -6,35 +6,24 @@ package org.beangle.db.replication;
 
 import static org.beangle.db.util.DataSourceUtil.getDataSource;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
-import org.beangle.db.replication.impl.ReplicatorBuilder;
-import org.beangle.db.util.DataSourceUtil;
+import org.apache.commons.lang.StringUtils;
 
 public class ReplicatorMain {
 
 	public static void main(String[] args) throws Exception {
-		final Properties props = new Properties();
-		try {
-			InputStream is = DataSourceUtil.class.getResourceAsStream("/replication.properties");
-			if (null == is) { throw new RuntimeException("cannot find replication.properties"); }
-			props.load(is);
-		} catch (IOException e) {
-			throw new RuntimeException("cannot find database.properties");
-		}
 		ReplicatorBuilder builder = new ReplicatorBuilder();
-		builder.source(props.getProperty("source.dialect"), getDataSource("source"))
-				.schema(props.getProperty("source.schema")).tables("PUBLIC.sys_authorities");
-		
-		builder.target(props.getProperty("target.dialect"), getDataSource("target")).schema(
-				props.getProperty("target.schema"));
-		
+		if (args.length < 2) {
+			System.out.println("Usage:ReplicatorMain datasource:dialect:schema targetsource:dialect:schema");
+			System.exit(0);
+		}
+		String src = args[1];
+		String tar = args[2];
+		String source[] = StringUtils.split(src, ':');
+		String target[] = StringUtils.split(tar, ':');
+		builder.source(source[1], getDataSource(source[0])).schema(source[2]).tables("*").contraints("*")
+				.sequences("*");
+		builder.target(target[1], getDataSource(target[0])).schema(target[2]);
 		Replicator replicator = builder.build();
 		replicator.start();
-		System.out.println("end replicate ..... start sleep");
-		Thread.sleep(1000 * 30);
 	}
-
 }
