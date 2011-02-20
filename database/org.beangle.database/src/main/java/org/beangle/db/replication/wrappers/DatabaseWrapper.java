@@ -36,8 +36,20 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 	protected List<String> viewNames = CollectUtils.newArrayList();
 	protected List<String> sequenceNames = CollectUtils.newArrayList();
 
-	public DatabaseWrapper() {
-		super();
+	public DatabaseWrapper(DataSource dataSource, Dialect dialect, String catalog, String schema) {
+		this(dataSource, dialect, catalog, schema, true);
+	}
+
+	public DatabaseWrapper(DataSource dataSource, Dialect dialect, String catalog, String schema,
+			boolean extras) {
+		try {
+			setDataSource(dataSource);
+			database = new Database(dataSource.getConnection().getMetaData(), dialect, catalog, schema);
+			database.loadTables(extras);
+		} catch (SQLException e) {
+			logger.error("cannot build connection using:{} under dialect {}", dataSource, dialect);
+			throw new RuntimeException(e);
+		}
 	}
 
 	public List<Object> getData(String tableName) {
@@ -47,6 +59,17 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 		} else {
 			return getData(tableMeta);
 		}
+	}
+
+	public boolean drop(Table table) {
+		try {
+			String tablename = Table.qualify(database.getSchema(), table.getName());
+			database.getTables().remove(tablename);
+			execute("drop table " + tablename);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	public int count(Table table) {
@@ -157,24 +180,7 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 		return database.getDialect();
 	}
 
-	/**
-	 * conntect to data source
-	 * 
-	 * @param dialect
-	 * @param catalog
-	 *            TODO
-	 * @param schema
-	 *            TODO
-	 * @param targetDB
-	 */
-	public void connect(DataSource dataSource, Dialect dialect, String catalog, String schema) {
-		try {
-			setDataSource(dataSource);
-			database = new Database(dialect, catalog, schema);
-			database.loadTables(dataSource.getConnection().getMetaData(), false);
-		} catch (SQLException e) {
-			logger.error("cannot build connection using:{} under dialect {}", dataSource, dialect);
-			throw new RuntimeException(e);
-		}
+	public void applyIndexAndContaint(Table table) {
+
 	}
 }

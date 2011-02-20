@@ -5,6 +5,7 @@
 package org.beangle.db.meta;
 
 import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,26 +20,38 @@ import org.beangle.db.dialect.Dialect;
  */
 public class Database {
 
+	// identifer(schema,name)->table
 	@SuppressWarnings("unchecked")
-	// identifer,table
 	private final Map<String, Table> tables = new CaseInsensitiveMap();
-	private final Set<Sequence> sequences = CollectUtils.newHashSet();
+	private Set<Sequence> sequences;
 	protected String catalog;
 	protected String schema;
 	private Dialect dialect;
+	private DatabaseMetaData meta;
 
-	public Database(Dialect dialect, String catalog, String schema) {
+	public Database(DatabaseMetaData meta, Dialect dialect, String catalog, String schema) {
 		super();
+		this.meta = meta;
 		this.dialect = dialect;
 		this.catalog = catalog;
 		this.schema = schema;
 	}
 
-	public void loadTables(DatabaseMetaData meta, boolean extras) {
+	public void loadTables(boolean extras) {
 		MetadataLoader loader = new MetadataLoader(dialect, meta);
 		Set<Table> loadTables = loader.loadTables(catalog, schema, extras);
 		for (Table table : loadTables) {
 			tables.put(table.identifier(), table);
+		}
+	}
+
+	public void loadSequences() {
+		MetadataLoader loader = new MetadataLoader(dialect, meta);
+		try {
+			sequences = CollectUtils.newHashSet();
+			sequences.addAll(loader.loadSequences(meta.getConnection(), schema));
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -71,6 +84,9 @@ public class Database {
 	}
 
 	public Set<Sequence> getSequences() {
+		if (null == sequences) {
+			loadSequences();
+		}
 		return sequences;
 	}
 

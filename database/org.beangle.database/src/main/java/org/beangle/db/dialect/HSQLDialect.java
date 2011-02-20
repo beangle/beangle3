@@ -10,10 +10,11 @@ public class HSQLDialect extends AbstractDialect {
 	public HSQLDialect() {
 		super();
 		ss = new SequenceSupport();
-		ss.setQuerySequenceSql("select sequence_name from information_schema.system_sequences");
-		ss.setNextValSql("call next value for {}");
-		ss.setSelectNextValSql("next value for {}");
-
+		ss.setQuerySequenceSql("select sequence_name,next_value,increment from information_schema.sequences where sequence_schema=':schema'");
+		ss.setNextValSql("call next value for :name");
+		ss.setSelectNextValSql("next value for :name");
+		ss.setCreateSql("create sequence :name start with :start increment by :increment");
+		ss.setDropSql("drop sequence if exists :name");
 		registerColumnType(Types.BOOLEAN, "boolean");
 		registerColumnType(Types.BIGINT, "bigint");
 		registerColumnType(Types.BINARY, "binary");

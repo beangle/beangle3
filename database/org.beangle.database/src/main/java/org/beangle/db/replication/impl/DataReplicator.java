@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.StopWatch;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.db.meta.Table;
@@ -18,50 +19,46 @@ import org.beangle.db.replication.wrappers.DatabaseWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DatabaseReplicator implements Replicator {
+public class DataReplicator implements Replicator {
 
-	private static final Logger logger = LoggerFactory.getLogger(DatabaseReplicator.class);
+	private static final Logger logger = LoggerFactory.getLogger(DataReplicator.class);
 
 	List<Table> tables = CollectUtils.newArrayList();
 	DatabaseWrapper source;
 	DatabaseWrapper target;
 
-	public DatabaseReplicator() {
+	public DataReplicator() {
 		super();
 	}
 
-	public DatabaseReplicator(DatabaseWrapper source, DatabaseWrapper target) {
+	public DataReplicator(DatabaseWrapper source, DatabaseWrapper target) {
 		super();
 		this.source = source;
 		this.target = target;
 	}
 
-	public boolean addTable(String table) {
-		String newTable = table.toUpperCase();
-		if (!StringUtils.contains(table, '.') && null != source.getDatabase().getSchema()) {
-			newTable = source.getDatabase().getSchema() + "." + newTable;
-		}
-		Table tm = source.getDatabase().getTable(newTable);
-		if (null == tm) {
-			logger.error("cannot find metadata for {}", newTable);
-		} else {
-			tables.add(tm);
-		}
-		return tm != null;
+	protected void addTable(Table table) {
+		tables.add(table);
 	}
 
-	public boolean addTables(Collection<String> tables) {
-		boolean success = true;
-		for (String tableName : tables) {
-			success &= addTable(tableName);
-		}
-		return success;
+	protected void addAll(Collection<? extends Table> newTables) {
+		tables.addAll(newTables);
 	}
 
-	public boolean addTables(String[] tables) {
+	public boolean addTables(String... tables) {
 		boolean success = true;
 		for (int i = 0; i < tables.length; i++) {
-			success &= addTable(tables[i]);
+			String newTable = tables[i];
+			if (!StringUtils.contains(tables[i], '.') && null != source.getDatabase().getSchema()) {
+				newTable = source.getDatabase().getSchema() + "." + newTable;
+			}
+			Table tm = source.getDatabase().getTable(newTable);
+			if (null == tm) {
+				logger.error("cannot find metadata for {}", newTable);
+			} else {
+				addTable(tm);
+			}
+			success &= (tm != null);
 		}
 		return success;
 	}
@@ -79,11 +76,16 @@ public class DatabaseReplicator implements Replicator {
 	}
 
 	public void start() {
+		StopWatch watch = new StopWatch();
+		watch.start();
+		logger.info("Start data replication.");
 		for (final Table table : tables) {
 			try {
+				if (target.drop(table)) {
+					logger.info("drop table {}", table.getName());
+				}
 				int count = source.count(table);
 				if (count == 0) {
-					// table.setSchema(target.getSchema());
 					target.pushData(table, Collections.emptyList());
 					logger.info("replicate {} data {}", table, 0);
 				} else {
@@ -92,7 +94,6 @@ public class DatabaseReplicator implements Replicator {
 					while (curr < count) {
 						limit.setPageNo(limit.getPageNo() + 1);
 						List<Object> data = source.getData(table, limit);
-						// table.setSchema(target.getSchema());
 						int successed = target.pushData(table, data);
 						curr += data.size();
 						if (successed == data.size()) {
@@ -107,6 +108,6 @@ public class DatabaseReplicator implements Replicator {
 				logger.error("replicate  " + table.identifier(), e);
 			}
 		}
+		logger.info("End data replication,using {}", watch.getTime());
 	}
-
 }

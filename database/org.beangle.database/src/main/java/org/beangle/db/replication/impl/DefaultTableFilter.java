@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.db.replication.TableFilter;
-import org.springframework.util.StringUtils;
 
 public class DefaultTableFilter implements TableFilter {
 
@@ -24,15 +23,18 @@ public class DefaultTableFilter implements TableFilter {
 	public Collection<String> filter(Collection<String> tables) {
 		List<String> newTables = CollectUtils.newArrayList();
 		for (String tableName : tables) {
+			tableName = tableName.toLowerCase();
 			boolean passed = includes.isEmpty();
 			for (String pattern : includes) {
-				if (StringUtils.startsWithIgnoreCase(tableName, pattern)) {
+				if (pattern.equals("*")) {
 					passed = true;
+				} else {
+					passed = tableName.startsWith(pattern);
 				}
 			}
 			if (passed) {
 				for (String pattern : excludes) {
-					if (tableName.toLowerCase().contains(pattern.toLowerCase())) {
+					if (tableName.contains(pattern)) {
 						passed = false;
 					}
 				}
@@ -45,7 +47,7 @@ public class DefaultTableFilter implements TableFilter {
 	}
 
 	public void addExclude(String table) {
-		excludes.add(table);
+		excludes.add(table.toLowerCase());
 	}
 
 	public List<String> getIncludes() {
@@ -53,7 +55,7 @@ public class DefaultTableFilter implements TableFilter {
 	}
 
 	public void addInclude(String table) {
-		includes.add(table);
+		includes.add(table.toLowerCase());
 	}
 
 }

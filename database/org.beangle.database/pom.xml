@@ -9,11 +9,43 @@
 	<artifactId>beangle-database</artifactId>
 	<packaging>jar</packaging>
 	<name>Beangle Database</name>
+	<properties>
+		<hsqldb.version>2.0.0</hsqldb.version>
+		<postgresql.version>8.4-701.jdbc3</postgresql.version>
+		<oracle.version>10.2.0.1.0</oracle.version>
+	</properties>
+	
 	<dependencies>
+		<dependency>
+			<groupId>org.beangle</groupId>
+			<artifactId>beangle-commons</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.2.2</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>${hsqldb.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgresql.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<artifactId>ojdbc14</artifactId>
 			<groupId>com.oracle.jdbc</groupId>
-			<version>10.2.0.1.0</version>
+			<version>${oracle.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -44,16 +76,6 @@
 			<groupId>com.linuxense</groupId>
 			<artifactId>javadbf</artifactId>
 			<version>0.4.0</version>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.beangle</groupId>
-			<artifactId>beangle-commons</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.2.2</version>
 			<optional>true</optional>
 		</dependency>
 	</dependencies>

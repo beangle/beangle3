@@ -4,7 +4,6 @@
  */
 package org.beangle.db.replication;
 
-import java.util.Collection;
 
 public interface Replicator {
 
@@ -21,27 +20,6 @@ public interface Replicator {
 	 * @param dataSource
 	 */
 	void setSource(DataWrapper source);
-
-	/**
-	 * 添加表
-	 * 
-	 * @param string
-	 */
-	boolean addTable(String string);
-
-	/**
-	 * 添加表
-	 * 
-	 * @param strings
-	 */
-	boolean addTables(String[] strings);
-
-	/**
-	 * 添加表
-	 * 
-	 * @param tables
-	 */
-	boolean addTables(Collection<String> tables);
 
 	/**
 	 * 重新开始

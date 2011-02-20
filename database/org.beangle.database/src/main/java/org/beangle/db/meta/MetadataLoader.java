@@ -156,19 +156,36 @@ public class MetadataLoader {
 		}
 	}
 
-	public Set<Sequence> loadSequences(Connection connection) throws SQLException {
+	public Set<Sequence> loadSequences(Connection connection, String schema) throws SQLException {
 		Set<Sequence> sequences = CollectUtils.newHashSet();
 		SequenceSupport ss = dialect.getSequenceSupport();
 		if (null == ss) return sequences;
 		String sql = ss.getQuerySequenceSql();
+		sql = StringUtils.replace(sql, ":schema", schema);
 		if (sql != null) {
 			Statement statement = null;
 			ResultSet rs = null;
 			try {
 				statement = connection.createStatement();
 				rs = statement.executeQuery(sql);
+				Set<String> columnNames = CollectUtils.newHashSet();
+				for (int i =1; i <= rs.getMetaData().getColumnCount(); i++) {
+					columnNames.add(rs.getMetaData().getColumnLabel(i).toLowerCase());
+				}
 				while (rs.next()) {
-					sequences.add(new Sequence(rs.getString(1).toLowerCase().trim()));
+					Sequence sequence = new Sequence(rs.getString("sequence_name").toLowerCase().trim());
+					if (columnNames.contains("current_value")) {
+						sequence.setCurrent(Long.valueOf(rs.getString("current_value")));
+					} else {
+						sequence.setCurrent(Long.valueOf(rs.getString("next_value")) - 1);
+					}
+					if (columnNames.contains("increment")) {
+						sequence.setIncrement(Integer.valueOf(rs.getString("increment")));
+					}
+					if (columnNames.contains("cache")) {
+						sequence.setCache(Integer.valueOf(rs.getString("cache")));
+					}
+					sequences.add(sequence);
 				}
 			} finally {
 				if (rs != null) rs.close();

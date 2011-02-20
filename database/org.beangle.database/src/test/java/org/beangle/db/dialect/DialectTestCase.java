@@ -17,17 +17,17 @@ public class DialectTestCase {
 	protected Dialect dialect;
 	protected Database database;
 
-	protected static final Logger log = LoggerFactory.getLogger(DialectTestCase.class.getName());
+	protected static final Logger logger = LoggerFactory.getLogger(DialectTestCase.class.getName());
 
 	protected void listTableAndSequences() {
 		Map<String, Table> tables = database.getTables();
 		for (String name : tables.keySet()) {
-			log.info("table found {}", name);
+			logger.info("table {}", name);
 		}
 
 		Set<Sequence> seqs = database.getSequences();
 		for (Sequence obj : seqs) {
-			log.info("sequence found {}", obj);
+			logger.info("sequence {}", obj);
 		}
 	}
 }

@@ -57,9 +57,10 @@ public class ForeignKey extends Constraint {
 			i++;
 		}
 
-		String result = dialect.getAddForeignKeyConstraintString(getName(), cols,
-				Table.qualify(getTable().getSchema(), referencedTable.getName()), refcols,
-				isReferenceToPrimaryKey());
+		String result = "alter table "
+				+ getTable().identifier()
+				+ dialect.getAddForeignKeyConstraintString(getName(), cols, referencedTable.identifier(),
+						refcols, isReferenceToPrimaryKey());
 
 		return cascadeDelete && dialect.supportsCascadeDelete() ? result + " on delete cascade" : result;
 	}

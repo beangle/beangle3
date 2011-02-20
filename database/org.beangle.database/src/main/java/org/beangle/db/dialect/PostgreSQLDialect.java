@@ -28,8 +28,8 @@ public class PostgreSQLDialect extends AbstractDialect {
 		super();
 		ss = new SequenceSupport();
 		ss.setQuerySequenceSql("select seqname from sysibm.syssequences");
-		ss.setNextValSql("select nextval ('{}')");
-		ss.setSelectNextValSql("nextval ('{}')");
+		ss.setNextValSql("select nextval (':name')");
+		ss.setSelectNextValSql("nextval (':name')");
 
 		registerColumnType(BOOLEAN, "bool");
 		registerColumnType(BIT, "bool");

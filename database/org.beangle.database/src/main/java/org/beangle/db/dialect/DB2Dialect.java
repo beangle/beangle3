@@ -11,10 +11,10 @@ public class DB2Dialect extends AbstractDialect {
 	public DB2Dialect() {
 		super();
 		ss = new SequenceSupport();
-		ss.setQuerySequenceSql("select seqname from sysibm.syssequences");
-		ss.setNextValSql("values nextval for {}");
-		ss.setDropSql("drop sequence {} restrict");
-		ss.setSelectNextValSql("nextval for {}");
+		ss.setQuerySequenceSql("select name as sequence_name,start-1 as current_value,increment,cache from sysibm.syssequences where schema=':schema'");
+		ss.setNextValSql("values nextval for :name");
+		ss.setDropSql("drop sequence :name restrict");
+		ss.setSelectNextValSql("nextval for :name");
 
 		registerColumnType(Types.BOOLEAN, "smallint");
 		registerColumnType(Types.BIT, "smallint");

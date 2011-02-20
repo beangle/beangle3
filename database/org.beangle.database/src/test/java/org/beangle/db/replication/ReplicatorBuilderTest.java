@@ -8,17 +8,18 @@ import static org.beangle.db.util.DataSourceUtil.getDataSource;
 
 import org.beangle.db.dialect.Dialects;
 import org.beangle.db.replication.impl.ReplicatorBuilder;
+import org.springframework.util.Assert;
 import org.testng.annotations.Test;
 
 @Test
-public class ReplicatorTest {
+public class ReplicatorBuilderTest {
 
-	public void testHsqlToH2() {
+	public void testBuilder() {
 		ReplicatorBuilder builder = new ReplicatorBuilder();
 		builder.source(Dialects.HSQL, getDataSource("hsqldb")).schema("PUBLIC").tables("*")
 				.exclude("public.dual").indexes("*").contraints("*").sequences("*");
 		builder.target(Dialects.H2, getDataSource("h1")).schema("PUBLIC");
 		Replicator replicator = builder.build();
-		replicator.start();
+		Assert.notNull(replicator);
 	}
 }

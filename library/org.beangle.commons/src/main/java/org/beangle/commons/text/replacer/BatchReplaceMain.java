@@ -58,7 +58,6 @@ public class BatchReplaceMain {
 		if (args.length >= 3) {
 			encoding = args[2];
 		}
-		@SuppressWarnings("unchecked")
 		List<String> lines = FileUtils.readLines(new File(properties));
 		Map<String, List<Replacer>> profiles = CollectUtils.newHashMap();
 		List<Replacer> replacers = null;

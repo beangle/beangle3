@@ -11,9 +11,9 @@ public class OracleDialect extends AbstractDialect {
 	public OracleDialect() {
 		super();
 		ss = new SequenceSupport();
-		ss.setQuerySequenceSql("select sequence_name from user_sequences order by sequence_name");
-		ss.setNextValSql("select {}.nextval from dual");
-		ss.setSelectNextValSql("{}.nextval");
+		ss.setQuerySequenceSql("select sequence_name,last_number,increment_by,cache_size from all_sequences where sequence_owner=':schema'");
+		ss.setNextValSql("select :name.nextval from dual");
+		ss.setSelectNextValSql(":name.nextval");
 		registerCharacterType();
 		registerNumericType();
 		registerDateTimeType();

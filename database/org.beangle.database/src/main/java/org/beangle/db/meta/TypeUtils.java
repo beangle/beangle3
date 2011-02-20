@@ -56,6 +56,7 @@ public class TypeUtils {
 				}
 				break;
 			case Types.BOOLEAN:
+			case Types.BIT:
 				ps.setBoolean(index, (Boolean) value);
 				break;
 			case Types.FLOAT:

@@ -20,8 +20,8 @@ public class MetadataLoaderTest {
 	public void testHsql() throws SQLException {
 		DataSource datasource = DataSourceUtil.getDataSource("source");
 		Dialect dialect = new HSQLDialect();
-		Database database = new Database(dialect, null, "PUBLIC");
-		database.loadTables(datasource.getConnection().getMetaData(), true);
+		Database database = new Database(datasource.getConnection().getMetaData(), dialect, null, "PUBLIC");
+		database.loadTables(true);
 		Map<String, Table> tables = database.getTables();
 		for (Table table : tables.values()) {
 			System.out.println(table.sqlCreateString(dialect));

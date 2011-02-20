@@ -14,8 +14,8 @@ public class SequenceSupport {
 
 	public SequenceSupport() {
 		super();
-		createSql = "create sequence {}";
-		dropSql = "drop sequence {}";
+		createSql = "create sequence :name start with :start increment by :increment";
+		dropSql = "drop sequence :name";
 	}
 
 	public String getCreateSql() {

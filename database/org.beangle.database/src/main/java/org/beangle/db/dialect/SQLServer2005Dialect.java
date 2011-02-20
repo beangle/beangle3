@@ -6,9 +6,9 @@ package org.beangle.db.dialect;
 
 import java.sql.Types;
 
-public class SqlServerDialect extends AbstractDialect {
+public class SQLServer2005Dialect extends AbstractDialect {
 
-	public SqlServerDialect() {
+	public SQLServer2005Dialect() {
 		super();
 		registerColumnType(Types.BIT, "tinyint"); // Sybase BIT type does not
 		// support null values
