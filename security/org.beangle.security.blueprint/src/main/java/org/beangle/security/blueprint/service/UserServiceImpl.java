@@ -14,7 +14,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.EntityExistException;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.security.blueprint.AdminUser;
+import org.beangle.security.blueprint.Adminuser;
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.GroupMember;
 import org.beangle.security.blueprint.User;
@@ -29,7 +29,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
 	public boolean isAdmin(User user) {
-		OqlBuilder<?> query = OqlBuilder.from(AdminUser.class, "admin");
+		OqlBuilder<?> query = OqlBuilder.from(Adminuser.class, "admin");
 		query.where("admin.user=:user", user).select("admin.id");
 		return !entityDao.search(query).isEmpty();
 	}

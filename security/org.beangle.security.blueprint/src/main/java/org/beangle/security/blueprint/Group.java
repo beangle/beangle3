@@ -7,6 +7,7 @@ package org.beangle.security.blueprint;
 import java.util.Set;
 
 import org.beangle.model.pojo.LongIdTimeEntity;
+import org.beangle.security.blueprint.restrict.GroupRestriction;
 import org.beangle.security.blueprint.restrict.RestrictionHolder;
 
 /**
@@ -14,7 +15,7 @@ import org.beangle.security.blueprint.restrict.RestrictionHolder;
  * 
  * @author chaostone 2005-9-26
  */
-public interface Group extends LongIdTimeEntity, RestrictionHolder {
+public interface Group extends LongIdTimeEntity, RestrictionHolder<GroupRestriction> {
 
 	/**
 	 * 名称

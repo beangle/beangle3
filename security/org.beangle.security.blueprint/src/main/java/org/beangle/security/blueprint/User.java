@@ -7,13 +7,15 @@ package org.beangle.security.blueprint;
 import java.util.Set;
 
 import org.beangle.model.pojo.LongIdTimeEntity;
+import org.beangle.security.blueprint.restrict.RestrictionHolder;
+import org.beangle.security.blueprint.restrict.UserRestriction;
 
 /**
  * 系统中所有用户的账号、权限、状态信息.
  * 
  * @author dell,chaostone 2005-9-26
  */
-public interface User extends LongIdTimeEntity {
+public interface User extends LongIdTimeEntity, RestrictionHolder<UserRestriction> {
 
 	// 新建用户的缺省密码
 	public static final String DEFAULT_PASSWORD = "1";

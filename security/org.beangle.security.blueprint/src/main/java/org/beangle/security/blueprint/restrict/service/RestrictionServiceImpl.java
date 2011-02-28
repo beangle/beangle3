@@ -52,7 +52,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 			restrictions.addAll(group.getRestrictions());
 		}
 		// 用户自身限制
-		RestrictionHolder userHolder = (RestrictionHolder) user;
+		RestrictionHolder<?> userHolder =user;
 		restrictions.addAll(userHolder.getRestrictions());
 		// 实体过滤
 		return (List<Restriction>) CollectionUtils.select(restrictions, new Predicate() {

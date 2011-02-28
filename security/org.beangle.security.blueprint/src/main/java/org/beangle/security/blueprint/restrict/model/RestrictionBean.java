@@ -6,6 +6,10 @@ package org.beangle.security.blueprint.restrict.model;
 
 import java.util.Map;
 
+import javax.persistence.ManyToMany;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.MappedSuperclass;
+
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.StrUtils;
@@ -13,41 +17,24 @@ import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.RestrictPattern;
 import org.beangle.security.blueprint.restrict.Restriction;
-import org.beangle.security.blueprint.restrict.RestrictionHolder;
 
 /**
  * 资源访问限制
  * 
  * @author chaostone
  */
-public class RestrictionBean extends LongIdObject implements Restriction {
+@MappedSuperclass
+public abstract class RestrictionBean extends LongIdObject implements Restriction {
 	private static final long serialVersionUID = -1157873272781525823L;
 
-	private RestrictionHolder holder;
+	protected RestrictPattern pattern;
 
-	private RestrictPattern pattern;
+	protected boolean enabled = true;
 
-	private boolean enabled = true;
-
+	// FIXME
+	@ManyToMany
+	@MapKeyColumn(name = "param_id")
 	private Map<Long, String> items = CollectUtils.newHashMap();
-
-	public RestrictionBean() {
-		super();
-	}
-
-	public RestrictionBean(RestrictionHolder holder, RestrictPattern pattern) {
-		super();
-		this.holder = holder;
-		this.pattern = pattern;
-	}
-
-	public RestrictionHolder getHolder() {
-		return holder;
-	}
-
-	public void setHolder(RestrictionHolder holder) {
-		this.holder = holder;
-	}
 
 	public boolean isEnabled() {
 		return enabled;

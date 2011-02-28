@@ -21,14 +21,14 @@ public interface Restriction extends LongIdEntity, Cloneable {
 	 * 
 	 * @return
 	 */
-	public RestrictionHolder getHolder();
+	public RestrictionHolder<? extends Restriction> getHolder();
 
 	/**
 	 * 设置数据权限持有者
 	 * 
 	 * @param holder
 	 */
-	public void setHolder(RestrictionHolder holder);
+	public void setHolder(RestrictionHolder<? extends Restriction> holder);
 
 	/**
 	 * 限制模式

@@ -6,22 +6,27 @@ package org.beangle.security.blueprint.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdTimeObject;
-import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.GroupMember;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.UserCategory;
-import org.beangle.security.blueprint.restrict.Restriction;
 import org.beangle.security.blueprint.restrict.RestrictionHolder;
+import org.beangle.security.blueprint.restrict.UserRestriction;
 
 /**
  * 系统中所有用户的账号、权限、状态信息.
  * 
  * @author dell,chaostone 2005-9-26
  */
-public class UserBean extends LongIdTimeObject implements User, RestrictionHolder {
+@Entity(name = "org.beangle.security.blueprint.AdminUser")
+public class UserBean extends LongIdTimeObject implements User, RestrictionHolder<UserRestriction> {
 	private static final long serialVersionUID = -3625902334772342380L;
 
 	/** 名称 */
@@ -37,15 +42,14 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 	private String mail;
 
 	/** 对应用户组 */
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<GroupMember> groups = CollectUtils.newHashSet();
 
 	/** 创建人 */
 	private User creator;
 
-	/** 向下级授权,所管理的用户组 */
-	private Set<Group> mngGroups = CollectUtils.newHashSet();
-
 	/** 种类 */
+	@ManyToMany
 	protected Set<UserCategory> categories = CollectUtils.newHashSet();;
 
 	/** 缺省类别 */
@@ -55,7 +59,8 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 	protected int status = User.ACTIVE;
 
 	/** 访问限制 */
-	protected Set<Restriction> restrictions = CollectUtils.newHashSet();
+	@OneToMany(mappedBy = "holder", cascade = CascadeType.ALL)
+	protected Set<UserRestriction> restrictions = CollectUtils.newHashSet();
 
 	/** 备注 */
 	protected String remark;
@@ -154,14 +159,6 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 		this.groups = groups;
 	}
 
-	public Set<Group> getMngGroups() {
-		return mngGroups;
-	}
-
-	public void setMngGroups(Set<Group> mngGroups) {
-		this.mngGroups = mngGroups;
-	}
-
 	public Set<UserCategory> getCategories() {
 		return categories;
 	}
@@ -170,11 +167,11 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 		this.categories = categories;
 	}
 
-	public Set<Restriction> getRestrictions() {
+	public Set<UserRestriction> getRestrictions() {
 		return restrictions;
 	}
 
-	public void setRestrictions(Set<Restriction> restrictions) {
+	public void setRestrictions(Set<UserRestriction> restrictions) {
 		this.restrictions = restrictions;
 	}
 

@@ -5,13 +5,15 @@
 package org.beangle.security.blueprint;
 
 import org.beangle.model.pojo.LongIdEntity;
+import org.beangle.security.blueprint.restrict.AuthorityRestriction;
+import org.beangle.security.blueprint.restrict.RestrictionHolder;
 
 /**
  * 权限
  * 
  * @author chaostone 2005-9-26
  */
-public interface Authority extends LongIdEntity, Cloneable {
+public interface Authority extends LongIdEntity, Cloneable, RestrictionHolder<AuthorityRestriction> {
 	/**
 	 * 系统资源
 	 * 

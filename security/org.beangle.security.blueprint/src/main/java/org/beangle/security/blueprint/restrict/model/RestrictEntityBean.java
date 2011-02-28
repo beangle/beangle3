@@ -6,11 +6,15 @@ package org.beangle.security.blueprint.restrict.model;
 
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdObject;
-import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.RestrictEntity;
+import org.beangle.security.blueprint.restrict.RestrictField;
 
+@Entity(name = "org.beangle.security.blueprint.restrict.RestrictEntity")
 public class RestrictEntityBean extends LongIdObject implements RestrictEntity {
 
 	private static final long serialVersionUID = -5761007041977213647L;
@@ -21,6 +25,7 @@ public class RestrictEntityBean extends LongIdObject implements RestrictEntity {
 
 	private String remark;
 
+	@ManyToMany
 	private Set<RestrictField> fields = CollectUtils.newHashSet();
 
 	public RestrictEntityBean() {

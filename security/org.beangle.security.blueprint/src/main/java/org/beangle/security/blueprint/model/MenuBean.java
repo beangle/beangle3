@@ -7,12 +7,19 @@ package org.beangle.security.blueprint.model;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.Menu;
 import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.Resource;
 
+
+@Entity(name = "org.beangle.security.blueprint.AdminUser")
 public class MenuBean extends LongIdObject implements Menu {
 
 	private static final long serialVersionUID = 3864556621041443066L;
@@ -27,6 +34,7 @@ public class MenuBean extends LongIdObject implements Menu {
 
 	private String remark;
 
+	@ManyToMany
 	private Set<Resource> resources = CollectUtils.newHashSet();
 
 	private boolean enabled = true;
@@ -35,6 +43,7 @@ public class MenuBean extends LongIdObject implements Menu {
 
 	private Menu parent;
 
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
 	private List<Menu> children;
 
 	/**

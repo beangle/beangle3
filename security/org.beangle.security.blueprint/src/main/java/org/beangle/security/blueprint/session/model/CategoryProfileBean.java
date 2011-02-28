@@ -4,11 +4,13 @@
  */
 package org.beangle.security.blueprint.session.model;
 
+import javax.persistence.Entity;
+
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.UserCategory;
 import org.beangle.security.blueprint.session.CategoryProfile;
 import org.beangle.security.blueprint.session.SessionProfile;
-
+@Entity(name = "org.beangle.security.blueprint.session.CategoryProfile")
 public class CategoryProfileBean extends LongIdObject implements CategoryProfile {
 
 	private static final long serialVersionUID = 1999239598984221565L;

@@ -6,6 +6,10 @@ package org.beangle.security.blueprint.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdTimeObject;
 import org.beangle.security.blueprint.Authority;
@@ -13,13 +17,14 @@ import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.GroupMember;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.UserCategory;
-import org.beangle.security.blueprint.restrict.Restriction;
+import org.beangle.security.blueprint.restrict.GroupRestriction;
 
 /**
  * 系统中用户组的基本信息和账号信息.
  * 
  * @author dell,chaostone 2005-9-26
  */
+@Entity(name = "org.beangle.security.blueprint.AdminUser")
 public class GroupBean extends LongIdTimeObject implements Group {
 
 	private static final long serialVersionUID = -3404181949500894284L;
@@ -28,6 +33,7 @@ public class GroupBean extends LongIdTimeObject implements Group {
 	private String name;
 
 	/** 关联的用户 */
+	@OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
 	private Set<GroupMember> members = CollectUtils.newHashSet();
 
 	/** 对应的用户类别 */
@@ -37,6 +43,7 @@ public class GroupBean extends LongIdTimeObject implements Group {
 	private Group parent;
 
 	/** 下级组 */
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
 	private Set<Group> children = CollectUtils.newHashSet();
 
 	/** 创建人 */
@@ -49,9 +56,11 @@ public class GroupBean extends LongIdTimeObject implements Group {
 	public boolean enabled = true;
 
 	/** 访问限制 */
-	protected Set<Restriction> restrictions = CollectUtils.newHashSet();
+	@OneToMany(mappedBy = "holder", cascade = CascadeType.ALL)
+	protected Set<GroupRestriction> restrictions = CollectUtils.newHashSet();
 
 	/** 权限 */
+	@OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
 	protected Set<Authority> authorities = CollectUtils.newHashSet();
 
 	public GroupBean() {
@@ -83,12 +92,12 @@ public class GroupBean extends LongIdTimeObject implements Group {
 		this.remark = remark;
 	}
 
-	public Set<Restriction> getRestrictions() {
+	public Set<GroupRestriction> getRestrictions() {
 		return restrictions;
 	}
 
-	public void setRestrictions(Set<Restriction> restrictions) {
-		this.restrictions = restrictions;
+	public void setRestrictions(Set<GroupRestriction> restrictions) {
+		this.restrictions = (Set<GroupRestriction>) restrictions;
 	}
 
 	public void setAuthorities(Set<Authority> authorities) {

@@ -6,18 +6,22 @@ package org.beangle.security.blueprint.model;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.Menu;
 import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.UserCategory;
-
+@Entity(name = "org.beangle.security.blueprint.AdminUser")
 public class MenuProfileBean extends LongIdObject implements MenuProfile {
 
 	private static final long serialVersionUID = 9147563981118270960L;
 
 	private String name;
 
+	@OneToMany(mappedBy="profile")
 	private List<Menu> menus = CollectUtils.newArrayList();
 
 	/** 对应的用户类别 */

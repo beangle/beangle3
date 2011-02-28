@@ -14,7 +14,7 @@ import org.beangle.security.blueprint.model.GroupBean;
 import org.beangle.security.blueprint.restrict.model.RestrictEntityBean;
 import org.beangle.security.blueprint.restrict.model.RestrictFieldBean;
 import org.beangle.security.blueprint.restrict.model.RestrictPatternBean;
-import org.beangle.security.blueprint.restrict.model.RestrictionBean;
+import org.beangle.security.blueprint.restrict.model.UserRestrictionBean;
 import org.beangle.security.blueprint.restrict.service.CsvDataResolver;
 import org.beangle.security.blueprint.restrict.service.RestrictionServiceImpl;
 import org.testng.Assert;
@@ -42,7 +42,7 @@ public class ApplyTest {
 		entity.getFields().add(field);
 		RestrictPattern pattern = new RestrictPatternBean(entity,
 				"exists(from {alias}.groups as g where g.group in(:groups))");
-		Restriction restriction = new RestrictionBean(null, pattern);
+		Restriction restriction = new UserRestrictionBean(null, pattern);
 		restriction.setItem(field, "id;name,1;group1");
 		OqlBuilder<User> builder = OqlBuilder.from(User.class);
 		restrictionService.apply(builder, CollectUtils.newArrayList(restriction));

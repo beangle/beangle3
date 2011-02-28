@@ -6,11 +6,15 @@ package org.beangle.security.blueprint.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.Authority;
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.Resource;
-import org.beangle.security.blueprint.restrict.Restriction;
+import org.beangle.security.blueprint.restrict.AuthorityRestriction;
 import org.beangle.security.blueprint.restrict.RestrictionHolder;
 
 /**
@@ -18,7 +22,8 @@ import org.beangle.security.blueprint.restrict.RestrictionHolder;
  * 
  * @author dell,chaostone 2005-9-26
  */
-public class AuthorityBean extends LongIdObject implements RestrictionHolder, Authority {
+@Entity(name = "org.beangle.security.blueprint.AdminUser")
+public class AuthorityBean extends LongIdObject implements RestrictionHolder<AuthorityRestriction>, Authority {
 
 	private static final long serialVersionUID = -8956079356245507990L;
 
@@ -29,7 +34,8 @@ public class AuthorityBean extends LongIdObject implements RestrictionHolder, Au
 	protected Resource resource;
 
 	/** 该模块对应的数据操作范围 */
-	protected Set<Restriction> restrictions;
+	@OneToMany(mappedBy = "holder", cascade = CascadeType.ALL)
+	protected Set<AuthorityRestriction> restrictions;
 
 	public AuthorityBean() {
 		super();
@@ -53,11 +59,11 @@ public class AuthorityBean extends LongIdObject implements RestrictionHolder, Au
 		this.resource = (Resource) resource;
 	}
 
-	public Set<Restriction> getRestrictions() {
+	public Set<AuthorityRestriction> getRestrictions() {
 		return restrictions;
 	}
 
-	public void setRestrictions(Set<Restriction> restrictions) {
+	public void setRestrictions(Set<AuthorityRestriction> restrictions) {
 		this.restrictions = restrictions;
 	}
 

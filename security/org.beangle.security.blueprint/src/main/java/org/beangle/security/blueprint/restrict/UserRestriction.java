@@ -4,6 +4,7 @@
  */
 package org.beangle.security.blueprint.restrict;
 
+
 public interface UserRestriction extends Restriction {
 
 }

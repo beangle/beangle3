@@ -4,10 +4,12 @@
  */
 package org.beangle.security.blueprint.restrict.model;
 
+import javax.persistence.Entity;
+
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.restrict.RestrictEntity;
 import org.beangle.security.blueprint.restrict.RestrictPattern;
-
+@Entity(name = "org.beangle.security.blueprint.restrict.RestrictPattern")
 public class RestrictPatternBean extends LongIdObject implements RestrictPattern {
 
 	private static final long serialVersionUID = 3491583230212588933L;

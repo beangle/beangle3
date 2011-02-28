@@ -7,6 +7,8 @@ package org.beangle.security.blueprint.session.model;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import javax.persistence.Entity;
+
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.UserCategory;
 import org.beangle.security.blueprint.session.SessionActivity;
@@ -16,6 +18,7 @@ import org.beangle.security.blueprint.session.SessionActivity;
  * 
  * @author chaostone
  */
+@Entity(name = "org.beangle.security.blueprint.session.SessionActivity")
 public class SessionActivityBean extends LongIdObject implements SessionActivity {
 
 	private static final long serialVersionUID = -3144771635148215917L;

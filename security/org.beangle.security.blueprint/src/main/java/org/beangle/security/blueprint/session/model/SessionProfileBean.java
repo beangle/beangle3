@@ -6,6 +6,8 @@ package org.beangle.security.blueprint.session.model;
 
 import java.util.Map;
 
+import javax.persistence.Entity;
+
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.session.CategoryProfile;
@@ -16,6 +18,7 @@ import org.beangle.security.blueprint.session.SessionProfile;
  * 
  * @author chaostone
  */
+@Entity(name = "org.beangle.security.blueprint.session.SessionProfile")
 public class SessionProfileBean extends LongIdObject implements SessionProfile {
 
 	private static final long serialVersionUID = 7877599995789627073L;
