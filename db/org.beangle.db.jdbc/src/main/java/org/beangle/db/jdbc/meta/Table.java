@@ -21,7 +21,7 @@ import org.beangle.db.jdbc.grammar.TableGrammar;
  * 
  * @author chaostone
  */
-public class Table implements Comparable<Table> {
+public class Table implements Comparable<Table>, Cloneable {
 	private String schema;
 	private String name;
 	private PrimaryKey primaryKey;
@@ -60,26 +60,17 @@ public class Table implements Comparable<Table> {
 		return qualify(schema, name);
 	}
 
+	public String identifier(String givenSchema) {
+		if (StringUtils.isEmpty(givenSchema)) return name;
+		else return qualify(givenSchema, name);
+	}
+
 	public static String qualify(String schema, String name) {
 		StringBuilder qualifiedName = new StringBuilder();
 		if (StringUtils.isNotEmpty(schema)) {
 			qualifiedName.append(schema).append('.');
 		}
 		return qualifiedName.append(name).toString();
-	}
-
-	public String genInsertSql() {
-		String[] columnNames = getColumnNames();
-		StringBuilder sb = new StringBuilder("insert into ");
-		sb.append(name).append("(");
-		for (int i = 0; i < columnNames.length; i++) {
-			sb.append(columnNames[i]).append(',');
-		}
-		sb.setCharAt(sb.length() - 1, ')');
-		sb.append(" values(");
-		sb.append(StringUtils.repeat("?,", columnNames.length));
-		sb.setCharAt(sb.length() - 1, ')');
-		return sb.toString();
 	}
 
 	public UniqueKey getOrCreateUniqueKey(String keyName) {
@@ -92,14 +83,36 @@ public class Table implements Comparable<Table> {
 		return uk;
 	}
 
+	public String getInsertSql() {
+		return getInsertSql(schema);
+	}
+
+	public String getInsertSql(String newSchema) {
+		String[] columnNames = getColumnNames();
+		StringBuilder sb = new StringBuilder("insert into ");
+		sb.append(identifier(newSchema)).append("(");
+		for (int i = 0; i < columnNames.length; i++) {
+			sb.append(columnNames[i]).append(',');
+		}
+		sb.setCharAt(sb.length() - 1, ')');
+		sb.append(" values(");
+		sb.append(StringUtils.repeat("?,", columnNames.length));
+		sb.setCharAt(sb.length() - 1, ')');
+		return sb.toString();
+	}
+
+	public String getCreateSql(Dialect dialect) {
+		return getCreateSql(dialect, schema);
+	}
+
 	/**
 	 * @param dialect
 	 * @return
 	 */
-	public String sqlCreateString(Dialect dialect) {
+	public String getCreateSql(Dialect dialect, String newSchema) {
 		TableGrammar grammar = dialect.getTableGrammar();
-		StringBuilder buf = new StringBuilder(grammar.getCreateString()).append(' ').append(name)
-				.append(" (");
+		StringBuilder buf = new StringBuilder(grammar.getCreateString()).append(' ')
+				.append(identifier(newSchema)).append(" (");
 		Iterator<Column> iter = columns.values().iterator();
 		while (iter.hasNext()) {
 			Column col = iter.next();
@@ -147,6 +160,73 @@ public class Table implements Comparable<Table> {
 		return buf.toString();
 	}
 
+	public String getQuerySql() {
+		return getQuerySql(schema);
+	}
+
+	public String getQuerySql(String newSchema) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("select ");
+		String[] columnNames = getColumnNames();
+		for (String columnName : columnNames) {
+			sb.append(columnName).append(',');
+		}
+		sb.deleteCharAt(sb.length() - 1);
+		sb.append(" from ").append(identifier(newSchema));
+		return sb.toString();
+	}
+
+	public Table clone() {
+		Table tb = new Table(schema, name);
+		tb.setComment(comment);
+		for (Column col : columns.values())
+			tb.addColumn(col.clone());
+		if (null != primaryKey) tb.setPrimaryKey(primaryKey.clone());
+
+		for (ForeignKey fk : foreignKeys.values())
+			tb.addForeignKey(fk.clone());
+
+		for (UniqueKey uk : uniqueKeys.values())
+			tb.addUniqueKey(uk.clone());
+
+		for (Index idx : indexes.values())
+			tb.addIndex(idx.clone());
+		return tb;
+	}
+
+	public void lowerCase() {
+		this.schema = StringUtils.lowerCase(schema);
+		this.name = StringUtils.lowerCase(name);
+		Map<String, Column> newColumns = CollectUtils.newHashMap();
+		for (Column col : columns.values()) {
+			col.lowerCase();
+			newColumns.put(col.getName(), col);
+		}
+		columns = newColumns;
+
+		if (null != primaryKey) primaryKey.lowerCase();
+
+		Map<String, ForeignKey> newKeys = CollectUtils.newHashMap();
+		for (ForeignKey fk : foreignKeys.values()) {
+			fk.lowerCase();
+			newKeys.put(fk.getName(), fk);
+		}
+		foreignKeys = newKeys;
+		Map<String, UniqueKey> newUniqueKeys = CollectUtils.newHashMap();
+		for (UniqueKey uk : uniqueKeys.values()) {
+			uk.lowerCase();
+			newUniqueKeys.put(uk.getName(), uk);
+		}
+		uniqueKeys = newUniqueKeys;
+
+		Map<String, Index> newIndexes = CollectUtils.newHashMap();
+		for (Index idx : indexes.values()) {
+			idx.lowerCase();
+			newIndexes.put(idx.getName(), idx);
+		}
+		indexes = newIndexes;
+	}
+
 	public int compareTo(Table o) {
 		return new CompareToBuilder().append(getSchema(), o.getSchema()).append(getName(), o.getName())
 				.toComparison();
@@ -192,24 +272,29 @@ public class Table implements Comparable<Table> {
 	}
 
 	public Column getColumn(String columnName) {
-		return (Column) columns.get(columnName.toLowerCase());
+		return (Column) columns.get(columnName);
 	}
 
 	public ForeignKey getForeignKey(String keyName) {
-		return foreignKeys.get(keyName.toLowerCase());
+		return foreignKeys.get(keyName);
 	}
 
 	public void addForeignKey(ForeignKey key) {
 		key.setTable(this);
-		foreignKeys.put(key.getName().toLowerCase(), key);
+		foreignKeys.put(key.getName(), key);
+	}
+
+	public void addUniqueKey(UniqueKey key) {
+		key.setTable(this);
+		this.uniqueKeys.put(key.getName(), key);
 	}
 
 	public void addColumn(Column column) {
-		columns.put(column.getName().toLowerCase(), column);
+		columns.put(column.getName(), column);
 	}
 
 	public void addIndex(Index index) {
-		indexes.put(index.getName().toLowerCase(), index);
+		indexes.put(index.getName(), index);
 	}
 
 	public Map<String, ForeignKey> getForeignKeys() {
@@ -225,7 +310,7 @@ public class Table implements Comparable<Table> {
 	}
 
 	public Index getIndex(String indexName) {
-		return indexes.get(indexName.toLowerCase());
+		return indexes.get(indexName);
 	}
 
 	public String getComment() {

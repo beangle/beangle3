@@ -7,6 +7,7 @@ package org.beangle.db.jdbc.meta;
 import java.sql.Types;
 
 import org.beangle.db.jdbc.dialect.H2Dialect;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -28,7 +29,16 @@ public class TableTest {
 	}
 
 	public void testH2Create() {
-		String createSql = table.sqlCreateString(new H2Dialect());
+		String createSql = table.getCreateSql(new H2Dialect());
 		System.out.println(createSql);
+	}
+	public void testClone(){
+		table = new Table("PUBLIC", "USER");
+		Table cloned=table.clone();
+		Assert.assertFalse(cloned==table);
+		cloned.lowerCase();
+		Assert.assertEquals("USER", table.getName());
+		Assert.assertEquals("user", cloned.getName());
+		
 	}
 }

@@ -34,6 +34,7 @@ public class OracleDialect extends AbstractDialect {
 
 	public OracleDialect() {
 		super("[10.1)");
+		registerKeywords("resource","level");
 	}
 
 	@Override
@@ -46,6 +47,7 @@ public class OracleDialect extends AbstractDialect {
 		return ss;
 	}
 
+
 	@Override
 	protected void registerType() {
 		registerType(CHAR, "char(1)");
@@ -55,13 +57,14 @@ public class OracleDialect extends AbstractDialect {
 
 		registerType(BOOLEAN, "number(1,0)");
 		registerType(BIT, "number(1,0)");
-		registerType(BIGINT, "number(19,0)");
 		registerType(SMALLINT, "number(5,0)");
 		registerType(TINYINT, "number(3,0)");
 		registerType(INTEGER, "number(10,0)");
+		registerType(BIGINT, "number(19,0)");
 
 		registerType(FLOAT, "float");
 		registerType(DOUBLE, "double precision");
+		
 		registerType(DECIMAL, "number($p,$s)");
 		registerType(NUMERIC, "number($p,$s)");
 		registerType(NUMERIC, 38, "number($p,$s)");
@@ -71,13 +74,13 @@ public class OracleDialect extends AbstractDialect {
 		registerType(TIME, "date");
 		registerType(TIMESTAMP, "date");
 
+		registerType(BINARY, "raw");
 		registerType(VARBINARY, 2000, "raw($l)");
 		registerType(VARBINARY, "long raw");
-		registerType(LONGVARCHAR, "long");
 		registerType(LONGVARBINARY, "long raw");
+
 		registerType(BLOB, "blob");
 		registerType(CLOB, "clob");
-		registerType(BINARY, "raw");
 	}
 
 	@Override

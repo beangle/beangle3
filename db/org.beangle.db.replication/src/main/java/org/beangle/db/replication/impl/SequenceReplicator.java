@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.db.jdbc.dialect.Dialect;
 import org.beangle.db.jdbc.meta.Sequence;
 import org.beangle.db.replication.DataWrapper;
 import org.beangle.db.replication.Replicator;
@@ -55,6 +56,12 @@ public class SequenceReplicator implements Replicator {
 	}
 
 	public void start() {
+		Dialect targetDialect = target.getDatabase().getDialect();
+		if (null == targetDialect.getSequenceGrammar()) {
+			logger.info("Target database {} dosen't support sequence,replication ommited.", targetDialect
+					.getClass().getSimpleName());
+			return;
+		}
 		Collections.sort(sequences);
 		StopWatch watch = new StopWatch();
 		watch.start();

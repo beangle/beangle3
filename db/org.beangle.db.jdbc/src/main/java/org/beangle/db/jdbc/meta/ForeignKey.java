@@ -32,7 +32,11 @@ public class ForeignKey extends Constraint {
 		addColumn(column);
 	}
 
-	public String sqlConstraintString(Dialect dialect) {
+	public String getAlterSql(Dialect dialect) {
+		return getAlterSql(dialect, table.getSchema());
+	}
+
+	public String getAlterSql(Dialect dialect, String newSchema) {
 		Validate.notNull(getName());
 		Validate.notNull(getTable());
 		Validate.notNull(referencedTable, "referencedTable must be set");
@@ -58,11 +62,23 @@ public class ForeignKey extends Constraint {
 		}
 
 		String result = "alter table "
-				+ getTable().identifier()
-				+ dialect.getAddForeignKeyConstraintString(getName(), cols, referencedTable.identifier(),
-						refcols, isReferenceToPrimaryKey());
+				+ getTable().identifier(newSchema)
+				+ dialect.getAddForeignKeyConstraintString(getName(), cols,
+						referencedTable.identifier(newSchema), refcols, isReferenceToPrimaryKey());
 
 		return cascadeDelete && dialect.supportsCascadeDelete() ? result + " on delete cascade" : result;
+	}
+
+	public ForeignKey clone() {
+		ForeignKey cloned = (ForeignKey) super.clone();
+		cloned.cascadeDelete = this.cascadeDelete;
+		cloned.referencedTable = this.referencedTable;
+		List<Column> newColumns = CollectUtils.newArrayList();
+		for (Column column : referencedColumns) {
+			newColumns.add(column.clone());
+		}
+		cloned.referencedColumns = newColumns;
+		return cloned;
 	}
 
 	public void addReferencedColumn(Column column) {

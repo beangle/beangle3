@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.StringUtils;
 import org.beangle.db.jdbc.dialect.Dialect;
 
 /**
@@ -16,7 +17,7 @@ import org.beangle.db.jdbc.dialect.Dialect;
  * 
  * @author chaostone
  */
-public class Column implements Comparable<Column> {
+public class Column implements Comparable<Column>, Cloneable {
 	private String name;
 	private String typeName;
 	private int typeCode;
@@ -53,6 +54,18 @@ public class Column implements Comparable<Column> {
 		typeCode = rs.getInt("DATA_TYPE");
 		typeName = new StringTokenizer(rs.getString("TYPE_NAME"), "() ").nextToken();
 		comment = rs.getString("REMARKS");
+	}
+
+	public Column clone() {
+		try {
+			return (Column) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void lowerCase() {
+		this.name = StringUtils.lowerCase(name);
 	}
 
 	public String getName() {

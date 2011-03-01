@@ -23,7 +23,7 @@ public class ForeignKeyTest {
 		tableA.addForeignKey(fk);
 		fk.setReferencedTable(table);
 		Dialect dialect = new OracleDialect();
-		System.out.println(fk.sqlConstraintString(dialect));
+		System.out.println(fk.getAlterSql(dialect));
 	}
 
 }

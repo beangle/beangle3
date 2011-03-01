@@ -50,7 +50,7 @@ public class DataReplicator implements Replicator {
 		for (int i = 0; i < tables.length; i++) {
 			String newTable = tables[i];
 			if (!StringUtils.contains(tables[i], '.') && null != source.getDatabase().getSchema()) {
-				newTable = source.getDatabase().getSchema() + "." + newTable;
+				newTable = Table.qualify(source.getDatabase().getSchema(), newTable);
 			}
 			Table tm = source.getDatabase().getTable(newTable);
 			if (null == tm) {
@@ -75,13 +75,13 @@ public class DataReplicator implements Replicator {
 		this.target = (DatabaseWrapper) target;
 	}
 
-	private boolean reCreateTable(Table table) {
+	private boolean createOrReplaceTable(Table table) {
 		if (target.drop(table)) {
 			if (target.create(table)) {
-				logger.info("Recreate table {}", table.getName());
+				logger.info("Create table {}", table.getName());
 				return true;
 			} else {
-				logger.error("Recreat table {} failure,try next table.", table.getName());
+				logger.error("Create table {} failure.", table.getName());
 			}
 		}
 		return false;
@@ -93,9 +93,13 @@ public class DataReplicator implements Replicator {
 		watch.start();
 		logger.info("Start data replication...");
 		for (final Table table : tables) {
+			String tableName=table.identifier();
+			// set new schema
+			table.setSchema(target.getDatabase().getSchema());
 			try {
-				if (!reCreateTable(table)) continue;
-				int count = source.count(table);
+				if (!createOrReplaceTable(table)) continue;
+				Table srcTable = source.getDatabase().getTable(tableName);
+				int count = source.count(srcTable);
 				if (count == 0) {
 					target.pushData(table, Collections.emptyList());
 					logger.info("Replicate {}(0)", table);
@@ -104,7 +108,7 @@ public class DataReplicator implements Replicator {
 					PageLimit limit = new PageLimit(0, 1000);
 					while (curr < count) {
 						limit.setPageNo(limit.getPageNo() + 1);
-						List<Object> data = source.getData(table, limit);
+						List<Object> data = source.getData(srcTable, limit);
 						if (data.isEmpty()) {
 							logger.error("Cannot fetch limit data in {} with page size {}",
 									limit.getPageNo(), limit.getPageSize());

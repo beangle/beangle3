@@ -14,7 +14,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.db.jdbc.dialect.Dialect;
 import org.beangle.db.jdbc.grammar.LimitGrammar;
@@ -37,9 +36,6 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 
 	protected Database database;
 	protected String productName;
-	protected List<String> tableNames = CollectUtils.newArrayList();
-	protected List<String> viewNames = CollectUtils.newArrayList();
-	protected List<String> sequenceNames = CollectUtils.newArrayList();
 
 	public DatabaseWrapper(DataSource dataSource, Dialect dialect, String catalog, String schema) {
 		this(dataSource, dialect, catalog, schema, true);
@@ -52,7 +48,7 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 			database = new Database(dataSource.getConnection().getMetaData(), dialect, catalog, schema);
 			database.loadTables(extras);
 		} catch (SQLException e) {
-			logger.error("cannot build connection using:{} under dialect {}", dataSource, dialect);
+			logger.error("Cannot build connection using:{} under dialect {}", dataSource, dialect);
 			throw new RuntimeException(e);
 		}
 	}
@@ -75,18 +71,18 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 				execute(database.getDialect().getTableGrammar().dropCascade(tablename));
 			}
 		} catch (Exception e) {
-			logger.error("drop table " + table.getName() + " failed", e);
+			logger.error("Drop table " + table.getName() + " failed", e);
 			return false;
 		}
 		return true;
 	}
 
 	public boolean create(Table table) {
-		if (null == database.getTable(Table.qualify(database.getSchema(), table.getName()))) {
+		if (null == database.getTable(table.identifier())) {
 			try {
-				execute(table.sqlCreateString(database.getDialect()));
+				execute(table.getCreateSql(database.getDialect()));
 			} catch (Exception e) {
-				logger.warn("cannot create table {}", table.getName());
+				logger.warn("Cannot create table {}", table.getName());
 				e.printStackTrace();
 				return false;
 			}
@@ -102,7 +98,7 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 				String dropSql = sequence.sqlDropString(getDialect());
 				if (null != dropSql) execute(dropSql);
 			} catch (Exception e) {
-				logger.error("drop sequence " + sequence.getName() + " failed", e);
+				logger.error("Drop sequence " + sequence.getName() + " failed", e);
 				return false;
 			}
 		}
@@ -121,13 +117,12 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 	}
 
 	public int count(Table table) {
-		String sql = getQueryString(table);
-		String countStr = "select count(*) from (" + sql + ")";
+		String countStr = "select count(*) from (" + table.getQuerySql() + ")";
 		return queryForInt(countStr);
 	}
 
 	public List<Object> getData(Table table, PageLimit limit) {
-		String sql = getQueryString(table);
+		String sql = table.getQuerySql();
 		LimitGrammar grammar = database.getDialect().getLimitGrammar();
 		String limitSql = grammar.limit(sql, limit.getPageNo() > 1);
 
@@ -145,24 +140,12 @@ public class DatabaseWrapper extends JdbcTemplate implements DataWrapper {
 	}
 
 	public List<Object> getData(Table table) {
-		return query(getQueryString(table));
-	}
-
-	private String getQueryString(Table table) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("select ");
-		String[] columnNames = table.getColumnNames();
-		for (String columnName : columnNames) {
-			sb.append(columnName).append(',');
-		}
-		sb.deleteCharAt(sb.length() - 1);
-		sb.append(" from ").append(table.getName());
-		return sb.toString();
+		return query(table.getQuerySql());
 	}
 
 	public int pushData(final Table table, List<Object> datas) {
 		final String[] columnNames = table.getColumnNames();
-		String insertSql = table.genInsertSql();
+		String insertSql = table.getInsertSql();
 		int successed = 0;
 		PreparedStatement ps = null;
 		Connection conn = DataSourceUtils.getConnection(getDataSource());

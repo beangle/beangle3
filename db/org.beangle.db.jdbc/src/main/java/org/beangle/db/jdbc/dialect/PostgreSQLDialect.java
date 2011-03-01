@@ -59,20 +59,23 @@ public class PostgreSQLDialect extends AbstractDialect {
 		registerType(SMALLINT, "int2");
 		registerType(TINYINT, "int2");
 		registerType(INTEGER, "int4");
+		
 		registerType(FLOAT, "float4");
 		registerType(DOUBLE, "float8");
-		registerType(DECIMAL, "numeric($p, $s)");
-		registerType(NUMERIC, "numeric($p, $s)");
+		
+		registerType(DECIMAL, "numeric($p, $s)");		
 		registerType(NUMERIC, 1000, "numeric($p, $s)");
 		registerType(NUMERIC, Integer.MAX_VALUE, "numeric(1000, $s)");
+		registerType(NUMERIC, "numeric($p, $s)");
 
 		registerType(DATE, "date");
 		registerType(TIME, "time");
 		registerType(TIMESTAMP, "timestamp");
 
-		registerType(VARBINARY, "bytea");
 		registerType(BINARY, "bytea");
+		registerType(VARBINARY, "bytea");
 		registerType(LONGVARBINARY, "bytea");
+
 		registerType(CLOB, "text");
 		registerType(BLOB, "oid");
 	}

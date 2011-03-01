@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.StopWatch;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.db.jdbc.meta.Constraint;
@@ -21,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 public class ConstraintReplicator implements Replicator {
 	private static final Logger logger = LoggerFactory.getLogger(ConstraintReplicator.class);
+	@SuppressWarnings("unused")
 	private DatabaseWrapper source;
 	private DatabaseWrapper target;
 
@@ -45,19 +45,17 @@ public class ConstraintReplicator implements Replicator {
 		StopWatch watch = new StopWatch();
 		watch.start();
 		logger.info("Start constraint replication...");
+		String targetSchema = target.getDatabase().getSchema();
 		for (Constraint contraint : contraints) {
 			if (contraint instanceof ForeignKey) {
 				ForeignKey fk = (ForeignKey) contraint;
-				String sql = fk.sqlConstraintString(target.getDialect());
-				String sourceSchema = source.getDatabase().getSchema();
-				String targetSchema = target.getDatabase().getSchema();
-				sql = StringUtils.replace(sql, sourceSchema + ".", targetSchema + ".");
+				String sql = fk.getAlterSql(target.getDialect(), targetSchema);
 				try {
 					target.execute(sql);
+					logger.info("Apply constaint {}", fk.getName());
 				} catch (Exception e) {
 					logger.warn("Cannot execute {}", sql);
 				}
-				logger.info("Apply constaint {}", fk.getName());
 			}
 		}
 		logger.info("End constraint replication,using {}", watch.getTime());

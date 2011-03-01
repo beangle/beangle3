@@ -9,14 +9,15 @@ import static org.beangle.db.jdbc.util.DataSourceUtil.getDataSource;
 import org.beangle.db.jdbc.dialect.Dialects;
 import org.testng.annotations.Test;
 
-@Test
+
 public class ReplicatorTest {
 
 	public void testHsqlToH2() {
 		ReplicatorBuilder builder = new ReplicatorBuilder();
-		builder.source(Dialects.HSQL18, getDataSource("exprdb")).tables("*")
-				.exclude("public.dual").indexes("*").contraints("*").sequences("*");
-		builder.target(Dialects.PostgreSQL, getDataSource("pgsql"));
+		builder.source(Dialects.HSQL18, getDataSource("exprdb")).tables("*").exclude("public.dual")
+				.indexes("*").contraints("*").sequences("*").lowercase();
+		
+		builder.target(Dialects.MySQL, getDataSource("mysql"));
 		Replicator replicator = builder.build();
 		replicator.start();
 	}

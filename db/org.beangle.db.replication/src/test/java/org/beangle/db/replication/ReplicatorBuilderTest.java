@@ -4,20 +4,18 @@
  */
 package org.beangle.db.replication;
 
-import static org.beangle.db.jdbc.util.DataSourceUtil.getDataSource;
+import javax.sql.DataSource;
 
-import org.beangle.db.jdbc.dialect.Dialects;
-import org.springframework.util.Assert;
+import org.beangle.db.replication.ReplicatorBuilder.DatabaseSource;
+import org.mockito.Mockito;
 import org.testng.annotations.Test;
 
 @Test
 public class ReplicatorBuilderTest {
+
+	@Test(expectedExceptions = IllegalArgumentException.class)
 	public void testBuilder() {
-		ReplicatorBuilder builder = new ReplicatorBuilder();
-		builder.source(Dialects.HSQL18, getDataSource("hsqldb")).schema("PUBLIC").tables("*")
-				.exclude("public.dual").indexes("*").contraints("*").sequences("*");
-		builder.target(Dialects.H2, getDataSource("h1")).schema("PUBLIC");
-		Replicator replicator = builder.build();
-		Assert.notNull(replicator);
+		DatabaseSource source = new ReplicatorBuilder.DatabaseSource(Mockito.mock(DataSource.class), null);
+		source.filterConstraints();
 	}
 }

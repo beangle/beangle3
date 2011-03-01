@@ -75,6 +75,7 @@ public class StatementUtils {
 			case DOUBLE:
 				ps.setDouble(index, (Double) value);
 				break;
+				
 			case NUMERIC:
 			case DECIMAL:
 				ps.setBigDecimal(index, (BigDecimal) value);

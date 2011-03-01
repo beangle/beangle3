@@ -60,9 +60,11 @@ public class HSQL2Dialect extends AbstractDialect {
 		registerType(SMALLINT, "smallint");
 		registerType(TINYINT, "tinyint");
 		registerType(BIGINT, "bigint");
-		registerType(DECIMAL, "decimal");
+		
 		registerType(DOUBLE, "double");
 		registerType(FLOAT, "float");
+
+		registerType(DECIMAL, "decimal");
 		registerType(NUMERIC, "numeric");
 
 		registerType(DATE, "date");

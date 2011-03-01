@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang.Validate;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.db.jdbc.dialect.Dialect;
 import org.beangle.db.jdbc.dialect.Dialects;
@@ -82,14 +83,15 @@ public final class ReplicatorBuilder {
 		}
 	}
 
-	public final class DatabaseSource {
+	public static final class DatabaseSource {
 		DataSource dataSource;
 		Dialect dialect;
 		String schema;
 		String catelog;
-		List<Table> tables = CollectUtils.newArrayList();
+		List<Table> tables;
 		String[] includes;
 		String[] excludes;
+		boolean toLowercase = false;
 
 		DatabaseWrapper wrapper = null;
 
@@ -108,6 +110,11 @@ public final class ReplicatorBuilder {
 
 		public DatabaseSource catelog(String catelog) {
 			this.catelog = catelog;
+			return this;
+		}
+
+		public DatabaseSource lowercase() {
+			this.toLowercase = true;
 			return this;
 		}
 
@@ -153,19 +160,23 @@ public final class ReplicatorBuilder {
 		}
 
 		protected List<Table> filterTables() {
-			if (null == tablenames) tablenames = filter(wrapper.getDatabase().getTables().keySet());
-			List<Table> tables = CollectUtils.newArrayList();
+			Collection<String> tablenames = filter(wrapper.getDatabase().getTables().keySet());
+			tables = CollectUtils.newArrayList();
 			for (String name : tablenames) {
-				tables.add(wrapper.getDatabase().getTable(name));
+				Table tb = wrapper.getDatabase().getTable(name);
+				if (toLowercase) {
+					tb = tb.clone();
+					tb.lowerCase();
+				}
+				tables.add(tb);
 			}
 			return tables;
 		}
 
 		protected List<Constraint> filterConstraints() {
-			if (null == tablenames) tablenames = filter(wrapper.getDatabase().getTables().keySet());
+			Validate.notNull(tables, "Call filterTables first");
 			List<Constraint> contraints = CollectUtils.newArrayList();
-			for (String name : tablenames) {
-				Table table = wrapper.getDatabase().getTable(name);
+			for (Table table : tables) {
 				contraints.addAll(table.getForeignKeys().values());
 			}
 			return contraints;

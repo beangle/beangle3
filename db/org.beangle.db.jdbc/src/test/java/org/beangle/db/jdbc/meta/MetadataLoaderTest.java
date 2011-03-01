@@ -25,9 +25,9 @@ public class MetadataLoaderTest {
 		database.loadTables(true);
 		Map<String, Table> tables = database.getTables();
 		for (Table table : tables.values()) {
-			System.out.println(table.sqlCreateString(dialect));
+			System.out.println(table.getCreateSql(dialect));
 			for (ForeignKey fk1 : table.getForeignKeys().values()) {
-				System.out.println(fk1.sqlConstraintString(dialect));
+				System.out.println(fk1.getAlterSql(dialect));
 			}
 		}
 	}

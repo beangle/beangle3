@@ -20,4 +20,9 @@ public class UniqueKey extends Constraint {
 		setName(name);
 	}
 
+	@Override
+	public UniqueKey clone() {
+		return (UniqueKey) super.clone();
+	}
+
 }

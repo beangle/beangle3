@@ -6,6 +6,7 @@ package org.beangle.db.jdbc.meta;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 
 /**
@@ -13,10 +14,14 @@ import org.beangle.commons.collection.CollectUtils;
  * 
  * @author chaostone
  */
-public class Constraint implements Comparable<Constraint> {
-	private String name;
-	private List<Column> columns = CollectUtils.newArrayList();
-	private Table table;
+public class Constraint implements Comparable<Constraint>,Cloneable {
+	protected String name;
+	protected List<Column> columns = CollectUtils.newArrayList();
+	protected Table table;
+
+	public void lowerCase() {
+		this.name = StringUtils.lowerCase(name);
+	}
 
 	public void addColumn(Column column) {
 		if (column != null) columns.add(column);
@@ -48,6 +53,21 @@ public class Constraint implements Comparable<Constraint> {
 
 	public int compareTo(Constraint o) {
 		return getName().compareTo(o.getName());
+	}
+
+	public Constraint clone() {
+		Constraint cloned;
+		try {
+			cloned = (Constraint) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException(e);
+		}
+		List<Column> newColumns = CollectUtils.newArrayList();
+		for (Column column : columns) {
+			newColumns.add(column.clone());
+		}
+		cloned.columns = newColumns;
+		return cloned;
 	}
 
 }

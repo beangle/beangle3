@@ -18,6 +18,11 @@ public class PrimaryKey extends Constraint {
 		addColumn(column);
 	}
 
+	@Override
+	public PrimaryKey clone() {
+		return (PrimaryKey) super.clone();
+	}
+
 	public String sqlConstraintString() {
 		StringBuffer buf = new StringBuffer("primary key (");
 		Iterator<Column> iter = getColumns().iterator();

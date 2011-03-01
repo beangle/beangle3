@@ -6,6 +6,7 @@ package org.beangle.db.jdbc.meta;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 
 /**
@@ -13,7 +14,7 @@ import org.beangle.commons.collection.CollectUtils;
  * 
  * @author chaostone
  */
-public class Index {
+public class Index implements Cloneable{
 	private String name;
 	private List<Column> columns = CollectUtils.newArrayList();
 
@@ -24,6 +25,10 @@ public class Index {
 	public Index(String name) {
 		super();
 		this.name = name;
+	}
+
+	public void lowerCase() {
+		this.name = StringUtils.lowerCase(name);
 	}
 
 	public String getName() {
@@ -41,4 +46,20 @@ public class Index {
 	public String toString() {
 		return "IndexMatadata(" + name + ')';
 	}
+
+	public Index clone() {
+		Index cloned;
+		try {
+			cloned = (Index) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException(e);
+		}
+		List<Column> newColumns = CollectUtils.newArrayList();
+		for (Column column : columns) {
+			newColumns.add(column.clone());
+		}
+		cloned.columns = newColumns;
+		return cloned;
+	}
+
 }

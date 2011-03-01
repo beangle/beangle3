@@ -4,6 +4,9 @@
  */
 package org.beangle.db.jdbc.dialect;
 
+import java.util.Set;
+
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.StrUtils;
 import org.beangle.db.jdbc.grammar.LimitGrammar;
 import org.beangle.db.jdbc.grammar.SequenceGrammar;
@@ -16,6 +19,8 @@ public abstract class AbstractDialect implements Dialect {
 	protected final LimitGrammar limitGrammar;
 	protected final TableGrammar tableGrammar;
 	protected final Dbversion version;
+	protected final Set<String> keywords = CollectUtils.newHashSet();
+	protected boolean caseSensitive = false;
 
 	public AbstractDialect(String versions) {
 		super();
@@ -42,6 +47,10 @@ public abstract class AbstractDialect implements Dialect {
 		return typeNames;
 	}
 
+	public Set<String> getKeywords() {
+		return keywords;
+	}
+
 	protected abstract LimitGrammar buildLimitGrammar();
 
 	protected TableGrammar buildTableGrammar() {
@@ -51,6 +60,13 @@ public abstract class AbstractDialect implements Dialect {
 	protected abstract SequenceGrammar buildSequenceGrammar();
 
 	protected abstract void registerType();
+
+	protected void registerKeywords(String... words) {
+		for (String word : words) {
+			keywords.add(word.toLowerCase());
+			keywords.add(word.toUpperCase());
+		}
+	}
 
 	protected void registerType(int code, int capacity, String name) {
 		typeNames.put(code, capacity, name);
@@ -82,6 +98,14 @@ public abstract class AbstractDialect implements Dialect {
 
 	public String defaultSchema() {
 		return null;
+	}
+
+	public boolean isCaseSensitive() {
+		return caseSensitive;
+	}
+
+	public void setCaseSensitive(boolean caseSensitive) {
+		this.caseSensitive = caseSensitive;
 	}
 
 }

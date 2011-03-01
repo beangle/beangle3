@@ -37,6 +37,8 @@ public class MySQLDialect extends AbstractDialect {
 
 	public MySQLDialect() {
 		super("[5.0,)");
+		registerKeywords("index", "explain");
+		caseSensitive=true;
 	}
 
 	@Override
@@ -58,10 +60,14 @@ public class MySQLDialect extends AbstractDialect {
 		registerType(SMALLINT, "smallint");
 		registerType(TINYINT, "tinyint");
 		registerType(INTEGER, "integer");
+		
 		registerType(FLOAT, "float");
 		registerType(DOUBLE, "double precision");
-		registerType(NUMERIC, "decimal($p,$s)");
+		
 		registerType(DECIMAL, "decimal($p,$s)");
+		registerType(NUMERIC, 65, "decimal($p, $s)");
+		registerType(NUMERIC, Integer.MAX_VALUE, "decimal(65, $s)");
+		registerType(NUMERIC, "decimal($p,$s)");
 
 		registerType(DATE, "date");
 		registerType(TIME, "time");
@@ -74,6 +80,7 @@ public class MySQLDialect extends AbstractDialect {
 		registerType(VARBINARY, 255, "tinyblob");
 		registerType(LONGVARBINARY, "longblob");
 		registerType(LONGVARBINARY, 16777215, "mediumblob");
+		
 		registerType(BLOB, "longblob");
 		registerType(CLOB, "longtext");
 	}

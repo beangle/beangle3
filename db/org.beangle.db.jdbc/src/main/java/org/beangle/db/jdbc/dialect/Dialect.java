@@ -25,4 +25,5 @@ public interface Dialect {
 
 	public boolean supportsCascadeDelete();
 
+	public boolean isCaseSensitive();
 }
