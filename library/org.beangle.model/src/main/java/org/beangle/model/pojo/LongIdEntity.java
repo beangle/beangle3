@@ -4,8 +4,11 @@
  */
 package org.beangle.model.pojo;
 
+import javax.persistence.MappedSuperclass;
+
 import org.beangle.model.Entity;
 
+@MappedSuperclass
 public interface LongIdEntity extends Entity<Long> {
 
 	public Long getId();

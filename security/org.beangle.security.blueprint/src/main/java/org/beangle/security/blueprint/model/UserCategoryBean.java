@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.UserCategory;
-@Entity(name = "org.beangle.security.blueprint.AdminUser")
+@Entity(name = "org.beangle.security.blueprint.UserCategory")
 public class UserCategoryBean extends LongIdObject implements UserCategory {
 
 	private static final long serialVersionUID = -5929038500510261629L;

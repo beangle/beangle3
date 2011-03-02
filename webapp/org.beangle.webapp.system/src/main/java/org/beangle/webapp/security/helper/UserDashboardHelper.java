@@ -19,7 +19,6 @@ import org.beangle.security.blueprint.Menu;
 import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.restrict.RestrictionHolder;
 import org.beangle.security.blueprint.restrict.service.RestrictionService;
 import org.beangle.security.blueprint.service.AuthorityService;
 import org.beangle.security.blueprint.service.UserService;
@@ -52,7 +51,7 @@ public class UserDashboardHelper {
 		populateOnlineActivities(user);
 		RestrictionHelper helper = new RestrictionHelper(entityDao);
 		helper.setRestrictionService(restrictionService);
-		helper.populateInfo((RestrictionHolder) user);
+		helper.populateInfo(user);
 	}
 
 	private void populateOnlineActivities(User user) {

@@ -3,10 +3,10 @@
 	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
-		<mapping resource="org/beangle/model/example/ContractInfo.hbm.xml"/>
-		<mapping resource="org/beangle/model/example/Employer.hbm.xml"/>
-		<mapping resource="org/beangle/model/example/OldName.hbm.xml"/>
-		<mapping resource="org/beangle/model/example/Skill.hbm.xml"/>
+		<mapping class="org.beangle.model.example.ManagerEmployer"/>
+		<mapping class="org.beangle.model.example.ContractInfo"/>
+		<mapping class="org.beangle.model.example.OldName"/>
+		<mapping class="org.beangle.model.example.Skill"/>
 		<mapping resource="org/beangle/model/example/SkillType.hbm.xml"/>
 	</session-factory>
 </hibernate-configuration>

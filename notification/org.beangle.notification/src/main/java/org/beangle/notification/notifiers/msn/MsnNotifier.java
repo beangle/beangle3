@@ -18,7 +18,7 @@ public class MsnNotifier implements Notifier<Message> {
 		return "msn";
 	}
 
-	public void send(Message msg) throws NotificationException {
+	public void deliver(Message msg) throws NotificationException {
 		// MSNMessenger msn;
 		// msn = new MSNMessenger("youraccount@hotmail.com", "password");
 		// msn.setInitialStatus(UserStatus.ONLINE);

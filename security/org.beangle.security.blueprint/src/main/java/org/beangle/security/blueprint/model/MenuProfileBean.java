@@ -14,7 +14,7 @@ import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.Menu;
 import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.UserCategory;
-@Entity(name = "org.beangle.security.blueprint.AdminUser")
+@Entity(name = "org.beangle.security.blueprint.MenuProfile")
 public class MenuProfileBean extends LongIdObject implements MenuProfile {
 
 	private static final long serialVersionUID = 9147563981118270960L;

@@ -8,5 +8,5 @@ public interface Notifier<T extends Message> {
 
 	String getType();
 
-	void send(T message) throws NotificationException;
+	void deliver(T message) throws NotificationException;
 }

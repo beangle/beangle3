@@ -41,16 +41,17 @@ public class RestrictionHelper {
 		this.entityDao = entityDao;
 	}
 
-	public RestrictionHolder getHolder() {
+	@SuppressWarnings("unchecked")
+	public <T extends Restriction> RestrictionHolder<T> getHolder() {
 		Long restrictionHolderId = Params.getLong("restriction.holder.id");
 		String restrictionType = Params.get("restrictionType");
-		RestrictionHolder holer = null;
+		RestrictionHolder<T> holer = null;
 		if ("user".equals(restrictionType)) {
-			holer = (RestrictionHolder) entityDao.get(User.class, restrictionHolderId);
+			holer = (RestrictionHolder<T>) entityDao.get(User.class, restrictionHolderId);
 		} else if ("group".equals(restrictionType)) {
-			holer = (RestrictionHolder) entityDao.get(Group.class, restrictionHolderId);
+			holer = (RestrictionHolder<T>) entityDao.get(Group.class, restrictionHolderId);
 		} else {
-			holer = (RestrictionHolder) entityDao.get(Authority.class, restrictionHolderId);
+			holer = (RestrictionHolder<T>) entityDao.get(Authority.class, restrictionHolderId);
 		}
 		return holer;
 	}
@@ -58,7 +59,7 @@ public class RestrictionHelper {
 	/**
 	 * 查看限制资源界面
 	 */
-	public void populateInfo(RestrictionHolder holder) {
+	public void populateInfo(RestrictionHolder<?> holder) {
 		List<Restriction> restrictions = CollectUtils.newArrayList(holder.getRestrictions());
 		Collections.sort(restrictions, new PropertyComparator<Object>("pattern.entity.name"));
 		Map<String, Map<String, Object>> fieldMaps = CollectUtils.newHashMap();

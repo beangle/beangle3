@@ -19,7 +19,7 @@ import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.Resource;
 
 
-@Entity(name = "org.beangle.security.blueprint.AdminUser")
+@Entity(name = "org.beangle.security.blueprint.Menu")
 public class MenuBean extends LongIdObject implements Menu {
 
 	private static final long serialVersionUID = 3864556621041443066L;

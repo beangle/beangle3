@@ -13,9 +13,9 @@ import javax.sql.DataSource;
 
 import org.apache.commons.lang.xwork.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.db.dialect.Dialect;
-import org.beangle.db.meta.MetadataLoader;
-import org.beangle.db.meta.Table;
+import org.beangle.db.jdbc.dialect.Dialect;
+import org.beangle.db.jdbc.meta.MetadataLoader;
+import org.beangle.db.jdbc.meta.Table;
 import org.beangle.webapp.database.model.DatasourceBean;
 import org.beangle.webapp.security.action.SecurityActionSupport;
 

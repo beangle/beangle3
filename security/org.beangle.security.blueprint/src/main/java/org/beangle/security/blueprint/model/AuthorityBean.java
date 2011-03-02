@@ -22,7 +22,7 @@ import org.beangle.security.blueprint.restrict.RestrictionHolder;
  * 
  * @author dell,chaostone 2005-9-26
  */
-@Entity(name = "org.beangle.security.blueprint.AdminUser")
+@Entity(name = "org.beangle.security.blueprint.Authority")
 public class AuthorityBean extends LongIdObject implements RestrictionHolder<AuthorityRestriction>, Authority {
 
 	private static final long serialVersionUID = -8956079356245507990L;

@@ -4,12 +4,21 @@
  */
 package org.beangle.model.pojo;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.beangle.model.predicates.ValidEntityKeyPredicate;
+import org.hibernate.annotations.GenericGenerator;
 
+@MappedSuperclass
 public class LongIdObject implements LongIdEntity {
 	private static final long serialVersionUID = -7530111699332363124L;
 
+	@Id
+	@GeneratedValue(generator = "table_sequence")
+	@GenericGenerator(name = "table_sequence", strategy = "org.beangle.model.persist.hibernate.support.TableSeqGenerator")
 	protected Long id;
 
 	public LongIdObject() {

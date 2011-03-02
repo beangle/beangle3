@@ -38,7 +38,7 @@ public abstract class AbstractMailNotifier<T extends MailMessage> implements Not
 		return "mail";
 	}
 
-	public void send(T mailMsg) throws NotificationException {
+	public void deliver(T mailMsg) throws NotificationException {
 		MimeMessage mimeMsg = mailSender.createMimeMessage();
 		try {
 			if (null == mailMsg.getSendAt()) {

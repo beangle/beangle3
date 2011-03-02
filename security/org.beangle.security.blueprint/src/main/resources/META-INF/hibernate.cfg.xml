@@ -3,8 +3,25 @@
 	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
-		<mapping resource="org/beangle/security/blueprint/model/mapping.hbm.xml"/>
-		<mapping resource="org/beangle/security/blueprint/restrict/model/mapping.hbm.xml"/>
-		<mapping resource="org/beangle/security/blueprint/session/model/mapping.hbm.xml"/>
+		<mapping class="org.beangle.security.blueprint.model.AdminuserBean"/>
+		<mapping class="org.beangle.security.blueprint.model.AuthorityBean"/>
+		<mapping class="org.beangle.security.blueprint.model.GroupBean"/>
+		<mapping class="org.beangle.security.blueprint.model.GroupMemberBean"/>
+		<mapping class="org.beangle.security.blueprint.model.MenuBean"/>
+		<mapping class="org.beangle.security.blueprint.model.MenuProfileBean"/>
+		<mapping class="org.beangle.security.blueprint.model.ResourceBean"/>
+		<mapping class="org.beangle.security.blueprint.model.UserBean"/>
+		<mapping class="org.beangle.security.blueprint.model.UserCategoryBean"/>
+		
+		<mapping class="org.beangle.security.blueprint.restrict.model.AuthorityRestrictionBean"/>
+		<mapping class="org.beangle.security.blueprint.restrict.model.GroupRestrictionBean"/>
+		<mapping class="org.beangle.security.blueprint.restrict.model.RestrictFieldBean"/>
+		<mapping class="org.beangle.security.blueprint.restrict.model.RestrictEntityBean"/>
+		<mapping class="org.beangle.security.blueprint.restrict.model.RestrictPatternBean"/>
+		<mapping class="org.beangle.security.blueprint.restrict.model.UserRestrictionBean"/>
+		
+		<mapping class="org.beangle.security.blueprint.session.model.CategoryProfileBean"/>
+		<mapping class="org.beangle.security.blueprint.session.model.SessionActivityBean"/>
+		<mapping class="org.beangle.security.blueprint.session.model.SessionProfileBean"/>
 	</session-factory>
 </hibernate-configuration>

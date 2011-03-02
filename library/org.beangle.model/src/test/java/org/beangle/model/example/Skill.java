@@ -4,8 +4,11 @@
  */
 package org.beangle.model.example;
 
+import javax.persistence.Entity;
+
 import org.beangle.model.pojo.LongIdObject;
 
+@Entity
 public class Skill extends LongIdObject {
 
 	private static final long serialVersionUID = 1L;

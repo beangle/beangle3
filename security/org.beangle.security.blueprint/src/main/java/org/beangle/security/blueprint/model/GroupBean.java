@@ -24,7 +24,7 @@ import org.beangle.security.blueprint.restrict.GroupRestriction;
  * 
  * @author dell,chaostone 2005-9-26
  */
-@Entity(name = "org.beangle.security.blueprint.AdminUser")
+@Entity(name = "org.beangle.security.blueprint.Group")
 public class GroupBean extends LongIdTimeObject implements Group {
 
 	private static final long serialVersionUID = -3404181949500894284L;

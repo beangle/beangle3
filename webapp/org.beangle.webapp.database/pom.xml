@@ -20,7 +20,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.beangle</groupId>
-			<artifactId>beangle-database</artifactId>
+			<artifactId>beangle-db-jdbc</artifactId>
 		</dependency>
 	</dependencies>
 </project>

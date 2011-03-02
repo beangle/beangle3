@@ -7,6 +7,7 @@ package org.beangle.model.persist.hibernate;
 import org.hibernate.DuplicateMappingException;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Mappings;
+import org.hibernate.cfg.SettingsFactory;
 import org.hibernate.mapping.Collection;
 import org.hibernate.mapping.PersistentClass;
 import org.slf4j.Logger;
@@ -22,23 +23,32 @@ public class OverrideConfiguration extends Configuration {
 
 	private static Logger logger = LoggerFactory.getLogger(OverrideConfiguration.class);
 
+	public OverrideConfiguration() {
+		super();
+		this.metadataSourceQueue=new StmartMetadataSourceQueue();
+	}
+	public OverrideConfiguration(SettingsFactory settingsFactory) {
+		super(settingsFactory);
+		this.metadataSourceQueue=new StmartMetadataSourceQueue();
+	}
 	@Override
 	public Mappings createMappings() {
 		return new OverrideMappings();
 	}
 
 	protected class OverrideMappings extends MappingsImpl {
-
 		@SuppressWarnings("unchecked")
 		@Override
 		public void addClass(PersistentClass persistentClass) throws DuplicateMappingException {
-			PersistentClass old = (PersistentClass) classes.get(persistentClass.getEntityName());
+			String entityName = persistentClass.getEntityName();
+			PersistentClass old = (PersistentClass) classes.get(entityName);
 			if (old == null) {
-				classes.put(persistentClass.getEntityName(), persistentClass);
+				classes.put(entityName, persistentClass);
+				classes.put(persistentClass.getMappedClass().getName(), persistentClass);
 				return;
 			}
 			if (old.getMappedClass().isAssignableFrom(persistentClass.getMappedClass())) {
-				classes.put(persistentClass.getEntityName(), persistentClass);
+				classes.put(entityName, persistentClass);
 				logger.info("{} override {} for entity configuration", persistentClass.getClassName(),
 						old.getClassName());
 			}
@@ -49,5 +59,9 @@ public class OverrideConfiguration extends Configuration {
 			collections.put(collection.getRole(), collection);
 		}
 
+	}
+	protected class StmartMetadataSourceQueue extends MetadataSourceQueue{
+		protected void syncAnnotatedClasses() {
+		}
 	}
 }

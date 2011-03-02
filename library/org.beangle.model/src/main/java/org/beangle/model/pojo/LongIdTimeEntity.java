@@ -4,6 +4,9 @@
  */
 package org.beangle.model.pojo;
 
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public interface LongIdTimeEntity extends LongIdEntity, TimeEntity<Long> {
 
 }

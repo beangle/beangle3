@@ -61,6 +61,24 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 		return tableName;
 	}
 
+	public String classToTableName(String className, String shortName) {
+		if (shortName.endsWith("Bean")) {
+			shortName = StringUtils.substringBeforeLast(shortName, "Bean");
+		}
+		String tableName = addUnderscores(shortName);
+		if (enablePluralize) {
+			tableName = pluralizer.pluralize(tableName);
+		}
+		String tblPrefix = tableNameConfig.getPrefix(className);
+		if (null != tblPrefix) {
+			tableName = tblPrefix + tableName;
+		}
+		if (tableName.length() > 30) {
+			logger.warn("{}'s length has greate more then 30, database will not be supported!", tableName);
+		}
+		return tableName;
+	}
+
 	/**
 	 * 对自动起名和使体内集合配置的表名，添加前缀
 	 * 
@@ -116,11 +134,6 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 		return sb.toString();
 	}
 
-	public String collectionTableName(String ownerEntity, String ownerEntityTable, String associatedEntity,
-			String associatedEntityTable, String propertyName) {
-		return tableName(ownerEntityTable + '_') + addUnderscores(unqualify(propertyName));
-	}
-
 	/**
 	 * Return the argument
 	 */
@@ -135,7 +148,29 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 			String propertyTableName, String referencedColumnName) {
 		String header = null == propertyName ? propertyTableName : unqualify(propertyName);
 		if (header == null) { throw new AssertionFailure("NamingStrategy not properly filled"); }
-		return columnName(header) + "_" + referencedColumnName;
+		// workground annotation collection foreignKey.
+		if (header.endsWith("s")) {
+			header = addUnderscores(propertyTableName);
+		} else {
+			addUnderscores(header);
+		}
+		return header + "_" + referencedColumnName;
+	}
+
+	/**
+	 * Collection Table
+	 */
+	public String collectionTableName(String ownerEntity, String ownerEntityTable, String associatedEntity,
+			String associatedEntityTable, String propertyName) {
+		String ownerTable = null;
+		// just for annotation configuration,it;s ownerEntity is classname(not entityName), and
+		// ownerEntityTable is class shortname
+		if (Character.isUpperCase(ownerEntityTable.charAt(0))) {
+			ownerTable = classToTableName(ownerEntity, ownerEntityTable);
+		} else {
+			ownerTable = tableName(ownerEntityTable);
+		}
+		return ownerTable + '_' + addUnderscores(unqualify(propertyName));
 	}
 
 	/**

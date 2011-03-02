@@ -5,10 +5,15 @@
 package org.beangle.model.example;
 
 import java.util.Map;
+import java.util.Set;
 
-import org.beangle.model.pojo.LongIdObject;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.MapKeyColumn;
 
-public class ManagerEmployer extends LongIdObject implements Employer {
+import org.beangle.model.pojo.LongIdTimeObject;
+@Entity(name = "org.beangle.model.example.Employer")
+public class ManagerEmployer extends LongIdTimeObject implements Employer {
 
 	private static final long serialVersionUID = 1L;
 
@@ -16,8 +21,13 @@ public class ManagerEmployer extends LongIdObject implements Employer {
 
 	ContractInfo contractInfo;
 
+	@ManyToMany
+	@MapKeyColumn(name = "skill_type_id")
 	Map<Long, Skill> skills;
-
+	
+	@ManyToMany
+	Set<Skill> oskills;
+	
 	public Map<Long, Skill> getSkills() {
 		return skills;
 	}
@@ -40,6 +50,14 @@ public class ManagerEmployer extends LongIdObject implements Employer {
 
 	public void setContractInfo(ContractInfo contractInfo) {
 		this.contractInfo = contractInfo;
+	}
+
+	public Set<Skill> getOskills() {
+		return oskills;
+	}
+
+	public void setOskills(Set<Skill> oskills) {
+		this.oskills = oskills;
 	}
 
 }

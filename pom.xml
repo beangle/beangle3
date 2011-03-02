@@ -13,7 +13,7 @@
 		<module>notification</module>
 		<module>struts2</module>
 		<module>security</module>
-		<module>database</module>
+		<module>db</module>
 		<module>webapp</module>
 	</modules>
 	<build>

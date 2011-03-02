@@ -7,6 +7,8 @@ package org.beangle.security.blueprint.session.model;
 import java.util.Map;
 
 import javax.persistence.Entity;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdObject;
@@ -36,6 +38,8 @@ public class SessionProfileBean extends LongIdObject implements SessionProfile {
 	private int inactiveInterval;
 
 	/** 用户种类特定配置 */
+	@OneToMany
+	@MapKeyColumn(name = "category_id")
 	private Map<Long, CategoryProfile> categoryProfiles = CollectUtils.newHashMap();
 
 	public String getName() {

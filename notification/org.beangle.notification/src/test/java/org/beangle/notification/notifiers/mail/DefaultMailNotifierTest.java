@@ -31,7 +31,7 @@ public class DefaultMailNotifierTest {
 		DefaultMailNotifier<MailMessage> mailNotifier = new DefaultMailNotifier<MailMessage>();
 		mailNotifier.setMailSender(mailSender);
 		mailNotifier.setFrom("<测试name>eams.demon@gmail.com");
-		if (online) mailNotifier.send(mmc);
+		if (online) mailNotifier.deliver(mmc);
 	}
 
 	public void testSimple() throws Exception {
@@ -45,7 +45,7 @@ public class DefaultMailNotifierTest {
 		DefaultMailNotifier<MailMessage> mailNotifier = new DefaultMailNotifier<MailMessage>();
 		mailNotifier.setMailSender(mailSender);
 		mailNotifier.setFrom("<测试name>infocms@mail.shufe.edu.cn");
-		if (online) mailNotifier.send(mmc);
+		if (online) mailNotifier.deliver(mmc);
 	}
 
 }

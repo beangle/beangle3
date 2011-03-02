@@ -17,7 +17,7 @@ import org.beangle.security.blueprint.User;
  * @author chaostone
  * @version $Id: GroupMemberBean.java Nov 2, 2010 6:45:48 PM chaostone $
  */
-@Entity(name = "org.beangle.security.blueprint.AdminUser")
+@Entity(name = "org.beangle.security.blueprint.GroupMember")
 public class GroupMemberBean extends LongIdTimeObject implements GroupMember {
 
 	private static final long serialVersionUID = -3882917413656652492L;

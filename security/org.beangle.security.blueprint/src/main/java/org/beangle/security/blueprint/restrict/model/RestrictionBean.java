@@ -6,7 +6,8 @@ package org.beangle.security.blueprint.restrict.model;
 
 import java.util.Map;
 
-import javax.persistence.ManyToMany;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.MappedSuperclass;
 
@@ -32,8 +33,9 @@ public abstract class RestrictionBean extends LongIdObject implements Restrictio
 	protected boolean enabled = true;
 
 	// FIXME
-	@ManyToMany
+	@ElementCollection
 	@MapKeyColumn(name = "param_id")
+	@Column(name = "content")
 	private Map<Long, String> items = CollectUtils.newHashMap();
 
 	public boolean isEnabled() {

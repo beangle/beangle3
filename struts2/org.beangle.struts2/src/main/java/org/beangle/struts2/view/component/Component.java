@@ -137,6 +137,7 @@ public class Component {
 	 *            the class to look for, or if assignable from.
 	 * @return the component if found, <tt>null</tt> if not.
 	 */
+	@SuppressWarnings("unchecked")
 	protected <T extends Component> T findAncestor(Class<T> clazz) {
 		Stack<? extends Component> componentStack = getComponentStack();
 		int currPosition = componentStack.search(this);

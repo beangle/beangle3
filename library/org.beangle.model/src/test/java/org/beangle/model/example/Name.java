@@ -6,20 +6,26 @@ package org.beangle.model.example;
 
 import java.util.List;
 
+import javax.persistence.Embeddable;
+import javax.persistence.OneToMany;
+
 import org.beangle.model.Component;
 
+@Embeddable
 public class Name implements Component {
+
 	String firstName;
 
 	String lastName;
 
-	List<String> oldNames;
+	@OneToMany(mappedBy = "employer")
+	List<OldName> oldNames;
 
-	public List<String> getOldNames() {
+	public List<OldName> getOldNames() {
 		return oldNames;
 	}
 
-	public void setOldNames(List<String> oldNames) {
+	public void setOldNames(List<OldName> oldNames) {
 		this.oldNames = oldNames;
 	}
 

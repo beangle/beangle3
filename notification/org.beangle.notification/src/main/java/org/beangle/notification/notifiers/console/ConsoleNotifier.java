@@ -17,7 +17,7 @@ public class ConsoleNotifier implements Notifier<Message> {
 		return "console";
 	}
 
-	public void send(Message context) throws NotificationException {
+	public void deliver(Message context) throws NotificationException {
 		System.out.println(context.getText());
 	}
 

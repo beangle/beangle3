@@ -1,9 +1,0 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-
-<suite name="test">
-	<test name="replicator">
-		<classes>
-			<class name="org.beangle.db.replication.ReplicatorTest" />
-		</classes>
-	</test>
-</suite>

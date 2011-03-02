@@ -16,6 +16,6 @@ public class ConsoleNotifierTest {
 		Notifier<Message> notifier = new ConsoleNotifier();
 		SimpleMessage context = new SimpleMessage();
 		context.setText("hello world");
-		notifier.send(context);
+		notifier.deliver(context);
 	}
 }

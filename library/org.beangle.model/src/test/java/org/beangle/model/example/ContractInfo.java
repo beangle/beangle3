@@ -4,13 +4,17 @@
  */
 package org.beangle.model.example;
 
-import org.beangle.model.pojo.LongIdObject;
 
-public class ContractInfo extends LongIdObject {
+import javax.persistence.Entity;
+
+import org.beangle.model.pojo.LongIdTimeObject;
+@Entity
+public class ContractInfo extends LongIdTimeObject {
 
 	private static final long serialVersionUID = 5751822654667684436L;
 
 	String add1;
+
 	String add2;
 
 	public String getAdd1() {

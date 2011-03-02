@@ -4,6 +4,8 @@
  */
 package org.beangle.model.example;
 
+import javax.persistence.Entity;
+
 import org.beangle.model.pojo.LongIdObject;
 
 /**
@@ -11,10 +13,14 @@ import org.beangle.model.pojo.LongIdObject;
  * 
  * @author chaostone
  */
+@Entity
 public class OldName extends LongIdObject {
 
 	private static final long serialVersionUID = -8986611679625767768L;
+
 	String name;
+
+	Employer employer;
 
 	public String getName() {
 		return name;
@@ -22,6 +28,14 @@ public class OldName extends LongIdObject {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Employer getEmployer() {
+		return employer;
+	}
+
+	public void setEmployer(Employer employer) {
+		this.employer = employer;
 	}
 
 }

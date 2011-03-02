@@ -50,7 +50,7 @@ public class DefaultNotificationTask<T extends Message> implements NotificationT
 			T msg = queue.remove();
 			try {
 				if (null != observer) observer.onStart(msg);
-				notifier.send(msg);
+				notifier.deliver(msg);
 				if (taskInterval > 0) {
 					Thread.sleep(taskInterval);
 				}

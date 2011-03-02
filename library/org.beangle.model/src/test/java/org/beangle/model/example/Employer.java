@@ -6,7 +6,9 @@ package org.beangle.model.example;
 
 import java.util.Map;
 
-public interface Employer {
+import org.beangle.model.pojo.LongIdEntity;
+
+public interface Employer extends LongIdEntity{
 
 	Name getName();
 

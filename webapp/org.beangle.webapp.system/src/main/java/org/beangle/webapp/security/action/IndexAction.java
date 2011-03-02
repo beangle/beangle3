@@ -11,14 +11,14 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.security.blueprint.AdminUser;
+import org.beangle.security.blueprint.Adminuser;
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.Menu;
 import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.UserCategory;
-import org.beangle.security.blueprint.model.AdminUserBean;
+import org.beangle.security.blueprint.model.AdminuserBean;
 import org.beangle.security.blueprint.model.UserCategoryBean;
 import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.RestrictPattern;
@@ -109,7 +109,7 @@ public class IndexAction extends SecurityActionSupport {
 			} else {
 				if (authorityService.getUserService().isAdmin(user)) { return redirect("admin",
 						"info.save.failure"); }
-				AdminUser adminUser = new AdminUserBean();
+				Adminuser adminUser = new AdminuserBean();
 				adminUser.setUser(user);
 				adminUser.setCreatedAt(new Date());
 				adminUser.setUpdatedAt(new Date());
@@ -119,13 +119,13 @@ public class IndexAction extends SecurityActionSupport {
 		}
 		Long adminId = getLong("removeAdminId");
 		if (null != adminId) {
-			AdminUser adminUser = entityDao.get(AdminUser.class, adminId);
+			Adminuser adminUser = entityDao.get(Adminuser.class, adminId);
 			if (null != adminUser) {
 				entityDao.remove(adminUser);
 			}
 			return redirect("admin", "info.remove.success");
 		}
-		List<AdminUser> admins = entityDao.getAll(AdminUser.class);
+		List<Adminuser> admins = entityDao.getAll(Adminuser.class);
 		put("adminUsers", admins);
 		List<UserCategory> categories = entityDao.getAll(UserCategory.class);
 		put("categories", categories);

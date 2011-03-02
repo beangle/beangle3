@@ -6,6 +6,9 @@ package org.beangle.model.pojo;
 
 import java.util.Date;
 
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public class LongIdTimeObject extends LongIdObject implements LongIdTimeEntity {
 	private static final long serialVersionUID = -5395713578471562117L;
 

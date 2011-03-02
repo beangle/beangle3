@@ -33,7 +33,7 @@ public class RestrictionAction extends SecurityActionSupport {
 	 */
 	public String remove() {
 		Restriction restriction = getRestriction();
-		RestrictionHolder holer = new RestrictionHelper(entityDao).getHolder();
+		RestrictionHolder<Restriction> holer = new RestrictionHelper(entityDao).getHolder();
 		holer.getRestrictions().remove(restriction);
 		entityDao.saveOrUpdate(holer);
 		return redirect("info", "info.remove.success");
@@ -51,7 +51,7 @@ public class RestrictionAction extends SecurityActionSupport {
 
 	public String save() {
 		Restriction restriction = getRestriction();
-		RestrictionHolder holder = new RestrictionHelper(entityDao).getHolder();
+		RestrictionHolder<Restriction> holder = new RestrictionHelper(entityDao).getHolder();
 		List<Restriction> myRestrictions = getMyRestrictions(restriction.getPattern(), holder);
 		Set<RestrictField> ignoreFields = getIgnoreFields(myRestrictions);
 		boolean isAdmin = isAdmin(getUser());
@@ -123,19 +123,19 @@ public class RestrictionAction extends SecurityActionSupport {
 		return forward();
 	}
 
-	private List<Restriction> getMyRestrictions(RestrictPattern pattern, RestrictionHolder holder) {
+	private List<Restriction> getMyRestrictions(RestrictPattern pattern, RestrictionHolder<? extends Restriction> holder) {
 		String type = get("restrictionType");
 		List<Restriction> restrictions = CollectUtils.newArrayList();
 		User me = getUser();
 		if (type.equals("user")) {
-			restrictions = CollectUtils.newArrayList(((RestrictionHolder) me).getRestrictions());
+			restrictions = CollectUtils.newArrayList(((RestrictionHolder<?>) me).getRestrictions());
 		} else if (type.equals("group")) {
 			for (GroupMember group : me.getGroups()) {
 				restrictions.addAll(group.getGroup().getRestrictions());
 			}
 		} else if (type.equals("authority")) {
-			restrictions = restrictionService
-					.getAuthorityRestrictions(me, ((Authority) holder).getResource());
+			Object aa = holder;
+			restrictions = restrictionService.getAuthorityRestrictions(me, ((Authority) aa).getResource());
 		}
 		List<Restriction> rt = CollectUtils.newArrayList();
 		for (Restriction restriction : restrictions) {

@@ -25,7 +25,7 @@ import org.beangle.security.blueprint.restrict.UserRestriction;
  * 
  * @author dell,chaostone 2005-9-26
  */
-@Entity(name = "org.beangle.security.blueprint.AdminUser")
+@Entity(name = "org.beangle.security.blueprint.User")
 public class UserBean extends LongIdTimeObject implements User, RestrictionHolder<UserRestriction> {
 	private static final long serialVersionUID = -3625902334772342380L;
 

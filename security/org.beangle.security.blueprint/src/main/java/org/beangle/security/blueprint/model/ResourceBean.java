@@ -26,7 +26,7 @@ import org.beangle.security.blueprint.restrict.RestrictEntity;
  * 
  * @author dell,chaostone 2005-9-26
  */
-@Entity(name = "org.beangle.security.blueprint.AdminUser")
+@Entity(name = "org.beangle.security.blueprint.Resource")
 public class ResourceBean extends LongIdObject implements Resource {
 	private static final long serialVersionUID = -8285208615351119572L;
 
