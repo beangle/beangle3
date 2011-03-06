@@ -11,9 +11,10 @@ import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.Entity;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.blueprint.Authority;
+import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.Menu;
 import org.beangle.security.blueprint.Resource;
-import org.beangle.security.blueprint.UserCategory;
+import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.restrict.RestrictEntity;
 import org.beangle.security.blueprint.service.CacheableAuthorityManager;
 import org.beangle.struts2.convention.route.Action;
@@ -33,7 +34,7 @@ public class ResourceAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String activate() {
-		Long[] resourceIds = StrUtils.splitToLong(get("resourceIds"));
+		Long[] resourceIds = getEntityIds();
 		Boolean enabled = getBoolean("enabled");
 		if (null == enabled) {
 			enabled = Boolean.FALSE;
@@ -53,7 +54,7 @@ public class ResourceAction extends SecurityActionSupport {
 		List<RestrictEntity> objects = entityDao.getAll(RestrictEntity.class);
 		objects.removeAll(resource.getEntities());
 		put("restrictObjects", objects);
-		put("categories", entityDao.getAll(UserCategory.class));
+		put("categories", entityDao.getAll(Category.class));
 	}
 
 	protected String saveAndForward(Entity<?> entity) {
@@ -72,7 +73,7 @@ public class ResourceAction extends SecurityActionSupport {
 		resource.getEntities().addAll(objects);
 
 		String categoryIds = get("categoryIds");
-		List<UserCategory> categories = entityDao.get(UserCategory.class, StrUtils.splitToLong(categoryIds));
+		List<Category> categories = entityDao.get(Category.class, StrUtils.splitToLong(categoryIds));
 		resource.getCategories().clear();
 		resource.getCategories().addAll(categories);
 
@@ -85,28 +86,34 @@ public class ResourceAction extends SecurityActionSupport {
 
 	public String info() {
 		Long entityId = getEntityId(getShortName());
-		Entity<?> entity = getModel(entityName, entityId);
+		Entity<?> entity = getModel(getEntityName(), entityId);
 		OqlBuilder<Menu> query = OqlBuilder.from(Menu.class, "menu");
-		query.join("menu.resources", "r").where("r.id=:resourceId", entity.getEntityId())
+		query.join("menu.resources", "r").where("r.id=:resourceId", entity.getIdentifier())
 				.orderBy("menu.profile.id,menu.code");
 
 		OqlBuilder<Authority> groupQuery = OqlBuilder.from(Authority.class, "auth");
 		groupQuery.where("auth.resource=:resource", entity).select("auth.group");
 
-		OqlBuilder<?> userQuery = OqlBuilder
-				.hql("select distinct u from User u join u.groups g,Authority a where g=a.group and a.resource=:resource");
+		OqlBuilder<?> userQuery = OqlBuilder.hql("select distinct u from " + User.class.getName()
+				+ " u join u.groups g," + Authority.class.getName()
+				+ " a where g=a.group and a.resource=:resource");
 		userQuery.param("resource", entity);
 
 		put(getShortName(), entity);
 		put("users", entityDao.search(userQuery));
 		put("groups", entityDao.search(groupQuery));
 		put("menus", entityDao.search(query));
-		put("categories", entityDao.getAll(UserCategory.class));
+		put("categories", entityDao.getAll(Category.class));
 		return forward();
 	}
 
 	public void setAuthorityManager(CacheableAuthorityManager authorityManager) {
 		this.authorityManager = authorityManager;
+	}
+
+	@Override
+	protected String getEntityName() {
+		return Resource.class.getName();
 	}
 
 }

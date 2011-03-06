@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.Authority;
@@ -28,9 +29,11 @@ public class AuthorityBean extends LongIdObject implements RestrictionHolder<Aut
 	private static final long serialVersionUID = -8956079356245507990L;
 
 	/** 用户组 */
+	@NotNull
 	protected Group group;
 
 	/** 权限实体中的模块 */
+	@NotNull
 	protected Resource resource;
 
 	/** 该模块对应的数据操作范围 */

@@ -6,9 +6,13 @@ package org.beangle.security.blueprint.model;
 
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdTimeObject;
@@ -16,8 +20,10 @@ import org.beangle.security.blueprint.Authority;
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.GroupMember;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.UserCategory;
+import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.restrict.GroupRestriction;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 系统中用户组的基本信息和账号信息.
@@ -25,11 +31,16 @@ import org.beangle.security.blueprint.restrict.GroupRestriction;
  * @author dell,chaostone 2005-9-26
  */
 @Entity(name = "org.beangle.security.blueprint.Group")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class GroupBean extends LongIdTimeObject implements Group {
 
 	private static final long serialVersionUID = -3404181949500894284L;
 
 	/** 名称 */
+	@Size(max = 100)
+	@NotNull
+	@Column(unique = true)
 	private String name;
 
 	/** 关联的用户 */
@@ -37,7 +48,8 @@ public class GroupBean extends LongIdTimeObject implements Group {
 	private Set<GroupMember> members = CollectUtils.newHashSet();
 
 	/** 对应的用户类别 */
-	private UserCategory category;
+	@NotNull
+	private Category category;
 
 	/** 上级组 */
 	private Group parent;
@@ -47,12 +59,14 @@ public class GroupBean extends LongIdTimeObject implements Group {
 	private Set<Group> children = CollectUtils.newHashSet();
 
 	/** 创建人 */
+	@NotNull
 	private User owner;
 
 	/** 备注 */
 	protected String remark;
 
 	/** 是否启用 */
+	@NotNull
 	public boolean enabled = true;
 
 	/** 访问限制 */
@@ -116,11 +130,11 @@ public class GroupBean extends LongIdTimeObject implements Group {
 		this.enabled = enabled;
 	}
 
-	public UserCategory getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(UserCategory userCategory) {
+	public void setCategory(Category userCategory) {
 		this.category = userCategory;
 	}
 

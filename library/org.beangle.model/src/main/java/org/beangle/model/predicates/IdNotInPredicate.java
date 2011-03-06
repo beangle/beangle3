@@ -22,6 +22,6 @@ public class IdNotInPredicate implements Predicate {
 
 	public boolean evaluate(Object arg0) {
 		Entity<?> entity = (Entity<?>) arg0;
-		return !idSet.contains(entity.getEntityId());
+		return !idSet.contains(entity.getIdentifier());
 	}
 }

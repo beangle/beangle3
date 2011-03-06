@@ -52,7 +52,6 @@
 	</bean>
 	
 	<bean id="accessDeniedHandler" class="org.beangle.security.web.access.DefaultAccessDeniedHandler">
-		<property name="errorPage" value="/error.action"/>
 	</bean>
 	
 	<bean id="exceptionTranslationFilter" class="org.beangle.security.web.access.ExceptionTranslationFilter">

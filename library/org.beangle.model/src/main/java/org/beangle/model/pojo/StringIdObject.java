@@ -23,7 +23,7 @@ public class StringIdObject implements Entity<String> {
 		this.id = id;
 	}
 
-	public String getEntityId() {
+	public String getIdentifier() {
 		return id;
 	}
 

@@ -38,7 +38,7 @@ public class LongIdObject implements LongIdEntity {
 		this.id = id;
 	}
 
-	public Long getEntityId() {
+	public Long getIdentifier() {
 		return id;
 	}
 

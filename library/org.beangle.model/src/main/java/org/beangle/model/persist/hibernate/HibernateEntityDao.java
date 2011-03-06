@@ -40,6 +40,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.engine.jdbc.StreamUtils;
 import org.hibernate.impl.CriteriaImpl;
 import org.hibernate.proxy.HibernateProxy;
+import org.hibernate.proxy.LazyInitializer;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -73,6 +74,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 	public <T> List<T> getAll(Class<T> clazz) {
 		String hql = "from " + Model.getEntityType(clazz).getEntityName();
 		Query query = getSession().createQuery(hql);
+		query.setCacheable(true);
 		return query.list();
 	}
 
@@ -343,8 +345,17 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 		getSession().refresh(entity);
 	}
 
-	public void initialize(Object entity) {
-		getHibernateTemplate().initialize(entity);
+	@SuppressWarnings("unchecked")
+	public <T> T initialize(T proxy) {
+		if (proxy instanceof HibernateProxy) {
+			LazyInitializer init = ((HibernateProxy) proxy).getHibernateLazyInitializer();
+			if (null == init.getSession() || init.getSession().isClosed()) {
+				proxy = (T) getHibernateTemplate().get(init.getEntityName(), init.getIdentifier());
+			} else {
+				getHibernateTemplate().initialize(proxy);
+			}
+		}
+		return proxy;
 	}
 
 	/**
@@ -569,7 +580,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 				} else {
 					for (Iterator<? extends Entity<?>> it = list.iterator(); it.hasNext();) {
 						Entity<?> info = it.next();
-						if (!info.getEntityId().equals(id)) { return true; }
+						if (!info.getIdentifier().equals(id)) { return true; }
 					}
 					return false;
 				}
@@ -595,7 +606,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 			} else {
 				for (Iterator<?> iter = list.iterator(); iter.hasNext();) {
 					Entity<?> one = (Entity<?>) iter.next();
-					if (!one.getEntityId().equals(id)) { return false; }
+					if (!one.getIdentifier().equals(id)) { return false; }
 				}
 			}
 		}

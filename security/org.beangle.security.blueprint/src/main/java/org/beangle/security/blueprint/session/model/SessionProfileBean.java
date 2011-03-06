@@ -6,9 +6,12 @@ package org.beangle.security.blueprint.session.model;
 
 import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdObject;
@@ -26,19 +29,25 @@ public class SessionProfileBean extends LongIdObject implements SessionProfile {
 	private static final long serialVersionUID = 7877599995789627073L;
 
 	/** 配置名称 */
+	@NotNull
+	@Size(max = 50)
+	@Column(unique = true)
 	private String name;
 
 	/** 系统最大在线人数 */
+	@NotNull
 	private int capacity;
 
 	/** 单用户最大session数 */
+	@NotNull
 	private int userMaxSessions;
 
 	/** 过期时间(min) */
+	@NotNull
 	private int inactiveInterval;
 
 	/** 用户种类特定配置 */
-	@OneToMany
+	@OneToMany(mappedBy = "sessionProfile")
 	@MapKeyColumn(name = "category_id")
 	private Map<Long, CategoryProfile> categoryProfiles = CollectUtils.newHashMap();
 

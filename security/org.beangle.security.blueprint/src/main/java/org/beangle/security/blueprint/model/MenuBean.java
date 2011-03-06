@@ -7,27 +7,41 @@ package org.beangle.security.blueprint.model;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.Menu;
 import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.Resource;
-
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity(name = "org.beangle.security.blueprint.Menu")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class MenuBean extends LongIdObject implements Menu {
 
 	private static final long serialVersionUID = 3864556621041443066L;
 
+	@NotNull
+	@Size(max = 32)
+	@Column(unique = true)
 	private String code;
 
+	@NotNull
+	@Size(max = 100)
 	private String title;
 
+	@NotNull
+	@Size(max = 100)
 	private String engTitle;
 
 	private String entry;
@@ -35,15 +49,19 @@ public class MenuBean extends LongIdObject implements Menu {
 	private String remark;
 
 	@ManyToMany
+	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 	private Set<Resource> resources = CollectUtils.newHashSet();
 
+	@NotNull
 	private boolean enabled = true;
 
+	@NotNull
 	private MenuProfile profile;
 
 	private Menu parent;
 
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 	private List<Menu> children;
 
 	/**

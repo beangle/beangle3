@@ -49,7 +49,7 @@ a:hover {color: red;}
 .gridbar-pagebar-label{background-color:#e9f2f8;}
 
 /*toolbar*/
-.toolbar{height:22px;border-collapse:separate;font-size: 13px;}
+.toolbar{height:22px;border-collapse:separate;display:block;font-size: 13px;}
 
 .toolbar-icon{vertical-align:bottom;margin-top:2px;margin-right:2px;border:0px}
 

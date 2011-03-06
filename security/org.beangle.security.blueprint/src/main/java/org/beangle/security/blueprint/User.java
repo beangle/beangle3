@@ -115,28 +115,28 @@ public interface User extends LongIdTimeEntity, RestrictionHolder<UserRestrictio
 	 * 
 	 * @return
 	 */
-	public Set<UserCategory> getCategories();
+	public Set<Category> getCategories();
 
 	/**
 	 * 设置类别.
 	 * 
 	 * @param categories
 	 */
-	public void setCategories(Set<UserCategory> HasSet);
+	public void setCategories(Set<Category> HasSet);
 
 	/**
 	 * 缺省类别
 	 * 
 	 * @return
 	 */
-	public UserCategory getDefaultCategory();
+	public Category getDefaultCategory();
 
 	/**
 	 * 设置缺省类别
 	 * 
 	 * @param userCategory
 	 */
-	public void setDefaultCategory(UserCategory userCategory);
+	public void setDefaultCategory(Category userCategory);
 
 	public boolean isCategory(Long categoryId);
 

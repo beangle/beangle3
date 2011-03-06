@@ -106,14 +106,14 @@ public interface Group extends LongIdTimeEntity, RestrictionHolder<GroupRestrict
 	 * 
 	 * @return
 	 */
-	public UserCategory getCategory();
+	public Category getCategory();
 
 	/**
 	 * 设置用户组对应的类别.
 	 * 
 	 * @param categories
 	 */
-	public void setCategory(UserCategory userCategory);
+	public void setCategory(Category userCategory);
 
 	/**
 	 * 状态

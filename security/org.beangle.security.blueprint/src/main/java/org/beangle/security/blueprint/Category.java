@@ -11,7 +11,7 @@ import org.beangle.model.pojo.LongIdEntity;
  * 
  * @author chaostone
  */
-public interface UserCategory extends LongIdEntity {
+public interface Category extends LongIdEntity {
 
 	public String getName();
 

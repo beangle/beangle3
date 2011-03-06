@@ -18,7 +18,7 @@ public interface Entity<ID extends Serializable> extends Serializable {
 	 * 
 	 * @return
 	 */
-	public ID getEntityId();
+	public ID getIdentifier();
 
 	/**
 	 * 是否是持久化对象

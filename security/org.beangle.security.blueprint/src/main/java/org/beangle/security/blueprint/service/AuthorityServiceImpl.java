@@ -114,7 +114,8 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 	private OqlBuilder<Menu> buildMenuQuery(MenuProfile profile, Group group) {
 		OqlBuilder<Menu> builder = OqlBuilder.from(Menu.class);
 		builder.join("menu.resources", "mr");
-		builder.where("exists(from Authority a where a.group=:group and a.resource=mr)", group);
+		builder.where("exists(from " + Authority.class.getName()
+				+ " a where a.group=:group and a.resource=mr)", group);
 		if (null != profile) {
 			builder.where("menu.profile=:profile", profile);
 		}
@@ -125,7 +126,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 		Set<Resource> resources = CollectUtils.newHashSet();
 		Map<String, Object> params = CollectUtils.newHashMap();
 		List<Group> groups = userService.getGroups(user, GroupMember.Ship.MEMBER);
-		String hql = "select distinct m from Group as r join r.authorities as a"
+		String hql = "select distinct m from " + Group.class.getName() + " as r join r.authorities as a"
 				+ " join a.resource as m where  r.id = :groupId";
 		params.clear();
 		for (final Group group : groups) {
@@ -149,7 +150,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Set<String> getResourceNamesByGroup(String group) {
-		String hql = "select m.name from Group as r join r.authorities as a"
+		String hql = "select m.name from " + Group.class.getName() + " as r join r.authorities as a"
 				+ " join a.resource as m where  r.name = :groupName and m.enabled = true";
 		OqlBuilder query = OqlBuilder.hql(hql).param("groupName", group).cacheable();
 		return (Set<String>) new HashSet(entityDao.search(query));
@@ -204,16 +205,17 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 	}
 
 	public List<Authority> getAuthorities(Group group) {
-		Map<String, Object> params = CollectUtils.newHashMap();
-		params.put("groupId", group.getId());
-		return entityDao.searchNamedQuery("getAuthorities", params, false);
+		OqlBuilder<Authority> builder = OqlBuilder.hql("select distinct a from  " + Group.class.getName()
+				+ " as r join r.authorities as a join a.resource as m  where r = :group");
+		builder.param("group", group);
+		return entityDao.search(builder);
 	}
 
 	/**
 	 * 查询用户组对应的模块
 	 */
 	public List<Resource> getResources(Group group) {
-		String hql = "select distinct m from Group as r join r.authorities as a"
+		String hql = "select distinct m from " + Group.class.getName() + " as r join r.authorities as a"
 				+ " join a.resource as m where  r.id = :groupId and m.enabled = true";
 		OqlBuilder<Resource> query = OqlBuilder.hql(hql);
 		query.param("groupId", group.getId()).cacheable();
@@ -223,7 +225,6 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 	public void remove(Authority authority) {
 		if (null != authority) entityDao.remove(authority);
 	}
-	
 
 	public String extractResource(String uri) {
 		int lastDot = -1;

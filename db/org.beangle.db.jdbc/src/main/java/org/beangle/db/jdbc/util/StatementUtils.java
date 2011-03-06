@@ -73,9 +73,13 @@ public class StatementUtils {
 
 			case FLOAT:
 			case DOUBLE:
-				ps.setDouble(index, (Double) value);
+				if (value instanceof BigDecimal) {
+					ps.setBigDecimal(index, (BigDecimal) value);
+				} else {
+					ps.setDouble(index, (Double) value);
+				}
 				break;
-				
+
 			case NUMERIC:
 			case DECIMAL:
 				ps.setBigDecimal(index, (BigDecimal) value);

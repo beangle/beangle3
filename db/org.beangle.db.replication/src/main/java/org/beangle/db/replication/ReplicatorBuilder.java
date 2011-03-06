@@ -41,15 +41,15 @@ public final class ReplicatorBuilder {
 
 	public Replicator build() {
 		DatabaseWrapper sourceWrapper = source.buildWrapper();
-		DatabaseWrapper targetWrraper = target.buildWrapper();
+		DatabaseWrapper targetWrapper = target.buildWrapper();
 
-		DataReplicator dataReplicator = new DataReplicator(sourceWrapper, targetWrraper);
+		DataReplicator dataReplicator = new DataReplicator(sourceWrapper, targetWrapper);
 		dataReplicator.addAll(source.filterTables());
 
-		ConstraintReplicator contraintRelicator = new ConstraintReplicator(sourceWrapper, targetWrraper);
+		ConstraintReplicator contraintRelicator = new ConstraintReplicator(sourceWrapper, targetWrapper);
 		contraintRelicator.addAll(source.filterConstraints());
 
-		SequenceReplicator sequenceReplicator = new SequenceReplicator(sourceWrapper, targetWrraper);
+		SequenceReplicator sequenceReplicator = new SequenceReplicator(sourceWrapper, targetWrapper);
 		sequenceReplicator.addAll(source.filterSequences());
 
 		return new CompositeReplicator(dataReplicator, contraintRelicator, sequenceReplicator);
@@ -164,8 +164,8 @@ public final class ReplicatorBuilder {
 			tables = CollectUtils.newArrayList();
 			for (String name : tablenames) {
 				Table tb = wrapper.getDatabase().getTable(name);
+				tb = tb.clone();
 				if (toLowercase) {
-					tb = tb.clone();
 					tb.lowerCase();
 				}
 				tables.add(tb);

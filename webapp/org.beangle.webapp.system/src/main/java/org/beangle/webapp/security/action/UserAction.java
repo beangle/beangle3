@@ -13,15 +13,14 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
-import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.Entity;
 import org.beangle.model.query.builder.Condition;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.model.transfer.exporter.PropertyExtractor;
+import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.GroupMember;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.UserCategory;
 import org.beangle.security.blueprint.model.GroupMemberBean;
 import org.beangle.security.blueprint.service.UserPropertyExtractor;
 import org.beangle.security.blueprint.service.UserService;
@@ -41,7 +40,7 @@ public class UserAction extends SecurityActionSupport {
 	private UserDashboardHelper userDashboardHelper;
 
 	protected void indexSetting() {
-		put("categories", entityDao.getAll(UserCategory.class));
+		put("categories", entityDao.getAll(Category.class));
 	}
 
 	public String dashboard() {
@@ -63,7 +62,7 @@ public class UserAction extends SecurityActionSupport {
 
 	protected OqlBuilder<User> getQueryBuilder() {
 		User manager = getUser();
-		OqlBuilder<User> userQuery = OqlBuilder.from(entityName, "user");
+		OqlBuilder<User> userQuery = OqlBuilder.from(getEntityName(), "user");
 		// 查询用户组
 		StringBuilder sb = new StringBuilder("exists(from user.groups ug where ");
 		List<Object> params = CollectUtils.newArrayList();
@@ -185,7 +184,7 @@ public class UserAction extends SecurityActionSupport {
 		}
 		put("memberMap", memberMap);
 		put("members", members);
-		put("categories", entityDao.getAll(UserCategory.class));
+		put("categories", entityDao.getAll(Category.class));
 	}
 
 	/**
@@ -194,8 +193,7 @@ public class UserAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String remove() {
-		String userIdSeq = get("userIds");
-		Long[] userIds = StrUtils.splitToLong(userIdSeq);
+		Long[] userIds = getEntityIds();
 		User creator = userService.get(getUserId());
 		List<User> toBeRemoved = userService.getUsers(userIds);
 		try {
@@ -217,7 +215,7 @@ public class UserAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String activate() {
-		Long[] userIds = getEntityIds("user");
+		Long[] userIds = getEntityIds();
 		String isActivate = get("isActivate");
 		try {
 			if (StringUtils.isNotEmpty(isActivate) && "false".equals(isActivate)) {
@@ -246,12 +244,12 @@ public class UserAction extends SecurityActionSupport {
 	 * @return
 	 */
 	protected String checkCategory(User user, Long categoryId) {
-		user.getCategories().add(entityDao.get(UserCategory.class, categoryId));
+		user.getCategories().add(entityDao.get(Category.class, categoryId));
 		return "";
 	}
 
 	protected String checkUser(User user) {
-		if (!user.isPersisted() && entityDao.exist(entityName, "name", user.getName())) { return "error.model.existed"; }
+		if (!user.isPersisted() && entityDao.exist(getEntityName(), "name", user.getName())) { return "error.model.existed"; }
 		return "";
 	}
 
@@ -287,4 +285,10 @@ public class UserAction extends SecurityActionSupport {
 	public void setUserDashboardHelper(UserDashboardHelper userDashboardHelper) {
 		this.userDashboardHelper = userDashboardHelper;
 	}
+
+	@Override
+	protected String getEntityName() {
+		return User.class.getName();
+	}
+
 }

@@ -5,11 +5,18 @@
 package org.beangle.webapp.security.action;
 
 import org.beangle.model.Entity;
-import org.beangle.security.blueprint.UserCategory;
+import org.beangle.security.blueprint.Category;
+import org.beangle.security.blueprint.MenuProfile;
 
 public class MenuProfileAction extends SecurityActionSupport {
 
 	protected void editSetting(Entity<?> entity) {
-		put("categories", entityDao.getAll(UserCategory.class));
+		put("categories", entityDao.getAll(Category.class));
 	}
+
+	@Override
+	protected String getEntityName() {
+		return MenuProfile.class.getName();
+	}
+
 }

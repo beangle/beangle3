@@ -6,7 +6,6 @@ package org.beangle.security.blueprint.service;
 
 import java.util.List;
 
-import org.beangle.model.EntityExistException;
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.GroupMember;
 import org.beangle.security.blueprint.User;
@@ -42,7 +41,7 @@ public interface UserService {
 	 * 
 	 * @param user
 	 */
-	public void saveOrUpdate(User user) throws EntityExistException;
+	public void saveOrUpdate(User user);
 
 	/**
 	 * 返回userIds指定的用户

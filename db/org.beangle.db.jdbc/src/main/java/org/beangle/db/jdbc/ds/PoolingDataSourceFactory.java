@@ -80,7 +80,9 @@ public class PoolingDataSourceFactory implements FactoryBean<DataSource> {
 	}
 
 	public DataSource getObject() {
-		ObjectPool connectionPool = new GenericObjectPool(null);
+		GenericObjectPool.Config config=new GenericObjectPool.Config();
+		config.maxActive=16;
+		ObjectPool connectionPool = new GenericObjectPool(null,config);
 		ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(url, username, password);
 		new PoolableConnectionFactory(connectionFactory, connectionPool, null, null, false, true);
 		return new PoolingDataSource(connectionPool);

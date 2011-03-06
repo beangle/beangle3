@@ -7,6 +7,7 @@ package org.beangle.security.blueprint.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 
 import org.beangle.model.pojo.LongIdTimeObject;
 import org.beangle.security.blueprint.Group;
@@ -21,10 +22,15 @@ import org.beangle.security.blueprint.User;
 public class GroupMemberBean extends LongIdTimeObject implements GroupMember {
 
 	private static final long serialVersionUID = -3882917413656652492L;
+	@NotNull
 	private Group group;
+	@NotNull
 	private User user;
+	@NotNull
 	private boolean member;
+	@NotNull
 	private boolean manager;
+	@NotNull
 	private boolean granter;
 
 	public GroupMemberBean() {

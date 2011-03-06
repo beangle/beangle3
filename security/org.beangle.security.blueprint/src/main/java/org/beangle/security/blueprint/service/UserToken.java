@@ -8,7 +8,7 @@ import java.util.Collection;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.beangle.security.blueprint.UserCategory;
+import org.beangle.security.blueprint.Category;
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.userdetail.User;
 import org.beangle.security.web.session.category.CategoryPrincipal;
@@ -22,9 +22,9 @@ public class UserToken extends User implements CategoryPrincipal, Comparable<Use
 	private final String fullname;
 
 	/** 用户类别 */
-	private UserCategory category;
+	private Category category;
 
-	public UserToken(Long id, String username, String fullname, String password, UserCategory category,
+	public UserToken(Long id, String username, String fullname, String password, Category category,
 			boolean enabled, boolean accountExpired, boolean credentialsExpired, boolean accountLocked,
 			Collection<? extends GrantedAuthority> authorities) throws IllegalArgumentException {
 		super(username, password, enabled, accountExpired, credentialsExpired, accountLocked, authorities);
@@ -41,13 +41,13 @@ public class UserToken extends User implements CategoryPrincipal, Comparable<Use
 		return fullname;
 	}
 
-	public UserCategory getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
 	public void changeCategory(Object newCategory) {
-		Validate.isTrue(newCategory instanceof UserCategory, "newCategory should be instanceof UserCategory");
-		this.category = (UserCategory) newCategory;
+		Validate.isTrue(newCategory instanceof Category, "newCategory should be instanceof UserCategory");
+		this.category = (Category) newCategory;
 	}
 
 	/**

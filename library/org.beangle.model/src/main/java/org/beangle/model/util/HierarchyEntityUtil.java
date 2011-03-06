@@ -24,7 +24,7 @@ public class HierarchyEntityUtil {
 		for (HierarchyEntity<?> de : datas) {
 			String myId = null;
 			if (null == property) {
-				myId = String.valueOf(de.getEntityId());
+				myId = String.valueOf(de.getIdentifier());
 			} else {
 				try {
 					myId = String.valueOf(PropertyUtils.getProperty(de, property));

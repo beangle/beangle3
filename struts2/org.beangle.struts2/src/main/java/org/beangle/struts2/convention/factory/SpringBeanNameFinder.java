@@ -27,7 +27,7 @@ public class SpringBeanNameFinder extends DefaultBeanNameFinder implements Appli
 	public String[] getBeanNames(Class<?> type) {
 		String[] names = appContext.getBeanNamesForType(type);
 		if (null == names || names.length == 0) {
-			return names;
+			return new String[] { type.getName() };
 		} else {
 			List<String> lefts = CollectUtils.newArrayList();
 			if (names.length > 1) {

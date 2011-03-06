@@ -2,11 +2,11 @@
 <tomcatProjectProperties>
     <rootDir>src/main/webapp</rootDir>
     <exportSource>false</exportSource>
-    <reloadable>true</reloadable>
+    <reloadable>false</reloadable>
     <redirectLogger>true</redirectLogger>
     <updateXml>true</updateXml>
     <warLocation></warLocation>
-    <extraInfo>%3CResource+%0A++name%3D%22jdbc%2Fbeangle%22%0A++driverClassName%3D%22org.h2.Driver%22%0A++url%3D%22jdbc%3Ah2%3A%2Ftmp%2Fbeangle2%3BAUTO_SERVER%3DTRUE%22+%0A++type%3D%22javax.sql.DataSource%22%0A++username%3D%22sa%22%0A++password%3D%22%22%0A++%2F%3E</extraInfo>
+    <extraInfo>%3CResource+%0A++name%3D%22jdbc%2Fbeangle%22%0A++driverClassName%3D%22org.h2.Driver%22%0A++url%3D%22jdbc%3Ah2%3A%2Ftmp%2Fbeangle%3BAUTO_SERVER%3DTRUE%22+%0A++type%3D%22javax.sql.DataSource%22%0A++username%3D%22sa%22%0A++password%3D%22%22%0A++%2F%3E</extraInfo>
     <webPath>/demo</webPath>
     <webClassPathEntries>
         <webClassPathEntry>/beangle-commons/target/classes</webClassPathEntry>
@@ -61,6 +61,7 @@
         <webClassPathEntry>M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/javassist/javassist/3.12.0.GA/javassist-3.12.0.GA.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/javax/transaction/jta/1.1/jta-1.1.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/javax/validation/validation-api/1.0.0.GA/validation-api-1.0.0.GA.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/net/sf/ehcache/ehcache-core/2.3.0/ehcache-core-2.3.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/net/sf/jxls/jxls-core/0.9.9/jxls-core-0.9.9.jar</webClassPathEntry>
@@ -79,6 +80,7 @@
         <webClassPathEntry>M2_REPO/org/eclipse/gemini/blueprint/gemini-blueprint-io/1.0.0.M1/gemini-blueprint-io-1.0.0.M1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/freemarker/freemarker/2.3.16/freemarker-2.3.16.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/org/hibernate/hibernate-validator/4.1.0.Final/hibernate-validator-4.1.0.Final.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.0.Final/hibernate-jpa-2.0-api-1.0.0.Final.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/jasig/cas/cas-client-core/3.1.9/cas-client-core-3.1.9.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/org/mockito/mockito-core/1.8.5/mockito-core-1.8.5.jar</webClassPathEntry>

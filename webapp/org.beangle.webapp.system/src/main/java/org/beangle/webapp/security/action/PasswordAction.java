@@ -66,4 +66,10 @@ public class PasswordAction extends SecurityActionSupport {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+
+	@Override
+	protected String getEntityName() {
+		return User.class.getName();
+	}
+
 }

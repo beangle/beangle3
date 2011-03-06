@@ -2,56 +2,60 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	
-	<bean id="captchaService" class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService">
+
+	<bean name="avatar.config" class="org.beangle.webapp.avatar.AvatarBeanConfigFactory" />
+	<bean name="captcha.config" class="org.beangle.webapp.captcha.CaptchaBeanConfigFactory" />
+	<bean name="portal.config" class="org.beangle.webapp.portal.PortalActionConfigFactory" />
+	<bean name="security.config" class="org.beangle.webapp.security.SecurityBeanConfigFactory" />
+	<bean name="system.config" class="org.beangle.webapp.system.SystemBeanConfigFactory" />
+
+	<bean id="captchaService"
+		class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService">
 		<property name="captchaEngine">
-			<bean class="org.beangle.webapp.captcha.service.GmailEngine"/>
+			<bean class="org.beangle.webapp.captcha.service.GmailEngine" />
 		</property>
-		<property name="minGuarantedStorageDelayInSeconds" value="600"/>
+		<property name="minGuarantedStorageDelayInSeconds" value="600" />
 	</bean>
-	
-	<bean name="classpathDocLoader" scope="prototype" 
-	class="org.beangle.webapp.staticfile.service.ClasspathDocLoader" autowire="byName">
-	</bean>
-	
-	<bean name="defaultAvatarBase" autowire="byName" 
-		class="org.beangle.webapp.avatar.service.FileSystemAvatarBase">
-	</bean>
-	
-	<bean name="streamDownloader" autowire="byName" class="org.beangle.web.io.SplitStreamDownloader"/>
-	
+
 	<bean name="mimeTypeProvider" autowire="byName"
 		class="org.beangle.web.mime.MimeTypeProvider">
 		<property name="resource">
 			<bean class="org.beangle.commons.config.ConfigResource">
-				<property name="globals" value="classpath*:org/beangle/web/mime/mimetypes.properties"/>
-				<property name="locations" value="classpath*:META-INF/mimetypes.properties"/>
+				<property name="globals"
+					value="classpath*:org/beangle/web/mime/mimetypes.properties" />
+				<property name="locations" value="classpath*:META-INF/mimetypes.properties" />
 			</bean>
 		</property>
 	</bean>
-		
-	<bean name="daoPropertyConfigProvider" autowire="byName"
-		class="org.beangle.webapp.system.service.DaoPropertyConfigProvider">
-	</bean>
-	
+
 	<bean name="urlPropertyConfigProvider" autowire="byName"
 		class="org.beangle.commons.config.property.UrlPropertyConfigProvider">
 		<property name="resource">
 			<bean class="org.beangle.commons.config.ConfigResource">
-				<property name="globals" value="classpath*:system-default.properties"/>
-				<property name="locations" value="classpath*:META-INF/system.properties"/>
-				<property name="users" value="classpath*:system.properties"/>
+				<property name="globals" value="classpath*:system-default.properties" />
+				<property name="locations" value="classpath*:META-INF/system.properties" />
+				<property name="users" value="classpath*:system.properties" />
 			</bean>
 		</property>
 	</bean>
-	
-	<bean id="propertyConfig" name="propertyConfig" autowire="byName"
+
+	<bean id="propertyConfig" autowire="byName"
 		class="org.beangle.commons.config.property.DefaultPropertyConfigFactory">
-			<property name="providers">
-				<list>
-					<ref bean="urlPropertyConfigProvider"/>
-					<ref bean="daoPropertyConfigProvider"/>
-				</list>
-			</property>
+		<property name="providers">
+			<list>
+				<ref bean="urlPropertyConfigProvider" />
+				<ref bean="daoPropertyConfigProvider" />
+			</list>
+		</property>
 	</bean>
+
+	<bean name="staticfile.download" scope="prototype"
+		class="org.beangle.webapp.staticfile.action.DownloadAction" autowire="byName">
+		<property name="loaders">
+			<list>
+				<ref bean="classpathDocLoader"></ref>
+			</list>
+		</property>
+	</bean>
+
 </beans>

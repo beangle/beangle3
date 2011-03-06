@@ -152,7 +152,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 		if (header.endsWith("s")) {
 			header = addUnderscores(propertyTableName);
 		} else {
-			addUnderscores(header);
+			header=addUnderscores(header);
 		}
 		return header + "_" + referencedColumnName;
 	}

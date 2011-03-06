@@ -5,6 +5,7 @@
 package org.beangle.security.blueprint.restrict.model;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.restrict.GroupRestriction;
@@ -16,6 +17,7 @@ public class GroupRestrictionBean extends RestrictionBean implements GroupRestri
 
 	private static final long serialVersionUID = -8655931585994557645L;
 
+	@NotNull
 	private Group holder;
 
 	public RestrictionHolder<? extends Restriction> getHolder() {

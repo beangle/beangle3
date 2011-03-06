@@ -15,6 +15,8 @@
 		<bundle.symbolicName>org.beangle.model</bundle.symbolicName>
 		<bundle.namespace>org.beangle.model</bundle.namespace>
 		<hibernate.version>3.6.1.Final</hibernate.version>
+		<hibernate.annotation.version>3.2.0.Final</hibernate.annotation.version>
+		<hibernate.validate.version>4.1.0.Final</hibernate.validate.version>
 		<ehcache.version>2.3.0</ehcache.version>
 		<jta.version>1.1</jta.version>
 	</properties>
@@ -55,7 +57,12 @@
 		<dependency>
 			<groupId>org.beangle</groupId>
 			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>3.2.0.Final</version>
+			<version>${hibernate.annotation.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate.validate.version}</version>
 		</dependency>
 		<!--
 		<dependency>

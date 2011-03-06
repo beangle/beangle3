@@ -8,10 +8,11 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityExistsException;
+
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.model.EntityExistException;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.blueprint.Adminuser;
@@ -29,9 +30,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
 	public boolean isAdmin(User user) {
-		OqlBuilder<?> query = OqlBuilder.from(Adminuser.class, "admin");
-		query.where("admin.user=:user", user).select("admin.id");
-		return !entityDao.search(query).isEmpty();
+		OqlBuilder<?> query = OqlBuilder.from(Adminuser.class, "admin").select("admin.user.id").cacheable();
+		List<?> adminuserIds=entityDao.search(query);
+		return adminuserIds.contains(user.getId());
 	}
 
 	public User get(String name, String password) {
@@ -70,7 +71,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		entityDao.saveOrUpdate(users);
 	}
 
-	public void saveOrUpdate(User user) throws EntityExistException {
+	public void saveOrUpdate(User user) {
 		try {
 			user.setUpdatedAt(new Date(System.currentTimeMillis()));
 			if (!user.isPersisted()) {
@@ -78,9 +79,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			}
 			entityDao.saveOrUpdate(user);
 		} catch (DataIntegrityViolationException e) {
-			throw new EntityExistException("User already exits:" + user);
+			throw new EntityExistsException("User already exits:" + user);
 		} catch (Exception e) {
-			throw new EntityExistException("User already exits:" + user);
+			throw new EntityExistsException("User already exits:" + user);
 		}
 	}
 

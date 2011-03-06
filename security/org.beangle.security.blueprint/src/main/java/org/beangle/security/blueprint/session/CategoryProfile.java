@@ -5,7 +5,7 @@
 package org.beangle.security.blueprint.session;
 
 import org.beangle.model.pojo.LongIdEntity;
-import org.beangle.security.blueprint.UserCategory;
+import org.beangle.security.blueprint.Category;
 
 public interface CategoryProfile extends LongIdEntity {
 
@@ -13,9 +13,9 @@ public interface CategoryProfile extends LongIdEntity {
 
 	public void setSessionProfile(SessionProfile sessionProfile);
 
-	public UserCategory getCategory();
+	public Category getCategory();
 
-	public void setCategory(UserCategory category);
+	public void setCategory(Category category);
 
 	public int getCapacity();
 

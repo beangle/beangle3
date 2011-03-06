@@ -6,10 +6,13 @@ package org.beangle.security.blueprint.restrict.model;
 
 import java.util.Map;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
@@ -28,14 +31,16 @@ import org.beangle.security.blueprint.restrict.Restriction;
 public abstract class RestrictionBean extends LongIdObject implements Restriction {
 	private static final long serialVersionUID = -1157873272781525823L;
 
+	@NotNull
 	protected RestrictPattern pattern;
 
+	@NotNull
 	protected boolean enabled = true;
 
-	// FIXME
 	@ElementCollection
 	@MapKeyColumn(name = "param_id")
 	@Column(name = "content")
+	@CollectionTable(joinColumns = @JoinColumn(name = "restriction_id"))
 	private Map<Long, String> items = CollectUtils.newHashMap();
 
 	public boolean isEnabled() {

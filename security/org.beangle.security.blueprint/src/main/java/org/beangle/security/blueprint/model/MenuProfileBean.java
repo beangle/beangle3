@@ -6,27 +6,41 @@ package org.beangle.security.blueprint.model;
 
 import java.util.List;
 
+import javax.persistence.Cacheable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdObject;
+import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.Menu;
 import org.beangle.security.blueprint.MenuProfile;
-import org.beangle.security.blueprint.UserCategory;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity(name = "org.beangle.security.blueprint.MenuProfile")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class MenuProfileBean extends LongIdObject implements MenuProfile {
 
 	private static final long serialVersionUID = 9147563981118270960L;
 
+	@NotNull
+	@Size(max = 50)
+	@Column(unique = true)
 	private String name;
 
-	@OneToMany(mappedBy="profile")
+	@OneToMany(mappedBy = "profile")
 	private List<Menu> menus = CollectUtils.newArrayList();
 
 	/** 对应的用户类别 */
-	private UserCategory category;
+	@NotNull
+	private Category category;
 
+	@NotNull
 	private boolean enabled;
 
 	public String getName() {
@@ -45,11 +59,11 @@ public class MenuProfileBean extends LongIdObject implements MenuProfile {
 		this.menus = menus;
 	}
 
-	public UserCategory getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(UserCategory category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 

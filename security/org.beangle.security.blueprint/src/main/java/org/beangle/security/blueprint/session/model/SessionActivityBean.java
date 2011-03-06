@@ -8,9 +8,11 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.beangle.model.pojo.LongIdObject;
-import org.beangle.security.blueprint.UserCategory;
+import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.session.SessionActivity;
 
 /**
@@ -24,46 +26,61 @@ public class SessionActivityBean extends LongIdObject implements SessionActivity
 	private static final long serialVersionUID = -3144771635148215917L;
 
 	/** 会话ID */
+	@NotNull
+	@Size(max = 100)
 	private String sessionid;
 
 	/** 系统登录用户 */
+	@NotNull
+	@Size(max = 40)
 	private String name;
 
 	/** 用户真实姓名 */
+	@NotNull
+	@Size(max = 50)
 	private String fullname;
 
 	/** 登录IP */
+	@Size(max = 100)
 	private String host;
 
 	/** OS */
+	@Size(max = 50)
 	private String os;
 
 	/** agent */
+	@Size(max = 50)
 	private String agent;
 
 	/** 登录时间 */
+	@NotNull
 	private Date loginAt;
 
 	/** 最后访问时间 */
+	@NotNull
 	private Date lastAccessAt;
 
 	/** 在线时间 */
+	@NotNull
 	private Long onlineTime;
 
 	/** 用户类型 */
-	private UserCategory category;
+	@NotNull
+	private Category category;
 
 	/** 退出时间 */
+	@NotNull
 	private Timestamp logoutAt;
 
 	/** 备注 */
+	@Size(max = 100)
 	private String remark;
 
 	public SessionActivityBean() {
 		super();
 	}
 
-	public SessionActivityBean(String sessionId, String name, String fullname, UserCategory category) {
+	public SessionActivityBean(String sessionId, String name, String fullname, Category category) {
 		super();
 		this.sessionid = sessionId;
 		this.name = name;
@@ -146,11 +163,11 @@ public class SessionActivityBean extends LongIdObject implements SessionActivity
 		this.onlineTime = onlineTime;
 	}
 
-	public UserCategory getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(UserCategory category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 

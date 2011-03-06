@@ -11,7 +11,7 @@ import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.model.transfer.exporter.PropertyExtractor;
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.UserCategory;
+import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.service.AuthorityService;
 import org.beangle.security.blueprint.service.GroupPropertyExtractor;
 import org.beangle.security.blueprint.service.UserService;
@@ -31,16 +31,16 @@ public class GroupAction extends SecurityActionSupport {
 	}
 
 	protected void indexSetting() {
-		put("categories", entityDao.getAll(UserCategory.class));
+		put("categories", entityDao.getAll(Category.class));
 	}
 
 	protected void editSetting(Entity<?> entity) {
-		put("categories", entityDao.getAll(UserCategory.class));
+		put("categories", entityDao.getAll(Category.class));
 	}
 
 	protected OqlBuilder<Group> getQueryBuilder() {
 		User manager = getUser();
-		OqlBuilder<Group> entityQuery = OqlBuilder.from(entityName, "userGroup");
+		OqlBuilder<Group> entityQuery = OqlBuilder.from(getEntityName(), "userGroup");
 		if (!isAdmin(manager)) {
 			entityQuery.join("userGroup.members", "gm");
 			entityQuery.where("gm.user=:me and gm.manager=true", manager);
@@ -89,6 +89,11 @@ public class GroupAction extends SecurityActionSupport {
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	@Override
+	protected String getEntityName() {
+		return Group.class.getName();
 	}
 
 }

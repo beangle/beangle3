@@ -1,3 +1,7 @@
+2011-03-05  duantihua  <chaostone.duan@gmail.com>
+	
+	* 增加spring自动配置
+	
 2010-11-13  duantihua  <chaostone.duan@gmail.com>
 	* 合并ListUtil,MapUtil,SetUtil到CollectUtils
 	* 重命名SeqStringUtil到SeqStrUtils

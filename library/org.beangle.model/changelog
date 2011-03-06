@@ -1,4 +1,10 @@
-2010-12-3  duantihua  <chaostone.duan@gmail.com>
+2011-03-05  duantihua  <chaostone.duan@gmail.com>
+
+	* Delete EntityExistException ,using jpa's EntityExistsException
+	* Change Entity's getEntityId method to getIndentifier
+	* Implenent Strong HibernateEntityDao's initialize method
+	
+2010-12-03  duantihua  <chaostone.duan@gmail.com>
 
 	* change entityDao.count returntype from int to long
 	

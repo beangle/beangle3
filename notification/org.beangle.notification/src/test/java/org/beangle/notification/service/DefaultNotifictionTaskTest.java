@@ -47,19 +47,13 @@ public class DefaultNotifictionTaskTest {
 		mailSender.setPort(3025);
 
 		AbstractMailNotifier<MailMessage> notifier = new DefaultMailNotifier<MailMessage>(mailSender);
-		notifier.setFrom("<测试name>user1@localhost");
+		notifier.setFrom("测试name<user1@localhost>");
 		DefaultNotificationTask<MailMessage> task = new DefaultNotificationTask<MailMessage>();
 		task.setNotifier(notifier);
 		MailMessage mmc = new MailMessage("测试", "测试简单邮件发送机制", "user2@localhost");
 		task.getMessageQueue().addMessage(mmc);
 		task.send();
 		MimeMessage[] msgs = greenMail.getReceivedMessages();
-		//MimeMessage msg = msgs[0];
-		// Enumeration<Header> headers=msg.getAllHeaders();
-		// while(headers.hasMoreElements()){
-		// Header header=headers.nextElement();
-		// System.out.println(header.getName()+":"+ header.getValue());
-		// }
 		assertEquals(1, msgs.length);
 	}
 }

@@ -168,6 +168,10 @@ public class EntityDrivenAction extends BaseAction {
 		return getEntityIds(shortName, Long.class);
 	}
 
+	protected Long[] getEntityIds() {
+		return getEntityIds(getShortName(), Long.class);
+	}
+
 	protected <T> void foo(Class<T> a) {
 	}
 
@@ -312,8 +316,9 @@ public class EntityDrivenAction extends BaseAction {
 	}
 
 	protected String getShortName() {
-		if (StringUtils.isNotEmpty(getEntityName())) { return EntityUtils.getCommandName(getEntityName()); }
-		return null;
+		String name = getEntityName();
+		if (StringUtils.isNotEmpty(name)) return EntityUtils.getCommandName(name);
+		else return null;
 	}
 
 	protected Entity<?> getModel(String entityName, Serializable id) {

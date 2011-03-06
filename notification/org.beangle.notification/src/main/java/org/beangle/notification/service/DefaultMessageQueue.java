@@ -15,7 +15,7 @@ import org.beangle.notification.MessageQueue;
 
 public class DefaultMessageQueue<T extends Message> implements MessageQueue<T> {
 
-	private Buffer contextBuffer = BufferUtils.synchronizedBuffer(new UnboundedFifoBuffer());;
+	private Buffer contextBuffer = BufferUtils.synchronizedBuffer(new UnboundedFifoBuffer());
 
 	@SuppressWarnings("unchecked")
 	public List<T> getMessages() {

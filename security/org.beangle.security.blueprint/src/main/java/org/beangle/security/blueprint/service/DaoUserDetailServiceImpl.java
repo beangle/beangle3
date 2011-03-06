@@ -11,7 +11,6 @@ import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.GroupMember;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.UserCategory;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.authority.GrantedAuthorityBean;
 import org.beangle.security.core.userdetail.UserDetail;
@@ -33,8 +32,8 @@ public class DaoUserDetailServiceImpl extends BaseServiceImpl implements UserDet
 				authorities.add(new GrantedAuthorityBean(g.getName()));
 			}
 			return new UserToken(user.getId(), user.getName(), user.getFullname(), user.getPassword(),
-					entityDao.get(UserCategory.class, user.getDefaultCategory().getId()),
-					user.getStatus() > 0, false, false, false, authorities);
+					entityDao.initialize(user.getDefaultCategory()), user.getStatus() > 0, false, false, false,
+					authorities);
 		}
 	}
 

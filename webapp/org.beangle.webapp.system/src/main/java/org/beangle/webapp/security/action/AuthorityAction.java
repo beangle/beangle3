@@ -14,12 +14,13 @@ import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.entity.Model;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.blueprint.Authority;
+import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.Group;
+import org.beangle.security.blueprint.GroupMember;
 import org.beangle.security.blueprint.Menu;
 import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.UserCategory;
 import org.beangle.security.blueprint.service.CacheableAuthorityManager;
 import org.beangle.security.core.authority.GrantedAuthorityBean;
 import org.beangle.struts2.convention.route.Action;
@@ -58,10 +59,17 @@ public class AuthorityAction extends SecurityActionSupport {
 		Group ao = entityDao.get(Group.class, groupId);
 		User user = getUser();
 		put("manager", user);
+		List<Group> mngGroups=CollectUtils.newArrayList();
 		if (isAdmin(user)) {
-			put("allGroups", entityDao.getAll(Group.class));
+			mngGroups= entityDao.getAll(Group.class);
+		}else{
+			for(GroupMember m:user.getGroups()){
+				if(m.isManager())mngGroups.add(m.getGroup());
+			}
 		}
-		List<UserCategory> categories = CollectUtils.newArrayList();
+		put("mngGroups",mngGroups);
+		
+		List<Category> categories = CollectUtils.newArrayList();
 		categories.add(((Group) ao).getCategory());
 
 		OqlBuilder<MenuProfile> query = OqlBuilder.from(MenuProfile.class, "menuProfile");

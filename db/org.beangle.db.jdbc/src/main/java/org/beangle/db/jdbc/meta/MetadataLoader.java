@@ -54,6 +54,7 @@ public class MetadataLoader {
 						String tableSchema = rs.getString("TABLE_SCHEM");
 						Table table = loadTable(tableSchema, tableName, extras);
 						tables.put(table.identifier(), table);
+						logger.info("load {}", tableName);
 					} catch (Exception e) {
 						logger.warn("cannot load metada for {}", tableName);
 					}

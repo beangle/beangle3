@@ -15,7 +15,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.comparators.PropertyComparator;
 import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.security.blueprint.UserCategory;
+import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.session.SessionActivity;
 
 /**
@@ -26,7 +26,7 @@ import org.beangle.security.blueprint.session.SessionActivity;
 public class ActivityAction extends SecurityActionSupport {
 
 	protected void indexSetting() {
-		put("categories", entityDao.getAll(UserCategory.class));
+		put("categories", entityDao.getAll(Category.class));
 	}
 
 	/**

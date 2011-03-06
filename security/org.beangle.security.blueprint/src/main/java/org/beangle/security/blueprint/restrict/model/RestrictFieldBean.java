@@ -6,30 +6,50 @@ package org.beangle.security.blueprint.restrict.model;
 
 import java.util.Set;
 
+import javax.persistence.Cacheable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.restrict.RestrictEntity;
 import org.beangle.security.blueprint.restrict.RestrictField;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity(name = "org.beangle.security.blueprint.restrict.RestrictField")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class RestrictFieldBean extends LongIdObject implements RestrictField {
 	private static final long serialVersionUID = 1L;
 
+	@NotNull
+	@Size(max = 50)
+	@Column(unique = true)
 	private String name;
 
+	@NotNull
+	@Size(max = 20)
 	private String keyName;
 
+	@NotNull
+	@Size(max = 100)
 	private String propertyNames;
 
+	@NotNull
+	@Size(max = 100)
 	private String type;
 
 	private String remark;
 
+	@NotNull
+	@Size(max = 200)
 	private String source;
 
+	@NotNull
 	private boolean multiple;
 
 	@ManyToMany(mappedBy = "fields")

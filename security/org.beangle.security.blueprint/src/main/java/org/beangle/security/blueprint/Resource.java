@@ -71,14 +71,14 @@ public interface Resource extends LongIdEntity {
 	 * 
 	 * @return
 	 */
-	public Set<UserCategory> getCategories();
+	public Set<Category> getCategories();
 
 	/**
 	 * 查询适用的用户类别
 	 * 
 	 * @param categories
 	 */
-	public void setCategories(Set<UserCategory> categories);
+	public void setCategories(Set<Category> categories);
 
 	/**
 	 * 资源访问范围

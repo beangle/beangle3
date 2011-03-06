@@ -17,19 +17,19 @@ import org.beangle.security.blueprint.Menu;
 import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.UserCategory;
+import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.model.AdminuserBean;
-import org.beangle.security.blueprint.model.UserCategoryBean;
+import org.beangle.security.blueprint.model.CategoryBean;
 import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.RestrictPattern;
 
 public class IndexAction extends SecurityActionSupport {
 
 	public String stat() {
-		OqlBuilder<UserCategory> cquery = OqlBuilder.from(UserCategory.class, "category");
-		List<UserCategory> categories = entityDao.search(cquery);
-		Map<Long, UserCategory> categoryMap = CollectUtils.newHashMap();
-		for (UserCategory category : categories) {
+		OqlBuilder<Category> cquery = OqlBuilder.from(Category.class, "category");
+		List<Category> categories = entityDao.search(cquery);
+		Map<Long, Category> categoryMap = CollectUtils.newHashMap();
+		for (Category category : categories) {
 			categoryMap.put(category.getId(), category);
 		}
 		put("categories", categoryMap);
@@ -80,8 +80,8 @@ public class IndexAction extends SecurityActionSupport {
 	public String admin() {
 		String newCategory = get("newCategory");
 		if (StringUtils.isNotBlank(newCategory)) {
-			if (entityDao.get(UserCategory.class, "name", newCategory).isEmpty()) {
-				UserCategoryBean category = new UserCategoryBean();
+			if (entityDao.get(Category.class, "name", newCategory).isEmpty()) {
+				CategoryBean category = new CategoryBean();
 				category.setName(newCategory);
 				entityDao.saveOrUpdate(category);
 				return redirect("admin", "info.save.success");
@@ -91,7 +91,7 @@ public class IndexAction extends SecurityActionSupport {
 		}
 		Long categoryId = getLong("removeCategoryId");
 		if (null != categoryId) {
-			UserCategory category = entityDao.get(UserCategory.class, categoryId);
+			Category category = entityDao.get(Category.class, categoryId);
 			if (null != category) {
 				try {
 					entityDao.remove(category);
@@ -127,7 +127,7 @@ public class IndexAction extends SecurityActionSupport {
 		}
 		List<Adminuser> admins = entityDao.getAll(Adminuser.class);
 		put("adminUsers", admins);
-		List<UserCategory> categories = entityDao.getAll(UserCategory.class);
+		List<Category> categories = entityDao.getAll(Category.class);
 		put("categories", categories);
 		return forward();
 	}

@@ -4,20 +4,31 @@
  */
 package org.beangle.security.blueprint.restrict.model;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.restrict.RestrictEntity;
 import org.beangle.security.blueprint.restrict.RestrictPattern;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity(name = "org.beangle.security.blueprint.restrict.RestrictPattern")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class RestrictPatternBean extends LongIdObject implements RestrictPattern {
 
 	private static final long serialVersionUID = 3491583230212588933L;
 
 	private String remark;
 
+	@NotNull
+	@Size(max = 600)
 	private String content;
 
+	@NotNull
 	private RestrictEntity entity;
 
 	public RestrictPatternBean() {

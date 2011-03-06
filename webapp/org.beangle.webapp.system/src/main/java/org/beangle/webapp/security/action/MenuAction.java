@@ -76,8 +76,7 @@ public class MenuAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String activate() {
-		String menuIdSeq = get("menuIds");
-		Long[] menuIds = StrUtils.splitToLong(menuIdSeq);
+		Long[] menuIds = getEntityIds(getShortName());
 		Boolean enabled = getBoolean("isActivate");
 		if (null == enabled) {
 			enabled = Boolean.TRUE;
@@ -123,6 +122,11 @@ public class MenuAction extends SecurityActionSupport {
 			put("groups", entityDao.search(groupQuery));
 		}
 		return forward();
+	}
+
+	@Override
+	protected String getEntityName() {
+		return Menu.class.getName();
 	}
 
 }

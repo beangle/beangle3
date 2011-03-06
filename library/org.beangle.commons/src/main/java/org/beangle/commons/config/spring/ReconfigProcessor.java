@@ -7,6 +7,7 @@ package org.beangle.commons.config.spring;
 import java.net.URL;
 import java.util.List;
 
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.config.ConfigResource;
 import org.beangle.commons.config.ReconfigType;
 import org.slf4j.Logger;
@@ -23,6 +24,8 @@ public class ReconfigProcessor implements BeanFactoryPostProcessor {
 	private static final Logger logger = LoggerFactory.getLogger(ReconfigProcessor.class);
 
 	private ConfigResource resource;
+
+	private List<String> beanNames = CollectUtils.newArrayList();
 
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory factory) {
 		if (null == resource || resource.isEmpty()) return;
@@ -43,6 +46,9 @@ public class ReconfigProcessor implements BeanFactoryPostProcessor {
 					mergeDefinition(definition, holder);
 				}
 			}
+		}
+		if (!beanNames.isEmpty()) {
+			logger.info("Reconfig bean : {}", beanNames);
 		}
 	}
 
@@ -65,7 +71,8 @@ public class ReconfigProcessor implements BeanFactoryPostProcessor {
 			target.getPropertyValues().addPropertyValue(name, pv.getValue());
 			logger.debug("config {}.{} = {}", new Object[] { source.getBeanName(), name, pv.getValue() });
 		}
-		logger.info("Reconfig bean {} ", source.getBeanName());
+		beanNames.add(source.getBeanName());
+		logger.debug("Reconfig bean {} ", source.getBeanName());
 	}
 
 	public ConfigResource getResource() {

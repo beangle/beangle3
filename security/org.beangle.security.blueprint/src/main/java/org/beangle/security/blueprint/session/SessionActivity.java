@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import org.beangle.model.pojo.LongIdEntity;
-import org.beangle.security.blueprint.UserCategory;
+import org.beangle.security.blueprint.Category;
 
 /**
  * 登录和退出日志
@@ -47,9 +47,9 @@ public interface SessionActivity extends LongIdEntity {
 
 	public void setOnlineTime(Long sessionTime);
 
-	public UserCategory getCategory();
+	public Category getCategory();
 
-	public void setCategory(UserCategory category);
+	public void setCategory(Category category);
 
 	public Timestamp getLogoutAt();
 

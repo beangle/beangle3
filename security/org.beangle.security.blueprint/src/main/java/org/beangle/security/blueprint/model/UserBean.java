@@ -7,16 +7,19 @@ package org.beangle.security.blueprint.model;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdTimeObject;
+import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.GroupMember;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.UserCategory;
 import org.beangle.security.blueprint.restrict.RestrictionHolder;
 import org.beangle.security.blueprint.restrict.UserRestriction;
 
@@ -30,15 +33,23 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 	private static final long serialVersionUID = -3625902334772342380L;
 
 	/** 名称 */
+	@Size(max = 40)
+	@NotNull
+	@Column(unique = true)
 	protected String name;
 
 	/** 用户姓名 */
+	@NotNull
+	@Size(max = 50)
 	private String fullname;
 
 	/** 用户密文 */
+	@Size(max = 100)
+	@NotNull
 	private String password;
 
 	/** 用户联系email */
+	@NotNull
 	private String mail;
 
 	/** 对应用户组 */
@@ -50,12 +61,14 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 
 	/** 种类 */
 	@ManyToMany
-	protected Set<UserCategory> categories = CollectUtils.newHashSet();;
+	protected Set<Category> categories = CollectUtils.newHashSet();;
 
 	/** 缺省类别 */
-	private UserCategory defaultCategory;
+	@NotNull
+	private Category defaultCategory;
 
 	/** 状态 */
+	@NotNull
 	protected int status = User.ACTIVE;
 
 	/** 访问限制 */
@@ -106,7 +119,7 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 	}
 
 	public boolean isCategory(Long categoryId) {
-		for (final UserCategory category : categories) {
+		for (final Category category : categories) {
 			if (category.getId().equals(categoryId)) return true;
 		}
 		return false;
@@ -128,11 +141,11 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 		this.creator = creator;
 	}
 
-	public UserCategory getDefaultCategory() {
+	public Category getDefaultCategory() {
 		return defaultCategory;
 	}
 
-	public void setDefaultCategory(UserCategory defaultCategory) {
+	public void setDefaultCategory(Category defaultCategory) {
 		this.defaultCategory = defaultCategory;
 	}
 
@@ -159,11 +172,11 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 		this.groups = groups;
 	}
 
-	public Set<UserCategory> getCategories() {
+	public Set<Category> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(Set<UserCategory> categories) {
+	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
 	}
 

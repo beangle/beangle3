@@ -5,6 +5,7 @@
 package org.beangle.security.blueprint.restrict.model;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.model.UserBean;
@@ -17,6 +18,7 @@ import org.beangle.security.blueprint.restrict.UserRestriction;
 public class UserRestrictionBean extends RestrictionBean implements UserRestriction {
 	private static final long serialVersionUID = 5582639967774356718L;
 
+	@NotNull
 	private User holder;
 
 	public UserRestrictionBean(User holder, RestrictPattern pattern) {

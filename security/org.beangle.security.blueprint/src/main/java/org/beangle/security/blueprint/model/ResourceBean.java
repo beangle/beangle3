@@ -6,15 +6,21 @@ package org.beangle.security.blueprint.model;
 
 import java.util.Set;
 
+import javax.persistence.Cacheable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdObject;
+import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.Resource;
-import org.beangle.security.blueprint.UserCategory;
 import org.beangle.security.blueprint.restrict.RestrictEntity;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 系统模块，代表一组系统功能点的集合.<br>
@@ -27,28 +33,40 @@ import org.beangle.security.blueprint.restrict.RestrictEntity;
  * @author dell,chaostone 2005-9-26
  */
 @Entity(name = "org.beangle.security.blueprint.Resource")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ResourceBean extends LongIdObject implements Resource {
 	private static final long serialVersionUID = -8285208615351119572L;
 
 	/** 模块名字 */
+	@Size(max = 100)
+	@NotNull
+	@Column(unique = true)
 	private String name;
 
 	/** 模块标题 */
+	@Size(max = 100)
+	@NotNull
 	private String title;
 
 	/** 简单描述 */
+	@Size(max = 100)
 	private String remark;
 
 	/** 模块是否可用 */
+	@NotNull
 	private boolean enabled = true;
 
 	/** 资源访问范围 */
+	@NotNull
 	private int scope = Scope.PRIVATE;
 
 	@ManyToMany
-	private Set<UserCategory> categories = CollectUtils.newHashSet();
+	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	private Set<Category> categories = CollectUtils.newHashSet();
 
 	@ManyToMany
+	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 	private Set<RestrictEntity> entities = CollectUtils.newHashSet();
 
 	public String getRemark() {
@@ -83,11 +101,11 @@ public class ResourceBean extends LongIdObject implements Resource {
 		this.title = title;
 	}
 
-	public Set<UserCategory> getCategories() {
+	public Set<Category> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(Set<UserCategory> categories) {
+	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
 	}
 

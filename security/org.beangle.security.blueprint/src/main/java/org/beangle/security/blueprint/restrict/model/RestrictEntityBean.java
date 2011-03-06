@@ -6,6 +6,7 @@ package org.beangle.security.blueprint.restrict.model;
 
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 
@@ -13,8 +14,12 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.restrict.RestrictEntity;
 import org.beangle.security.blueprint.restrict.RestrictField;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity(name = "org.beangle.security.blueprint.restrict.RestrictEntity")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class RestrictEntityBean extends LongIdObject implements RestrictEntity {
 
 	private static final long serialVersionUID = -5761007041977213647L;

@@ -100,7 +100,6 @@ public interface EntityDao {
 	public <T> List<T> get(Class<T> entityClass, String keyName, Collection<?> values);
 
 	/**
-	 * 
 	 * @param <T>
 	 * @param entityClass
 	 * @param attrs
@@ -110,7 +109,6 @@ public interface EntityDao {
 	public <T> List<T> get(Class<T> entityClass, String[] attrs, Object... values);
 
 	/**
-	 * 
 	 * @param <T>
 	 * @param entityClass
 	 * @param parameterMap
@@ -390,7 +388,14 @@ public interface EntityDao {
 	// 容器相关
 	public void evict(Object entity);
 
-	public void initialize(Object entity);
+	/**
+	 * Initialize entity whenever session close or open
+	 * 
+	 * @param <T>
+	 * @param entity
+	 * @return
+	 */
+	public <T> T initialize(T entity);
 
 	public void refresh(Object entity);
 

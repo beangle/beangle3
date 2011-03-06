@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.persist.impl.AbstractBaseDao;
-import org.beangle.security.blueprint.UserCategory;
+import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.session.CategoryProfile;
 import org.beangle.security.web.session.category.LimitProfile;
 import org.beangle.security.web.session.category.LimitProfileProvider;
@@ -22,7 +22,7 @@ public class MultiSessionProfileProvider extends AbstractBaseDao implements Limi
 		List<CategoryProfile> profiles = entityDao.getAll(CategoryProfile.class);
 		Map<Object, LimitProfile> profileMap = CollectUtils.newHashMap();
 		for (CategoryProfile profile : profiles) {
-			UserCategory category = entityDao.get(UserCategory.class, profile.getCategory().getId());
+			Category category = entityDao.initialize(profile.getCategory());
 			profileMap.put(
 					category,
 					new LimitProfile(category, profile.getCapacity(), profile.getInactiveInterval(), profile

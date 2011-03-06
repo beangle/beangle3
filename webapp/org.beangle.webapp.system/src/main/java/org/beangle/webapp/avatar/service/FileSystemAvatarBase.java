@@ -100,7 +100,7 @@ public class FileSystemAvatarBase extends AbstractAvatarBase implements Property
 	}
 
 	public String getDescription() {
-		return "File:" + avatarDir + " <br>config system using:fileSystemAvatarBase.avatarDir";
+		return "Path:" + avatarDir + " <br><em>Config system property:fileSystemAvatarBase.avatarDir  to change location.</em>";
 	}
 
 	public void setPropertyConfig(PropertyConfig config) {

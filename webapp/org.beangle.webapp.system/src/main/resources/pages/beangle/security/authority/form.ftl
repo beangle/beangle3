@@ -45,8 +45,6 @@
 	<tr>
 		<td>
 		用户组:<select name="group.id" onchange="this.form.submit()" style="width:150px">
-			 [#assign mngGroups=manager.mngGroups/]
-			 [#if allGroups??][#assign mngGroups=allGroups/][/#if]
 			 [#list mngGroups?sort_by("name")! as group]
 			  <option value="${group.id}" [#if group.id=ao.id]selected="selected"[/#if]>${group.name}</option>
 			 [/#list]
