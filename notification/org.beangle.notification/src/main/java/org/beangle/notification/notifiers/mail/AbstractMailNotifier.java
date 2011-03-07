@@ -6,7 +6,6 @@ package org.beangle.notification.notifiers.mail;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -15,7 +14,6 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.beangle.commons.collection.CollectUtils;
 import org.beangle.notification.Message;
 import org.beangle.notification.NotificationException;
 import org.beangle.notification.Notifier;
@@ -32,7 +30,7 @@ public abstract class AbstractMailNotifier<T extends MailMessage> implements Not
 
 	private String from;
 
-	private Map<String, InternetAddress[]> fromMap = CollectUtils.newHashMap();
+	private InternetAddress[] froms;
 
 	public String getType() {
 		return "mail";
@@ -78,12 +76,11 @@ public abstract class AbstractMailNotifier<T extends MailMessage> implements Not
 	// add from and other recipients
 	private int addRecipient(MimeMessage mimeMsg, MailMessage mailMsg) throws MessagingException {
 		String encoding = mailMsg.getEncoding();
-		InternetAddress[] froms = fromMap.get(encoding);
 		if (null == froms) {
 			List<InternetAddress> addresses = MimeUtils.parseAddress(from, encoding);
 			InternetAddress[] addressArray = new InternetAddress[addresses.size()];
 			if (addressArray.length > 0) {
-				fromMap.put(encoding, addresses.toArray(addressArray));
+				addresses.toArray(addressArray);
 				froms = addressArray;
 			}
 		}

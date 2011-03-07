@@ -27,10 +27,10 @@ public class DefaultMailNotifierTest {
 				"javax.net.ssl.SSLSocketFactory");
 		mailSender.getJavaMailProperties().put("mail.smtp.socketFactory.fallback", "false");
 
-		MailMessage mmc = new MailMessage("测试", "测试简单邮件发送机制", "eams.demon@gmail.com");
+		MailMessage mmc = new MailMessage("测试", "测试简单邮件发送机制", "eams.demon@gmail.com","gjloverfly@163.com","chaostone.duan@gmail.com");
 		DefaultMailNotifier<MailMessage> mailNotifier = new DefaultMailNotifier<MailMessage>();
 		mailNotifier.setMailSender(mailSender);
-		mailNotifier.setFrom("<测试name>eams.demon@gmail.com");
+		mailNotifier.setFrom("测试name<eams.demon@gmail.com>");
 		if (online) mailNotifier.deliver(mmc);
 	}
 
