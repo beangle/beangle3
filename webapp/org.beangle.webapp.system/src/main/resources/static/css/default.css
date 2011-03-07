@@ -106,15 +106,17 @@ a:hover {
     font-size: 10pt; 
     color: red; 
     background-color: #EBEBEB;
-    text-align: right;
+    /*text-align: right;*/
 }
 .tfvNormal {
 	font-weight: normal;
     font-style: normal; 
     font-size: 10pt; 
     color: black; 
+/*
     background-color: #EBEBEB;
     text-align: right;
+*/
 }
 /*title */	
 

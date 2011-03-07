@@ -282,11 +282,13 @@ table.settingTable td{
 	font-weight: bold; 
 	color: red; 
 	background-color: #EBEBEB;
-	text-align: right;
+	/*text-align: right;*/
 }
 .tfvNormal {
 	font-weight: normal;
 	color: black; 
-	background-color: #EBEBEB;
+/*
+    background-color: #EBEBEB;
 	text-align: right;
+*/
 }
