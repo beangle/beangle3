@@ -5,10 +5,8 @@
 package org.beangle.model;
 
 import javax.persistence.Embeddable;
-import javax.persistence.MappedSuperclass;
 
 @Embeddable
-@MappedSuperclass
 public interface Component {
 
 }

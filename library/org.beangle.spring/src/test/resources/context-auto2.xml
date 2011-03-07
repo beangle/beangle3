@@ -3,8 +3,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="autoConfigProcessor" class="org.beangle.commons.config.spring.AutoConfigProcessor" />
+	<bean id="autoConfigProcessor" class="org.beangle.spring.bind.AutoConfigProcessor" />
 
-	<bean id="spring.common.test" class="org.beangle.commons.config.spring.TestConfigFactory"/>
+	<bean id="spring.common.test" class="org.beangle.spring.testbean.TestConfigFactory"/>
 	
 </beans>

@@ -8,6 +8,7 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 import org.apache.commons.lang.time.StopWatch;
+import org.beangle.spring.testbean.SomeAction;
 import org.beangle.spring.testbean.UserDaoProvider;
 import org.beangle.spring.testbean.UserLdapProvider;
 import org.springframework.context.ApplicationContext;

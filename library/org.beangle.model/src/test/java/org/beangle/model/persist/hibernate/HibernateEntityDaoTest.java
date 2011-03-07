@@ -17,7 +17,7 @@ public class HibernateEntityDaoTest extends ConfigurationTest {
 	public void testQueryHqlWithParamArray() {
 		EntityDao entityDao = (EntityDao) applicationContext.getBean("entityDao");
 		//List<?> tables=entityDao.search(new SqlQuery("SELECT table_name FROM INFORMATION_SCHEMA.TABLES"));
-		entityDao.searchHQLQuery("from Employer where name.firstName=? and contractInfo.add1=?",
+		entityDao.searchHQLQuery("from "+Employer.class.getName()+" where name.firstName=? and contractInfo.add1=?",
 				new Object[] { "john", "najing street" });
 	}
 

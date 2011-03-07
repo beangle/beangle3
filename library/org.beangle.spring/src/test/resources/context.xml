@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<bean id="userService" class="org.beangle.commons.config.spring.UserService">
+	<bean id="userService" class="org.beangle.spring.testbean.UserService">
 		<property name="someMap">
 			<map>
 				<entry key="string" value="just some string"/>
@@ -19,11 +19,11 @@
 		<property name="provider" ref="userDaoProvider"/>
 	</bean>
 	
-	<bean id="userDaoProvider" class="org.beangle.commons.config.spring.UserDaoProvider"/>
+	<bean id="userDaoProvider" class="org.beangle.spring.testbean.UserDaoProvider"/>
 
-	<bean id="userLdapProvider" class="org.beangle.commons.config.spring.UserLdapProvider"/>
+	<bean id="userLdapProvider" class="org.beangle.spring.testbean.UserLdapProvider"/>
 
-    <bean id="userLdapService" class="org.beangle.commons.config.spring.UserService">
+    <bean id="userLdapService" class="org.beangle.spring.testbean.UserService">
     	<property name="provider" ref="userLdapProvider"/>
     </bean>
     

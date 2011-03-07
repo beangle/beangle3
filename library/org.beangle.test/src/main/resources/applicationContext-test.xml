@@ -10,6 +10,9 @@
 			</bean>
 		</property>
 	</bean>
+	
+	<bean id="autoConfigProcessor" class="org.beangle.spring.bind.AutoConfigProcessor" />
+	
 	<import resource="classpath*:META-INF/spring/*.xml"/>
 	<import resource="classpath*:META-INF/spring-override/*.xml"/>
 	<import resource="classpath*:spring-local.xml"/>

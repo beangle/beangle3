@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyColumn;
 
 import org.beangle.model.pojo.LongIdTimeObject;
+
 @Entity(name = "org.beangle.model.example.Employer")
 public class ManagerEmployer extends LongIdTimeObject implements Employer {
 
@@ -24,10 +25,10 @@ public class ManagerEmployer extends LongIdTimeObject implements Employer {
 	@ManyToMany
 	@MapKeyColumn(name = "skill_type_id")
 	Map<Long, Skill> skills;
-	
+
 	@ManyToMany
 	Set<Skill> oskills;
-	
+
 	public Map<Long, Skill> getSkills() {
 		return skills;
 	}

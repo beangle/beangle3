@@ -3,28 +3,28 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="autoConfigProcessor" class="org.beangle.commons.config.spring.AutoConfigProcessor" />
+	<bean id="autoConfigProcessor" class="org.beangle.spring.bind.AutoConfigProcessor" />
 
-	<bean id="test.service" class="org.beangle.commons.config.spring.BeanConfigFactory">
+	<bean id="test.service" class="org.beangle.spring.bind.BeanConfigFactory">
 		<property name="useShortName" value="true" />
 		<property name="classes">
 			<list>
-				<value>org.beangle.commons.config.spring.UserLdapProvider</value>
-				<value>org.beangle.commons.config.spring.UserDaoProvider</value>
+				<value>org.beangle.spring.testbean.UserLdapProvider</value>
+				<value>org.beangle.spring.testbean.UserDaoProvider</value>
 			</list>
 		</property>
 	</bean>
 
-	<bean id="test.action" class="org.beangle.commons.config.spring.BeanConfigFactory">
+	<bean id="test.action" class="org.beangle.spring.bind.BeanConfigFactory">
 		<property name="scope" value="prototype" />
 		<property name="classes">
 			<list>
-				<value>org.beangle.commons.config.spring.SomeAction</value>
+				<value>org.beangle.spring.testbean.SomeAction</value>
 			</list>
 		</property>
 	</bean>
 
-	<bean id="autowire.someaction" class="org.beangle.commons.config.spring.SomeAction"
+	<bean id="autowire.someaction" class="org.beangle.spring.testbean.SomeAction"
 		autowire="byName" scope="prototype">
 		<property name="ldapProvider" ref="userLdapProvider" />
 	</bean>

@@ -9,7 +9,7 @@ import java.net.URL;
 
 import net.sf.jxls.transformer.XLSTransformer;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.beangle.model.transfer.exporter.Context;
 import org.beangle.model.transfer.exporter.TemplateWriter;
 import org.beangle.model.transfer.io.TransferFormats;
@@ -24,7 +24,7 @@ public class ExcelTemplateWriter implements TemplateWriter {
 
 	protected OutputStream outputStream;
 
-	protected HSSFWorkbook workbook;
+	protected Workbook workbook;
 
 	public ExcelTemplateWriter() {
 		super();

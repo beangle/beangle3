@@ -3,7 +3,7 @@
 	<bean id="userService">
 		<property name="someMap">
 			<map>
-				<entry key="string" value="override string"/>
+				<entry key="string" value="override string" />
 			</map>
 		</property>
 		<property name="someList">
@@ -12,6 +12,6 @@
 			</list>
 		</property>
 	</bean>
-	
-	<bean id="userLdapProvider" class="org.beangle.commons.config.spring.AdvancedUserLdapProvider"/>
+
+	<bean id="userLdapProvider" class="org.beangle.spring.testbean.AdvancedUserLdapProvider" />
 </beans>
