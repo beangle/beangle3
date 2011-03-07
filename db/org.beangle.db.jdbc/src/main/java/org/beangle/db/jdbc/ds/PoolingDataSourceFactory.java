@@ -15,9 +15,8 @@ import org.apache.commons.pool.ObjectPool;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.FactoryBean;
 
-public class PoolingDataSourceFactory implements FactoryBean<DataSource> {
+public class PoolingDataSourceFactory {
 
 	private static final Logger logger = LoggerFactory.getLogger(PoolingDataSourceFactory.class);
 	protected String url;

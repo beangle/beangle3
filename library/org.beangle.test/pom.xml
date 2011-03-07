@@ -9,7 +9,7 @@
 	<groupId>org.beangle</groupId>
 	<artifactId>beangle-test</artifactId>
 	<packaging>jar</packaging>
-	<name>Beangle Test</name>
+	<name>Beangle Library Test</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.beangle</groupId>
@@ -28,7 +28,6 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>2.4</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>

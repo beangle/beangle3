@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 
-import org.beangle.commons.config.ConfigResource;
+import org.beangle.spring.config.ConfigResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

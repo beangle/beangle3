@@ -7,7 +7,7 @@ package org.beangle.webapp.system.service;
 import java.util.List;
 import java.util.Properties;
 
-import org.beangle.commons.config.property.PropertyConfigFactory;
+import org.beangle.commons.property.PropertyConfigFactory;
 import org.beangle.model.Entity;
 import org.beangle.model.persist.EntityDao;
 import org.beangle.webapp.system.model.PropertyConfigItemBean;

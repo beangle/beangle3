@@ -22,23 +22,6 @@
 			<artifactId>beangle-web</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>org.springframework.ldap</groupId>
-			<artifactId>spring-ldap-core</artifactId>
-			<version>${springldap.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun</groupId>
-			<artifactId>ldapbp</artifactId>
-			<version>${sunldap.version}</version>
-			<optional>true</optional>
-		</dependency>
-		 -->
-		<dependency>
 			<groupId>org.beangle</groupId>
 			<artifactId>beangle-security-core</artifactId>
 			<version>${project.version}</version>
@@ -46,7 +29,6 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>${servletapi.version}</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

@@ -15,7 +15,6 @@
 		<struts.version>2.2.1</struts.version>
 		<jqueryplugin.version>2.5.0</jqueryplugin.version>
 		<freemarker.version>2.3.16</freemarker.version>
-		<servletapi.version>2.4</servletapi.version>
 	</properties>
 
 	<modules>
@@ -26,8 +25,12 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>${servletapi.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.beangle</groupId>
@@ -52,10 +55,12 @@
 			<artifactId>struts2-jquery-plugin</artifactId>
 			<version>${jqueryplugin.version}</version>
 		</dependency>
+<!--
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 		</dependency>
+-->	
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-spring-plugin</artifactId>

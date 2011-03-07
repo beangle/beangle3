@@ -16,7 +16,7 @@ import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.config.ConfigResource;
+import org.beangle.spring.config.ConfigResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

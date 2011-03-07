@@ -9,7 +9,7 @@
 	<groupId>org.beangle</groupId>
 	<artifactId>beangle-model</artifactId>
 	<packaging>jar<!--bundle--></packaging>
-	<name>Beangle Model</name>
+	<name>Beangle Library Model</name>
 	
 	<properties>
 		<bundle.symbolicName>org.beangle.model</bundle.symbolicName>
@@ -25,6 +25,15 @@
 		<dependency>
 			<groupId>org.beangle</groupId>
 			<artifactId>beangle-commons</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.beangle</groupId>
+			<artifactId>beangle-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>

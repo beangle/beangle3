@@ -20,7 +20,7 @@
 	<bean name="mimeTypeProvider" autowire="byName"
 		class="org.beangle.web.mime.MimeTypeProvider">
 		<property name="resource">
-			<bean class="org.beangle.commons.config.ConfigResource">
+			<bean class="org.beangle.spring.config.ConfigResource">
 				<property name="globals"
 					value="classpath*:org/beangle/web/mime/mimetypes.properties" />
 				<property name="locations" value="classpath*:META-INF/mimetypes.properties" />
@@ -29,9 +29,9 @@
 	</bean>
 
 	<bean name="urlPropertyConfigProvider" autowire="byName"
-		class="org.beangle.commons.config.property.UrlPropertyConfigProvider">
+		class="org.beangle.spring.config.UrlPropertyConfigProvider">
 		<property name="resource">
-			<bean class="org.beangle.commons.config.ConfigResource">
+			<bean class="org.beangle.spring.config.ConfigResource">
 				<property name="globals" value="classpath*:system-default.properties" />
 				<property name="locations" value="classpath*:META-INF/system.properties" />
 				<property name="users" value="classpath*:system.properties" />
@@ -40,7 +40,7 @@
 	</bean>
 
 	<bean id="propertyConfig" autowire="byName"
-		class="org.beangle.commons.config.property.DefaultPropertyConfigFactory">
+		class="org.beangle.spring.config.DefaultPropertyConfigFactory">
 		<property name="providers">
 			<list>
 				<ref bean="urlPropertyConfigProvider" />

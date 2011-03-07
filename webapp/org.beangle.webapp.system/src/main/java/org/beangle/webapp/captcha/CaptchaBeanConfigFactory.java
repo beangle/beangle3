@@ -4,8 +4,8 @@
  */
 package org.beangle.webapp.captcha;
 
-import org.beangle.commons.config.spring.AbstractBeanConfigBindFactory;
-import org.beangle.commons.config.spring.Scope;
+import org.beangle.spring.bind.AbstractBeanConfigBindFactory;
+import org.beangle.spring.bind.Scope;
 import org.beangle.webapp.captcha.action.ImageAction;
 
 public class CaptchaBeanConfigFactory extends AbstractBeanConfigBindFactory {

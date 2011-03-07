@@ -4,8 +4,8 @@
  */
 package org.beangle.webapp.security;
 
-import org.beangle.commons.config.spring.AbstractBeanConfigBindFactory;
-import org.beangle.commons.config.spring.Scope;
+import org.beangle.spring.bind.AbstractBeanConfigBindFactory;
+import org.beangle.spring.bind.Scope;
 import org.beangle.webapp.security.action.ActivityAction;
 import org.beangle.webapp.security.action.AuthorityAction;
 import org.beangle.webapp.security.action.GroupAction;

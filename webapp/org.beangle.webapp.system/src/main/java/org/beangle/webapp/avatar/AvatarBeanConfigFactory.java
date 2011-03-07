@@ -4,8 +4,8 @@
  */
 package org.beangle.webapp.avatar;
 
-import org.beangle.commons.config.spring.AbstractBeanConfigBindFactory;
-import org.beangle.commons.config.spring.Scope;
+import org.beangle.spring.bind.AbstractBeanConfigBindFactory;
+import org.beangle.spring.bind.Scope;
 import org.beangle.webapp.avatar.action.BoardAction;
 import org.beangle.webapp.avatar.action.MyAction;
 import org.beangle.webapp.avatar.action.MyUploadAction;

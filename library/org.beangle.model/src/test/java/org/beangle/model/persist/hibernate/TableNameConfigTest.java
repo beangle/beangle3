@@ -4,8 +4,8 @@
  */
 package org.beangle.model.persist.hibernate;
 
-import org.beangle.commons.config.ConfigResource;
 import org.beangle.model.persist.hibernate.support.DefaultTableNameConfig;
+import org.beangle.spring.config.ConfigResource;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

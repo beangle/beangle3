@@ -12,9 +12,10 @@
 	<name>Beangle Library</name>
 	<modules>
 		<module>org.beangle.commons</module>
-		<module>org.beangle.test</module>
 		<module>org.beangle.web</module>
+		<module>org.beangle.spring</module>
 		<module>org.beangle.model</module>
+		<module>org.beangle.test</module>
 		<module>org.beangle.rule</module>
 	</modules>
 	<build>

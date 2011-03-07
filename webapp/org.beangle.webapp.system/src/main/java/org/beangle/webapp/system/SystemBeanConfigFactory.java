@@ -4,8 +4,8 @@
  */
 package org.beangle.webapp.system;
 
-import org.beangle.commons.config.spring.AbstractBeanConfigBindFactory;
-import org.beangle.commons.config.spring.Scope;
+import org.beangle.spring.bind.AbstractBeanConfigBindFactory;
+import org.beangle.spring.bind.Scope;
 import org.beangle.web.io.SplitStreamDownloader;
 import org.beangle.webapp.staticfile.service.ClasspathDocLoader;
 import org.beangle.webapp.system.action.FileAction;

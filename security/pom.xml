@@ -30,6 +30,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.beangle</groupId>
+			<artifactId>beangle-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.beangle</groupId>
 			<artifactId>beangle-test</artifactId>
    		    <scope>test</scope>
 		</dependency>

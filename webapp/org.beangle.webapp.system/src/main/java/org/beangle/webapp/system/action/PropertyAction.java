@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.config.property.PropertyConfigFactory;
+import org.beangle.commons.property.PropertyConfigFactory;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.struts2.action.BaseAction;
 import org.beangle.webapp.system.model.PropertyConfigItemBean;

@@ -13,16 +13,11 @@
 	<properties>
 		<bundle.symbolicName>org.beangle.security.cas</bundle.symbolicName>
 		<bundle.namespace>org.beangle.security.cas</bundle.namespace>
-		<servletapi.version>2.4</servletapi.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.beangle</groupId>
 			<artifactId>beangle-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.beangle</groupId>
@@ -37,7 +32,6 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>${servletapi.version}</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

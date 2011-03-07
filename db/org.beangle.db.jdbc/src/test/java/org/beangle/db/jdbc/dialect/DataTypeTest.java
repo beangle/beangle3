@@ -26,7 +26,7 @@ import static java.sql.Types.TINYINT;
 import static java.sql.Types.VARBINARY;
 import static java.sql.Types.VARCHAR;
 
-import org.springframework.util.Assert;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Test
@@ -85,7 +85,7 @@ public class DataTypeTest {
 
 	private void testGetTypeName(Dialect dialect) {
 		for (int type : types) {
-			Assert.notNull(dialect.getTypeNames().get(type));
+			Assert.assertNotNull(dialect.getTypeNames().get(type));
 		}
 	}
 }

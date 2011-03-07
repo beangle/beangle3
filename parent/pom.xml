@@ -52,7 +52,6 @@
 	</distributionManagement>
 
 	<properties>
-		<spring.version>3.0.5.RELEASE</spring.version>
 		<gemini.version>1.0.0.M1</gemini.version>
 		<slf4j.version>1.6.1</slf4j.version>
 		<logback.version>0.9.28</logback.version>
@@ -63,6 +62,7 @@
 		<testng.version>5.14.7</testng.version>
 		<mockito.version>1.8.5</mockito.version>
 		<servletapi.version>2.4</servletapi.version>
+		<spring.version>3.0.5.RELEASE</spring.version>
 	</properties>
 
 	<dependencyManagement>
@@ -71,6 +71,11 @@
 			<dependency>
 				<groupId>org.beangle</groupId>
 				<artifactId>beangle-commons</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.beangle</groupId>
+				<artifactId>beangle-spring</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -148,7 +153,7 @@
 				<scope>provided</scope>
 				<optional>true</optional>
 			</dependency>
-			<!--spring-->
+
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
@@ -337,11 +342,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
 		</dependency>
@@ -374,46 +374,6 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-asm</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-expression</artifactId>
 		</dependency>
 	</dependencies>
 	<build>

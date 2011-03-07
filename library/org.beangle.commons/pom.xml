@@ -9,7 +9,7 @@
 	<groupId>org.beangle</groupId>
 	<artifactId>beangle-commons</artifactId>
 	<packaging>jar<!--bundle--></packaging>
-	<name>Beangle Commons</name>
+	<name>Beangle Library Commons</name>
 	
 	<properties>
 		<bundle.symbolicName>org.beangle.commons</bundle.symbolicName>

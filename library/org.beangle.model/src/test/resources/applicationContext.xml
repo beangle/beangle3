@@ -3,9 +3,9 @@
 
 <beans>
 	<bean id="beangleConfig"
-	 class="org.beangle.commons.config.spring.ReconfigProcessor">
+	 class="org.beangle.spring.reconfig.ReconfigProcessor">
 		<property name="resource">
-			<bean class="org.beangle.commons.config.ConfigResource">
+			<bean class="org.beangle.spring.config.ConfigResource">
 				<property name="locations" value="classpath*:spring-config.xml" />
 			</bean>
 		</property>

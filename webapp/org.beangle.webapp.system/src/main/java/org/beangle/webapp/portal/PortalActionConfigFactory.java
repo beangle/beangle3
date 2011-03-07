@@ -4,8 +4,8 @@
  */
 package org.beangle.webapp.portal;
 
-import org.beangle.commons.config.spring.AbstractBeanConfigBindFactory;
-import org.beangle.commons.config.spring.Scope;
+import org.beangle.spring.bind.AbstractBeanConfigBindFactory;
+import org.beangle.spring.bind.Scope;
 import org.beangle.webapp.portal.action.HomeAction;
 import org.beangle.webapp.portal.action.LoginAction;
 import org.beangle.webapp.portal.action.LogoutAction;
