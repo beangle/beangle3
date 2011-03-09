@@ -1,6 +1,7 @@
 [#ftl]
 [@b.head/]
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
+<script  type="text/javascript" src="${base}/static/scripts/My97DatePicker/WdatePicker.js"></script>
 [#assign labInfo][#if user.name??]${b.text("action.modify")}[#else]${b.text("action.new")}[/#if] ${b.text("user")}[/#assign]
 [#include "/template/back.ftl"]
 [@b.form name="userForm" action="!save"]
@@ -30,7 +31,9 @@
 	   </tr>
 	   <tr>
 		 <td class="title" id="f_fullname"><font color="red">*</font>${b.text("user.fullname")}:</td>
-		 <td ><input type="text" name="user.fullname" value="${user.fullname!}" style="width:200px;" maxlength="60" /></td>
+		 <td ><input type="text" name="user.fullname" value="${user.fullname!}" style="width:200px;" maxlength="60" />
+		<input name="aa" type="text" value="2010-09-09" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+		 </td>
 	   </tr>
 	   <tr>
 		 <td class="title" id="f_password">密码:</td>

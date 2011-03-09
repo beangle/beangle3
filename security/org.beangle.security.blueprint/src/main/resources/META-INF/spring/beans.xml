@@ -77,23 +77,10 @@
 				<ref bean="usernamePreauthFilter"/>
 				<ref bean="anonymousFilter"/>
 				<ref bean="exceptionTranslationFilter"/>
+				<ref bean="concurrentSessionFilter"/>
 				<ref bean="filterSecurityInterceptor"/>
 			</list>
 		</property>
-		<!--
-		<property name="filterChainMap">
-			<map>
-				<entry>
-					<key>
-						<bean class="org.beangle.web.filter.AntPathRequestMatcher">
-							<constructor-arg value="/**"/>
-						</bean>
-					</key>
-					
-				</entry>
-			</map>
-		</property>
-		 -->
 	</bean>
 	
 	<bean id="securityContextLogoutHandler" class="org.beangle.security.web.auth.logout.SecurityContextLogoutHandler"/>

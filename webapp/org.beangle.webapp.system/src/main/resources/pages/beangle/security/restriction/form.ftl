@@ -33,11 +33,15 @@ bar.addBack();
 	   	<input name="ignoreField${field.id}" type="radio" value="0" [#if !holderIgnoreFields?seq_contains(field)]checked="checked"[/#if] id="ignoreField${field.id}_2"><label for="ignoreField${field.id}_2">选择或填写具体值</label>
 	   </div>
 	[/#if]
-	   [#if field.multiple]
+	   [#if field.multiple && field.keyName?exists]
 		[@b.grid items=mngFields[field.name] var="value"]
 			[@b.row]
-				[@b.boxcol width="10%" property="id" boxname=field.name checked=(aoFields[field.name]?seq_contains(value))!false /]
+				[@b.boxcol width="10%" property=field.keyName boxname=field.name checked=(aoFields[field.name]?seq_contains(value))!false /]
+				[#if field.propertyNames??]
+				[#list field.propertyNames?split(",") as pName][@b.col title=pName]${value[pName]!}[/@][/#list]
+				[#else]
 				[@b.col title="可选值"]${value}[/@]
+				[/#if]
 			[/@]
 		[/@]
 	   [#else]

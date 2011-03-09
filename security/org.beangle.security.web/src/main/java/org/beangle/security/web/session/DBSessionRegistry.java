@@ -47,6 +47,9 @@ public class DBSessionRegistry extends AbstractBaseDao implements SessionRegistr
 
 	public void register(String sessionId, Authentication authentication) {
 	}
+	
+	public void expire(String sessionId) {
+	}
 
 	public SessionInfo remove(String sessionId) {
 		return null;

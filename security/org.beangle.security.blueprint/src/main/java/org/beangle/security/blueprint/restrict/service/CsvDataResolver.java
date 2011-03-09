@@ -5,6 +5,7 @@
 package org.beangle.security.blueprint.restrict.service;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import org.beangle.security.blueprint.restrict.RestrictField;
  */
 public class CsvDataResolver implements DataResolver, DataProvider {
 
-	public String marshal(RestrictField field, List<?> items) {
+	public String marshal(RestrictField field, Collection<?> items) {
 		if (null == items) { return null; }
 		List<String> properties = CollectUtils.newArrayList();
 		if (null != field.getKeyName()) {
@@ -91,9 +92,14 @@ public class CsvDataResolver implements DataResolver, DataProvider {
 				return rs;
 			} else {
 				properties.clear();
-				String[] names = StringUtils.split(datas[0], ";");
+				int startIndex=0;
+				String[] names = new String[]{field.getKeyName()};
+				if(-1!=datas[0].indexOf(';')){
+					names= StringUtils.split(datas[0], ";");
+					startIndex=1;
+				}
 				properties.addAll(Arrays.asList(names));
-				for (int i = 1; i < datas.length; i++) {
+				for (int i = startIndex; i < datas.length; i++) {
 					Object obj = type.newInstance();
 					String[] dataItems = StringUtils.split(datas[i], ";");
 					for (int j = 0; j < properties.size(); j++) {

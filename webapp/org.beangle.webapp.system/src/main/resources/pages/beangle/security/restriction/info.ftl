@@ -10,7 +10,7 @@
 	[#list restriction.pattern.entity.fields as field]
 	<li>${field.remark}</li>
 		[#if field.multiple]
-		[#list fieldMaps[restriction.id?string][field.name]! as value]${value}[#if value_has_next],[/#if][/#list]</td>
+		[#list fieldMaps[restriction.id?string][field.name]! as value][#list field.propertyNames?split(",") as pName]${value[pName]!} [/#list][#if value_has_next],[/#if][/#list]</td>
 		[#else]
 		${fieldMaps[restriction.id?string][field.name]!}
 		[/#if]
@@ -19,8 +19,8 @@
 [/#list]
 <br/>
 
-[#list restrictEntities! as entity]
- <li>${entity.remark!} <a onclick="add('${entity.id}')" href='#'>添加</a></li>
+[#list patterns! as pattern]
+ <li>${pattern.remark!} <a onclick="add('${pattern.id}')" href='#'>添加</a></li>
 [/#list]
 [@b.form name="restrictionForm" ]
 	<input type="hidden" name="restrictionType" value="${Parameters['restrictionType']}"/>

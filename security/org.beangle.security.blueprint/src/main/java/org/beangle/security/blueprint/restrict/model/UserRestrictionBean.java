@@ -21,6 +21,10 @@ public class UserRestrictionBean extends RestrictionBean implements UserRestrict
 	@NotNull
 	private User holder;
 
+	public UserRestrictionBean() {
+		super();
+	}
+
 	public UserRestrictionBean(User holder, RestrictPattern pattern) {
 		super();
 		this.holder = holder;

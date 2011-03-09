@@ -15,10 +15,13 @@ import org.beangle.model.persist.EntityDao;
 import org.beangle.security.blueprint.Authority;
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.User;
+import org.beangle.security.blueprint.restrict.AuthorityRestriction;
+import org.beangle.security.blueprint.restrict.GroupRestriction;
 import org.beangle.security.blueprint.restrict.RestrictField;
-import org.beangle.security.blueprint.restrict.RestrictEntity;
+import org.beangle.security.blueprint.restrict.RestrictPattern;
 import org.beangle.security.blueprint.restrict.Restriction;
 import org.beangle.security.blueprint.restrict.RestrictionHolder;
+import org.beangle.security.blueprint.restrict.UserRestriction;
 import org.beangle.security.blueprint.restrict.service.RestrictionService;
 import org.beangle.struts2.helper.ContextHelper;
 import org.beangle.struts2.helper.Params;
@@ -27,9 +30,9 @@ public class RestrictionHelper {
 
 	public static final Map<String, String> restrictionTypeMap = CollectUtils.newHashMap();
 	static {
-		restrictionTypeMap.put("user", "org.beangle.security.blueprint.restrict.UserRestriction");
-		restrictionTypeMap.put("group", "org.beangle.security.blueprint.restrict.GroupRestriction");
-		restrictionTypeMap.put("authority", "org.beangle.security.blueprint.restrict.AuthorityRestriction");
+		restrictionTypeMap.put("user", UserRestriction.class.getName());
+		restrictionTypeMap.put("group", GroupRestriction.class.getName());
+		restrictionTypeMap.put("authority", AuthorityRestriction.class.getName());
 	}
 
 	EntityDao entityDao;
@@ -77,17 +80,7 @@ public class RestrictionHelper {
 			}
 			fieldMaps.put(restriction.getId().toString(), aoFields);
 		}
-		String forEdit = Params.get("forEdit");
-		if (StringUtils.isNotEmpty(forEdit)) {
-			List<RestrictEntity> restrictEntities = CollectUtils.newArrayList();
-			if (holder instanceof Authority) {
-				Authority au = (Authority) holder;
-				restrictEntities.addAll(au.getResource().getEntities());
-			} else {
-				restrictEntities = entityDao.getAll(RestrictEntity.class);
-			}
-			ContextHelper.put("restrictEntities", restrictEntities);
-		}
+		ContextHelper.put("patterns", entityDao.getAll(RestrictPattern.class));
 		ContextHelper.put("fieldMaps", fieldMaps);
 		ContextHelper.put("restrictions", restrictions);
 	}

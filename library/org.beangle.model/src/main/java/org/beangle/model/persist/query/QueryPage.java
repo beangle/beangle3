@@ -8,6 +8,7 @@ import org.beangle.commons.collection.page.Page;
 import org.beangle.commons.collection.page.SinglePage;
 import org.beangle.model.persist.EntityDao;
 import org.beangle.model.query.LimitQuery;
+import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.model.query.limit.AbstractQueryPage;
 
 public class QueryPage<T> extends AbstractQueryPage<T> {
@@ -16,6 +17,12 @@ public class QueryPage<T> extends AbstractQueryPage<T> {
 
 	public QueryPage(LimitQuery<T> query, EntityDao entityDao) {
 		super(query);
+		this.entityDao = entityDao;
+		next();
+	}
+
+	public QueryPage(OqlBuilder<T> builder, EntityDao entityDao) {
+		super((LimitQuery<T>) builder.build());
 		this.entityDao = entityDao;
 		next();
 	}

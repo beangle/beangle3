@@ -75,10 +75,12 @@ public class MonitorAction extends SecurityActionSupport {
 	public String invalidate() {
 		String[] sessionIds = (String[]) getAll("sessionId");
 		String mySessionId = ServletActionContext.getRequest().getSession().getId();
+		boolean killed = getBool("kill");
 		if (null != sessionIds) {
-			for (int i = 0; i < sessionIds.length; i++) {
-				if (mySessionId.equals(sessionIds[i])) continue;
-				sessionRegistry.remove(sessionIds[i]);
+			for (String sessionId : sessionIds) {
+				if (mySessionId.equals(sessionId)) continue;
+				if (killed) sessionRegistry.remove(sessionId);
+				else sessionRegistry.expire(sessionId);
 			}
 		}
 		return redirect("activities", "info.action.success");

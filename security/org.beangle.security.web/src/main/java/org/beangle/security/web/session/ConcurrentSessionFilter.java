@@ -70,25 +70,28 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			SessionInfo info = sessionRegistry.getSessionInfo(session.getId());
-			if (info != null) {
-				// Expired - abort processing
-				if (info.isExpired()) {
-					doLogout(request, response);
-					String targetUrl = determineExpiredUrl(request, info);
-					if (targetUrl != null) {
-						RedirectUtils.sendRedirect(request, response, targetUrl);
-						return;
+			// Expired - abort processing
+			if (null == info || info.isExpired()) {
+				doLogout(request, response);
+				String targetUrl = determineExpiredUrl(request, info);
+				if (targetUrl != null) {
+					RedirectUtils.sendRedirect(request, response, targetUrl);
+					return;
+				} else {
+					if (null == info) {
+						response.getWriter().print(
+								"This session has been removed or killed.");
 					} else {
 						response.getWriter().print(
 								"This session has been expired (possibly due to multiple concurrent "
 										+ "logins being attempted as the same user).");
-						response.flushBuffer();
 					}
-					return;
-				} else {
-					// Non-expired - update last request date/time
-					info.refreshLastRequest();
+					response.flushBuffer();
 				}
+				return;
+			} else {
+				// Non-expired - update last request date/time
+				info.refreshLastRequest();
 			}
 		}
 

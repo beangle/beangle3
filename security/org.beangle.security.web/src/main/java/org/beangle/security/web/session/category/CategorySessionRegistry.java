@@ -64,9 +64,13 @@ public class CategorySessionRegistry implements SessionRegistry, InitializingBea
 		}
 	}
 
+	public void expire(String sessionId) {
+		innerRegistry.expire(sessionId);
+	}
+
 	public SessionInfo remove(String sessionId) {
 		SessionInfo info = innerRegistry.remove(sessionId);
-		if (null != info) {
+		if (null != info && !info.isExpired()) {
 			sessionController.left(categoryPrincipal(info).getCategory());
 		}
 		return info;

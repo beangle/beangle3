@@ -104,6 +104,11 @@ public class MemSessionRegistry implements SessionRegistry {
 		return info;
 	}
 
+	public void expire(String sessionId) {
+		SessionInfo info = getSessionInfo(sessionId);
+		if (null != info) info.expireNow();
+	}
+
 	public int count() {
 		return sessionIds.size();
 	}

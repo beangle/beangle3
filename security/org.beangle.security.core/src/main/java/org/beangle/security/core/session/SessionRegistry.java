@@ -32,6 +32,12 @@ public interface SessionRegistry {
 	public SessionInfo remove(String sessionId);
 
 	/**
+	 * @param sessionId
+	 * @return
+	 */
+	public void expire(String sessionId);
+
+	/**
 	 * 查询在线记录
 	 * 
 	 * @return

@@ -115,6 +115,7 @@ public class UserAction extends SecurityActionSupport {
 		String errorMsg = "";
 		// // 收集用户身份
 		String[] categories = StringUtils.split(get("categoryIds"), ",");
+		user.getCategories().clear();
 		for (int i = 0; i < categories.length; i++) {
 			errorMsg = checkCategory(user, Long.valueOf(categories[i]));
 			if (StringUtils.isNotEmpty(errorMsg)) { return forward(new Action("edit"), errorMsg); }
@@ -122,19 +123,14 @@ public class UserAction extends SecurityActionSupport {
 		// 检验用户合法性
 		errorMsg = checkUser(user);
 		if (StringUtils.isNotEmpty(errorMsg)) { return forward(new Action("edit"), errorMsg); }
-		try {
-			processPassword(user);
-			if (!user.isPersisted()) {
-				User creator = userService.get(getUserId());
-				userService.createUser(creator, user);
-			} else {
-				userService.saveOrUpdate(user);
-			}
-			updateUserGroup(user);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return forward(ERROR);
+		processPassword(user);
+		if (!user.isPersisted()) {
+			User creator = userService.get(getUserId());
+			userService.createUser(creator, user);
+		} else {
+			userService.saveOrUpdate(user);
 		}
+		updateUserGroup(user);
 		return redirect("search", "info.save.success");
 	}
 

@@ -35,7 +35,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 
 	protected Map<String, DataProvider> providers = CollectUtils.newHashMap();
 
-	protected DataResolver dataResolver;
+	protected DataResolver dataResolver = new CsvDataResolver();
 
 	/**
 	 * 查询用户在指定模块的数据权限
@@ -52,7 +52,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 			restrictions.addAll(group.getRestrictions());
 		}
 		// 用户自身限制
-		RestrictionHolder<?> userHolder =user;
+		RestrictionHolder<?> userHolder = user;
 		restrictions.addAll(userHolder.getRestrictions());
 		// 实体过滤
 		return (List<Restriction>) CollectionUtils.select(restrictions, new Predicate() {
@@ -134,6 +134,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 				return (1 != returned.size()) ? null : returned.get(0);
 			}
 		} catch (Exception e) {
+			logger.error("Error getFieldValue ", e);
 			throw new RuntimeException("exception with param type:" + field.getType() + " value:" + value, e);
 		}
 	}

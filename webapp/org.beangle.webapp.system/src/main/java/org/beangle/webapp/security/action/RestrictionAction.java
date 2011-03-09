@@ -9,8 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.entity.Model;
 import org.beangle.security.blueprint.Authority;
 import org.beangle.security.blueprint.GroupMember;
@@ -19,6 +22,7 @@ import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.RestrictPattern;
 import org.beangle.security.blueprint.restrict.Restriction;
 import org.beangle.security.blueprint.restrict.RestrictionHolder;
+import org.beangle.security.blueprint.restrict.service.CsvDataResolver;
 import org.beangle.struts2.helper.Params;
 import org.beangle.webapp.security.helper.RestrictionHelper;
 
@@ -35,6 +39,7 @@ public class RestrictionAction extends SecurityActionSupport {
 		Restriction restriction = getRestriction();
 		RestrictionHolder<Restriction> holer = new RestrictionHelper(entityDao).getHolder();
 		holer.getRestrictions().remove(restriction);
+		entityDao.remove(restriction);
 		entityDao.saveOrUpdate(holer);
 		return redirect("info", "info.remove.success");
 	}
@@ -55,20 +60,41 @@ public class RestrictionAction extends SecurityActionSupport {
 		List<Restriction> myRestrictions = getMyRestrictions(restriction.getPattern(), holder);
 		Set<RestrictField> ignoreFields = getIgnoreFields(myRestrictions);
 		boolean isAdmin = isAdmin(getUser());
-		for (RestrictField field : restriction.getPattern().getEntity().getFields()) {
-			String value = get(field.getName());
+		for (final RestrictField field : restriction.getPattern().getEntity().getFields()) {
+			String[] values = (String[]) getAll(field.getName());
 			if ((ignoreFields.contains(field) || isAdmin) && getBool("ignoreField" + field.getId())) {
 				restriction.setItem(field, "*");
 			} else {
-				if (StringUtils.isEmpty(value)) {
+				if (null == values || values.length == 0) {
 					restriction.getItems().remove(field.getId());
 				} else {
-					restriction.setItem(field, value);
+					String storedValue = null;
+					if (null != field.getKeyName()) {
+						final Set<String> keys = CollectUtils.newHashSet(values);
+						Collection<?> allValues = restrictionService.getFieldValues(field.getName());
+						allValues = CollectionUtils.select(allValues, new Predicate() {
+							public boolean evaluate(Object arg0) {
+								try {
+									String keyValue = String.valueOf(PropertyUtils.getProperty(arg0,
+											field.getKeyName()));
+									return keys.contains(keyValue);
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+								return false;
+							}
+						});
+						storedValue = new CsvDataResolver().marshal(field, allValues);
+					} else {
+						storedValue = StrUtils.join(values);
+					}
+					restriction.setItem(field, storedValue);
 				}
 			}
 		}
 		if (restriction.getItems().isEmpty()) {
 			holder.getRestrictions().remove(restriction);
+			entityDao.remove(restriction);
 			entityDao.saveOrUpdate(holder);
 			return redirect("info", "info.save.success");
 		} else {
@@ -123,7 +149,8 @@ public class RestrictionAction extends SecurityActionSupport {
 		return forward();
 	}
 
-	private List<Restriction> getMyRestrictions(RestrictPattern pattern, RestrictionHolder<? extends Restriction> holder) {
+	private List<Restriction> getMyRestrictions(RestrictPattern pattern,
+			RestrictionHolder<? extends Restriction> holder) {
 		String type = get("restrictionType");
 		List<Restriction> restrictions = CollectUtils.newArrayList();
 		User me = getUser();

@@ -10,7 +10,8 @@
 [@b.grid  id="activityListTable" items=onlineActivities var="activity"]
 	[@b.gridbar]
 	bar.addItem("刷新","refresh()",'refresh.gif');
-	bar.addItem("结束会话","invalidateSession()",'delete.gif');
+	bar.addItem("过期","expireSession()",'delete.gif');
+	bar.addItem("结束","killSession()",'delete.gif');
 	[/@]
 	[@b.row]
 		[@b.boxcol boxname="sessionId" property="sessionid"/]
@@ -27,7 +28,8 @@
 		[@b.col width="8%" title="状态" property="expired"]${activity.expired?string("过期","在线")}[/@]
 	[/@]
 [/@]
-[@b.submit id="invalidateBtn" style="display:none" value=""/]
+[@b.submit id="expireBtn" style="display:none" value=""/]
+[@b.submit id="killBtn" style="display:none" action="!invalidate?kill=1" value=""/]
 [/@]
 [#assign refreshInterval=Parameters['interval']!"4"/]
 <div>定时每${refreshInterval}秒刷新</div>
@@ -41,9 +43,14 @@
 			}
 		}
 	}
-	function invalidateSession(){
-		$('#invalidateBtn').click();
+	
+	function killSession(){
+		document.getElementById('killBtn').click();
 	}
+	function expireSession(){
+		document.getElementById('expireBtn').click();
+	}
+	
 	if(typeof refreshTime != undefined){
 		clearTimeout(refreshTime);
 	}

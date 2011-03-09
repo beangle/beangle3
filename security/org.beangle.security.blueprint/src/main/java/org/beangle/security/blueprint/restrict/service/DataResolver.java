@@ -4,6 +4,7 @@
  */
 package org.beangle.security.blueprint.restrict.service;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.beangle.security.blueprint.restrict.RestrictField;
@@ -17,7 +18,7 @@ public interface DataResolver {
 	 * @param items
 	 * @return
 	 */
-	public String marshal(RestrictField field, List<?> items);
+	public String marshal(RestrictField field, Collection<?> items);
 
 	/**
 	 * Convert text to list of objects
