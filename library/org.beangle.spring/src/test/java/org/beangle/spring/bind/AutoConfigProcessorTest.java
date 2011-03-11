@@ -9,6 +9,7 @@ import static org.testng.Assert.assertTrue;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.beangle.spring.testbean.SomeAction;
+import org.beangle.spring.testbean.TestService;
 import org.beangle.spring.testbean.UserDaoProvider;
 import org.beangle.spring.testbean.UserLdapProvider;
 import org.springframework.context.ApplicationContext;
@@ -23,25 +24,8 @@ public class AutoConfigProcessorTest {
 		watch.start();
 		ApplicationContext factory = new ClassPathXmlApplicationContext("/context-auto.xml");
 		testBean(factory);
+		testFactoryBean(factory);
 		System.out.println("config  context-auto completed using " + watch.getTime());
-	}
-
-	public void testGet2() {
-		StopWatch watch = new StopWatch();
-		watch.start();
-		ApplicationContext factory = new ClassPathXmlApplicationContext("/context-auto2.xml");
-		testBean(factory);
-		System.out.println("config context-auto2 completed using " + watch.getTime());
-	}
-
-	public void testWithAutowire() {
-		StopWatch watch = new StopWatch();
-		watch.start();
-		ApplicationContext factory = new ClassPathXmlApplicationContext("/context-auto.xml");
-		for (int i = 0; i < 100; i++) {
-			factory.getBean("autowire.someaction");
-		}
-		System.out.println("autowire using " + watch.getTime());
 	}
 
 	public void testNoAutowire() {
@@ -53,6 +37,12 @@ public class AutoConfigProcessorTest {
 			factory.getBean(name);
 		}
 		System.out.println("no autowire using " + watch.getTime());
+	}
+
+	private void testFactoryBean(ApplicationContext factory) {
+		TestService testService = factory.getBean("testService", TestService.class);
+		assertNotNull(testService);
+		assertNotNull(testService.getTestDao());
 	}
 
 	private void testBean(ApplicationContext factory) {

@@ -3,11 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean name="avatar.config" class="org.beangle.webapp.avatar.AvatarBeanConfigFactory" />
-	<bean name="captcha.config" class="org.beangle.webapp.captcha.CaptchaBeanConfigFactory" />
-	<bean name="portal.config" class="org.beangle.webapp.portal.PortalActionConfigFactory" />
-	<bean name="security.config" class="org.beangle.webapp.security.SecurityBeanConfigFactory" />
-	<bean name="system.config" class="org.beangle.webapp.system.SystemBeanConfigFactory" />
+	<bean name="avatar.config" class="org.beangle.webapp.avatar.AvatarModule" />
+	<bean name="captcha.config" class="org.beangle.webapp.captcha.CaptchaModule" />
+	<bean name="portal.config" class="org.beangle.webapp.portal.PortalModule" />
+	<bean name="security.config" class="org.beangle.webapp.security.SecurityModule" />
+	<bean name="system.config" class="org.beangle.webapp.system.SystemModule" />
 
 	<bean id="captchaService"
 		class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService">

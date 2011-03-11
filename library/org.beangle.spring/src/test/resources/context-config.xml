@@ -3,14 +3,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<bean id="beangleConfig"
-		class="org.beangle.spring.reconfig.ReconfigProcessor">
+	<bean id="beangleReconfigProcessor"
+		class="org.beangle.spring.config.ReconfigProcessor">
 		<property name="resource">
 			<bean class="org.beangle.spring.config.ConfigResource">
 				<property name="locations" value="classpath*:spring-config.xml" />
 			</bean>
 		</property>
 	</bean>
+	
 	<import resource="classpath:context.xml"/>
 
 </beans>

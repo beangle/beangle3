@@ -5,28 +5,26 @@
 
 	<bean id="autoConfigProcessor" class="org.beangle.spring.bind.AutoConfigProcessor" />
 
-	<bean id="test.service" class="org.beangle.spring.bind.BeanConfigFactory">
-		<property name="useShortName" value="true" />
-		<property name="classes">
-			<list>
-				<value>org.beangle.spring.testbean.UserLdapProvider</value>
-				<value>org.beangle.spring.testbean.UserDaoProvider</value>
-			</list>
+	<bean id="spring.common.test" class="org.beangle.spring.testbean.TestModule"/>
+	
+	<bean id="baseTransactionProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		abstract="true">
+		<property name="transactionAttributes">
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
 		</property>
 	</bean>
 
-	<bean id="test.action" class="org.beangle.spring.bind.BeanConfigFactory">
-		<property name="scope" value="prototype" />
-		<property name="classes">
-			<list>
-				<value>org.beangle.spring.testbean.SomeAction</value>
-			</list>
+
+	<bean id="entityDao" parent="baseTransactionProxy">
+		<property name="target">
+			<bean
+				class="org.beangle.spring.testbean.TestEntityDao"
+				autowire="byName">
+			</bean>
 		</property>
 	</bean>
-
-	<bean id="autowire.someaction" class="org.beangle.spring.testbean.SomeAction"
-		autowire="byName" scope="prototype">
-		<property name="ldapProvider" ref="userLdapProvider" />
-	</bean>
-
 </beans>

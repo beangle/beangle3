@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang.time.StopWatch;
 import org.beangle.commons.collection.CollectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,30 +18,51 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.ClassUtils;
-import org.springframework.util.StringUtils;
 
-public class AutoConfigProcessor implements BeanFactoryPostProcessor {
+public class AutoConfigProcessor implements BeanDefinitionRegistryPostProcessor {
 	private static final Logger logger = LoggerFactory.getLogger(AutoConfigProcessor.class);
 
-	public void postProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException {
-		if (!(factory instanceof BeanDefinitionRegistry)) return;
-		BeanDefinitionRegistry registry = (BeanDefinitionRegistry) factory;
-		String[] definitionNames = factory.getBeanNamesForType(BeanConfig.class);
+	protected Map<String, BeanDefinition> newBeanDefinitions = CollectUtils.newHashMap();
 
-		Map<String, BeanDefinition> newBeanDefinitions = CollectUtils.newHashMap();
-		for (String name : definitionNames) {
-			BeanConfig config = factory.getBean(name, BeanConfig.class);
+	protected BindRegistry bindRegistry;
+
+	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+		StopWatch watch = new StopWatch();
+		watch.start();
+		bindRegistry = new DefinitionBindRegistry(registry);
+		register(registry);
+		autowire();
+		logger.debug("Auto register and wire bean [{}]", newBeanDefinitions.keySet());
+		logger.info("Auto register and wire {} beans using {} mills", newBeanDefinitions.size(), watch.getTime());
+		newBeanDefinitions.clear();
+		bindRegistry = null;
+	}
+
+	public void postProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException {
+	}
+
+	protected void register(BeanDefinitionRegistry registry) {
+		List<String> modules = bindRegistry.getBeanNames(BindModule.class);
+		for (String name : modules) {
+			Class<?> beanClass = bindRegistry.getBeanType(name);
+			BeanConfig config = null;
+			try {
+				config = ((BindModule) beanClass.newInstance()).getConfig();
+			} catch (Exception e) {
+				logger.error("class initialization error of  " + beanClass, e);
+				continue;
+			}
 			List<BeanConfig.Definition> definitions = config.getDefinitions();
 			for (BeanConfig.Definition definition : definitions) {
 				String beanName = definition.beanName;
-				if (newBeanDefinitions.containsKey(beanName) || registry.containsBeanDefinition(beanName)) {
+				if (bindRegistry.contains(beanName)) {
 					logger.warn("Ingore exists bean definition {}", beanName);
 				} else {
 					BeanDefinition def = register(beanName, definition.clazz, definition.scope, registry);
@@ -48,7 +70,6 @@ public class AutoConfigProcessor implements BeanFactoryPostProcessor {
 				}
 			}
 		}
-		autowire(registry, newBeanDefinitions);
 	}
 
 	/**
@@ -57,38 +78,38 @@ public class AutoConfigProcessor implements BeanFactoryPostProcessor {
 	 * @param registry
 	 * @param definition
 	 */
-	private BeanDefinition register(String beanName, Class<?> clazz, String scope,
+	protected BeanDefinition register(String beanName, Class<?> clazz, String scope,
 			BeanDefinitionRegistry registry) {
 		GenericBeanDefinition def = new GenericBeanDefinition();
 		def.setBeanClass(clazz);
 		def.setScope(scope);
 		registry.registerBeanDefinition(beanName, def);
+		bindRegistry.register(clazz, beanName);
 		logger.debug("Register definition {} for {}", beanName, clazz);
 		return def;
 	}
 
-	protected void autowire(BeanDefinitionRegistry registry, Map<String, BeanDefinition> definitions) {
-		for (Map.Entry<String, BeanDefinition> entry : definitions.entrySet()) {
+	protected void autowire() {
+		for (Map.Entry<String, BeanDefinition> entry : newBeanDefinitions.entrySet()) {
 			String beanName = entry.getKey();
 			BeanDefinition mbd = entry.getValue();
-			autowire(beanName, mbd, registry, (ConfigurableListableBeanFactory) registry);
+			autowire(beanName, mbd);
 		}
 	}
 
-	protected void autowire(String beanName, BeanDefinition mbd, BeanDefinitionRegistry registry,
-			ConfigurableListableBeanFactory factory) {
+	protected void autowire(String beanName, BeanDefinition mbd) {
 		Map<String, PropertyDescriptor> properties = unsatisfiedNonSimpleProperties(mbd);
 		for (Map.Entry<String, PropertyDescriptor> entry : properties.entrySet()) {
 			String propertyName = entry.getKey();
 			PropertyDescriptor pd = entry.getValue();
 			if (Object.class.equals(pd.getPropertyType())) continue;
 			MethodParameter methodParam = BeanUtils.getWriteMethodParameter(pd);
-			String[] beanNames = factory.getBeanNamesForType(methodParam.getParameterType());
+			List<String> beanNames = bindRegistry.getBeanNames(methodParam.getParameterType());
 			boolean binded = false;
-			if (beanNames.length == 1) {
-				mbd.getPropertyValues().add(propertyName, new RuntimeBeanReference(beanNames[0]));
+			if (beanNames.size() == 1) {
+				mbd.getPropertyValues().add(propertyName, new RuntimeBeanReference(beanNames.get(0)));
 				binded = true;
-			} else if (beanNames.length > 1) {
+			} else if (beanNames.size() > 1) {
 				for (String name : beanNames) {
 					if (name.equals(propertyName)) {
 						binded = true;
@@ -96,8 +117,7 @@ public class AutoConfigProcessor implements BeanFactoryPostProcessor {
 					}
 				}
 			}
-			if (!binded) logger.debug("expected single bean but found {} : {}", beanNames.length,
-					StringUtils.arrayToCommaDelimitedString(beanNames));
+			if (!binded) logger.debug("expected single bean but found {} : {}", beanNames.size(), beanNames);
 		}
 	}
 

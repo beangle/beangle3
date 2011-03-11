@@ -6,8 +6,8 @@ package org.beangle.spring.reconfig;
 
 import java.util.List;
 
-import org.beangle.spring.reconfig.BeanDefinitionReader;
-import org.beangle.spring.reconfig.ReconfigBeanDefinitionHolder;
+import org.beangle.spring.config.BeanDefinitionReader;
+import org.beangle.spring.config.ReconfigBeanDefinitionHolder;
 import org.springframework.core.io.ClassPathResource;
 import org.testng.annotations.Test;
 

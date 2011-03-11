@@ -3,7 +3,7 @@
 
 <beans>
 	<bean id="beangleConfig"
-	 class="org.beangle.spring.reconfig.ReconfigProcessor">
+	 class="org.beangle.spring.config.ReconfigProcessor">
 		<property name="resource">
 			<bean class="org.beangle.spring.config.ConfigResource">
 				<property name="locations" value="classpath*:spring-config.xml" />
