@@ -25,12 +25,14 @@ public class OverrideConfiguration extends Configuration {
 
 	public OverrideConfiguration() {
 		super();
-		this.metadataSourceQueue=new StmartMetadataSourceQueue();
+		this.metadataSourceQueue = new StmartMetadataSourceQueue();
 	}
+
 	public OverrideConfiguration(SettingsFactory settingsFactory) {
 		super(settingsFactory);
-		this.metadataSourceQueue=new StmartMetadataSourceQueue();
+		this.metadataSourceQueue = new StmartMetadataSourceQueue();
 	}
+
 	@Override
 	public Mappings createMappings() {
 		return new OverrideMappings();
@@ -49,6 +51,7 @@ public class OverrideConfiguration extends Configuration {
 			}
 			if (old.getMappedClass().isAssignableFrom(persistentClass.getMappedClass())) {
 				classes.put(entityName, persistentClass);
+				classes.put(persistentClass.getMappedClass().getName(), persistentClass);
 				logger.info("{} override {} for entity configuration", persistentClass.getClassName(),
 						old.getClassName());
 			}
@@ -60,7 +63,8 @@ public class OverrideConfiguration extends Configuration {
 		}
 
 	}
-	protected class StmartMetadataSourceQueue extends MetadataSourceQueue{
+
+	protected class StmartMetadataSourceQueue extends MetadataSourceQueue {
 		protected void syncAnnotatedClasses() {
 		}
 	}
