@@ -18,6 +18,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.Condition;
 import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.security.blueprint.Authority;
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.GroupMember;
 import org.beangle.security.blueprint.Resource;
@@ -65,8 +66,8 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 	}
 
 	public List<Restriction> getAuthorityRestrictions(User user, Resource resource) {
-		OqlBuilder<Restriction> query = OqlBuilder.hql("select restriction from Authority r "
-				+ "join r.group.members as gmember join r.restrictions as restriction"
+		OqlBuilder<Restriction> query = OqlBuilder.hql("select restriction from " + Authority.class.getName()
+				+ " r " + "join r.group.members as gmember join r.restrictions as restriction"
 				+ " where gmember.user=:user and gmember.member=true and r.resource=:resource"
 				+ " and restriction.enabled=true");
 		Map<String, Object> params = CollectUtils.newHashMap();

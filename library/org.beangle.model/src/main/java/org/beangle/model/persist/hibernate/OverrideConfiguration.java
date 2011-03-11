@@ -46,15 +46,12 @@ public class OverrideConfiguration extends Configuration {
 			PersistentClass old = (PersistentClass) classes.get(entityName);
 			if (old == null) {
 				classes.put(entityName, persistentClass);
-				classes.put(persistentClass.getMappedClass().getName(), persistentClass);
-				return;
-			}
-			if (old.getMappedClass().isAssignableFrom(persistentClass.getMappedClass())) {
+			} else if (old.getMappedClass().isAssignableFrom(persistentClass.getMappedClass())) {
 				classes.put(entityName, persistentClass);
-				classes.put(persistentClass.getMappedClass().getName(), persistentClass);
 				logger.info("{} override {} for entity configuration", persistentClass.getClassName(),
 						old.getClassName());
 			}
+			classes.put(persistentClass.getMappedClass().getName(), (PersistentClass) classes.get(entityName));
 		}
 
 		@Override
