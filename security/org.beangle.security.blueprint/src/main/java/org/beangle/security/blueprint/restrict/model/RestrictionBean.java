@@ -38,7 +38,7 @@ public abstract class RestrictionBean extends LongIdObject implements Restrictio
 	protected boolean enabled = true;
 
 	@ElementCollection
-	@MapKeyColumn(name = "param_id")
+	@MapKeyColumn(name = "field_id")
 	@Column(name = "content")
 	@CollectionTable(joinColumns = @JoinColumn(name = "restriction_id"))
 	private Map<Long, String> items = CollectUtils.newHashMap();
