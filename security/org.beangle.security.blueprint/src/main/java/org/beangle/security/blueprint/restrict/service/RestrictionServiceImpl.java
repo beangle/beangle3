@@ -36,7 +36,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 
 	protected Map<String, DataProvider> providers = CollectUtils.newHashMap();
 
-	protected DataResolver dataResolver = new CsvDataResolver();
+	protected DataResolver idDataResolver;
 
 	/**
 	 * 查询用户在指定模块的数据权限
@@ -128,7 +128,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		if (StringUtils.isEmpty(value)) return null;
 		if (ObjectUtils.equals(Restriction.ALL, value)) { return getFieldValues(field); }
 		try {
-			List<Object> returned = dataResolver.unmarshal(field, value);
+			List<Object> returned = idDataResolver.unmarshal(field, value);
 			if (field.isMultiple()) {
 				return returned;
 			} else {
@@ -214,12 +214,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		this.providers = providers;
 	}
 
-	public DataResolver getDataResolver() {
-		return dataResolver;
+	public void setIdDataResolver(DataResolver idDataResolver) {
+		this.idDataResolver = idDataResolver;
 	}
-
-	public void setDataResolver(DataResolver dataResolver) {
-		this.dataResolver = dataResolver;
-	}
-
 }

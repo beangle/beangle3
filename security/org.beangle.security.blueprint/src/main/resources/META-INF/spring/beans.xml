@@ -103,6 +103,8 @@
 	
 	<bean id="authorityService" class="org.beangle.security.blueprint.service.AuthorityServiceImpl" autowire="byName"/>
 	
+	<bean id="idDataResolver" class="org.beangle.security.blueprint.restrict.service.IdentifierDataResolver" autowire="byName"/>
+
 	<bean id="csvDataResolver" class="org.beangle.security.blueprint.restrict.service.CsvDataResolver" autowire="byName"/>
 
 	<bean id="oqlDataProvider" class="org.beangle.security.blueprint.restrict.service.OqlDataProvider" autowire="byName"/>

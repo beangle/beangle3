@@ -22,11 +22,12 @@ import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.RestrictPattern;
 import org.beangle.security.blueprint.restrict.Restriction;
 import org.beangle.security.blueprint.restrict.RestrictionHolder;
-import org.beangle.security.blueprint.restrict.service.CsvDataResolver;
+import org.beangle.security.blueprint.restrict.service.DataResolver;
 import org.beangle.struts2.helper.Params;
 import org.beangle.webapp.security.helper.RestrictionHelper;
 
 public class RestrictionAction extends SecurityActionSupport {
+	protected DataResolver idDataResolver;
 
 	public String tip() {
 		return forward();
@@ -84,7 +85,7 @@ public class RestrictionAction extends SecurityActionSupport {
 								return false;
 							}
 						});
-						storedValue = new CsvDataResolver().marshal(field, allValues);
+						storedValue = idDataResolver.marshal(field, allValues);
 					} else {
 						storedValue = StrUtils.join(values);
 					}
@@ -219,4 +220,9 @@ public class RestrictionAction extends SecurityActionSupport {
 		}
 		return restriction;
 	}
+
+	public void setIdDataResolver(DataResolver idDataResolver) {
+		this.idDataResolver = idDataResolver;
+	}
+
 }

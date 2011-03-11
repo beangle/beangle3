@@ -40,7 +40,8 @@ public class AutoConfigProcessor implements BeanDefinitionRegistryPostProcessor 
 		register(registry);
 		autowire();
 		logger.debug("Auto register and wire bean [{}]", newBeanDefinitions.keySet());
-		logger.info("Auto register and wire {} beans using {} mills", newBeanDefinitions.size(), watch.getTime());
+		logger.info("Auto register and wire {} beans using {} mills", newBeanDefinitions.size(),
+				watch.getTime());
 		newBeanDefinitions.clear();
 		bindRegistry = null;
 	}
@@ -112,12 +113,20 @@ public class AutoConfigProcessor implements BeanDefinitionRegistryPostProcessor 
 			} else if (beanNames.size() > 1) {
 				for (String name : beanNames) {
 					if (name.equals(propertyName)) {
-						binded = true;
 						mbd.getPropertyValues().add(propertyName, new RuntimeBeanReference(propertyName));
+						binded = true;
+						break;
 					}
 				}
 			}
-			if (!binded) logger.debug("expected single bean but found {} : {}", beanNames.size(), beanNames);
+			if (!binded) {
+				if (beanNames.isEmpty()) {
+					logger.debug(beanName + "'s " + propertyName + "  cannot  found candidate bean");
+				} else {
+					logger.warn(beanName + "'s " + propertyName + " expected single bean but found {} : {}",
+							beanNames.size(), beanNames);
+				}
+			}
 		}
 	}
 
