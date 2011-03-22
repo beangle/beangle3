@@ -11,8 +11,10 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.UnhandledException;
@@ -70,6 +72,10 @@ public final class CollectUtils {
 
 	public static <K, V> Map<K, V> newConcurrentHashMap() {
 		return new ConcurrentHashMap<K, V>();
+	}
+
+	public static <E> Queue<E> newConcurrentLinkedQueue() {
+		return new ConcurrentLinkedQueue<E>();
 	}
 
 	public static <K, V> Map<K, V> newHashMap(Map<? extends K, ? extends V> m) {

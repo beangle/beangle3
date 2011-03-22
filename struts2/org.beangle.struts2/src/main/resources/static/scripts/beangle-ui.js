@@ -401,48 +401,52 @@
 		addAnchor=function(text,pageNumber){
 			pageHref=document.createElement('a');
 			pageHref.setAttribute("href","#");
-			pageHref.setAttribute("onclick","bg.page.goPage('" + pageId + "'," + pageNumber+ ")");
 			pageHref.innerHTML=text;
 			pageHref.style.padding="0px 2px 0px 2px";
 			pageDiv.appendChild(pageHref);
+			jQuery(pageHref).click(function(){bg.page.goPage(pageId ,pageNumber)});
 		}
 		if(pageNo>1){
 			addAnchor(titles['first'],1);
 			addAnchor(titles['previous'],pageNo-1);
 		}
 		labelspan=document.createElement('span');
-		labelspan.setAttribute("title",titles['change']);
 		labelspan.innerHTML="<strong>" + startNo +"</strong> - <strong>"+ endNo + "</strong> of <strong>" + total + "</strong>";
-		labelspan.setAttribute("onclick","this.nextSibling.style.display='';this.style.display='none'");
-		labelspan.setAttribute("onmouseover","this.className='gridbar-pagebar-label'");
-		labelspan.setAttribute("onmouseout","this.className=''");
 		labelspan.style.padding="0px 2px 0px 2px";
 		pageDiv.appendChild(labelspan);
+		var numSpan=jQuery(labelspan)
+		numSpan.attr('title',titles['change'])
+		numSpan.mouseover(function (){this.className='gridbar-pagebar-label'});
+		numSpan.mouseout(function(){this.className=''});
+		numSpan.click(function(){this.nextSibling.style.display='';this.style.display='none'});
 		
 		pagespan=document.createElement('span');
 		pagespan.style.display="none";
 		pageInput=document.createElement('input');
-		pageInput.setAttribute("value",pageNo+"/"+maxPageNo);
-		pageInput.setAttribute("type","text");
-		pageInput.setAttribute("onfocus","this.value=''");
-		pageInput.setAttribute("onblur","if(!this.value) this.value='" + pageNo+"/"+maxPageNo+"'");
-		pageInput.setAttribute("onchange","bg.page.goPage('" + pageId + "',this.value)");
+		pagespan.innerHTML=titles['no'];
 		pageInput.style.width="35px";
 		pageInput.style.height="12px";
-		pagespan.innerHTML=titles['no'];
 		pagespan.appendChild(pageInput);
+
+		var pageInputJ=jQuery(pageInput)
+		pageInputJ.attr("value",pageNo+"/"+maxPageNo);
+		pageInputJ.focus(function(){this.value=''});
+		pageInputJ.blur(function(){if(!this.value) this.value= pageNo+"/"+maxPageNo});
+		pageInputJ.change(function(){bg.page.goPage(pageId,this.value)});
+		
 		if(ranks && (ranks.length>0)){
 			pageNoSelect=document.createElement('select');
-			pageNoSelect.setAttribute("onchange","bg.page.goPage('"+ pageId +"',1,this.value)");
+			pagespan.appendChild(pageNoSelect);
 			pageNoSelect.style.width="45px";
 			pageNoSelect.style.height="20px";
 			pageNoSelect.title="page size";
+			var selectIndex=0;
 			for(var i=0;i<ranks.length;i++){
-				op=new Option(ranks[i], ranks[i]);
-				if(ranks[i]==pageSize){ op.setAttribute("selected","selected");}
-				pageNoSelect.options[pageNoSelect.length]=op;
+				if(ranks[i]==pageSize) selectIndex=i;
+				pageNoSelect.options.add(new Option(ranks[i], ranks[i]));
 			}
-			pagespan.appendChild(pageNoSelect);
+			jQuery(pageNoSelect).change(function (){bg.page.goPage(pageId,1,this.value)});
+			pageNoSelect.selectedIndex = selectIndex;
 		}
 		pageDiv.appendChild(pagespan);
 		if(pageNo<maxPageNo){

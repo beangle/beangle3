@@ -54,7 +54,12 @@ public class LoginAction extends BaseAction {
 		if (null != captchaService) {
 			try {
 				String sessionId = getRequest().getSession().getId();
-				Boolean valid = captchaService.validateResponseForID(sessionId, get("captcha"));
+				String captchaText=get("captcha");
+				if(StringUtils.isEmpty(captchaText)) {
+					addActionError(getText("security.EmptyCaptcha"));
+					return false;
+				}
+				Boolean valid = captchaService.validateResponseForID(sessionId,captchaText);
 				if (Boolean.FALSE.equals(valid)) {
 					addActionError(getText("security.WrongCaptcha"));
 					return false;

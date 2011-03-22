@@ -82,7 +82,7 @@ public class UserAction extends SecurityActionSupport {
 			if (queryGroup) {
 				sb.append(" and ");
 			}
-			sb.append("ug.name like :groupName ");
+			sb.append("ug.group.name like :groupName ");
 			params.add("%" + groupName + "%");
 			queryGroup = true;
 		}

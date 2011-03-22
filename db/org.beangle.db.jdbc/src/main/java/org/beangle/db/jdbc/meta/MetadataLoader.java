@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
@@ -48,8 +49,10 @@ public class MetadataLoader {
 				} else {
 					rs = meta.getTables(catalog, schema, null, TYPES);
 				}
+				Queue<String> tableNames = CollectUtils.newConcurrentLinkedQueue();
 				while (rs.next()) {
 					String tableName = rs.getString("TABLE_NAME");
+					tableNames.add(tableName);
 					try {
 						String tableSchema = rs.getString("TABLE_SCHEM");
 						Table table = loadTable(tableSchema, tableName, extras);

@@ -5,10 +5,10 @@ bar.addBack("${b.text("action.back")}");
 [/@]
 <table class="infoTable">
 	<tr>
-	 <td class="title">${b.text("common.name")}:</td>
-	 <td class="content"> ${userGroup.name}</td>
-	 <td class="title">${b.text("common.creator")}:</td>
-	 <td class="content">${userGroup.owner.name!}  </td>
+	 <td class="title" width="10%">${b.text("common.name")}:</td>
+	 <td class="content" width="40%"> ${userGroup.name}</td>
+	 <td class="title" width="10%">${b.text("common.creator")}:</td>
+	 <td class="content" width="40%">${userGroup.owner.name!}  </td>
 	</tr>
 	<tr>
 	 <td class="title" >${b.text("common.createdAt")}:</td>
@@ -28,7 +28,7 @@ bar.addBack("${b.text("action.back")}");
 	</tr>
 	<tr>
 	<td class="title" >${b.text("group.users")}:</td>
-	<td  class="content" colspan="3">[#list userGroup.members?sort_by(["user","name"]) as m] ${m.user.fullname}(${m.user.name})&nbsp;[/#list]</td>
+	<td  class="content" colspan="3">[#list userGroup.members?sort_by(["user","name"]) as m] [#if m.user.enabled]${m.user.fullname}(${m.user.name})[#else]<s>${m.user.fullname}(${m.user.name})</s>[/#if]&nbsp;[/#list]</td>
 	</tr>
 	<tr>
 	<td class="title" >${b.text("common.description")}:</td>

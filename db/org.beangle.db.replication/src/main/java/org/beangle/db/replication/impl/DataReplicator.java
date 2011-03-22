@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.StopWatch;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.PageLimit;
+import org.beangle.commons.lang.Tasks;
 import org.beangle.db.jdbc.meta.Table;
 import org.beangle.db.replication.DataWrapper;
 import org.beangle.db.replication.Replicator;
@@ -89,19 +90,11 @@ public class DataReplicator implements Replicator {
 		StopWatch watch = new StopWatch();
 		watch.start();
 		logger.info("Start data replication...");
-		List<Thread> tasks = CollectUtils.newArrayList();
+		Tasks task=new Tasks();
 		for (int i = 0; i < 9; i++) {
-			Thread thread = new Thread(new ReplicatorTask(source, target, tableBuffer));
-			tasks.add(thread);
-			thread.start();
+			task.addTask(new ReplicatorTask(source, target, tableBuffer));
 		}
-		for (Thread task : tasks) {
-			try {
-				task.join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+		task.run();
 		logger.info("End data replication,using {}", watch.getTime());
 	}
 

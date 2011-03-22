@@ -39,7 +39,7 @@ public abstract class RestrictionBean extends LongIdObject implements Restrictio
 
 	@ElementCollection
 	@MapKeyColumn(name = "field_id")
-	@Column(name = "content")
+	@Column(name = "content", length = 2000)
 	@CollectionTable(joinColumns = @JoinColumn(name = "restriction_id"))
 	private Map<Long, String> items = CollectUtils.newHashMap();
 

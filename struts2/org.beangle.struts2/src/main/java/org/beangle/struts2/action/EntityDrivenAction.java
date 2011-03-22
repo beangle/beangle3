@@ -108,11 +108,10 @@ public class EntityDrivenAction extends BaseAction {
 	 * @throws Exception
 	 */
 	public String remove() throws Exception {
-		Long entityId = getLong(getShortName() + "Id");
+		Long entityId = getEntityId(getShortName());
 		Collection<?> entities = null;
 		if (null == entityId) {
-			String entityIdSeq = get(getShortName() + "Ids");
-			entities = getModels(getEntityName(), StrUtils.splitToLong(entityIdSeq));
+			entities = getModels(getEntityName(), getEntityIds(getShortName()));
 		} else {
 			Entity<?> entity = getModel(getEntityName(), entityId);
 			entities = Collections.singletonList(entity);
