@@ -70,9 +70,9 @@ public class FreemarkerTemplateEngine implements TemplateEngine {
 			} catch (ParseException pe) {
 				throw pe;
 			} catch (IOException e) {
-				logger.error("Could not load the FreeMarker template named '{}'", templateName);
-				logger.error("The TemplateLoader provided by the FreeMarker Configuration was a: "
-						+ config.getTemplateLoader().getClass().getName());
+				logger.error("Could not load template named '{}',TemplateLoader is {}",
+						templateName, config.getTemplateLoader().getClass());
+				throw e;
 			}
 		} else {
 			env.setOut(writer);
