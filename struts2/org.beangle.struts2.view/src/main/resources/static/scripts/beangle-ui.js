@@ -26,10 +26,10 @@
 		this.id=divId;
 		this.separator="|";
 		this.bar.className="toolbar";
-		var defaultToolBarImageName="info.gif";
-		var defaultItemImageName="action.gif";
-		var helpImageName="help.gif";
-		var imagePath=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/images/action/";
+		var defaultToolBarImageName="info.png";
+		var defaultItemImageName="action.png";
+		var helpImageName="help.png";
+		var imagePath=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/beangle/icons/16x16/actions/";
 		
 		this.setTitle=function(newTitle,imageName){
 			if(!newTitle) return;
@@ -63,7 +63,7 @@
 		
 		this.addHr=function(){
 			hrdiv=this.appendDiv(null,"toolbar-line");
-			hrdiv.innerHTML='<img height="1" width="100%" align="top" src="' + imagePath + 'keyline.gif" />';
+			hrdiv.innerHTML='<img height="1" width="100%" align="top" src="' + imagePath + 'keyline.png" />';
 		}
 		function getImagePath(path,imageName){
 			if(imageName.charAt(0)=='/'){
@@ -79,16 +79,16 @@
 				action=action.name;
 			}
 			if(typeof action=="string"){
-				if(action.indexOf("add")!=-1||action.indexOf("new")!=-1) return "new.gif";
-				if(action.indexOf("remove")!=-1||action.indexOf("delete")!=-1) return "delete.gif";
-				if(action.indexOf("update")!=-1||action.indexOf("edit")!=-1||action.indexOf("Edit")!=-1) return "update.gif";
-				if(action.indexOf("export")!=-1) return "excel.gif";
-				if(action.indexOf("copy")!=-1) return "copy.gif";
-				if(action.indexOf("print")!=-1) return "print.gif";
-				if(action.indexOf("refresh")!=-1) return "refresh.gif";
-				if(action.indexOf("close")!=-1) return "close.gif";
-				if(action.indexOf("save")!=-1) return "save.gif";
-				if(action.indexOf("download")!=-1) return "download.gif";
+				if(action.indexOf("add")!=-1||action.indexOf("new")!=-1) return "new.png";
+				if(action.indexOf("remove")!=-1||action.indexOf("delete")!=-1) return "edit-delete.png";
+				if(action.indexOf("update")!=-1||action.indexOf("edit")!=-1||action.indexOf("Edit")!=-1) return "update.png";
+				if(action.indexOf("export")!=-1) return "excel.png";
+				if(action.indexOf("copy")!=-1) return "copy.png";
+				if(action.indexOf("print")!=-1) return "print.png";
+				if(action.indexOf("refresh")!=-1) return "refresh.png";
+				if(action.indexOf("close")!=-1) return "close.png";
+				if(action.indexOf("save")!=-1) return "save.png";
+				if(action.indexOf("download")!=-1) return "download.png";
 				else return defaultItemImageName;
 			}else return defaultItemImageName;   
 		}
@@ -123,9 +123,9 @@
 		
 		this.addBack = function (msg){
 			if(null==msg){
-				this.addItem("返回",function (){history.back(-1)},'backward.gif');
+				this.addItem("返回",function (){history.back(-1)},'backward.png');
 			}else{
-				this.addItem(msg,function (){history.back(-1)},'backward.gif');
+				this.addItem(msg,function (){history.back(-1)},'backward.png');
 			}
 		}
 		this.addHelp = function (module){
@@ -146,7 +146,7 @@
 			if(''==msg|| null==msg){
 				msg="关闭";
 			}
-			this.addItem(msg,"window.close()",'close.gif');
+			this.addItem(msg,"window.close()",'close.png');
 		}
 		/**
 		 * 添加菜单
@@ -234,7 +234,7 @@
 			item_div.onmouseout=MouseOutItem;
 			item_div.onmouseover=MouseOverItem;
 			this.items_div.appendChild(item_div);
-			item_div.innerHTML=title+'<img src="'+imagePath+'downarrow.gif" class="toolbar-icon" />';
+			item_div.innerHTML=title+'<img src="'+imagePath+'downarrow.png" class="toolbar-icon" />';
 			var menu = new Menu(menuTableId,item_div);
 			item_div.onclick=function (event){displayMenu(event);};
 			this.itemCount++;
@@ -581,7 +581,7 @@
 							}
 							if(orderBy.indexOf(desc)!=-1){
 								cell.className="gridhead-desc"
-									cell.innerHTML=cell.innerHTML+'<img src="'+bg.getContextPath()+'/static/images/action/sortDesc.gif"  style="border:0"  alt="Arrow" />'
+									cell.innerHTML=cell.innerHTML+'<img src="'+bg.getContextPath()+'/static/themes/beangle/icons/16x16/actions/sort-desc.png"  style="border:0"  alt="Arrow" />'
 								continue;
 							}
 							var asc=cell.id+" asc";
@@ -590,7 +590,7 @@
 							}
 							if(orderBy==asc){
 								cell.className="gridhead-asc"
-									cell.innerHTML=cell.innerHTML+'<img src="'+bg.getContextPath()+'/static/images/action/sortAsc.gif"  style="border:0"  alt="Arrow" />'
+									cell.innerHTML=cell.innerHTML+'<img src="'+bg.getContextPath()+'/static/themes/beangle/icons/16x16/actions/sort-asc.png"  style="border:0"  alt="Arrow" />'
 								continue;
 							}
 						}

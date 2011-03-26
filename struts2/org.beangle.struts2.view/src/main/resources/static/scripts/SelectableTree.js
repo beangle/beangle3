@@ -27,23 +27,6 @@ function MenuToc_toc(tocName){
     this.styleItemLink=0
     this.styleItemNoLink=0
 
-    // Icons
-    //this.iconPath            = "/images"
-    //this.iconWidth           = "24"
-    //this.iconHeight          = "22"
-    //this.iconPlus            = this.iconPath + "/plus.gif"
-    //this.iconMinus           = this.iconPath + "/minus.gif"
-    //this.iconPlus1           = this.iconPath + "/plus1.gif"
-    //this.iconPlus2           = this.iconPath + "/plus2.gif"
-    //this.iconMinus1          = this.iconPath + "/minus1.gif"
-    //this.iconMinus2          = this.iconPath + "/minus2.gif"
-    //this.iconItem            = this.iconPath + "/sanjiao.gif"
-    //this.iconFolderCollapsed = this.iconPath + "/foldercol.gif"
-    //this.iconFolderExpanded  = this.iconPath + "/folderexp.gif"
-    //this.iconEmpty           = this.iconPath + "/empty.gif"
-    //this.iconLine1           = this.iconPath + "/line1.gif"
-    //this.iconLine2           = this.iconPath + "/line2.gif"
-    //this.iconLine3           = this.iconPath + "/line3.gif"
 
     // Application data(added by Lu Gengbiao)
     this.multiSelect         = true;

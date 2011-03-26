@@ -33,10 +33,10 @@
 // default collapse column
 var defaultColumn=0;
 // for collapse or display child nodes.
-var treeImagePath=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/images/tree/";
+var treeImagePath=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/beangle/icons/16x16/tree/";
 function toggleRows(elm) {
  var rows = document.getElementsByTagName("TR");
- elm.style.backgroundImage = "url("+treeImagePath+"plus.gif)";
+ elm.style.backgroundImage = "url("+treeImagePath+"plus.png)";
  var newDisplay = "none";
  var thisID = elm.parentNode.parentNode.parentNode.id + "-";
  // Are we expanding or contracting? If the first child is hidden, we expand
@@ -47,7 +47,7 @@ function toggleRows(elm) {
     if (r.style.display == "none") {
      if (document.all) newDisplay = "block"; //IE4+ specific code
      else newDisplay = "table-row"; //Netscape and Mozilla
-     elm.style.backgroundImage = "url("+treeImagePath+"minus.gif)";
+     elm.style.backgroundImage = "url("+treeImagePath+"minus.png)";
     }
     break;
    }
@@ -66,7 +66,7 @@ function toggleRows(elm) {
      var folder = tier.getElementsByTagName("a")[0];
 
      if (folder.getAttribute("onclick") != null) {
-      folder.style.backgroundImage = "url("+treeImagePath+"plus.gif)";
+      folder.style.backgroundImage = "url("+treeImagePath+"plus.png)";
      }
    }
  }

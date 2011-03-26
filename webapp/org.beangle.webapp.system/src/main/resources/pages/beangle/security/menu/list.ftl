@@ -1,7 +1,7 @@
 [#ftl]
 [@b.head/]
-<link href="${base}/static/css/tableTree.css" rel="stylesheet" type="text/css" />
-<script  type="text/javascript" src="${base}/static/scripts/common/TableTree.js"></script>
+<link href="${base}/static/themes/beangle/css/tableTree.css" rel="stylesheet" type="text/css" />
+<script  type="text/javascript" src="${base}/static/scripts/TableTree.js"></script>
 <script type="text/javascript">defaultColumn=1;</script>
 [#include "../status.ftl"/]
 [#function convert_code(code)]
@@ -28,13 +28,13 @@
 	function preview(){
 		window.open("${b.url('!preview')}?${b.paramstring}");
 	}
-	bar.addItem("${b.text("action.new")}",action.add(),'new.gif');
-	bar.addItem("${b.text("action.edit")}",action.edit(),'update.gif');
+	bar.addItem("${b.text("action.new")}",action.add());
+	bar.addItem("${b.text("action.edit")}",action.edit());
 	bar.addItem("${b.text("action.freeze")}",activate(0),'${base}/static/icons/beangle/16x16/actions/freeze.png');
 	bar.addItem("${b.text("action.activate")}",activate(1),'${base}/static/icons/beangle/16x16/actions/activate.png');
 	bar.addItem("${b.text("action.export")}",exportData());
 	bar.addItem("${b.text("action.delete")}",action.remove());
-	bar.addItem("打印","preview()","print.gif");
+	bar.addItem("打印","preview()","print.png");
 [/@]
 	[@b.row ]
 		<tr title="${menu.entry!}" id="${convert_code(menu.code)}">
