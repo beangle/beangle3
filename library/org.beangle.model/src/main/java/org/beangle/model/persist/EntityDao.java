@@ -25,17 +25,18 @@ import org.beangle.model.query.QueryBuilder;
  */
 public interface EntityDao {
 	/**
-	 * @param clazz
-	 * @param id
-	 * @return
+	 * 查询指定id的对象
+	 * @param clazz 类型
+	 * @param id 唯一标识
+	 * @return null 
 	 */
 	public <T> T get(Class<T> clazz, Serializable id);
 
 	/**
-	 * 依据实体类的全名或简名加载对象
+	 * 依据实体名加载对象
 	 * 
-	 * @param entityName
-	 * @param id
+	 * @param entityName 实体名
+	 * @param id 唯一标识
 	 * @return
 	 */
 	public <T> T get(String entityName, Serializable id);

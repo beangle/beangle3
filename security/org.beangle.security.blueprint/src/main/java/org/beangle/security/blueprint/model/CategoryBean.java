@@ -17,7 +17,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity(name = "org.beangle.security.blueprint.Category")
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class CategoryBean extends LongIdObject implements Category {
 
 	private static final long serialVersionUID = -5929038500510261629L;

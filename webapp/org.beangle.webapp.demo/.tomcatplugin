@@ -15,6 +15,7 @@
         <webClassPathEntry>/beangle-security-core/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-security-web/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-spring/target/classes</webClassPathEntry>
+        <webClassPathEntry>/beangle-struts2-view/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-struts2/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-web/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-webapp-database/target/classes</webClassPathEntry>
@@ -53,8 +54,6 @@
         <webClassPathEntry>M2_REPO/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-digester/commons-digester/2.0/commons-digester-2.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-fileupload/commons-fileupload/1.2.1/commons-fileupload-1.2.1.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/commons-io/commons-io/1.3.2/commons-io-1.3.2.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/commons-io/commons-io/1.4/commons-io-1.4.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-io/commons-io/2.0.1/commons-io-2.0.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-lang/commons-lang/2.6/commons-lang-2.6.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-logging/commons-logging/99.0-does-not-exist/commons-logging-99.0-does-not-exist.jar</webClassPathEntry>

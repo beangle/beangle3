@@ -55,7 +55,4 @@
 	<bean type="org.beangle.struts2.convention.route.ActionBuilder" class="org.beangle.struts2.convention.route.impl.DefaultActionBuilder"/>
 	<bean type="org.beangle.struts2.convention.route.ViewMapper" class="org.beangle.struts2.convention.route.impl.DefaultViewMapper"/>
 	<bean type="org.beangle.struts2.convention.route.ProfileService" class="org.beangle.struts2.convention.route.impl.ProfileServiceImpl"/>
-	
-	<bean type="org.apache.struts2.views.TagLibrary" name="b" class="org.beangle.struts2.view.BeangleTagLibrary" />
-	<bean type="org.beangle.struts2.view.template.TemplateEngine" name="default" class="org.beangle.struts2.view.template.FreemarkerTemplateEngine" />
 </struts>

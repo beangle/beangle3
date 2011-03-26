@@ -19,6 +19,7 @@
 
 	<modules>
 		<module>org.beangle.struts2</module>
+		<module>org.beangle.struts2.view</module>
 	</modules>
 
 	<dependencies>

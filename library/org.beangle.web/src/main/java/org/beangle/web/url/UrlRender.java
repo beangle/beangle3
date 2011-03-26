@@ -23,7 +23,13 @@ public class UrlRender {
 
 	public UrlRender(String suffix) {
 		super();
-		this.suffix = suffix;
+		if (null != suffix) {
+			if (suffix.charAt(0) != '.') {
+				this.suffix = "." + suffix;
+			} else {
+				this.suffix = suffix;
+			}
+		}
 	}
 
 	public String render(String referer, String uri, Map<String, String> params) {
