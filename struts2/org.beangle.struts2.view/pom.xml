@@ -2,7 +2,7 @@
 	<parent>
 		<groupId>org.beangle</groupId>
 		<artifactId>beangle-struts2-parent</artifactId>
-		<version>2.2.1</version>
+		<version>2.3.0-alpha</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.beangle</groupId>
@@ -18,7 +18,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.beangle</groupId>
-			<artifactId>beangle-struts2</artifactId>
+			<artifactId>beangle-struts2-convention</artifactId>
 		</dependency>
 	</dependencies>
 </project>

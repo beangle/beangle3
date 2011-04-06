@@ -1,0 +1,294 @@
+/*
+ * Beangle UI CSS Framework
+ * GLPL version 3.
+ */
+
+body{margin-top: 0;margin-bottom: 0;margin-left:0;margin-right:0;font-size: 13px;}
+
+a:link {color: #000080;text-decoration: none;}
+a:visited {text-decoration: none;}
+a:hover {color: red;}
+
+/* grid */
+.grid{border-color:#006CB2;margin: 0px 0px 0px 0px ;font-size: 13px;}
+
+.gridempty{border:solid;border-width:1px;border-top-width:0px;border-color:#006CB2;}
+
+.gridtable {width:100%;border-collapse: collapse;border:solid;border-width:1px;border-color:#006CB2;vertical-align: middle;}
+
+.gridtable td{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;}
+
+.gridtable th{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;}
+
+.gridselect{text-align:center;background-color: #e0ecff;width:3%;}
+
+.gridhead{color: #000000;text-decoration: none;text-align:center;letter-spacing:0;background-color: #c7dbff;}
+
+.gridhead-asc{background-color: #308dbb;cursor:pointer;}
+
+.gridhead-desc{background-color: #308dbb;cursor:pointer;}
+
+.gridhead-sortable{cursor:pointer;}
+
+.griddata{text-align:center;}
+
+.griddata-odd{text-align:center;text-decoration: none;letter-spacing:0;background-color: #EBEBEB;}
+
+.griddata-even{text-align:center;text-decoration: none;letter-spacing:0;background-color: white;}
+
+.griddata-selected{background-color: #BFFFBF;}
+
+.griddata-over{background-color: #BFFFBF;}
+
+.gridbar{height:22px;background-color: #c7dbff;border:solid;border-color:#006CB2;border-width:0px;}
+
+.gridbar-items{float:left;}
+
+.gridbar-pagebar{float:right;margin-top:2px;margin-right:5px;}
+
+.gridbar-pagebar-label{background-color:#e9f2f8;}
+
+/*toolbar*/
+.toolbar{height:22px;border-collapse:separate;display:block;font-size: 13px;}
+
+.toolbar-icon{vertical-align:bottom;margin-top:2px;margin-right:2px;border:0px}
+
+.toolbar-separator{padding-left:0px;width:1px;float:left;}
+
+.toolbar-title{float:left;}
+
+.toolbar-msg{float:left}
+
+.toolbar-items{float:right;}
+
+.toolbar-item{float:left;padding:2px 3px 2px 3px;cursor:pointer;}
+
+.toolbar-item-selected{background-color:#4791C5;float:left;padding:2px 3px 2px 3px;cursor:pointer;}
+
+.toolbar-item-transfer{float:left;padding:1px 2px 1px 2px;background-color:#e9f2f8;border:1px solid #336699;cursor:pointer;}
+
+.toolbar-menu{margin-top:1px;margin-left:0px;background-color:#e9f2f8;visibility:hidden;position:absolute;z-index:100;padding:1px;overflow:visible;border:solid 1px #4791C5;white-space:nowrap;}
+
+.toolbar-menuitem{padding:1px 2px 1px 2px;cursor:pointer;}
+
+.toolbar-menuitem-transfer{background-color:#FFFFFF;padding:1px 2px 1px 2px;cursor:pointer;}
+
+.toolbar-group-separator{float:left;margin:0px 10px 0px 10px;}
+
+.toolbar-line {height:1px;font-size:0pt;}
+
+._ajax_container{}
+
+/* message */
+div.error, div.message {
+	background-color: #ECD83C;
+	border: 0px solid #000;
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: bottom;
+}
+
+/* use a different color for the errors */
+div.error {
+	border: 0px solid red;
+}
+
+img.validationWarning, div.errors img.icon, div.messages img.icon {
+	border: 0;
+	width: 14px;
+	height: 13px;
+	vertical-align: top;
+}
+
+span.fieldError {
+	color: red;
+	font-weight: bold;
+}
+div.message a {
+	background: transparent;
+	color: #0000FF;
+}
+
+div.message a:visited {
+	background: transparent;
+	color: #0000FF;
+}
+
+div.message a:hover {
+	background: transparent;
+	color: #008000;
+}
+
+div.message a:active {
+	text-decoration: underline overline;
+}
+
+div.message img.icon {
+	vertical-align: middle;
+}
+
+.search-widget{
+	border-collapse: collapse;
+	border-width:0px;
+}
+.search-widget .search-item{
+	text-align:right;
+}
+.search-item input{
+	width:100px;
+}
+.search-item select{
+	width:105px;
+}
+
+.V {height:1px;font-size:0pt;padding:0px;border-top:1px solid #4791C5;}
+
+/* FormTable */
+.formTable{
+	border-collapse: collapse;
+	border:solid;
+	border-width:1px;
+	border-color:#006CB2;
+	text-align: left;
+}
+
+.formTable .thead {
+	color: #000000; 
+	text-decoration: none; 
+	letter-spacing:0;
+	background-color: #c7dbff;
+	font-weight:bolder;
+}
+.formTable .tfoot{
+	color: #000000; 
+	text-decoration: none;
+	text-align:center;
+	letter-spacing:0;
+	background-color: #c7dbff;
+	font-weight:bolder;
+}
+
+.formTable td{
+	border:solid;
+	border-width:0px;
+	border-right-width:1px;
+	border-bottom-width:1px;
+	border-color:#006CB2;
+	color: #000000; 
+	text-decoration: none; 
+	letter-spacing:0;
+}
+
+.formTable .title{
+	text-align: right;
+	background-color: #EBEBEB;
+}
+.formTable .content{
+	text-align: left;
+	background-color: white
+}
+
+/*详细信息页面*/
+table.infoTable {
+	vertical-align: middle;
+	width:100%;
+	border-collapse: collapse;
+	background-color: #EEEEEE;
+}
+
+table.infoTable td {
+	border: 1px solid #FFFFFF;
+}
+table.infoTable th {
+	background-color: #E1ECFF;
+	height: 22px;
+}
+
+.infoTable .title{
+	height: 22px;
+	width: 110px;
+	background-color:#F5EDDB;
+	padding-left: 2px;
+	padding-right: 2px;
+	text-align:right;
+}
+.infoTable .content{
+	padding-left: 1px;
+	padding-right: 1px;
+}
+.infoTitle{
+}
+
+/** Index Panel*/
+.indexpanel{
+	border-collapse: collapse;
+	border:solid;
+	border-width:1px;
+	border-color:#006CB2;
+	margin:0px 0px 0px 0px;
+	width:100%;
+}
+.index_view{
+	border:solid;
+	border-width:0px;
+	border-right-width:1px;
+	border-color:#006CB2;
+	vertical-align: top; 
+	background-color: #E1ECFF;
+}
+
+.index_content{
+	vertical-align: top; 
+}
+
+.index_title{
+	border:solid;
+	border-width:1px;
+	margin:0px 0px 0px 0px;
+	background-color :#E1ECFF;
+	border-color:#006CB2;
+	width:100%;
+}
+
+table.settingTable td{
+	border:solid;
+	border-width:0px;
+	border-color:#006CB2;
+	height:30px;
+}
+
+/** Print */
+@media print {
+	.notprint {
+		display:none;
+	}
+	.ToolBar {
+		display:none;
+	}
+}
+
+@media screen {
+	.notprint {
+		display:inline;
+	}
+	.ToolBar {
+		display:inline;
+	}
+}
+/** 验证框架使用的两个class */
+.tfvHighlight {
+	font-weight: bold; 
+	color: red; 
+	background-color: #EBEBEB;
+	/*text-align: right;*/
+}
+.tfvNormal {
+	font-weight: normal;
+	color: black; 
+/*
+    background-color: #EBEBEB;
+	text-align: right;
+*/
+}

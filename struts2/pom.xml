@@ -2,7 +2,7 @@
 	<parent>
 		<groupId>org.beangle</groupId>
 		<artifactId>beangle-parent</artifactId>
-		<version>2.2.1</version>
+		<version>2.3.0-alpha</version>
         <relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -18,7 +18,7 @@
 	</properties>
 
 	<modules>
-		<module>org.beangle.struts2</module>
+		<module>org.beangle.struts2.convention</module>
 		<module>org.beangle.struts2.view</module>
 	</modules>
 
@@ -56,12 +56,6 @@
 			<artifactId>struts2-jquery-plugin</artifactId>
 			<version>${jqueryplugin.version}</version>
 		</dependency>
-<!--
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-		</dependency>
--->	
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-spring-plugin</artifactId>

@@ -364,6 +364,16 @@
 				this.toolbars[i].addItem(title,action,imageName,alt);
 			}
 		}
+		this.addBack=function(title,action){
+			for(var i=0;i<this.toolbars.length;i++){
+				this.toolbars[i].addBack(title);
+			}
+		}
+		this.addBackOrClose=function(){
+			for(var i=0;i<this.toolbars.length;i++){
+				this.toolbars[i].addBackOrClose();
+			}
+		}
 		this.addBlankItem=function(title,action,imageName,alt){
 			for(var i=0;i<this.toolbars.length;i++){
 				this.toolbars[i].addBlankItem(title,action,imageName,alt);

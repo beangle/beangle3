@@ -44,7 +44,7 @@ import com.opensymphony.xwork2.inject.Inject;
 import com.opensymphony.xwork2.util.ValueStack;
 
 public class BeangleTagLibrary extends AbstractTagLibrary {
-	
+
 	private ActionUrlRender render;
 
 	public BeangleTagLibrary() {
@@ -53,15 +53,15 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 
 	public BeangleTagLibrary(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
 		super(stack, req, res);
-		this.stack.getContext().put(Theme.THEME, new Theme(Theme.DEFAULT_THEME));
+		this.stack.getContext().put(Theme.THEME, theme);
 	}
 
 	public Object getFreemarkerModels(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
-		BeangleTagLibrary models= new BeangleTagLibrary(stack, req, res);
-		models.render=this.render;
+		BeangleTagLibrary models = new BeangleTagLibrary(stack, req, res);
+		models.render = this.render;
 		return models;
 	}
-	
+
 	@Inject
 	public void setRender(ActionUrlRender render) {
 		this.render = render;
@@ -69,6 +69,18 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 
 	public String url(String url) {
 		return render.render(req.getRequestURI(), url);
+	}
+
+	public String iconurl(String name) {
+		return iconurl(name, "16x16");
+	}
+
+	public String iconurl(String name, String size) {
+		StringBuilder sb = new StringBuilder(80);
+		sb.append(stack.getContext().get("base")).append("/static/");
+		sb.append(theme.getName()).append("/icons/").append(size);
+		sb.append(name);
+		return sb.toString();
 	}
 
 	/**
@@ -111,7 +123,6 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 	public String text(String name, Object arg0, Object arg1) {
 		return getText(name, name, CollectUtils.newArrayList(arg0, arg1), stack, false);
 	}
-
 
 	public TagModel getHead() {
 		return get(Head.class);

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.views.TagLibrary;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.struts2.view.component.Component;
+import org.beangle.struts2.view.template.Theme;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
@@ -27,6 +28,8 @@ public abstract class AbstractTagLibrary implements TagLibrary {
 	protected HttpServletResponse res;
 	protected Map<Class<?>, TagModel> models = CollectUtils.newHashMap();
 
+	protected Theme theme=new Theme(Theme.DEFAULT_THEME);
+	
 	public AbstractTagLibrary() {
 
 	}
@@ -51,4 +54,9 @@ public abstract class AbstractTagLibrary implements TagLibrary {
 	public List<Class> getVelocityDirectiveClasses() {
 		return null;
 	}
+
+	public Theme getTheme() {
+		return theme;
+	}
+	
 }
