@@ -3,7 +3,7 @@
 [#assign scopeNames={'0':'public','1':'protected','2':'private'}/]
 [#assign scopeTitles={'0':'公开资源,不限权限','1':'公有资源,需要登录即可访问','2':'私有资源,需要权限分配'}/]
 [#macro resourceScope scope]
-	<img src="${base}/static/icons/beangle/16x16/actions/${scopeNames[scope?string]}.png"/>${scopes[scope?string]}
+	<img src="${b.iconurl('actions/'+ scopeNames[scope?string] + '.png')}"/>${scopes[scope?string]}
 [/#macro]
 
 [#macro resourceScopeSelect scope]
@@ -23,5 +23,5 @@
 [/#macro]
 
 [#macro enableInfo enabled]
-[#if enabled]<img height="15px" width="15px" src="${base}/static/icons/beangle/16x16/actions/activate.png"/>${b.text("action.activate")}[#else]<font color="red"]<img height="15px" width="15px" src="${base}/static/icons/beangle/16x16/actions/freeze.png"/>${b.text("action.freeze")}</font>[/#if]
+[#if enabled]<img height="15px" width="15px" src="${b.iconurl('actions/activate.png')}"/>${b.text("action.activate")}[#else]<font color="red"]<img height="15px" width="15px" src="${b.iconurl('actions/freeze.png')}"/>${b.text("action.freeze")}</font>[/#if]
 [/#macro]

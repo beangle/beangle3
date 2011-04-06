@@ -3,7 +3,7 @@
 <table width="100%" align="center">
 	<tr>
 	  <td>
-		<img src="${base}/static/icons/beangle/48x48/actions/go-previous.png" width="18px" height="18px"/>
+		<img src="${b.iconurl('actions/go-previous.png','48x48')}" width="18px" height="18px"/>
 		[@b.a href="!list?path=${file.parent?js_string}"]返回[/@]
 		<img src="${base}/static/images/action/download.gif"/>
 		<a href="${b.url('!download')}?path=${file.absolutePath?js_string}&download=1">下载</a>

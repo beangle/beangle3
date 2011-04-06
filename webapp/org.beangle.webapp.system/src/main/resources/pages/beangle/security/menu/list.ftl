@@ -30,8 +30,8 @@
 	}
 	bar.addItem("${b.text("action.new")}",action.add());
 	bar.addItem("${b.text("action.edit")}",action.edit());
-	bar.addItem("${b.text("action.freeze")}",activate(0),'${base}/static/icons/beangle/16x16/actions/freeze.png');
-	bar.addItem("${b.text("action.activate")}",activate(1),'${base}/static/icons/beangle/16x16/actions/activate.png');
+	bar.addItem("${b.text("action.freeze")}",activate(0),'${b.iconurl('actions/freeze.png')});
+	bar.addItem("${b.text("action.activate")}",activate(1),'${b.iconurl('actions/activate.png')});
 	bar.addItem("${b.text("action.export")}",exportData());
 	bar.addItem("${b.text("action.delete")}",action.remove());
 	bar.addItem("打印","preview()","print.png");

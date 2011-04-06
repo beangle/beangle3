@@ -2,7 +2,7 @@
 	<parent>
 		<groupId>org.beangle</groupId>
 		<artifactId>beangle-webapp</artifactId>
-		<version>2.2.1</version>
+		<version>2.3.0-alpha</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.beangle</groupId>
@@ -22,10 +22,12 @@
 			<groupId>org.beangle</groupId>
 			<artifactId>beangle-webapp-system</artifactId>
 		</dependency>
+		<!--
 		<dependency>
 			<groupId>org.beangle</groupId>
 			<artifactId>beangle-webapp-database</artifactId>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>org.beangle</groupId>
 			<artifactId>beangle-security-cas</artifactId>
