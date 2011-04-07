@@ -714,13 +714,13 @@
 			}
 			return true;
 		}
-		function submitIdAction(id,method,multiId,confirmMsg){
+		function submitIdAction(id,method,multiId,confirmMsg,ajax){
 			aform=getEntityAction(id);
 			if (beforeSubmmitId(aform.id,method)) {
 				if(null!=confirmMsg && ''!=confirmMsg){
 					if(!confirm(confirmMsg))return;
 				}
-				bg.form.submitId(aform.getForm(),aform.entity + ".id",multiId);
+				bg.form.submitId(aform.getForm(),aform.entity + ".id",multiId,ajax);
 			}
 		}
 		this.remove=function(confirmMsg){
@@ -760,12 +760,12 @@
 			});
 		}
 		
-		this.multi = function(methodName,confirmMsg,extparams){
+		this.multi = function(methodName,confirmMsg,extparams,ajax){
 			return new NamedFunction(methodName,function(){
 				try {
 					form = getEntityAction(id).getForm();
 					if(null!=extparams) bg.form.addHiddens(form, extparams);
-					submitIdAction(id, methodName, true, confirmMsg);
+					submitIdAction(id, methodName, true, confirmMsg,ajax);
 				}catch(e){
 					bg.alert(e)
 				}

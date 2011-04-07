@@ -326,7 +326,7 @@
 			 * @param isMulti(可选)是否允许多个id选择,默认支持一个
 			 * @param action (可选) 指定form的action
 			 */
-			submitId : function (form,id,isMulti,action,promptMsg){
+			submitId : function (form,id,isMulti,action,promptMsg,ajax){
 				var selectId = bg.input.getCheckBoxValues(id);
 				if(null==isMulti)
 					isMulti=false;
@@ -347,7 +347,7 @@
 				if(null!=promptMsg){
 					if(!confirm(promptMsg))return;
 				}
-				bg.form.submit(form,action);
+				bg.form.submit(form,action,null,null,ajax);
 			},
 			/**
 			 * 向form中添加一个input。

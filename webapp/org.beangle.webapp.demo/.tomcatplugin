@@ -2,7 +2,7 @@
 <tomcatProjectProperties>
     <rootDir>src/main/webapp</rootDir>
     <exportSource>false</exportSource>
-    <reloadable>false</reloadable>
+    <reloadable>true</reloadable>
     <redirectLogger>true</redirectLogger>
     <updateXml>true</updateXml>
     <warLocation></warLocation>
@@ -15,10 +15,9 @@
         <webClassPathEntry>/beangle-security-core/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-security-web/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-spring/target/classes</webClassPathEntry>
+        <webClassPathEntry>/beangle-struts2-convention/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-struts2-view/target/classes</webClassPathEntry>
-        <webClassPathEntry>/beangle-struts2/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-web/target/classes</webClassPathEntry>
-        <webClassPathEntry>/beangle-webapp-database/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-webapp-demo/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-webapp-system/target/classes</webClassPathEntry>
         <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0/jre/lib/charsets.jar</webClassPathEntry>
@@ -57,7 +56,6 @@
         <webClassPathEntry>M2_REPO/commons-io/commons-io/2.0.1/commons-io-2.0.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-lang/commons-lang/2.6/commons-lang-2.6.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-logging/commons-logging/99.0-does-not-exist/commons-logging-99.0-does-not-exist.jar</webClassPathEntry>
-        <webClassPathEntry>M2_REPO/commons-pool/commons-pool/1.5.4/commons-pool-1.5.4.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/javassist/javassist/3.12.0.GA/javassist-3.12.0.GA.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/javax/transaction/jta/1.1/jta-1.1.jar</webClassPathEntry>

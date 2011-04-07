@@ -3,7 +3,7 @@
 [#assign scopeNames={'0':'public','1':'protected','2':'private'}/]
 [#assign scopeTitles={'0':'公开资源,不限权限','1':'公有资源,需要登录即可访问','2':'私有资源,需要权限分配'}/]
 [#macro resourceScope scope]
-	<img src="${b.iconurl('actions/'+ scopeNames[scope?string] + '.png')}"/>${scopes[scope?string]}
+	<img src="${b.iconurl('status/'+ scopeNames[scope?string] + '.png')}"/>${scopes[scope?string]}
 [/#macro]
 
 [#macro resourceScopeSelect scope]

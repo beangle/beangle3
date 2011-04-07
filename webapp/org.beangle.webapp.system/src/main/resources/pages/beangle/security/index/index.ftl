@@ -9,7 +9,7 @@
 
 [#macro menuitem image="" link="" name="" remark=""]
 <tr>
-	<td><a href="${link}"><img height="48" style="margin-right:1em" alt="" width="48" src="${b.actionurl(image!,'48x48')}" /></a></td>
+	<td><a href="${link}"><img height="48" style="margin-right:1em" alt="" width="48" src="${b.iconurl(image!,48)}" /></a></td>
 	<td style="vertical-align:middle">
 		<div class="link">[@b.a href="${link}"]${name}[/@]</div>
 		<div style="color:gray; text-decoration:none;">${remark!}</div>

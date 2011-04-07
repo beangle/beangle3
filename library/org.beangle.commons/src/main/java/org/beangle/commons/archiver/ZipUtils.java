@@ -28,12 +28,19 @@ public final class ZipUtils {
 	private ZipUtils() {
 	}
 
-	// 文件压缩
 	public static File zip(List<String> fileNames, String zipPath) {
+		return zip(fileNames, zipPath, null);
+	}
+
+	// 文件压缩
+	public static File zip(List<String> fileNames, String zipPath, String encoding) {
 		try {
 			FileOutputStream f = new FileOutputStream(zipPath);
 			ZipArchiveOutputStream zos = (ZipArchiveOutputStream) new ArchiveStreamFactory()
 					.createArchiveOutputStream(ArchiveStreamFactory.ZIP, f);
+			if (null != encoding) {
+				zos.setEncoding(encoding);
+			}
 			for (int i = 0; i < fileNames.size(); i++) {
 				String fileName = fileNames.get(i);
 				String entryName = StringUtils.substringAfterLast(fileName, File.separator);

@@ -4,6 +4,7 @@
 		<groupId>org.beangle</groupId>
 		<artifactId>beangle</artifactId>
 		<version>2</version>
+		<relativePath>../../beangle/pom.xml</relativePath>
 	</parent>
 	<groupId>org.beangle</groupId>
 	<artifactId>beangle-parent</artifactId>

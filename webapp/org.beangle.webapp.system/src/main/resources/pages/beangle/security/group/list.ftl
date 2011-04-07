@@ -3,9 +3,9 @@
 [#include "../status.ftl"/]
 [@b.grid  items=userGroups var="userGroup"]
 	[@b.gridbar]
-		bar.addItem("${b.text("action.new")}",action.add(),'new.gif');
-		bar.addItem("${b.text("action.modify")}",action.edit(),'update.gif');
-		bar.addItem("${b.text("action.delete")}",action.remove(),'delete.gif');
+		bar.addItem("${b.text("action.new")}",action.add());
+		bar.addItem("${b.text("action.modify")}",action.edit());
+		bar.addItem("${b.text("action.delete")}",action.remove());
 		bar.addItem("${b.text("action.export")}",action.exportData(null,"title,description,creator.title,createdAt,updatedAt,users","${b.text("common.name")},${b.text("common.description")},${b.text("common.creator")},${b.text("common.createdAt")},${b.text("common.updatedAt")},${b.text("group.users")}"));
 	[/@]
 	[@b.row]

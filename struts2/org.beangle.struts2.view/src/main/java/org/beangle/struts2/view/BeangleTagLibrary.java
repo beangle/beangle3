@@ -75,10 +75,22 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		return iconurl(name, "16x16");
 	}
 
+	public String iconurl(String name, int size) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(size).append('x').append(size);
+		return iconurl(name, sb.toString());
+	}
+
 	public String iconurl(String name, String size) {
 		StringBuilder sb = new StringBuilder(80);
-		sb.append(stack.getContext().get("base")).append("/static/");
+		String contextPath = req.getContextPath();
+		if (contextPath.length() < 2) {
+			sb.append("/static/themes/");
+		} else {
+			sb.append(contextPath).append("/static/themes/");
+		}
 		sb.append(theme.getName()).append("/icons/").append(size);
+		if (!name.startsWith("/")) sb.append('/');
 		sb.append(name);
 		return sb.toString();
 	}

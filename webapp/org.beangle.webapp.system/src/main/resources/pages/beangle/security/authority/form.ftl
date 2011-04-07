@@ -36,9 +36,9 @@
 <td valign="top">
 [@b.toolbar]
 	bar.setTitle('[@b.a href="group"]用户组[/@]-->菜单和资源权限');
-	bar.addItem("${b.text("action.spread")}","displayAllRowsFor(2);",'contract.gif');
-	bar.addItem("${b.text("action.collapse")}","collapseAllRowsFor(2);",'expand.gif');
-	bar.addItem("${b.text("action.save")}",save,'save.gif');
+	bar.addItem("${b.text("action.spread")}","displayAllRowsFor(2);",'plus.png');
+	bar.addItem("${b.text("action.collapse")}","collapseAllRowsFor(2);",'minus.png');
+	bar.addItem("${b.text("action.save")}",save,'save.png');
 [/@]
 [@b.form name="authorityForm" action="!edit"]
 <table width="100%" class="searchTable" id="meunAuthorityTable">
