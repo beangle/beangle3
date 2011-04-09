@@ -8,8 +8,8 @@
 	function activate(enabled){return action.multi('activate','确定操作?','&enabled='+enabled);}
 	bar.addItem("${b.text("action.add")}",action.add());
 	bar.addItem("${b.text("action.edit")}",action.edit());
-	bar.addItem("${b.text("action.freeze")}",activate(0),'${b.iconurl('actions/freeze.png')}');
-	bar.addItem("${b.text("action.activate")}",activate(1),'${b.iconurl('actions/activate.png')}');
+	bar.addItem("${b.text("action.freeze")}",activate(0),'${b.theme.iconurl('actions/freeze.png')}');
+	bar.addItem("${b.text("action.activate")}",activate(1),'${b.theme.iconurl('actions/activate.png')}');
 	bar.addItem("${b.text("action.delete")}",action.remove());
 	bar.addItem("${b.text("action.export")}",action.exportData(null,"title,name,description,enabled","标题,名称,描述,状态"));
 	[/@]

@@ -14,6 +14,6 @@
 		name="org.hibernate.cache.StandardQueryCache"></cache>
 		
 	<cache eternal="false" overflowToDisk="false" maxElementsInMemory="1000"
-		timeToLiveSeconds="1000" timeToIdleSeconds="120"
+		timeToLiveSeconds="1000" timeToIdleSeconds="500"
 		name="beangle.security"></cache>
 </ehcache>

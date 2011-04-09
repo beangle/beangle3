@@ -34,8 +34,7 @@ public final class SecurityUtils {
 	}
 
 	public static Long getUserCategoryId() {
-		return 1L;
-		//return getPrincipal().getCategory().getId();
+		return getPrincipal().getCategory().getId();
 	}
 
 	public static String getResource() {

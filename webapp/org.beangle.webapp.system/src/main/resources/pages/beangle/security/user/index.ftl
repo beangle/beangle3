@@ -7,7 +7,7 @@
 [/@]
 <table class="indexpanel">
 <tr>
-	<td style="width:180px"  class="index_view">
+	<td class="index_view">
 	[@b.qform name="userSearchForm" action="!search" title="ui.searchForm" target="userlist"]
 		[@b.qfields names="user.name,user.fullname,user.creator.fullname,groupName;entity.group"/]
 		[@b.qselect name="categoryId" title="entity.userCategory" items=categories empty="..." /]

@@ -1,7 +1,7 @@
 [#ftl]
 [@b.head/]
-<link href="${base}/static/themes/beangle/css/tableTree.css" rel="stylesheet" type="text/css" />
-<script  type="text/javascript" src="${base}/static/scripts/TableTree.js"></script>
+[@b.css href="tableTree.css"/]
+<script type="text/javascript" src="${base}/static/scripts/TableTree.js"></script>
 <script type="text/javascript">defaultColumn=1;</script>
 [#include "../status.ftl"/]
 [#function convert_code(code)]
@@ -30,8 +30,8 @@
 	}
 	bar.addItem("${b.text("action.new")}",action.add());
 	bar.addItem("${b.text("action.edit")}",action.edit());
-	bar.addItem("${b.text("action.freeze")}",activate(0),'${b.iconurl('actions/freeze.png')});
-	bar.addItem("${b.text("action.activate")}",activate(1),'${b.iconurl('actions/activate.png')});
+	bar.addItem("${b.text("action.freeze")}",activate(0),'${b.theme.iconurl('actions/freeze.png')}');
+	bar.addItem("${b.text("action.activate")}",activate(1),'${b.theme.iconurl('actions/activate.png')}');
 	bar.addItem("${b.text("action.export")}",exportData());
 	bar.addItem("${b.text("action.delete")}",action.remove());
 	bar.addItem("打印","preview()","print.png");

@@ -12,9 +12,9 @@
 	   [#list user.groups as m]
 	   <tr align="right">
 	   <td>${m.group.name}</td>
-	   <td>[#if m.member]<img src="${b.iconurl('actions/activate.png')}"/>[/#if]</td>
-	   <td>[#if m.granter]<img src="${b.iconurl('actions/activate.png')}"/>[/#if]</td>
-	   <td>[#if m.manager]<img src="${b.iconurl('actions/activate.png')}"/>[/#if]</td>
+	   <td>[#if m.member]<img src="${b.theme.iconurl('actions/activate.png')}"/>[/#if]</td>
+	   <td>[#if m.granter]<img src="${b.theme.iconurl('actions/activate.png')}"/>[/#if]</td>
+	   <td>[#if m.manager]<img src="${b.theme.iconurl('actions/activate.png')}"/>[/#if]</td>
 	   </tr>
 	   [/#list]
 	   </table>

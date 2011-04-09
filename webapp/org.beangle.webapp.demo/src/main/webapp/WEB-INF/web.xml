@@ -70,7 +70,7 @@
 		<filter-name>struts2</filter-name>
 		<url-pattern>/struts/*</url-pattern>
 	</filter-mapping>
-	<!---->
+
 	<listener>
 		<listener-class>org.beangle.security.web.session.HttpSessionEventPublisher</listener-class>
 	</listener>

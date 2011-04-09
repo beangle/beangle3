@@ -10,5 +10,12 @@ public class Messages extends UIBean {
 
 	public Messages(ValueStack stack) {
 		super(stack);
+
 	}
+
+	@Override
+	protected void evaluateParams() {
+		generateIdIfEmpty();
+	}
+
 }

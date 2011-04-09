@@ -12,11 +12,11 @@ ol#root {  padding-left: 5px; margin-top: 2px; margin-bottom: 1px; list-style: n
 
 #root a { text-decoration: none; }
 
-.folder { background: url(../icons/16x16/tree/plus.png)  no-repeat; float: left; height: 14px; width: 17px; padding-right: 3px }
+.folder { background: url(icons/16x16/tree/plus.png)  no-repeat; float: left; height: 14px; width: 17px; padding-right: 3px }
 
-.folder_open { background: url(../icons/16x16/tree/minus.png)  no-repeat; float: left; height: 14px; width: 17px; padding-right: 3px }
+.folder_open { background: url(icons/16x16/tree/minus.png)  no-repeat; float: left; height: 14px; width: 17px; padding-right: 3px }
 
-.doc { background: url(../icons/16x16/tree/entityfolder.png) no-repeat; float: left; height: 14px; width: 17px; padding-right: 1px; margin-left: 5px;}
+.doc { background: url(icons/16x16/tree/entityfolder.png) no-repeat; float: left; height: 14px; width: 17px; padding-right: 1px; margin-left: 5px;}
 
 
 #banner, #toptabs {

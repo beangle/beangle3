@@ -74,7 +74,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 		Set<Menu> menus = CollectUtils.newHashSet();
 		List<Group> groups = userService.getGroups(user, GroupMember.Ship.MEMBER);
 		for (final Group group : groups) {
-			menus.addAll(getMenus(profile, group, Boolean.TRUE));
+			if (group.isEnabled()) menus.addAll(getMenus(profile, group, Boolean.TRUE));
 		}
 		return addParentMenus(menus);
 	}

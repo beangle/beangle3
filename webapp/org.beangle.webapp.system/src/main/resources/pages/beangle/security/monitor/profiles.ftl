@@ -1,5 +1,5 @@
 [#ftl]
-[@b.messages/]
+[@b.messages slash="true"/]
 [@b.form action="!saveProfile"]
 <table width="50%">
 	<tr>

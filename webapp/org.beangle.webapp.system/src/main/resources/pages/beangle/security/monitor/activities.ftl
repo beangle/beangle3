@@ -9,9 +9,9 @@
 [@b.form name="invalidateForm" id="invalidateForm" action="!invalidate"]
 [@b.grid  id="activityListTable" items=onlineActivities var="activity"]
 	[@b.gridbar]
-	bar.addItem("刷新","refresh()",'refresh.gif');
-	bar.addItem("过期","expireSession()",'delete.gif');
-	bar.addItem("结束","killSession()",'delete.gif');
+	bar.addItem("刷新","refresh()",'refresh.png');
+	bar.addItem("过期","expireSession()",'edit-delete.png');
+	bar.addItem("结束","killSession()",'edit-delete.png');
 	[/@]
 	[@b.row]
 		[@b.boxcol boxname="sessionId" property="sessionid"/]
@@ -36,7 +36,7 @@
 <script type="text/javascript">
 	function refresh(){
 		if(document.getElementById("activityListTable")){
-			bg.page.goPage("activityListTable");
+			page_activityListTable.goPage();
 		}else{
 			if(typeof refreshTime != undefined){
 				clearTimeout(refreshTime);
@@ -51,7 +51,7 @@
 		document.getElementById('expireBtn').click();
 	}
 	
-	if(typeof refreshTime != undefined){
+	if(refreshTime != null){
 		clearTimeout(refreshTime);
 	}
 	refreshTime=setTimeout(refresh,${refreshInterval}*1000);

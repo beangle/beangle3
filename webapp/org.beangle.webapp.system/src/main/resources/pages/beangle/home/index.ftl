@@ -1,7 +1,7 @@
 [#ftl]
 [@b.head]
 <style type="text/css">
-.banner{background-color:#e0ecff;height:20px;padding-top:2px;padding-bottom:2px;}
+.banner{background-color:#e0ecff;height:25px;padding-top:2px;padding-bottom:2px;}
 .banner_area{float:right;padding-right:10px}
 </style>
 [/@]

@@ -3,7 +3,11 @@
  * GLPL version 3.
  */
 
-body{margin-top: 0;margin-bottom: 0;margin-left:0;margin-right:0;font-size: 13px;}
+body {font-size: 13px;margin:0;}
+
+select {font-size: 13px;}
+
+input {font-size: 13px;}
 
 a:link {color: #000080;text-decoration: none;}
 a:visited {text-decoration: none;}
@@ -44,9 +48,13 @@ a:hover {color: red;}
 
 .gridbar-items{float:left;}
 
-.gridbar-pagebar{float:right;margin-top:2px;margin-right:5px;}
+.girdbar-pgbar{float:right;margin-top:2px;margin-right:5px;margin-bottom:0px;vertical-align:middle}
 
-.gridbar-pagebar-label{background-color:#e9f2f8;}
+.pgbar-label{background-color:#e9f2f8;}
+
+.pgbar-input{width:45px;height:12px;}
+
+.pgbar-selbox{width:50px;height:20px;font-size: 0.8em;margin:0px;}
 
 /*toolbar*/
 .toolbar{height:22px;border-collapse:separate;display:block;font-size: 13px;}
@@ -132,6 +140,7 @@ div.message img.icon {
 .search-widget{
 	border-collapse: collapse;
 	border-width:0px;
+	margin:auto;
 }
 .search-widget .search-item{
 	text-align:right;
@@ -237,6 +246,7 @@ table.infoTable th {
 	border-color:#006CB2;
 	vertical-align: top; 
 	background-color: #E1ECFF;
+	width:170px;
 }
 
 .index_content{

@@ -19,7 +19,6 @@
 
 	<properties>
 		<commonupload.version>1.2.1</commonupload.version>
-		<commonio.version>1.4</commonio.version>
 	</properties>
 
 	<dependencies>
@@ -61,11 +60,6 @@
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>${commonupload.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>commons-io</groupId>
-		    <artifactId>commons-io</artifactId>
-		    <version>${commonio.version}</version>
 		</dependency>
 	</dependencies>
 	<build>

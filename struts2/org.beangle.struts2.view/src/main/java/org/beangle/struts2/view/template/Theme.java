@@ -11,12 +11,19 @@ import org.beangle.commons.collection.CollectUtils;
 
 public class Theme {
 
-	public static final String THEME = ".ui_theme";
+	public static final String THEME = ".beangle_theme";
 
 	public static final String DEFAULT_THEME = "beangle";
 
+	private final static Map<Class<?>, String> defaultNames = CollectUtils.newHashMap();
+
+	private final String name;
+
+	private String ui;
+
+	private String uibase;
+
 	public Theme() {
-		super();
 		this.name = DEFAULT_THEME;
 	}
 
@@ -25,9 +32,41 @@ public class Theme {
 		this.name = name;
 	}
 
-	private final String name;
+	public String iconurl(String name) {
+		return iconurl(name, "16x16");
+	}
 
-	public final static Map<Class<?>, String> defaultNames = CollectUtils.newHashMap();
+	public String iconurl(String name, int size) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(size).append('x').append(size);
+		return iconurl(name, sb.toString());
+	}
+
+	public String iconurl(String name, String size) {
+		StringBuilder sb = new StringBuilder(80);
+		if (uibase.length() < 2) {
+			sb.append("/static/themes/");
+		} else {
+			sb.append(uibase).append("/static/themes/");
+		}
+		sb.append(getUi()).append("/icons/").append(size);
+		if (!name.startsWith("/")) sb.append('/');
+		sb.append(name);
+		return sb.toString();
+	}
+
+	public String cssurl(String name) {
+		StringBuilder sb = new StringBuilder(80);
+		if (uibase.length() < 2) {
+			sb.append("/static/themes/");
+		} else {
+			sb.append(uibase).append("/static/themes/");
+		}
+		sb.append(getUi());
+		if (!name.startsWith("/")) sb.append('/');
+		sb.append(name);
+		return sb.toString();
+	}
 
 	public String getTemplatePath(Class<?> clazz, String suffix) {
 		StringBuilder sb = new StringBuilder(20);
@@ -46,6 +85,22 @@ public class Theme {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getUi() {
+		return ui;
+	}
+
+	public void setUi(String uitheme) {
+		this.ui = uitheme;
+	}
+
+	public String getUibase() {
+		return uibase;
+	}
+
+	public void setUibase(String uibase) {
+		this.uibase = uibase;
 	}
 
 	@Override

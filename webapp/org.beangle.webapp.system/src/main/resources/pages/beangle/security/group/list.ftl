@@ -15,7 +15,7 @@
 		[@b.col width="15%" property="updatedAt" title="common.updatedAt"]${userGroup.updatedAt?string("yyyy-MM-dd")}[/@]
 		[@b.col width="15%" property="category.name" title="entity.userCategory" /]
 		[@b.col width="10%" property="enabled" title="common.status"][@enableInfo userGroup.enabled/][/@]
-		[@b.col title="设置权限"][@b.a target="_blank" href="authority!edit?group.id=${userGroup.id}"]<img style="border:0px" src="${b.iconurl('actions/config.png')}"/>设置权限[/@][/@]
+		[@b.col title="设置权限"][@b.a target="_blank" href="authority!edit?group.id=${userGroup.id}"]<img style="border:0px" src="${b.theme.iconurl('actions/config.png')}"/>设置权限[/@][/@]
 	[/@]
 [/@]
 [@b.foot/]

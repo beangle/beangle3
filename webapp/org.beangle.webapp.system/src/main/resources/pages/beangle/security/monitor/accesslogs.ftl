@@ -19,7 +19,7 @@
 <script type="text/javascript">
 	function refresh(){
 		if(document.getElementById("accesslogTable")){
-			bg.page.goPage("accesslogTable");
+			page_accesslogTable.goPage();
 		}else{
 			if(typeof refreshTime != undefined){
 				clearTimeout(refreshTime);

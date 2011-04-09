@@ -24,7 +24,7 @@
 	</bean>
 	<!--  
 	<bean id="userDetailService" class="org.beangle.webapp.demo.SimpleUserDetailServiceImpl" autowire="byName"/>
-	-->
+	
 	<bean id="authorityManager" class="org.beangle.webapp.demo.MockAuthorityManager" autowire="byName"/>
 	
 	<bean id="authenticationmanager">
@@ -34,5 +34,6 @@
 			</list>
 		</property>
 	</bean>
+	-->
 </beans>
 

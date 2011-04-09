@@ -5,8 +5,8 @@
 	[@b.gridbar]
 	bar.addItem("${b.text("action.new")}",action.add());
 	bar.addItem("${b.text("action.modify")}",action.edit());
-	bar.addItem("${b.text("action.freeze")}",activateUser('false'),'${b.acitonurl('actions/freeze.png')}');
-	bar.addItem("${b.text("action.activate")}",activateUser('true'),'${b.actionurl('actions/activate.png')}');
+	bar.addItem("${b.text("action.freeze")}",activateUser('false'),'${b.theme.iconurl('actions/freeze.png')}');
+	bar.addItem("${b.text("action.activate")}",activateUser('true'),'${b.theme.iconurl('actions/activate.png')}');
 	bar.addItem("${b.text("action.delete")}",action.remove());
 	bar.addItem("${b.text("action.export")}",exportUserList());
 	function activateUser(isActivate){

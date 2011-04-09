@@ -98,7 +98,13 @@
 			}
 		}
 	});
-	
+	bg.extend({
+		randomInt:function(){
+			var num=Math.random()*10000;
+			num -= num%1;
+			return num;
+		}
+	});
 	// Logger----------------------------
 	beangle.extend({
 		logger:{
@@ -284,7 +290,7 @@
 					action=action.substring(action.indexOf("/",7));
 				}
 				myForm.action=action;
-				if(!ajax){
+				if(null==ajax || ajax){
 					ajax=bg.isAjaxTarget(submitTarget)
 				}
 				if(!ajax){
@@ -607,21 +613,62 @@
 	});
 	
 	// Page---------------------------------------------------------------------
-	if(typeof pages=="undefined"){
-		pages=new Object();
-	}
-
-	function Page(id,action,target){
-		this.id=id;
+	function Page(action,target,pageNo,pageSize,total){
+		this.formid = "form_" + bg.randomInt();
 		this.action=action;
 		this.target=target;
 		this.paramMap={};
-		this.params = function(){
-			return this.paramMap;
-		}
-		this.maxPageNo=1;
-		pages[id]=this;
+		this.params = function(){ return this.paramMap;}
 		
+		this.pageInfo = function(pageNo,pageSize,total){
+			this.pageNo=pageNo;
+			this.pageSize=pageSize;
+			this.total=total;
+			if(null!=total && null!=pageSize && null!=pageNo){
+				quotient=Math.floor(total/pageSize);
+				this.maxPageNo = (0 == total%pageSize) ? quotient : (quotient + 1);
+				this.startNo=(pageNo-1)*pageSize+1;
+				this.endNo=(this.startNo+pageSize-1)<=total?(this.startNo+pageSize-1):total;
+			}else{
+				this.maxPageNo=1;
+			}
+		}
+		
+		this.pageInfo(pageNo,pageSize,total);
+		
+		this.action=function(action){
+			this.action=action;
+			return this;
+		}
+		this.paramstr=function(newstring){
+			this.paramstr=newstring;
+			this.addParams(newstring);
+			return this;
+		}
+		this.orderby=function(newstring){
+			this.orderby=newstring;
+			return this;
+		}
+		this.target=function(givenTarget,elemId){
+			if(givenTarget){
+				this.target=givenTarget;
+			}else if(elemId){
+				this.target=bg.findTarget(document.getElementById(elemId));
+			}
+			return this;
+		}
+		
+		this.getForm = function(){
+			myForm=document.getElementById(this.formid);
+			if(null==myForm){
+				myForm=document.createElement("form");
+				myForm.setAttribute("id",this.formid);
+				myForm.setAttribute("action",this.action);
+				myForm.setAttribute("method","POST");
+				document.getElementById(this.target).appendChild(myForm);
+			}
+			return myForm;
+		}
 		this.addParams = function(paramSeq){
 			bg.assert.notNull(paramSeq,"paramSeq for addHiddens must not be null");
 			var paramArray = paramSeq.split("&");
@@ -641,7 +688,7 @@
 					bg.alert("输入分页的页码是:"+pageNo+",它不是个整数");
 					return false;
 				}
-				if(pages[id].maxPageNo!=null){
+				if(this.maxPageNo!=null){
 					if(pageNo>this.maxPageNo){
 						pageNo=this.maxPageNo;
 					}
@@ -676,28 +723,22 @@
 		}
 		// jump to page using ajax
 		this.goPageAjax = function (pageNo,pageSize,orderBy){
-			myForm=document.getElementById("form_"+this.id);
-			if(null==myForm){
-				myForm=document.createElement("form");
-				myForm.setAttribute("id","form_"+this.id);
-				myForm.setAttribute("action",this.action);
-				myForm.setAttribute("method","POST");
-				document.body.appendChild(myForm);
-			}
+			myForm=this.getForm();
 			for(var key in this.paramMap){
 				value=this.paramMap[key];
 				if(value!=""){
 					bg.form.addInput(myForm,key,value,"hidden");
 				}
 			}
-			var submitx=document.getElementById("submitx");
+			var submitBtnId=this.formid + "_submitx";
+			var submitx=document.getElementById(submitBtnId);
 			if(null==submitx){
 				if(document.all){
-					var inputHTML="<button id='submitx' type='submit' style='display:none'></button>";
+					var inputHTML="<button id='" + submitBtnId + "' type='submit' style='display:none'></button>";
 					submitx = myForm.document.createElement(inputHTML);
 				}else{
 					submitx = document.createElement('button');
-					submitx.setAttribute("id","submitx");
+					submitx.setAttribute("id",submitBtnId);
 					submitx.setAttribute("type",'submit');
 					submitx.setAttribute("style",'display:none');
 				}
@@ -705,32 +746,28 @@
 			}
 			var options_submit = {};
 			options_submit.jqueryaction = "button";
-			options_submit.id = "submitx";
+			options_submit.id = submitBtnId;
 			options_submit.targets = this.target;
 			options_submit.href = this.action;
-			options_submit.formids = "form_"+this.id;
-			$.struts2_jquery.bind($('#submitx'),options_submit);
-			// myForm.submit();
+			options_submit.formids = this.formid;
+			$.struts2_jquery.bind($('#' + submitBtnId),options_submit);
 			submitx.click();
 		}
-	}
-	bg.extend({
-		page:function (id,action,target){return new Page(id,action,target);},
-		'page.goPage':function (id, pageNo, pageSize, orderBy){
-			if(pages[id]==null){
-				bg.alert("page id for ["+ id +"] is not well defined.");
-				return false;
-			}
-			onePage=pages[id];
-			if(onePage.checkPageParams(pageNo,pageSize,orderBy)){
-				if(onePage.target && document.getElementById(onePage.target)){
-					onePage.goPageAjax(pageNo,pageSize,orderBy);
+		this.goPage = function (pageNo,pageSize,orderBy){
+			if(this.checkPageParams(pageNo,pageSize,orderBy)){
+				if(this.target && document.getElementById(this.target)){
+					this.goPageAjax(pageNo,pageSize,orderBy);
 				}else{
-					onePage.goPageNormal(pageNo,pageSize,orderBy);
+					this.goPageNormal(pageNo,pageSize,orderBy);
 				}
 			}
 		}
+	}
+
+	bg.extend({
+		page:function (action,target){return new Page(action,target);}
 	});
+	
 	// alert(document.body);
 	beangle.ready(beangle.iframe.adaptSelf);
 })(window);

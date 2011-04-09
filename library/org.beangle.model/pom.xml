@@ -17,7 +17,7 @@
 		<hibernate.version>3.6.1.Final</hibernate.version>
 		<hibernate.annotation.version>3.2.0.Final</hibernate.annotation.version>
 		<hibernate.validate.version>4.1.0.Final</hibernate.validate.version>
-		<ehcache.version>2.4.0</ehcache.version>
+		<ehcache.version>2.4.1</ehcache.version>
 		<jta.version>1.1</jta.version>
 		<jxls.version>1.0-RC-1</jxls.version>
 		<poi.version>3.7</poi.version>

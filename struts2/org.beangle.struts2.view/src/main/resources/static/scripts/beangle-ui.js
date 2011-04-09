@@ -6,6 +6,8 @@
 	bg.alert=function(msg){
 		alert(msg);
 	}
+	bg.uitheme="default"
+	
 	function NamedFunction(name,func){
 		this.name=name;
 		this.func=func;
@@ -29,7 +31,7 @@
 		var defaultToolBarImageName="info.png";
 		var defaultItemImageName="action.png";
 		var helpImageName="help.png";
-		var imagePath=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/beangle/icons/16x16/actions/";
+		var imagePath=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/"+ bg.uitheme +"/icons/16x16/actions/";
 		
 		this.setTitle=function(newTitle,imageName){
 			if(!newTitle) return;
@@ -131,7 +133,7 @@
 		this.addHelp = function (module){
 			this.addItem("帮助",function (){
 				if(null==module) bg.alert("施工中..");
-				else window.open("help.do?method=help&helpId="+module);},'help.png');
+				else window.open("help.action?helpId="+module);},'help-contents.png');
 		}
 
 		this.addPrint = function (msg){
@@ -343,22 +345,6 @@
 			this.pageId=givenId;
 			return this;
 		}
-		this.target=function(givenTarget){
-			if(givenTarget){
-				this.target=givenTarget;
-			}else{
-				this.target=bg.findTarget(document.getElementById(this.pageId));
-			}
-			return this;
-		}
-		this.action=function(action){
-			this.action=action;
-			return this;
-		}
-		this.paramstring=function(newstring){
-			this.paramstring=newstring;
-			return this;
-		}
 		this.addItem=function(title,action,imageName,alt){
 			for(var i=0;i<this.toolbars.length;i++){
 				this.toolbars[i].addItem(title,action,imageName,alt);
@@ -379,19 +365,16 @@
 				this.toolbars[i].addBlankItem(title,action,imageName,alt);
 			}
 		}
-		this.addPage=function(pageNo,pageSize,total,ranks,titles){
-			page=bg.page(this.pageId,this.action,this.target);
-			quotient=Math.floor(total/pageSize);
-			page.maxPageNo = (0 == total%pageSize) ? quotient : (quotient + 1);
-			page.addParams(this.paramstring);
+		this.addPage=function(onePage,ranks,titles){
+			this.myPage=onePage;
 			for(var i=0;i<this.toolbars.length;i++){
-				pageDiv=this.toolbars[i].appendDiv(divIds[i]+'_page',"gridbar-pagebar");
-				bg.ui.pagebar(this.pageId,pageDiv,pageNo,pageSize,total,ranks,titles);
+				pageDiv=this.toolbars[i].appendDiv(divIds[i]+'_page',"girdbar-pgbar");
+				bg.ui.pagebar(onePage,pageDiv,ranks,titles);
 			}
 			return this;
 		}
 		this.addEntityAction=function(entity){
-			return new bg.entityaction(this.id,entity,this.action,this.paramstring,this.target);
+			return new bg.entityaction(entity,this.myPage);
 		}
 		this.addPrint=function(msg){
 			for(var i=0;i<this.toolbars.length;i++){
@@ -400,68 +383,63 @@
 		}
 	}});
 	
-	bg.extend({'ui.pagebar':function (pageId,pageDiv,pageNo,pageSize,total,ranks,titles){
-		if(total==0) return;
+	bg.extend({'ui.pagebar':function (onePage,pageDiv,ranks,titles){
+		if(onePage.total==0) return;
 		if(!ranks) ranks=[10,20,30,50,70,100,200,500,1000];
 		if(!titles) titles={first:'« First',previous:'‹ Previous',next:'Next ›',last:'Last »',no:'No:',size:'Size:',change:'Click me to change page size'};
-		quotient=Math.floor(total/pageSize);
-		maxPageNo= (0 == total%pageSize) ? quotient : (quotient + 1);
-		startNo=(pageNo-1)*pageSize+1;
-		endNo=(startNo+pageSize-1)<=total?(startNo+pageSize-1):total;
+		maxPageNo= onePage.maxPageNo;
 		addAnchor=function(text,pageNumber){
 			pageHref=document.createElement('a');
 			pageHref.setAttribute("href","#");
 			pageHref.innerHTML=text;
 			pageHref.style.padding="0px 2px 0px 2px";
 			pageDiv.appendChild(pageHref);
-			jQuery(pageHref).click(function(){bg.page.goPage(pageId ,pageNumber)});
+			jQuery(pageHref).click(function(){onePage.goPage(pageNumber)});
 		}
-		if(pageNo>1){
+		if(onePage.pageNo>1){
 			addAnchor(titles['first'],1);
-			addAnchor(titles['previous'],pageNo-1);
+			addAnchor(titles['previous'],onePage.pageNo-1);
 		}
 		labelspan=document.createElement('span');
-		labelspan.innerHTML="<strong>" + startNo +"</strong> - <strong>"+ endNo + "</strong> of <strong>" + total + "</strong>";
+		labelspan.innerHTML="<strong>" + onePage.startNo +"</strong> - <strong>"+ onePage.endNo + "</strong> of <strong>" + onePage.total + "</strong>";
 		labelspan.style.padding="0px 2px 0px 2px";
 		pageDiv.appendChild(labelspan);
 		var numSpan=jQuery(labelspan)
 		numSpan.attr('title',titles['change'])
-		numSpan.mouseover(function (){this.className='gridbar-pagebar-label'});
+		numSpan.mouseover(function (){this.className='pgbar-label'});
 		numSpan.mouseout(function(){this.className=''});
-		numSpan.click(function(){this.nextSibling.style.display='';this.style.display='none'});
+		numSpan.click(function(){this.parentNode.style.marginTop="0px";this.nextSibling.style.display='';this.style.display='none'});
 		
 		pagespan=document.createElement('span');
 		pagespan.style.display="none";
 		pageInput=document.createElement('input');
 		pagespan.innerHTML=titles['no'];
-		pageInput.style.width="35px";
-		pageInput.style.height="12px";
+		pageInput.className="pgbar-input";
 		pagespan.appendChild(pageInput);
 
 		var pageInputJ=jQuery(pageInput)
-		pageInputJ.attr("value",pageNo+"/"+maxPageNo);
+		pageInputJ.attr("value",onePage.pageNo+"/"+maxPageNo);
 		pageInputJ.focus(function(){this.value=''});
-		pageInputJ.blur(function(){if(!this.value) this.value= pageNo+"/"+maxPageNo});
-		pageInputJ.change(function(){bg.page.goPage(pageId,this.value)});
+		pageInputJ.blur(function(){if(!this.value) this.value= onePage.pageNo+"/"+maxPageNo});
+		pageInputJ.change(function(){onePage.goPage(this.value)});
 		
 		if(ranks && (ranks.length>0)){
 			pageNoSelect=document.createElement('select');
 			pagespan.appendChild(pageNoSelect);
-			pageNoSelect.style.width="45px";
-			pageNoSelect.style.height="20px";
+			pageNoSelect.className="pgbar-selbox";
 			pageNoSelect.title="page size";
 			var selectIndex=0;
 			for(var i=0;i<ranks.length;i++){
-				if(ranks[i]==pageSize) selectIndex=i;
+				if(ranks[i]==onePage.pageSize) selectIndex=i;
 				pageNoSelect.options.add(new Option(ranks[i], ranks[i]));
 			}
-			jQuery(pageNoSelect).change(function (){bg.page.goPage(pageId,1,this.value)});
+			jQuery(pageNoSelect).change(function (){onePage.goPage(1,this.value)});
 			pageNoSelect.selectedIndex = selectIndex;
 		}
 		pageDiv.appendChild(pagespan);
-		if(pageNo<maxPageNo){
-			addAnchor(titles['next'],pageNo+1);
-			addAnchor(titles['last'],maxPageNo);
+		if(onePage.pageNo<onePage.maxPageNo){
+			addAnchor(titles['next'],onePage.pageNo+1);
+			addAnchor(titles['last'],onePage.maxPageNo);
 		}
 	}
 	});
@@ -527,9 +505,9 @@
 					}
 				}
 			},
-			//列排序对应的pageId和选中的列
-			sort : function (pageId,ele){
-				if(null==pageId){
+			//列排序对应的onePage和选中的列
+			sort : function (onePage,ele){
+				if(null==onePage){
 					bg.alert("无法找到元素对应的排序表格！");return;
 				}
 				var orderByStr=null;
@@ -550,31 +528,30 @@
 				}else{
 					orderByStr="";
 				}
-				bg.page.goPage(pageId,1,null,orderByStr);
+				onePage.goPage(1,null,orderByStr);
 			},
 
 			/**
 			 * 初始化排序表格<br/>
 			 * 此函数主要是向已经待排序表格的列头1)添加鼠标事件响应和显示效果. 2)负责将事件传递到用户定义的函数中.
 			 * 
-			 * 凡是要排序的列,请注名排序单元格的id 和class. 其中id是排序要传递的字段,class为定值gridhead-sortable.
+			 * 凡是要排序的列,请注名排序单元格的id 和class. 其中id是排序要传递的字段,class为定值gridhead-kable.
 			 * 除此之外,用户(使用该方法的人)需要自定义一个钩子函数"sortBy(what)",以备调用.
 			 * 
-			 * @param tableId
-			 *            待排序表格的id
-			 * @param orderBy
-			 *            orderBy 字句 用法: <table>
+			 * @param tableId 待排序表格的id
+			 * @param onePage 与表格对应的page对象
 			 */
-			init : function (tableId,orderBy){
+			init : function (tableId,onePage){
 				var table= document.getElementById(tableId);
 				var thead=table.tHead;
 				if(!thead || thead.rows.length==0){
 					bg.alert("sortTable ["+tableId+"] without thead"); 
 					return;
 				}
+				orderBy=onePage.orderby;
 				columnSort = function(event){
 					// this is a td/th
-					bg.ui.grid.sort(tableId,this);
+					bg.ui.grid.sort(onePage,this);
 				}
 				for(var j=0;j<thead.rows.length;j++){
 					head=thead.rows[j];
@@ -591,7 +568,7 @@
 							}
 							if(orderBy.indexOf(desc)!=-1){
 								cell.className="gridhead-desc"
-									cell.innerHTML=cell.innerHTML+'<img src="'+bg.getContextPath()+'/static/themes/beangle/icons/16x16/actions/sort-desc.png"  style="border:0"  alt="Arrow" />'
+									cell.innerHTML=cell.innerHTML+'<img src="'+bg.getContextPath()+'/static/themes/' + bg.uitheme + '/icons/16x16/actions/sort-desc.png"  style="border:0"  alt="Arrow" />'
 								continue;
 							}
 							var asc=cell.id+" asc";
@@ -600,7 +577,7 @@
 							}
 							if(orderBy==asc){
 								cell.className="gridhead-asc"
-									cell.innerHTML=cell.innerHTML+'<img src="'+bg.getContextPath()+'/static/themes/beangle/icons/16x16/actions/sort-asc.png"  style="border:0"  alt="Arrow" />'
+									cell.innerHTML=cell.innerHTML+'<img src="'+bg.getContextPath()+'/static/themes/' + bg.uitheme + '/icons/16x16/actions/sort-asc.png"  style="border:0"  alt="Arrow" />'
 								continue;
 							}
 						}
@@ -641,30 +618,15 @@
 	});
 	
 	// Action---------------------------------------------------------------------
-	if (typeof entityActions == "undefined") {
-		entityActions = new Object();
-	}
-	function getEntityAction(id){
-		if (null == id || typeof id != "string") {
-			for (var fid in entityActions) {
-				return entityActions[fid];
-			}
-		}
-		else {
-			if (typeof entityActions[id] == "undefined") {
-				bg.alert("without actionform with id" + id);
-			}
-			else {
-				return entityActions[id];
-			}
-		}
-	}
-	function EntityAction(id,entity,action,actionQueryStr,target){
-		this.id=id;
+	//this.action,this.paramstring,this.target
+	function EntityAction(entity,onePage){
 		this.entity=entity;
-		this.action=action;
-		this.actionQueryStr=actionQueryStr;
-		this.target=target;
+		this.page=onePage;
+		this.formid="form_" + bg.randomInt();
+
+		//record self for closure method
+		selfaction = this;
+		
 		function applyMethod(action,method){
 			last1=action.lastIndexOf("!");
 			lastDot=action.lastIndexOf(".");
@@ -679,93 +641,81 @@
 			}
 			return shortAction+"!"+method+sufix;
 		}
-		entityActions[id]=this;
 		this.getForm=function (){
-			actionForm=document.getElementById(id+"_form");
-			if(null==actionForm){
-				actionForm=document.createElement("form");
-				actionForm.setAttribute("id",id+"_form");
-				actionForm.setAttribute("action",this.action);
-				actionForm.setAttribute("method","POST");
-				document.body.appendChild(actionForm);
-			}
-			return  actionForm;
+			return this.page.getForm();
 		};
-		this.addParam=function(name,value){
+		this.addParam = function(name,value){
 			bg.form.addInput(this.getForm(),name,value);
 		}
-		if(null!=target&&''!=target){
+		if(null!=this.page.target&&''!=this.page.target){
 			var fm = this.getForm();
-			if(null!=fm) fm.target=target;
+			if(null!=fm) fm.target=this.page.target;
 		}
 		
-		function beforeSubmmitId(id,method) {
-			aform=getEntityAction(id);
-			var ids = bg.input.getCheckBoxValues(aform.entity+".id");
+		this.beforeSubmmitId = function(method) {
+			var ids = bg.input.getCheckBoxValues(entity+".id");
 			if (ids == null || ids == "") {
 				bg.alert("你没有选择要操作的记录！");
 				return false;
 			}
-			form=aform.getForm();
-			form.action = applyMethod(aform.action, method);
-			if(aform.actionQueryStr){
-				bg.form.addHiddens(form,aform.actionQueryStr);
-				bg.form.addParamsInput(form,aform.actionQueryStr);
+			form=this.getForm();
+			form.action = applyMethod(this.page.action, method);
+			if(this.page.paramstr){
+				bg.form.addHiddens(form,this.page.paramstr);
+				bg.form.addParamsInput(form,this.page.paramstr);
 			}
 			return true;
 		}
-		function submitIdAction(id,method,multiId,confirmMsg,ajax){
-			aform=getEntityAction(id);
-			if (beforeSubmmitId(aform.id,method)) {
+		this.submitIdAction=function (method,multiId,confirmMsg,ajax){
+			if (this.beforeSubmmitId(method)) {
 				if(null!=confirmMsg && ''!=confirmMsg){
 					if(!confirm(confirmMsg))return;
 				}
-				bg.form.submitId(aform.getForm(),aform.entity + ".id",multiId,ajax);
+				bg.form.submitId(this.getForm(),this.entity + ".id",multiId,null,null,ajax);
 			}
 		}
 		this.remove=function(confirmMsg){
 			confirmMsg=confirmMsg||'确认删除?';
 			return new NamedFunction('remove',function(){
-				submitIdAction(id,'remove',false,confirmMsg);
+				selfaction.submitIdAction('remove',false,confirmMsg);
 			});
 		}
 		this.add = function(){
 			return new NamedFunction('add',function(){
-				aform=getEntityAction(id);
-				form=aform.getForm();
-				if(""!=aform.actionQueryStr) bg.form.addHiddens(form,aform.actionQueryStr);
-				bg.form.addInput(form,aform.entity + 'Id',"");
-				if(""!=aform.actionQueryStr) bg.form.addParamsInput(form,aform.actionQueryStr);
-				bg.form.submit(form,applyMethod(aform.action,"edit"));
+				form=selfaction.getForm();
+				if(""!=selfaction.page.paramstr) bg.form.addHiddens(form,selfaction.page.paramstr);
+				bg.form.addInput(form,selfaction.entity + '.id',"");
+				if(""!=selfaction.page.paramstr) bg.form.addParamsInput(form,selfaction.page.paramstr);
+				bg.form.submit(form,applyMethod(selfaction.page.action,"edit"));
 			});
 		}
 		
 		this.info = function(){
 			return new NamedFunction('info',function(){
-				submitIdAction(id,'info',false)
+				selfaction.submitIdAction('info',false)
 			});
 		}
 		
 		this.edit = function (){
 			return new NamedFunction('edit',function(){
-				submitIdAction(id,'edit',false);
+				selfaction.submitIdAction('edit',false);
 			});
 		}
 		
 		this.single = function(methodName,confirmMsg,extparams){
 			return new NamedFunction(methodName,function(){
-				form=getEntityAction(id).getForm();
-				if(null!=extparams) addHiddens(form,extparams);
-				submitIdAction(id,methodName,false,confirmMsg);
+				form=selfaction.getForm();
+				if(null!=extparams) bg.form.addHiddens(form,extparams);
+				selfaction.submitIdAction(methodName,false,confirmMsg);
 			});
 		}
 		
 		this.multi = function(methodName,confirmMsg,extparams,ajax){
 			return new NamedFunction(methodName,function(){
 				try {
-					form = getEntityAction(id).getForm();
+					form = selfaction.getForm();
 					if(null!=extparams) bg.form.addHiddens(form, extparams);
-					submitIdAction(id, methodName, true, confirmMsg,ajax);
+					selfaction.submitIdAction(methodName, true, confirmMsg,ajax);
 				}catch(e){
 					bg.alert(e)
 				}
@@ -773,18 +723,18 @@
 		}
 		this.method=function(methodName,confirmMsg,extparams,ajax){
 			return  new NamedFunction(methodName,function(){
-				aform=getEntityAction(id);
-				form=aform.getForm();
+				form=selfaction.getForm();
 				if(null!=extparams){
 					bg.form.addHiddens(form,extparams);
 				}
-				if(""!=aform.actionQueryStr){
-					bg.form.addHiddens(form,aform.actionQueryStr);
-					bg.form.addParamsInput(form,aform.actionQueryStr);
+				if(""!=selfaction.page.paramstr){
+					bg.form.addHiddens(form,selfaction.page.paramstr);
+					bg.form.addParamsInput(form,selfaction.page.paramstr);
 				}
-				bg.form.submit(form,applyMethod(aform.action ,methodName),ajax);
+				bg.form.submit(form,applyMethod(aform.page.action ,methodName),null,null,ajax);
 			});
 		}
+		
 		this.exportData=function (format,keys,titles,extparams){
 			format = format || "xls";
 			keys = keys||"";

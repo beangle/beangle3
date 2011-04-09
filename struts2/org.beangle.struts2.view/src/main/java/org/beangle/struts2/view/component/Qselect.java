@@ -8,8 +8,24 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 public class Qselect extends Select {
 
+	private String title;
+
 	public Qselect(ValueStack stack) {
 		super(stack);
+	}
+
+	@Override
+	protected void evaluateParams() {
+		super.evaluateParams();
+		title = (null == title) ? getText(name, null) : getText(title);
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }

@@ -118,8 +118,8 @@ public abstract class UIBean extends Component {
 	protected Container getContainer() {
 		return (Container) stack.getContext().get(ActionContext.CONTAINER);
 	}
-	
-	protected String render(String uri){
+
+	protected String render(String uri) {
 		return getContainer().getInstance(ActionUrlRender.class).render(getRequestURI(), uri);
 	}
 

@@ -13,6 +13,7 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.beangle.commons.collection.CollectUtils;
@@ -20,6 +21,7 @@ import org.beangle.commons.collection.page.Page;
 import org.beangle.struts2.view.component.ActionUrlRender;
 import org.beangle.struts2.view.component.Anchor;
 import org.beangle.struts2.view.component.Component;
+import org.beangle.struts2.view.component.Css;
 import org.beangle.struts2.view.component.Div;
 import org.beangle.struts2.view.component.Foot;
 import org.beangle.struts2.view.component.Form;
@@ -53,6 +55,8 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 
 	public BeangleTagLibrary(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
 		super(stack, req, res);
+		theme.setUi(getUitheme());
+		theme.setUibase(req.getContextPath());
 		this.stack.getContext().put(Theme.THEME, theme);
 	}
 
@@ -62,6 +66,20 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		return models;
 	}
 
+	protected String getUitheme() {
+		String uitheme = req.getParameter("ui.theme");
+		if (null == uitheme) {
+			HttpSession session = req.getSession(false);
+			if (null != session && null != session.getAttribute("ui.theme")) {
+				uitheme = (String) session.getAttribute("ui.theme");
+			}
+		}
+		if (null == uitheme) {
+			uitheme = "default";
+		}
+		return uitheme;
+	}
+
 	@Inject
 	public void setRender(ActionUrlRender render) {
 		this.render = render;
@@ -69,30 +87,6 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 
 	public String url(String url) {
 		return render.render(req.getRequestURI(), url);
-	}
-
-	public String iconurl(String name) {
-		return iconurl(name, "16x16");
-	}
-
-	public String iconurl(String name, int size) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(size).append('x').append(size);
-		return iconurl(name, sb.toString());
-	}
-
-	public String iconurl(String name, String size) {
-		StringBuilder sb = new StringBuilder(80);
-		String contextPath = req.getContextPath();
-		if (contextPath.length() < 2) {
-			sb.append("/static/themes/");
-		} else {
-			sb.append(contextPath).append("/static/themes/");
-		}
-		sb.append(theme.getName()).append("/icons/").append(size);
-		if (!name.startsWith("/")) sb.append('/');
-		sb.append(name);
-		return sb.toString();
 	}
 
 	/**
@@ -138,6 +132,10 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 
 	public TagModel getHead() {
 		return get(Head.class);
+	}
+
+	public TagModel getCss() {
+		return get(Css.class);
 	}
 
 	public TagModel getIframe() {
@@ -247,4 +245,5 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 	public TagModel getSelect() {
 		return get(Select.class);
 	}
+
 }

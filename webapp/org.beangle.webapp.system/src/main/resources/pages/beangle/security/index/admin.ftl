@@ -1,8 +1,8 @@
 [#ftl]
 [@b.head title="Security Dashboard"]
 [/@]
-<link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css"/>
-<div>[@b.messages/]</div>
+[@b.css href="panel.css"/]
+[@b.messages/]
 <div id="categoryDiv" class="module expanded">
 	<h2 class="header">
 		<a href="#" class="toggle" onclick="_wi_tm('categoryDiv');">用户类别列表</a>

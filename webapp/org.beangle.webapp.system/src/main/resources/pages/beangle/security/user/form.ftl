@@ -1,7 +1,7 @@
 [#ftl]
 [@b.head/]
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
-[#assign labInfo][#if user.name??]${b.text("action.modify")}[#else]${b.text("action.new")}[/#if] ${b.text("user")}[/#assign]
+[#assign labInfo][#if user.id??]${b.text("action.modify")}[#else]${b.text("action.new")}[/#if] ${b.text("entity.user")}[/#assign]
 [#include "/template/back.ftl"]
 [@b.form name="userForm" action="!save"]
 [@sj.tabbedpanel id="userTabs"]

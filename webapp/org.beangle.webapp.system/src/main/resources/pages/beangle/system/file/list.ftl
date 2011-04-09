@@ -3,9 +3,9 @@
 <table  width="80%" align="center">
 	<tr>
 	<td colspan="3">
-		<img src="${b.iconurl('actions/go-up.png','48x48')}" width="18px" height="18px"/>
+		<img src="${b.theme.iconurl('actions/go-up.png','48x48')}" width="18px" height="18px"/>
 		[@b.a href="!list?path=${(path?js_string)!}.."]上级目录[/@]
-		<img src="${b.iconurl('actions/go-home.png','48x48')}" width="18px" height="18px"/>
+		<img src="${b.theme.iconurl('actions/go-home.png','48x48')}" width="18px" height="18px"/>
 		[@b.a href="!list"]home[/@]
 	</td>
 	</tr>
@@ -21,13 +21,13 @@
 	<tr>
 		<td class="file-name">
 			[#if file.file]
-			<img src="${b.iconurl('mimetypes/' + mimeType.getMimeType(file) + '.png','48x48')}" width="18px" heigth="18px"/>
+			<img src="${b.theme.iconurl('mimetypes/' + mimeType.getMimeType(file) + '.png','48x48')}" width="18px" heigth="18px"/>
 			[#if mimeType.isTextType(file)][@b.a href="!download?path=${file.absolutePath?url}" title="download"]<span[#if file.hidden] style="color:#999999"[/#if]>${file.name}</span>[/@]
 			[#else]
 			[@b.a href="!download?path=${file.absolutePath?url}" title="download" target="_self"]<span[#if file.hidden] style="color:#999999"[/#if]>${file.name}</span>[/@]
 			[/#if]
 			[#else]
-			<img src="${b.iconurl('places/folder.png','22x22')}" width="18px" height="18px"/>
+			<img src="${b.theme.iconurl('places/folder.png','22x22')}" width="18px" height="18px"/>
 			[@b.a href="!list?path=${file.absolutePath?url}"]<span[#if file.hidden] style="color:#999999"[/#if]>${file.name}</span>[/@]
 			[/#if]
 		</td>

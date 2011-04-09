@@ -13,8 +13,8 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 public class Select extends UIBean {
 
-	private String name;
-	private String title;
+	protected String name;
+	
 	private Object items;
 	private String empty;
 	private Object value;
@@ -38,7 +38,6 @@ public class Select extends UIBean {
 				valueName = "name";
 			}
 		}
-		title = (null == title) ? getText(name, null) : getText(title);
 		if (null == this.id) id = name;
 	}
 
@@ -58,14 +57,6 @@ public class Select extends UIBean {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public Object getItems() {

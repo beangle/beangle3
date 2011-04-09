@@ -33,7 +33,7 @@
 // default collapse column
 var defaultColumn=0;
 // for collapse or display child nodes.
-var treeImagePath=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/beangle/icons/16x16/tree/";
+var treeImagePath=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/" + bg.uitheme + "/icons/16x16/tree/";
 function toggleRows(elm) {
  var rows = document.getElementsByTagName("TR");
  elm.style.backgroundImage = "url("+treeImagePath+"plus.png)";
