@@ -46,5 +46,4 @@ function validate(form){
 	}
 }
 </script>
-
 [@b.foot/]

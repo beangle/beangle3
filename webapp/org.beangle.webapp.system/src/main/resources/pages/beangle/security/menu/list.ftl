@@ -22,9 +22,6 @@
 	function activate(isActivate){
 		return action.multi("activate","确定操作?","isActivate="+isActivate);
 	}
-	function exportData(){
-		return action.method("export",null,"keys=code,title,entry,description,enabled&titles=代码,标题,入口,描述,是否可用");
-	}
 	function preview(){
 		window.open("${b.url('!preview')}?${b.paramstring}");
 	}
@@ -32,7 +29,7 @@
 	bar.addItem("${b.text("action.edit")}",action.edit());
 	bar.addItem("${b.text("action.freeze")}",activate(0),'${b.theme.iconurl('actions/freeze.png')}');
 	bar.addItem("${b.text("action.activate")}",activate(1),'${b.theme.iconurl('actions/activate.png')}');
-	bar.addItem("${b.text("action.export")}",exportData());
+	bar.addItem("${b.text("action.export")}",action.exportData("code:代码,title:标题,entry:入口,description:描述,enabled:是否可用"));
 	bar.addItem("${b.text("action.delete")}",action.remove());
 	bar.addItem("打印","preview()","print.png");
 [/@]

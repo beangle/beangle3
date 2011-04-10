@@ -8,10 +8,10 @@
 <table class="indexpanel">
 <tr>
 	<td class="index_view">
-	[@b.qform name="userSearchForm" action="!search" title="ui.searchForm" target="userlist"]
-		[@b.qfields names="user.name,user.fullname,user.creator.fullname,groupName;entity.group"/]
-		[@b.qselect name="categoryId" title="entity.userCategory" items=categories empty="..." /]
-		[@b.qselect name="user.status" title="common.status" items={'1':'${b.text("action.activate")}','0':'${b.text("action.freeze")}'}/]
+	[@b.form name="userSearchForm" action="!search" title="ui.searchForm" target="userlist" theme="search"]
+		[@b.textfields names="user.name,user.fullname,user.creator.fullname,groupName;entity.group"/]
+		[@b.select name="categoryId" label="entity.userCategory" items=categories empty="..." /]
+		[@b.select name="user.status" label="common.status" items={'1':'${b.text("action.activate")}','0':'${b.text("action.freeze")}'}/]
 	[/@]
 	</td>
 	<td class="index_content">

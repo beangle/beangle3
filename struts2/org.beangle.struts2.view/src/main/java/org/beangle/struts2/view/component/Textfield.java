@@ -6,18 +6,27 @@ package org.beangle.struts2.view.component;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
-public class Qform extends Form {
-
+public class Textfield extends UIBean {
+	private String name;
 	private String title;
 
-	public Qform(ValueStack stack) {
+	public Textfield(ValueStack stack) {
 		super(stack);
 	}
 
 	@Override
 	protected void evaluateParams() {
+		if (null == title) title = name;
+		if (null == this.id) id = name;
 		title = getText(title);
-		super.evaluateParams();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getTitle() {

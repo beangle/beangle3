@@ -12,6 +12,8 @@ public class Form extends ClosingUIBean {
 	protected String action;
 	protected String target;
 
+	private String title;
+
 	public Form(ValueStack stack) {
 		super(stack);
 	}
@@ -25,6 +27,7 @@ public class Form extends ClosingUIBean {
 			id = name;
 		}
 		action = render(action);
+		if (null != title) title = getText(title);
 	}
 
 	public String getAction() {
@@ -50,4 +53,13 @@ public class Form extends ClosingUIBean {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 }

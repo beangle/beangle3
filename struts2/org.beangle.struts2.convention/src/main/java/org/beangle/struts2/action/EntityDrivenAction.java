@@ -22,7 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.Entity;
 import org.beangle.model.EntityUtils;
 import org.beangle.model.entity.Model;
@@ -354,8 +356,21 @@ public class EntityDrivenAction extends BaseAction {
 		context.put("format", format);
 		context.put("exportFile", fileName);
 		context.put("template", template);
-		context.put(Context.KEYS, get("keys"));
-		context.put(Context.TITLES, get("titles"));
+		String properties = get("properties");
+		if (null != properties) {
+			String[] props = StringUtils.split(properties, ",");
+			List<String> keys = CollectUtils.newArrayList();
+			List<String> titles = CollectUtils.newArrayList();
+			for (String prop : props) {
+				keys.add(StringUtils.substringBefore(prop, ":"));
+				titles.add(StringUtils.substringAfter(prop, ":"));
+			}
+			context.put(Context.KEYS, StrUtils.join(keys, ","));
+			context.put(Context.TITLES, StrUtils.join(titles, ","));
+		} else {
+			context.put(Context.KEYS, get("keys"));
+			context.put(Context.TITLES, get("titles"));
+		}
 		context.put(Context.EXTRACTOR, getPropertyExtractor());
 
 		HttpServletResponse response = ServletActionContext.getResponse();

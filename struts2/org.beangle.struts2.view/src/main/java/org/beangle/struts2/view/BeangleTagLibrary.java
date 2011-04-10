@@ -30,15 +30,12 @@ import org.beangle.struts2.view.component.Head;
 import org.beangle.struts2.view.component.Iframe;
 import org.beangle.struts2.view.component.Messages;
 import org.beangle.struts2.view.component.Pagebar;
-import org.beangle.struts2.view.component.Qfield;
-import org.beangle.struts2.view.component.Qfields;
-import org.beangle.struts2.view.component.Qform;
+import org.beangle.struts2.view.component.Textfields;
 import org.beangle.struts2.view.component.Qitem;
-import org.beangle.struts2.view.component.Qselect;
 import org.beangle.struts2.view.component.RedirectParams;
 import org.beangle.struts2.view.component.Select;
 import org.beangle.struts2.view.component.Submit;
-import org.beangle.struts2.view.component.TextField;
+import org.beangle.struts2.view.component.Textfield;
 import org.beangle.struts2.view.component.Toolbar;
 import org.beangle.struts2.view.template.Theme;
 
@@ -215,27 +212,15 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 	}
 
 	public TagModel getTextfield() {
-		return get(TextField.class);
-	}
-
-	public TagModel getQform() {
-		return get(Qform.class);
+		return get(Textfield.class);
 	}
 
 	public TagModel getQitem() {
 		return get(Qitem.class);
 	}
 
-	public TagModel getQfield() {
-		return get(Qfield.class);
-	}
-
-	public TagModel getQfields() {
-		return get(Qfields.class);
-	}
-
-	public TagModel getQselect() {
-		return get(Qselect.class);
+	public TagModel getTextfields() {
+		return get(Textfields.class);
 	}
 
 	public TagModel getDiv() {

@@ -8,22 +8,22 @@ import org.apache.commons.lang.StringUtils;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
-public class Qfields extends UIBean {
+public class Textfields extends UIBean {
 
 	private String names;
 
-	private TextField[] fields;
+	private Textfield[] fields;
 
-	public Qfields(ValueStack stack) {
+	public Textfields(ValueStack stack) {
 		super(stack);
 	}
 
 	@Override
 	protected void evaluateParams() {
 		String[] nameArray = StringUtils.split(names, ',');
-		fields = new TextField[nameArray.length];
+		fields = new Textfield[nameArray.length];
 		for (int i = 0; i < nameArray.length; i++) {
-			fields[i] = new TextField(stack);
+			fields[i] = new Textfield(stack);
 			String name = nameArray[i];
 			String title = name;
 			int semiconIndex = name.indexOf(';');
@@ -41,7 +41,7 @@ public class Qfields extends UIBean {
 		this.names = names;
 	}
 
-	public TextField[] getFields() {
+	public Textfield[] getFields() {
 		return fields;
 	}
 

@@ -724,6 +724,9 @@
 		this.method=function(methodName,confirmMsg,extparams,ajax){
 			return  new NamedFunction(methodName,function(){
 				form=selfaction.getForm();
+				if(null!=confirmMsg && ''!=confirmMsg){
+					if(!confirm(confirmMsg))return;
+				}
 				if(null!=extparams){
 					bg.form.addHiddens(form,extparams);
 				}
@@ -731,17 +734,16 @@
 					bg.form.addHiddens(form,selfaction.page.paramstr);
 					bg.form.addParamsInput(form,selfaction.page.paramstr);
 				}
-				bg.form.submit(form,applyMethod(aform.page.action ,methodName),null,null,ajax);
+				bg.form.submit(form,applyMethod(selfaction.page.action ,methodName),null,null,ajax);
 			});
 		}
 		
-		this.exportData=function (format,keys,titles,extparams){
+		this.exportData=function(properties,format,extparams){
 			format = format || "xls";
-			keys = keys||"";
-			titles = titles||"";
+			properties = properties||"";
 			extparams = extparams||"";
-			extparams = "&format=" + format +"&keys=" + keys + "&titles=" + titles + extparams;
-			return this.method('export',null,extparams,false);
+			extparams = "&format=" + format +"&properties=" + properties + extparams;
+			return selfaction.method('export',null,extparams,false);
 		}
 	}
 	

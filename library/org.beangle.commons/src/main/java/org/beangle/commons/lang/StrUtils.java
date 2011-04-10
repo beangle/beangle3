@@ -371,6 +371,21 @@ public final class StrUtils {
 		}
 	}
 
+	public static String join(final Collection<String> seq, final String delimiter) {
+		if (null == seq || seq.size() < 1) {
+			return "";
+		} else {
+			StringBuilder aim = new StringBuilder();
+			for (String one : seq) {
+				if (null != delimiter && aim.length() > 0) {
+					aim.append(delimiter);
+				}
+				aim.append(one);
+			}
+			return aim.toString();
+		}
+	}
+
 	public static String concat(final String... seq) {
 		return join(seq, null);
 	}

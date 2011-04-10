@@ -6,6 +6,8 @@ package org.beangle.struts2.view.component;
 
 import java.io.Writer;
 
+import org.beangle.struts2.view.template.Theme;
+
 import com.opensymphony.xwork2.util.ValueStack;
 
 public class ClosingUIBean extends UIBean {
@@ -30,6 +32,7 @@ public class ClosingUIBean extends UIBean {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+		stack.getContext().remove(Theme.INNER_THEME);
 		return false;
 	}
 
@@ -40,5 +43,10 @@ public class ClosingUIBean extends UIBean {
 	@Override
 	final public boolean usesBody() {
 		return true;
+	}
+
+	public void setTheme(String newTheme) {
+		this.theme = new Theme(newTheme);
+		stack.getContext().put(Theme.INNER_THEME, theme);
 	}
 }

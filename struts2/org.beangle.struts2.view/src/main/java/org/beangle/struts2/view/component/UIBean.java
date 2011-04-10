@@ -72,7 +72,11 @@ public abstract class UIBean extends Component {
 
 	protected Theme getTheme() {
 		if (null == theme) {
-			return (Theme) stack.getContext().get(Theme.THEME);
+			theme = (Theme) stack.getContext().get(Theme.INNER_THEME);
+			if (null == theme) {
+				theme = (Theme) stack.getContext().get(Theme.THEME);
+			}
+			return theme;
 		} else {
 			return theme;
 		}

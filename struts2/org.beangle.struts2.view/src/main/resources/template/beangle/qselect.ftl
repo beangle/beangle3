@@ -1,2 +1,0 @@
-[#ftl/]
-<tr><td class="search-item"><label for="${tag.id}">${tag.title}:</label><select id="${tag.id}" name="${tag.name}"${tag.parameterString}>[#if tag.empty??]<option value="">${tag.empty}</option>[/#if][#list tag.items as item]<option value="${item[tag.keyName]}"[#if tag.isSelected(item)]selected="selected"[/#if]>${item[tag.valueName]!}</option>[/#list]</select></td></tr>

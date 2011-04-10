@@ -10,7 +10,7 @@
 	<div class="modulebody">
 	<ul>
 	[#list categories as category]
-	<li>${category.name}&nbsp;[@b.a href="!admin?removeCategoryId=${category.id}"]<img style="border:0px" src="${base}/static/images/action/delete.gif"/>[/@]</li>
+	<li>${category.name}&nbsp;[@b.a href="!admin?removeCategoryId=${category.id}"]<img style="border:0px" src="${b.theme.iconurl('actions/edit-delete.png')}"/>[/@]</li>
 	[/#list]
 	</ul>
 	[@b.form action="!admin"]
@@ -28,7 +28,7 @@
 	[#list adminUsers as adminUser]
 	<li>
 	${adminUser.user.name}(${adminUser.user.fullname}) ${(adminUser.createdAt?string("yyyy-MM-dd"))!}
-	&nbsp;[@b.a href="!admin?removeAdminId=${adminUser.id}"]<img  style="border:0px" src="${base}/static/images/action/delete.gif"/>[/@]
+	&nbsp;[@b.a href="!admin?removeAdminId=${adminUser.id}"]<img  style="border:0px" src="${b.theme.iconurl('actions/edit-delete.png')}"/>[/@]
 	</li>
 	[/#list]
 	</ul>

@@ -1,11 +1,10 @@
 [#ftl]
 [@b.head/]
-
 [@b.toolbar title="菜单列表"]
 	bar.addPrint("${b.text("action.print")}");
 	bar.addClose("${b.text("action.close")}");
 [/@]
-<table class="grid" align="center" width="90%">
+<table class="gridtable" align="center" width="90%">
 	<tr class="thead">
 	 <td colspan="${depth}">模块标题</td>
 	 <td>英文名</td>
@@ -22,5 +21,4 @@
 	</tr>
 	[/#list]
 </table>
- 
 [@b.foot/]

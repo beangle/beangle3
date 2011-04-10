@@ -1,2 +1,0 @@
-[#ftl]
-<tr><td class="search-item"><label for="${tag.name}">${tag.title}:</label><input type="text" id="${tag.id}" name="${tag.name}" [#if !tag.parameters['value']??]value="${Parameters[tag.name]!?html}"[/#if]${tag.parameterString}/></td></tr>

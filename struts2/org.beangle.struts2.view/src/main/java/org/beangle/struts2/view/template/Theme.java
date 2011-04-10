@@ -13,7 +13,9 @@ public class Theme {
 
 	public static final String THEME = ".beangle_theme";
 
-	public static final String DEFAULT_THEME = "beangle";
+	public static final String INNER_THEME = ".inner_beangle_theme";
+
+	public static final String DEFAULT_THEME = "xml";
 
 	private final static Map<Class<?>, String> defaultNames = CollectUtils.newHashMap();
 

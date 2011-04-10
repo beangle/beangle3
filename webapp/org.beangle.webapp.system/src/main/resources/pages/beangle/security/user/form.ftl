@@ -60,7 +60,7 @@
 		 <td><textarea cols="50" rows="1" name="user.remark">${user.remark!}</textarea></td>
 	   </tr>
 	   <tr class="tfoot">
-		<td colspan="6">
+		<td colspan="2">
 			<input type="hidden" name="user.id" value="${user.id!}" />
 			[@b.redirectParams/]
 			[@b.submit value="action.submit" onsubmit="validate" /]&nbsp;
@@ -70,7 +70,7 @@
 	 </table>
 	</div>
 	<div id="groupmember">
-	[@b.grid    items=members var="m"]
+	[@b.grid  items=members var="m"]
 		[@b.row]
 			[@b.col title=""]<input name="groupId" type="checkbox" onchange="changeMember(${m.group.id},this)"/>[/@]
 			[@b.col title="序号"]${m_index+1}[/@]
