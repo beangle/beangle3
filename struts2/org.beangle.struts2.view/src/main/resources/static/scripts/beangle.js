@@ -615,7 +615,7 @@
 	// Page---------------------------------------------------------------------
 	function Page(action,target,pageNo,pageSize,total){
 		this.formid = "form_" + bg.randomInt();
-		this.action=action;
+		this.actionurl=action;
 		this.target=target;
 		this.paramMap={};
 		this.params = function(){ return this.paramMap;}
@@ -636,8 +636,8 @@
 		
 		this.pageInfo(pageNo,pageSize,total);
 		
-		this.action=function(action){
-			this.action=action;
+		this.action=function(actionurl){
+			this.actionurl=actionurl;
 			return this;
 		}
 		this.paramstr=function(newstring){
@@ -663,9 +663,13 @@
 			if(null==myForm){
 				myForm=document.createElement("form");
 				myForm.setAttribute("id",this.formid);
-				myForm.setAttribute("action",this.action);
+				myForm.setAttribute("action",this.actionurl);
 				myForm.setAttribute("method","POST");
-				document.getElementById(this.target).appendChild(myForm);
+				if(document.getElementById(this.target)){
+					document.getElementById(this.target).appendChild(myForm);
+				}else{
+					document.body.appendChild(myForm);
+				}
 			}
 			return myForm;
 		}
@@ -710,7 +714,7 @@
 		// jump to page using form submit
 		this.goPageNormal = function (pageNo,pageSize,orderBy){
 			myForm=document.createElement("form");
-			myForm.setAttribute("action",this.action);
+			myForm.setAttribute("action",this.actionurl);
 			myForm.setAttribute("method","POST");
 			for(var key in this.paramMap){
 				value=this.paramMap[key];
@@ -748,7 +752,7 @@
 			options_submit.jqueryaction = "button";
 			options_submit.id = submitBtnId;
 			options_submit.targets = this.target;
-			options_submit.href = this.action;
+			options_submit.href = this.actionurl;
 			options_submit.formids = this.formid;
 			$.struts2_jquery.bind($('#' + submitBtnId),options_submit);
 			submitx.click();

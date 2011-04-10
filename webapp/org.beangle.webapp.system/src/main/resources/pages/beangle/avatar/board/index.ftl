@@ -37,8 +37,8 @@
 		  [/#list]
 	   </tr>
 	   [/#list]
-	   [@b.pagebar id="avatarPanel" page=names/]
 	</table>
+	[@b.pagebar id="avatarPanel" page=names/]
 	</div>
 </div>
 [@b.foot/]
