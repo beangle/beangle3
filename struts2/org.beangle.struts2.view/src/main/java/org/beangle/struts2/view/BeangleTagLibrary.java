@@ -29,13 +29,15 @@ import org.beangle.struts2.view.component.Grid;
 import org.beangle.struts2.view.component.Head;
 import org.beangle.struts2.view.component.Iframe;
 import org.beangle.struts2.view.component.Messages;
+import org.beangle.struts2.view.component.Navitem;
+import org.beangle.struts2.view.component.Navmenu;
 import org.beangle.struts2.view.component.Pagebar;
-import org.beangle.struts2.view.component.Textfields;
 import org.beangle.struts2.view.component.Qitem;
 import org.beangle.struts2.view.component.RedirectParams;
 import org.beangle.struts2.view.component.Select;
 import org.beangle.struts2.view.component.Submit;
 import org.beangle.struts2.view.component.Textfield;
+import org.beangle.struts2.view.component.Textfields;
 import org.beangle.struts2.view.component.Toolbar;
 import org.beangle.struts2.view.template.Theme;
 
@@ -231,4 +233,11 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		return get(Select.class);
 	}
 
+	public TagModel getNavmenu() {
+		return get(Navmenu.class);
+	}
+
+	public TagModel getNavitem() {
+		return get(Navitem.class);
+	}
 }

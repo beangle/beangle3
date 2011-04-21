@@ -6,17 +6,35 @@ package org.beangle.webapp.system.action;
 
 import java.lang.management.ManagementFactory;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.property.PropertyConfigFactory;
+import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.struts2.action.BaseAction;
+import org.beangle.webapp.system.model.PropertyConfigItemBean;
 
-public class StatusAction extends BaseAction {
+public class InfoAction extends BaseAction {
+
+	private PropertyConfigFactory configFactory;
 
 	public String index() {
+		Map<String, Object> clientProps = CollectUtils.newHashMap();
+		clientProps.put("client.ip", getRemoteAddr());
+		HttpServletRequest request = getRequest();
+		clientProps.put("client.useragent", request.getHeader("USER-AGENT"));
+		clientProps.put("client.scheme", request.getScheme());
+		clientProps.put("client.secure", String.valueOf(request.isSecure()));
+		put("clientProps", clientProps);
+		return forward();
+	}
+
+	public String status() {
 		put("MaxMem", Runtime.getRuntime().maxMemory());
 		put("FreeMem", Runtime.getRuntime().freeMemory());
 		put("TotalMem", Runtime.getRuntime().totalMemory());
@@ -67,4 +85,21 @@ public class StatusAction extends BaseAction {
 		return forward();
 	}
 
+	public String settings() {
+		OqlBuilder<PropertyConfigItemBean> builder = OqlBuilder.from(PropertyConfigItemBean.class, "config");
+		builder.orderBy("config.name");
+		List<PropertyConfigItemBean> configs = entityDao.search(builder);
+		put("propertyConfigs", configs);
+		Set<String> staticNames = configFactory.getConfig().getNames();
+		for (PropertyConfigItemBean config : configs) {
+			staticNames.remove(config.getName());
+		}
+		put("config", configFactory.getConfig());
+		put("staticNames", staticNames);
+		return forward();
+	}
+
+	public void setConfigFactory(PropertyConfigFactory configFactory) {
+		this.configFactory = configFactory;
+	}
 }

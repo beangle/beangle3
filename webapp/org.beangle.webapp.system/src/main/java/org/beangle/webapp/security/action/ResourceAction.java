@@ -45,7 +45,7 @@ public class ResourceAction extends SecurityActionSupport {
 	}
 
 	@Override
-	public String index() throws Exception {
+	public String index() {
 		return forward(new Action(this, "search"));
 	}
 

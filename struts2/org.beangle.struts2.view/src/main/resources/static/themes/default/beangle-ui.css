@@ -302,3 +302,47 @@ table.settingTable td{
 	text-align: right;
 */
 }
+
+/**导航菜单**/
+.navmenu {
+    left: 6px;
+    background: none repeat scroll 0 0 #507AAA;
+    clear: both;
+    height: 30px;
+    padding: 0 10px;
+}
+
+.navmenu ul {
+    padding: 0;
+    float: left;
+    height: 24px;
+    margin: 5px 0 0;
+}
+
+.navmenu li {
+    float: left;
+    list-style-type: none;
+    margin: 0 2px 0 0;
+    padding: 0;
+    white-space: nowrap;
+}
+.navmenu li a {
+    color: #FFFFFF;
+    display: block;
+    font-weight: bold;
+    margin: 0;
+    padding: 4px 10px;
+    outline: 0 none;
+    text-decoration: none;
+}
+
+.navmenu li a:hover {
+    background: none repeat scroll 0 0 #759FCF;
+    color: #FFFFFF;
+}
+.navmenu li a.selected, .navmenu li a.selected:hover {
+    color: #555555;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}

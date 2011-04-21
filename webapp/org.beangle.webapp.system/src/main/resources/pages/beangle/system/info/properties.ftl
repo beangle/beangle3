@@ -1,4 +1,6 @@
 [#ftl]
+[@b.head/]
+[#include "nav.ftl"/]
 	[@sj.tabbedpanel id="localtabs"]
 	  [@sj.tab id="tab1" target="tone" label="java"/]
 	  [@sj.tab id="tab2" target="ttwo" label="os"/]
@@ -62,3 +64,4 @@
 		</table>
 	  </div>
 	[/@]
+[@b.foot/]

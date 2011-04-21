@@ -1,4 +1,6 @@
 [#ftl]
+[@b.head/]
+[#include "nav.ftl"/]
 	摘要
 	<hr>
 	<table width="100%">
@@ -76,3 +78,4 @@
 			<td>启动类路径:</td><td colspan="3">${runtimeMBean.bootClassPath?replace(":","<br/>:")!}</td>
 		</tr>
 	</table>
+[@b.foot/]

@@ -1,0 +1,7 @@
+[#ftl]
+[@b.navmenu title="系统信息"]
+	[@b.navitem title="系统信息" href="info"/]
+	[@b.navitem title="系统状态" href="info!status" /]
+	[@b.navitem title="系统属性" href="info!properties" /]
+	[@b.navitem title="系统配置" href="info!settings" /]
+[/@]

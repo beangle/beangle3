@@ -47,7 +47,7 @@ public class UserAction extends SecurityActionSupport {
 	 * 只显示头像
 	 * 
 	 * @return
-	 * @throws IOException
+	 * @throws IOException 
 	 */
 	public String index() throws IOException {
 		String userName = get("user.name");

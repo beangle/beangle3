@@ -108,7 +108,7 @@ public class MenuAction extends SecurityActionSupport {
 	}
 
 	@Override
-	public String info() throws Exception {
+	public String info() {
 		Long entityId = getEntityId(getShortName());
 		if (null == entityId) {
 			logger.warn("cannot get paremeter {}Id or {}.id", getShortName(), getShortName());

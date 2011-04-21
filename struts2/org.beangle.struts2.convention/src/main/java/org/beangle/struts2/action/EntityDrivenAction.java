@@ -61,7 +61,6 @@ public class EntityDrivenAction extends BaseAction {
 	 * 主页面
 	 * 
 	 * @return
-	 * @throws Exception
 	 */
 	public String index() throws Exception {
 		indexSetting();
@@ -72,9 +71,8 @@ public class EntityDrivenAction extends BaseAction {
 	 * 查找标准
 	 * 
 	 * @return
-	 * @throws Exception
 	 */
-	public String search() throws Exception {
+	public String search() {
 		put(getShortName() + "s", search(getQueryBuilder()));
 		return forward();
 	}
@@ -87,9 +85,8 @@ public class EntityDrivenAction extends BaseAction {
 	 * 修改标准
 	 * 
 	 * @return
-	 * @throws Exception
 	 */
-	public String edit() throws Exception {
+	public String edit() {
 		Long entityId = getEntityId(getShortName());
 		Entity<?> entity = null;
 		if (null == entityId) {
@@ -106,9 +103,8 @@ public class EntityDrivenAction extends BaseAction {
 	 * 删除
 	 * 
 	 * @return
-	 * @throws Exception
 	 */
-	public String remove() throws Exception {
+	public String remove() {
 		Long entityId = getEntityId(getShortName());
 		Collection<?> entities = null;
 		if (null == entityId) {
@@ -124,9 +120,8 @@ public class EntityDrivenAction extends BaseAction {
 	 * 保存修改后的标准
 	 * 
 	 * @return
-	 * @throws Exception
 	 */
-	public String save() throws Exception {
+	public String save() {
 		return saveAndForward(populateEntity());
 	}
 
@@ -233,9 +228,8 @@ public class EntityDrivenAction extends BaseAction {
 	 * 查看信息
 	 * 
 	 * @return
-	 * @throws Exception
 	 */
-	public String info() throws Exception {
+	public String info() {
 		Long entityId = getEntityId(getShortName());
 		if (null == entityId) {
 			logger.warn("cannot get paremeter {}Id or {}.id", getShortName(), getShortName());

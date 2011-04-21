@@ -659,7 +659,7 @@
 				return false;
 			}
 			form=this.getForm();
-			form.action = applyMethod(this.page.action, method);
+			form.action = applyMethod(this.page.actionurl, method);
 			if(this.page.paramstr){
 				bg.form.addHiddens(form,this.page.paramstr);
 				bg.form.addParamsInput(form,this.page.paramstr);
@@ -686,7 +686,7 @@
 				if(""!=selfaction.page.paramstr) bg.form.addHiddens(form,selfaction.page.paramstr);
 				bg.form.addInput(form,selfaction.entity + '.id',"");
 				if(""!=selfaction.page.paramstr) bg.form.addParamsInput(form,selfaction.page.paramstr);
-				bg.form.submit(form,applyMethod(selfaction.page.action,"edit"));
+				bg.form.submit(form,applyMethod(selfaction.page.actionurl,"edit"));
 			});
 		}
 		
@@ -734,7 +734,7 @@
 					bg.form.addHiddens(form,selfaction.page.paramstr);
 					bg.form.addParamsInput(form,selfaction.page.paramstr);
 				}
-				bg.form.submit(form,applyMethod(selfaction.page.action ,methodName),null,null,ajax);
+				bg.form.submit(form,applyMethod(selfaction.page.actionurl ,methodName),null,null,ajax);
 			});
 		}
 		
