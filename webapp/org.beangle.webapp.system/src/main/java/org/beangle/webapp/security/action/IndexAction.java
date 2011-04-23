@@ -78,6 +78,11 @@ public class IndexAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String admin() {
+		List<Adminuser> admins = entityDao.getAll(Adminuser.class);
+		put("adminUsers", admins);
+		List<Category> categories = entityDao.getAll(Category.class);
+		put("categories", categories);
+		if (isAdmin(getUser())) { return "admin-info"; }
 		String newCategory = get("newCategory");
 		if (StringUtils.isNotBlank(newCategory)) {
 			if (entityDao.get(Category.class, "name", newCategory).isEmpty()) {
@@ -125,10 +130,6 @@ public class IndexAction extends SecurityActionSupport {
 			}
 			return redirect("admin", "info.remove.success");
 		}
-		List<Adminuser> admins = entityDao.getAll(Adminuser.class);
-		put("adminUsers", admins);
-		List<Category> categories = entityDao.getAll(Category.class);
-		put("categories", categories);
 		return forward();
 	}
 }

@@ -13,7 +13,7 @@ bar.addClose("${b.text("action.close")}");
 [/@]
 
 <div id="column1" class="column" >
-	[#include "online_portlet.ftl"/]
+	[#include "../user/panels/online_portlet.ftl"/]
 	[#include "../user/panels/session_portlet.ftl"/]
 </div>
 

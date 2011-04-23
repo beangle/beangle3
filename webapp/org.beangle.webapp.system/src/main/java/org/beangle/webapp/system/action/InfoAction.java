@@ -6,22 +6,15 @@ package org.beangle.webapp.system.action;
 
 import java.lang.management.ManagementFactory;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.property.PropertyConfigFactory;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.struts2.action.BaseAction;
-import org.beangle.webapp.system.model.PropertyConfigItemBean;
 
 public class InfoAction extends BaseAction {
-
-	private PropertyConfigFactory configFactory;
 
 	public String index() {
 		Map<String, Object> clientProps = CollectUtils.newHashMap();
@@ -83,23 +76,5 @@ public class InfoAction extends BaseAction {
 		put("userProps", userProps);
 		put("extraProps", extraProps);
 		return forward();
-	}
-
-	public String settings() {
-		OqlBuilder<PropertyConfigItemBean> builder = OqlBuilder.from(PropertyConfigItemBean.class, "config");
-		builder.orderBy("config.name");
-		List<PropertyConfigItemBean> configs = entityDao.search(builder);
-		put("propertyConfigs", configs);
-		Set<String> staticNames = configFactory.getConfig().getNames();
-		for (PropertyConfigItemBean config : configs) {
-			staticNames.remove(config.getName());
-		}
-		put("config", configFactory.getConfig());
-		put("staticNames", staticNames);
-		return forward();
-	}
-
-	public void setConfigFactory(PropertyConfigFactory configFactory) {
-		this.configFactory = configFactory;
 	}
 }

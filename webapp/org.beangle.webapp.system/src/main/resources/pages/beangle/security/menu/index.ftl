@@ -1,13 +1,6 @@
 [#ftl]
 [@b.head/]
-[@b.toolbar id="menubar"]
-bar.setTitle('[@b.a href="index"]权限管理[/@]-->菜单资源');
-function redirectTo(url){window.open(url);}
-bar.addItem("系统功能","redirectTo('${b.url('resource')}')");
-bar.addItem("菜单配置","redirectTo('${b.url('menu-profile!search')}')");
-bar.addItem("数据限制","redirectTo('${b.url('restrict-meta')}')");
-bar.addHelp();
-[/@]
+[#include "../nav.ftl"/]
 <table  class="indexpanel">
 	<tr>
 		<td class="index_view">

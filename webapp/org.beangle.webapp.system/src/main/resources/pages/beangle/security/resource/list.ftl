@@ -1,5 +1,6 @@
 [#ftl]
 [@b.head/]
+[#include "../nav.ftl"/]
 [#include "scope.ftl"/]
 [#include "../status.ftl"/]
 [@b.form name="resourceForm" action="!search"]

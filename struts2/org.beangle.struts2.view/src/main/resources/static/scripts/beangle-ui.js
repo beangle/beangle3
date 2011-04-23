@@ -677,7 +677,7 @@
 		this.remove=function(confirmMsg){
 			confirmMsg=confirmMsg||'确认删除?';
 			return new NamedFunction('remove',function(){
-				selfaction.submitIdAction('remove',false,confirmMsg);
+				selfaction.submitIdAction('remove',true,confirmMsg);
 			});
 		}
 		this.add = function(){

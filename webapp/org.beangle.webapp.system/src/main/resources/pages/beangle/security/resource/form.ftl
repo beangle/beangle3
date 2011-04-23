@@ -1,5 +1,6 @@
 [#ftl]
 [@b.head/]
+[#include "../nav.ftl"/]
 [#include "scope.ftl"/]
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 [@b.toolbar title="security.resource.info"]bar.addClose();[/@]

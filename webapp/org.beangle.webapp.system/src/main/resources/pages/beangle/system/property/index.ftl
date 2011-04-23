@@ -1,61 +1,32 @@
 [#ftl]
 [@b.head/]
-[@b.toolbar title="&nbsp;系统参数"]bar.addBack();[/@]
-[@sj.accordion id="accordion"]
-	[@sj.accordionItem title="固定参数"]
-	[@b.grid items=staticNames var="name" width="90%"]
-		[@b.row]
-		 [@b.col title="序号" width="10%"]${name_index+1}[/@]
-		 [@b.col title="参数名称" width="20%"]${name}[/@]
-		 [@b.col title="参数值" width="25%"]${config.get(name)}[/@]
-		[/@]
-	 [/@]
-	 [/@sj.accordionItem]
-
-	[@b.form name="systemConfigForm" action="!save" ]
-	[@sj.accordionItem title="可编辑参数"]
-	[@b.grid width="95%" items=propertyConfigs var="config"]
-		[@b.row]
-		 [@b.col title="序号" width="7%"]${config_index+1}[/@]
-		 [@b.col title="参数名称" width="20%" style="text-align:left"]<input name="config${config.id}.name"  value="${config.name}" style="width:100%"/>[/@]
-		 [@b.col title="类型" width="15%"]<input name="config${config.id}.type" value="${config.type!}" style="width:100%"/>[/@]
-		 [@b.col title="参数值" width="35%"]<input name="config${config.id}.value" value="${config.value?default("")}" maxlength="300" style="width:100%"/>[/@]
-		 [@b.col title="说明" width="15%"]<input name="config${config.id}.description" value="${config.description!}" style="width:100%"/>[/@]
-		 [@b.col title="删除" width="8%"]<button onclick="remove(${config.id})">删除</button>[/@]
-		[/@]
+[#include "../info/nav.ftl"/]
+静态参数
+<hr/></div>
+[#if staticNames?size=0]
+<br>
+[#else]
+[@b.grid items=staticNames var="name" width="90%"]
+	[@b.row]
+	 [@b.col title="序号" width="10%"]${name_index+1}[/@]
+	 [@b.col title="参数名称" width="20%"]${name}[/@]
+	 [@b.col title="参数值" width="25%"]${config.get(name)}[/@]
 	[/@]
-	[#if propertyConfigs?size>0]<div align="center"><br/><br/>[@b.submit value="保存"/]</div>[/#if]
-	[/@sj.accordionItem]
+[/@]
+[/#if]
 
-	[@sj.accordionItem title="新增参数"]
-	<table class="grid" align="center" width="90%">
-	   <tr>
-		 <td width="20%"  class="title">参数名称*</td>
-		 <td style="text-align:left"><input name="configNew.name"  value=""/></td>
-	   </tr>
-	   <tr>
-		 <td class="title">参数值*</td>
-		 <td><input name="configNew.value" value="" maxlength="300" style="width:100%"/></td>
-	   </tr>
-	   <tr>
-		 <td class="title">类型*</td>
-		 <td><input name="configNew.type" value=""/></td>
-	   </tr>
-	   <tr>
-		 <td class="title">说明</td>
-		 <td><input name="configNew.description" value="" style="width:100%"/></td>
-	   </tr>
-	   <tr>
-		<td colspan="2" align="center">[@b.submit value="保存"/]</td>
-	   </tr>
-	 </table>
-	[/@sj.accordionItem]
-	[/@]
-[/@sj.accordion]
+可编辑参数 [@bs.guard res="property"]
+[@b.a href="property!bulkEdit" target="editable-properties"]编辑所有[/@]&nbsp;
+[@b.a href="property!newConfig" target="editable-properties"]新增配置[/@]
+[/@]
+<hr/>
+[@b.div id="editable-properties"]
+[#include "dynaInfo.ftl"/]
+[/@]
 <script type="text/javascript">
 function remove(id){
 	if(confirm("确定删除?")){
-		bg.Go("${b.url('!remove')}?config.id="+id);
+		bg.Go("${b.url('!remove')}?config.id="+id,'editable-properties');
 	}
 }
 </script>

@@ -18,7 +18,7 @@ public class PropertyAction extends BaseAction {
 
 	private PropertyConfigFactory configFactory;
 
-	public String index() {
+	public String bulkEdit() {
 		OqlBuilder<PropertyConfigItemBean> builder = OqlBuilder.from(PropertyConfigItemBean.class, "config");
 		builder.orderBy("config.name");
 		List<PropertyConfigItemBean> configs = entityDao.search(builder);
@@ -36,11 +36,8 @@ public class PropertyAction extends BaseAction {
 		List<PropertyConfigItemBean> configs = entityDao.getAll(PropertyConfigItemBean.class);
 		Set<String> names = CollectUtils.newHashSet();
 		for (PropertyConfigItemBean config : configs) {
-			populate(config, "config" + config.getId());
 			names.add(config.getName());
 		}
-		entityDao.saveOrUpdate(configs);
-
 		String msg = "info.save.success";
 		PropertyConfigItemBean newConfig = populate(PropertyConfigItemBean.class, "configNew");
 		if (StringUtils.isNotBlank(newConfig.getName()) && StringUtils.isNotBlank(newConfig.getValue())
@@ -48,13 +45,52 @@ public class PropertyAction extends BaseAction {
 			entityDao.saveOrUpdate(newConfig);
 		}
 		configFactory.reload();
-		return redirect("index", msg);
+		return redirect("dynaInfo", msg);
+	}
+
+	public String bulkSave() {
+		List<PropertyConfigItemBean> configs = entityDao.getAll(PropertyConfigItemBean.class);
+		Set<String> names = CollectUtils.newHashSet();
+		for (PropertyConfigItemBean config : configs) {
+			populate(config, "config" + config.getId());
+			names.add(config.getName());
+		}
+		entityDao.saveOrUpdate(configs);
+		configFactory.reload();
+		return redirect("dynaInfo", "info.save.success");
 	}
 
 	public String remove() {
 		PropertyConfigItemBean config = entityDao.get(PropertyConfigItemBean.class, getLong("config.id"));
 		if (null != config) entityDao.remove(config);
-		return redirect("index", "info.save.success");
+		return redirect("dynaInfo", "info.save.success");
+	}
+
+	public String index() {
+		OqlBuilder<PropertyConfigItemBean> builder = OqlBuilder.from(PropertyConfigItemBean.class, "config");
+		builder.orderBy("config.name");
+		List<PropertyConfigItemBean> configs = entityDao.search(builder);
+		put("propertyConfigs", configs);
+		Set<String> staticNames = configFactory.getConfig().getNames();
+		for (PropertyConfigItemBean config : configs) {
+			staticNames.remove(config.getName());
+		}
+		put("config", configFactory.getConfig());
+		put("staticNames", staticNames);
+		return forward();
+	}
+
+	public String dynaInfo() {
+		OqlBuilder<PropertyConfigItemBean> builder = OqlBuilder.from(PropertyConfigItemBean.class, "config");
+		builder.orderBy("config.name");
+		List<PropertyConfigItemBean> configs = entityDao.search(builder);
+		put("propertyConfigs", configs);
+		put("config", configFactory.getConfig());
+		return forward();
+	}
+
+	public String newConfig() {
+		return "form";
 	}
 
 	public void setConfigFactory(PropertyConfigFactory configFactory) {

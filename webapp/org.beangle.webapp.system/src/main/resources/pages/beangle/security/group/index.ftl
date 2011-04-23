@@ -1,9 +1,6 @@
 [#ftl]
 [@b.head/]
-[@b.toolbar id="groupbar"]
-	bar.setTitle('[@b.a href='index']权限管理[/@]-->用户组管理');
-	bar.addHelp("${b.text("action.help")}");
-[/@]
+[#include "../nav.ftl"/]
 <table  class="indexpanel">
 	<tr>
 		<td class="index_view">

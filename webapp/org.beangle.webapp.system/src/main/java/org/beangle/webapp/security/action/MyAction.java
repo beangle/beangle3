@@ -13,6 +13,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.security.blueprint.SecurityUtils;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.session.SessionActivity;
 import org.beangle.security.codec.EncryptUtil;
@@ -54,7 +55,7 @@ public class MyAction extends SecurityActionSupport {
 		limit.setPageSize(10);
 		query.limit(limit);
 		put("sessionActivities", entityDao.search(query));
-		put("onlineActivities", sessionRegistry.getSessionInfos(getUser(), true));
+		put("onlineActivities", sessionRegistry.getSessionInfos(SecurityUtils.getPrincipal(), true));
 		return forward();
 	}
 

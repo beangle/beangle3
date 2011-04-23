@@ -1,6 +1,6 @@
 [#ftl]
 [@b.head]
-<link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css" />
+[@b.css href="panel.css"/]
 <style type="text/css">
 .column {width: 440px;float: left;padding-bottom: 100px;}
 div .ui-widget {margin:5px;}

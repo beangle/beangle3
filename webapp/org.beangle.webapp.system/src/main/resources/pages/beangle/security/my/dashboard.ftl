@@ -1,28 +1,91 @@
 [#ftl]
 [@b.head/]
-<link href="${base}/static/themes/default/css/panel.css" rel="stylesheet" type="text/css"/>
-<style type="text/css">
-.column {width: 440px;float: left;padding-bottom: 100px;}
+[#include "../nav.ftl"/]
+[@b.css href="panel.css"/]
+<style>
+#user-profile{
+    margin: 10px 5px;
+    width: 1000px;
+}
+#lspace{
+	float:left;
+	width: 220px;
+	padding: 2px;
+}
+#mspace{
+	float:left;
+	width: 400px;
+	padding: 2px;
+}
+#rspace{
+	float:right;
+	width: 360px;
+	padding: 2px;
+}
+#portrait{
+	height:80px;
+}
+#portrait ul, ol {
+	list-style-type: none;
+}
+
+#portrait img {
+	float: left;
+    border: 1px solid #CCCCCC;
+    padding: 2px;
+    height: 60px;
+    width: 60px;
+}
+
+#portrait #olnks em {
+    color: #000000;
+    font-style: normal;
+    font-weight: bold;
+}
+#portrait #olnks ul {
+    font-size: 10pt;
+    line-height: 20px;
+    margin-top:2px;
+}
+#portrait #olnks ul li {
+    float: left;
+    padding-left: 5px;
+    width: 70px;
+}
+#portrait #olnks ul li a:hover {
+    color: #AA0000;
+}
 div .ui-widget {margin:5px;}
 div .ui-widget-header{margin:2px;}
 div .portlet-content{margin:2px;}
 .ui-icon {float: right;}
 </style>
-[@b.toolbar title="个人用户权限面板"]
-bar.addClose("${b.text("action.close")}");
-[/@]
-
-<div id="column1" class="column">
-	[#include "../user/panels/info_portlet.ftl"/]
-	[#include "../user/panels/group_portlet.ftl"/]
-	[#include "../user/panels/online_portlet.ftl"/]
-	[#include "../user/panels/session_portlet.ftl"/]
+<div id="user-profile">
+<div id="lspace">
+	<div id="portrait">
+		<div id="portrait-img" ><img  title="${user.fullname}" alt="${user.fullname}" src="${b.url('/avatar/my')}"/></div>
+		<div id="olnks">
+			<em>${user.fullname}</em>
+			<ul>
+				<li>[@b.a href="!edit"]修改密码[/@]</li>
+				[@bs.guard res="/avatar/myUpload"]<li>[@b.a href="/avatar/myUpload"]更换头像[/@]</li>[/@]
+				[@bs.guard res="/preference"]<li>[@b.a href="/perference"]设置偏好[/@]</li>[/@]
+				<li>[@b.a href="/logout"]退出系统[/@]</li>
+			</ul>
+		</div>
+	</div>
 </div>
-<div id="column2" class="column">
-	[#include "../user/panels/restriction_portlet.ftl"/]
-	[#include "../user/panels/menu_portlet.ftl"/]
+<div id="mspace">
+[#include "../user/panels/info_portlet.ftl"/]
+[#include "../user/panels/group_portlet.ftl"/]
+[#include "../user/panels/menu_portlet.ftl"/]
 </div>
-
+<div id="rspace">
+[#include "../user/panels/online_portlet.ftl"/]
+[#include "../user/panels/restriction_portlet.ftl"/]
+[#include "../user/panels/session_portlet.ftl"/]
+</div>
+</div>
 <script type="text/javascript">
    function _wi_tm(moudleId){
 	   var id= document.getElementById(moudleId);
@@ -33,7 +96,7 @@ bar.addClose("${b.text("action.close")}");
 	   }
    }
    $(function() {
-		$(".column div div .ui-icon").click(function() {
+		$(".ui-icon").click(function() {
 			$(this).toggleClass("ui-icon-minusthick");
 			$(this).parents(".column div").find(".portlet-content").toggle();
 		});

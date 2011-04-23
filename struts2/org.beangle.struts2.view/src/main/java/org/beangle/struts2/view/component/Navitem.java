@@ -4,7 +4,6 @@
  */
 package org.beangle.struts2.view.component;
 
-import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.lang.StrUtils;
 
 import com.opensymphony.xwork2.util.ValueStack;
@@ -29,7 +28,7 @@ public class Navitem extends UIBean {
 	@Override
 	protected void evaluateParams() {
 		this.href = render(this.href);
-		this.selected = StringUtils.contains(this.href, this.getRequestURI());
+		this.selected = findAncestor(Navmenu.class).isSelected(this.href);
 		if (null == onclick) {
 			if (null != target) {
 				onclick = StrUtils.concat("return bg.Go(this,'", target, "')");

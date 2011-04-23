@@ -22,6 +22,7 @@ import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.restrict.service.RestrictionService;
 import org.beangle.security.blueprint.service.AuthorityService;
 import org.beangle.security.blueprint.service.UserService;
+import org.beangle.security.blueprint.service.UserToken;
 import org.beangle.security.blueprint.session.SessionActivity;
 import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.struts2.helper.ContextHelper;
@@ -55,7 +56,9 @@ public class UserDashboardHelper {
 	}
 
 	private void populateOnlineActivities(User user) {
-		Collection<?> onlineActivities = sessionRegistry.getSessionInfos(user, true);
+		Collection<?> onlineActivities = sessionRegistry.getSessionInfos(
+				new UserToken(user.getId(), user.getName(), user.getFullname(), user.getPassword(), user
+						.getDefaultCategory(), user.getStatus() > 0, false, false, false, null), true);
 		ContextHelper.put("onlineActivities", onlineActivities);
 	}
 
@@ -63,7 +66,7 @@ public class UserDashboardHelper {
 		OqlBuilder<SessionActivity> onlineQuery = OqlBuilder.from(SessionActivity.class, "sessionActivity");
 		onlineQuery.where("sessionActivity.name =:name", user.getName());
 		PageLimit limit = QueryHelper.getPageLimit();
-		limit.setPageSize(10);
+		limit.setPageSize(5);
 		onlineQuery.orderBy("sessionActivity.loginAt desc").limit(limit);
 		ContextHelper.put("sessionActivities", entityDao.search(onlineQuery));
 	}

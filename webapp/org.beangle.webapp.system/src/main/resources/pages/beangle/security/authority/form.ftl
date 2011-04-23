@@ -2,8 +2,8 @@
 [@b.head/]
 [#include "../status.ftl"/]
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
-<link href="${base}/static/css/tableTree.css" rel="stylesheet" type="text/css"/>
-<script  type="text/javascript" src="${base}/static/scripts/common/TableTree.js"></script>
+[@b.css href="tableTree.css"/]
+<script  type="text/javascript" src="${base}/static/scripts/TableTree.js"></script>
 <script type="text/javascript"> defaultColumn=1;</script>
 <script type="text/javascript">
 	function getIds(){
@@ -36,8 +36,8 @@
 <td valign="top">
 [@b.toolbar]
 	bar.setTitle('[@b.a href="group"]用户组[/@]-->菜单和资源权限');
-	bar.addItem("${b.text("action.spread")}","displayAllRowsFor(2);",'plus.png');
-	bar.addItem("${b.text("action.collapse")}","collapseAllRowsFor(2);",'minus.png');
+	bar.addItem("${b.text("action.spread")}","displayAllRowsFor(2);",'${b.theme.iconurl('tree/plus.png')}');
+	bar.addItem("${b.text("action.collapse")}","collapseAllRowsFor(2);",'${b.theme.iconurl('tree/minus.png')}');
 	bar.addItem("${b.text("action.save")}",save,'save.png');
 [/@]
 [@b.form name="authorityForm" action="!edit"]
@@ -82,7 +82,7 @@
 	[/#if]
 	[#assign tdid = tdid[0..tdid?length-2]]
 
-	<tr class="grayStyle" id="${tdid}">
+	<tr class="grayStyle" id="${tdid}" [#if !menu.enabled]style="color:#999999"[/#if]>
 		<td	class="gridselect">
 			<input type="checkbox" id="checkbox_${menu_index}" onclick="treeToggle(this);checkChildren('checkbox_${menu_index}');"  name="menuId" [#if (aoMenus??)&&(aoMenus?seq_contains(menu))]checked="checked"[/#if] value="${menu.id}">
 		</td>

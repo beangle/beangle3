@@ -7,7 +7,6 @@ package org.beangle.security.blueprint.service;
 import java.util.Collection;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.beangle.security.blueprint.Category;
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.userdetail.User;
@@ -54,7 +53,7 @@ public class UserToken extends User implements CategoryPrincipal, Comparable<Use
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(-64900959, -454788261).append(this.id).toHashCode();
+		return getUsername().hashCode();
 	}
 
 	public int compareTo(UserToken o) {
@@ -67,7 +66,7 @@ public class UserToken extends User implements CategoryPrincipal, Comparable<Use
 	public boolean equals(final Object object) {
 		if (!(object instanceof UserToken)) { return false; }
 		UserToken rhs = (UserToken) object;
-		if (null == getId() || null == rhs.getId()) { return false; }
-		return getId().equals(rhs.getId());
+		if (null == getUsername() || null == rhs.getUsername()) { return false; }
+		return getUsername().equals(rhs.getUsername());
 	}
 }

@@ -1,6 +1,5 @@
 [#ftl]
-[@b.head title="Dashboard"]
-[/@]
+[@b.head title="Dashboard"/]
 [@b.css href="panel.css"/]
 <style type="text/css">
 img {border:0 none;vertical-align:middle}
@@ -16,7 +15,7 @@ img {border:0 none;vertical-align:middle}
 	</td>
 </tr>
 [/#macro]
-<h1 style="padding-left: 1em;">系统权限管理</h1>
+[#include "../nav.ftl"/]
 <table>
 <tr>
 	<td width="40%" valign="top">
