@@ -82,7 +82,7 @@ public class IndexAction extends SecurityActionSupport {
 		put("adminUsers", admins);
 		List<Category> categories = entityDao.getAll(Category.class);
 		put("categories", categories);
-		if (isAdmin(getUser())) { return "admin-info"; }
+		if (!isAdmin(getUser())) { return "admin-info"; }
 		String newCategory = get("newCategory");
 		if (StringUtils.isNotBlank(newCategory)) {
 			if (entityDao.get(Category.class, "name", newCategory).isEmpty()) {

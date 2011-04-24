@@ -1,6 +1,6 @@
 [#ftl]
 [@b.head/]
-[#include "nav.ftl"/]
+[#include "../nav.ftl"/]
 	摘要
 	<hr>
 	<table width="100%">

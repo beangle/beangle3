@@ -270,7 +270,7 @@
 				if(onsubmit){
 					var rs=null;
 					if(typeof onsubmit == "function"){
-						rs=onsubmit(myForm);
+						try{rs=onsubmit(myForm);}catch(e){alert(e);return;}
 					}else{
 						rs=eval(onsubmit);
 					}

@@ -1,8 +1,7 @@
 [#ftl]
 [@b.head/]
-[@b.toolbar title="照片库信息"/]
-<div align="center">
-	<div class="result ui-widget-content ui-corner-all" style="width:700px" align="left">
+[#include "../../security/nav.ftl"/]
+	<div class="result ui-widget-content ui-corner-all" style="width:800px;margin:10px 5px;" align="left">
 		<table width="100%">
 		 <tr>
 		   <td align="right" width="20%">照片库信息:</td><td>${avatarBase.description!}</td>
@@ -40,5 +39,4 @@
 	</table>
 	[@b.pagebar id="avatarPanel" page=names/]
 	</div>
-</div>
 [@b.foot/]

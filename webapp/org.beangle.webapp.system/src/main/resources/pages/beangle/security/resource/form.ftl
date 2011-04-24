@@ -3,7 +3,6 @@
 [#include "../nav.ftl"/]
 [#include "scope.ftl"/]
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
-[@b.toolbar title="security.resource.info"]bar.addClose();[/@]
 [@b.form action="!save"]
 <table width="80%" class="formTable" align="center">
 	<tr class="thead">

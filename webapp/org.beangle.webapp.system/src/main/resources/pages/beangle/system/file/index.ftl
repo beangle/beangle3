@@ -1,8 +1,10 @@
 [#ftl]
+[@b.head/]
+[#include "../nav.ftl"/]
 <style type="text/css">
 	.file-browser {
 		width: 800px;
-		margin:0 auto;
+		margin:5px 5px;
 		padding-bottom: 5px;
 	}
 	.file-name {
@@ -30,3 +32,4 @@
 [/@]
 [@b.div id="filelist" href="!list?path=${path?js_string!}" /]
 </div>
+[@b.foot/]

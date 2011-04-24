@@ -22,7 +22,7 @@ public class MyUploadAction extends SecurityActionSupport {
 
 	protected AvatarBase avatarBase;
 
-	public String uploadForm() {
+	public String index() {
 		User user = getUser();
 		Avatar avatar = avatarBase.getAvatar(user.getName());
 		put("avatar", avatar);

@@ -1,6 +1,6 @@
 [#ftl]
 [@b.head/]
-[#include "nav.ftl"/]
+[#include "../nav.ftl"/]
 ${(systemVersion.name)!} 版本信息
 <hr/>
 <ul>

@@ -1,9 +1,8 @@
 [#ftl]
 [@b.head/]
 <script type="text/javascript" src="${base}/static/scripts/validator.js"></script>
-<script type="text/javascript" src="${base}/static/scripts/common/md5.js"></script>
-[@b.toolbar title="更改我的账户"]bar.addClose()[/@]
-[@b.form name="commonForm" action="!save"]
+<script type="text/javascript" src="${base}/static/scripts/md5.js"></script>
+[@b.form action="!save"]
 <table width="80%" align="center" class="formTable">
 	<tr  class="thead">
 	  <td colspan="2"><font color="red"><em>我的账户</em></font></td>
@@ -40,8 +39,8 @@ function validate(form){
 	 'repeatedPassword':{'l':'${b.text("user.repeatPassword")}', 'r':true, 't':'f_repeatedPassword'},
 	 'mail':{'l':'${b.text("common.email")}', 'r':true, 'f':'email', 't':'f_mail'}
 	};
-
-	var v = new validator(document.commonForm , a_fields, null);
+	
+	var v = new validator(form, a_fields, null);
 	if (v.exec()) {
 		if(form['oldPassword_encoded'].value!=hex_md5(form.oldPassword.value)) {alert ("旧密码输入不正确.");return;}
 		if(form['password'].value!=form['repeatedPassword'].value){alert("新密码与重复输入的不相同");return;}
@@ -51,6 +50,7 @@ function validate(form){
 			return true;
 		}
 	}
+	return false;
 }
 </script>
 [@b.foot/]

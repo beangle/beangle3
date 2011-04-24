@@ -21,7 +21,7 @@ public class PasswordAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String edit() {
-		put("user", userService.get(getEntityId("id")));
+		put("user", getEntity());
 		return forward();
 	}
 
@@ -45,6 +45,10 @@ public class PasswordAction extends SecurityActionSupport {
 			return ERROR;
 		}
 	}
+	public String infolet() {
+		put("user", getEntity());
+		return forward();
+	}
 
 	/**
 	 * 更新指定帐户的密码和邮箱
@@ -59,8 +63,7 @@ public class PasswordAction extends SecurityActionSupport {
 		valueMap.put("password", pwd);
 		valueMap.put("mail", email);
 		entityDao.update(User.class, "id", new Object[] { userId }, valueMap);
-		addMessage("ok.passwordChanged");
-		return redirect("edit", "ok.passwordChanged", "&id=" + userId);
+		return redirect("infolet", "ok.passwordChanged", "&id=" + userId);
 	}
 
 	public void setUserService(UserService userService) {

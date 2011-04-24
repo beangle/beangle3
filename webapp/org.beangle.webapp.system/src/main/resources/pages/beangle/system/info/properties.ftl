@@ -1,6 +1,6 @@
 [#ftl]
 [@b.head/]
-[#include "nav.ftl"/]
+[#include "../nav.ftl"/]
 	[@sj.tabbedpanel id="localtabs"]
 	  [@sj.tab id="tab1" target="tone" label="java"/]
 	  [@sj.tab id="tab2" target="ttwo" label="os"/]
@@ -49,7 +49,7 @@
 			[/#list]
 		</table>
 	  </div>
-	  <div id="tfour">
+	  <div id="tfour" style="width:600px">
 		<table>
 			<thead class="thead">
 				<td>系统属性</td>

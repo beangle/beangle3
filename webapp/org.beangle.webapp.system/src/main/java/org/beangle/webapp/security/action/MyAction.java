@@ -42,6 +42,11 @@ public class MyAction extends SecurityActionSupport {
 		return forward();
 	}
 
+	public String infolet() {
+		put("user", getUser());
+		return forward();
+	}
+
 	public String dashboard() {
 		userDashboardHelper.buildDashboard(getUser());
 		return forward();
@@ -86,7 +91,7 @@ public class MyAction extends SecurityActionSupport {
 		valueMap.put("password", pwd);
 		valueMap.put("mail", email);
 		entityDao.update(User.class, "id", new Object[] { userId }, valueMap);
-		return redirect("edit", "ok.passwordChanged");
+		return redirect("infolet", "ok.passwordChanged");
 	}
 
 	/**

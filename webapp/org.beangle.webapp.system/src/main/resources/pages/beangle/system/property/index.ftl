@@ -1,6 +1,6 @@
 [#ftl]
 [@b.head/]
-[#include "../info/nav.ftl"/]
+[#include "../nav.ftl"/]
 静态参数
 <hr/></div>
 [#if staticNames?size=0]
@@ -20,14 +20,5 @@
 [@b.a href="property!newConfig" target="editable-properties"]新增配置[/@]
 [/@]
 <hr/>
-[@b.div id="editable-properties"]
-[#include "dynaInfo.ftl"/]
-[/@]
-<script type="text/javascript">
-function remove(id){
-	if(confirm("确定删除?")){
-		bg.Go("${b.url('!remove')}?config.id="+id,'editable-properties');
-	}
-}
-</script>
+[@b.div id="editable-properties" href="!dynaInfo"/]
 [@b.foot/]

@@ -21,13 +21,17 @@ public class DefaultPropertyConfigFactory implements PropertyConfigFactory, Fact
 
 	private List<PropertyConfigFactory.Provider> providers = new ArrayList<PropertyConfigFactory.Provider>();
 
-	private PropertyConfig config = new PropertyConfigBean();
+	private PropertyConfig config = null;
 
 	public void addConfigProvider(PropertyConfigFactory.Provider provider) {
 		providers.add(provider);
 	}
 
 	public PropertyConfig getObject() throws Exception {
+		if (null == config) {
+			config = new PropertyConfigBean();
+			reload();
+		}
 		return config;
 	}
 

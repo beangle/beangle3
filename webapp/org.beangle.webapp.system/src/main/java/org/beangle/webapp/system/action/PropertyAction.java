@@ -70,12 +70,10 @@ public class PropertyAction extends BaseAction {
 		OqlBuilder<PropertyConfigItemBean> builder = OqlBuilder.from(PropertyConfigItemBean.class, "config");
 		builder.orderBy("config.name");
 		List<PropertyConfigItemBean> configs = entityDao.search(builder);
-		put("propertyConfigs", configs);
 		Set<String> staticNames = configFactory.getConfig().getNames();
 		for (PropertyConfigItemBean config : configs) {
 			staticNames.remove(config.getName());
 		}
-		put("config", configFactory.getConfig());
 		put("staticNames", staticNames);
 		return forward();
 	}
