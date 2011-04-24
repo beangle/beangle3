@@ -22,9 +22,9 @@
 	  <td width="95%">
 		 用户名:${user.name}<br/>
 		 姓名:${user.fullname}<br/>
-		[#if length??]
-		 文件大小:${length}KB<br/>
-		 更新时间:${lastModified?string("yyyy-MM-dd HH:mm:ss")}
+		[#if avatar??]
+		 文件大小:${avatar.size/1024}KB<br/>
+		 更新时间:${(avatar.updatedAt?string("yyyy-MM-dd HH:mm:ss"))!}
 		[#else]
 		 <em>尚无照片</em>
 		[/#if]
