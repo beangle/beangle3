@@ -28,6 +28,7 @@ import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.RestrictPattern;
 import org.beangle.security.blueprint.restrict.Restriction;
 import org.beangle.security.blueprint.restrict.RestrictionHolder;
+import org.beangle.security.blueprint.service.AuthorityService;
 import org.beangle.security.blueprint.service.UserService;
 
 public class RestrictionServiceImpl extends BaseServiceImpl implements RestrictionService {
@@ -37,6 +38,8 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 	protected Map<String, DataProvider> providers = CollectUtils.newHashMap();
 
 	protected DataResolver idDataResolver;
+	
+	protected AuthorityService authorityService;
 
 	/**
 	 * 查询用户在指定模块的数据权限
@@ -49,7 +52,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		restrictions.addAll(getAuthorityRestrictions(user, resource));
 		List<Group> groups = userService.getGroups(user, GroupMember.Ship.MEMBER);
 		// 用户组自身限制
-		for (Group group : groups) {
+		for (Group group : authorityService.filter(groups,resource)) {
 			restrictions.addAll(group.getRestrictions());
 		}
 		// 用户自身限制
@@ -204,6 +207,11 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	
+	public void setAuthorityService(AuthorityService authorityService) {
+		this.authorityService = authorityService;
 	}
 
 	public Map<String, DataProvider> getProviders() {

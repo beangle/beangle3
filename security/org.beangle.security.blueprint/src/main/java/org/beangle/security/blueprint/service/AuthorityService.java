@@ -4,6 +4,7 @@
  */
 package org.beangle.security.blueprint.service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -161,4 +162,12 @@ public interface AuthorityService {
 	 * @return
 	 */
 	public String extractResource(String uri);
+
+	/**
+	 * 过滤有该资源权限的用户组
+	 * @param groups
+	 * @param resource
+	 * @return
+	 */
+	public Collection<Group> filter(Collection<Group> groups, Resource resource);
 }
