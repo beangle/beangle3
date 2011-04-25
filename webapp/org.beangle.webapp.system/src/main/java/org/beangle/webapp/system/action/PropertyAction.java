@@ -12,7 +12,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.property.PropertyConfigFactory;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.struts2.action.BaseAction;
-import org.beangle.webapp.system.model.PropertyConfigItemBean;
+import org.beangle.webapp.service.config.model.PropertyConfigItemBean;
 
 public class PropertyAction extends BaseAction {
 

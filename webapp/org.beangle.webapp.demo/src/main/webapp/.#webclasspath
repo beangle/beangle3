@@ -92,7 +92,8 @@
 /home/chaostone/.m2/repository/org/apache/velocity/velocity/1.5/velocity-1.5.jar
 /home/chaostone/.m2/repository/org/apache/struts/xwork/xwork-core/2.2.1.1/xwork-core-2.2.1.1.jar
 /home/chaostone/ws_beangle/core/struts2/org.beangle.struts2.view/target/classes
-/home/chaostone/ws_beangle/core/webapp/org.beangle.webapp.system/target/classes
+/home/chaostone/ws_beangle/core/webapp/org.beangle.webapp.service/target/classes
 /home/chaostone/.m2/repository/com/jhlabs/imaging/01012005/imaging-01012005.jar
 /home/chaostone/.m2/repository/com/octo/captcha/jcaptcha/1.0/jcaptcha-1.0.jar
 /home/chaostone/.m2/repository/com/octo/captcha/jcaptcha-api/1.0/jcaptcha-api-1.0.jar
+/home/chaostone/ws_beangle/core/webapp/org.beangle.webapp.system/target/classes

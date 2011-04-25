@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean name="system.service.config" class="org.beangle.webapp.service.ServiceModule" />
+
+	<bean id="captchaService"
+		class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService">
+		<property name="captchaEngine">
+			<bean class="org.beangle.webapp.service.captcha.GmailEngine" />
+		</property>
+		<property name="minGuarantedStorageDelayInSeconds" value="600" />
+	</bean>
+
+	<bean name="mimeTypeProvider" autowire="byName"
+		class="org.beangle.web.mime.MimeTypeProvider">
+		<property name="resource">
+			<bean class="org.beangle.spring.config.ConfigResource">
+				<property name="globals"
+					value="classpath*:org/beangle/web/mime/mimetypes.properties" />
+				<property name="locations" value="classpath*:META-INF/mimetypes.properties" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean name="urlPropertyConfigProvider" autowire="byName"
+		class="org.beangle.spring.config.UrlPropertyConfigProvider">
+		<property name="resource">
+			<bean class="org.beangle.spring.config.ConfigResource">
+				<property name="globals" value="classpath*:system-default.properties" />
+				<property name="locations" value="classpath*:META-INF/system.properties" />
+				<property name="users" value="classpath*:system.properties" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="propertyConfig" autowire="byName"
+		class="org.beangle.spring.config.DefaultPropertyConfigFactory">
+		<property name="providers">
+			<list>
+				<ref bean="urlPropertyConfigProvider" />
+				<ref bean="daoPropertyConfigProvider" />
+			</list>
+		</property>
+	</bean>
+
+</beans>

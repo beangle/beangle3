@@ -19,6 +19,7 @@
         <webClassPathEntry>/beangle-struts2-view/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-web/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-webapp-demo/target/classes</webClassPathEntry>
+        <webClassPathEntry>/beangle-webapp-service/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-webapp-system/target/classes</webClassPathEntry>
         <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/charsets.jar</webClassPathEntry>
         <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/ext/dnsns.jar</webClassPathEntry>

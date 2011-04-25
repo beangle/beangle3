@@ -6,13 +6,26 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.beangle</groupId>
-	<artifactId>beangle-webapp-system</artifactId>
+	<artifactId>beangle-webapp-service</artifactId>
 	<packaging>jar</packaging>
-	<name>Beangle Webapp System</name>
+	<name>Beangle Webapp Service</name>
 	<dependencies>
+		<!--captcha dependency-->
 		<dependency>
-			<groupId>org.beangle</groupId>
-			<artifactId>beangle-webapp-service</artifactId>
+			<groupId>com.octo.captcha</groupId>
+			<artifactId>jcaptcha</artifactId>
+			<version>1.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.jhlabs</groupId>
+			<artifactId>imaging</artifactId>
+			<version>01012005</version>
 		</dependency>
 	</dependencies>
 </project>

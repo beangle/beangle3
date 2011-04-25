@@ -229,7 +229,7 @@ public class EntityDrivenAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public String info() {
+	public String info() throws Exception {
 		Long entityId = getEntityId(getShortName());
 		if (null == entityId) {
 			logger.warn("cannot get paremeter {}Id or {}.id", getShortName(), getShortName());

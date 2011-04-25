@@ -1,7 +1,6 @@
 [#ftl]
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
-[#assign labInfo]修改参数信息[/#assign]
-[#include "/template/back.ftl"/]
+[@b.toolbar title="修改参数信息"]bar.addBack("${b.text("action.back")}");[/@]
 [@b.form action="!saveField"]
 <table width="80%" class="formTable" align="center">
 	<tr class="thead"><td  colspan="2">数据限制参数</td></tr>

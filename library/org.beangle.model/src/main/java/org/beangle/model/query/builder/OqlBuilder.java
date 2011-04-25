@@ -164,8 +164,29 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 		return this;
 	}
 
+	/**
+	 * 声明排序字符串
+	 * @param orderBy 排序字符串
+	 * @return 查询构建器
+	 */
 	public OqlBuilder<T> orderBy(final String orderBy) {
 		return orderBy(Order.parse(orderBy));
+	}
+
+	/**
+	 * 指定排序字符串的位置
+	 * 
+	 * @param index 从0开始
+	 * @param orderBy 排序字符串
+	 * @return 查询构建器
+	 */
+	public OqlBuilder<T> orderBy(final int index, final String orderBy) {
+		if (null != orders) {
+			if (StringUtils.isNotEmpty(statement)) { throw new RuntimeException(
+					"cannot add order by to a exists statement."); }
+			this.orders.addAll(index, Order.parse(orderBy));
+		}
+		return this;
 	}
 
 	public OqlBuilder<T> orderBy(final Order order) {

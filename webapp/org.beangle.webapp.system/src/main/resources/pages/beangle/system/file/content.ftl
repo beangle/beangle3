@@ -1,5 +1,5 @@
 [#ftl]
-<link href="${base}/static/css/code.css" rel="stylesheet" type="text/css"/>
+[@b.css href="code.css"/]
 <table width="100%" align="center">
 	<tr>
 	  <td>

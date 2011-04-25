@@ -12,9 +12,10 @@
 	<name>Beangle Webapp Parent</name>
 
     <modules>
-      <module>org.beangle.webapp.system</module>
+		<module>org.beangle.webapp.service</module>      
+		<module>org.beangle.webapp.system</module>
       <!--<module>org.beangle.webapp.database</module>-->
-      <module>org.beangle.webapp.demo</module>
+		<module>org.beangle.webapp.demo</module>
     </modules>
 
 	<properties>

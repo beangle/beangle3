@@ -12,9 +12,9 @@ import org.beangle.commons.archiver.ZipUtils;
 import org.beangle.commons.collection.page.Page;
 import org.beangle.security.blueprint.User;
 import org.beangle.struts2.convention.route.Action;
-import org.beangle.webapp.avatar.Avatar;
-import org.beangle.webapp.avatar.service.AvatarBase;
 import org.beangle.webapp.security.action.SecurityActionSupport;
+import org.beangle.webapp.service.avatar.Avatar;
+import org.beangle.webapp.service.avatar.AvatarBase;
 
 /**
  * 用户头像管理

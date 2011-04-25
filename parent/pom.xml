@@ -89,6 +89,11 @@
 			</dependency>
 			<dependency>
 				<groupId>org.beangle</groupId>
+				<artifactId>beangle-webapp-service</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.beangle</groupId>
 				<artifactId>beangle-webapp-system</artifactId>
 				<version>${project.version}</version>
 			</dependency>

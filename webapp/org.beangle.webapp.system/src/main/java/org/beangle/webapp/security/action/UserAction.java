@@ -249,7 +249,7 @@ public class UserAction extends SecurityActionSupport {
 		return "";
 	}
 
-	public String info(){
+	public String info() throws Exception {
 		String name = get("name");
 		if (StringUtils.isNotBlank(name)) {
 			User user = userService.get(name);

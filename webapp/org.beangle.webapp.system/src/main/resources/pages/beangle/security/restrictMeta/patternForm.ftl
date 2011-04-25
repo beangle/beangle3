@@ -1,7 +1,9 @@
 [#ftl]
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 [#assign labInfo]${b.text("security.restrictionPattern.info")}[/#assign]
-[#include "/template/back.ftl"/]
+[@b.toolbar title=labInfo]
+bar.addBack("${b.text("action.back")}");
+[/@]
 [@b.form action="!savePattern"]
 <table width="70%" class="formTable" align="center">
 	<tr class="thead">
