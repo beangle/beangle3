@@ -29,6 +29,25 @@
 	 </td>
 	</tr>
 	<tr>
+	 <td class="title" id="f_keyName">主键属性:</td>
+	 <td >
+	  <input type="text" name="field.keyName" value="${(field.keyName)!}" style="width:400px;" />
+	 </td>
+	</tr>
+	<tr>
+	 <td class="title" id="f_propertyNames">其它显示属性:</td>
+	 <td >
+	  <input type="text" name="field.propertyNames" value="${(field.propertyNames)!}" style="width:400px;" />
+	 </td>
+	</tr>
+	<tr>
+	 <td class="title" id="f_multiple">是否允许多值:</td>
+	 <td>
+	  <input type="checkbox" name="field.multiple" value="1" [#if field.multiple]checked="checked"[/#if] />是
+	  <input type="checkbox" name="field.multiple" value="0" [#if !field.multiple]checked="checked"[/#if] />否
+	 </td>
+	</tr>
+	<tr>
 		<td class="title" id="f_group"><font color="red">*</font>${b.text('restriction.entities')}:</td>
 		<td>
 		 <table>

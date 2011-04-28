@@ -34,24 +34,31 @@ public final class SystemModule extends AbstractBindModule {
 
 	@Override
 	protected void doBinding() {
-		//property
-		bind(FileAction.class, InfoAction.class, PropertyAction.class).in(Scope.PROTOTYPE);
-		
-		//security
-		bind(ActivityAction.class, AuthorityAction.class, GroupAction.class, IndexAction.class,
-				MenuAction.class, MenuProfileAction.class, MonitorAction.class, MyAction.class,
-				PasswordAction.class, ResourceAction.class, RestrictionAction.class,
+		// property
+		bind(FileAction.class, InfoAction.class, PropertyAction.class).in(
+				Scope.PROTOTYPE);
+
+		// security
+		bind(ActivityAction.class, AuthorityAction.class, GroupAction.class,
+				IndexAction.class, MenuAction.class, MenuProfileAction.class,
+				MonitorAction.class, MyAction.class, PasswordAction.class,
+				ResourceAction.class, RestrictionAction.class,
 				RestrictMetaAction.class, UserAction.class).in(Scope.PROTOTYPE);
 		bind(UserDashboardHelper.class).shortName();
-		
-		//captcha
+
+		// captcha
 		bind(ImageAction.class).in(Scope.PROTOTYPE);
-		
-		//avatar
-		bind(BoardAction.class, MyAction.class, MyUploadAction.class, UserAction.class).in(Scope.PROTOTYPE);
-		
-		//home
-		bind(LoginAction.class, LogoutAction.class, HomeAction.class).in(Scope.PROTOTYPE);
+
+		// avatar
+		bind(BoardAction.class,
+				org.beangle.webapp.avatar.action.MyAction.class,
+				MyUploadAction.class,
+				org.beangle.webapp.avatar.action.UserAction.class).in(
+				Scope.PROTOTYPE);
+
+		// home
+		bind(LoginAction.class, LogoutAction.class, HomeAction.class).in(
+				Scope.PROTOTYPE);
 	}
 
 }

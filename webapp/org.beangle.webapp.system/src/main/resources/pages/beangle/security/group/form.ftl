@@ -33,7 +33,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td class="title" id="f_remark">${b.text("common.description")}:</td>
+		<td class="title" id="f_remark">${b.text("common.remark")}:</td>
 		<td><textarea cols="30" rows="2" name="userGroup.remark">${userGroup.remark!}</textarea></td>
 	</tr>
 	<tr class="tfoot">

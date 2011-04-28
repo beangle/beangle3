@@ -5,14 +5,14 @@
 	[#if (restrictions?size==0)]没有设置[/#if]
 		 [#list restrictions as restriction]
 			<fieldSet  align="center">
-			<legend>${restriction.paramGroup.name}(${restriction.enabled?string("启用","禁用")})</legend>
-			[#list restriction.paramGroup.params as param]
-			  <li>${param.description}</li>
-				  [#if param.editor??]
-				  <br/>[#list paramMaps[restriction.id?string][param.name]! as value]${value[param.editor.properties]}[#if value_has_next],[/#if][/#list]</td>
-				  [#else]
-				  <br/>${paramMaps[restriction.id?string][param.name]!}
-				  [/#if]
+			<legend>${restriction.pattern.remark}(${restriction.enabled?string("启用","禁用")})</legend>
+			[#list restriction.pattern.entity.fields as field]
+				<li>${field.remark}</li>
+				[#if field.multiple]
+				[#list fieldMaps[restriction.id?string][field.name]! as value][#list field.propertyNames?split(",") as pName]${value[pName]!} [/#list][#if value_has_next],[/#if][/#list]</td>
+				[#else]
+				${fieldMaps[restriction.id?string][field.name]!}
+				[/#if]
 			[/#list]
 			</fieldSet>
 		[/#list]

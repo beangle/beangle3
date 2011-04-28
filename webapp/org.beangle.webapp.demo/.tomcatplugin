@@ -6,7 +6,7 @@
     <redirectLogger>false</redirectLogger>
     <updateXml>true</updateXml>
     <warLocation></warLocation>
-    <extraInfo>%3CResource+%0A++name%3D%22jdbc%2Fbeangle%22%0A++driverClassName%3D%22org.h2.Driver%22%0A++url%3D%22jdbc%3Ah2%3A%2Ftmp%2Fbeangle%3BAUTO_SERVER%3DTRUE%22+%0A++type%3D%22javax.sql.DataSource%22%0A++username%3D%22sa%22%0A++password%3D%22%22%0A++%2F%3E</extraInfo>
+    <extraInfo>%3CResource+name%3D%22jdbc%2Fbeangle%22+driverClassName%3D%22org.h2.Driver%22%0Aurl%3D%22jdbc%3Ah2%3A%2Ftmp%2Fbeangle%3BAUTO_SERVER%3DTRUE%22%0Atype%3D%22javax.sql.DataSource%22%0Ausername%3D%22sa%22%0Apassword%3D%22%22%0A%2F%3E</extraInfo>
     <webPath>/demo</webPath>
     <webClassPathEntries>
         <webClassPathEntry>/beangle-commons/target/classes</webClassPathEntry>
@@ -21,18 +21,6 @@
         <webClassPathEntry>/beangle-webapp-demo/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-webapp-service/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-webapp-system/target/classes</webClassPathEntry>
-        <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/charsets.jar</webClassPathEntry>
-        <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/ext/dnsns.jar</webClassPathEntry>
-        <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/ext/gnome-java-bridge.jar</webClassPathEntry>
-        <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/ext/localedata.jar</webClassPathEntry>
-        <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/ext/pulse-java.jar</webClassPathEntry>
-        <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/ext/sunjce_provider.jar</webClassPathEntry>
-        <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/ext/sunpkcs11.jar</webClassPathEntry>
-        <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/jce.jar</webClassPathEntry>
-        <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/jsse.jar</webClassPathEntry>
-        <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/resources.jar</webClassPathEntry>
-        <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/rhino.jar</webClassPathEntry>
-        <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/rt.jar</webClassPathEntry>
         <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/lib/tools.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/antlr/antlr/2.7.6/antlr-2.7.6.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/aopalliance/aopalliance/1.0/aopalliance-1.0.jar</webClassPathEntry>
@@ -52,6 +40,7 @@
         <webClassPathEntry>M2_REPO/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-digester/commons-digester/2.0/commons-digester-2.0.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-fileupload/commons-fileupload/1.2.1/commons-fileupload-1.2.1.jar</webClassPathEntry>
+        <webClassPathEntry>M2_REPO/commons-io/commons-io/1.3.2/commons-io-1.3.2.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-io/commons-io/2.0.1/commons-io-2.0.1.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-lang/commons-lang/2.6/commons-lang-2.6.jar</webClassPathEntry>
         <webClassPathEntry>M2_REPO/commons-logging/commons-logging/99.0-does-not-exist/commons-logging-99.0-does-not-exist.jar</webClassPathEntry>

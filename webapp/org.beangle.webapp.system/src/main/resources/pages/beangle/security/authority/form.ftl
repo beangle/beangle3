@@ -36,8 +36,8 @@
 <td valign="top">
 [@b.toolbar]
 	bar.setTitle('[@b.a href="group"]用户组[/@]-->菜单和资源权限');
-	bar.addItem("${b.text("action.spread")}","displayAllRowsFor(2);",'${b.theme.iconurl('tree/plus.png')}');
-	bar.addItem("${b.text("action.collapse")}","collapseAllRowsFor(2);",'${b.theme.iconurl('tree/minus.png')}');
+	bar.addItem("${b.text("action.spread")}","displayAllRowsFor(1);",'${b.theme.iconurl('tree/plus.png')}');
+	bar.addItem("${b.text("action.collapse")}","collapseAllRowsFor(1);",'${b.theme.iconurl('tree/minus.png')}');
 	bar.addItem("${b.text("action.save")}",save,'save.png');
 [/@]
 [@b.form name="authorityForm" action="!edit"]
@@ -82,7 +82,7 @@
 	[/#if]
 	[#assign tdid = tdid[0..tdid?length-2]]
 
-	<tr class="grayStyle" id="${tdid}" [#if !menu.enabled]style="color:#999999"[/#if]>
+	<tr class="grayStyle [#if !menu.enabled]ui-disabled[/#if]" id="${tdid}">
 		<td	class="gridselect">
 			<input type="checkbox" id="checkbox_${menu_index}" onclick="treeToggle(this);checkChildren('checkbox_${menu_index}');"  name="menuId" [#if (aoMenus??)&&(aoMenus?seq_contains(menu))]checked="checked"[/#if] value="${menu.id}">
 		</td>
@@ -91,7 +91,7 @@
 			[#if menu.children?size==0]
 			<a href="#" class="doc"></a>[#rt]
 			[#else]
-			<a href="#" class="folder" onclick="toggleRows(this);"></a>[#rt]
+			<a href="#" class="folder_open" id="${tdid}_folder" onclick="toggleRows(this);"></a>[#rt]
 			[/#if]
 			 [@i18nTitle menu/]
 		</div>

@@ -83,8 +83,8 @@
 	</td>
 	</tr>
 	<tr>
-		<td class="title" width="25%" id="f_description">&nbsp;${b.text("common.description")}:</td>
-		<td ><textarea cols="35" rows="2" name="menu.description">${menu.description!}</textarea></td>
+		<td class="title" width="25%" id="f_remark">&nbsp;${b.text("common.remark")}:</td>
+		<td ><textarea cols="35" rows="2" name="menu.remark">${menu.remark!}</textarea></td>
 	</tr>
 	<tr class="tfoot">
 		<td colspan="6"  >

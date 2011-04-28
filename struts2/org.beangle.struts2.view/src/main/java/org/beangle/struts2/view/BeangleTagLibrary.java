@@ -52,14 +52,16 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		super();
 	}
 
-	public BeangleTagLibrary(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
+	public BeangleTagLibrary(ValueStack stack, HttpServletRequest req,
+			HttpServletResponse res) {
 		super(stack, req, res);
 		theme.setUi(getUitheme());
 		theme.setUibase(req.getContextPath());
 		this.stack.getContext().put(Theme.THEME, theme);
 	}
 
-	public Object getFreemarkerModels(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
+	public Object getFreemarkerModels(ValueStack stack, HttpServletRequest req,
+			HttpServletResponse res) {
 		BeangleTagLibrary models = new BeangleTagLibrary(stack, req, res);
 		models.render = this.render;
 		return models;
@@ -99,6 +101,9 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		while (em.hasMoreElements()) {
 			String attr = (String) em.nextElement();
 			String value = req.getParameter(attr);
+			if (attr.equals("x-requested-with")) {
+				continue;
+			}
 			sw.write(attr);
 			sw.write('=');
 			try {
@@ -122,11 +127,13 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 	}
 
 	public String text(String name, Object arg0) {
-		return getText(name, name, Collections.singletonList(arg0), stack, false);
+		return getText(name, name, Collections.singletonList(arg0), stack,
+				false);
 	}
 
 	public String text(String name, Object arg0, Object arg1) {
-		return getText(name, name, CollectUtils.newArrayList(arg0, arg1), stack, false);
+		return getText(name, name, CollectUtils.newArrayList(arg0, arg1),
+				stack, false);
 	}
 
 	public TagModel getHead() {

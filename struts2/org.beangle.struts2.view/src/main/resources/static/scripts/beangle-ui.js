@@ -123,11 +123,11 @@
 			}
 		}
 		
-		this.addBack = function (msg){
-			if(null==msg){
+		this.addBack = function (title){
+			if(null==title){
 				this.addItem("返回",function (){history.back(-1)},'backward.png');
 			}else{
-				this.addItem(msg,function (){history.back(-1)},'backward.png');
+				this.addItem(title,function (){history.back(-1)},'backward.png');
 			}
 		}
 		this.addHelp = function (module){
@@ -436,6 +436,16 @@
 			jQuery(pageNoSelect).change(function (){onePage.goPage(1,this.value)});
 			pageNoSelect.selectedIndex = selectIndex;
 		}
+		/**
+		var submitBtn = document.createElement('input');
+		submitBtn.setAttribute("type",'button');
+		submitBtn.setAttribute("name",'gogo');
+		submitBtn.value="Go"
+		submitBtn.className="pgbar-go";
+		pagespan.appendChild(submitBtn);
+		jQuery(submitBtn).click(function (){onePage.goPage(1,this.value)});
+		*/
+		
 		pageDiv.appendChild(pagespan);
 		if(onePage.pageNo<onePage.maxPageNo){
 			addAnchor(titles['next'],onePage.pageNo+1);
@@ -603,16 +613,18 @@
 					row.onmouseout=bg.ui.grid.mouseOverGrid;
 				}
 			},
-			fillEmpty : function (divId,pageSize,size){
+			fillEmpty : function (divId,pageSize,size,msg){
 				emptydiv=document.getElementById(divId);
 				var emptyCnt=pageSize-size;
 				if(emptyCnt>7) emptyCnt=7;
+				heightpx=emptyCnt*16;
 				if(size==0){
-					emptyLabel=document.createElement("label");
-					emptyLabel.innerHTML="No result matched your search.";
+					emptyLabel=document.createElement("div");
+					emptyLabel.innerHTML=(msg||'No result matched your search.');
+					emptyLabel.style.paddingTop=heightpx/2-16 +"px";
 					emptydiv.appendChild(emptyLabel);
 				}
-				for(var i=0;i<emptyCnt;i++){ emptydiv.appendChild(document.createElement("br")); }
+				emptydiv.style.height=heightpx+"px";
 			}
 		}
 	});

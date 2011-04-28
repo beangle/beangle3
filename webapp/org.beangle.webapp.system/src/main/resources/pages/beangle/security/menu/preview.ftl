@@ -17,7 +17,7 @@
 	[#list 1..(depth-((menu.code?length)/2)) as i]<td></td>[/#list]
 	[/#if]
 	<td>${menu.engTitle!("")}</td>
-	<td>${menu.description!("")}</td>
+	<td>${menu.remark!("")}</td>
 	</tr>
 	[/#list]
 </table>

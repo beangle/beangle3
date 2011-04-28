@@ -17,8 +17,8 @@ bar.addBack("${b.text("action.back")}");
 	 <td class="content">${menu.engtitle!}</td>
    </tr>
    <tr>
-	<td class="title" >&nbsp;${b.text("common.description")}:</td>
-	<td  class="content" >${menu.description!}</td>
+	<td class="title" >&nbsp;${b.text("common.remark")}:</td>
+	<td  class="content" >${menu.remark!}</td>
 	<td class="title" >&nbsp;${b.text("common.status")}:</td>
 	<td class="content">
 		[#if menu.enabled]${b.text("action.activate")}[#else]${b.text("action.unactivate")}[/#if]

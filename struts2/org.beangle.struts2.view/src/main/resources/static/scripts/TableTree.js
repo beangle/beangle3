@@ -100,6 +100,13 @@ function collapseAllRowsFor(depth) {
    if (r.id.lastIndexOf("-") >depth ) {
      r.style.display = "none";
    }
+   if(r.id.lastIndexOf("-") >=depth ) {
+     var rowFolder=document.getElementById(r.id+"_folder");
+     if(rowFolder){
+     	rowFolder.style.backgroundImage = "url("+treeImagePath+"plus.png)";
+     	rowFolder.className="folder";
+     }
+   }
  }
 }
 /**
@@ -112,6 +119,13 @@ function displayAllRowsFor(depth) {
    var r = rows[j];
    if (r.id.lastIndexOf("-") > depth) {
      r.style.display = "";
+   }
+   if (r.id.lastIndexOf("-") >= depth) {
+     var rowFolder=document.getElementById(r.id+"_folder");
+     if(rowFolder){
+     	rowFolder.style.backgroundImage = "url("+treeImagePath+"minus.png)";
+     	rowFolder.className="folder_open";
+     }
    }
  }
 }

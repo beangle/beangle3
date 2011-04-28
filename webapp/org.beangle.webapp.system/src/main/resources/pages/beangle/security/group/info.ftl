@@ -31,8 +31,8 @@ bar.addBack("${b.text("action.back")}");
 	<td  class="content" colspan="3">[#list userGroup.members?sort_by(["user","name"]) as m] [#if m.user.enabled]${m.user.fullname}(${m.user.name})[#else]<s>${m.user.fullname}(${m.user.name})</s>[/#if]&nbsp;[/#list]</td>
 	</tr>
 	<tr>
-	<td class="title" >${b.text("common.description")}:</td>
-	<td  class="content" colspan="3">${userGroup.description!}</td>
+	<td class="title" >${b.text("common.remark")}:</td>
+	<td  class="content" colspan="3">${userGroup.remark!}</td>
 	</tr>
 	<tr>
 		<td colspan="4">[@b.div href="restriction!info?restriction.holder.id=${userGroup.id}&restrictionType=group" /]</td>

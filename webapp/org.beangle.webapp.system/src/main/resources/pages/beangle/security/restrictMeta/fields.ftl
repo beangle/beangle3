@@ -9,7 +9,7 @@ function validateEntity(form){
 	return true
 }
 </script>
-[@b.grid items=entities var="entity"]
+[@b.grid items=entities var="entity" sortable="false"]
 	[@b.row]
 		[@b.col property="" title="序号"]${entity_index+1}[/@]
 		[@b.col property="name" title="common.name"]
@@ -42,7 +42,7 @@ function validateEntity(form){
 	[@b.gridbar ]
 		bar.addItem("${b.text("action.new")}",action.method('editField'));
 		bar.addItem("${b.text("action.edit")}",action.single('editField'));
-		//bar.addItem("${b.text("action.delete")}","remove('fieldForm')");
+		bar.addItem("${b.text("action.delete")}",action.single('removeField'));
 	[/@]
 	[@b.row]
 		[@b.boxcol/]

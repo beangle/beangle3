@@ -6,7 +6,7 @@
 		bar.addItem("${b.text("action.new")}",action.add());
 		bar.addItem("${b.text("action.modify")}",action.edit());
 		bar.addItem("${b.text("action.delete")}",action.remove());
-		bar.addItem("${b.text("action.export")}",action.exportData(null,"title,description,creator.title,createdAt,updatedAt,users","${b.text("common.name")},${b.text("common.description")},${b.text("common.creator")},${b.text("common.createdAt")},${b.text("common.updatedAt")},${b.text("group.users")}"));
+		bar.addItem("${b.text("action.export")}",action.exportData("name:${b.text("common.name")},remark:${b.text("common.remark")},owner.name:${b.text("common.creator")},createdAt:${b.text("common.createdAt")},updatedAt:${b.text("common.updatedAt")},users:${b.text("group.users")}"));
 	[/@]
 	[@b.row]
 		[@b.boxcol/]

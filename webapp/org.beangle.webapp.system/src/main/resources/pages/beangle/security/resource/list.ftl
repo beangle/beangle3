@@ -12,10 +12,10 @@
 	bar.addItem("${b.text("action.freeze")}",activate(0),'${b.theme.iconurl('actions/freeze.png')}');
 	bar.addItem("${b.text("action.activate")}",activate(1),'${b.theme.iconurl('actions/activate.png')}');
 	bar.addItem("${b.text("action.delete")}",action.remove());
-	bar.addItem("${b.text("action.export")}",action.exportData(null,"title,name,description,enabled","标题,名称,描述,状态"));
+	bar.addItem("${b.text("action.export")}",action.exportData("title:标题,name:名称,remark:${b.text('common.remark')},enabled:是否启用"));
 	[/@]
 	<tr>
-		<td><img src="${base}/static/images/action/search.png" onclick="document.getElementById('resourceForm').submit()"/></td>
+		<td><img src="${b.theme.iconurl('actions/edit-find.png')}" onclick="bg.form.submit(document.getElementById('resourceForm'))"/>[@b.submit style="display:none"/]</td>
 		<td><input type="text" name="resource.title" value="${Parameters['resource.title']!}" style="width:95%;"/></td>
 		<td><input type="text" name="resource.name" value="${Parameters['resource.name']!}" style="width:95%;"/></td>
 		<td>
@@ -37,7 +37,7 @@
 	[@b.row]
 		[@b.boxcol/]
 		[@b.col  width="20%" property="title" title="标题" ][@b.a href="resource!info?resource.id=${resource.id}"]${(resource.title)!}[/@][/@]
-		[@b.col  width="55%" property="name" align="left" title="名称"]<span title="${resource.description!}">${resource.name!}</span>[/@]
+		[@b.col  width="55%" property="name" align="left" title="名称"]<span title="${resource.remark!}">${resource.name!}</span>[/@]
 		[@b.col  width="10%" property="scope" title="可见范围"][@resourceScope resource.scope/][/@]
 		[@b.col  width="10%" property="enabled" title="状态"][@enableInfo resource.enabled/][/@]
 	[/@]

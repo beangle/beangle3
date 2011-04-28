@@ -8,6 +8,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 public class Textfield extends UIBean {
 	private String name;
+	private String label;
 	private String title;
 
 	public Textfield(ValueStack stack) {
@@ -16,9 +17,9 @@ public class Textfield extends UIBean {
 
 	@Override
 	protected void evaluateParams() {
-		if (null == title) title = name;
 		if (null == this.id) id = name;
-		title = getText(title);
+		if (null != label) label = getText(label);
+		if (null != title) title = getText(title);
 	}
 
 	public String getName() {
@@ -35,6 +36,14 @@ public class Textfield extends UIBean {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 }

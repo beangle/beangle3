@@ -1,5 +1,5 @@
 [#ftl]
-[@b.grid   items=patterns var="pattern"]
+[@b.grid  items=patterns var="pattern"]
 	[@b.gridbar]
 		bar.addItem("${b.text("action.add")}",action.method('editPattern'));
 		bar.addItem("${b.text("action.edit")}",action.single('editPattern'));

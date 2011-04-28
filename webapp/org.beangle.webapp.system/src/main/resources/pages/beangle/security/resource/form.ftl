@@ -2,6 +2,7 @@
 [@b.head/]
 [#include "../nav.ftl"/]
 [#include "scope.ftl"/]
+[@b.toolbar title="新建/修改资源"]bar.addBack();[/@]
 <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 [@b.form action="!save"]
 <table width="80%" class="formTable" align="center">
@@ -21,9 +22,9 @@
 	 </td>
 	</tr>
 	<tr>
-	 <td class="title" id="f_description">${b.text("common.description")}:</td>
+	 <td class="title" id="f_remark">${b.text("common.remark")}:</td>
 	 <td >
-		<input type="text" name="resource.description" value="${resource.description!}"/>
+		<input type="text" name="resource.remark" value="${resource.remark!}"/>
 	 </td>
 	</tr>
 	<tr>

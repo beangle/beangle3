@@ -10,8 +10,8 @@ import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.RestrictEntity;
+import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.RestrictPattern;
 
 public class RestrictMetaAction extends SecurityActionSupport {
@@ -70,15 +70,37 @@ public class RestrictMetaAction extends SecurityActionSupport {
 	}
 
 	public String removeEntity() {
-		Long groupId = getEntityId("entity");
-		if (null != groupId) {
-			RestrictEntity group = (RestrictEntity) entityDao.get(RestrictEntity.class, groupId);
-			entityDao.remove(group);
-			logger.info("remove group with name {}", group.getName());
+		Long entityId = getEntityId("entity");
+		if (null != entityId) {
+			RestrictEntity entity = (RestrictEntity) entityDao.get(RestrictEntity.class, entityId);
+			try {
+				entityDao.remove(entity);
+			} catch (Exception e) {
+				return redirect("fields", "info.remove.failure");
+			}
+			logger.info("remove entity with name {}", entity.getName());
 		}
 		return redirect("fields", "info.remove.success");
 	}
 
+	public String removeField() {
+		Long fieldId = getEntityId("field");
+		if (null != fieldId) {
+			RestrictField field = (RestrictField) entityDao.get(RestrictField.class, fieldId);
+			try {
+				for(RestrictEntity entity:field.getEntities()){
+					entity.getFields().remove(field);
+				}
+				entityDao.saveOrUpdate(field.getEntities());
+				entityDao.remove(field);
+			} catch (Exception e) {
+				return redirect("fields", "info.remove.failure");
+			}
+			logger.info("remove field with name {}", field.getName());
+		}
+		return redirect("fields", "info.remove.success");
+	}
+	
 	public String editField() {
 		RestrictField field = getEntity(RestrictField.class, "field");
 		List<RestrictEntity> entities = entityDao.getAll(RestrictEntity.class);
@@ -90,14 +112,21 @@ public class RestrictMetaAction extends SecurityActionSupport {
 
 	public String saveField() {
 		String entityIds = get("entityIds");
-		List<RestrictEntity> paramGroups = CollectUtils.newArrayList();
+		List<RestrictEntity> entities = CollectUtils.newArrayList();
 		if (StringUtils.isNotBlank(entityIds)) {
-			paramGroups = entityDao.get(RestrictEntity.class, StrUtils.splitToLong(entityIds));
+			entities = entityDao.get(RestrictEntity.class, StrUtils.splitToLong(entityIds));
 		}
+		//FIXME Too complex
 		RestrictField field = populateEntity(RestrictField.class, "field");
+		for(RestrictEntity entity:field.getEntities()){
+			entity.getFields().remove(field);
+		}
+		for(RestrictEntity entity:entities){
+			entity.getFields().add(field);
+		}
 		field.getEntities().clear();
-		field.getEntities().addAll(paramGroups);
-		saveOrUpdate(field);
+		field.getEntities().addAll(entities);
+		entityDao.saveOrUpdate(field,entities);
 		return redirect("fields", "info.save.success");
 	}
 

@@ -100,7 +100,7 @@
 	});
 	bg.extend({
 		randomInt:function(){
-			var num=Math.random()*10000;
+			var num=Math.random()*10000000;
 			num -= num%1;
 			return num;
 		}
@@ -321,8 +321,9 @@
 				if (typeof jQuery != "undefined") {
 					jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
 				}
-				//myForm.submit();
 				submitx.click();
+				jQuery("#"+sumbitBtnId).unbind();
+				//myForm.removeChild(submitx);
 			},
 	
 			/**
@@ -754,7 +755,7 @@
 			options_submit.targets = this.target;
 			options_submit.href = this.actionurl;
 			options_submit.formids = this.formid;
-			$.struts2_jquery.bind($('#' + submitBtnId),options_submit);
+			jQuery.struts2_jquery.bind(jQuery('#' + submitBtnId),options_submit);
 			submitx.click();
 		}
 		this.goPage = function (pageNo,pageSize,orderBy){
@@ -771,6 +772,15 @@
 	bg.extend({
 		page:function (action,target){return new Page(action,target);}
 	});
+	
+	bg.onReturn = function(event, action) {
+		if (!event) {
+			event = window.event;
+		}
+		if (event && event.keyCode && event.keyCode == 13) {
+			action();
+		}
+	};
 	
 	// alert(document.body);
 	beangle.ready(beangle.iframe.adaptSelf);

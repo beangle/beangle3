@@ -10,7 +10,7 @@ bar.addBack("${b.text("action.back")}");
 		<td  colspan="2">数据限制模式</td>
 	</tr>
 	<tr>
-		<td class="title" id="f_description">描述<font color="red">*</font>:</td>
+		<td class="title" id="f_remark">描述<font color="red">*</font>:</td>
 		<td><input name="pattern.remark" value="${pattern.remark!}"/></td>
 	</tr>
 	<tr>
@@ -41,7 +41,7 @@ bar.addBack("${b.text("action.back")}");
 <script>
 function validatePattern(form){
 	var a_fields = {
-		'pattern.remark':{'l':'标题', 'r':true, 't':'f_description'},
+		'pattern.remark':{'l':'${b.text("common.remark")}', 'r':true, 't':'f_remark'},
 		'pattern.content':{'l':'模式', 'r':true, 't':'f_pattern'}
 	};
 	var v = new validator(form, a_fields, null);

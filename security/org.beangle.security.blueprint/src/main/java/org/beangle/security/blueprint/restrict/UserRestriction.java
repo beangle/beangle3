@@ -4,7 +4,11 @@
  */
 package org.beangle.security.blueprint.restrict;
 
-
+/**
+ * 用户数据权限
+ * @author chaostone
+ *
+ */
 public interface UserRestriction extends Restriction {
 
 }

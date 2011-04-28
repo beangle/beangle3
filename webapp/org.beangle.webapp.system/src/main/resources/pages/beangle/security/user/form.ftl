@@ -8,7 +8,8 @@
 	[@sj.tab id="userTab1" label="用户信息" target="userInfo"/]
 	[@sj.tab id="userTab2" label="所在用户组" target="groupmember"/]
 	[#if user.id??]
-	[@sj.tab id="userTab3" label="全局数据权限" href="${b.url('restriction!info')}?forEdit=1&restrictionType=user&restriction.holder.id=${user.id}"/]
+	[@sj.tab id="userTab3" label="全局数据权限" target="user_restriction"/]
+	[@b.div href="restriction!info?forEdit=1&restrictionType=user&restriction.holder.id=${user.id}" id="user_restriction"/]
 	[/#if]
 	<div id="userInfo">
 	 <table width="100%"  class="formTable">
@@ -74,7 +75,7 @@
 		[@b.row]
 			[@b.col title=""]<input name="groupId" type="checkbox" onchange="changeMember(${m.group.id},this)"/>[/@]
 			[@b.col title="序号"]${m_index+1}[/@]
-			[@b.col title="用户组" property="group.name"/]
+			[@b.col title="用户组" property="group.name"]<span [#if !m.group.enabled]class="ui-disabled" title="${b.text('action.freeze')}"[/#if]>${m.group.name}</span>[/@]
 			[@b.col title="成员"]
 			<input type="checkbox" name="member${m.group.id}" ${(memberMap.get(m.group).member)?default(false)?string('checked="checked"','')}/>
 			[/@]

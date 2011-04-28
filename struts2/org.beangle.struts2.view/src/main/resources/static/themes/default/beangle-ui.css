@@ -16,7 +16,7 @@ a:hover {color: red;}
 /* grid */
 .grid{border-color:#006CB2;margin: 0px 0px 0px 0px ;font-size: 13px;}
 
-.gridempty{border:solid;border-width:1px;border-top-width:0px;border-color:#006CB2;}
+.gridempty{border:solid;border-width:1px;border-top-width:0px;border-color:#006CB2;text-align:center;}
 
 .gridtable {width:100%;border-collapse: collapse;border:solid;border-width:1px;border-color:#006CB2;vertical-align: middle;}
 
@@ -55,6 +55,8 @@ a:hover {color: red;}
 .pgbar-input{width:45px;height:12px;}
 
 .pgbar-selbox{width:50px;height:20px;font-size: 0.8em;margin:0px;}
+
+.pgbar-go{width:30px;height:20px;font-size: 0.8em;margin:0px;}
 
 /*toolbar*/
 .toolbar{height:22px;border-collapse:separate;display:block;font-size: 13px;}
@@ -297,10 +299,6 @@ table.settingTable td{
 .tfvNormal {
 	font-weight: normal;
 	color: black; 
-/*
-    background-color: #EBEBEB;
-	text-align: right;
-*/
 }
 
 /**导航菜单**/
@@ -338,6 +336,8 @@ table.settingTable td{
 
 .navmenu li a:hover {
     background: none repeat scroll 0 0 #759FCF;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     color: #FFFFFF;
 }
 .navmenu li a.selected, .navmenu li a.selected:hover {
@@ -345,4 +345,8 @@ table.settingTable td{
     background: none repeat scroll 0 0 #FFFFFF;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+}
+
+.ui-disabled{
+	color:#999999;
 }

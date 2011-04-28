@@ -58,8 +58,8 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
 			if (null == textResource) {
 				return value;
 			} else {
-				if (Boolean.TRUE.equals(value)) return getText("yes");
-				else return getText("no");
+				if (Boolean.TRUE.equals(value)) return getText("common.yes", "Y");
+				else return getText("common.no", "N");
 			}
 		} else {
 			return value;
@@ -87,6 +87,10 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
 
 	protected String getText(String key) {
 		return textResource.getText(key, key);
+	}
+
+	protected String getText(String key, String defaultVal) {
+		return textResource.getText(key, defaultVal);
 	}
 
 	public TextResource getTextResource() {

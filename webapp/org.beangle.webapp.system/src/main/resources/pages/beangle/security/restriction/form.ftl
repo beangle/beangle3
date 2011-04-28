@@ -1,15 +1,17 @@
 [#ftl]
 [@b.head/]
- <link href="${base}/static/css/tab.css" rel="stylesheet" type="text/css"/>
+[@b.css href="tab.css"/]
  <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
- <script  type="text/javascript" src="${base}/static/scripts/tabpane.js"></script>
- <script  type="text/javascript" src="${base}/static/scripts/common/TabPane.js"></script>
+ <script  type="text/javascript" src="${base}/static/scripts/TabPane.js"></script>
 [@b.toolbar title="数据权限"]
 function save(){
 	if(confirm("确定设置?")){bg.form.submit(document.restrictionForm);}
 }
-bar.addItem("${b.text("action.save")}",save,'save.gif');
-bar.addBack();
+function cancelEdit(){
+	bg.form.submit(document.restrictionForm,'${b.url("!info")}')
+}
+bar.addItem("${b.text("action.save")}",save,'${b.theme.iconurl("actions/save.png")}');
+bar.addItem("取消",cancelEdit,'${b.theme.iconurl("actions/close.png")}');
 [/@]
 [@b.form name="restrictionForm" action="!save"]
 	<input type="hidden" name="restriction.id" value="${restriction.id!}"/>

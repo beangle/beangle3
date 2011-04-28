@@ -10,8 +10,8 @@
 	 <td class="content">${resource.name}</td>
    </tr>
    <tr>
-	<td class="title">${b.text("common.description")}:</td>
-	<td  class="content">${resource.description!}</td>
+	<td class="title">${b.text("common.remark")}:</td>
+	<td  class="content">${resource.remark!}</td>
 	<td class="title">&nbsp;${b.text("common.status")}:</td>
 	<td class="content">
 		[#if resource.enabled]${b.text("action.activate")}[#else]${b.text("action.unactivate")}[/#if]
@@ -46,7 +46,7 @@
    <table class="infoTable">
    <tr>
 	 <td class="title">名称:</td>
-	 <td class="content">${entity.name}</td>
+	 <td class="content">${entity.name}([#list entity.fields as field]${field.name}-${field.remark!}[#if field_has_next],[/#if][/#list])</td>
 	 <td class="title">类型:</td>
 	 <td class="content">${entity.type!}</td>
 	 <td class="title">描述:</td>
