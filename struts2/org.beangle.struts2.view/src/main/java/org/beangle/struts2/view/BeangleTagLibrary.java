@@ -23,6 +23,7 @@ import org.beangle.struts2.view.component.Anchor;
 import org.beangle.struts2.view.component.Component;
 import org.beangle.struts2.view.component.Css;
 import org.beangle.struts2.view.component.Div;
+import org.beangle.struts2.view.component.Field;
 import org.beangle.struts2.view.component.Foot;
 import org.beangle.struts2.view.component.Form;
 import org.beangle.struts2.view.component.Grid;
@@ -32,7 +33,7 @@ import org.beangle.struts2.view.component.Messages;
 import org.beangle.struts2.view.component.Navitem;
 import org.beangle.struts2.view.component.Navmenu;
 import org.beangle.struts2.view.component.Pagebar;
-import org.beangle.struts2.view.component.Qitem;
+import org.beangle.struts2.view.component.Module;
 import org.beangle.struts2.view.component.RedirectParams;
 import org.beangle.struts2.view.component.Select;
 import org.beangle.struts2.view.component.Submit;
@@ -52,16 +53,14 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		super();
 	}
 
-	public BeangleTagLibrary(ValueStack stack, HttpServletRequest req,
-			HttpServletResponse res) {
+	public BeangleTagLibrary(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
 		super(stack, req, res);
 		theme.setUi(getUitheme());
 		theme.setUibase(req.getContextPath());
 		this.stack.getContext().put(Theme.THEME, theme);
 	}
 
-	public Object getFreemarkerModels(ValueStack stack, HttpServletRequest req,
-			HttpServletResponse res) {
+	public Object getFreemarkerModels(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
 		BeangleTagLibrary models = new BeangleTagLibrary(stack, req, res);
 		models.render = this.render;
 		return models;
@@ -127,13 +126,11 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 	}
 
 	public String text(String name, Object arg0) {
-		return getText(name, name, Collections.singletonList(arg0), stack,
-				false);
+		return getText(name, name, Collections.singletonList(arg0), stack, false);
 	}
 
 	public String text(String name, Object arg0, Object arg1) {
-		return getText(name, name, CollectUtils.newArrayList(arg0, arg1),
-				stack, false);
+		return getText(name, name, CollectUtils.newArrayList(arg0, arg1), stack, false);
 	}
 
 	public TagModel getHead() {
@@ -224,8 +221,8 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		return get(Textfield.class);
 	}
 
-	public TagModel getQitem() {
-		return get(Qitem.class);
+	public TagModel getField() {
+		return get(Field.class);
 	}
 
 	public TagModel getTextfields() {
@@ -240,6 +237,10 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		return get(Select.class);
 	}
 
+	public TagModel getModule() {
+		return get(Module.class);
+	}
+
 	public TagModel getNavmenu() {
 		return get(Navmenu.class);
 	}
@@ -247,4 +248,5 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 	public TagModel getNavitem() {
 		return get(Navitem.class);
 	}
+
 }

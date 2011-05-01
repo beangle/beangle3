@@ -30,6 +30,8 @@ public abstract class UIBean extends Component {
 
 	protected Theme theme;
 
+	protected Theme innerTheme;
+	
 	public UIBean(ValueStack stack) {
 		super(stack);
 	}

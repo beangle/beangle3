@@ -267,6 +267,7 @@
 		form:{
 			submit : function (myForm,action,target,onsubmit,ajax){
 				if((typeof myForm)=='string') myForm = document.getElementById(myForm);
+				if(!onsubmit) onsubmit=myForm.onsubmit;
 				if(onsubmit){
 					var rs=null;
 					if(typeof onsubmit == "function"){

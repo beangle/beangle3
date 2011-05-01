@@ -47,6 +47,7 @@ public class HomeAction extends SecurityActionSupport {
 
 	public String welcome() {
 		put("date", new Date(System.currentTimeMillis()));
+		put("user", getUser());
 		return forward();
 	}
 

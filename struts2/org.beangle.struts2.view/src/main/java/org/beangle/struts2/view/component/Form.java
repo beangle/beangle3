@@ -4,6 +4,11 @@
  */
 package org.beangle.struts2.view.component;
 
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.beangle.commons.collection.CollectUtils;
+
 import com.opensymphony.xwork2.util.ValueStack;
 
 public class Form extends ClosingUIBean {
@@ -12,7 +17,14 @@ public class Form extends ClosingUIBean {
 	protected String action;
 	protected String target;
 
+	protected String onsubmit;
+	/** Boolean */
+	protected String validate;
 	private String title;
+
+	private Map<String, StringBuilder> checks = CollectUtils.newHashMap();
+
+	private StringBuilder validity;
 
 	public Form(ValueStack stack) {
 		super(stack);
@@ -60,6 +72,51 @@ public class Form extends ClosingUIBean {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getOnsubmit() {
+		return onsubmit;
+	}
+
+	public void setOnsubmit(String onsubmit) {
+		this.onsubmit = onsubmit;
+	}
+
+	public String getValidate() {
+		if (null == validate) {
+			if (!checks.isEmpty()) validate = "true";
+			else {
+				validate = "false";
+			}
+		}
+		return validate;
+	}
+
+	public void setValidate(String validate) {
+		this.validate = validate;
+	}
+
+	public void addCheck(String id, String check) {
+		StringBuilder sb = checks.get(id);
+		if (null == sb) {
+			sb = new StringBuilder(20);
+			checks.put(id, sb);
+		}
+		sb.append('.').append(check);
+	}
+
+	public void addCheck(String check) {
+		if (null == validity) validity = new StringBuilder();
+		validity.append(check);
+	}
+
+	public String getValidity() {
+		if (null == validity) validity = new StringBuilder();
+		for (Map.Entry<String, StringBuilder> check : checks.entrySet()) {
+			validity.append("jQuery('#").append(StringUtils.replace(check.getKey(), ".", "\\\\."))
+					.append("')").append(check.getValue()).append("\n");
+		}
+		return validity.toString();
 	}
 
 }

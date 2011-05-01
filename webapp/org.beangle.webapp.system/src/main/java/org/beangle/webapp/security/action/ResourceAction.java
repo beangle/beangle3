@@ -51,9 +51,9 @@ public class ResourceAction extends SecurityActionSupport {
 
 	protected void editSetting(Entity<?> entity) {
 		Resource resource = (Resource) entity;
-		List<RestrictEntity> objects = entityDao.getAll(RestrictEntity.class);
-		objects.removeAll(resource.getEntities());
-		put("restrictObjects", objects);
+		List<RestrictEntity> entities = entityDao.getAll(RestrictEntity.class);
+		entities.removeAll(resource.getEntities());
+		put("restrictEntities", entities);
 		put("categories", entityDao.getAll(Category.class));
 	}
 
@@ -64,13 +64,13 @@ public class ResourceAction extends SecurityActionSupport {
 					"edit", "error.notUnique"); }
 		}
 
-		Long[] patternIds = StrUtils.splitToLong(get("restrictObjectIds"));
-		List<RestrictEntity> objects = Collections.emptyList();
-		if (null != patternIds) {
-			objects = entityDao.get(RestrictEntity.class, patternIds);
+		Long[] entityIds = StrUtils.splitToLong(get("restrictEntityIds"));
+		List<RestrictEntity> entities = Collections.emptyList();
+		if (null != entityIds) {
+			entities = entityDao.get(RestrictEntity.class, entityIds);
 		}
 		resource.getEntities().clear();
-		resource.getEntities().addAll(objects);
+		resource.getEntities().addAll(entities);
 
 		String categoryIds = get("categoryIds");
 		List<Category> categories = entityDao.get(Category.class, StrUtils.splitToLong(categoryIds));

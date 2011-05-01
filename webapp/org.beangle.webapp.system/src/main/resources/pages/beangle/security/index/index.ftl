@@ -1,6 +1,5 @@
 [#ftl]
 [@b.head title="Dashboard"/]
-[@b.css href="panel.css"/]
 <style type="text/css">
 img {border:0 none;vertical-align:middle}
 .module{margin:0 3 5px;line-height:1.3em;float:left;width:42%;}

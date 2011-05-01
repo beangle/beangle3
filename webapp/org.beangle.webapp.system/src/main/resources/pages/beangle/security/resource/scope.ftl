@@ -18,7 +18,7 @@
 [#macro resourceScopeRadio scope]
 	[#list 0..2 as i]
 	  <input type="radio" name="resource.scope" value="${i}" id="resource_scope${i}" [#if scope=i]checked="checked"[/#if]> <label for="resource_scope${i}">${scopeTitles[i?string]}</label>
-	  [#if i_has_next]</br>[/#if]
+	  [#if i_has_next][/#if]
 	[/#list]
 [/#macro]
 

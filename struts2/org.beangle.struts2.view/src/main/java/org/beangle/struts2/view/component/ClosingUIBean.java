@@ -32,7 +32,9 @@ public class ClosingUIBean extends UIBean {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		stack.getContext().remove(Theme.INNER_THEME);
+		if (null != innerTheme) {
+			stack.getContext().remove(Theme.INNER_THEME);
+		}
 		return false;
 	}
 
@@ -47,6 +49,7 @@ public class ClosingUIBean extends UIBean {
 
 	public void setTheme(String newTheme) {
 		this.theme = new Theme(newTheme);
-		stack.getContext().put(Theme.INNER_THEME, theme);
+		this.innerTheme = this.theme;
+		stack.getContext().put(Theme.INNER_THEME, innerTheme);
 	}
 }

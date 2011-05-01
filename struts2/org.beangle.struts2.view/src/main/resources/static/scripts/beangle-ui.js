@@ -760,4 +760,16 @@
 	}
 	
 	bg.extend({entityaction:EntityAction});
+	
+	bg.extend({'ui.module':{
+		moduleClick:function (moudleId){
+			var id= document.getElementById(moudleId);
+			if(id.className=="module collapsed"){
+				id.className="module expanded";
+			}else{
+				id.className="module collapsed";
+			}
+		}
+	}
+	});
 })(beangle)
