@@ -55,6 +55,10 @@ public abstract class UIBean extends Component {
 		engine.render(getTheme().getTemplatePath(getClass(), engine.getSuffix()), stack, writer, this);
 	}
 
+	/**
+	 * 将所有额外参数链接起来
+	 * @return 空格开始 空格相隔的参数字符串
+	 */
 	public String getParameterString() {
 		StringBuilder sb = new StringBuilder(parameters.size() * 10);
 		for (Map.Entry<String, Object> entry : parameters.entrySet()) {

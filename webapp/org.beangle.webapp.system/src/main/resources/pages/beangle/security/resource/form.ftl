@@ -3,12 +3,11 @@
 [#include "../nav.ftl"/]
 [#include "scope.ftl"/]
 [@b.toolbar title="新建/修改资源"]bar.addBack();[/@]
-<br/>
 <div style="width:850px">
-[@b.form action="!save" title="security.resource.info" theme="edit"]
-[@b.textfield name="resource.name" required="true" label="common.name" value="${resource.name!}" check="maxLength(100)" comment="资源名称唯一"/]
-[@b.textfield name="resource.title" required="true" label="标题" value="${resource.title!}" check="maxLength(50)" /]
-[@b.textfield name="resource.remark" label="common.remark" value="${resource.remark!}"/]
+[@b.form action="!save" title="security.resource.info" theme="list"]
+[@b.textfield name="resource.name" required="true" label="common.name" value="${resource.name!}" maxLength="50" comment="资源名称唯一"/]
+[@b.textfield name="resource.title" required="true" label="标题" value="${resource.title!}" maxLength="50"/]
+[@b.textfield name="resource.remark" label="common.remark" value="${resource.remark!}" maxLength="50"/]
 [@b.field label="可见范围" required="true"][@resourceScopeRadio resource.scope/][/@]
 [@b.field label="common.status" required="true"]
 	<input type="radio" id="status_enabled" name="resource.enabled" value='1' [#if resource.enabled!true]checked="checked"[/#if]>
@@ -23,24 +22,19 @@
 	[/#list]
 [/@]
 [@b.field label="数据限制对象" required="true"]
-		<select name="RestrictEntities" multiple="multiple" size="10" style="width:200px" onDblClick="JavaScript:bg.select.moveSelected(this.form['RestrictEntities'], this.form['SelectedRestrictEntities'])" >
-		 [#list restrictEntities as entity]
-		  <option value="${entity.id}">${entity.name}</option>
-		 [/#list]
-		</select>
-		<input style="margin:auto" onclick="JavaScript:bg.select.moveSelected(this.form['RestrictEntities'], this.form['SelectedRestrictEntities'])" type="button" value="&gt;"/>
-		<input style="vertical-align: middle;" onclick="JavaScript:bg.select.moveSelected(this.form['SelectedRestrictEntities'], this.form['RestrictEntities'])" type="button" value="&lt;"/>
-		<select name="SelectedRestrictEntities" multiple="multiple" size="10" style="width:200px;" onDblClick="JavaScript:bg.select.moveSelected(this.form['SelectedRestrictEntities'], this.form['RestrictEntities'])">
-		 [#list resource.entities! as entity]
-		  <option value="${entity.id}">${entity.name}</option>
-		 [/#list]
-		</select>
+	[@b.select2 name1st="RestrictEntities" name2nd="SelectedRestrictEntities" items1st=restrictEntities items2nd=resource.entities /]
 [/@]
-[@b.field]
-	[@b.submit value="action.submit"/]
+[@b.field style="text-align:center"]
+	[@b.submit value="action.submit" onsubmit="validateResource"/]
+	<input type="reset" value="${b.text('action.reset')}"/>
 	<input type="hidden" name="resource.id" value="${(resource.id)!}" />
 	<input type="hidden" name="restrictEntityIds" value=""/>
 [/@]
 [/@]
 </div>
+<script>
+function validateResource(form){
+	form['restrictEntityIds'].value = bg.select.getValues(form.SelectedRestrictEntities);
+}
+</script>
 [@b.foot/]

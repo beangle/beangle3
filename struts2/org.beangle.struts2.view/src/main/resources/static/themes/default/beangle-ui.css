@@ -352,11 +352,11 @@ table.settingTable td{
 .ui-disabled{
 	color:#999999;
 }
-
 /*
- * EditForm Style
+ * Pretty Form Style
  */
-form.editform label.title{
+
+form.listform label.title{
 	clear: left;
 	display: block;
 	float: left;
@@ -366,25 +366,56 @@ form.editform label.title{
 	width: 100px;
 	font-weight: bold;
 }
-form.editform label.comment{
+
+form.listform label.comment{
 	padding-left: 5px;
 }
-form.editform em.required{
-	color:red;
+form.listform em{
+	color: #FF0000;
+	font-style: normal;
+	font-weight: bold;
 }
-form.editform fieldset{
+
+form.listform legend {
+	font-weight: bold;
+	padding: 0 2px;
+}
+
+form.listform fieldset{
 	border-style: solid none none;
+	margin: 10px 0px 0px 10px;
 }
-form.editform fieldset p{
+
+form.listform fieldset ol {
+	margin: 0;
+	padding: 0;
+}
+
+form.listform fieldset li{
 	background: url("images/form-divider.gif") repeat-x scroll left bottom transparent;
 	padding: 4px 10px 7px;
 	list-style: none outside none;
 	margin: 0;
 }
-form.editform legend {
-	font-weight: bold;
-	padding: 0 2px;
+
+form.listform fieldset fieldset {
+	border: medium none;
+	margin: 3px 0 0;
+	background: none repeat scroll 0 0 transparent;
 }
+form.listform fieldset fieldset legend {
+	font-weight: normal;
+	padding: 0 0 5px;
+}
+
+form.listform fieldset fieldset label {
+	display: block;
+	width: auto;
+}
+form.listform fieldset fieldset label {
+	margin-left: 103px;
+}
+
 
 /*
  * Module UI Style

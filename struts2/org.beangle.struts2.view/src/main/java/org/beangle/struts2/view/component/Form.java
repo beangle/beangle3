@@ -112,11 +112,12 @@ public class Form extends ClosingUIBean {
 
 	public String getValidity() {
 		if (null == validity) validity = new StringBuilder();
+		StringBuilder sb = new StringBuilder(validity);
 		for (Map.Entry<String, StringBuilder> check : checks.entrySet()) {
-			validity.append("jQuery('#").append(StringUtils.replace(check.getKey(), ".", "\\\\."))
-					.append("')").append(check.getValue()).append("\n");
+			sb.append("jQuery('#").append(StringUtils.replace(check.getKey(), ".", "\\\\.")).append("')")
+					.append(check.getValue()).append("\n");
 		}
-		return validity.toString();
+		return sb.toString();
 	}
 
 }

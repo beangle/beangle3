@@ -28,7 +28,7 @@ import freemarker.template.Configuration;
 import freemarker.template.SimpleHash;
 import freemarker.template.Template;
 
-public class FreemarkerTemplateEngine implements TemplateEngine {
+public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
 	private static final Logger logger = LoggerFactory.getLogger(FreemarkerTemplateEngine.class);
 	protected FreemarkerManager freemarkerManager;
 	protected Configuration config;
@@ -50,9 +50,30 @@ public class FreemarkerTemplateEngine implements TemplateEngine {
 	@Inject
 	public void setFreemarkerManager(FreemarkerManager mgr) {
 		this.freemarkerManager = mgr;
-		if (null != freemarkerManager) config = freemarkerManager.getConfig();
+		// Disable freemarker localized lookup
+		if (null != freemarkerManager) {
+			config = (Configuration) freemarkerManager.getConfig().clone();
+			config.setLocalizedLookup(false);
+		}
 	}
 
+	private Template loadTemplate(String templateName)throws Exception{
+		Template template=null;
+		String curTemplate=templateName;
+		while(null==template){
+			try{
+				template = config.getTemplate(curTemplate);
+			}catch(IOException e) {
+				curTemplate=getParentTemplate(curTemplate);
+				if(null==curTemplate){
+					logger.error("Could not load template named '{}',TemplateLoader is {}", templateName, config
+							.getTemplateLoader().getClass());
+					throw e;
+				}
+			}
+		}
+		return template;
+	}
 	@SuppressWarnings("unchecked")
 	private Environment getEnvironment(String templateName, ValueStack stack, SimpleHash model, Writer writer)
 			throws Exception {
@@ -64,15 +85,11 @@ public class FreemarkerTemplateEngine implements TemplateEngine {
 		Environment env = envs.get(templateName);
 		if (null == env) {
 			try {
-				Template template = config.getTemplate(templateName);
+				Template template=loadTemplate(templateName);
 				env = template.createProcessingEnvironment(model, writer);
 				envs.put(templateName, env);
 			} catch (ParseException pe) {
 				throw pe;
-			} catch (IOException e) {
-				logger.error("Could not load template named '{}',TemplateLoader is {}",
-						templateName, config.getTemplateLoader().getClass());
-				throw e;
 			}
 		} else {
 			env.setOut(writer);

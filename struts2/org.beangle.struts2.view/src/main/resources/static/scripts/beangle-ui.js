@@ -772,4 +772,16 @@
 		}
 	}
 	});
+	bg.extend({'ui.loadResource':
+		function (uimodule){
+			base=bg.getContextPath();
+			if(uimodule=="validity"){
+				if (!jQuery.struts2_jquery.loadAtOnce) {
+					jQuery.struts2_jquery.requireCss("/static/themes/default/jquery.validity.css",base);
+					jQuery.struts2_jquery.require("/static/scripts/jquery.validity.js",null,base);
+					jQuery.struts2_jquery.require("/static/scripts/lang/jquery.validity_zh.js",null,base);
+				}
+			}
+		}
+	});
 })(beangle)

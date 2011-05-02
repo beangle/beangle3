@@ -40,10 +40,11 @@
 	 </td>
 	</tr>
 </table>
-[#list resource.entities as entity]
+[#if resource.entities?size>0]
 <fieldSet  align="center">
    <legend>数据权限 限制对象</legend>
    <table class="infoTable">
+[#list resource.entities as entity]
    <tr>
 	 <td class="title">名称:</td>
 	 <td class="content">${entity.name}([#list entity.fields as field]${field.name}-${field.remark!}[#if field_has_next],[/#if][/#list])</td>
@@ -52,7 +53,8 @@
 	 <td class="title">描述:</td>
 	 <td class="content">${entity.remark!}</td>
    </tr>
+[/#list]
    </table>
 </fieldSet>
-[/#list]
+[/#if]
 [@b.foot/]
