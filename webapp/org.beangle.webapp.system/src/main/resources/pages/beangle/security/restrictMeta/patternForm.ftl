@@ -1,50 +1,22 @@
 [#ftl]
-<script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 [#assign labInfo]${b.text("security.restrictionPattern.info")}[/#assign]
 [@b.toolbar title=labInfo]
 bar.addBack("${b.text("action.back")}");
 [/@]
-[@b.form action="!savePattern"]
-<table width="70%" class="formTable" align="center">
-	<tr class="thead">
-		<td  colspan="2">数据限制模式</td>
-	</tr>
-	<tr>
-		<td class="title" id="f_remark">描述<font color="red">*</font>:</td>
-		<td><input name="pattern.remark" value="${pattern.remark!}"/></td>
-	</tr>
-	<tr>
-	 <td class="title" id="f_pattern">模式<font color="red">*</font>:</td>
-	 <td >
-	  <textarea  style="width:500px;" rows="4" name="pattern.content" >${pattern.content!}</textarea>
-	 </td>
-	</tr>
-	<tr>
-		<td class="title" id="f_params">${b.text('entity.restrictEntity')}:</td>
-		<td >
+[@b.form action="!savePattern" theme="list" title="数据限制模式"]
+	[@b.textfield label="描述" name="pattern.remark" value="${pattern.remark!}" maxLength="50" required="true"/]
+	[@b.textarea label="模式" name="pattern.content" required="true" value="${pattern.content!}" maxLength="400" rows="4" style="width:500px;"/]
+	[@b.field required="true" label="entity.restrictEntity"]
 			<select name="pattern.entity.id"  style="width:200px">
 			 [#list entities as entity]
 			  <option value="${entity.id}" [#if entity.id=(pattern.entity.id)!(0)]selected="selected"[/#if]>${entity.name}</option>
 			 [/#list]
 			</select>
-		</td>
-	</tr>
-	<tr class="tfoot">
-		<td colspan="2">
-			<input type="hidden" name="pattern.id" value="${(pattern.id)!}" style="width:200px;" />
-			[@b.submit value="action.submit" onsubmit="validatePattern"/]
-			<input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />
-		</td>
-	</tr>
+	[/@]
+	[@b.formfoot]
+		<input type="hidden" name="pattern.id" value="${(pattern.id)!}" style="width:200px;" />
+		[@b.submit value="action.submit" /]
+		<input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />
+	[/@]
 </table>
 [/@]
-<script>
-function validatePattern(form){
-	var a_fields = {
-		'pattern.remark':{'l':'${b.text("common.remark")}', 'r':true, 't':'f_remark'},
-		'pattern.content':{'l':'模式', 'r':true, 't':'f_pattern'}
-	};
-	var v = new validator(form, a_fields, null);
-	return v.exec();
-}
-</script>

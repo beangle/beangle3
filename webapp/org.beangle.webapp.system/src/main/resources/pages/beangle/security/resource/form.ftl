@@ -24,7 +24,7 @@
 [@b.field label="数据限制对象" required="true"]
 	[@b.select2 name1st="RestrictEntities" name2nd="SelectedRestrictEntities" items1st=restrictEntities items2nd=resource.entities /]
 [/@]
-[@b.field style="text-align:center"]
+[@b.formfoot]
 	[@b.submit value="action.submit" onsubmit="validateResource"/]
 	<input type="reset" value="${b.text('action.reset')}"/>
 	<input type="hidden" name="resource.id" value="${(resource.id)!}" />

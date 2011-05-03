@@ -6,9 +6,14 @@ package org.beangle.struts2.view.component;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
-public class Textfield extends AbstractTextBean {
+/**
+ * 表单尾部控制
+ * @author chaostone
+ * @version $Id: Formfooter.java May 3, 2011 12:25:12 PM chaostone $
+ */
+public class Formfoot extends ClosingUIBean {
 
-	public Textfield(ValueStack stack) {
+	public Formfoot(ValueStack stack) {
 		super(stack);
 	}
 

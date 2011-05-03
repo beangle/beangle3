@@ -1,47 +1,20 @@
 [#ftl]
 [@b.head/]
-<script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 [@b.toolbar title="菜单配置"]bar.addClose();[/@]
-[@b.form action="!save"]
-<table width="70%" class="formTable" align="center">
-	<tr class="thead">
-	 <td  colspan="2">${b.text("info.module.detail")}</td>
-	</tr>
-	<tr>
-	 <td class="title" width="25%" id="f_name">&nbsp;名称<font color="red">*</font>:</td>
-	 <td >
-	  <input type="text" name="menuProfile.name" value="${menuProfile.name!}" style="width:200px;" />
-	 </td>
-	</tr>
-	<tr>
-		<td class="title" width="25%" id="f_category">&nbsp;${b.text("entity.userCategory")}<font color="red">*</font>:</td>
-		<td>
+[@b.form action="!save" theme="list" title="info.module.detail"]
+	[@b.textfield name="menuProfile.name" label="common.name" value="${menuProfile.name!}" required="true" maxLength="50"/]
+	[@b.field label="entity.userCategory" required="true"]
 		<select  name="menuProfile.category.id" style="width:100px;" >
 			[#list categories as category]
 				<option value="${category.id}"  [#if menuProfile.category??&&menuProfile.category.id==category.id]selected="selected"[/#if]>${category.name}</option>
 			[/#list]
 		</select>
-		</td>
-	</tr>
-	<tr class="tfoot">
-		<td colspan="6"  >
+	[/@]
+	[@b.formfoot]
 		[@b.redirectParams/]
 		<input type="hidden" name="menuProfile.id" value="${menuProfile.id!}" style="width:200px;" />
-		<input type="hidden" name="menuProfileIds" />
-		[@b.submit value="action.submit" onsubmit="validateMenuProfile"/]&nbsp;
+		[@b.submit value="action.submit"/]&nbsp;
 		<input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />
-		</td>
-	</tr>
-</table>
+	[/@]
 [/@]
-<script>
-function validateMenuProfile(form){
-	var a_fields = {
-		 'menuProfile.name':{'l':'${b.text("common.name")}', 'r':true,'t':'f_name'},
-		 'menuProfile.category.id':{'l':'${b.text("entity.userCategory")}', 'r':true,'t':'f_category'}
-	};
-	var v = new validator(form, a_fields, null);
-	return v.exec();
-}
-</script>
 [@b.foot/]

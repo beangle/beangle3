@@ -31,7 +31,7 @@ public abstract class UIBean extends Component {
 	protected Theme theme;
 
 	protected Theme innerTheme;
-	
+
 	public UIBean(ValueStack stack) {
 		super(stack);
 	}
@@ -57,13 +57,15 @@ public abstract class UIBean extends Component {
 
 	/**
 	 * 将所有额外参数链接起来
+	 * 
 	 * @return 空格开始 空格相隔的参数字符串
 	 */
 	public String getParameterString() {
 		StringBuilder sb = new StringBuilder(parameters.size() * 10);
 		for (Map.Entry<String, Object> entry : parameters.entrySet()) {
-			sb.append(" ").append(entry.getKey()).append("=\"").append(entry.getValue().toString())
-					.append("\"");
+			String key = entry.getKey();
+			if ("cssClass".equals(key)) key = "class";
+			sb.append(" ").append(key).append("=\"").append(entry.getValue().toString()).append("\"");
 		}
 		return sb.toString();
 	}

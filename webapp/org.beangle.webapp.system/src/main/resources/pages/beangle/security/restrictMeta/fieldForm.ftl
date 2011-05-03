@@ -1,101 +1,28 @@
 [#ftl]
-<script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 [@b.toolbar title="修改参数信息"]bar.addBack("${b.text("action.back")}");[/@]
-[@b.form action="!saveField"]
-<table width="80%" class="formTable" align="center">
-	<tr class="thead"><td  colspan="2">数据限制参数</td></tr>
-	<tr>
-	 <td class="title" id="f_name">${b.text("common.name")}<font color="red">*</font>:</td>
-	 <td>
-	  <input type="text" name="field.name" value="${field.name!}" style="width:200px;" />
-	 </td>
-	</tr>
-	<tr>
-	 <td class="title" id="f_type">类型<font color="red">*</font>:</td>
-	 <td >
-	  <input type="text" name="field.type" value="${field.type!}" style="width:200px;" />
-	 </td>
-	</tr>
-	<tr>
-	 <td class="title" id="f_remark">标题<font color="red">*</font>:</td>
-	 <td >
-		<input name="field.remark" value="${field.remark!}"/>
-	 </td>
-	</tr>
-	<tr>
-	 <td class="title" id="f_referenceType">引用类型:</td>
-	 <td >
-	  <input type="text" name="field.source" value="${(field.source)!}" style="width:400px;" />
-	 </td>
-	</tr>
-	<tr>
-	 <td class="title" id="f_keyName">主键属性:</td>
-	 <td >
-	  <input type="text" name="field.keyName" value="${(field.keyName)!}" style="width:400px;" />
-	 </td>
-	</tr>
-	<tr>
-	 <td class="title" id="f_propertyNames">其它显示属性:</td>
-	 <td >
-	  <input type="text" name="field.propertyNames" value="${(field.propertyNames)!}" style="width:400px;" />
-	 </td>
-	</tr>
-	<tr>
-	 <td class="title" id="f_multiple">是否允许多值:</td>
-	 <td>
+[@b.form action="!saveField" title="数据限制参数" theme="list"]
+	[@b.textfield label="common.name" name="field.name" value="${field.name!}" required="true" maxLength="50"/]
+	[@b.textfield label="标题" name="field.remark" value="${field.remark!}" maxLength="50"/]
+	[@b.textfield label="引用类型" name="field.source" value="${(field.source)!}" style="width:400px;" maxLength="100" /]
+	[@b.textfield label="主键属性" name="field.keyName" value="${(field.keyName)!}" maxLength="40"/]
+	[@b.textfield label="其它显示属性" name="field.propertyNames" value="${(field.propertyNames)!}" maxLength="100"  /]
+	[@b.field label="是否允许多值" required="true"]
 	  <input type="checkbox" name="field.multiple" value="1" [#if field.multiple]checked="checked"[/#if] />是
 	  <input type="checkbox" name="field.multiple" value="0" [#if !field.multiple]checked="checked"[/#if] />否
-	 </td>
-	</tr>
-	<tr>
-		<td class="title" id="f_group"><font color="red">*</font>${b.text('restriction.entities')}:</td>
-		<td>
-		 <table>
-		  <tr>
-		   <td>
-			<select name="Entitys" multiple="multiple" size="10" style="width:200px" onDblClick="JavaScript:bg.select.moveSelected(this.form['Entitys'], this.form['SelectedEntity'])" >
-			 [#list entities?sort_by('name') as o]
-			  <option value="${o.id}">${o.name}</option>
-			 [/#list]
-			</select>
-		   </td>
-		   <td  valign="middle">
-			<br/><br/>
-			<input onclick="JavaScript:bg.select.moveSelected(this.form['Entitys'], this.form['SelectedEntity'])" type="button" value="&gt;"/>
-			<br/><br/>
-			<input onclick="JavaScript:bg.select.moveSelected(this.form['SelectedEntity'], this.form['Entitys'])" type="button" value="&lt;"/>
-			<br/>
-		   </td>
-		   <td  class="normalTextStyle">
-			<select name="SelectedEntity" multiple="multiple" size="10" style="width:200px;" onDblClick="JavaScript:bg.select.moveSelected(this.form['SelectedEntity'], this.form['Entitys'])">
-			 [#list field.entities! as o]
-			  <option value="${o.id}">${o.name}</option>
-			 [/#list]
-			</select>
-		   </td>
-		  </tr>
-		 </table>
-		</td>
-	</tr>
-	<tr class="tfoot">
-		<td colspan="6"  >
-		   <input type="hidden" name="entityIds" value=""/>
-		   <input type="hidden" name="field.id" value="${(field.id)!}" style="width:200px;" />
-			[@b.submit value="action.submit" onsubmit="validateField" /]
-		   <input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />
-		 </td>
-	</tr>
+	[/@]
+	[@b.field label="restriction.entities" required="true"]
+		[@b.select2 name1st="Entitys" name2nd="SelectedEntity" items1st=entities items2nd=field.entities /]
+	[/@]
+	[@b.formfoot]
+		<input type="hidden" name="entityIds" value=""/>
+		<input type="hidden" name="field.id" value="${(field.id)!}" style="width:200px;" />
+		[@b.submit value="action.submit" onsubmit="validateField" /]
+		<input type="reset"  name="reset1" value="${b.text("action.reset")}" />
+	[/@]
 </table>
 [/@]
 <script>
 function validateField(form){
 	form['entityIds'].value = bg.select.getValues(form.SelectedEntity);
-	var a_fields = {
-		'field.name':{'l':'${b.text("common.name")}', 'r':true,'t':'f_name'},
-		'field.remark':{'l':'标题', 'r':true, 't':'f_remark'},
-		'field.type':{'l':'类型', 'r':true, 't':'f_type'}
-	};
-	var v = new validator(form, a_fields, null);
-	return v.exec();
 }
 </script>

@@ -1,8 +1,7 @@
 [#ftl]
 [@b.head/]
 [@b.css href="tab.css"/]
- <script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
- <script  type="text/javascript" src="${base}/static/scripts/TabPane.js"></script>
+<script  type="text/javascript" src="${base}/static/scripts/TabPane.js"></script>
 [@b.toolbar title="数据权限"]
 function save(){
 	if(confirm("确定设置?")){bg.form.submit(document.restrictionForm);}

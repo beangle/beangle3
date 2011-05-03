@@ -26,6 +26,7 @@ import org.beangle.struts2.view.component.Div;
 import org.beangle.struts2.view.component.Field;
 import org.beangle.struts2.view.component.Foot;
 import org.beangle.struts2.view.component.Form;
+import org.beangle.struts2.view.component.Formfoot;
 import org.beangle.struts2.view.component.Grid;
 import org.beangle.struts2.view.component.Head;
 import org.beangle.struts2.view.component.Iframe;
@@ -34,10 +35,12 @@ import org.beangle.struts2.view.component.Module;
 import org.beangle.struts2.view.component.Navitem;
 import org.beangle.struts2.view.component.Navmenu;
 import org.beangle.struts2.view.component.Pagebar;
+import org.beangle.struts2.view.component.Password;
 import org.beangle.struts2.view.component.RedirectParams;
 import org.beangle.struts2.view.component.Select;
 import org.beangle.struts2.view.component.Select2;
 import org.beangle.struts2.view.component.Submit;
+import org.beangle.struts2.view.component.Textarea;
 import org.beangle.struts2.view.component.Textfield;
 import org.beangle.struts2.view.component.Textfields;
 import org.beangle.struts2.view.component.Toolbar;
@@ -154,6 +157,10 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		return get(Form.class);
 	}
 
+	public TagModel getFormfoot() {
+		return get(Formfoot.class);
+	}
+
 	public TagModel getSubmit() {
 		return get(Submit.class);
 	}
@@ -197,6 +204,10 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		return get(Pagebar.class);
 	}
 
+	public TagModel getPassword() {
+		return get(Password.class);
+	}
+
 	public TagModel getA() {
 		TagModel model = models.get(Anchor.class);
 		if (null == model) {
@@ -220,6 +231,10 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 
 	public TagModel getTextfield() {
 		return get(Textfield.class);
+	}
+
+	public TagModel getTextarea() {
+		return get(Textarea.class);
 	}
 
 	public TagModel getField() {

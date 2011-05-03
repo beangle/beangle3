@@ -5,7 +5,7 @@
 		 [@b.col title="序号" width="7%"]${config_index+1}[/@]
 		 [@b.col title="参数名称" width="20%" style="text-align:left"]<input name="config${config.id}.name"  value="${config.name}" style="width:97%"/>[/@]
 		 [@b.col title="类型" width="15%"]<input name="config${config.id}.type" value="${config.type!}" style="width:97%"/>[/@]
-		 [@b.col title="参数值" width="35%"]<input name="config${config.id}.value" value="${config.value?default("")}" maxlength="300" style="width:97%"/>[/@]
+		 [@b.col title="参数值" width="35%"]<input name="config${config.id}.value" value="${config.value?default("")}" maxLength="300" style="width:97%"/>[/@]
 		 [@b.col title="说明" width="15%"]<input name="config${config.id}.description" value="${config.description!}" style="width:97%"/>[/@]
 		 [@b.col title="删除" width="8%"]<a href="${b.url('!remove')}?config.id=${config.id}" onclick="if(confirm('确定删除?')){bg.Go(this);} return false;">删除</a>[/@]
 		[/@]

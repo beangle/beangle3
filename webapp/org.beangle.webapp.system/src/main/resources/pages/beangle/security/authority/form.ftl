@@ -1,7 +1,6 @@
 [#ftl]
 [@b.head/]
 [#include "../status.ftl"/]
-<script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 [@b.css href="tableTree.css"/]
 <script  type="text/javascript" src="${base}/static/scripts/TableTree.js"></script>
 <script type="text/javascript"> defaultColumn=1;</script>

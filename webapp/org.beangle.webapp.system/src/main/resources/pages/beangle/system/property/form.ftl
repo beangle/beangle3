@@ -7,7 +7,7 @@
    </tr>
    <tr>
 	 <td class="title">参数值*</td>
-	 <td><input name="configNew.value" value="" maxlength="300" style="width:100%"/></td>
+	 <td><input name="configNew.value" value="" maxLength="300" style="width:100%"/></td>
    </tr>
    <tr>
 	 <td class="title">类型*</td>

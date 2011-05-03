@@ -416,6 +416,10 @@ form.listform fieldset fieldset label {
 	margin-left: 103px;
 }
 
+form.listform li.foot {
+	padding-left: 110px;
+}
+
 
 /*
  * Module UI Style

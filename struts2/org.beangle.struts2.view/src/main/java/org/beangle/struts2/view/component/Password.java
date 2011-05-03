@@ -6,9 +6,14 @@ package org.beangle.struts2.view.component;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
-public class Textfield extends AbstractTextBean {
+/**
+ *
+ * @author chaostone
+ * @version $Id: Password.java May 3, 2011 2:18:50 PM chaostone $
+ */
+public class Password extends AbstractTextBean {
 
-	public Textfield(ValueStack stack) {
+	public Password(ValueStack stack) {
 		super(stack);
 	}
 

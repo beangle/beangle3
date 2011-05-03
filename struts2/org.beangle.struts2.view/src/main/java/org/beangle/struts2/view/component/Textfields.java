@@ -32,7 +32,7 @@ public class Textfields extends UIBean {
 				name = name.substring(0, semiconIndex);
 			}
 			fields[i].setName(name);
-			fields[i].setTitle(title);
+			fields[i].setLabel(title);
 			fields[i].evaluateParams();
 		}
 	}

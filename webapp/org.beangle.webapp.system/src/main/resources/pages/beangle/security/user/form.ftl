@@ -1,9 +1,8 @@
 [#ftl]
 [@b.head/]
-<script  type="text/javascript" src="${base}/static/scripts/validator.js"></script>
 [#assign labInfo][#if user.id??]${b.text("action.modify")}[#else]${b.text("action.new")}[/#if] ${b.text("entity.user")}[/#assign]
 [@b.toolbar title=labInfo]bar.addBack("${b.text("action.back")}");[/@]
-[@b.form name="userForm" action="!save"]
+[@b.form name="userForm" action="!save" cssClass="listform"]
 [@sj.tabbedpanel id="userTabs"]
 	[@sj.tab id="userTab1" label="用户信息" target="userInfo"/]
 	[@sj.tab id="userTab2" label="所在用户组" target="groupmember"/]
@@ -11,39 +10,19 @@
 	[@sj.tab id="userTab3" label="全局数据权限" target="user_restriction"/]
 	[@b.div href="restriction!info?forEdit=1&restrictionType=user&restriction.holder.id=${user.id}" id="user_restriction"/]
 	[/#if]
-	<div id="userInfo">
-	 <table width="100%"  class="formTable">
-	   <tr class="thead">
-		 <td  colspan="2">${b.text("ui.userInfo")}</td>
-	   </tr>
-	   <tr>
-		 <td class="title" width="15%" id="f_name"><font color="red">*</font>${b.text("user.name")}:</td>
-		 <td><input type="text" name="user.name" value="${user.name!}" style="width:200px;" maxlength="30"/></td>
-		</tr>
-		<tr>
-		 <td class="title">${b.text("common.status")}:</td>
-		 <td >
+	[@b.div id="userInfo" theme="list" asContainer="false"]
+	<fieldset><legend>${b.text('ui.userInfo')}</legend><ol>
+		[@b.textfield label="user.name"  name="user.name" value="${user.name!}" style="width:200px;" required="true" maxLength="30"/]
+		[@b.field label="common.status" required="true"]
 		 <input value="1" id="user_status_1" type="radio" name="user.status" [#if (user.status!1)==1]checked="checked"[/#if] />
 		 <label for="user_status_1">${b.text("action.activate")}</label>
 		 <input value="0" id="user_status_0" type="radio" name="user.status" [#if (user.status!1)==0]checked="checked"[/#if] />
 		 <label for="user_status_0">${b.text("action.freeze")}</label>
-		 </td>
-	   </tr>
-	   <tr>
-		 <td class="title" id="f_fullname"><font color="red">*</font>${b.text("user.fullname")}:</td>
-		 <td ><input type="text" name="user.fullname" value="${user.fullname!}" style="width:200px;" maxlength="60" /></td>
-	   </tr>
-	   <tr>
-		 <td class="title" id="f_password">密码:</td>
-		 <td><input type="password" name="password" value="" style="width:200px;" maxlength="60" /> 默认密码为1</td>
-	   </tr>
-	   <tr>
-		 <td class="title" id="f_email"><font color="red">*</font>${b.text("common.email")}:</td>
-		 <td ><input type="text" name="user.mail" value="${user.mail!}" style="width:300px;" maxlength="70" /></td>
-	   </tr>
-	   <tr>
-		 <td class="title">&nbsp;<font color="red">*</font>${b.text("entity.userCategory")}:</td>
-		 <td>
+		[/@]
+		[@b.textfield label="user.fullname" name="user.fullname" value="${user.fullname!}" style="width:200px;" required="true" maxLength="60" /]
+		[@b.password label="密码" name="password" value="" axLength="60" comment="默认密码为1"/]
+		[@b.textfield label="common.email" name="user.mail" value="${user.mail!}" style="width:300px;" maxLength="70" required="true"/]
+		[@b.field label="entity.userCategory" required="true"]
 		  [#list categories as category]
 		  <input name="categoryIds" id="categoryIds${category.id}" value="${category.id}" type="checkbox" [#if user.categories?seq_contains(category)]checked="checked"[/#if] />
 		  <label for="categoryIds${category.id}">${category.name}</label>
@@ -54,22 +33,16 @@
 			 <option value="${category.id}" [#if (user.defaultCategory??)&&(user.defaultCategory.id==category.id)]selected="selected"[/#if]>${category.name}</option>
 		  [/#list]
 		  </select>
-		  </td>
-		</tr>
-		<tr>
-		 <td id="f_remark" class="title">&nbsp;${b.text("common.remark")}:</td>
-		 <td><textarea cols="50" rows="1" name="user.remark">${user.remark!}</textarea></td>
-	   </tr>
-	   <tr class="tfoot">
-		<td colspan="2">
+		[/@]
+		[@b.textarea label="common.remark" cols="50" rows="1" name="user.remark" value="${user.remark!}" maxLength="100"/]
+		[@b.formfoot]
 			<input type="hidden" name="user.id" value="${user.id!}" />
 			[@b.redirectParams/]
-			[@b.submit value="action.submit" onsubmit="validate" /]&nbsp;
+			[@b.submit value="action.submit" onsubmit="validateUser" /]&nbsp;
 			<input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />
-		</td>
-	   </tr>
-	 </table>
-	</div>
+		[/@]
+		</ol></fieldset>
+	[/@]
 	<div id="groupmember">
 	[@b.grid  items=members var="m"]
 		[@b.row]
@@ -85,42 +58,32 @@
 			[@b.col title="管理"]
 			<input type="checkbox" name="manager${m.group.id}" ${(memberMap.get(m.group).manager)?default(false)?string('checked="checked"','')}/>
 			[/@]
-			[@b.col title="加入时间"]${(m.updatedAt?string("yyyy-MM-dd HH:mm"))!}[/@]
+			[@b.col title="加入时间"]${(memberMap.get(m.group).updatedAt?string("yyyy-MM-dd HH:mm"))!}[/@]
 		[/@]
 	[/@]
 	</div>
 [/@]
 [/@]
 <script  type="text/javascript">
-	function validate(form){
-		var a_fields = {
-			 'user.mail':{'l':'${b.text("common.email")}', 'r':true, 'f':'email', 't':'f_email'},
-			 'user.name':{'l':'${b.text("user.name")}', 'r':true, 't':'f_name'},
-			 'user.fullname':{'l':'真实姓名', 'r':true, 't':'f_fullname'},
-			 'user.remark':{'l':'${b.text("common.remark")}','r':false,'t':'f_remark','mx':80}
-		};
-
-		var v = new validator(form, a_fields, null);
-		if (v.exec()) {
-			var cIds = bg.input.getCheckBoxValues("categoryIds");
-			if(""==cIds){
-			   alert("请选择身份");return false;
-			}
-			var arr = cIds.split(",");
-			var defaultValue = form["user.defaultCategory.id"].value;
-			var isIn = false;
-			for(var i=0;i<arr.length;i++){
-				if(defaultValue==arr[i]){
-					isIn=true;
-					break;
-				}
-			}
-			if(!isIn){
-				alert("默认身份必须在所选身份中！");
-				return false;
-			}
-			return true;
+	function validateUser(form){
+		var cIds = bg.input.getCheckBoxValues("categoryIds");
+		if(""==cIds){
+		   alert("请选择身份");return false;
 		}
+		var arr = cIds.split(",");
+		var defaultValue = form["user.defaultCategory.id"].value;
+		var isIn = false;
+		for(var i=0;i<arr.length;i++){
+			if(defaultValue==arr[i]){
+				isIn=true;
+				break;
+			}
+		}
+		if(!isIn){
+			alert("默认身份必须在所选身份中！");
+			return false;
+		}
+		return true;
 	}
 	/**
 	 * 改变每个组行之前的复选框

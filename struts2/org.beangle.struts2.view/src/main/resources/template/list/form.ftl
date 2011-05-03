@@ -25,11 +25,5 @@ function onsubmit${tag.id}(){
 	[/#if]
 	return res;
 }
-$(function() {
-$("#${tag.id}").validity(function() {
-${tag.validity}
-});
-});
-
 </script>
 [/#if]
