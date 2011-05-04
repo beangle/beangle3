@@ -8,9 +8,9 @@ import java.io.IOException;
 
 import org.apache.struts2.ServletActionContext;
 import org.beangle.security.blueprint.User;
+import org.beangle.webapp.avatar.Avatar;
+import org.beangle.webapp.avatar.service.AvatarBase;
 import org.beangle.webapp.security.action.SecurityActionSupport;
-import org.beangle.webapp.service.avatar.Avatar;
-import org.beangle.webapp.service.avatar.AvatarBase;
 
 /**
  * 查看下载自己的照片

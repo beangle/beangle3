@@ -3,12 +3,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean name="system.service.config" class="org.beangle.webapp.service.ServiceModule" />
+	<bean name="system.service.config" class="org.beangle.webapp.WebappServiceModule" />
 
 	<bean id="captchaService"
 		class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService">
 		<property name="captchaEngine">
-			<bean class="org.beangle.webapp.service.captcha.GmailEngine" />
+			<bean class="org.beangle.webapp.captcha.GmailEngine" />
 		</property>
 		<property name="minGuarantedStorageDelayInSeconds" value="600" />
 	</bean>

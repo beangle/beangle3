@@ -9,7 +9,7 @@
 	<legend>${restriction.pattern.remark}(${restriction.enabled?string("启用","禁用")}) <a href="#" onclick="edit('${restriction.id}')">修改</a>	<a href="#" onclick="remove('${restriction.id}')">删除</a></legend>
 	[#list restriction.pattern.entity.fields as field]
 	<li>${field.remark}</li>
-		[#if field.multiple]
+		[#if field.multiple &&  field.source??]
 		[#list fieldMaps[restriction.id?string][field.name]! as value][#list field.propertyNames?split(",") as pName]${value[pName]!} [/#list][#if value_has_next],[/#if][/#list]</td>
 		[#else]
 		${fieldMaps[restriction.id?string][field.name]!}

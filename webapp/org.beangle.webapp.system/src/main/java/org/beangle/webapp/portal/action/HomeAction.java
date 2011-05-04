@@ -9,10 +9,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.SecurityUtils;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.Category;
 import org.beangle.webapp.security.action.SecurityActionSupport;
 
 /**

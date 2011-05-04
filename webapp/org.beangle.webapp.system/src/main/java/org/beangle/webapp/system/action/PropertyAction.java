@@ -12,7 +12,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.property.PropertyConfigFactory;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.struts2.action.BaseAction;
-import org.beangle.webapp.service.config.model.PropertyConfigItemBean;
+import org.beangle.webapp.config.model.PropertyConfigItemBean;
 
 public class PropertyAction extends BaseAction {
 
@@ -74,6 +74,7 @@ public class PropertyAction extends BaseAction {
 		for (PropertyConfigItemBean config : configs) {
 			staticNames.remove(config.getName());
 		}
+		put("config", configFactory.getConfig());
 		put("staticNames", staticNames);
 		return forward();
 	}

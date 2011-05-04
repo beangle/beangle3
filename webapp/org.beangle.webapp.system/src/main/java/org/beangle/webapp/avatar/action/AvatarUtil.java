@@ -10,7 +10,7 @@ import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.beangle.webapp.service.avatar.Avatar;
+import org.beangle.webapp.avatar.Avatar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

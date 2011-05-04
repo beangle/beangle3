@@ -1,0 +1,17 @@
+.padding{PADDING-LEFT:4px;PADDING-RIGHT:4px;PADDING-TOP:2px;PADDING-BOTTOM:2px;cursor:pointer;}
+.transfer{PADDING-LEFT:3px;PADDING-RIGHT:3px;BACKGROUND-COLOR:#e9f2f8;BORDER:1px solid #336699;cursor:pointer;}
+.Q{COLOR:#FFFFFF;PADDING-LEFT:4px;PADDING-RIGHT:4px;BACKGROUND-COLOR:#4791C5;}
+
+.separator{PADDING-LEFT:0px;WIDTH:1px}
+.icon{vertical-align:middle;margin-top:1px;border:0px}
+.ToolBar{font-size: 12px;border-collapse:separate;}
+.ToolBarDiv {position:absolute;top:0px;left:0px;width:0px;height:0px;}
+.ToolBar TD	{HEIGHT:22px;WHITE-SPACE:nowrap}
+.ToolBar A	{COLOR:#000000;TEXT-DECORATION:none !important}
+.barMenu{BACKGROUND-COLOR:#e9f2f8;VISIBILITY:hidden;POSITION:absolute;Z-INDEX:100;PADDING:1px;OVERFLOW:visible;BORDER:solid 1px #4791C5;TOP:0px;LEFT:-200px;WHITE-SPACE:nowrap;}
+.barMenuPadding{BACKGROUND-COLOR:#FFFFFF;PADDING-LEFT:5px;PADDING-RIGHT:5px;PADDING-TOP:1px;;PADDING-BOTTOM:1px;font-size: 12px;cursor:pointer;}
+.barMenuPadding A{TEXT-DECORATION:none !important;COLOR:#000000;cursor:pointer;}
+.barMenuTransfer{PADDING-LEFT:5px;PADDING-RIGHT:5px;PADDING-TOP:1px;;PADDING-BOTTOM:1px;font-size: 12px;cursor:pointer;}
+.barMenuTransfer A{TEXT-DECORATION:none;COLOR:#000000;cursor:pointer;}
+TD.keyLine {HEIGHT:1px;font-size:0pt;}
+.V {HEIGHT:1px;font-size:0pt;PADDING:0px;BORDER-TOP:1px solid #4791C5;}

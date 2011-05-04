@@ -1,9 +1,10 @@
 [#ftl]
 [@b.head/]
 [#include "../status.ftl"/]
-[@b.css href="tableTree.css"/]
-<script  type="text/javascript" src="${base}/static/scripts/TableTree.js"></script>
-<script type="text/javascript"> defaultColumn=1;</script>
+<script type="text/javascript">
+	bg.ui.load("tabletree");
+	defaultColumn=1;
+</script>
 <script type="text/javascript">
 	function getIds(){
 		return(getCheckBoxValue(document.getElementsByName("menuId")));

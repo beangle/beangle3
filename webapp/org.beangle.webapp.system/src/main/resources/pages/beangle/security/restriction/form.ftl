@@ -22,19 +22,19 @@ bar.addItem("取消",cancelEdit,'${b.theme.iconurl("actions/close.png")}');
   <input type="radio" [#if (restriction.enabled)!(true)]checked="checked"[/#if] value="1" name="restriction.enabled"  id="restriction.enabled1"/><label for="restriction.enabled1">启用</label>
   <input type="radio" [#if !(restriction.enabled)!(true)]checked="checked"[/#if] value="0" name="restriction.enabled" id="restriction.enabled0"/><label for="restriction.enabled0">禁用</label>
  </div>
- <div class="dynamic-tab-pane-control tab-pane" id="tabPane1" >
-   <script type="text/javascript">tp1 = new WebFXTabPane( document.getElementById( "tabPane1") ,false );</script>
+[@sj.tabbedpanel id="restrictionPanenl"]
 	[#list restriction.pattern.entity.fields?sort_by("remark") as field]
-	 <div style="display: block;" class="tab-page" id="tabPage${field_index}">
-	  <h2 class="tab"><a href="#" style="font-size:12px"> ${field.remark}</a></h2>
-	  <script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage${field_index}" ) );</script>
+	[@sj.tab label="${field.name}(${field.remark})" target="restriction_field_${field.id}"/]
+	[/#list]
+	[#list restriction.pattern.entity.fields?sort_by("remark") as field]
+	<div id="restriction_field_${field.id}">
 	[#if ignoreFields?seq_contains(field)]
 	   <div>
 	   	<input name="ignoreField${field.id}" type="radio" value="1" [#if holderIgnoreFields?seq_contains(field)]checked="checked"[/#if] id="ignoreField${field.id}_1"><label for="ignoreField${field.id}_1">使用通配符*</label>
 	   	<input name="ignoreField${field.id}" type="radio" value="0" [#if !holderIgnoreFields?seq_contains(field)]checked="checked"[/#if] id="ignoreField${field.id}_2"><label for="ignoreField${field.id}_2">选择或填写具体值</label>
 	   </div>
 	[/#if]
-	   [#if field.multiple && field.keyName?exists]
+	[#if field.multiple && field.keyName?exists]
 		[@b.grid items=mngFields[field.name] var="value"]
 			[@b.row]
 				[@b.boxcol width="10%" property=field.keyName boxname=field.name checked=(aoFields[field.name]?seq_contains(value))!false /]
@@ -45,16 +45,13 @@ bar.addItem("取消",cancelEdit,'${b.theme.iconurl("actions/close.png")}');
 				[/#if]
 			[/@]
 		[/@]
-	   [#else]
+	[#else]
 	   <table class="grid" width="100%">
 		  <tr><td colspan="2"><input type="text" name="${field.name}" value="${aoFields[field.name]!}"/>[#if field.multiple]多个值请用,格开[/#if]</td></tr>
 	   </table>
-	   [/#if]
-	   </div>
-	[/#list]
+	[/#if]
 	</div>
+	[/#list]
 [/@]
-<script type="text/javascript">
-	setupAllTabs();
- </script>
+[/@]
 [@b.foot/]

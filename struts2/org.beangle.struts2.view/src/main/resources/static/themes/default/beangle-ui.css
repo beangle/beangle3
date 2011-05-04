@@ -310,12 +310,13 @@ table.settingTable td{
 	clear: both;
 	height: 30px;
 	padding: 0 10px;
+	font-size: 13px;
 }
 
 .navmenu ul {
 	padding: 0;
 	float: left;
-	height: 24px;
+	height: 25px;
 	margin: 5px 0 0;
 }
 
@@ -353,9 +354,12 @@ table.settingTable td{
 	color:#999999;
 }
 /*
- * Pretty Form Style
+ * Pretty List Form Style
  */
 
+form.listform {
+	font-size: 13px;
+}
 form.listform label.title{
 	clear: left;
 	display: block;

@@ -9,9 +9,9 @@ import java.io.File;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.security.blueprint.User;
 import org.beangle.struts2.convention.route.Action;
+import org.beangle.webapp.avatar.Avatar;
+import org.beangle.webapp.avatar.service.AvatarBase;
 import org.beangle.webapp.security.action.SecurityActionSupport;
-import org.beangle.webapp.service.avatar.Avatar;
-import org.beangle.webapp.service.avatar.AvatarBase;
 
 /**
  * 上传照片

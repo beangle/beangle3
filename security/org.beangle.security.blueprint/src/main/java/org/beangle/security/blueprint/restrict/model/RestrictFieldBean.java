@@ -31,11 +31,9 @@ public class RestrictFieldBean extends LongIdObject implements RestrictField {
 	@Column(unique = true)
 	private String name;
 
-	@NotNull
 	@Size(max = 20)
 	private String keyName;
 
-	@NotNull
 	@Size(max = 100)
 	private String propertyNames;
 
@@ -43,9 +41,9 @@ public class RestrictFieldBean extends LongIdObject implements RestrictField {
 	@Size(max = 100)
 	private String type;
 
+	@NotNull
 	private String remark;
 
-	@NotNull
 	@Size(max = 200)
 	private String source;
 

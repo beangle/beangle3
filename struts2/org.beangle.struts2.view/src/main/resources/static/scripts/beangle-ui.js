@@ -772,15 +772,17 @@
 		}
 	}
 	});
-	bg.extend({'ui.loadResource':
+	bg.extend({'ui.load':
 		function (uimodule){
+			if(jQuery.struts2_jquery.loadAtOnce) return;
 			base=bg.getContextPath();
 			if(uimodule=="validity"){
-				if (!jQuery.struts2_jquery.loadAtOnce) {
-					jQuery.struts2_jquery.requireCss("/static/themes/default/jquery.validity.css",base);
-					jQuery.struts2_jquery.require("/static/scripts/jquery.validity.js",null,base);
-					jQuery.struts2_jquery.require("/static/scripts/lang/jquery.validity_zh.js",null,base);
-				}
+				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/jquery.validity.css",base);
+				jQuery.struts2_jquery.require("/static/scripts/jquery.validity.js",null,base);
+				jQuery.struts2_jquery.require("/static/scripts/lang/jquery.validity_zh.js",null,base);
+			}else if(uimodule=="tabletree"){
+				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/beangle-ui-tabletree.css",base);
+				jQuery.struts2_jquery.require("/static/scripts/beangle-ui-tabletree.js",null,base);
 			}
 		}
 	});

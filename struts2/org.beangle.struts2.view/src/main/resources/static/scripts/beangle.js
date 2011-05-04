@@ -267,13 +267,7 @@
 		form:{
 			submit : function (myForm,action,target,onsubmit,ajax){
 				if((typeof myForm)=='string') myForm = document.getElementById(myForm);
-				if(myForm.onsubmit){
-					var rs=null;
-					try{rs=myForm.onsubmit();}catch(e){alert(e);return;}
-					if(rs==false){
-						return;
-					}
-				}
+				//1. submit hook
 				if(onsubmit){
 					var rs=null;
 					if(typeof onsubmit == "function"){
@@ -281,6 +275,14 @@
 					}else{
 						rs=eval(onsubmit);
 					}
+					if(rs==false){
+						return;
+					}
+				}
+				//2.native onsubmit
+				if(myForm.onsubmit){
+					var rs=null;
+					try{rs=myForm.onsubmit();}catch(e){alert(e);return;}
 					if(rs==false){
 						return;
 					}
@@ -313,15 +315,10 @@
 				var sumbitBtnId=myForm.id+"_submit";
 				var submitx=document.getElementById(sumbitBtnId);
 				if(null==submitx){
-					if(document.all){
-						var inputHTML="<button id='"+sumbitBtnId+"' type='submit' style='display:none'></button>";
-						submitx = myForm.document.createElement(inputHTML);
-					}else{
-						submitx = document.createElement('input');
-						submitx.setAttribute("id",sumbitBtnId);
-						submitx.setAttribute("type",'submit');
-						submitx.setAttribute("style",'display:none');
-					}
+					submitx = document.createElement('input');
+					submitx.setAttribute("id",sumbitBtnId);
+					submitx.setAttribute("type",'submit');
+					submitx.setAttribute("style",'display:none');
 					myForm.appendChild(submitx);
 				}
 				var options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#'};
@@ -378,16 +375,10 @@
 				}else{
 					if(null==type)
 						type="hidden";
-					var input=null;
-					if(document.all){
-						var inputHTML="<input name='"+name+"' value='"+ value+"' type='"+type+"'>";
-						input = form.document.createElement(inputHTML);
-					}else{
-						input = document.createElement('input');
-						input.setAttribute("name",name);
-						input.setAttribute("value",value);
-						input.setAttribute("type",type);
-					}
+					var input = document.createElement('input');
+					input.setAttribute("name",name);
+					input.setAttribute("value",value);
+					input.setAttribute("type",type);
 					form.appendChild(input);
 				}
 			},
@@ -745,15 +736,10 @@
 			var submitBtnId=this.formid + "_submitx";
 			var submitx=document.getElementById(submitBtnId);
 			if(null==submitx){
-				if(document.all){
-					var inputHTML="<button id='" + submitBtnId + "' type='submit' style='display:none'></button>";
-					submitx = myForm.document.createElement(inputHTML);
-				}else{
-					submitx = document.createElement('button');
-					submitx.setAttribute("id",submitBtnId);
-					submitx.setAttribute("type",'submit');
-					submitx.setAttribute("style",'display:none');
-				}
+				submitx = document.createElement('button');
+				submitx.setAttribute("id",submitBtnId);
+				submitx.setAttribute("type",'submit');
+				submitx.setAttribute("style",'display:none');
 				myForm.appendChild(submitx);
 			}
 			var options_submit = {};

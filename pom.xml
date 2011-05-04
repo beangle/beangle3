@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.beangle</groupId>
 	<artifactId>beangle-aggregator</artifactId>
-	<version>2.3.0-beta</version>
+	<version>2.3.0-RC</version>
 	<packaging>pom</packaging>
 	<name>Beangle Aggregator</name>
 	<description>Aggregator of the Beangle modules.</description>

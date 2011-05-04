@@ -1,8 +1,9 @@
 [#ftl]
 [@b.head/]
-[@b.css href="tableTree.css"/]
-<script type="text/javascript" src="${base}/static/scripts/TableTree.js"></script>
-<script type="text/javascript">defaultColumn=1;</script>
+<script type="text/javascript">
+	bg.ui.load("tabletree");
+	defaultColumn=1;
+</script>
 [#include "../status.ftl"/]
 [#function convert_code(code)]
 	[#local tdid="1-"]

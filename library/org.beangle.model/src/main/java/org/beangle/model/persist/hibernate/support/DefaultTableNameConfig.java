@@ -38,9 +38,6 @@ public class DefaultTableNameConfig implements TableNameConfig {
 	public void addConfig(URL url) {
 		loadProperties(url);
 		Collections.sort(patterns);
-		for (TableNamePattern pattern : patterns) {
-			logger.info("table name pattern {}", pattern);
-		}
 	}
 
 	private void loadProperties(URL url) {
@@ -116,7 +113,28 @@ public class DefaultTableNameConfig implements TableNameConfig {
 			for (final URL url : resource.getAllPaths()) {
 				addConfig(url);
 			}
+			if(logger.isInfoEnabled()){
+				logger.info("Table name pattern: -> \n{}", this.toString());
+			}
 		}
+	}
+	
+	public String toString(){
+		int maxlength = 0;
+		for (TableNamePattern pattern : patterns) {
+			if (pattern.getPackageName().length() > maxlength) {
+				maxlength = pattern.getPackageName().length();
+			}
+		}
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < patterns.size(); i++) {
+			TableNamePattern pattern = patterns.get(i);
+			sb.append(StringUtils.rightPad(pattern.getPackageName(), maxlength)).append(" : [")
+					.append(pattern.getSchema());
+			sb.append(" , ").append(pattern.getPrefix()).append(']');
+			if (i < patterns.size()-1) sb.append('\n');
+		}
+		return sb.toString();
 	}
 
 }

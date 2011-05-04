@@ -11,7 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.struts2.action.BaseAction;
 import org.beangle.web.io.StreamDownloader;
-import org.beangle.webapp.service.io.StaticFileLoader;
+import org.beangle.webapp.io.StaticFileLoader;
 
 /**
  * 静态资源下载
