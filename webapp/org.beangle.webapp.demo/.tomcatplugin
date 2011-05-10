@@ -3,7 +3,7 @@
     <rootDir>src/main/webapp</rootDir>
     <exportSource>false</exportSource>
     <reloadable>true</reloadable>
-    <redirectLogger>false</redirectLogger>
+    <redirectLogger>true</redirectLogger>
     <updateXml>true</updateXml>
     <warLocation></warLocation>
     <extraInfo>%3CResource+name%3D%22jdbc%2Fbeangle%22+driverClassName%3D%22org.h2.Driver%22%0Aurl%3D%22jdbc%3Ah2%3A%2Ftmp%2Fbeangle%3BAUTO_SERVER%3DTRUE%22%0Atype%3D%22javax.sql.DataSource%22%0Ausername%3D%22sa%22%0Apassword%3D%22%22%0A%2F%3E</extraInfo>
@@ -19,6 +19,7 @@
         <webClassPathEntry>/beangle-struts2-view/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-web/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-webapp-demo/target/classes</webClassPathEntry>
+        <webClassPathEntry>/beangle-webapp-dictionary/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-webapp-service/target/classes</webClassPathEntry>
         <webClassPathEntry>/beangle-webapp-system/target/classes</webClassPathEntry>
         <webClassPathEntry>/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/lib/tools.jar</webClassPathEntry>

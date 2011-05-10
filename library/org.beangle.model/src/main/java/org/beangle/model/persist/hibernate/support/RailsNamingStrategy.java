@@ -51,7 +51,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 		if (enablePluralize) {
 			tableName = pluralizer.pluralize(tableName);
 		}
-		tblPrefix = tableNameConfig.getPrefix(className);
+		generatePrefix(className);
 		if (null != tblPrefix) {
 			tableName = tblPrefix + tableName;
 		}
@@ -61,7 +61,11 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 		return tableName;
 	}
 
-	public String classToTableName(String className, String shortName) {
+	private void generatePrefix(String className) {
+		tblPrefix = tableNameConfig.getPrefix(className);
+	}
+
+	private String classToTableName(String className, String shortName) {
 		if (shortName.endsWith("Bean")) {
 			shortName = StringUtils.substringBeforeLast(shortName, "Bean");
 		}
@@ -168,6 +172,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 		if (Character.isUpperCase(ownerEntityTable.charAt(0))) {
 			ownerTable = classToTableName(ownerEntity, ownerEntityTable);
 		} else {
+			generatePrefix(ownerEntity);
 			ownerTable = tableName(ownerEntityTable);
 		}
 		return ownerTable + '_' + addUnderscores(unqualify(propertyName));

@@ -4,6 +4,10 @@
  */
 package org.beangle.webapp.config.model;
 
+import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.beangle.model.pojo.LongIdObject;
 
 /**
@@ -11,16 +15,25 @@ import org.beangle.model.pojo.LongIdObject;
  * 
  * @author chaostone
  */
+@Entity
 public class PropertyConfigItemBean extends LongIdObject {
 
 	private static final long serialVersionUID = 1L;
 
+	@NotNull
+	@Size(max = 50)
 	private String name;
 
+	@NotNull
+	@Size(max = 200)
 	private String value;
 
+	@NotNull
+	@Size(max = 200)
 	private String description;
 
+	@NotNull
+	@Size(max = 200)
 	private String type;
 
 	public String getDescription() {

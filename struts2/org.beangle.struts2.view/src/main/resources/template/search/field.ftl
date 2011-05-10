@@ -1,2 +1,2 @@
 [#ftl]
-<tr><td class="search-item">${tag.body}</td></tr>
+<tr><td class="search-item">[#if tag.label??]<label>${tag.label}:</label>[/#if]${tag.body}</td></tr>
