@@ -22,6 +22,7 @@ import org.beangle.struts2.view.component.ActionUrlRender;
 import org.beangle.struts2.view.component.Anchor;
 import org.beangle.struts2.view.component.Component;
 import org.beangle.struts2.view.component.Css;
+import org.beangle.struts2.view.component.Date;
 import org.beangle.struts2.view.component.Div;
 import org.beangle.struts2.view.component.Field;
 import org.beangle.struts2.view.component.Foot;
@@ -245,6 +246,10 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		return get(Textfields.class);
 	}
 
+	public TagModel getDatepicker() {
+		return get(Date.class);
+	}
+	
 	public TagModel getDiv() {
 		return get(Div.class);
 	}

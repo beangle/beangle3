@@ -23,6 +23,11 @@ public class Select extends UIBean {
 	private String valueName;
 
 	private String label;
+	protected String title;
+
+	protected String comment;
+	protected String check;
+	protected String required;
 
 	public Select(ValueStack stack) {
 		super(stack);
@@ -40,8 +45,18 @@ public class Select extends UIBean {
 				valueName = "name";
 			}
 		}
-		if (null == this.id) id = name;
+		if (null == this.id) generateIdIfEmpty();
 		if (null != label) label = getText(label, label);
+		if (null != title) {
+			title = getText(title);
+		} else {
+			title = label;
+		}
+		Form myform = findAncestor(Form.class);
+		if (null != myform) {
+			if ("true".equals(required)) myform.addCheck(id, "require()");
+			if (null != check) myform.addCheck(id, check);
+		}
 	}
 
 	public boolean isSelected(Object obj) {
@@ -110,4 +125,37 @@ public class Select extends UIBean {
 			}
 		}
 	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getCheck() {
+		return check;
+	}
+
+	public void setCheck(String check) {
+		this.check = check;
+	}
+
+	public String getRequired() {
+		return required;
+	}
+
+	public void setRequired(String required) {
+		this.required = required;
+	}
+	
 }

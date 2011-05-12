@@ -8,8 +8,40 @@ public class Date extends UIBean {
 
 	private String label;
 
+	private String title;
+
+	private String comment;
+
+	private String check;
+
+	private String required;
+
+	private String value;
+
+	private String format = "yyyy-MM-dd";
+
+	protected String minDate;
+	
+	protected String maxDate;
+
 	public Date(ValueStack stack) {
 		super(stack);
+	}
+
+	@Override
+	protected void evaluateParams() {
+		if (null == this.id) generateIdIfEmpty();
+		if (null != label) label = getText(label, label);
+		if (null != title) {
+			title = getText(title);
+		} else {
+			title = label;
+		}
+		Form myform = findAncestor(Form.class);
+		if (null != myform) {
+			if ("true".equals(required)) myform.addCheck(id, "require()");
+			if (null != check) myform.addCheck(id, check);
+		}
 	}
 
 	public String getName() {
@@ -26,6 +58,70 @@ public class Date extends UIBean {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getCheck() {
+		return check;
+	}
+
+	public void setCheck(String check) {
+		this.check = check;
+	}
+
+	public String getRequired() {
+		return required;
+	}
+
+	public void setRequired(String required) {
+		this.required = required;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public String getFormat() {
+		return format;
+	}
+
+	public void setFormat(String format) {
+		this.format = format;
+	}
+
+	public String getMinDate() {
+		return minDate;
+	}
+
+	public void setMinDate(String minDate) {
+		this.minDate = minDate;
+	}
+
+	public String getMaxDate() {
+		return maxDate;
+	}
+
+	public void setMaxDate(String maxDate) {
+		this.maxDate = maxDate;
 	}
 
 }

@@ -373,8 +373,8 @@
 			}
 			return this;
 		}
-		this.addEntityAction=function(entity){
-			return new bg.entityaction(entity,this.myPage);
+		this.addEntityAction=function(entity,onePage){
+			return new bg.entityaction(entity,onePage);
 		}
 		this.addPrint=function(msg){
 			for(var i=0;i<this.toolbars.length;i++){
@@ -774,7 +774,6 @@
 	});
 	bg.extend({'ui.load':
 		function (uimodule){
-			if(jQuery.struts2_jquery.loadAtOnce) return;
 			base=bg.getContextPath();
 			if(uimodule=="validity"){
 				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/jquery.validity.css",base);
@@ -783,6 +782,8 @@
 			}else if(uimodule=="tabletree"){
 				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/beangle-ui-tabletree.css",base);
 				jQuery.struts2_jquery.require("/static/scripts/beangle-ui-tabletree.js",null,base);
+			}else if(uimodule=="My97DatePicker"){
+				jQuery.struts2_jquery.require("/static/scripts/My97DatePicker/WdatePicker.js",null,base);
 			}
 		}
 	});

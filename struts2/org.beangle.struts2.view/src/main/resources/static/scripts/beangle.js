@@ -639,12 +639,7 @@
 			this.actionurl=actionurl;
 			return this;
 		}
-		this.paramstr=function(newstring){
-			this.paramstr=newstring;
-			this.addParams(newstring);
-			return this;
-		}
-		this.orderby=function(newstring){
+		this.orderBy=function(newstring){
 			this.orderby=newstring;
 			return this;
 		}
@@ -674,6 +669,7 @@
 		}
 		this.addParams = function(paramSeq){
 			bg.assert.notNull(paramSeq,"paramSeq for addHiddens must not be null");
+			this.paramstr=paramSeq
 			var paramArray = paramSeq.split("&");
 			for(var i=0;i<paramArray.length;i++){
 				oneParam=paramArray[i];
@@ -683,6 +679,7 @@
 					this.paramMap[name]=value;
 				}
 			}
+			return this;
 		}
 		// 检查分页参数
 		this.checkPageParams = function (pageNo, pageSize,orderBy){
