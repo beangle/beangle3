@@ -85,7 +85,7 @@
 				if(action.indexOf("remove")!=-1||action.indexOf("delete")!=-1) return "edit-delete.png";
 				if(action.indexOf("update")!=-1||action.indexOf("edit")!=-1||action.indexOf("Edit")!=-1) return "update.png";
 				if(action.indexOf("export")!=-1) return "excel.png";
-				if(action.indexOf("copy")!=-1) return "copy.png";
+				if(action.indexOf("copy")!=-1) return "edit-copy.png";
 				if(action.indexOf("print")!=-1) return "print.png";
 				if(action.indexOf("refresh")!=-1) return "refresh.png";
 				if(action.indexOf("close")!=-1) return "close.png";
