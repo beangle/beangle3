@@ -26,6 +26,7 @@
 [/@]
 [@b.formfoot]
 	[@b.submit value="action.submit" onsubmit="validateResource"/]
+	[@b.redirectParams/]
 	<input type="reset" value="${b.text('action.reset')}"/>
 	<input type="hidden" name="resource.id" value="${(resource.id)!}" />
 	<input type="hidden" name="restrictEntityIds" value=""/>

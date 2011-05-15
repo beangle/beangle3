@@ -419,12 +419,14 @@
 
 		var pageInputJ=jQuery(pageInput)
 		pageInputJ.attr("value",onePage.pageNo+"/"+maxPageNo);
+		pageInputJ.attr("id",pageDiv.id+"_input");
 		pageInputJ.focus(function(){this.value=''});
 		pageInputJ.blur(function(){if(!this.value) this.value= onePage.pageNo+"/"+maxPageNo});
-		pageInputJ.change(function(){onePage.goPage(this.value)});
+		//pageInputJ.change(function(){onePage.goPage(this.value)});
 		
 		if(ranks && (ranks.length>0)){
 			pageNoSelect=document.createElement('select');
+			pageNoSelect.id=pageDiv.id+"_select";
 			pagespan.appendChild(pageNoSelect);
 			pageNoSelect.className="pgbar-selbox";
 			pageNoSelect.title="page size";
@@ -433,20 +435,29 @@
 				if(ranks[i]==onePage.pageSize) selectIndex=i;
 				pageNoSelect.options.add(new Option(ranks[i], ranks[i]));
 			}
-			jQuery(pageNoSelect).change(function (){onePage.goPage(1,this.value)});
+			//jQuery(pageNoSelect).change(function (){onePage.goPage(1,this.value)});
 			pageNoSelect.selectedIndex = selectIndex;
 		}
-		/**
+		//add go button
 		var submitBtn = document.createElement('input');
 		submitBtn.setAttribute("type",'button');
 		submitBtn.setAttribute("name",'gogo');
 		submitBtn.value="Go"
 		submitBtn.className="pgbar-go";
 		pagespan.appendChild(submitBtn);
-		jQuery(submitBtn).click(function (){onePage.goPage(1,this.value)});
-		*/
+		var changePage=function(){
+			var pageNo=document.getElementById(pageDiv.id+'_input').value;var endIndex=pageNo.indexOf("/"+onePage.maxPageNo);
+			if(-1!=endIndex){pageNo=pageNo.substring(0,endIndex)}
+			onePage.goPage(pageNo,document.getElementById(pageDiv.id+'_select').value);
+		}
+		jQuery(submitBtn).click(function (){changePage()});
 		
 		pageDiv.appendChild(pagespan);
+		jQuery(pagespan).keypress(function(event){
+			if (!event) {event = window.event;}
+			if (event && event.keyCode && event.keyCode == 13) {changePage();return false;}
+		});
+		
 		if(onePage.pageNo<onePage.maxPageNo){
 			addAnchor(titles['next'],onePage.pageNo+1);
 			addAnchor(titles['last'],onePage.maxPageNo);
@@ -773,17 +784,21 @@
 	}
 	});
 	bg.extend({'ui.load':
-		function (uimodule){
+		function (uimodule,callback){
 			base=bg.getContextPath();
 			if(uimodule=="validity"){
 				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/jquery.validity.css",base);
 				jQuery.struts2_jquery.require("/static/scripts/jquery.validity.js",null,base);
-				jQuery.struts2_jquery.require("/static/scripts/lang/jquery.validity_zh.js",null,base);
+				if(jQuery.struts2_jquery.scriptCache["/static/scripts/lang/jquery.validity_zh.js"] && callback){
+					callback()
+				}else{
+					jQuery.struts2_jquery.require("/static/scripts/lang/jquery.validity_zh.js",callback,base);
+				}
 			}else if(uimodule=="tabletree"){
 				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/beangle-ui-tabletree.css",base);
-				jQuery.struts2_jquery.require("/static/scripts/beangle-ui-tabletree.js",null,base);
+				jQuery.struts2_jquery.require("/static/scripts/beangle-ui-tabletree.js",callback,base);
 			}else if(uimodule=="My97DatePicker"){
-				jQuery.struts2_jquery.require("/static/scripts/My97DatePicker/WdatePicker.js",null,base);
+				jQuery.struts2_jquery.require("/static/scripts/My97DatePicker/WdatePicker.js",callback,base);
 			}
 		}
 	});

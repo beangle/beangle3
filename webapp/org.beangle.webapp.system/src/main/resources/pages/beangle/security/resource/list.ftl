@@ -15,7 +15,7 @@
 	bar.addItem("${b.text("action.export")}",action.exportData("title:标题,name:名称,remark:${b.text('common.remark')},enabled:是否启用"));
 	[/@]
 	<tr>
-		<td><img src="${b.theme.iconurl('actions/edit-find.png')}" onclick="bg.form.submit(document.getElementById('resourceForm'))"/>[@b.submit style="display:none"/]</td>
+		<td  onclick="bg.form.submit(document.getElementById('resourceForm'))"><img src="${b.theme.iconurl('actions/edit-find.png')}"/>[@b.submit style="display:none"/]</td>
 		<td><input type="text" name="resource.title" value="${Parameters['resource.title']!}" style="width:95%;"/></td>
 		<td><input type="text" name="resource.name" value="${Parameters['resource.name']!}" style="width:95%;"/></td>
 		<td>

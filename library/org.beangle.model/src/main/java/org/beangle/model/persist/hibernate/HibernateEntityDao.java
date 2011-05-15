@@ -117,7 +117,6 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 			return search(query.params(parameterMap).build());
 		} else {
 			QueryBuilder<T> query = OqlBuilder.hql(hql.toString());
-			query.params(parameterMap);
 			List<T> rs = CollectUtils.newArrayList();
 			int i = 0;
 			while (i < values.length) {
@@ -126,7 +125,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 					end = values.length;
 				}
 				parameterMap.put("keyName", ArrayUtils.subarray(values, i, end));
-				rs.addAll(search(query.build()));
+				rs.addAll(search(query.params(parameterMap).build()));
 				i += 500;
 			}
 			return rs;

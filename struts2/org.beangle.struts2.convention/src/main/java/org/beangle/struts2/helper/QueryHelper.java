@@ -123,8 +123,8 @@ public class QueryHelper {
 	 */
 	public static int getPageNo() {
 		String pageNo = Params.get(PAGENO);
-		if (StringUtils.isNotEmpty(pageNo)) {
-			return Integer.valueOf(pageNo).intValue();
+		if (StringUtils.isNotBlank(pageNo)) {
+			return Integer.valueOf(pageNo.trim()).intValue();
 		} else {
 			return Page.DEFAULT_PAGE_NUM;
 		}
@@ -137,8 +137,8 @@ public class QueryHelper {
 	 */
 	public static int getPageSize() {
 		String pageSize = Params.get(PAGESIZE);
-		if (StringUtils.isNotEmpty(pageSize)) {
-			return Integer.valueOf(pageSize).intValue();
+		if (StringUtils.isNotBlank(pageSize)) {
+			return Integer.valueOf(pageSize.trim()).intValue();
 		} else {
 			HttpServletRequest request = ServletActionContext.getRequest();
 			pageSize = CookieUtils.getCookieValue(request, PAGESIZE);
