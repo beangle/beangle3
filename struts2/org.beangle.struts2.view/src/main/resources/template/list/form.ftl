@@ -20,7 +20,7 @@ function onsubmit${tag.id}(){
 [#if (tag.validate!"")=="true"]
 	jQuery.validity.start();
 	${tag.validity}
-	res = $.validity.end().valid;
+	res = jQuery.validity.end().valid;
 [/#if]
 	if(false==res) return false;
 	[#if tag.onsubmit??]

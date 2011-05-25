@@ -8,18 +8,33 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.HierarchyEntity;
 
-public class HierarchyEntityUtil {
+public final class HierarchyEntityUtil {
 
-	public Map<HierarchyEntity<?>, String> sort(List<? extends HierarchyEntity<?>> datas) {
+	/**
+	 * 按照上下关系排序
+	 * 
+	 * @param datas
+	 * @return
+	 */
+	public static Map<HierarchyEntity<?>, String> sort(List<? extends HierarchyEntity<?>> datas) {
 		return sort(datas, null);
 	}
 
-	public Map<HierarchyEntity<?>, String> sort(List<? extends HierarchyEntity<?>> datas, String property) {
+	/**
+	 * 按照上下关系和指定属性排序
+	 * 
+	 * @param datas
+	 * @param property
+	 * @return
+	 */
+	public static Map<HierarchyEntity<?>, String> sort(List<? extends HierarchyEntity<?>> datas,
+			String property) {
 		final Map<HierarchyEntity<?>, String> sortedMap = CollectUtils.newHashMap();
 		for (HierarchyEntity<?> de : datas) {
 			String myId = null;
@@ -59,13 +74,41 @@ public class HierarchyEntityUtil {
 		return sortedMap;
 	}
 
-	private void updatedTagFor(String prefix, HierarchyEntity<?> root,
+	private static void updatedTagFor(String prefix, HierarchyEntity<?> root,
 			Map<HierarchyEntity<?>, String> sortedMap) {
 		for (HierarchyEntity<?> child : root.getChildren()) {
 			if (sortedMap.containsKey(child)) {
 				sortedMap.put(child, prefix + sortedMap.get(child));
 				updatedTagFor(prefix, child, sortedMap);
 			}
+		}
+	}
+
+	/**
+	 * 得到给定节点的所有家族结点，包括自身
+	 * 
+	 * @param root
+	 *            指定根节点
+	 * @return 包含自身的家族节点集合
+	 */
+	public static Set<HierarchyEntity<?>> getFamily(HierarchyEntity<?> root) {
+		Set<HierarchyEntity<?>> nodes = CollectUtils.newHashSet();
+		nodes.add(root);
+		loadChildren(root, nodes);
+		return nodes;
+	}
+
+	/**
+	 * 加载字节点
+	 * 
+	 * @param node
+	 * @param children
+	 */
+	private static void loadChildren(HierarchyEntity<?> node, Set<HierarchyEntity<?>> children) {
+		if (null == node.getChildren()) { return; }
+		for (HierarchyEntity<?> one : node.getChildren()) {
+			children.add(one);
+			loadChildren(one, children);
 		}
 	}
 }

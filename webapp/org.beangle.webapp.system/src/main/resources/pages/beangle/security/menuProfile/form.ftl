@@ -2,7 +2,7 @@
 [@b.head/]
 [@b.toolbar title="菜单配置"]bar.addClose();[/@]
 [@b.form action="!save" theme="list" title="info.module.detail"]
-	[@b.textfield name="menuProfile.name" label="common.name" value="${menuProfile.name!}" required="true" maxLength="50"/]
+	[@b.textfield name="menuProfile.name" label="common.name" value="${menuProfile.name!}" required="true" maxlength="50"/]
 	[@b.field label="entity.userCategory" required="true"]
 		<select  name="menuProfile.category.id" style="width:100px;" >
 			[#list categories as category]

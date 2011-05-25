@@ -16,7 +16,7 @@ public class Date extends UIBean {
 
 	private String required;
 
-	private String value;
+	private String value="";
 
 	private String format = "yyyy-MM-dd";
 

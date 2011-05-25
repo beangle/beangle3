@@ -156,19 +156,6 @@ public class AuthorityAction extends SecurityActionSupport {
 			mngResources.addAll(m.getResources());
 		}
 
-		// 确定要删除的菜单和系统资源
-		// Set<MenuAuthority> removedMenus = CollectionUtil.newHashSet();
-		// for (MenuAuthority ma : mao.getMenuAuthorities()) {
-		// if (mngMenus.contains(ma.getMenu()) &&
-		// ma.getMenu().getProfile().equals(menuProfile)) {
-		// if (!newMenus.contains(ma.getMenu())) {
-		// removedMenus.add(ma);
-		// } else {
-		// newMenus.remove(ma.getMenu());
-		// }
-		// }
-		// }
-
 		Set<Authority> removedResources = CollectUtils.newHashSet();
 		for (final Authority au : mao.getAuthorities()) {
 			if (mngResources.contains(au.getResource())) {
@@ -181,17 +168,8 @@ public class AuthorityAction extends SecurityActionSupport {
 		}
 
 		// 删除菜单和系统资源
-		// mao.getMenuAuthorities().removeAll(removedMenus);
 		mao.getAuthorities().removeAll(removedResources);
-
-		// 添加新的菜单和系统资源
-		// for (Menu menu : newMenus) {
-		// MenuAuthority authority = Model.newInstance(MenuAuthority.class);
-		// authority.setGroup(mao);
-		// authority.setMenu(menu);
-		// mao.getMenuAuthorities().add(authority);
-		// }
-
+		
 		for (Resource resource : newResources) {
 			Authority authority = Model.newInstance(Authority.class);
 			authority.setGroup(mao);

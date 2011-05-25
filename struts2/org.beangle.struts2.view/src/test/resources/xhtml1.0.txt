@@ -50,5 +50,5 @@ optino=option
 <link(.*?)([^/])>=<link$1$2/>
 <a(.*?)([^/])>=<a$1$2/>
 MULTIPLE=multiple\="multiple"
-maxLength=maxlength
-\[@b\.text(.*?)"(.*?)"(.*?)/\]=\${b.text\("$2"\)}
+\[@b\.text(.*?)"(.*?)"(.*?)/\]=\${b.text\("$2"\)} 
+\[@text(.*?)"(.*?)"(.*?)/\]=\${b.text("$2")}

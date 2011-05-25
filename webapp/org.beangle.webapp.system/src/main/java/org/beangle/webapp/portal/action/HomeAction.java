@@ -41,7 +41,6 @@ public class HomeAction extends SecurityActionSupport {
 			put("menus", Collections.EMPTY_LIST);
 		}
 		put("user", user);
-		put("categories", user.getCategories());
 		return forward();
 	}
 

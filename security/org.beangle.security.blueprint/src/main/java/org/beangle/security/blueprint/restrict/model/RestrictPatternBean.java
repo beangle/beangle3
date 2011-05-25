@@ -17,7 +17,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity(name = "org.beangle.security.blueprint.restrict.RestrictPattern")
 @Cacheable
-@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RestrictPatternBean extends LongIdObject implements RestrictPattern {
 
 	private static final long serialVersionUID = 3491583230212588933L;

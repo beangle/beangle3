@@ -2,7 +2,7 @@
 [@b.head/]
 [@b.toolbar title="ui.groupInfo"]bar.addBack();[/@]
 [@b.form action="!save" title="ui.groupInfo" theme="list"]
-	[@b.textfield name="userGroup.name" label="common.name" value="${userGroup.name!}" required="true" maxLength="50"/]
+	[@b.textfield name="userGroup.name" label="common.name" value="${userGroup.name!}" required="true" maxlength="50"/]
 	[@b.field label="common.status" required="true"]
 		<input value="1" id="group_enabled" type="radio" name="userGroup.enabled" [#if (userGroup.enabled)]checked="checked"[/#if]>
 		<label for="group_enabled">${b.text("action.activate")}</label>
@@ -17,7 +17,7 @@
 			[/#list]
 		</select>
 	[/@]
-	[@b.textfield name="userGroup.remark" label="common.remark" value="${userGroup.remark!}" maxLength="50"/]
+	[@b.textfield name="userGroup.remark" label="common.remark" value="${userGroup.remark!}" maxlength="50"/]
 	[@b.formfoot]
 		<input type="hidden" name="userGroup.id" value="${userGroup.id!}" />
 		[@b.redirectParams/]

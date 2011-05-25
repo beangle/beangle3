@@ -72,11 +72,7 @@ function getEvent()
  */
 function getEventTarget(e){
   e=portableEvent(e);
-  if(document.all){
-     return e.srcElement;
-  }else{
-     return e.target;
-  }
+  return e.target || e.srcElement;
 }
 
 function MakeFull(){
