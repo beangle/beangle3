@@ -1,3 +1,6 @@
+2011-06-05  duantihua   <chaostone.duan@gmail.com>
+	* 增强了菜单管理的功能，增加级联调整顺序的功能
+
 2011-05-19  duantihua   <chaostone.duan@gmail.com>
 	* 修复了b.boxcol,b.textarea的属性错误
 	* 修复了beangle.js中的getTarget错误
@@ -8,7 +11,6 @@
 	
 	* HierarchyEntityUtil变成了不可重载类，并提供静态方法。增加了获取家庭成员的方法。
 	* b.textfield,b.textarea中的maxLength改名为maxlength
-	*
 
 2010-12-27  duantihua   <chaostone.duan@gmail.com>
 	* 采用Maven3构建系统

@@ -35,6 +35,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return adminuserIds.contains(user.getId());
 	}
 
+	public boolean isAdmin(String username) {
+		OqlBuilder<?> query = OqlBuilder.from(Adminuser.class, "admin").select("admin.user.name").cacheable();
+		List<?> adminusernames=entityDao.search(query);
+		return adminusernames.contains(username);
+	}
+
 	public User get(String name, String password) {
 		Map<String, Object> params = CollectUtils.newHashMap();
 		params.put("name", name);

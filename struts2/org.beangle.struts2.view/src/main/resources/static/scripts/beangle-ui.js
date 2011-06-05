@@ -385,7 +385,10 @@
 	
 	bg.extend({'ui.pagebar':function (onePage,pageDiv,ranks,titles){
 		if(onePage.total==0) return;
+		
 		if(!ranks) ranks=[10,20,30,50,70,100,200,500,1000];
+		else if(ranks.length==0) ranks=[onePage.pageSize];
+		
 		if(!titles) titles={first:'« First',previous:'‹ Previous',next:'Next ›',last:'Last »',no:'No:',size:'Size:',change:'Click me to change page size'};
 		maxPageNo= onePage.maxPageNo;
 		addAnchor=function(text,pageNumber){

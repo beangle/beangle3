@@ -10,8 +10,6 @@ import java.util.Set;
 
 import org.beangle.security.blueprint.Authority;
 import org.beangle.security.blueprint.Group;
-import org.beangle.security.blueprint.Menu;
-import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.User;
 
@@ -104,22 +102,6 @@ public interface AuthorityService {
 	 * @return
 	 */
 	public Authority getAuthority(Group group, Resource resource);
-
-	/**
-	 * 获取用户的直接权限范围内的资源和所具有用户组的资源.
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	public List<Menu> getMenus(MenuProfile profile, User user);
-
-	/**
-	 * 用户组内对应的资源
-	 * 
-	 * @param groupId
-	 * @return
-	 */
-	public List<Menu> getMenus(MenuProfile profile, Group group, Boolean enabled);
 
 	/**
 	 * 保存新的权限设置

@@ -4,18 +4,20 @@
  */
 package org.beangle.webapp.security.action;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.xwork.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.Entity;
 import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.model.util.HierarchyEntityUtil;
 import org.beangle.security.blueprint.Authority;
 import org.beangle.security.blueprint.Menu;
 import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.Resource;
+import org.beangle.security.blueprint.service.MenuService;
 
 /**
  * 系统模块(菜单)管理响应类
@@ -24,6 +26,8 @@ import org.beangle.security.blueprint.Resource;
  */
 public class MenuAction extends SecurityActionSupport {
 
+	private MenuService menuService;
+	
 	protected void indexSetting() {
 		put("profiles", entityDao.getAll(MenuProfile.class));
 	}
@@ -31,17 +35,41 @@ public class MenuAction extends SecurityActionSupport {
 	protected void editSetting(Entity<?> entity) {
 		put("profiles", entityDao.getAll(MenuProfile.class));
 		Menu menu = (Menu) entity;
+		List<Menu> folders = CollectUtils.newArrayList();
 		OqlBuilder<Resource> builder = OqlBuilder.from(Resource.class, "r");
 		if (null != menu.getProfile() && null != menu.getProfile().getId()) {
 			MenuProfile profile = entityDao.get(MenuProfile.class, menu.getProfile().getId());
 			builder.where("exists(from r.categories as rc where rc=:category)", profile.getCategory());
+			// 查找可以作为父节点的菜单
+			OqlBuilder<Menu> folderBuilder = OqlBuilder.from(Menu.class, "m");
+			folderBuilder.where("m.entry is null and m.profile=:profile", profile);
+			folderBuilder.orderBy("m.code");
+			folders = entityDao.search(folderBuilder);
+			if (null != menu.getParent()&& !folders.contains(menu.getParent())) folders.add(menu.getParent());
+			folders.removeAll(HierarchyEntityUtil.getFamily(menu));
 		}
 		List<Resource> resurces = entityDao.search(builder);
 		Set<Resource> existResources = menu.getResources();
 		if (null != resurces) {
 			resurces.removeAll(existResources);
 		}
+		put("parents", folders);
 		put("resources", resurces);
+	}
+
+	@Override
+	protected String removeAndForward(Collection<?> entities) {
+		@SuppressWarnings("unchecked")
+		List<Menu> menus = (List<Menu>) entities;
+		List<Menu> parents = CollectUtils.newArrayList();
+		for (Menu menu : menus) {
+			if (null != menu.getParent()) {
+				menu.getParent().getChildren().remove(menu);
+				parents.add(menu.getParent());
+			}
+		}
+		entityDao.saveOrUpdate(parents);
+		return super.removeAndForward(entities);
 	}
 
 	protected String saveAndForward(Entity<?> entity) {
@@ -54,21 +82,22 @@ public class MenuAction extends SecurityActionSupport {
 			}
 			menu.getResources().clear();
 			menu.getResources().addAll(resources);
-			String parentCode = menu.getCode().substring(0, menu.getCode().length() - 2);
-			Menu parent = null;
-			if (StringUtils.isNotEmpty(parentCode)) {
-				List<Menu> parents = entityDao.get(Menu.class, "code", parentCode);
-				if (1 == parents.size()) {
-					parent = parents.get(0);
-				}
-			}
-			menu.setParent(parent);
 			entityDao.saveOrUpdate(menu);
+			Long newParentId = getLong("parent.id");
+			int indexno = getInteger("indexno");
+			Menu parent = null;
+			if (null != newParentId) {
+				parent = entityDao.get(Menu.class, newParentId);
+			}
+			menuService.move(menu, parent, indexno);
 		} catch (Exception e) {
 			return forward(ERROR);
 		}
 		return redirect("search", "info.save.success");
 	}
+
+
+	
 
 	/**
 	 * 禁用或激活一个或多个模块
@@ -127,6 +156,10 @@ public class MenuAction extends SecurityActionSupport {
 	@Override
 	protected String getEntityName() {
 		return Menu.class.getName();
+	}
+
+	public void setMenuService(MenuService menuService) {
+		this.menuService = menuService;
 	}
 
 }

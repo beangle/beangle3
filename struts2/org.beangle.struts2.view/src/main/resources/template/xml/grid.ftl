@@ -22,7 +22,7 @@ bar=new bg.ui.gridbar(['${tag.id}_bar1','${tag.id}_bar2'],'${(tag.parameters['ti
 bar.pageId('${tag.id}')
 [#if tag.pageable]
 page_${tag.id}.pageInfo(${tag.items.pageNo},${tag.items.pageSize},${tag.items.total});
-bar.addPage(page_${tag.id},[#if parameters['fixPageSize']??][][#else]null[/#if],{${b.text('page.description')}});
+bar.addPage(page_${tag.id},[#if tag.parameters['fixPageSize']??][][#else]null[/#if],{${b.text('page.description')}});
 [#if tag.notFullPage]bg.ui.grid.fillEmpty('${tag.id}_empty',${tag.items.pageSize},${tag.items?size},'${b.text("page.noData")}');[/#if]
 [/#if]
 [#if tag.var??]action=bar.addEntityAction('${tag.var}',page_${tag.id});[/#if]

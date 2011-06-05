@@ -22,6 +22,7 @@ import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.service.CacheableAuthorityManager;
+import org.beangle.security.blueprint.service.MenuService;
 import org.beangle.security.core.authority.GrantedAuthorityBean;
 import org.beangle.struts2.convention.route.Action;
 
@@ -33,6 +34,8 @@ import org.beangle.struts2.convention.route.Action;
 public class AuthorityAction extends SecurityActionSupport {
 
 	private CacheableAuthorityManager authorityManager;
+
+	private MenuService menuService;
 
 	/**
 	 * 主页面
@@ -59,16 +62,16 @@ public class AuthorityAction extends SecurityActionSupport {
 		Group ao = entityDao.get(Group.class, groupId);
 		User user = getUser();
 		put("manager", user);
-		List<Group> mngGroups=CollectUtils.newArrayList();
+		List<Group> mngGroups = CollectUtils.newArrayList();
 		if (isAdmin(user)) {
-			mngGroups= entityDao.getAll(Group.class);
-		}else{
-			for(GroupMember m:user.getGroups()){
-				if(m.isManager())mngGroups.add(m.getGroup());
+			mngGroups = entityDao.getAll(Group.class);
+		} else {
+			for (GroupMember m : user.getGroups()) {
+				if (m.isManager()) mngGroups.add(m.getGroup());
 			}
 		}
-		put("mngGroups",mngGroups);
-		
+		put("mngGroups", mngGroups);
+
 		List<Category> categories = CollectUtils.newArrayList();
 		categories.add(((Group) ao).getCategory());
 
@@ -94,7 +97,7 @@ public class AuthorityAction extends SecurityActionSupport {
 				menus = menuProfile.getMenus();
 				resources = entityDao.getAll(Resource.class);
 			} else {
-				menus = authorityService.getMenus(menuProfile, user);
+				menus = menuService.getMenus(menuProfile, user);
 				resources = authorityService.getResources(user);
 			}
 			put("resources", CollectUtils.newHashSet(resources));
@@ -113,7 +116,7 @@ public class AuthorityAction extends SecurityActionSupport {
 			Set<Resource> aoResources = CollectUtils.newHashSet();
 			Map<String, Long> aoResourceAuthorityMap = CollectUtils.newHashMap();
 			List<Authority> authorities = authorityService.getAuthorities(ao);
-			Collection<Menu> aoMenus = authorityService.getMenus(menuProfile, (Group) ao, null);
+			Collection<Menu> aoMenus = menuService.getMenus(menuProfile, (Group) ao, null);
 			for (final Authority authority : authorities) {
 				aoResources.add(authority.getResource());
 				aoResourceAuthorityMap.put(authority.getResource().getId().toString(), authority.getId());
@@ -150,7 +153,7 @@ public class AuthorityAction extends SecurityActionSupport {
 		if (isAdmin(manager)) {
 			mngMenus = CollectUtils.newHashSet(menuProfile.getMenus());
 		} else {
-			mngMenus = CollectUtils.newHashSet(authorityService.getMenus(menuProfile, (User) manager));
+			mngMenus = CollectUtils.newHashSet(menuService.getMenus(menuProfile, (User) manager));
 		}
 		for (final Menu m : mngMenus) {
 			mngResources.addAll(m.getResources());
@@ -169,7 +172,7 @@ public class AuthorityAction extends SecurityActionSupport {
 
 		// 删除菜单和系统资源
 		mao.getAuthorities().removeAll(removedResources);
-		
+
 		for (Resource resource : newResources) {
 			Authority authority = Model.newInstance(Authority.class);
 			authority.setGroup(mao);
@@ -191,6 +194,10 @@ public class AuthorityAction extends SecurityActionSupport {
 
 	public void setAuthorityManager(CacheableAuthorityManager authorityManager) {
 		this.authorityManager = authorityManager;
+	}
+
+	public void setMenuService(MenuService menuService) {
+		this.menuService = menuService;
 	}
 
 }

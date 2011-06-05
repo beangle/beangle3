@@ -3,6 +3,10 @@
 	* support more web ui
 	* support bean validation
 
+	todo
+	* select2的required script
+	* 设定好的权限无法访问
+
 2010-02-20(beangle 2.2)
 	* better database query ui support.
 	* [droped]support runAs in security

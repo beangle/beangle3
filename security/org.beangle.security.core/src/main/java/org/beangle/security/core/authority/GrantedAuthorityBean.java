@@ -34,7 +34,7 @@ public class GrantedAuthorityBean implements GrantedAuthority, Serializable {
 	}
 
 	public boolean equals(Object obj) {
-		if (obj instanceof String) { return obj.equals(this.role); }
+		// if (obj instanceof String) { return obj.equals(this.role); }
 		if (obj instanceof GrantedAuthority) {
 			GrantedAuthority attr = (GrantedAuthority) obj;
 			return this.role.equals(attr.getAuthority());

@@ -17,7 +17,7 @@
 	[#return tdid[0..tdid?length-2]]
 [/#function]
 
-[@b.grid  items=menus var="menu"]
+[@b.grid  items=menus var="menu" sortable="false"]
 [@b.gridbar title="菜单列表"]
 	action.addParam('menu.profile.id',"${Parameters['menu.profile.id']!}");
 	function activate(isActivate){
@@ -37,7 +37,7 @@
 	bar.addItem("菜单配置","redirectTo('${b.url('menu-profile!search')}')");
 [/@]
 	[@b.row ]
-		<tr title="${menu.entry!}" id="${convert_code(menu.code)}">
+		<tr title="${(menu.remark?html)!}  ${menu.entry!}" id="${convert_code(menu.code)}">
 		[@b.boxcol onclick="treeToggle(this,false)" /]
 		[@b.col property="title" title="标题"]
 		<div class="tier${menu.code?length/2}" align="left">

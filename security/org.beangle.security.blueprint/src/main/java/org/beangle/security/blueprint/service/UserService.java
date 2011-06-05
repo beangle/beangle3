@@ -119,11 +119,18 @@ public interface UserService {
 	public void removeGroup(User manager, List<Group> groups);
 
 	/**
-	 * 是否是管理员
+	 * 是否是超级管理员
 	 * 
 	 * @param user
 	 * @return
 	 */
 	public boolean isAdmin(User user);
 
+	/**
+	 * 是否是超级管理员
+	 * 
+	 * @param username
+	 * @return
+	 */
+	public boolean isAdmin(String username);
 }
