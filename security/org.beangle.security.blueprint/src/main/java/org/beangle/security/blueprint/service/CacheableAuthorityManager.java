@@ -58,7 +58,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 		SecurityUtils.setResource(resourceName);
 		if (publicResources.contains(resourceName)) { return true; }
 		if (AnonymousAuthentication.class.isAssignableFrom(auth.getClass())) { return false; }
-		if(authorityService.getUserService().isAdmin(auth.getName()))return true;
+		if(authorityService.getUserService().isAdmin(((UserToken)auth.getPrincipal()).getId()))return true;
 		if (protectedResources.contains(resourceName)) { return true; }
 		Collection<? extends GrantedAuthority> authories = auth.getAuthorities();
 		for (GrantedAuthority authorty : authories) {

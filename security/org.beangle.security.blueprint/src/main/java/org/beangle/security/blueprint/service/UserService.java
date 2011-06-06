@@ -129,8 +129,8 @@ public interface UserService {
 	/**
 	 * 是否是超级管理员
 	 * 
-	 * @param username
+	 * @param userId
 	 * @return
 	 */
-	public boolean isAdmin(String username);
+	public boolean isAdmin(Long userId);
 }

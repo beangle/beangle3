@@ -26,6 +26,9 @@ public interface User extends LongIdTimeEntity, RestrictionHolder<UserRestrictio
 	// 激活
 	public static final int ACTIVE = 1;
 
+	/**根用户id*/
+	public static final Long ROOT = 1L;
+
 	/**
 	 * 名称
 	 * 

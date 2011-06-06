@@ -4,21 +4,18 @@
  */
 package org.beangle.webapp.security.action;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.security.blueprint.Adminuser;
 import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.Menu;
 import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.model.AdminuserBean;
 import org.beangle.security.blueprint.model.CategoryBean;
 import org.beangle.security.blueprint.restrict.RestrictField;
 import org.beangle.security.blueprint.restrict.RestrictPattern;
@@ -78,8 +75,6 @@ public class IndexAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String admin() {
-		List<Adminuser> admins = entityDao.getAll(Adminuser.class);
-		put("adminUsers", admins);
 		List<Category> categories = entityDao.getAll(Category.class);
 		put("categories", categories);
 		if (!isAdmin(getUser())) { return "admin-info"; }
@@ -103,30 +98,6 @@ public class IndexAction extends SecurityActionSupport {
 				} catch (Exception e) {
 					return redirect("admin", "info.remove.failure");
 				}
-			}
-			return redirect("admin", "info.remove.success");
-		}
-		String newAdmin = get("newAdmin");
-		if (StringUtils.isNotBlank(newAdmin)) {
-			User user = authorityService.getUserService().get(newAdmin);
-			if (null == user) {
-				return redirect("admin", "info.save.failure");
-			} else {
-				if (authorityService.getUserService().isAdmin(user)) { return redirect("admin",
-						"info.save.failure"); }
-				Adminuser adminUser = new AdminuserBean();
-				adminUser.setUser(user);
-				adminUser.setCreatedAt(new Date());
-				adminUser.setUpdatedAt(new Date());
-				entityDao.saveOrUpdate(adminUser);
-				return redirect("admin", "info.save.success");
-			}
-		}
-		Long adminId = getLong("removeAdminId");
-		if (null != adminId) {
-			Adminuser adminUser = entityDao.get(Adminuser.class, adminId);
-			if (null != adminUser) {
-				entityDao.remove(adminUser);
 			}
 			return redirect("admin", "info.remove.success");
 		}
