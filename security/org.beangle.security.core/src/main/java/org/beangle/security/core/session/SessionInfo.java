@@ -63,8 +63,8 @@ public class SessionInfo {
 		return loginAt;
 	}
 
-	public Long getOnlineTime() {
-		return Long.valueOf(System.currentTimeMillis() - getLoginAt().getTime());
+	public long getOnlineTime() {
+		return  System.currentTimeMillis() - getLoginAt().getTime();
 	}
 
 	public Authentication getAuthentication() {
