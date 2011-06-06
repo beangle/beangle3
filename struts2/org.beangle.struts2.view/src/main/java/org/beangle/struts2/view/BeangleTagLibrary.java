@@ -37,6 +37,8 @@ import org.beangle.struts2.view.component.Navitem;
 import org.beangle.struts2.view.component.Navmenu;
 import org.beangle.struts2.view.component.Pagebar;
 import org.beangle.struts2.view.component.Password;
+import org.beangle.struts2.view.component.Radio;
+import org.beangle.struts2.view.component.Radios;
 import org.beangle.struts2.view.component.RedirectParams;
 import org.beangle.struts2.view.component.Select;
 import org.beangle.struts2.view.component.Select2;
@@ -249,7 +251,7 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 	public TagModel getDatepicker() {
 		return get(Date.class);
 	}
-	
+
 	public TagModel getDiv() {
 		return get(Div.class);
 	}
@@ -274,4 +276,11 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		return get(Navitem.class);
 	}
 
+	public TagModel getRadio() {
+		return get(Radio.class);
+	}
+
+	public TagModel getRadios() {
+		return get(Radios.class);
+	}
 }
