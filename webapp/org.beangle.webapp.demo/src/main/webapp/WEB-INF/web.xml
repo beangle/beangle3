@@ -78,12 +78,12 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	<!-- 
+	
 	<error-page>
 		<error-code>404</error-code>
-		<location>/404.jsp</location>
+		<location>/404.html</location>
 	</error-page>
-	-->
+	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>

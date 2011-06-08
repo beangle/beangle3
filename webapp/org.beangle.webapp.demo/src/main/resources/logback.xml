@@ -11,4 +11,5 @@
 		<level value="info"/>
 		<appender-ref ref="STDOUT"/>
 	</root>
+	<logger name="org.apache.struts2.dispatcher" level="ERROR"/>
 </configuration>

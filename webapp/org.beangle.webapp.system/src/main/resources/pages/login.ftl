@@ -12,7 +12,7 @@
 		<tr><td colspan="3">[@b.messages/]</td></tr>
 		<tr>
 			<td><label for="username"><strong>用户名:</strong></label></td>
-			<td><input name="username" id="username" tabindex="1" title="请输入用户名" type="text" value="${name!}" style="width:150px;background-color:#B0B0B0"/></td>
+			<td><input name="username" id="username" tabindex="1" title="请输入用户名" type="text" value="${(Parameters['username']!)?html}" style="width:150px;background-color:#B0B0B0"/></td>
 			<td rowspan="3" valign="top">
 			[@b.submit name="submitBtn" tabindex="6" style="height:35pt;width:38pt;" value="登录" onsubmit="checkLogin"][/@]
 			</td>
@@ -33,8 +33,8 @@
 			<td colspan="3" align="center">
 				<fieldset>
 				<legend>语言</legend>
-				<input name="session_locale" id="local_zh" type="radio" tabindex="4" value="zh_CN" checked="checked"/><label for="local_zh">中文</label>
-				<input name="session_locale" id="local_en" type="radio" tabindex="5" value="en_US"/><label for="local_en">ENGLISH</label>
+				<input name="session_locale" id="local_zh" type="radio" tabindex="4" value="zh_CN" [#if locale.language?contains('zh')]checked="checked"[/#if]/><label for="local_zh">中文</label>
+				<input name="session_locale" id="local_en" type="radio" tabindex="5" value="en_US" [#if locale.language?contains('en')]checked="checked"[/#if]/><label for="local_en">ENGLISH</label>
 				</fieldset>
 			</td>
 		</tr>
@@ -68,7 +68,6 @@
 		[/#if]
 		return true;
 	}
-	if("${locale.language}".indexOf("en")!=-1){document.getElementById('local_en').checked=true;}
 	var username=beangle.cookie.get("username");
 	if(null!=username){ form['username'].value=username;}
 	function changeCaptcha(obj) {

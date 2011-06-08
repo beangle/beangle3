@@ -51,6 +51,7 @@
 		[/@]
 		[@b.col property="engTitle" title="英文标题"/]
 		[@b.col property="code" width="10%" title="common.code"/]
+		[@b.col width="30%" title="使用资源"][#list menu.resources as re]${re.title?html}[#if re_has_next],[/#if][/#list][/@]
 		[@b.col property="enabled" width="10%" title="common.status"][@enableInfo menu.enabled/][/@]
 		</tr>
 	[/@]

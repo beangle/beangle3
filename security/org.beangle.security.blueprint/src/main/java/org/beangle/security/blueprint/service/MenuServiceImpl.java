@@ -12,7 +12,6 @@ import org.apache.commons.lang.ObjectUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.model.util.HierarchyEntityUtil;
 import org.beangle.security.blueprint.Authority;
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.GroupMember;
@@ -54,7 +53,7 @@ public class MenuServiceImpl extends BaseServiceImpl implements MenuService {
 		}
 		menus.addAll(parentMenus);
 		List<Menu> menuList = CollectUtils.newArrayList(menus);
-		HierarchyEntityUtil.sort(menuList, "indexno");
+		Collections.sort(menuList);
 		return menuList;
 	}
 
@@ -121,8 +120,10 @@ public class MenuServiceImpl extends BaseServiceImpl implements MenuService {
 
 	private void generateCode(Menu menu) {
 		((MenuBean) menu).generateCode();
-		for (Menu m : menu.getChildren()) {
-			generateCode(m);
+		if (null != menu.getChildren()) {
+			for (Menu m : menu.getChildren()) {
+				generateCode(m);
+			}
 		}
 		entityDao.saveOrUpdate(menu);
 	}

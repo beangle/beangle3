@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.Resource;
@@ -130,4 +131,7 @@ public class ResourceBean extends LongIdObject implements Resource {
 		this.entities = entities;
 	}
 
+	public String getDescription() {
+		return StrUtils.concat(name, "[", title, "]");
+	}
 }

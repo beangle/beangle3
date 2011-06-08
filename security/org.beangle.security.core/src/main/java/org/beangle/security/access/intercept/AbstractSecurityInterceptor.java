@@ -5,10 +5,11 @@
 package org.beangle.security.access.intercept;
 
 import org.apache.commons.lang.Validate;
-import org.beangle.security.access.AuthorityManager;
 import org.beangle.security.access.AccessDeniedException;
+import org.beangle.security.access.AuthorityManager;
 import org.beangle.security.auth.AuthenticationManager;
 import org.beangle.security.core.Authentication;
+import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.context.SecurityContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -158,6 +159,9 @@ public abstract class AbstractSecurityInterceptor implements InitializingBean {
 	 */
 	private Authentication authenticateIfRequired() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if(null==authentication){
+			throw new AuthenticationException();
+		}
 		if (authentication.isAuthenticated() && !alwaysReauthenticate) {
 			logger.debug("Previously Authenticated: {}", authentication);
 			return authentication;

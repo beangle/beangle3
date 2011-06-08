@@ -17,6 +17,7 @@ import org.beangle.security.blueprint.Authority;
 import org.beangle.security.blueprint.Menu;
 import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.Resource;
+import org.beangle.security.blueprint.model.MenuBean;
 import org.beangle.security.blueprint.service.MenuService;
 
 /**
@@ -82,6 +83,9 @@ public class MenuAction extends SecurityActionSupport {
 			}
 			menu.getResources().clear();
 			menu.getResources().addAll(resources);
+			if(menu.isTransient()){
+				((MenuBean)menu).generateCode();
+			}
 			entityDao.saveOrUpdate(menu);
 			Long newParentId = getLong("parent.id");
 			int indexno = getInteger("indexno");
@@ -91,6 +95,7 @@ public class MenuAction extends SecurityActionSupport {
 			}
 			menuService.move(menu, parent, indexno);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return forward(ERROR);
 		}
 		return redirect("search", "info.save.success");

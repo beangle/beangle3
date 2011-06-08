@@ -1,3 +1,6 @@
+2011-06-08  duantihua   <chaostone.duan@gmail.com>
+	* 修复了form的ajax提交在ie6,ie7下会自动显示隐藏的Input
+
 2011-06-05  duantihua   <chaostone.duan@gmail.com>
 	* 增强了菜单管理的功能，增加级联调整顺序的功能
 

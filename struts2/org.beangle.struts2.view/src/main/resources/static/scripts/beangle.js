@@ -294,7 +294,6 @@
 				if(action.indexOf("http://")==0){
 					action=action.substring(action.indexOf("/",7));
 				}
-				myForm.action=action;
 				if(null==ajax || ajax){
 					ajax=bg.isAjaxTarget(submitTarget)
 				}
@@ -314,16 +313,18 @@
 					submitx = document.createElement('input');
 					submitx.setAttribute("id",sumbitBtnId);
 					submitx.setAttribute("type",'submit');
-					submitx.setAttribute("style",'display:none');
+					submitx.style.display="none";
 					myForm.appendChild(submitx);
 				}
+				var origin_action=myForm.action;
+				myForm.action=action;
 				var options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#'};
 				if (typeof jQuery != "undefined") {
 					jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
 				}
 				submitx.click();
 				jQuery("#"+sumbitBtnId).unbind();
-				//myForm.removeChild(submitx);
+				if(myForm) myForm.action=origin_action;
 			},
 	
 			/**
@@ -732,7 +733,7 @@
 				submitx = document.createElement('button');
 				submitx.setAttribute("id",submitBtnId);
 				submitx.setAttribute("type",'submit');
-				submitx.setAttribute("style",'display:none');
+				submitx.style.display='none';
 				myForm.appendChild(submitx);
 			}
 			var options_submit = {};

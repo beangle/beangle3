@@ -69,7 +69,6 @@ public class AnonymousAuthenticationFilter extends GenericHttpFilterBean {
 						auth);
 			}
 		}
-
 		try {
 			chain.doFilter(request, response);
 		} finally {

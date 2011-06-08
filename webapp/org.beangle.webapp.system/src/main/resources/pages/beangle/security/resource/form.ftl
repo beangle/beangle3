@@ -21,7 +21,7 @@
 		<label for="categoryIds${category.id}" >${category.name}</label>
 		[/#list]
 	[/@]
-	[@b.select2 label="数据限制对象" name1st="RestrictEntities" name2nd="SelectedRestrictEntities" items1st=restrictEntities items2nd=resource.entities /]
+	[@b.select2 label="数据限制对象" name1st="RestrictEntities" name2nd="SelectedRestrictEntities" items1st=restrictEntities items2nd=resource.entities/]
 	[@b.formfoot]
 		[@b.submit value="action.submit" onsubmit="validateResource"/]
 		[@b.redirectParams/]
