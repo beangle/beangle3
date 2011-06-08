@@ -21,6 +21,7 @@ import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.restrict.service.RestrictionService;
 import org.beangle.security.blueprint.service.AuthorityService;
+import org.beangle.security.blueprint.service.MenuService;
 import org.beangle.security.blueprint.service.UserService;
 import org.beangle.security.blueprint.service.UserToken;
 import org.beangle.security.blueprint.session.SessionActivity;
@@ -40,6 +41,8 @@ public class UserDashboardHelper {
 	private SessionRegistry sessionRegistry;
 
 	private AuthorityService authorityService;
+
+	private MenuService menuService;
 
 	private RestrictionService restrictionService;
 
@@ -83,7 +86,7 @@ public class UserDashboardHelper {
 		}
 		if (null != menuProfileId) {
 			MenuProfile menuProfile = (MenuProfile) entityDao.get(MenuProfile.class, menuProfileId);
-			List<Menu> menus = authorityService.getMenus(menuProfile, user);
+			List<Menu> menus = menuService.getMenus(menuProfile, user);
 			Set<Resource> resources = CollectUtils.newHashSet(authorityService.getResources(user));
 			Map<String, Group> groupMap = CollectUtils.newHashMap();
 			Map<String, List<Menu>> groupMenusMap = CollectUtils.newHashMap();
@@ -92,7 +95,7 @@ public class UserDashboardHelper {
 			for (Group group : myGroups) {
 				groupMap.put(group.getId().toString(), group);
 				groupMenusMap.put(group.getId().toString(),
-						authorityService.getMenus(menuProfile, group, Boolean.TRUE));
+						menuService.getMenus(menuProfile, group, Boolean.TRUE));
 			}
 			ContextHelper.put("menus", menus);
 			ContextHelper.put("groupMap", groupMap);
@@ -101,12 +104,9 @@ public class UserDashboardHelper {
 		}
 	}
 
-	// public String restrictionInfo() {
-	// User user = getUser();
-	// return forward(new Action(RestrictionAction.class, "info",
-	// "&restriction.holder.id="
-	// + user.getId() + "&restrictionType=user"));
-	// }
+	public void setMenuService(MenuService menuService) {
+		this.menuService = menuService;
+	}
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;

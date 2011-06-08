@@ -2,9 +2,9 @@
 [@b.head/]
 <script type="text/javascript" src="${base}/static/scripts/md5.js"></script>
 [@b.form action="!save" theme="list" title="ui.changePasswordIndex"]
-	[@b.password label="user.newPassword" name="password" required="true" maxLength="64" /]
-	[@b.password label="user.repeatPassword" name="repeatedPassword" required="true"  maxLength="64"/]
-	[@b.textfield label="common.email" name="mail" value="${user.mail}" check="match('email')" maxLength="100" /]
+	[@b.password label="user.newPassword" name="password" required="true" maxlength="64" /]
+	[@b.password label="user.repeatPassword" name="repeatedPassword" required="true"  maxlength="64"/]
+	[@b.textfield label="common.email" name="mail" value="${user.mail}" check="match('email')" maxlength="100" /]
 	[@b.formfoot]
 		<input type="hidden" name="user.id" value="${user.id}"/>
 		[@b.submit value="action.submit"  onsubmit="validatePassword" /]&nbsp;

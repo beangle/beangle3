@@ -14,13 +14,20 @@ import com.opensymphony.xwork2.util.ValueStack;
  */
 public class Select2 extends UIBean {
 
+	private String label;
+	private String required;
 	private String keyName = "id", valueName = "name";
 	private String name1st, name2nd;
 	private Object items1st, items2nd;
-	private String size="10";
+	private String size = "10";
 
 	public Select2(ValueStack stack) {
 		super(stack);
+	}
+
+	@Override
+	protected void evaluateParams() {
+		if (null != label) label = getText(label);
 	}
 
 	public String getName1st() {
@@ -87,4 +94,21 @@ public class Select2 extends UIBean {
 			}
 		}
 	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public String getRequired() {
+		return required;
+	}
+
+	public void setRequired(String required) {
+		this.required = required;
+	}
+
 }

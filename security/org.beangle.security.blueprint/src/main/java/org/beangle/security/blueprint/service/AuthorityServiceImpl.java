@@ -18,8 +18,6 @@ import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.blueprint.Authority;
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.GroupMember;
-import org.beangle.security.blueprint.Menu;
-import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.User;
 
@@ -69,58 +67,6 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 			}
 		}
 		return au;
-	}
-
-	public List<Menu> getMenus(MenuProfile profile, User user) {
-		Set<Menu> menus = CollectUtils.newHashSet();
-		List<Group> groups = userService.getGroups(user, GroupMember.Ship.MEMBER);
-		for (final Group group : groups) {
-			if (group.isEnabled()) menus.addAll(getMenus(profile, group, Boolean.TRUE));
-		}
-		return addParentMenus(menus);
-	}
-
-	/**
-	 * 添加父菜单并且排序
-	 * 
-	 * @param menus
-	 * @return
-	 */
-	private List<Menu> addParentMenus(Set<Menu> menus) {
-		Set<Menu> parentMenus = CollectUtils.newHashSet();
-		for (Menu menu : menus) {
-			while (null != menu.getParent() && !menu.getParent().equals(menu)) {
-				parentMenus.add(menu.getParent());
-				menu = menu.getParent();
-			}
-		}
-		menus.addAll(parentMenus);
-		List<Menu> menuList = CollectUtils.newArrayList(menus);
-		Collections.sort(menuList);
-		return menuList;
-	}
-
-	/**
-	 * 查询用户组对应的模块
-	 */
-	public List<Menu> getMenus(MenuProfile profile, Group group, Boolean enabled) {
-		OqlBuilder<Menu> query = buildMenuQuery(profile, group).cacheable();
-		if (null != enabled) {
-			query.where("menu.enabled=:enabled", enabled);
-		}
-		List<Menu> menus = entityDao.search(query);
-		return addParentMenus(CollectUtils.newHashSet(menus));
-	}
-
-	private OqlBuilder<Menu> buildMenuQuery(MenuProfile profile, Group group) {
-		OqlBuilder<Menu> builder = OqlBuilder.from(Menu.class);
-		builder.join("menu.resources", "mr");
-		builder.where("exists(from " + Authority.class.getName()
-				+ " a where a.group=:group and a.resource=mr)", group);
-		if (null != profile) {
-			builder.where("menu.profile=:profile", profile);
-		}
-		return builder;
 	}
 
 	public List<Resource> getResources(User user) {

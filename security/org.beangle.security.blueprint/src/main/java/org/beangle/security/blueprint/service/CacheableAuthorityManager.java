@@ -58,9 +58,9 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 		SecurityUtils.setResource(resourceName);
 		if (publicResources.contains(resourceName)) { return true; }
 		if (AnonymousAuthentication.class.isAssignableFrom(auth.getClass())) { return false; }
+		if(authorityService.getUserService().isAdmin(((UserToken)auth.getPrincipal()).getId()))return true;
 		if (protectedResources.contains(resourceName)) { return true; }
 		Collection<? extends GrantedAuthority> authories = auth.getAuthorities();
-		if (authories.isEmpty()) { return false; }
 		for (GrantedAuthority authorty : authories) {
 			if (isAuthorizedByGroup(authorty, resourceName)) { return true; }
 		}
@@ -83,7 +83,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 	}
 
 	public Set<?> refreshGroupAuthorities(GrantedAuthority group) {
-		Set<?> actions = authorityService.getResourceNamesByGroup(group.toString());
+		Set<?> actions = authorityService.getResourceNamesByGroup(group.getAuthority());
 		authorities.put(group, actions);
 		logger.debug("add authorities for group:{} resource:{}", group, actions);
 		return actions;

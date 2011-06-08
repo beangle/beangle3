@@ -8,20 +8,74 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.HierarchyEntity;
 
-public class HierarchyEntityUtil {
+public final class HierarchyEntityUtil {
 
-	public Map<HierarchyEntity<?>, String> sort(List<? extends HierarchyEntity<?>> datas) {
+	/**
+	 * 得到给定节点的所有家族结点，包括自身
+	 * 
+	 * @param root
+	 *            指定根节点
+	 * @return 包含自身的家族节点集合
+	 */
+	public static <T extends HierarchyEntity<T>> Set<T> getFamily(T root) {
+		Set<T> nodes = CollectUtils.newHashSet();
+		nodes.add(root);
+		loadChildren(root, nodes);
+		return nodes;
+	}
+
+	/**
+	 * 加载字节点
+	 * 
+	 * @param node
+	 * @param children
+	 */
+	private static <T extends HierarchyEntity<T>> void loadChildren(T node, Set<T> children) {
+		if (null == node.getChildren()) { return; }
+		for (T one : node.getChildren()) {
+			children.add(one);
+			loadChildren(one, children);
+		}
+	}
+
+	/**
+	 * 按照上下关系排序
+	 * 
+	 * @param datas
+	 * @return
+	 */
+	public static <T extends HierarchyEntity<T>> Map<T, String> sort(List<T> datas) {
 		return sort(datas, null);
 	}
 
-	public Map<HierarchyEntity<?>, String> sort(List<? extends HierarchyEntity<?>> datas, String property) {
-		final Map<HierarchyEntity<?>, String> sortedMap = CollectUtils.newHashMap();
-		for (HierarchyEntity<?> de : datas) {
+	/**
+	 * 按照上下关系和指定属性排序
+	 * 
+	 * @param datas
+	 * @param property
+	 * @return
+	 */
+	public static <T extends HierarchyEntity<T>> Map<T, String> sort(List<T> datas, String property) {
+		final Map<T, String> sortedMap = tag(datas, property);
+		Collections.sort(datas, new Comparator<HierarchyEntity<?>>() {
+			public int compare(HierarchyEntity<?> arg0, HierarchyEntity<?> arg1) {
+				String tag0 = sortedMap.get(arg0);
+				String tag1 = sortedMap.get(arg1);
+				return tag0.compareTo(tag1);
+			}
+		});
+		return sortedMap;
+	}
+
+	public static <T extends HierarchyEntity<T>> Map<T, String> tag(List<T> datas, String property) {
+		final Map<T, String> sortedMap = CollectUtils.newHashMap();
+		for (T de : datas) {
 			String myId = null;
 			if (null == property) {
 				myId = String.valueOf(de.getIdentifier());
@@ -42,26 +96,18 @@ public class HierarchyEntityUtil {
 			updatedTagFor(myId, de, sortedMap);
 			sortedMap.put(de, myId);
 		}
-		for (HierarchyEntity<?> de : datas) {
+		for (T de : datas) {
 			String tag = sortedMap.get(de);
-			if (!tag.endsWith("_")) {
-				String newTag = tag += "_";
-				sortedMap.put(de, newTag);
+			if (tag.endsWith("_")) {
+				sortedMap.put(de, tag.substring(0, tag.length() - 1));
 			}
 		}
-		Collections.sort(datas, new Comparator<HierarchyEntity<?>>() {
-			public int compare(HierarchyEntity<?> arg0, HierarchyEntity<?> arg1) {
-				String tag0 = sortedMap.get(arg0);
-				String tag1 = sortedMap.get(arg1);
-				return tag0.compareTo(tag1);
-			}
-		});
 		return sortedMap;
 	}
 
-	private void updatedTagFor(String prefix, HierarchyEntity<?> root,
-			Map<HierarchyEntity<?>, String> sortedMap) {
-		for (HierarchyEntity<?> child : root.getChildren()) {
+	private static <T extends HierarchyEntity<T>> void updatedTagFor(String prefix, T root,
+			Map<T, String> sortedMap) {
+		for (T child : root.getChildren()) {
 			if (sortedMap.containsKey(child)) {
 				sortedMap.put(child, prefix + sortedMap.get(child));
 				updatedTagFor(prefix, child, sortedMap);

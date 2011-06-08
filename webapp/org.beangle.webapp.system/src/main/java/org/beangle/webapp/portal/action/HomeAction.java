@@ -13,6 +13,7 @@ import org.beangle.security.blueprint.Category;
 import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.SecurityUtils;
 import org.beangle.security.blueprint.User;
+import org.beangle.security.blueprint.service.MenuService;
 import org.beangle.webapp.security.action.SecurityActionSupport;
 
 /**
@@ -22,6 +23,8 @@ import org.beangle.webapp.security.action.SecurityActionSupport;
  */
 public class HomeAction extends SecurityActionSupport {
 
+	private MenuService menuService;
+	
 	public String index() {
 		User user = getUser();
 		Long categoryId = getLong("security.categoryId");
@@ -36,18 +39,17 @@ public class HomeAction extends SecurityActionSupport {
 		put("categoryId", categoryId);
 		MenuProfile profile = getMenuProfile(categoryId);
 		if (null != profile) {
-			put("menus", authorityService.getMenus(profile, user));
+			put("menus", menuService.getMenus(profile, user));
 		} else {
 			put("menus", Collections.EMPTY_LIST);
 		}
 		put("user", user);
-		put("categories", user.getCategories());
 		return forward();
 	}
 
 	public String welcome() {
 		put("date", new Date(System.currentTimeMillis()));
-		put("user", getUser());
+		put("user", SecurityUtils.getFullname());
 		return forward();
 	}
 
@@ -60,6 +62,10 @@ public class HomeAction extends SecurityActionSupport {
 		} else {
 			return mps.get(0);
 		}
+	}
+
+	public void setMenuService(MenuService menuService) {
+		this.menuService = menuService;
 	}
 
 }

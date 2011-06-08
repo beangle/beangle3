@@ -406,6 +406,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 	}
 
 	private void persistEntity(Object entity, String entityName) {
+		if (null == entity) return;
 		if (null != entityName) {
 			getHibernateTemplate().saveOrUpdate(entityName, entity);
 		} else {
@@ -466,9 +467,8 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 
 	public void remove(Collection<?> entities) {
 		if (null == entities || entities.isEmpty()) return;
-		for (Iterator<?> iter = entities.iterator(); iter.hasNext();) {
-			getHibernateTemplate().delete((Object) iter.next());
-		}
+		for (Object entity : entities)
+			getHibernateTemplate().delete(entity);
 	}
 
 	public void remove(Object... entities) {

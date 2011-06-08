@@ -4,13 +4,17 @@
  */
 package org.beangle.model.pojo;
 
-import java.util.Set;
+import java.util.List;
 
 import org.beangle.model.Entity;
 
 public interface HierarchyEntity<T extends HierarchyEntity<?>> extends Entity<Long> {
 
-	T getParent();
+	public T getParent();
 
-	public Set<? extends T> getChildren();
+	public void setParent(T parent);
+
+	public List<T> getChildren();
+
+	public void setChildren(List<T> children);
 }

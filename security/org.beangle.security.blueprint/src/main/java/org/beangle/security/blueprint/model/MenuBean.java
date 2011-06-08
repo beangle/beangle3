@@ -13,28 +13,34 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.pojo.LongIdObject;
 import org.beangle.security.blueprint.Menu;
 import org.beangle.security.blueprint.MenuProfile;
 import org.beangle.security.blueprint.Resource;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Index;
 
 @Entity(name = "org.beangle.security.blueprint.Menu")
 @Cacheable
-@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MenuBean extends LongIdObject implements Menu {
 
 	private static final long serialVersionUID = 3864556621041443066L;
-
 	@NotNull
 	@Size(max = 32)
 	@Column(unique = true)
 	private String code;
+
+	@NotNull
+	private int indexno;
 
 	@NotNull
 	@Size(max = 100)
@@ -49,19 +55,22 @@ public class MenuBean extends LongIdObject implements Menu {
 	private String remark;
 
 	@ManyToMany
-	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	private Set<Resource> resources = CollectUtils.newHashSet();
 
 	@NotNull
 	private boolean enabled = true;
 
 	@NotNull
+	@Index(name = "idx_menu_profile")
 	private MenuProfile profile;
 
+	@Index(name = "idx_menu_parent")
 	private Menu parent;
 
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
+	@OrderBy("indexno")
 	private List<Menu> children;
 
 	/**
@@ -71,6 +80,19 @@ public class MenuBean extends LongIdObject implements Menu {
 	 */
 	public int compareTo(Menu other) {
 		return getCode().compareTo(other.getCode());
+	}
+
+	public void generateCode() {
+		this.code = (null != parent ? parent.getCode() : "")
+				+ StringUtils.leftPad(String.valueOf(indexno), 2,'0');
+	}
+
+	public int getIndexno() {
+		return indexno;
+	}
+
+	public void setIndexno(int indexno) {
+		this.indexno = indexno;
 	}
 
 	public String getCode() {
@@ -151,6 +173,11 @@ public class MenuBean extends LongIdObject implements Menu {
 
 	public void setChildren(List<Menu> children) {
 		this.children = children;
+	}
+
+	@Override
+	public String toString() {
+		return StrUtils.concat(title, "[", code, "]");
 	}
 
 }

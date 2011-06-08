@@ -25,7 +25,7 @@ public class Textarea extends AbstractTextBean {
 	protected void evaluateParams() {
 		super.evaluateParams();
 		Form myform = findAncestor(Form.class);
-		if (null != maxLength) myform.addCheck(id, "maxLength(" + maxLength + ")");
+		if (null != maxlength) myform.addCheck(id, "maxLength(" + maxlength + ")");
 	}
 
 	public String getCols() {

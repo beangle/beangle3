@@ -4,7 +4,7 @@
 [#include "scope.ftl"/]
 [#include "../status.ftl"/]
 [@b.form name="resourceForm" action="!search"]
-[@b.grid items=resources var="resource" sortable="true" ]
+[@b.grid items=resources var="resource" sortable="true"]
 	[@b.gridbar title='系统资源']
 	function activate(enabled){return action.multi('activate','确定操作?','&enabled='+enabled);}
 	bar.addItem("${b.text("action.add")}",action.add());
@@ -39,7 +39,7 @@
 		[@b.col  width="20%" property="title" title="标题" ][@b.a href="resource!info?resource.id=${resource.id}"]${(resource.title)!}[/@][/@]
 		[@b.col  width="55%" property="name" align="left" title="名称"]<span title="${resource.remark!}">${resource.name!}</span>[/@]
 		[@b.col  width="10%" property="scope" title="可见范围"][@resourceScope resource.scope/][/@]
-		[@b.col  width="10%" property="enabled" title="状态"][@enableInfo resource.enabled/][/@]
+		[@b.col  width="10%" property="enabled" title="状态" sortable="false"][@enableInfo resource.enabled/][/@]
 	[/@]
 [/@]
 [/@]

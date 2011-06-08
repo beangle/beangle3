@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.xwork.ObjectUtils;
+import org.apache.commons.lang.xwork.StringEscapeUtils;
 import org.apache.commons.lang.xwork.StringUtils;
 import org.apache.struts2.util.MakeIterator;
 import org.beangle.commons.collection.CollectUtils;
@@ -60,7 +61,7 @@ public class Grid extends ClosingUIBean {
 	public boolean isSortable(Col cln) {
 		Object sortby = cln.getParameters().get("sort");
 		if (null != sortby) return true;
-		return ("true".equals(sortable) && !ObjectUtils.equals(cln.getParameters().get("sortable"), "false") && null != cln
+		return ("true".equals(sortable) && !ObjectUtils.equals(cln.getSortable(), "false") && null != cln
 				.getProperty());
 	}
 
@@ -180,6 +181,7 @@ public class Grid extends ClosingUIBean {
 		String title;
 		String width;
 		Row row;
+		String sortable;
 
 		public Col(ValueStack stack) {
 			super(stack);
@@ -203,7 +205,7 @@ public class Grid extends ClosingUIBean {
 						writer.append(body);
 					} else if (null != property) {
 						Object val = getValue();
-						if (null != val) writer.append(val.toString());
+						if (null != val) StringEscapeUtils.escapeHtml(writer, val.toString());
 					}
 					writer.append("</td>");
 				} catch (Exception e) {
@@ -249,6 +251,14 @@ public class Grid extends ClosingUIBean {
 
 		public void setWidth(String width) {
 			this.width = width;
+		}
+
+		public String getSortable() {
+			return sortable;
+		}
+
+		public void setSortable(String sortable) {
+			this.sortable = sortable;
 		}
 
 	}

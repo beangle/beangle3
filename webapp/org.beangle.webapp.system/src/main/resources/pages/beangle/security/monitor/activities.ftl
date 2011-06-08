@@ -16,7 +16,7 @@
 	[@b.row]
 		[@b.boxcol boxname="sessionId" property="sessionid"/]
 		[@b.col width="15%" title="用户名" property="authentication.username"]
-		[@b.a href="user!dashboard?user.id=${activity.authentication.principal.id}" target="_blank"]${activity.authentication.principal.fullname!('')}(${activity.authentication.principal.username!})[/@]
+		[@b.a href="user!dashboard?user.id=${activity.authentication.principal.id}" target="_blank"]${(activity.authentication.principal.fullname!(''))?html}(${(activity.authentication.principal.username!(''))?html})[/@]
 		[/@]
 		[@b.col width="12%" title="登录时间" property="loginAt"]${activity.loginAt?string("yy-MM-dd HH:mm")}[/@]
 		[@b.col width="12%" title="最近访问时间" property="lastAccessAt"]${activity.lastAccessAt?string("yy-MM-dd HH:mm")}[/@]

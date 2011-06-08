@@ -11,38 +11,25 @@
 		[/#list]
 		</select>
 	[/@]
-	[@b.textfield label="common.code" name="menu.code" value="${menu.code!}" required="true" maxLength="20" check="match('integer')" comment="数字格式,例如(0601)" /]
-	[@b.textfield label="标题" name="menu.title" value="${menu.title!}" style="width:200px;" required="true" maxLength="50"/]
-	[@b.textfield label="英文标题" name="menu.engTitle" value="${menu.engTitle!}" style="width:200px;"  required="true" maxLength="100" />
+	[@b.textfield label="标题" name="menu.title" value="${menu.title!}" style="width:200px;" required="true" maxlength="50"/]
+	[@b.textfield label="英文标题" name="menu.engTitle" value="${menu.engTitle!}" style="width:200px;"  required="true" maxlength="100" /]
+	[@b.select label="上级菜单" name="parent.id" value=(menu.parent.id)! style="width:200px;"  items=parents option="id,title" empty="..."/]
+	[@b.textfield label="同级顺序号" name="indexno" value="${menu.indexno!}" required="true" maxlength="2" check="match('integer')" /]
 	[@b.field label="common.status" required="true"]
 		<select  name="menu.enabled" style="width:100px;" >
 			<option value="true" [#if menu.enabled]selected="selected"[/#if]>${b.text("action.activate")}</option>
 			<option value="false" [#if !menu.enabled]selected="selected"[/#if]>${b.text("action.freeze")}</option>
 		</select>
 	[/@]
-	[@b.textfield label="menu.entry"  name="menu.entry" value="${menu.entry!}" maxLength="100" /]
-	[@b.field label="使用资源"]
-		[@b.select2 name1st="Resources" name2nd="SelectedResource" items1st=resources?sort_by("name") items2nd= menu.resources?sort_by("name") /]
-	[/@]
-	[@b.textfield label="common.remark"  name="menu.remark" maxLength="50" value="${menu.remark!}"/]
+	[@b.textfield label="menu.entry"  name="menu.entry" value="${menu.entry!}" maxlength="100" /]
+	[@b.select2 label="使用资源" name1st="Resources" name2nd="SelectedResource" items1st=resources?sort_by("name") items2nd= menu.resources?sort_by("name") /]
+	[@b.textfield label="common.remark"  name="menu.remark" maxlength="50" value="${menu.remark!}"/]
 	[@b.formfoot]
-		[@b.submit value="action.submit"  onsubmit="validateMenu"/]&nbsp;
+		[@b.submit value="action.submit"/]&nbsp;
 		<input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />
 		[@b.redirectParams/]
 		<input type="hidden" name="menu.id" value="${menu.id!}" />
 		<input type="hidden" name="resourceIds" />
 	[/@]
 [/@]
-<script  type="text/javascript">
-	function validateMenu(form){
-		form.resourceIds.value = bg.select.getValues(form.SelectedResource);
-		var codeValue=form['menu.code'].value;
-		var le = codeValue.length;
-		if(le%2!=0){
-			 alert("代码必须为双数位!");
-			 return false;
-		}
-		return true;
-	}
-</script>
 [@b.foot/]

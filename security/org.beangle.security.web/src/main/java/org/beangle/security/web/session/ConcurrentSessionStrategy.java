@@ -18,7 +18,11 @@ import org.beangle.security.core.session.SessionInfo;
 import org.beangle.security.core.session.SessionRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * 并行登录的会话策略
+ * @author chaostone
+ *
+ */
 public class ConcurrentSessionStrategy implements SessionStrategy {
 
 	private final Logger logger = LoggerFactory.getLogger(ConcurrentSessionStrategy.class);

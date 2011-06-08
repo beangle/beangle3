@@ -34,7 +34,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.Resource")
 @Cacheable
-@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ResourceBean extends LongIdObject implements Resource {
 	private static final long serialVersionUID = -8285208615351119572L;
 
@@ -62,11 +62,11 @@ public class ResourceBean extends LongIdObject implements Resource {
 	private int scope = Scope.PRIVATE;
 
 	@ManyToMany
-	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	private Set<Category> categories = CollectUtils.newHashSet();
 
 	@ManyToMany
-	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	private Set<RestrictEntity> entities = CollectUtils.newHashSet();
 
 	public String getRemark() {

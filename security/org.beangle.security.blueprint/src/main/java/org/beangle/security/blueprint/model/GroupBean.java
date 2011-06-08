@@ -32,7 +32,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.Group")
 @Cacheable
-@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class GroupBean extends LongIdTimeObject implements Group {
 
 	private static final long serialVersionUID = -3404181949500894284L;

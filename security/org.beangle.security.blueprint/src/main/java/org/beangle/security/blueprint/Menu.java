@@ -4,9 +4,9 @@
  */
 package org.beangle.security.blueprint;
 
-import java.util.List;
 import java.util.Set;
 
+import org.beangle.model.pojo.HierarchyEntity;
 import org.beangle.model.pojo.LongIdEntity;
 
 /**
@@ -14,16 +14,25 @@ import org.beangle.model.pojo.LongIdEntity;
  * 
  * @author chaostone
  */
-public interface Menu extends LongIdEntity, Comparable<Menu> {
+public interface Menu extends LongIdEntity, Comparable<Menu>,HierarchyEntity<Menu> {
 
 	/**
-	 * 菜单代码
+	 * 同级菜单索引号
 	 * 
 	 * @return
 	 */
 	public String getCode();
 
 	public void setCode(String code);
+
+	/**
+	 * 同级菜单序列号
+	 * 
+	 * @return
+	 */
+	public int getIndexno();
+
+	public void setIndexno(int indexno);
 
 	/**
 	 * 菜单标题
@@ -41,14 +50,6 @@ public interface Menu extends LongIdEntity, Comparable<Menu> {
 	public String getEntry();
 
 	public void setEntry(String entry);
-
-	public Menu getParent();
-
-	public void setParent(Menu parent);
-
-	public List<Menu> getChildren();
-
-	public void setChildren(List<Menu> children);
 
 	public String getRemark();
 

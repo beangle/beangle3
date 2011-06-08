@@ -15,7 +15,6 @@ import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.security.blueprint.Adminuser;
 import org.beangle.security.blueprint.Group;
 import org.beangle.security.blueprint.GroupMember;
 import org.beangle.security.blueprint.User;
@@ -30,9 +29,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
 	public boolean isAdmin(User user) {
-		OqlBuilder<?> query = OqlBuilder.from(Adminuser.class, "admin").select("admin.user.id").cacheable();
-		List<?> adminuserIds=entityDao.search(query);
-		return adminuserIds.contains(user.getId());
+		return User.ROOT.equals(user.getId());
+	}
+
+	public boolean isAdmin(Long userId) {
+		return User.ROOT.equals(userId);
 	}
 
 	public User get(String name, String password) {

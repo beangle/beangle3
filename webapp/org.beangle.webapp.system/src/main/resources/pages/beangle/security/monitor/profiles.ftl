@@ -22,9 +22,9 @@
 	<tr style="background-color:${(profile_index%2!=0)?string("#e1e8f5","#FFFFFF")}">
 		<td>${profile.category.name}</td>
 		<td>${profile.online}</td>
-		<td><input name="max_${profile.category.id}" value="${profile.capacity}" style="width:50px" maxLength="5"/></td>
-		<td><input name="inactiveInterval_${profile.category.id}" value="${profile.inactiveInterval}" style="width:50px" maxLength="5"/>分</td>
-		<td><input name="maxSessions_${profile.category.id}" value="${profile.userMaxSessions}" style="width:35px" maxLength="2"/></td>
+		<td><input name="max_${profile.category.id}" value="${profile.capacity}" style="width:50px" maxlength="5"/></td>
+		<td><input name="inactiveInterval_${profile.category.id}" value="${profile.inactiveInterval}" style="width:50px" maxlength="5"/>分</td>
+		<td><input name="maxSessions_${profile.category.id}" value="${profile.userMaxSessions}" style="width:35px" maxlength="2"/></td>
 	</tr>
 	[/#list]
 	<tr>

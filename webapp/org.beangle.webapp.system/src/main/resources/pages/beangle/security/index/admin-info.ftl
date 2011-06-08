@@ -9,14 +9,4 @@
 	[/#list]
 	</ul>
 [/@]
-
-[@b.module title="超级管理员(加入时间)列表"]
-	<ul>
-	[#list adminUsers as adminUser]
-	<li>
-	${adminUser.user.name}(${adminUser.user.fullname}) ${(adminUser.createdAt?string("yyyy-MM-dd"))!}
-	</li>
-	[/#list]
-	</ul>
-[/@]
 [@b.foot/]

@@ -61,7 +61,7 @@ public class UserToken extends User implements CategoryPrincipal, Comparable<Use
 	}
 
 	/**
-	 * 比较id,如果任一方id是null,则不相等
+	 * 比较username,如果任一方username是null,则不相等
 	 */
 	public boolean equals(final Object object) {
 		if (!(object instanceof UserToken)) { return false; }

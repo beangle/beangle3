@@ -15,7 +15,7 @@
   }
 </script>
 [@b.module title="欢迎信息"]
-	欢迎您:${(user.fullname)!},今天是${date}
+	欢迎您:${(user)!},今天是${date}
 [/@]
 
 [#if notices?? && notices?size!=0]

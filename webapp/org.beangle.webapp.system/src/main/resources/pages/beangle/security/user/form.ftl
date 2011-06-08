@@ -12,16 +12,16 @@
 	[/#if]
 	[@b.div id="userInfo" theme="list" asContainer="false"]
 	<fieldset><legend>${b.text('ui.userInfo')}</legend><ol>
-		[@b.textfield label="user.name"  name="user.name" value="${user.name!}" style="width:200px;" required="true" maxLength="30"/]
+		[@b.textfield label="user.name"  name="user.name" value="${user.name!}" style="width:200px;" required="true" maxlength="30"/]
 		[@b.field label="common.status" required="true"]
 		 <input value="1" id="user_status_1" type="radio" name="user.status" [#if (user.status!1)==1]checked="checked"[/#if] />
 		 <label for="user_status_1">${b.text("action.activate")}</label>
 		 <input value="0" id="user_status_0" type="radio" name="user.status" [#if (user.status!1)==0]checked="checked"[/#if] />
 		 <label for="user_status_0">${b.text("action.freeze")}</label>
 		[/@]
-		[@b.textfield label="user.fullname" name="user.fullname" value="${user.fullname!}" style="width:200px;" required="true" maxLength="60" /]
+		[@b.textfield label="user.fullname" name="user.fullname" value="${user.fullname!}" style="width:200px;" required="true" maxlength="60" /]
 		[@b.password label="密码" name="password" value="" axLength="60" comment="默认密码为1"/]
-		[@b.textfield label="common.email" name="user.mail" value="${user.mail!}" style="width:300px;" maxLength="70" required="true"/]
+		[@b.textfield label="common.email" name="user.mail" value="${user.mail!}" style="width:300px;" maxlength="70" required="true"/]
 		[@b.field label="entity.userCategory" required="true"]
 		  [#list categories as category]
 		  <input name="categoryIds" id="categoryIds${category.id}" value="${category.id}" type="checkbox" [#if user.categories?seq_contains(category)]checked="checked"[/#if] />
@@ -34,7 +34,7 @@
 		  [/#list]
 		  </select>
 		[/@]
-		[@b.textarea label="common.remark" cols="50" rows="1" name="user.remark" value="${user.remark!}" maxLength="100"/]
+		[@b.textarea label="common.remark" cols="50" rows="1" name="user.remark" value="${user.remark!}" maxlength="100"/]
 		[@b.formfoot]
 			<input type="hidden" name="user.id" value="${user.id!}" />
 			[@b.redirectParams/]

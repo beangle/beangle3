@@ -1,7 +1,7 @@
 [#ftl]
 [@b.head/]
 [#include "../nav.ftl"/]
-	摘要
+	<em>摘要</em>
 	<hr>
 	<table width="100%">
 		<tr>
@@ -27,7 +27,7 @@
 		</tr>
 	</table>
 	<br/>
-	内存使用(单位:MB)
+	<em>内存使用(单位:MB)</em>
 	<hr>
 	<div  class="ui-widget ui-widget-content ui-corner-all" id="progressbar">
 	<table width="100%" style="border-collapse:collapse">
@@ -59,7 +59,7 @@
 		[/#list]
 	</table>
 	<br/>
-	线程
+	<em>线程</em>
 	<hr>
 	<table width="100%">
 		<tr>
@@ -68,7 +68,7 @@
 		</tr>
 	</table>
 	<br/>
-	运行时
+	<em>运行时</em>
 	<hr>
 	<table width="100%">
 		<tr>

@@ -14,8 +14,8 @@
 	</div>
 	[@b.form]
 	<div class="banner_area">
-		[@b.a href="/security/my" target="_blank" title="查看登录记录"]${user.fullname}(${user.name})[/@]&nbsp;&nbsp;
-		[@b.select name="security.categoryId" items=categories title="entity.userCategory"  style="width:100px" value=categoryId/]
+		[@b.a href="/security/my" target="_blank" title="查看登录记录"]${user.fullname?html}(${user.name?html})[/@]&nbsp;&nbsp;
+		[@b.select name="security.categoryId" items=user.categories title="entity.userCategory"  style="width:100px" value=categoryId/]
 		<input type="submit" value="切换"/>
 	</div>
 	[/@]

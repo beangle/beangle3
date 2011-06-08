@@ -140,11 +140,7 @@
 			 */
 			getTarget: function (e){
 				e=bg.event.portable(e);
-				if(document.all){
-					return e.srcElement;
-				}else{
-					return e.target;
-				}
+				return e.target || e.srcElement;
 			}
 		}
 	});

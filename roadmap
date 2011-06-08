@@ -1,3 +1,19 @@
+2011-05-20(beangle 2.3)
+	* support online user stat on multiple server
+	* support more web ui
+	* support bean validation
+
+	todo
+	* select2的required script
+	* 设定好的权限无法访问
+
+2010-02-20(beangle 2.2)
+	* better database query ui support.
+	* [droped]support runAs in security
+	* [droped]implement group/parent relation in security
+	* support more elegant export attribute setting
+	* [droped]support multi account in single session
+
 2011-1-20(beangle 2.1)
 	* monitor every access log(user ip os/browser)
 	* support online user and activity
@@ -8,10 +24,3 @@
 	* support better data restriciton
 	* remove unnessasery archiver code
 
-2010-2-20(beangle 2.2)
-	* better database query ui support.
-	* support runAs in security
-	* support online user stat on multi server
-	* implement group/parent relation in security
-	* support more elegant export attribute setting
-	* support multi account in single session

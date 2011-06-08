@@ -4,12 +4,15 @@
  */
 package org.beangle.security.web.session.category;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
 
 import org.apache.commons.lang.Validate;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.security.core.Authentication;
+import org.beangle.security.core.session.SessionCleaner;
 import org.beangle.security.core.session.SessionDestroyedEvent;
 import org.beangle.security.core.session.SessionException;
 import org.beangle.security.core.session.SessionInfo;
@@ -36,6 +39,8 @@ public class CategorySessionRegistry implements SessionRegistry, InitializingBea
 	public void afterPropertiesSet() throws Exception {
 		Validate.notNull(sessionController, "sessionController must set");
 		Validate.notNull(innerRegistry, "innerRegistry must set");
+		// 每两分钟执行一次
+		new Timer("Beangle Session Cleaner",true).schedule(new SessionCleaner(this), new Date(), 1000 * 120);
 	}
 
 	// 当会话消失时，退出用户
