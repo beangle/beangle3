@@ -236,7 +236,7 @@
 			item_div.onmouseout=MouseOutItem;
 			item_div.onmouseover=MouseOverItem;
 			this.items_div.appendChild(item_div);
-			item_div.innerHTML=title+'<img src="'+imagePath+'downarrow.png" class="toolbar-icon" />';
+			item_div.innerHTML='<img src="'+imagePath+'downarrow.png" class="toolbar-icon" />'+title;
 			var menu = new Menu(menuTableId,item_div);
 			item_div.onclick=function (event){displayMenu(event);};
 			this.itemCount++;
@@ -379,6 +379,20 @@
 		this.addPrint=function(msg){
 			for(var i=0;i<this.toolbars.length;i++){
 				this.toolbars[i].addPrint(msg);
+			}
+		}
+		this.addMenu=function(title,action,imageName,alt){
+			return new menus(title,action,imageName,alt,this.toolbars);
+		}
+		function menus(title,action,imageName,alt,bars){
+			var menu = new Array();
+			for(var i=0;i<bars.length;i++){
+				menu[i] = bars[i].addMenu(title,action,imageName,alt);
+			}
+			this.addItem = function (title,action,imageName,alt){
+				for(var i=0;i<menu.length;i++){
+					menu[i].addItem(title,action,imageName,alt)
+				}
 			}
 		}
 	}});
