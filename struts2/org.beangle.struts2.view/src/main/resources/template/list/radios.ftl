@@ -4,6 +4,7 @@
 <input type="radio" id="${tag.id}" style="display:none" name="${tag.name}" value="${radio.value!?html}"${tag.parameterString} [#if tag.checked?? && radio.value!?html==tag.checked]checked[#elseif !tag.checked?exists && radio_index==(tag.radios?size-1)]checked[/#if]/>
 <span class="radioClass"><img src="${base}/static/themes/default/images/radio1.gif"/>&nbsp;&nbsp;${radio.title!}</span>&nbsp;&nbsp;
 [/#list]
+[#if tag.comment??]<label class="comment">${tag.comment}</label>[/#if]
 </li>
 <script type="text/javascript">
 	if(jQuery.struts2_jquery.scriptCache["/static/scripts/radioInit.js"]){

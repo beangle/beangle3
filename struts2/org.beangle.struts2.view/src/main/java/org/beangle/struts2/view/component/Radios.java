@@ -17,6 +17,8 @@ public class Radios extends UIBean {
 
 	private Object checked;
 
+	private String comment;
+
 	public Radios(ValueStack stack) {
 		super(stack);
 		// TODO Auto-generated constructor stub
@@ -87,4 +89,13 @@ public class Radios extends UIBean {
 	public void setChecked(Object checked) {
 		this.checked = checked;
 	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 }
