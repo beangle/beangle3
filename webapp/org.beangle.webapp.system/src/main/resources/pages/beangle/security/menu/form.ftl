@@ -13,7 +13,7 @@
 	[/@]
 	[@b.textfield label="标题" name="menu.title" value="${menu.title!}" style="width:200px;" required="true" maxlength="50"/]
 	[@b.textfield label="英文标题" name="menu.engTitle" value="${menu.engTitle!}" style="width:200px;"  required="true" maxlength="100" /]
-	[@b.select label="上级菜单" name="parent.id" value=(menu.parent.id)! style="width:200px;"  items=parents option="id,title" empty="..."/]
+	[@b.select label="上级菜单" name="parent.id" value=(menu.parent.id)! style="width:200px;"  items=parents option="id,description" empty="..."/]
 	[@b.textfield label="同级顺序号" name="indexno" value="${menu.indexno!}" required="true" maxlength="2" check="match('integer')" /]
 	[@b.field label="common.status" required="true"]
 		<select  name="menu.enabled" style="width:100px;" >
@@ -23,7 +23,7 @@
 	[/@]
 	[@b.textfield label="menu.entry"  name="menu.entry" value="${menu.entry!}" maxlength="100" /]
 	[@b.select2 label="使用资源" name1st="Resources" name2nd="SelectedResource" items1st=resources?sort_by("name") items2nd= menu.resources?sort_by("name") option="id,description"/]
-	[@b.textfield label="common.remark"  name="menu.remark" maxlength="50" value="${menu.remark!}"/]
+	[@b.textarea label="common.remark"  name="menu.remark" maxlength="50" value=menu.remark! rows="2" cols="40"/]
 	[@b.formfoot]
 		[@b.submit value="action.submit" onsubmit="validateMenu"/]&nbsp;
 		<input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />

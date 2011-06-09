@@ -10,7 +10,7 @@
 	<bean id="hibernateConfig">
 		<property name="properties">
 			<props merge="true">
-				<prop key="hibernate.dialect">org.hibernate.dialect.DB2Dialect</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.hbm2ddl.auto">false</prop>
 			</props>

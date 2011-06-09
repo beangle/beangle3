@@ -4,6 +4,7 @@
  */
 package org.beangle.struts2.view.component;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -11,11 +12,11 @@ import org.apache.commons.lang.xwork.StringUtils;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
-public class Select extends UIBean {
+public class Select extends ClosingUIBean {
 
 	protected String name;
 
-	private Object items;
+	private Object items=Collections.emptyList();
 	private String empty;
 	private Object value;
 

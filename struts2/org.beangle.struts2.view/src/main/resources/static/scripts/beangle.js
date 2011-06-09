@@ -326,7 +326,7 @@
 				jQuery("#"+sumbitBtnId).unbind();
 				if(myForm) myForm.action=origin_action;
 			},
-	
+
 			/**
 			 * 提交要求含有id的表单
 			 * @param form 带提交的表单

@@ -428,7 +428,7 @@ form.listform li.foot {
 /*
  * Module UI Style
  */
-.module{margin:0 3 5px;line-height:1.3em;float:left;width:49%;}
+.module{margin:0px 3px 5px;line-height:1.3em;float:left;width:49%;}
 .modulebody{display:block;padding:4px 8px;background:#e0ecff;} 
 .collapsed .modulebody,.collapsed .collapsed{display:none}
 .header{background:#94aef3;margin:0;padding:0;font-size:100%;line-height:1.2em}

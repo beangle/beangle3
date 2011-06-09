@@ -84,7 +84,7 @@ public class MenuBean extends LongIdObject implements Menu {
 
 	public void generateCode() {
 		this.code = (null != parent ? parent.getCode() : "")
-				+ StringUtils.leftPad(String.valueOf(indexno), 2,'0');
+				+ StringUtils.leftPad(String.valueOf(indexno), 2, '0');
 	}
 
 	public int getIndexno() {
@@ -175,9 +175,13 @@ public class MenuBean extends LongIdObject implements Menu {
 		this.children = children;
 	}
 
+	public String getDescription() {
+		return StrUtils.concat("[", code, "]", title);
+	}
+
 	@Override
 	public String toString() {
-		return StrUtils.concat(title, "[", code, "]");
+		return getDescription();
 	}
 
 }

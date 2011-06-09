@@ -31,7 +31,8 @@
 		var defaultToolBarImageName="info.png";
 		var defaultItemImageName="action.png";
 		var helpImageName="help.png";
-		var imagePath=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/"+ bg.uitheme +"/icons/16x16/actions/";
+		var imageRoot=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/"+ bg.uitheme +"/icons/";
+		var imagePath=imageRoot + "16x16/actions/";
 		
 		this.setTitle=function(newTitle,imageName){
 			if(!newTitle) return;
@@ -236,7 +237,7 @@
 			item_div.onmouseout=MouseOutItem;
 			item_div.onmouseover=MouseOverItem;
 			this.items_div.appendChild(item_div);
-			item_div.innerHTML='<img src="'+imagePath+'downarrow.png" class="toolbar-icon" />'+title;
+			item_div.innerHTML=title+ '<img src="'+imageRoot+'8x8/actions/downarrow.png" class="toolbar-icon" />';
 			var menu = new Menu(menuTableId,item_div);
 			item_div.onclick=function (event){displayMenu(event);};
 			this.itemCount++;
