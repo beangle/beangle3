@@ -19,7 +19,7 @@
  |      </td>                                                      |
  |      other td                                                   |
  |    </tr>                                                        |
- |    <tr id="1-1">                                                |
+ |    <tr id="1.1">                                                |
  |      <td>                                                       |
  |      <div class="tier2">	                                       |
  |	      <a href="#" class="doc" onclick="toggleRows(this)"></a>  |
@@ -32,13 +32,14 @@
  \----------------------------------------------------------------*/
 // default collapse column
 var defaultColumn=0;
+var treeIdComma=".";
 // for collapse or display child nodes.
 var treeImagePath=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/" + bg.uitheme + "/icons/16x16/tree/";
 function toggleRows(elm) {
  var rows = document.getElementsByTagName("TR");
  elm.style.backgroundImage = "url("+treeImagePath+"plus.png)";
  var newDisplay = "none";
- var thisID = elm.parentNode.parentNode.parentNode.id + "-";
+ var thisID = elm.parentNode.parentNode.parentNode.id + treeIdComma;
  // Are we expanding or contracting? If the first child is hidden, we expand
   for (var i = 0; i < rows.length; i++) {
    var r = rows[i];
@@ -76,7 +77,7 @@ function matchStart(target, pattern, matchDirectChildrenOnly) {
  var pos = target.indexOf(pattern);
  if (pos != 0) return false;
  if (!matchDirectChildrenOnly) return true;
- if (target.slice(pos + pattern.length, target.length).indexOf("-") >= 0) return false;
+ if (target.slice(pos + pattern.length, target.length).indexOf(treeIdComma) >= 0) return false;
  return true;
 }
 
@@ -84,7 +85,7 @@ function collapseAllRows() {
  var rows = document.getElementsByTagName("tr");
  for (var j = 0; j < rows.length; j++) {
    var r = rows[j];
-   if (r.id.indexOf("-") >1 ) {
+   if (r.id.indexOf(treeIdComma) >1 ) {
      r.style.display = "none";
    }
  }
@@ -93,14 +94,22 @@ function collapseAllRows() {
   added by chaostone for collapse special depth
   2005-10-11 
 */
+function countchar(id){
+	var cnt=0;
+	for(var i=0;i<id.length;i++){
+		if(id.charAt(i)==treeIdComma) cnt++;
+	}
+	return cnt+1;
+}
+
 function collapseAllRowsFor(depth) {
  var rows = document.getElementsByTagName("tr");
  for (var j = 0; j < rows.length; j++) {
    var r = rows[j];
-   if (r.id.lastIndexOf("-") >depth ) {
+   if (countchar(r.id) >depth ) {
      r.style.display = "none";
    }
-   if(r.id.lastIndexOf("-") >=depth ) {
+   if(countchar(r.id) >=depth ) {
      var rowFolder=document.getElementById(r.id+"_folder");
      if(rowFolder){
      	rowFolder.style.backgroundImage = "url("+treeImagePath+"plus.png)";
@@ -117,10 +126,10 @@ function displayAllRowsFor(depth) {
  var rows = document.getElementsByTagName("tr");
  for (var j = 0; j < rows.length; j++) {
    var r = rows[j];
-   if (r.id.lastIndexOf("-") > depth) {
+   if (countchar(r.id) > depth) {
      r.style.display = "";
    }
-   if (r.id.lastIndexOf("-") >= depth) {
+   if (countchar(r.id) >= depth) {
      var rowFolder=document.getElementById(r.id+"_folder");
      if(rowFolder){
      	rowFolder.style.backgroundImage = "url("+treeImagePath+"minus.png)";

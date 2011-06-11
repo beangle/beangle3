@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="sessionController" class="org.beangle.security.web.session.category.MemCategorySessionController" autowire="byName"></bean>
+	
+	<bean id="sessionRegistry" class="org.beangle.security.web.session.category.CategorySessionRegistry" autowire="byName">
+		<property name="innerRegistry">
+			<bean class="org.beangle.security.core.session.MemSessionRegistry"/>
+		</property>
+	</bean>
+	
+	<bean id="sessionStrategy" class="org.beangle.security.web.session.ConcurrentSessionStrategy" autowire="byName">
+		<property name="sessionController" ref="sessionController"/>
+	</bean>
+	
+	<bean id="passwordEncoder" class="org.beangle.security.auth.encoding.DigestPasswordEncoder">
+		<property name="algorithm" value="MD5"/>
+	</bean>
+	
+	<bean id="daoUserProvider" class="org.beangle.security.auth.dao.DaoAuthenticationProvider"
+	 autowire="byName"/>
+	
+	<bean id="preauthUserDetailProvider" class="org.beangle.security.web.auth.preauth.PreauthUserDetailProvider"
+	 autowire="byName"/>
+	
+	<bean id="remoteUsernameSource" class="org.beangle.security.web.auth.preauth.j2ee.RemoteUsernameSource"/>
+	
+	<bean id="usernamePreauthFilter" class="org.beangle.security.web.auth.preauth.UsernamePreauthFilter" autowire="byName">
+		<property name="usernameSource" ref="remoteUsernameSource"/>
+	</bean>
+	
+	<!--why name required?-->
+	<bean id="authenticationmanager" name="authenticationManager" class="org.beangle.security.auth.ProviderManager" autowire="byName">
+		<property name="providers">
+			<list>
+				<ref bean="preauthUserDetailProvider"/>
+				<ref bean="daoUserProvider"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="httpSessionContextIntegrationFilter" class="org.beangle.security.web.context.HttpSessionContextIntegrationFilter"/>
+	
+	<bean id="filterSecurityInterceptor" class="org.beangle.security.web.access.intercept.FilterSecurityInterceptor" autowire="byName"/>
+	
+	<bean id="anonymousFilter" class="org.beangle.security.web.auth.AnonymousAuthenticationFilter"></bean>
+	
+	<bean id="concurrentSessionFilter" class="org.beangle.security.web.session.ConcurrentSessionFilter">
+		<property name="sessionRegistry" ref="sessionRegistry"/>
+	</bean>
+	
+	<bean id="accessDeniedHandler" class="org.beangle.security.web.access.DefaultAccessDeniedHandler">
+	</bean>
+	
+	<bean id="exceptionTranslationFilter" class="org.beangle.security.web.access.ExceptionTranslationFilter">
+		<property name="authenticationEntryPoint" ref="authenticationEntryPoint"/>
+		<property name="accessDeniedHandler" ref="accessDeniedHandler"/>
+	</bean>
+	
+	<bean id="resourceAccessor" class="org.beangle.security.web.access.log.CachedResourceAccessor"/>
+	
+	<bean id="accessLogFilter" class="org.beangle.security.web.access.log.AccessLogFilter">
+		<property name="accessor" ref="resourceAccessor"/>
+	</bean>
+	
+	<bean id="authenticationEntryPoint" class="org.beangle.security.web.auth.LoginUrlEntryPoint">
+		<property name="loginUrl" value="/login.action"/>
+	</bean>
+	
+	<bean id="securityFilterChain" class="org.beangle.security.web.FilterChainProxy">
+		<property name="filters">
+			<list>
+				<ref bean="httpSessionContextIntegrationFilter"/>
+				<ref bean="accessLogFilter"/>
+				<ref bean="usernamePreauthFilter"/>
+				<ref bean="anonymousFilter"/>
+				<ref bean="exceptionTranslationFilter"/>
+				<ref bean="concurrentSessionFilter"/>
+				<ref bean="filterSecurityInterceptor"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="securityContextLogoutHandler" class="org.beangle.security.web.auth.logout.SecurityContextLogoutHandler"/>
+	
+	<bean id="sessionInfoPersistHandler" class="org.beangle.ems.security.session.SessionInfoPersistHandler"
+	  autowire="byName"/>
+	
+	<bean id="logoutHandlerStack" class="org.beangle.security.web.auth.logout.LogoutHandlerStack">
+		<property name="handlers">
+			<list>
+				<ref bean="sessionInfoPersistHandler"/>
+				<ref bean="securityContextLogoutHandler"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="authenticationDetailsSource" class="org.beangle.security.web.auth.WebAuthenticationDetailsSource"/>
+	
+	<!--blueprint management service-->
+	<bean id="userService" class="org.beangle.ems.security.service.UserServiceImpl" autowire="byName"/>
+	
+	<bean id="authorityService" class="org.beangle.ems.security.service.AuthorityServiceImpl" autowire="byName"/>
+	
+	<bean id="menuService" class="org.beangle.ems.security.service.MenuServiceImpl" autowire="byName"/>
+	
+	<bean id="idDataResolver" class="org.beangle.ems.security.restrict.service.IdentifierDataResolver" autowire="byName"/>
+
+	<bean id="csvDataResolver" class="org.beangle.ems.security.restrict.service.CsvDataResolver" autowire="byName"/>
+
+	<bean id="oqlDataProvider" class="org.beangle.ems.security.restrict.service.OqlDataProvider" autowire="byName"/>
+	
+	<bean id="restrictionService" class="org.beangle.ems.security.restrict.service.RestrictionServiceImpl" autowire="byName">
+		<property name="providers">
+			<map>
+				<entry key="csv" value-ref="csvDataResolver"/>
+				<entry key="oql" value-ref="oqlDataProvider"/>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="userDetailService" class="org.beangle.ems.security.service.DaoUserDetailServiceImpl" autowire="byName"/>
+	
+	<bean id="authorityManager" class="org.beangle.ems.security.service.CacheableAuthorityManager" autowire="byName"/>
+	
+	<bean id="profileProvider" class="org.beangle.ems.security.service.MultiSessionProfileProvider" autowire="byName"/>
+	
+</beans>

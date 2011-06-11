@@ -1,11 +1,13 @@
-2011-05-20(beangle 2.3)
-	* support online user stat on multiple server
-	* support more web ui
-	* support bean validation
-
 	todo
+	* support online user stat on multiple server
 	* select2的required script
 	* 设定好的权限无法访问
+
+
+2011-06-10(beangle 2.3)
+	* support more web ui
+	* support session cleaner
+	* support bean validation
 
 2010-02-20(beangle 2.2)
 	* better database query ui support.

@@ -19,7 +19,7 @@
  |      </td>                                                      |
  |      other td                                                   |
  |    </tr>                                                        |
- |    <tr id="1-1">                                                |
+ |    <tr id="1.1">                                                |
  |      <td>                                                       |
  |      <div class="tier2">	                                       |
  |	      <a href="#" class="doc" onclick="toggleRows(this)"></a>  |
@@ -76,7 +76,7 @@ function matchStart(target, pattern, matchDirectChildrenOnly) {
  var pos = target.indexOf(pattern);
  if (pos != 0) return false;
  if (!matchDirectChildrenOnly) return true;
- if (target.slice(pos + pattern.length, target.length).indexOf("-") >= 0) return false;
+ if (target.slice(pos + pattern.length, target.length).indexOf(".") >= 0) return false;
  return true;
 }
 
@@ -84,7 +84,7 @@ function collapseAllRows() {
  var rows = document.getElementsByTagName("tr");
  for (var j = 0; j < rows.length; j++) {
    var r = rows[j];
-   if (r.id.indexOf("-") >1 ) {
+   if (r.id.indexOf(".") >1 ) {
      r.style.display = "none";
    }
  }
@@ -97,7 +97,7 @@ function collapseAllRowsFor(depth) {
  var rows = document.getElementsByTagName("tr");
  for (var j = 0; j < rows.length; j++) {
    var r = rows[j];
-   if (r.id.lastIndexOf("-") >depth ) {
+   if (r.id.lastIndexOf(".") >depth ) {
      r.style.display = "none";
    }
  }
@@ -110,7 +110,7 @@ function displayAllRowsFor(depth) {
  var rows = document.getElementsByTagName("tr");
  for (var j = 0; j < rows.length; j++) {
    var r = rows[j];
-   if (r.id.lastIndexOf("-") > depth) {
+   if (r.id.lastIndexOf(".") > depth) {
      r.style.display = "";
    }
  }

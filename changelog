@@ -1,15 +1,16 @@
 2011-06-08  duantihua   <chaostone.duan@gmail.com>
 	* 修复了form的ajax提交在ie6,ie7下会自动显示隐藏的Input
+	* 修复了b.select不声明items，系统报错的bug
 
 2011-06-05  duantihua   <chaostone.duan@gmail.com>
-	* 增强了菜单管理的功能，增加级联调整顺序的功能
+	* 增强了security菜单管理的功能，增加级联调整顺序的功能
 
 2011-05-19  duantihua   <chaostone.duan@gmail.com>
 	* 修复了b.boxcol,b.textarea的属性错误
 	* 修复了beangle.js中的getTarget错误
 
 	* 增加了b.col,b.textfield,b.textfields,b.textarea的防跨站攻击能力
-	* b.datepicker支持了不申明value情况下，默认为""
+	* b.datepicker支持了不声明value情况下，默认为""
 	* b.select2标签支持rquired和label属性，并增加了list主题的支持
 	
 	* HierarchyEntityUtil变成了不可重载类，并提供静态方法。增加了获取家庭成员的方法。
