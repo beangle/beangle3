@@ -12,10 +12,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.beangle</groupId>
-			<artifactId>beangle-ems-base</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.beangle</groupId>
 			<artifactId>beangle-ems-web</artifactId>
 		</dependency>		
 	</dependencies>

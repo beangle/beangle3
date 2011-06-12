@@ -12,7 +12,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.beangle</groupId>
-			<artifactId>beangle-ems-base</artifactId>
+			<artifactId>beangle-ems-infra</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.beangle</groupId>
