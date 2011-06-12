@@ -81,11 +81,11 @@ public class DynamicSessionFactoryBean extends LocalSessionFactoryBean implement
 
 	private Set<URL> getTableConfigLocation(Bundle bundle) {
 		Set<URL> urls = CollectUtils.newHashSet();
-		URL url = bundle.getResource("META-INF/table.properties");
+		URL url = bundle.getResource("META-INF/beangle/table.properties");
 		if (null != url) {
 			urls.add(url);
 		}
-		url = bundle.getResource("table.properties");
+		url = bundle.getResource("beangle/table.properties");
 		if (null != url) {
 			urls.add(url);
 		}

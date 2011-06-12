@@ -1,3 +1,9 @@
+2011-06-12  duantihua   <chaostone.duan@gmail.com>
+	* 移动convention-route.properties,从META-INF/到META-INF/beangle/
+	* 移动全局table.properties到beangle/,局部table.properties从META-INF/移动到META-INF/beangle/
+	* 重命名资源	/captcha/image-->/security/captcha,/staticfile-->/system/staticfile
+	* 独立了ems-web包，内容包含公共action,标签，convention配置
+
 2011-06-08  duantihua   <chaostone.duan@gmail.com>
 	* 修复了form的ajax提交在ie6,ie7下会自动显示隐藏的Input
 	* 修复了b.select不声明items，系统报错的bug

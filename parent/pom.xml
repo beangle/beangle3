@@ -94,6 +94,16 @@
 			</dependency>
 			<dependency>
 				<groupId>org.beangle</groupId>
+				<artifactId>beangle-ems-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.beangle</groupId>
+				<artifactId>beangle-emsapp-security</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.beangle</groupId>
 				<artifactId>beangle-emsapp-system</artifactId>
 				<version>${project.version}</version>
 			</dependency>

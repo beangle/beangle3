@@ -58,9 +58,9 @@ public class ProfileServiceImpl implements ProfileService {
 		try {
 			ConfigResource resource = new ConfigResource();
 			resource.setGlobal(ProfileServiceImpl.class.getClassLoader().getResource(
-					"META-INF/convention-default.properties"));
+					"META-INF/beangle/convention-default.properties"));
 			Enumeration<URL> em = ProfileServiceImpl.class.getClassLoader().getResources(
-					"META-INF/convention-route.properties");
+					"META-INF/beangle/convention-route.properties");
 			while (em.hasMoreElements()) {
 				resource.getLocals().add(em.nextElement());
 			}

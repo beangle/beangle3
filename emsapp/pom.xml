@@ -12,6 +12,7 @@
 	<name>Beangle Emsapp Parent</name>
 
     <modules>
+		<module>org.beangle.emsapp.security</module>
 		<module>org.beangle.emsapp.system</module>
       <!--<module>org.beangle.webapp.database</module>-->
 		<module>org.beangle.emsapp.demo</module>
@@ -51,6 +52,10 @@
 		<dependency>
 			<groupId>org.beangle</groupId>
 			<artifactId>beangle-security-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.beangle</groupId>
+			<artifactId>beangle-ems-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.beangle</groupId>

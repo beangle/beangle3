@@ -1,22 +1,30 @@
-	todo
+Beangle 2.4
+	* refact webapp to ems
+	* refact security menu code to better format
+	* support operation log and dictority in ems
+	* support business event and listener
 	* support online user stat on multiple server
-	* select2的required script
-	* 设定好的权限无法访问
+	* b.select2的required script
+	* 修复设定好的权限无法访问
+	* rebase to newest hibernate/spring/hibernate/freemarker/ehcache/ognl/...
+	* add quartz dependency
+	* split beangle-emsapp-system to security and system 
+	* add beangle-emsapp-skin
 
 
-2011-06-10(beangle 2.3)
+Beangle 2.3(2011-06-10)
 	* support more web ui
 	* support session cleaner
 	* support bean validation
 
-2010-02-20(beangle 2.2)
+Beangle 2.2(2010-02-20)
 	* better database query ui support.
 	* [droped]support runAs in security
 	* [droped]implement group/parent relation in security
 	* support more elegant export attribute setting
 	* [droped]support multi account in single session
 
-2011-1-20(beangle 2.1)
+Beangle 2.1(2011-1-20)
 	* monitor every access log(user ip os/browser)
 	* support online user and activity
 	* better web browser support(xhtml1.0 transitional) 

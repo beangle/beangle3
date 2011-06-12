@@ -13,7 +13,7 @@ import org.beangle.ems.security.MenuProfile;
 import org.beangle.ems.security.SecurityUtils;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.service.MenuService;
-import org.beangle.emsapp.security.action.SecurityActionSupport;
+import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.model.query.builder.OqlBuilder;
 
 /**

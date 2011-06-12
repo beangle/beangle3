@@ -102,8 +102,8 @@
 	<bean id="tableNameConfig" class="org.beangle.model.persist.hibernate.support.DefaultTableNameConfig">
 		<property name="resource">
 			<bean class="org.beangle.spring.config.ConfigResource">
-				<property name="locations" value="classpath*:META-INF/table.properties"/>
-				<property name="users" value="classpath*:table.properties"/>
+				<property name="locations" value="classpath*:META-INF/beangle/table.properties"/>
+				<property name="users" value="classpath*:beangle/table.properties"/>
 			</bean>
 		</property>
 	</bean>

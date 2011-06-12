@@ -16,7 +16,6 @@
 		<module>org.beangle.spring</module>
 		<module>org.beangle.model</module>
 		<module>org.beangle.test</module>
-		<module>org.beangle.rule</module>
 	</modules>
 	<build>
 		<plugins>
