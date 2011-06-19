@@ -230,6 +230,9 @@
 		this.addMenu = function(title,action,imageName,alt){
 			this.addSeparatorAsNeed();
 			var item_div = document.createElement('div');
+			if(null==imageName){
+				imageName=getDefaultImageName(action);
+			}
 			alt=alt||title;
 			item_div.className="toolbar-item";
 			var menuTableId=this.id+this.itemCount+"_menu";
@@ -237,9 +240,20 @@
 			item_div.onmouseout=MouseOutItem;
 			item_div.onmouseover=MouseOverItem;
 			this.items_div.appendChild(item_div);
-			item_div.innerHTML=title+ '<img src="'+imageRoot+'8x8/actions/downarrow.png" class="toolbar-icon" />';
+			if(action == null){
+				item_div.innerHTML='<img class="toolbar-icon" src="'+getImagePath(imagePath,imageName)+'" alt="' +alt+'" />'+title+ '&nbsp;<img src="'+imageRoot+'8x8/actions/downarrow.png" class="toolbar-icon" />';
+				item_div.onclick=function (event){displayMenu(event);};
+			}else{
+				var span1 = document.createElement("span");
+				span1.innerHTML = '<img class="toolbar-icon" src="'+getImagePath(imagePath,imageName)+'" alt="' +alt+'" />'+title;
+				setAction(span1,action);
+				var span2 = document.createElement("span");
+				span2.innerHTML = '&nbsp;<img src="'+imageRoot+'8x8/actions/downarrow.png" class="toolbar-icon" />';
+				span2.onclick = function (event){displayMenu(event);};
+				item_div.appendChild(span1);
+				item_div.appendChild(span2);
+			}
 			var menu = new Menu(menuTableId,item_div);
-			item_div.onclick=function (event){displayMenu(event);};
 			this.itemCount++;
 			return menu;
 		}
