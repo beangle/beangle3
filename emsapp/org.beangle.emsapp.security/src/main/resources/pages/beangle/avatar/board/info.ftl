@@ -17,11 +17,10 @@
    </tr>
 	<tr>
 	  <td>
-		  <img src="${b.url('user')}?user.name=${user.name}" width="100px" align="top"/>
+		  <img src="${b.url('user')}?user.name=${Parameters['user.name']!}" width="100px" align="top"/>
 	  </td>
 	  <td width="95%">
-		 用户名:${user.name}<br/>
-		 姓名:${user.fullname}<br/>
+		用户:${user!}<br/>
 		[#if avatar??]
 		 文件大小:${avatar.size/1024}KB<br/>
 		 更新时间:${(avatar.updatedAt?string("yyyy-MM-dd HH:mm:ss"))!}

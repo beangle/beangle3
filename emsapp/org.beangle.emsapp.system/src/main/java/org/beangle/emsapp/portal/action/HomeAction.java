@@ -26,7 +26,7 @@ public class HomeAction extends SecurityActionSupport {
 	private MenuService menuService;
 	
 	public String index() {
-		User user = getUser();
+		User user = entityDao.get(User.class, getUserId());
 		Long categoryId = getLong("security.categoryId");
 		if (null == categoryId) {
 			categoryId = getUserCategoryId();

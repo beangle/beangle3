@@ -27,7 +27,7 @@ import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.security.core.session.SessionInfo;
 import org.beangle.security.core.session.SessionRegistry;
-import org.beangle.security.web.auth.logout.LogoutHandler;
+import org.beangle.security.web.auth.logout.LogoutHandlerStack;
 import org.beangle.security.web.auth.logout.SecurityContextLogoutHandler;
 import org.beangle.web.filter.GenericHttpFilterBean;
 import org.beangle.web.util.RedirectUtils;
@@ -55,7 +55,7 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 
 	private SessionRegistry sessionRegistry;
 	private String expiredUrl;
-	private LogoutHandler[] handlers = new LogoutHandler[] { new SecurityContextLogoutHandler() };
+	private LogoutHandlerStack handlerStack=new LogoutHandlerStack(new SecurityContextLogoutHandler());
 
 	@Override
 	protected void initFilterBean() {
@@ -101,9 +101,7 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 
 	private void doLogout(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		for (LogoutHandler handler : handlers) {
-			handler.logout(request, response, auth);
-		}
+		handlerStack.logout(request, response, auth);
 	}
 
 	public void setExpiredUrl(String expiredUrl) {
@@ -114,8 +112,7 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 		this.sessionRegistry = sessionRegistry;
 	}
 
-	public void setLogoutHandlers(LogoutHandler[] handlers) {
-		Assert.notNull(handlers);
-		this.handlers = handlers;
+	public void setHandlerStack(LogoutHandlerStack handlerStack) {
+		this.handlerStack = handlerStack;
 	}
 }

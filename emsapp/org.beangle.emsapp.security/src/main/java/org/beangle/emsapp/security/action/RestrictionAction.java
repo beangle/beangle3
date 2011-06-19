@@ -61,7 +61,7 @@ public class RestrictionAction extends SecurityActionSupport {
 		RestrictionHolder<Restriction> holder = new RestrictionHelper(entityDao).getHolder();
 		List<Restriction> myRestrictions = getMyRestrictions(restriction.getPattern(), holder);
 		Set<RestrictField> ignoreFields = getIgnoreFields(myRestrictions);
-		boolean isAdmin = isAdmin(getUser());
+		boolean isAdmin = isAdmin();
 		for (final RestrictField field : restriction.getPattern().getEntity().getFields()) {
 			String[] values = (String[]) getAll(field.getName());
 			if ((ignoreFields.contains(field) || isAdmin) && getBool("ignoreField" + field.getId())) {
@@ -118,7 +118,7 @@ public class RestrictionAction extends SecurityActionSupport {
 	public String edit() {
 		// 取得各参数的值
 		Restriction restriction = getRestriction();
-		boolean isAdmin = isAdmin(getUser());
+		boolean isAdmin = isAdmin();
 		Map<String, Object> mngFields = CollectUtils.newHashMap();
 		Map<String, Object> aoFields = CollectUtils.newHashMap();
 		List<Restriction> myRestricitons = getMyRestrictions(restriction.getPattern(),
@@ -155,7 +155,7 @@ public class RestrictionAction extends SecurityActionSupport {
 			RestrictionHolder<? extends Restriction> holder) {
 		String type = get("restrictionType");
 		List<Restriction> restrictions = CollectUtils.newArrayList();
-		User me = getUser();
+		User me = entityDao.get(User.class, getUserId());
 		if (type.equals("user")) {
 			restrictions = CollectUtils.newArrayList(((RestrictionHolder<?>) me).getRestrictions());
 		} else if (type.equals("group")) {

@@ -33,7 +33,7 @@ public class SessionInfo {
 
 	private boolean expired = false;
 
-	public SessionInfo(final String sessionid, final Authentication auth) {
+	public SessionInfo(final Authentication auth, final String sessionid) {
 		this.sessionid = sessionid;
 		this.authentication = auth;
 		refreshLastRequest();

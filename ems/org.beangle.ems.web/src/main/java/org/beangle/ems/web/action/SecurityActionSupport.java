@@ -11,6 +11,7 @@ import java.util.Map;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.NoParameters;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.SecurityUtils;
 import org.beangle.ems.security.User;
@@ -42,8 +43,8 @@ public abstract class SecurityActionSupport extends EntityDrivenAction implement
 		return authorityService.getResource(resourceName);
 	}
 
-	protected boolean isAdmin(User user) {
-		return authorityService.getUserService().isAdmin(user);
+	protected boolean isAdmin() {
+		return authorityService.getUserService().isAdmin(getUserId());
 	}
 
 	protected List<Restriction> getRestrictions() {
@@ -58,7 +59,7 @@ public abstract class SecurityActionSupport extends EntityDrivenAction implement
 		Resource resource = getResource();
 		if (resource.getEntities().isEmpty()) { return Collections.emptyList(); }
 		List<Restriction> realms = restrictionMap.get(resource.getId());
-		User user = getUser();
+		User user = entityDao.get(User.class, getUserId());
 		if (null == realms) {
 			realms = restrictionService.getRestrictions(user, resource);
 			restrictionMap.put(resource.getId(), realms);
@@ -86,12 +87,8 @@ public abstract class SecurityActionSupport extends EntityDrivenAction implement
 		return SecurityUtils.getUsername();
 	}
 
-	protected String getFullname() {
-		return SecurityUtils.getFullname();
-	}
-
-	protected User getUser() {
-		return (User) entityDao.get(User.class, getUserId());
+	protected String getUser() {
+		return StrUtils.concat(SecurityUtils.getUsername(), "(", SecurityUtils.getFullname(), ")");
 	}
 
 	protected Long getUserCategoryId() {

@@ -42,9 +42,8 @@ public class AuthorityAction extends SecurityActionSupport {
 	 * 主页面
 	 */
 	public String index() {
-		User user = getUser();
-		put("manager", user);
-		if (isAdmin(user)) {
+		put("manager", getUser());
+		if (isAdmin()) {
 			put("allGroups", entityDao.getAll(Group.class));
 		}
 		return forward();
@@ -61,10 +60,10 @@ public class AuthorityAction extends SecurityActionSupport {
 			groupId = getLong("groupIds");
 		}
 		Group ao = entityDao.get(Group.class, groupId);
-		User user = getUser();
+		User user = entityDao.get(User.class, getUserId());
 		put("manager", user);
 		List<Group> mngGroups = CollectUtils.newArrayList();
-		if (isAdmin(user)) {
+		if (isAdmin()) {
 			mngGroups = entityDao.getAll(Group.class);
 		} else {
 			for (GroupMember m : user.getGroups()) {
@@ -94,7 +93,7 @@ public class AuthorityAction extends SecurityActionSupport {
 		if (null != menuProfile) {
 			List<Menu> menus = null;
 			Collection<Resource> resources = null;
-			if (isAdmin(user)) {
+			if (isAdmin()) {
 				menus = menuProfile.getMenus();
 				resources = entityDao.getAll(Resource.class);
 			} else {
@@ -148,10 +147,10 @@ public class AuthorityAction extends SecurityActionSupport {
 				StrUtils.splitToLong(get("resourceId"))));
 
 		// 管理员拥有的菜单权限和系统资源
-		User manager = getUser();
+		User manager = entityDao.get(User.class, getUserId());
 		Set<Menu> mngMenus = null;
 		Set<Resource> mngResources = CollectUtils.newHashSet();
-		if (isAdmin(manager)) {
+		if (isAdmin()) {
 			mngMenus = CollectUtils.newHashSet(menuProfile.getMenus());
 		} else {
 			mngMenus = CollectUtils.newHashSet(menuService.getMenus(menuProfile, (User) manager));

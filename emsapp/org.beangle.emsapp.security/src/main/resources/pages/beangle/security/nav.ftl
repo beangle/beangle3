@@ -7,6 +7,6 @@
 	[@bs.guard res="/security/resource"][@b.navitem title="资源" href="/security/resource!search" /][/@]
 	[@bs.guard res="/security/restrict-meta"][@b.navitem title="数据限制" href="/security/restrict-meta" /][/@]
 	[@bs.guard res="/avatar/board"][@b.navitem title="用户头像" href="/avatar/board" /][/@]
-	[@bs.guard res="/security/monitor"][@b.navitem title="系统监控" href="/security/monitor" /][/@]
+	[@bs.guard res="/security/monitor"][@b.navitem title="会话监控" href="/security/monitor" /][/@]
 	[@b.navitem title="我的账户" href="/security/my?nav=true" /]
 [/@]

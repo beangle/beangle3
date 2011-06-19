@@ -16,7 +16,7 @@ import org.beangle.emsapp.system.action.PropertyAction;
 import org.beangle.spring.bind.AbstractBindModule;
 import org.beangle.spring.bind.Scope;
 
-public final class SystemModule extends AbstractBindModule {
+public final class DefaultModule extends AbstractBindModule {
 
 	@Override
 	protected void doBinding() {

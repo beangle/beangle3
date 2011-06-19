@@ -16,7 +16,7 @@ public class SessionCleanerTest {
 
 	public void testShouldRemove() {
 		SessionCleaner cleaner = new SessionCleaner(null);
-		SessionInfo info = new SessionInfo("test session id", null);
+		SessionInfo info = new SessionInfo(null, "test session id");
 		assertFalse(cleaner.shouldRemove(info));
 		
 		cleaner = new SessionCleaner(null,0);

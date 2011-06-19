@@ -5,7 +5,6 @@
 package org.beangle.emsapp.security.action;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -13,13 +12,13 @@ import org.apache.struts2.ServletActionContext;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.PagedList;
 import org.beangle.commons.comparators.PropertyComparator;
+import org.beangle.ems.security.session.CategoryProfile;
 import org.beangle.ems.security.session.model.CategoryProfileBean;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.security.core.session.SessionInfo;
+import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.security.web.access.log.Accesslog;
 import org.beangle.security.web.access.log.CachedResourceAccessor;
-import org.beangle.security.web.session.category.CategorySessionRegistry;
-import org.beangle.security.web.session.category.MemCategorySessionController;
 
 /**
  * 系统在线用户管理
@@ -28,12 +27,18 @@ import org.beangle.security.web.session.category.MemCategorySessionController;
  */
 public class MonitorAction extends SecurityActionSupport {
 
-	private CategorySessionRegistry sessionRegistry;
+	private SessionRegistry sessionRegistry;
 
 	private CachedResourceAccessor resourceAccessor;
 
 	public String profiles() {
-		put("onlineProfiles", sessionRegistry.getProfiles());
+		put("categoryProfiles", entityDao.getAll(CategoryProfile.class));
+		return forward();
+	}
+
+	public String sessionStats() {
+		put("categoryProfiles", entityDao.getAll(CategoryProfile.class));
+		put("sessionStats", sessionRegistry.getController().getSessionStats());
 		return forward();
 	}
 
@@ -45,8 +50,7 @@ public class MonitorAction extends SecurityActionSupport {
 		List<SessionInfo> onlineActivities = sessionRegistry.getAll();
 		Collections.sort(onlineActivities, new PropertyComparator<Object>(orderBy));
 		put("onlineActivities", new PagedList<SessionInfo>(onlineActivities, getPageLimit()));
-		put("onlineProfiles", sessionRegistry.getProfiles());
-		put("now", new Date());
+
 		return forward();
 	}
 
@@ -66,10 +70,7 @@ public class MonitorAction extends SecurityActionSupport {
 				profile.setInactiveInterval(inactiveInterval);
 			}
 		}
-		MemCategorySessionController m = (MemCategorySessionController) sessionRegistry
-				.getSessionController();
-		m.loadProfiles();
-		// FIXME sessionController.loadProfiles();
+		entityDao.saveOrUpdate(categories);
 		return redirect("profiles", "info.save.success");
 	}
 
@@ -109,7 +110,7 @@ public class MonitorAction extends SecurityActionSupport {
 		return forward();
 	}
 
-	public void setSessionRegistry(CategorySessionRegistry sessionRegistry) {
+	public void setSessionRegistry(SessionRegistry sessionRegistry) {
 		this.sessionRegistry = sessionRegistry;
 	}
 

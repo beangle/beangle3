@@ -96,6 +96,9 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		return render.render(req.getRequestURI(), url);
 	}
 
+	public java.util.Date getNow(){
+		return new java.util.Date();
+	}
 	/**
 	 * query string and form control
 	 * 

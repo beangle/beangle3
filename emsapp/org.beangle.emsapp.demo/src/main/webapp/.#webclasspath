@@ -38,7 +38,7 @@
 /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/ext/gnome-java-bridge.jar
 /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/ext/pulse-java.jar
 /usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/ext/sunpkcs11.jar
-/home/chaostone/beangle/core/ems/org.beangle.ems.base/target/classes
+/home/chaostone/beangle/core/ems/org.beangle.ems.infra/target/classes
 /home/chaostone/beangle/core/library/org.beangle.model/target/classes
 /home/chaostone/beangle/core/library/org.beangle.spring/target/classes
 /home/chaostone/.m2/repository/org/springframework/spring-aop/3.0.5.RELEASE/spring-aop-3.0.5.RELEASE.jar

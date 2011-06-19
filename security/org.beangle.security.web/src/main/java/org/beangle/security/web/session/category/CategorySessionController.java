@@ -4,48 +4,18 @@
  */
 package org.beangle.security.web.session.category;
 
-import java.util.List;
-
-import org.beangle.security.core.session.SessionController;
-
 /**
- * 登录会话控制器
+ * 分类用户会话控制器
  * 
  * @author chaostone
- * @version $Id: ConcurrentSessionController.java Nov 21, 2010 3:44:13 PM
- *          chaostone $
+ * @version $Id: CategorySessionController.java Jun 18, 2011 9:39:08 PM chaostone $
  */
-public interface CategorySessionController extends SessionController {
+public interface CategorySessionController {
 
-	/**
-	 * load profile
-	 * 
-	 * @return
-	 */
-	public List<LimitProfile> getProfiles();
+	public CategorySessionStat getSessionStat();
 
-	/**
-	 * 返回某一类用户的最大用户数
-	 * 
-	 * @param category
-	 * @return
-	 */
-	public LimitProfile getProfile(Object category);
+	public void free(String sessionId);
 
-	/**
-	 * reserve space for given sessionid
-	 * 
-	 * @param category
-	 * @param sessionId
-	 * @return
-	 */
-	public boolean reserve(Object category, String sessionId);
-
-	/**
-	 * left given category
-	 * 
-	 * @param category
-	 */
-	public void left(Object category);
+	public boolean allocate(String sessionId);
 
 }
