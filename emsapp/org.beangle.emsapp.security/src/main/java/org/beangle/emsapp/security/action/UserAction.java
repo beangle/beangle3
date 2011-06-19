@@ -46,7 +46,7 @@ public class UserAction extends SecurityActionSupport {
 
 	public String dashboard() {
 		Long userId = getLong("user.id");
-		User me = getUser();
+		User me = entityDao.get(User.class, getUserId());
 		if (null != userId) {
 			User managed = (User) entityDao.get(User.class, userId);
 			if (me.equals(managed) || userService.isManagedBy(me, managed)) {
@@ -62,13 +62,13 @@ public class UserAction extends SecurityActionSupport {
 	}
 
 	protected OqlBuilder<User> getQueryBuilder() {
-		User manager = getUser();
+		User manager = entityDao.get(User.class, getUserId());
 		OqlBuilder<User> userQuery = OqlBuilder.from(getEntityName(), "user");
 		// 查询用户组
 		StringBuilder sb = new StringBuilder("exists(from user.groups ug where ");
 		List<Object> params = CollectUtils.newArrayList();
 		boolean queryGroup = false;
-		if (!userService.isAdmin(manager)) {
+		if (!isAdmin()) {
 			List<Group> mngGroups = userService.getGroups(manager, GroupMember.Ship.MEMBER);
 			if (mngGroups.isEmpty()) {
 				sb.append("1=0");
@@ -143,7 +143,7 @@ public class UserAction extends SecurityActionSupport {
 		}
 		Set<GroupMember> newMembers = CollectUtils.newHashSet();
 		Set<GroupMember> removedMembers = CollectUtils.newHashSet();
-		User manager = getUser();
+		User manager = entityDao.get(User.class, getUserId());
 		Collection<GroupMember> members = userService.getGroupMembers(manager, GroupMember.Ship.GRANTER);
 		for (GroupMember member : members) {
 			GroupMember myMember = memberMap.get(member.getGroup());
@@ -172,7 +172,7 @@ public class UserAction extends SecurityActionSupport {
 
 	protected void editSetting(Entity<?> entity) {
 		User user = (User) entity;
-		User manager = getUser();
+		User manager = entityDao.get(User.class, getUserId());
 		Collection<GroupMember> members = userService.getGroupMembers(manager, GroupMember.Ship.GRANTER);
 		Set<GroupMember> userMembers = user.getGroups();
 		Map<Group, GroupMember> memberMap = CollectUtils.newHashMap();

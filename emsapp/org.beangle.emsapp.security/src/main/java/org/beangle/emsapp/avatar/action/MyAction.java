@@ -9,7 +9,6 @@ import java.io.IOException;
 import org.apache.struts2.ServletActionContext;
 import org.beangle.ems.avatar.Avatar;
 import org.beangle.ems.avatar.service.AvatarBase;
-import org.beangle.ems.security.User;
 import org.beangle.ems.web.action.SecurityActionSupport;
 
 /**
@@ -33,10 +32,9 @@ public class MyAction extends SecurityActionSupport {
 	}
 
 	public String info() {
-		User user = getUser();
-		Avatar avatar = avatarBase.getAvatar(user.getName());
+		Avatar avatar = avatarBase.getAvatar(getUsername());
 		put("avatar", avatar);
-		put("user", user);
+		put("user", getUser());
 		return forward();
 	}
 

@@ -14,7 +14,7 @@ import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.context.AuthenticationUtils;
 import org.beangle.security.core.context.SecurityContextHolder;
-import org.beangle.security.web.session.SessionStrategy;
+import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.struts2.action.BaseAction;
 
 import com.octo.captcha.service.CaptchaService;
@@ -28,7 +28,7 @@ public class LoginAction extends BaseAction {
 
 	private AuthenticationManager authenticationManager;
 
-	private SessionStrategy sessionStrategy;
+	private SessionRegistry sessionRegistry;
 
 	public static final String LOGIN_FAILURE_COUNT = "loginFailureCount";
 
@@ -83,7 +83,7 @@ public class LoginAction extends BaseAction {
 		Authentication authRequest = auth;
 		try {
 			authRequest = authenticationManager.authenticate(authRequest);
-			sessionStrategy.onAuthentication(authRequest, request, null);
+			sessionRegistry.register(authRequest, request.getSession().getId());
 			SecurityContextHolder.getContext().setAuthentication(authRequest);
 		} catch (AuthenticationException e) {
 			return e.getMessage();
@@ -126,8 +126,7 @@ public class LoginAction extends BaseAction {
 		this.authenticationManager = authenticationManager;
 	}
 
-	public void setSessionStrategy(SessionStrategy sessionStrategy) {
-		this.sessionStrategy = sessionStrategy;
+	public void setSessionRegistry(SessionRegistry sessionRegistry) {
+		this.sessionRegistry = sessionRegistry;
 	}
-
 }

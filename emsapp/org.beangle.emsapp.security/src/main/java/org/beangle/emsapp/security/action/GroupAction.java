@@ -40,11 +40,10 @@ public class GroupAction extends SecurityActionSupport {
 	}
 
 	protected OqlBuilder<Group> getQueryBuilder() {
-		User manager = getUser();
 		OqlBuilder<Group> entityQuery = OqlBuilder.from(getEntityName(), "userGroup");
-		if (!isAdmin(manager)) {
+		if (!isAdmin()) {
 			entityQuery.join("userGroup.members", "gm");
-			entityQuery.where("gm.user=:me and gm.manager=true", manager);
+			entityQuery.where("gm.user.id=:me and gm.manager=true", getUserId());
 		}
 		populateConditions(entityQuery);
 		entityQuery.limit(getPageLimit()).orderBy(get("orderBy"));

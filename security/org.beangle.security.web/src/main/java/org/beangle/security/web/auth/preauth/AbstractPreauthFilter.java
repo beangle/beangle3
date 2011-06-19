@@ -17,10 +17,10 @@ import org.beangle.security.auth.AuthenticationManager;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.context.SecurityContextHolder;
+import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.security.core.userdetail.UsernameNotFoundException;
 import org.beangle.security.web.auth.AbstractAuthenticationFilter;
 import org.beangle.security.web.auth.WebAuthenticationDetailsSource;
-import org.beangle.security.web.session.SessionStrategy;
 import org.beangle.web.filter.GenericHttpFilterBean;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -42,7 +42,7 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implem
 
 	private AuthenticationManager authenticationManager = null;
 
-	private SessionStrategy sessionStrategy;
+	private SessionRegistry sessionRegistry;
 
 	private AuthenticationAliveChecker authenticationAliveChecker;
 
@@ -56,7 +56,7 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implem
 	 */
 	protected void initFilterBean() {
 		Validate.notNull(authenticationManager, "authenticationManager must be set");
-		Validate.notNull(sessionStrategy, "sessionStrategy must be set");
+		Validate.notNull(sessionRegistry, "sessionRegistry must be set");
 	}
 
 	/**
@@ -100,7 +100,7 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implem
 		try {
 			auth.setDetails(authenticationDetailsSource.buildDetails(request));
 			authResult = authenticationManager.authenticate(auth);
-			sessionStrategy.onAuthentication(authResult, request, response);
+			sessionRegistry.register(authResult, request.getSession().getId());
 			successfulAuthentication(request, response, authResult);
 		} catch (AuthenticationException failed) {
 			unsuccessfulAuthentication(request, response, failed);
@@ -150,8 +150,8 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implem
 		this.authenticationManager = authenticationManager;
 	}
 
-	public void setSessionStrategy(SessionStrategy sessionStrategy) {
-		this.sessionStrategy = sessionStrategy;
+	public void setSessionRegistry(SessionRegistry sessionRegistry) {
+		this.sessionRegistry = sessionRegistry;
 	}
 
 	public void setContinueOnFail(boolean continueOnFail) {

@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.ems.avatar.Avatar;
 import org.beangle.ems.avatar.service.AvatarBase;
 import org.beangle.ems.security.User;
@@ -30,16 +31,14 @@ public class UserAction extends SecurityActionSupport {
 		String userName = get("user.name");
 		if (StringUtils.isEmpty(userName)) { return null; }
 		List<User> users = entityDao.get(User.class, "name", userName);
-		User user = null;
-		if (users.isEmpty()) {
-			return null;
+		if (!users.isEmpty()) {
+			User user = users.get(0);
+			put("user", StrUtils.concat(userName, "(", user.getFullname(), ")"));
 		} else {
-			user = users.get(0);
+			put("user", userName);
 		}
-
-		Avatar avatar = avatarBase.getAvatar(user.getName());
+		Avatar avatar = avatarBase.getAvatar(userName);
 		put("avatar", avatar);
-		put("user", user);
 		return forward();
 	}
 
@@ -47,7 +46,7 @@ public class UserAction extends SecurityActionSupport {
 	 * 只显示头像
 	 * 
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public String index() throws IOException {
 		String userName = get("user.name");

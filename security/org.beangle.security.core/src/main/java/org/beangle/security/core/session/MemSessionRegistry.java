@@ -5,26 +5,39 @@
 package org.beangle.security.core.session;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.Validate;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.security.core.Authentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationListener;
 
-public class MemSessionRegistry implements SessionRegistry {
+public class MemSessionRegistry implements SessionRegistry, ApplicationListener<SessionDestroyedEvent> {
 
 	protected static final Logger logger = LoggerFactory.getLogger(MemSessionRegistry.class);
+
+	private SessionController controller;
 
 	// <principal:Object,SessionIdSet>
 	protected Map<Object, Set<String>> principals = new ConcurrentHashMap<Object, Set<String>>();
 
 	// <sessionId:Object,OnlineActvities>
 	protected Map<String, SessionInfo> sessionIds = new ConcurrentHashMap<String, SessionInfo>();
+
+	public void afterPropertiesSet() throws Exception {
+		Validate.notNull(controller, "controller must set");
+		// 每两分钟执行一次
+		new Timer("Beangle Session Cleaner", true).schedule(new SessionCleaner(this), new Date(), 1000 * 120);
+	}
 
 	public List<SessionInfo> getAll() {
 		return CollectUtils.newArrayList(sessionIds.values());
@@ -65,12 +78,21 @@ public class MemSessionRegistry implements SessionRegistry {
 		}
 	}
 
-	private void register(String sessionId, Object principal, SessionInfo newActivity) {
+	public void register(Authentication auth, String sessionId) throws SessionException {
 		SessionInfo existed = getSessionInfo(sessionId);
+		Object principal = auth.getPrincipal();
+		// 是否为重复注册
+		if (null != existed && ObjectUtils.equals(existed.getAuthentication().getPrincipal(), principal)) return;
+		// 争取名额
+		if (!controller.onRegister(auth, sessionId, this)) throw new SessionException(
+				"over max session limit");
+		// 注销同会话的其它账户
 		if (null != existed) {
 			existed.appendRemark(" expired with replacement.");
 			remove(sessionId);
 		}
+		// 新生
+		SessionInfo newActivity = new SessionInfo(auth, sessionId);
 		sessionIds.put(sessionId, newActivity);
 		Set<String> sessionsUsedByPrincipal = principals.get(principal);
 		if (sessionsUsedByPrincipal == null) {
@@ -78,10 +100,6 @@ public class MemSessionRegistry implements SessionRegistry {
 			principals.put(principal, sessionsUsedByPrincipal);
 		}
 		sessionsUsedByPrincipal.add(sessionId);
-	}
-
-	public void register(String sessionId, Authentication authentication) {
-		register(sessionId, authentication.getPrincipal(), new SessionInfo(sessionId, authentication));
 	}
 
 	public SessionInfo remove(String sessionId) {
@@ -101,7 +119,13 @@ public class MemSessionRegistry implements SessionRegistry {
 				}
 			}
 		}
+		controller.onLogout(info);
 		return info;
+	}
+
+	// 当会话消失时，退出用户
+	public void onApplicationEvent(SessionDestroyedEvent event) {
+		remove(event.getId());
 	}
 
 	public void expire(String sessionId) {
@@ -111,6 +135,14 @@ public class MemSessionRegistry implements SessionRegistry {
 
 	public int count() {
 		return sessionIds.size();
+	}
+
+	public void setController(SessionController controller) {
+		this.controller = controller;
+	}
+
+	public SessionController getController() {
+		return controller;
 	}
 
 }

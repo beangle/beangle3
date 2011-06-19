@@ -18,10 +18,10 @@ public interface SessionRegistry {
 	/**
 	 * 注册
 	 * 
-	 * @param sessionId
 	 * @param authentication
+	 * @param sessionId
 	 */
-	public void register(String sessionId, Authentication authentication);
+	public void register(Authentication authentication, String sessionId) throws SessionException;
 
 	/**
 	 * 注销指定sessionId
@@ -32,6 +32,8 @@ public interface SessionRegistry {
 	public SessionInfo remove(String sessionId);
 
 	/**
+	 * 过期指定会话
+	 * 
 	 * @param sessionId
 	 * @return
 	 */
@@ -82,5 +84,12 @@ public interface SessionRegistry {
 	 * @return
 	 */
 	public int count();
+
+	/**
+	 * 查询控制器
+	 * 
+	 * @return
+	 */
+	public SessionController getController();
 
 }

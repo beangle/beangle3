@@ -20,6 +20,16 @@ public class LogoutHandlerStack {
 
 	private List<LogoutHandler> handlers = CollectUtils.newArrayList();
 
+	public LogoutHandlerStack() {
+		super();
+	}
+
+	public LogoutHandlerStack(LogoutHandler... initHandlers) {
+		for (LogoutHandler handler : initHandlers) {
+			handlers.add(handler);
+		}
+	}
+
 	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication auth) {
 		for (LogoutHandler handler : handlers) {
 			handler.logout(request, response, auth);

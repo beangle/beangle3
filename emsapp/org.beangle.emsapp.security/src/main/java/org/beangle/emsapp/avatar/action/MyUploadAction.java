@@ -9,7 +9,6 @@ import java.io.File;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.ems.avatar.Avatar;
 import org.beangle.ems.avatar.service.AvatarBase;
-import org.beangle.ems.security.User;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.struts2.convention.route.Action;
 
@@ -23,10 +22,9 @@ public class MyUploadAction extends SecurityActionSupport {
 	protected AvatarBase avatarBase;
 
 	public String index() {
-		User user = getUser();
-		Avatar avatar = avatarBase.getAvatar(user.getName());
+		Avatar avatar = avatarBase.getAvatar(getUsername());
 		put("avatar", avatar);
-		put("user", user);
+		put("user", getUser());
 		return forward();
 	}
 

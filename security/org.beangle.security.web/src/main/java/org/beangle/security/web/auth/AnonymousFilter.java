@@ -22,7 +22,7 @@ import org.beangle.web.filter.GenericHttpFilterBean;
  * Detects if there is no <code>Authentication</code> object in the
  * <code>SecurityContextHolder</code>, and populates it with one if needed.
  */
-public class AnonymousAuthenticationFilter extends GenericHttpFilterBean {
+public class AnonymousFilter extends GenericHttpFilterBean {
 
 	private AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
 	private String key;

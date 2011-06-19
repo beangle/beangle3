@@ -19,7 +19,7 @@ import org.beangle.security.auth.AuthenticationManager;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.context.SecurityContextHolder;
-import org.beangle.security.web.session.SessionStrategy;
+import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.web.filter.GenericHttpFilterBean;
 import org.beangle.web.util.RedirectUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -145,7 +145,7 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilterBean
 
 	private boolean serverSideRedirect = false;
 
-	private SessionStrategy sessionStrategy;
+	private SessionRegistry sessionRegistry;
 
 	protected void initFilterBean() throws ServletException {
 		Validate.notEmpty(filterUrl, "filterUrl must be specified");
@@ -180,7 +180,7 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilterBean
 			try {
 				authResult = attemptAuthentication(request);
 				if (null == authResult) { return; }
-				sessionStrategy.onAuthentication(authResult, request, response);
+				sessionRegistry.register(authResult, request.getSession().getId());
 			} catch (AuthenticationException failed) {
 				// Authentication failed
 				unsuccessfulAuthentication(request, response, failed);
@@ -398,8 +398,9 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilterBean
 		this.serverSideRedirect = serverSideRedirect;
 	}
 
-	public void setSessionStrategy(SessionStrategy sessionStrategy) {
-		this.sessionStrategy = sessionStrategy;
+	public void setSessionRegistry(SessionRegistry sessionRegistry) {
+		this.sessionRegistry = sessionRegistry;
 	}
+
 
 }

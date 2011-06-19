@@ -24,7 +24,7 @@ import org.beangle.emsapp.security.helper.UserDashboardHelper;
 import org.beangle.spring.bind.AbstractBindModule;
 import org.beangle.spring.bind.Scope;
 
-public final class SecurityModule extends AbstractBindModule {
+public final class DefaultModule extends AbstractBindModule {
 
 	@Override
 	protected void doBinding() {

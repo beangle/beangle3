@@ -35,7 +35,7 @@ public class PasswordAction extends SecurityActionSupport {
 		Long userId = getLong("user.id");
 		if (ValidEntityKeyPredicate.INSTANCE.evaluate(userId)) {
 			User user = userService.get(userId);
-			User manager = getUser();
+			User manager = entityDao.get(User.class, getUserId());
 			if (userService.isManagedBy(manager, user)) {
 				return updateAccount(userId);
 			} else {

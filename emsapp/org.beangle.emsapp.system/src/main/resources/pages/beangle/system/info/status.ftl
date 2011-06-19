@@ -8,7 +8,7 @@
 			<td>名称:</td><td>${runtimeMBean.name}</td><td>虚拟机名称:</td><td>${runtimeMBean.vmName}</td>
 		</tr>
 		<tr>
-			<td>名称:</td><td>${osMBean.name} ${osMBean.version}</td><td>体系结构:</td><td>${osMBean.arch}</td>
+			<td>OS名称:</td><td>${osMBean.name} ${osMBean.version}</td><td>体系结构:</td><td>${osMBean.arch}</td>
 		</tr>
 		<tr>
 			<td>处理器个数:</td><td>${osMBean.availableProcessors}</td><td>系统负载:</td><td>${osMBean.systemLoadAverage!}</td>
@@ -23,7 +23,7 @@
 			<td>${b.text("server.path")}:</td><td colspan="3">${serverProps["server.path"]}</td>
 		</tr>
 		<tr>
-			<td>启动于:</td><td>${upAt?string("yyyy-MM-dd HH:mm:ss")}(当前:${now?string("yyyy-MM-dd HH:mm:ss")})</td><td>运行时间:</td><td>[#assign upsecond=runtimeMBean.uptime/1000?int][#if (upsecond>3600)]${(upsecond/3600)?int}小时[/#if]${((upsecond%3600)/60)?int}分${(upsecond%60)}秒</td>
+			<td>启动于:</td><td>${upAt?string("yyyy-MM-dd HH:mm:ss")}(当前:${b.now?string("yyyy-MM-dd HH:mm:ss")})</td><td>运行时间:</td><td>[#assign upsecond=runtimeMBean.uptime/1000?int][#if (upsecond>3600)]${(upsecond/3600)?int}小时[/#if]${((upsecond%3600)/60)?int}分${(upsecond%60)}秒</td>
 		</tr>
 	</table>
 	<br/>

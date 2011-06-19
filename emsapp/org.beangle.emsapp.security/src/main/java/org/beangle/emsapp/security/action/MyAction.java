@@ -39,7 +39,7 @@ public class MyAction extends SecurityActionSupport {
 	private UserDashboardHelper userDashboardHelper;
 
 	public String index() {
-		userDashboardHelper.buildDashboard(getUser());
+		userDashboardHelper.buildDashboard(entityDao.get(User.class, getUserId()));
 		return forward();
 	}
 
@@ -49,7 +49,7 @@ public class MyAction extends SecurityActionSupport {
 	}
 
 	public String dashboard() {
-		userDashboardHelper.buildDashboard(getUser());
+		userDashboardHelper.buildDashboard(entityDao.get(User.class, getUserId()));
 		return forward();
 	}
 

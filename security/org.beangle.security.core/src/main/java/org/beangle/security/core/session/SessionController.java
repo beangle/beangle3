@@ -4,6 +4,8 @@
  */
 package org.beangle.security.core.session;
 
+import java.util.List;
+
 import org.beangle.security.core.Authentication;
 
 /**
@@ -14,24 +16,34 @@ import org.beangle.security.core.Authentication;
 public interface SessionController {
 
 	/**
-	 * get max session for system
-	 * 
-	 * @return
-	 */
-	public int getMax();
-
-	/**
-	 * get count of session in system
-	 * 
-	 * @return
-	 */
-	public int getSessionCount();
-
-	/**
-	 * get max sessions for given auth
+	 * 根据用户确定单个用户的最大会话数
 	 * 
 	 * @param auth
 	 * @return -1 or positive number
 	 */
-	public int getMaximumSessions(Authentication auth);
+	public int getMaxSessions(Authentication auth);
+
+	/**
+	 * reserve space for given sessionid
+	 * 
+	 * @param auth
+	 * @param sessionId
+	 * @param registry
+	 * @return
+	 */
+	public boolean onRegister(Authentication auth, String sessionId, SessionRegistry registry)
+			throws SessionException;
+
+	/**
+	 * 释放sessioninfo对应的空间
+	 * 
+	 * @param info
+	 */
+	public void onLogout(SessionInfo info);
+	
+	/**
+	 * 查询在线统计
+	 * @return
+	 */
+	public List<SessionStat> getSessionStats();
 }
