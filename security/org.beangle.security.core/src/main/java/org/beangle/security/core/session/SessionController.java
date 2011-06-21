@@ -4,7 +4,6 @@
  */
 package org.beangle.security.core.session;
 
-import java.util.List;
 
 import org.beangle.security.core.Authentication;
 
@@ -45,5 +44,5 @@ public interface SessionController {
 	 * 查询在线统计
 	 * @return
 	 */
-	public List<SessionStat> getSessionStats();
+	public SessionStat getSessionStat();
 }

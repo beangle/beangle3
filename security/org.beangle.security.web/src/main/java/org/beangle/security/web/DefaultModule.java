@@ -17,7 +17,6 @@ import org.beangle.security.web.auth.preauth.UsernamePreauthFilter;
 import org.beangle.security.web.auth.preauth.j2ee.RemoteUsernameSource;
 import org.beangle.security.web.context.HttpSessionContextIntegrationFilter;
 import org.beangle.security.web.session.ConcurrentSessionFilter;
-import org.beangle.security.web.session.category.MultiCategorySessionController;
 import org.beangle.spring.bind.AbstractBindModule;
 
 /**
@@ -30,8 +29,8 @@ public class DefaultModule extends AbstractBindModule {
 
 	@Override
 	protected void doBinding() {
-		// session control bean
-		bind(MultiCategorySessionController.class, ConcurrentSessionFilter.class).shortName();
+		// session filter
+		bind(ConcurrentSessionFilter.class).shortName();
 
 		// auth bean
 		bind(PreauthUserDetailProvider.class, RemoteUsernameSource.class, UsernamePreauthFilter.class,

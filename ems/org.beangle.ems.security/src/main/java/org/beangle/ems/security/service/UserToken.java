@@ -9,8 +9,8 @@ import java.util.Collection;
 import org.apache.commons.lang.Validate;
 import org.beangle.ems.security.Category;
 import org.beangle.security.core.GrantedAuthority;
+import org.beangle.security.core.session.category.CategoryPrincipal;
 import org.beangle.security.core.userdetail.User;
-import org.beangle.security.web.session.category.CategoryPrincipal;
 
 public class UserToken extends User implements CategoryPrincipal, Comparable<UserToken> {
 

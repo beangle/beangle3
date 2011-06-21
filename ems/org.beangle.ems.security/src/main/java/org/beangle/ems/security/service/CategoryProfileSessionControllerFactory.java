@@ -4,15 +4,13 @@
  */
 package org.beangle.ems.security.service;
 
-import java.lang.management.ManagementFactory;
 import java.util.List;
 
 import org.beangle.ems.security.session.CategoryProfile;
-import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.security.web.session.category.AbstractCategorySessionController;
-import org.beangle.security.web.session.category.CategorySessionController;
-import org.beangle.security.web.session.category.CategorySessionControllerFactory;
+import org.beangle.security.core.session.category.CategorySessionController;
+import org.beangle.security.core.session.category.ClusterCategorySessionController;
+import org.beangle.security.core.session.category.ClusterCategorySessionControllerFactory;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
@@ -21,19 +19,19 @@ import org.springframework.beans.factory.InitializingBean;
  * @author chaostone
  * @version $Id: DbCategorySessionControllerFactory.java Jun 19, 2011 8:03:54 AM chaostone $
  */
-public class CategoryProfileSessionControllerFactory extends BaseServiceImpl implements
-		CategorySessionControllerFactory {
+public class CategoryProfileSessionControllerFactory extends ClusterCategorySessionControllerFactory {
 
-	public CategorySessionController getInstance(Object category) {
-		ProfileCategorySessionController controller = new ProfileCategorySessionController(ManagementFactory
-				.getRuntimeMXBean().getName(), String.valueOf(category));
+	public CategorySessionController doGetInstance(Object category) {
+		ProfileCategorySessionController controller = new ProfileCategorySessionController(getServerName(),
+				String.valueOf(category));
 		controller.setEntityDao(entityDao);
 		controller.afterPropertiesSet();
 		return controller;
 	}
+
 }
 
-class ProfileCategorySessionController extends AbstractCategorySessionController implements InitializingBean {
+class ProfileCategorySessionController extends ClusterCategorySessionController implements InitializingBean {
 
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();

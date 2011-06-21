@@ -23,9 +23,9 @@ public class SessionStat {
 	
 	private final Date statAt;
 
-	private final Map<Object, Integer> details;
+	private final Map<?, Integer> details;
 
-	public SessionStat(String serverName, Date statAt,int capacity, int sessions, Map<Object, Integer> details) {
+	public SessionStat(String serverName, Date statAt,int capacity, int sessions, Map<?, Integer> details) {
 		super();
 		this.serverName = serverName;
 		this.capacity=capacity;
@@ -50,7 +50,7 @@ public class SessionStat {
 		return statAt;
 	}
 
-	public Map<Object, Integer> getDetails() {
+	public Map<?, Integer> getDetails() {
 		return details;
 	}
 

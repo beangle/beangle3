@@ -4,8 +4,12 @@
  */
 package org.beangle.emsapp.security.action;
 
+import java.lang.management.ManagementFactory;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
@@ -17,6 +21,8 @@ import org.beangle.ems.security.session.model.CategoryProfileBean;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.security.core.session.SessionInfo;
 import org.beangle.security.core.session.SessionRegistry;
+import org.beangle.security.core.session.SessionStat;
+import org.beangle.security.core.session.category.CategorySessionStat;
 import org.beangle.security.web.access.log.Accesslog;
 import org.beangle.security.web.access.log.CachedResourceAccessor;
 
@@ -38,8 +44,63 @@ public class MonitorAction extends SecurityActionSupport {
 
 	public String sessionStats() {
 		put("categoryProfiles", entityDao.getAll(CategoryProfile.class));
-		put("sessionStats", sessionRegistry.getController().getSessionStats());
+		List<CategorySessionStat> stats = entityDao.getAll(CategorySessionStat.class);
+		List<SessionStat> sessionStats = buildStats(stats);
+		put("sessionStats", sessionStats);
+		put("serverName",ManagementFactory.getRuntimeMXBean().getName());
 		return forward();
+	}
+
+	private List<SessionStat> buildStats(List<CategorySessionStat> stats) {
+		Map<String, Map<String, Integer>> capacityMap = CollectUtils.newHashMap();
+		Map<String, Map<String, Integer>> onlineMap = CollectUtils.newHashMap();
+		Map<String, Date> dateMap = CollectUtils.newHashMap();
+		for (CategorySessionStat stat : stats) {
+			Map<String, Integer> capacities = capacityMap.get(stat.getServerName());
+			if (null == capacities) {
+				capacities = CollectUtils.newHashMap();
+				capacityMap.put(stat.getServerName(), capacities);
+			}
+			capacities.put(stat.getCategory(), stat.getCapacity());
+
+			Map<String, Integer> onlines = onlineMap.get(stat.getServerName());
+			if (null == onlines) {
+				onlines = CollectUtils.newHashMap();
+				onlineMap.put(stat.getServerName(), onlines);
+			}
+			onlines.put(stat.getCategory(), stat.getOnline());
+			dateMap.put(stat.getServerName(), stat.getStatAt());
+		}
+
+		Map<String, Integer> serverCapacity = CollectUtils.newHashMap();
+		for (String serverName : capacityMap.keySet()) {
+			Map<String, Integer> myCapacities = capacityMap.get(serverName);
+			int capacity = 0;
+			for (Integer c : myCapacities.values()) {
+				capacity += c;
+			}
+			serverCapacity.put(serverName, new Integer(capacity));
+		}
+
+		Map<String, Integer> serverOnline = CollectUtils.newHashMap();
+		for (String serverName : onlineMap.keySet()) {
+			Map<String, Integer> myOnlines = onlineMap.get(serverName);
+			int online = 0;
+			for (Integer c : myOnlines.values()) {
+				online += c;
+			}
+			serverOnline.put(serverName, new Integer(online));
+		}
+		Set<String> servers = CollectUtils.newHashSet(serverCapacity.keySet());
+		servers.addAll(serverOnline.keySet());
+		List<SessionStat> sessionStats = CollectUtils.newArrayList();
+		for (String server : servers) {
+			Integer capacity = serverCapacity.get(server);
+			Integer online = serverOnline.get(server);
+			sessionStats.add(new SessionStat(server, dateMap.get(server), (null == capacity) ? 0 : capacity,
+					(null == online) ? 0 : online, onlineMap.get(server)));
+		}
+		return sessionStats;
 	}
 
 	public String activities() {
@@ -50,7 +111,7 @@ public class MonitorAction extends SecurityActionSupport {
 		List<SessionInfo> onlineActivities = sessionRegistry.getAll();
 		Collections.sort(onlineActivities, new PropertyComparator<Object>(orderBy));
 		put("onlineActivities", new PagedList<SessionInfo>(onlineActivities, getPageLimit()));
-
+		put("sessionStat", sessionRegistry.getController().getSessionStat());
 		return forward();
 	}
 

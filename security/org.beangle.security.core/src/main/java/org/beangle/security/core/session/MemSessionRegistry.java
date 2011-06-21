@@ -19,9 +19,11 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.security.core.Authentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationListener;
 
-public class MemSessionRegistry implements SessionRegistry, ApplicationListener<SessionDestroyedEvent> {
+public class MemSessionRegistry implements SessionRegistry, ApplicationListener<SessionDestroyedEvent>,
+		InitializingBean {
 
 	protected static final Logger logger = LoggerFactory.getLogger(MemSessionRegistry.class);
 

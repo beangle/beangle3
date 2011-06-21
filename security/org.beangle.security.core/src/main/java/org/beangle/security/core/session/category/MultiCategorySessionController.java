@@ -2,12 +2,10 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.security.web.session.category;
+package org.beangle.security.core.session.category;
 
 import java.lang.management.ManagementFactory;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.beangle.commons.collection.CollectUtils;
@@ -20,11 +18,11 @@ import org.beangle.security.core.session.SessionStat;
  * @author chaostone
  * @version $Id: ProfileSessionController.java Jun 18, 2011 7:18:44 PM chaostone $
  */
-public class MultiCategorySessionController extends AbstractSessionController {
+public class MultiCategorySessionController extends AbstractSessionController{
 
 	private CategorySessionControllerFactory controllerFactory;
 
-	private Map<Object, CategorySessionController> profiles = CollectUtils.newHashMap();
+	protected Map<Object, CategorySessionController> profiles = CollectUtils.newHashMap();
 
 	protected CategorySessionController getController(Authentication auth) {
 		Object category = ((CategoryPrincipal) auth.getPrincipal()).getCategory();
@@ -47,7 +45,7 @@ public class MultiCategorySessionController extends AbstractSessionController {
 		controller.free(info.getSessionid());
 	}
 
-	public List<SessionStat> getSessionStats() {
+	public SessionStat getSessionStat() {
 		Map<Object, Integer> details = CollectUtils.newHashMap();
 		int total = 0;
 		int capacity = 0;
@@ -57,8 +55,8 @@ public class MultiCategorySessionController extends AbstractSessionController {
 			total += status.getOnline();
 			capacity += status.getCapacity();
 		}
-		return Collections.singletonList(new SessionStat(ManagementFactory.getRuntimeMXBean().getName(),
-				new Date(), capacity, total, details));
+		return new SessionStat(ManagementFactory.getRuntimeMXBean().getName(), new Date(), capacity, total,
+				details);
 	}
 
 	@Override

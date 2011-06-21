@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.security.web.session.category;
+package org.beangle.security.core.session.category;
 
 import java.util.Date;
 
@@ -38,6 +38,14 @@ public class CategorySessionStat extends LongIdObject {
 	private int inactiveInterval;
 
 	private int userMaxSessions;
+
+	public CategorySessionStat stat() {
+		CategorySessionStat stat = new CategorySessionStat(this.serverName, this.category, this.capacity,
+				this.userMaxSessions);
+		stat.setOnline(this.online);
+		stat.setId(this.getId());
+		return stat;
+	}
 
 	public CategorySessionStat() {
 		super();

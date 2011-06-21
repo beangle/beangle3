@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.security.web.session.category;
+package org.beangle.security.core.session.category;
 
 import java.util.List;
 
@@ -16,8 +16,7 @@ import org.springframework.beans.factory.InitializingBean;
  * @author chaostone
  * @version $Id: AbstractCategorySessionController.java Jun 18, 2011 10:31:12 PM chaostone $
  */
-public abstract class AbstractCategorySessionController implements CategorySessionController,
-		InitializingBean {
+public abstract class ClusterCategorySessionController implements CategorySessionController, InitializingBean {
 
 	protected EntityDao entityDao;
 
@@ -27,7 +26,7 @@ public abstract class AbstractCategorySessionController implements CategorySessi
 		return sessionStatus;
 	}
 
-	public AbstractCategorySessionController(String serverName, String category) {
+	public ClusterCategorySessionController(String serverName, String category) {
 		super();
 		sessionStatus = new CategorySessionStat(serverName, category, 0, 1);
 	}
@@ -48,8 +47,7 @@ public abstract class AbstractCategorySessionController implements CategorySessi
 
 	public synchronized void free(String sessionId) {
 		sessionStatus.free(sessionId);
-		// FIXME
-		// gc
+		// FIXME gc
 	}
 
 	protected int allocate(int required) {

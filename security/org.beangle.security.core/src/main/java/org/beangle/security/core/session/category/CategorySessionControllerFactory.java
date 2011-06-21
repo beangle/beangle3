@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.security.web.session.category;
+package org.beangle.security.core.session.category;
 
 /**
  * @author chaostone
