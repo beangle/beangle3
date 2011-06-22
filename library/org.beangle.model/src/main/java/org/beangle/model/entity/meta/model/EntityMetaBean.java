@@ -23,7 +23,7 @@ public class EntityMetaBean extends LongIdObject implements EntityMeta {
 	private String name;
 	/** 实体别名 */
 	@NotNull
-	private String comment;
+	private String comments;
 	/** 实体备注 */
 	@Size(max = 500)
 	private String remark;
@@ -44,12 +44,12 @@ public class EntityMetaBean extends LongIdObject implements EntityMeta {
 		this.name = name;
 	}
 
-	public String getComment() {
-		return comment;
+	public String getComments() {
+		return comments;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 
 	public String getRemark() {

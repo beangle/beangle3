@@ -10,15 +10,17 @@ import java.util.Map;
 
 import javax.persistence.EntityExistsException;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.model.persist.impl.BaseServiceImpl;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.model.GroupMemberBean;
+import org.beangle.model.persist.impl.BaseServiceImpl;
+import org.beangle.model.query.builder.OqlBuilder;
 import org.springframework.dao.DataIntegrityViolationException;
 
 /**
@@ -62,14 +64,24 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return entityDao.get(User.class, userIds);
 	}
 
-	public void updateState(Long[] ids, int state) {
+	/**
+	 * 
+	 */
+	public void updateState(final User manager, Long[] ids, int state) {
 		assert (null == ids || ids.length < 1);
-		List<User> users = getUsers(ids);
+		@SuppressWarnings("unchecked")
+		List<User> users = (List<User>) CollectionUtils.select(getUsers(ids), new Predicate() {
+			public boolean evaluate(Object object) {
+				return isManagedBy(manager, (User) object) && !manager.equals(object);
+			}
+		});
+
 		for (int i = 0; i < users.size(); i++) {
 			User cur = users.get(i);
 			cur.setStatus(state);
 		}
 		entityDao.saveOrUpdate(users);
+		//publish(null);
 	}
 
 	public void saveOrUpdate(User user) {
@@ -86,7 +98,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 	}
 
-	// workgroup for no session
+	// workground for no session
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<Group> getGroups(User user, GroupMember.Ship ship) {
 		if (isAdmin(user) && !ObjectUtils.equals(ship, GroupMember.Ship.MEMBER)) return entityDao

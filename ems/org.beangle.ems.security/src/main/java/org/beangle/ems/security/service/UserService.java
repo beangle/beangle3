@@ -70,11 +70,12 @@ public interface UserService {
 
 	/**
 	 * 设置用户状态
-	 * 
+	 * 不能禁用或激活自己和非管理范围内的用户
+	 * @param manager
 	 * @param userIds
 	 * @param state
 	 */
-	public void updateState(Long[] userIds, int state);
+	public void updateState(User manager,Long[] userIds, int state);
 
 	/**
 	 * 创建帐户

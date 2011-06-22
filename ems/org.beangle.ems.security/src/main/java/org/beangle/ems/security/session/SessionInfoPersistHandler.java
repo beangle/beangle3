@@ -6,9 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.Validate;
+import org.beangle.ems.security.service.UserToken;
 import org.beangle.model.entity.Model;
 import org.beangle.model.persist.impl.BaseServiceImpl;
-import org.beangle.ems.security.service.UserToken;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.session.SessionInfo;
 import org.beangle.security.core.session.SessionRegistry;
@@ -51,5 +51,4 @@ public class SessionInfoPersistHandler extends BaseServiceImpl implements Logout
 	public void setSessionRegistry(SessionRegistry sessionRegistry) {
 		this.sessionRegistry = sessionRegistry;
 	}
-
 }
