@@ -259,11 +259,11 @@
 		}
 		
 		function displayMenu(event){
-			div=bg.event.getTarget(event);
+			var div=bg.event.getTarget(event);
 			while(div && div.tagName.toLowerCase()!='div'){
 				div=div.parentNode;
 			}
-			menu=div.lastElementChild;
+			var menu=div.lastElementChild || div.lastChild;
 			if(null==menu){alert('menu is null then return and target is '+div);return;}
 			if(menu.style.visibility!=""&&menu.style.visibility!="hidden"){
 				menu.style.visibility="hidden";
