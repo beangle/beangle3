@@ -32,5 +32,10 @@ public class CommonUtilsTest {
 		final String urlEncodedService = CommonUtils.constructServiceUrl(request, response, null,
 				config.getLocalServer(), "ticket", config.isEncode());
 		System.out.println(urlEncodedService);
+
+		final String urlEncodedService2 = CommonUtils.constructServiceUrl(request, response, null,
+				"localhost:8080", "ticket", config.isEncode());
+		
+		System.out.println(urlEncodedService2);
 	}
 }

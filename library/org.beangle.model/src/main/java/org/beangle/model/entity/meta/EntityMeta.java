@@ -35,14 +35,14 @@ public interface EntityMeta extends LongIdEntity {
 	 * 
 	 * @return 实体说明
 	 */
-	public String getComment();
+	public String getComments();
 
 	/**
 	 * 设置实体说明
 	 * 
 	 * @param comment 实体说明
 	 */
-	public void setComment(String comment);
+	public void setComments(String comments);
 
 	/**
 	 * 获得实体备注

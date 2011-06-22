@@ -215,16 +215,13 @@ public class UserAction extends SecurityActionSupport {
 		Long[] userIds = getEntityIds();
 		String isActivate = get("isActivate");
 		try {
+			User manager = userService.get(getUserId());
 			if (StringUtils.isNotEmpty(isActivate) && "false".equals(isActivate)) {
-				// logHelper.info(request, "UnActivate userIds:" + userIds);
-				userService.updateState(userIds, User.FREEZE);
+				userService.updateState(manager, userIds, User.FREEZE);
 			} else {
-				// logHelper.info(request, "Activate userIds:" + userIds);
-				userService.updateState(userIds, User.ACTIVE);
+				userService.updateState(manager, userIds, User.ACTIVE);
 			}
 		} catch (Exception e) {
-			// logHelper.info(request, "Faliure Activate alert for userIds:"
-			// + userIds, e);
 			return forward(ERROR, "error.occurred");
 		}
 		String msg = "ok.activate";
