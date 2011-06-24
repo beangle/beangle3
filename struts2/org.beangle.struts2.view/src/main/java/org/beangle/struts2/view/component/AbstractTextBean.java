@@ -18,7 +18,7 @@ public abstract class AbstractTextBean extends UIBean {
 	protected String required;
 	protected String value="";
 	protected String check;
-	protected String maxlength;
+	protected String maxlength="100";
 
 	public AbstractTextBean(ValueStack stack) {
 		super(stack);

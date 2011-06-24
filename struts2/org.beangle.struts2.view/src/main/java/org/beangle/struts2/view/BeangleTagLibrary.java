@@ -42,7 +42,7 @@ import org.beangle.struts2.view.component.Radios;
 import org.beangle.struts2.view.component.RedirectParams;
 import org.beangle.struts2.view.component.Select;
 import org.beangle.struts2.view.component.Select2;
-import org.beangle.struts2.view.component.StartToEnd;
+import org.beangle.struts2.view.component.Startend;
 import org.beangle.struts2.view.component.Submit;
 import org.beangle.struts2.view.component.Textarea;
 import org.beangle.struts2.view.component.Textfield;
@@ -97,9 +97,10 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		return render.render(req.getRequestURI(), url);
 	}
 
-	public java.util.Date getNow(){
+	public java.util.Date getNow() {
 		return new java.util.Date();
 	}
+
 	/**
 	 * query string and form control
 	 * 
@@ -287,8 +288,8 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 	public TagModel getRadios() {
 		return get(Radios.class);
 	}
-	
-	public TagModel getStartToEnd(){
-		return get(StartToEnd.class);
+
+	public TagModel getStartend() {
+		return get(Startend.class);
 	}
 }

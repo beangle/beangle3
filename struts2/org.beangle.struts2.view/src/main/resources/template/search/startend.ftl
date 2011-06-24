@@ -3,9 +3,7 @@
 [#list tag.dates as date]
 <tr>
 <td class="search-item">
-[#if date.label??]
-	<label for="${date.id}">${date.label}:</label>
-[/#if]
+<label for="${date.id}">${date.label}:</label>
 <input type="text" id="${date.id}" [#if date.title??]title="${date.title}"[/#if] class="Wdate" onFocus="WdatePicker({dateFmt:'${tag.format}'[#if date.maxDate??],maxDate:'${date.maxDate}'[/#if][#if date.minDate??],minDate:'${date.minDate}'[/#if]})" name="${date.name}" value="${(date.value)?if_exists}" ${tag.parameterString}/>
 </td>
 </tr>

@@ -1,5 +1,7 @@
 package org.beangle.struts2.view.component;
 
+import java.text.SimpleDateFormat;
+
 import com.opensymphony.xwork2.util.ValueStack;
 
 public class Date extends UIBean {
@@ -16,12 +18,12 @@ public class Date extends UIBean {
 
 	private String required;
 
-	private String value="";
+	private Object value = "";
 
 	private String format = "yyyy-MM-dd";
 
 	protected String minDate;
-	
+
 	protected String maxDate;
 
 	public Date(ValueStack stack) {
@@ -41,6 +43,10 @@ public class Date extends UIBean {
 		if (null != myform) {
 			if ("true".equals(required)) myform.addCheck(id, "require()");
 			if (null != check) myform.addCheck(id, check);
+		}
+		if (value instanceof java.util.Date) {
+			SimpleDateFormat dformat = new SimpleDateFormat(format);
+			value = dformat.format((java.util.Date) value);
 		}
 	}
 
@@ -92,11 +98,11 @@ public class Date extends UIBean {
 		this.required = required;
 	}
 
-	public String getValue() {
+	public Object getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(Object value) {
 		this.value = value;
 	}
 

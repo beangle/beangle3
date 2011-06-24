@@ -7,6 +7,8 @@ package org.beangle.struts2.view.component;
 import com.opensymphony.xwork2.util.ValueStack;
 
 /**
+ * 文本域
+ * 
  * @author chaostone
  * @version $Id: Textarea.java May 3, 2011 12:40:21 PM chaostone $
  */
@@ -19,6 +21,7 @@ public class Textarea extends AbstractTextBean {
 
 	public Textarea(ValueStack stack) {
 		super(stack);
+		maxlength = "400";
 	}
 
 	@Override

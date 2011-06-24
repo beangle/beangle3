@@ -11,4 +11,6 @@ package org.beangle.security.core.session.category;
 public interface CategorySessionControllerFactory {
 
 	public CategorySessionController getInstance(Object category);
+
+	public String getServerName();
 }

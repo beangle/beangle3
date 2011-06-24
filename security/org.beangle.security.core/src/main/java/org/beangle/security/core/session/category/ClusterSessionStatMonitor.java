@@ -28,16 +28,15 @@ public class ClusterSessionStatMonitor {
 	}
 
 	/**
-	 * 比当前时间早五分钟的统计一律视为无效，将之清除
+	 * 比当前时间早十分钟的统计一律视为无效，将之清除
 	 */
-	public void gc() {
+	public void gc(CategorySessionControllerFactory factory) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.roll(Calendar.MINUTE, -5);
-		System.out.println(calendar.getTime());
+		calendar.roll(Calendar.MINUTE, -10);
 		entityDao
 				.executeUpdateHql(
-						"delete from org.beangle.security.core.session.category.CategorySessionStat css where css.statAt < ?",
-						calendar.getTime());
+						"delete from org.beangle.security.core.session.category.CategorySessionStat css where css.statAt < ? and css.serverName<>?",
+						calendar.getTime(), factory.getServerName());
 	}
 
 	public void report() {

@@ -16,7 +16,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td>登录起始/截止时间:[@b.datepicker name="startTime" style="width:100px" value=""/]~[@b.datepicker value="" style="width:100px" name="endTime" /]</td>
+		<td>[@b.startend name="startTime,endTime" label="登录起始,截止时间" style="width:100px" /]</td>
 		<td>ip:<input name="sessionActivity.host" value="" style="width:100px" maxlength="32"/>
 		[@b.submit action="!search" value="登录明细"/]
 			[@b.submit action="!loginCountStat" value="次数统计"/]

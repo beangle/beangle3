@@ -5,7 +5,7 @@
 package org.beangle.security.core.session.category;
 
 import java.lang.management.ManagementFactory;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,6 +23,11 @@ public abstract class ClusterCategorySessionControllerFactory extends BaseServic
 
 	protected ClusterSessionStatMonitor monitor;
 
+	// 默认汇报的间隔为15秒
+	protected int reportInterval = 15;
+
+	protected boolean reportSameTime = true;
+
 	public final CategorySessionController getInstance(Object category) {
 		CategorySessionController controller = doGetInstance(category);
 		monitor.addController(controller);
@@ -33,11 +38,34 @@ public abstract class ClusterCategorySessionControllerFactory extends BaseServic
 
 	public void afterPropertiesSet() throws Exception {
 		monitor = new ClusterSessionStatMonitor(entityDao);
-		new Timer("Beangle Session Stat", true).schedule(new MonitorDaemon(this), new Date(), 1000 * 10);
+		Calendar calendar = Calendar.getInstance();
+		if (reportSameTime) {
+			calendar.roll(Calendar.MINUTE, 1);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+		}
+		new Timer("Beangle Session Stat", true).schedule(new MonitorDaemon(this), calendar.getTime(),
+				1000 * reportInterval);
 	}
 
-	protected String getServerName() {
+	public String getServerName() {
 		return ManagementFactory.getRuntimeMXBean().getName();
+	}
+
+	public int getReportInterval() {
+		return reportInterval;
+	}
+
+	public void setReportInterval(int reportInterval) {
+		this.reportInterval = reportInterval;
+	}
+
+	public boolean isReportSameTime() {
+		return reportSameTime;
+	}
+
+	public void setReportSameTime(boolean reportSameTime) {
+		this.reportSameTime = reportSameTime;
 	}
 
 }
@@ -56,7 +84,7 @@ class MonitorDaemon extends TimerTask {
 		cnt++;
 		cnt %= 7;
 		if (cnt == 0) {
-			factory.monitor.gc();
+			factory.monitor.gc(factory);
 		}
 		factory.monitor.report();
 	}
