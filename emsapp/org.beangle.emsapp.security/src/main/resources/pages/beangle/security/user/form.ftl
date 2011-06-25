@@ -14,10 +14,12 @@
 	<fieldset><legend>${b.text('ui.userInfo')}</legend><ol>
 		[@b.textfield label="user.name"  name="user.name" value="${user.name!}" style="width:200px;" required="true" maxlength="30"/]
 		[@b.field label="common.status" required="true"]
-		 <input value="1" id="user_status_1" type="radio" name="user.status" [#if (user.status!1)==1]checked="checked"[/#if] />
+		 <input value="1" id="user_status_1" type="radio" [#if isme]disabled="disabled"[/#if] name="user.enabled" [#if user.enabled]checked="checked"[/#if] />
 		 <label for="user_status_1">${b.text("action.activate")}</label>
-		 <input value="0" id="user_status_0" type="radio" name="user.status" [#if (user.status!1)==0]checked="checked"[/#if] />
+		 [#if !isadmin]
+		 <input value="0" id="user_status_0" type="radio" name="user.status" [#if isme]disabled="disabled"[/#if] [#if !user.enabled]checked="checked"[/#if] />
 		 <label for="user_status_0">${b.text("action.freeze")}</label>
+		 [/#if]
 		[/@]
 		[@b.textfield label="user.fullname" name="user.fullname" value="${user.fullname!}" style="width:200px;" required="true" maxlength="60" /]
 		[@b.password label="密码" name="password" value="" axLength="60" comment="默认密码为1"/]
@@ -34,6 +36,12 @@
 		  [/#list]
 		  </select>
 		[/@]
+		[#if isadmin|| isme]
+		[@b.startend label="common.effective-invalid" name="user.effectiveAt,user.invalidAt" required="true,false" start=user.effectiveAt end=user.invalidAt format="yyyy-MM-dd HH:mm:ss" disabled="disabled"/]
+		[#else]
+		[@b.startend label="common.effective-invalid" name="user.effectiveAt,user.invalidAt" required="true,false" start=user.effectiveAt end=user.invalidAt format="yyyy-MM-dd HH:mm:ss"/]
+		[/#if]
+		[@b.datepicker label="user.passwordExpiredAt" name="user.passwordExpiredAt" value=user.passwordExpiredAt format="yyyy-MM-dd HH:mm:ss"/]
 		[@b.textarea label="common.remark" cols="50" rows="1" name="user.remark" value="${user.remark!}" maxlength="100"/]
 		[@b.formfoot]
 			<input type="hidden" name="user.id" value="${user.id!}" />

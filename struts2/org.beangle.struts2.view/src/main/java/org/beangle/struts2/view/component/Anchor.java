@@ -69,6 +69,9 @@ public class Anchor extends ClosingUIBean {
 			try {
 				writer.append("<a href=\"");
 				writer.append(href).append("\"");
+				if (null != id) {
+					writer.append(" id=\"").append(id).append("\"");
+				}
 				if (null != target) {
 					writer.append(" target=\"").append(target).append("\"");
 				}

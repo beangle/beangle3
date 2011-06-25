@@ -14,6 +14,7 @@ public class Submit extends UIBean {
 	String onsubmit;
 	String action;
 	String value;
+	String target;
 
 	public Submit(ValueStack stack) {
 		super(stack);
@@ -66,6 +67,14 @@ public class Submit extends UIBean {
 
 	public void setAction(String href) {
 		this.action = href;
+	}
+
+	public String getTarget() {
+		return target;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
 	}
 
 }

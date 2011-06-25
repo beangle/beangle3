@@ -22,16 +22,10 @@ public class UserPropertyExtractor extends DefaultPropertyExtractor {
 
 	public Object getPropertyValue(Object target, String property) throws Exception {
 		User user = (User) target;
-		if ("status".equals(property)) {
-			int status = user.getStatus();
-			switch (status) {
-			case User.ACTIVE:
-				return getText("action.activate");
-			case User.FREEZE:
-				return getText("action.freeze");
-			default:
-				return "unknown status " + status;
-			}
+		if ("enabled".equals(property)) {
+			boolean enabled = user.isEnabled();
+			if (enabled) return getText("action.activate");
+			else return getText("action.freeze");
 		}
 		if ("groups".equals(property)) {
 			return getPropertyIn(user.getGroups(), "group.name");

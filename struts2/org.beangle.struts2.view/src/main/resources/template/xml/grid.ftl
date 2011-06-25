@@ -1,10 +1,29 @@
 [#ftl/]
 <div class="grid">[@b.messages slash="4"/][#if tag.hasbar]<div id="${tag.id}_bar1" class="gridbar"></div>[/#if]
 <table id="${tag.id}" class="gridtable"${tag.parameterString}>
-<thead class="gridhead"><tr>
-[#list tag.cols as cln]<th [#if cln.width??]width="${cln.width}" [/#if][#if cln.type??][#if cln.type!="checkbox"]>[#else]><input type="${cln.type}" name="${cln.boxname}box" onclick="bg.input.toggleCheckBox(document.getElementsByName('${cln.boxname}'),event)" title="${b.text('action.selectall')}"/>[/#if][#else][#if tag.isSortable(cln)]class="gridhead-sortable" id="${cln.parameters['sort']!(tag.defaultSort(cln.property))}"[/#if]>${cln.title}[/#if]</th>
+[#if tag.cols?size>0]
+<thead class="gridhead">
+[#if tag.filterable="true" || tag.filters?size>0]
+<tr>
+	<th  onclick="document.getElementById('${tag.id}_filter_submit').onclick()"><img src="${b.theme.iconurl('actions/edit-find.png')}"/>[@b.submit id="${tag.id}_filter_submit" style="display:none"/]</th>
+	[#list tag.cols as cln]
+	[#if !(cln.type??)]
+	[#if tag.isFilterable(cln)]
+	<th title="${cln.title}">
+	[#if tag.filters[cln.property]??]${tag.filters[cln.property]}[#else]<input type="text" name="${cln.propertyPath}"  maxlength="100" value="${(Parameters[cln.propertyPath]!)?html}" style="width:95%;"/>[/#if]
+	</th>
+	[#else]<th></th>[/#if]
+	[/#if]
+	[/#list]
+</tr>
+[/#if]
+<tr>
+[#list tag.cols as cln]<th [#if cln.width??]width="${cln.width}" [/#if][#if cln.type??] class="gridselect-top"[#if cln.type!="checkbox"]>[#else]><input type="${cln.type}" name="${cln.boxname}box" onclick="bg.input.toggleCheckBox(document.getElementsByName('${cln.boxname}'),event)" title="${b.text('action.selectall')}"/>[/#if][#else][#if tag.isSortable(cln)]class="gridhead-sortable" id="${cln.parameters['sort']!(tag.defaultSort(cln.property))}"[/#if]>${cln.title}[/#if]</th>
 [/#list]
-</tr></thead>
+</tr>
+</thead>
+[/#if]
+
 <tbody id="${tag.id}_data">${tag.body}</tbody>
 </table>
 [#if tag.hasbar]

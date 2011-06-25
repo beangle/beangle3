@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.ems.security.service;
+package org.beangle.ems.security.nav.service;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,10 +17,11 @@ import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
-import org.beangle.ems.security.Menu;
-import org.beangle.ems.security.MenuProfile;
 import org.beangle.ems.security.User;
-import org.beangle.ems.security.model.MenuBean;
+import org.beangle.ems.security.nav.Menu;
+import org.beangle.ems.security.nav.MenuProfile;
+import org.beangle.ems.security.nav.model.MenuBean;
+import org.beangle.ems.security.service.UserService;
 
 /**
  * @author chaostone

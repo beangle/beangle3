@@ -6,9 +6,9 @@ package org.beangle.struts2.helper;
 
 import java.util.Map;
 
-import org.beangle.model.EntityUtils;
 import org.beangle.model.entity.Model;
 import org.beangle.model.entity.types.EntityType;
+import org.beangle.model.util.EntityUtils;
 
 public class PopulateHelper {
 

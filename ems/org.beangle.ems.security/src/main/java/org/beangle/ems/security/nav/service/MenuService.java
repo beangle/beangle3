@@ -2,14 +2,14 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.ems.security.service;
+package org.beangle.ems.security.nav.service;
 
 import java.util.List;
 
 import org.beangle.ems.security.Group;
-import org.beangle.ems.security.Menu;
-import org.beangle.ems.security.MenuProfile;
 import org.beangle.ems.security.User;
+import org.beangle.ems.security.nav.Menu;
+import org.beangle.ems.security.nav.MenuProfile;
 
 /**
  * @author chaostone

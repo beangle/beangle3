@@ -57,23 +57,26 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
 		}
 	}
 
-	private Template loadTemplate(String templateName)throws Exception{
-		Template template=null;
-		String curTemplate=templateName;
-		while(null==template){
-			try{
+	private Template loadTemplate(String templateName) throws Exception {
+		Template template = null;
+		String curTemplate = templateName;
+		while (null == template) {
+			try {
 				template = config.getTemplate(curTemplate);
-			}catch(IOException e) {
-				curTemplate=getParentTemplate(curTemplate);
-				if(null==curTemplate){
-					logger.error("Could not load template named '{}',TemplateLoader is {}", templateName, config
-							.getTemplateLoader().getClass());
+			} catch (ParseException e) {
+				throw e;
+			} catch (IOException e) {
+				curTemplate = getParentTemplate(curTemplate);
+				if (null == curTemplate) {
+					logger.error("Could not load template named '{}',TemplateLoader is {}", templateName,
+							config.getTemplateLoader().getClass());
 					throw e;
 				}
 			}
 		}
 		return template;
 	}
+
 	@SuppressWarnings("unchecked")
 	private Environment getEnvironment(String templateName, ValueStack stack, SimpleHash model, Writer writer)
 			throws Exception {
@@ -85,7 +88,7 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
 		Environment env = envs.get(templateName);
 		if (null == env) {
 			try {
-				Template template=loadTemplate(templateName);
+				Template template = loadTemplate(templateName);
 				env = template.createProcessingEnvironment(model, writer);
 				envs.put(templateName, env);
 			} catch (ParseException pe) {

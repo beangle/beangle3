@@ -15,10 +15,10 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
 import org.beangle.commons.collection.page.PageLimit;
 import static org.beangle.commons.lang.StrUtils.*;
-import org.beangle.model.EntityUtils;
 import org.beangle.model.entity.Model;
 import org.beangle.model.entity.types.EntityType;
 import org.beangle.model.query.Lang;
+import org.beangle.model.util.EntityUtils;
 
 /**
  * 实体类查询 Object Query Language Builder

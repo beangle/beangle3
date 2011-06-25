@@ -16,11 +16,7 @@
 	</tr>
 	<tr>
 	 <td class="title" >${b.text("common.status")}:</td>
-	 <td class="content">
-		[#if user.state!(1)==1] ${b.text("action.activate")}
-		[#else]${b.text("action.freeze")}
-		[/#if]
-	 </td>
+	 <td class="content">[#if user.enabled] ${b.text("action.activate")}[#else]${b.text("action.freeze")}[/#if]</td>
 	 <td class="title" >${b.text("common.updatedAt")}:</td>
 	 <td class="content">${user.updatedAt?string("yyyy-MM-dd")}</td>
 	</tr>

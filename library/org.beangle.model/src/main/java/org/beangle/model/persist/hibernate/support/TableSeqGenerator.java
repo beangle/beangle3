@@ -12,6 +12,8 @@ import org.hibernate.id.PersistentIdentifierGenerator;
 import org.hibernate.id.SequenceGenerator;
 import org.hibernate.id.enhanced.SequenceStyleGenerator;
 import org.hibernate.type.Type;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 按照表明进行命名序列<br>
@@ -27,7 +29,9 @@ import org.hibernate.type.Type;
  * @author chaostone
  */
 public class TableSeqGenerator extends SequenceStyleGenerator {
-
+	private static final Logger logger = LoggerFactory.getLogger(TableSeqGenerator.class);
+	// 表名、字段名、序列长度
+	private static final int MaxLength = 30;
 	/** 序列命名模式 */
 	private String sequencePattern = "seq_{table}";
 
@@ -42,6 +46,10 @@ public class TableSeqGenerator extends SequenceStyleGenerator {
 			if (tableName != null) {
 				String seqName = StringUtils.replace(sequencePattern, "{table}", tableName);
 				seqName = StringUtils.replace(seqName, "{pk}", pk);
+				if (seqName.length() > MaxLength) {
+					logger.error("{}'s length has greate more then 30, database will not be supported!",
+							seqName);
+				}
 				params.setProperty(SEQUENCE_PARAM, seqName);
 			}
 		}

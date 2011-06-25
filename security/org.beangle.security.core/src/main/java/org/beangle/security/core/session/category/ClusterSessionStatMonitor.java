@@ -19,6 +19,9 @@ public class ClusterSessionStatMonitor {
 	private EntityDao entityDao;
 	private List<CategorySessionController> controllers = CollectUtils.newArrayList();
 
+	// 多长时间不更新服务器，就被认为是服务器宕掉，以分钟为单位.默认为20分钟
+	private int serviceUnavaliableTime = 20;
+
 	public ClusterSessionStatMonitor(EntityDao entityDao) {
 		this.entityDao = entityDao;
 	}
@@ -28,11 +31,11 @@ public class ClusterSessionStatMonitor {
 	}
 
 	/**
-	 * 比当前时间早十分钟的统计一律视为无效，将之清除
+	 * 比当前时间早二十分钟的统计一律视为无效，将之清除
 	 */
 	public void gc(CategorySessionControllerFactory factory) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.roll(Calendar.MINUTE, -10);
+		calendar.roll(Calendar.MINUTE, 0 - serviceUnavaliableTime);
 		entityDao
 				.executeUpdateHql(
 						"delete from org.beangle.security.core.session.category.CategorySessionStat css where css.statAt < ? and css.serverName<>?",
@@ -47,6 +50,10 @@ public class ClusterSessionStatMonitor {
 							"update org.beangle.security.core.session.category.CategorySessionStat css set css.statAt=?,css.online=? where css.serverName=? and css.category=?",
 							stat.getStatAt(), stat.getOnline(), stat.getServerName(), stat.getCategory());
 		}
+	}
+
+	public void setServiceUnavaliableTime(int serviceUnavaliableTime) {
+		this.serviceUnavaliableTime = serviceUnavaliableTime;
 	}
 
 }

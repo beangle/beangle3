@@ -14,9 +14,9 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.Entity;
-import org.beangle.model.EntityUtils;
 import org.beangle.model.persist.EntityDao;
 import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.model.util.EntityUtils;
 import org.beangle.ems.dictionary.model.CodeScript;
 import org.beangle.ems.dictionary.service.CodeFixture;
 

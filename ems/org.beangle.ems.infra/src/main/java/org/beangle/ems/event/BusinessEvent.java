@@ -7,6 +7,7 @@ package org.beangle.ems.event;
 import org.springframework.context.ApplicationEvent;
 
 /**
+ * 业务事件
  * @author chaostone
  * @version $Id: BusinessEvent.java Jun 22, 2011 8:47:39 AM chaostone $
  */

@@ -26,7 +26,6 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
 import org.beangle.commons.lang.StrUtils;
 import org.beangle.model.Entity;
-import org.beangle.model.EntityUtils;
 import org.beangle.model.entity.Model;
 import org.beangle.model.entity.types.EntityType;
 import org.beangle.model.pojo.TimeEntity;
@@ -45,6 +44,7 @@ import org.beangle.model.transfer.importer.DefaultEntityImporter;
 import org.beangle.model.transfer.importer.EntityImporter;
 import org.beangle.model.transfer.importer.listener.ImporterForeignerListener;
 import org.beangle.model.transfer.io.TransferFormats;
+import org.beangle.model.util.EntityUtils;
 import org.beangle.struts2.helper.ExportHelper;
 import org.beangle.struts2.helper.Params;
 

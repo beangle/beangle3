@@ -1,3 +1,12 @@
+2011-06-25  duantihua   <chaostone.duan@gmail.com>
+	* 增加了gridfilter标签
+	* 降低beangle-struts2-lagecy的外部依赖性为0
+	* 移动beangle-struts2-convention关于freemarker的代码到beangle-struts2-view包中
+	* 修复了[@b.a标签不支持id属性的错误
+	* 修复了当没有数据时，grid没有显示标题的缺陷
+	* 增加了用户信息中的生效和过期时间、密码过期时间
+	* 增加了EnabledEntity
+
 2011-06-12  duantihua   <chaostone.duan@gmail.com>
 	* 移动convention-route.properties,从META-INF/到META-INF/beangle/
 	* 移动全局table.properties到beangle/,局部table.properties从META-INF/移动到META-INF/beangle/

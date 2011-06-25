@@ -4,6 +4,8 @@
  "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
+	<constant name="struts.freemarker.manager.classname" value="org.beangle.struts2.view.freemarker.BeangleFreemarkerManager"/>
+
 	<bean type="org.beangle.struts2.view.component.ActionUrlRender" class="org.beangle.struts2.view.component.DefaultActionUrlRender"/>
 	
 	<bean type="org.apache.struts2.views.TagLibrary" name="b" class="org.beangle.struts2.view.BeangleTagLibrary" />

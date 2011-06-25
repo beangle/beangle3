@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.ems.security.model;
+package org.beangle.ems.security.nav.model;
 
 import java.util.List;
 import java.util.Set;
@@ -20,14 +20,14 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.StrUtils;
-import org.beangle.ems.security.Menu;
-import org.beangle.ems.security.MenuProfile;
 import org.beangle.ems.security.Resource;
+import org.beangle.ems.security.nav.Menu;
+import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.model.pojo.LongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-@Entity(name = "org.beangle.ems.security.Menu")
+@Entity(name = "org.beangle.ems.security.nav.Menu")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MenuBean extends LongIdObject implements Menu {

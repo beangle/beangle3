@@ -27,6 +27,8 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	private static final long serialVersionUID = -2656604564223895758L;
 
 	private static final Logger logger = LoggerFactory.getLogger(RailsNamingStrategy.class);
+	// 表名、字段名、序列长度
+	private static final int MaxLength = 30;
 	/**
 	 * 是否对表名进行复数化
 	 */
@@ -55,8 +57,8 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 		if (null != tblPrefix) {
 			tableName = tblPrefix + tableName;
 		}
-		if (tableName.length() > 30) {
-			logger.warn("{}'s length has greate more then 30, database will not be supported!", tableName);
+		if (tableName.length() > MaxLength) {
+			logger.error("{}'s length has greate more then 30, database will not be supported!", tableName);
 		}
 		return tableName;
 	}
@@ -77,7 +79,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 		if (null != tblPrefix) {
 			tableName = tblPrefix + tableName;
 		}
-		if (tableName.length() > 30) {
+		if (tableName.length() > MaxLength) {
 			logger.warn("{}'s length has greate more then 30, database will not be supported!", tableName);
 		}
 		return tableName;
@@ -98,6 +100,9 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 				newName = tblPrefix + tableName;
 			}
 		}
+		if (newName.length() > MaxLength) {
+			logger.error("{}'s length has greate more then 30, database will not be supported!", newName);
+		}
 		return newName;
 	}
 
@@ -105,6 +110,9 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 * 对配置文件起好的列名,不进行处理
 	 */
 	public String columnName(String columnName) {
+		if (columnName.length() > MaxLength) {
+			logger.error("{}'s length has greate more then 30, database will not be supported!", columnName);
+		}
 		return columnName;
 	}
 
@@ -135,6 +143,10 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 		if (!StringUtils.endsWithIgnoreCase(propertyName, "id") && isManyToOne()) {
 			sb.append("_id");
 		}
+		if (sb.length() > MaxLength) {
+			logger.error("{}'s length has greate more then 30, database will not be supported!",
+					sb.toString());
+		}
 		return sb.toString();
 	}
 
@@ -156,7 +168,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 		if (header.endsWith("s")) {
 			header = addUnderscores(propertyTableName);
 		} else {
-			header=addUnderscores(header);
+			header = addUnderscores(header);
 		}
 		return header + "_" + referencedColumnName;
 	}
@@ -175,7 +187,11 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 			generatePrefix(ownerEntity);
 			ownerTable = tableName(ownerEntityTable);
 		}
-		return ownerTable + '_' + addUnderscores(unqualify(propertyName));
+		String tblName = ownerTable + '_' + addUnderscores(unqualify(propertyName));
+		if (tblName.length() > MaxLength) {
+			logger.error("{}'s length has greate more then 30, database will not be supported!", tblName);
+		}
+		return tblName;
 	}
 
 	/**

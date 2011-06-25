@@ -12,8 +12,24 @@ import org.beangle.ems.event.BusinessEvent;
  */
 public class AccountStatusEvent extends BusinessEvent {
 
+	private static final long serialVersionUID = -8120260840834127793L;
+	private boolean enabled;
+
 	public AccountStatusEvent(Object source) {
 		super(source);
+	}
+
+	public AccountStatusEvent(Object source, boolean enabled) {
+		super(source);
+		this.enabled = enabled;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
 	}
 
 }

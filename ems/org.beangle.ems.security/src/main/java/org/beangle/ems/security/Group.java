@@ -6,16 +6,17 @@ package org.beangle.ems.security;
 
 import java.util.Set;
 
-import org.beangle.model.pojo.LongIdTimeEntity;
 import org.beangle.ems.security.restrict.GroupRestriction;
 import org.beangle.ems.security.restrict.RestrictionHolder;
+import org.beangle.model.pojo.HierarchyEntity;
+import org.beangle.model.pojo.LongIdTimeEntity;
 
 /**
  * 系统用户组的基本信息
  * 
  * @author chaostone 2005-9-26
  */
-public interface Group extends LongIdTimeEntity, RestrictionHolder<GroupRestriction> {
+public interface Group extends LongIdTimeEntity, RestrictionHolder<GroupRestriction>, HierarchyEntity<Group> {
 
 	/**
 	 * 名称
@@ -30,34 +31,6 @@ public interface Group extends LongIdTimeEntity, RestrictionHolder<GroupRestrict
 	 * @param name
 	 */
 	public void setName(String name);
-
-	/**
-	 * 上级组
-	 * 
-	 * @return
-	 */
-	public Group getParent();
-
-	/**
-	 * 设置上级组
-	 * 
-	 * @param parent
-	 */
-	public void setParent(Group parent);
-
-	/**
-	 * 下级组
-	 * 
-	 * @return
-	 */
-	public Set<Group> getChildren();
-
-	/**
-	 * 设置下级组
-	 * 
-	 * @param children
-	 */
-	public void setChildren(Set<Group> children);
 
 	/**
 	 * 查询权限

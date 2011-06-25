@@ -20,7 +20,7 @@
 	beangle.extend({
 		//jump to href or anchor
 		Go : function (obj,target){
-			url=obj;
+			var url=obj;
 			if(typeof obj =="object" && obj.tagName.toLowerCase()=="a"){
 				url=obj.href;
 				if(!target){
@@ -71,8 +71,8 @@
 			else return target;
 		},
 		findTarget : function(ele){
-			p=ele.parentNode;
-			finalTarget="_self";
+			var p=ele.parentNode;
+			var finalTarget="_self";
 			while(p){
 				//FIXME ui-tabs-panel
 				if(p.id && p.className  && (p.className.indexOf("_ajax_container")>-1||p.className.indexOf("ui-tabs-panel")>-1)){
@@ -244,8 +244,8 @@
 				var targWin=frames[0];
 				if(targWin != null && (targWin.scrolling=="no" || targWin.className=="autoadapt")) {
 					var heightValue = targObj.document.body.scrollHeight;
-					totalHeight=heightValue + ((null==extraHight)?0:extraHight);
-					myHeight=0;
+					var totalHeight=heightValue + ((null==extraHight)?0:extraHight);
+					var myHeight=0;
 					if(targWin.style.height){
 						myHeight=parseInt(targWin.style.height.substring(0,targWin.style.height.length-2));
 					}
@@ -601,7 +601,7 @@
 			set : function (name, value, path){
 				if(null==path)
 					path="/";
-				expires=new Date();
+				var expires=new Date();
 				expires.setTime(expires.getTime()+(86400*30));
 				document.cookie=name+"="+value+"; expires="+expires.toGMTString()+"; path="+path;
 			}
@@ -706,7 +706,7 @@
 		}
 		// jump to page using form submit
 		this.goPageNormal = function (pageNo,pageSize,orderBy){
-			myForm=document.createElement("form");
+			var myForm=document.createElement("form");
 			myForm.setAttribute("action",this.actionurl);
 			myForm.setAttribute("method","POST");
 			for(var key in this.paramMap){
@@ -720,9 +720,9 @@
 		}
 		// jump to page using ajax
 		this.goPageAjax = function (pageNo,pageSize,orderBy){
-			myForm=this.getForm();
+			var myForm=this.getForm();
 			for(var key in this.paramMap){
-				value=this.paramMap[key];
+				var value=this.paramMap[key];
 				if(value!=""){
 					bg.form.addInput(myForm,key,value,"hidden");
 				}

@@ -13,13 +13,13 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
-import org.beangle.ems.security.Menu;
-import org.beangle.ems.security.MenuProfile;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
+import org.beangle.ems.security.nav.Menu;
+import org.beangle.ems.security.nav.MenuProfile;
+import org.beangle.ems.security.nav.service.MenuService;
 import org.beangle.ems.security.restrict.service.RestrictionService;
 import org.beangle.ems.security.service.AuthorityService;
-import org.beangle.ems.security.service.MenuService;
 import org.beangle.ems.security.service.UserService;
 import org.beangle.ems.security.service.UserToken;
 import org.beangle.ems.security.session.SessionActivity;
@@ -61,7 +61,8 @@ public class UserDashboardHelper {
 	private void populateOnlineActivities(User user) {
 		Collection<?> onlineActivities = sessionRegistry.getSessionInfos(
 				new UserToken(user.getId(), user.getName(), user.getFullname(), user.getPassword(), user
-						.getDefaultCategory(), user.getStatus() > 0, false, false, false, null), true);
+						.getDefaultCategory(), user.isEnabled(), user.isAccountExpired(), user
+						.isPasswordExpired(), false, null), true);
 		ContextHelper.put("onlineActivities", onlineActivities);
 	}
 

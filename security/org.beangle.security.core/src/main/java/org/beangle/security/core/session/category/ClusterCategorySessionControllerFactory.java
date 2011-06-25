@@ -82,7 +82,7 @@ class MonitorDaemon extends TimerTask {
 	@Override
 	public void run() {
 		cnt++;
-		cnt %= 7;
+		cnt %= 10;
 		if (cnt == 0) {
 			factory.monitor.gc(factory);
 		}

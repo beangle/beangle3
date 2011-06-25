@@ -14,7 +14,6 @@
 	<!-- max 50M -->
 	<constant name="struts.multipart.maxSize" value="52428800"/>
 	<constant name="struts.mapper.class" value="beangle"/>
-	<constant name="struts.freemarker.manager.classname" value="org.beangle.struts2.view.freemarker.BeangleFreemarkerManager"/>
 	
 	<package name="beangle" extends="struts-default">
 		<interceptors>

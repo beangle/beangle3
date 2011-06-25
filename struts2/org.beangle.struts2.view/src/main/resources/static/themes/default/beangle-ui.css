@@ -26,6 +26,8 @@ a:hover {color: red;}
 
 .gridselect{text-align:center;background-color: #e0ecff;width:3%;}
 
+.gridselect-top{text-align:center;width:3%;}
+
 .gridhead{color: #000000;text-decoration: none;text-align:center;letter-spacing:0;background-color: #c7dbff;}
 
 .gridhead-asc{background-color: #308dbb;cursor:pointer;}

@@ -185,6 +185,10 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		return get(Grid.Bar.class);
 	}
 
+	public TagModel getGridfilter() {
+		return get(Grid.Filter.class);
+	}
+
 	public TagModel getRow() {
 		return get(Grid.Row.class);
 	}

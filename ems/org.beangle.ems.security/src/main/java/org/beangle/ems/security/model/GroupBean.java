@@ -4,6 +4,7 @@
  */
 package org.beangle.ems.security.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Cacheable;
@@ -15,13 +16,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.model.pojo.LongIdTimeObject;
 import org.beangle.ems.security.Authority;
+import org.beangle.ems.security.Category;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
-import org.beangle.ems.security.Category;
 import org.beangle.ems.security.restrict.GroupRestriction;
+import org.beangle.model.pojo.LongIdTimeObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -56,7 +57,7 @@ public class GroupBean extends LongIdTimeObject implements Group {
 
 	/** 下级组 */
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-	private Set<Group> children = CollectUtils.newHashSet();
+	private List<Group> children = CollectUtils.newArrayList();
 
 	/** 创建人 */
 	@NotNull
@@ -146,11 +147,11 @@ public class GroupBean extends LongIdTimeObject implements Group {
 		this.parent = parent;
 	}
 
-	public Set<Group> getChildren() {
+	public List<Group> getChildren() {
 		return children;
 	}
 
-	public void setChildren(Set<Group> children) {
+	public void setChildren(List<Group> children) {
 		this.children = children;
 	}
 

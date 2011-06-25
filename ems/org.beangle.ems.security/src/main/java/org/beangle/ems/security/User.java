@@ -6,27 +6,24 @@ package org.beangle.ems.security;
 
 import java.util.Set;
 
-import org.beangle.model.pojo.LongIdTimeEntity;
 import org.beangle.ems.security.restrict.RestrictionHolder;
 import org.beangle.ems.security.restrict.UserRestriction;
+import org.beangle.model.pojo.EnabledEntity;
+import org.beangle.model.pojo.LongIdTimeEntity;
+import org.beangle.model.pojo.TemporalActiveEntity;
 
 /**
  * 系统中所有用户的账号、权限、状态信息.
  * 
  * @author dell,chaostone 2005-9-26
  */
-public interface User extends LongIdTimeEntity, RestrictionHolder<UserRestriction> {
+public interface User extends LongIdTimeEntity, RestrictionHolder<UserRestriction>, TemporalActiveEntity,
+		EnabledEntity {
 
 	// 新建用户的缺省密码
 	public static final String DEFAULT_PASSWORD = "1";
 
-	// 冻结
-	public static final int FREEZE = 0;
-
-	// 激活
-	public static final int ACTIVE = 1;
-
-	/**根用户id*/
+	/** 根用户id */
 	public static final Long ROOT = 1L;
 
 	/**
@@ -100,20 +97,6 @@ public interface User extends LongIdTimeEntity, RestrictionHolder<UserRestrictio
 	public void setGroups(Set<GroupMember> groups);
 
 	/**
-	 * 状态
-	 * 
-	 * @return
-	 */
-	public int getStatus();
-
-	/**
-	 * 设置状态
-	 * 
-	 * @param status
-	 */
-	public void setStatus(int status);
-
-	/**
 	 * 类别.
 	 * 
 	 * @return
@@ -141,6 +124,12 @@ public interface User extends LongIdTimeEntity, RestrictionHolder<UserRestrictio
 	 */
 	public void setDefaultCategory(Category userCategory);
 
+	/**
+	 * 是否属于某一类别
+	 * 
+	 * @param categoryId
+	 * @return
+	 */
 	public boolean isCategory(Long categoryId);
 
 	/**
@@ -177,4 +166,18 @@ public interface User extends LongIdTimeEntity, RestrictionHolder<UserRestrictio
 	 * @param remark
 	 */
 	public void setRemark(String remark);
+
+	/**
+	 * 账户是否过期
+	 * 
+	 * @return
+	 */
+	public boolean isAccountExpired();
+
+	/**
+	 * 是否密码过期
+	 * 
+	 * @return
+	 */
+	public boolean isPasswordExpired();
 }

@@ -11,11 +11,11 @@ import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.security.Category;
 import org.beangle.ems.security.Group;
-import org.beangle.ems.security.Menu;
-import org.beangle.ems.security.MenuProfile;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.model.CategoryBean;
+import org.beangle.ems.security.nav.Menu;
+import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.security.restrict.RestrictField;
 import org.beangle.ems.security.restrict.RestrictPattern;
 import org.beangle.ems.web.action.SecurityActionSupport;
@@ -65,8 +65,8 @@ public class IndexAction extends SecurityActionSupport {
 
 	private void populateUserStat() {
 		OqlBuilder<User> userQuery = OqlBuilder.from(User.class, "user");
-		userQuery.select("user.defaultCategory.id,user.status,count(*)").groupBy(
-				"user.defaultCategory.id,user.status");
+		userQuery.select("user.defaultCategory.id,user.enabled,count(*)").groupBy(
+				"user.defaultCategory.id,user.enabled");
 		put("userStat", entityDao.search(userQuery));
 	}
 

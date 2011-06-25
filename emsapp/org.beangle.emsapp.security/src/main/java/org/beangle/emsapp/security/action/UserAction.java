@@ -181,6 +181,8 @@ public class UserAction extends SecurityActionSupport {
 		}
 		put("memberMap", memberMap);
 		put("members", members);
+		put("isadmin",userService.isAdmin(user));
+		put("isme",getUserId().equals(user.getId()));
 		put("categories", entityDao.getAll(Category.class));
 	}
 
@@ -217,9 +219,9 @@ public class UserAction extends SecurityActionSupport {
 		try {
 			User manager = userService.get(getUserId());
 			if (StringUtils.isNotEmpty(isActivate) && "false".equals(isActivate)) {
-				userService.updateState(manager, userIds, User.FREEZE);
+				userService.updateState(manager, userIds, false);
 			} else {
-				userService.updateState(manager, userIds, User.ACTIVE);
+				userService.updateState(manager, userIds, true);
 			}
 		} catch (Exception e) {
 			return forward(ERROR, "error.occurred");

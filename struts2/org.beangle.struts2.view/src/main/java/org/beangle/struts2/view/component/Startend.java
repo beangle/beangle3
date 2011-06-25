@@ -49,16 +49,21 @@ public class Startend extends UIBean {
 				dates[i].setLabel(labelArray.length == 1 ? label : labelArray[i]);
 			}
 			dates[i].setTitle(dates[i].getLabel());
+			if (i == 0) dates[0].setValue(start);
+			else dates[1].setValue(end);
+
 			dates[i].evaluateParams();
 		}
 		if (dates.length == 2) {
 			dates[0].setMaxDate("#F{$dp.$D(\\'" + dates[1].id + "\\')}");
-			dates[0].setValue(start);
 			dates[1].setMinDate("#F{$dp.$D(\\'" + dates[0].id + "\\')}");
-			dates[1].setValue(end);
+
 			if (labelArray.length == 1) {
-				dates[0].setTitle(dates[0].getTitle() + getText("common.beginDate", "起始时间"));
-				dates[1].setTitle(dates[1].getTitle() + getText("common.endDate", "截止时间"));
+				boolean containTime = format.contains("HH:mm");
+				dates[0].setTitle(dates[0].getTitle()
+						+ getText(containTime ? "common.beginAt" : "common.beginOn"));
+				dates[1].setTitle(dates[1].getTitle()
+						+ getText(containTime ? "common.endAt" : "common.endOn"));
 			}
 		}
 

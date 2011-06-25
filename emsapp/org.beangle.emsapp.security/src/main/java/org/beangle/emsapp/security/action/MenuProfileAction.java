@@ -5,7 +5,7 @@
 package org.beangle.emsapp.security.action;
 
 import org.beangle.ems.security.Category;
-import org.beangle.ems.security.MenuProfile;
+import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.model.Entity;
 

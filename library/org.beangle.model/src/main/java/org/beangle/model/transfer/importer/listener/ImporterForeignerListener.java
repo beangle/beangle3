@@ -11,11 +11,11 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.Entity;
-import org.beangle.model.EntityUtils;
 import org.beangle.model.entity.Model;
 import org.beangle.model.persist.EntityDao;
 import org.beangle.model.transfer.TransferResult;
 import org.beangle.model.transfer.importer.MultiEntityImporter;
+import org.beangle.model.util.EntityUtils;
 
 /**
  * 导入数据外键监听器<br>

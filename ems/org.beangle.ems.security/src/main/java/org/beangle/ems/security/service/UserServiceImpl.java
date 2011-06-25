@@ -64,10 +64,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return entityDao.get(User.class, userIds);
 	}
 
-	/**
-	 * 
-	 */
-	public void updateState(final User manager, Long[] ids, int state) {
+	public void updateState(final User manager, Long[] ids, boolean enabled) {
 		assert (null == ids || ids.length < 1);
 		@SuppressWarnings("unchecked")
 		List<User> users = (List<User>) CollectionUtils.select(getUsers(ids), new Predicate() {
@@ -78,10 +75,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
 		for (int i = 0; i < users.size(); i++) {
 			User cur = users.get(i);
-			cur.setStatus(state);
+			cur.setEnabled(enabled);
 		}
 		entityDao.saveOrUpdate(users);
-		//publish(null);
+		publish(new AccountStatusEvent(users, enabled));
 	}
 
 	public void saveOrUpdate(User user) {

@@ -5,8 +5,10 @@
 package org.beangle.struts2.view.component;
 
 import java.io.Writer;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.xwork.ObjectUtils;
@@ -37,6 +39,8 @@ public class Grid extends ClosingUIBean {
 	// gridbar
 	private String bar;
 	private String sortable = "true";
+	private String filterable = "false";
+	private Map<String, String> filters = CollectUtils.newHashMap();
 
 	public Grid(ValueStack stack) {
 		super(stack);
@@ -62,6 +66,11 @@ public class Grid extends ClosingUIBean {
 		Object sortby = cln.getParameters().get("sort");
 		if (null != sortby) return true;
 		return ("true".equals(sortable) && !ObjectUtils.equals(cln.getSortable(), "false") && null != cln
+				.getProperty());
+	}
+
+	public boolean isFilterable(Col cln) {
+		return ("true".equals(filterable) && !ObjectUtils.equals(cln.getFilterable(), "false") && null != cln
 				.getProperty());
 	}
 
@@ -109,26 +118,68 @@ public class Grid extends ClosingUIBean {
 		this.sortable = sortable;
 	}
 
+	public String getFilterable() {
+		return filterable;
+	}
+
+	public void setFilterable(String filterable) {
+		this.filterable = filterable;
+	}
+
 	public String getBar() {
 		return bar;
 	}
 
-	public static class Bar extends ClosingUIBean {
-		private Grid table;
+	public Map<String, String> getFilters() {
+		return filters;
+	}
 
-		public Bar(ValueStack stack) {
+	public void setFilters(Map<String, String> filters) {
+		this.filters = filters;
+	}
+
+	public static class Filter extends ClosingUIBean {
+		String property;
+
+		public Filter(ValueStack stack) {
 			super(stack);
-			table = (Grid) findAncestor(Grid.class);
 		}
 
 		@Override
 		public boolean end(Writer writer, String body) {
-			table.bar = body;
+			Grid grid = (Grid) findAncestor(Grid.class);
+			if (null != property && null != grid) {
+				grid.getFilters().put(property, body);
+			}
+			return false;
+		}
+
+		public String getProperty() {
+			return property;
+		}
+
+		public void setProperty(String property) {
+			this.property = property;
+		}
+
+	}
+
+	public static class Bar extends ClosingUIBean {
+		private Grid grid;
+
+		public Bar(ValueStack stack) {
+			super(stack);
+			grid = (Grid) findAncestor(Grid.class);
+		}
+
+		@Override
+		public boolean end(Writer writer, String body) {
+			grid.bar = body;
 			return false;
 		}
 
 		public Grid getTable() {
-			return table;
+			return grid;
 		}
 	}
 
@@ -137,7 +188,7 @@ public class Grid extends ClosingUIBean {
 		private String var_index;
 		private Iterator<?> iterator;
 		private int index = -1;
-		private Object obj;
+		protected Object curObj;
 		private Boolean innerTr;
 
 		public Row(ValueStack stack) {
@@ -148,6 +199,9 @@ public class Grid extends ClosingUIBean {
 				iteratorTarget = findValue((String) table.items);
 			}
 			iterator = MakeIterator.convert(iteratorTarget);
+			if (!iterator.hasNext()) {
+				iterator = Collections.singleton(null).iterator();
+			}
 			this.var_index = table.var + "_index";
 		}
 
@@ -161,8 +215,8 @@ public class Grid extends ClosingUIBean {
 		protected boolean next() {
 			if (iterator != null && iterator.hasNext()) {
 				index++;
-				obj = iterator.next();
-				stack.getContext().put(table.var, obj);
+				curObj = iterator.next();
+				stack.getContext().put(table.var, curObj);
 				stack.getContext().put(var_index, index);
 				return true;
 			} else {
@@ -182,6 +236,7 @@ public class Grid extends ClosingUIBean {
 		String width;
 		Row row;
 		String sortable;
+		String filterable;
 
 		public Col(ValueStack stack) {
 			super(stack);
@@ -193,7 +248,7 @@ public class Grid extends ClosingUIBean {
 			if (row.index == 0) {
 				row.table.addCol(this);
 			}
-			return true;
+			return null != row.curObj;
 		}
 
 		@Override
@@ -231,11 +286,15 @@ public class Grid extends ClosingUIBean {
 		 * @return
 		 */
 		public Object getValue() {
-			return getValue(row.obj, property);
+			return getValue(row.curObj, property);
 		}
 
 		public void setTitle(String title) {
 			this.title = title;
+		}
+
+		public String getPropertyPath() {
+			return StrUtils.concat(row.table.var, ".", property);
 		}
 
 		public String getTitle() {
@@ -259,6 +318,14 @@ public class Grid extends ClosingUIBean {
 
 		public void setSortable(String sortable) {
 			this.sortable = sortable;
+		}
+
+		public String getFilterable() {
+			return filterable;
+		}
+
+		public void setFilterable(String filterable) {
+			this.filterable = filterable;
 		}
 
 	}
@@ -286,7 +353,7 @@ public class Grid extends ClosingUIBean {
 			if (row.index == 0) {
 				row.table.addCol(this);
 			}
-			return true;
+			return null!=row.curObj;
 		}
 
 		@Override
@@ -342,6 +409,5 @@ public class Grid extends ClosingUIBean {
 		public void setChecked(boolean checked) {
 			this.checked = checked;
 		}
-
 	}
 }

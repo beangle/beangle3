@@ -1,5 +1,6 @@
 [#ftl]
-[@b.toolbar title="当前服务器会话"][/@]
+[#assign statTitle]${sessionStat.sessions}/${sessionStat.capacity} [#list sessionStat.details?keys as k]${k}(${sessionStat.details.get(k)}) [/#list][/#assign]
+[@b.toolbar title="当前服务器会话 ${statTitle}"][/@]
 [@b.form name="invalidateForm" id="invalidateForm" action="!invalidate"]
 [@b.grid  id="activityListTable" items=onlineActivities var="activity"]
 	[@b.gridbar]

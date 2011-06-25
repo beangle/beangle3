@@ -25,7 +25,7 @@
 	bar.addItem("菜单配置","redirectTo('${b.url('menu-profile!search')}')");
 [/@]
 	[@b.row ]
-		<tr title="${(menu.remark?html)!}  ${menu.entry!}" id="${menu.code}">
+		<tr [#if menu??] title="${(menu.remark?html)!}  ${menu.entry!}" id="${menu.code}"[/#if]>
 		[@b.boxcol onclick="treeToggle(this,false)" /]
 		[@b.col property="title" title="标题"]
 		<div class="tier${menu.depth}" align="left">

@@ -2,10 +2,11 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.ems.security;
+package org.beangle.ems.security.nav;
 
 import java.util.Set;
 
+import org.beangle.ems.security.Resource;
 import org.beangle.model.pojo.HierarchyEntity;
 import org.beangle.model.pojo.LongIdEntity;
 

@@ -419,9 +419,9 @@
 		else if(ranks.length==0) ranks=[onePage.pageSize];
 		
 		if(!titles) titles={first:'« First',previous:'‹ Previous',next:'Next ›',last:'Last »',no:'No:',size:'Size:',change:'Click me to change page size'};
-		maxPageNo= onePage.maxPageNo;
+		var maxPageNo = onePage.maxPageNo;
 		addAnchor=function(text,pageNumber){
-			pageHref=document.createElement('a');
+			var pageHref=document.createElement('a');
 			pageHref.setAttribute("href","#");
 			pageHref.innerHTML=text;
 			pageHref.style.padding="0px 2px 0px 2px";
@@ -432,7 +432,7 @@
 			addAnchor(titles['first'],1);
 			addAnchor(titles['previous'],onePage.pageNo-1);
 		}
-		labelspan=document.createElement('span');
+		var labelspan=document.createElement('span');
 		labelspan.innerHTML="<strong>" + onePage.startNo +"</strong> - <strong>"+ onePage.endNo + "</strong> of <strong>" + onePage.total + "</strong>";
 		labelspan.style.padding="0px 2px 0px 2px";
 		pageDiv.appendChild(labelspan);
@@ -442,9 +442,9 @@
 		numSpan.mouseout(function(){this.className=''});
 		numSpan.click(function(){this.parentNode.style.marginTop="0px";this.nextSibling.style.display='';this.style.display='none'});
 		
-		pagespan=document.createElement('span');
+		var pagespan=document.createElement('span');
 		pagespan.style.display="none";
-		pageInput=document.createElement('input');
+		var pageInput=document.createElement('input');
 		pagespan.innerHTML=titles['no'];
 		pageInput.className="pgbar-input";
 		pagespan.appendChild(pageInput);
@@ -457,7 +457,7 @@
 		//pageInputJ.change(function(){onePage.goPage(this.value)});
 		
 		if(ranks && (ranks.length>0)){
-			pageNoSelect=document.createElement('select');
+			var pageNoSelect=document.createElement('select');
 			pageNoSelect.id=pageDiv.id+"_select";
 			pagespan.appendChild(pageNoSelect);
 			pageNoSelect.className="pgbar-selbox";
@@ -511,7 +511,7 @@
 			// 鼠标经过数据行的效果
 			mouseOverGrid : function (){
 				if((typeof this.className)=="undefined") return;
-				myclass=this.className;
+				var myclass=this.className;
 				selectIndex=myclass.indexOf("griddata-selected");
 				if(-1 != selectIndex) return;
 				overIndex=myclass.indexOf("griddata-over");
@@ -525,7 +525,7 @@
 			 * 行选函数。单击行内的任一处，可以选定行头的checkbox或者radio 用法:onclick="onRowChange(event)"
 			 */
 			onRowChange : function (event){    
-				ele =  bg.event.getTarget(event);
+				var ele =  bg.event.getTarget(event);
 				var changed=true;
 				if(null!=ele && ele.tagName.toLowerCase()=="td"){
 					var firstChild = ele.parentNode.firstChild;
@@ -548,9 +548,9 @@
 						ele.onchange();
 					}
 					if(ele.type=="radio") return;
-					row=ele.parentNode.parentNode;
+					var row=ele.parentNode.parentNode;
 					if((typeof row.className)=="undefined") return;
-					selectIndex=row.className.indexOf("griddata-selected");
+					var selectIndex=row.className.indexOf("griddata-selected");
 					if(ele.checked){
 						if(-1 == selectIndex) row.className=row.className +" "+ "griddata-selected";
 					}else{
@@ -598,18 +598,18 @@
 				var table= document.getElementById(tableId);
 				var thead=table.tHead;
 				if(!thead || thead.rows.length==0){
-					bg.alert("sortTable ["+tableId+"] without thead"); 
+					//bg.alert("sortTable ["+tableId+"] without thead"); 
 					return;
 				}
-				orderBy=onePage.orderby;
-				columnSort = function(event){
+				var orderBy=onePage.orderby;
+				var columnSort = function(event){
 					// this is a td/th
 					bg.ui.grid.sort(onePage,this);
 				}
 				for(var j=0;j<thead.rows.length;j++){
-					head=thead.rows[j];
+					var head=thead.rows[j];
 					for(var i=0;i<head.cells.length;i++){
-						cell=head.cells[i];
+						var cell=head.cells[i];
 						if(cell.className=="gridhead-sortable" && null!=cell.id){
 							cell.onclick = columnSort;
 							cell.onmouseover=bg.ui.grid.overSortTableHeader;
@@ -640,7 +640,7 @@
 				if(!tbody)	return;
 				for(var j=0;j<tbody.rows.length;j++){
 					var row=tbody.rows[j];
-					orignClassName=row.className;
+					var orignClassName=row.className;
 					if(orignClassName){
 						orignClassName=" "+orignClassName;
 					}else{
@@ -657,12 +657,12 @@
 				}
 			},
 			fillEmpty : function (divId,pageSize,size,msg){
-				emptydiv=document.getElementById(divId);
+				var emptydiv=document.getElementById(divId);
 				var emptyCnt=pageSize-size;
 				if(emptyCnt>7) emptyCnt=7;
-				heightpx=emptyCnt*16;
+				var heightpx=emptyCnt*16;
 				if(size==0){
-					emptyLabel=document.createElement("div");
+					var emptyLabel=document.createElement("div");
 					emptyLabel.innerHTML=(msg||'No result matched your search.');
 					emptyLabel.style.paddingTop=heightpx/2-16 +"px";
 					emptydiv.appendChild(emptyLabel);
@@ -680,13 +680,13 @@
 		this.formid="form_" + bg.randomInt();
 
 		//record self for closure method
-		selfaction = this;
+		var selfaction = this;
 		
 		function applyMethod(action,method){
-			last1=action.lastIndexOf("!");
-			lastDot=action.lastIndexOf(".");
-			shortAction=action;
-			sufix="";
+			var last1=action.lastIndexOf("!");
+			var lastDot=action.lastIndexOf(".");
+			var shortAction=action;
+			var sufix="";
 			if(-1 == last1) last1 = lastDot;
 			if(-1!=last1){
 				shortAction=action.substring(0,last1);
@@ -713,7 +713,7 @@
 				bg.alert("你没有选择要操作的记录！");
 				return false;
 			}
-			form=this.getForm();
+			var form=this.getForm();
 			form.action = applyMethod(this.page.actionurl, method);
 			if(this.page.paramstr){
 				bg.form.addHiddens(form,this.page.paramstr);
@@ -737,7 +737,7 @@
 		}
 		this.add = function(){
 			return new NamedFunction('add',function(){
-				form=selfaction.getForm();
+				var form=selfaction.getForm();
 				if(""!=selfaction.page.paramstr) bg.form.addHiddens(form,selfaction.page.paramstr);
 				bg.form.addInput(form,selfaction.entity + '.id',"");
 				if(""!=selfaction.page.paramstr) bg.form.addParamsInput(form,selfaction.page.paramstr);
@@ -759,7 +759,7 @@
 		
 		this.single = function(methodName,confirmMsg,extparams){
 			return new NamedFunction(methodName,function(){
-				form=selfaction.getForm();
+				var form=selfaction.getForm();
 				if(null!=extparams) bg.form.addHiddens(form,extparams);
 				selfaction.submitIdAction(methodName,false,confirmMsg);
 			});
@@ -768,7 +768,7 @@
 		this.multi = function(methodName,confirmMsg,extparams,ajax){
 			return new NamedFunction(methodName,function(){
 				try {
-					form = selfaction.getForm();
+					var form = selfaction.getForm();
 					if(null!=extparams) bg.form.addHiddens(form, extparams);
 					selfaction.submitIdAction(methodName, true, confirmMsg,ajax);
 				}catch(e){
@@ -778,7 +778,7 @@
 		}
 		this.method=function(methodName,confirmMsg,extparams,ajax){
 			return  new NamedFunction(methodName,function(){
-				form=selfaction.getForm();
+				var form=selfaction.getForm();
 				if(null!=confirmMsg && ''!=confirmMsg){
 					if(!confirm(confirmMsg))return;
 				}
@@ -817,7 +817,7 @@
 	});
 	bg.extend({'ui.load':
 		function (uimodule,callback){
-			base=bg.getContextPath();
+			var base=bg.getContextPath();
 			if(uimodule=="validity"){
 				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/jquery.validity.css",base);
 				jQuery.struts2_jquery.require("/static/scripts/jquery.validity.js",null,base);

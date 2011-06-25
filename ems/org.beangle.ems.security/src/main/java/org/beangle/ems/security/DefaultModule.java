@@ -4,6 +4,7 @@
  */
 package org.beangle.ems.security;
 
+import org.beangle.ems.security.nav.service.MenuServiceImpl;
 import org.beangle.ems.security.restrict.service.CsvDataResolver;
 import org.beangle.ems.security.restrict.service.IdentifierDataResolver;
 import org.beangle.ems.security.restrict.service.OqlDataProvider;
@@ -11,12 +12,12 @@ import org.beangle.ems.security.service.AuthorityServiceImpl;
 import org.beangle.ems.security.service.CacheableAuthorityManager;
 import org.beangle.ems.security.service.CategoryProfileSessionControllerFactory;
 import org.beangle.ems.security.service.DaoUserDetailServiceImpl;
-import org.beangle.ems.security.service.MenuServiceImpl;
 import org.beangle.ems.security.service.UserServiceImpl;
 import org.beangle.ems.security.session.SessionInfoPersistHandler;
 import org.beangle.spring.bind.AbstractBindModule;
 
 /**
+ * 权限缺省服务配置
  * @author chaostone
  * @version $Id: DefaultModule.java Jun 18, 2011 10:21:05 AM chaostone $
  */

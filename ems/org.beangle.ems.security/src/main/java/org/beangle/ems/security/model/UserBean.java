@@ -4,6 +4,7 @@
  */
 package org.beangle.ems.security.model;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,12 +17,13 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.model.pojo.LongIdTimeObject;
 import org.beangle.ems.security.Category;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.restrict.RestrictionHolder;
 import org.beangle.ems.security.restrict.UserRestriction;
+import org.beangle.model.pojo.LongIdTimeObject;
+import org.beangle.model.util.EntityUtils;
 
 /**
  * 系统中所有用户的账号、权限、状态信息.
@@ -67,9 +69,24 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 	@NotNull
 	private Category defaultCategory;
 
-	/** 状态 */
+	/**
+	 * 账户生效时间
+	 */
 	@NotNull
-	protected int status = User.ACTIVE;
+	protected Date effectiveAt;
+
+	/**
+	 * 账户失效时间
+	 */
+	protected Date invalidAt;
+
+	/**
+	 * 密码失效时间
+	 */
+	protected Date passwordExpiredAt;
+
+	@NotNull
+	protected boolean enabled;
 
 	/** 访问限制 */
 	@OneToMany(mappedBy = "holder", cascade = CascadeType.ALL)
@@ -149,19 +166,26 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 		this.defaultCategory = defaultCategory;
 	}
 
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
+	/**
+	 * 是否账户过期
+	 */
+	public boolean isAccountExpired() {
+		return EntityUtils.isExpired(this);
 	}
 
 	/**
-	 * 1 激活
+	 * 是否密码过期
 	 */
+	public boolean isPasswordExpired() {
+		return (null != passwordExpiredAt && new Date().after(passwordExpiredAt));
+	}
+
 	public boolean isEnabled() {
-		return status == 1;
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public Set<GroupMember> getGroups() {
@@ -186,6 +210,30 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 
 	public void setRestrictions(Set<UserRestriction> restrictions) {
 		this.restrictions = restrictions;
+	}
+
+	public Date getEffectiveAt() {
+		return effectiveAt;
+	}
+
+	public void setEffectiveAt(Date effectiveAt) {
+		this.effectiveAt = effectiveAt;
+	}
+
+	public Date getInvalidAt() {
+		return invalidAt;
+	}
+
+	public void setInvalidAt(Date invalidAt) {
+		this.invalidAt = invalidAt;
+	}
+
+	public Date getPasswordExpiredAt() {
+		return passwordExpiredAt;
+	}
+
+	public void setPasswordExpiredAt(Date passwordExpiredAt) {
+		this.passwordExpiredAt = passwordExpiredAt;
 	}
 
 	public String toString() {

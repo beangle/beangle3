@@ -9,10 +9,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.beangle.ems.security.Category;
-import org.beangle.ems.security.MenuProfile;
 import org.beangle.ems.security.SecurityUtils;
 import org.beangle.ems.security.User;
-import org.beangle.ems.security.service.MenuService;
+import org.beangle.ems.security.nav.MenuProfile;
+import org.beangle.ems.security.nav.service.MenuService;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.model.query.builder.OqlBuilder;
 
