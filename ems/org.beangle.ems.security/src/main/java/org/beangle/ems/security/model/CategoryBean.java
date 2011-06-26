@@ -27,13 +27,10 @@ public class CategoryBean extends LongIdObject implements Category {
 	@Column(unique = true)
 	private String name;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	@NotNull
+	@Size(max = 50)
+	@Column(unique = true)
+	private String title;
 
 	public CategoryBean() {
 		super();
@@ -44,9 +41,25 @@ public class CategoryBean extends LongIdObject implements Category {
 		this.setId(id);
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
-		return name;
+		return title;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }

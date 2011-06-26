@@ -1,5 +1,5 @@
 [#ftl]
-[#macro i18nNameTitle(entity)][#if locale.language?index_of("en")!=-1][#if entity.engTitle!?trim==""]${entity.title!}[#else]${entity.engTitle!}[/#if][#else][#if entity.title!?trim!=""]${entity.title!}[#else]${entity.engTitle!}[/#if][/#if][/#macro]
+[#macro i18nNameTitle(entity)][#if locale.language?index_of("en")!=-1][#if entity.name!?trim==""]${entity.title!}[#else]${entity.name!}[/#if][#else][#if entity.title!?trim!=""]${entity.title!}[#else]${entity.name!}[/#if][/#if][/#macro]
 
 [#assign displayed={} /]
 [#macro displayMenu menu]
@@ -8,7 +8,7 @@
 [#if menu.entry??]
 [@b.a href="${(menu.entry)!}" target="main"][@i18nNameTitle menu/][/@]
 [#else]
-	[@i18nNameTitle menu/]
+	[@b.a href="/security/menu-nav?menu.id=${menu.id}" target="main"][@i18nNameTitle menu/][/@]
 	<ul style="padding-left: 20px;">
 	[#list menu.children as child]
 		[#if menus?seq_contains(child)][@displayMenu child/][/#if]

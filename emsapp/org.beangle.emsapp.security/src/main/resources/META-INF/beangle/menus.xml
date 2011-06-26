@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<settings>
+	<resources namespace="/security">
+		<resource name="/activity" title="历史会话" remark="查看用户登录的历史会话" scope="private"  categories="manager"/>
+		<resource name="/authority" title="授权管理" remark="针对用户组进行功能授权" scope="private"  categories="manager"/>
+		<resource name="/captcha" title="权限验证码" remark="登录用验证码" scope="public"/>
+		<resource name="/group" title="用户组" remark="创建、修改和授权用户组" scope="private"  categories="manager"/>
+		<resource name="/index" title="权限控制台" remark="显示权限功能的导航和各类权限统计数据" scope="private"  categories="manager"/>
+		<resource name="/menu" title="菜单管理" remark="创建、修改和维护菜单以及菜单配置" scope="private"  categories="manager"/>
+		<resource name="/menu-nav" title="菜单导航" remark="显示菜单导航内容" scope="protected"  categories="manager"/>
+		<resource name="/menu-profile" title="菜单配置" remark="管理分组菜单信息" scope="private"  categories="manager"/>
+		<resource name="/monitor" title="会话监控" remark="监控和统计会话信息" scope="private"  categories="manager"/>
+		<resource name="/my" title="我的权限" remark="查看个人权限信息" scope="protected"/>
+		<resource name="/password" title="管理密码" remark="管理账户的密码和邮件信息" scope="private"  categories="manager"/>
+		<resource name="/resource" title="资源管理" remark="管理可访问资源信息" scope="private"  categories="manager"/>
+		<resource name="/restriction" title="数据权限维护" remark="管理用户和组的数据权限" scope="private"  categories="manager"/>
+		<resource name="/restriction-meta" title="数据权限配置" remark="管理数据权限实体和模式" scope="private"  categories="manager"/>
+	</resources>
+	<resources namespace="/avatar">
+		<resource name="/board" title="头像管理控制台" remark="上传、更新和查看所有头像" scope="private"  categories="manager"/>
+		<resource name="/my" title="我的头像" remark="查看个人头像信息" scope="protected"/>
+		<resource name="/my-upload" title="更新我的头像" remark="更新个人头像"  scope="private"  categories="manager"/>
+		<resource name="/user" title="用户头像" remark="查看其它账户头像" scope="protected"  categories="manager"/>
+	</resources>
+	<profile category="manager">
+		<menu entry="/security/index" name="Security Management" title="权限管理" parent="System" remark="分配和管理系统权限"/>
+	</profile>
+<settings>

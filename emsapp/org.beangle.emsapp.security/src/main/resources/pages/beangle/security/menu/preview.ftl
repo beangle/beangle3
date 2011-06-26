@@ -7,7 +7,7 @@
 <table class="gridtable" align="center" width="90%">
 	<tr class="thead">
 	 <td colspan="${depth}">模块标题</td>
-	 <td>英文名</td>
+	 <td>${b.text("common.name")}</td>
 	 <td>模块描述</td>
 	</tr>
 	[#list menus as menu]
@@ -16,7 +16,7 @@
 	[#if (depth-((menu.code?length)/2)>0)]
 	[#list 1..(depth-((menu.code?length)/2)) as i]<td></td>[/#list]
 	[/#if]
-	<td>${menu.engTitle!("")}</td>
+	<td>${menu.name!("")}</td>
 	<td>${menu.remark!("")}</td>
 	</tr>
 	[/#list]

@@ -17,4 +17,8 @@ public interface Category extends LongIdEntity {
 
 	public void setName(String name);
 
+	public String getTitle();
+
+	public void setTitle(String title);
+
 }

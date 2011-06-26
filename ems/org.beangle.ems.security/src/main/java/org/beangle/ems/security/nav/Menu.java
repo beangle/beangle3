@@ -15,7 +15,7 @@ import org.beangle.model.pojo.LongIdEntity;
  * 
  * @author chaostone
  */
-public interface Menu extends LongIdEntity, Comparable<Menu>,HierarchyEntity<Menu> {
+public interface Menu extends LongIdEntity, Comparable<Menu>, HierarchyEntity<Menu> {
 
 	/**
 	 * 同级菜单索引号
@@ -24,13 +24,34 @@ public interface Menu extends LongIdEntity, Comparable<Menu>,HierarchyEntity<Men
 	 */
 	public String getCode();
 
+	/**
+	 * 设置代码
+	 * 
+	 * @param code
+	 */
 	public void setCode(String code);
 
 	/**
 	 * 菜单的层级，从1开始
+	 * 
 	 * @return
 	 */
 	public int getDepth();
+
+	/**
+	 * 菜单名称
+	 * 
+	 * @return
+	 */
+	public String getName();
+
+	/**
+	 * 设置菜单名称
+	 * 
+	 * @param name
+	 */
+	public void setName(String name);
+
 	/**
 	 * 菜单标题
 	 * 
@@ -38,11 +59,12 @@ public interface Menu extends LongIdEntity, Comparable<Menu>,HierarchyEntity<Men
 	 */
 	public String getTitle();
 
+	/**
+	 * 设置菜单标题
+	 * 
+	 * @param title
+	 */
 	public void setTitle(String title);
-
-	public String getEngTitle();
-
-	public void setEngTitle(String engTitle);
 
 	public String getEntry();
 

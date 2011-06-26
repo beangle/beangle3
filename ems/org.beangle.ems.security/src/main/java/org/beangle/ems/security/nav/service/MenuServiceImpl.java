@@ -14,6 +14,7 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.model.util.HierarchyEntityUtil;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
@@ -47,15 +48,8 @@ public class MenuServiceImpl extends BaseServiceImpl implements MenuService {
 	 * @return
 	 */
 	private List<Menu> addParentMenus(Set<Menu> menus) {
-		Set<Menu> parentMenus = CollectUtils.newHashSet();
-		for (Menu menu : menus) {
-			while (null != menu.getParent() && !menu.getParent().equals(menu)) {
-				parentMenus.add(menu.getParent());
-				menu = menu.getParent();
-			}
-		}
-		menus.addAll(parentMenus);
-		List<Menu> menuList = CollectUtils.newArrayList(menus);
+		HierarchyEntityUtil.addParent(menus);
+		List<Menu> menuList=CollectUtils.newArrayList(menus);
 		Collections.sort(menuList);
 		return menuList;
 	}

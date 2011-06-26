@@ -7,7 +7,7 @@
 	 <td class="title">标题:</td>
 	 <td class="content">${resource.title}</td>
 	 <td class="title">${b.text("common.name")}:</td>
-	 <td class="content">${resource.name}</td>
+	 <td class="content">[#if resource.needParams]${resource.name}(不可独立访问)[#else][@b.a href=resource.name]${resource.name}[/@][/#if]</td>
    </tr>
    <tr>
 	<td class="title">${b.text("common.remark")}:</td>

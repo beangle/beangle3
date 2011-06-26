@@ -94,6 +94,24 @@ public interface Resource extends LongIdEntity {
 	 */
 	public void setScope(int scope);
 
+	public Set<RestrictEntity> getEntities();
+
+	public void setEntities(Set<RestrictEntity> entities);
+
+	/**
+	 * 访问时需要其它参数
+	 * 
+	 * @return
+	 */
+	public boolean isNeedParams();
+
+	/**
+	 * 设置访问时需要其它参数
+	 * 
+	 * @param needParams
+	 */
+	public void setNeedParams(boolean needParams);
+
 	public static class Scope {
 		/** 不受保护的公共资源 */
 		public static final int PUBLIC = 0;
@@ -102,8 +120,4 @@ public interface Resource extends LongIdEntity {
 		/** 受保护的私有资源 */
 		public static final int PRIVATE = 2;
 	}
-
-	public Set<RestrictEntity> getEntities();
-
-	public void setEntities(Set<RestrictEntity> entities);
 }

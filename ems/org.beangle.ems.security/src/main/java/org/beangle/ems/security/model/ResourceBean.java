@@ -62,6 +62,10 @@ public class ResourceBean extends LongIdObject implements Resource {
 	@NotNull
 	private int scope = Scope.PRIVATE;
 
+	/** 访问时需要其它参数 */
+	@NotNull
+	private boolean needParams;
+	
 	@ManyToMany
 	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	private Set<Category> categories = CollectUtils.newHashSet();
@@ -134,4 +138,13 @@ public class ResourceBean extends LongIdObject implements Resource {
 	public String getDescription() {
 		return StrUtils.concat(name, "[", title, "]");
 	}
+
+	public boolean isNeedParams() {
+		return needParams;
+	}
+
+	public void setNeedParams(boolean needParams) {
+		this.needParams = needParams;
+	}
+	
 }

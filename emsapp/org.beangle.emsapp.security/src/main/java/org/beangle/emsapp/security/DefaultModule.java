@@ -12,6 +12,7 @@ import org.beangle.emsapp.security.action.CaptchaAction;
 import org.beangle.emsapp.security.action.GroupAction;
 import org.beangle.emsapp.security.action.IndexAction;
 import org.beangle.emsapp.security.action.MenuAction;
+import org.beangle.emsapp.security.action.MenuNavAction;
 import org.beangle.emsapp.security.action.MenuProfileAction;
 import org.beangle.emsapp.security.action.MonitorAction;
 import org.beangle.emsapp.security.action.MyAction;
@@ -30,8 +31,8 @@ public final class DefaultModule extends AbstractBindModule {
 	protected void doBinding() {
 		// security
 		bind(ActivityAction.class, AuthorityAction.class, GroupAction.class, IndexAction.class,
-				MenuAction.class, MenuProfileAction.class, MonitorAction.class, MyAction.class,
-				PasswordAction.class, ResourceAction.class, RestrictionAction.class,
+				MenuAction.class, MenuNavAction.class, MenuProfileAction.class, MonitorAction.class,
+				MyAction.class, PasswordAction.class, ResourceAction.class, RestrictionAction.class,
 				RestrictMetaAction.class, UserAction.class, CaptchaAction.class).in(Scope.PROTOTYPE);
 
 		bind(UserDashboardHelper.class).shortName();

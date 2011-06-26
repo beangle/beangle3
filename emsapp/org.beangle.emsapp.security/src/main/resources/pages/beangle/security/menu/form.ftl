@@ -11,8 +11,8 @@
 		[/#list]
 		</select>
 	[/@]
+	[@b.textfield label="common.name" name="menu.name" value="${menu.name!}" style="width:200px;"  required="true" maxlength="100" /]
 	[@b.textfield label="标题" name="menu.title" value="${menu.title!}" style="width:200px;" required="true" maxlength="50"/]
-	[@b.textfield label="英文标题" name="menu.engTitle" value="${menu.engTitle!}" style="width:200px;"  required="true" maxlength="100" /]
 	[@b.select label="上级菜单" name="parent.id" value=(menu.parent.id)! style="width:200px;"  items=parents option="id,description" empty="..."/]
 	[@b.textfield label="同级顺序号" name="indexno" value="${menu.indexno!}" required="true" maxlength="2" check="match('integer')" /]
 	[@b.field label="common.status" required="true"]

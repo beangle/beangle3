@@ -23,34 +23,34 @@ public class Navmenu extends ClosingUIBean {
 
 	public Navmenu(ValueStack stack) {
 		super(stack);
-		this.uri = getRequestURI();
+		StringBuilder sb = new StringBuilder(StringUtils.substringBeforeLast(getRequestURI(), "."));
+		if (-1 == sb.lastIndexOf("!")) {
+			sb.append("!index");
+		}
+		this.uri=sb.toString();
 	}
 
 	boolean isSelected(String givenUri) {
 		if (selected) return false;
 		else {
-			selected = sameAction(givenUri, uri);
+			selected = sameAction(givenUri);
 			return selected;
 		}
 	}
 
 	/**
-	 * 去除后缀比较是否是同一个action
+	 * 去除后缀比较是否是同一个resource(action!method)
 	 * 
 	 * @param first
 	 * @param second
 	 * @return
 	 */
-	private boolean sameAction(String first, String second) {
-		StringBuilder firstSb = new StringBuilder(StringUtils.substringBeforeLast(first, "."));
+	private boolean sameAction(String first) {
+		StringBuilder firstSb = new StringBuilder(StringUtils.substringBefore(first, "."));
 		if (-1 == firstSb.lastIndexOf("!")) {
 			firstSb.append("!index");
 		}
-		StringBuilder secondSb = new StringBuilder(StringUtils.substringBeforeLast(second, "."));
-		if (-1 == secondSb.lastIndexOf("!")) {
-			secondSb.append("!index");
-		}
-		return firstSb.toString().equals(secondSb.toString());
+		return firstSb.toString().equals(uri);
 	}
 
 	public String getTitle() {

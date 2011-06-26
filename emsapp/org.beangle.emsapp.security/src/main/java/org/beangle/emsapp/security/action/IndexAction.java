@@ -79,6 +79,20 @@ public class IndexAction extends SecurityActionSupport {
 		List<Category> categories = entityDao.getAll(Category.class);
 		put("categories", categories);
 		if (!isAdmin()) { return "admin-info"; }
+		boolean updated=false;
+		for (Category category : categories) {
+			String name = get(category.getId() + "_category.name");
+			String title = get(category.getId() + "_category.title");
+			if (null != name && null != title) {
+				category.setName(name);
+				category.setTitle(title);
+				updated=true;
+				entityDao.saveOrUpdate(category);
+			}
+		}
+		if(updated){
+			return redirect("admin", "info.save.success");
+		}
 		String newCategory = get("newCategory");
 		if (StringUtils.isNotBlank(newCategory)) {
 			if (entityDao.get(Category.class, "name", newCategory).isEmpty()) {

@@ -4,6 +4,7 @@
  */
 package org.beangle.model.util;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang.ObjectUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.HierarchyEntity;
 
@@ -113,5 +115,41 @@ public final class HierarchyEntityUtil {
 				updatedTagFor(prefix, child, sortedMap);
 			}
 		}
+	}
+
+	public static <T extends HierarchyEntity<T>> List<T> getRoots(final List<T> nodes) {
+		List<T> roots = CollectUtils.newArrayList();
+		for (T m : nodes) {
+			if (null == m.getParent() || !nodes.contains(m.getParent())) {
+				roots.add(m);
+			}
+		}
+		return roots;
+	}
+
+	public static <T extends HierarchyEntity<T>> List<T> getPath(final T node) {
+		List<T> path = CollectUtils.newArrayList();
+		T curNode = node;
+		while (null != curNode && !path.contains(curNode)) {
+			path.add(0, curNode);
+			curNode = curNode.getParent();
+		}
+		return path;
+	}
+
+	public static <T extends HierarchyEntity<T>> void addParent(Collection<T> nodes) {
+		addParent(nodes, null);
+	}
+
+	public static <T extends HierarchyEntity<T>> void addParent(Collection<T> nodes, T toRoot) {
+		Set<T> parents = CollectUtils.newHashSet();
+		for (T node : nodes) {
+			while (null != node.getParent() && !parents.contains(node.getParent())
+					&& ObjectUtils.notEqual(node.getParent(), toRoot)) {
+				parents.add(node.getParent());
+				node = node.getParent();
+			}
+		}
+		nodes.addAll(parents);
 	}
 }

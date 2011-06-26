@@ -15,6 +15,7 @@ import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.security.nav.service.MenuService;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.model.util.HierarchyEntityUtil;
 
 /**
  * 加载用户登陆信息
@@ -39,7 +40,7 @@ public class HomeAction extends SecurityActionSupport {
 		put("categoryId", categoryId);
 		MenuProfile profile = getMenuProfile(categoryId);
 		if (null != profile) {
-			put("menus", menuService.getMenus(profile, user));
+			put("menus", HierarchyEntityUtil.getRoots(menuService.getMenus(profile, user)));
 		} else {
 			put("menus", Collections.EMPTY_LIST);
 		}

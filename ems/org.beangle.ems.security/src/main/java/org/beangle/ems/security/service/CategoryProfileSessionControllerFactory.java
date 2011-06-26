@@ -6,6 +6,7 @@ package org.beangle.ems.security.service;
 
 import java.util.List;
 
+import org.beangle.ems.security.Category;
 import org.beangle.ems.security.session.CategoryProfile;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.core.session.category.CategorySessionController;
@@ -22,8 +23,7 @@ import org.springframework.beans.factory.InitializingBean;
 public class CategoryProfileSessionControllerFactory extends ClusterCategorySessionControllerFactory {
 
 	public CategorySessionController doGetInstance(Object category) {
-		ProfileCategorySessionController controller = new ProfileCategorySessionController(getServerName(),
-				String.valueOf(category));
+		ProfileCategorySessionController controller = new ProfileCategorySessionController(getServerName(),((Category)category).getTitle());
 		controller.setEntityDao(entityDao);
 		controller.afterPropertiesSet();
 		return controller;
@@ -45,7 +45,7 @@ class ProfileCategorySessionController extends ClusterCategorySessionController 
 	@Override
 	protected int getMaxCapacity() {
 		OqlBuilder<?> spbuilder = OqlBuilder.from(CategoryProfile.class, "sp");
-		spbuilder.where("sp.category.name=:category", sessionStatus.getCategory());
+		spbuilder.where("sp.category.title=:category", sessionStatus.getCategory());
 		spbuilder.select("sp.capacity");
 		List<?> sps = entityDao.search(spbuilder);
 		int capacity = ((Number) sps.get(0)).intValue();

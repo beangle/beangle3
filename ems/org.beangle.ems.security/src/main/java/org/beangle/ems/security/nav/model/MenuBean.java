@@ -40,11 +40,11 @@ public class MenuBean extends LongIdObject implements Menu {
 
 	@NotNull
 	@Size(max = 100)
-	private String title;
+	private String name;
 
 	@NotNull
 	@Size(max = 100)
-	private String engTitle;
+	private String title;
 
 	private String entry;
 
@@ -116,12 +116,12 @@ public class MenuBean extends LongIdObject implements Menu {
 		this.title = title;
 	}
 
-	public String getEngTitle() {
-		return engTitle;
+	public String getName() {
+		return name;
 	}
 
-	public void setEngTitle(String engTitle) {
-		this.engTitle = engTitle;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getEntry() {
