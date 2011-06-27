@@ -6,6 +6,7 @@ package org.beangle.security.core.session.category;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
@@ -33,6 +34,7 @@ public class CategorySessionStat extends LongIdObject {
 
 	private int capacity;
 
+	@Column(name = "on_line")
 	private int online;
 
 	private int inactiveInterval;

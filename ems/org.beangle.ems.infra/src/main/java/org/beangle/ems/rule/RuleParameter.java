@@ -35,4 +35,8 @@ public interface RuleParameter extends LongIdEntity {
 
 	public void setType(String type);
 
+	public void setTitle(String title);
+
+	public String getTitle();
+
 }

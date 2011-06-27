@@ -29,7 +29,7 @@ public class ApplyTest {
 	@BeforeClass
 	public void setUp() {
 		CsvDataResolver resolver = new CsvDataResolver();
-		restrictionService.setIdDataResolver(resolver);
+		restrictionService.setDataResolver(resolver);
 		restrictionService.getProviders().put(resolver.getName(), resolver);
 	}
 

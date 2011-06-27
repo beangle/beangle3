@@ -50,6 +50,7 @@
 				<entry key="oql" value-ref="oqlDataProvider"/>
 			</map>
 		</property>
+		<property name="dataResolver" ref="identifierDataResolver"/>
 	</bean>
 	
 </beans>

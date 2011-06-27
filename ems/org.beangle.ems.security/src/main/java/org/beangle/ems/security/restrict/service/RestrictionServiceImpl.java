@@ -15,9 +15,6 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.model.persist.impl.BaseServiceImpl;
-import org.beangle.model.query.builder.Condition;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
@@ -30,6 +27,9 @@ import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.ems.security.restrict.RestrictionHolder;
 import org.beangle.ems.security.service.AuthorityService;
 import org.beangle.ems.security.service.UserService;
+import org.beangle.model.persist.impl.BaseServiceImpl;
+import org.beangle.model.query.builder.Condition;
+import org.beangle.model.query.builder.OqlBuilder;
 
 public class RestrictionServiceImpl extends BaseServiceImpl implements RestrictionService {
 
@@ -37,7 +37,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 
 	protected Map<String, DataProvider> providers = CollectUtils.newHashMap();
 
-	protected DataResolver idDataResolver;
+	protected DataResolver dataResolver;
 	
 	protected AuthorityService authorityService;
 
@@ -131,7 +131,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		if (StringUtils.isEmpty(value)) return null;
 		if (ObjectUtils.equals(Restriction.ALL, value)) { return getFieldValues(field); }
 		try {
-			List<Object> returned = idDataResolver.unmarshal(field, value);
+			List<Object> returned = dataResolver.unmarshal(field, value);
 			if (field.isMultiple()) {
 				return returned;
 			} else {
@@ -222,7 +222,8 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		this.providers = providers;
 	}
 
-	public void setIdDataResolver(DataResolver idDataResolver) {
-		this.idDataResolver = idDataResolver;
+	public void setDataResolver(DataResolver dataResolver) {
+		this.dataResolver = dataResolver;
 	}
+
 }
