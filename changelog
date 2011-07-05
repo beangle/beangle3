@@ -1,3 +1,6 @@
+2011-07-01  duantihua   <chaostone.duan@gmail.com>
+	* beangle-model增加了LoggingEntity和FlashEntity接口，支持对实体进行区分对待和处理
+
 2011-06-25  duantihua   <chaostone.duan@gmail.com>
 	* 增加了gridfilter标签
 	* 降低beangle-struts2-lagecy的外部依赖性为0

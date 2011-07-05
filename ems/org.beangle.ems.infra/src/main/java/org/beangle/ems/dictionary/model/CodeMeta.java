@@ -29,26 +29,30 @@ public class CodeMeta extends LongIdObject {
 
 	private static final long serialVersionUID = -2272793754309992189L;
 
-	/** 中文名称 */
+	/** 代码名称 */
 	@Column(unique = true)
 	@NotNull
 	@Size(max = 50)
 	private String name;
 
-	/** 代码名称 */
+	/** 中文名称 */
 	@NotNull
 	@Size(max = 100)
-	private String engName;
+	private String title;
 
 	/** 类名 */
 	@NotNull
 	@Size(max = 100)
 	private String className;
 
+	/** 所在分类 */
+	@NotNull
+	private CodeCategory category;
+
 	/**
 	 * 代码名称
 	 * 
-	 * @return 名称(民族、政治面貌等)
+	 * @return 名称
 	 */
 	public String getName() {
 		return name;
@@ -64,30 +68,18 @@ public class CodeMeta extends LongIdObject {
 		this.name = name;
 	}
 
-	/**
-	 * 代码英文名
-	 * Nation、Country等
-	 * 
-	 * @return 代码英文名
-	 */
-	public String getEngName() {
-		return engName;
+	public String getTitle() {
+		return title;
 	}
 
-	/**
-	 * 设置新的英文名
-	 * 
-	 * @param engName
-	 *            新的英文名
-	 */
-	public void setEngName(String engName) {
-		this.engName = engName;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	/**
 	 * 查询代码的类名
 	 * 
-	 * @return 代码的类路径全名(例如com.ekingstar.eams.basecode.nation.Country)
+	 * @return 代码的类路径全名
 	 */
 	public String getClassName() {
 		return className;
@@ -102,4 +94,13 @@ public class CodeMeta extends LongIdObject {
 	public void setClassName(String className) {
 		this.className = className;
 	}
+
+	public CodeCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(CodeCategory category) {
+		this.category = category;
+	}
+
 }

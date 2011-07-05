@@ -1,9 +1,9 @@
 [#ftl]
 [@b.head/]
+[#include "../nav.ftl"/]
 <table width="100%">
 	<tr>
 	  <td class="infoTitle" width="20%" style="height:22px;">
-	   <img src="${base}/static/images/action/info.gif" align="top"/><em>
 		  <em>我的照片</em>
 	  </td>
 	  <td class="infoTitle" width="20%" style="height:22px;">
@@ -30,5 +30,7 @@
 	  </td>
    </tr>
 </table>
-
+[@bs.guard res="/avatar/my-upload"]
+[@b.div href="my-upload"/]
+[/@]
 [@b.foot/]

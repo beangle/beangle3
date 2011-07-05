@@ -130,12 +130,12 @@ public class EntityDrivenAction extends BaseAction {
 	}
 
 	protected Long getEntityId(String shortName) {
-		Long entityId = getLong("id");
-		if (null == entityId) {
-			entityId = getLong(shortName + ".id");
-		}
+		Long entityId = getLong(shortName + ".id");
 		if (null == entityId) {
 			entityId = getLong(shortName + "Id");
+		}
+		if (null == entityId) {
+			entityId = getLong("id");
 		}
 		return entityId;
 	}
@@ -152,12 +152,9 @@ public class EntityDrivenAction extends BaseAction {
 		T[] datas = Params.getAll(shortName + ".id", clazz);
 		if (null == datas) {
 			String datastring = Params.get(shortName + ".ids");
-			if (null == datastring)
-				datastring = Params.get(shortName + "Ids");
-			if (null != datastring) {
-				return Params.converter.convert(
-						StringUtils.split(datastring, ","), clazz);
-			}
+			if (null == datastring) datastring = Params.get(shortName + "Ids");
+			if (null != datastring) { return Params.converter.convert(StringUtils.split(datastring, ","),
+					clazz); }
 		}
 		return datas;
 	}
@@ -206,8 +203,7 @@ public class EntityDrivenAction extends BaseAction {
 		try {
 			EntityType type = Model.getEntityType(entityName);
 			if (null == entityId) {
-				entity = (Entity<?>) populate(type.newInstance(),
-						type.getEntityName(), name);
+				entity = (Entity<?>) populate(type.newInstance(), type.getEntityName(), name);
 			} else {
 				entity = getModel(entityName, entityId);
 			}
@@ -236,8 +232,7 @@ public class EntityDrivenAction extends BaseAction {
 	public String info() throws Exception {
 		Long entityId = getEntityId(getShortName());
 		if (null == entityId) {
-			logger.warn("cannot get paremeter {}Id or {}.id", getShortName(),
-					getShortName());
+			logger.warn("cannot get paremeter {}Id or {}.id", getShortName(), getShortName());
 		}
 		Entity<?> entity = getModel(getEntityName(), entityId);
 		put(getShortName(), entity);
@@ -287,8 +282,7 @@ public class EntityDrivenAction extends BaseAction {
 	}
 
 	protected QueryBuilder<?> getQueryBuilder() {
-		OqlBuilder<?> builder = OqlBuilder
-				.from(getEntityName(), getShortName());
+		OqlBuilder<?> builder = OqlBuilder.from(getEntityName(), getShortName());
 		populateConditions(builder);
 		builder.orderBy(get(Order.ORDER_STR)).limit(getPageLimit());
 		return builder;
@@ -301,8 +295,7 @@ public class EntityDrivenAction extends BaseAction {
 	protected EntityQuery buildQuery() {
 		EntityQuery query = new EntityQuery(getEntityName(), getShortName());
 		populateConditions(query);
-		query.addOrder(Order.parse(get(Order.ORDER_STR))).setLimit(
-				getPageLimit());
+		query.addOrder(Order.parse(get(Order.ORDER_STR))).setLimit(getPageLimit());
 		return query;
 	}
 
@@ -311,19 +304,15 @@ public class EntityDrivenAction extends BaseAction {
 	}
 
 	protected String getEntityName() {
-		if (null == entityName) {
-			throw new RuntimeException("entityName not set for :"
-					+ getClass().getName());
-		}
+		if (null == entityName) { throw new RuntimeException("entityName not set for :"
+				+ getClass().getName()); }
 		return entityName;
 	}
 
 	protected String getShortName() {
 		String name = getEntityName();
-		if (StringUtils.isNotEmpty(name))
-			return EntityUtils.getCommandName(name);
-		else
-			return null;
+		if (StringUtils.isNotEmpty(name)) return EntityUtils.getCommandName(name);
+		else return null;
 	}
 
 	protected Entity<?> getModel(String entityName, Serializable id) {
@@ -390,8 +379,7 @@ public class EntityDrivenAction extends BaseAction {
 		response.setHeader(
 				"Content-Disposition",
 				"attachment;filename="
-						+ encodeAttachName(ServletActionContext.getRequest(),
-								fileName + "." + format));
+						+ encodeAttachName(ServletActionContext.getRequest(), fileName + "." + format));
 		// 进行输出
 		exporter.setContext(context);
 		exporter.transfer(new TransferResult());
@@ -439,8 +427,7 @@ public class EntityDrivenAction extends BaseAction {
 		if (null == getEntityName()) {
 			return buildEntityImporter("importFile", null);
 		} else {
-			return buildEntityImporter("importFile",
-					Model.getEntityType(getEntityName()).getEntityClass());
+			return buildEntityImporter("importFile", Model.getEntityType(getEntityName()).getEntityClass());
 		}
 	}
 
@@ -477,10 +464,8 @@ public class EntityDrivenAction extends BaseAction {
 				put("importer", importer);
 				return importer;
 			} else {
-				LineNumberReader reader = new LineNumberReader(
-						new InputStreamReader(is));
-				if (null == reader.readLine())
-					return null;
+				LineNumberReader reader = new LineNumberReader(new InputStreamReader(is));
+				if (null == reader.readLine()) return null;
 				reader.reset();
 				EntityImporter importer = (clazz == null) ? new DefaultEntityImporter()
 						: new DefaultEntityImporter(clazz);
@@ -501,9 +486,7 @@ public class EntityDrivenAction extends BaseAction {
 	public String importData() {
 		TransferResult tr = new TransferResult();
 		EntityImporter importer = buildEntityImporter();
-		if (null == importer) {
-			return forward("/components/importData/error");
-		}
+		if (null == importer) { return forward("/components/importData/error"); }
 		configImporter(importer);
 		importer.transfer(tr);
 		put("importResult", tr);
@@ -521,7 +504,6 @@ public class EntityDrivenAction extends BaseAction {
 	}
 
 	protected List<? extends TransferListener> getImporterListeners() {
-		return Collections.singletonList(new ImporterForeignerListener(
-				entityDao));
+		return Collections.singletonList(new ImporterForeignerListener(entityDao));
 	}
 }

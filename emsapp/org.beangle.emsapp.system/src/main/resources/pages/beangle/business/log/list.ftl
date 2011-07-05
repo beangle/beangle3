@@ -1,0 +1,18 @@
+[#ftl/]
+[@b.head/]
+[@b.grid items="businessLogs" var="log"]
+	[@b.gridbar title="dd"]
+		bar.addItem("导出",action.exportData("id:日志编号,operator:操作人员,operatorAt:操作时间,entry:入口,operation:日志内容/操作"));
+	[/@]
+	[@b.row]
+		[@b.boxcol/]
+		[@b.col title="日志编号"  property="id"/]
+		[@b.col title="操作人员"  property="operator"/]
+		[@b.col title="操作时间"  property="operateAt" ]${log.operateAt?string("yyyy-MM-dd HH:mm:ss")}[/@]
+		[@b.col title="资源"  property="resource"/]
+		[@b.col title="入口"  property="entry"/]
+		[@b.col title="操作内容"  property="operation"/]
+	[/@]
+[/@]
+
+[@b.foot/]

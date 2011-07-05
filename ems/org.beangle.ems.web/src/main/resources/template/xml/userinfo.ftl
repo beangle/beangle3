@@ -1,0 +1,2 @@
+[#ftl]
+[@bs.avatar user=tag.user/]&nbsp;[#if tag.dashboardAuthorized]<a href="${tag.dashboardUrl}" target="_blank" ${tag.parameterString}>${tag.user.name}(${tag.user.fullname})</a>[#else]${tag.user.name}(${tag.user.fullname})[/#if]

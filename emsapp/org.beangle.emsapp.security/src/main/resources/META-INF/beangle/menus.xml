@@ -24,5 +24,7 @@
 	</resources>
 	<profile category="manager">
 		<menu entry="/security/index" name="Security Management" title="权限管理" parent="System" remark="分配和管理系统权限"/>
+		<menu entry="/security/monitor" name="Session Monitor" title="会话监控" parent="System" remark="分配各类用户在线数量、监控会话状态、强制退出"/>
+		<menu entry="/avatar/board" name="Avatar Management" title="用户头像" parent="System" remark="上传、下载、浏览用户头像"/>
 	</profile>
 <settings>

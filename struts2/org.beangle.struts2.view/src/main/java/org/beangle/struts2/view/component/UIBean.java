@@ -11,6 +11,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.CharUtils;
 import org.apache.commons.lang.xwork.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.util.TextProviderHelper;
@@ -94,19 +95,21 @@ public abstract class UIBean extends Component {
 		this.theme = new Theme(theme);
 	}
 
+	/**
+	 * 获得对应的国际化信息
+	 * 
+	 * @param text
+	 * @return 当第一个字符不是字母或者不包含.或者包含空格的均返回原有字符串
+	 */
 	protected String getText(String text) {
-		if (StringUtils.isEmpty(text)) return text;
-		if (-1 == text.indexOf('.') || -1 < text.indexOf(' ')) {
-			return text;
-		} else {
-			return TextProviderHelper.getText(text, text, Collections.emptyList(), stack, false);
-		}
+		return getText(text, text);
 	}
 
 	protected String getText(String text, String defaultText) {
-		if (StringUtils.isEmpty(text)) return text;
+		if (StringUtils.isEmpty(text)) return defaultText;
+		if (!CharUtils.isAsciiAlpha(text.charAt(0))) return defaultText;
 		if (-1 == text.indexOf('.') || -1 < text.indexOf(' ')) {
-			return text;
+			return defaultText;
 		} else {
 			return TextProviderHelper.getText(text, defaultText, Collections.emptyList(), stack, false);
 		}

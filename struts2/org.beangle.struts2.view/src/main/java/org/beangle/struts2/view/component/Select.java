@@ -47,7 +47,7 @@ public class Select extends ClosingUIBean {
 			}
 		}
 		if (null == this.id) generateIdIfEmpty();
-		if (null != label) label = getText(label, label);
+		if (null != label) label = getText(label);
 		if (null != title) {
 			title = getText(title);
 		} else {

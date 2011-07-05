@@ -1,6 +1,5 @@
 [#ftl]
 [@b.head/]
-[#include "../nav.ftl"/]
 <script>
 	//标签卡刷新定时器
 	var refreshTime=null;

@@ -1,6 +1,6 @@
 [#ftl]
 [@b.head/]
-[#include "../../security/nav.ftl"/]
+[#include "../nav.ftl"/]
 	<div class="result ui-widget-content ui-corner-all" style="width:800px;margin:10px 5px;" align="left">
 		<table width="100%">
 		 <tr>

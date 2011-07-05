@@ -7,7 +7,9 @@ package org.beangle.ems.web.tags;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.beangle.ems.web.tags.component.AvatarImage;
 import org.beangle.ems.web.tags.component.Guard;
+import org.beangle.ems.web.tags.component.Userinfo;
 import org.beangle.security.access.AuthorityManager;
 import org.beangle.struts2.view.AbstractTagLibrary;
 import org.beangle.struts2.view.TagModel;
@@ -18,14 +20,14 @@ import com.opensymphony.xwork2.ObjectFactory;
 import com.opensymphony.xwork2.inject.Container;
 import com.opensymphony.xwork2.util.ValueStack;
 
-public class BeangleEmsTagLibrary extends AbstractTagLibrary {
+public class BeangleSecurityTagLibrary extends AbstractTagLibrary {
 	AuthorityManager authorityManager;
 
-	public BeangleEmsTagLibrary() {
+	public BeangleSecurityTagLibrary() {
 		super();
 	}
 
-	public BeangleEmsTagLibrary(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
+	public BeangleSecurityTagLibrary(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
 		super(stack, req, res);
 	}
 
@@ -37,7 +39,7 @@ public class BeangleEmsTagLibrary extends AbstractTagLibrary {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		BeangleEmsTagLibrary library = new BeangleEmsTagLibrary(stack, req, res);
+		BeangleSecurityTagLibrary library = new BeangleSecurityTagLibrary(stack, req, res);
 		library.authorityManager = authorityManager;
 		return library;
 	}
@@ -51,6 +53,32 @@ public class BeangleEmsTagLibrary extends AbstractTagLibrary {
 				}
 			};
 			models.put(Guard.class, model);
+		}
+		return model;
+	}
+
+	public TagModel getAvatar() {
+		TagModel model = models.get(AvatarImage.class);
+		if (null == model) {
+			model = new TagModel(stack) {
+				protected Component getBean() {
+					return new AvatarImage(stack, authorityManager);
+				}
+			};
+			models.put(AvatarImage.class, model);
+		}
+		return model;
+	}
+	
+	public TagModel getUserinfo() {
+		TagModel model = models.get(Userinfo.class);
+		if (null == model) {
+			model = new TagModel(stack) {
+				protected Component getBean() {
+					return new Userinfo(stack, authorityManager);
+				}
+			};
+			models.put(Userinfo.class, model);
 		}
 		return model;
 	}

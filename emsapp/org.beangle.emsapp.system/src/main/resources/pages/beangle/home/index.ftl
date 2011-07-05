@@ -14,7 +14,7 @@
 	</div>
 	[@b.form]
 	<div class="banner_area">
-		[@b.a href="/security/my" target="_blank" title="查看登录记录"]${user.fullname?html}(${user.name?html})[/@]&nbsp;&nbsp;
+		[@bs.userinfo user=user href="/security/my" title="查看登录记录"/]&nbsp;&nbsp;
 		[@b.select name="security.categoryId" items=user.categories title="entity.userCategory"  style="width:100px" value=categoryId option="id,title"/]
 		<input type="submit" value="切换"/>
 	</div>
@@ -23,11 +23,8 @@
 
 <table id="mainTable" style="width:100%;height:95%" >
 <tr>
-   <td style="height:100%;width:14%" id="leftTD" valign="top">
-	   [#include "menus.ftl"/]
-   </td>
-   <td style="width:86%" id="rightTD" valign="top">
-   [@b.div id="main" href="!welcome"/]
+   <td id="rightTD" valign="top">
+   [@b.div id="main" href="/security/menu-nav"/]
    </td>
  </tr>
 </table>

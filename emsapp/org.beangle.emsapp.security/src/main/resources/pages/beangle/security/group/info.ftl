@@ -28,7 +28,7 @@ bar.addBack("${b.text("action.back")}");
 	</tr>
 	<tr>
 	<td class="title" >${b.text("group.users")}:</td>
-	<td  class="content" colspan="3">[#list userGroup.members?sort_by(["user","name"]) as m] [#if m.user.enabled]${m.user.fullname}(${m.user.name})[#else]<s>${m.user.fullname}(${m.user.name})</s>[/#if]&nbsp;[/#list]</td>
+	<td  class="content" colspan="3">[#list userGroup.members?sort_by(["user","name"]) as m] [#if m.user.enabled][@bs.userinfo user=m.user/][#else]<s>[@bs.userinfo user=m.user/]</s>[/#if]&nbsp;[/#list]</td>
 	</tr>
 	<tr>
 	<td class="title" >${b.text("common.remark")}:</td>

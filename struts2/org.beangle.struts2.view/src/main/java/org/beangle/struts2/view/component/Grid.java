@@ -25,10 +25,6 @@ import com.opensymphony.xwork2.util.ValueStack;
 /**
  * Data table
  * 
- * <pre>
- * filter  FIXME
- * </pre>
- * 
  * @author chaostone
  */
 public class Grid extends ClosingUIBean {

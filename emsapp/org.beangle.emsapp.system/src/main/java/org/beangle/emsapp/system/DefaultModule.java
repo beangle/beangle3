@@ -4,12 +4,15 @@
  */
 package org.beangle.emsapp.system;
 
-import org.beangle.ems.dictionary.service.impl.BaseCodeServiceImpl;
-import org.beangle.ems.dictionary.service.impl.SeqCodeGenerator;
 import org.beangle.ems.web.action.LogoutAction;
+import org.beangle.emsapp.business.action.LogAction;
+import org.beangle.emsapp.business.action.RuleAction;
+import org.beangle.emsapp.business.action.RuleParamAction;
+import org.beangle.emsapp.dictionary.action.BaseCodeAction;
+import org.beangle.emsapp.dictionary.action.CodeMetaAction;
+import org.beangle.emsapp.dictionary.action.CodeScriptAction;
 import org.beangle.emsapp.portal.action.HomeAction;
 import org.beangle.emsapp.portal.action.LoginAction;
-import org.beangle.emsapp.system.action.CodeMetaAction;
 import org.beangle.emsapp.system.action.FileAction;
 import org.beangle.emsapp.system.action.InfoAction;
 import org.beangle.emsapp.system.action.PropertyAction;
@@ -21,16 +24,13 @@ public final class DefaultModule extends AbstractBindModule {
 	@Override
 	protected void doBinding() {
 		// property
-		bind(FileAction.class, InfoAction.class, PropertyAction.class).in(
-				Scope.PROTOTYPE);
+		bind(FileAction.class, InfoAction.class, PropertyAction.class).in(Scope.PROTOTYPE);
 		// home
-		bind(LoginAction.class, LogoutAction.class, HomeAction.class).in(
-				Scope.PROTOTYPE);
-		
-		bind("baseCodeService", BaseCodeServiceImpl.class);
-		bind(SeqCodeGenerator.class);
+		bind(LoginAction.class, LogoutAction.class, HomeAction.class).in(Scope.PROTOTYPE);
 
-		bind(CodeMetaAction.class).in(Scope.PROTOTYPE);
+		bind(LogAction.class, RuleAction.class, RuleParamAction.class).in(Scope.PROTOTYPE);
+		
+		bind(BaseCodeAction.class, CodeMetaAction.class, CodeScriptAction.class).in(Scope.PROTOTYPE);
 	}
 
 }

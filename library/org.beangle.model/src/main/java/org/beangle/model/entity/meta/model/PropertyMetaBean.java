@@ -30,7 +30,7 @@ public class PropertyMetaBean extends LongIdObject implements PropertyMeta {
 	private String type;
 	/** 属性说明 */
 	@Size(max = 40)
-	private String comment;
+	private String comments;
 	/**备注*/
 	@Size(max = 100)
 	private String remark;
@@ -66,12 +66,12 @@ public class PropertyMetaBean extends LongIdObject implements PropertyMeta {
 		this.type = type;
 	}
 
-	public String getComment() {
-		return comment;
+	public String getComments() {
+		return comments;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 
 	public String getRemark() {

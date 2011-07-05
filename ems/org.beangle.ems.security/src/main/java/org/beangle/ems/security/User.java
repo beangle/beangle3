@@ -4,6 +4,7 @@
  */
 package org.beangle.ems.security;
 
+import java.security.Principal;
 import java.util.Set;
 
 import org.beangle.ems.security.restrict.RestrictionHolder;
@@ -18,7 +19,7 @@ import org.beangle.model.pojo.TemporalActiveEntity;
  * @author dell,chaostone 2005-9-26
  */
 public interface User extends LongIdTimeEntity, RestrictionHolder<UserRestriction>, TemporalActiveEntity,
-		EnabledEntity {
+		EnabledEntity, Principal {
 
 	// 新建用户的缺省密码
 	public static final String DEFAULT_PASSWORD = "1";

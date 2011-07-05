@@ -14,7 +14,6 @@ import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.nav.MenuProfile;
-import org.beangle.ems.security.nav.model.MenuBean;
 import org.beangle.ems.security.nav.service.MenuService;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.model.Entity;
@@ -29,7 +28,7 @@ import org.beangle.model.util.HierarchyEntityUtil;
 public class MenuAction extends SecurityActionSupport {
 
 	private MenuService menuService;
-	
+
 	protected void indexSetting() {
 		put("profiles", entityDao.getAll(MenuProfile.class));
 	}
@@ -47,7 +46,8 @@ public class MenuAction extends SecurityActionSupport {
 			folderBuilder.where("m.entry is null and m.profile=:profile", profile);
 			folderBuilder.orderBy("m.code");
 			folders = entityDao.search(folderBuilder);
-			if (null != menu.getParent()&& !folders.contains(menu.getParent())) folders.add(menu.getParent());
+			if (null != menu.getParent() && !folders.contains(menu.getParent())) folders
+					.add(menu.getParent());
 			folders.removeAll(HierarchyEntityUtil.getFamily(menu));
 		}
 		List<Resource> resurces = entityDao.search(builder);
@@ -84,10 +84,6 @@ public class MenuAction extends SecurityActionSupport {
 			}
 			menu.getResources().clear();
 			menu.getResources().addAll(resources);
-			if(menu.isTransient()){
-				((MenuBean)menu).generateCode();
-			}
-			entityDao.saveOrUpdate(menu);
 			Long newParentId = getLong("parent.id");
 			int indexno = getInteger("indexno");
 			Menu parent = null;
@@ -95,15 +91,13 @@ public class MenuAction extends SecurityActionSupport {
 				parent = entityDao.get(Menu.class, newParentId);
 			}
 			menuService.move(menu, parent, indexno);
+			entityDao.saveOrUpdate(menu);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return forward(ERROR);
 		}
 		return redirect("search", "info.save.success");
 	}
-
-
-	
 
 	/**
 	 * 禁用或激活一个或多个模块

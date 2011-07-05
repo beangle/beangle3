@@ -23,7 +23,8 @@ import org.springframework.beans.factory.InitializingBean;
 public class CategoryProfileSessionControllerFactory extends ClusterCategorySessionControllerFactory {
 
 	public CategorySessionController doGetInstance(Object category) {
-		ProfileCategorySessionController controller = new ProfileCategorySessionController(getServerName(),((Category)category).getTitle());
+		ProfileCategorySessionController controller = new ProfileCategorySessionController(getServerName(),
+				((Category) category).getTitle());
 		controller.setEntityDao(entityDao);
 		controller.afterPropertiesSet();
 		return controller;
@@ -35,7 +36,7 @@ class ProfileCategorySessionController extends ClusterCategorySessionController 
 
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
-		List<CategoryProfile> profiles = entityDao.get(CategoryProfile.class, "category.name",
+		List<CategoryProfile> profiles = entityDao.get(CategoryProfile.class, "category.title",
 				sessionStatus.getCategory());
 		if (!profiles.isEmpty()) {
 			sessionStatus.setUserMaxSessions(profiles.get(0).getUserMaxSessions());
@@ -48,8 +49,7 @@ class ProfileCategorySessionController extends ClusterCategorySessionController 
 		spbuilder.where("sp.category.title=:category", sessionStatus.getCategory());
 		spbuilder.select("sp.capacity");
 		List<?> sps = entityDao.search(spbuilder);
-		int capacity = ((Number) sps.get(0)).intValue();
-		return capacity;
+		return ((Number) sps.get(0)).intValue();
 	}
 
 	public ProfileCategorySessionController(String serverName, String category) {

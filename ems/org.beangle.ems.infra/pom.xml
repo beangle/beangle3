@@ -32,6 +32,14 @@
 			<artifactId>beangle-web</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.beangle</groupId>
+			<artifactId>beangle-security-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.beangle</groupId>
+			<artifactId>beangle-security-web</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.beanshell</groupId>
 			<artifactId>bsh</artifactId>
 			<version>2.0b4</version>

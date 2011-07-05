@@ -3,7 +3,6 @@
 <table width="100%">
 	<tr>
 	  <td class="infoTitle" width="20%" style="height:22px;">
-	   <img src="${base}/static/images/action/info.gif" align="top"/><em>
 		  <em>上传自己的照片</em>
 	  </td>
 	  <td class="infoTitle" width="20%" style="height:22px;">

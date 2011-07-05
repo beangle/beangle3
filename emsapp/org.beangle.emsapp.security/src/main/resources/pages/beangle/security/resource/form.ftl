@@ -24,7 +24,7 @@
 	[@b.field label="适用用户" required="true"]
 		[#list categories as category]
 		<input name="categoryIds" value="${category.id}" type="checkbox" id="categoryIds${category.id}" [#if resource.categories?seq_contains(category)]checked="checked"[/#if]/>
-		<label for="categoryIds${category.id}" >${category.name}</label>
+		<label for="categoryIds${category.id}" >${category.title}</label>
 		[/#list]
 	[/@]
 	[@b.select2 label="数据限制对象" name1st="RestrictEntities" name2nd="SelectedRestrictEntities" items1st=restrictEntities items2nd=resource.entities/]

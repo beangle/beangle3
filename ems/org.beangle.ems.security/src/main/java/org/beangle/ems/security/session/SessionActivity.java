@@ -39,10 +39,6 @@ public interface SessionActivity extends LongIdEntity {
 
 	public void setLoginAt(Date loginAt);
 
-	public Date getLastAccessAt();
-
-	public void setLastAccessAt(Date lastAccessAt);
-
 	public Long getOnlineTime();
 
 	public void setOnlineTime(Long sessionTime);

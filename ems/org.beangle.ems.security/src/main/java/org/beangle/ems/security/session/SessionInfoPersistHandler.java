@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.Validate;
 import org.beangle.ems.security.service.UserToken;
-import org.beangle.model.entity.Model;
+import org.beangle.ems.security.session.model.SessionActivityBean;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.session.SessionInfo;
@@ -24,8 +24,9 @@ public class SessionInfoPersistHandler extends BaseServiceImpl implements Logout
 		Validate.notNull(sessionRegistry, "sessionRegistry must be set");
 	}
 
+	//FIXME use logSessionActivity
 	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication auth) {
-		SessionActivity record = (SessionActivity) Model.newInstance(SessionActivity.class);
+		SessionActivityBean record =new SessionActivityBean();
 		Object details = auth.getDetails();
 		if (!(details instanceof WebAuthenticationDetails)) return;
 		WebAuthenticationDetails webDetails = (WebAuthenticationDetails) details;

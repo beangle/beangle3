@@ -1,0 +1,17 @@
+#menu_area {
+	margin-left:10px;
+	margin-right:10px;
+}
+
+#menu_area ul {padding-left:10px}
+#menu_area  .menu  {
+	list-style-type:none; 
+	background:url('icons/16x16/places/folder.png') no-repeat left;
+	padding-left:20px
+}
+
+#menu_area .resource  {
+	list-style-type:none; 
+	background:url('icons/16x16/tree/sanjiao.png') no-repeat left;
+	padding-left:20px
+}
