@@ -4,8 +4,11 @@
  */
 package org.beangle.security.core.session;
 
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
+import org.mockito.Mockito;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * @author chaostone
@@ -15,11 +18,13 @@ import static org.testng.Assert.*;
 public class SessionCleanerTest {
 
 	public void testShouldRemove() {
-		SessionCleaner cleaner = new SessionCleaner(null);
-		SessionInfo info = new SessionInfo(null, "test session id");
-		assertFalse(cleaner.shouldRemove(info));
+		SessionCleanerTask cleaner = new SessionCleanerTask(null);
 		
-		cleaner = new SessionCleaner(null,0);
-		assertTrue(cleaner.shouldRemove(info));
+		Sessioninfo activity =Mockito.mock(Sessioninfo.class);
+		//new SessioninfoBean("test session id", "testserver", null, null);
+		assertFalse(cleaner.shouldRemove(activity));
+
+		cleaner = new SessionCleanerTask(null, 0);
+		assertTrue(cleaner.shouldRemove(activity));
 	}
 }

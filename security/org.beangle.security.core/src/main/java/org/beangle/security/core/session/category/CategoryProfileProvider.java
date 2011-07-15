@@ -4,13 +4,17 @@
  */
 package org.beangle.security.core.session.category;
 
-/**
- * @author chaostone
- * @version $Id: SessionStatusControllerFactory.java Jun 18, 2011 9:23:53 PM chaostone $
- */
-public interface CategorySessionControllerFactory {
+import java.util.List;
 
-	public CategorySessionController getInstance(Object category);
+/**
+ * 分类配置提供者
+ * 
+ * @author chaostone
+ * @version $Id: CategoryProfileProvider.java Jul 11, 2011 10:14:02 AM chaostone $
+ */
+public interface CategoryProfileProvider {
+
+	public List<CategoryProfile> getCategoryProfiles();
 
 	public String getServerName();
 }

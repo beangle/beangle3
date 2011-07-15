@@ -4,7 +4,6 @@
  */
 package org.beangle.security.core.session;
 
-
 import org.beangle.security.core.Authentication;
 
 /**
@@ -38,11 +37,25 @@ public interface SessionController {
 	 * 
 	 * @param info
 	 */
-	public void onLogout(SessionInfo info);
-	
+	public void onLogout(Sessioninfo info);
+
 	/**
 	 * 查询在线统计
+	 * 
 	 * @return
 	 */
 	public SessionStat getSessionStat();
+
+	/**
+	 * 得到session集中监控的服务器名
+	 * 
+	 * @return
+	 */
+	public String getServerName();
+
+	/**
+	 * 统计
+	 */
+	public void stat();
+
 }

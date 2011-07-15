@@ -92,7 +92,12 @@ public abstract class SecurityActionSupport extends EntityDrivenAction implement
 	}
 
 	protected Long getUserCategoryId() {
-		return SecurityUtils.getUserCategoryId();
+		Long categoryId = getLong("security.categoryId");
+		if (null == categoryId) {
+			User user = entityDao.get(User.class, getUserId());
+			categoryId = user.getDefaultCategory().getId();
+		}
+		return categoryId;
 	}
 
 	public void setAuthorityService(AuthorityService authorityService) {

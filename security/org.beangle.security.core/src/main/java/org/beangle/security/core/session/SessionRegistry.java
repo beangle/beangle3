@@ -19,32 +19,32 @@ public interface SessionRegistry {
 	 * 注册
 	 * 
 	 * @param authentication
-	 * @param sessionId
+	 * @param sessionid
 	 */
-	public void register(Authentication authentication, String sessionId) throws SessionException;
+	public void register(Authentication authentication, String sessionid) throws SessionException;
 
 	/**
-	 * 注销指定sessionId
+	 * 注销指定sessionid
 	 * 
-	 * @param sessionId
+	 * @param sessionid
 	 * @return
 	 */
-	public SessionInfo remove(String sessionId);
+	public Sessioninfo remove(String sessionid);
 
 	/**
 	 * 过期指定会话
 	 * 
-	 * @param sessionId
+	 * @param sessionid
 	 * @return
 	 */
-	public void expire(String sessionId);
+	public void expire(String sessionid);
 
 	/**
 	 * 查询在线记录
 	 * 
 	 * @return
 	 */
-	public List<SessionInfo> getAll();
+	public List<Sessioninfo> getAll();
 
 	/**
 	 * 查询某帐号的在线信息
@@ -53,15 +53,23 @@ public interface SessionRegistry {
 	 * @param includeExpiredSessions
 	 * @return
 	 */
-	public List<SessionInfo> getSessionInfos(Object principal, boolean includeExpiredSessions);
+	public List<Sessioninfo> getSessioninfos(String principal, boolean includeExpiredSessions);
 
 	/**
-	 * 查询对应sessionId的信息
+	 * 查询对应sessionid的信息
 	 * 
-	 * @param sessionId
+	 * @param sessionid
 	 * @return
 	 */
-	public SessionInfo getSessionInfo(String sessionId);
+	public Sessioninfo getSessioninfo(String sessionid);
+
+	/**
+	 * 查询会话状态
+	 * 
+	 * @param sessionid
+	 * @return
+	 */
+	public SessionStatus getSessionStatus(String sessionid);
 
 	/**
 	 * 查询帐号是否还有没有过期的在线记录
@@ -69,14 +77,7 @@ public interface SessionRegistry {
 	 * @param principal
 	 * @return
 	 */
-	public boolean isRegisted(Object principal);
-
-	/**
-	 * 更新对应sessionId的最后访问时间
-	 * 
-	 * @param sessionId
-	 */
-	public void refreshLastRequest(String sessionId);
+	public boolean isRegisted(String principal);
 
 	/**
 	 * session count

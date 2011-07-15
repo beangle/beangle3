@@ -4,27 +4,24 @@
  */
 package org.beangle.ems.security.session.model;
 
-import java.util.Map;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.LongIdObject;
-import org.beangle.ems.security.session.CategoryProfile;
-import org.beangle.ems.security.session.SessionProfile;
 
 /**
  * 会话配置
  * 
  * @author chaostone
  */
-@Entity(name = "org.beangle.ems.security.session.SessionProfile")
-public class SessionProfileBean extends LongIdObject implements SessionProfile {
+@Entity
+public class SessionProfileBean extends LongIdObject {
 
 	private static final long serialVersionUID = 7877599995789627073L;
 
@@ -33,10 +30,6 @@ public class SessionProfileBean extends LongIdObject implements SessionProfile {
 	@Size(max = 50)
 	@Column(unique = true)
 	private String name;
-
-	/** 系统最大在线人数 */
-	@NotNull
-	private int capacity;
 
 	/** 单用户最大session数 */
 	@NotNull
@@ -48,8 +41,18 @@ public class SessionProfileBean extends LongIdObject implements SessionProfile {
 
 	/** 用户种类特定配置 */
 	@OneToMany(mappedBy = "sessionProfile")
-	@MapKeyColumn(name = "category_id")
-	private Map<Long, CategoryProfile> categoryProfiles = CollectUtils.newHashMap();
+	private List<CategoryProfileBean> categoryProfiles = CollectUtils.newArrayList();
+
+	public SessionProfileBean() {
+		super();
+	}
+
+	public SessionProfileBean(String name, int userMaxSessions, int inactiveInterval) {
+		super();
+		this.name = name;
+		this.userMaxSessions = userMaxSessions;
+		this.inactiveInterval = inactiveInterval;
+	}
 
 	public String getName() {
 		return name;
@@ -57,14 +60,6 @@ public class SessionProfileBean extends LongIdObject implements SessionProfile {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public int getCapacity() {
-		return capacity;
-	}
-
-	public void setCapacity(int max) {
-		this.capacity = max;
 	}
 
 	public int getUserMaxSessions() {
@@ -83,11 +78,11 @@ public class SessionProfileBean extends LongIdObject implements SessionProfile {
 		this.inactiveInterval = inactiveInterval;
 	}
 
-	public Map<Long, CategoryProfile> getCategoryProfiles() {
+	public List<CategoryProfileBean> getCategoryProfiles() {
 		return categoryProfiles;
 	}
 
-	public void setCategoryProfiles(Map<Long, CategoryProfile> categoryProfiles) {
+	public void setCategoryProfiles(List<CategoryProfileBean> categoryProfiles) {
 		this.categoryProfiles = categoryProfiles;
 	}
 

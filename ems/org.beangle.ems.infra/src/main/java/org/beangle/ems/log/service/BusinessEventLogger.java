@@ -4,12 +4,15 @@
  */
 package org.beangle.ems.log.service;
 
-import java.util.Date;
-
+import org.apache.commons.lang.StringUtils;
 import org.beangle.ems.event.BusinessEvent;
 import org.beangle.ems.log.model.BusinessLogBean;
 import org.beangle.model.persist.impl.BaseServiceImpl;
+import org.beangle.security.access.AccessMonitor;
+import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.SecurityContextHolder;
+import org.beangle.security.core.session.SessionRegistry;
+import org.beangle.security.core.session.Sessioninfo;
 import org.beangle.security.web.auth.WebAuthenticationDetails;
 import org.springframework.context.ApplicationListener;
 
@@ -19,21 +22,36 @@ import org.springframework.context.ApplicationListener;
  */
 public class BusinessEventLogger extends BaseServiceImpl implements ApplicationListener<BusinessEvent> {
 
+	private SessionRegistry sessionRegistry;
+
+	private AccessMonitor accessMonitor;
 	public void onApplicationEvent(BusinessEvent event) {
 		BusinessLogBean log = new BusinessLogBean();
-		log.setOperateAt(new Date());
-		log.setOperation(event.toString());
-		log.setOperater(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-		Object details=SecurityContextHolder.getContext().getAuthentication().getDetails();
-		if (!(details instanceof WebAuthenticationDetails)) return;
-		WebAuthenticationDetails webDetails = (WebAuthenticationDetails) details;
-		
-//		log.setResource(SecurityUtils.getResource());
-//		log.setEntry(entry);
+		log.setOperateAt(event.getIssueAt());
+		log.setOperation(StringUtils.defaultIfBlank(event.getDescription(), "  "));
+		log.setResource(StringUtils.defaultIfBlank(event.getResource(), "  "));
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (null == auth) return;
+		log.setOperater(auth.getPrincipal().toString());
+		Object details = auth.getDetails();
+		if (!(details instanceof WebAuthenticationDetails)) {
+			WebAuthenticationDetails webDetails = (WebAuthenticationDetails) details;
+			log.setIp(webDetails.getAgent().getIp());
+			log.setAgent(webDetails.getAgent().toString());
+			Sessioninfo activity = sessionRegistry.getSessioninfo(webDetails.getSessionId());
+			if (null != activity) {
+				log.setEntry(accessMonitor.getResource(webDetails.getSessionId()));
+			}
+		}
+		entityDao.saveOrUpdate(log);
+	}
 
-		SecurityContextHolder.getContext().getAuthentication().getDetails();
-		log.setIp(webDetails.getAgent().getIp());
-		log.setParams(webDetails.getAgent().toString());
+	public void setSessionRegistry(SessionRegistry sessionRegistry) {
+		this.sessionRegistry = sessionRegistry;
+	}
+
+	public void setAccessMonitor(AccessMonitor accessMonitor) {
+		this.accessMonitor = accessMonitor;
 	}
 
 }

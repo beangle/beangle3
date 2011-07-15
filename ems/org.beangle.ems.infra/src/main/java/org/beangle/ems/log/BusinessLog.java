@@ -14,32 +14,60 @@ import java.util.Date;
  */
 public interface BusinessLog {
 
+	/**
+	 * 操作人员
+	 * 
+	 * @return
+	 */
 	public String getOperater();
 
-	public void setOperater(String operater);
-
+	/**
+	 * 操作内容
+	 * 
+	 * @return
+	 */
 	public String getOperation();
 
-	public void setOperation(String operation);
-
+	/**
+	 * 操作资源
+	 * 
+	 * @return
+	 */
 	public String getResource();
 
-	public void setResource(String resource);
-
+	/**
+	 * 操作时间
+	 * 
+	 * @return
+	 */
 	public Date getOperateAt();
 
-	public void setOperateAt(Date operateAt);
-
+	/**
+	 * 操作地址
+	 * 
+	 * @return
+	 */
 	public String getIp();
 
-	public void setIp(String ip);
-
+	/**
+	 * 其它参数
+	 * 
+	 * @return
+	 */
 	public String getParams();
 
-	public void setParams(String params);
-
+	/**
+	 * 操作的系统入口
+	 * 
+	 * @return
+	 */
 	public String getEntry();
 
-	public void setEntry(String entry);
+	/**
+	 * 客户端代理
+	 * 
+	 * @return
+	 */
+	public String getAgent();
 
 }

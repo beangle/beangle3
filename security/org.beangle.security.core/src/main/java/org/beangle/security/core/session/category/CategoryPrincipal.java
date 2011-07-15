@@ -11,7 +11,10 @@ package org.beangle.security.core.session.category;
  */
 public interface CategoryPrincipal {
 
-	public Object getCategory();
+	public String getCategory();
 
-	public void changeCategory(Object newCategory);
+	public void changeCategory(String newCategory);
+
+	public String getFullname();
+
 }

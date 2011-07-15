@@ -397,10 +397,36 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 		}
 	}
 
+	public void save(Object... entities) {
+		if (null == entities) return;
+		for (Object entity : entities) {
+			if (entity instanceof Collection<?>) {
+				for (Object elementEntry : (Collection<?>) entity) {
+					saveEntity(elementEntry, null);
+				}
+			} else {
+				saveEntity(entity, null);
+			}
+		}
+	}
+
 	public void saveOrUpdate(Collection<?> entities) {
 		if (null != entities && !entities.isEmpty()) {
 			for (Object entity : entities) {
 				persistEntity(entity, null);
+			}
+		}
+	}
+
+	private void saveEntity(Object entity, String entityName) {
+		if (null == entity) return;
+		if (null != entityName) {
+			getHibernateTemplate().save(entityName, entity);
+		} else {
+			if (entity instanceof HibernateProxy) {
+				getHibernateTemplate().save(entity);
+			} else {
+				getHibernateTemplate().save(Model.getEntityType(entity.getClass()).getEntityName(), entity);
 			}
 		}
 	}

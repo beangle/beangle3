@@ -16,7 +16,7 @@
 
 	[@b.div href=menu.entry style="float:left;width:85%"/]
 	<div style="float:left;width:14%">
-	[@b.module title=menu.parent.title style="width:100%"]
+	[@b.module title=menu.parent.title style="width:200px;"]
 		<ul>
 		[#list (menu.parent.children)! as m]
 		<li class="resource[#if m==menu] current[/#if]">[@displayCommandAnchor m]${m.title}[/@]</li>

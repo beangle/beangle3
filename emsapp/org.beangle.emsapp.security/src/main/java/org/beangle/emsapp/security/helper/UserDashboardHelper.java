@@ -21,11 +21,10 @@ import org.beangle.ems.security.nav.service.MenuService;
 import org.beangle.ems.security.restrict.service.RestrictionService;
 import org.beangle.ems.security.service.AuthorityService;
 import org.beangle.ems.security.service.UserService;
-import org.beangle.ems.security.service.UserToken;
-import org.beangle.ems.security.session.SessionActivity;
 import org.beangle.model.persist.EntityDao;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.core.session.SessionRegistry;
+import org.beangle.security.web.session.model.SessioninfoLogBean;
 import org.beangle.struts2.helper.ContextHelper;
 import org.beangle.struts2.helper.Params;
 import org.beangle.struts2.helper.QueryHelper;
@@ -51,7 +50,7 @@ public class UserDashboardHelper {
 	public void buildDashboard(User user) {
 		ContextHelper.put("user", user);
 		populateMenus(user);
-		populateSessionActivities(user);
+		populateSessioninfoLogs(user);
 		populateOnlineActivities(user);
 		RestrictionHelper helper = new RestrictionHelper(entityDao);
 		helper.setRestrictionService(restrictionService);
@@ -59,20 +58,18 @@ public class UserDashboardHelper {
 	}
 
 	private void populateOnlineActivities(User user) {
-		Collection<?> onlineActivities = sessionRegistry.getSessionInfos(
-				new UserToken(user.getId(), user.getName(), user.getFullname(), user.getPassword(), user
-						.getDefaultCategory(), user.isEnabled(), user.isAccountExpired(), user
-						.isPasswordExpired(), false, null), true);
+		Collection<?> onlineActivities = sessionRegistry.getSessioninfos(user.getName(), true);
 		ContextHelper.put("onlineActivities", onlineActivities);
 	}
 
-	private void populateSessionActivities(User user) {
-		OqlBuilder<SessionActivity> onlineQuery = OqlBuilder.from(SessionActivity.class, "sessionActivity");
-		onlineQuery.where("sessionActivity.name =:name", user.getName());
+	private void populateSessioninfoLogs(User user) {
+		OqlBuilder<SessioninfoLogBean> onlineQuery = OqlBuilder.from(SessioninfoLogBean.class,
+				"sessioninfoLog");
+		onlineQuery.where("sessioninfoLog.username = :username", user.getName());
 		PageLimit limit = QueryHelper.getPageLimit();
 		limit.setPageSize(5);
-		onlineQuery.orderBy("sessionActivity.loginAt desc").limit(limit);
-		ContextHelper.put("sessionActivities", entityDao.search(onlineQuery));
+		onlineQuery.orderBy("sessioninfoLog.loginAt desc").limit(limit);
+		ContextHelper.put("sessioninfoLogs", entityDao.search(onlineQuery));
 	}
 
 	private void populateMenus(User user) {

@@ -37,7 +37,6 @@
 	<bean id="logoutHandlerStack" class="org.beangle.security.web.auth.logout.LogoutHandlerStack">
 		<property name="handlers">
 			<list>
-				<ref bean="sessionInfoPersistHandler"/>
 				<ref bean="securityContextLogoutHandler"/>
 			</list>
 		</property>

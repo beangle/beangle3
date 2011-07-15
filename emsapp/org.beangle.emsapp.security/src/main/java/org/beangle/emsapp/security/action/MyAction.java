@@ -14,12 +14,12 @@ import org.beangle.commons.collection.Order;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.ems.security.SecurityUtils;
 import org.beangle.ems.security.User;
-import org.beangle.ems.security.session.SessionActivity;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.emsapp.security.helper.UserDashboardHelper;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.codec.EncryptUtil;
 import org.beangle.security.core.session.SessionRegistry;
+import org.beangle.security.web.session.model.SessioninfoLogBean;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
@@ -44,7 +44,7 @@ public class MyAction extends SecurityActionSupport {
 	}
 
 	public String infolet() {
-		put("user", getUser());
+		put("user", entityDao.get(User.class, getUserId()));
 		return forward();
 	}
 
@@ -54,14 +54,15 @@ public class MyAction extends SecurityActionSupport {
 	}
 
 	public String activity() {
-		OqlBuilder<SessionActivity> query = OqlBuilder.from(SessionActivity.class, "sessionActivity");
-		query.where("sessionActivity.name=:name", getUsername());
-		query.orderBy(Order.parse("sessionActivity.loginAt desc"));
+		OqlBuilder<SessioninfoLogBean> builder = OqlBuilder.from(SessioninfoLogBean.class,
+				"sessioninfoLog");
+		builder.where("sessioninfoLog.username=:name", getUsername());
+		builder.orderBy(Order.parse("sessioninfoLog.loginAt desc"));
 		PageLimit limit = getPageLimit();
 		limit.setPageSize(10);
-		query.limit(limit);
-		put("sessionActivities", entityDao.search(query));
-		put("onlineActivities", sessionRegistry.getSessionInfos(SecurityUtils.getPrincipal(), true));
+		builder.limit(limit);
+		put("sessioninfoLogs", entityDao.search(builder));
+		put("sessioninfos", sessionRegistry.getSessioninfos(SecurityUtils.getUsername(), true));
 		return forward();
 	}
 

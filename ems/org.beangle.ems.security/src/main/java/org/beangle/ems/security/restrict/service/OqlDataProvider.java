@@ -4,6 +4,7 @@
  */
 package org.beangle.ems.security.restrict.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.beangle.model.persist.impl.BaseServiceImpl;
@@ -13,7 +14,12 @@ public class OqlDataProvider extends BaseServiceImpl implements DataProvider {
 
 	@SuppressWarnings("unchecked")
 	public <T> List<T> getData(RestrictField field, String source) {
-		return (List<T>) entityDao.searchHQLQuery(source);
+		try {
+			return (List<T>) entityDao.searchHQLQuery(source);
+		} catch (Exception e) {
+			logger.error("Get data error", e);
+		}
+		return Collections.emptyList();
 	}
 
 	public String getName() {

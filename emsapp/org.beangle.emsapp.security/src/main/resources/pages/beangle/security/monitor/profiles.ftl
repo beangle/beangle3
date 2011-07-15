@@ -1,7 +1,7 @@
 [#ftl]
 [@b.messages slash="true"/]
 [@b.form action="!saveProfile"]
-<table width="50%">
+<table width="70%">
 	<tr style="background-color:#e1e8f5">
 		<td>用户种类</td>
 		<td>上限</td>

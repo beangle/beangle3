@@ -205,6 +205,7 @@ div.message img.icon {
 
 /*详细信息页面*/
 table.infoTable {
+	font-size: 13px;
 	vertical-align: middle;
 	width:100%;
 	border-collapse: collapse;

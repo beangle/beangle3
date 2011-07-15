@@ -17,6 +17,7 @@ import org.beangle.security.web.auth.preauth.UsernamePreauthFilter;
 import org.beangle.security.web.auth.preauth.j2ee.RemoteUsernameSource;
 import org.beangle.security.web.context.HttpSessionContextIntegrationFilter;
 import org.beangle.security.web.session.ConcurrentSessionFilter;
+import org.beangle.security.web.session.WebSessioninfoBuilder;
 import org.beangle.spring.bind.AbstractBindModule;
 
 /**
@@ -44,6 +45,7 @@ public class DefaultModule extends AbstractBindModule {
 				CachedResourceAccessor.class, AccessLogFilter.class, FilterSecurityInterceptor.class)
 				.shortName();
 
+		bind(WebSessioninfoBuilder.class);
 	}
 
 }

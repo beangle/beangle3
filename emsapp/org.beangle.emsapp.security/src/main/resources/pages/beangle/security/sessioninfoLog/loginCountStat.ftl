@@ -1,0 +1,8 @@
+[#ftl]
+[@b.grid  items=loginCountStats var="logonStat"]
+	[@b.row]
+		[@b.col title="登录名" sort="sessioninfoLog.username"]${logonStat[0]}[/@]
+		[@b.col title="姓名" sort="sessioninfoLog.fullname"]${logonStat[1]}[/@]
+		[@b.col title="登录次数" sort="count(sessioninfoLog.username)"][#if logonStat[2]!=0][@b.a  href="!search?sessioninfoLog.username=${logonStat[0]}&startTime=${Parameters['startTime']!}&endTime=${Parameters['endTime']!}"]${logonStat[2]}[/@][/#if][/@]
+	[/@]
+[/@]

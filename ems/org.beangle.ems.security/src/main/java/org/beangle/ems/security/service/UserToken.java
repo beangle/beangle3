@@ -6,8 +6,6 @@ package org.beangle.ems.security.service;
 
 import java.util.Collection;
 
-import org.apache.commons.lang.Validate;
-import org.beangle.ems.security.Category;
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.session.category.CategoryPrincipal;
 import org.beangle.security.core.userdetail.User;
@@ -21,9 +19,9 @@ public class UserToken extends User implements CategoryPrincipal, Comparable<Use
 	private final String fullname;
 
 	/** 用户类别 */
-	private Category category;
+	private String category;
 
-	public UserToken(Long id, String username, String fullname, String password, Category category,
+	public UserToken(Long id, String username, String fullname, String password, String category,
 			boolean enabled, boolean accountExpired, boolean credentialsExpired, boolean accountLocked,
 			Collection<? extends GrantedAuthority> authorities) throws IllegalArgumentException {
 		super(username, password, enabled, accountExpired, credentialsExpired, accountLocked, authorities);
@@ -40,13 +38,12 @@ public class UserToken extends User implements CategoryPrincipal, Comparable<Use
 		return fullname;
 	}
 
-	public Category getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void changeCategory(Object newCategory) {
-		Validate.isTrue(newCategory instanceof Category, "newCategory should be instanceof UserCategory");
-		this.category = (Category) newCategory;
+	public void changeCategory(String newCategory) {
+		this.category =  newCategory;
 	}
 
 	/**

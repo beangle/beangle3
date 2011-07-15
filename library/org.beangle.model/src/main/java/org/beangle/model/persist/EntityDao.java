@@ -26,17 +26,22 @@ import org.beangle.model.query.QueryBuilder;
 public interface EntityDao {
 	/**
 	 * 查询指定id的对象
-	 * @param clazz 类型
-	 * @param id 唯一标识
-	 * @return null 
+	 * 
+	 * @param clazz
+	 *            类型
+	 * @param id
+	 *            唯一标识
+	 * @return null
 	 */
 	public <T> T get(Class<T> clazz, Serializable id);
 
 	/**
 	 * 依据实体名加载对象
 	 * 
-	 * @param entityName 实体名
-	 * @param id 唯一标识
+	 * @param entityName
+	 *            实体名
+	 * @param id
+	 *            唯一标识
 	 * @return
 	 */
 	public <T> T get(String entityName, Serializable id);
@@ -277,9 +282,14 @@ public interface EntityDao {
 	public int executeUpdateNamedQuery(String queryName, Object... arguments);
 
 	/**
-	 * 保存单个或多个实体.
+	 * 保存或更新单个或多个实体.
 	 */
 	public void saveOrUpdate(Object... entities);
+
+	/**
+	 * 保存单个或多个实体.
+	 */
+	public void save(Object... entities);
 
 	/**
 	 * Save Collection

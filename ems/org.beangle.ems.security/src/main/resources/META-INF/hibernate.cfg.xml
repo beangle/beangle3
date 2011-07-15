@@ -21,7 +21,6 @@
 		<mapping class="org.beangle.ems.security.restrict.model.UserRestrictionBean"/>
 		
 		<mapping class="org.beangle.ems.security.session.model.CategoryProfileBean"/>
-		<mapping class="org.beangle.ems.security.session.model.SessionActivityBean"/>
 		<mapping class="org.beangle.ems.security.session.model.SessionProfileBean"/>
 	</session-factory>
 </hibernate-configuration>

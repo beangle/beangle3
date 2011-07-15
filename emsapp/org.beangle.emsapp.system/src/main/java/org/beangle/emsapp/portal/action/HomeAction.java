@@ -8,7 +8,6 @@ import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
 
-import org.beangle.ems.security.Category;
 import org.beangle.ems.security.SecurityUtils;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.nav.MenuProfile;
@@ -28,15 +27,7 @@ public class HomeAction extends SecurityActionSupport {
 	
 	public String index() {
 		User user = entityDao.get(User.class, getUserId());
-		Long categoryId = getLong("security.categoryId");
-		if (null == categoryId) {
-			categoryId = getUserCategoryId();
-		} else {
-			if (!categoryId.equals(getUserCategoryId())) {
-				Category newCategory = entityDao.get(Category.class, categoryId);
-				SecurityUtils.getPrincipal().changeCategory(newCategory);
-			}
-		}
+		Long categoryId = getUserCategoryId();
 		put("categoryId", categoryId);
 		MenuProfile profile = getMenuProfile(categoryId);
 		if (null != profile) {

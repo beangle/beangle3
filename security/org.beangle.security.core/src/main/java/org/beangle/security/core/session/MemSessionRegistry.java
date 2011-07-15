@@ -5,12 +5,10 @@
 package org.beangle.security.core.session;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang.ObjectUtils;
@@ -29,39 +27,40 @@ public class MemSessionRegistry implements SessionRegistry, ApplicationListener<
 
 	private SessionController controller;
 
-	// <principal:Object,SessionIdSet>
-	protected Map<Object, Set<String>> principals = new ConcurrentHashMap<Object, Set<String>>();
+	private SessioninfoBuilder sessioninfoBuilder;
 
-	// <sessionId:Object,OnlineActvities>
-	protected Map<String, SessionInfo> sessionIds = new ConcurrentHashMap<String, SessionInfo>();
+	// <principal,SessionIdSet>
+	protected Map<String, Set<String>> principals = new ConcurrentHashMap<String, Set<String>>();
+
+	// <sessionid,Sessioninfo>
+	protected Map<String, Sessioninfo> sessionids = new ConcurrentHashMap<String, Sessioninfo>();
 
 	public void afterPropertiesSet() throws Exception {
 		Validate.notNull(controller, "controller must set");
-		// 每两分钟执行一次
-		new Timer("Beangle Session Cleaner", true).schedule(new SessionCleaner(this), new Date(), 1000 * 120);
+		Validate.notNull(sessioninfoBuilder, "sessioninfoBuilder must set");
 	}
 
-	public List<SessionInfo> getAll() {
-		return CollectUtils.newArrayList(sessionIds.values());
+	public List<Sessioninfo> getAll() {
+		return CollectUtils.newArrayList(sessionids.values());
 	}
 
-	public boolean isRegisted(Object principal) {
+	public boolean isRegisted(String principal) {
 		Set<String> sessionsUsedByPrincipal = principals.get(principal);
 		return (null != sessionsUsedByPrincipal && !sessionsUsedByPrincipal.isEmpty());
 	}
 
-	public List<SessionInfo> getSessionInfos(Object principal, boolean includeExpiredSessions) {
+	public List<Sessioninfo> getSessioninfos(String principal, boolean includeExpiredSessions) {
 		Set<String> sessionsUsedByPrincipal = principals.get(principal);
-		List<SessionInfo> list = CollectUtils.newArrayList();
+		List<Sessioninfo> list = CollectUtils.newArrayList();
 		if (null == sessionsUsedByPrincipal) { return list; }
 		synchronized (sessionsUsedByPrincipal) {
-			for (final String sessionId : sessionsUsedByPrincipal) {
-				SessionInfo activity = getSessionInfo(sessionId);
-				if (activity == null) {
+			for (final String sessionid : sessionsUsedByPrincipal) {
+				Sessioninfo info = getSessioninfo(sessionid);
+				if (info == null) {
 					continue;
 				}
-				if (includeExpiredSessions || !activity.isExpired()) {
-					list.add(activity);
+				if (includeExpiredSessions || !info.isExpired()) {
+					list.add(info);
 				}
 			}
 		}
@@ -69,51 +68,43 @@ public class MemSessionRegistry implements SessionRegistry, ApplicationListener<
 		return list;
 	}
 
-	public SessionInfo getSessionInfo(String sessionId) {
-		return sessionIds.get(sessionId);
+	public Sessioninfo getSessioninfo(String sessionid) {
+		return sessionids.get(sessionid);
 	}
 
-	public void refreshLastRequest(String sessionId) {
-		SessionInfo info = getSessionInfo(sessionId);
-		if (info != null) {
-			info.refreshLastRequest();
-		}
-	}
-
-	public void register(Authentication auth, String sessionId) throws SessionException {
-		SessionInfo existed = getSessionInfo(sessionId);
-		Object principal = auth.getPrincipal();
+	public void register(Authentication auth, String sessionid) throws SessionException {
+		Sessioninfo existed = getSessioninfo(sessionid);
+		String principal = auth.getName();
 		// 是否为重复注册
-		if (null != existed && ObjectUtils.equals(existed.getAuthentication().getPrincipal(), principal)) return;
+		if (null != existed && ObjectUtils.equals(existed.getUsername(), principal)) return;
 		// 争取名额
-		if (!controller.onRegister(auth, sessionId, this)) throw new SessionException(
-				"over max session limit");
+		boolean success = controller.onRegister(auth, sessionid, this);
+		if (!success) throw new SessionException("security.OvermaxSession");
 		// 注销同会话的其它账户
 		if (null != existed) {
-			existed.appendRemark(" expired with replacement.");
-			remove(sessionId);
+			existed.addRemark(" expired with replacement.");
+			remove(sessionid);
 		}
 		// 新生
-		SessionInfo newActivity = new SessionInfo(auth, sessionId);
-		sessionIds.put(sessionId, newActivity);
+		sessionids.put(sessionid, sessioninfoBuilder.build(auth, controller.getServerName(), sessionid));
 		Set<String> sessionsUsedByPrincipal = principals.get(principal);
 		if (sessionsUsedByPrincipal == null) {
 			sessionsUsedByPrincipal = Collections.synchronizedSet(new HashSet<String>(4));
 			principals.put(principal, sessionsUsedByPrincipal);
 		}
-		sessionsUsedByPrincipal.add(sessionId);
+		sessionsUsedByPrincipal.add(sessionid);
 	}
 
-	public SessionInfo remove(String sessionId) {
-		SessionInfo info = getSessionInfo(sessionId);
+	public Sessioninfo remove(String sessionid) {
+		Sessioninfo info = getSessioninfo(sessionid);
 		if (null == info) { return null; }
-		sessionIds.remove(sessionId);
-		Object principal = info.getAuthentication().getPrincipal();
-		logger.debug("Remove session {} for {}", sessionId, principal);
+		sessionids.remove(sessionid);
+		String principal = info.getUsername();
+		logger.debug("Remove session {} for {}", sessionid, principal);
 		Set<String> sessionsUsedByPrincipal = principals.get(principal);
 		if (null != sessionsUsedByPrincipal) {
 			synchronized (sessionsUsedByPrincipal) {
-				sessionsUsedByPrincipal.remove(sessionId);
+				sessionsUsedByPrincipal.remove(sessionid);
 				// No need to keep object in principals Map anymore
 				if (sessionsUsedByPrincipal.size() == 0) {
 					principals.remove(principal);
@@ -130,13 +121,19 @@ public class MemSessionRegistry implements SessionRegistry, ApplicationListener<
 		remove(event.getId());
 	}
 
-	public void expire(String sessionId) {
-		SessionInfo info = getSessionInfo(sessionId);
+	public void expire(String sessionid) {
+		Sessioninfo info = getSessioninfo(sessionid);
 		if (null != info) info.expireNow();
 	}
 
+	public SessionStatus getSessionStatus(String sessionid) {
+		Sessioninfo info = getSessioninfo(sessionid);
+		if (null == info) return null;
+		else return new SessionStatus(info);
+	}
+
 	public int count() {
-		return sessionIds.size();
+		return sessionids.size();
 	}
 
 	public void setController(SessionController controller) {
@@ -145,6 +142,10 @@ public class MemSessionRegistry implements SessionRegistry, ApplicationListener<
 
 	public SessionController getController() {
 		return controller;
+	}
+
+	public void setSessioninfoBuilder(SessioninfoBuilder sessioninfoBuilder) {
+		this.sessioninfoBuilder = sessioninfoBuilder;
 	}
 
 }

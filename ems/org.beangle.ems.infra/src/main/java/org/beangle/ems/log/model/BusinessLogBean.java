@@ -51,9 +51,21 @@ public class BusinessLogBean extends LongIdObject implements BusinessLog {
 	@Size(max = 100)
 	private String ip;
 
+	/** 操作客户端代理 */
+	@Size(max = 100)
+	private String agent;
+
 	/** 操作参数 */
 	@Size(max = 500)
 	private String params;
+
+	public String getAgent() {
+		return agent;
+	}
+
+	public void setAgent(String agent) {
+		this.agent = agent;
+	}
 
 	public String getOperater() {
 		return operater;

@@ -6,7 +6,7 @@ package org.beangle.emsapp.security;
 
 import org.beangle.emsapp.avatar.action.BoardAction;
 import org.beangle.emsapp.avatar.action.MyUploadAction;
-import org.beangle.emsapp.security.action.ActivityAction;
+import org.beangle.emsapp.security.action.SessioninfoLogAction;
 import org.beangle.emsapp.security.action.AuthorityAction;
 import org.beangle.emsapp.security.action.CaptchaAction;
 import org.beangle.emsapp.security.action.GroupAction;
@@ -22,6 +22,7 @@ import org.beangle.emsapp.security.action.RestrictMetaAction;
 import org.beangle.emsapp.security.action.RestrictionAction;
 import org.beangle.emsapp.security.action.UserAction;
 import org.beangle.emsapp.security.helper.UserDashboardHelper;
+import org.beangle.security.core.session.DbSessionRegistry;
 import org.beangle.spring.bind.AbstractBindModule;
 import org.beangle.spring.bind.Scope;
 
@@ -30,7 +31,7 @@ public final class DefaultModule extends AbstractBindModule {
 	@Override
 	protected void doBinding() {
 		// security
-		bind(ActivityAction.class, AuthorityAction.class, GroupAction.class, IndexAction.class,
+		bind(SessioninfoLogAction.class, AuthorityAction.class, GroupAction.class, IndexAction.class,
 				MenuAction.class, MenuNavAction.class, MenuProfileAction.class, MonitorAction.class,
 				MyAction.class, PasswordAction.class, ResourceAction.class, RestrictionAction.class,
 				RestrictMetaAction.class, UserAction.class, CaptchaAction.class).in(Scope.PROTOTYPE);
@@ -40,6 +41,8 @@ public final class DefaultModule extends AbstractBindModule {
 		// avatar
 		bind(BoardAction.class, org.beangle.emsapp.avatar.action.MyAction.class, MyUploadAction.class,
 				org.beangle.emsapp.avatar.action.UserAction.class).in(Scope.PROTOTYPE);
+		
+		bind("sessionRegistry",DbSessionRegistry.class);
 	}
 
 }

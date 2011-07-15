@@ -32,7 +32,7 @@ public class DaoUserDetailServiceImpl extends BaseServiceImpl implements UserDet
 				authorities.add(new GrantedAuthorityBean(g.getName()));
 			}
 			return new UserToken(user.getId(), user.getName(), user.getFullname(), user.getPassword(),
-					entityDao.initialize(user.getDefaultCategory()), user.isEnabled(),
+					entityDao.initialize(user.getDefaultCategory()).getTitle(), user.isEnabled(),
 					user.isAccountExpired(), user.isPasswordExpired(), false, authorities);
 		}
 	}

@@ -42,14 +42,6 @@ public class CategorySessionStat extends LongIdObject implements FlashEntity {
 
 	private int userMaxSessions;
 
-	public CategorySessionStat stat() {
-		CategorySessionStat stat = new CategorySessionStat(this.serverName, this.category, this.capacity,
-				this.userMaxSessions);
-		stat.setOnline(this.online);
-		stat.setId(this.getId());
-		return stat;
-	}
-
 	public CategorySessionStat() {
 		super();
 	}

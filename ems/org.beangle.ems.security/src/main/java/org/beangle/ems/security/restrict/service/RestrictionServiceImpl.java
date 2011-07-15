@@ -38,7 +38,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 	protected Map<String, DataProvider> providers = CollectUtils.newHashMap();
 
 	protected DataResolver dataResolver;
-	
+
 	protected AuthorityService authorityService;
 
 	/**
@@ -52,7 +52,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		restrictions.addAll(getAuthorityRestrictions(user, resource));
 		List<Group> groups = userService.getGroups(user, GroupMember.Ship.MEMBER);
 		// 用户组自身限制
-		for (Group group : authorityService.filter(groups,resource)) {
+		for (Group group : authorityService.filter(groups, resource)) {
 			restrictions.addAll(group.getRestrictions());
 		}
 		// 用户自身限制
@@ -138,8 +138,8 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 				return (1 != returned.size()) ? null : returned.get(0);
 			}
 		} catch (Exception e) {
-			logger.error("Error getFieldValue ", e);
-			throw new RuntimeException("exception with param type:" + field.getType() + " value:" + value, e);
+			logger.error("exception with param type:" + field.getType() + " value:" + value, e);
+			return null;
 		}
 	}
 
@@ -209,7 +209,6 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		this.userService = userService;
 	}
 
-	
 	public void setAuthorityService(AuthorityService authorityService) {
 		this.authorityService = authorityService;
 	}

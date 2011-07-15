@@ -5,7 +5,6 @@
 package org.beangle.security.core.session;
 
 import java.util.Date;
-import java.util.Map;
 
 /**
  * 服务器会话统计
@@ -23,9 +22,9 @@ public class SessionStat {
 	
 	private final Date statAt;
 
-	private final Map<?, Integer> details;
+	private final Object details;
 
-	public SessionStat(String serverName, Date statAt,int capacity, int sessions, Map<?, Integer> details) {
+	public SessionStat(String serverName, Date statAt,int capacity, int sessions, Object details) {
 		super();
 		this.serverName = serverName;
 		this.capacity=capacity;
@@ -50,7 +49,7 @@ public class SessionStat {
 		return statAt;
 	}
 
-	public Map<?, Integer> getDetails() {
+	public Object getDetails() {
 		return details;
 	}
 

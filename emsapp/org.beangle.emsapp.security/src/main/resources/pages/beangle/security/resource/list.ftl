@@ -3,7 +3,7 @@
 [#include "../nav.ftl"/]
 [#include "scope.ftl"/]
 [#include "../status.ftl"/]
-[@b.form name="resourceForm" action="!search"]
+[@b.form name="resourceForm" id="resourceForm" action="!search"]
 [@b.grid items=resources var="resource" sortable="true" filterable="true"]
 	[@b.gridbar title='系统资源']
 	function activate(enabled){return action.multi('activate','确定操作?','&enabled='+enabled);}
@@ -39,4 +39,7 @@
 	[/@]
 [/@]
 [/@]
+<script>
+alert(document.resourceForm.innerHTML)
+</script>
 [@b.foot/]

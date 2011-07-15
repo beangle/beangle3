@@ -6,47 +6,46 @@ package org.beangle.security.core.session;
 
 import java.util.List;
 
+import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.security.core.Authentication;
 
 /**
  * @author chaostone
  * @version $Id: AbstractSessionController.java Jun 16, 2011 8:00:10 PM chaostone $
  */
-public abstract class AbstractSessionController implements SessionController {
+public abstract class AbstractSessionController extends BaseServiceImpl implements SessionController {
+	
+	protected String serverName;
 
 	public boolean onRegister(Authentication auth, String sessionId, SessionRegistry registry)
 			throws SessionException {
-		if (!allocate(auth, sessionId)) return false;
-		processSamePrincipal(auth, sessionId, registry);
-		return true;
-	}
-
-	private void processSamePrincipal(Authentication auth, String sessionId, SessionRegistry registry)
-			throws SessionException {
-		Object principal = auth.getPrincipal();
-		List<SessionInfo> sessions = registry.getSessionInfos(principal, false);
+		List<Sessioninfo> sessions = registry.getSessioninfos(auth.getName(), false);
 		int sessionCount = 0;
 		if (sessions != null) sessionCount = sessions.size();
 
+		if (sessionCount <= 0) return allocate(auth, sessionId);
+
+		boolean allocated = false;
 		int allowableSessions = getMaxSessions(auth);
-		if (sessionCount < allowableSessions) {
-			return;
-		} else if (allowableSessions == -1) {
-			return;
-		} else if (sessionCount == allowableSessions) {
-			for (int i = 0; i < sessionCount; i++) {
-				if ((sessions.get(i)).getSessionid().equals(sessionId)) { return; }
-			}
+		if (sessionCount < allowableSessions || allowableSessions == -1) {
+			allocated = allocate(auth, sessionId);
 		}
+
 		// Determine least recently used session, and mark it for invalidation
-		SessionInfo leastRecentlyUsed = null;
-		for (int i = 0; i < sessions.size(); i++) {
-			if ((leastRecentlyUsed == null)
-					|| sessions.get(i).getLastAccessAt().before(leastRecentlyUsed.getLastAccessAt())) {
-				leastRecentlyUsed = (SessionInfo) sessions.get(i);
+		if (!allocated) {
+			Sessioninfo leastRecentlyUsed = null;
+			for (int i = 0; i < sessions.size(); i++) {
+				if ((leastRecentlyUsed == null)
+						|| sessions.get(i).getLoginAt().before(leastRecentlyUsed.getLoginAt())) {
+					leastRecentlyUsed = sessions.get(i);
+				}
+			}
+			if (null != leastRecentlyUsed) {
+				registry.expire(leastRecentlyUsed.getId());
+				allocated = true;
 			}
 		}
-		leastRecentlyUsed.expireNow();
+		return allocated;
 	}
 
 	/**
@@ -57,5 +56,9 @@ public abstract class AbstractSessionController implements SessionController {
 	 * @return 如果成功返回true,否则false
 	 */
 	protected abstract boolean allocate(Authentication auth, String sessionId);
+
+	public String getServerName() {
+		return serverName;
+	}
 
 }

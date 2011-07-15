@@ -10,10 +10,9 @@ import org.beangle.ems.security.restrict.service.IdentifierDataResolver;
 import org.beangle.ems.security.restrict.service.OqlDataProvider;
 import org.beangle.ems.security.service.AuthorityServiceImpl;
 import org.beangle.ems.security.service.CacheableAuthorityManager;
-import org.beangle.ems.security.service.CategoryProfileSessionControllerFactory;
 import org.beangle.ems.security.service.DaoUserDetailServiceImpl;
 import org.beangle.ems.security.service.UserServiceImpl;
-import org.beangle.ems.security.session.SessionInfoPersistHandler;
+import org.beangle.ems.security.session.service.CategoryProfileServiceImpl;
 import org.beangle.spring.bind.AbstractBindModule;
 
 /**
@@ -30,7 +29,7 @@ public class DefaultModule extends AbstractBindModule {
 		bind("menuService", MenuServiceImpl.class);
 		bind("userDetailService",DaoUserDetailServiceImpl.class);
 		bind("authorityManager",CacheableAuthorityManager.class);
-		bind(CategoryProfileSessionControllerFactory.class,SessionInfoPersistHandler.class).shortName();
+		bind(CategoryProfileServiceImpl.class).shortName();
 		bind(IdentifierDataResolver.class,CsvDataResolver.class,OqlDataProvider.class).shortName();
 	}
 

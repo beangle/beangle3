@@ -8,11 +8,11 @@
 <style>
 #user-profile{
     margin: 10px 5px;
-    width: 1000px;
+    width: 1010px;
 }
 #lspace{
 	float:left;
-	width: 220px;
+	width: 230px;
 	padding: 2px;
 }
 #mspace{

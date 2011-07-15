@@ -15,16 +15,18 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.comparators.PropertyComparator;
 import org.beangle.ems.security.Category;
-import org.beangle.ems.security.session.SessionActivity;
+import org.beangle.ems.security.User;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.security.web.session.model.SessioninfoLogBean;
+
 
 /**
  * 用户登陆退出的会话管理
  * 
  * @author chaostone
  */
-public class ActivityAction extends SecurityActionSupport {
+public class SessioninfoLogAction extends SecurityActionSupport {
 
 	protected void indexSetting() {
 		put("categories", entityDao.getAll(Category.class));
@@ -34,18 +36,18 @@ public class ActivityAction extends SecurityActionSupport {
 	 * 显示用户某时间段的登陆记录
 	 */
 	public String search() {
-		OqlBuilder<SessionActivity> query = OqlBuilder.from(SessionActivity.class, "sessionActivity");
+		OqlBuilder<SessioninfoLogBean> query = OqlBuilder.from(SessioninfoLogBean.class, "sessioninfoLog");
 		addConditions(query);
 		String orderBy = get("orderBy");
 		if (null == orderBy) {
-			orderBy = "sessionActivity.loginAt desc";
+			orderBy = "sessioninfoLog.loginAt desc";
 		}
 		query.limit(getPageLimit()).orderBy(orderBy);
-		put("sessionActivitys", entityDao.search(query));
+		put("sessioninfoLogs", entityDao.search(query));
 		return forward();
 	}
 
-	private void addTimeCondition(OqlBuilder<SessionActivity> query) {
+	private void addTimeCondition(OqlBuilder<SessioninfoLogBean> query) {
 		String stime = get("startTime");
 		String etime = get("endTime");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -66,11 +68,11 @@ public class ActivityAction extends SecurityActionSupport {
 			}
 		}
 		if (null != sdate && null == edate) {
-			query.where("sessionActivity.loginAt >=:sdate", sdate);
+			query.where("sessioninfoLog.loginAt >=:sdate", sdate);
 		} else if (null != sdate && null != edate) {
-			query.where("sessionActivity.loginAt >=:sdate and sessionActivity.loginAt <:edate", sdate, edate);
+			query.where("sessioninfoLog.loginAt >=:sdate and sessioninfoLog.loginAt <:edate", sdate, edate);
 		} else if (null == sdate && null != edate) {
-			query.where("sessionActivity.loginAt <:edate", edate);
+			query.where("sessioninfoLog.loginAt <:edate", edate);
 		}
 	}
 
@@ -78,23 +80,23 @@ public class ActivityAction extends SecurityActionSupport {
 	 * 显示登陆次数
 	 */
 	public String loginCountStat() {
-		OqlBuilder<SessionActivity> query = OqlBuilder.from(SessionActivity.class, "sessionActivity");
+		OqlBuilder<SessioninfoLogBean> query = OqlBuilder.from(SessioninfoLogBean.class, "sessioninfoLog");
 		addConditions(query);
-		query.select("sessionActivity.name,sessionActivity.fullname,count(*)")
-				.groupBy("sessionActivity.name,sessionActivity.fullname").orderBy(get("orderBy"))
+		query.select("sessioninfoLog.username,sessioninfoLog.fullname,count(*)")
+				.groupBy("sessioninfoLog.username,sessioninfoLog.fullname").orderBy(get("orderBy"))
 				.limit(getPageLimit());
 		put("loginCountStats", entityDao.search(query));
 		return forward();
 	}
 
-	private void addConditions(OqlBuilder<SessionActivity> query) {
+	private void addConditions(OqlBuilder<SessioninfoLogBean> query) {
 		populateConditions(query);
 		addTimeCondition(query);
 		String groupName = get("groupName");
 		if (StringUtils.isNotEmpty(groupName)) {
-			query.where("exists(select u.id from User u join u.groups as group "
-					+ "where u.name=sessionActivity.name and group.name like :groupName )", "%" + groupName
-					+ "%");
+			query.where("exists(select u.id from " + User.class.getName() + " u join u.groups as gm "
+					+ "where u.name=sessioninfoLog.username and gm.group.name like :groupName )", "%"
+					+ groupName + "%");
 		}
 	}
 
@@ -103,9 +105,9 @@ public class ActivityAction extends SecurityActionSupport {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public String timeIntervalStat() {
-		OqlBuilder<SessionActivity> query = OqlBuilder.from(SessionActivity.class, "sessionActivity");
+		OqlBuilder<SessioninfoLogBean> query = OqlBuilder.from(SessioninfoLogBean.class, "sessioninfoLog");
 		addConditions(query);
-		query.select("hour(sessionActivity.loginAt),count(*)").groupBy("hour(sessionActivity.loginAt)");
+		query.select("hour(sessioninfoLog.loginAt),count(*)").groupBy("hour(sessioninfoLog.loginAt)");
 		List rs = entityDao.search(query);
 		Collections.sort(rs, new PropertyComparator<Object[]>("[0]"));
 		put("logonStats", rs);

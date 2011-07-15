@@ -13,7 +13,7 @@ public final class SecurityUtils {
 
 	private static ThreadLocal<String> resource = new ThreadLocal<String>();
 
-	public static UserToken getPrincipal() {
+	private static UserToken getPrincipal() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (null == auth) throw new AuthenticationException();
 		UserToken user = (UserToken) auth.getPrincipal();
@@ -31,10 +31,6 @@ public final class SecurityUtils {
 
 	public static String getFullname() {
 		return getPrincipal().getFullname();
-	}
-
-	public static Long getUserCategoryId() {
-		return getPrincipal().getCategory().getId();
 	}
 
 	public static String getResource() {

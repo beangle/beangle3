@@ -2,19 +2,15 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.ems.security.session.model;
+package org.beangle.security.web.session.model;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.beangle.ems.security.Category;
-import org.beangle.ems.security.session.SessionActivity;
-import org.beangle.model.pojo.LoggingEntity;
-import org.beangle.model.pojo.LongIdObject;
+import org.beangle.model.pojo.StringIdObject;
 
 /**
  * 登录和退出日志
@@ -22,19 +18,19 @@ import org.beangle.model.pojo.LongIdObject;
  * @author chaostone
  */
 @Entity
-public class LogSessionActivityBean extends LongIdObject implements SessionActivity, LoggingEntity {
+public class SessioninfoLogBean extends StringIdObject {
 
 	private static final long serialVersionUID = -3144771635148215917L;
 
-	/** 会话ID */
+	/** 服务器 */
 	@NotNull
 	@Size(max = 100)
-	private String sessionid;
+	private String serverName;
 
 	/** 系统登录用户 */
 	@NotNull
 	@Size(max = 40)
-	private String name;
+	private String username;
 
 	/** 用户真实姓名 */
 	@NotNull
@@ -43,7 +39,7 @@ public class LogSessionActivityBean extends LongIdObject implements SessionActiv
 
 	/** 登录IP */
 	@Size(max = 100)
-	private String host;
+	private String ip;
 
 	/** OS */
 	@Size(max = 50)
@@ -61,33 +57,39 @@ public class LogSessionActivityBean extends LongIdObject implements SessionActiv
 	@NotNull
 	private Long onlineTime;
 
-	/** 用户类型 */
-	@NotNull
-	private Category category;
-
 	/** 退出时间 */
 	@NotNull
-	private Timestamp logoutAt;
+	private Date logoutAt;
 
 	/** 备注 */
 	@Size(max = 100)
 	private String remark;
 
-	public LogSessionActivityBean() {
+	public SessioninfoLogBean() {
 		super();
 	}
 
-	public LogSessionActivityBean(String sessionId, String name, String fullname, Category category) {
+	public SessioninfoLogBean(SessioninfoBean info) {
 		super();
-		this.sessionid = sessionId;
-		this.name = name;
-		this.fullname = fullname;
-		this.loginAt = new Date(System.currentTimeMillis());
-		this.category = category;
+		this.id = info.getId();
+		this.serverName = info.getServerName();
+		this.username = info.getUsername();
+		this.fullname = info.getFullname();
+		this.loginAt = info.getLoginAt();
+		
+		if (null != info.getExpiredAt()) this.logoutAt = info.getExpiredAt();
+		else this.logoutAt = new Date();
+		
+		this.calcOnlineTime();
+
+		this.os = info.getOs();
+		this.ip = info.getIp();
+		this.agent = info.getAgent();
+		this.remark = info.getRemark();
 	}
 
 	public String toString() {
-		String str = " User:[" + getName() + "]";
+		String str = " User:[" + getUsername() + "]";
 		long onlineTime = System.currentTimeMillis() - loginAt.getTime();
 		long minute = (onlineTime / 1000) / 60;
 		long second = (onlineTime / 1000) % 60;
@@ -103,20 +105,20 @@ public class LogSessionActivityBean extends LongIdObject implements SessionActiv
 		}
 	}
 
-	public String getSessionid() {
-		return sessionid;
+	public String getServerName() {
+		return serverName;
 	}
 
-	public void setSessionid(String sessionId) {
-		this.sessionid = sessionId;
+	public void setServerName(String serverName) {
+		this.serverName = serverName;
 	}
 
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getFullname() {
@@ -127,12 +129,20 @@ public class LogSessionActivityBean extends LongIdObject implements SessionActiv
 		this.fullname = fullname;
 	}
 
-	public String getHost() {
-		return host;
+	public String getIp() {
+		return ip;
 	}
 
-	public void setHost(String host) {
-		this.host = host;
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public Date getLogoutAt() {
+		return logoutAt;
+	}
+
+	public void setLogoutAt(Date logoutAt) {
+		this.logoutAt = logoutAt;
 	}
 
 	public Date getLoginAt() {
@@ -149,22 +159,6 @@ public class LogSessionActivityBean extends LongIdObject implements SessionActiv
 
 	public void setOnlineTime(Long onlineTime) {
 		this.onlineTime = onlineTime;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public Timestamp getLogoutAt() {
-		return logoutAt;
-	}
-
-	public void setLogoutAt(Timestamp logoutAt) {
-		this.logoutAt = logoutAt;
 	}
 
 	public String getRemark() {

@@ -21,13 +21,7 @@
 	[/@]
 </div>
 
-<table id="mainTable" style="width:100%;height:95%" >
-<tr>
-   <td id="rightTD" valign="top">
-   [@b.div id="main" href="/security/menu-nav"/]
-   </td>
- </tr>
-</table>
+[@b.div id="main" href="/security/menu-nav"/]
 
 <script type="text/javascript">
   function editAccount(){

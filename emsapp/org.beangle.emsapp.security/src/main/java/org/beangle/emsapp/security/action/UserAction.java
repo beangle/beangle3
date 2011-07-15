@@ -46,9 +46,15 @@ public class UserAction extends SecurityActionSupport {
 
 	public String dashboard() {
 		Long userId = getLong("user.id");
-		User me = entityDao.get(User.class, getUserId());
+		User managed = null;
 		if (null != userId) {
-			User managed = (User) entityDao.get(User.class, userId);
+			managed = entityDao.get(User.class, userId);
+		} else {
+			String username = get("user.name");
+			if (null != username) managed = userService.get(username);
+		}
+		User me = entityDao.get(User.class, getUserId());
+		if (null != managed) {
 			if (me.equals(managed) || userService.isManagedBy(me, managed)) {
 				userDashboardHelper.buildDashboard(managed);
 				return forward();
@@ -181,8 +187,8 @@ public class UserAction extends SecurityActionSupport {
 		}
 		put("memberMap", memberMap);
 		put("members", members);
-		put("isadmin",userService.isAdmin(user));
-		put("isme",getUserId().equals(user.getId()));
+		put("isadmin", userService.isAdmin(user));
+		put("isme", getUserId().equals(user.getId()));
 		put("categories", entityDao.getAll(Category.class));
 	}
 

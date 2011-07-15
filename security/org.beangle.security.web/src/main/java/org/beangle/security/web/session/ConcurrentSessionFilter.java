@@ -25,8 +25,8 @@ import javax.servlet.http.HttpSession;
 
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.SecurityContextHolder;
-import org.beangle.security.core.session.SessionInfo;
 import org.beangle.security.core.session.SessionRegistry;
+import org.beangle.security.core.session.SessionStatus;
 import org.beangle.security.web.auth.logout.LogoutHandlerStack;
 import org.beangle.security.web.auth.logout.SecurityContextLogoutHandler;
 import org.beangle.web.filter.GenericHttpFilterBean;
@@ -55,7 +55,7 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 
 	private SessionRegistry sessionRegistry;
 	private String expiredUrl;
-	private LogoutHandlerStack handlerStack=new LogoutHandlerStack(new SecurityContextLogoutHandler());
+	private LogoutHandlerStack handlerStack = new LogoutHandlerStack(new SecurityContextLogoutHandler());
 
 	@Override
 	protected void initFilterBean() {
@@ -69,11 +69,12 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 			throws IOException, ServletException {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			SessionInfo info = sessionRegistry.getSessionInfo(session.getId());
+			SessionStatus info = sessionRegistry.getSessionStatus(session.getId());
 			// Expired - abort processing
 			if (null != info) {
 				if (info.isExpired()) {
 					doLogout(request, response);
+					sessionRegistry.remove(session.getId());
 					String targetUrl = determineExpiredUrl(request, info);
 					if (targetUrl != null) {
 						RedirectUtils.sendRedirect(request, response, targetUrl);
@@ -85,9 +86,6 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 						response.flushBuffer();
 					}
 					return;
-				} else {
-					// Non-expired - update last request date/time
-					info.refreshLastRequest();
 				}
 			}
 		}
@@ -95,7 +93,7 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 		chain.doFilter(request, response);
 	}
 
-	protected String determineExpiredUrl(HttpServletRequest request, SessionInfo info) {
+	protected String determineExpiredUrl(HttpServletRequest request, SessionStatus info) {
 		return expiredUrl;
 	}
 

@@ -7,18 +7,16 @@ package org.beangle.ems.security.session.model;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
-import org.beangle.model.pojo.LongIdObject;
 import org.beangle.ems.security.Category;
-import org.beangle.ems.security.session.CategoryProfile;
-import org.beangle.ems.security.session.SessionProfile;
+import org.beangle.model.pojo.LongIdObject;
 
-@Entity(name = "org.beangle.ems.security.session.CategoryProfile")
-public class CategoryProfileBean extends LongIdObject implements CategoryProfile {
+@Entity
+public class CategoryProfileBean extends LongIdObject {
 
 	private static final long serialVersionUID = 1999239598984221565L;
 
 	@NotNull
-	protected SessionProfile sessionProfile;
+	protected SessionProfileBean sessionProfile;
 
 	@NotNull
 	protected Category category;
@@ -44,11 +42,11 @@ public class CategoryProfileBean extends LongIdObject implements CategoryProfile
 		this.inactiveInterval = inactiveInterval;
 	}
 
-	public SessionProfile getSessionProfile() {
+	public SessionProfileBean getSessionProfile() {
 		return sessionProfile;
 	}
 
-	public void setSessionProfile(SessionProfile sessionProfile) {
+	public void setSessionProfile(SessionProfileBean sessionProfile) {
 		this.sessionProfile = sessionProfile;
 	}
 
