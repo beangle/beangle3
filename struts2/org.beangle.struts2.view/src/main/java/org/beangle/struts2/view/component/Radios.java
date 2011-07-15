@@ -1,7 +1,12 @@
 package org.beangle.struts2.view.component;
 
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import org.apache.commons.lang.StringUtils;
-import org.beangle.struts2.view.component.UIBean;
+import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.StrUtils;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
@@ -11,44 +16,70 @@ public class Radios extends UIBean {
 
 	private String label;
 
-	private Object titles;
+	private Object items;
 
 	private Radio[] radios;
 
-	private Object checked;
+	private Object value;
 
 	private String comment;
 
 	public Radios(ValueStack stack) {
 		super(stack);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected void evaluateParams() {
 		if (null == this.id) generateIdIfEmpty();
-		String[] titleArray;
-		if (titles == null) {
-			titleArray = new String[] { "1:是", "0:否" };
-		} else {
-			titleArray = StringUtils.split(titles.toString(), ',');
-		}
-		radios = new Radio[titleArray.length];
 		if (null != label) label = getText(label);
-		for (int i = 0; i < titleArray.length; i++) {
+
+		List<?> keys = convertItems();
+		radios = new Radio[keys.size()];
+		int i = 0;
+		for (Object key : keys) {
 			radios[i] = new Radio(stack);
-			String titleValue = titleArray[i];
-			String value = "";
-			String title = "";
-			int semiconIndex = titleValue.indexOf(':');
-			if (-1 != semiconIndex) {
-				title = titleValue.substring(semiconIndex + 1);
-				value = titleValue.substring(0, semiconIndex);
-			}
-			radios[i].setTitle(title);
-			radios[i].setValue(value);
+			radios[i].setTitle(String.valueOf(((Map<?,?>)items).get(key)));
+			radios[i].setValue(key);
+			radios[i].setId(StrUtils.concat(this.id + "_" + String.valueOf(i)));
 			radios[i].evaluateParams();
+			i++;
 		}
+		if (null == this.value && radios.length > 0) this.value = radios[0].getValue();
+		this.value = Radio.booleanize(this.value);
+
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private List<?> convertItems() {
+		if (items instanceof Map) return CollectUtils.newArrayList(((Map<Object, Object>) items).keySet());
+		Map<Object, Object> defaultItemMap = new TreeMap<Object, Object>();
+		defaultItemMap.put("1", "是");
+		defaultItemMap.put("0", "否");
+		List<?> defaultKeys = CollectUtils.newArrayList("1", "0");
+		Map<Object, Object> itemMap = new TreeMap<Object, Object>();
+		List keys = CollectUtils.newArrayList();
+		if (null == items) {
+			keys = defaultKeys;
+			items = defaultItemMap;
+		} else if (items instanceof String) {
+			if (StringUtils.isBlank((String) items)) {
+				keys = defaultKeys;
+				items = defaultItemMap;
+			} else {
+				String[] titleArray = StringUtils.split(items.toString(), ',');
+				for (int i = 0; i < titleArray.length; i++) {
+					String titleValue = titleArray[i];
+					int semiconIndex = titleValue.indexOf(':');
+					if (-1 != semiconIndex) {
+						keys.add(titleValue.substring(0, semiconIndex));
+						itemMap.put(titleValue.substring(0, semiconIndex),
+								titleValue.substring(semiconIndex + 1));
+					}
+				}
+				items = itemMap;
+			}
+		}
+		return keys;
 	}
 
 	public String getName() {
@@ -59,12 +90,12 @@ public class Radios extends UIBean {
 		this.name = name;
 	}
 
-	public Object getTitles() {
-		return titles;
+	public Object getItems() {
+		return items;
 	}
 
-	public void setTitles(Object titles) {
-		this.titles = titles;
+	public void setItems(Object items) {
+		this.items = items;
 	}
 
 	public Radio[] getRadios() {
@@ -83,12 +114,12 @@ public class Radios extends UIBean {
 		this.label = label;
 	}
 
-	public Object getChecked() {
-		return checked;
+	public Object getValue() {
+		return value;
 	}
 
-	public void setChecked(Object checked) {
-		this.checked = checked;
+	public void setValue(Object value) {
+		this.value = value;
 	}
 
 	public String getComment() {

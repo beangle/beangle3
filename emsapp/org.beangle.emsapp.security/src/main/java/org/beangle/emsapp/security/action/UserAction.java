@@ -119,6 +119,10 @@ public class UserAction extends SecurityActionSupport {
 	 */
 	protected String saveAndForward(Entity<?> entity) {
 		User user = (User) entity;
+		if (entityDao.duplicate(User.class, user.getId(), "name", user.getName())) {
+			addFlashMessageNow("security.error.usernameNotAvaliable", user.getName());
+			return forward(new Action(this, "edit"));
+		}
 		String errorMsg = "";
 		// // 收集用户身份
 		String[] categories = StringUtils.split(get("categoryIds"), ",");
@@ -222,20 +226,17 @@ public class UserAction extends SecurityActionSupport {
 	public String activate() {
 		Long[] userIds = getEntityIds();
 		String isActivate = get("isActivate");
-		try {
-			User manager = userService.get(getUserId());
-			if (StringUtils.isNotEmpty(isActivate) && "false".equals(isActivate)) {
-				userService.updateState(manager, userIds, false);
-			} else {
-				userService.updateState(manager, userIds, true);
-			}
-		} catch (Exception e) {
-			return forward(ERROR, "error.occurred");
+		int successCnt;
+		User manager = userService.get(getUserId());
+		String msg = "security.info.freeze.success";
+		if (StringUtils.isNotEmpty(isActivate) && "false".equals(isActivate)) {
+			successCnt = userService.updateState(manager, userIds, false);
+		} else {
+			msg = "security.info.activate.success";
+			successCnt = userService.updateState(manager, userIds, true);
 		}
-		String msg = "ok.activate";
-		if (StringUtils.isNotEmpty(isActivate) && "false".equals(isActivate)) msg = "info.unactivate.success";
-
-		return redirect("search", msg);
+		addFlashMessage(msg, successCnt);
+		return redirect("search");
 	}
 
 	/**

@@ -1,10 +1,16 @@
 package org.beangle.struts2.view.component;
 
 import java.text.SimpleDateFormat;
+import java.util.Map;
+
+import org.beangle.commons.collection.CollectUtils;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
 public class Date extends UIBean {
+
+	public static final Map<String, String> ResvervedFormats = CollectUtils.toMap(new String[] { "date",
+			"yyyy-MM-dd" }, new String[] { "datetime", "yyyy-MM-dd HH:mm:ss" });
 
 	private String name;
 
@@ -20,7 +26,7 @@ public class Date extends UIBean {
 
 	private Object value = "";
 
-	private String format = "yyyy-MM-dd";
+	private String format = "date";
 
 	protected String minDate;
 
@@ -44,6 +50,8 @@ public class Date extends UIBean {
 			if ("true".equals(required)) myform.addCheck(id, "require()");
 			if (null != check) myform.addCheck(id, check);
 		}
+		String format2 = ResvervedFormats.get(format);
+		if (null != format2) format = format2;
 		if (value instanceof java.util.Date) {
 			SimpleDateFormat dformat = new SimpleDateFormat(format);
 			value = dformat.format((java.util.Date) value);

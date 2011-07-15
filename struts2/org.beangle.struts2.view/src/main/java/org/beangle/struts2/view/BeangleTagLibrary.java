@@ -24,6 +24,7 @@ import org.beangle.struts2.view.component.Component;
 import org.beangle.struts2.view.component.Css;
 import org.beangle.struts2.view.component.Date;
 import org.beangle.struts2.view.component.Div;
+import org.beangle.struts2.view.component.Emailfield;
 import org.beangle.struts2.view.component.Field;
 import org.beangle.struts2.view.component.Foot;
 import org.beangle.struts2.view.component.Form;
@@ -243,6 +244,10 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 
 	public TagModel getTextfield() {
 		return get(Textfield.class);
+	}
+
+	public TagModel getEmailfield() {
+		return get(Emailfield.class);
 	}
 
 	public TagModel getTextarea() {

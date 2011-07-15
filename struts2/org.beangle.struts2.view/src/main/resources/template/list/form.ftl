@@ -1,6 +1,5 @@
 [#ftl]
-[#--<script  type="text/javascript" src="${base}/static/scripts/jquery.validity.js"></script>
-<link href="/demo/static/themes/default/jquery.validity.css" rel="stylesheet" type="text/css" />--]
+[@b.messages slash="4"/]
 <form id="${tag.id}" [#if !tag.parameters['cssClass']??]class="listform"[/#if] name="${tag.name}" action="${tag.action}" method="post" [#if tag.target??]target="${tag.target}"[/#if]${tag.parameterString} 
 [#if tag.validate=="true" || tag.onsubmit??]onsubmit="return onsubmit${tag.id}()"[/#if]>
 <fieldset>

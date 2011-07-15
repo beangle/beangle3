@@ -7,14 +7,14 @@ package org.beangle.struts2.view.component;
 import com.opensymphony.xwork2.util.ValueStack;
 
 /**
+ *
  * @author chaostone
- * @version $Id: Password.java May 3, 2011 2:18:50 PM chaostone $
+ * @version $Id: Emailfield.java Jul 15, 2011 11:13:53 AM chaostone $
  */
-public class Password extends AbstractTextBean {
+public class Emailfield extends AbstractTextBean {
 
-	public Password(ValueStack stack) {
+	public Emailfield(ValueStack stack) {
 		super(stack);
-		maxlength = "10";
+		check="match('email')";
 	}
-
 }

@@ -602,7 +602,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 	 * @param id
 	 * @return boolean(是否存在) 如果entityId为空或者有不一样的entity存在则认为存在。
 	 */
-	public boolean duplicate(Class<? extends Entity<?>> clazz, Long id, String codeName, Object codeValue) {
+	public boolean duplicate(Class<? extends Entity<?>> clazz, Serializable id, String codeName, Object codeValue) {
 		if (null != codeValue && StringUtils.isNotEmpty(codeValue.toString())) {
 			List<? extends Entity<?>> list = get(clazz, codeName, new Object[] { codeValue });
 			if (list != null && !list.isEmpty()) {
@@ -620,7 +620,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 		return false;
 	}
 
-	public boolean duplicate(String entityName, Long id, Map<String, Object> params) {
+	public boolean duplicate(String entityName, Serializable id, Map<String, Object> params) {
 		StringBuilder b = new StringBuilder("from ");
 		b.append(entityName).append(" where (1=1)");
 		Map<String, Object> paramsMap = CollectUtils.newHashMap();

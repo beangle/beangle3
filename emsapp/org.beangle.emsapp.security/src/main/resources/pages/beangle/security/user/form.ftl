@@ -2,6 +2,7 @@
 [@b.head/]
 [#assign labInfo][#if user.id??]${b.text("action.modify")}[#else]${b.text("action.new")}[/#if] ${b.text("entity.user")}[/#assign]
 [@b.toolbar title=labInfo]bar.addBack("${b.text("action.back")}");[/@]
+[@b.messages/]
 [@b.form name="userForm" action="!save" cssClass="listform"]
 [@sj.tabbedpanel id="userTabs"]
 	[@sj.tab id="userTab1" label="用户信息" target="userInfo"/]
@@ -13,36 +14,29 @@
 	[@b.div id="userInfo" theme="list" asContainer="false"]
 	<fieldset><legend>${b.text('ui.userInfo')}</legend><ol>
 		[@b.textfield label="user.name"  name="user.name" value="${user.name!}" style="width:200px;" required="true" maxlength="30"/]
-		[@b.field label="common.status" required="true"]
-		 <input value="1" id="user_status_1" type="radio" [#if isme]disabled="disabled"[/#if] name="user.enabled" [#if user.enabled]checked="checked"[/#if] />
-		 <label for="user_status_1">${b.text("action.activate")}</label>
-		 [#if !isadmin]
-		 <input value="0" id="user_status_0" type="radio" name="user.status" [#if isme]disabled="disabled"[/#if] [#if !user.enabled]checked="checked"[/#if] />
-		 <label for="user_status_0">${b.text("action.freeze")}</label>
-		 [/#if]
-		[/@]
-		[@b.textfield label="user.fullname" name="user.fullname" value="${user.fullname!}" style="width:200px;" required="true" maxlength="60" /]
-		[@b.password label="密码" name="password" value="" axLength="60" comment="默认密码为1"/]
-		[@b.textfield label="common.email" name="user.mail" value="${user.mail!}" style="width:300px;" maxlength="70" required="true"/]
+		[@b.radios name="user.enabled" label="common.status" value=user.enabled items="1:action.activate,0:action.freeze"/]
+		[@b.textfield label="user.fullname" name="user.fullname" value="${user.fullname!}" style="width:200px;" required="true" maxlength="50" /]
+		[@b.password label="密码" name="password" value="" comment="默认密码为1"/]
+		[@b.emailfield label="common.email" name="user.mail" value="${user.mail!}" style="width:300px;" required="true" maxlength="50"/]
 		[@b.field label="entity.userCategory" required="true"]
 		  [#list categories as category]
 		  <input name="categoryIds" id="categoryIds${category.id}" value="${category.id}" type="checkbox" [#if user.categories?seq_contains(category)]checked="checked"[/#if] />
-		  <label for="categoryIds${category.id}">${category.name}</label>
+		  <label for="categoryIds${category.id}">${category.title}</label>
 		  [/#list]
 		&nbsp;&nbsp;&nbsp;默认
 		  <select name="user.defaultCategory.id">
 		  [#list categories as category]
-			 <option value="${category.id}" [#if (user.defaultCategory??)&&(user.defaultCategory.id==category.id)]selected="selected"[/#if]>${category.name}</option>
+			 <option value="${category.id}" [#if (user.defaultCategory??)&&(user.defaultCategory.id==category.id)]selected="selected"[/#if]>${category.title}</option>
 		  [/#list]
 		  </select>
 		[/@]
 		[#if isadmin|| isme]
-		[@b.startend label="common.effective-invalid" name="user.effectiveAt,user.invalidAt" required="true,false" start=user.effectiveAt end=user.invalidAt format="yyyy-MM-dd HH:mm:ss" disabled="disabled"/]
+		[@b.startend label="common.effective-invalid" name="user.effectiveAt,user.invalidAt" required="true,false" start=user.effectiveAt end=user.invalidAt format="datetime" disabled="disabled"/]
 		[#else]
-		[@b.startend label="common.effective-invalid" name="user.effectiveAt,user.invalidAt" required="true,false" start=user.effectiveAt end=user.invalidAt format="yyyy-MM-dd HH:mm:ss"/]
+		[@b.startend label="common.effective-invalid" name="user.effectiveAt,user.invalidAt" required="true,false" start=user.effectiveAt end=user.invalidAt format="datetime"/]
 		[/#if]
-		[@b.datepicker label="user.passwordExpiredAt" name="user.passwordExpiredAt" value=user.passwordExpiredAt format="yyyy-MM-dd HH:mm:ss"/]
-		[@b.textarea label="common.remark" cols="50" rows="1" name="user.remark" value="${user.remark!}" maxlength="100"/]
+		[@b.datepicker label="user.passwordExpiredAt" name="user.passwordExpiredAt" value=user.passwordExpiredAt format="datetime"/]
+		[@b.textarea label="common.remark" cols="50" rows="1" name="user.remark" value="${user.remark!}" maxlength="50"/]
 		[@b.formfoot]
 			<input type="hidden" name="user.id" value="${user.id!}" />
 			[@b.redirectParams/]
@@ -52,7 +46,7 @@
 		</ol></fieldset>
 	[/@]
 	<div id="groupmember">
-	[@b.grid  items=members var="m"]
+	[@b.grid  items=members?sort_by(["group","name"]) var="m" sortable="false"]
 		[@b.row]
 			[@b.col title=""]<input name="groupId" type="checkbox" onchange="changeMember(${m.group.id},this)"/>[/@]
 			[@b.col title="序号"]${m_index+1}[/@]

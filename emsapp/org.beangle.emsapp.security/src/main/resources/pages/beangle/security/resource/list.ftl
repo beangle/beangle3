@@ -39,7 +39,4 @@
 	[/@]
 [/@]
 [/@]
-<script>
-alert(document.resourceForm.innerHTML)
-</script>
 [@b.foot/]

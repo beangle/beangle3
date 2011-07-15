@@ -4,10 +4,12 @@
  */
 package org.beangle.struts2.action;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.xwork.CharUtils;
 import org.beangle.struts2.convention.Flash;
 import org.beangle.struts2.convention.route.Action;
 
@@ -45,7 +47,7 @@ public class DispatchAction extends ActionSupport {
 	}
 
 	protected String forward(Action action, String message) {
-		addActionMessage(getText(message));
+		if (null != message) addActionMessage(getText(message));
 		return forward(action);
 	}
 
@@ -57,6 +59,10 @@ public class DispatchAction extends ActionSupport {
 	 */
 	protected String redirect(String method, String message, String params) {
 		return redirect(new Action((String) null, method, params), message);
+	}
+
+	protected String redirect(String method) {
+		return redirect(new Action(method), null);
 	}
 
 	/**
@@ -76,16 +82,34 @@ public class DispatchAction extends ActionSupport {
 		return "redirectAction:dispatch_action";
 	}
 
+	private String getTextInternal(String msgKey, Object... args) {
+		if (null == msgKey) return null;
+		if (CharUtils.isAsciiAlpha(msgKey.charAt(0)) && msgKey.indexOf('.') > 0) {
+			if (args.length > 0) return getText(msgKey, Arrays.asList(args));
+			else return getText(msgKey);
+		} else {
+			return msgKey;
+		}
+	}
+
 	protected void addMessage(String msgKey) {
-		addActionMessage(getText(msgKey));
+		addActionMessage(getTextInternal(msgKey));
 	}
 
 	protected void addError(String msgKey) {
-		addActionError(getText(msgKey));
+		addActionError(getTextInternal(msgKey));
 	}
 
 	protected void addFlashMessage(String msgKey) {
-		getFlash().addMessage(getText(msgKey));
+		getFlash().addMessage(getTextInternal(msgKey));
+	}
+
+	protected void addFlashMessage(String msgKey, Object... args) {
+		getFlash().addMessage(getTextInternal(msgKey, args));
+	}
+
+	protected void addFlashMessageNow(String msgKey, Object... args) {
+		getFlash().addMessageNow(getTextInternal(msgKey, args));
 	}
 
 	protected Flash getFlash() {

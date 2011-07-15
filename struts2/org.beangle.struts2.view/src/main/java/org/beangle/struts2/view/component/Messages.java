@@ -6,12 +6,17 @@ package org.beangle.struts2.view.component;
 
 import java.util.Collection;
 
+import org.beangle.struts2.action.ActionSupport;
+
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.ValueStack;
 
 public class Messages extends UIBean {
 
 	Collection<String> actionMessages = null;
 	Collection<String> actionErrors = null;
+
+	private String clear = "true";
 
 	public Messages(ValueStack stack) {
 		super(stack);
@@ -24,6 +29,12 @@ public class Messages extends UIBean {
 		actionErrors = (Collection<String>) findValue("actionErrors");
 		if (!actionErrors.isEmpty() || !actionMessages.isEmpty()) {
 			generateIdIfEmpty();
+			if ("true".equals(clear)) {
+				Object action = ActionContext.getContext().getActionInvocation().getAction();
+				if (action instanceof ActionSupport) {
+					((ActionSupport) action).clearErrorsAndMessages();
+				}
+			}
 		}
 	}
 
@@ -33,6 +44,10 @@ public class Messages extends UIBean {
 
 	public boolean hasActionMessages() {
 		return !actionMessages.isEmpty();
+	}
+
+	public void setClear(String clear) {
+		this.clear = clear;
 	}
 
 	public Collection<String> getActionMessages() {

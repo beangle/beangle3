@@ -30,6 +30,8 @@ public class Startend extends UIBean {
 	protected void evaluateParams() {
 		String[] nameArray = StringUtils.split(name, ',');
 		dates = new Date[nameArray.length];
+		String format2 = Date.ResvervedFormats.get(format);
+		if (null != format2) format = format2;
 		String[] requiredArray = StringUtils.split(required, ',');
 		String[] commentArray = StringUtils.split(comment, ',');
 		String[] labelArray = StringUtils.split(label, ',');

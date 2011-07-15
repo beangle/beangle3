@@ -1,10 +1,22 @@
 package org.beangle.struts2.view.component;
 
-import org.beangle.struts2.view.component.UIBean;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
 public class Radio extends UIBean {
+	public static final Map<Object, String> Booleans = new HashMap<Object, String>();
+	static {
+		Booleans.put(Boolean.TRUE, "1");
+		Booleans.put(Boolean.FALSE, "0");
+		Booleans.put("y", "1");
+		Booleans.put("Y", "1");
+		Booleans.put("true", "1");
+		Booleans.put("N", "0");
+		Booleans.put("n", "0");
+		Booleans.put("false", "0");
+	}
 
 	public Radio(ValueStack stack) {
 		super(stack);
@@ -13,7 +25,7 @@ public class Radio extends UIBean {
 	protected String name;
 	protected String label;
 	protected String title;
-	protected String value = "";
+	protected Object value = "";
 
 	@Override
 	protected void evaluateParams() {
@@ -24,6 +36,7 @@ public class Radio extends UIBean {
 		} else {
 			title = label;
 		}
+		this.value = booleanize(value);
 	}
 
 	public String getName() {
@@ -50,11 +63,16 @@ public class Radio extends UIBean {
 		this.label = label;
 	}
 
-	public String getValue() {
+	public Object getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(Object value) {
 		this.value = value;
+	}
+
+	public static Object booleanize(Object obj) {
+		Object booleanValue = Booleans.get(obj);
+		return null == booleanValue ? obj : booleanValue;
 	}
 }

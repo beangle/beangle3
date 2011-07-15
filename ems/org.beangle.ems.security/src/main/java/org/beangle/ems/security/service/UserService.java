@@ -76,7 +76,7 @@ public interface UserService {
 	 * @param userIds
 	 * @param enabled
 	 */
-	public void updateState(User manager, Long[] userIds, boolean enabled);
+	public int updateState(User manager, Long[] userIds, boolean enabled);
 
 	/**
 	 * 创建帐户

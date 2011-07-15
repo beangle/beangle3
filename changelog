@@ -1,3 +1,17 @@
+2011-07-15  duantihua   <chaostone.duan@gmail.com>
+	* beangle-model增加了StringIdEntity和StringIdObject接口，支持对实体进行区分对待和处理
+	* beangle-model中EntityDao增加了save接口
+	* beangle-ems/emsapp中增加了BusinessEvent及其handler
+	* beangle-ems/emsapp中增加了dictionary
+	* beangle-ems/emsapp中增加了logentry??
+	* beangle-struts2-view增加了emailfield,
+	* beangle-struts2-view中datepicker增加了内置的date\datetime的format支持
+	* beangle-struts2-view中password内置了maxlength=10
+	* list主题的form内置了b.messages
+	* 为了防止b.messages的多次显示，加入了clear参数
+	* beangle-struts-convention中的DispatchAction增加了addFlashMessage(key,Object...args)，以及不加消息直接调用的redirect(string method)方法
+	* beangle-struts-convention中的DispatchAction中增加addFlashMessageNow支持forward消息。
+
 2011-07-01  duantihua   <chaostone.duan@gmail.com>
 	* beangle-model增加了LoggingEntity和FlashEntity接口，支持对实体进行区分对待和处理
 

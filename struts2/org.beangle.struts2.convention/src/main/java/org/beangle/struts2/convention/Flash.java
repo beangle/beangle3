@@ -107,12 +107,29 @@ public class Flash implements Map<Object, Object>, Serializable {
 		return now.values();
 	}
 
+	/**
+	 * 添加消息到下一次请求
+	 * @param message
+	 */
 	public void addMessage(String message) {
 		@SuppressWarnings("unchecked")
-		List<String> messages = (List<String>) get(Flash.MESSAGES);
+		List<String> messages = (List<String>) next.get(Flash.MESSAGES);
 		if (null == messages) {
 			messages = CollectUtils.newArrayList();
 			put(Flash.MESSAGES, messages);
+		}
+		messages.add(message);
+	}
+	/**
+	 * 添加消息到下一次请求
+	 * @param message
+	 */
+	public void addMessageNow(String message) {
+		@SuppressWarnings("unchecked")
+		List<String> messages = (List<String>) now.get(Flash.MESSAGES);
+		if (null == messages) {
+			messages = CollectUtils.newArrayList();
+			now.put(Flash.MESSAGES, messages);
 		}
 		messages.add(message);
 	}

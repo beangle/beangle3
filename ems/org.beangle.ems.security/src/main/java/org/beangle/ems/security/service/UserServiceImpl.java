@@ -8,8 +8,6 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityExistsException;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.ObjectUtils;
@@ -21,7 +19,6 @@ import org.beangle.ems.security.User;
 import org.beangle.ems.security.model.GroupMemberBean;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
-import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * 用户信息服务的实现类
@@ -64,12 +61,13 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return entityDao.get(User.class, userIds);
 	}
 
-	public void updateState(final User manager, Long[] ids, boolean enabled) {
+	public int updateState(final User manager, Long[] ids, final boolean enabled) {
 		assert (null == ids || ids.length < 1);
 		@SuppressWarnings("unchecked")
 		List<User> users = (List<User>) CollectionUtils.select(getUsers(ids), new Predicate() {
 			public boolean evaluate(Object object) {
-				return isManagedBy(manager, (User) object) && !manager.equals(object);
+				User one = (User) object;
+				return isManagedBy(manager, one) && !manager.equals(one) && (one.isEnabled()!=enabled);
 			}
 		});
 
@@ -79,20 +77,15 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		entityDao.saveOrUpdate(users);
 		publish(new AccountStatusEvent(users, enabled));
+		return users.size();
 	}
 
 	public void saveOrUpdate(User user) {
-		try {
-			user.setUpdatedAt(new Date(System.currentTimeMillis()));
-			if (!user.isPersisted()) {
-				user.setCreatedAt(new Date(System.currentTimeMillis()));
-			}
-			entityDao.saveOrUpdate(user);
-		} catch (DataIntegrityViolationException e) {
-			throw new EntityExistsException("User already exits:" + user);
-		} catch (Exception e) {
-			throw new EntityExistsException("User already exits:" + user);
+		user.setUpdatedAt(new Date(System.currentTimeMillis()));
+		if (!user.isPersisted()) {
+			user.setCreatedAt(new Date(System.currentTimeMillis()));
 		}
+		entityDao.saveOrUpdate(user);
 	}
 
 	// workground for no session

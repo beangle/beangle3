@@ -422,8 +422,8 @@ public interface EntityDao {
 
 	public boolean exist(Class<?> entity, String[] attrs, Object[] values);
 
-	public boolean duplicate(String entityName, Long id, Map<String, Object> params);
+	public boolean duplicate(String entityName, Serializable id, Map<String, Object> params);
 
-	public boolean duplicate(Class<? extends Entity<?>> clazz, Long id, String codeName, Object codeValue);
+	public boolean duplicate(Class<? extends Entity<?>> clazz, Serializable id, String codeName, Object codeValue);
 
 }
