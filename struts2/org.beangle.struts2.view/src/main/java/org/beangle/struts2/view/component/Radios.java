@@ -26,7 +26,7 @@ public class Radios extends UIBean {
 
 	@Override
 	protected void evaluateParams() {
-		if (null == this.id) id = name;
+		if (null == this.id) generateIdIfEmpty();
 		String[] titleArray;
 		if (titles == null) {
 			titleArray = new String[] { "1:是", "0:否" };
@@ -34,6 +34,7 @@ public class Radios extends UIBean {
 			titleArray = StringUtils.split(titles.toString(), ',');
 		}
 		radios = new Radio[titleArray.length];
+		if (null != label) label = getText(label);
 		for (int i = 0; i < titleArray.length; i++) {
 			radios[i] = new Radio(stack);
 			String titleValue = titleArray[i];

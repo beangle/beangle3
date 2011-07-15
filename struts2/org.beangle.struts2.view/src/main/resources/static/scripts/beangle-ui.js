@@ -237,6 +237,7 @@
 			item_div.className="toolbar-item";
 			var menuTableId=this.id+this.itemCount+"_menu";
 			item_div.id=menuTableId;
+			item_div.tabIndex = 0;
 			item_div.onmouseout=MouseOutItem;
 			item_div.onmouseover=MouseOverItem;
 			this.items_div.appendChild(item_div);
@@ -253,9 +254,27 @@
 				item_div.appendChild(span1);
 				item_div.appendChild(span2);
 			}
+			item_div.onblur = function (event){hiddenMenu(event);};
 			var menu = new Menu(menuTableId,item_div);
 			this.itemCount++;
 			return menu;
+		}
+		
+		function hiddenMenu(event){
+			var div=bg.event.getTarget(event);
+			while(div && div.tagName.toLowerCase()!='div'){
+				div=div.parentNode;
+			}
+			var menu=div.lastElementChild || div.lastChild;
+			if(null==menu || menu.tagName.toLowerCase()!='table'){alert('menu is null then return and target is '+div);return;}
+			if(menu.style.visibility!=""&&menu.style.visibility!="hidden"){
+				for(var i = 0;i < menu.rows.length;i++){
+					if(menu.rows[i].cells[0].className=='toolbar-menuitem-transfer'){
+						return;
+					}
+				}
+				menu.style.visibility="hidden";
+			}
 		}
 		
 		function displayMenu(event){
@@ -279,9 +298,12 @@
 		function Menu(id,item_div){
 			var table=document.createElement("table");
 			table.className="toolbar-menu";
-			table.id=id;
+			table.id=id+"Table";
 			var mytablebody = document.createElement("tbody");
 			table.appendChild(mytablebody);
+			if (jQuery("#" + id).find("span").length>0) {
+				table.onclick = function (event){displayMenu(event);};
+			}
 			item_div.appendChild(table);
 			this.table=table; 
 			/**
