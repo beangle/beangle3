@@ -19,9 +19,8 @@
 	[/@]
 	[@b.select2 label="数据限制对象" name1st="RestrictEntities"  name2nd="restrictEntityId" items1st=restrictEntities items2nd=resource.entities/]
 	[@b.formfoot]
-		[@b.submit value="action.submit"/]
+		[@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit"/]
 		[@b.redirectParams/]
-		<input type="reset" value="${b.text('action.reset')}"/>
 		<input type="hidden" name="resource.id" value="${(resource.id)!}" />
 	[/@]
 [/@]

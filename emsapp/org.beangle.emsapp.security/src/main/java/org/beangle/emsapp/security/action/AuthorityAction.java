@@ -39,17 +39,6 @@ public class AuthorityAction extends SecurityActionSupport {
 	private MenuService menuService;
 
 	/**
-	 * 主页面
-	 */
-	public String index() {
-		put("manager", getUser());
-		if (isAdmin()) {
-			put("allGroups", entityDao.getAll(Group.class));
-		}
-		return forward();
-	}
-
-	/**
 	 * 根据菜单配置来分配权限
 	 * 
 	 * @author 鄂州蚊子
@@ -159,11 +148,11 @@ public class AuthorityAction extends SecurityActionSupport {
 			mngResources.addAll(m.getResources());
 		}
 
-		Set<Authority> removedResources = CollectUtils.newHashSet();
+		Set<Authority> removedAuthorities = CollectUtils.newHashSet();
 		for (final Authority au : mao.getAuthorities()) {
 			if (mngResources.contains(au.getResource())) {
 				if (!newResources.contains(au.getResource())) {
-					removedResources.add(au);
+					removedAuthorities.add(au);
 				} else {
 					newResources.remove(au.getResource());
 				}
@@ -171,7 +160,7 @@ public class AuthorityAction extends SecurityActionSupport {
 		}
 
 		// 删除菜单和系统资源
-		mao.getAuthorities().removeAll(removedResources);
+		mao.getAuthorities().removeAll(removedAuthorities);
 
 		for (Resource resource : newResources) {
 			Authority authority = Model.newInstance(Authority.class);
@@ -180,6 +169,7 @@ public class AuthorityAction extends SecurityActionSupport {
 			mao.getAuthorities().add(authority);
 		}
 
+		entityDao.remove(removedAuthorities);
 		entityDao.saveOrUpdate(mao);
 		authorityManager.refreshGroupAuthorities(new GrantedAuthorityBean(mao.getName()));
 

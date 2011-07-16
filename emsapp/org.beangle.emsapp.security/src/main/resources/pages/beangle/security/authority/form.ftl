@@ -35,7 +35,7 @@
 <tr>
 <td valign="top">
 [@b.toolbar]
-	bar.setTitle('[@b.a href="group"]用户组[/@]-->菜单和资源权限');
+	bar.setTitle('用户组-->菜单和资源权限');
 	bar.addItem("${b.text("action.spread")}","displayAllRowsFor(1);",'${b.theme.iconurl('tree/plus.png')}');
 	bar.addItem("${b.text("action.collapse")}","collapseAllRowsFor(1);",'${b.theme.iconurl('tree/minus.png')}');
 	bar.addItem("${b.text("action.save")}",save,'save.png');

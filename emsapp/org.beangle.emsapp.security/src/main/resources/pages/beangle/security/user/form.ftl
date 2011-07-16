@@ -34,8 +34,7 @@
 		[@b.formfoot]
 			<input type="hidden" name="user.id" value="${user.id!}" />
 			[@b.redirectParams/]
-			[@b.submit value="action.submit" onsubmit="validateUser" /]&nbsp;
-			<input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />
+			[@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit" onsubmit="validateUser" /]&nbsp;
 		[/@]
 		</ol></fieldset>
 	[/@]

@@ -3,7 +3,7 @@
 [@b.grid items="rules" var="rule"]
 	[@b.gridbar title="dd"]
 	bar.addItem("${b.text("action.info")}",action.info());
-	bar.addItem("${b.text("action.add")}",action.add());
+	bar.addItem("${b.text("action.new")}",action.add());
 	bar.addItem("${b.text("action.modify")}",action.edit());
 	bar.addItem("${b.text("action.delete")}",action.remove());
 	bar.addItem("编辑参数",action.single('params'));

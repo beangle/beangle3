@@ -76,7 +76,7 @@ public class MyAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String edit() {
-		put("user", getUser());
+		put("user",entityDao.get(User.class, getUserId()));
 		return forward();
 	}
 

@@ -19,7 +19,7 @@
 	bar.addItem("${b.text("action.edit")}",action.edit());
 	bar.addItem("${b.text("action.freeze")}",activate(0),'${b.theme.iconurl('actions/freeze.png')}');
 	bar.addItem("${b.text("action.activate")}",activate(1),'${b.theme.iconurl('actions/activate.png')}');
-	bar.addItem("${b.text("action.export")}",action.exportData("code:代码,name:${b.text('common.name')},title:标题,entry:入口,remark:${b.text('common.remark')},enabled:是否可用"));
+	bar.addItem("${b.text("action.export")}",action.exportData("code:代码,name:${b.text('common.name')},title:标题,entry:入口,remark:${b.text('common.remark')},enabled:是否可用",null,"&fileName=菜单信息"));
 	bar.addItem("${b.text("action.delete")}",action.remove());
 	bar.addItem("打印","preview()","print.png");
 	bar.addItem("菜单配置","redirectTo('${b.url('menu-profile!search')}')");

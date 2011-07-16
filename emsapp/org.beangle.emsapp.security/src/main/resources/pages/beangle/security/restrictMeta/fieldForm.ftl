@@ -11,8 +11,7 @@
 	[@b.select2 label="restriction.entities" required="true" name1st="Entitys" name2nd="entityId" items1st=entities items2nd=field.entities /]
 	[@b.formfoot]
 		<input type="hidden" name="field.id" value="${(field.id)!}" style="width:200px;" />
-		[@b.submit value="action.submit" /]
-		<input type="reset"  name="reset1" value="${b.text("action.reset")}" />
+		[@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit" /]
 	[/@]
 </table>
 [/@]

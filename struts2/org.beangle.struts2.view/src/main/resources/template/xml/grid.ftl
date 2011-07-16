@@ -47,5 +47,10 @@ bar.addPage(page_${tag.id},[#if tag.parameters['fixPageSize']??][][#else]null[/#
 [#if tag.var??]action=bar.addEntityAction('${tag.var}',page_${tag.id});[/#if]
 ${tag.bar!}
 [/#if]
+[#-- refresh interval --]
+[#if tag.refresh??]
+if(typeof ${tag.id}_timer !="undefined"){clearTimeout(${tag.id}_timer)}
+var ${tag.id}_timer=setTimeout(function(){if(document.getElementById('${tag.id}')) page_${tag.id}.goPage()},${tag.refresh}*1000);
+[/#if]
 </script>
 </div>

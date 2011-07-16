@@ -40,7 +40,7 @@ function validateEntity(form){
 <div id="restrict_fields">
 [@b.grid items=fields var="field"]
 	[@b.gridbar ]
-		bar.addItem("${b.text("action.new")}",action.method('editField'));
+		bar.addItem("${b.text("action.new")}",action.method('editField'),'${b.theme.iconurl("actions/new.png")}');
 		bar.addItem("${b.text("action.edit")}",action.single('editField'));
 		bar.addItem("${b.text("action.delete")}",action.single('removeField'));
 	[/@]

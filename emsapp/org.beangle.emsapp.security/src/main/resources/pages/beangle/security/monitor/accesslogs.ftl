@@ -1,6 +1,8 @@
 [#ftl]
+[@b.head/]
+[#include "nav.ftl"/]
 [@b.toolbar title="系统资源访问记录(耗时最长的500条)"/]
-[@b.grid id="accesslogTable" items=accesslogs var="accesslog"]
+[@b.grid items=accesslogs var="accesslog" refresh="10"]
 	[@b.gridbar]
 	bar.addPrint("${b.text("action.print")}");
 	[/@]
@@ -16,18 +18,4 @@
 	[/@]
 [/@]
 [#if (accesslogs?size==0)]没有记录可能是由于没有启用资源访问过滤器.[/#if]
-<script type="text/javascript">
-	function refresh(){
-		if(document.getElementById("accesslogTable")){
-			page_accesslogTable.goPage();
-		}else{
-			if(typeof refreshTime != undefined){
-				clearTimeout(refreshTime);
-			}
-		}
-	}
-	if(typeof refreshTime != undefined){
-		clearTimeout(refreshTime);
-	}
-	refreshTime=setTimeout(refresh,${Parameters['interval']!"5"}*1000);
-</script>
+[@b.foot/]

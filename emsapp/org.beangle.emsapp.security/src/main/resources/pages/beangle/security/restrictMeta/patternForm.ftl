@@ -5,7 +5,7 @@ bar.addBack("${b.text("action.back")}");
 [/@]
 [@b.form action="!savePattern" theme="list" title="数据限制模式"]
 	[@b.textfield label="描述" name="pattern.remark" value="${pattern.remark!}" maxlength="50" required="true"/]
-	[@b.textarea label="模式" name="pattern.content" required="true" value="${pattern.content!}" maxlength="400" rows="4" style="width:500px;"/]
+	[@b.textarea label="restrictPattern.content" name="pattern.content" required="true" value="${pattern.content!}" maxlength="400" rows="4" style="width:500px;"/]
 	[@b.field required="true" label="entity.restrictEntity"]
 			<select name="pattern.entity.id"  style="width:200px">
 			 [#list entities as entity]
@@ -15,8 +15,7 @@ bar.addBack("${b.text("action.back")}");
 	[/@]
 	[@b.formfoot]
 		<input type="hidden" name="pattern.id" value="${(pattern.id)!}" style="width:200px;" />
-		[@b.submit value="action.submit" /]
-		<input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />
+		[@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit" /]
 	[/@]
 </table>
 [/@]

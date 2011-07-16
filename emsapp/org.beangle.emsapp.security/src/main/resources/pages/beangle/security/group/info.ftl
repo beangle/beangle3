@@ -18,7 +18,7 @@ bar.addBack("${b.text("action.back")}");
 	</tr>
 	<tr>
 	<td class="title" >适用身份:</td>
-	<td  class="content">${userGroup.category.name}</td>
+	<td  class="content">${userGroup.category.title}</td>
 	<td class="title" >&nbsp;${b.text("common.status")}:</td>
 	<td class="content">
 		[#if userGroup.enabled] ${b.text("action.activate")}

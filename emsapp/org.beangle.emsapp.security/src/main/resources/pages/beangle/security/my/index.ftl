@@ -73,7 +73,7 @@ div .portlet-content{margin:2px;}
 				<li>[@b.a href="!edit" target="user-info"]修改密码[/@]</li>
 				[@bs.guard res="/avatar/my-upload"]<li>[@b.a href="/avatar/my-upload"]更换头像[/@]</li>[/@]
 				[@bs.guard res="/preference"]<li>[@b.a href="/perference"]设置偏好[/@]</li>[/@]
-				<li>[@b.a href="/logout"]退出系统[/@]</li>
+				<li>[@b.a href="/logout" target="_self"]退出系统[/@]</li>
 			</ul>
 		</div>
 	</div>

@@ -1,13 +1,27 @@
 [#ftl]
 [@b.head/]
-<script>
-	//标签卡刷新定时器
-	var refreshTime=null;
-</script>
-[@b.tabs]
-	[@b.tab label="当前会话" href="!activities"/]
-	[@b.tab label="会话配置" href="!profiles"/]
-	[@b.tab label="历史会话" href="/security/sessioninfo-log"/]
-	[@b.tab label="访问日志" href="!accesslogs?ordreBy=duration%20desc"/]
+[#include "nav.ftl"/]
+[#assign statTitle] ${sessionStat.sessions}/${sessionStat.capacity}(${b.now?string('yyyy-MM-dd HH:mm:ss')}) [#list sessionStat.details?keys as k]${k}(${sessionStat.details.get(k).online}/${sessionStat.details.get(k).capacity}) [/#list][/#assign]
+[@b.toolbar title="当前服务器会话 ${statTitle}"][/@]
+[#assign refreshInterval=Parameters['interval']!"10"/]
+[@b.grid items=sessioninfos var="sessioninfo" refresh="${refreshInterval}"]
+	[@b.gridbar]
+	bar.addItem("过期",action.multi('invalidate','确定过期选择的会话吗?'),'edit-delete.png');
+	bar.addItem("结束",action.multi('invalidate','确定结束选择的会话吗?','kill=1'),'edit-delete.png');
+	[/@]
+	[@b.row]
+		[@b.boxcol/]
+		[@b.col width="15%" title="sessioninfo.username" property="username"]
+			[@b.a href="user!dashboard?user.name=${sessioninfo.username}" target="_blank"]${(sessioninfo.fullname!(''))?html}(${(sessioninfo.username!(''))?html})[/@]
+		[/@]
+		[@b.col width="12%" title="sessioninfo.loginAt" property="loginAt"]${sessioninfo.loginAt?string("yy-MM-dd HH:mm")}[/@]
+		[@b.col width="8%" title="sessioninfo.onlineTime" property="onlineTime" sortable="false"]${(sessioninfo.onlineTime)/1000/60}min[/@]
+		[@b.col width="15%" title="sessioninfo.ip" property="ip"/]
+		[@b.col width="10%" title="sessioninfo.os" property="os"/]
+		[@b.col width="10%" title="sessioninfo.agent" property="agent"/]
+		[@b.col width="8%" title="sessioninfo.category" property="category"/]
+		[@b.col width="8%" title="sessioninfo.expired" property="expiredAt"]${sessioninfo.expired?string("过期","在线")}[/@]
+	[/@]
 [/@]
+<div>定时每${refreshInterval}秒刷新</div>
 [@b.foot/]

@@ -5,7 +5,7 @@
 [@b.module title="用户类别列表"]
 	<ul>
 	[#list categories as category]
-	<li>${category.name}</li>
+	<li>${category.title}</li>
 	[/#list]
 	</ul>
 [/@]

@@ -38,7 +38,7 @@ public class MonitorAction extends SecurityActionSupport {
 	private SessionRegistry sessionRegistry;
 
 	private CategoryProfileService categoryProfileService;
-	
+
 	private CachedResourceAccessor resourceAccessor;
 
 	public String profiles() {
@@ -95,7 +95,7 @@ public class MonitorAction extends SecurityActionSupport {
 		return sessionStats;
 	}
 
-	public String activities() {
+	public String index() {
 		String orderBy = get("orderBy");
 		if (StringUtils.isEmpty(orderBy)) {
 			orderBy = "sessioninfo.loginAt desc";
@@ -113,8 +113,8 @@ public class MonitorAction extends SecurityActionSupport {
 	 * 保存设置
 	 */
 	public String saveProfile() {
-		OqlBuilder<CategoryProfileBean> builder=OqlBuilder.from(CategoryProfileBean.class,"p");
-		builder.where("p.sessionProfile.name=:serverName",sessionRegistry.getController().getServerName());
+		OqlBuilder<CategoryProfileBean> builder = OqlBuilder.from(CategoryProfileBean.class, "p");
+		builder.where("p.sessionProfile.name=:serverName", sessionRegistry.getController().getServerName());
 		List<CategoryProfileBean> categories = entityDao.getAll(CategoryProfileBean.class);
 		for (final CategoryProfileBean profile : categories) {
 			Long categoryId = profile.getCategory().getId();
@@ -132,17 +132,20 @@ public class MonitorAction extends SecurityActionSupport {
 	}
 
 	public String invalidate() {
-		String[] sessionIds = (String[]) getAll("sessioninfo.id");
+		String[] sessionIds = getEntityIds("sessioninfo", String.class);
 		String mySessionId = ServletActionContext.getRequest().getSession().getId();
 		boolean killed = getBool("kill");
+		int success = 0;
 		if (null != sessionIds) {
 			for (String sessionId : sessionIds) {
 				if (mySessionId.equals(sessionId)) continue;
 				if (killed) sessionRegistry.remove(sessionId);
 				else sessionRegistry.expire(sessionId);
+				success++;
 			}
 		}
-		return redirect("activities", "info.action.success");
+		addFlashMessage(killed ? "security.info.session.kill" : "security.info.session.expire", success);
+		return redirect("index");
 	}
 
 	/**

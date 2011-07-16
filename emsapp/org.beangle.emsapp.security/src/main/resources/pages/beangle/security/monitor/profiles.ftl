@@ -1,4 +1,6 @@
 [#ftl]
+[@b.head/]
+[#include "nav.ftl"/]
 [@b.messages slash="true"/]
 [@b.form action="!saveProfile"]
 <table width="70%">
@@ -18,7 +20,8 @@
 	[/#list]
 	<tr>
 		<td  colspan="5">注:最大会话数指单个用户同时在线数量&nbsp;&nbsp;
-		[@b.submit value="提交" onsubmit="validateProfile"/]
+		&nbsp;
+		[@b.reset/]&nbsp;&nbsp;[@b.submit value="提交" onsubmit="validateProfile"/]
 		</td>
 	</tr>
 </table>
@@ -33,3 +36,4 @@
 		return true;
 	}
 </script>
+[@b.foot/]

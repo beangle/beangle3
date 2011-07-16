@@ -1,7 +1,6 @@
 [#ftl]
 [@b.head/]
 [@b.toolbar title="数据权限"]
- bar.addHelp();
 [/@]
 [#if (restrictions?size==0)]没有设置[/#if]
  [#list restrictions as restriction]
@@ -20,7 +19,7 @@
 <br/>
 
 [#list patterns! as pattern]
- <li>${pattern.remark!} <a onclick="add('${pattern.id}')" href='#'>添加</a></li>
+ <li>${pattern.remark!} <a onclick="add('${pattern.id}')" href='#'>${b.text('action.new')}</a></li>
 [/#list]
 [@b.form name="restrictionForm" ]
 	<input type="hidden" name="restrictionType" value="${Parameters['restrictionType']}"/>

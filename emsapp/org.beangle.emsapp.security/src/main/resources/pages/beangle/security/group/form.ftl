@@ -11,8 +11,7 @@
 			[@b.formfoot]
 				<input type="hidden" name="userGroup.id" value="${userGroup.id!}" />
 				[@b.redirectParams/]
-				[@b.submit value="action.submit"/]
-				<input type="reset"  name="reset1" value="${b.text("action.reset")}" />
+				[@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit"/]
 			[/@]
 		[/@]
 	[/@]

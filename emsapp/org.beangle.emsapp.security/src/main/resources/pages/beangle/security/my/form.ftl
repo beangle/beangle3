@@ -2,14 +2,13 @@
 [@b.head/]
 <script type="text/javascript" src="${base}/static/scripts/md5.js"></script>
 [@b.form action="!save" title="我的账户" theme="list"]
-	[@b.password label="user.oldPassword" name="oldPassword"  value="${user.password}" required="true" maxlength="64" /]
-	[@b.password label="user.newPassword" name="password" required="true" maxlength="64" /]
-	[@b.password label="user.repeatPassword" name="repeatedPassword" required="true"  maxlength="64"/]
-	[@b.textfield label="common.email" name="mail" value="${user.mail}" check="match('email')" maxlength="100" /]
+	[@b.password label="user.oldPassword" name="oldPassword"  value="" required="true" maxlength="40" /]
+	[@b.password label="user.newPassword" name="password" required="true"  /]
+	[@b.password label="user.repeatPassword" name="repeatedPassword" required="true" /]
+	[@b.emailfield label="common.email" name="mail" value="${user.mail}" /]
 	[@b.formfoot]
 		<input type="hidden" name="user.id" value="${user.id}"/>
-		[@b.submit value="action.submit"  onsubmit="validateMyAccount" /]&nbsp;
-		<input type="reset" value="${b.text("action.reset")}" name="reset1" />
+		[@b.reset /]&nbsp;&nbsp;[@b.submit value="action.submit"  onsubmit="validateMyAccount" /]
 		<input type="hidden" name="oldPassword_encoded" value="${user.password}"/>
 	[/@]
 [/@]

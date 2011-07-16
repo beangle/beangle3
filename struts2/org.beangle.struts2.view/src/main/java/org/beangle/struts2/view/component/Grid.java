@@ -14,6 +14,7 @@ import java.util.Set;
 import org.apache.commons.lang.xwork.ObjectUtils;
 import org.apache.commons.lang.xwork.StringEscapeUtils;
 import org.apache.commons.lang.xwork.StringUtils;
+import org.apache.commons.lang.xwork.math.NumberUtils;
 import org.apache.struts2.util.MakeIterator;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.Page;
@@ -37,6 +38,9 @@ public class Grid extends ClosingUIBean {
 	private String sortable = "true";
 	private String filterable = "false";
 	private Map<String, String> filters = CollectUtils.newHashMap();
+
+	/** 重新载入的时间间隔（以秒为单位） */
+	private String refresh;
 
 	public Grid(ValueStack stack) {
 		super(stack);
@@ -96,6 +100,15 @@ public class Grid extends ClosingUIBean {
 
 	public void setVar(String var) {
 		this.var = var;
+	}
+
+	public String getRefresh() {
+		return refresh;
+	}
+
+	public void setRefresh(String refresh) {
+		int refreshNum = NumberUtils.toInt(refresh);
+		if (refreshNum > 0) this.refresh = String.valueOf(refreshNum);
 	}
 
 	public void setItems(Object datas) {
@@ -349,7 +362,7 @@ public class Grid extends ClosingUIBean {
 			if (row.index == 0) {
 				row.table.addCol(this);
 			}
-			return null!=row.curObj;
+			return null != row.curObj;
 		}
 
 		@Override

@@ -25,8 +25,8 @@
 	[@b.select2 label="使用资源" name1st="Resources" name2nd="resourceId" items1st=resources?sort_by("name") items2nd= menu.resources?sort_by("name") option="id,description"/]
 	[@b.textarea label="common.remark"  name="menu.remark" maxlength="50" value=menu.remark! rows="2" cols="40"/]
 	[@b.formfoot]
-		[@b.submit value="action.submit" /]&nbsp;
-		<input type="reset"  name="reset1" value="${b.text("action.reset")}" class="buttonStyle" />
+		[@b.reset/]&nbsp;&nbsp;
+		[@b.submit value="action.submit" /]
 		[@b.redirectParams/]
 		<input type="hidden" name="menu.id" value="${menu.id!}" />
 	[/@]
