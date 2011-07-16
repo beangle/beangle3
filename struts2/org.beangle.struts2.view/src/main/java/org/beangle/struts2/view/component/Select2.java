@@ -5,6 +5,7 @@
 package org.beangle.struts2.view.component;
 
 import org.apache.commons.lang.xwork.StringUtils;
+import org.beangle.commons.lang.StrUtils;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
@@ -21,8 +22,8 @@ public class Select2 extends UIBean {
 	private Object items1st, items2nd;
 	private String size = "10";
 
-	private String style="width:250px;height:200px";
-	
+	private String style = "width:250px;height:200px";
+
 	public Select2(ValueStack stack) {
 		super(stack);
 	}
@@ -30,6 +31,18 @@ public class Select2 extends UIBean {
 	@Override
 	protected void evaluateParams() {
 		if (null != label) label = getText(label);
+		generateIdIfEmpty();
+		Form myform = findAncestor(Form.class);
+		if (null != myform) {
+			String mySelectId = id + "_1";
+			if ("true".equals(required)) {
+				myform.addCheck(mySelectId, "assert(bg.select.selectAll,'requireSelect')");
+			} else {
+				myform.addCheck(mySelectId, StrUtils.concat(
+						"assert(bg.select.selectAll(document.getElementById('", mySelectId, "'))||true)"));
+			}
+		}
+
 	}
 
 	public String getName1st() {

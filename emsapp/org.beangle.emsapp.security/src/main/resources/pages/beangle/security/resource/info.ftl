@@ -1,7 +1,7 @@
 [#ftl]
 [@b.head/]
 [#include "scope.ftl"/]
-[@b.toolbar title="security.resource.info"]bar.addClose();[/@]
+[@b.toolbar title="security.resource.info"]bar.addBack();[/@]
 <table class="infoTable">
 	<tr>
 	 <td class="title">标题:</td>

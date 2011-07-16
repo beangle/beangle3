@@ -1,5 +1,6 @@
 jQuery.extend(jQuery.validity.messages, {
 	require:"请填写#{field}",
+	requireSelect:"请选择#{field}",
 	// Format validators:
 	match:"#{field}格式无效",
 	integer:"#{field}应为整数",

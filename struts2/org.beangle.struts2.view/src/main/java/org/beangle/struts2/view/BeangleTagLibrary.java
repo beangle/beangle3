@@ -23,6 +23,7 @@ import org.beangle.struts2.view.component.Anchor;
 import org.beangle.struts2.view.component.Component;
 import org.beangle.struts2.view.component.Css;
 import org.beangle.struts2.view.component.Date;
+import org.beangle.struts2.view.component.Dialog;
 import org.beangle.struts2.view.component.Div;
 import org.beangle.struts2.view.component.Emailfield;
 import org.beangle.struts2.view.component.Field;
@@ -45,6 +46,8 @@ import org.beangle.struts2.view.component.Select;
 import org.beangle.struts2.view.component.Select2;
 import org.beangle.struts2.view.component.Startend;
 import org.beangle.struts2.view.component.Submit;
+import org.beangle.struts2.view.component.Tab;
+import org.beangle.struts2.view.component.Tabs;
 import org.beangle.struts2.view.component.Textarea;
 import org.beangle.struts2.view.component.Textfield;
 import org.beangle.struts2.view.component.Textfields;
@@ -150,6 +153,10 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		return get(Head.class);
 	}
 
+	public TagModel getDialog() {
+		return get(Dialog.class);
+	}
+
 	public TagModel getCss() {
 		return get(Css.class);
 	}
@@ -176,6 +183,14 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 
 	public TagModel getToolbar() {
 		return get(Toolbar.class);
+	}
+
+	public TagModel getTabs() {
+		return get(Tabs.class);
+	}
+
+	public TagModel getTab() {
+		return get(Tab.class);
 	}
 
 	public TagModel getGrid() {

@@ -11,7 +11,7 @@
 	<meta http-equiv="expires" content="0"/>
 	<meta http-equiv="content-style-type" content="text/css"/>
 	<meta http-equiv="content-script-type" content="text/javascript"/>
-	[@sj.head/]
+	[@sj.head /]
 	<link id="beangle_theme_link" href="${base}/static/themes/${b.theme.ui}/beangle-ui.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="${base}/static/scripts/beangle.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/beangle-ui.js?ver=1"></script>

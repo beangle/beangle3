@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.lang.StrUtils;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.nav.Menu;
@@ -77,11 +76,7 @@ public class MenuAction extends SecurityActionSupport {
 	protected String saveAndForward(Entity<?> entity) {
 		Menu menu = (Menu) entity;
 		try {
-			List<Resource> resources = CollectUtils.newArrayList();
-			String resourceIdSeq = get("resourceIds");
-			if (null != resourceIdSeq && resourceIdSeq.length() > 0) {
-				resources = entityDao.get(Resource.class, StrUtils.splitToLong(resourceIdSeq));
-			}
+			List<Resource> resources = entityDao.get(Resource.class, getAll("resourceId", Long.class));
 			menu.getResources().clear();
 			menu.getResources().addAll(resources);
 			Long newParentId = getLong("parent.id");

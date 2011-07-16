@@ -67,6 +67,10 @@ public class BaseAction extends DispatchAction {
 		return Params.getAll(paramName);
 	}
 
+	protected <T> T[] getAll(String paramName, Class<T> clazz) {
+		return Params.getAll(paramName, clazz);
+	}
+
 	protected String get(String paramName) {
 		return Params.get(paramName);
 	}

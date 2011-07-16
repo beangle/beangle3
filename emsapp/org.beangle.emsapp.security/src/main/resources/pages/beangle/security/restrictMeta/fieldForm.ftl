@@ -7,21 +7,12 @@
 	[@b.textfield label="数据源" name="field.source" value="${(field.source)!}" style="width:400px;" maxlength="100" comment="java.lang中的基本类型，此处可以为空"/]
 	[@b.textfield label="主键属性" name="field.keyName" value="${(field.keyName)!}" maxlength="40"/]
 	[@b.textfield label="其它显示属性" name="field.propertyNames" value="${(field.propertyNames)!}" maxlength="100"  /]
-	[@b.field label="是否允许多值" required="true"]
-	  <input type="radio" name="field.multiple" value="1" [#if field.multiple]checked="checked"[/#if] />是
-	  <input type="radio" name="field.multiple" value="0" [#if !field.multiple]checked="checked"[/#if] />否
-	[/@]
-	[@b.select2 label="restriction.entities" required="true" name1st="Entitys" name2nd="SelectedEntity" items1st=entities items2nd=field.entities /]
+	[@b.radios label="是否允许多值" name="field.multiple"  value=field.multiple/]
+	[@b.select2 label="restriction.entities" required="true" name1st="Entitys" name2nd="entityId" items1st=entities items2nd=field.entities /]
 	[@b.formfoot]
-		<input type="hidden" name="entityIds" value=""/>
 		<input type="hidden" name="field.id" value="${(field.id)!}" style="width:200px;" />
-		[@b.submit value="action.submit" onsubmit="validateField" /]
+		[@b.submit value="action.submit" /]
 		<input type="reset"  name="reset1" value="${b.text("action.reset")}" />
 	[/@]
 </table>
 [/@]
-<script>
-function validateField(form){
-	form['entityIds'].value = bg.select.getValues(form.SelectedEntity);
-}
-</script>

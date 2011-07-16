@@ -132,7 +132,7 @@ public class MonitorAction extends SecurityActionSupport {
 	}
 
 	public String invalidate() {
-		String[] sessionIds = (String[]) getAll("sessionId");
+		String[] sessionIds = (String[]) getAll("sessioninfo.id");
 		String mySessionId = ServletActionContext.getRequest().getSession().getId();
 		boolean killed = getBool("kill");
 		if (null != sessionIds) {

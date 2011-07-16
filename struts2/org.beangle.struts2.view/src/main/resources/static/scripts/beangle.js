@@ -75,7 +75,7 @@
 			var finalTarget="_self";
 			while(p){
 				//FIXME ui-tabs-panel
-				if(p.id && p.className  && (p.className.indexOf("_ajax_container")>-1||p.className.indexOf("ui-tabs-panel")>-1)){
+				if(p.id && p.className  && (p.className.indexOf("_ajax_target")>-1 )){//||p.className.indexOf("ui-tabs-panel")>-1
 					finalTarget = p.id;
 					break;
 				}else{
@@ -553,10 +553,14 @@
 			},
 			
 			clearStatus : function (select){
-				for (var i=0; i<select.length; i++)
+				for (var i=0; i<select.options.length; i++)
 					select.options[i].selected = false;
 			},
-
+			selectAll : function(select){
+				for (var i=0; i<select.options.length; i++)
+					select.options[i].selected = true;
+				return select.options.length>0;
+			},
 			removeSelected : function (select){
 				var options = select.options;
 				for (var i=options.length-1; i>=0; i--){   

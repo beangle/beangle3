@@ -89,7 +89,7 @@ a:hover {color: red;}
 
 .toolbar-line {height:1px;font-size:0pt;}
 
-._ajax_container{}
+._ajax_target{}
 
 /* message */
 div.error, div.message {

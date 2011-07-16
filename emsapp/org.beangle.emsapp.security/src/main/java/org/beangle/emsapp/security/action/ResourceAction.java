@@ -4,7 +4,6 @@
  */
 package org.beangle.emsapp.security.action;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.beangle.commons.lang.StrUtils;
@@ -65,11 +64,8 @@ public class ResourceAction extends SecurityActionSupport {
 					"edit", "error.notUnique"); }
 		}
 
-		Long[] entityIds = StrUtils.splitToLong(get("restrictEntityIds"));
-		List<RestrictEntity> entities = Collections.emptyList();
-		if (null != entityIds) {
-			entities = entityDao.get(RestrictEntity.class, entityIds);
-		}
+		List<RestrictEntity> entities = entityDao.get(RestrictEntity.class,
+				getAll("restrictEntityId", Long.class));
 		resource.getEntities().clear();
 		resource.getEntities().addAll(entities);
 

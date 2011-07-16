@@ -13,7 +13,7 @@ public class Div extends ClosingUIBean {
 
 	private String href;
 
-	private String asContainer;
+	private String astarget;
 
 	public Div(ValueStack stack) {
 		super(stack);
@@ -25,12 +25,12 @@ public class Div extends ClosingUIBean {
 			generateIdIfEmpty();
 			href = render(this.href);
 		}
-		if (!ObjectUtils.equals(asContainer, "false")) {
+		if (!ObjectUtils.equals(astarget, "false")) {
 			String className = "";
 			if (null != parameters.get("class")) {
 				className = " " + parameters.get("class").toString();
 			}
-			parameters.put("class", StrUtils.concat("_ajax_container", className));
+			parameters.put("class", StrUtils.concat("_ajax_target", className));
 		}
 	}
 
@@ -42,12 +42,12 @@ public class Div extends ClosingUIBean {
 		this.href = href;
 	}
 
-	public String getAsContainer() {
-		return asContainer;
+	public String getAstarget() {
+		return astarget;
 	}
 
-	public void setAsContainer(String asContainer) {
-		this.asContainer = asContainer;
+	public void setAstarget(String astarget) {
+		this.astarget = astarget;
 	}
 
 }

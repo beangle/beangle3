@@ -1,6 +1,5 @@
 [#ftl]
 [@b.head title="Login"/]
-<script type="text/javascript" src="${base}/static/scripts/common/OnReturn.js"></script>
 <script type="text/javascript">
 	if(this.parent!=this){ this.top.location="${b.url('login')}"; }
 </script>
@@ -8,7 +7,7 @@
 <div style="text-align:center;margin-top:150px;border:4px">权限系统</div>
 <div >
 	[@b.form name="loginForm" action="login" target="_top"]
-	<table onkeypress="ret.focus(event)" style="margin:auto;">
+	<table style="margin:auto;">
 		<tr><td colspan="3">[@b.messages/]</td></tr>
 		<tr>
 			<td><label for="username"><strong>用户名:</strong></label></td>
@@ -45,15 +44,7 @@
 	[/@]
 </div>
 <script type="text/javascript">
-	var ret = new OnReturn(document.loginForm);
-	ret.add("username");
-	ret.add("password");
-	[#if needCaptcha]
-	ret.add("captcha");
-	[/#if]
-	ret.add("submitBtn");
 	var form  = document.loginForm;
-
 	function checkLogin(form){
 		if(!form['username'].value){
 			alert("用户名称不能为空");return false;

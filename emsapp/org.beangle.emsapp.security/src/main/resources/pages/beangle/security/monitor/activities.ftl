@@ -9,7 +9,7 @@
 	bar.addItem("结束","killSession()",'edit-delete.png');
 	[/@]
 	[@b.row]
-		[@b.boxcol boxname="sessionId" property="sessionid"/]
+		[@b.boxcol/]
 		[@b.col width="15%" title="sessioninfo.username" property="username"]
 			[@b.a href="user!dashboard?user.name=${sessioninfo.username}" target="_blank"]${(sessioninfo.fullname!(''))?html}(${(sessioninfo.username!(''))?html})[/@]
 		[/@]

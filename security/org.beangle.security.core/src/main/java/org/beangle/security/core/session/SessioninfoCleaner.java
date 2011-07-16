@@ -23,8 +23,8 @@ public class SessioninfoCleaner implements InitializingBean {
 
 	private SessionRegistry sessionRegistry;
 
-	// 默认十分钟清理一次
-	private int cleanInterval = 1000 * 600;
+	// 默认一刻钟分钟清理一次
+	private int cleanInterval = 1000 * 900;
 
 	public void afterPropertiesSet() throws Exception {
 		Validate.notNull(sessionRegistry);

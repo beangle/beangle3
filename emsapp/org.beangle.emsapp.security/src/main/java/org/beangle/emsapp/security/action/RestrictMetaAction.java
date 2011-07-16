@@ -6,9 +6,6 @@ package org.beangle.emsapp.security.action;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.lang.StrUtils;
 import org.beangle.ems.security.restrict.RestrictEntity;
 import org.beangle.ems.security.restrict.RestrictField;
 import org.beangle.ems.security.restrict.RestrictPattern;
@@ -89,7 +86,7 @@ public class RestrictMetaAction extends SecurityActionSupport {
 		if (null != fieldId) {
 			RestrictField field = (RestrictField) entityDao.get(RestrictField.class, fieldId);
 			try {
-				for(RestrictEntity entity:field.getEntities()){
+				for (RestrictEntity entity : field.getEntities()) {
 					entity.getFields().remove(field);
 				}
 				entityDao.saveOrUpdate(field.getEntities());
@@ -101,7 +98,7 @@ public class RestrictMetaAction extends SecurityActionSupport {
 		}
 		return redirect("fields", "info.remove.success");
 	}
-	
+
 	public String editField() {
 		RestrictField field = getEntity(RestrictField.class, "field");
 		List<RestrictEntity> entities = entityDao.getAll(RestrictEntity.class);
@@ -112,22 +109,18 @@ public class RestrictMetaAction extends SecurityActionSupport {
 	}
 
 	public String saveField() {
-		String entityIds = get("entityIds");
-		List<RestrictEntity> entities = CollectUtils.newArrayList();
-		if (StringUtils.isNotBlank(entityIds)) {
-			entities = entityDao.get(RestrictEntity.class, StrUtils.splitToLong(entityIds));
-		}
-		//FIXME Too complex
+		List<RestrictEntity> entities = entityDao.get(RestrictEntity.class, getAll("entityId", Long.class));
+		// FIXME Too complex
 		RestrictField field = populateEntity(RestrictField.class, "field");
-		for(RestrictEntity entity:field.getEntities()){
+		for (RestrictEntity entity : field.getEntities()) {
 			entity.getFields().remove(field);
 		}
-		for(RestrictEntity entity:entities){
+		for (RestrictEntity entity : entities) {
 			entity.getFields().add(field);
 		}
 		field.getEntities().clear();
 		field.getEntities().addAll(entities);
-		entityDao.saveOrUpdate(field,entities);
+		entityDao.saveOrUpdate(field, entities);
 		return redirect("fields", "info.save.success");
 	}
 

@@ -96,7 +96,7 @@ public class RestrictionAction extends SecurityActionSupport {
 		}
 		if (restriction.getItems().isEmpty()) {
 			holder.getRestrictions().remove(restriction);
-			entityDao.remove(restriction);
+			if (restriction.isPersisted()) entityDao.remove(restriction);
 			entityDao.saveOrUpdate(holder);
 			return redirect("info", "info.save.success");
 		} else {

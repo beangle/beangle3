@@ -901,11 +901,12 @@
 
                 // In the case that 'expression' is a function, 
                 // use it as a regimen on each matched element individually:
+                // add $.validity.messages[msg] duantihua 2011-07-16 support localized message
                 if ($.isFunction(expression)) {
                     return validate(
                         this,
                         expression,
-                        msg || $.validity.messages.generic
+                        $.validity.messages[msg] || msg || $.validity.messages.generic
                     );
                 }
 

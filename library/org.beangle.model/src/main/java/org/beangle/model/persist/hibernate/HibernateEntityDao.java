@@ -498,8 +498,9 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 	}
 
 	public void remove(Object... entities) {
-		for (Object entity : entities)
+		for (Object entity : entities){
 			getHibernateTemplate().delete(entity);
+		}
 	}
 
 	public boolean remove(Class<?> clazz, String attr, Object... values) {
