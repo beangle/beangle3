@@ -13,8 +13,9 @@
 	<meta http-equiv="content-script-type" content="text/javascript"/>
 	[@sj.head /]
 	<link id="beangle_theme_link" href="${base}/static/themes/${b.theme.ui}/beangle-ui.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="${base}/static/scripts/beangle.js"></script>
-	<script type="text/javascript" src="${base}/static/scripts/beangle-ui.js?ver=1"></script>
+	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-2.4.1.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui-2.4.1.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/my97/WdatePicker-4.72.js"></script>
 ${tag.body}
 </head>
 <body>

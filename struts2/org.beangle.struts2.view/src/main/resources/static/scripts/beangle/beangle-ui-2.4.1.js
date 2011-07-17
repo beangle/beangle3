@@ -440,7 +440,7 @@
 		if(!ranks) ranks=[10,20,30,50,70,100,200,500,1000];
 		else if(ranks.length==0) ranks=[onePage.pageSize];
 		
-		if(!titles) titles={first:'« First',previous:'‹ Previous',next:'Next ›',last:'Last »',no:'No:',size:'Size:',change:'Click me to change page size'};
+		if(!titles) titles={first:'« First',previous:'‹ Previous',next:'Next ›',last:'Last »',no:'No:',size:'Size:',change:'Click me to change page size',pagesize:'Page Size'};
 		var maxPageNo = onePage.maxPageNo;
 		addAnchor=function(text,pageNumber){
 			var pageHref=document.createElement('a');
@@ -483,7 +483,7 @@
 			pageNoSelect.id=pageDiv.id+"_select";
 			pagespan.appendChild(pageNoSelect);
 			pageNoSelect.className="pgbar-selbox";
-			pageNoSelect.title="page size";
+			pageNoSelect.title=titles['pagesize']||'Page Size';
 			var selectIndex=0;
 			for(var i=0;i<ranks.length;i++){
 				if(ranks[i]==onePage.pageSize) selectIndex=i;
@@ -842,17 +842,17 @@
 			var base=bg.getContextPath();
 			if(uimodule=="validity"){
 				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/jquery.validity.css",base);
-				jQuery.struts2_jquery.require("/static/scripts/jquery.validity.js",null,base);
-				if(jQuery.struts2_jquery.scriptCache["/static/scripts/lang/jquery.validity_zh.js"] && callback){
+				jQuery.struts2_jquery.require("/static/scripts/jquery.validity-1.1.1.js",null,base);
+				if(jQuery.struts2_jquery.scriptCache["/static/scripts/i18n/zh_CN/jquery.validity.js"] && callback){
 					callback()
 				}else{
-					jQuery.struts2_jquery.require("/static/scripts/lang/jquery.validity_zh.js",callback,base);
+					jQuery.struts2_jquery.require("/static/scripts/i18n/zh_CN/jquery.validity.js",callback,base);
 				}
 			}else if(uimodule=="tabletree"){
 				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/beangle-ui-tabletree.css",base);
 				jQuery.struts2_jquery.require("/static/scripts/beangle-ui-tabletree.js",callback,base);
 			}else if(uimodule=="My97DatePicker"){
-				jQuery.struts2_jquery.require("/static/scripts/My97DatePicker/WdatePicker.js",callback,base);
+				//jQuery.struts2_jquery.require("/static/scripts/My97DatePicker/WdatePicker.js",callback,base);
 			}
 		}
 	});

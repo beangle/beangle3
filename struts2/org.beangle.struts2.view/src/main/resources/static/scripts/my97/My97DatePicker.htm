@@ -19,7 +19,7 @@ else
 $dp.getLangIndex = function(name){
 	var arr = langList;
 	for (var i = 0; i < arr.length; i++) {
-		if (arr[i].name == name) {
+		if (arr[i].name.toLowerCase() == name) {
 			return i;
 		}
 	}
@@ -33,12 +33,18 @@ $dp.getLang = function(name){
 	}
 	return langList[index];
 }
- 
+
 $dp.realLang = $dp.getLang($dp.lang);
-document.write("<script src='lang/" + $dp.realLang.name + ".js' charset='" + $dp.realLang.charset + "'><\/script>");
+function normalizeLang(name){
+	name=name.replace('-','_');
+	var index=name.indexOf('_');
+	if(index>0) name = name.substring(0,index) +  name.substring(index).toUpperCase();
+	return name;
+}
+document.write("<script src='../i18n/" + normalizeLang($dp.realLang.name) + "/WdatePicker.js' charset='" + $dp.realLang.charset + "'><\/script>");
 
 for (var i = 0; i < skinList.length; i++) {
-    document.write('<link rel="stylesheet" type="text/css" href="skin/' + skinList[i].name + '/datepicker.css" title="' + skinList[i].name + '" charset="' + skinList[i].charset + '" disabled="true"/>');
+    document.write('<link rel="stylesheet" type="text/css" href="../../themes/' + skinList[i].name + '/datepicker.css" title="' + skinList[i].name + '" charset="' + skinList[i].charset + '" disabled="true"/>');
 }
 </script>
 <script type="text/javascript" src="calendar.js"></script>
