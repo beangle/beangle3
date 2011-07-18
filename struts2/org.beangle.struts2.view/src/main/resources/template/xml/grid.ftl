@@ -5,11 +5,11 @@
 <thead class="gridhead">
 [#if tag.filterable="true" || tag.filters?size>0]
 <tr>
-	<th  onclick="document.getElementById('${tag.id}_filter_submit').onclick()"><img src="${b.theme.iconurl('actions/edit-find.png')}"/>[@b.submit id="${tag.id}_filter_submit" style="display:none"/]</th>
+	<th  onclick="document.getElementById('${tag.id}_filter_submit').onclick()" class="gridselect-top"><img src="${b.theme.iconurl('actions/edit-find.png')}"/>[@b.submit id="${tag.id}_filter_submit" style="display:none"/]</th>
 	[#list tag.cols as cln]
 	[#if !(cln.type??)]
 	[#if tag.isFilterable(cln)]
-	<th title="${cln.title}">
+	<th title="${cln.title}" [#if cln.width??]width="${cln.width}"[/#if]>
 	[#if tag.filters[cln.property]??]${tag.filters[cln.property]}[#else]<input type="text" name="${cln.propertyPath}"  maxlength="100" value="${(Parameters[cln.propertyPath]!)?html}" style="width:95%;"/>[/#if]
 	</th>
 	[#else]<th></th>[/#if]

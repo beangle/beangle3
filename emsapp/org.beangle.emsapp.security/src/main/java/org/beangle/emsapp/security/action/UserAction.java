@@ -18,10 +18,10 @@ import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.model.GroupMemberBean;
-import org.beangle.ems.security.service.UserPropertyExtractor;
 import org.beangle.ems.security.service.UserService;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.emsapp.security.helper.UserDashboardHelper;
+import org.beangle.emsapp.security.helper.UserPropertyExtractor;
 import org.beangle.model.Entity;
 import org.beangle.model.query.builder.Condition;
 import org.beangle.model.query.builder.OqlBuilder;
@@ -205,17 +205,32 @@ public class UserAction extends SecurityActionSupport {
 		Long[] userIds = getEntityIds();
 		User creator = userService.get(getUserId());
 		List<User> toBeRemoved = userService.getUsers(userIds);
+		StringBuilder sb = new StringBuilder();
+		User removed = null;
+		int success = 0;
+		int expected = toBeRemoved.size();
 		try {
 			for (User one : toBeRemoved) {
+				removed = one;
 				// 不能删除自己
 				if (!one.getId().equals(getUserId())) {
 					userService.removeUser(creator, one);
+					success++;
+				} else {
+					addFlashError("security.info.cannotRemoveSelf");
+					expected--;
 				}
 			}
 		} catch (Exception e) {
-			return redirect("search", "info.delete.failure");
+			sb.append(',').append(removed.getName());
 		}
-		return redirect("search", "info.remove.success");
+		if (sb.length() > 0) {
+			sb.deleteCharAt(0);
+			addFlashMessage("security.info.userRemovePartial", success, sb);
+		} else if (expected == success && success > 0) {
+			addFlashMessage("info.remove.success");
+		}
+		return redirect("search");
 	}
 
 	/**

@@ -850,7 +850,7 @@
 				}
 			}else if(uimodule=="tabletree"){
 				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/beangle-ui-tabletree.css",base);
-				jQuery.struts2_jquery.require("/static/scripts/beangle-ui-tabletree.js",callback,base);
+				jQuery.struts2_jquery.require("/static/scripts/beangle/beangle-ui-tabletree.js",callback,base);
 			}else if(uimodule=="My97DatePicker"){
 				//jQuery.struts2_jquery.require("/static/scripts/My97DatePicker/WdatePicker.js",callback,base);
 			}

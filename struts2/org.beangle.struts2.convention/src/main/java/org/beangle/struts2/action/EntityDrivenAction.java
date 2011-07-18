@@ -357,7 +357,7 @@ public class EntityDrivenAction extends BaseAction {
 			List<String> titles = CollectUtils.newArrayList();
 			for (String prop : props) {
 				keys.add(StringUtils.substringBefore(prop, ":"));
-				titles.add(StringUtils.substringAfter(prop, ":"));
+				titles.add(getTextInternal(StringUtils.substringAfter(prop, ":")));
 			}
 			context.put(Context.KEYS, StrUtils.join(keys, ","));
 			context.put(Context.TITLES, StrUtils.join(titles, ","));

@@ -1,6 +1,6 @@
 [#ftl]
 <div class="ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
-	<div class="ui-widget-header ui-corner-all"><span class="title">用户组信息</span><span class="ui-icon ui-icon-plusthick"></span></div>
+	<div class="ui-widget-header ui-corner-all"><span class="title">用户组信息</span></div>
 	<div class="portlet-content">
 	[@b.grid  items=user.groups var="m" ]
 		[@b.row]

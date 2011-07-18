@@ -5,7 +5,7 @@
 	[@b.password label="user.oldPassword" name="oldPassword"  value="" required="true" maxlength="40" /]
 	[@b.password label="user.newPassword" name="password" required="true"  /]
 	[@b.password label="user.repeatPassword" name="repeatedPassword" required="true" /]
-	[@b.emailfield label="common.email" name="mail" value="${user.mail}" /]
+	[@b.email label="common.email" name="mail" value="${user.mail}" /]
 	[@b.formfoot]
 		<input type="hidden" name="user.id" value="${user.id}"/>
 		[@b.reset /]&nbsp;&nbsp;[@b.submit value="action.submit"  onsubmit="validateMyAccount" /]

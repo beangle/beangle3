@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.ems.security.service;
+package org.beangle.emsapp.security.helper;
 
 import org.beangle.commons.text.TextResource;
 import org.beangle.model.transfer.exporter.DefaultPropertyExtractor;

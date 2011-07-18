@@ -1,6 +1,6 @@
 [#ftl]
 <div class="ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
-	<div class="ui-widget-header ui-corner-all"><span class="title">最近的历史登录信息</span><span class="ui-icon ui-icon-plusthick"></span></div>
+	<div class="ui-widget-header ui-corner-all"><span class="title">最近的历史登录信息</span></div>
 	<div class="portlet-content">
 	[#if (sessioninfoLogs?size==0)]没有登录过系统[#else]
 	[@b.grid fixPageSize="1" items=sessioninfoLogs var="sessioninfoLog" sortable="false"]
