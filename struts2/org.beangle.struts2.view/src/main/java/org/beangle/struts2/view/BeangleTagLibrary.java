@@ -20,6 +20,8 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.Page;
 import org.beangle.struts2.view.component.ActionUrlRender;
 import org.beangle.struts2.view.component.Anchor;
+import org.beangle.struts2.view.component.Checkbox;
+import org.beangle.struts2.view.component.Checkboxes;
 import org.beangle.struts2.view.component.Component;
 import org.beangle.struts2.view.component.Css;
 import org.beangle.struts2.view.component.Date;
@@ -320,5 +322,13 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 
 	public TagModel getStartend() {
 		return get(Startend.class);
+	}
+	
+	public TagModel getCheckbox(){
+		return get(Checkbox.class);
+	}
+	
+	public TagModel getCheckboxes(){
+		return get(Checkboxes.class);
 	}
 }
