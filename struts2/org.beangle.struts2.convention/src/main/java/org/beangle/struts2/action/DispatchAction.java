@@ -82,7 +82,7 @@ public class DispatchAction extends ActionSupport {
 		return "redirectAction:dispatch_action";
 	}
 
-	private String getTextInternal(String msgKey, Object... args) {
+	protected String getTextInternal(String msgKey, Object... args) {
 		if (null == msgKey) return null;
 		if (CharUtils.isAsciiAlpha(msgKey.charAt(0)) && msgKey.indexOf('.') > 0) {
 			if (args.length > 0) return getText(msgKey, Arrays.asList(args));
@@ -100,8 +100,8 @@ public class DispatchAction extends ActionSupport {
 		addActionError(getTextInternal(msgKey));
 	}
 
-	protected void addFlashMessage(String msgKey) {
-		getFlash().addMessage(getTextInternal(msgKey));
+	protected void addFlashError(String msgKey, Object... args) {
+		getFlash().addError(getTextInternal(msgKey, args));
 	}
 
 	protected void addFlashMessage(String msgKey, Object... args) {

@@ -15,8 +15,10 @@ import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.security.nav.service.MenuService;
 import org.beangle.ems.web.action.SecurityActionSupport;
+import org.beangle.emsapp.security.helper.MenuPropertyExtractor;
 import org.beangle.model.Entity;
 import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.model.transfer.exporter.PropertyExtractor;
 import org.beangle.model.util.HierarchyEntityUtil;
 
 /**
@@ -146,6 +148,10 @@ public class MenuAction extends SecurityActionSupport {
 			put("groups", entityDao.search(groupQuery));
 		}
 		return forward();
+	}
+
+	protected PropertyExtractor getPropertyExtractor() {
+		return new MenuPropertyExtractor(getTextResource());
 	}
 
 	@Override

@@ -143,7 +143,7 @@ function displayAllRowsFor(depth) {
      * @params ele 选择的行
      * @params toggleParent是否在选中时,级联选中父节点
      */
-    function treeToggle(elm,toggleParent){
+    function treeToggle(elm,callback,toggleParent){
        var rows = document.getElementsByTagName("tr");
        var thisID = elm.parentNode.parentNode.id;
        var checked = elm.checked;
@@ -151,29 +151,36 @@ function displayAllRowsFor(depth) {
           toggleParent=true;
        }
        for (var i = 0; i < rows.length; i++) {
-             var r = rows[i];             
+             var r = rows[i];
              if (r.id!=""&&((r.id.indexOf(thisID)==0)||(thisID.indexOf(r.id)==0))){
                  var cell = r.getElementsByTagName("td")[0];
                  var input = cell.getElementsByTagName("input")[0];
+                 var fireCallback=false;
                  if(thisID.indexOf(r.id)==0){
-                    if(checked&&toggleParent)
-                       input.checked=true;
+                    if(checked&&toggleParent) input.checked=true;
+                    if(thisID==r.id) fireCallback=true;
                  }else{
                     input.checked = checked;
+                    fireCallback=true;
                  }
+                 if(fireCallback && callback) callback(input);
              }
        }             
     }
-    function treeToggleAll(elm){
+    function treeToggleAll(elm,callback){
      var rows = document.getElementsByTagName("tr");
        var thisID = elm.parentNode.parentNode.id;
        var checked = elm.checked;
         for (var i = 0; i < rows.length; i++) {
-             var r = rows[i];     
-             if (r.id.indexOf("1")>-1){
+             var r = rows[i];
+             if (r.id){
                  var cell = r.getElementsByTagName("td")[0];
-                 var input = cell.getElementsByTagName("input")[0];
-                 input.checked = checked; 
-             }             
+                 var inputs=cell.getElementsByTagName("input");
+                 if(inputs.length==1){
+                     var input = cell.getElementsByTagName("input")[0];
+                     input.checked = checked;
+                     if(callback) callback(input);
+                 }
+             }
         } 
     }

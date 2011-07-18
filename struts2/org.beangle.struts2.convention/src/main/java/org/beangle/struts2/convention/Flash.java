@@ -109,6 +109,7 @@ public class Flash implements Map<Object, Object>, Serializable {
 
 	/**
 	 * 添加消息到下一次请求
+	 * 
 	 * @param message
 	 */
 	public void addMessage(String message) {
@@ -120,8 +121,25 @@ public class Flash implements Map<Object, Object>, Serializable {
 		}
 		messages.add(message);
 	}
+
+	/**
+	 * 添加错误消息到下一次请求
+	 * 
+	 * @param message
+	 */
+	public void addError(String error) {
+		@SuppressWarnings("unchecked")
+		List<String> errors = (List<String>) next.get(Flash.ERRORS);
+		if (null == errors) {
+			errors = CollectUtils.newArrayList();
+			put(Flash.ERRORS, errors);
+		}
+		errors.add(error);
+	}
+
 	/**
 	 * 添加消息到下一次请求
+	 * 
 	 * @param message
 	 */
 	public void addMessageNow(String message) {

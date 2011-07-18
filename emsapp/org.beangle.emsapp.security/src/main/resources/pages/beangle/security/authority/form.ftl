@@ -15,7 +15,8 @@
 			document.authorityForm.submit();
 		}
 	}
-	function checkChildren(menuDivId){
+	function checkResource(ele){
+		menuDivId=ele.id;
 		var tempTarget ;
 		tempTarget = document.getElementById(menuDivId);
 		if(tempTarget!=null||tempTarget!='undefined'){
@@ -64,7 +65,7 @@
 <table width="100%" class="gridtable">
 	<tbody>
 	<tr class="gridhead">
-	<th width="6%"><input type="checkbox" onclick="treeToggleAll(this)"/></th>
+	<th width="6%"><input type="checkbox" onclick="treeToggleAll(this,checkResource)"/></th>
 	<th width="34%">${b.text("common.name")}</th>
 	<th width="13%">${b.text("common.id")}</th>
 	<th width="40%">可用资源</th>
@@ -75,7 +76,7 @@
 
 	<tr class="grayStyle [#if !menu.enabled]ui-disabled[/#if]" id="${menu.code}">
 		<td	class="gridselect">
-			<input type="checkbox" id="checkbox_${menu_index}" onclick="treeToggle(this);checkChildren('checkbox_${menu_index}');"  name="menuId" [#if (aoMenus??)&&(aoMenus?seq_contains(menu))]checked="checked"[/#if] value="${menu.id}">
+			<input type="checkbox" id="checkbox_${menu_index}" onclick="treeToggle(this,checkResource)"  name="menuId" [#if (aoMenus??)&&(aoMenus?seq_contains(menu))]checked="checked"[/#if] value="${menu.id}">
 		</td>
 		<td>
 		<div class="tier${menu.depth}">

@@ -11,9 +11,9 @@ import com.opensymphony.xwork2.util.ValueStack;
  * @author chaostone
  * @version $Id: Emailfield.java Jul 15, 2011 11:13:53 AM chaostone $
  */
-public class Emailfield extends AbstractTextBean {
+public class Email extends AbstractTextBean {
 
-	public Emailfield(ValueStack stack) {
+	public Email(ValueStack stack) {
 		super(stack);
 		check="match('email')";
 	}

@@ -1,6 +1,6 @@
 [#ftl]
 <div class="ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
-	<div class="ui-widget-header ui-corner-all"><span class="title">菜单权限</span><span class="ui-icon ui-icon-plusthick"></span></div>
+	<div class="ui-widget-header ui-corner-all"><span class="title">菜单权限</span></div>
 	<div class="portlet-content  grid">
 	<table width="100%" class="gridtable">
 	  <tbody>

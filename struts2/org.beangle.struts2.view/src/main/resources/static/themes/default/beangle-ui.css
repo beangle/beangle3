@@ -18,15 +18,15 @@ a:hover {color: red;}
 
 .gridempty{border:solid;border-width:1px;border-top-width:0px;border-color:#006CB2;text-align:center;}
 
-.gridtable {width:100%;border-collapse: collapse;border:solid;border-width:1px;border-color:#006CB2;vertical-align: middle;}
+.gridtable {width:100%;border-collapse: collapse;border:solid;border-width:1px;border-color:#006CB2;vertical-align: middle;table-layout:fixed}
 
-.gridtable td{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;}
+.gridtable td{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;overflow:hidden;word-wrap:break-word;}
 
 .gridtable th{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;}
 
 .gridselect{text-align:center;background-color: #e0ecff;width:3%;}
 
-.gridselect-top{text-align:center;width:3%;}
+.gridselect-top{text-align:center;width:25px;}
 
 .gridhead{color: #000000;text-decoration: none;text-align:center;letter-spacing:0;background-color: #c7dbff;}
 
@@ -365,8 +365,8 @@ form.listform {
 }
 form.listform label.title{
 	clear: left;
-	display: block;
 	float: left;
+	display: block;
 	margin: 0 0 8px;
 	padding-right: 5px;
 	text-align: right;

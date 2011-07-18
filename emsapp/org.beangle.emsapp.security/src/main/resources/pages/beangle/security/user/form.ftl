@@ -11,7 +11,7 @@
 		[@b.radios name="user.enabled" label="common.status" value=user.enabled items="1:action.activate,0:action.freeze"/]
 		[@b.textfield label="user.fullname" name="user.fullname" value="${user.fullname!}" style="width:200px;" required="true" maxlength="50" /]
 		[@b.password label="密码" name="password" value="" comment="默认密码为1"/]
-		[@b.emailfield label="common.email" name="user.mail" value="${user.mail!}" style="width:300px;" required="true" maxlength="50"/]
+		[@b.email label="common.email" name="user.mail" value="${user.mail!}" style="width:300px;" required="true" maxlength="50"/]
 		[@b.field label="entity.userCategory" required="true"]
 		  [#list categories as category]
 		  <input name="categoryIds" id="categoryIds${category.id}" value="${category.id}" type="checkbox" [#if user.categories?seq_contains(category)]checked="checked"[/#if] />

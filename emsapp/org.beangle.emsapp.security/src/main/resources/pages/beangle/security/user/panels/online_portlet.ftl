@@ -2,7 +2,7 @@
 [#if (onlineActivities?size==0)]没有在线[#else]
  <div class="ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
 	<div class="ui-widget-header ui-corner-all"><span class="title">在线信息</span>
-	<span class="ui-icon ui-icon-plusthick"></span></div>
+	</div>
 	<div class="portlet-content">
 		[@b.grid items=onlineActivities var="activity" sortable="false"]
 			[@b.row]

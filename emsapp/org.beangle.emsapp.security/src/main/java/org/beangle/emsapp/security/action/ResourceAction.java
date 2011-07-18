@@ -6,7 +6,6 @@ package org.beangle.emsapp.security.action;
 
 import java.util.List;
 
-import org.beangle.commons.lang.StrUtils;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Category;
 import org.beangle.ems.security.Resource;
@@ -15,8 +14,10 @@ import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.restrict.RestrictEntity;
 import org.beangle.ems.security.service.CacheableAuthorityManager;
 import org.beangle.ems.web.action.SecurityActionSupport;
+import org.beangle.emsapp.security.helper.ResourcePropertyExtractor;
 import org.beangle.model.Entity;
 import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.model.transfer.exporter.PropertyExtractor;
 import org.beangle.struts2.convention.route.Action;
 
 /**
@@ -69,8 +70,7 @@ public class ResourceAction extends SecurityActionSupport {
 		resource.getEntities().clear();
 		resource.getEntities().addAll(entities);
 
-		String categoryIds = get("categoryIds");
-		List<Category> categories = entityDao.get(Category.class, StrUtils.splitToLong(categoryIds));
+		List<Category> categories = entityDao.get(Category.class, getAll("categoryId",Long.class));
 		resource.getCategories().clear();
 		resource.getCategories().addAll(categories);
 
@@ -106,6 +106,10 @@ public class ResourceAction extends SecurityActionSupport {
 
 	public void setAuthorityManager(CacheableAuthorityManager authorityManager) {
 		this.authorityManager = authorityManager;
+	}
+
+	protected PropertyExtractor getPropertyExtractor() {
+		return new ResourcePropertyExtractor(getTextResource());
 	}
 
 	@Override
