@@ -11,6 +11,7 @@ import org.apache.commons.lang.Validate;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.core.Authentication;
+import org.beangle.security.core.session.category.SimpleSessioninfoBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -23,7 +24,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 
 	private SessionController controller;
 
-	private SessioninfoBuilder sessioninfoBuilder;
+	private SessioninfoBuilder sessioninfoBuilder = new SimpleSessioninfoBuilder();
 
 	public void afterPropertiesSet() throws Exception {
 		Validate.notNull(controller, "controller must set");
@@ -68,7 +69,8 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 		@SuppressWarnings("unchecked")
 		OqlBuilder<SessionStatus> builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoClass(), "info");
 		builder.where("info.id=:sessionid", sessionid)
-				.select("new org.beangle.security.core.session.SessionStatus(info.username,info.expiredAt)").cacheable();
+				.select("new org.beangle.security.core.session.SessionStatus(info.username,info.expiredAt)")
+				.cacheable();
 		List<SessionStatus> infos = entityDao.search(builder);
 		if (infos.isEmpty()) return null;
 		else return infos.get(0);
@@ -84,23 +86,23 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 		if (!success) throw new SessionException("security.OvermaxSession");
 		// 注销同会话的其它账户
 		if (null != existed) {
-			remove(sessionId," expired with replacement.");
+			remove(sessionId, " expired with replacement.");
 		}
 		// 新生
 		entityDao.save(sessioninfoBuilder.build(auth, controller.getServerName(), sessionId));
 	}
 
 	public Sessioninfo remove(String sessionId) {
-		return remove(sessionId,null);
+		return remove(sessionId, null);
 	}
-	
-	private Sessioninfo remove(String sessionId,String reason) {
+
+	private Sessioninfo remove(String sessionId, String reason) {
 		Sessioninfo info = getSessioninfo(sessionId);
 		if (null == info) {
 			return null;
 		} else {
 			// FIXME not in a transcation
-			if(null!=reason) info.addRemark(reason);
+			if (null != reason) info.addRemark(reason);
 			entityDao.remove(info);
 			controller.onLogout(info);
 			Object sessioninfoLog = sessioninfoBuilder.buildLog(info);

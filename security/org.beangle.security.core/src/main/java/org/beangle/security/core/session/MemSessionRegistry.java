@@ -27,7 +27,7 @@ public class MemSessionRegistry implements SessionRegistry, ApplicationListener<
 
 	private SessionController controller;
 
-	private SessioninfoBuilder sessioninfoBuilder;
+	private SessioninfoBuilder sessioninfoBuilder = new SimpleSessioninfoBuilder();
 
 	// <principal,SessionIdSet>
 	protected Map<String, Set<String>> principals = new ConcurrentHashMap<String, Set<String>>();

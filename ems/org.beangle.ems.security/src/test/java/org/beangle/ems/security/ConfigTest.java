@@ -5,9 +5,7 @@
 package org.beangle.ems.security;
 
 import org.beangle.test.spring.SpringTestCase;
-import org.testng.annotations.Test;
 
-@Test
 public class ConfigTest extends SpringTestCase {
 
 	public void testCfg() {

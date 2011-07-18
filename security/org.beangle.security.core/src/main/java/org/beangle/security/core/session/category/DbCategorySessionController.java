@@ -28,7 +28,7 @@ import org.springframework.context.ApplicationListener;
 public class DbCategorySessionController extends AbstractSessionController implements InitializingBean,
 		ApplicationListener<CategoryProfileUpdateEvent> {
 
-	private CategoryProfileProvider categoryProfileProvider;
+	private CategoryProfileProvider categoryProfileProvider = new SimpleCategoryProfileProvider();
 
 	private SessioninfoBuilder sessioninfoBuilder;
 

@@ -4,7 +4,7 @@
 	[@bs.guard res="/security/user"][@b.navitem title="用户" href="/security/user" /][/@]
 	[@bs.guard res="/security/group"][@b.navitem title="用户组" href="/security/group" /][/@]
 	[@bs.guard res="/security/menu"][@b.navitem title="菜单" href="/security/menu" /][/@]
-	[@bs.guard res="/security/resource"][@b.navitem title="资源" href="/security/resource!search?orderBy=resource.name asc" /][/@]
+	[@bs.guard res="/security/resource"][@b.navitem title="资源" href="/security/resource!search?orderBy=resource.name%20asc" /][/@]
 	[@bs.guard res="/security/restrict-meta"][@b.navitem title="数据限制" href="/security/restrict-meta" /][/@]
 	[@b.navitem title="我的账户" href="/security/my?nav=true" /]
 [/@]
