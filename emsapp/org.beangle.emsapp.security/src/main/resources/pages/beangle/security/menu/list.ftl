@@ -25,7 +25,7 @@
 	bar.addItem("菜单配置","redirectTo('${b.url('menu-profile!search')}')");
 [/@]
 	[@b.row]
-		<tr [#if menu??] title="${(menu.remark?html)!}  ${menu.entry!}" id="${menu.code}"[/#if]>
+		<tr [#if menu??] title="入口及备注:${menu.entry!} ${(menu.remark?html)!}" id="${menu.code}"[/#if]>
 		[@b.boxcol /]
 		[@b.col property="title" title="common.title"]
 		<div class="tier${menu.depth}" align="left">

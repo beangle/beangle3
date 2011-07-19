@@ -42,6 +42,9 @@ public class Grid extends ClosingUIBean {
 	/** 重新载入的时间间隔（以秒为单位） */
 	private String refresh;
 
+	/**没有数据时显示的文本*/
+	private String emptyMsg;
+	
 	public Grid(ValueStack stack) {
 		super(stack);
 	}
@@ -137,6 +140,14 @@ public class Grid extends ClosingUIBean {
 
 	public String getBar() {
 		return bar;
+	}
+
+	public String getEmptyMsg() {
+		return emptyMsg;
+	}
+
+	public void setEmptyMsg(String emptyMsg) {
+		this.emptyMsg = emptyMsg;
 	}
 
 	public Map<String, String> getFilters() {

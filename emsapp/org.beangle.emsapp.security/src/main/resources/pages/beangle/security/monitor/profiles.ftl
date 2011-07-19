@@ -29,9 +29,9 @@
 <script type="text/javascript">
 	function validateProfile(form){
 		[#list categoryProfiles as profile]
-		if(!(/^\d+$/.test(form['max_${profile.category.id}'].value))){alert("${profile.category.name}最大用户数限制应为整数");return false;}
-		if(!(/^\d+$/.test(form['maxSessions_${profile.category.id}'].value))){alert("${profile.category.name}最大会话数应为整数");return false;}
-		if(!(/^\d+$/.test(form['inactiveInterval_${profile.category.id}'].value))){alert("${profile.category.name}过期时间应为整数");return false;}
+		if(!(/^\d+$/.test(form['max_${profile.category.id}'].value))){alert("${profile.category.title}最大用户数限制应为0或正整数");return false;}
+		if(!(/^\d+$/.test(form['maxSessions_${profile.category.id}'].value))){alert("${profile.category.title}最大会话数应为0或正整数");return false;}
+		if(!(/^\d+$/.test(form['inactiveInterval_${profile.category.id}'].value))){alert("${profile.category.title}过期时间应为0或正整数");return false;}
 		[/#list]
 		return true;
 	}
