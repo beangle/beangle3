@@ -61,6 +61,10 @@ public class Navmenu extends ClosingUIBean {
 		this.title = title;
 	}
 
+	public void setLabel(String label) {
+		this.title = label;
+	}
+
 	public String getUri() {
 		return uri;
 	}

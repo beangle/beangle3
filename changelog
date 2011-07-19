@@ -1,3 +1,8 @@
+2011-07-19  zhaoding   <zhaoding@gmail.com>
+	* 重构了radios标签
+	* 增加了checkboxes标签
+	* grid增加了emptyMsg支持
+
 2011-07-15  duantihua   <chaostone.duan@gmail.com>
 	* beangle-model增加了StringIdEntity和StringIdObject接口，支持对实体进行区分对待和处理
 	* beangle-model中EntityDao增加了save接口
