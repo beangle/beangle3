@@ -33,6 +33,7 @@ public class Checkboxes extends UIBean {
 
 	private Object max;
 
+	private String valueName="name";
 	public Checkboxes(ValueStack stack) {
 		super(stack);
 	}
@@ -106,7 +107,7 @@ public class Checkboxes extends UIBean {
 			for (Object object : (List<?>) items) {
 				try {
 					Object value = PropertyUtils.getProperty(object, "id");
-					Object title = PropertyUtils.getProperty(object, "name");
+					Object title = PropertyUtils.getProperty(object, valueName);
 					keys.add(value);
 					itemMap.put(value, title);
 				} catch (Exception e) {
@@ -225,4 +226,13 @@ public class Checkboxes extends UIBean {
 	public void setMax(Object max) {
 		this.max = max;
 	}
+
+	public String getValueName() {
+		return valueName;
+	}
+
+	public void setValueName(String valueName) {
+		this.valueName = valueName;
+	}
+	
 }

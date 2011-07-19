@@ -81,4 +81,12 @@ public interface Sessioninfo extends StringIdEntity {
 	 * @return
 	 */
 	public Date getExpiredAt();
+	
+	/**
+	 * 查询最后访问时间
+	 * 
+	 * @return
+	 */
+	public Date getLastAccessAt();
+
 }

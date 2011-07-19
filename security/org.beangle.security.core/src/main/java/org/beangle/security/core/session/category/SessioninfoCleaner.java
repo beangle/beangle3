@@ -13,6 +13,7 @@ import java.util.TimerTask;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.time.StopWatch;
 import org.beangle.model.persist.EntityDao;
+import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.security.core.session.Sessioninfo;
@@ -24,17 +25,18 @@ import org.springframework.beans.factory.InitializingBean;
  * @author chaostone
  * @version $Id: SessionCleaner.java Jun 6, 2011 12:21:24 PM chaostone $
  */
-public class SessioninfoCleaner implements InitializingBean {
+public class SessioninfoCleaner extends BaseServiceImpl implements InitializingBean {
 
 	private SessionRegistry sessionRegistry;
 
-	// 默认一刻钟分钟清理一次
+	// 默认15分钟清理一次
 	private int cleanInterval = 1000 * 900;
 
 	public void afterPropertiesSet() throws Exception {
 		Validate.notNull(sessionRegistry);
-		new Timer("Beangle Session Cleaner", true).schedule(new SessionCleanerTask(sessionRegistry),
-				new Date(), cleanInterval);
+		SessionCleanerTask sessionCleanerTask = new SessionCleanerTask(sessionRegistry);
+		sessionCleanerTask.setEntityDao(entityDao);
+		new Timer("Beangle Session Cleaner", true).schedule(sessionCleanerTask, new Date(), cleanInterval);
 	}
 
 	public SessionRegistry getSessionRegistry() {
@@ -63,8 +65,17 @@ class SessionCleanerTask extends TimerTask {
 
 	private EntityDao entityDao;
 
+	/** 默认 过期时间 30分钟 */
+	private int expiredTime = 30;
+
 	public SessionCleanerTask(SessionRegistry registry) {
+		super();
 		this.registry = registry;
+	}
+
+	public SessionCleanerTask(SessionRegistry registry, int expiredTime) {
+		this.registry = registry;
+		this.expiredTime = expiredTime;
 	}
 
 	@Override
@@ -72,11 +83,11 @@ class SessionCleanerTask extends TimerTask {
 		StopWatch watch = new StopWatch();
 		watch.start();
 		logger.debug("clean up expired or over maxOnlineTime session start ...");
+		Calendar calendar = Calendar.getInstance();
+		calendar.roll(Calendar.MINUTE, -expiredTime);
 		@SuppressWarnings("unchecked")
 		OqlBuilder<Sessioninfo> builder = OqlBuilder.from(registry.getSessioninfoBuilder()
 				.getSessioninfoClass(), "info");
-		Calendar calendar = Calendar.getInstance();
-		calendar.roll(Calendar.MINUTE, -60);
 		builder.where("info.serverName=:server and info.lastAccessAt<:givenTime", registry.getController()
 				.getServerName(), calendar.getTime());
 		List<Sessioninfo> activities = entityDao.search(builder);
@@ -90,6 +101,10 @@ class SessionCleanerTask extends TimerTask {
 					watch.getTime());
 		}
 		registry.getController().stat();
+	}
+
+	public void setEntityDao(EntityDao entityDao) {
+		this.entityDao = entityDao;
 	}
 
 }

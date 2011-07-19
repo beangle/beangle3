@@ -16,6 +16,7 @@
 package org.beangle.security.web.session;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -68,8 +69,9 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 	protected void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpSession session = request.getSession(false);
+		SessionStatus info = null;
 		if (session != null) {
-			SessionStatus info = sessionRegistry.getSessionStatus(session.getId());
+			info = sessionRegistry.getSessionStatus(session.getId());
 			// Expired - abort processing
 			if (null != info) {
 				if (info.isExpired()) {
@@ -89,8 +91,14 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 				}
 			}
 		}
-
-		chain.doFilter(request, response);
+		Date beginAt = new Date();
+		try {
+			chain.doFilter(request, response);
+		} finally {
+			if (null != info) {
+				sessionRegistry.access(session.getId(), request.getRequestURI(), beginAt, new Date());
+			}
+		}
 	}
 
 	protected String determineExpiredUrl(HttpServletRequest request, SessionStatus info) {

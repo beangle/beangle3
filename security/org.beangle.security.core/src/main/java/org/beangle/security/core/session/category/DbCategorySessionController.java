@@ -4,16 +4,12 @@
  */
 package org.beangle.security.core.session.category;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.Validate;
-import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.session.AbstractSessionController;
-import org.beangle.security.core.session.SessionStat;
 import org.beangle.security.core.session.Sessioninfo;
 import org.beangle.security.core.session.SessioninfoBuilder;
 import org.springframework.beans.factory.InitializingBean;
@@ -62,21 +58,6 @@ public class DbCategorySessionController extends AbstractSessionController imple
 					+ "where stat.online>0 and stat.category=? and stat.serverName=?",
 					categoryinfo.getCategory(), getServerName());
 		}
-	}
-
-	public SessionStat getSessionStat() {
-		Map<Object, CategorySessionStat> details = CollectUtils.newHashMap();
-		int total = 0;
-		int capacity = 0;
-		OqlBuilder<CategorySessionStat> builder = OqlBuilder.from(CategorySessionStat.class, "stat");
-		builder.where("stat.serverName=:server", getServerName());
-		List<CategorySessionStat> categoryStats = entityDao.search(builder);
-		for (CategorySessionStat stat : categoryStats) {
-			details.put(stat.getCategory(), stat);
-			total += stat.getOnline();
-			capacity += stat.getCapacity();
-		}
-		return new SessionStat(getServerName(), new Date(), capacity, total, details);
 	}
 
 	public void afterPropertiesSet() throws Exception {

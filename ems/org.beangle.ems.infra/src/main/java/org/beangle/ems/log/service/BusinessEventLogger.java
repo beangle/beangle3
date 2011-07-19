@@ -8,7 +8,6 @@ import org.apache.commons.lang.StringUtils;
 import org.beangle.ems.event.BusinessEvent;
 import org.beangle.ems.log.model.BusinessLogBean;
 import org.beangle.model.persist.impl.BaseServiceImpl;
-import org.beangle.security.access.AccessMonitor;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.security.core.session.SessionRegistry;
@@ -24,7 +23,6 @@ public class BusinessEventLogger extends BaseServiceImpl implements ApplicationL
 
 	private SessionRegistry sessionRegistry;
 
-	private AccessMonitor accessMonitor;
 	public void onApplicationEvent(BusinessEvent event) {
 		BusinessLogBean log = new BusinessLogBean();
 		log.setOperateAt(event.getIssueAt());
@@ -40,7 +38,7 @@ public class BusinessEventLogger extends BaseServiceImpl implements ApplicationL
 			log.setAgent(webDetails.getAgent().toString());
 			Sessioninfo activity = sessionRegistry.getSessioninfo(webDetails.getSessionId());
 			if (null != activity) {
-				log.setEntry(accessMonitor.getResource(webDetails.getSessionId()));
+				log.setEntry(sessionRegistry.getResource(webDetails.getSessionId()));
 			}
 		}
 		entityDao.saveOrUpdate(log);
@@ -48,10 +46,6 @@ public class BusinessEventLogger extends BaseServiceImpl implements ApplicationL
 
 	public void setSessionRegistry(SessionRegistry sessionRegistry) {
 		this.sessionRegistry = sessionRegistry;
-	}
-
-	public void setAccessMonitor(AccessMonitor accessMonitor) {
-		this.accessMonitor = accessMonitor;
 	}
 
 }

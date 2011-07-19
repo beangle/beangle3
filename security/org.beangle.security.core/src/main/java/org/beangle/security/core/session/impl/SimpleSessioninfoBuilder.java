@@ -2,12 +2,15 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.security.core.session;
+package org.beangle.security.core.session.impl;
 
 import java.util.Date;
 
 import org.beangle.model.pojo.StringIdObject;
 import org.beangle.security.core.Authentication;
+import org.beangle.security.core.session.Sessioninfo;
+import org.beangle.security.core.session.SessioninfoBuilder;
+import org.beangle.security.core.session.category.CategorySessioninfo;
 
 /**
  * @author chaostone
@@ -20,7 +23,9 @@ public class SimpleSessioninfoBuilder implements SessioninfoBuilder {
 	}
 
 	public Sessioninfo build(Authentication auth, String serverName, String sessionid) {
-		return new SimpleSessioninfo(sessionid, serverName, auth.getName(), auth.getName());
+		SimpleSessioninfo info = new SimpleSessioninfo(sessionid, serverName, auth.getName(),
+				auth.getName());
+		return info;
 	}
 
 	public Object buildLog(Sessioninfo info) {
@@ -29,7 +34,7 @@ public class SimpleSessioninfoBuilder implements SessioninfoBuilder {
 
 }
 
-class SimpleSessioninfo extends StringIdObject implements Sessioninfo {
+class SimpleSessioninfo extends StringIdObject implements CategorySessioninfo {
 
 	private static final long serialVersionUID = 1462323011613320213L;
 
@@ -42,12 +47,17 @@ class SimpleSessioninfo extends StringIdObject implements Sessioninfo {
 	/** 用户真实姓名 */
 	private String fullname;
 
+	private String category;
+
 	/** 登录时间 */
 	private Date loginAt;
 
 	/** 过期时间 */
 	private Date expiredAt;
 
+	/** 最后访问时间*/
+	private Date lastAccessAt;
+	
 	/** 备注 */
 	private String remark;
 
@@ -110,6 +120,14 @@ class SimpleSessioninfo extends StringIdObject implements Sessioninfo {
 		this.fullname = fullname;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	public Date getLoginAt() {
 		return loginAt;
 	}
@@ -144,4 +162,11 @@ class SimpleSessioninfo extends StringIdObject implements Sessioninfo {
 		this.expiredAt = expiredAt;
 	}
 
+	public Date getLastAccessAt() {
+		return lastAccessAt;
+	}
+
+	public void setLastAccessAt(Date lastAccessAt) {
+		this.lastAccessAt = lastAccessAt;
+	}
 }

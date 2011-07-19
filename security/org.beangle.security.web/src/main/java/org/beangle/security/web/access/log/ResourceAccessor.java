@@ -4,13 +4,17 @@
  */
 package org.beangle.security.web.access.log;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.beangle.security.core.session.impl.AccessLog;
 
 public interface ResourceAccessor {
 
-	public Accesslog beginAccess(HttpServletRequest request, long time);
+	public AccessLog beginAccess(HttpServletRequest request, Date date);
 
-	public void endAccess(Accesslog log, long time);
+	public void endAccess(AccessLog log, Date date);
 
 	public void start();
 

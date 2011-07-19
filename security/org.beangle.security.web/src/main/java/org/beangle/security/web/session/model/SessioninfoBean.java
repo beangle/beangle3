@@ -59,6 +59,9 @@ public class SessioninfoBean extends StringIdObject implements CategorySessionin
 	/** 过期时间 */
 	private Date expiredAt;
 
+	/** 最后访问时间*/
+	private Date lastAccessAt;
+	
 	/** 备注 */
 	@Size(max = 100)
 	private String remark;
@@ -74,6 +77,7 @@ public class SessioninfoBean extends StringIdObject implements CategorySessionin
 		this.username = username;
 		this.fullname = fullname;
 		this.loginAt = new Date(System.currentTimeMillis());
+		this.lastAccessAt=loginAt;
 	}
 
 	public String toString() {
@@ -188,4 +192,11 @@ public class SessioninfoBean extends StringIdObject implements CategorySessionin
 		this.expiredAt = expiredAt;
 	}
 
+	public Date getLastAccessAt() {
+		return lastAccessAt;
+	}
+
+	public void setLastAccessAt(Date lastAccessAt) {
+		this.lastAccessAt = lastAccessAt;
+	}
 }

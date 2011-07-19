@@ -2,9 +2,10 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.security.core.session;
+package org.beangle.security.core.session.impl;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,13 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.Validate;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.security.core.Authentication;
+import org.beangle.security.core.session.SessionController;
+import org.beangle.security.core.session.SessionDestroyedEvent;
+import org.beangle.security.core.session.SessionException;
+import org.beangle.security.core.session.SessionRegistry;
+import org.beangle.security.core.session.SessionStatus;
+import org.beangle.security.core.session.Sessioninfo;
+import org.beangle.security.core.session.SessioninfoBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -147,5 +155,14 @@ public class MemSessionRegistry implements SessionRegistry, ApplicationListener<
 	public SessioninfoBuilder getSessioninfoBuilder() {
 		return sessioninfoBuilder;
 	}
+
+	public void access(String sessionid, String resource, Date beginAt, Date endAt) {
+		//DO nothing
+	}
+
+	public String getResource(String sessionid) {
+		return null;
+	}
+	
 
 }

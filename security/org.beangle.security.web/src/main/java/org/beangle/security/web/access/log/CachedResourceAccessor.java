@@ -4,6 +4,7 @@
  */
 package org.beangle.security.web.access.log;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,11 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.Validate;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.security.core.session.impl.AccessLog;
 import org.springframework.beans.factory.InitializingBean;
 
 public class CachedResourceAccessor extends DefaultResourceAccessor implements InitializingBean {
 
-	private List<Accesslog> accesslogs = CollectUtils.newArrayList();
+	private List<AccessLog> accessLogs = CollectUtils.newArrayList();
 
 	// 3000 milliseconds
 	private long minDuration = 3000;
@@ -28,28 +30,28 @@ public class CachedResourceAccessor extends DefaultResourceAccessor implements I
 		Validate.isTrue(cacheSize > 100, "cacheSize should greate then 100");
 	}
 
-	public Accesslog beginAccess(HttpServletRequest request, long time) {
-		Accesslog accesslog = buildLog(request);
-		accesslog.setBeginAt(time);
-		synchronized (accesslogs) {
-			accesslogs.add(accesslog);
-			if (accesslogs.size() >= cacheSize) {
-				shrink(accesslogs);
-				if (accesslogs.size() >= cacheSize) {
-					flush(accesslogs);
+	public AccessLog beginAccess(HttpServletRequest request, Date date) {
+		AccessLog accessLog = buildLog(request);
+		accessLog.setBeginAt(date);
+		synchronized (accessLogs) {
+			accessLogs.add(accessLog);
+			if (accessLogs.size() >= cacheSize) {
+				shrink(accessLogs);
+				if (accessLogs.size() >= cacheSize) {
+					flush(accessLogs);
 				}
 			}
 		}
-		return accesslog;
+		return accessLog;
 	}
 
-	public void endAccess(Accesslog log, long time) {
-		log.setEndAt(time);
+	public void endAccess(AccessLog log, Date date) {
+		log.setEndAt(date);
 	}
 
 	public void finish() {
-		if (!accesslogs.isEmpty()) {
-			flush(accesslogs);
+		if (!accessLogs.isEmpty()) {
+			flush(accessLogs);
 		}
 	}
 
@@ -57,24 +59,24 @@ public class CachedResourceAccessor extends DefaultResourceAccessor implements I
 
 	}
 
-	public List<Accesslog> getAccessLogs() {
-		return accesslogs;
+	public List<AccessLog> getAccessLogs() {
+		return accessLogs;
 	}
 
-	protected void shrink(List<Accesslog> accesslogs) {
-		for (Iterator<Accesslog> iterator = accesslogs.iterator(); iterator.hasNext();) {
-			Accesslog accesslog = (Accesslog) iterator.next();
-			if (accesslog.getDuration() < minDuration) {
+	protected void shrink(List<AccessLog> accessLogs) {
+		for (Iterator<AccessLog> iterator = accessLogs.iterator(); iterator.hasNext();) {
+			AccessLog accessLog = (AccessLog) iterator.next();
+			if (accessLog.getDuration() < minDuration) {
 				iterator.remove();
 			}
 		}
 	}
 
-	protected void flush(List<Accesslog> accesslogs) {
-		for (final Accesslog accesslog : accesslogs) {
-			logger.info(accesslog.toString());
+	protected void flush(List<AccessLog> accessLogs) {
+		for (final AccessLog accessLog : accessLogs) {
+			logger.info(accessLog.toString());
 		}
-		accesslogs.clear();
+		accessLogs.clear();
 	}
 
 	public Long getMinDuration() {

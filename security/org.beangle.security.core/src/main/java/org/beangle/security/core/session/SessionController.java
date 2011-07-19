@@ -40,13 +40,6 @@ public interface SessionController {
 	public void onLogout(Sessioninfo info);
 
 	/**
-	 * 查询在线统计
-	 * 
-	 * @return
-	 */
-	public SessionStat getSessionStat();
-
-	/**
 	 * 得到session集中监控的服务器名
 	 * 
 	 * @return

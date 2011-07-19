@@ -7,7 +7,6 @@ package org.beangle.security.web;
 import org.beangle.security.web.access.DefaultAccessDeniedHandler;
 import org.beangle.security.web.access.ExceptionTranslationFilter;
 import org.beangle.security.web.access.intercept.FilterSecurityInterceptor;
-import org.beangle.security.web.access.log.AccessLogFilter;
 import org.beangle.security.web.access.log.CachedResourceAccessor;
 import org.beangle.security.web.auth.AnonymousFilter;
 import org.beangle.security.web.auth.WebAuthenticationDetailsSource;
@@ -42,8 +41,7 @@ public class DefaultModule extends AbstractBindModule {
 
 		// access bean
 		bind(DefaultAccessDeniedHandler.class, ExceptionTranslationFilter.class,
-				CachedResourceAccessor.class, AccessLogFilter.class, FilterSecurityInterceptor.class)
-				.shortName();
+				CachedResourceAccessor.class, FilterSecurityInterceptor.class).shortName();
 
 		bind(WebSessioninfoBuilder.class);
 	}

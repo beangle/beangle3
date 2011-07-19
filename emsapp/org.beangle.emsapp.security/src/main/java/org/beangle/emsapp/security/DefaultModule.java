@@ -22,7 +22,7 @@ import org.beangle.emsapp.security.action.RestrictMetaAction;
 import org.beangle.emsapp.security.action.RestrictionAction;
 import org.beangle.emsapp.security.action.UserAction;
 import org.beangle.emsapp.security.helper.UserDashboardHelper;
-import org.beangle.security.core.session.DbSessionRegistry;
+import org.beangle.security.core.session.impl.DbSessionRegistry;
 import org.beangle.spring.bind.AbstractBindModule;
 import org.beangle.spring.bind.Scope;
 

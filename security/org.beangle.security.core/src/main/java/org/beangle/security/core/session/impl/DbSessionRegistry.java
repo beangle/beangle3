@@ -2,16 +2,28 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.security.core.session;
+package org.beangle.security.core.session.impl;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.Validate;
+import org.beangle.commons.collection.CollectUtils;
+import org.beangle.model.persist.EntityDao;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.core.Authentication;
-import org.beangle.security.core.session.category.SimpleSessioninfoBuilder;
+import org.beangle.security.core.context.SecurityContextHolder;
+import org.beangle.security.core.session.AccessLogger;
+import org.beangle.security.core.session.SessionController;
+import org.beangle.security.core.session.SessionDestroyedEvent;
+import org.beangle.security.core.session.SessionException;
+import org.beangle.security.core.session.SessionRegistry;
+import org.beangle.security.core.session.SessionStatus;
+import org.beangle.security.core.session.Sessioninfo;
+import org.beangle.security.core.session.SessioninfoBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -25,6 +37,16 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 	private SessionController controller;
 
 	private SessioninfoBuilder sessioninfoBuilder = new SimpleSessioninfoBuilder();
+
+	Map<String, AccessEntry> entries = CollectUtils.newConcurrentHashMap();
+
+	private boolean enableLog;
+
+	private AccessLogger accessLogger;
+
+	long updatedAt = System.currentTimeMillis();
+
+	private int updatedInterval = 5 * 60 * 1000;// 5分钟
 
 	public void afterPropertiesSet() throws Exception {
 		Validate.notNull(controller, "controller must set");
@@ -145,6 +167,78 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 	public SessioninfoBuilder getSessioninfoBuilder() {
 		return sessioninfoBuilder;
 	}
-	
 
+	public void access(String sessionid, String resource, Date beginAt, Date endAt) {
+		if ((beginAt.getTime() - updatedAt) > updatedInterval) {
+			new Thread(new AccessUpdaterTask(this)).start();
+		}
+		AccessEntry entry = entries.get(sessionid);
+		if (null == entry) entries.put(sessionid, new AccessEntry(resource, beginAt));
+		else entry.access(resource, beginAt);
+		if (enableLog) {
+			accessLogger.log(sessionid, SecurityContextHolder.getContext().getAuthentication().getName(),
+					resource, beginAt, endAt);
+		}
+	}
+
+	public void setAccessLogger(AccessLogger accessLogger) {
+		this.accessLogger = accessLogger;
+	}
+
+	public boolean isEnableLog() {
+		return enableLog;
+	}
+
+	public void setEnableLog(boolean enableLog) {
+		this.enableLog = enableLog;
+	}
+
+	public String getResource(String sessionid) {
+		AccessEntry entry = entries.get(sessionid);
+		if (null == entry) return null;
+		else return entry.resource;
+	}
+
+}
+
+class AccessUpdaterTask implements Runnable {
+
+	DbSessionRegistry registry;
+
+	public AccessUpdaterTask(DbSessionRegistry registry) {
+		super();
+		this.registry = registry;
+	}
+
+	public void run() {
+		EntityDao entityDao = registry.getEntityDao();
+		Date updatedAt = new Date(registry.updatedAt);
+		for (Map.Entry<String, AccessEntry> entry : registry.entries.entrySet()) {
+			AccessEntry accessEntry = entry.getValue();
+			if (accessEntry.accessAt.after(updatedAt)) {
+				entityDao.executeUpdateHql("update "
+						+ registry.getSessioninfoBuilder().getSessioninfoClass().getName()
+						+ " info set info.lastAccessAt=? where info.id=?", entry.getValue().accessAt,
+						entry.getKey());
+			}
+		}
+		registry.updatedAt = System.currentTimeMillis();
+	}
+
+}
+
+class AccessEntry {
+	String resource;
+	Date accessAt;
+
+	public AccessEntry(String resource, Date accessAt) {
+		super();
+		this.resource = resource;
+		this.accessAt = accessAt;
+	}
+
+	public void access(String resource, Date accessAt) {
+		this.resource = resource;
+		this.accessAt = accessAt;
+	}
 }

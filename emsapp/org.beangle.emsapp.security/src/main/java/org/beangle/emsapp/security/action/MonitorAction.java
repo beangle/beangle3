@@ -4,28 +4,18 @@
  */
 package org.beangle.emsapp.security.action;
 
-import java.lang.management.ManagementFactory;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
-import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
-import org.beangle.commons.collection.page.PagedList;
-import org.beangle.commons.comparators.PropertyComparator;
 import org.beangle.ems.security.session.model.CategoryProfileBean;
 import org.beangle.ems.security.session.service.CategoryProfileService;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.core.session.SessionRegistry;
-import org.beangle.security.core.session.SessionStat;
 import org.beangle.security.core.session.category.CategorySessionStat;
-import org.beangle.security.web.access.log.Accesslog;
-import org.beangle.security.web.access.log.CachedResourceAccessor;
+import org.beangle.security.core.session.impl.AccessLog;
 import org.beangle.security.web.session.model.SessioninfoBean;
 
 /**
@@ -39,60 +29,9 @@ public class MonitorAction extends SecurityActionSupport {
 
 	private CategoryProfileService categoryProfileService;
 
-	private CachedResourceAccessor resourceAccessor;
-
 	public String profiles() {
 		put("categoryProfiles", entityDao.getAll(CategoryProfileBean.class));
 		return forward();
-	}
-
-	public String sessionStats() {
-		put("categoryProfiles", entityDao.getAll(CategoryProfileBean.class));
-		List<CategorySessionStat> stats = entityDao.getAll(CategorySessionStat.class);
-		List<SessionStat> sessionStats = buildStats(stats);
-		put("sessionStats", sessionStats);
-		put("serverName", ManagementFactory.getRuntimeMXBean().getName());
-		return forward();
-	}
-
-	private List<SessionStat> buildStats(List<CategorySessionStat> stats) {
-		Map<String, Map<String, CategorySessionStat>> categoryMaps = CollectUtils.newHashMap();
-		Map<String, Date> dateMap = CollectUtils.newHashMap();
-		for (CategorySessionStat stat : stats) {
-			Map<String, CategorySessionStat> categoryMap = categoryMaps.get(stat.getServerName());
-			if (null == categoryMap) {
-				categoryMap = CollectUtils.newHashMap();
-				categoryMaps.put(stat.getServerName(), categoryMap);
-			}
-			categoryMap.put(stat.getCategory(), stat);
-			dateMap.put(stat.getServerName(), stat.getStatAt());
-		}
-
-		Map<String, Integer> serverCapacity = CollectUtils.newHashMap();
-		Map<String, Integer> serverOnline = CollectUtils.newHashMap();
-
-		for (String serverName : categoryMaps.keySet()) {
-			Map<String, CategorySessionStat> myOnlines = categoryMaps.get(serverName);
-			int online = 0;
-			int capacity = 0;
-			for (CategorySessionStat one : myOnlines.values()) {
-				online += one.getOnline();
-				capacity += one.getCapacity();
-			}
-			serverOnline.put(serverName, new Integer(online));
-			serverCapacity.put(serverName, new Integer(capacity));
-		}
-
-		Set<String> servers = CollectUtils.newHashSet(serverCapacity.keySet());
-		servers.addAll(serverOnline.keySet());
-		List<SessionStat> sessionStats = CollectUtils.newArrayList();
-		for (String server : servers) {
-			Integer capacity = serverCapacity.get(server);
-			Integer online = serverOnline.get(server);
-			sessionStats.add(new SessionStat(server, dateMap.get(server), (null == capacity) ? 0 : capacity,
-					(null == online) ? 0 : online, categoryMaps.get(server)));
-		}
-		return sessionStats;
 	}
 
 	public String index() {
@@ -105,7 +44,9 @@ public class MonitorAction extends SecurityActionSupport {
 		builder.where("sessioninfo.serverName=:server", sessionRegistry.getController().getServerName());
 		builder.orderBy(get(Order.ORDER_STR)).limit(getPageLimit());
 		put("sessioninfos", entityDao.search(builder));
-		put("sessionStat", sessionRegistry.getController().getSessionStat());
+		OqlBuilder<CategorySessionStat> statBuilder = OqlBuilder.from(CategorySessionStat.class, "stat");
+		statBuilder.where("stat.serverName=:server",  sessionRegistry.getController().getServerName());
+		put("sessionStats",entityDao.search(statBuilder));
 		return forward();
 	}
 
@@ -139,8 +80,7 @@ public class MonitorAction extends SecurityActionSupport {
 		if (null != sessionIds) {
 			for (String sessionId : sessionIds) {
 				if (mySessionId.equals(sessionId)) continue;
-				if (killed) sessionRegistry.remove(sessionId);
-				else sessionRegistry.expire(sessionId);
+			    sessionRegistry.expire(sessionId);
 				success++;
 			}
 		}
@@ -152,30 +92,19 @@ public class MonitorAction extends SecurityActionSupport {
 	 * 访问记录
 	 */
 	public String accesslogs() {
-		List<Accesslog> accessLogs = null;
-		if (null == resourceAccessor) {
-			accessLogs = Collections.emptyList();
-		} else {
-			accessLogs = CollectUtils.newArrayList(resourceAccessor.getAccessLogs());
-		}
+		OqlBuilder<AccessLog> builder = OqlBuilder.from(AccessLog.class, "accessLog");
+		populateConditions(builder);
 		String orderBy = get("orderBy");
 		if (StringUtils.isEmpty(orderBy)) {
-			orderBy = "duration desc";
+			orderBy = "accessLog.endAt-accessLog.beginAt desc";
 		}
-		if (orderBy.startsWith("accesslog.")) {
-			orderBy = StringUtils.substringAfter(orderBy, "accesslog.");
-		}
-		Collections.sort(accessLogs, new PropertyComparator<Object>(orderBy));
-		put("accesslogs", new PagedList<Accesslog>(accessLogs, getPageLimit()));
+		builder.orderBy(orderBy).limit(getPageLimit());
+		put("accessLogs", entityDao.search(builder));
 		return forward();
 	}
 
 	public void setSessionRegistry(SessionRegistry sessionRegistry) {
 		this.sessionRegistry = sessionRegistry;
-	}
-
-	public void setResourceAccessor(CachedResourceAccessor resourceAccessor) {
-		this.resourceAccessor = resourceAccessor;
 	}
 
 	public void setCategoryProfileService(CategoryProfileService categoryProfileService) {

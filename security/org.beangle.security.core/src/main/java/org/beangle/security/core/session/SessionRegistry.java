@@ -4,6 +4,7 @@
  */
 package org.beangle.security.core.session;
 
+import java.util.Date;
 import java.util.List;
 
 import org.beangle.security.core.Authentication;
@@ -80,6 +81,13 @@ public interface SessionRegistry {
 	public int count();
 
 	/**
+	 * 更新对应sessionId的最后访问时间
+	 * 
+	 * @param sessionid
+	 */
+	public void access(String sessionid, String resource, Date beginAt, Date endAt);
+
+	/**
 	 * 查询控制器
 	 * 
 	 * @return
@@ -92,5 +100,13 @@ public interface SessionRegistry {
 	 * @return
 	 */
 	public SessioninfoBuilder getSessioninfoBuilder();
+
+	/**
+	 * 获取当前session访问的资源
+	 * 
+	 * @param sessionid
+	 * @return
+	 */
+	public String getResource(String sessionid);
 
 }
