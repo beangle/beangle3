@@ -40,13 +40,6 @@ public interface SessionRegistry {
 	public void expire(String sessionid);
 
 	/**
-	 * 查询在线记录
-	 * 
-	 * @return
-	 */
-	public List<Sessioninfo> getAll();
-
-	/**
 	 * 查询某帐号的在线信息
 	 * 
 	 * @param principal
@@ -92,5 +85,12 @@ public interface SessionRegistry {
 	 * @return
 	 */
 	public SessionController getController();
+
+	/**
+	 * 获取sessinoinfobuilder
+	 * 
+	 * @return
+	 */
+	public SessioninfoBuilder getSessioninfoBuilder();
 
 }

@@ -1,4 +1,7 @@
 [#ftl/][@b.head/]
+[@b.tabs]
+	[#list codeCategories as ca]
+	[@b.tab title=
 <style type="text/css">
 	.selectable {
 	border:1px solid #000;

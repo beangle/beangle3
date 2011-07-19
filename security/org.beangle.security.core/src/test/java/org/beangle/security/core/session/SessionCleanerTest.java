@@ -7,6 +7,7 @@ package org.beangle.security.core.session;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import org.beangle.security.core.session.category.SessionCleanerTask;
 import org.mockito.Mockito;
 import org.testng.annotations.Test;
 

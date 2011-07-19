@@ -31,13 +31,6 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 		Validate.notNull(sessioninfoBuilder, "sessioninfoBuilder must set");
 	}
 
-	public List<Sessioninfo> getAll() {
-		@SuppressWarnings("unchecked")
-		OqlBuilder<Sessioninfo> builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoClass(), "info");
-		builder.where("info.serverName=:server", controller.getServerName());
-		return entityDao.search(builder);
-	}
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public boolean isRegisted(String principal) {
 		OqlBuilder builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoClass(), "info");
@@ -148,5 +141,10 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 	public void setSessioninfoBuilder(SessioninfoBuilder sessioninfoBuilder) {
 		this.sessioninfoBuilder = sessioninfoBuilder;
 	}
+
+	public SessioninfoBuilder getSessioninfoBuilder() {
+		return sessioninfoBuilder;
+	}
+	
 
 }

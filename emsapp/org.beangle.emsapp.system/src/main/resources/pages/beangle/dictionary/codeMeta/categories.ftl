@@ -1,4 +1,6 @@
 [#ftl]
+[@b.head/]
+[#include "../nav.ftl"/]
 [@b.messages/]
 [@b.module title="代码类别列表" ]
 	[@b.form action="!saveCategory"]
@@ -13,3 +15,4 @@
 		[@b.submit value="提交"/]
 	[/@]
 [/@]
+[@b.foot/]

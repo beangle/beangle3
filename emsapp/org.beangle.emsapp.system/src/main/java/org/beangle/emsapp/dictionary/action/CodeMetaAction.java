@@ -20,6 +20,12 @@ import org.beangle.model.Entity;
  */
 public class CodeMetaAction extends SecurityActionSupport {
 
+	@Override
+	public String index() throws Exception {
+		put(getShortName() + "s", search(getQueryBuilder()));
+		return forward();
+	}
+
 	public String categories() {
 		put("categories", entityDao.getAll(CodeCategory.class));
 		return forward();

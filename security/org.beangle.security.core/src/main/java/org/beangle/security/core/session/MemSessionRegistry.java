@@ -40,10 +40,6 @@ public class MemSessionRegistry implements SessionRegistry, ApplicationListener<
 		Validate.notNull(sessioninfoBuilder, "sessioninfoBuilder must set");
 	}
 
-	public List<Sessioninfo> getAll() {
-		return CollectUtils.newArrayList(sessionids.values());
-	}
-
 	public boolean isRegisted(String principal) {
 		Set<String> sessionsUsedByPrincipal = principals.get(principal);
 		return (null != sessionsUsedByPrincipal && !sessionsUsedByPrincipal.isEmpty());
@@ -146,6 +142,10 @@ public class MemSessionRegistry implements SessionRegistry, ApplicationListener<
 
 	public void setSessioninfoBuilder(SessioninfoBuilder sessioninfoBuilder) {
 		this.sessioninfoBuilder = sessioninfoBuilder;
+	}
+
+	public SessioninfoBuilder getSessioninfoBuilder() {
+		return sessioninfoBuilder;
 	}
 
 }

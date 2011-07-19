@@ -2,8 +2,9 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.security.core.session;
+package org.beangle.security.core.session.category;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -11,6 +12,10 @@ import java.util.TimerTask;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.time.StopWatch;
+import org.beangle.model.persist.EntityDao;
+import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.security.core.session.SessionRegistry;
+import org.beangle.security.core.session.Sessioninfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -56,24 +61,10 @@ class SessionCleanerTask extends TimerTask {
 
 	private final SessionRegistry registry;
 
-	/**
-	 * 最大过期时间
-	 */
-	private final long maxOnlineTime;
+	private EntityDao entityDao;
 
-	// 最大过期时间为12小时
 	public SessionCleanerTask(SessionRegistry registry) {
-		this(registry, 1000 * 60 * 60 * 12);
-	}
-
-	public SessionCleanerTask(SessionRegistry registry, long maxOnlineTime) {
-		super();
 		this.registry = registry;
-		this.maxOnlineTime = maxOnlineTime;
-	}
-
-	protected boolean shouldRemove(Sessioninfo info) {
-		return info.isExpired() || (info.getOnlineTime() >= maxOnlineTime);
 	}
 
 	@Override
@@ -81,13 +72,18 @@ class SessionCleanerTask extends TimerTask {
 		StopWatch watch = new StopWatch();
 		watch.start();
 		logger.debug("clean up expired or over maxOnlineTime session start ...");
-		List<Sessioninfo> activities = registry.getAll();
+		@SuppressWarnings("unchecked")
+		OqlBuilder<Sessioninfo> builder = OqlBuilder.from(registry.getSessioninfoBuilder()
+				.getSessioninfoClass(), "info");
+		Calendar calendar = Calendar.getInstance();
+		calendar.roll(Calendar.MINUTE, -60);
+		builder.where("info.serverName=:server and info.lastAccessAt<:givenTime", registry.getController()
+				.getServerName(), calendar.getTime());
+		List<Sessioninfo> activities = entityDao.search(builder);
 		int removed = 0;
 		for (Sessioninfo activity : activities) {
-			if (shouldRemove(activity)) {
-				registry.remove(activity.getId());
-				removed++;
-			}
+			registry.remove(activity.getId());
+			removed++;
 		}
 		if (removed > 0 || watch.getTime() > 50) {
 			logger.info("removed {} expired or over maxOnlineTime sessions in {} ms", removed,
