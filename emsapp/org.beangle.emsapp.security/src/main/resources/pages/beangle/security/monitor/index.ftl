@@ -21,7 +21,7 @@
 		[/@]
 		[@b.col width="10%" title="sessioninfo.loginAt" property="loginAt"]<span title="${sessioninfo.id}">${sessioninfo.loginAt?string("yy-MM-dd HH:mm")}</span>[/@]
 		[@b.col width="12%" title="最后访问" property="lastAccessAt"]${(sessioninfo.lastAccessAt?string("MM-dd HH:mm:ss"))!}[/@]
-		[@b.col width="9%" title="sessioninfo.onlineTime" property="onlineTime" sortable="false"]${(sessioninfo.onlineTime)/1000/60}min[/@]
+		[@b.col width="9%" title="sessioninfo.onlineTime" property="onlineTime" sort="lastAccessAt-loginAt"]${(sessioninfo.onlineTime)/1000/60}min[/@]
 		[@b.col width="13%" title="sessioninfo.ip" property="ip"/]
 		[@b.col width="10%" title="sessioninfo.os" property="os"/]
 		[@b.col width="12%" title="sessioninfo.agent" property="agent"/]

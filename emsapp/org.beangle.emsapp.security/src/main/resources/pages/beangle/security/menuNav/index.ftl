@@ -11,7 +11,7 @@
 		<input type="hidden" name="menu.id" value="${Parameters['menu.id']!?html}"/>
 		[@b.textfield name="name" value=Parameters['name']/][@b.submit value="搜索"/][/@]
 		</div>
-		<div><img width="100%" height="1" align="top" src="${base}/static/themes/default/icons/16x16/actions/keyline.png"></div>
+		<div><img width="100%" height="1" align="top" src="${b.theme.iconurl("actions/keyline.png")}"></div>
 	</div>
 	[#assign alonemenus=[]]
 	[#list tops as topmenu]

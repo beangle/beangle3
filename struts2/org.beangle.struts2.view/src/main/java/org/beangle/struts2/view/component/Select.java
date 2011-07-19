@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang.xwork.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.opensymphony.xwork2.util.ValueStack;
 

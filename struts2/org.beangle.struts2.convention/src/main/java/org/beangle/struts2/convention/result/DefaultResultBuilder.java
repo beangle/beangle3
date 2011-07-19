@@ -110,7 +110,7 @@ public class DefaultResultBuilder implements ResultBuilder {
 				// x-requested-with->XMLHttpRequest
 				if (null != request.getHeader("x-requested-with")) {
 					action.param("x-requested-with", "1");
-				}
+				} 
 				Map<String, String> params = buildResultParams(path, resultTypeConfig);
 				if (null != action.getParams().get("method")) {
 					params.put("method", (String) action.getParams().get("method"));

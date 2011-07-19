@@ -19,7 +19,7 @@
     </modules>
 
 	<properties>
-		<commonupload.version>1.2.1</commonupload.version>
+		<commonupload.version>1.2.2</commonupload.version>
 	</properties>
 
 	<dependencies>

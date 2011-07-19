@@ -12,7 +12,7 @@
 	</tr>
 	<tr>
 	  <td colspan="5" style="font-size:0px">
-		  <img src="${base}/static/images/action/keyline.gif" height="2" width="100%" align="top"/>
+		  <img src="${b.theme.iconurl("actions/keyline.png")}" height="2" width="100%" align="top"/>
 	  </td>
    </tr>
 	<tr>
@@ -31,6 +31,6 @@
    </tr>
 </table>
 [@bs.guard res="/avatar/my-upload"]
-[@b.div href="my-upload"/]
+[@b.div href="my-upload" astarget="false"/]
 [/@]
 [@b.foot/]

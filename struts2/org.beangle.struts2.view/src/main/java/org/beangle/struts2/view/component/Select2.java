@@ -4,7 +4,7 @@
  */
 package org.beangle.struts2.view.component;
 
-import org.apache.commons.lang.xwork.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.lang.StrUtils;
 
 import com.opensymphony.xwork2.util.ValueStack;

@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.xwork.ObjectUtils;
 import org.apache.struts2.StrutsException;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.struts2.convention.factory.BeanNameFinder;

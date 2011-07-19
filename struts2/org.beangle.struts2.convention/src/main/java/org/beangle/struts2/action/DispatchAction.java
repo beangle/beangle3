@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang.CharUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.xwork.CharUtils;
 import org.beangle.struts2.convention.Flash;
 import org.beangle.struts2.convention.route.Action;
 
