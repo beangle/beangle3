@@ -2,6 +2,7 @@
 [@b.head/]
 [#include "../nav.ftl"/]
 	<div class="result ui-widget-content ui-corner-all" style="width:800px;margin:10px 5px;" align="left">
+	[@b.messages/]
 		<table width="100%">
 		 <tr>
 		   <td align="right" width="20%">照片库信息:</td><td>${avatarBase.description!}&nbsp;&nbsp;[@b.a href="/system/property"]进入系统配置>>[/@]</td>
