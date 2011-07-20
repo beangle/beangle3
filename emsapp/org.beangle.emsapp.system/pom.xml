@@ -9,10 +9,20 @@
 	<artifactId>beangle-emsapp-system</artifactId>
 	<packaging>jar</packaging>
 	<name>Beangle Emsapp System</name>
+
+	<properties>
+		<commonscompress.version>1.1</commonscompress.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.beangle</groupId>
 			<artifactId>beangle-ems-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<version>${commonscompress.version}</version>
 		</dependency>
 	</dependencies>
 </project>
