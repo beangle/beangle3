@@ -10,7 +10,7 @@
 	<div class="banner_area">
 	<a href="#" onclick="editAccount()">${b.text('action.myAccount')}</a>&nbsp;&nbsp;
 	[@b.a href="!welcome" target="main"]${b.text('action.backHome')}[/@]&nbsp;&nbsp;
-	[@b.a href="logout" target="top"]${b.text('action.logout')}[/@]
+	[@b.a href="logout" target="_top"]${b.text('action.logout')}[/@]
 	</div>
 	[@b.form]
 	<div class="banner_area">

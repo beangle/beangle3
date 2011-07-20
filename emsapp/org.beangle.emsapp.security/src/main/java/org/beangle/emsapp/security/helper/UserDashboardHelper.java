@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.PageLimit;
+import org.beangle.ems.security.Category;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.Resource;
@@ -74,7 +75,10 @@ public class UserDashboardHelper {
 
 	private void populateMenus(User user) {
 		OqlBuilder<MenuProfile> query = OqlBuilder.from(MenuProfile.class, "menuProfile");
-		query.where("menuProfile.category in(:categories)", user.getCategories());
+		Set<Category> categories = CollectUtils.newHashSet();
+		categories.add(user.getDefaultCategory());
+		categories.addAll(user.getCategories());
+		query.where("menuProfile.category in(:categories)", categories);
 		List<?> menuProfiles = entityDao.search(query);
 		ContextHelper.put("menuProfiles", menuProfiles);
 

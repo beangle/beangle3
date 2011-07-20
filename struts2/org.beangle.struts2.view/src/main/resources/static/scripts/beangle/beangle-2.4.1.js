@@ -30,6 +30,8 @@
 			if(!target) target="_self";
 			if("_self"==target){ self.location=url;}
 			else if("_parent"==target){self.parent.location=url;}
+			else if("_top" ==target){self.top.location=url;}
+			else if("_new" ==target || "_blank" ==target  ){windown.open(url);}
 			else{
 				if(!bg.isAjaxTarget(target)){
 					//FIXME _blank,_top
@@ -52,7 +54,7 @@
 		},
 		isAjaxTarget : function (target){
 			if(!target) return false;
-			if(target==""||target=="new"||target=="_blank"||target=="_self"||target=="_parent"){
+			if(target==""||target=="_new"||target=="_blank"||target=="_self"||target=="_parent"||target=="_top"){
 				return false;
 			}
 			targetEle=document.getElementById(target);
