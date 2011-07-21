@@ -17,6 +17,7 @@ import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.model.Entity;
 import org.beangle.model.query.Query;
 import org.beangle.model.query.QueryBuilder;
+import org.beangle.model.query.builder.BatchBuilder;
 
 /**
  * dao 查询辅助类
@@ -425,5 +426,11 @@ public interface EntityDao {
 	public boolean duplicate(String entityName, Serializable id, Map<String, Object> params);
 
 	public boolean duplicate(Class<? extends Entity<?>> clazz, Serializable id, String codeName, Object codeValue);
+	
+	/**
+	 * 在同一个session保存、删除
+	 * @param builder
+	 */
+	public void excute(BatchBuilder builder);
 
 }

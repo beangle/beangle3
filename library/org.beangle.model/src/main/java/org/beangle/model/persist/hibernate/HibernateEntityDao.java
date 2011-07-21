@@ -28,6 +28,8 @@ import org.beangle.model.entity.Model;
 import org.beangle.model.persist.EntityDao;
 import org.beangle.model.query.LimitQuery;
 import org.beangle.model.query.QueryBuilder;
+import org.beangle.model.query.builder.BatchBuilder;
+import org.beangle.model.query.builder.BuilderEnum;
 import org.beangle.model.query.builder.Condition;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.hibernate.Criteria;
@@ -35,6 +37,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.engine.jdbc.StreamUtils;
@@ -408,6 +411,48 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 				saveEntity(entity, null);
 			}
 		}
+	}
+
+	public void excute(BatchBuilder builder) {
+		List<Object> excuteList = builder.getExcuteList();
+		Session session = getSession();
+		if (!session.isOpen()) {
+			session = getHibernateTemplate().getSessionFactory().openSession();
+		}
+		Transaction tx = session.beginTransaction();
+		boolean saveTransaction = true;
+		try {
+			for (Object object : excuteList) {
+				if (object instanceof BuilderEnum) {
+					switch ((BuilderEnum) object) {
+					case SAVE:
+						saveTransaction = true;
+						break;
+					case REMOVE:
+						saveTransaction = false;
+						break;
+					case COMMIT:
+						tx.commit();
+						tx = session.beginTransaction();
+						break;
+					}
+				} else {
+					if (null != object) {
+						if (saveTransaction) {
+							session.saveOrUpdate(object);
+						} else {
+							session.delete(object);
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			tx.rollback();
+		} finally {
+			tx.commit();
+			session.close();
+		}
+
 	}
 
 	public void saveOrUpdate(Collection<?> entities) {
