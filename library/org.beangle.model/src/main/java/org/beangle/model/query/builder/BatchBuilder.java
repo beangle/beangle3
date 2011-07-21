@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.beangle.commons.collection.CollectUtils;
 
@@ -18,6 +19,9 @@ public class BatchBuilder {
 	}
 
 	public BatchBuilder save(Collection<Object> entities) {
+		if (CollectionUtils.isEmpty(entities)) {
+			return this;
+		}
 		if(null==currType || currType!=BuilderEnum.SAVE){
 			this.excuteList.add(BuilderEnum.SAVE);
 			this.currType = BuilderEnum.SAVE;
@@ -39,6 +43,9 @@ public class BatchBuilder {
 	}
 	
 	public BatchBuilder remove(Collection<Object> entities) {
+		if (CollectionUtils.isEmpty(entities)) {
+			return this;
+		}
 		if(null==currType || currType!=BuilderEnum.REMOVE){
 			this.excuteList.add(BuilderEnum.REMOVE);
 			this.currType = BuilderEnum.REMOVE;
