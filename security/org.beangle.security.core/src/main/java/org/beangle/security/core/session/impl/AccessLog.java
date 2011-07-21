@@ -4,6 +4,7 @@
  */
 package org.beangle.security.core.session.impl;
 
+import javax.persistence.Column;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,6 +27,7 @@ public class AccessLog extends LongIdObject {
 	private String sessionid;
 	
 	@NotNull
+	@Column(name = "resrc")
 	private String resource;
 	
 	@NotNull
