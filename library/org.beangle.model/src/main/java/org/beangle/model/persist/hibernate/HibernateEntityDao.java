@@ -26,10 +26,9 @@ import org.beangle.commons.collection.page.SinglePage;
 import org.beangle.model.Entity;
 import org.beangle.model.entity.Model;
 import org.beangle.model.persist.EntityDao;
+import org.beangle.model.persist.Operation;
 import org.beangle.model.query.LimitQuery;
 import org.beangle.model.query.QueryBuilder;
-import org.beangle.model.query.builder.BatchBuilder;
-import org.beangle.model.query.builder.BatchBuilder.BuilderEnum;
 import org.beangle.model.query.builder.Condition;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.hibernate.Criteria;
@@ -37,7 +36,6 @@ import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.engine.jdbc.StreamUtils;
@@ -413,46 +411,30 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 		}
 	}
 
-	public void excute(BatchBuilder builder) {
-		List<Object> excuteList = builder.getExcuteList();
-		Session session = getSession();
-		if (!session.isOpen()) {
-			session = getHibernateTemplate().getSessionFactory().openSession();
-		}
-		Transaction tx = session.beginTransaction();
-		boolean saveTransaction = true;
-		try {
-			for (Object object : excuteList) {
-				if (object instanceof BuilderEnum) {
-					switch ((BuilderEnum) object) {
-					case SAVE:
-						saveTransaction = true;
-						break;
-					case REMOVE:
-						saveTransaction = false;
-						break;
-					}
-				} else {
-					if (null != object) {
-						if (saveTransaction) {
-							session.saveOrUpdate(object);
-						} else {
-							session.delete(object);
-						}
-					}
-				}
+	public void execute(Operation... opts) {
+		for (Operation operation : opts) {
+			switch (operation.type) {
+			case SAVE_UPDATE:
+				persistEntity(operation.data, null);
+				break;
+			case REMOVE:
+				remove(operation.data);
+				break;
 			}
-		} catch (Exception e) {
-			tx.rollback();
-		} finally {
-			try {
-				tx.commit();
-			} catch (Exception e2) {
-				tx.rollback();
-			}
-			session.close();
 		}
+	}
 
+	public void execute(Operation.Builder builder) {
+		for (Operation operation : builder.build()) {
+			switch (operation.type) {
+			case SAVE_UPDATE:
+				persistEntity(operation.data, null);
+				break;
+			case REMOVE:
+				remove(operation.data);
+				break;
+			}
+		}
 	}
 
 	public void saveOrUpdate(Collection<?> entities) {

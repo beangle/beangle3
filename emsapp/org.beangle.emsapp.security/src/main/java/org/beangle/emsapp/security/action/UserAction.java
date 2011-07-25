@@ -23,6 +23,7 @@ import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.emsapp.security.helper.UserDashboardHelper;
 import org.beangle.emsapp.security.helper.UserPropertyExtractor;
 import org.beangle.model.Entity;
+import org.beangle.model.persist.Operation;
 import org.beangle.model.query.builder.Condition;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.model.transfer.exporter.PropertyExtractor;
@@ -176,8 +177,7 @@ public class UserAction extends SecurityActionSupport {
 				newMembers.add(myMember);
 			}
 		}
-		entityDao.saveOrUpdate(newMembers);
-		entityDao.remove(removedMembers);
+		entityDao.execute(Operation.saveOrUpdate(newMembers).remove(removedMembers));
 	}
 
 	protected void editSetting(Entity<?> entity) {
