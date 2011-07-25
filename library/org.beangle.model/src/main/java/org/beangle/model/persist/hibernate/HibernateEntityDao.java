@@ -29,7 +29,7 @@ import org.beangle.model.persist.EntityDao;
 import org.beangle.model.query.LimitQuery;
 import org.beangle.model.query.QueryBuilder;
 import org.beangle.model.query.builder.BatchBuilder;
-import org.beangle.model.query.builder.BuilderEnum;
+import org.beangle.model.query.builder.BatchBuilder.BuilderEnum;
 import org.beangle.model.query.builder.Condition;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.hibernate.Criteria;
@@ -431,10 +431,6 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 					case REMOVE:
 						saveTransaction = false;
 						break;
-					case COMMIT:
-						tx.commit();
-						tx = session.beginTransaction();
-						break;
 					}
 				} else {
 					if (null != object) {
@@ -449,7 +445,11 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 		} catch (Exception e) {
 			tx.rollback();
 		} finally {
-			tx.commit();
+			try {
+				tx.commit();
+			} catch (Exception e2) {
+				tx.rollback();
+			}
 			session.close();
 		}
 

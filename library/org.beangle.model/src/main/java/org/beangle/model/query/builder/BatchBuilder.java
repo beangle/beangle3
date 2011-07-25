@@ -66,15 +66,11 @@ public class BatchBuilder {
 		return this;
 	}
 
-	public BatchBuilder commit() {
-		if(null!=currType && currType!=BuilderEnum.COMMIT){
-			this.excuteList.add(BuilderEnum.COMMIT);
-			this.currType = BuilderEnum.COMMIT;
-		}
-		return this;
-	}
-
 	public List<Object> getExcuteList() {
 		return excuteList;
+	}
+	
+	public enum BuilderEnum {
+		SAVE,REMOVE
 	}
 }
