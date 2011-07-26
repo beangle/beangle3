@@ -138,7 +138,7 @@ public class Flash implements Map<Object, Object>, Serializable {
 	}
 
 	/**
-	 * 添加消息到下一次请求
+	 * 添加消息到本次请求
 	 * 
 	 * @param message
 	 */
@@ -150,5 +150,19 @@ public class Flash implements Map<Object, Object>, Serializable {
 			now.put(Flash.MESSAGES, messages);
 		}
 		messages.add(message);
+	}
+	/**
+	 * 添加错误到本次请求
+	 * 
+	 * @param message
+	 */
+	public void addErrorNow(String message) {
+		@SuppressWarnings("unchecked")
+		List<String> errors = (List<String>) now.get(Flash.ERRORS);
+		if (null == errors) {
+			errors = CollectUtils.newArrayList();
+			now.put(Flash.ERRORS, errors);
+		}
+		errors.add(message);
 	}
 }

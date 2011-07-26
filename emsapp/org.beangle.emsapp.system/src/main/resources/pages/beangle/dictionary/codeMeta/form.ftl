@@ -3,6 +3,7 @@
 [@b.toolbar title="代码元信息维护"]
 	bar.addBack("${b.text("action.goback")}");
 [/@]
+[@b.messages/]
 [@b.form action="!save" name="codeMetaForm" theme="list" title="代码元信息维护"]
 	[@b.textfield name="codeMeta.name" value=codeMeta.name label="common.name" required="true" maxlength="50"/]
 	[@b.textfield name="codeMeta.title" value=codeMeta.title label="common.title" required="true" maxlength="100"/]

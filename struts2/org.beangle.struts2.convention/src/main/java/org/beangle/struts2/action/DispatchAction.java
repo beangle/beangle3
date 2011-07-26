@@ -112,6 +112,10 @@ public class DispatchAction extends ActionSupport {
 		getFlash().addMessageNow(getTextInternal(msgKey, args));
 	}
 
+	protected void addFlashErrorNow(String msgKey, Object... args) {
+		getFlash().addErrorNow(getTextInternal(msgKey, args));
+	}
+
 	protected Flash getFlash() {
 		Flash flash = (Flash) ActionContext.getContext().getSession().get("flash");
 		if (null == flash) {

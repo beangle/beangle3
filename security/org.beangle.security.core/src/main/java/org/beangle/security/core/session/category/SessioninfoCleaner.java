@@ -29,8 +29,8 @@ public class SessioninfoCleaner extends BaseServiceImpl implements InitializingB
 
 	private SessionRegistry sessionRegistry;
 
-	// 默认15分钟清理一次
-	private int cleanInterval = 1000 * 900;
+	// 默认5分钟清理一次
+	private int cleanInterval = 1000 * 300;
 
 	public void afterPropertiesSet() throws Exception {
 		Validate.notNull(sessionRegistry);

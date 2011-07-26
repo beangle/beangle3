@@ -7,6 +7,7 @@ package org.beangle.ems.dictionary.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -29,6 +30,7 @@ public class CodeCategory extends LongIdObject implements HierarchyEntity<CodeCa
 
 	@NotNull
 	@Size(max = 50)
+	@Column(unique = true)
 	private String name;
 
 	private CodeCategory parent;
