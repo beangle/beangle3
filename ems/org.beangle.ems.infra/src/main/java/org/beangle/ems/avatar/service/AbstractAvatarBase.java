@@ -29,7 +29,7 @@ public abstract class AbstractAvatarBase implements AvatarBase {
 	protected static final String DEFAULT_AVATAR = "default.jpg";
 
 	{
-		for (String name : new String[] { "jpg", "JPG", "jpeg", "png" }) {
+		for (String name : new String[] { "jpg", "JPG", "jpeg", "png", "gif", "GIF" }) {
 			types.add(name);
 			typeList.add(name);
 		}

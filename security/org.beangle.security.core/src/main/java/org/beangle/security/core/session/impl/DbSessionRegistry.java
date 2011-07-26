@@ -120,6 +120,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 			if (null != reason) info.addRemark(reason);
 			entityDao.remove(info);
 			controller.onLogout(info);
+			entries.remove(info.getId());
 			Object sessioninfoLog = sessioninfoBuilder.buildLog(info);
 			if (null != sessioninfoLog) {
 				entityDao.save(sessioninfoLog);

@@ -19,13 +19,13 @@ public class BatchReplaceMainTest {
 		Matcher m = pattern.matcher(clause);
 		System.out.println(m.find());
 		System.out.println(m.groupCount());
-		System.out.println(pattern.matches("<#(.*)/>", clause));
+		System.out.println(Pattern.matches("<#(.*)/>", clause));
 		System.out.println(m.group(1));
 		StringBuffer sb = new StringBuffer();
 		m.appendReplacement(sb, "[#$1/]");
 		System.out.println(sb);
 
-		System.out.println(pattern.matches("template", clause));
+		System.out.println(Pattern.matches("template", clause));
 
 		Pattern p = Pattern.compile("(cat)");
 		Matcher m1 = p.matcher("one cat two cats in the yard");

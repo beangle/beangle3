@@ -12,6 +12,7 @@ import java.util.TimerTask;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.time.StopWatch;
+import org.beangle.commons.lang.DateUtils;
 import org.beangle.model.persist.EntityDao;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
@@ -84,12 +85,11 @@ class SessionCleanerTask extends TimerTask {
 		watch.start();
 		logger.debug("clean up expired or over maxOnlineTime session start ...");
 		Calendar calendar = Calendar.getInstance();
-		calendar.roll(Calendar.MINUTE, -expiredTime);
 		@SuppressWarnings("unchecked")
 		OqlBuilder<Sessioninfo> builder = OqlBuilder.from(registry.getSessioninfoBuilder()
 				.getSessioninfoClass(), "info");
 		builder.where("info.serverName=:server and info.lastAccessAt<:givenTime", registry.getController()
-				.getServerName(), calendar.getTime());
+				.getServerName(), DateUtils.rollMinutes(calendar.getTime(), -expiredTime));
 		List<Sessioninfo> activities = entityDao.search(builder);
 		int removed = 0;
 		for (Sessioninfo activity : activities) {
@@ -97,8 +97,7 @@ class SessionCleanerTask extends TimerTask {
 			removed++;
 		}
 		if (removed > 0 || watch.getTime() > 50) {
-			logger.info("removed {} expired or over maxOnlineTime sessions in {} ms", removed,
-					watch.getTime());
+			logger.info("removed {} expired sessions in {} ms", removed, watch.getTime());
 		}
 		registry.getController().stat();
 	}

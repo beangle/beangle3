@@ -16,9 +16,9 @@ public abstract class AbstractTextBean extends UIBean {
 	protected String title;
 	protected String comment;
 	protected String required;
-	protected String value="";
+	protected Object value = "";
 	protected String check;
-	protected String maxlength="100";
+	protected String maxlength = "100";
 
 	public AbstractTextBean(ValueStack stack) {
 		super(stack);
@@ -86,12 +86,12 @@ public abstract class AbstractTextBean extends UIBean {
 		this.check = check;
 	}
 
-	public String getValue() {
-		return value;
+	public Object getValue() {
+		return (String) value;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public void setValue(Object value) {
+		this.value = String.valueOf(value);
 	}
 
 	public String getMaxlength() {
@@ -101,5 +101,5 @@ public abstract class AbstractTextBean extends UIBean {
 	public void setMaxlength(String maxlength) {
 		this.maxlength = maxlength;
 	}
-	
+
 }

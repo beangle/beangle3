@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.StrUtils;
 import org.beangle.ems.dictionary.model.CodeCategory;
 import org.beangle.ems.dictionary.model.CodeMeta;
 import org.beangle.ems.web.action.SecurityActionSupport;
@@ -43,11 +44,11 @@ public class CodeMetaAction extends SecurityActionSupport {
 		List<CodeCategory> categories = entityDao.getAll(CodeCategory.class);
 		List<CodeCategory> updated = CollectUtils.newArrayList();
 		Set<String> names = CollectUtils.newHashSet();
-		StringBuilder duplicatedNames = new StringBuilder();
+		Set<String> duplicatedNames  = CollectUtils.newHashSet();
 		for (CodeCategory category : categories) {
 			CodeCategory newCategory = populateEntity(CodeCategory.class, category.getId() + "_codeCategory");
 			if (names.contains(newCategory.getName())) {
-				duplicatedNames.append(" ").append(newCategory.getName());
+				duplicatedNames.add(newCategory.getName());
 			} else {
 				names.add(newCategory.getName());
 				updated.add(newCategory);
@@ -56,14 +57,14 @@ public class CodeMetaAction extends SecurityActionSupport {
 		CodeCategory newCategory = populateEntity(CodeCategory.class, "newCodeCategory");
 		if (StringUtils.isNotBlank(newCategory.getName())) {
 			if (names.contains(newCategory.getName())) {
-				duplicatedNames.append(" ").append(newCategory.getName());
+				duplicatedNames.add(newCategory.getName());
 			} else {
 				names.add(newCategory.getName());
 				updated.add(newCategory);
 			}
 		}
-		if (duplicatedNames.length() > 0) {
-			this.addFlashErrorNow("dictionary.error.duplicateCategoryName", duplicatedNames);
+		if (duplicatedNames.size() > 0) {
+			addFlashErrorNow("dictionary.error.duplicateCategoryName", StrUtils.join(duplicatedNames,","));
 			return forward(new Action(this, "categories"));
 		} else {
 			entityDao.save(updated);
