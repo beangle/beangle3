@@ -11,7 +11,6 @@ import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.security.core.session.SessionRegistry;
-import org.beangle.security.core.session.Sessioninfo;
 import org.beangle.security.web.auth.WebAuthenticationDetails;
 import org.springframework.context.ApplicationListener;
 
@@ -30,16 +29,13 @@ public class BusinessEventLogger extends BaseServiceImpl implements ApplicationL
 		log.setResource(StringUtils.defaultIfBlank(event.getResource(), "  "));
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (null == auth) return;
-		log.setOperater(auth.getPrincipal().toString());
+		log.setOperater(auth.getName());
 		Object details = auth.getDetails();
-		if (!(details instanceof WebAuthenticationDetails)) {
+		if ((details instanceof WebAuthenticationDetails)) {
 			WebAuthenticationDetails webDetails = (WebAuthenticationDetails) details;
 			log.setIp(webDetails.getAgent().getIp());
 			log.setAgent(webDetails.getAgent().toString());
-			Sessioninfo activity = sessionRegistry.getSessioninfo(webDetails.getSessionId());
-			if (null != activity) {
-				log.setEntry(sessionRegistry.getResource(webDetails.getSessionId()));
-			}
+			log.setEntry(sessionRegistry.getResource(webDetails.getSessionId()));
 		}
 		entityDao.saveOrUpdate(log);
 	}

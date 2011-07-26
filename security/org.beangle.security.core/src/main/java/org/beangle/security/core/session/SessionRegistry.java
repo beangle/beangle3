@@ -4,7 +4,6 @@
  */
 package org.beangle.security.core.session;
 
-import java.util.Date;
 import java.util.List;
 
 import org.beangle.security.core.Authentication;
@@ -85,7 +84,15 @@ public interface SessionRegistry {
 	 * 
 	 * @param sessionid
 	 */
-	public void access(String sessionid, String resource, Date beginAt, Date endAt);
+	public void access(String sessionid, String resource, long accessAt);
+
+	/**
+	 * 结束访问某资源
+	 * 
+	 * @param sessionid
+	 * @param endAt
+	 */
+	public void endAccess(String sessionid, String resource, long endAt);
 
 	/**
 	 * 查询控制器

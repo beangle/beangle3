@@ -4,7 +4,10 @@
  */
 package org.beangle.ems.security.service;
 
+import java.util.List;
+
 import org.beangle.ems.event.BusinessEvent;
+import org.beangle.ems.security.User;
 
 /**
  * @author chaostone
@@ -17,10 +20,11 @@ public class AccountStatusEvent extends BusinessEvent {
 
 	public AccountStatusEvent(Object source) {
 		super(source);
+		this.resource = "用户管理";
 	}
 
 	public AccountStatusEvent(Object source, boolean enabled) {
-		super(source);
+		this(source);
 		this.enabled = enabled;
 	}
 
@@ -30,6 +34,18 @@ public class AccountStatusEvent extends BusinessEvent {
 
 	public boolean isEnabled() {
 		return enabled;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public String getDescription() {
+		List<User> users = (List<User>) source;
+		StringBuilder sb = new StringBuilder();
+		for (User user : users) {
+			sb.append(user.getName()).append(",");
+		}
+		sb.deleteCharAt(sb.length() - 1);
+		return (enabled ? "激活" : "禁用") + "了" + sb;
 	}
 
 }

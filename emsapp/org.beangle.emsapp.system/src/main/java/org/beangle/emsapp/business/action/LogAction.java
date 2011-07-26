@@ -4,13 +4,12 @@
  */
 package org.beangle.emsapp.business.action;
 
-import java.util.Calendar;
-
 import org.apache.commons.lang.StringUtils;
 import org.beangle.ems.log.BusinessLog;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.model.query.QueryBuilder;
 import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.struts2.helper.QueryHelper;
 
 /**
  * 业务日志相应类
@@ -29,14 +28,7 @@ public class LogAction extends SecurityActionSupport {
 	protected QueryBuilder<?> getQueryBuilder() {
 		OqlBuilder<BusinessLog> builder = OqlBuilder.from(BusinessLog.class, "log");
 		populateConditions(builder);
-		java.sql.Date beginDate = getDate("beginDate");
-		java.sql.Date endDate = getDate("endDate");
-		if (null != beginDate && null != endDate) {
-			Calendar c = Calendar.getInstance();
-			c.setTime(endDate);
-			c.set(Calendar.DATE, c.get(Calendar.DATE) + 1);
-			builder.where("log.time >= (:begin) and log.time <= (:end)", beginDate, c.getTime());
-		}
+		QueryHelper.addDateIntervalCondition(builder, "operateAt", "beginDate", "endDate");
 		builder.limit(getPageLimit());
 		String orderBy = get("orderBy");
 		if (StringUtils.isEmpty(orderBy)) {

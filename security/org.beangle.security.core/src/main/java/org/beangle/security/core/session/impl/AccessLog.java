@@ -43,13 +43,13 @@ public class AccessLog extends LongIdObject {
 		super();
 	}
 
-	public AccessLog(String sessionid, String username, String resource, Date beginAt, Date endAt) {
+	public AccessLog(String sessionid, String username, String resource, long beginAt, long endAt) {
 		super();
 		this.sessionid = sessionid;
 		this.username = username;
 		this.resource = resource;
-		this.beginAt = beginAt;
-		this.endAt = endAt;
+		this.beginAt = new Date(beginAt);
+		this.endAt = new Date(endAt);
 	}
 
 	public long getDuration() {

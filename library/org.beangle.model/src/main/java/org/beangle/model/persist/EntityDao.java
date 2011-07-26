@@ -255,6 +255,15 @@ public interface EntityDao {
 	public int executeUpdateHql(String hql, Object... arguments);
 
 	/**
+	 * 重复执行单个hql语句
+	 * 
+	 * @param queryStr
+	 * @param arguments
+	 * @return
+	 */
+	public int executeUpdateHqlRepeatly(String queryStr, List<Object[]> arguments);
+
+	/**
 	 * 执行HQL 进行更新或者删除
 	 * 
 	 * @param queryStr
@@ -434,5 +443,10 @@ public interface EntityDao {
 	 */
 	public void execute(Operation... opts);
 
+	/**
+	 * 执行一个操作构建者提供的一系列操作
+	 * 
+	 * @param builder
+	 */
 	public void execute(Operation.Builder builder);
 }

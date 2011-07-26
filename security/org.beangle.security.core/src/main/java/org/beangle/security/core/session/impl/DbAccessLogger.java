@@ -4,8 +4,6 @@
  */
 package org.beangle.security.core.session.impl;
 
-import java.util.Date;
-
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.security.core.session.AccessLogger;
 
@@ -17,8 +15,8 @@ import org.beangle.security.core.session.AccessLogger;
  */
 public class DbAccessLogger extends BaseServiceImpl implements AccessLogger {
 
-	public void log(String sessionid, String username, String resource, Date beginAt, Date endAt) {
-		entityDao.saveOrUpdate(new AccessLog(sessionid, username, resource, beginAt, endAt));
+	public void log(String sessionid, String username, String resource, long beginAt, long endAt) {
+		entityDao.saveOrUpdate(new AccessLog(sessionid, username, resource,beginAt, endAt));
 	}
 
 }

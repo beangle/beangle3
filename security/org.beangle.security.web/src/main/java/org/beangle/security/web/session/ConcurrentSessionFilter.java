@@ -16,7 +16,6 @@
 package org.beangle.security.web.session;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,6 +31,7 @@ import org.beangle.security.web.auth.logout.LogoutHandlerStack;
 import org.beangle.security.web.auth.logout.SecurityContextLogoutHandler;
 import org.beangle.web.filter.GenericHttpFilterBean;
 import org.beangle.web.util.RedirectUtils;
+import org.beangle.web.util.RequestUtils;
 import org.springframework.util.Assert;
 
 /**
@@ -91,13 +91,12 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 				}
 			}
 		}
-		Date beginAt = new Date();
+		String uri = RequestUtils.getServletPath(request);
+		if (null != info) sessionRegistry.access(session.getId(), uri, System.currentTimeMillis());
 		try {
 			chain.doFilter(request, response);
 		} finally {
-			if (null != info) {
-				sessionRegistry.access(session.getId(), request.getRequestURI(), beginAt, new Date());
-			}
+			if (null != info) sessionRegistry.endAccess(session.getId(), uri, System.currentTimeMillis());
 		}
 	}
 

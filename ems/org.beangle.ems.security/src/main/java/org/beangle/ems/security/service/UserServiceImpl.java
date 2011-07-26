@@ -67,7 +67,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		List<User> users = (List<User>) CollectionUtils.select(getUsers(ids), new Predicate() {
 			public boolean evaluate(Object object) {
 				User one = (User) object;
-				return isManagedBy(manager, one) && !manager.equals(one) && (one.isEnabled()!=enabled);
+				return isManagedBy(manager, one) && !manager.equals(one) && (one.isEnabled() != enabled);
 			}
 		});
 
@@ -75,8 +75,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			User cur = users.get(i);
 			cur.setEnabled(enabled);
 		}
-		entityDao.saveOrUpdate(users);
-		publish(new AccountStatusEvent(users, enabled));
+		if (!users.isEmpty()) {
+			entityDao.saveOrUpdate(users);
+			publish(new AccountStatusEvent(users, enabled));
+		}
 		return users.size();
 	}
 

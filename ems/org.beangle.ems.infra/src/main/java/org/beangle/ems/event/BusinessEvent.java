@@ -22,11 +22,11 @@ public class BusinessEvent extends ApplicationEvent {
 		super(source);
 	}
 
-	private Date issueAt;
+	protected Date issueAt=new Date();
 
-	private String resource;
+	protected String resource;
 
-	private String description;
+	protected String description;
 
 	public Date getIssueAt() {
 		return issueAt;

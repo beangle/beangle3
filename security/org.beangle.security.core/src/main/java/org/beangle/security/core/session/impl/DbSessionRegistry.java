@@ -169,16 +169,21 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 		return sessioninfoBuilder;
 	}
 
-	public void access(String sessionid, String resource, Date beginAt, Date endAt) {
-		if ((beginAt.getTime() - updatedAt) > updatedInterval) {
+	public void access(String sessionid, String resource, long accessAt) {
+		if (accessAt - updatedAt > updatedInterval) {
 			new Thread(new AccessUpdaterTask(this)).start();
 		}
 		AccessEntry entry = entries.get(sessionid);
-		if (null == entry) entries.put(sessionid, new AccessEntry(resource, beginAt));
-		else entry.access(resource, beginAt);
+		if (null == entry) entries.put(sessionid, new AccessEntry(resource, accessAt));
+		else entry.access(resource, accessAt);
+
+	}
+
+	public void endAccess(String sessionid, String resource, long endAt) {
 		if (enableLog) {
+			AccessEntry entry = entries.get(sessionid);
 			accessLogger.log(sessionid, SecurityContextHolder.getContext().getAuthentication().getName(),
-					resource, beginAt, endAt);
+					resource, entry.accessAt, endAt);
 		}
 	}
 
@@ -213,15 +218,18 @@ class AccessUpdaterTask implements Runnable {
 
 	public void run() {
 		EntityDao entityDao = registry.getEntityDao();
-		Date updatedAt = new Date(registry.updatedAt);
+		long updatedAt = registry.updatedAt;
+		List<Object[]> arguments = CollectUtils.newArrayList();
 		for (Map.Entry<String, AccessEntry> entry : registry.entries.entrySet()) {
 			AccessEntry accessEntry = entry.getValue();
-			if (accessEntry.accessAt.after(updatedAt)) {
-				entityDao.executeUpdateHql("update "
-						+ registry.getSessioninfoBuilder().getSessioninfoClass().getName()
-						+ " info set info.lastAccessAt=? where info.id=?", entry.getValue().accessAt,
-						entry.getKey());
+			if (accessEntry.accessAt > updatedAt) {
+				arguments.add(new Object[] { new Date(entry.getValue().accessAt), entry.getKey() });
 			}
+		}
+		if (!arguments.isEmpty()) {
+			entityDao.executeUpdateHqlRepeatly("update "
+					+ registry.getSessioninfoBuilder().getSessioninfoClass().getName()
+					+ " info set info.lastAccessAt=? where info.id=?", arguments);
 		}
 		registry.updatedAt = System.currentTimeMillis();
 	}
@@ -230,16 +238,16 @@ class AccessUpdaterTask implements Runnable {
 
 class AccessEntry {
 	String resource;
-	Date accessAt;
+	long accessAt;
 
-	public AccessEntry(String resource, Date accessAt) {
+	public AccessEntry(String resource, long accessMillis) {
 		super();
 		this.resource = resource;
-		this.accessAt = accessAt;
+		this.accessAt = accessMillis;
 	}
 
-	public void access(String resource, Date accessAt) {
+	public void access(String resource, long accessMillis) {
 		this.resource = resource;
-		this.accessAt = accessAt;
+		this.accessAt = accessMillis;
 	}
 }

@@ -9,6 +9,7 @@ import org.beangle.ems.config.service.DaoPropertyConfigProvider;
 import org.beangle.ems.dictionary.service.impl.BaseCodeServiceImpl;
 import org.beangle.ems.dictionary.service.impl.SeqCodeGenerator;
 import org.beangle.ems.io.ClasspathDocLoader;
+import org.beangle.ems.log.service.BusinessEventLogger;
 import org.beangle.spring.bind.AbstractBindModule;
 import org.beangle.web.io.SplitStreamDownloader;
 
@@ -22,6 +23,7 @@ public class BaseServiceModule extends AbstractBindModule {
 
 		bind("baseCodeService", BaseCodeServiceImpl.class);
 		bind(SeqCodeGenerator.class);
+		bind(BusinessEventLogger.class);
 	}
 
 }

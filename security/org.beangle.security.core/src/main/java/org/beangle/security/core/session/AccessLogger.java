@@ -4,8 +4,6 @@
  */
 package org.beangle.security.core.session;
 
-import java.util.Date;
-
 /**
  * 访问记录监控器
  * 
@@ -19,6 +17,6 @@ public interface AccessLogger {
 	 * 
 	 * @param sessionid
 	 */
-	public void log(String sessionid, String username, String resource, Date beginAt, Date endAt);
+	public void log(String sessionid, String username, String resource, long beginAt, long endAt);
 
 }

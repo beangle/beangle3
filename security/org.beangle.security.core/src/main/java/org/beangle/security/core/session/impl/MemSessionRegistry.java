@@ -5,7 +5,6 @@
 package org.beangle.security.core.session.impl;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -156,8 +155,13 @@ public class MemSessionRegistry implements SessionRegistry, ApplicationListener<
 		return sessioninfoBuilder;
 	}
 
-	public void access(String sessionid, String resource, Date beginAt, Date endAt) {
+	public void access(String sessionid, String resource, long beginAt) {
 		//DO nothing
+	}
+
+	public void endAccess(String sessionid, String resource, long endAt) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public String getResource(String sessionid) {
