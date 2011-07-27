@@ -24,6 +24,7 @@
 	[@b.textfield label="menu.entry"  name="menu.entry" value="${menu.entry!}" maxlength="100" /]
 	[@b.select2 label="使用资源" name1st="Resources" name2nd="resourceId" items1st=resources?sort_by("name") items2nd= menu.resources?sort_by("name") option="id,description"/]
 	[@b.textarea label="common.remark"  name="menu.remark" maxlength="50" value=menu.remark! rows="2" cols="40"/]
+	[@b.baseCode className="Country" required="true" style="width:100px" name="bbb" label="国家" format="id" value="177" empty="..."/]
 	[@b.formfoot]
 		[@b.reset/]&nbsp;&nbsp;
 		[@b.submit value="action.submit" /]

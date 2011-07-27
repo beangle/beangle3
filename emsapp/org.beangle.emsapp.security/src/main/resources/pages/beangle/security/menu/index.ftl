@@ -8,6 +8,7 @@
 				[@b.select name="menu.profile.id" items=profiles label="配置"/]
 				[@b.textfields names="menu.code;common.code,menu.title;标题,menu.entry;menu.entry"/]
 				[@b.select name="menu.enabled" items=profiles label="common.status" items={'true':'${b.text("action.activate")}','false':'${b.text("action.freeze")}'}  empty="..."/]
+				[@b.baseCode className="Country" name="aaa" label="国家" format="engName" value="177" empty="..."/]
 			[/@]
 		</td>
 		<td class="index_content">

@@ -5,14 +5,18 @@
 <thead class="gridhead">
 [#if tag.filterable="true" || tag.filters?size>0]
 <tr>
-	<th  onclick="document.getElementById('${tag.id}_filter_submit').onclick()" class="gridselect-top"><img src="${b.theme.iconurl('actions/edit-find.png')}"/>[@b.submit id="${tag.id}_filter_submit" style="display:none"/]</th>
+	<th class="gridselect-top">[@b.submit id="${tag.id}_filter_submit" style="background-image: url(${b.theme.iconurl('actions/edit-find.png')});background-repeat: no-repeat;background-color:transparent;width:16px;height:16px;border-style:none;"/]</th>
 	[#list tag.cols as cln]
 	[#if !(cln.type??)]
 	[#if tag.isFilterable(cln)]
-	<th title="${cln.title}" [#if cln.width??]width="${cln.width}"[/#if]>
-	[#if tag.filters[cln.property]??]${tag.filters[cln.property]}[#else]<input type="text" name="${cln.propertyPath}"  maxlength="100" value="${(Parameters[cln.propertyPath]!)?html}" style="width:95%;"/>[/#if]
+	<th title="${cln.title}" [#if cln.width??]width="${cln.width}"[/#if] style="padding-left:3px">
+	[#if tag.filters[cln.property]??]${tag.filters[cln.property]}[#else]
+	<div style="margin-right:6px">
+	<input type="text" name="${cln.propertyPath}"  maxlength="100" value="${(Parameters[cln.propertyPath]!)?html}" style="width:100%;"/>
+	</div>
+	[/#if]
 	</th>
-	[#else]<th></th>[/#if]
+	[#else]<th [#if cln.width??]width="${cln.width}"[/#if]></th>[/#if]
 	[/#if]
 	[/#list]
 </tr>

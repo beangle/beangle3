@@ -20,6 +20,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.Page;
 import org.beangle.struts2.view.component.ActionUrlRender;
 import org.beangle.struts2.view.component.Anchor;
+import org.beangle.struts2.view.component.BaseCode;
 import org.beangle.struts2.view.component.Checkbox;
 import org.beangle.struts2.view.component.Checkboxes;
 import org.beangle.struts2.view.component.Component;
@@ -330,5 +331,9 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 	
 	public TagModel getCheckboxes(){
 		return get(Checkboxes.class);
+	}
+	
+	public TagModel getBaseCode(){
+		return get(BaseCode.class);
 	}
 }
