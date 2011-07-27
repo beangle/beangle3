@@ -12,14 +12,15 @@ import java.util.Map;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.model.entity.Model;
-import org.beangle.model.persist.impl.BaseServiceImpl;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
+import org.beangle.ems.security.event.GroupAuthorityEvent;
+import org.beangle.model.entity.Model;
+import org.beangle.model.persist.impl.BaseServiceImpl;
+import org.beangle.model.query.builder.OqlBuilder;
 
 /**
  * 授权信息的服务实现类
@@ -104,30 +105,25 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 	}
 
 	public void authorize(Group group, Set<Resource> resources) {
-		// 查找保留的权限
-		Set<Authority> reserved = CollectUtils.newHashSet();
-		for (final Authority authority : group.getAuthorities()) {
-			if (resources.contains(authority.getResource())) {
-				reserved.add(authority);
-				resources.remove(authority.getResource());
+		Set<Authority> removed = CollectUtils.newHashSet();
+		for (final Authority au : group.getAuthorities()) {
+			if (!resources.contains(au.getResource())) {
+				removed.add(au);
+			} else {
+				resources.remove(au.getResource());
 			}
 		}
-		group.getAuthorities().clear();
-		group.getAuthorities().addAll(reserved);
-		// 新权限
-		Authority model = null;
-		try {
-			model = (Authority) Model.newInstance(Authority.class);
-		} catch (Exception e) {
-			throw new RuntimeException("cannot init authroity by class:" + Authority.class);
-		}
-		model.setGroup(group);
-		for (final Resource element : resources) {
-			Authority authority = (Authority) model.clone();
-			authority.setResource(element);
+		group.getAuthorities().removeAll(removed);
+
+		for (Resource resource : resources) {
+			Authority authority = Model.newInstance(Authority.class);
+			authority.setGroup(group);
+			authority.setResource(resource);
 			group.getAuthorities().add(authority);
 		}
+		entityDao.remove(removed);
 		entityDao.saveOrUpdate(group);
+		publish(new GroupAuthorityEvent(group));
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -177,10 +173,6 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 		return entityDao.search(query);
 	}
 
-	public void remove(Authority authority) {
-		if (null != authority) entityDao.remove(authority);
-	}
-
 	public String extractResource(String uri) {
 		int lastDot = -1;
 		for (int i = 0; i < uri.length(); i++) {
@@ -194,10 +186,6 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 			lastDot = uri.length();
 		}
 		return uri.substring(0, lastDot);
-	}
-
-	public void saveOrUpdate(Authority authority) {
-		entityDao.saveOrUpdate(authority);
 	}
 
 	public void setUserService(UserService userService) {

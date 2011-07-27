@@ -42,9 +42,9 @@ public class Grid extends ClosingUIBean {
 	/** 重新载入的时间间隔（以秒为单位） */
 	private String refresh;
 
-	/**没有数据时显示的文本*/
+	/** 没有数据时显示的文本 */
 	private String emptyMsg;
-	
+
 	public Grid(ValueStack stack) {
 		super(stack);
 	}
@@ -115,7 +115,11 @@ public class Grid extends ClosingUIBean {
 	}
 
 	public void setItems(Object datas) {
-		this.items = datas;
+		if (datas instanceof String) {
+			this.items = findValue((String) datas);
+		} else {
+			this.items = datas;
+		}
 	}
 
 	public Object getItems() {
@@ -215,9 +219,6 @@ public class Grid extends ClosingUIBean {
 			super(stack);
 			table = (Grid) findAncestor(Grid.class);
 			Object iteratorTarget = table.items;
-			if (table.items instanceof String) {
-				iteratorTarget = findValue((String) table.items);
-			}
 			iterator = MakeIterator.convert(iteratorTarget);
 			if (!iterator.hasNext()) {
 				iterator = Collections.singleton(null).iterator();

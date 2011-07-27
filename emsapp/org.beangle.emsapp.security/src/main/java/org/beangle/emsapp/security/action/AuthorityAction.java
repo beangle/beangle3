@@ -22,7 +22,6 @@ import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.security.nav.service.MenuService;
 import org.beangle.ems.security.service.CacheableAuthorityManager;
 import org.beangle.ems.web.action.SecurityActionSupport;
-import org.beangle.model.entity.Model;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.core.authority.GrantedAuthorityBean;
 import org.beangle.struts2.convention.route.Action;
@@ -147,30 +146,8 @@ public class AuthorityAction extends SecurityActionSupport {
 		for (final Menu m : mngMenus) {
 			mngResources.addAll(m.getResources());
 		}
-
-		Set<Authority> removedAuthorities = CollectUtils.newHashSet();
-		for (final Authority au : mao.getAuthorities()) {
-			if (mngResources.contains(au.getResource())) {
-				if (!newResources.contains(au.getResource())) {
-					removedAuthorities.add(au);
-				} else {
-					newResources.remove(au.getResource());
-				}
-			}
-		}
-
-		// 删除菜单和系统资源
-		mao.getAuthorities().removeAll(removedAuthorities);
-
-		for (Resource resource : newResources) {
-			Authority authority = Model.newInstance(Authority.class);
-			authority.setGroup(mao);
-			authority.setResource(resource);
-			mao.getAuthorities().add(authority);
-		}
-
-		entityDao.remove(removedAuthorities);
-		entityDao.saveOrUpdate(mao);
+		newResources.retainAll(mngResources);
+		authorityService.authorize(mao, newResources);
 		authorityManager.refreshGroupAuthorities(new GrantedAuthorityBean(mao.getName()));
 
 		Action redirect = Action.to(this).method("edit");

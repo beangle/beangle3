@@ -34,7 +34,7 @@ public class BusinessEventLogger extends BaseServiceImpl implements ApplicationL
 		if ((details instanceof WebAuthenticationDetails)) {
 			WebAuthenticationDetails webDetails = (WebAuthenticationDetails) details;
 			log.setIp(webDetails.getAgent().getIp());
-			log.setAgent(webDetails.getAgent().toString());
+			log.setAgent(webDetails.getAgent().getOs()+" "+webDetails.getAgent().getBrowser());
 			log.setEntry(sessionRegistry.getResource(webDetails.getSessionId()));
 		}
 		entityDao.saveOrUpdate(log);

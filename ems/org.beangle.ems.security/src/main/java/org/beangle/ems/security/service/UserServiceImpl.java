@@ -5,6 +5,7 @@
 package org.beangle.ems.security.service;
 
 import java.sql.Date;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,11 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
+import org.beangle.ems.security.event.GroupCreationEvent;
+import org.beangle.ems.security.event.UserAlterationEvent;
+import org.beangle.ems.security.event.UserCreationEvent;
+import org.beangle.ems.security.event.UserRemoveEvent;
+import org.beangle.ems.security.event.UserStatusEvent;
 import org.beangle.ems.security.model.GroupMemberBean;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
@@ -77,7 +83,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		}
 		if (!users.isEmpty()) {
 			entityDao.saveOrUpdate(users);
-			publish(new AccountStatusEvent(users, enabled));
+			publish(new UserStatusEvent(users, enabled));
 		}
 		return users.size();
 	}
@@ -88,6 +94,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			user.setCreatedAt(new Date(System.currentTimeMillis()));
 		}
 		entityDao.saveOrUpdate(user);
+		publish(new UserAlterationEvent(Collections.singletonList(user)));
 	}
 
 	// workground for no session
@@ -132,12 +139,16 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		newUser.setUpdatedAt(new Date(System.currentTimeMillis()));
 		newUser.setCreatedAt(new Date(System.currentTimeMillis()));
 		entityDao.saveOrUpdate(newUser);
+		publish(new UserCreationEvent(Collections.singletonList(newUser)));
 	}
 
 	public void removeUser(User manager, User user) {
+		List<User> removed=CollectUtils.newArrayList();
 		if (isManagedBy(manager, user)) {
 			entityDao.remove(user);
+			removed.add(user);
 		}
+		publish(new UserRemoveEvent(removed));
 	}
 
 	public boolean isManagedBy(User manager, User user) {
@@ -150,6 +161,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		group.setOwner(owner);
 		group.getMembers().add(new GroupMemberBean(group, owner, GroupMember.Ship.MANAGER));
 		entityDao.saveOrUpdate(group);
+		publish(new GroupCreationEvent(group));
 	}
 
 	/**

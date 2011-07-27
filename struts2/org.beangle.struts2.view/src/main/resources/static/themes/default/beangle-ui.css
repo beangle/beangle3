@@ -26,6 +26,8 @@ a:hover {color: red;}
 
 .gridselect{text-align:center;background-color: #e0ecff;width:25px;}
 
+.grid-filter-submit {background-image: url(icons/16x16/actions/edit-find.png);background-repeat: no-repeat;background-color:transparent;width:16px;height:16px;border-style:none}
+
 .gridselect-top{text-align:center;width:25px;}
 
 .gridhead{color: #000000;text-decoration: none;text-align:center;letter-spacing:0;background-color: #c7dbff;}

@@ -1,6 +1,6 @@
 [#ftl/][@b.head/]
 
-[@b.grid items="rules" var="rule"]
+[@b.grid items=rules var="rule"]
 	[@b.gridbar title="dd"]
 	bar.addItem("${b.text("action.info")}",action.info());
 	bar.addItem("${b.text("action.new")}",action.add());

@@ -104,49 +104,35 @@ public interface AuthorityService {
 	public Authority getAuthority(Group group, Resource resource);
 
 	/**
-	 * 保存新的权限设置
-	 * 
-	 * @param authority
-	 */
-	public void saveOrUpdate(Authority authority);
-
-	/**
-	 * 删除权限的信息设置
-	 * 
-	 * @param authority
-	 */
-	public void remove(Authority authority);
-
-	/**
 	 * 授权
 	 * 
 	 * @param ao
 	 * @param resources
-	 * @param authorityClass
 	 */
 	public void authorize(Group group, Set<Resource> resources);
 
 	/**
-	 * 
 	 * @param userService
 	 */
 	public void setUserService(UserService userService);
 
 	/**
-	 * 
 	 * @return
 	 */
 	public UserService getUserService();
 
 	/**
 	 * Extract Resource from uri
-	 * @param uri with out context path
+	 * 
+	 * @param uri
+	 *            with out context path
 	 * @return
 	 */
 	public String extractResource(String uri);
 
 	/**
 	 * 过滤有该资源权限的用户组
+	 * 
 	 * @param groups
 	 * @param resource
 	 * @return
