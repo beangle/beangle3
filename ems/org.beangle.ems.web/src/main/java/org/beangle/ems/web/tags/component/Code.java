@@ -1,16 +1,16 @@
-package org.beangle.struts2.view.component;
+package org.beangle.ems.web.tags.component;
 
 import org.beangle.struts2.view.component.Select;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
-public class BaseCode extends Select {
+public class Code extends Select {
 
 	private String className;
 
 	private String format;
 
-	public BaseCode(ValueStack stack) {
+	public Code(ValueStack stack) {
 		super(stack);
 	}
 

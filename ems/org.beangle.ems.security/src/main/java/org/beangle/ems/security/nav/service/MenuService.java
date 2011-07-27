@@ -18,6 +18,12 @@ import org.beangle.ems.security.nav.MenuProfile;
 public interface MenuService {
 
 	/**
+	 * 查询用户能够适用的菜单配置
+	 * @param user
+	 * @return
+	 */
+	public List<MenuProfile> getProfiles(User user);
+	/**
 	 * 获取用户的直接权限范围内的资源和所具有用户组的资源.
 	 * 
 	 * @param userId

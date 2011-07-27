@@ -1,5 +1,5 @@
 [#ftl]
 [@b.navmenu title="业务监控"]
-	[@bs.guard res="/business/log"][@b.navitem title="业务日志" href="/business/log"/][/@]
-	[@bs.guard res="/business/rule"][@b.navitem title="业务规则" href="/business/rule"/][/@]
+	[@ems.guard res="/business/log"][@b.navitem title="业务日志" href="/business/log"/][/@]
+	[@ems.guard res="/business/rule"][@b.navitem title="业务规则" href="/business/rule"/][/@]
 [/@]

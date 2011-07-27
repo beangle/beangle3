@@ -11,7 +11,6 @@ import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.PageLimit;
-import org.beangle.ems.security.Category;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.Resource;
@@ -74,14 +73,8 @@ public class UserDashboardHelper {
 	}
 
 	private void populateMenus(User user) {
-		OqlBuilder<MenuProfile> query = OqlBuilder.from(MenuProfile.class, "menuProfile");
-		Set<Category> categories = CollectUtils.newHashSet();
-		categories.add(user.getDefaultCategory());
-		categories.addAll(user.getCategories());
-		query.where("menuProfile.category in(:categories)", categories);
-		List<?> menuProfiles = entityDao.search(query);
+		List<?> menuProfiles = menuService.getProfiles(user);
 		ContextHelper.put("menuProfiles", menuProfiles);
-
 		Long menuProfileId = Params.getLong("menuProfileId");
 		if (null == menuProfileId && !menuProfiles.isEmpty()) {
 			menuProfileId = ((MenuProfile) (menuProfiles.get(0))).getId();
@@ -90,17 +83,13 @@ public class UserDashboardHelper {
 			MenuProfile menuProfile = (MenuProfile) entityDao.get(MenuProfile.class, menuProfileId);
 			List<Menu> menus = menuService.getMenus(menuProfile, user);
 			Set<Resource> resources = CollectUtils.newHashSet(authorityService.getResources(user));
-			Map<String, Group> groupMap = CollectUtils.newHashMap();
-			Map<String, List<Menu>> groupMenusMap = CollectUtils.newHashMap();
+			Map<Group, List<Menu>> groupMenusMap = CollectUtils.newHashMap();
 
 			List<Group> myGroups = userService.getGroups(user, GroupMember.Ship.MEMBER);
 			for (Group group : myGroups) {
-				groupMap.put(group.getId().toString(), group);
-				groupMenusMap.put(group.getId().toString(),
-						menuService.getMenus(menuProfile, group, Boolean.TRUE));
+				groupMenusMap.put(group, menuService.getMenus(menuProfile, group, Boolean.TRUE));
 			}
 			ContextHelper.put("menus", menus);
-			ContextHelper.put("groupMap", groupMap);
 			ContextHelper.put("groupMenusMap", groupMenusMap);
 			ContextHelper.put("resources", resources);
 		}

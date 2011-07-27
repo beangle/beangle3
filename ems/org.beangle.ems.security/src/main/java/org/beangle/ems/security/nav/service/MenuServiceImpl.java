@@ -16,6 +16,7 @@ import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.model.util.HierarchyEntityUtil;
 import org.beangle.ems.security.Authority;
+import org.beangle.ems.security.Category;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
@@ -31,6 +32,15 @@ import org.beangle.ems.security.service.UserService;
 public class MenuServiceImpl extends BaseServiceImpl implements MenuService {
 
 	private UserService userService;
+
+	public List<MenuProfile> getProfiles(User user) {
+		Set<Category> categories = CollectUtils.newHashSet();
+		categories.add(user.getDefaultCategory());
+		categories.addAll(user.getCategories());
+		OqlBuilder<MenuProfile> query = OqlBuilder.from(MenuProfile.class, "menuProfile");
+		query.where("menuProfile.category in(:categories)", categories).cacheable();
+		return entityDao.search(query);
+	}
 
 	public List<Menu> getMenus(MenuProfile profile, User user) {
 		Set<Menu> menus = CollectUtils.newHashSet();
@@ -49,7 +59,7 @@ public class MenuServiceImpl extends BaseServiceImpl implements MenuService {
 	 */
 	private List<Menu> addParentMenus(Set<Menu> menus) {
 		HierarchyEntityUtil.addParent(menus);
-		List<Menu> menuList=CollectUtils.newArrayList(menus);
+		List<Menu> menuList = CollectUtils.newArrayList(menus);
 		Collections.sort(menuList);
 		return menuList;
 	}

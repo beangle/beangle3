@@ -71,7 +71,7 @@ div .portlet-content{margin:2px;}
 			<em>${user.fullname}</em>
 			<ul>
 				<li>[@b.a href="/security/password!edit?user.id=${user.id}" target="user-info"]修改密码[/@]</li>
-				[@bs.guard res="/avatar/board"]<li>[@b.a href="/avatar/board!info?user.name=${user.name}"]更换头像[/@]</li>[/@]
+				[@ems.guard res="/avatar/board"]<li>[@b.a href="/avatar/board!info?user.name=${user.name}"]更换头像[/@]</li>[/@]
 			</ul>
 		</div>
 	</div>

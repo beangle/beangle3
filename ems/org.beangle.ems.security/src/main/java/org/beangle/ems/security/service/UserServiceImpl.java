@@ -109,6 +109,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 			if (ship.equals(GroupMember.Ship.MANAGER)) builder.where("gm.manager=true");
 			if (ship.equals(GroupMember.Ship.GRANTER)) builder.where("gm.granter=true");
 		}
+		builder.cacheable();
 		return entityDao.search(builder);
 	}
 

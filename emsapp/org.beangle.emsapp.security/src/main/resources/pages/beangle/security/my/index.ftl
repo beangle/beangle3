@@ -71,8 +71,8 @@ div .portlet-content{margin:2px;}
 			<em>${user.fullname}</em>
 			<ul>
 				<li>[@b.a href="!edit" target="user-info"]修改密码[/@]</li>
-				[@bs.guard res="/avatar/my-upload"]<li>[@b.a href="/avatar/my-upload"]更换头像[/@]</li>[/@]
-				[#--[@bs.guard res="/preference"]<li>[@b.a href="/perference"]设置偏好[/@]</li>[/@]--]
+				[@ems.guard res="/avatar/my-upload"]<li>[@b.a href="/avatar/my-upload"]更换头像[/@]</li>[/@]
+				[#--[@ems.guard res="/preference"]<li>[@b.a href="/perference"]设置偏好[/@]</li>[/@]--]
 				<li>[@b.a href="/logout" target="_self"]退出系统[/@]</li>
 			</ul>
 		</div>
@@ -81,7 +81,7 @@ div .portlet-content{margin:2px;}
 	[#include "../user/panels/group_portlet.ftl"/]
 </div>
 <div id="mspace">
-[@b.div id="user-info" href="!infolet" /]
+[@b.div id="user-info"][#include "infolet.ftl"/][/@]
 [#include "../user/panels/menu_portlet.ftl"/]
 </div>
 <div id="rspace">

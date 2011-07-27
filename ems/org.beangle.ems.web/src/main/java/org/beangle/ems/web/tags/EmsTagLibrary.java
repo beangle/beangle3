@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.beangle.ems.web.tags.component.AvatarImage;
+import org.beangle.ems.web.tags.component.Code;
 import org.beangle.ems.web.tags.component.Guard;
 import org.beangle.ems.web.tags.component.Userinfo;
 import org.beangle.security.access.AuthorityManager;
@@ -20,14 +21,14 @@ import com.opensymphony.xwork2.ObjectFactory;
 import com.opensymphony.xwork2.inject.Container;
 import com.opensymphony.xwork2.util.ValueStack;
 
-public class BeangleSecurityTagLibrary extends AbstractTagLibrary {
+public class EmsTagLibrary extends AbstractTagLibrary {
 	AuthorityManager authorityManager;
 
-	public BeangleSecurityTagLibrary() {
+	public EmsTagLibrary() {
 		super();
 	}
 
-	public BeangleSecurityTagLibrary(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
+	public EmsTagLibrary(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
 		super(stack, req, res);
 	}
 
@@ -39,7 +40,7 @@ public class BeangleSecurityTagLibrary extends AbstractTagLibrary {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		BeangleSecurityTagLibrary library = new BeangleSecurityTagLibrary(stack, req, res);
+		EmsTagLibrary library = new EmsTagLibrary(stack, req, res);
 		library.authorityManager = authorityManager;
 		return library;
 	}
@@ -69,7 +70,7 @@ public class BeangleSecurityTagLibrary extends AbstractTagLibrary {
 		}
 		return model;
 	}
-	
+
 	public TagModel getUserinfo() {
 		TagModel model = models.get(Userinfo.class);
 		if (null == model) {
@@ -83,4 +84,7 @@ public class BeangleSecurityTagLibrary extends AbstractTagLibrary {
 		return model;
 	}
 
+	public TagModel getCode() {
+		return get(Code.class);
+	}
 }

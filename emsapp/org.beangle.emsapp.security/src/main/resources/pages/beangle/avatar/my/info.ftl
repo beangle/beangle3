@@ -30,7 +30,7 @@
 	  </td>
    </tr>
 </table>
-[@bs.guard res="/avatar/my-upload"]
+[@ems.guard res="/avatar/my-upload"]
 [@b.div href="my-upload" astarget="false"/]
 [/@]
 [@b.foot/]

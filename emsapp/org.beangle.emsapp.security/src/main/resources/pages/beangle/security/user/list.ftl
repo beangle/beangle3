@@ -15,7 +15,7 @@
 	[/@]
 	[@b.row]
 		[@b.boxcol/]
-		[@b.col property="name" width="15%"]&nbsp;[@bs.avatar user=user/]&nbsp;[@b.a href="!dashboard?user.id=${user.id}" target="_blank"]${user.name}[/@][/@]
+		[@b.col property="name" width="15%"]&nbsp;[@ems.avatar user=user/]&nbsp;[@b.a href="!dashboard?user.id=${user.id}" target="_blank"]${user.name}[/@][/@]
 		[@b.col property="fullname" width="11%"/]
 		[@b.col property="mail" title="common.email" width="25%"/]
 		[@b.col property="creator.fullname" sort="user.creator" width="11%"/]

@@ -15,7 +15,7 @@
 [/@]
 [/#if]
 
-可编辑参数 [@bs.guard res="property"]
+可编辑参数 [@ems.guard res="property"]
 [@b.a href="property!bulkEdit" target="editable-properties"]编辑所有[/@]&nbsp;
 [@b.a href="property!newConfig" target="editable-properties"]新增配置[/@]
 [/@]

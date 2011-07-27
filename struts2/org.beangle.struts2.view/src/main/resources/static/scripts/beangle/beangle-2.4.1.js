@@ -6,9 +6,8 @@
 	/** extend function */
 	beangle.extend= function(map){
 		for(attr in map){
-			var attrs=attr.split(".");
-			var obj=beangle;
-			for(var i=0 ;i<attrs.length-1;i++){
+			var attrs=attr.split("."),obj=beangle,i;
+			for(i=0 ;i<attrs.length-1;i++){
 				obj[attrs[i]]=obj[attrs[i]]||{};
 				obj=obj[attrs[i]];
 			}
@@ -73,8 +72,7 @@
 			else return target;
 		},
 		findTarget : function(ele){
-			var p=ele.parentNode;
-			var finalTarget="_self";
+			var p = ele.parentNode,finalTarget = "_self";
 			while(p){
 				//FIXME ui-tabs-panel
 				if(p.id && p.className  && (p.className.indexOf("_ajax_target")>-1 )){//||p.className.indexOf("ui-tabs-panel")>-1
@@ -175,7 +173,7 @@
 			 * 将反选取消,改为全选或者全部取消
 			 */
 			boxAction : function (box, action,event){
-				var val = "";
+				var val = "",srcElement,i;
 				if (box){
 					if (! box[0]){
 						if (action == "selected"){
@@ -184,14 +182,14 @@
 							if (box.checked)
 								val = box.value;
 						} else if (action == "toggle"){
-							var srcElement = beangle.event.getTarget(event);
+							srcElement = beangle.event.getTarget(event);
 							box.checked = srcElement.checked;
 							if(typeof box.onchange =="function"){
 								box.onchange();
 							}
 						}
 					} else{
-						for (var i=0; i<box.length; i++){
+						for (i=0; i<box.length; i++){
 							if (action == "selected"){
 								if (box[i].checked)
 									return box[i].checked;
@@ -206,7 +204,7 @@
 									}
 								}
 							} else if (action == "toggle"){
-							    var srcElement = beangle.event.getTarget(event);
+								srcElement = beangle.event.getTarget(event);
 								box[i].checked = srcElement.checked;
 								if(typeof box[i].onchange =="function"){
 									box[i].onchange();
@@ -215,7 +213,6 @@
 						}
 					}
 				}
-	
 				if (action == "selected")
 					return false;
 				else
@@ -235,19 +232,19 @@
 			 * @extraHight 
 			 */
 			adapt: function (targObj,extraHight){
+				var frames, targWin, totalHeight, myHeight;
 				if(null==targObj || targObj.name=="")
 					return;
 				if(targObj.parent == targObj)return;
 				if (targObj.parent == window.top) {
 					if(targObj.parent.document.body.style.overflowY=="hidden") return;
 				}
-				var frames = targObj.parent.document.getElementsByName(targObj.name);
+				frames = targObj.parent.document.getElementsByName(targObj.name);
 				if(frames.length<1) return;
-				var targWin=frames[0];
+				targWin=frames[0];
 				if(targWin != null && (targWin.scrolling=="no" || targWin.className=="autoadapt")) {
-					var heightValue = targObj.document.body.scrollHeight;
-					var totalHeight=heightValue + ((null==extraHight)?0:extraHight);
-					var myHeight=0;
+					totalHeight = targObj.document.body.scrollHeight + ((null==extraHight)?0:extraHight);
+					myHeight = 0;
 					if(targWin.style.height){
 						myHeight=parseInt(targWin.style.height.substring(0,targWin.style.height.length-2));
 					}
@@ -264,10 +261,11 @@
 	beangle.extend({
 		form:{
 			submit : function (myForm,action,target,onsubmit,ajax){
+				var submitTarget, rs, sumbitBtnId, submitx, origin_action,options_submit;
 				if((typeof myForm)=='string') myForm = document.getElementById(myForm);
 				//1. submit hook
 				if(onsubmit){
-					var rs=null;
+					rs=null;
 					if(typeof onsubmit == "function"){
 						try{rs=onsubmit(myForm);}catch(e){alert(e);return;}
 					}else{
@@ -279,14 +277,14 @@
 				}
 				//2.native onsubmit
 				if(myForm.onsubmit){
-					var rs=null;
+					rs=null;
 					try{rs=myForm.onsubmit();}catch(e){alert(e);return;}
 					if(rs==false){
 						return;
 					}
 				}
 				//FIXME check target is(iframe,reserved,div)
-				var submitTarget = (null!=target)?target:myForm.target;
+				submitTarget = (null!=target)?target:myForm.target;
 				if(!submitTarget){
 					submitTarget=bg.findTarget(myForm);
 				}
@@ -309,8 +307,8 @@
 				if(null==myForm.id||''==myForm.id){
 					myForm.setAttribute("id",myForm.name);
 				}
-				var sumbitBtnId=myForm.id+"_submit";
-				var submitx=document.getElementById(sumbitBtnId);
+				sumbitBtnId=myForm.id+"_submit";
+				submitx=document.getElementById(sumbitBtnId);
 				if(null==submitx){
 					submitx = document.createElement('input');
 					submitx.setAttribute("id",sumbitBtnId);
@@ -318,9 +316,9 @@
 					submitx.style.display="none";
 					myForm.appendChild(submitx);
 				}
-				var origin_action=myForm.action;
+				origin_action=myForm.action;
 				myForm.action=action;
-				var options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#'};
+				options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#'};
 				if (typeof jQuery != "undefined") {
 					jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
 				}
@@ -383,11 +381,10 @@
 			},
 			ecodeParams : function (params){
 				if(""==params)return "";
-				var paramsPair=params.split("&");
-				var newParams="";
-				for(var i=0;i<paramsPair.length;i++){
+				var paramsPair=params.split("&"), newParams="", i, eqIndex;
+				for(i=0;i<paramsPair.length;i++){
 					if(paramsPair[i]!=""){
-						var eqIndex = paramsPair[i].indexOf("=");
+						eqIndex = paramsPair[i].indexOf("=");
 						newParams+="&"+paramsPair[i].substr(0,eqIndex);
 						if(-1!=eqIndex){
 							newParams+="=";
@@ -409,11 +406,11 @@
 
 			addHiddens : function (form,paramSeq){
 				bg.assert.notNull(paramSeq,"paramSeq for addHiddens must not be null");
-				var params = paramSeq.split("&");
-				for(var i=0;i<params.length;i++){
+				var params = paramSeq.split("&"), i, name, value;
+				for(i=0;i<params.length;i++){
 					if(params[i]!=""){
-						var name = params[i].substr(0,params[i].indexOf("="));
-						var value =params[i].substr(params[i].indexOf("=")+1);
+						name = params[i].substr(0,params[i].indexOf("="));
+						value =params[i].substr(params[i].indexOf("=")+1);
 						bg.form.addInput(form,name,value,"hidden");
 					}
 				}
@@ -440,11 +437,10 @@
 			 * 
 			 */
 			getInputParams : function (form,prefix,getEmpty){
-				var elems = form.elements;
-				var params = "";
+				var elems = form.elements, params = "", i;
 				if(null==getEmpty) getEmpty=true;
 
-				for(i =0;i < elems.length; i++){
+				for(i = 0;i < elems.length; i++){
 					if(""!=elems[i].name){
 						if("params"==elems[i].name) continue;
 						//alert(elems[i].tagName+":"+elems[i].value);
@@ -512,9 +508,8 @@
 	beangle.extend({
 		select:{
 			getValues : function (select){
-				var val = "";
-				var options = select.options;
-				for (var i=0; i<options.length; i++){
+				var val = "", i, options = select.options;
+				for (i = 0; i< options.length; i++){
 					if (val != "")
 						val = val + ",";
 					val = val + options[i].value;
@@ -522,9 +517,8 @@
 				return val;
 			},
 			getSelectedValues : function (select){
-				var val = "";
-				var options = select.options;
-				for (var i=0; i<options.length; i++){   
+				var val = "", i, options = select.options;
+				for (i = 0; i < options.length; i++){   
 					if (options[i].selected){
 						if (val != "")
 							val = val + ",";	
@@ -534,7 +528,7 @@
 				return val;
 			},
 			hasOption : function (select, op){ 
-				for (var i=0; i<select.length; i++ ){
+				for (var i = 0; i< select.length; i++ ){
 					if (select.options[i].value == op.value)
 						return true;
 				}
@@ -542,9 +536,10 @@
 			},
 			
 			moveSelected : function (srcSelect, destSelect){
-				for (var i=0; i<srcSelect.length; i++){
+				var i, op;
+				for (i = 0; i < srcSelect.length; i++){
 					if (srcSelect.options[i].selected){ 
-						var op = srcSelect.options[i];
+						op = srcSelect.options[i];
 						if (!bg.select.hasOption(destSelect, op)){
 						   destSelect.options[destSelect.length]= new Option(op.text, op.value);
 						}
@@ -564,8 +559,8 @@
 				return select.options.length>0;
 			},
 			removeSelected : function (select){
-				var options = select.options;
-				for (var i=options.length-1; i>=0; i--){   
+				var options = select.options, i;
+				for (i = options.length-1; i >= 0; i--){   
 					if (options[i].selected){  
 						options[i] = null;
 					}
@@ -593,14 +588,13 @@
 	beangle.extend({
 		cookie:{
 			get : function (cookieName) {
-				var cookieString = document.cookie;
-				var start = cookieString.indexOf(cookieName + '=');
+				var cookieString = document.cookie , start = cookieString.indexOf(cookieName + '='), end;
 				// 加上等号的原因是避免在某些 Cookie 的值里有
 				// 与 cookieName 一样的字符串。
 				if (start == -1) // 找不到
 				return null;
 				start += cookieName.length + 1;
-				var end = cookieString.indexOf(';', start);
+				end = cookieString.indexOf(';', start);
 				if (end == -1) return unescape(cookieString.substring(start));
 				return unescape(cookieString.substring(start, end));
 			},
@@ -672,13 +666,13 @@
 		}
 		this.addParams = function(paramSeq){
 			bg.assert.notNull(paramSeq,"paramSeq for addHiddens must not be null");
-			this.paramstr=paramSeq
-			var paramArray = paramSeq.split("&");
-			for(var i=0;i<paramArray.length;i++){
+			this.paramstr=paramSeq;
+			var paramArray = paramSeq.split("&"), i, name, value;
+			for(i=0;i<paramArray.length;i++){
 				oneParam=paramArray[i];
 				if(oneParam!=""){
-					var name = oneParam.substr(0,oneParam.indexOf("="));
-					var value = oneParam.substr(oneParam.indexOf("=")+1);
+					name = oneParam.substr(0,oneParam.indexOf("="));
+					value = oneParam.substr(oneParam.indexOf("=")+1);
 					this.paramMap[name]=value;
 				}
 			}
@@ -712,10 +706,10 @@
 		}
 		// jump to page using form submit
 		this.goPageNormal = function (pageNo,pageSize,orderBy){
-			var myForm=document.createElement("form");
+			var myForm=document.createElement("form"), key, value;
 			myForm.setAttribute("action",this.actionurl);
 			myForm.setAttribute("method","POST");
-			for(var key in this.paramMap){
+			for(key in this.paramMap){
 				value=this.paramMap[key];
 				if(value != ""){
 					bg.form.addInput(myForm,key,value,"hidden");
@@ -726,15 +720,15 @@
 		}
 		// jump to page using ajax
 		this.goPageAjax = function (pageNo,pageSize,orderBy){
-			var myForm=this.getForm();
-			for(var key in this.paramMap){
-				var value=this.paramMap[key];
+			var myForm=this.getForm(), key, value, submitBtnId, submitx, options_submit;
+			for(key in this.paramMap){
+				value=this.paramMap[key];
 				if(value!=""){
 					bg.form.addInput(myForm,key,value,"hidden");
 				}
 			}
-			var submitBtnId=this.formid + "_submitx";
-			var submitx=document.getElementById(submitBtnId);
+			submitBtnId=this.formid + "_submitx";
+			submitx=document.getElementById(submitBtnId);
 			if(null==submitx){
 				submitx = document.createElement('button');
 				submitx.setAttribute("id",submitBtnId);
@@ -742,7 +736,7 @@
 				submitx.style.display='none';
 				myForm.appendChild(submitx);
 			}
-			var options_submit = {};
+			options_submit = {};
 			options_submit.jqueryaction = "button";
 			options_submit.id = submitBtnId;
 			options_submit.targets = this.target;

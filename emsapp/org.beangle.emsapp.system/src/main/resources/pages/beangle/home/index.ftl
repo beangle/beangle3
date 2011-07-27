@@ -14,7 +14,7 @@
 	</div>
 	[@b.form]
 	<div class="banner_area">
-		[@bs.userinfo user=user href="/security/my" title="查看登录记录"/]&nbsp;&nbsp;
+		[@ems.userinfo user=user href="/security/my" title="查看登录记录"/]&nbsp;&nbsp;
 		[@b.select name="security.categoryId" items=user.categories title="entity.userCategory"  style="width:100px" value=categoryId option="id,title"/]
 		<input type="submit" value="切换"/>
 	</div>

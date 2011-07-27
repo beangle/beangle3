@@ -47,7 +47,7 @@
 	[#local i=0]
 	[#local moreitem=false/]
 	[#list mymenu.resources as resource]
-	[@bs.guard res=resource.name]
+	[@ems.guard res=resource.name]
 		[#if i=maxItem]
 		[#local moreitem=true/]
 		[#local i=i+1][#break/]

@@ -28,11 +28,9 @@
 		this.id=divId;
 		this.separator="|";
 		this.bar.className="toolbar";
-		var defaultToolBarImageName="info.png";
-		var defaultItemImageName="action.png";
-		var helpImageName="help.png";
-		var imageRoot=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/"+ bg.uitheme +"/icons/";
-		var imagePath=imageRoot + "16x16/actions/";
+		var defaultToolBarImageName="info.png", defaultItemImageName="action.png", helpImageName="help.png",
+			imageRoot=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/"+ bg.uitheme +"/icons/",
+			imagePath=imageRoot + "16x16/actions/";
 		
 		this.setTitle=function(newTitle,imageName){
 			if(!newTitle) return;
@@ -47,16 +45,16 @@
 		 * 
 		 */
 		this.init = function (title,imageName){
-			var title_div = document.createElement('div');
+			var title_div = document.createElement('div'), msg_div, items_div;
 			title_div.className="toolbar-title";
 			this.bar.appendChild(title_div);
 			this.title_div=title_div;
 			this.setTitle(title);
-			var msg_div = document.createElement('div');
+			msg_div = document.createElement('div');
 			msg_div.className="toolbar-msg";
 			msg_div.id=this.id+"_msg";
 			this.bar.appendChild(msg_div);
-			var items_div = document.createElement('div');
+			items_div = document.createElement('div');
 			items_div.className="toolbar-items";
 			items_div.id=this.id+"_items";
 			this.items_div=items_div;
@@ -617,27 +615,26 @@
 			 * @param onePage 与表格对应的page对象
 			 */
 			init : function (tableId,onePage){
-				var table= document.getElementById(tableId);
-				var thead=table.tHead;
+				var table= document.getElementById(tableId), thead = table.tHead, tbody, orderBy, columnSort ,i ,j, head, row, cell, desc, asc, orignRowCls;
 				if(!thead || thead.rows.length==0){
 					//bg.alert("sortTable ["+tableId+"] without thead"); 
 					return;
 				}
-				var orderBy=onePage.orderby;
-				var columnSort = function(event){
+				orderBy=onePage.orderby;
+				columnSort = function(event){
 					// this is a td/th
 					bg.ui.grid.sort(onePage,this);
 				}
-				for(var j=0;j<thead.rows.length;j++){
-					var head=thead.rows[j];
-					for(var i=0;i<head.cells.length;i++){
-						var cell=head.cells[i];
+				for(j=0;j<thead.rows.length;j++){
+					head=thead.rows[j];
+					for(i=0;i<head.cells.length;i++){
+						cell=head.cells[i];
 						if(cell.className=="gridhead-sortable" && null!=cell.id){
 							cell.onclick = columnSort;
 							cell.onmouseover=bg.ui.grid.overSortTableHeader;
 							cell.onmouseout=bg.ui.grid.outSortTableHeader;
 							cell.title="点击按 ["+cell.innerHTML+"] 排序";
-							var desc=cell.id.replace(/\,/g," desc,")+" desc";
+							desc=cell.id.replace(/\,/g," desc,")+" desc";
 							if(typeof cell.desc !="undefined"){
 								desc=cell.desc;
 							}
@@ -646,9 +643,9 @@
 									cell.innerHTML=cell.innerHTML+'<img src="'+bg.getContextPath()+'/static/themes/' + bg.uitheme + '/icons/16x16/actions/sort-desc.png"  style="border:0"  alt="Arrow" />'
 								continue;
 							}
-							var asc=cell.id+" asc";
+							asc = cell.id+" asc";
 							if(typeof cell.asc !="undefined"){
-								asc=cell.asc;
+								asc = cell.asc;
 							}
 							if(orderBy==asc){
 								cell.className="gridhead-asc"
@@ -658,20 +655,20 @@
 						}
 					}
 				}
-				var tbody=document.getElementById(tableId+"_data");
+				tbody=document.getElementById(tableId+"_data");
 				if(!tbody)	return;
-				for(var j=0;j<tbody.rows.length;j++){
-					var row=tbody.rows[j];
-					var orignClassName=row.className;
-					if(orignClassName){
-						orignClassName=" "+orignClassName;
+				for(j=0;j<tbody.rows.length;j++){
+					row=tbody.rows[j];
+					orignRowCls=row.className;
+					if(orignRowCls){
+						orignRowCls=" "+orignRowCls;
 					}else{
-						orignClassName="";
+						orignRowCls="";
 					}
 					if(j%2==1){
-						row.className="griddata-odd" + orignClassName;
+						row.className="griddata-odd" + orignRowCls;
 					}else{
-						row.className="griddata-even" + orignClassName;
+						row.className="griddata-even" + orignRowCls;
 					}
 					row.onclick = bg.ui.grid.onRowChange;
 					row.onmouseover=bg.ui.grid.mouseOverGrid;
@@ -679,12 +676,11 @@
 				}
 			},
 			fillEmpty : function (divId,pageSize,size,msg){
-				var emptydiv=document.getElementById(divId);
-				var emptyCnt=pageSize-size;
+				var emptydiv=document.getElementById(divId), emptyCnt=pageSize-size, heightpx, emptyLabel;
 				if(emptyCnt>7) emptyCnt=7;
-				var heightpx=emptyCnt*16;
+				heightpx=emptyCnt*16;
 				if(size==0){
-					var emptyLabel=document.createElement("div");
+					emptyLabel=document.createElement("div");
 					emptyLabel.innerHTML=(msg||'No result matched your search.');
 					emptyLabel.style.paddingTop=heightpx/2-16 +"px";
 					emptydiv.appendChild(emptyLabel);
@@ -705,10 +701,7 @@
 		var selfaction = this;
 		
 		function applyMethod(action,method){
-			var last1=action.lastIndexOf("!");
-			var lastDot=action.lastIndexOf(".");
-			var shortAction=action;
-			var sufix="";
+			var last1=action.lastIndexOf("!"), lastDot=action.lastIndexOf("."), shortAction=action, sufix="";
 			if(-1 == last1) last1 = lastDot;
 			if(-1!=last1){
 				shortAction=action.substring(0,last1);
@@ -851,8 +844,6 @@
 			}else if(uimodule=="tabletree"){
 				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/beangle-ui-tabletree.css",base);
 				jQuery.struts2_jquery.require("/static/scripts/beangle/beangle-ui-tabletree.js",callback,base);
-			}else if(uimodule=="My97DatePicker"){
-				//jQuery.struts2_jquery.require("/static/scripts/My97DatePicker/WdatePicker.js",callback,base);
 			}
 		}
 	});
