@@ -22,7 +22,7 @@
 		this.itemCount=0;
 		this.bar=document.getElementById(divId);
 		if(null==this.bar){
-			bg.alert("cannot find div with id " + divId);
+			//bg.alert("cannot find div with id " + divId);
 			return;
 		}
 		this.id=divId;

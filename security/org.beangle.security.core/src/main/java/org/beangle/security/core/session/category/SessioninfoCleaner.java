@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.time.StopWatch;
 import org.beangle.commons.lang.DateUtils;
 import org.beangle.model.persist.EntityDao;
@@ -34,10 +33,12 @@ public class SessioninfoCleaner extends BaseServiceImpl implements InitializingB
 	private int cleanInterval = 1000 * 300;
 
 	public void afterPropertiesSet() throws Exception {
-		Validate.notNull(sessionRegistry);
-		SessionCleanerTask sessionCleanerTask = new SessionCleanerTask(sessionRegistry);
-		sessionCleanerTask.setEntityDao(entityDao);
-		new Timer("Beangle Session Cleaner", true).schedule(sessionCleanerTask, new Date(), cleanInterval);
+		if (null != sessionRegistry) {
+			SessionCleanerTask sessionCleanerTask = new SessionCleanerTask(sessionRegistry);
+			sessionCleanerTask.setEntityDao(entityDao);
+			new Timer("Beangle Session Cleaner", true)
+					.schedule(sessionCleanerTask, new Date(), cleanInterval);
+		}
 	}
 
 	public SessionRegistry getSessionRegistry() {

@@ -7,11 +7,16 @@
 		<mapping class="org.beangle.ems.rule.model.RuleParameterBean"/>
 		<mapping class="org.beangle.ems.rule.model.RuleConfig"/>
 		<mapping class="org.beangle.ems.rule.model.RuleConfigParam"/>
+		
 		<mapping class="org.beangle.ems.config.model.PropertyConfigItemBean"/>
+		
 		<mapping class="org.beangle.ems.log.model.BusinessLogBean"/>
 		
 		<mapping class="org.beangle.ems.dictionary.model.CodeCategory"/>
 		<mapping class="org.beangle.ems.dictionary.model.CodeMeta"/>
 		<mapping class="org.beangle.ems.dictionary.model.CodeScript"/>
+		
+		<mapping class="org.beangle.model.entity.meta.model.EntityMetaBean"/>
+		<mapping class="org.beangle.model.entity.meta.model.PropertyMetaBean"/>
 	</session-factory>
 </hibernate-configuration>

@@ -68,7 +68,8 @@
 			if(target==""||target=="new"||target=="_blank"||target=="_self"||target=="_parent"){
 				return target;
 			}
-			if(!document.getElementById(target)) return "_self";
+			var targetObj = document.getElementById(target);
+			if(!targetObj || targetObj.tagName.toLowerCase()!="iframe") return "_self";
 			else return target;
 		},
 		findTarget : function(ele){
@@ -261,7 +262,7 @@
 	beangle.extend({
 		form:{
 			submit : function (myForm,action,target,onsubmit,ajax){
-				var submitTarget, rs, sumbitBtnId, submitx, origin_action,options_submit;
+				var submitTarget, rs, sumbitBtnId, submitx,origin_target, origin_action,options_submit;
 				if((typeof myForm)=='string') myForm = document.getElementById(myForm);
 				//1. submit hook
 				if(onsubmit){
@@ -283,7 +284,7 @@
 						return;
 					}
 				}
-				//FIXME check target is(iframe,reserved,div)
+				//3. check target and action
 				submitTarget = (null!=target)?target:myForm.target;
 				if(!submitTarget){
 					submitTarget=bg.findTarget(myForm);
@@ -297,34 +298,40 @@
 				if(null==ajax || ajax){
 					ajax=bg.isAjaxTarget(submitTarget)
 				}
-				if(!ajax){
-					myForm.target=bg.normalTarget(submitTarget);
-					myForm.action=action;
-					myForm.submit();
-					return;
-				}
-				//fix myForm without id
-				if(null==myForm.id||''==myForm.id){
-					myForm.setAttribute("id",myForm.name);
-				}
-				sumbitBtnId=myForm.id+"_submit";
-				submitx=document.getElementById(sumbitBtnId);
-				if(null==submitx){
-					submitx = document.createElement('input');
-					submitx.setAttribute("id",sumbitBtnId);
-					submitx.setAttribute("type",'submit');
-					submitx.style.display="none";
-					myForm.appendChild(submitx);
-				}
+				origin_target=myForm.target;
 				origin_action=myForm.action;
+				
+				// 4. fire
 				myForm.action=action;
-				options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#'};
-				if (typeof jQuery != "undefined") {
-					jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
+				if(ajax){
+					//fix myForm without id
+					if(null==myForm.id||''==myForm.id){
+						myForm.setAttribute("id",myForm.name);
+					}
+					sumbitBtnId=myForm.id+"_submit";
+					submitx=document.getElementById(sumbitBtnId);
+					if(null==submitx){
+						submitx = document.createElement('input');
+						submitx.setAttribute("id",sumbitBtnId);
+						submitx.setAttribute("type",'submit');
+						submitx.style.display="none";
+						myForm.appendChild(submitx);
+					}
+					options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#'};
+					if (typeof jQuery != "undefined") {
+						jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
+					}
+					submitx.click();
+					jQuery("#"+sumbitBtnId).unbind();
+				}else{
+					myForm.target = bg.normalTarget(submitTarget);
+					myForm.submit();
+					myForm.target = origin_target;
 				}
-				submitx.click();
-				jQuery("#"+sumbitBtnId).unbind();
-				if(myForm) myForm.action=origin_action;
+				// 5. cleanup
+				if(myForm){
+					myForm.action = origin_action;
+				}
 			},
 
 			/**
