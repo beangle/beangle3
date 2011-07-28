@@ -13,6 +13,7 @@ import org.beangle.ems.security.service.CacheableAuthorityManager;
 import org.beangle.ems.security.service.DaoUserDetailServiceImpl;
 import org.beangle.ems.security.service.UserServiceImpl;
 import org.beangle.ems.security.session.service.CategoryProfileServiceImpl;
+import org.beangle.security.core.session.impl.DbSessionRegistry;
 import org.beangle.spring.bind.AbstractBindModule;
 
 /**
@@ -30,6 +31,8 @@ public class DefaultModule extends AbstractBindModule {
 		bind("userDetailService",DaoUserDetailServiceImpl.class);
 		bind("authorityManager",CacheableAuthorityManager.class);
 		bind(CategoryProfileServiceImpl.class).shortName();
+		
+		bind("sessionRegistry",DbSessionRegistry.class);
 		bind(IdentifierDataResolver.class,CsvDataResolver.class,OqlDataProvider.class).shortName();
 	}
 
