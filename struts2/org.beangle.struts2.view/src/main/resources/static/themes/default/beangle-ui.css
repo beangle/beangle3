@@ -281,19 +281,8 @@ table.settingTable td{
 	.notprint {
 		display:none;
 	}
-	.ToolBar {
-		display:none;
-	}
 }
 
-@media screen {
-	.notprint {
-		display:inline;
-	}
-	.ToolBar {
-		display:inline;
-	}
-}
 /** 验证框架使用的两个class */
 .tfvHighlight {
 	font-weight: bold; 

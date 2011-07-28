@@ -13,7 +13,7 @@ public class Theme {
 
 	public static final String THEME = ".beangle_theme";
 
-	public static final String INNER_THEME = ".inner_beangle_theme";
+	public static final String THEME_STACK = ".beangle_theme_stack";
 
 	public static final String DEFAULT_THEME = "xml";
 

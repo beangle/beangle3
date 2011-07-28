@@ -32,7 +32,7 @@ public abstract class IterableUIBean extends ClosingUIBean {
 	}
 
 	@Override
-	public boolean end(Writer writer, String body) {
+	public boolean doEnd(Writer writer, String body) {
 		iterator(writer, body);
 		return next();
 	}

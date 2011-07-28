@@ -1,9 +1,11 @@
 2011-07-19  zhaoding   <zhaoding@gmail.com>
 	* 重构了radios标签
 	* 增加了checkboxes标签
-	* grid增加了emptyMsg、refresh支持
+	* grid增加了emptyMsg支持
 	* grid中filter内的input能够自适应宽度
 	* 修复了grid中filter回车提交两次的错误
+	* beangle-struts2-view中修复了多主题嵌套的导致的错误
+	* beangle-struts2-view中整合了colorbox
 
 2011-07-15  duantihua   <chaostone.duan@gmail.com>
 	* beangle-model增加了StringIdEntity和StringIdObject接口，支持对实体进行区分对待和处理

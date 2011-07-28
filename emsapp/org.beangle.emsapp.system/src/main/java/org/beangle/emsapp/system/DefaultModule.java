@@ -8,7 +8,7 @@ import org.beangle.ems.web.action.LogoutAction;
 import org.beangle.emsapp.business.action.LogAction;
 import org.beangle.emsapp.business.action.RuleAction;
 import org.beangle.emsapp.business.action.RuleParamAction;
-import org.beangle.emsapp.dictionary.action.BaseCodeAction;
+import org.beangle.emsapp.dictionary.action.CodeAction;
 import org.beangle.emsapp.dictionary.action.CodeMetaAction;
 import org.beangle.emsapp.dictionary.action.CodeScriptAction;
 import org.beangle.emsapp.portal.action.HomeAction;
@@ -30,7 +30,7 @@ public final class DefaultModule extends AbstractBindModule {
 
 		bind(LogAction.class, RuleAction.class, RuleParamAction.class).in(Scope.PROTOTYPE);
 		
-		bind(BaseCodeAction.class, CodeMetaAction.class, CodeScriptAction.class).in(Scope.PROTOTYPE);
+		bind(CodeAction.class, CodeMetaAction.class, CodeScriptAction.class).in(Scope.PROTOTYPE);
 	}
 
 }

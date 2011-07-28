@@ -17,6 +17,7 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.util.TextProviderHelper;
 import org.beangle.struts2.view.template.TemplateEngine;
 import org.beangle.struts2.view.template.Theme;
+import org.beangle.struts2.view.template.ThemeStack;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.inject.Container;
@@ -30,8 +31,6 @@ public abstract class UIBean extends Component {
 	protected String id;
 
 	protected Theme theme;
-
-	protected Theme innerTheme;
 
 	public UIBean(ValueStack stack) {
 		super(stack);
@@ -81,7 +80,10 @@ public abstract class UIBean extends Component {
 
 	protected Theme getTheme() {
 		if (null == theme) {
-			theme = (Theme) stack.getContext().get(Theme.INNER_THEME);
+			ThemeStack themestack = (ThemeStack) stack.getContext().get(Theme.THEME_STACK);
+			if (null != themestack) {
+				theme = themestack.peek();
+			}
 			if (null == theme) {
 				theme = (Theme) stack.getContext().get(Theme.THEME);
 			}

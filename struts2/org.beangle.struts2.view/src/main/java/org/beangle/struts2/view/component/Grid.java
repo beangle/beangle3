@@ -170,7 +170,7 @@ public class Grid extends ClosingUIBean {
 		}
 
 		@Override
-		public boolean end(Writer writer, String body) {
+		public boolean doEnd(Writer writer, String body) {
 			Grid grid = (Grid) findAncestor(Grid.class);
 			if (null != property && null != grid) {
 				grid.getFilters().put(property, body);
@@ -197,7 +197,7 @@ public class Grid extends ClosingUIBean {
 		}
 
 		@Override
-		public boolean end(Writer writer, String body) {
+		public boolean doEnd(Writer writer, String body) {
 			grid.bar = body;
 			return false;
 		}
@@ -273,7 +273,7 @@ public class Grid extends ClosingUIBean {
 		}
 
 		@Override
-		public boolean end(Writer writer, String body) {
+		public boolean doEnd(Writer writer, String body) {
 			if (getTheme().equals(Theme.DEFAULT_THEME)) {
 				try {
 					writer.append("<td").append(getParameterString()).append(">");
@@ -289,7 +289,7 @@ public class Grid extends ClosingUIBean {
 				}
 				return false;
 			} else {
-				return super.end(writer, body);
+				return super.doEnd(writer, body);
 			}
 		}
 
@@ -378,7 +378,7 @@ public class Grid extends ClosingUIBean {
 		}
 
 		@Override
-		public boolean end(Writer writer, String body) {
+		public boolean doEnd(Writer writer, String body) {
 			if (getTheme().equals(Theme.DEFAULT_THEME)) {
 				try {
 					writer.append("<td class=\"gridselect\"");
@@ -398,7 +398,7 @@ public class Grid extends ClosingUIBean {
 				}
 				return false;
 			} else {
-				return super.end(writer, body);
+				return super.doEnd(writer, body);
 			}
 		}
 

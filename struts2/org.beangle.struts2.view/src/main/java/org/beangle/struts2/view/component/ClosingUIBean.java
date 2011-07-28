@@ -7,12 +7,15 @@ package org.beangle.struts2.view.component;
 import java.io.Writer;
 
 import org.beangle.struts2.view.template.Theme;
+import org.beangle.struts2.view.template.ThemeStack;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
 public class ClosingUIBean extends UIBean {
 
 	protected String body;
+
+	private boolean useNewTheme = false;
 
 	public ClosingUIBean(ValueStack stack) {
 		super(stack);
@@ -25,15 +28,18 @@ public class ClosingUIBean extends UIBean {
 	}
 
 	@Override
-	public boolean end(Writer writer, String body) {
+	public final boolean end(Writer writer, String body) {
+		boolean evaluatedAgain = doEnd(writer, body);
+		if (useNewTheme) popTheme();
+		return evaluatedAgain;
+	}
+
+	public boolean doEnd(Writer writer, String body) {
 		this.body = body;
 		try {
 			mergeTemplate(writer);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
-		}
-		if (null != innerTheme) {
-			stack.getContext().remove(Theme.INNER_THEME);
 		}
 		return false;
 	}
@@ -47,9 +53,24 @@ public class ClosingUIBean extends UIBean {
 		return true;
 	}
 
-	public void setTheme(String newTheme) {
+	public final void setTheme(String newTheme) {
 		this.theme = new Theme(newTheme);
-		this.innerTheme = this.theme;
-		stack.getContext().put(Theme.INNER_THEME, innerTheme);
+		pushTheme(theme);
+		useNewTheme = true;
+	}
+
+	private void pushTheme(Theme theme) {
+		ThemeStack themestack = (ThemeStack) stack.getContext().get(Theme.THEME_STACK);
+		if (null == themestack) {
+			themestack = new ThemeStack();
+			stack.getContext().put(Theme.THEME_STACK, themestack);
+		}
+		themestack.push(theme);
+	}
+
+	private void popTheme() {
+		ThemeStack themestack = (ThemeStack) stack.getContext().get(Theme.THEME_STACK);
+		themestack.pop();
+		if (themestack.isEmpty()) stack.getContext().remove(Theme.THEME_STACK);
 	}
 }

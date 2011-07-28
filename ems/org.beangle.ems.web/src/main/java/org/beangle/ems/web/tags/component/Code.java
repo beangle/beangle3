@@ -6,7 +6,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 public class Code extends Select {
 
-	private String className;
+	private String type;
 
 	private String format;
 
@@ -14,12 +14,12 @@ public class Code extends Select {
 		super(stack);
 	}
 
-	public String getClassName() {
-		return className;
+	public String getType() {
+		return type;
 	}
 
-	public void setClassName(String className) {
-		this.className = className;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getFormat() {

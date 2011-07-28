@@ -36,10 +36,10 @@ public class Tab extends ClosingUIBean {
 	}
 
 	@Override
-	public boolean end(Writer writer, String body) {
+	public boolean doEnd(Writer writer, String body) {
 		if (null == target) {
 			this.target = id + "_target";
-			return super.end(writer, body);
+			return super.doEnd(writer, body);
 		} else {
 			return false;
 		}

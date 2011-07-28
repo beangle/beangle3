@@ -27,7 +27,7 @@
 		}
 		this.id=divId;
 		this.separator="|";
-		this.bar.className="toolbar";
+		this.bar.className="toolbar notprint";
 		var defaultToolBarImageName="info.png", defaultItemImageName="action.png", helpImageName="help.png",
 			imageRoot=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/"+ bg.uitheme +"/icons/",
 			imagePath=imageRoot + "16x16/actions/";
@@ -844,6 +844,9 @@
 			}else if(uimodule=="tabletree"){
 				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/beangle-ui-tabletree.css",base);
 				jQuery.struts2_jquery.require("/static/scripts/beangle/beangle-ui-tabletree.js",callback,base);
+			}else if(uimodule=="colorbox"){
+				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/colorbox.css",base);
+				jQuery.struts2_jquery.require("/static/scripts/colorbox/jquery-colorbox-1.3.17.1.min.js",callback,base);
 			}
 		}
 	});

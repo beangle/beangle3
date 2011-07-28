@@ -150,6 +150,12 @@ public class MenuAction extends SecurityActionSupport {
 		return forward();
 	}
 
+	public String xml() {
+		put("resources", entityDao.getAll(Resource.class));
+		put("menuProfiles", entityDao.getAll(MenuProfile.class));
+		return forward();
+	}
+
 	protected PropertyExtractor getPropertyExtractor() {
 		return new MenuPropertyExtractor(getTextResource());
 	}

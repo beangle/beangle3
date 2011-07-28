@@ -11,9 +11,7 @@
 	function activate(isActivate){
 		return action.multi("activate","确定操作?","isActivate="+isActivate);
 	}
-	function preview(){
-		window.open("${b.url('!preview')}?${b.paramstring}");
-	}
+	function preview(){window.open("${b.url('!preview')}?${b.paramstring}");}
 	function redirectTo(url){window.open(url);}
 	bar.addItem("${b.text("action.new")}",action.add());
 	bar.addItem("${b.text("action.edit")}",action.edit());

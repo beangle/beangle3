@@ -64,7 +64,7 @@ public class Anchor extends ClosingUIBean {
 	}
 
 	@Override
-	public boolean end(Writer writer, String body) {
+	public boolean doEnd(Writer writer, String body) {
 		if (getTheme().equals(Theme.DEFAULT_THEME)) {
 			try {
 				writer.append("<a href=\"");
@@ -85,7 +85,7 @@ public class Anchor extends ClosingUIBean {
 			}
 			return false;
 		} else {
-			return super.end(writer, body);
+			return super.doEnd(writer, body);
 		}
 	}
 
