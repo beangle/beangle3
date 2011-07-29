@@ -5,6 +5,7 @@
 package org.beangle.ems.security;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
 
 import org.beangle.ems.security.restrict.RestrictionHolder;
@@ -84,54 +85,25 @@ public interface User extends LongIdTimeEntity, RestrictionHolder<UserRestrictio
 	public void setMail(String mail);
 
 	/**
-	 * 对应用户组
+	 * 对应用户组成员
 	 * 
 	 * @return
 	 */
-	public Set<GroupMember> getGroups();
+	public Set<GroupMember> getMembers();
+
+	/**
+	 * 对应用户组
+	 * 
+	 * @return 按照用户组代码排序的group列表
+	 */
+	public List<Group> getGroups();
 
 	/**
 	 * 设置对应用户组
 	 * 
 	 * @param groups
 	 */
-	public void setGroups(Set<GroupMember> groups);
-
-	/**
-	 * 类别.
-	 * 
-	 * @return
-	 */
-	public Set<Category> getCategories();
-
-	/**
-	 * 设置类别.
-	 * 
-	 * @param categories
-	 */
-	public void setCategories(Set<Category> HasSet);
-
-	/**
-	 * 缺省类别
-	 * 
-	 * @return
-	 */
-	public Category getDefaultCategory();
-
-	/**
-	 * 设置缺省类别
-	 * 
-	 * @param userCategory
-	 */
-	public void setDefaultCategory(Category userCategory);
-
-	/**
-	 * 是否属于某一类别
-	 * 
-	 * @param categoryId
-	 * @return
-	 */
-	public boolean isCategory(Long categoryId);
+	public void setMembers(Set<GroupMember> members);
 
 	/**
 	 * 创建者

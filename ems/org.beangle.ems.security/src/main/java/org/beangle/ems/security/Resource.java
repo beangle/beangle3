@@ -67,50 +67,18 @@ public interface Resource extends LongIdEntity {
 	public void setEnabled(boolean isEnabled);
 
 	/**
-	 * 适用的用户类别
+	 * 限制实体
 	 * 
 	 * @return
 	 */
-	public Set<Category> getCategories();
-
-	/**
-	 * 查询适用的用户类别
-	 * 
-	 * @param categories
-	 */
-	public void setCategories(Set<Category> categories);
-
-	/**
-	 * 资源访问范围
-	 * 
-	 * @return
-	 */
-	public int getScope();
-
-	/**
-	 * 设置资源访问范围
-	 * 
-	 * @param scope
-	 */
-	public void setScope(int scope);
-
 	public Set<RestrictEntity> getEntities();
 
+	/**
+	 * 设置限制实体
+	 * 
+	 * @param entities
+	 */
 	public void setEntities(Set<RestrictEntity> entities);
-
-	/**
-	 * 访问时需要其它参数
-	 * 
-	 * @return
-	 */
-	public boolean isNeedParams();
-
-	/**
-	 * 设置访问时需要其它参数
-	 * 
-	 * @param needParams
-	 */
-	public void setNeedParams(boolean needParams);
 
 	public static class Scope {
 		/** 不受保护的公共资源 */

@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.comparators.PropertyComparator;
-import org.beangle.ems.security.Category;
 import org.beangle.ems.security.User;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.model.query.builder.OqlBuilder;
@@ -27,10 +26,6 @@ import org.beangle.security.web.session.model.SessioninfoLogBean;
  * @author chaostone
  */
 public class SessioninfoLogAction extends SecurityActionSupport {
-
-	protected void indexSetting() {
-		put("categories", entityDao.getAll(Category.class));
-	}
 
 	/**
 	 * 显示用户某时间段的登陆记录

@@ -19,8 +19,7 @@ import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.security.nav.service.MenuService;
 import org.beangle.ems.web.action.SecurityActionSupport;
-import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.model.util.HierarchyEntityUtil;
+import org.beangle.model.util.HierarchyEntityUtils;
 
 /**
  * 菜单浏览导航器
@@ -40,15 +39,14 @@ public class MenuNavAction extends SecurityActionSupport {
 		final Menu givenMenu;
 		if (null != menuId) {
 			givenMenu = entityDao.get(Menu.class, menuId);
-			family = HierarchyEntityUtil.getFamily(givenMenu);
+			family = HierarchyEntityUtils.getFamily(givenMenu);
 		} else {
 			family = null;
 			givenMenu = null;
 		}
 
 		User user = entityDao.get(User.class, getUserId());
-		Long categoryId = getUserCategoryId();
-		MenuProfile profile = getMenuProfile(categoryId);
+		MenuProfile profile = menuService.getProfile(user, getLong("security.menuProfileId"));
 		List<Menu> menus = Collections.emptyList();
 		if (null != profile) {
 			menus = menuService.getMenus(profile, user);
@@ -69,7 +67,7 @@ public class MenuNavAction extends SecurityActionSupport {
 			}
 		});
 		if (StringUtils.isNotEmpty(name)) {
-			HierarchyEntityUtil.addParent(menus, givenMenu);
+			HierarchyEntityUtils.addParent(menus, givenMenu);
 			Collections.sort(menus);
 		}
 
@@ -77,29 +75,25 @@ public class MenuNavAction extends SecurityActionSupport {
 		if (null != givenMenu) {
 			// menus.retainAll(family);
 			menus.remove(givenMenu);
-			menuPath = HierarchyEntityUtil.getPath(givenMenu);
+			menuPath = HierarchyEntityUtils.getPath(givenMenu);
 		}
 		put("menuPath", menuPath);
 		put("menus", menus);
-		put("tops", HierarchyEntityUtil.getRoots(menus));
+		put("tops", HierarchyEntityUtils.getRoots(menus));
 		return forward();
 	}
 
 	public String search() {
 		User user = entityDao.get(User.class, getUserId());
-		Long categoryId = getLong("security.categoryId");
-		if (null == categoryId) {
-			categoryId = getUserCategoryId();
-		}
-		MenuProfile profile = getMenuProfile(categoryId);
+		MenuProfile profile = menuService.getProfile(user, getLong("security.menuProfileId"));
 		List<Menu> menus = menuService.getMenus(profile, user);
 		List<Menu> menuPath = CollectUtils.newArrayList();
 		Long menuId = getLong("menu.id");
 		if (null != menuId) {
 			Menu menu = entityDao.get(Menu.class, menuId);
-			menus.retainAll(HierarchyEntityUtil.getFamily(menu));
+			menus.retainAll(HierarchyEntityUtils.getFamily(menu));
 			menus.remove(menu);
-			menuPath = HierarchyEntityUtil.getPath(menu);
+			menuPath = HierarchyEntityUtils.getPath(menu);
 		}
 		put("menuPath", menuPath);
 		if (null != profile) {
@@ -107,7 +101,7 @@ public class MenuNavAction extends SecurityActionSupport {
 		} else {
 			put("menus", Collections.EMPTY_LIST);
 		}
-		put("tops", HierarchyEntityUtil.getRoots(menus));
+		put("tops", HierarchyEntityUtils.getRoots(menus));
 		put("user", user);
 		return forward();
 	}
@@ -115,21 +109,10 @@ public class MenuNavAction extends SecurityActionSupport {
 	public String access() {
 		Long menuId = getLong("menu.id");
 		Menu menu = entityDao.get(Menu.class, menuId);
-		List<Menu> paths = HierarchyEntityUtil.getPath(menu);
+		List<Menu> paths = HierarchyEntityUtils.getPath(menu);
 		put("menu", menu);
 		put("paths", paths);
 		return forward();
-	}
-
-	protected MenuProfile getMenuProfile(Long categoryId) {
-		OqlBuilder<MenuProfile> query = OqlBuilder.from(MenuProfile.class, "mp");
-		query.where("category.id=:categoryId", categoryId).cacheable();
-		List<MenuProfile> mps = entityDao.search(query);
-		if (mps.isEmpty()) {
-			return null;
-		} else {
-			return mps.get(0);
-		}
 	}
 
 	public void setMenuService(MenuService menuService) {

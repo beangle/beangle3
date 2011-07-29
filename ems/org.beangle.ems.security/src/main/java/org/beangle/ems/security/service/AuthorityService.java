@@ -38,21 +38,19 @@ public interface AuthorityService {
 	public List<Resource> getResources(User user);
 
 	/**
-	 * 查询指定可见范围的资源
+	 * 按照用户组查找资源
 	 * 
-	 * @param scope
+	 * @param groupName
 	 * @return
 	 */
-	public Set<String> getResourceNames(int scope);
-
+	public Set<String> getResourceNamesByGroup(String groupName);
 	/**
 	 * 按照用户组查找资源
 	 * 
-	 * @param group
+	 * @param groupId
 	 * @return
 	 */
-	public Set<String> getResourceNamesByGroup(String group);
-
+	public Set<String> getResourceNamesByGroup(Long groupId);
 	/**
 	 * 用户组内对应的资源
 	 * 

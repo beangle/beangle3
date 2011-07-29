@@ -6,7 +6,7 @@ package org.beangle.ems.security.nav;
 
 import java.util.List;
 
-import org.beangle.ems.security.Category;
+import org.beangle.ems.security.Group;
 import org.beangle.model.pojo.LongIdEntity;
 
 public interface MenuProfile extends LongIdEntity {
@@ -19,9 +19,9 @@ public interface MenuProfile extends LongIdEntity {
 
 	public void setMenus(List<Menu> menus);
 
-	public Category getCategory();
+	public Group getGroup();
 
-	public void setCategory(Category category);
+	public void setGroup(Group group);
 
 	/**
 	 * 资源状态

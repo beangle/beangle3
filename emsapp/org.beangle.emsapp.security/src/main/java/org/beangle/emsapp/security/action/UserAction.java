@@ -13,7 +13,6 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
-import org.beangle.ems.security.Category;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
@@ -40,10 +39,6 @@ public class UserAction extends SecurityActionSupport {
 	private UserService userService;
 
 	private UserDashboardHelper userDashboardHelper;
-
-	protected void indexSetting() {
-		put("categories", entityDao.getAll(Category.class));
-	}
 
 	public String dashboard() {
 		Long userId = getLong("user.id");
@@ -76,7 +71,11 @@ public class UserAction extends SecurityActionSupport {
 		List<Object> params = CollectUtils.newArrayList();
 		boolean queryGroup = false;
 		if (!isAdmin()) {
-			List<Group> mngGroups = userService.getGroups(manager, GroupMember.Ship.MEMBER);
+			List<GroupMember> members = userService.getGroupMembers(manager, GroupMember.Ship.MANAGER);
+			List<Group> mngGroups = CollectUtils.newArrayList();
+			for (GroupMember m : members) {
+				mngGroups.add(m.getGroup());
+			}
 			if (mngGroups.isEmpty()) {
 				sb.append("1=0");
 			} else {
@@ -125,13 +124,6 @@ public class UserAction extends SecurityActionSupport {
 			return forward(new Action(this, "edit"));
 		}
 		String errorMsg = "";
-		// // 收集用户身份
-		String[] categories = StringUtils.split(get("categoryIds"), ",");
-		user.getCategories().clear();
-		for (int i = 0; i < categories.length; i++) {
-			errorMsg = checkCategory(user, Long.valueOf(categories[i]));
-			if (StringUtils.isNotEmpty(errorMsg)) { return forward(new Action("edit"), errorMsg); }
-		}
 		// 检验用户合法性
 		errorMsg = checkUser(user);
 		if (StringUtils.isNotEmpty(errorMsg)) { return forward(new Action("edit"), errorMsg); }
@@ -147,7 +139,7 @@ public class UserAction extends SecurityActionSupport {
 	}
 
 	private void updateUserGroup(User user) {
-		Set<GroupMember> userMembers = user.getGroups();
+		Set<GroupMember> userMembers = user.getMembers();
 		Map<Group, GroupMember> memberMap = CollectUtils.newHashMap();
 		for (GroupMember gm : userMembers) {
 			memberMap.put(gm.getGroup(), gm);
@@ -163,7 +155,7 @@ public class UserAction extends SecurityActionSupport {
 			boolean isManager = getBool("manager" + member.getGroup().getId());
 			if (!isMember && !isGranter && !isManager) {
 				if (null != myMember) {
-					user.getGroups().remove(myMember);
+					user.getMembers().remove(myMember);
 					removedMembers.add(myMember);
 				}
 			} else {
@@ -184,7 +176,7 @@ public class UserAction extends SecurityActionSupport {
 		User user = (User) entity;
 		User manager = entityDao.get(User.class, getUserId());
 		Collection<GroupMember> members = userService.getGroupMembers(manager, GroupMember.Ship.GRANTER);
-		Set<GroupMember> userMembers = user.getGroups();
+		Set<GroupMember> userMembers = user.getMembers();
 		Map<Group, GroupMember> memberMap = CollectUtils.newHashMap();
 		for (GroupMember gm : userMembers) {
 			memberMap.put(gm.getGroup(), gm);
@@ -193,7 +185,6 @@ public class UserAction extends SecurityActionSupport {
 		put("members", members);
 		put("isadmin", userService.isAdmin(user));
 		put("isme", getUserId().equals(user.getId()));
-		put("categories", entityDao.getAll(Category.class));
 	}
 
 	/**
@@ -252,18 +243,6 @@ public class UserAction extends SecurityActionSupport {
 		}
 		addFlashMessage(msg, successCnt);
 		return redirect("search");
-	}
-
-	/**
-	 * 核实用户身份
-	 * 
-	 * @param user
-	 * @param category
-	 * @return
-	 */
-	protected String checkCategory(User user, Long categoryId) {
-		user.getCategories().add(entityDao.get(Category.class, categoryId));
-		return "";
 	}
 
 	protected String checkUser(User user) {

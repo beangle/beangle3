@@ -16,9 +16,12 @@ public class HibernateEntityDaoTest extends ConfigurationTest {
 	 */
 	public void testQueryHqlWithParamArray() {
 		EntityDao entityDao = (EntityDao) applicationContext.getBean("entityDao");
-		//List<?> tables=entityDao.search(new SqlQuery("SELECT table_name FROM INFORMATION_SCHEMA.TABLES"));
-		entityDao.searchHQLQuery("from "+Employer.class.getName()+" where name.firstName=? and contractInfo.add1=?",
-				new Object[] { "john", "najing street" });
+		// List<?> tables=entityDao.search(new
+		// SqlQuery("SELECT table_name FROM INFORMATION_SCHEMA.TABLES"));
+		entityDao
+				.searchHQLQuery("from " + Employer.class.getName()
+						+ " where name.firstName=? and contractInfo.add1=?", new Object[] { "john",
+						"najing street" });
 	}
 
 	/**
@@ -29,4 +32,14 @@ public class HibernateEntityDaoTest extends ConfigurationTest {
 		entityDao.update(Employer.class, "id", new Long[] { 1L }, new String[] { "name.firstName" },
 				new Object[] { "me" });
 	}
+
+	/**
+	 * Test Count
+	 */
+	public void testCount() {
+		EntityDao entityDao = (EntityDao) applicationContext.getBean("entityDao");
+		entityDao.count(Employer.class, new String[] { "name.firstName" }, new Object[] { new String[] {
+				"make", "john" } }, null);
+	}
+
 }

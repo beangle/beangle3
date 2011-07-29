@@ -4,6 +4,7 @@
  */
 package org.beangle.ems.security.model;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -17,16 +18,16 @@ import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.security.Authority;
-import org.beangle.ems.security.Category;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.restrict.GroupRestriction;
-import org.beangle.model.pojo.LongIdTimeObject;
+import org.beangle.model.pojo.LongIdHierarchyObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
+ * 用户组信息
  * 系统中用户组的基本信息和账号信息.
  * 
  * @author dell,chaostone 2005-9-26
@@ -34,7 +35,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity(name = "org.beangle.ems.security.Group")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class GroupBean extends LongIdTimeObject implements Group {
+public class GroupBean extends LongIdHierarchyObject<Group> implements Group {
 
 	private static final long serialVersionUID = -3404181949500894284L;
 
@@ -48,11 +49,7 @@ public class GroupBean extends LongIdTimeObject implements Group {
 	@OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
 	private Set<GroupMember> members = CollectUtils.newHashSet();
 
-	/** 对应的用户类别 */
-	@NotNull
-	private Category category;
-
-	/** 上级组 */
+	/** 父级组 */
 	private Group parent;
 
 	/** 下级组 */
@@ -77,6 +74,12 @@ public class GroupBean extends LongIdTimeObject implements Group {
 	/** 权限 */
 	@OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
 	protected Set<Authority> authorities = CollectUtils.newHashSet();
+
+	/** 创建时间 */
+	protected Date createdAt;
+
+	/** 最后修改时间 */
+	protected Date updatedAt;
 
 	public GroupBean() {
 		super();
@@ -131,14 +134,6 @@ public class GroupBean extends LongIdTimeObject implements Group {
 		this.enabled = enabled;
 	}
 
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category userCategory) {
-		this.category = userCategory;
-	}
-
 	public Group getParent() {
 		return parent;
 	}
@@ -173,6 +168,26 @@ public class GroupBean extends LongIdTimeObject implements Group {
 
 	public String toString() {
 		return name;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public int compareTo(Group o) {
+		return getCode().compareTo(o.getCode());
 	}
 
 }

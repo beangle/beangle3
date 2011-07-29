@@ -15,6 +15,8 @@ import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
 
 /**
+ * 用户组成员关系
+ * 
  * @author chaostone
  * @version $Id: GroupMemberBean.java Nov 2, 2010 6:45:48 PM chaostone $
  */
@@ -22,16 +24,26 @@ import org.beangle.ems.security.User;
 public class GroupMemberBean extends LongIdTimeObject implements GroupMember {
 
 	private static final long serialVersionUID = -3882917413656652492L;
+
+	/** 用户组 */
 	@NotNull
 	private Group group;
+
+	/** 用户 */
 	@NotNull
 	private User user;
+
+	/** 用户是否是该组的成员 */
 	@NotNull
 	private boolean member;
-	@NotNull
-	private boolean manager;
+
+	/** 用户是否能将该组授权给他人 */
 	@NotNull
 	private boolean granter;
+
+	/** 用户是否是该组的管理者 */
+	@NotNull
+	private boolean manager;
 
 	public GroupMemberBean() {
 		super();

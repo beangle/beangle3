@@ -12,11 +12,17 @@ import org.beangle.ems.security.restrict.GroupRestriction;
 import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.ems.security.restrict.RestrictionHolder;
 
+/**
+ * 用户组数据权限
+ * 
+ * @author chaostone
+ */
 @Entity(name = "org.beangle.ems.security.restrict.GroupRestriction")
 public class GroupRestrictionBean extends RestrictionBean implements GroupRestriction {
 
 	private static final long serialVersionUID = -8655931585994557645L;
 
+	/** 持有该数据权限的用户组 */
 	@NotNull
 	private Group holder;
 

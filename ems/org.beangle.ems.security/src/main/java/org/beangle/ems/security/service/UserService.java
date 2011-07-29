@@ -52,12 +52,12 @@ public interface UserService {
 	public List<User> getUsers(Long userIds[]);
 
 	/**
-	 * 查询用户关联的用户组
+	 * 查询用户关联的member用户组
 	 * 
 	 * @param user
 	 * @return
 	 */
-	public List<Group> getGroups(User user, GroupMember.Ship ship);
+	public List<Group> getGroups(User user);
 
 	/**
 	 * 查找关联组关系
@@ -104,23 +104,6 @@ public interface UserService {
 	public boolean isManagedBy(User manager, User user);
 
 	/**
-	 * 创建一个用户组
-	 * 
-	 * @param creator
-	 * @param group
-	 */
-	public void createGroup(User creator, Group group);
-
-	/**
-	 * 删除管理者与用户组的管理关系，如果该用户组为其所创建则彻底删除. 1)超级管理员不能被删除.<br>
-	 * 2)如果删除人有超级管理员用户组，则可以删除不是自己创建的用户组
-	 * 
-	 * @param manager
-	 * @param group
-	 */
-	public void removeGroup(User manager, List<Group> groups);
-
-	/**
 	 * 是否是超级管理员
 	 * 
 	 * @param user
@@ -135,4 +118,5 @@ public interface UserService {
 	 * @return
 	 */
 	public boolean isAdmin(Long userId);
+
 }

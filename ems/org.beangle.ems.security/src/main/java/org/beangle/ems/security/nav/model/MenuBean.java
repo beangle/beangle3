@@ -9,7 +9,6 @@ import java.util.Set;
 
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -17,96 +16,63 @@ import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.StrUtils;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.nav.MenuProfile;
-import org.beangle.model.pojo.LongIdObject;
+import org.beangle.model.pojo.LongIdHierarchyObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+/**
+ * 系统菜单
+ * 
+ * @author chaostone
+ */
 @Entity(name = "org.beangle.ems.security.nav.Menu")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class MenuBean extends LongIdObject implements Menu {
+public class MenuBean extends LongIdHierarchyObject<Menu> implements Menu {
 
 	private static final long serialVersionUID = 3864556621041443066L;
-	@NotNull
-	@Size(max = 32)
-	@Column(unique = true)
-	private String code;
 
+	/** 菜单名称 */
 	@NotNull
 	@Size(max = 100)
 	private String name;
 
+	/** 菜单标题 */
 	@NotNull
 	@Size(max = 100)
 	private String title;
 
+	/** 菜单入口 */
 	private String entry;
 
+	/** 菜单备注 */
 	private String remark;
 
 	@ManyToMany
 	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	private Set<Resource> resources = CollectUtils.newHashSet();
 
+	/** 是否启用 */
 	@NotNull
 	private boolean enabled = true;
 
+	/** 菜单配置 */
 	@NotNull
 	private MenuProfile profile;
 
+	/** 父级菜单 */
 	private Menu parent;
 
+	/** 直接下级菜单 */
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
 	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	@OrderBy("code")
 	private List<Menu> children;
-
-	/**
-	 * 不同级的菜单按照他们固有的级联顺序排序.
-	 */
-	public int compareTo(Menu other) {
-		return getCode().compareTo(other.getCode());
-	}
-
-	public void generateCode(String indexno) {
-		if (null == parent) {
-			this.code = indexno;
-		} else {
-			this.code = StrUtils.concat(parent.getCode(), ".", indexno);
-		}
-	}
-
-	public void generateCode() {
-		if (null != parent) {
-			this.code = StrUtils.concat(parent.getCode(), ".", getIndexno());
-		}
-	}
-
-	public String getIndexno() {
-		String indexno = StringUtils.substringAfterLast(code, ".");
-		if (StringUtils.isEmpty(indexno)) {
-			indexno = code;
-		}
-		return indexno;
-	}
-
-	public int getDepth() {
-		return (null == parent) ? 1 : parent.getDepth() + 1;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
 
 	public String getTitle() {
 		return title;

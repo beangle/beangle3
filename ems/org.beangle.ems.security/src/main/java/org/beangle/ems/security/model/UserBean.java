@@ -4,20 +4,21 @@
  */
 package org.beangle.ems.security.model;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.ems.security.Category;
+import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.restrict.RestrictionHolder;
@@ -26,7 +27,8 @@ import org.beangle.model.pojo.LongIdTimeObject;
 import org.beangle.model.util.EntityUtils;
 
 /**
- * 系统中所有用户的账号、权限、状态信息.
+ * 系统用户
+ * 记录账号、权限、状态信息.
  * 
  * @author dell,chaostone 2005-9-26
  */
@@ -56,18 +58,10 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 
 	/** 对应用户组 */
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<GroupMember> groups = CollectUtils.newHashSet();
+	private Set<GroupMember> members = CollectUtils.newHashSet();
 
 	/** 创建人 */
 	private User creator;
-
-	/** 种类 */
-	@ManyToMany
-	protected Set<Category> categories = CollectUtils.newHashSet();;
-
-	/** 缺省类别 */
-	@NotNull
-	private Category defaultCategory;
 
 	/**
 	 * 账户生效时间
@@ -85,6 +79,7 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 	 */
 	protected Date passwordExpiredAt;
 
+	/** 是否启用 */
 	@NotNull
 	protected boolean enabled;
 
@@ -135,13 +130,6 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 		this.password = password;
 	}
 
-	public boolean isCategory(Long categoryId) {
-		for (final Category category : categories) {
-			if (category.getId().equals(categoryId)) return true;
-		}
-		return false;
-	}
-
 	public String getFullname() {
 		return fullname;
 	}
@@ -158,12 +146,30 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 		this.creator = creator;
 	}
 
-	public Category getDefaultCategory() {
-		return defaultCategory;
+	public Set<GroupMember> getMembers() {
+		return members;
 	}
 
-	public void setDefaultCategory(Category defaultCategory) {
-		this.defaultCategory = defaultCategory;
+	public List<Group> getGroups() {
+		List<Group> groups = CollectUtils.newArrayList();
+		for (GroupMember member : members) {
+			if (member.isMember()) groups.add(member.getGroup());
+		}
+		Set<Group> allGroups = CollectUtils.newHashSet();
+		for (Group g : groups) {
+			while (null != g && !allGroups.contains(g)) {
+				allGroups.add(g);
+				g = g.getParent();
+			}
+		}
+		groups.clear();
+		groups.addAll(allGroups);
+		Collections.sort(groups);
+		return groups;
+	}
+
+	public void setMembers(Set<GroupMember> members) {
+		this.members = members;
 	}
 
 	/**
@@ -186,22 +192,6 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
-	}
-
-	public Set<GroupMember> getGroups() {
-		return groups;
-	}
-
-	public void setGroups(Set<GroupMember> groups) {
-		this.groups = groups;
-	}
-
-	public Set<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(Set<Category> categories) {
-		this.categories = categories;
 	}
 
 	public Set<UserRestriction> getRestrictions() {

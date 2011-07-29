@@ -19,6 +19,7 @@ import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.Page;
 import org.beangle.commons.collection.page.PageLimit;
@@ -310,9 +311,9 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 
 	public int executeUpdateHqlRepeatly(final String queryStr, final List<Object[]> arguments) {
 		Query query = getSession().createQuery(queryStr);
-		int updated=0;
+		int updated = 0;
 		for (Object[] params : arguments) {
-			updated+= QuerySupport.setParameter(query, params).executeUpdate();
+			updated += QuerySupport.setParameter(query, params).executeUpdate();
 		}
 		return updated;
 	}
@@ -591,6 +592,8 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 	}
 
 	public long count(Class<?> entityClass, String[] attrs, Object[] values, String countAttr) {
+		Validate.isTrue(null != attrs && null != values && attrs.length == values.length);
+
 		String entityName = entityClass.getName();
 		StringBuilder hql = new StringBuilder();
 		if (StringUtils.isNotEmpty(countAttr)) {
@@ -601,21 +604,19 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 		hql.append(entityName).append(" as entity where ");
 		Map<String, Object> params = CollectUtils.newHashMap();
 		for (int i = 0; i < attrs.length; i++) {
-			String keyName = (String) attrs[i];
-			if (StringUtils.isEmpty(keyName)) {
+			if (StringUtils.isEmpty(attrs[i])) {
 				continue;
 			}
+			String keyName = StringUtils.replace(attrs[i], ".", "_");
 			Object keyValue = values[i];
 			params.put(keyName, keyValue);
-			String[] tempName = StringUtils.split(attrs[i], "\\.");
-			attrs[i] = tempName[tempName.length - 1] + i;
 			if (keyValue != null && (keyValue.getClass().isArray() || keyValue instanceof Collection<?>)) {
-				hql.append("entity.").append(keyName).append(" in (:").append(attrs[i]).append(") and ");
+				hql.append("entity.").append(attrs[i]).append(" in (:").append(keyName).append(')');
 			} else {
-				hql.append("entity.").append(keyName).append(" = :").append(attrs[i]).append(" and ");
+				hql.append("entity.").append(attrs[i]).append(" = :").append(keyName);
 			}
+			if (i < attrs.length - 1) hql.append(" and ");
 		}
-		hql.append(" (1=1) ");
 		return ((Number) searchHQLQuery(hql.toString(), params).get(0)).longValue();
 	}
 

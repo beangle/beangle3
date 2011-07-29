@@ -13,12 +13,18 @@ import org.beangle.ems.security.restrict.AuthorityRestriction;
 import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.ems.security.restrict.RestrictionHolder;
 
+/**
+ * 具体授权的数据权限
+ * 
+ * @author chaostone
+ */
 @Entity(name = "org.beangle.ems.security.restrict.AuthorityRestriction")
-@Table(name="auth_restrictions")
+@Table(name = "auth_restrictions")
 public class AuthorityRestrictionBean extends RestrictionBean implements AuthorityRestriction {
 
 	private static final long serialVersionUID = -4061917734606523063L;
 
+	/** 持有该数据权限的具体授权 */
 	@NotNull
 	private Authority holder;
 

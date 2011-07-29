@@ -8,9 +8,9 @@ import java.util.Collection;
 
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.session.category.CategoryPrincipal;
-import org.beangle.security.core.userdetail.User;
+import org.beangle.security.core.userdetail.DefaultUserDetailBean;
 
-public class UserToken extends User implements CategoryPrincipal, Comparable<UserToken> {
+public class UserToken extends DefaultUserDetailBean implements CategoryPrincipal, Comparable<UserToken> {
 
 	private static final long serialVersionUID = 63829183922466239L;
 
@@ -40,10 +40,6 @@ public class UserToken extends User implements CategoryPrincipal, Comparable<Use
 
 	public String getCategory() {
 		return category;
-	}
-
-	public void changeCategory(String newCategory) {
-		this.category =  newCategory;
 	}
 
 	/**

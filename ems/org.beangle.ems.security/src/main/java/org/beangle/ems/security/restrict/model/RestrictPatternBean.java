@@ -9,12 +9,17 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.beangle.model.pojo.LongIdObject;
 import org.beangle.ems.security.restrict.RestrictEntity;
 import org.beangle.ems.security.restrict.RestrictPattern;
+import org.beangle.model.pojo.LongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+/**
+ * 数据限制模式
+ * 
+ * @author chaostone
+ */
 @Entity(name = "org.beangle.ems.security.restrict.RestrictPattern")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -22,12 +27,15 @@ public class RestrictPatternBean extends LongIdObject implements RestrictPattern
 
 	private static final long serialVersionUID = 3491583230212588933L;
 
+	/** 备注说明 */
 	private String remark;
 
+	/** 限制内容 */
 	@NotNull
 	@Size(max = 600)
 	private String content;
 
+	/** 限制实体 */
 	@NotNull
 	private RestrictEntity entity;
 

@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.model.persist.hibernate.support.DefaultTableNameConfig;
 import org.beangle.model.persist.hibernate.support.TableNameConfig;
 import org.eclipse.gemini.blueprint.context.BundleContextAware;
 import org.hibernate.SessionFactory;
@@ -104,7 +105,7 @@ public class DynamicSessionFactoryBean extends LocalSessionFactoryBean implement
 		Set<URL> locations = getTableConfigLocation(bundle);
 		if (!locations.isEmpty()) {
 			for (URL url : locations) {
-				tableNameConfig.addConfig(url);
+				((DefaultTableNameConfig)tableNameConfig).addConfig(url);
 			}
 		}
 		loader.addClassLoader(BundleDelegatingClassLoader.createBundleClassLoaderFor(bundle));

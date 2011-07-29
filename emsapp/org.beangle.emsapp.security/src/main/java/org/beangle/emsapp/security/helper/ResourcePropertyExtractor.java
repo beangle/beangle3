@@ -26,13 +26,6 @@ public class ResourcePropertyExtractor extends DefaultPropertyExtractor {
 		Resource resource = (Resource) target;
 		if ("enabled".equals(property)) {
 			return resource.isEnabled() ? "激活" : "冻结";
-		} else if ("scope".equals(property)) {
-			String scope = "公开";
-			if (1 == resource.getScope()) scope = "公有";
-			else if (2 == resource.getScope()) scope = "私有";
-			return scope;
-		} else if ("categories".equals(property)) {
-			return getPropertyIn(resource.getCategories(), "title");
 		} else return super.getPropertyValue(target, property);
 	}
 

@@ -12,7 +12,6 @@ import java.util.Set;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.ems.security.Group;
-import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.nav.Menu;
@@ -20,7 +19,6 @@ import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.security.nav.service.MenuService;
 import org.beangle.ems.security.restrict.service.RestrictionService;
 import org.beangle.ems.security.service.AuthorityService;
-import org.beangle.ems.security.service.UserService;
 import org.beangle.model.persist.EntityDao;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.core.session.SessionRegistry;
@@ -44,8 +42,6 @@ public class UserDashboardHelper {
 	private MenuService menuService;
 
 	private RestrictionService restrictionService;
-
-	private UserService userService;
 
 	public void buildDashboard(User user) {
 		ContextHelper.put("user", user);
@@ -85,8 +81,7 @@ public class UserDashboardHelper {
 			Set<Resource> resources = CollectUtils.newHashSet(authorityService.getResources(user));
 			Map<Group, List<Menu>> groupMenusMap = CollectUtils.newHashMap();
 
-			List<Group> myGroups = userService.getGroups(user, GroupMember.Ship.MEMBER);
-			for (Group group : myGroups) {
+			for (Group group : user.getGroups()) {
 				groupMenusMap.put(group, menuService.getMenus(menuProfile, group, Boolean.TRUE));
 			}
 			ContextHelper.put("menus", menus);
@@ -97,10 +92,6 @@ public class UserDashboardHelper {
 
 	public void setMenuService(MenuService menuService) {
 		this.menuService = menuService;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
 	}
 
 	public void setEntityDao(EntityDao entityDao) {

@@ -15,7 +15,7 @@ import org.beangle.model.pojo.LongIdEntity;
  * 
  * @author chaostone
  */
-public interface Menu extends LongIdEntity, Comparable<Menu>, HierarchyEntity<Menu> {
+public interface Menu extends LongIdEntity, HierarchyEntity<Menu>, Comparable<Menu> {
 
 	/**
 	 * 同级菜单索引号

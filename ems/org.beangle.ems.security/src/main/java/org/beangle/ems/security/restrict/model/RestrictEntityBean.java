@@ -17,6 +17,11 @@ import org.beangle.ems.security.restrict.RestrictField;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+/**
+ * 数据限制实体
+ * 
+ * @author chaostone
+ */
 @Entity(name = "org.beangle.ems.security.restrict.RestrictEntity")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -24,12 +29,16 @@ public class RestrictEntityBean extends LongIdObject implements RestrictEntity {
 
 	private static final long serialVersionUID = -5761007041977213647L;
 
+	/** 名称 */
 	private String name;
 
+	/** 类型 */
 	private String type;
 
+	/** 备注 */
 	private String remark;
 
+	/** 实体的属性 */
 	@ManyToMany
 	private Set<RestrictField> fields = CollectUtils.newHashSet();
 

@@ -47,8 +47,8 @@ public class ProfileServiceImpl implements ProfileService {
 		defaultProfile.setUriPath("/");
 		defaultProfile.setUriPathStyle(Constants.SEO_URI);
 		defaultProfile.setUriExtension("action");
-		defaultProfile.setViewPath("/pages/");
-		defaultProfile.setViewPathStyle(Constants.SIMPLE_VIEWPATH);
+		// defaultProfile.setViewPath("/pages/");
+		defaultProfile.setViewPathStyle(Constants.FULL_VIEWPATH);
 		defaultProfile.setViewExtension("ftl");
 		setResource(getDefaultResource());
 	}
@@ -121,11 +121,9 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	/**
-	 * 初始化配置
+	 * 初始化配置,依次加载META-INF/convention-default.properties,META-INF/convention-route.properties
 	 */
 	private void loadProfiles() {
-		// META-INF/convention-default.properties
-		// META-INF/convention-route.properties
 		URL convention_default = resource.getGlobal();
 		if (null == convention_default) { throw new RuntimeException(
 				"cannot find convention-default.properties!"); }

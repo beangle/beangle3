@@ -5,17 +5,19 @@
 package org.beangle.emsapp.security.action;
 
 import java.sql.Date;
+import java.util.List;
 
-import org.beangle.ems.security.Category;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.service.AuthorityService;
+import org.beangle.ems.security.service.GroupService;
 import org.beangle.ems.security.service.UserService;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.emsapp.security.helper.GroupPropertyExtractor;
 import org.beangle.model.Entity;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.model.transfer.exporter.PropertyExtractor;
+import org.beangle.model.util.HierarchyEntityUtils;
 
 /**
  * 用户组信息维护响应类
@@ -24,6 +26,8 @@ import org.beangle.model.transfer.exporter.PropertyExtractor;
  */
 public class GroupAction extends SecurityActionSupport {
 
+	private GroupService groupService;
+
 	private UserService userService;
 
 	@Override
@@ -31,12 +35,13 @@ public class GroupAction extends SecurityActionSupport {
 		return "userGroup";
 	}
 
-	protected void indexSetting() {
-		put("categories", entityDao.getAll(Category.class));
-	}
-
 	protected void editSetting(Entity<?> entity) {
-		put("categories", entityDao.getAll(Category.class));
+		OqlBuilder<Group> query = OqlBuilder.from(Group.class, "g");
+		query.where("g.id not in (:reservedIds) ",new Long[]{Group.ANONYMOUS_ID,Group.ANYONE_ID});
+		List<Group> groups = entityDao.search(query);
+		Group group = (Group) entity;
+		groups.removeAll(HierarchyEntityUtils.getFamily(group));
+		put("parents", groups);
 	}
 
 	protected OqlBuilder<Group> getQueryBuilder() {
@@ -60,7 +65,7 @@ public class GroupAction extends SecurityActionSupport {
 				"edit", "error.notUnique"); }
 		if (!group.isPersisted()) {
 			User creator = userService.get(getUserId());
-			userService.createGroup(creator, group);
+			groupService.createGroup(creator, group);
 		} else {
 			group.setUpdatedAt(new Date(System.currentTimeMillis()));
 			if (!group.isPersisted()) {
@@ -68,6 +73,13 @@ public class GroupAction extends SecurityActionSupport {
 			}
 			entityDao.saveOrUpdate(group);
 		}
+		Long newParentId = getLong("parent.id");
+		int indexno = getInteger("indexno");
+		Group parent = null;
+		if (null != newParentId) {
+			parent = entityDao.get(Group.class, newParentId);
+		}
+		groupService.moveGroup(group, parent, indexno);
 		return redirect("search", "info.save.success");
 	}
 
@@ -79,7 +91,7 @@ public class GroupAction extends SecurityActionSupport {
 	public String remove() {
 		Long[] groupIds = getEntityIds(getShortName());
 		User curUser = userService.get(getUserId());
-		userService.removeGroup(curUser, entityDao.get(Group.class, groupIds));
+		groupService.removeGroup(curUser, entityDao.get(Group.class, groupIds));
 		return redirect("search", "info.remove.success");
 	}
 
@@ -89,6 +101,10 @@ public class GroupAction extends SecurityActionSupport {
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;
+	}
+
+	public void setGroupService(GroupService groupService) {
+		this.groupService = groupService;
 	}
 
 	@Override

@@ -9,12 +9,12 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.beangle.commons.collection.Order;
-import org.beangle.ems.security.session.model.CategoryProfileBean;
-import org.beangle.ems.security.session.service.CategoryProfileService;
+import org.beangle.ems.security.session.model.GroupProfileBean;
+import org.beangle.ems.security.session.service.GroupProfileService;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.core.session.SessionRegistry;
-import org.beangle.security.core.session.category.CategorySessionStat;
+import org.beangle.security.core.session.category.SessionStat;
 import org.beangle.security.core.session.impl.AccessLog;
 import org.beangle.security.web.session.model.SessioninfoBean;
 
@@ -27,10 +27,10 @@ public class MonitorAction extends SecurityActionSupport {
 
 	private SessionRegistry sessionRegistry;
 
-	private CategoryProfileService categoryProfileService;
+	private GroupProfileService categoryProfileService;
 
 	public String profiles() {
-		put("categoryProfiles", entityDao.getAll(CategoryProfileBean.class));
+		put("categoryProfiles", entityDao.getAll(GroupProfileBean.class));
 		return forward();
 	}
 
@@ -44,9 +44,9 @@ public class MonitorAction extends SecurityActionSupport {
 		builder.where("sessioninfo.serverName=:server", sessionRegistry.getController().getServerName());
 		builder.orderBy(get(Order.ORDER_STR)).limit(getPageLimit());
 		put("sessioninfos", entityDao.search(builder));
-		OqlBuilder<CategorySessionStat> statBuilder = OqlBuilder.from(CategorySessionStat.class, "stat");
-		statBuilder.where("stat.serverName=:server",  sessionRegistry.getController().getServerName());
-		put("sessionStats",entityDao.search(statBuilder));
+		OqlBuilder<SessionStat> statBuilder = OqlBuilder.from(SessionStat.class, "stat");
+		statBuilder.where("stat.serverName=:server", sessionRegistry.getController().getServerName());
+		put("sessionStats", entityDao.search(statBuilder));
 		return forward();
 	}
 
@@ -54,14 +54,14 @@ public class MonitorAction extends SecurityActionSupport {
 	 * 保存设置
 	 */
 	public String saveProfile() {
-		OqlBuilder<CategoryProfileBean> builder = OqlBuilder.from(CategoryProfileBean.class, "p");
+		OqlBuilder<GroupProfileBean> builder = OqlBuilder.from(GroupProfileBean.class, "p");
 		builder.where("p.sessionProfile.name=:serverName", sessionRegistry.getController().getServerName());
-		List<CategoryProfileBean> categories = entityDao.getAll(CategoryProfileBean.class);
-		for (final CategoryProfileBean profile : categories) {
-			Long categoryId = profile.getCategory().getId();
-			Integer max = getInteger("max_" + categoryId);
-			Integer maxSessions = getInteger("maxSessions_" + categoryId);
-			Integer inactiveInterval = getInteger("inactiveInterval_" + categoryId);
+		List<GroupProfileBean> categories = entityDao.getAll(GroupProfileBean.class);
+		for (final GroupProfileBean profile : categories) {
+			Long groupId = profile.getGroup().getId();
+			Integer max = getInteger("max_" + groupId);
+			Integer maxSessions = getInteger("maxSessions_" + groupId);
+			Integer inactiveInterval = getInteger("inactiveInterval_" + groupId);
 			if (null != max && null != maxSessions && null != inactiveInterval) {
 				profile.setCapacity(max);
 				profile.setUserMaxSessions(maxSessions);
@@ -80,7 +80,7 @@ public class MonitorAction extends SecurityActionSupport {
 		if (null != sessionIds) {
 			for (String sessionId : sessionIds) {
 				if (mySessionId.equals(sessionId)) continue;
-			    sessionRegistry.expire(sessionId);
+				sessionRegistry.expire(sessionId);
 				success++;
 			}
 		}
@@ -107,7 +107,7 @@ public class MonitorAction extends SecurityActionSupport {
 		this.sessionRegistry = sessionRegistry;
 	}
 
-	public void setCategoryProfileService(CategoryProfileService categoryProfileService) {
+	public void setCategoryProfileService(GroupProfileService categoryProfileService) {
 		this.categoryProfileService = categoryProfileService;
 	}
 

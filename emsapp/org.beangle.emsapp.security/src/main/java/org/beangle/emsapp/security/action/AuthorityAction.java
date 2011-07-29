@@ -12,7 +12,6 @@ import java.util.Set;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.StrUtils;
 import org.beangle.ems.security.Authority;
-import org.beangle.ems.security.Category;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.Resource;
@@ -22,7 +21,6 @@ import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.security.nav.service.MenuService;
 import org.beangle.ems.security.service.CacheableAuthorityManager;
 import org.beangle.ems.web.action.SecurityActionSupport;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.core.authority.GrantedAuthorityBean;
 import org.beangle.struts2.convention.route.Action;
 
@@ -54,30 +52,14 @@ public class AuthorityAction extends SecurityActionSupport {
 		if (isAdmin()) {
 			mngGroups = entityDao.getAll(Group.class);
 		} else {
-			for (GroupMember m : user.getGroups()) {
+			for (GroupMember m : user.getMembers()) {
 				if (m.isManager()) mngGroups.add(m.getGroup());
 			}
 		}
 		put("mngGroups", mngGroups);
+		put("menuProfiles", menuService.getProfiles(ao));
 
-		List<Category> categories = CollectUtils.newArrayList();
-		categories.add(((Group) ao).getCategory());
-
-		OqlBuilder<MenuProfile> query = OqlBuilder.from(MenuProfile.class, "menuProfile");
-		query.where("menuProfile.category in(:categories)", categories);
-		List<MenuProfile> menuProfiles = entityDao.search(query);
-		put("menuProfiles", menuProfiles);
-
-		Long menuProfileId = getLong("menuProfileId");
-		MenuProfile menuProfile = null;
-		if (null != menuProfileId) {
-			menuProfile = entityDao.get(MenuProfile.class, menuProfileId);
-			if (!menuProfile.getCategory().equals(ao.getCategory())) {
-				menuProfile = (menuProfiles.get(0));
-			}
-		} else {
-			menuProfile = (menuProfiles.get(0));
-		}
+		MenuProfile menuProfile = menuService.getProfile(ao, getLong("menuProfileId"));
 		if (null != menuProfile) {
 			List<Menu> menus = null;
 			Collection<Resource> resources = null;

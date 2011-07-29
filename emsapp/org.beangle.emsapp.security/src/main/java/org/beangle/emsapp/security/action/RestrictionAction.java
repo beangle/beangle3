@@ -159,8 +159,8 @@ public class RestrictionAction extends SecurityActionSupport {
 		if (type.equals("user")) {
 			restrictions = CollectUtils.newArrayList(((RestrictionHolder<?>) me).getRestrictions());
 		} else if (type.equals("group")) {
-			for (GroupMember group : me.getGroups()) {
-				restrictions.addAll(group.getGroup().getRestrictions());
+			for (GroupMember member : me.getMembers()) {
+				if (member.isMember()) restrictions.addAll(member.getGroup().getRestrictions());
 			}
 		} else if (type.equals("authority")) {
 			Object aa = holder;

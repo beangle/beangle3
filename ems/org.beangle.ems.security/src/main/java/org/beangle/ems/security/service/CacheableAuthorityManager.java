@@ -10,11 +10,11 @@ import java.util.Set;
 
 import org.apache.commons.lang.Validate;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.ems.security.Group;
+import org.beangle.ems.security.SecurityUtils;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.security.access.AuthorityManager;
 import org.beangle.security.auth.AnonymousAuthentication;
-import org.beangle.ems.security.Resource;
-import org.beangle.ems.security.SecurityUtils;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.web.AuthenticationEntryPoint;
@@ -54,11 +54,11 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 		} else {
 			resourceName = resource.toString();
 		}
-		//registe resourceName
+		// registe resourceName
 		SecurityUtils.setResource(resourceName);
 		if (publicResources.contains(resourceName)) { return true; }
 		if (AnonymousAuthentication.class.isAssignableFrom(auth.getClass())) { return false; }
-		if(authorityService.getUserService().isAdmin(((UserToken)auth.getPrincipal()).getId()))return true;
+		if (authorityService.getUserService().isAdmin(((UserToken) auth.getPrincipal()).getId())) return true;
 		if (protectedResources.contains(resourceName)) { return true; }
 		Collection<? extends GrantedAuthority> authories = auth.getAuthorities();
 		for (GrantedAuthority authorty : authories) {
@@ -102,7 +102,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 	 * 加载三类资源
 	 */
 	public void refreshCache() {
-		publicResources = authorityService.getResourceNames(Resource.Scope.PUBLIC);
+		publicResources = authorityService.getResourceNamesByGroup(Group.ANONYMOUS_ID);
 		if (null != authenticationEntryPoint && authenticationEntryPoint instanceof UrlEntryPoint) {
 			UrlEntryPoint fep = (UrlEntryPoint) authenticationEntryPoint;
 			String loginResource = authorityService.extractResource(fep.getLoginUrl());
@@ -110,7 +110,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 				publicResources.add(loginResource);
 			}
 		}
-		protectedResources = authorityService.getResourceNames(Resource.Scope.PROTECTED);
+		protectedResources = authorityService.getResourceNamesByGroup(Group.ANYONE_ID);
 		expired = false;
 	}
 

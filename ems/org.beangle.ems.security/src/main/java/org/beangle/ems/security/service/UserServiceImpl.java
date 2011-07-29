@@ -17,7 +17,6 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
-import org.beangle.ems.security.event.GroupCreationEvent;
 import org.beangle.ems.security.event.UserAlterationEvent;
 import org.beangle.ems.security.event.UserCreationEvent;
 import org.beangle.ems.security.event.UserRemoveEvent;
@@ -99,16 +98,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
 	// workground for no session
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List<Group> getGroups(User user, GroupMember.Ship ship) {
-		if (isAdmin(user) && !ObjectUtils.equals(ship, GroupMember.Ship.MEMBER)) return entityDao
-				.getAll(Group.class);
+	public List<Group> getGroups(User user) {
 		OqlBuilder builder = OqlBuilder.from(GroupMember.class, "gm");
-		builder.where("gm.user=:user", user).select("gm.group");
-		if (null != ship) {
-			if (ship.equals(GroupMember.Ship.MEMBER)) builder.where("gm.member=true");
-			if (ship.equals(GroupMember.Ship.MANAGER)) builder.where("gm.manager=true");
-			if (ship.equals(GroupMember.Ship.GRANTER)) builder.where("gm.granter=true");
-		}
+		builder.where("gm.user=:user and gm.member=true", user).select("gm.group").orderBy("gm.group.code");
 		builder.cacheable();
 		return entityDao.search(builder);
 	}
@@ -144,7 +136,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	public void removeUser(User manager, User user) {
-		List<User> removed=CollectUtils.newArrayList();
+		List<User> removed = CollectUtils.newArrayList();
 		if (isManagedBy(manager, user)) {
 			entityDao.remove(user);
 			removed.add(user);
@@ -156,24 +148,5 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return (isAdmin(manager) || manager.equals(user.getCreator()));
 	}
 
-	public void createGroup(User owner, Group group) {
-		group.setUpdatedAt(new Date(System.currentTimeMillis()));
-		group.setCreatedAt(new Date(System.currentTimeMillis()));
-		group.setOwner(owner);
-		group.getMembers().add(new GroupMemberBean(group, owner, GroupMember.Ship.MANAGER));
-		entityDao.saveOrUpdate(group);
-		publish(new GroupCreationEvent(group));
-	}
-
-	/**
-	 * 超级管理员不能删除
-	 */
-	public void removeGroup(User manager, List<Group> groups) {
-		List<Object> removed = CollectUtils.newArrayList();
-		for (final Group group : groups) {
-			if (group.getOwner().equals(manager) || isAdmin(manager)) entityDao.remove(group);
-		}
-		entityDao.remove(removed);
-	}
-
+	
 }

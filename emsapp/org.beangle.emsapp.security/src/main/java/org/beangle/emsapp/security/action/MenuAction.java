@@ -19,7 +19,7 @@ import org.beangle.emsapp.security.helper.MenuPropertyExtractor;
 import org.beangle.model.Entity;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.model.transfer.exporter.PropertyExtractor;
-import org.beangle.model.util.HierarchyEntityUtil;
+import org.beangle.model.util.HierarchyEntityUtils;
 
 /**
  * 系统模块(菜单)管理响应类
@@ -41,7 +41,6 @@ public class MenuAction extends SecurityActionSupport {
 		OqlBuilder<Resource> builder = OqlBuilder.from(Resource.class, "r");
 		if (null != menu.getProfile() && null != menu.getProfile().getId()) {
 			MenuProfile profile = entityDao.get(MenuProfile.class, menu.getProfile().getId());
-			builder.where("exists(from r.categories as rc where rc=:category)", profile.getCategory());
 			// 查找可以作为父节点的菜单
 			OqlBuilder<Menu> folderBuilder = OqlBuilder.from(Menu.class, "m");
 			folderBuilder.where("m.entry is null and m.profile=:profile", profile);
@@ -49,7 +48,7 @@ public class MenuAction extends SecurityActionSupport {
 			folders = entityDao.search(folderBuilder);
 			if (null != menu.getParent() && !folders.contains(menu.getParent())) folders
 					.add(menu.getParent());
-			folders.removeAll(HierarchyEntityUtil.getFamily(menu));
+			folders.removeAll(HierarchyEntityUtils.getFamily(menu));
 		}
 		List<Resource> resurces = entityDao.search(builder);
 		Set<Resource> existResources = menu.getResources();

@@ -4,7 +4,6 @@
 <hibernate-configuration>
 	<session-factory>
 		<mapping class="org.beangle.ems.security.model.AuthorityBean"/>
-		<mapping class="org.beangle.ems.security.model.CategoryBean"/>
 		<mapping class="org.beangle.ems.security.model.GroupBean"/>
 		<mapping class="org.beangle.ems.security.model.GroupMemberBean"/>
 		<mapping class="org.beangle.ems.security.model.ResourceBean"/>
@@ -20,7 +19,7 @@
 		<mapping class="org.beangle.ems.security.restrict.model.RestrictPatternBean"/>
 		<mapping class="org.beangle.ems.security.restrict.model.UserRestrictionBean"/>
 		
-		<mapping class="org.beangle.ems.security.session.model.CategoryProfileBean"/>
+		<mapping class="org.beangle.ems.security.session.model.GroupProfileBean"/>
 		<mapping class="org.beangle.ems.security.session.model.SessionProfileBean"/>
 	</session-factory>
 </hibernate-configuration>

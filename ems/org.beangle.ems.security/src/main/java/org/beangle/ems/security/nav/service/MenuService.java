@@ -19,10 +19,37 @@ public interface MenuService {
 
 	/**
 	 * 查询用户能够适用的菜单配置
+	 * 
 	 * @param user
 	 * @return
 	 */
 	public List<MenuProfile> getProfiles(User user);
+
+	/**
+	 * 查询用户组能够适用的菜单配置
+	 * 
+	 * @param groups
+	 * @return
+	 */
+	public List<MenuProfile> getProfiles(Group... groups);
+
+	/**
+	 * 查询用户能够适用的单个菜单配置
+	 * 
+	 * @param user
+	 * @return profiles的第一个如果profileId is null
+	 */
+	public MenuProfile getProfile(User user, Long profileId);
+
+	/**
+	 * 查询用户组能够适用的单个菜单配置
+	 * 
+	 * @param group
+	 * @param profileId
+	 * @return
+	 */
+	public MenuProfile getProfile(Group group, Long profileId);
+
 	/**
 	 * 获取用户的直接权限范围内的资源和所具有用户组的资源.
 	 * 

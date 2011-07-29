@@ -4,7 +4,7 @@
  */
 package org.beangle.emsapp.security.action;
 
-import org.beangle.ems.security.Category;
+import org.beangle.ems.security.Group;
 import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.model.Entity;
@@ -12,7 +12,7 @@ import org.beangle.model.Entity;
 public class MenuProfileAction extends SecurityActionSupport {
 
 	protected void editSetting(Entity<?> entity) {
-		put("categories", entityDao.getAll(Category.class));
+		put("groups", entityDao.getAll(Group.class));
 	}
 
 	@Override

@@ -8,44 +8,80 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.model.persist.impl.BaseServiceImpl;
-import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.model.util.HierarchyEntityUtil;
 import org.beangle.ems.security.Authority;
-import org.beangle.ems.security.Category;
 import org.beangle.ems.security.Group;
-import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.security.nav.model.MenuBean;
-import org.beangle.ems.security.service.UserService;
+import org.beangle.model.persist.impl.AbstractHierarchyService;
+import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.model.util.HierarchyEntityUtils;
 
 /**
  * @author chaostone
  * @version $Id: MenuServiceImpl.java Jun 5, 2011 9:25:49 PM chaostone $
  */
-public class MenuServiceImpl extends BaseServiceImpl implements MenuService {
-
-	private UserService userService;
+public class MenuServiceImpl extends AbstractHierarchyService<MenuBean> implements MenuService {
 
 	public List<MenuProfile> getProfiles(User user) {
-		Set<Category> categories = CollectUtils.newHashSet();
-		categories.add(user.getDefaultCategory());
-		categories.addAll(user.getCategories());
+		List<Group> groups = user.getGroups();
+		return getProfilesInternal(groups.toArray(new Group[groups.size()]));
+	}
+
+	public MenuProfile getProfile(User user, Long profileId) {
+		List<MenuProfile> profiles = getProfiles(user);
+		if (profiles.isEmpty()) return null;
+		MenuProfile profile = profiles.get(0);
+		if (null != profileId) {
+			for (MenuProfile mp : profiles) {
+				if (mp.getId().equals(profileId)) {
+					profile = mp;
+					break;
+				}
+			}
+		}
+		return profile;
+	}
+
+	public MenuProfile getProfile(Group group, Long profileId) {
+		List<Group> path = HierarchyEntityUtils.getPath(group);
+		List<MenuProfile> profiles = getProfilesInternal(path.toArray(new Group[path.size()]));
+		if (profiles.isEmpty()) return null;
+		MenuProfile profile = profiles.get(0);
+		if (null != profileId) {
+			for (MenuProfile mp : profiles) {
+				if (mp.getId().equals(profileId)) {
+					profile = mp;
+					break;
+				}
+			}
+		}
+		return profile;
+	}
+
+	private List<MenuProfile> getProfilesInternal(Group... groups) {
+		if (groups.length == 0) return Collections.emptyList();
 		OqlBuilder<MenuProfile> query = OqlBuilder.from(MenuProfile.class, "menuProfile");
-		query.where("menuProfile.category in(:categories)", categories).cacheable();
+		query.where("menuProfile.group in(:group)", groups).cacheable();
+		return entityDao.search(query);
+	}
+
+	public List<MenuProfile> getProfiles(Group... groups) {
+		if (groups.length == 0) return Collections.emptyList();
+		Set<Group> allGroups = CollectUtils.newHashSet();
+		for (Group group : groups) {
+			allGroups.addAll(HierarchyEntityUtils.getPath(group));
+		}
+		OqlBuilder<MenuProfile> query = OqlBuilder.from(MenuProfile.class, "menuProfile");
+		query.where("menuProfile.group in(:group)", allGroups).cacheable();
 		return entityDao.search(query);
 	}
 
 	public List<Menu> getMenus(MenuProfile profile, User user) {
 		Set<Menu> menus = CollectUtils.newHashSet();
-		List<Group> groups = userService.getGroups(user, GroupMember.Ship.MEMBER);
-		for (final Group group : groups) {
+		for (final Group group : user.getGroups()) {
 			if (group.isEnabled()) menus.addAll(getMenus(profile, group, Boolean.TRUE));
 		}
 		return addParentMenus(menus);
@@ -58,7 +94,7 @@ public class MenuServiceImpl extends BaseServiceImpl implements MenuService {
 	 * @return
 	 */
 	private List<Menu> addParentMenus(Set<Menu> menus) {
-		HierarchyEntityUtil.addParent(menus);
+		HierarchyEntityUtils.addParent(menus);
 		List<Menu> menuList = CollectUtils.newArrayList(menus);
 		Collections.sort(menuList);
 		return menuList;
@@ -87,61 +123,71 @@ public class MenuServiceImpl extends BaseServiceImpl implements MenuService {
 		return builder;
 	}
 
+	// public void move(Menu menu, Menu location, int indexno) {
+	// if (ObjectUtils.equals(menu.getParent(), location)) {
+	// if (NumberUtils.toInt(((MenuBean) menu).getIndexno()) != indexno) {
+	// shiftCode(menu, location, indexno);
+	// }
+	// } else {
+	// if (null != menu.getParent()) {
+	// menu.getParent().getChildren().remove(menu);
+	// }
+	// menu.setParent(location);
+	// shiftCode(menu, location, indexno);
+	// }
+	// }
+	//
+	// private void shiftCode(Menu menu, Menu newParent, int indexno) {
+	// List<Menu> sibling = null;
+	// if (null != newParent) sibling = newParent.getChildren();
+	// else {
+	// sibling = CollectUtils.newArrayList();
+	// for (Menu m : menu.getProfile().getMenus()) {
+	// if (null == m.getParent()) sibling.add(m);
+	// }
+	// }
+	// Collections.sort(sibling);
+	// sibling.remove(menu);
+	// indexno--;
+	// if (indexno > sibling.size()) {
+	// indexno = sibling.size();
+	// }
+	// sibling.add(indexno, menu);
+	// int nolength = String.valueOf(sibling.size()).length();
+	// Set<Menu> menus = CollectUtils.newHashSet();
+	// for (int seqno = 1; seqno <= sibling.size(); seqno++) {
+	// Menu one = sibling.get(seqno - 1);
+	// generateCode(one, StringUtils.leftPad(String.valueOf(seqno), nolength, '0'), menus);
+	// }
+	// entityDao.saveOrUpdate(menus);
+	// }
+	//
+	// private void generateCode(Menu menu, String indexno, Set<Menu> menus) {
+	// menus.add(menu);
+	// if (null != indexno) {
+	// ((MenuBean) menu).generateCode(indexno);
+	// } else {
+	// ((MenuBean) menu).generateCode();
+	// }
+	// if (null != menu.getChildren()) {
+	// for (Menu m : menu.getChildren()) {
+	// generateCode(m, null, menus);
+	// }
+	// }
+	// }
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	protected List<MenuBean> getTopNodes(MenuBean menu) {
+		List sibling = CollectUtils.newArrayList();
+		for (Menu m : menu.getProfile().getMenus()) {
+			if (null == m.getParent()) sibling.add(m);
+		}
+		return sibling;
+	}
+
 	public void move(Menu menu, Menu location, int indexno) {
-		if (ObjectUtils.equals(menu.getParent(), location)) {
-			if (NumberUtils.toInt(((MenuBean) menu).getIndexno()) != indexno) {
-				shiftCode(menu, location, indexno);
-			}
-		} else {
-			if (null != menu.getParent()) {
-				menu.getParent().getChildren().remove(menu);
-			}
-			menu.setParent(location);
-			shiftCode(menu, location, indexno);
-		}
-	}
-
-	private void shiftCode(Menu menu, Menu newParent, int indexno) {
-		List<Menu> sibling = null;
-		if (null != newParent) sibling = newParent.getChildren();
-		else {
-			sibling = CollectUtils.newArrayList();
-			for (Menu m : menu.getProfile().getMenus()) {
-				if (null == m.getParent()) sibling.add(m);
-			}
-		}
-		Collections.sort(sibling);
-		sibling.remove(menu);
-		indexno--;
-		if (indexno > sibling.size()) {
-			indexno = sibling.size();
-		}
-		sibling.add(indexno, menu);
-		int nolength = String.valueOf(sibling.size()).length();
-		Set<Menu> menus = CollectUtils.newHashSet();
-		for (int seqno = 1; seqno <= sibling.size(); seqno++) {
-			Menu one = sibling.get(seqno - 1);
-			generateCode(one, StringUtils.leftPad(String.valueOf(seqno), nolength, '0'), menus);
-		}
-		entityDao.saveOrUpdate(menus);
-	}
-
-	private void generateCode(Menu menu, String indexno, Set<Menu> menus) {
-		menus.add(menu);
-		if (null != indexno) {
-			((MenuBean) menu).generateCode(indexno);
-		} else {
-			((MenuBean) menu).generateCode();
-		}
-		if (null != menu.getChildren()) {
-			for (Menu m : menu.getChildren()) {
-				generateCode(m, null, menus);
-			}
-		}
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+		this.move((MenuBean) menu, (MenuBean) location, indexno);
 	}
 
 }

@@ -14,7 +14,6 @@ import java.util.Set;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
-import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.event.GroupAuthorityEvent;
@@ -40,7 +39,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 	public List<Authority> getAuthorities(User user) {
 		if (null == user) return Collections.emptyList();
 		Map<Resource, Authority> authorities = CollectUtils.newHashMap();
-		List<Group> groups = userService.getGroups(user, GroupMember.Ship.MEMBER);
+		List<Group> groups = user.getGroups();
 		for (final Group group : groups) {
 			List<Authority> groupAuths = getAuthorities(group);
 			for (final Authority groupAuth : groupAuths) {
@@ -58,7 +57,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 	public Authority getAuthority(User user, Resource resource) {
 		if ((null == user) || null == resource) return null;
 		Authority au = null;
-		List<Group> groups = userService.getGroups(user, GroupMember.Ship.MEMBER);
+		List<Group> groups = user.getGroups();
 		for (final Group one : groups) {
 			Authority ar = getAuthority(one, resource);
 			if (null == au) {
@@ -73,7 +72,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 	public List<Resource> getResources(User user) {
 		Set<Resource> resources = CollectUtils.newHashSet();
 		Map<String, Object> params = CollectUtils.newHashMap();
-		List<Group> groups = userService.getGroups(user, GroupMember.Ship.MEMBER);
+		List<Group> groups = user.getGroups();
 		String hql = "select distinct m from " + Group.class.getName() + " as r join r.authorities as a"
 				+ " join a.resource as m where  r.id = :groupId";
 		params.clear();
@@ -85,14 +84,6 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 		return CollectUtils.newArrayList(resources);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public Set<String> getResourceNames(int scope) {
-		OqlBuilder query = OqlBuilder.from(Resource.class, "resource");
-		query.where("resource.scope=:scope and resource.enabled=true", Integer.valueOf(scope));
-		query.select("resource.name");
-		return CollectUtils.newHashSet(entityDao.search(query));
-	}
-
 	/**
 	 * 找到该组内激活的资源id
 	 */
@@ -101,6 +92,17 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 		String hql = "select m.name from " + Group.class.getName() + " as r join r.authorities as a"
 				+ " join a.resource as m where  r.name = :groupName and m.enabled = true";
 		OqlBuilder query = OqlBuilder.hql(hql).param("groupName", group).cacheable();
+		return (Set<String>) new HashSet(entityDao.search(query));
+	}
+
+	/**
+	 * 找到该组内激活的资源id
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Set<String> getResourceNamesByGroup(Long groupId) {
+		String hql = "select m.name from " + Group.class.getName() + " as r join r.authorities as a"
+				+ " join a.resource as m where  r.id = :groupId and m.enabled = true";
+		OqlBuilder query = OqlBuilder.hql(hql).param("groupId", groupId).cacheable();
 		return (Set<String>) new HashSet(entityDao.search(query));
 	}
 

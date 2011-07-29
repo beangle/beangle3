@@ -14,13 +14,18 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.model.pojo.LongIdObject;
-import org.beangle.ems.security.Category;
+import org.beangle.ems.security.Group;
 import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.nav.MenuProfile;
+import org.beangle.model.pojo.LongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+/**
+ * 菜单配置
+ * 
+ * @author chaostone
+ */
 @Entity(name = "org.beangle.ems.security.nav.MenuProfile")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -28,6 +33,7 @@ public class MenuProfileBean extends LongIdObject implements MenuProfile {
 
 	private static final long serialVersionUID = 9147563981118270960L;
 
+	/** 菜单配置名称 */
 	@NotNull
 	@Size(max = 50)
 	@Column(unique = true)
@@ -36,10 +42,11 @@ public class MenuProfileBean extends LongIdObject implements MenuProfile {
 	@OneToMany(mappedBy = "profile")
 	private List<Menu> menus = CollectUtils.newArrayList();
 
-	/** 对应的用户类别 */
+	/** 用户组 */
 	@NotNull
-	private Category category;
+	private Group group;
 
+	/** 是否启用 */
 	@NotNull
 	private boolean enabled;
 
@@ -59,12 +66,12 @@ public class MenuProfileBean extends LongIdObject implements MenuProfile {
 		this.menus = menus;
 	}
 
-	public Category getCategory() {
-		return category;
+	public Group getGroup() {
+		return group;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 
 	public boolean isEnabled() {

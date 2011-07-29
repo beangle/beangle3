@@ -31,7 +31,7 @@ public class DbCategorySessionController extends AbstractSessionController imple
 	@Override
 	protected boolean allocate(Authentication auth, String sessionId) {
 		String category = ((CategoryPrincipal) auth.getPrincipal()).getCategory();
-		int result = entityDao.executeUpdateHql("update " + CategorySessionStat.class.getName()
+		int result = entityDao.executeUpdateHql("update " + SessionStat.class.getName()
 				+ " stat set stat.online = stat.online + 1 "
 				+ "where stat.online < stat.capacity and stat.category=? and stat.serverName=?", category,
 				getServerName());
@@ -41,7 +41,7 @@ public class DbCategorySessionController extends AbstractSessionController imple
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public int getMaxSessions(Authentication auth) {
 		String category = ((CategoryPrincipal) auth.getPrincipal()).getCategory();
-		OqlBuilder builder = OqlBuilder.from(CategorySessionStat.class, "stat");
+		OqlBuilder builder = OqlBuilder.from(SessionStat.class, "stat");
 		builder.select("stat.userMaxSessions")
 				.where("stat.category=:category and stat.serverName=:server", category, getServerName())
 				.cacheable();
@@ -53,7 +53,7 @@ public class DbCategorySessionController extends AbstractSessionController imple
 	public void onLogout(Sessioninfo info) {
 		CategorySessioninfo categoryinfo = (CategorySessioninfo) info;
 		if (!info.isExpired()) {
-			entityDao.executeUpdateHql("update " + CategorySessionStat.class.getName()
+			entityDao.executeUpdateHql("update " + SessionStat.class.getName()
 					+ " stat set stat.online=stat.online -1 "
 					+ "where stat.online>0 and stat.category=? and stat.serverName=?",
 					categoryinfo.getCategory(), getServerName());
@@ -66,12 +66,12 @@ public class DbCategorySessionController extends AbstractSessionController imple
 		Validate.notNull(this.serverName);
 
 		for (CategoryProfile profile : categoryProfileProvider.getCategoryProfiles()) {
-			OqlBuilder<CategorySessionStat> builder = OqlBuilder.from(CategorySessionStat.class, "stat");
+			OqlBuilder<SessionStat> builder = OqlBuilder.from(SessionStat.class, "stat");
 			builder.where("stat.category=:category and stat.serverName=:server", profile.getCategory(),
 					getServerName());
-			CategorySessionStat stat = entityDao.uniqueResult(builder);
+			SessionStat stat = entityDao.uniqueResult(builder);
 			if (null == stat) {
-				stat = new CategorySessionStat(getServerName(), profile.getCategory(), profile.getCapacity(),
+				stat = new SessionStat(getServerName(), profile.getCategory(), profile.getCapacity(),
 						profile.getInactiveInterval());
 				entityDao.saveOrUpdate(stat);
 			}
@@ -80,7 +80,7 @@ public class DbCategorySessionController extends AbstractSessionController imple
 
 	public void onApplicationEvent(CategoryProfileUpdateEvent event) {
 		CategoryProfile profile = (CategoryProfile) event.getSource();
-		entityDao.executeUpdateHql("update " + CategorySessionStat.class.getName()
+		entityDao.executeUpdateHql("update " + SessionStat.class.getName()
 				+ " stat  set stat.capacity=?,stat.userMaxSessions=?,stat.inactiveInterval=?"
 				+ " where stat.category=?", profile.getCapacity(), profile.getUserMaxSessions(),
 				profile.getInactiveInterval(), profile.getCategory());
@@ -90,7 +90,7 @@ public class DbCategorySessionController extends AbstractSessionController imple
 		entityDao
 				.executeUpdateHql(
 						"update "
-								+ CategorySessionStat.class.getName()
+								+ SessionStat.class.getName()
 								+ " stat  set stat.online=(select count(*) from "
 								+ sessioninfoBuilder.getSessioninfoClass().getName()
 								+ " info where info.serverName=stat.serverName and info.expiredAt is null and info.category=stat.category)"

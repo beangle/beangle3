@@ -1,3 +1,16 @@
+2011-07-28  duantihua   <chaostone.duan@gmail.com>
+	* 实现选中导出 *
+	* 实现会话监控和权限管理分离 *
+	* 完善wiki *
+	* 支持table缩写*
+	* 支持独立的jdbc/sessions监控数据源*
+	* 支持独立数据库检查服务(表核对、序列核对)*
+	* 修复导出参数处理
+	* 实现用户类别和用户组合并
+	* 修复了HibernateEntityDao.count(Class type,String[] attrs,Object [] values,String countStr)的错误
+	* 重构页面布局 /pages/beangle 改为org.beangle...全路径页面结构布局;更改了struts-convertion中的默认viewPathStyle为full
+	* 重新命名ems设计到的表格，前缀从sys_改为ems_;将beangle/model/entity/meta移动到了beangle/ems/meta
+
 2011-07-19  zhaoding   <zhaoding@gmail.com>
 	* 重构了radios标签
 	* 增加了checkboxes标签

@@ -17,7 +17,6 @@ import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
-import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.restrict.RestrictEntity;
@@ -50,9 +49,8 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		final Set<RestrictEntity> entities = CollectUtils.newHashSet(resource.getEntities());
 		// 权限上的限制
 		restrictions.addAll(getAuthorityRestrictions(user, resource));
-		List<Group> groups = userService.getGroups(user, GroupMember.Ship.MEMBER);
 		// 用户组自身限制
-		for (Group group : authorityService.filter(groups, resource)) {
+		for (Group group : authorityService.filter(user.getGroups(), resource)) {
 			restrictions.addAll(group.getRestrictions());
 		}
 		// 用户自身限制

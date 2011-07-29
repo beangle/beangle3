@@ -16,7 +16,28 @@ import org.beangle.model.pojo.LongIdTimeEntity;
  * 
  * @author chaostone 2005-9-26
  */
-public interface Group extends LongIdTimeEntity, RestrictionHolder<GroupRestriction>, HierarchyEntity<Group> {
+public interface Group extends LongIdTimeEntity, RestrictionHolder<GroupRestriction>, HierarchyEntity<Group>,
+		Comparable<Group> {
+
+	/** 匿名用户组id */
+	public static final long ANONYMOUS_ID = -1;
+
+	/** 所有用户所在的公共组id */
+	public static final long ANYONE_ID = 0;
+
+	/**
+	 * 代码
+	 * 
+	 * @return
+	 */
+	public String getCode();
+
+	/**
+	 * 设置代码
+	 * 
+	 * @param code
+	 */
+	public void setCode(String code);
 
 	/**
 	 * 名称
@@ -75,20 +96,6 @@ public interface Group extends LongIdTimeEntity, RestrictionHolder<GroupRestrict
 	public void setOwner(User owner);
 
 	/**
-	 * 用户组对应的类别.
-	 * 
-	 * @return
-	 */
-	public Category getCategory();
-
-	/**
-	 * 设置用户组对应的类别.
-	 * 
-	 * @param categories
-	 */
-	public void setCategory(Category userCategory);
-
-	/**
 	 * 状态
 	 * 
 	 * @return
@@ -115,5 +122,7 @@ public interface Group extends LongIdTimeEntity, RestrictionHolder<GroupRestrict
 	 * @param remark
 	 */
 	public void setRemark(String remark);
+
+	int getDepth();
 
 }

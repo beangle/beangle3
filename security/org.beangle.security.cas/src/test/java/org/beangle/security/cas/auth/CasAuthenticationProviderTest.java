@@ -16,7 +16,7 @@ import org.beangle.security.auth.BadCredentialsException;
 import org.beangle.security.auth.UsernamePasswordAuthentication;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.authority.GrantedAuthorityBean;
-import org.beangle.security.core.userdetail.User;
+import org.beangle.security.core.userdetail.DefaultUserDetailBean;
 import org.beangle.security.core.userdetail.UserDetail;
 import org.beangle.security.core.userdetail.UserDetailService;
 import org.beangle.security.core.userdetail.UsernameNotFoundException;
@@ -109,7 +109,7 @@ public class CasAuthenticationProviderTest {
 	}
 
 	private UserDetail makeUserDetailsFromAuthoritiesPopulator() {
-		return new User("user", "password", GrantedAuthorityBean.build("ROLE_A", "ROLE_B"));
+		return new DefaultUserDetailBean("user", "password", GrantedAuthorityBean.build("ROLE_A", "ROLE_B"));
 	}
 
 	private class MockStatelessTicketCache implements StatelessTicketCache {

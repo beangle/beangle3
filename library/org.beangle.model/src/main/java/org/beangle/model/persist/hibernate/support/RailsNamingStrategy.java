@@ -29,10 +29,6 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	private static final Logger logger = LoggerFactory.getLogger(RailsNamingStrategy.class);
 	// 表名、字段名、序列长度
 	private static final int MaxLength = 30;
-	/**
-	 * 是否对表名进行复数化
-	 */
-	private boolean enablePluralize = true;
 
 	private Pluralizer pluralizer = new EnNounPluralizer();
 
@@ -50,7 +46,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 			className = StringUtils.substringBeforeLast(className, "Bean");
 		}
 		String tableName = addUnderscores(unqualify(className));
-		if (enablePluralize) {
+		if (null != pluralizer) {
 			tableName = pluralizer.pluralize(tableName);
 		}
 		generatePrefix(className);
@@ -72,7 +68,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 			shortName = StringUtils.substringBeforeLast(shortName, "Bean");
 		}
 		String tableName = addUnderscores(shortName);
-		if (enablePluralize) {
+		if (null != pluralizer) {
 			tableName = pluralizer.pluralize(tableName);
 		}
 		String tblPrefix = tableNameConfig.getPrefix(className);
@@ -227,14 +223,6 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 
 	public void setPluralizer(Pluralizer pluralizer) {
 		this.pluralizer = pluralizer;
-	}
-
-	public boolean isPluralizeTableName() {
-		return enablePluralize;
-	}
-
-	public void setPluralizeTableName(boolean pluralizeTableName) {
-		this.enablePluralize = pluralizeTableName;
 	}
 
 	public TableNameConfig getTableNameConfig() {

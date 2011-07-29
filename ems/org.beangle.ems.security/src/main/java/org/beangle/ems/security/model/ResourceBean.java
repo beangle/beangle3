@@ -16,15 +16,15 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.StrUtils;
-import org.beangle.model.pojo.LongIdObject;
-import org.beangle.ems.security.Category;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.restrict.RestrictEntity;
+import org.beangle.model.pojo.LongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
- * 系统模块，代表一组系统功能点的集合.<br>
+ * 系统资源
+ * 代表一组系统功能点的集合.<br>
  * <p>
  * 系统模块之间存在基于代码表示上的父子级联关系.<br>
  * 上下级关系是通过模块代码的包含关系体现的。<br>
@@ -57,18 +57,6 @@ public class ResourceBean extends LongIdObject implements Resource {
 	/** 模块是否可用 */
 	@NotNull
 	private boolean enabled = true;
-
-	/** 资源访问范围 */
-	@NotNull
-	private int scope = Scope.PRIVATE;
-
-	/** 访问时需要其它参数 */
-	@NotNull
-	private boolean needParams;
-	
-	@ManyToMany
-	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
-	private Set<Category> categories = CollectUtils.newHashSet();
 
 	@ManyToMany
 	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -106,27 +94,6 @@ public class ResourceBean extends LongIdObject implements Resource {
 		this.title = title;
 	}
 
-	public Set<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(Set<Category> categories) {
-		this.categories = categories;
-	}
-
-	public int getScope() {
-		return scope;
-	}
-
-	public void setScope(int scope) {
-		this.scope = scope;
-	}
-
-	public String toString() {
-		return new ToStringBuilder(this).append("name", this.name).append("id", this.id)
-				.append("remark", this.remark).toString();
-	}
-
 	public Set<RestrictEntity> getEntities() {
 		return entities;
 	}
@@ -139,12 +106,9 @@ public class ResourceBean extends LongIdObject implements Resource {
 		return StrUtils.concat(name, "[", title, "]");
 	}
 
-	public boolean isNeedParams() {
-		return needParams;
+	public String toString() {
+		return new ToStringBuilder(this).append("name", this.name).append("id", this.id)
+				.append("remark", this.remark).toString();
 	}
 
-	public void setNeedParams(boolean needParams) {
-		this.needParams = needParams;
-	}
-	
 }

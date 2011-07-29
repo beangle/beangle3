@@ -16,7 +16,7 @@
 		<mapping class="org.beangle.ems.dictionary.model.CodeMeta"/>
 		<mapping class="org.beangle.ems.dictionary.model.CodeScript"/>
 		
-		<mapping class="org.beangle.model.entity.meta.model.EntityMetaBean"/>
-		<mapping class="org.beangle.model.entity.meta.model.PropertyMetaBean"/>
+		<mapping class="org.beangle.ems.meta.model.EntityMetaBean"/>
+		<mapping class="org.beangle.ems.meta.model.PropertyMetaBean"/>
 	</session-factory>
 </hibernate-configuration>

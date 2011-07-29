@@ -4,17 +4,12 @@
  */
 package org.beangle.model.persist.hibernate.support;
 
-import java.net.URL;
-import java.util.List;
 
 public interface TableNameConfig {
-
-	public void addConfig(URL url);
 
 	public String getSchema(String packageName);
 
 	public String getPrefix(String packageName);
 
-	public List<TableNamePattern> getPatterns();
 
 }

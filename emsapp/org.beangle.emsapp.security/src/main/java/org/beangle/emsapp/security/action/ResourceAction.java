@@ -7,7 +7,7 @@ package org.beangle.emsapp.security.action;
 import java.util.List;
 
 import org.beangle.ems.security.Authority;
-import org.beangle.ems.security.Category;
+import org.beangle.ems.security.Group;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.nav.Menu;
@@ -55,7 +55,7 @@ public class ResourceAction extends SecurityActionSupport {
 		List<RestrictEntity> entities = entityDao.getAll(RestrictEntity.class);
 		entities.removeAll(resource.getEntities());
 		put("restrictEntities", entities);
-		put("categories", entityDao.getAll(Category.class));
+		put("groups", entityDao.getAll(Group.class));
 	}
 
 	protected String saveAndForward(Entity<?> entity) {
@@ -69,10 +69,6 @@ public class ResourceAction extends SecurityActionSupport {
 				getAll("restrictEntityId", Long.class));
 		resource.getEntities().clear();
 		resource.getEntities().addAll(entities);
-
-		List<Category> categories = entityDao.get(Category.class, getAll("categoryId",Long.class));
-		resource.getCategories().clear();
-		resource.getCategories().addAll(categories);
 
 		entityDao.saveOrUpdate(resource);
 		authorityManager.refreshCache();
@@ -100,7 +96,6 @@ public class ResourceAction extends SecurityActionSupport {
 		put("users", entityDao.search(userQuery));
 		put("groups", entityDao.search(groupQuery));
 		put("menus", entityDao.search(query));
-		put("categories", entityDao.getAll(Category.class));
 		return forward();
 	}
 

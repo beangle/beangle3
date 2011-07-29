@@ -31,9 +31,11 @@ import org.beangle.ems.security.restrict.Restriction;
 public abstract class RestrictionBean extends LongIdObject implements Restriction {
 	private static final long serialVersionUID = -1157873272781525823L;
 
+	/** 限制模式 */
 	@NotNull
 	protected RestrictPattern pattern;
 
+	/** 是否启用 */
 	@NotNull
 	protected boolean enabled = true;
 

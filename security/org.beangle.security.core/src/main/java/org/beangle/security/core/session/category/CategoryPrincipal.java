@@ -13,8 +13,6 @@ public interface CategoryPrincipal {
 
 	public String getCategory();
 
-	public void changeCategory(String newCategory);
-
 	public String getFullname();
 
 }
