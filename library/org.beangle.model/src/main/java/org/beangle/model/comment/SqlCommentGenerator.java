@@ -67,12 +67,12 @@ public class SqlCommentGenerator {
 			ClassDoc classDoc = classes[i];
 
 			// generate table name
-			strategy.generatePrefix(classDoc.name());
+			strategy.generatePrefix(classDoc.qualifiedName());
 			String tableName = getTableName(classDoc);
 			if (null != tableName) {
 				tableName = strategy.tableName(tableName);
 			} else {
-				tableName = strategy.classToTableName(classDoc.name());
+				tableName = strategy.classToTableName(classDoc.qualifiedName());
 			}
 
 			// find table comment
@@ -80,7 +80,7 @@ public class SqlCommentGenerator {
 			if (null != tableComment) {
 				out.write("\ncomment on table " + tableName + " is '" + tableComment + "';\n");
 			} else {
-				nocomments.append(classDoc.name()).append('\n');
+				nocomments.append(classDoc.qualifiedName()).append('\n');
 				nocomment++;
 			}
 
@@ -106,7 +106,7 @@ public class SqlCommentGenerator {
 								+ columnComment + "';\n");
 					} else {
 						if (null != fields[j].position() && fields[j].position().column() > 0) {
-							nocomments.append(classDoc.name()).append('.').append(fields[j].name())
+							nocomments.append(classDoc.qualifiedName()).append('.').append(fields[j].name())
 									.append('\n');
 							nocomment++;
 						}
