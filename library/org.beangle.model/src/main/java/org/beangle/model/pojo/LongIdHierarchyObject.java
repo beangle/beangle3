@@ -16,7 +16,7 @@ import org.beangle.commons.lang.StrUtils;
  * @version $Id: LongIdHierarchyObject.java Jul 29, 2011 1:18:17 AM chaostone $
  */
 @MappedSuperclass
-public abstract class LongIdHierarchyObject<T extends HierarchyEntity<?>> extends LongIdObject implements
+public abstract class LongIdHierarchyObject<T> extends LongIdObject implements
 		HierarchyEntity<T>, Comparable<T> {
 	private static final long serialVersionUID = -968320812584144969L;
 	

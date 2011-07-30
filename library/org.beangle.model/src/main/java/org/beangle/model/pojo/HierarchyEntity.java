@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.beangle.model.Entity;
 
-public interface HierarchyEntity<T extends HierarchyEntity<?>> extends Entity<Long> {
+public interface HierarchyEntity<T> extends Entity<Long> {
 
 	public T getParent();
 

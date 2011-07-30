@@ -21,7 +21,7 @@ import org.beangle.model.query.builder.OqlBuilder;
  * @author chaostone
  * @version $Id: GroupServiceImpl.java Jul 29, 2011 1:58:51 AM chaostone $
  */
-public class GroupServiceImpl extends AbstractHierarchyService<GroupBean> implements GroupService {
+public class GroupServiceImpl extends AbstractHierarchyService<GroupBean, Group> implements GroupService {
 	private UserService userService;
 
 	public void createGroup(User owner, Group group) {

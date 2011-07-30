@@ -2,22 +2,28 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.model.persist;
+package org.beangle.model.comment;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.StrUtils;
 import org.beangle.commons.text.inflector.Pluralizer;
 import org.beangle.commons.text.inflector.lang.en.EnNounPluralizer;
+import org.beangle.model.persist.hibernate.support.DefaultTableNameConfig;
 import org.beangle.model.persist.hibernate.support.TableNameConfig;
 
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.DocErrorReporter;
 import com.sun.javadoc.FieldDoc;
 import com.sun.javadoc.RootDoc;
 
@@ -28,15 +34,20 @@ import com.sun.javadoc.RootDoc;
  * @version $Id: ListTags.java Jul 30, 2011 12:42:54 AM chaostone $
  */
 
-public class CommentDoc {
+public class SqlCommentGenerator {
+
+	private static final String CONFIG = "config";
+	private static final String SQLFILE = "file";
+
+	private static DefaultTableNameConfig tableNameConfig;
 
 	public static boolean start(RootDoc root) throws IOException {
 		ClassDoc[] classes = root.classes();
 		NamingStrategy strategy = new NamingStrategy();
-		strategy.setTableNameConfig(new SimpleTableNameConfig());
+		strategy.setTableNameConfig(tableNameConfig);
 
 		// out files
-		String commentFileName = System.getProperty("java.io.tmpdir") + "/comment.sql";
+		String commentFileName = getFileOption(root.options());
 		String commentLogFileName = System.getProperty("java.io.tmpdir") + "/comment_log.txt";
 		BufferedWriter out = new BufferedWriter(new FileWriter(commentFileName));
 		BufferedWriter log = new BufferedWriter(new FileWriter(commentLogFileName));
@@ -152,6 +163,61 @@ public class CommentDoc {
 		}
 		return null;
 	}
+
+	/**
+	 * Doclet method called by Javadoc to recognize
+	 * custom parameters.
+	 */
+	public static int optionLength(String option) {
+		if (option.equals("-" + CONFIG)) return 2;
+		if (option.equals("-" + SQLFILE)) return 2;
+		else return 0;
+	}
+
+	public static boolean validOptions(String options[][], DocErrorReporter reporter) throws IOException {
+		System.out.println("start valid options...");
+		tableNameConfig = new DefaultTableNameConfig();
+		for (int i = 0; i < options.length; i++) {
+			String[] opt = options[i];
+			if (opt[0].equals("-file")) {
+				FileUtils.touch(new File(opt[1]));
+			} else if (opt[0].equals("-config")) {
+				String fileName = opt[1];
+				if (null == fileName) continue;
+				File file = new File(fileName);
+				if (!file.exists()) {
+					reporter.printError("config file [" + fileName + "] not exists.");
+					return false;
+				} else {
+					((DefaultTableNameConfig) tableNameConfig).addConfig(file.toURI().toURL());
+				}
+			}
+		}
+		Enumeration<URL> urls = Thread.currentThread().getContextClassLoader()
+				.getResources("/META-INF/beangle/table.properties");
+		while (urls.hasMoreElements()) {
+			tableNameConfig.addConfig(urls.nextElement());
+		}
+		if (tableNameConfig.getPatterns().isEmpty()) {
+			reporter.printError("Cannot find table.properties in classpath or options. Using -config your/path/to/table.properties");
+			return false;
+		} else {
+			System.out.println(tableNameConfig);
+			return true;
+		}
+	}
+
+	private static String getFileOption(String[][] options) {
+		String tagName = null;
+		for (int i = 0; i < options.length; i++) {
+			String[] opt = options[i];
+			if (opt[0].equals("-file")) {
+				tagName = opt[1];
+			}
+		}
+		if (null == tagName) tagName = System.getProperty("java.io.tmpdir") + "/comment.sql";
+		return tagName;
+	}
 }
 
 class NamingStrategy {
@@ -208,14 +274,4 @@ class NamingStrategy {
 		return (loc < 0) ? qualifiedName : qualifiedName.substring(loc + 1);
 	}
 
-}
-
-class SimpleTableNameConfig implements TableNameConfig {
-	public String getSchema(String packageName) {
-		return null;
-	}
-
-	public String getPrefix(String packageName) {
-		return "se_";
-	}
 }

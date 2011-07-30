@@ -12,14 +12,16 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.model.pojo.HierarchyEntity;
 import org.beangle.model.pojo.LongIdHierarchyObject;
 
 /**
  * @author chaostone
  * @version $Id: AbstractHierarchyService.java Jul 29, 2011 1:34:01 AM chaostone $
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
-public abstract class AbstractHierarchyService<T extends LongIdHierarchyObject> extends BaseServiceImpl {
+@SuppressWarnings({ "unchecked" })
+public abstract class AbstractHierarchyService<T extends LongIdHierarchyObject<M>, M extends HierarchyEntity<M>>
+		extends BaseServiceImpl {
 
 	public void move(T node, T location, int indexno) {
 		if (ObjectUtils.equals(node.getParent(), location)) {
@@ -30,14 +32,15 @@ public abstract class AbstractHierarchyService<T extends LongIdHierarchyObject> 
 			if (null != node.getParent()) {
 				node.getParent().getChildren().remove(node);
 			}
-			node.setParent(location);
+			node.setParent((M) location);
 			shiftCode(node, location, indexno);
 		}
 	}
 
 	private void shiftCode(T node, T newParent, int indexno) {
-		List<T> sibling = null;
-		if (null != newParent) sibling = newParent.getChildren();
+		@SuppressWarnings("rawtypes")
+		List sibling = null;
+		if (null != newParent) sibling = (List<T>) newParent.getChildren();
 		else {
 			sibling = CollectUtils.newArrayList();
 			for (T m : getTopNodes(node)) {
@@ -54,7 +57,7 @@ public abstract class AbstractHierarchyService<T extends LongIdHierarchyObject> 
 		int nolength = String.valueOf(sibling.size()).length();
 		Set<T> nodes = CollectUtils.newHashSet();
 		for (int seqno = 1; seqno <= sibling.size(); seqno++) {
-			T one = sibling.get(seqno - 1);
+			T one = (T) sibling.get(seqno - 1);
 			generateCode(one, StringUtils.leftPad(String.valueOf(seqno), nolength, '0'), nodes);
 		}
 		entityDao.saveOrUpdate(nodes);
@@ -71,7 +74,7 @@ public abstract class AbstractHierarchyService<T extends LongIdHierarchyObject> 
 		}
 		if (null != node.getChildren()) {
 			for (Object m : node.getChildren()) {
-				generateCode((T)m, null, nodes);
+				generateCode((T) m, null, nodes);
 			}
 		}
 	}

@@ -5,6 +5,7 @@
 	* 支持table缩写*
 	* 支持独立的jdbc/sessions监控数据源*
 	* 支持独立数据库检查服务(表核对、序列核对)*
+	* 支持扫描源文件生成sql comment语句
 	* 修复导出参数处理
 	* 实现用户类别和用户组合并
 	* 修复了HibernateEntityDao.count(Class type,String[] attrs,Object [] values,String countStr)的错误
