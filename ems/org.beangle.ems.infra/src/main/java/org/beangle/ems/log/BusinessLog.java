@@ -14,7 +14,7 @@ import org.beangle.model.pojo.LongIdEntity;
  * @author chaostone
  * @version $Id: BusinessLog.java Jun 27, 2011 7:28:23 PM chaostone $
  */
-public interface BusinessLog extends LongIdEntity{
+public interface BusinessLog extends LongIdEntity {
 
 	/**
 	 * 操作人员
@@ -64,5 +64,12 @@ public interface BusinessLog extends LongIdEntity{
 	 * @return
 	 */
 	public String getAgent();
+
+	/**
+	 * 详细内容
+	 * 
+	 * @return
+	 */
+	public BusinessLogDetail getDetail();
 
 }
