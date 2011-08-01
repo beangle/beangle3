@@ -11,6 +11,7 @@
 		<mapping class="org.beangle.ems.config.model.PropertyConfigItemBean"/>
 		
 		<mapping class="org.beangle.ems.log.model.BusinessLogBean"/>
+		<mapping class="org.beangle.ems.log.model.BusinessLogDetailBean"/>
 		
 		<mapping class="org.beangle.ems.dictionary.model.CodeCategory"/>
 		<mapping class="org.beangle.ems.dictionary.model.CodeMeta"/>

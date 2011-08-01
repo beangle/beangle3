@@ -31,6 +31,7 @@ public class RestrictEntityBean extends LongIdObject implements RestrictEntity {
 	private String remark;
 
 	@ManyToMany
+	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	private Set<RestrictField> fields = CollectUtils.newHashSet();
 
 	public RestrictEntityBean() {

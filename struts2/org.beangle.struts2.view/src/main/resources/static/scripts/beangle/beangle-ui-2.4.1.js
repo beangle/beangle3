@@ -812,6 +812,7 @@
 			format = format || "xls";
 			properties = properties||"";
 			extparams = extparams||"";
+			if(extparams.indexOf("&") != 0) extparams = "&" + extparams;
 			extparams = "&format=" + format +"&properties=" + properties + extparams;
 			return selfaction.method('export',null,extparams,false);
 		}

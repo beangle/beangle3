@@ -6,12 +6,16 @@ package org.beangle.ems.log.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.ems.log.BusinessLog;
+import org.beangle.ems.log.BusinessLogDetail;
 import org.beangle.model.pojo.LongIdObject;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  * 业务日志实现
@@ -26,7 +30,7 @@ public class BusinessLogBean extends LongIdObject implements BusinessLog {
 	/** 操作用户 */
 	@NotNull
 	@Size(max = 50)
-	private String operater;
+	private String operator;
 
 	/** 操作内容 */
 	@NotNull
@@ -36,6 +40,7 @@ public class BusinessLogBean extends LongIdObject implements BusinessLog {
 	/** 操作资源 */
 	@NotNull
 	@Size(max = 100)
+	@Column(name = "resrc")
 	private String resource;
 
 	/** 操作资源 */
@@ -55,9 +60,8 @@ public class BusinessLogBean extends LongIdObject implements BusinessLog {
 	@Size(max = 100)
 	private String agent;
 
-	/** 操作参数 */
-	@Size(max = 500)
-	private String params;
+	@Cascade(CascadeType.ALL)
+	private BusinessLogDetail detail;
 
 	public String getAgent() {
 		return agent;
@@ -67,12 +71,12 @@ public class BusinessLogBean extends LongIdObject implements BusinessLog {
 		this.agent = agent;
 	}
 
-	public String getOperater() {
-		return operater;
+	public String getOperator() {
+		return operator;
 	}
 
-	public void setOperater(String operater) {
-		this.operater = operater;
+	public void setOperator(String operator) {
+		this.operator = operator;
 	}
 
 	public String getOperation() {
@@ -115,12 +119,11 @@ public class BusinessLogBean extends LongIdObject implements BusinessLog {
 		this.ip = ip;
 	}
 
-	public String getParams() {
-		return params;
+	public BusinessLogDetail getDetail() {
+		return detail;
 	}
 
-	public void setParams(String params) {
-		this.params = params;
+	public void setDetail(BusinessLogDetail detail) {
+		this.detail = detail;
 	}
-
 }

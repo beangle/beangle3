@@ -65,7 +65,7 @@ public class IdentifierDataResolver implements DataResolver {
 				Object realId=ConvertUtils.convert(id, propertyType);
 				realIds.add(realId);
 			}
-			builder.where("restrictField."+field.getKeyName()+" in (:ids)",realIds);
+			builder.where("restrictField."+field.getKeyName()+" in (:ids)",realIds).cacheable();
 			return entityDao.search(builder);
 		}
 	}

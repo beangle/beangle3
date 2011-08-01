@@ -11,8 +11,11 @@ import org.beangle.ems.security.Group;
 import org.beangle.ems.security.restrict.GroupRestriction;
 import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.ems.security.restrict.RestrictionHolder;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity(name = "org.beangle.ems.security.restrict.GroupRestriction")
+@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class GroupRestrictionBean extends RestrictionBean implements GroupRestriction {
 
 	private static final long serialVersionUID = -8655931585994557645L;
