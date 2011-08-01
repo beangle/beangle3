@@ -19,7 +19,7 @@ public interface BusinessLog {
 	 * 
 	 * @return
 	 */
-	public String getOperater();
+	public String getOperator();
 
 	/**
 	 * 操作内容
@@ -54,7 +54,7 @@ public interface BusinessLog {
 	 * 
 	 * @return
 	 */
-	public String getParams();
+	public String getDetails();
 
 	/**
 	 * 操作的系统入口

@@ -29,7 +29,7 @@ public class BusinessEventLogger extends BaseServiceImpl implements ApplicationL
 		log.setResource(StringUtils.defaultIfBlank(event.getResource(), "  "));
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (null == auth) return;
-		log.setOperater(auth.getName());
+		log.setOperator(auth.getName());
 		Object details = auth.getDetails();
 		if ((details instanceof WebAuthenticationDetails)) {
 			WebAuthenticationDetails webDetails = (WebAuthenticationDetails) details;
