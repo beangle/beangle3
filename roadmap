@@ -1,3 +1,11 @@
+Beangle 2.5
+	* 实现选中导出 *
+	* 实现会话监控和权限管理分离 *
+	* 完善wiki *
+	* 支持table缩写*
+	* 支持独立的jdbc/sessions监控数据源*
+	* 支持独立数据库检查服务(表核对、序列核对)*
+
 Beangle 2.4
 	* refact webapp to ems
 	* refact security menu code to better format

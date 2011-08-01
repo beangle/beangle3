@@ -50,13 +50,6 @@ public interface BusinessLog {
 	public String getIp();
 
 	/**
-	 * 其它参数
-	 * 
-	 * @return
-	 */
-	public String getDetails();
-
-	/**
 	 * 操作的系统入口
 	 * 
 	 * @return

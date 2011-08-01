@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.ems.log.BusinessLog;
+import org.beangle.ems.log.BusinessLogDetail;
 import org.beangle.model.pojo.LongIdObject;
 
 /**
@@ -57,9 +58,7 @@ public class BusinessLogBean extends LongIdObject implements BusinessLog {
 	@Size(max = 100)
 	private String agent;
 
-	/** 操作参数 */
-	@Size(max = 500)
-	private String details;
+	private BusinessLogDetail detail;
 
 	public String getAgent() {
 		return agent;
@@ -117,12 +116,11 @@ public class BusinessLogBean extends LongIdObject implements BusinessLog {
 		this.ip = ip;
 	}
 
-	public String getDetails() {
-		return details;
+	public BusinessLogDetail getDetail() {
+		return detail;
 	}
 
-	public void setDetails(String details) {
-		this.details = details;
+	public void setDetail(BusinessLogDetail detail) {
+		this.detail = detail;
 	}
-
 }

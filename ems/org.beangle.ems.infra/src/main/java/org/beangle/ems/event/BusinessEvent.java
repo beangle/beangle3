@@ -22,11 +22,13 @@ public class BusinessEvent extends ApplicationEvent {
 		super(source);
 	}
 
-	protected Date issueAt=new Date();
+	protected Date issueAt = new Date();
 
 	protected String resource;
 
 	protected String description;
+
+	protected String detail;
 
 	public Date getIssueAt() {
 		return issueAt;
@@ -50,6 +52,14 @@ public class BusinessEvent extends ApplicationEvent {
 
 	public void setResource(String resource) {
 		this.resource = resource;
+	}
+
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
 	}
 
 }

@@ -69,10 +69,12 @@ public class GroupBean extends LongIdHierarchyObject<Group> implements Group {
 
 	/** 访问限制 */
 	@OneToMany(mappedBy = "holder", cascade = CascadeType.ALL)
+	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	protected Set<GroupRestriction> restrictions = CollectUtils.newHashSet();
 
 	/** 权限 */
 	@OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	protected Set<Authority> authorities = CollectUtils.newHashSet();
 
 	/** 创建时间 */

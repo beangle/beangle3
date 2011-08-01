@@ -40,6 +40,7 @@ public class RestrictEntityBean extends LongIdObject implements RestrictEntity {
 
 	/** 实体的属性 */
 	@ManyToMany
+	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	private Set<RestrictField> fields = CollectUtils.newHashSet();
 
 	public RestrictEntityBean() {

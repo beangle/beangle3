@@ -64,6 +64,7 @@ public class RestrictFieldBean extends LongIdObject implements RestrictField {
 
 	/** 引用的实体 */
 	@ManyToMany(mappedBy = "fields")
+	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	private Set<RestrictEntity> entities = CollectUtils.newHashSet();
 
 	public RestrictFieldBean() {

@@ -1,10 +1,10 @@
+2011-08-01  duantihua   <chaostone.duan@gmail.com>
+	* 增加了GroupBean.authorities/restrictions;RestrictEntityBean.fields,GroupRestrictionBean;RestrictFieldBean.entities的缓存设置
+	* IdentifierDataResolver的unmarshal增加了二级缓存
+	* BusinessEvent增加了detail字段
+	* 增加了BusinessLogDetail和BusinessLogDetailBean
+
 2011-07-28  duantihua   <chaostone.duan@gmail.com>
-	* 实现选中导出 *
-	* 实现会话监控和权限管理分离 *
-	* 完善wiki *
-	* 支持table缩写*
-	* 支持独立的jdbc/sessions监控数据源*
-	* 支持独立数据库检查服务(表核对、序列核对)*
 	* 支持扫描源文件生成sql comment语句
 	* 修复导出参数处理
 	* 实现用户类别和用户组合并
