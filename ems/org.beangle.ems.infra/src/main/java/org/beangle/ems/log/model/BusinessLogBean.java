@@ -14,6 +14,8 @@ import javax.validation.constraints.Size;
 import org.beangle.ems.log.BusinessLog;
 import org.beangle.ems.log.BusinessLogDetail;
 import org.beangle.model.pojo.LongIdObject;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  * 业务日志实现
@@ -58,6 +60,7 @@ public class BusinessLogBean extends LongIdObject implements BusinessLog {
 	@Size(max = 100)
 	private String agent;
 
+	@Cascade(CascadeType.ALL)
 	private BusinessLogDetail detail;
 
 	public String getAgent() {

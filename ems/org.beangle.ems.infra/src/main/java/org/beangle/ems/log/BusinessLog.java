@@ -6,13 +6,15 @@ package org.beangle.ems.log;
 
 import java.util.Date;
 
+import org.beangle.model.pojo.LongIdEntity;
+
 /**
  * 业务日志
  * 
  * @author chaostone
  * @version $Id: BusinessLog.java Jun 27, 2011 7:28:23 PM chaostone $
  */
-public interface BusinessLog {
+public interface BusinessLog extends LongIdEntity{
 
 	/**
 	 * 操作人员

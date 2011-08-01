@@ -4,13 +4,15 @@
  */
 package org.beangle.ems.log;
 
+import org.beangle.model.pojo.LongIdEntity;
+
 /**
  * 业务日志明细
  * 
  * @author chaostone
  * @version $Id: BusinessLogDetail.java Aug 1, 2011 3:20:46 PM chaostone $
  */
-public interface BusinessLogDetail {
+public interface BusinessLogDetail extends LongIdEntity {
 
 	public String getConent();
 

@@ -7,6 +7,7 @@ package org.beangle.ems.log.service;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.ems.event.BusinessEvent;
 import org.beangle.ems.log.model.BusinessLogBean;
+import org.beangle.ems.log.model.BusinessLogDetailBean;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.SecurityContextHolder;
@@ -34,8 +35,11 @@ public class BusinessEventLogger extends BaseServiceImpl implements ApplicationL
 		if ((details instanceof WebAuthenticationDetails)) {
 			WebAuthenticationDetails webDetails = (WebAuthenticationDetails) details;
 			log.setIp(webDetails.getAgent().getIp());
-			log.setAgent(webDetails.getAgent().getOs()+" "+webDetails.getAgent().getBrowser());
+			log.setAgent(webDetails.getAgent().getOs() + " " + webDetails.getAgent().getBrowser());
 			log.setEntry(sessionRegistry.getResource(webDetails.getSessionId()));
+		}
+		if (null != event.getDetail()) {
+			log.setDetail(new BusinessLogDetailBean(log, event.getDetail()));
 		}
 		entityDao.saveOrUpdate(log);
 	}

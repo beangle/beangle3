@@ -72,4 +72,6 @@ alter table sys_rule_parameters rename to ems_rule_parameters;
 alter table sys_rules rename to ems_rules;
 drop table sys_parameters
 
+alter table ems_business_logs alter column resource rename to resrc;
+alter table ems_business_logs alter column operater rename to operator;
 

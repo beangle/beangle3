@@ -17,7 +17,7 @@ import org.beangle.model.pojo.LongIdObject;
  * @author chaostone
  * @version $Id: BusinessLogDetailBean.java Aug 1, 2011 3:16:29 PM chaostone $
  */
-@Entity
+@Entity(name = "org.beangle.ems.log.BusinessLogDetail")
 public class BusinessLogDetailBean extends LongIdObject implements BusinessLogDetail {
 
 	private static final long serialVersionUID = 8792899149257213752L;
@@ -26,7 +26,18 @@ public class BusinessLogDetailBean extends LongIdObject implements BusinessLogDe
 	@Lob
 	private String conent;
 
+	/** 操作日志 */
 	private BusinessLog log;
+
+	public BusinessLogDetailBean() {
+		super();
+	}
+
+	public BusinessLogDetailBean(BusinessLog log, String conent) {
+		super();
+		this.conent = conent;
+		this.log = log;
+	}
 
 	public String getConent() {
 		return conent;

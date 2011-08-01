@@ -76,6 +76,7 @@
 /home/chaostone/.m2/repository/org/apache/poi/poi-ooxml/3.6/poi-ooxml-3.6.jar
 /home/chaostone/.m2/repository/org/apache/poi/poi-ooxml-schemas/3.6/poi-ooxml-schemas-3.6.jar
 /home/chaostone/.m2/repository/stax/stax-api/1.0.1/stax-api-1.0.1.jar
+/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/lib/tools.jar
 /home/chaostone/.m2/repository/org/apache/xmlbeans/xmlbeans/2.3.0/xmlbeans-2.3.0.jar
 /home/chaostone/beangle/core/security/org.beangle.security.core/target/classes
 /home/chaostone/.m2/repository/org/dbunit/dbunit/2.4.8/dbunit-2.4.8.jar
@@ -95,7 +96,6 @@
 /home/chaostone/.m2/repository/org/apache/struts/struts2-core/2.2.3/struts2-core-2.2.3.jar
 /home/chaostone/.m2/repository/com/jgeppert/struts2/jquery/struts2-jquery-plugin/3.1.0/struts2-jquery-plugin-3.1.0.jar
 /home/chaostone/.m2/repository/org/apache/struts/struts2-spring-plugin/2.2.3/struts2-spring-plugin-2.2.3.jar
-/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/lib/tools.jar
 /home/chaostone/.m2/repository/org/apache/velocity/velocity/1.5/velocity-1.5.jar
 /home/chaostone/.m2/repository/org/apache/struts/xwork/xwork-core/2.2.3/xwork-core-2.2.3.jar
 /home/chaostone/beangle/core/struts2/org.beangle.struts2.view/target/classes
