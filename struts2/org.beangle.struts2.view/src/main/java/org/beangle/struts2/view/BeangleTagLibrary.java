@@ -231,6 +231,10 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		return model;
 	}
 
+	public TagModel getTreecol() {
+		return get(Grid.Treecol.class);
+	}
+
 	public TagModel getBoxcol() {
 		return get(Grid.Boxcol.class);
 	}
@@ -323,12 +327,12 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 	public TagModel getStartend() {
 		return get(Startend.class);
 	}
-	
-	public TagModel getCheckbox(){
+
+	public TagModel getCheckbox() {
 		return get(Checkbox.class);
 	}
-	
-	public TagModel getCheckboxes(){
+
+	public TagModel getCheckboxes() {
 		return get(Checkboxes.class);
 	}
 }

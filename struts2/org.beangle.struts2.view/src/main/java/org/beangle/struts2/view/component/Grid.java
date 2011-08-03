@@ -349,8 +349,30 @@ public class Grid extends ClosingUIBean {
 			this.filterable = filterable;
 		}
 
+		public Object getCurObj() {
+			return row.curObj;
+		}
+		
 	}
 
+	public static class Treecol extends Col{
+
+		public Treecol(ValueStack stack) {
+			super(stack);
+		}
+		
+		@Override
+		public boolean doEnd(Writer writer, String body) {
+			this.body = body;
+			try {
+				mergeTemplate(writer);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+			return false;
+		}
+		
+	}
 	public static class Boxcol extends Col {
 
 		public Boxcol(ValueStack stack) {

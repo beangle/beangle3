@@ -30,7 +30,7 @@
 	</tr>
 	<tr>
 	<td class="title" >${b.text("group")}:</td>
-	<td  class="content" colspan="3">[#list user.groups! as g]${g.group.name}([#if g.member]成员[/#if][#if g.manager] 管理[/#if][#if g.granter] 授权[/#if])[/#list]</td>
+	<td  class="content" colspan="3">[#list user.members! as m]${m.group.name}([#if m.member]成员[/#if][#if m.manager] 管理[/#if][#if m.granter] 授权[/#if])[/#list]</td>
 	</tr>
 	<tr>
 	<td class="title" >${b.text("user.mngGroups")}:</td>

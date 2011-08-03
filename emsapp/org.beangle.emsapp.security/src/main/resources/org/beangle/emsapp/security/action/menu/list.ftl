@@ -25,16 +25,7 @@
 	[@b.row]
 		<tr [#if menu??] title="入口及备注:${menu.entry!} ${(menu.remark?html)!}" id="${menu.code}"[/#if]>
 		[@b.boxcol /]
-		[@b.col property="title" title="common.title"]
-		<div class="tier${menu.depth}" align="left">
-		[#if (menu.children?size==0)]
-			<a href="#" class="doc"/>
-		[#else]
-			<a href="#" class="folder_open" id="${menu.code}_folder" onclick="toggleRows(this)" >   </a>
-		[/#if]
-			[@b.a href="!info?menu.id=${menu.id}"]${menu.code} ${menu.title}[/@]
-		</div>
-		[/@]
+		[@b.treecol title="common.title"][@b.a href="!info?menu.id=${menu.id}"]${menu.code} ${menu.title}[/@][/@]
 		[@b.col property="name" title="common.name"/]
 		[@b.col width="30%" title="使用资源"][#list menu.resources as re]${re.title?html}[#if re_has_next],[/#if][/#list][/@]
 		[@b.col property="enabled" width="10%" title="common.status"][@enableInfo menu.enabled/][/@]

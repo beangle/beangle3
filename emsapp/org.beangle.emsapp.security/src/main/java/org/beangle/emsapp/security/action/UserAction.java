@@ -67,7 +67,7 @@ public class UserAction extends SecurityActionSupport {
 		User manager = entityDao.get(User.class, getUserId());
 		OqlBuilder<User> userQuery = OqlBuilder.from(getEntityName(), "user");
 		// 查询用户组
-		StringBuilder sb = new StringBuilder("exists(from user.groups ug where ");
+		StringBuilder sb = new StringBuilder("exists(from user.members m where ");
 		List<Object> params = CollectUtils.newArrayList();
 		boolean queryGroup = false;
 		if (!isAdmin()) {
@@ -79,7 +79,7 @@ public class UserAction extends SecurityActionSupport {
 			if (mngGroups.isEmpty()) {
 				sb.append("1=0");
 			} else {
-				sb.append("ug.group in(:groups) ");
+				sb.append("m.group in(:groups) ");
 				params.add(mngGroups);
 			}
 			queryGroup = true;
@@ -89,7 +89,7 @@ public class UserAction extends SecurityActionSupport {
 			if (queryGroup) {
 				sb.append(" and ");
 			}
-			sb.append("ug.group.name like :groupName ");
+			sb.append("m.group.name like :groupName ");
 			params.add("%" + groupName + "%");
 			queryGroup = true;
 		}

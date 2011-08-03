@@ -50,7 +50,7 @@ public class ApplyTest {
 		String statement = query.getStatement();
 		Map<?, ?> params = query.getParams();
 		Assert.assertEquals(statement, "select user from org.beangle.ems.security.User user "
-				+ "where ((exists(from user.groups as g where g.group in(:groups0))))");
+				+ "where ((exists(from user.members as m where m.group in(:groups0))))");
 		Assert.assertNotNull(params);
 		Assert.assertEquals(params.size(), 1);
 		Assert.assertEquals(params.get("groups0"), CollectUtils.newArrayList(new GroupBean(1L, "group1")));

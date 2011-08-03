@@ -108,7 +108,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	public List<GroupMember> getGroupMembers(User user, GroupMember.Ship ship) {
 		if (isAdmin(user) && !ObjectUtils.equals(ship, GroupMember.Ship.MEMBER)) {
 			List<GroupMember> members = CollectUtils.newArrayList();
-			List<Group> groups = entityDao.getAll(Group.class);
+			OqlBuilder<Group> builder = OqlBuilder.from(Group.class, "g");
+			builder.where("g.id not in(:groupIds)", new Long[] { Group.ANONYMOUS_ID, Group.ANYONE_ID });
+			List<Group> groups = entityDao.search(builder);
 			for (Group group : groups) {
 				GroupMemberBean gmb = new GroupMemberBean(group, user, GroupMember.Ship.MEMBER);
 				gmb.setGranter(true);
@@ -148,5 +150,4 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		return (isAdmin(manager) || manager.equals(user.getCreator()));
 	}
 
-	
 }
