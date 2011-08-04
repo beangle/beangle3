@@ -16,10 +16,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.beangle</groupId>
-			<artifactId>beangle-ems-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.beangle</groupId>
 			<artifactId>beangle-web</artifactId>
 		</dependency>
 		<dependency>

@@ -384,6 +384,11 @@ form.listform fieldset{
 	margin: 10px 0px 0px 10px;
 }
 
+form.listform fieldset.emptytitle{
+	border-style: none;
+	margin: 0px 0px 0px 0px;
+}
+
 form.listform fieldset ol {
 	margin: 0;
 	padding: 0;

@@ -3,10 +3,12 @@
 [#assign labInfo][#if user.id??]${b.text("action.modify")}[#else]${b.text("action.new")}[/#if] ${b.text("entity.user")}[/#assign]
 [@b.toolbar title=labInfo]bar.addBack("${b.text("action.back")}");[/@]
 [@b.messages/]
-[@b.form name="userForm" action="!save" class="listform"]
 [@b.tabs]
-	[@b.tab label="用户信息" theme="list"]
-		<fieldset><legend>${b.text('ui.userInfo')}</legend><ol>
+[@b.form name="userForm" action="!save" class="listform" theme="list"]
+	<input type="hidden" name="user.id" value="${user.id!}" />
+	[@b.redirectParams/]
+
+	[@b.tab label="用户信息"]
 		[@b.textfield label="user.name"  name="user.name" value="${user.name!}" style="width:200px;" required="true" maxlength="30"/]
 		[@b.radios name="user.enabled" label="common.status" value=user.enabled items="1:action.activate,0:action.freeze"/]
 		[@b.textfield label="user.fullname" name="user.fullname" value="${user.fullname!}" style="width:200px;" required="true" maxlength="50" /]
@@ -19,15 +21,10 @@
 		[/#if]
 		[@b.datepicker label="user.passwordExpiredAt" name="user.passwordExpiredAt" value=user.passwordExpiredAt format="datetime"/]
 		[@b.textarea label="common.remark" cols="50" rows="1" name="user.remark" value="${user.remark!}" maxlength="50"/]
-		[@b.formfoot]
-			<input type="hidden" name="user.id" value="${user.id!}" />
-			[@b.redirectParams/]
-			[@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit"/]&nbsp;
-		[/@]
-		</ol></fieldset>
+		[@b.formfoot][@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit"/][/@]
 	[/@]
 	[@b.tab label="所在用户组"]
-		[@b.grid  items=members?sort_by(["group","name"]) var="m" sortable="false"]
+		[@b.grid  items=members?sort_by(["group","code"]) var="m" sortable="false"]
 			[@b.row]
 				[@b.col title="" width="5%"]<input name="groupId" type="checkbox" onchange="changeMember(${m.group.id},this)"/>[/@]
 				[@b.col title="序号" width="5%"]${m_index+1}[/@]
@@ -45,14 +42,14 @@
 			[/@]
 		[/@]
 	[/@]
+[/@]
 	[#if user.id??]
 	[@b.tab label="全局数据权限" href="restriction!info?forEdit=1&restrictionType=user&restriction.holder.id=${user.id}" /]
 	[/#if]
 [/@]
-[/@]
 <script  type="text/javascript">
 	/**
-	 * 改变每个组行之前的复选框
+	 * 改变每行之前的复选框
 	 */
 	function changeMember(groupId,checkbox){
 		if(null==checkbox) return;

@@ -6,6 +6,8 @@ package org.beangle.struts2.view.freemarker;
 
 import java.net.URL;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.opensymphony.xwork2.util.ClassLoaderUtil;
 
 import freemarker.cache.URLTemplateLoader;
@@ -37,7 +39,11 @@ public class BeangleClassTemplateLoader extends URLTemplateLoader {
 	}
 
 	public void setPrefix(String pre) {
-		this.prefix = pre;
+		if (StringUtils.isBlank(pre)) {
+			this.prefix = null;
+		} else {
+			this.prefix = pre.trim();
+		}
 		if (null != prefix) {
 			if (prefix.equals("/")) {
 				prefix = null;

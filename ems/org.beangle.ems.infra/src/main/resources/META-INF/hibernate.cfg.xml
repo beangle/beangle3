@@ -19,5 +19,25 @@
 		
 		<mapping class="org.beangle.ems.meta.model.EntityMetaBean"/>
 		<mapping class="org.beangle.ems.meta.model.PropertyMetaBean"/>
+
+		<mapping class="org.beangle.ems.security.model.AuthorityBean"/>
+		<mapping class="org.beangle.ems.security.model.GroupBean"/>
+		<mapping class="org.beangle.ems.security.model.GroupMemberBean"/>
+		<mapping class="org.beangle.ems.security.model.ResourceBean"/>
+		<mapping class="org.beangle.ems.security.model.UserBean"/>
+
+		<mapping class="org.beangle.ems.security.nav.model.MenuBean"/>
+		<mapping class="org.beangle.ems.security.nav.model.MenuProfileBean"/>
+		
+		<mapping class="org.beangle.ems.security.restrict.model.AuthorityRestrictionBean"/>
+		<mapping class="org.beangle.ems.security.restrict.model.GroupRestrictionBean"/>
+		<mapping class="org.beangle.ems.security.restrict.model.RestrictFieldBean"/>
+		<mapping class="org.beangle.ems.security.restrict.model.RestrictEntityBean"/>
+		<mapping class="org.beangle.ems.security.restrict.model.RestrictPatternBean"/>
+		<mapping class="org.beangle.ems.security.restrict.model.UserRestrictionBean"/>
+		
+		<mapping class="org.beangle.ems.security.session.model.GroupProfileBean"/>
+		<mapping class="org.beangle.ems.security.session.model.SessionProfileBean"/>
+
 	</session-factory>
 </hibernate-configuration>

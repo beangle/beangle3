@@ -1,3 +1,7 @@
+2011-08-03  duantihua   <chaostone.duan@gmail.com>
+	* 修复了list主题下没有设置title的form呈现形式，去除了多余的横线
+	* 将BeangleFreemarkerManager中多模板加载的配置改为类似classpath:,file:,webapp:的形式
+
 2011-08-01  duantihua   <chaostone.duan@gmail.com>
 	* 增加了GroupBean.authorities/restrictions;RestrictEntityBean.fields,GroupRestrictionBean;RestrictFieldBean.entities的缓存设置
 	* IdentifierDataResolver的unmarshal增加了二级缓存

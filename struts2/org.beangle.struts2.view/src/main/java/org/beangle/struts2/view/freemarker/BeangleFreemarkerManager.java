@@ -32,7 +32,7 @@ import freemarker.template.TemplateException;
 /**
  * BeangleFreemarkerManager provide:
  * <p>
- * <li>Better template loader sequence like class://;file://;file//;webapp://</li>
+ * <li>Better template loader sequence like classpath:,file:,webapp:</li>
  * <li>Multi freemark properties loading(META-INF/freemarker.properties,freemarker.properties)</li>
  * <li>Friendly Collection/Map/Object objectwrapper</li>
  * 
@@ -52,8 +52,8 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 
 	/**
 	 * The default template loader is a MultiTemplateLoader which includes
-	 * BeangleClassTemplateLoader(class://) and a WebappTemplateLoader
-	 * (webapp://) and FileTemplateLoader(file://) . All template path described
+	 * BeangleClassTemplateLoader(classpath:) and a WebappTemplateLoader
+	 * (webapp:) and FileTemplateLoader(file:) . All template path described
 	 * in init parameter templatePath or TemplatePlath
 	 * <p/>
 	 * The ClassTemplateLoader will resolve fully qualified template includes that begin with a
@@ -64,23 +64,23 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 	@Override
 	protected TemplateLoader createTemplateLoader(ServletContext servletContext, String templatePath) {
 		// construct a FileTemplateLoader for the init-param 'TemplatePath'
-		String[] paths = StringUtils.split(templatePath, ";");
+		String[] paths = StringUtils.split(templatePath, ",");
 		List<TemplateLoader> loaders = CollectUtils.newArrayList();
 		for (String path : paths) {
-			if (path.startsWith("class://")) {
-				// substring(7) is intentional as we "reuse" the last slash
-				loaders.add(new BeangleClassTemplateLoader(path.substring(7)));
-			} else if (path.startsWith("file://")) {
+			if (path.startsWith("classpath:")) {
+				loaders.add(new BeangleClassTemplateLoader(StringUtils.substringAfter(path, "classpath:")));
+			} else if (path.startsWith("file:")) {
 				try {
 					loaders.add(new FileTemplateLoader(new File(path)));
 				} catch (IOException e) {
 					throw new RuntimeException("templatePath: " + path + " cannot be accessed", e);
 				}
-			} else if (path.startsWith("webapp://")) {
-				loaders.add(new WebappTemplateLoader(servletContext, path.substring(8)));
+			} else if (path.startsWith("webapp:")) {
+				loaders.add(new WebappTemplateLoader(servletContext, StringUtils.substringAfter(path,
+						"webapp:")));
 			} else {
 				throw new RuntimeException("templatePath: " + path
-						+ " is not well-formed. Use [class://|file://|webapp://] seperated with ;");
+						+ " is not well-formed. Use [classpath:|file:|webapp:] seperated with ,");
 			}
 
 		}

@@ -13,7 +13,6 @@
 	
 	<modules>
 		<module>org.beangle.ems.infra</module>
-		<module>org.beangle.ems.security</module>
 		<module>org.beangle.ems.web</module>
 	</modules>
 

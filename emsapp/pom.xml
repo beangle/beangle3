@@ -59,7 +59,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.beangle</groupId>
-			<artifactId>beangle-ems-security</artifactId>
+			<artifactId>beangle-ems-infra</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>
