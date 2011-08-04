@@ -108,7 +108,7 @@
 [/@]
 	</td>
 	<td id="dataRealmTD" style="width:300px" valign="top" >
-	 [@b.div  href="restriction!tip" id="restictionFrame"/]
+	 [@b.div  href="restriction!tip" id="restictionFrame" style="position:fixed !important;"/]
 	</td>
 	</tr>
 </table>
