@@ -5,7 +5,7 @@
 package org.beangle.web.url;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author chaostone
@@ -26,8 +26,11 @@ public class UrlBuilder {
 
 	public UrlBuilder(String contextPath) {
 		super();
-		Validate.notEmpty(contextPath);
-		this.contextPath = contextPath;
+		if (StringUtils.isEmpty(contextPath)) {
+			this.contextPath = "/";
+		} else {
+			this.contextPath = contextPath.trim();
+		}
 	}
 
 	/**
