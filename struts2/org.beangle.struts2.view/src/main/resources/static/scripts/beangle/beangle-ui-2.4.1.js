@@ -124,9 +124,9 @@
 		
 		this.addBack = function (title){
 			if(null==title){
-				this.addItem("返回",function (){history.back(-1)},'backward.png');
+				this.addItem("返回",function (){History.back()},'backward.png');
 			}else{
-				this.addItem(title,function (){history.back(-1)},'backward.png');
+				this.addItem(title,function (){History.back()},'backward.png');
 			}
 		}
 		this.addHelp = function (module){

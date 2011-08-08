@@ -18,7 +18,7 @@
 	window.bg=beangle;
 	beangle.extend({
 		//jump to href or anchor
-		Go : function (obj,target){
+		Go : function (obj,target,ajaxHistory){
 			var url=obj;
 			if(typeof obj =="object" && obj.tagName.toLowerCase()=="a"){
 				url=obj.href;
@@ -33,10 +33,16 @@
 			else if("_new" ==target || "_blank" ==target  ){windown.open(url);}
 			else{
 				if(!bg.isAjaxTarget(target)){
-					//FIXME _blank,_top
-					document.getElementById(target).src=url;
+					if(document.getElementById(target)) document.getElementById(target).src=url;
 				}else{
-					jQuery('#'+target).load(url);
+					if(!ajaxHistory){
+						jQuery('#'+target).load(url);
+					}else{
+						jQuery('#'+target).load(url,function(evt,msg,request){
+							var html = request.responseText;
+							History.pushState({html:html,target:"#"+target,fresh:true},"",url);
+						});
+					}
 				}
 			}
 			return false;
@@ -73,6 +79,7 @@
 			else return target;
 		},
 		findTarget : function(ele){
+			if(!ele) return "_self";
 			var p = ele.parentNode,finalTarget = "_self";
 			while(p){
 				//FIXME ui-tabs-panel
@@ -320,6 +327,22 @@
 					options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#'};
 					if (typeof jQuery != "undefined") {
 						jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
+						if(!(history== false || history == "false" || history=="0" || history==0)){
+							var targetObj=jQuery('#'+submitTarget);
+							targetObj.ajaxSuccess(function(evt, request, settings){
+								if(settings && settings.dataType !="script"){
+									var url = History.extractState(History.getState().url).url+"?state=";
+									if(action.indexOf(bg.getContextPath()+"/")==0){
+										url = url + action.replace(bg.getContextPath()+"/","");
+									}else{
+										url = url + action;
+									}
+									var html = request.responseText;
+									History.pushState({html:html,target:"#"+submitTarget},"",url);
+									targetObj.unbind("ajaxSuccess");
+								}
+							});
+						}
 					}
 					submitx.click();
 					jQuery("#"+sumbitBtnId).unbind();
