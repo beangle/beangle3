@@ -104,7 +104,7 @@ public class DynamicSessionFactoryBean extends LocalSessionFactoryBean implement
 		Set<URL> locations = getTableConfigLocation(bundle);
 		if (!locations.isEmpty()) {
 			for (URL url : locations) {
-				tableNameConfig.addConfig(url);
+				//tableNameConfig.addConfig(url);
 			}
 		}
 		loader.addClassLoader(BundleDelegatingClassLoader.createBundleClassLoaderFor(bundle));

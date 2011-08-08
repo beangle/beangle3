@@ -16,6 +16,9 @@ import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.StrUtils;
+import org.beangle.commons.text.inflector.Pluralizer;
+import org.beangle.commons.text.inflector.lang.en.EnNounPluralizer;
 import org.beangle.spring.config.ConfigResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +29,15 @@ import org.slf4j.LoggerFactory;
  * @author chaostone
  */
 public class DefaultTableNameConfig implements TableNameConfig {
+
+	// 表名、字段名、序列长度
+	private static final int MaxLength = 25;
+	/**
+	 * 是否对表名进行复数化
+	 */
+	private boolean enablePluralize = true;
+
+	private Pluralizer pluralizer = new EnNounPluralizer();
 
 	private static final Logger logger = LoggerFactory.getLogger(DefaultTableNameConfig.class);
 
@@ -54,6 +66,7 @@ public class DefaultTableNameConfig implements TableNameConfig {
 
 				String schema = null;
 				String prefix = null;
+				String abbreviationStr = null;
 				int commaIndex = schemaPrefix.indexOf(',');
 				if (commaIndex < 0 || (commaIndex + 1 == schemaPrefix.length())) {
 					schema = schemaPrefix;
@@ -63,6 +76,10 @@ public class DefaultTableNameConfig implements TableNameConfig {
 					schema = StringUtils.substringBefore(schemaPrefix, ",");
 					prefix = StringUtils.substringAfter(schemaPrefix, ",");
 				}
+				if (prefix.contains(",")) {
+					abbreviationStr = StringUtils.substringAfter(prefix, ",").toLowerCase();
+					prefix = StringUtils.substringBefore(prefix, ",");
+				}
 				TableNamePattern pattern = (TableNamePattern) packagePatterns.get(packageName);
 				if (null == pattern) {
 					pattern = new TableNamePattern(packageName, schema, prefix);
@@ -71,6 +88,14 @@ public class DefaultTableNameConfig implements TableNameConfig {
 				} else {
 					pattern.setSchema(schema);
 					pattern.setPrefix(prefix);
+				}
+				if (null != abbreviationStr) {
+					String[] pairs = StringUtils.split(abbreviationStr, ";");
+					for (String pair : pairs) {
+						String longName = StringUtils.substringBefore(pair, "=");
+						String shortName = StringUtils.substringAfter(pair, "=");
+						pattern.abbreviations.put(longName, shortName);
+					}
 				}
 			}
 			is.close();
@@ -87,6 +112,16 @@ public class DefaultTableNameConfig implements TableNameConfig {
 			}
 		}
 		return schemaName;
+	}
+
+	public TableNamePattern getPattern(String packageName) {
+		TableNamePattern pattern = null;
+		for (TableNamePattern packageSchema : patterns) {
+			if (packageName.indexOf(packageSchema.getPackageName()) == 0) {
+				pattern = packageSchema;
+			}
+		}
+		return pattern;
 	}
 
 	public String getPrefix(String packageName) {
@@ -113,13 +148,13 @@ public class DefaultTableNameConfig implements TableNameConfig {
 			for (final URL url : resource.getAllPaths()) {
 				addConfig(url);
 			}
-			if(logger.isInfoEnabled()){
+			if (logger.isInfoEnabled()) {
 				logger.info("Table name pattern: -> \n{}", this.toString());
 			}
 		}
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		int maxlength = 0;
 		for (TableNamePattern pattern : patterns) {
 			if (pattern.getPackageName().length() > maxlength) {
@@ -132,9 +167,66 @@ public class DefaultTableNameConfig implements TableNameConfig {
 			sb.append(StringUtils.rightPad(pattern.getPackageName(), maxlength)).append(" : [")
 					.append(pattern.getSchema());
 			sb.append(" , ").append(pattern.getPrefix()).append(']');
-			if (i < patterns.size()-1) sb.append('\n');
+			if (i < patterns.size() - 1) sb.append('\n');
 		}
 		return sb.toString();
+	}
+
+	public String classToTableName(String className) {
+		if (className.endsWith("Bean")) {
+			className = StringUtils.substringBeforeLast(className, "Bean");
+		}
+		String tableName = addUnderscores(unqualify(className));
+		if (enablePluralize) {
+			tableName = pluralizer.pluralize(tableName);
+		}
+		TableNamePattern pattern = getPattern(className);
+		if (null != pattern) {
+			tableName = pattern.prefix + tableName;
+		}
+		if (tableName.length() > MaxLength && null != pattern) {
+			for (Map.Entry<String, String> pairEntry : pattern.abbreviations.entrySet()) {
+				tableName = StringUtils.replace(tableName, pairEntry.getKey(), pairEntry.getValue());
+			}
+		}
+		return tableName;
+	}
+
+	public String collectionToTableName(String className, String tableName, String collectionName) {
+		TableNamePattern pattern = getPattern(className);
+		String collectionTableName = addUnderscores(unqualify(collectionName));
+		if (tableName.length() + 1 + collectionTableName.length() > MaxLength + 4 && null != pattern) {
+			for (Map.Entry<String, String> pairEntry : pattern.abbreviations.entrySet()) {
+				collectionTableName = StringUtils.replace(collectionTableName, pairEntry.getKey(),
+						pairEntry.getValue());
+			}
+		}
+		return tableName + "_" + collectionTableName;
+	}
+
+	protected static String unqualify(String qualifiedName) {
+		int loc = qualifiedName.lastIndexOf('.');
+		return (loc < 0) ? qualifiedName : qualifiedName.substring(loc + 1);
+	}
+
+	protected static String addUnderscores(String name) {
+		return StrUtils.unCamel(name.replace('.', '_'), '_');
+	}
+
+	public Pluralizer getPluralizer() {
+		return pluralizer;
+	}
+
+	public void setPluralizer(Pluralizer pluralizer) {
+		this.pluralizer = pluralizer;
+	}
+
+	public boolean isPluralizeTableName() {
+		return enablePluralize;
+	}
+
+	public void setPluralizeTableName(boolean pluralizeTableName) {
+		this.enablePluralize = pluralizeTableName;
 	}
 
 }
@@ -151,6 +243,8 @@ class TableNamePattern implements Comparable<TableNamePattern> {
 	String schema;
 	// 前缀名
 	String prefix;
+
+	Map<String, String> abbreviations = CollectUtils.newHashMap();
 
 	public TableNamePattern(String packageName, String schemaName, String prefix) {
 		this.packageName = packageName;
@@ -190,6 +284,7 @@ class TableNamePattern implements Comparable<TableNamePattern> {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[package:").append(packageName).append(", schema:").append(schema);
 		sb.append(", prefix:").append(prefix).append(']');
+		sb.append(", abbreviations:").append(abbreviations).append(']');
 		return sb.toString();
 	}
 
