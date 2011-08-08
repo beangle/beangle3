@@ -12,21 +12,24 @@
 (function($) {
     
     // Default settings:
-    ////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////
     
     var 
         defaults = {
-            // The default output mode is label because it requires no dependencies:
+            // The default output mode is label because it requires no
+			// dependencies:
             outputMode:"label",
             
             // The css class on the output
             cssClass:"error",
 
-            // The this property is set to true, validity will scroll the browser viewport
+            // The this property is set to true, validity will scroll the
+			// browser viewport
             // so that the first error is visible when validation fails:
             scrollTo:false,
 
-            // If this setting is true, modal errors will disappear when they are clicked on:
+            // If this setting is true, modal errors will disappear when they
+			// are clicked on:
             modalErrorsClickable:true,
 
             // If a field name cannot be otherwise inferred, this will be used:
@@ -35,7 +38,8 @@
             // jQuery selector to filter down to validation-supported elements:
             elementSupport:":text, :password, textarea, select, :radio, :checkbox",
             
-            // Function to stringify argments for use when generating error messages.
+            // Function to stringify argments for use when generating error
+			// messages.
             // Primarily, it just generates pretty date strings:
             argToString:function(val) {
                 return val.getDate ?
@@ -45,33 +49,41 @@
         };
     
     // Static functions and properties:
-    ////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////
     
     $.validity = {
 
         // Clone the defaults. They can be overridden with the setup function:
         settings:$.extend(defaults, {}),
 
-        // Built-in library of format-checking tools for use with the 
+        // Built-in library of format-checking tools for use with the
         // match validator as well as the nonHtml validator:
         patterns:{
             integer:/^\d+$/,
             
-            // Used to use Date.parse(), which was the cause of Issue 9, 
+            // Used to use Date.parse(), which was the cause of Issue 9,
             // where the function would accept 09/80/2009 as parseable.
-            // The fix is to use a RegExp that will only accept American Middle-Endian form.
-            // See the Internationalization section in the documentation for how to
+            // The fix is to use a RegExp that will only accept American
+			// Middle-Endian form.
+            // See the Internationalization section in the documentation for how
+			// to
             // cause it to support other date formats:
-            date:/^((0?\d)|(1[012]))\/([012]?\d|30|31)\/\d{1,4}$/, 
+            date:/^((0?\d)|(1[012]))\/([012]?\d|30|31)\/\d{1,4}$/,
+            
+            yearMonth:/^((19|20)\d{2})-(0?[1-9]|1[0-2])$/,
+            year:/^((19|20)\d{2})$/,
             
             email:/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i,
             usd:/^\$?(\d{1,3},?(\d{3},?)*\d{3}(\.\d{0,2})?|\d{1,3}(\.\d{0,2})?|\.\d{1,2}?)$/,
             url:/^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i,
             
-            // Number should accept floats or integers, be they positive or negative.
-            // It should also support scientific-notation, written as a lower or capital 'E' followed by the radix.
-            // Number assumes base 10. 
-            // Unlike the native parseFloat or parseInt functions, this should not accept trailing Latin characters.
+            // Number should accept floats or integers, be they positive or
+			// negative.
+            // It should also support scientific-notation, written as a lower or
+			// capital 'E' followed by the radix.
+            // Number assumes base 10.
+            // Unlike the native parseFloat or parseInt functions, this should
+			// not accept trailing Latin characters.
             number:/^[+-]?(\d+(\.\d*)?|\.\d+)([Ee]\d+)?$/,
             
             zip:/^\d{5}(-\d{4})?$/,
@@ -83,7 +95,8 @@
             nonHtml:/^[^<>]*$/
         },
 
-        // Built-in set of default error messages (for use when a message isn't specified):
+        // Built-in set of default error messages (for use when a message isn't
+		// specified):
         messages:{
 
             require:"#{field} is required.",
@@ -91,6 +104,9 @@
             match:"#{field} is in an invalid format.",
             integer:"#{field} must be a positive, whole number.",
             date:"#{field} must be formatted as a date.",
+            yearMonth:"#{field} must be 'yyyy-MM' or 'yyyy-M',range:1900-01 to 2099-12",
+            year:"#{field} must be 'yyyy',range:1900 to 2099",
+            idCardCRP:"fail to validate ID card.",
             email:"#{field} must be formatted as an email.",
             usd:"#{field} must be formatted as a US Dollar amount.",
             url:"#{field} must be formatted as a URL.",
@@ -141,7 +157,8 @@
             symbol:/[^A-Za-z0-9]/g
         },
 
-        // Object to contain the output modes. The three built-in output modes are installed
+        // Object to contain the output modes. The three built-in output modes
+		// are installed
         // later on in this script.
         outputs:{},
 
@@ -153,7 +170,7 @@
         // Object to store information about ongoing validation.
         // When validation starts, this will be set to a report object.
         // When validators fail, they will inform this object.
-        // When validation is completed, this object will contain the 
+        // When validation is completed, this object will contain the
         // information of whether it succeeded:
         report:null,
 
@@ -165,7 +182,8 @@
         // Function to prepare validity to start validating:
         start:function() {
             // The output mode should be notified that validation is starting.
-            // This usually means that the output mode will erase errors from the 
+            // This usually means that the output mode will erase errors from
+			// the
             // document in whatever way the mode needs to:
             if (this.outputs[this.settings.outputMode] &&
                 this.outputs[this.settings.outputMode].start) {
@@ -176,7 +194,8 @@
             this.report = { errors:0, valid:true };
         },
 
-        // Function called when validation is over to examine the results and clean-up:
+        // Function called when validation is over to examine the results and
+		// clean-up:
         end:function() {
             // Null coalescence: fix for Issue 5:
             var results = this.report || { errors: 0, valid: true };
@@ -200,13 +219,13 @@
     };
     
     // jQuery instance methods:
-    ////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////
 
     $.fn.extend({
 
         // The validity function is how validation can be bound to forms.
-        // The user may pass in a validation function or, as a shortcut, 
-        // pass in a string of a CSS selector that grabs all the inputs to 
+        // The user may pass in a validation function or, as a shortcut,
+        // pass in a string of a CSS selector that grabs all the inputs to
         // require:
         validity:function(arg) {
         
@@ -218,7 +237,8 @@
                     if (this.tagName.toLowerCase() == "form") {
                         var f = null;
 
-                        // If the user entered a string to select the inputs to require,
+                        // If the user entered a string to select the inputs to
+						// require,
                         // then make the validation logic ad hoc:
                         if (typeof (arg) == "string") {
                             f = function() {
@@ -226,7 +246,8 @@
                             };
                         }
 
-                        // If the user entered a validation function then just call
+                        // If the user entered a validation function then just
+						// call
                         // that at the appropriate time:
                         else if ($.isFunction(arg)) {
                             f = arg;
@@ -248,10 +269,10 @@
         },
 
         // Validators:
-        ////////////////////////////////////////////////
+        // //////////////////////////////////////////////
 
         // Common validators:
-        ////////////////////////////////
+        // //////////////////////////////
         
         // Validate whether the field has a value.
         // http://validity.thatscaptaintoyou.com/Demos/index.htm#Require
@@ -315,6 +336,72 @@
             );
         },
 
+        idCardCRP:function(msg){
+        	 return validate(
+                     this,
+                     
+                     function (obj){   
+                    	 	var cardNo = obj.value.toUpperCase();  
+                    	 	if (!(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(cardNo))){
+                    	 		$.validity.messages.idCardCRP = "输入的身份证号码不符合规定!15位号码应全为数字,18位号码末位可以为数字或X.";
+                    	 		return false;
+                    	 	} 
+                    	 	var len, re; 
+                    	 	len = cardNo.length; 
+                    	 	if (len == 15){ 
+                	 			re = new RegExp(/^(\d{6})(\d{2})(\d{2})(\d{2})(\d{3})$/); 
+                	 			var arrSplit = cardNo.match(re); 
+                	 			var dtmBirth = new Date('19' + arrSplit[2] + '/' + arrSplit[3] + '/' + arrSplit[4]); 
+                	 			var bGoodDay; 
+                	 			bGoodDay = (dtmBirth.getYear() == Number(arrSplit[2])) && ((dtmBirth.getMonth() + 1) == Number(arrSplit[3])) && (dtmBirth.getDate() == Number(arrSplit[4])); 
+                	 			if (!bGoodDay){
+                	 				$.validity.messages.idCardCRP = "身份证号码出生日期不合规范.";
+                	 				return false;
+                	 			} 
+                	 			else{ 
+                	 				var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2); 
+                	 				var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'); 
+                	 				var nTemp = 0, i;   
+                	 				cardNo = cardNo.substr(0, 6) + '19' + cardNo.substr(6, cardNo.length - 6); 
+                	 				for(i = 0; i < 17; i ++){ 
+                	 					nTemp += cardNo.substr(i, 1) * arrInt[i]; 
+                	 				} 
+                	 				cardNo += arrCh[nTemp % 11];   
+                	 				return true;   
+                	 			}   
+                    	 	} 
+                    	 	if (len == 18){ 
+                    	 		re = new RegExp(/^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/); 
+                    	 		var arrSplit = cardNo.match(re); 
+
+                    	 		var dtmBirth = new Date(arrSplit[2] + "/" + arrSplit[3] + "/" + arrSplit[4]); 
+                    	 		var bGoodDay; 
+                    	 		bGoodDay = (dtmBirth.getFullYear() == Number(arrSplit[2])) && ((dtmBirth.getMonth() + 1) == Number(arrSplit[3])) && (dtmBirth.getDate() == Number(arrSplit[4])); 
+                    	 		if (!bGoodDay){
+                    	 			$.validity.messages.idCardCRP = "身份证号码出生日期不合规范.";
+                    	 			return false;
+                    	 		} 
+                    	 		else{ 
+                    	 			var valnum; 
+                    	 			var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2); 
+                    	 			var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'); 
+                    	 			var nTemp = 0, i; 
+                    	 			for(i = 0; i < 17; i ++){ 
+                    	 				nTemp += cardNo.substr(i, 1) * arrInt[i]; 
+                    	 			} 
+                    	 			valnum = arrCh[nTemp % 11]; 
+                    	 			if (valnum != cardNo.substr(17, 1)){
+                    	 				$.validity.messages.idCardCRP="18位身份证的校验码不正确.";
+                    	 				return false;
+                    	 			} 
+                    	 			return true; 
+                    	 		} 
+                    	 	} 
+                    	 	return false; 
+                 		},   
+                     msg || $.validity.messages.idCardCRP
+                 );
+        },
         // http://validity.thatscaptaintoyou.com/Demos/index.htm#Range
         range:function(min, max, msg) {
             return validate(
@@ -330,7 +417,7 @@
 
                     min.substring && max.substring && Big ?
 
-                        // If both arguments are strings then parse them 
+                        // If both arguments are strings then parse them
                         // using the Arbitrary-Precision library.
                         function(obj) {
                             var n = new Big(obj.value);
@@ -505,7 +592,7 @@
                 this,
                 function(obj) {
                 
-                    // For each character in the string, ensure that 
+                    // For each character in the string, ensure that
                     // it's in the alphabet definition:
                     for (var idx = 0; idx < obj.value.length; ++idx) {
                         if (alpha.indexOf(obj.value.charAt(idx)) == -1) {
@@ -619,7 +706,8 @@
             return this;
         },
         
-        // Validate that the input does not contain potentially dangerous strings.
+        // Validate that the input does not contain potentially dangerous
+		// strings.
         // http://validity.thatscaptaintoyou.com/Demos/index.htm#NonHtml
         nonHtml:function(msg) {
             return validate(
@@ -634,7 +722,7 @@
         },
         
         // Aggregate validators:
-        ////////////////////////////////
+        // //////////////////////////////
         
         // Validate that all matched elements bear the same values.
         // Accepts a function to transform the values for testing.
@@ -732,7 +820,7 @@
                     msg = arg0;
                 }
 
-                // Map all the matched values into an array.    
+                // Map all the matched values into an array.
                 var map = $.map(
                     $reduction,
                     function(obj) {
@@ -768,7 +856,8 @@
             return this;
         },
 
-        // Validate that the numeric sum of all values is equal to a given value.
+        // Validate that the numeric sum of all values is equal to a given
+		// value.
         // http://validity.thatscaptaintoyou.com/Demos/index.htm#Sum
         sum:function(sum, msg) {
             // If a reduced set is attached, use it.
@@ -791,7 +880,8 @@
             return this;
         },
 
-        // Validates an inclusive upper-bound on the numeric sum of the values of all matched elements.
+        // Validates an inclusive upper-bound on the numeric sum of the values
+		// of all matched elements.
         // http://validity.thatscaptaintoyou.com/Demos/index.htm#Sum
         sumMax:function(max, msg) {
             // If a reduced set is attached, use it.
@@ -814,7 +904,8 @@
             return this;
         },
 
-        // Validates an inclusive lower-bound on the numeric sum of the values of all matched elements.
+        // Validates an inclusive lower-bound on the numeric sum of the values
+		// of all matched elements.
         // http://validity.thatscaptaintoyou.com/Demos/index.htm#Sum
         sumMin:function(min, msg) {
             // If a reduced set is attached, use it.
@@ -838,7 +929,7 @@
         },
         
         // Radio group validators:
-        ////////////////////////////////
+        // //////////////////////////////
         
         // TODO: Document
         radioChecked:function(val, msg) {
@@ -869,7 +960,7 @@
         },
         
         // Checkbox validators:
-        ////////////////////////////////
+        // //////////////////////////////
         
         // TODO: Document
         checkboxChecked:function(msg) {
@@ -886,10 +977,12 @@
         },
         
         // Specialized validators:
-        ////////////////////////////////
+        // //////////////////////////////
 
-        // If expression is a function, it will be called on each matched element.
-        // Otherwise, it is treated as a boolean, and the determines the validity 
+        // If expression is a function, it will be called on each matched
+		// element.
+        // Otherwise, it is treated as a boolean, and the determines the
+		// validity
         // of elements in an aggregate fashion.
         // http://validity.thatscaptaintoyou.com/Demos/index.htm#Assert
         assert:function(expression, msg) {
@@ -899,9 +992,10 @@
 
             if ($reduction.length) {
 
-                // In the case that 'expression' is a function, 
+                // In the case that 'expression' is a function,
                 // use it as a regimen on each matched element individually:
-                // add $.validity.messages[msg] duantihua 2011-07-16 support localized message
+                // add $.validity.messages[msg] duantihua 2011-07-16 support
+				// localized message
                 if ($.isFunction(expression)) {
                     return validate(
                         this,
@@ -910,7 +1004,8 @@
                     );
                 }
 
-                // Otherwise map it to a boolean and consider this as an aggregate validation:
+                // Otherwise map it to a boolean and consider this as an
+				// aggregate validation:
                 else if (!expression) {
 
                     raiseAggregateError(
@@ -928,7 +1023,7 @@
     });
 
     // Private utilities:
-    ////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////
 
     // Do non-aggregate validation.
     // Subject each element in $obj to the regimen.
@@ -946,7 +1041,8 @@
         // For each in the reduction.
         $reduction.each(
             function() {
-                // If the element passes the regimen, include it in the reduction.
+                // If the element passes the regimen, include it in the
+				// reduction.
                 if (regimen(this)) {
                     elements.push(this);
                 }
@@ -978,7 +1074,7 @@
         }
     }
 
-    // Inform the report of a failure and display an error according to the 
+    // Inform the report of a failure and display an error according to the
     // idiom of the current ouutput mode.
     function raiseError(obj, msg) {
         addToReport();
@@ -989,7 +1085,8 @@
         }
     }
 
-    // Inform the report of a failure and display an aggregate error according to the 
+    // Inform the report of a failure and display an aggregate error according
+	// to the
     // idiom of the current output mode.
     function raiseAggregateError($obj, msg) {
         addToReport();
@@ -1000,7 +1097,8 @@
         }
     }
 
-    // Yield the sum of the values of all fields matched in obj that can be parsed.
+    // Yield the sum of the values of all fields matched in obj that can be
+	// parsed.
     function numericSum(obj) {
         var accumulator = 0;
         obj.each(
@@ -1066,9 +1164,9 @@
 })(jQuery);
 
 // Output modes:
-////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////
 
-// Each output mode gets its own closure, 
+// Each output mode gets its own closure,
 // distinct from the validity closure.
 
 // Install the label output.
@@ -1086,7 +1184,8 @@
         },
         
         end:function(results) {
-            // If not valid and scrollTo is enabled, scroll the page to the first error.
+            // If not valid and scrollTo is enabled, scroll the page to the
+			// first error.
             if (!results.valid && $.validity.settings.scrollTo) {
                 location.hash = $("label." + $.validity.settings.cssClass + ":eq(0)").attr('for');
             }
@@ -1096,7 +1195,8 @@
             var 
                 labelSelector = "label." + $.validity.settings.cssClass + "[for='" + getIdentifier($obj) + "']";
 
-            // If an error label already exists for the bad input just update its text:
+            // If an error label already exists for the bad input just update
+			// its text:
             if ($(labelSelector).length) {
                 $(labelSelector).text(msg);
             }
@@ -1110,7 +1210,7 @@
 
                     // In the case that the element does not have an id
                     // then the for attribute in the label will not cause
-                    // clicking the label to focus the element. This line 
+                    // clicking the label to focus the element. This line
                     // will make that happen.
                     .click(function() {
                         if ($obj.length) {
@@ -1137,7 +1237,8 @@
         // Class to apply to modal errors.
         errorClass = "validity-modal-msg",
         
-        // The selector for the element where modal errors will me injected semantically.
+        // The selector for the element where modal errors will me injected
+		// semantically.
         container = "body";
         
     $.validity.outputs.modal = {
@@ -1147,7 +1248,8 @@
         },
         
         end:function(results) {
-            // If not valid and scrollTo is enabled, scroll the page to the first error.
+            // If not valid and scrollTo is enabled, scroll the page to the
+			// first error.
             if (!results.valid && $.validity.settings.scrollTo) {
                 location.hash = $("." + errorClass + ":eq(0)").attr('id');
             }
@@ -1189,7 +1291,8 @@
 // Install the summary output
 (function($) {
     var 
-        // Container contains the summary. This is the element that is shown or hidden.
+        // Container contains the summary. This is the element that is shown or
+		// hidden.
         container = ".validity-summary-container",
         
         // Erroneous refers to an input with an invalid value,
@@ -1202,7 +1305,8 @@
         // The wrapper for entries in the summary.
         wrapper = "<li/>",
 
-        // Buffer to contain all the error messages that build up during validation.
+        // Buffer to contain all the error messages that build up during
+		// validation.
         // When validation ends, it'll be flushed into the summary.
         // This way, the summary doesn't flicker empty then fill up.
         buffer = [];
