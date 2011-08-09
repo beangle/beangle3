@@ -6,6 +6,7 @@ package org.beangle.ems.dictionary.model;
 
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.validation.constraints.Size;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.HierarchyEntity;
 import org.beangle.model.pojo.LongIdObject;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 代码分类
@@ -24,6 +27,8 @@ import org.beangle.model.pojo.LongIdObject;
  * @version $Id: CodeCategory.java Jun 28, 2011 8:32:18 PM chaostone $
  */
 @Entity
+@Cacheable
+@Cache(region = "ems.dictionary",usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class CodeCategory extends LongIdObject implements HierarchyEntity<CodeCategory> {
 
 	private static final long serialVersionUID = -8865890399079481866L;
