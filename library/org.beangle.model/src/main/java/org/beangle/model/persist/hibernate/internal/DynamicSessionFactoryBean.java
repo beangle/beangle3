@@ -8,8 +8,8 @@ import java.net.URL;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.model.persist.hibernate.support.DefaultTableNameConfig;
-import org.beangle.model.persist.hibernate.support.TableNameConfig;
+import org.beangle.model.persist.hibernate.support.DefaultTableNamingStrategy;
+import org.beangle.model.persist.hibernate.support.TableNamingStrategy;
 import org.eclipse.gemini.blueprint.context.BundleContextAware;
 import org.hibernate.SessionFactory;
 import org.osgi.framework.Bundle;
@@ -34,7 +34,7 @@ public class DynamicSessionFactoryBean extends LocalSessionFactoryBean implement
 
 	private ChainedClassLoader loader = null;
 
-	private TableNameConfig tableNameConfig;
+	private TableNamingStrategy tableNameConfig;
 
 	@Override
 	protected SessionFactory wrapSessionFactoryIfNecessary(SessionFactory rawSf) {
@@ -105,7 +105,7 @@ public class DynamicSessionFactoryBean extends LocalSessionFactoryBean implement
 		Set<URL> locations = getTableConfigLocation(bundle);
 		if (!locations.isEmpty()) {
 			for (URL url : locations) {
-				((DefaultTableNameConfig)tableNameConfig).addConfig(url);
+				((DefaultTableNamingStrategy)tableNameConfig).addConfig(url);
 			}
 		}
 		loader.addClassLoader(BundleDelegatingClassLoader.createBundleClassLoaderFor(bundle));
@@ -173,7 +173,7 @@ public class DynamicSessionFactoryBean extends LocalSessionFactoryBean implement
 		context = bundleContext;
 	}
 
-	public void setTableNameConfig(TableNameConfig tableNameConfig) {
+	public void setTableNameConfig(TableNamingStrategy tableNameConfig) {
 		this.tableNameConfig = tableNameConfig;
 	}
 

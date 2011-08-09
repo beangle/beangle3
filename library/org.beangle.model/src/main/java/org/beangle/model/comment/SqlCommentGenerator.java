@@ -16,10 +16,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.StrUtils;
-import org.beangle.commons.text.inflector.Pluralizer;
-import org.beangle.commons.text.inflector.lang.en.EnNounPluralizer;
-import org.beangle.model.persist.hibernate.support.DefaultTableNameConfig;
-import org.beangle.model.persist.hibernate.support.TableNameConfig;
+import org.beangle.model.persist.hibernate.support.DefaultTableNamingStrategy;
 
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.ClassDoc;
@@ -39,12 +36,10 @@ public class SqlCommentGenerator {
 	private static final String CONFIG = "config";
 	private static final String SQLFILE = "file";
 
-	private static DefaultTableNameConfig tableNameConfig;
+	private static DefaultTableNamingStrategy strategy;
 
 	public static boolean start(RootDoc root) throws IOException {
 		ClassDoc[] classes = root.classes();
-		NamingStrategy strategy = new NamingStrategy();
-		strategy.setTableNameConfig(tableNameConfig);
 
 		// out files
 		String commentFileName = getFileOption(root.options());
@@ -67,11 +62,8 @@ public class SqlCommentGenerator {
 			ClassDoc classDoc = classes[i];
 
 			// generate table name
-			strategy.generatePrefix(classDoc.qualifiedName());
 			String tableName = getTableName(classDoc);
 			if (null != tableName) {
-				tableName = strategy.tableName(tableName);
-			} else {
 				tableName = strategy.classToTableName(classDoc.qualifiedName());
 			}
 
@@ -176,7 +168,7 @@ public class SqlCommentGenerator {
 
 	public static boolean validOptions(String options[][], DocErrorReporter reporter) throws IOException {
 		System.out.println("start valid options...");
-		tableNameConfig = new DefaultTableNameConfig();
+		strategy = new DefaultTableNamingStrategy();
 		for (int i = 0; i < options.length; i++) {
 			String[] opt = options[i];
 			if (opt[0].equals("-file")) {
@@ -189,20 +181,20 @@ public class SqlCommentGenerator {
 					reporter.printError("config file [" + fileName + "] not exists.");
 					return false;
 				} else {
-					((DefaultTableNameConfig) tableNameConfig).addConfig(file.toURI().toURL());
+					((DefaultTableNamingStrategy) strategy).addConfig(file.toURI().toURL());
 				}
 			}
 		}
 		Enumeration<URL> urls = Thread.currentThread().getContextClassLoader()
 				.getResources("/META-INF/beangle/table.properties");
 		while (urls.hasMoreElements()) {
-			tableNameConfig.addConfig(urls.nextElement());
+			strategy.addConfig(urls.nextElement());
 		}
-		if (tableNameConfig.getPatterns().isEmpty()) {
+		if (strategy.getPatterns().isEmpty()) {
 			reporter.printError("Cannot find table.properties in classpath or options. Using -config your/path/to/table.properties");
 			return false;
 		} else {
-			System.out.println(tableNameConfig);
+			System.out.println(strategy);
 			return true;
 		}
 	}
@@ -218,60 +210,4 @@ public class SqlCommentGenerator {
 		if (null == tagName) tagName = System.getProperty("java.io.tmpdir") + "/comment.sql";
 		return tagName;
 	}
-}
-
-class NamingStrategy {
-
-	private Pluralizer pluralizer = new EnNounPluralizer();
-
-	private TableNameConfig tableNameConfig;
-
-	private String tblPrefix;
-
-	public String classToTableName(String className) {
-		if (className.endsWith("Bean")) {
-			className = StringUtils.substringBeforeLast(className, "Bean");
-		}
-		String tableName = addUnderscores(unqualify(className));
-
-		if (null != pluralizer) {
-			tableName = pluralizer.pluralize(tableName);
-		}
-		if (null != tblPrefix) {
-			tableName = tblPrefix + tableName;
-		}
-		return tableName;
-	}
-
-	public void generatePrefix(String className) {
-		tblPrefix = tableNameConfig.getPrefix(className);
-	}
-
-	public String tableName(String tableName) {
-		String newName = tableName;
-		if (null != tblPrefix) {
-			if (!tableName.startsWith(tblPrefix)) {
-				newName = tblPrefix + tableName;
-			}
-		}
-		return newName;
-	}
-
-	public void setPluralizer(Pluralizer pluralizer) {
-		this.pluralizer = pluralizer;
-	}
-
-	public void setTableNameConfig(TableNameConfig tableNameConfig) {
-		this.tableNameConfig = tableNameConfig;
-	}
-
-	protected static String addUnderscores(String name) {
-		return StrUtils.unCamel(name.replace('.', '_'), '_');
-	}
-
-	protected static String unqualify(String qualifiedName) {
-		int loc = qualifiedName.lastIndexOf('.');
-		return (loc < 0) ? qualifiedName : qualifiedName.substring(loc + 1);
-	}
-
 }

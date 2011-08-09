@@ -8,8 +8,6 @@ import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.lang.StrUtils;
-import org.beangle.commons.text.inflector.Pluralizer;
-import org.beangle.commons.text.inflector.lang.en.EnNounPluralizer;
 import org.hibernate.AssertionFailure;
 import org.hibernate.cfg.DefaultNamingStrategy;
 import org.hibernate.cfg.NamingStrategy;
@@ -30,11 +28,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	// 表名、字段名、序列长度
 	private static final int MaxLength = 30;
 
-	private Pluralizer pluralizer = new EnNounPluralizer();
-
-	private TableNameConfig tableNameConfig;
-
-	private String tblPrefix;
+	private TableNamingStrategy tableNameConfig;
 
 	/**
 	 * 根据实体名(entityName)命名表
@@ -42,41 +36,9 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 * @param className
 	 */
 	public String classToTableName(String className) {
-		if (className.endsWith("Bean")) {
-			className = StringUtils.substringBeforeLast(className, "Bean");
-		}
-		String tableName = addUnderscores(unqualify(className));
-		if (null != pluralizer) {
-			tableName = pluralizer.pluralize(tableName);
-		}
-		generatePrefix(className);
-		if (null != tblPrefix) {
-			tableName = tblPrefix + tableName;
-		}
+		String tableName = tableNameConfig.classToTableName(className);
 		if (tableName.length() > MaxLength) {
-			logger.error("{}'s length has greate more then 30, database will not be supported!", tableName);
-		}
-		return tableName;
-	}
-
-	private void generatePrefix(String className) {
-		tblPrefix = tableNameConfig.getPrefix(className);
-	}
-
-	private String classToTableName(String className, String shortName) {
-		if (shortName.endsWith("Bean")) {
-			shortName = StringUtils.substringBeforeLast(shortName, "Bean");
-		}
-		String tableName = addUnderscores(shortName);
-		if (null != pluralizer) {
-			tableName = pluralizer.pluralize(tableName);
-		}
-		String tblPrefix = tableNameConfig.getPrefix(className);
-		if (null != tblPrefix) {
-			tableName = tblPrefix + tableName;
-		}
-		if (tableName.length() > MaxLength) {
-			logger.warn("{}'s length has greate more then 30, database will not be supported!", tableName);
+			logger.error("{}'s length greate than 30, database like oracle will not be supported!", tableName);
 		}
 		return tableName;
 	}
@@ -89,17 +51,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 * </re>
 	 */
 	public String tableName(String tableName) {
-		checkNewEntity();
-		String newName = tableName;
-		if (null != tblPrefix) {
-			if (!tableName.startsWith(tblPrefix)) {
-				newName = tblPrefix + tableName;
-			}
-		}
-		if (newName.length() > MaxLength) {
-			logger.error("{}'s length has greate more then 30, database will not be supported!", newName);
-		}
-		return newName;
+		return tableName;
 	}
 
 	/**
@@ -107,7 +59,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 */
 	public String columnName(String columnName) {
 		if (columnName.length() > MaxLength) {
-			logger.error("{}'s length has greate more then 30, database will not be supported!", columnName);
+			logger.error("{}'s length greate than 30, database will not be supported!", columnName);
 		}
 		return columnName;
 	}
@@ -140,7 +92,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 			sb.append("_id");
 		}
 		if (sb.length() > MaxLength) {
-			logger.error("{}'s length has greate more then 30, database will not be supported!",
+			logger.error("{}'s length greate than 30, database will not be supported!",
 					sb.toString());
 		}
 		return sb.toString();
@@ -178,14 +130,13 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 		// just for annotation configuration,it;s ownerEntity is classname(not entityName), and
 		// ownerEntityTable is class shortname
 		if (Character.isUpperCase(ownerEntityTable.charAt(0))) {
-			ownerTable = classToTableName(ownerEntity, ownerEntityTable);
+			ownerTable = tableNameConfig.classToTableName(ownerEntity);
 		} else {
-			generatePrefix(ownerEntity);
 			ownerTable = tableName(ownerEntityTable);
 		}
-		String tblName = ownerTable + '_' + addUnderscores(unqualify(propertyName));
+		String tblName = tableNameConfig.collectionToTableName(ownerEntity, ownerTable, propertyName);
 		if (tblName.length() > MaxLength) {
-			logger.error("{}'s length has greate more then 30, database will not be supported!", tblName);
+			logger.error("{}'s length greate than 30, database will not be supported!", tblName);
 		}
 		return tblName;
 	}
@@ -217,19 +168,11 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 				+ referencedColumn;
 	}
 
-	public Pluralizer getPluralizer() {
-		return pluralizer;
-	}
-
-	public void setPluralizer(Pluralizer pluralizer) {
-		this.pluralizer = pluralizer;
-	}
-
-	public TableNameConfig getTableNameConfig() {
+	public TableNamingStrategy getTableNameConfig() {
 		return tableNameConfig;
 	}
 
-	public void setTableNameConfig(TableNameConfig tableNameConfig) {
+	public void setTableNameConfig(TableNamingStrategy tableNameConfig) {
 		this.tableNameConfig = tableNameConfig;
 	}
 
@@ -240,19 +183,6 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	protected static String unqualify(String qualifiedName) {
 		int loc = qualifiedName.lastIndexOf('.');
 		return (loc < 0) ? qualifiedName : qualifiedName.substring(loc + 1);
-	}
-
-	/**
-	 * 检查当前堆栈是否正在为一个新的实体调用类名和表名转换
-	 */
-	private void checkNewEntity() {
-		StackTraceElement[] trace = Thread.currentThread().getStackTrace();
-		if (trace.length > 4) {
-			if (trace[3].getMethodName().equals("getClassTableName")
-					|| trace[4].getMethodName().equals("getClassTableName")) {
-				this.tblPrefix = null;
-			}
-		}
 	}
 
 	/**
