@@ -54,7 +54,7 @@ public class Anchor extends ClosingUIBean {
 		if (!isReserved()) {
 			if (null == onclick) {
 				if (null != target) {
-					onclick = StrUtils.concat("return bg.Go(this,'", target, ",true')");
+					onclick = StrUtils.concat("return bg.Go(this,'", target, "',true)");
 					target = null;
 				} else {
 					onclick = "return bg.Go(this,null,true)";

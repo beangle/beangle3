@@ -344,6 +344,7 @@
 					if (typeof jQuery != "undefined") {
 						jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
 						if(!ajaxHistory){
+							var target = jQuery("#"+submitTarget);
 							target.ajaxSuccess(function(evt, request, settings){
 								if(settings && settings.dataType !="script"){
 									var url = History.extractState(History.getState().url).url+"?state=";
