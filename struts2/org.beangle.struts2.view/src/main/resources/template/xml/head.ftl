@@ -24,14 +24,20 @@
 			}
 			var History = window.History;
 			jQuery(document).ready(function(){
-				History.Adapter.bind(window,'statechange',function(e){
-					var currState = History.extractState(History.getState().url);
-					if(currState.data.fresh==true){
-						currState.data.fresh=false;
-						//alert(History.replaceState(currState.data,"",currState.url));
-					}else{
-						jQuery(currState.data.target).empty();
-						jQuery(currState.data.target).html(currState.data.html);
+				History.Adapter.bind(window,'statechange',function(e){	
+					var currState = History.getState();//History.extractState(History.getState().url);
+					if(!currState.data.flag){
+						currState.data.flag = true;
+						History.replaceStateHash = History.extractState(currState.url).url;
+						History.replaceState(currState.data,currState.title,History.replaceStateHash);
+						return;
+					}
+					if(!History.replaceStateHash || History.replaceStateHash!=History.extractState(currState.url).url){
+						if(jQuery.type((currState.data||{}).target)!="undefined" &&  jQuery.type((currState.data||{}).html)!="undefined"){
+							jQuery(currState.data.target).empty();
+							jQuery(currState.data.target).html(currState.data.html);
+							History.replaceStateHash = false;
+						}
 					}
 				});
 			});

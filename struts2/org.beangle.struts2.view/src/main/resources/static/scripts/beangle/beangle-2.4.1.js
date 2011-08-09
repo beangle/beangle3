@@ -38,9 +38,25 @@
 					if(!ajaxHistory){
 						jQuery('#'+target).load(url);
 					}else{
-						jQuery('#'+target).load(url,function(evt,msg,request){
-							var html = request.responseText;
-							History.pushState({html:html,target:"#"+target,fresh:true},"",url);
+						var off = url.indexOf( " " );
+						if ( off >= 0 ) {
+							var selector = url.slice( off, url.length );
+							url = url.slice( 0, off );
+						}
+						jQuery.ajax({
+							url: url,
+							type: "GET",
+							dataType: "html",
+							complete: function( jqXHR, status, responseText ) {
+								responseText = jqXHR.responseText;
+								if ( jqXHR.isResolved() ) {
+									jqXHR.done(function( r ) {
+										responseText = r;
+									});
+									var html = selector ?jQuery("<div>").append(responseText.replace(rscript, "")).find(selector) :responseText;
+									History.pushState({html:html,target:"#"+target,flag:true},"",url);
+								}
+							}
 						});
 					}
 				}
@@ -268,7 +284,7 @@
 	//About From
 	beangle.extend({
 		form:{
-			submit : function (myForm,action,target,onsubmit,ajax){
+			submit : function (myForm,action,target,onsubmit,ajax,ajaxHistory){
 				var submitTarget, rs, sumbitBtnId, submitx,origin_target, origin_action,options_submit;
 				if((typeof myForm)=='string') myForm = document.getElementById(myForm);
 				//1. submit hook
@@ -327,9 +343,8 @@
 					options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#'};
 					if (typeof jQuery != "undefined") {
 						jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
-						if(!(history== false || history == "false" || history=="0" || history==0)){
-							var targetObj=jQuery('#'+submitTarget);
-							targetObj.ajaxSuccess(function(evt, request, settings){
+						if(!ajaxHistory){
+							target.ajaxSuccess(function(evt, request, settings){
 								if(settings && settings.dataType !="script"){
 									var url = History.extractState(History.getState().url).url+"?state=";
 									if(action.indexOf(bg.getContextPath()+"/")==0){
@@ -339,9 +354,9 @@
 									}
 									var html = request.responseText;
 									History.pushState({html:html,target:"#"+submitTarget},"",url);
-									targetObj.unbind("ajaxSuccess");
+									target.unbind("ajaxSuccess");
 								}
-							});
+							});	
 						}
 					}
 					submitx.click();
