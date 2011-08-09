@@ -32,7 +32,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @SuppressWarnings("rawtypes")
 @MappedSuperclass
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(region = "ems.dictionary",usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public abstract class BaseCode<T extends BaseCode> extends LongIdTimeObject implements Comparable<T>,
 		TemporalActiveEntity {
 
