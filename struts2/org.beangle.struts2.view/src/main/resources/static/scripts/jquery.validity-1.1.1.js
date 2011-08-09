@@ -70,8 +70,8 @@
             // cause it to support other date formats:
             date:/^((0?\d)|(1[012]))\/([012]?\d|30|31)\/\d{1,4}$/,
             
-            yearMonth:/^((19|20)\d{2})-(0?[1-9]|1[0-2])$/,
-            year:/^((19|20)\d{2})$/,
+            yearMonth:/^(\d{4})-([1-9]|1[0-2])$/,
+            year:/^\d{4}$/,
             
             email:/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i,
             usd:/^\$?(\d{1,3},?(\d{3},?)*\d{3}(\.\d{0,2})?|\d{1,3}(\.\d{0,2})?|\.\d{1,2}?)$/,
@@ -104,9 +104,9 @@
             match:"#{field} is in an invalid format.",
             integer:"#{field} must be a positive, whole number.",
             date:"#{field} must be formatted as a date.",
-            yearMonth:"#{field} must be 'yyyy-MM' or 'yyyy-M',range:1900-01 to 2099-12",
-            year:"#{field} must be 'yyyy',range:1900 to 2099",
-            idCardCRP:"fail to validate ID card.",
+            yearMonth:"#{field} is in an invalid format,e.g.1900-01 to 2099-12",
+            year:"#{field} must be 'yyyy'",
+            idCardPRC:"fail to validate ID card.",
             email:"#{field} must be formatted as an email.",
             usd:"#{field} must be formatted as a US Dollar amount.",
             url:"#{field} must be formatted as a URL.",
@@ -336,14 +336,13 @@
             );
         },
 
-        idCardCRP:function(msg){
+        idCardPRC:function(msg){
         	 return validate(
                      this,
                      
                      function (obj){   
                     	 	var cardNo = obj.value.toUpperCase();  
                     	 	if (!(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(cardNo))){
-                    	 		$.validity.messages.idCardCRP = "输入的身份证号码不符合规定!15位号码应全为数字,18位号码末位可以为数字或X.";
                     	 		return false;
                     	 	} 
                     	 	var len, re; 
@@ -355,7 +354,6 @@
                 	 			var bGoodDay; 
                 	 			bGoodDay = (dtmBirth.getYear() == Number(arrSplit[2])) && ((dtmBirth.getMonth() + 1) == Number(arrSplit[3])) && (dtmBirth.getDate() == Number(arrSplit[4])); 
                 	 			if (!bGoodDay){
-                	 				$.validity.messages.idCardCRP = "身份证号码出生日期不合规范.";
                 	 				return false;
                 	 			} 
                 	 			else{ 
@@ -378,7 +376,6 @@
                     	 		var bGoodDay; 
                     	 		bGoodDay = (dtmBirth.getFullYear() == Number(arrSplit[2])) && ((dtmBirth.getMonth() + 1) == Number(arrSplit[3])) && (dtmBirth.getDate() == Number(arrSplit[4])); 
                     	 		if (!bGoodDay){
-                    	 			$.validity.messages.idCardCRP = "身份证号码出生日期不合规范.";
                     	 			return false;
                     	 		} 
                     	 		else{ 
@@ -391,7 +388,6 @@
                     	 			} 
                     	 			valnum = arrCh[nTemp % 11]; 
                     	 			if (valnum != cardNo.substr(17, 1)){
-                    	 				$.validity.messages.idCardCRP="18位身份证的校验码不正确.";
                     	 				return false;
                     	 			} 
                     	 			return true; 
@@ -399,7 +395,7 @@
                     	 	} 
                     	 	return false; 
                  		},   
-                     msg || $.validity.messages.idCardCRP
+                     msg || $.validity.messages.idCardPRC
                  );
         },
         // http://validity.thatscaptaintoyou.com/Demos/index.htm#Range
