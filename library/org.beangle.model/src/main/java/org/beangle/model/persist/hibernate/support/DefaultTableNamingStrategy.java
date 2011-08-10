@@ -73,7 +73,7 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
 					schema = StringUtils.substringBefore(schemaPrefix, ",");
 					prefix = StringUtils.substringAfter(schemaPrefix, ",");
 				}
-				if (prefix.contains(",")) {
+				if (StringUtils.contains(prefix, ",")) {
 					abbreviationStr = StringUtils.substringAfter(prefix, ",").toLowerCase();
 					prefix = StringUtils.substringBefore(prefix, ",");
 				}
