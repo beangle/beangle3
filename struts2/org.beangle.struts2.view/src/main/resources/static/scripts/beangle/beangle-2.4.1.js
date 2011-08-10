@@ -342,22 +342,28 @@
 					}
 					options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#'};
 					if (typeof jQuery != "undefined") {
-						jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
 						if(!ajaxHistory){
-							var target = jQuery("#"+submitTarget);
-							target.ajaxSuccess(function(evt, request, settings){
-								if(settings && settings.dataType !="script"){
-									var url = History.extractState(History.getState().url).url+"?state=";
-									if(action.indexOf(bg.getContextPath()+"/")==0){
-										url = url + action.replace(bg.getContextPath()+"/","");
-									}else{
-										url = url + action;
-									}
-									var html = request.responseText;
-									History.pushState({html:html,target:"#"+submitTarget},"",url);
-									target.unbind("ajaxSuccess");
-								}
-							});	
+							var minSuffix = jQuery.struts2_jquery.minSuffix;
+							if(jQuery.struts2_jquery.scriptCache["/struts/js/plugins/jquery.form."+minSuffix+".js"]){
+								$('#'+myForm.id).ajaxForm(function(result,message,response) { 
+								    if(message==="success" && response.status==200 && response.readyState==4){
+								    	var target = jQuery("#"+submitTarget);
+								    	History.pushState({html:result,target:"#"+submitTarget},"",action);
+								    }
+									return false; 
+								});	
+							}else{
+								jQuery.struts2_jquery.require("/struts/js/plugins/jquery.form"+minSuffix+".js",null,bg.getContextPath());
+								$('#'+myForm.id).ajaxForm(function(result,message,response) { 
+								    if(message==="success" && response.status==200 && response.readyState==4){
+								    	var target = jQuery("#"+submitTarget);
+								    	History.pushState({html:result,target:"#"+submitTarget},"",action);
+								    }
+									return false; 
+								});	
+							}
+						}else{
+							jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
 						}
 					}
 					submitx.click();
@@ -817,4 +823,20 @@
 	
 	// alert(document.body);
 	beangle.ready(beangle.iframe.adaptSelf);
+})(window);
+
+(function(window,undefined){
+	if ( document.location.protocol === 'file:' ) {
+		alert('The HTML5 History API (and thus History.js) do not work on files, please upload it to a server.');
+	}
+	var History = window.History;
+	jQuery(document).ready(function(){
+		History.Adapter.bind(window,'statechange',function(e){	
+			var currState = History.getState();
+			if(jQuery.type((currState.data||{}).target)!="undefined" &&  jQuery.type((currState.data||{}).html)!="undefined"){
+					jQuery(currState.data.target).empty();
+					jQuery(currState.data.target).html(currState.data.html);
+			}
+		});
+	});
 })(window);

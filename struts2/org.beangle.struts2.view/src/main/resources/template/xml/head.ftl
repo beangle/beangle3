@@ -11,38 +11,12 @@
 	<meta http-equiv="expires" content="0"/>
 	<meta http-equiv="content-style-type" content="text/css"/>
 	<meta http-equiv="content-script-type" content="text/javascript"/>
-	[@beangle_js_head compressed=(Parameters['devMode']?exists)?string("false","false") /]
+	[@beangle_js_head compressed=(Parameters['devMode']?exists)?string("false","true") /]
 	<script type="text/javascript" src="${base}/static/scripts/my97/WdatePicker-4.72.js"></script>
 	<script type="text/javascript">if ( typeof window.JSON === 'undefined' ) { document.write('<script src="${base}/static/scripts/history/json2.js"><\/script>'); }</script>
 	<script type="text/javascript" src="${base}/static/scripts/history/history.adapter.jquery.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/history/history.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/history/history.html4.js"></script>
-	<script type="text/javascript">
-		(function(window,undefined){
-			if ( document.location.protocol === 'file:' ) {
-				alert('The HTML5 History API (and thus History.js) do not work on files, please upload it to a server.');
-			}
-			var History = window.History;
-			jQuery(document).ready(function(){
-				History.Adapter.bind(window,'statechange',function(e){	
-					var currState = History.getState();//History.extractState(History.getState().url);
-					if(!currState.data.flag){
-						currState.data.flag = true;
-						History.replaceStateHash = History.extractState(currState.url).url;
-						History.replaceState(currState.data,currState.title,History.replaceStateHash);
-						return;
-					}
-					if(!History.replaceStateHash || History.replaceStateHash!=History.extractState(currState.url).url){
-						if(jQuery.type((currState.data||{}).target)!="undefined" &&  jQuery.type((currState.data||{}).html)!="undefined"){
-							jQuery(currState.data.target).empty();
-							jQuery(currState.data.target).html(currState.data.html);
-							History.replaceStateHash = false;
-						}
-					}
-				});
-			});
-		})(window);	
-	</script>
 ${tag.body}
 </head>
 <body>
