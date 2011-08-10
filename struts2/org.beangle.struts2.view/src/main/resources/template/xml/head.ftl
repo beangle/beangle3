@@ -27,15 +27,15 @@ ${tag.body}
 	[@sj.head  compressed="false"/]
 	<link id="beangle_theme_link" href="${base}/static/themes/${b.theme.ui}/beangle-ui.css" rel="stylesheet" type="text/css" />
 	<link href="${base}/static/themes/${b.theme.ui}/colorbox.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-2.4.1.js"></script>
-	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui-2.4.1.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-2.4.2.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui-2.4.2.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/colorbox/jquery-colorbox-1.3.17.1.js"></script>
 [#else]
 	[@sj.head/]
 	<link id="beangle_theme_link" href="${base}/static/themes/${b.theme.ui}/beangle-ui.css" rel="stylesheet" type="text/css" />
 	<link href="${base}/static/themes/${b.theme.ui}/colorbox.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-2.4.1.min.js"></script>
-	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui-2.4.1.min.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-2.4.2.min.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui-2.4.2.min.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/colorbox/jquery-colorbox-1.3.17.1.min.js"></script>
 [/#if]
 [/#macro]
