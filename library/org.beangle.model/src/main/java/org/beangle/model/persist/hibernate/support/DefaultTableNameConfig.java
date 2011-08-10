@@ -76,7 +76,7 @@ public class DefaultTableNameConfig implements TableNameConfig {
 					schema = StringUtils.substringBefore(schemaPrefix, ",");
 					prefix = StringUtils.substringAfter(schemaPrefix, ",");
 				}
-				if (prefix.contains(",")) {
+				if (StringUtils.contains(prefix, ",")) {
 					abbreviationStr = StringUtils.substringAfter(prefix, ",").toLowerCase();
 					prefix = StringUtils.substringBefore(prefix, ",");
 				}
@@ -194,14 +194,14 @@ public class DefaultTableNameConfig implements TableNameConfig {
 
 	public String collectionToTableName(String className, String tableName, String collectionName) {
 		TableNamePattern pattern = getPattern(className);
-		String collectionTableName = addUnderscores(unqualify(collectionName));
-		if (tableName.length() + 1 + collectionTableName.length() > MaxLength + 4 && null != pattern) {
+		String collectionTableName = tableName + "_" + addUnderscores(unqualify(collectionName));
+		if (collectionTableName.length() > MaxLength && null != pattern) {
 			for (Map.Entry<String, String> pairEntry : pattern.abbreviations.entrySet()) {
 				collectionTableName = StringUtils.replace(collectionTableName, pairEntry.getKey(),
 						pairEntry.getValue());
 			}
 		}
-		return tableName + "_" + collectionTableName;
+		return collectionTableName;
 	}
 
 	protected static String unqualify(String qualifiedName) {

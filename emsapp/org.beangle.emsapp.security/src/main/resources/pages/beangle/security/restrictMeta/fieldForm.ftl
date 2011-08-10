@@ -10,7 +10,8 @@
 	[@b.radios label="是否允许多值" name="field.multiple"  value=field.multiple/]
 	[@b.select2 label="restriction.entities" required="true" name1st="Entitys" name2nd="entityId" items1st=entities items2nd=field.entities /]
 	[@b.formfoot]
-		<input type="hidden" name="field.id" value="${(field.id)!}" style="width:200px;" />
+		<input type="hidden" name="field.id" value="${(field.id)!}"/>
+		[@b.redirectParams/]
 		[@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit" /]
 	[/@]
 </table>
