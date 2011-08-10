@@ -2,7 +2,7 @@
 [@b.head/]
 [@b.css href="tab.css"/]
 <script  type="text/javascript" src="${base}/static/scripts/TabPane.js"></script>
-[@b.toolbar title="数据权限"]
+[@b.toolbar title="在 ${restriction.pattern.entity.name} 上按照 ${restriction.pattern.remark} 进行数据授权"]
 	function save(){if(confirm("确定设置?")){bg.form.submit(document.restrictionForm);}}
 	function cancelEdit(){bg.form.submit(document.restrictionForm,'${b.url("!info")}')}
 	bar.addItem("${b.text("action.save")}",save,'${b.theme.iconurl("actions/save.png")}');

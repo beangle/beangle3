@@ -190,15 +190,14 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
 
 	public String collectionToTableName(String className, String tableName, String collectionName) {
 		TableNamePattern pattern = getPattern(className);
-		String collectionTableName = addUnderscores(unqualify(collectionName));
-		if ((tableName.length() + 1 + collectionTableName.length() > relationTableMaxLength)
-				&& null != pattern) {
+		String collectionTableName = tableName + "_" + addUnderscores(unqualify(collectionName));
+		if ((collectionTableName.length() > relationTableMaxLength) && null != pattern) {
 			for (Map.Entry<String, String> pairEntry : pattern.abbreviations.entrySet()) {
 				collectionTableName = StringUtils.replace(collectionTableName, pairEntry.getKey(),
 						pairEntry.getValue());
 			}
 		}
-		return tableName + "_" + collectionTableName;
+		return collectionTableName;
 	}
 
 	protected static String unqualify(String qualifiedName) {
