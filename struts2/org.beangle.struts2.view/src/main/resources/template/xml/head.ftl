@@ -11,7 +11,7 @@
 	<meta http-equiv="expires" content="0"/>
 	<meta http-equiv="content-style-type" content="text/css"/>
 	<meta http-equiv="content-script-type" content="text/javascript"/>
-	[@beangle_js_head compressed=(Parameters['devMode']?exists)?string("false","false") /]
+	[@beangle_js_head compressed=(Parameters['devMode']?exists)?string("false","true") /]
 	<script type="text/javascript" src="${base}/static/scripts/my97/WdatePicker-4.72.js"></script>
 ${tag.body}
 </head>

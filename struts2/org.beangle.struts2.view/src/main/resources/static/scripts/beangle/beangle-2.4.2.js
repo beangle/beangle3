@@ -266,7 +266,7 @@
 	//About From
 	beangle.extend({
 		form:{
-			submit : function (myForm,action,target,onsubmit,ajax,ajaxHistory){
+			submit : function (myForm,action,target,onsubmit,ajax,noHistory){
 				var submitTarget, rs, sumbitBtnId, submitx,origin_target, origin_action,options_submit;
 				if((typeof myForm)=='string') myForm = document.getElementById(myForm);
 				//1. submit hook
@@ -324,7 +324,7 @@
 					}
 					options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#'};
 					if (typeof jQuery != "undefined") {
-						if(!ajaxHistory){
+						if(!noHistory && jQuery("input:file",myForm).length==0){
 							beangle.history.historySubmit(myForm.id,action,submitTarget);
 						}else{
 							jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
