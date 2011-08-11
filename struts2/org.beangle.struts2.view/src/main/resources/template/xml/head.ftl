@@ -11,12 +11,8 @@
 	<meta http-equiv="expires" content="0"/>
 	<meta http-equiv="content-style-type" content="text/css"/>
 	<meta http-equiv="content-script-type" content="text/javascript"/>
-	[@beangle_js_head compressed=(Parameters['devMode']?exists)?string("false","true") /]
+	[@beangle_js_head compressed=(Parameters['devMode']?exists)?string("false","false") /]
 	<script type="text/javascript" src="${base}/static/scripts/my97/WdatePicker-4.72.js"></script>
-	<script type="text/javascript">if ( typeof window.JSON === 'undefined' ) { document.write('<script src="${base}/static/scripts/history/json2.js"><\/script>'); }</script>
-	<script type="text/javascript" src="${base}/static/scripts/history/history.adapter.jquery.js"></script>
-	<script type="text/javascript" src="${base}/static/scripts/history/history.js"></script>
-	<script type="text/javascript" src="${base}/static/scripts/history/history.html4.js"></script>
 ${tag.body}
 </head>
 <body>
@@ -27,15 +23,23 @@ ${tag.body}
 	[@sj.head  compressed="false"/]
 	<link id="beangle_theme_link" href="${base}/static/themes/${b.theme.ui}/beangle-ui.css" rel="stylesheet" type="text/css" />
 	<link href="${base}/static/themes/${b.theme.ui}/colorbox.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="${base}/static/scripts/colorbox/jquery-colorbox-1.3.17.1.js"></script>
+	<script type="text/javascript">if ( typeof window.JSON === 'undefined' ) { document.write('<script src="${base}/static/scripts/history/json2.js"><\/script>'); }</script>
+	<script type="text/javascript" src="${base}/static/scripts/history/history.adapter.jquery.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/history/history.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/history/history.html4.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-2.4.2.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui-2.4.2.js"></script>
-	<script type="text/javascript" src="${base}/static/scripts/colorbox/jquery-colorbox-1.3.17.1.js"></script>
 [#else]
 	[@sj.head/]
 	<link id="beangle_theme_link" href="${base}/static/themes/${b.theme.ui}/beangle-ui.css" rel="stylesheet" type="text/css" />
 	<link href="${base}/static/themes/${b.theme.ui}/colorbox.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="${base}/static/scripts/colorbox/jquery-colorbox-1.3.17.1.min.js"></script>
+	<script type="text/javascript">if ( typeof window.JSON === 'undefined' ) { document.write('<script src="${base}/static/scripts/history/json2.min.js"><\/script>'); }</script>
+	<script type="text/javascript" src="${base}/static/scripts/history/history.adapter.jquery.min.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/history/history.min.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/history/history.html4.min.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-2.4.2.min.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui-2.4.2.min.js"></script>
-	<script type="text/javascript" src="${base}/static/scripts/colorbox/jquery-colorbox-1.3.17.1.min.js"></script>
 [/#if]
 [/#macro]
