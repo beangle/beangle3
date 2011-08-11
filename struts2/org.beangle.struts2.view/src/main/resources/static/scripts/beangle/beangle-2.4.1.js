@@ -38,26 +38,7 @@
 					if(!ajaxHistory){
 						jQuery('#'+target).load(url);
 					}else{
-						var off = url.indexOf( " " );
-						if ( off >= 0 ) {
-							var selector = url.slice( off, url.length );
-							url = url.slice( 0, off );
-						}
-						jQuery.ajax({
-							url: url,
-							type: "GET",
-							dataType: "html",
-							complete: function( jqXHR, status, responseText ) {
-								responseText = jqXHR.responseText;
-								if ( jqXHR.isResolved() ) {
-									jqXHR.done(function( r ) {
-										responseText = r;
-									});
-									var html = selector ?jQuery("<div>").append(responseText.replace(rscript, "")).find(selector) :responseText;
-									History.pushState({html:html,target:"#"+target,flag:true},"",url);
-								}
-							}
-						});
+						beangle.history.historyGo(url,target);
 					}
 				}
 			}
@@ -343,25 +324,7 @@
 					options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#'};
 					if (typeof jQuery != "undefined") {
 						if(!ajaxHistory){
-							var minSuffix = jQuery.struts2_jquery.minSuffix;
-							if(jQuery.struts2_jquery.scriptCache["/struts/js/plugins/jquery.form."+minSuffix+".js"]){
-								$('#'+myForm.id).ajaxForm(function(result,message,response) { 
-								    if(message==="success" && response.status==200 && response.readyState==4){
-								    	var target = jQuery("#"+submitTarget);
-								    	History.pushState({html:result,target:"#"+submitTarget},"",action);
-								    }
-									return false; 
-								});	
-							}else{
-								jQuery.struts2_jquery.require("/struts/js/plugins/jquery.form"+minSuffix+".js",null,bg.getContextPath());
-								$('#'+myForm.id).ajaxForm(function(result,message,response) { 
-								    if(message==="success" && response.status==200 && response.readyState==4){
-								    	var target = jQuery("#"+submitTarget);
-								    	History.pushState({html:result,target:"#"+submitTarget},"",action);
-								    }
-									return false; 
-								});	
-							}
+							beangle.history.historySubmit(myForm.id,action,submitTarget);
 						}else{
 							jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
 						}
@@ -826,17 +789,8 @@
 })(window);
 
 (function(window,undefined){
-	if ( document.location.protocol === 'file:' ) {
-		alert('The HTML5 History API (and thus History.js) do not work on files, please upload it to a server.');
-	}
-	var History = window.History;
-	jQuery(document).ready(function(){
-		History.Adapter.bind(window,'statechange',function(e){	
-			var currState = History.getState();
-			if(jQuery.type((currState.data||{}).target)!="undefined" &&  jQuery.type((currState.data||{}).html)!="undefined"){
-					jQuery(currState.data.target).empty();
-					jQuery(currState.data.target).html(currState.data.html);
-			}
-		});
-	});
+	//FIXME beangle 版本动态获取
+	jQuery.struts2_jquery.require("/static/scripts/beangle/beangle-history-2.4.1.js",function(){
+		window.beangle.history.init();
+	},bg.getContextPath());
 })(window);
