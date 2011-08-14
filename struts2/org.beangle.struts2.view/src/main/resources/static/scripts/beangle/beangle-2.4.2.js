@@ -798,7 +798,6 @@
 				if ( document.location.protocol === 'file:' ) {
 					alert('The HTML5 History API (and thus History.js) do not work on files, please upload it to a server.');
 				}
-				var History = window.History;
 				jQuery(document).ready(function(){
 					History.Adapter.bind(window,'statechange',function(e){	
 						var currState = History.getState();
