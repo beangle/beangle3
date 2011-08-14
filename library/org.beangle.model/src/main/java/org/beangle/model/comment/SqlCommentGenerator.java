@@ -63,10 +63,12 @@ public class SqlCommentGenerator {
 
 			// generate table name
 			String tableName = getTableName(classDoc);
-			if (null != tableName) {
+			if (null == tableName) {
 				tableName = strategy.classToTableName(classDoc.qualifiedName());
+				if(null==tableName){
+					System.out.println("Cannot find tablenam for "+classDoc.qualifiedName());
+				}
 			}
-
 			// find table comment
 			String tableComment = processComment(classDoc.commentText());
 			if (null != tableComment) {
@@ -191,7 +193,7 @@ public class SqlCommentGenerator {
 			strategy.addConfig(urls.nextElement());
 		}
 		if (strategy.getPatterns().isEmpty()) {
-			reporter.printError("Cannot find table.properties in classpath or options. Using -config your/path/to/table.properties");
+			reporter.printError("Cannot find table.properties in classpath or options. Using -config /your/path/to/table.properties");
 			return false;
 		} else {
 			System.out.println(strategy);

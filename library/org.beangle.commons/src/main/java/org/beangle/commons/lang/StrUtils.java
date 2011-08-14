@@ -112,7 +112,7 @@ public final class StrUtils {
 			boolean lower3 = isLowerCase(next);
 			if (lower1 && upper2 && lower3) {
 				build.append(seperator);
-				build.append(toLowerCase(cur));
+				build.append(lowercase ? toLowerCase(cur) : cur);
 				build.append(next);
 				i += 2;
 			} else {
