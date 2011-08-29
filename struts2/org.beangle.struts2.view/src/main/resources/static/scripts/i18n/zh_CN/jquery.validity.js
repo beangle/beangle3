@@ -3,7 +3,7 @@ jQuery.extend(jQuery.validity.messages, {
 	requireSelect:"请选择#{field}",
 	// Format validators:
 	match:"#{field}格式无效",
-	integer:"#{field}应为整数",
+	integer:"#{field}应为自然数",
 	date:"#{field}应为日期格式",
 	email:"#{field}应为邮件格式",
 	usd:"#{field}应为美元格式",

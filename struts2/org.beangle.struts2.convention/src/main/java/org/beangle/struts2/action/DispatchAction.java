@@ -47,7 +47,13 @@ public class DispatchAction extends ActionSupport {
 	}
 
 	protected String forward(Action action, String message) {
-		if (null != message) addActionMessage(getText(message));
+		if (StringUtils.isNotBlank(message)) {
+			if (StringUtils.containsIgnoreCase(message, "error")) {
+				addFlashErrorNow(message);
+			} else {
+				addFlashMessageNow(message);
+			}
+		}
 		return forward(action);
 	}
 

@@ -66,6 +66,7 @@ public class LongIdObject implements LongIdEntity {
 	 * @see java.lang.Object#equals(Object)
 	 */
 	public boolean equals(final Object object) {
+		if (this == object) return true;
 		if (!(object instanceof LongIdObject)) { return false; }
 		LongIdObject rhs = (LongIdObject) object;
 		if (null == getId() || null == rhs.getId()) { return false; }
