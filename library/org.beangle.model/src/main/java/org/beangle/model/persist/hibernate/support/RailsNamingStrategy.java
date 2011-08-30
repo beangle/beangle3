@@ -28,7 +28,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	// 表名、字段名、序列长度
 	private static final int MaxLength = 30;
 
-	private TableNamingStrategy tableNameConfig;
+	private TableNamingStrategy tableNamingStrategy;
 
 	/**
 	 * 根据实体名(entityName)命名表
@@ -36,7 +36,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 * @param className
 	 */
 	public String classToTableName(String className) {
-		String tableName = tableNameConfig.classToTableName(className);
+		String tableName = tableNamingStrategy.classToTableName(className);
 		if (tableName.length() > MaxLength) {
 			logger.error("{}'s length greate than 30, database like oracle will not be supported!", tableName);
 		}
@@ -87,15 +87,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 * @param propertyName
 	 */
 	public String propertyToColumnName(String propertyName) {
-		StringBuilder sb = new StringBuilder(addUnderscores(unqualify(propertyName)));
-		if (!StringUtils.endsWithIgnoreCase(propertyName, "id") && isManyToOne()) {
-			sb.append("_id");
-		}
-		if (sb.length() > MaxLength) {
-			logger.error("{}'s length greate than 30, database will not be supported!",
-					sb.toString());
-		}
-		return sb.toString();
+		return addUnderscores(unqualify(propertyName));
 	}
 
 	/**
@@ -112,13 +104,13 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 			String propertyTableName, String referencedColumnName) {
 		String header = null == propertyName ? propertyTableName : unqualify(propertyName);
 		if (header == null) { throw new AssertionFailure("NamingStrategy not properly filled"); }
-		// workground annotation collection foreignKey.
-		if (header.endsWith("s")) {
-			header = addUnderscores(propertyTableName);
-		} else {
+		if (isManyToOne()) {
 			header = addUnderscores(header);
+		} else {
+			header = addUnderscores(propertyTableName);
 		}
 		return header + "_" + referencedColumnName;
+
 	}
 
 	/**
@@ -130,11 +122,11 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 		// just for annotation configuration,it;s ownerEntity is classname(not entityName), and
 		// ownerEntityTable is class shortname
 		if (Character.isUpperCase(ownerEntityTable.charAt(0))) {
-			ownerTable = tableNameConfig.classToTableName(ownerEntity);
+			ownerTable = tableNamingStrategy.classToTableName(ownerEntity);
 		} else {
 			ownerTable = tableName(ownerEntityTable);
 		}
-		String tblName = tableNameConfig.collectionToTableName(ownerEntity, ownerTable, propertyName);
+		String tblName = tableNamingStrategy.collectionToTableName(ownerEntity, ownerTable, propertyName);
 		if (tblName.length() > MaxLength) {
 			logger.error("{}'s length greate than 30, database will not be supported!", tblName);
 		}
@@ -168,12 +160,8 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 				+ referencedColumn;
 	}
 
-	public TableNamingStrategy getTableNameConfig() {
-		return tableNameConfig;
-	}
-
-	public void setTableNameConfig(TableNamingStrategy tableNameConfig) {
-		this.tableNameConfig = tableNameConfig;
+	public void setTableNamingStrategy(TableNamingStrategy tableNamingStrategy) {
+		this.tableNamingStrategy = tableNamingStrategy;
 	}
 
 	protected static String addUnderscores(String name) {
@@ -192,9 +180,9 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 */
 	private boolean isManyToOne() {
 		StackTraceElement[] trace = Thread.currentThread().getStackTrace();
-		if (trace.length >= 7) {
-			for (int i = 5; i <= 7; i++) {
-				if (trace[i].getMethodName().equals("bindManyToOne")) { return true; }
+		if (trace.length >= 9) {
+			for (int i = 6; i <= 8; i++) {
+				if (trace[i].getClassName().equals("org.hibernate.cfg.ToOneFkSecondPass")) return true;
 			}
 		}
 		return false;

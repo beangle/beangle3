@@ -16,6 +16,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.StrUtils;
+import org.beangle.model.Component;
 import org.beangle.model.persist.hibernate.support.DefaultTableNamingStrategy;
 
 import com.sun.javadoc.AnnotationDesc;
@@ -37,6 +38,10 @@ public class SqlCommentGenerator {
 	private static final String SQLFILE = "file";
 
 	private static DefaultTableNamingStrategy strategy;
+	private static Set<String> primaryTypes = CollectUtils.newHashSet("String", "int", "long", "float",
+			"double", "boolean");
+	// reserved types
+	private static Set<String> collectionTypes = CollectUtils.newHashSet("Set", "Map", "List");
 
 	public static boolean start(RootDoc root) throws IOException {
 		ClassDoc[] classes = root.classes();
@@ -46,12 +51,6 @@ public class SqlCommentGenerator {
 		String commentLogFileName = System.getProperty("java.io.tmpdir") + "/comment_log.txt";
 		BufferedWriter out = new BufferedWriter(new FileWriter(commentFileName));
 		BufferedWriter log = new BufferedWriter(new FileWriter(commentLogFileName));
-
-		// reserved types
-		Set<String> multiTypes = CollectUtils.newHashSet("Set", "Map", "List");
-		Set<String> scalaTypes = CollectUtils.newHashSet("String", "Integer", "int", "Long", "long", "Float",
-				"float", "Double", "double", "Date", "DateTime", "Calendar", "BigDecimal", "Boolean",
-				"boolean");
 
 		// nocomment
 		int nocomment = 0;
@@ -64,10 +63,8 @@ public class SqlCommentGenerator {
 			// generate table name
 			String tableName = getTableName(classDoc);
 			if (null == tableName) {
-				tableName = strategy.classToTableName(classDoc.qualifiedName());
-				if(null==tableName){
-					System.out.println("Cannot find tablenam for "+classDoc.qualifiedName());
-				}
+				System.out.println("Cannot find tablenam for " + classDoc.qualifiedName());
+				continue;
 			}
 			// find table comment
 			String tableComment = processComment(classDoc.commentText());
@@ -86,18 +83,24 @@ public class SqlCommentGenerator {
 					FieldDoc field = fields[j];
 					if (field.isTransient() || field.isStatic() || field.isEnum()) continue;
 					String simpleTypeName = field.type().simpleTypeName();
-					if (multiTypes.contains(simpleTypeName)) continue;
 
 					String columnComment = processComment(fields[j].commentText());
-
 					if (null != columnComment) {
-						String columnName = StrUtils.unCamel(fields[j].name(), '_', true);
-						if (!scalaTypes.contains(simpleTypeName)) {
-							columnName = columnName + "_id";
-							columnComment = columnComment + "ID";
+						if (collectionTypes.contains(simpleTypeName)) {
+							String joinTable = collectionTable(classDoc, tableName, field);
+							if (null != joinTable) {
+								out.write("\ncomment on table " + joinTable + " is '" + tableComment + "-"
+										+ columnComment + "';\n");
+							}
+						} else {
+							String columnName = getColumnName(fields[j]);
+							if (isEntity(field)) {
+								columnName = columnName + "_id";
+								columnComment = columnComment + "ID";
+							}
+							out.write("comment on column " + tableName + "." + columnName + " is '"
+									+ columnComment + "';\n");
 						}
-						out.write("comment on column " + tableName + "." + columnName + " is '"
-								+ columnComment + "';\n");
 					} else {
 						if (null != fields[j].position() && fields[j].position().column() > 0) {
 							nocomments.append(classDoc.qualifiedName()).append('.').append(fields[j].name())
@@ -133,6 +136,44 @@ public class SqlCommentGenerator {
 		return comment.trim();
 	}
 
+	private static String collectionTable(ClassDoc classDoc, String tableName, FieldDoc fieldDoc) {
+		String joinTable = null;
+		AnnotationDesc[] anns = fieldDoc.annotations();
+		if (null != anns && anns.length > 0) {
+			boolean find = false;
+			for (AnnotationDesc anno : anns) {
+				if ("ManyToMany".equals(anno.annotationType().name())) {
+					find = true;
+					AnnotationDesc.ElementValuePair[] pairs = anno.elementValues();
+					if (null != pairs && pairs.length > 0) {
+						for (AnnotationDesc.ElementValuePair pair : pairs) {
+							if (pair.element().name().equals("mappedBy")) {
+								find = false;
+								break;
+							}
+						}
+					}
+				}
+				if ("JoinTable".equals(anno.annotationType().name())) {
+					AnnotationDesc.ElementValuePair[] pairs = anno.elementValues();
+					if (null != pairs && pairs.length > 0) {
+						for (AnnotationDesc.ElementValuePair pair : pairs) {
+							if (pair.element().name().equals("name")) {
+								joinTable = pair.value().value().toString();
+								break;
+							}
+						}
+					}
+				}
+			}
+			if (find && null == joinTable) {
+				joinTable = strategy.collectionToTableName(classDoc.qualifiedName(), tableName,
+						fieldDoc.name());
+			}
+		}
+		return joinTable;
+	}
+
 	private static boolean isEntity(ClassDoc classDoc) {
 		AnnotationDesc[] anns = classDoc.annotations();
 		if (null == anns || anns.length == 0) return false;
@@ -142,20 +183,52 @@ public class SqlCommentGenerator {
 		return false;
 	}
 
+	private static boolean isEntity(FieldDoc fieldDoc) {
+		String className = fieldDoc.type().qualifiedTypeName();
+		if (StringUtils.startsWith(className, "java.")) return false;
+		if (primaryTypes.contains(className)) return false;
+		AnnotationDesc[] anns = fieldDoc.annotations();
+		if (null != anns && anns.length > 0) {
+			for (AnnotationDesc anno : anns) {
+				if ("Enumerated".equals(anno.annotationType().name())
+						|| "Embedded".equals(anno.annotationType().name())) return false;
+			}
+		}
+		return true;
+	}
+
 	private static String getTableName(ClassDoc classDoc) {
 		AnnotationDesc[] anns = classDoc.annotations();
-		if (null == anns || anns.length == 0) return null;
-		for (AnnotationDesc anno : anns) {
-			if ("Table".equals(anno.annotationType().name())) {
-				AnnotationDesc.ElementValuePair[] pairs = anno.elementValues();
-				if (null != pairs && pairs.length > 0) {
-					for (AnnotationDesc.ElementValuePair pair : pairs) {
-						if (pair.element().name().equals("name")) return pair.value().value().toString();
+		if (null != anns && anns.length >= 0) {
+			for (AnnotationDesc anno : anns) {
+				if ("Table".equals(anno.annotationType().name())) {
+					AnnotationDesc.ElementValuePair[] pairs = anno.elementValues();
+					if (null != pairs && pairs.length > 0) {
+						for (AnnotationDesc.ElementValuePair pair : pairs) {
+							if (pair.element().name().equals("name")) return pair.value().value().toString();
+						}
 					}
 				}
 			}
 		}
-		return null;
+		return strategy.classToTableName(classDoc.qualifiedName());
+	}
+
+	private static String getColumnName(FieldDoc fieldDoc) {
+		AnnotationDesc[] anns = fieldDoc.annotations();
+		if (null != anns && anns.length >= 0) {
+			for (AnnotationDesc anno : anns) {
+				if ("Column".equals(anno.annotationType().name())) {
+					AnnotationDesc.ElementValuePair[] pairs = anno.elementValues();
+					if (null != pairs && pairs.length > 0) {
+						for (AnnotationDesc.ElementValuePair pair : pairs) {
+							if (pair.element().name().equals("name")) return pair.value().value().toString();
+						}
+					}
+				}
+			}
+		}
+		return StrUtils.unCamel(fieldDoc.name(), '_', true);
 	}
 
 	/**

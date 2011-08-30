@@ -96,10 +96,10 @@
 	</bean>
 	
 	<bean id="railsNamingStrategy" class="org.beangle.model.persist.hibernate.support.RailsNamingStrategy">
-		<property name="tableNameConfig" ref="tableNameConfig"/>
+		<property name="tableNamingStrategy" ref="tableNamingStrategy"/>
 	</bean>
 	
-	<bean id="tableNameConfig" class="org.beangle.model.persist.hibernate.support.DefaultTableNameConfig">
+	<bean id="tableNamingStrategy" class="org.beangle.model.persist.hibernate.support.DefaultTableNamingStrategy">
 		<property name="resource">
 			<bean class="org.beangle.spring.config.ConfigResource">
 				<property name="locations" value="classpath*:META-INF/beangle/table.properties"/>
