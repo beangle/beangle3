@@ -9,12 +9,17 @@ import javax.validation.constraints.NotNull;
 
 import org.beangle.ems.rule.RuleParameter;
 import org.beangle.model.pojo.LongIdObject;
+/**
+ * 规则参数配置
+ * @author chaostone
+ *
+ */
 @Entity
 public class RuleConfigParam extends LongIdObject {
 
 	private static final long serialVersionUID = 8711866530914907008L;
 
-	/** 标准-规则 */
+	/**规则 */
 	@NotNull
 	private RuleConfig config;
 

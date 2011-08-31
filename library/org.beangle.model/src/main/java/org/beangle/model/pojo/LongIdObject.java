@@ -16,6 +16,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class LongIdObject implements LongIdEntity {
 	private static final long serialVersionUID = -7530111699332363124L;
 
+	/**非业务主键*/
 	@Id
 	@GeneratedValue(generator = "table_sequence")
 	@GenericGenerator(name = "table_sequence", strategy = "org.beangle.model.persist.hibernate.support.TableSeqGenerator")

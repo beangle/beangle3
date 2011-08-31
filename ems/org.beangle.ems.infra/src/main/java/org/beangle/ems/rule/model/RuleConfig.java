@@ -14,6 +14,11 @@ import javax.validation.constraints.NotNull;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.rule.Rule;
 import org.beangle.model.pojo.LongIdTimeObject;
+/**
+ * 系统规则配置
+ * @author chaostone
+ *
+ */
 @Entity
 public class RuleConfig extends LongIdTimeObject {
 

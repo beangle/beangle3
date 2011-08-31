@@ -15,7 +15,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
- * 登记系统使用的基础代码
+ * 基础代码元信息
  * </p>
  * 这些代码的名称、英文名称和全称类名
  * 

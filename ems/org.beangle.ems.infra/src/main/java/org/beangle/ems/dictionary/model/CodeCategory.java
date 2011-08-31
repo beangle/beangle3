@@ -28,13 +28,16 @@ public class CodeCategory extends LongIdObject implements HierarchyEntity<CodeCa
 
 	private static final long serialVersionUID = -8865890399079481866L;
 
+	/**名称*/
 	@NotNull
 	@Size(max = 50)
 	@Column(unique = true)
 	private String name;
 
+	/**上级代码种类*/
 	private CodeCategory parent;
 
+	/**下级代码种类*/
 	@OneToMany(mappedBy="parent",cascade=CascadeType.ALL)
 	private List<CodeCategory> children = CollectUtils.newArrayList();
 

@@ -17,6 +17,11 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.rule.RuleParameter;
 import org.beangle.ems.rule.Rule;
 import org.beangle.model.pojo.LongIdTimeObject;
+/**
+ * 系统规则
+ * @author chaostone
+ *
+ */
 @Entity(name="org.beangle.ems.rule.Rule")
 public class RuleBean extends LongIdTimeObject implements Rule {
 

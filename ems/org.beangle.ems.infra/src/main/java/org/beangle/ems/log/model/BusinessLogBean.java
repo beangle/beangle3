@@ -60,6 +60,7 @@ public class BusinessLogBean extends LongIdObject implements BusinessLog {
 	@Size(max = 100)
 	private String agent;
 
+	/**日志明细*/
 	@Cascade(CascadeType.ALL)
 	private BusinessLogDetail detail;
 
