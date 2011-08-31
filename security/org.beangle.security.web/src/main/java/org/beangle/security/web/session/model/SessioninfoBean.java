@@ -14,7 +14,7 @@ import org.beangle.model.pojo.StringIdObject;
 import org.beangle.security.core.session.category.CategorySessioninfo;
 
 /**
- * 默认会话活动bean
+ * 默认会话活动
  * 
  * @author chaostone
  * @version $Id: SessioninfoBean.java Jul 7, 2011 10:04:48 PM chaostone $
@@ -38,6 +38,7 @@ public class SessioninfoBean extends StringIdObject implements CategorySessionin
 	@Size(max = 50)
 	private String fullname;
 
+	/**用户种类*/
 	private String category;
 
 	/** 登录IP */

@@ -26,7 +26,8 @@ import org.beangle.model.pojo.LongIdTimeObject;
 import org.beangle.model.util.EntityUtils;
 
 /**
- * 系统中所有用户的账号、权限、状态信息.
+ * 系统用户
+ * 所有用户的账号、权限、状态信息.
  * 
  * @author dell,chaostone 2005-9-26
  */
@@ -85,6 +86,7 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 	 */
 	protected Date passwordExpiredAt;
 
+	/** 是否启用 */
 	@NotNull
 	protected boolean enabled;
 

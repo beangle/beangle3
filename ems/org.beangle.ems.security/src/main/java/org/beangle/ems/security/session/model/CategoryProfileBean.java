@@ -10,24 +10,33 @@ import javax.validation.constraints.NotNull;
 import org.beangle.ems.security.Category;
 import org.beangle.model.pojo.LongIdObject;
 
+/**
+ * 用户种类配置
+ * @author chaostone
+ *
+ */
 @Entity
 public class CategoryProfileBean extends LongIdObject {
 
 	private static final long serialVersionUID = 1999239598984221565L;
 
+	/**会话配置*/
 	@NotNull
 	protected SessionProfileBean sessionProfile;
 
+	/**用户种类*/
 	@NotNull
 	protected Category category;
 
+	/**容量*/
 	@NotNull
 	protected int capacity;
 
+	/**最大会话数*/
 	@NotNull
 	protected int userMaxSessions = 1;
 
-	/** minutes */
+	/** 过期时间 */
 	@NotNull
 	protected int inactiveInterval;
 

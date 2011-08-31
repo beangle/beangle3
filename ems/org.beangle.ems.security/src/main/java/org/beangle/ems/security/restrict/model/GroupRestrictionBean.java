@@ -14,12 +14,18 @@ import org.beangle.ems.security.restrict.RestrictionHolder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+/**
+ * 用户组数据权限
+ * @author chaostone
+ *
+ */
 @Entity(name = "org.beangle.ems.security.restrict.GroupRestriction")
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class GroupRestrictionBean extends RestrictionBean implements GroupRestriction {
 
 	private static final long serialVersionUID = -8655931585994557645L;
 
+	/**用户组*/
 	@NotNull
 	private Group holder;
 

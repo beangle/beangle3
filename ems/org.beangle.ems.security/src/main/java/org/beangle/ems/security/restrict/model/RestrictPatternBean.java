@@ -15,6 +15,11 @@ import org.beangle.ems.security.restrict.RestrictPattern;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+/**
+ * 数据限制模式
+ * @author chaostone
+ *
+ */
 @Entity(name = "org.beangle.ems.security.restrict.RestrictPattern")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -22,12 +27,15 @@ public class RestrictPatternBean extends LongIdObject implements RestrictPattern
 
 	private static final long serialVersionUID = 3491583230212588933L;
 
+	/**说明*/
 	private String remark;
 
+	/**内容*/
 	@NotNull
 	@Size(max = 600)
 	private String content;
 
+	/**对应实体*/
 	@NotNull
 	private RestrictEntity entity;
 

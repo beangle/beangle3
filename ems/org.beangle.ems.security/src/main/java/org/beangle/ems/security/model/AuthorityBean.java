@@ -19,7 +19,8 @@ import org.beangle.ems.security.restrict.AuthorityRestriction;
 import org.beangle.ems.security.restrict.RestrictionHolder;
 
 /**
- * 权限实体，模块及其操作的数据范围规定
+ * 系统权限实体
+ * 模块及其操作的数据范围规定
  * 
  * @author dell,chaostone 2005-9-26
  */

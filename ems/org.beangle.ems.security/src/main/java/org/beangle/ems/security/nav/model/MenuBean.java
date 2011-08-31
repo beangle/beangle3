@@ -27,41 +27,57 @@ import org.beangle.model.pojo.LongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+/**
+ * 系统菜单
+ * @author chaostone
+ *
+ */
 @Entity(name = "org.beangle.ems.security.nav.Menu")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MenuBean extends LongIdObject implements Menu {
 
 	private static final long serialVersionUID = 3864556621041443066L;
+	
+	/**代码*/
 	@NotNull
 	@Size(max = 32)
 	@Column(unique = true)
 	private String code;
 
+	/**名称*/
 	@NotNull
 	@Size(max = 100)
 	private String name;
 
+	/**标题*/
 	@NotNull
 	@Size(max = 100)
 	private String title;
 
+	/**入口*/
 	private String entry;
 
+	/**备注*/
 	private String remark;
 
+	/**关联资源*/
 	@ManyToMany
 	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	private Set<Resource> resources = CollectUtils.newHashSet();
 
+	/**是否启用*/
 	@NotNull
 	private boolean enabled = true;
 
+	/**菜单配置*/
 	@NotNull
 	private MenuProfile profile;
 
+	/**上级菜单*/
 	private Menu parent;
 
+	/**下级菜单*/
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
 	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	@OrderBy("code")

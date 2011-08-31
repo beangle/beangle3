@@ -19,37 +19,49 @@ import org.beangle.ems.security.restrict.RestrictEntity;
 import org.beangle.ems.security.restrict.RestrictField;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
+/**
+ * 数据权限限制域
+ * @author chaostone
+ *
+ */
 @Entity(name = "org.beangle.ems.security.restrict.RestrictField")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RestrictFieldBean extends LongIdObject implements RestrictField {
 	private static final long serialVersionUID = 1L;
 
+	/**名称*/
 	@NotNull
 	@Size(max = 50)
 	@Column(unique = true)
 	private String name;
 
+	/**关键字*/
 	@Size(max = 20)
 	private String keyName;
 
+	/**属性*/
 	@Size(max = 100)
 	private String propertyNames;
 
+	/**类型*/
 	@NotNull
 	@Size(max = 100)
 	private String type;
 
+	/**备注*/
 	@NotNull
 	private String remark;
 
+	/**数据源*/
 	@Size(max = 200)
 	private String source;
 
+	/**是否允许多值*/
 	@NotNull
 	private boolean multiple;
 
+	/**对应实体*/
 	@ManyToMany(mappedBy = "fields")
 	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	private Set<RestrictEntity> entities = CollectUtils.newHashSet();

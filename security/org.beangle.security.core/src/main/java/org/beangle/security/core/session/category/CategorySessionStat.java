@@ -24,22 +24,29 @@ public class CategorySessionStat extends LongIdObject implements FlashEntity {
 
 	private static final long serialVersionUID = 8698006403892972254L;
 
+	/**服务器名*/
 	@NotNull
 	private String serverName;
 
+	/**统计时间*/
 	@NotNull
 	private Date statAt = new Date();
 
+	/**用户分类*/
 	@NotNull
 	private String category;
 
+	/**容量人数*/
 	private int capacity;
 
+	/**在线人数*/
 	@Column(name = "on_line")
 	private int online;
 
+	/**过期时间(minuts)*/
 	private int inactiveInterval;
 
+	/**单用户最大会话*/
 	private int userMaxSessions;
 
 	public CategorySessionStat() {

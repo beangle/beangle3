@@ -14,10 +14,16 @@ import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.ems.security.restrict.RestrictionHolder;
 import org.beangle.ems.security.restrict.UserRestriction;
 
+/**
+ * 用户全局级数据权限
+ * @author chaostone
+ *
+ */
 @Entity(name = "org.beangle.ems.security.restrict.UserRestriction")
 public class UserRestrictionBean extends RestrictionBean implements UserRestriction {
 	private static final long serialVersionUID = 5582639967774356718L;
 
+	/**用户*/
 	@NotNull
 	private User holder;
 

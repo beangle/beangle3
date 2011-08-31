@@ -27,7 +27,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
- * 系统中用户组的基本信息和账号信息.
+ * 系统用户组
+ * 用户组的基本信息.
  * 
  * @author dell,chaostone 2005-9-26
  */

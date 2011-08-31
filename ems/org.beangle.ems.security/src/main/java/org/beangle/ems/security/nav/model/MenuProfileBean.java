@@ -21,6 +21,7 @@ import org.beangle.ems.security.nav.MenuProfile;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+/**菜单配置*/
 @Entity(name = "org.beangle.ems.security.nav.MenuProfile")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -28,11 +29,13 @@ public class MenuProfileBean extends LongIdObject implements MenuProfile {
 
 	private static final long serialVersionUID = 9147563981118270960L;
 
+	/**名称*/
 	@NotNull
 	@Size(max = 50)
 	@Column(unique = true)
 	private String name;
 
+	/**菜单*/
 	@OneToMany(mappedBy = "profile")
 	private List<Menu> menus = CollectUtils.newArrayList();
 
@@ -40,6 +43,7 @@ public class MenuProfileBean extends LongIdObject implements MenuProfile {
 	@NotNull
 	private Category category;
 
+	/**是否启用*/
 	@NotNull
 	private boolean enabled;
 

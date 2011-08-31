@@ -15,6 +15,11 @@ import org.beangle.ems.security.Category;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+/**
+ * 用户种类
+ * @author chaostone
+ *
+ */
 @Entity(name = "org.beangle.ems.security.Category")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -22,11 +27,13 @@ public class CategoryBean extends LongIdObject implements Category {
 
 	private static final long serialVersionUID = -5929038500510261629L;
 
+	/**名称*/
 	@NotNull
 	@Size(max = 50)
 	@Column(unique = true)
 	private String name;
 
+	/**标题*/
 	@NotNull
 	@Size(max = 50)
 	@Column(unique = true)

@@ -24,7 +24,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
- * 系统模块，代表一组系统功能点的集合.<br>
+ * 系统资源
  * <p>
  * 系统模块之间存在基于代码表示上的父子级联关系.<br>
  * 上下级关系是通过模块代码的包含关系体现的。<br>
@@ -65,11 +65,13 @@ public class ResourceBean extends LongIdObject implements Resource {
 	/** 访问时需要其它参数 */
 	@NotNull
 	private boolean needParams;
-	
+
+	/** 用户种类 */
 	@ManyToMany
 	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	private Set<Category> categories = CollectUtils.newHashSet();
 
+	/** 对应实体 */
 	@ManyToMany
 	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	private Set<RestrictEntity> entities = CollectUtils.newHashSet();
@@ -146,5 +148,5 @@ public class ResourceBean extends LongIdObject implements Resource {
 	public void setNeedParams(boolean needParams) {
 		this.needParams = needParams;
 	}
-	
+
 }
