@@ -19,7 +19,7 @@ import org.beangle.ems.security.restrict.AuthorityRestriction;
 import org.beangle.ems.security.restrict.RestrictionHolder;
 
 /**
- * 授权实体
+ * 系统授权实体
  * 用户组和资源以及数据范围规定
  * 
  * @author dell,chaostone 2005-9-26
