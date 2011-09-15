@@ -995,9 +995,6 @@
     // Inform the report of a failure and display an aggregate error according to the 
     // idiom of the current output mode.
     function raiseAggregateError($obj, msg) {
-		if($(obj).attr('disabled')) {
-			return;
-		}
         addToReport();
 
         if ($.validity.outputs[$.validity.settings.outputMode] &&
