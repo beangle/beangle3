@@ -981,6 +981,9 @@
     // Inform the report of a failure and display an error according to the 
     // idiom of the current ouutput mode.
     function raiseError(obj, msg) {
+		if($(obj).attr('disabled')) {
+			return;
+		}
         addToReport();
 
         if ($.validity.outputs[$.validity.settings.outputMode] &&
