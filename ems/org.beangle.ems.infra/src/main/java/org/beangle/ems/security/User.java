@@ -6,10 +6,9 @@ package org.beangle.ems.security;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-import org.beangle.ems.security.restrict.RestrictionHolder;
-import org.beangle.ems.security.restrict.UserRestriction;
 import org.beangle.model.pojo.EnabledEntity;
 import org.beangle.model.pojo.LongIdTimeEntity;
 import org.beangle.model.pojo.TemporalActiveEntity;
@@ -19,8 +18,7 @@ import org.beangle.model.pojo.TemporalActiveEntity;
  * 
  * @author dell,chaostone 2005-9-26
  */
-public interface User extends LongIdTimeEntity, RestrictionHolder<UserRestriction>, TemporalActiveEntity,
-		EnabledEntity, Principal {
+public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEntity, Principal {
 
 	// 新建用户的缺省密码
 	public static final String DEFAULT_PASSWORD = "1";
@@ -153,4 +151,28 @@ public interface User extends LongIdTimeEntity, RestrictionHolder<UserRestrictio
 	 * @return
 	 */
 	public boolean isPasswordExpired();
+
+	/**
+	 * 用户自定义属性
+	 * 
+	 * @return
+	 */
+	public Map<Long, String> getProperties();
+
+	/**
+	 * 查询对应自定属性
+	 * 
+	 * @param property
+	 * @return
+	 */
+	public String getProperty(UserProperty property);
+
+	/**
+	 * 设置自定义属性
+	 * 
+	 * @param property
+	 * @param text
+	 */
+	public void setProperty(UserProperty property, String text);
+
 }

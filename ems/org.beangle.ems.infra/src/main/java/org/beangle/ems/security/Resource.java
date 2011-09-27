@@ -4,10 +4,7 @@
  */
 package org.beangle.ems.security;
 
-import java.util.Set;
-
 import org.beangle.model.pojo.LongIdEntity;
-import org.beangle.ems.security.restrict.RestrictEntity;
 
 /**
  * 系统资源.<br>
@@ -65,20 +62,6 @@ public interface Resource extends LongIdEntity {
 	 * @return
 	 */
 	public void setEnabled(boolean isEnabled);
-
-	/**
-	 * 限制实体
-	 * 
-	 * @return
-	 */
-	public Set<RestrictEntity> getEntities();
-
-	/**
-	 * 设置限制实体
-	 * 
-	 * @param entities
-	 */
-	public void setEntities(Set<RestrictEntity> entities);
 
 	public static class Scope {
 		/** 不受保护的公共资源 */

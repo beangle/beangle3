@@ -4,8 +4,6 @@
  */
 package org.beangle.ems.security.restrict;
 
-import java.util.Map;
-
 import org.beangle.model.pojo.LongIdEntity;
 
 /**
@@ -15,54 +13,26 @@ import org.beangle.model.pojo.LongIdEntity;
  */
 public interface Restriction extends LongIdEntity, Cloneable {
 	public static final String ALL = "*";
-
 	/**
-	 * 数据权限持有者
+	 * 限制内容
 	 * 
 	 * @return
 	 */
-	public RestrictionHolder<? extends Restriction> getHolder();
+	public String getContent();
 
 	/**
-	 * 设置数据权限持有者
-	 * 
-	 * @param holder
-	 */
-	public void setHolder(RestrictionHolder<? extends Restriction> holder);
-
-	/**
-	 * 限制模式
+	 * 针对实体
 	 * 
 	 * @return
 	 */
-	public RestrictPattern getPattern();
+	public RestrictEntity getEntity();
 
 	/**
-	 * 设置限制模式
-	 * 
-	 * @param pattern
-	 */
-	public void setPattern(RestrictPattern pattern);
-
-	/**
-	 * 限制项
+	 * 备注
 	 * 
 	 * @return
 	 */
-	public Map<Long, String> getItems();
-
-	/**
-	 * 设置限制项
-	 * 
-	 * @param items
-	 */
-	public void setItems(Map<Long, String> items);
-
-	public String getItem(String fieldName);
-
-	public String getItem(RestrictField field);
-
-	public void setItem(RestrictField field, String text);
+	public String getRemark();
 
 	/**
 	 * 是否有效
@@ -70,11 +40,4 @@ public interface Restriction extends LongIdEntity, Cloneable {
 	 * @return
 	 */
 	public boolean isEnabled();
-
-	/**
-	 * 设置是否有效
-	 * 
-	 * @param isEnabled
-	 */
-	public void setEnabled(boolean isEnabled);
 }

@@ -6,17 +6,16 @@ package org.beangle.ems.security.model;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
-import org.beangle.model.pojo.LongIdObject;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.Resource;
-import org.beangle.ems.security.restrict.AuthorityRestriction;
+import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.ems.security.restrict.RestrictionHolder;
+import org.beangle.model.pojo.LongIdObject;
 
 /**
  * 系统授权实体
@@ -25,7 +24,7 @@ import org.beangle.ems.security.restrict.RestrictionHolder;
  * @author dell,chaostone 2005-9-26
  */
 @Entity(name = "org.beangle.ems.security.Authority")
-public class AuthorityBean extends LongIdObject implements RestrictionHolder<AuthorityRestriction>, Authority {
+public class AuthorityBean extends LongIdObject implements RestrictionHolder, Authority {
 
 	private static final long serialVersionUID = -8956079356245507990L;
 
@@ -38,8 +37,8 @@ public class AuthorityBean extends LongIdObject implements RestrictionHolder<Aut
 	protected Resource resource;
 
 	/** 该模块对应的数据操作范围 */
-	@OneToMany(mappedBy = "holder", cascade = CascadeType.ALL)
-	protected Set<AuthorityRestriction> restrictions;
+	@ManyToMany
+	protected Set<Restriction> restrictions;
 
 	public AuthorityBean() {
 		super();
@@ -63,11 +62,11 @@ public class AuthorityBean extends LongIdObject implements RestrictionHolder<Aut
 		this.resource = (Resource) resource;
 	}
 
-	public Set<AuthorityRestriction> getRestrictions() {
+	public Set<Restriction> getRestrictions() {
 		return restrictions;
 	}
 
-	public void setRestrictions(Set<AuthorityRestriction> restrictions) {
+	public void setRestrictions(Set<Restriction> restrictions) {
 		this.restrictions = restrictions;
 	}
 

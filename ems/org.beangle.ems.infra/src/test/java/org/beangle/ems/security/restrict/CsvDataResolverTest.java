@@ -10,19 +10,19 @@ import java.util.List;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.security.model.GroupBean;
-import org.beangle.ems.security.restrict.model.RestrictFieldBean;
-import org.beangle.ems.security.restrict.service.CsvDataResolver;
+import org.beangle.ems.security.restrict.model.UserPropertyBean;
+import org.beangle.ems.security.service.CsvDataResolver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 @Test
 public class CsvDataResolverTest {
 	CsvDataResolver resolver = new CsvDataResolver();
-	RestrictField field = null;
+	UserProperty field = null;
 
 	@BeforeClass
 	public void setUp() {
-		field = new RestrictFieldBean("group", GroupBean.class.getName(), "oql:from Group");
+		field = new UserPropertyBean("group", GroupBean.class.getName(), "oql:from Group");
 		field.setKeyName("id");
 		field.setPropertyNames("name");
 	}

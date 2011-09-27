@@ -12,11 +12,11 @@ import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.model.GroupBean;
 import org.beangle.ems.security.restrict.model.RestrictEntityBean;
-import org.beangle.ems.security.restrict.model.RestrictFieldBean;
+import org.beangle.ems.security.restrict.model.UserPropertyBean;
 import org.beangle.ems.security.restrict.model.RestrictPatternBean;
 import org.beangle.ems.security.restrict.model.UserRestrictionBean;
-import org.beangle.ems.security.restrict.service.CsvDataResolver;
 import org.beangle.ems.security.restrict.service.RestrictionServiceImpl;
+import org.beangle.ems.security.service.CsvDataResolver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -34,7 +34,7 @@ public class ApplyTest {
 	}
 
 	public void testApply() {
-		RestrictField field = new RestrictFieldBean("groups", GroupBean.class.getName(),
+		UserProperty field = new UserPropertyBean("groups", GroupBean.class.getName(),
 				"id;name,1;group1,2;group2");
 		field.setKeyName("id");
 		field.setPropertyNames("name");

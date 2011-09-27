@@ -4,16 +4,15 @@
  */
 package org.beangle.ems.security;
 
-import org.beangle.model.pojo.LongIdEntity;
-import org.beangle.ems.security.restrict.AuthorityRestriction;
 import org.beangle.ems.security.restrict.RestrictionHolder;
+import org.beangle.model.pojo.LongIdEntity;
 
 /**
  * 权限
  * 
  * @author chaostone 2005-9-26
  */
-public interface Authority extends LongIdEntity, Cloneable, RestrictionHolder<AuthorityRestriction> {
+public interface Authority extends LongIdEntity, Cloneable, RestrictionHolder {
 	/**
 	 * 系统资源
 	 * 

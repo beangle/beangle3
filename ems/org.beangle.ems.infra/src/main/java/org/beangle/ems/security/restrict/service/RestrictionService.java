@@ -7,11 +7,11 @@ package org.beangle.ems.security.restrict.service;
 import java.util.Collection;
 import java.util.List;
 
-import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
-import org.beangle.ems.security.restrict.RestrictField;
+import org.beangle.ems.security.UserProperty;
 import org.beangle.ems.security.restrict.Restriction;
+import org.beangle.model.query.builder.OqlBuilder;
 
 /**
  * 资源访问约束服务
@@ -46,7 +46,7 @@ public interface RestrictionService {
 	 * @param restriction
 	 * @return
 	 */
-	public Object getFieldValue(RestrictField field, Restriction restriction);
+	public Object getFieldValue(UserProperty field, Restriction restriction);
 
 	/**
 	 * @param builder

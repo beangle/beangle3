@@ -4,20 +4,15 @@
  */
 package org.beangle.ems.security.model;
 
-import java.util.Set;
-
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.StrUtils;
 import org.beangle.ems.security.Resource;
-import org.beangle.ems.security.restrict.RestrictEntity;
 import org.beangle.model.pojo.LongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -58,10 +53,6 @@ public class ResourceBean extends LongIdObject implements Resource {
 	@NotNull
 	private boolean enabled = true;
 
-	@ManyToMany
-	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
-	private Set<RestrictEntity> entities = CollectUtils.newHashSet();
-
 	public String getRemark() {
 		return remark;
 	}
@@ -92,14 +83,6 @@ public class ResourceBean extends LongIdObject implements Resource {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public Set<RestrictEntity> getEntities() {
-		return entities;
-	}
-
-	public void setEntities(Set<RestrictEntity> entities) {
-		this.entities = entities;
 	}
 
 	public String getDescription() {

@@ -6,7 +6,6 @@ package org.beangle.ems.security;
 
 import java.util.Set;
 
-import org.beangle.ems.security.restrict.GroupRestriction;
 import org.beangle.ems.security.restrict.RestrictionHolder;
 import org.beangle.model.pojo.HierarchyEntity;
 import org.beangle.model.pojo.LongIdTimeEntity;
@@ -16,7 +15,7 @@ import org.beangle.model.pojo.LongIdTimeEntity;
  * 
  * @author chaostone 2005-9-26
  */
-public interface Group extends LongIdTimeEntity, RestrictionHolder<GroupRestriction>, HierarchyEntity<Group>,
+public interface Group extends LongIdTimeEntity, RestrictionHolder, HierarchyEntity<Group>,
 		Comparable<Group> {
 
 	/** 匿名用户组id */

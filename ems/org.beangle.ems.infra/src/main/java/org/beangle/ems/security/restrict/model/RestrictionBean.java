@@ -4,46 +4,63 @@
  */
 package org.beangle.ems.security.restrict.model;
 
-import java.util.Map;
-
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.StringUtils;
-import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.lang.StrUtils;
-import org.beangle.model.pojo.LongIdObject;
-import org.beangle.ems.security.restrict.RestrictField;
-import org.beangle.ems.security.restrict.RestrictPattern;
+import org.beangle.ems.security.restrict.RestrictEntity;
 import org.beangle.ems.security.restrict.Restriction;
+import org.beangle.model.pojo.LongIdObject;
 
 /**
  * 资源访问限制
  * 
  * @author chaostone
  */
-@MappedSuperclass
+@Entity(name = "org.beangle.ems.security.restrict.Restriction")
 public abstract class RestrictionBean extends LongIdObject implements Restriction {
 	private static final long serialVersionUID = -1157873272781525823L;
 
-	/** 限制模式 */
+	/** 限制内容 */
 	@NotNull
-	protected RestrictPattern pattern;
+	@Size(max = 600)
+	private String content;
+
+	/** 限制实体 */
+	@NotNull
+	private RestrictEntity entity;
 
 	/** 是否启用 */
 	@NotNull
 	protected boolean enabled = true;
 
-	@ElementCollection
-	@MapKeyColumn(name = "field_id")
-	@Column(name = "content", length = 2000)
-	@CollectionTable(joinColumns = @JoinColumn(name = "restriction_id"))
-	private Map<Long, String> items = CollectUtils.newHashMap();
+	/** 备注说明 */
+	private String remark;
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public RestrictEntity getEntity() {
+		return entity;
+	}
+
+	public void setEntity(RestrictEntity entity) {
+		this.entity = entity;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
 	public boolean isEnabled() {
 		return enabled;
@@ -53,53 +70,8 @@ public abstract class RestrictionBean extends LongIdObject implements Restrictio
 		this.enabled = enabled;
 	}
 
-	public RestrictPattern getPattern() {
-		return pattern;
-	}
-
-	public Map<Long, String> getItems() {
-		return items;
-	}
-
-	public void setItems(Map<Long, String> items) {
-		this.items = items;
-	}
-
-	public void setPattern(RestrictPattern pattern) {
-		this.pattern = pattern;
-	}
-
 	protected Object clone() throws CloneNotSupportedException {
 		return super.clone();
-	}
-
-	public String getItem(String paramName) {
-		RestrictField param = getPattern().getEntity().getField(paramName);
-		if (null == param) {
-			return null;
-		} else {
-			return getItem(param);
-		}
-	}
-
-	public String getItem(RestrictField param) {
-		if (null == items || items.isEmpty()) {
-			return null;
-		} else {
-			return (String) items.get(param.getId());
-		}
-	}
-
-	public void setItem(RestrictField param, String text) {
-		items.put(param.getId(), text);
-	}
-
-	public void merge(RestrictField param, String value) {
-		setItem(param, evictComma(StrUtils.mergeSeq(getItem(param), value)));
-	}
-
-	public void shrink(RestrictField param, String value) {
-		setItem(param, evictComma(StrUtils.subtractSeq(getItem(param), value)));
 	}
 
 	private static String evictComma(String str) {

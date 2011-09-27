@@ -7,11 +7,16 @@ package org.beangle.ems.security.model;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,8 +26,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
-import org.beangle.ems.security.restrict.RestrictionHolder;
-import org.beangle.ems.security.restrict.UserRestriction;
+import org.beangle.ems.security.UserProperty;
 import org.beangle.model.pojo.LongIdTimeObject;
 import org.beangle.model.util.EntityUtils;
 
@@ -33,7 +37,7 @@ import org.beangle.model.util.EntityUtils;
  * @author dell,chaostone 2005-9-26
  */
 @Entity(name = "org.beangle.ems.security.User")
-public class UserBean extends LongIdTimeObject implements User, RestrictionHolder<UserRestriction> {
+public class UserBean extends LongIdTimeObject implements User {
 	private static final long serialVersionUID = -3625902334772342380L;
 
 	/** 名称 */
@@ -83,9 +87,14 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 	@NotNull
 	protected boolean enabled;
 
-	/** 访问限制 */
-	@OneToMany(mappedBy = "holder", cascade = CascadeType.ALL)
-	protected Set<UserRestriction> restrictions = CollectUtils.newHashSet();
+	/**
+	 * 用户自定义属性
+	 */
+	@ElementCollection
+	@MapKeyColumn(name = "property_id")
+	@Column(name = "content", length = 2000)
+	@CollectionTable(joinColumns = @JoinColumn(name = "user_id"))
+	protected Map<Long, String> properties = CollectUtils.newHashMap();
 
 	/** 备注 */
 	protected String remark;
@@ -194,12 +203,12 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 		this.enabled = enabled;
 	}
 
-	public Set<UserRestriction> getRestrictions() {
-		return restrictions;
+	public Map<Long, String> getProperties() {
+		return properties;
 	}
 
-	public void setRestrictions(Set<UserRestriction> restrictions) {
-		this.restrictions = restrictions;
+	public void setProperties(Map<Long, String> properties) {
+		this.properties = properties;
 	}
 
 	public Date getEffectiveAt() {
@@ -230,4 +239,24 @@ public class UserBean extends LongIdTimeObject implements User, RestrictionHolde
 		return new ToStringBuilder(this).append("id", this.id).append("password", this.password)
 				.append("name", this.getName()).toString();
 	}
+
+	public String getProperty(UserProperty property) {
+		if (null == properties || properties.isEmpty()) {
+			return null;
+		} else {
+			return properties.get(property.getId());
+		}
+	}
+
+	public void setProperty(UserProperty property, String text) {
+		properties.put(property.getId(),text);
+	}
+
+	// public UserProperty getField(String paramName) {
+	// for (final UserProperty param : fields) {
+	// if (param.getName().equals(paramName)) { return param; }
+	// }
+	// return null;
+	// }
+
 }

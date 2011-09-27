@@ -4,8 +4,6 @@
  */
 package org.beangle.ems.security.restrict;
 
-import java.util.Set;
-
 import org.beangle.model.pojo.LongIdEntity;
 
 /**
@@ -15,22 +13,25 @@ import org.beangle.model.pojo.LongIdEntity;
  */
 public interface RestrictEntity extends LongIdEntity {
 
+	/**
+	 * 名称
+	 * 
+	 * @return
+	 */
 	public String getName();
 
-	public void setName(String name);
-
+	/**
+	 * 实体类名
+	 * 
+	 * @return
+	 */
 	public String getType();
 
-	public void setType(String type);
-
+	/**
+	 * 备注
+	 * 
+	 * @return
+	 */
 	public String getRemark();
-
-	public void setRemark(String remark);
-
-	public Set<RestrictField> getFields();
-
-	public void setFields(Set<RestrictField> fields);
-
-	public RestrictField getField(String fieldName);
 
 }

@@ -12,6 +12,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,7 +22,7 @@ import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
-import org.beangle.ems.security.restrict.GroupRestriction;
+import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.model.pojo.LongIdHierarchyObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -68,9 +69,9 @@ public class GroupBean extends LongIdHierarchyObject<Group> implements Group {
 	public boolean enabled = true;
 
 	/** 访问限制 */
-	@OneToMany(mappedBy = "holder", cascade = CascadeType.ALL)
+	@ManyToMany
 	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
-	protected Set<GroupRestriction> restrictions = CollectUtils.newHashSet();
+	protected Set<Restriction> restrictions = CollectUtils.newHashSet();
 
 	/** 权限 */
 	@OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
@@ -112,12 +113,12 @@ public class GroupBean extends LongIdHierarchyObject<Group> implements Group {
 		this.remark = remark;
 	}
 
-	public Set<GroupRestriction> getRestrictions() {
+	public Set<Restriction> getRestrictions() {
 		return restrictions;
 	}
 
-	public void setRestrictions(Set<GroupRestriction> restrictions) {
-		this.restrictions = (Set<GroupRestriction>) restrictions;
+	public void setRestrictions(Set<Restriction> restrictions) {
+		this.restrictions = (Set<Restriction>) restrictions;
 	}
 
 	public void setAuthorities(Set<Authority> authorities) {

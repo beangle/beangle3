@@ -8,10 +8,10 @@ import java.util.Set;
 
 import org.beangle.model.pojo.LongIdEntity;
 
-public interface RestrictionHolder<T extends Restriction> extends LongIdEntity {
+public interface RestrictionHolder extends LongIdEntity {
 
-	public Set<T> getRestrictions();
+	public Set<Restriction> getRestrictions();
 
-	public void setRestrictions(Set<T> restrictions);
+	public void setRestrictions(Set<Restriction> restrictions);
 
 }

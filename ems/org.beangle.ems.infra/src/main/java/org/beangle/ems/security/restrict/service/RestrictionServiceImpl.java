@@ -20,11 +20,13 @@ import org.beangle.ems.security.Group;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.restrict.RestrictEntity;
-import org.beangle.ems.security.restrict.RestrictField;
+import org.beangle.ems.security.restrict.UserProperty;
 import org.beangle.ems.security.restrict.RestrictPattern;
 import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.ems.security.restrict.RestrictionHolder;
 import org.beangle.ems.security.service.AuthorityService;
+import org.beangle.ems.security.service.UserDataProvider;
+import org.beangle.ems.security.service.UserDataResolver;
 import org.beangle.ems.security.service.UserService;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.Condition;
@@ -34,9 +36,9 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 
 	protected UserService userService;
 
-	protected Map<String, DataProvider> providers = CollectUtils.newHashMap();
+	protected Map<String, UserDataProvider> providers = CollectUtils.newHashMap();
 
-	protected DataResolver dataResolver;
+	protected UserDataResolver dataResolver;
 
 	protected AuthorityService authorityService;
 
@@ -78,12 +80,12 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		return entityDao.search(query);
 	}
 
-	private List<?> getFieldValues(RestrictField field) {
+	private List<?> getFieldValues(UserProperty field) {
 		if (null == field.getSource()) return Collections.emptyList();
 		String source = field.getSource();
 		String prefix = StringUtils.substringBefore(source, ":");
 		source = StringUtils.substringAfter(source, ":");
-		DataProvider provider = providers.get(prefix);
+		UserDataProvider provider = providers.get(prefix);
 		if (null != provider) {
 			return provider.getData(field, source);
 		} else {
@@ -92,12 +94,12 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 	}
 
 	public List<?> getFieldValues(String fieldName) {
-		return getFieldValues(getRestrictField(fieldName));
+		return getFieldValues(getUserProperty(fieldName));
 	}
 
 	public List<?> getFieldValues(String fieldName, List<? extends Restriction> restrictions) {
 		Set<Object> values = CollectUtils.newHashSet();
-		RestrictField field = getRestrictField(fieldName);
+		UserProperty field = getUserProperty(fieldName);
 		boolean gotIt = false;
 		for (Restriction restriction : restrictions) {
 			Object value = getFieldValue(field, restriction);
@@ -124,7 +126,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 	 * @param restriction
 	 * @return
 	 */
-	public Object getFieldValue(RestrictField field, Restriction restriction) {
+	public Object getFieldValue(UserProperty field, Restriction restriction) {
 		String value = restriction.getItem(field);
 		if (StringUtils.isEmpty(value)) return null;
 		if (ObjectUtils.equals(Restriction.ALL, value)) { return getFieldValues(field); }
@@ -161,7 +163,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 				Condition c = new Condition(content);
 				List<String> params = c.getParamNames();
 				for (final String paramName : params) {
-					RestrictField param = pattern.getEntity().getField(paramName);
+					UserProperty param = pattern.getEntity().getField(paramName);
 					String value = restriction.getItem(param);
 					if (StringUtils.isNotEmpty(value)) {
 						if (value.equals(Restriction.ALL)) {
@@ -197,8 +199,8 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		}
 	}
 
-	private RestrictField getRestrictField(String fieldName) {
-		List<RestrictField> fields = entityDao.get(RestrictField.class, "name", fieldName);
+	private UserProperty getUserProperty(String fieldName) {
+		List<UserProperty> fields = entityDao.get(UserProperty.class, "name", fieldName);
 		if (1 != fields.size()) { throw new RuntimeException("bad pattern parameter named :" + fieldName); }
 		return fields.get(0);
 	}
@@ -211,15 +213,15 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		this.authorityService = authorityService;
 	}
 
-	public Map<String, DataProvider> getProviders() {
+	public Map<String, UserDataProvider> getProviders() {
 		return providers;
 	}
 
-	public void setProviders(Map<String, DataProvider> providers) {
+	public void setProviders(Map<String, UserDataProvider> providers) {
 		this.providers = providers;
 	}
 
-	public void setDataResolver(DataResolver dataResolver) {
+	public void setDataResolver(UserDataResolver dataResolver) {
 		this.dataResolver = dataResolver;
 	}
 

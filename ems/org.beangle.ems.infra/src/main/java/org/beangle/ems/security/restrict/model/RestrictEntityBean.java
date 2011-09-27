@@ -4,16 +4,11 @@
  */
 package org.beangle.ems.security.restrict.model;
 
-import java.util.Set;
-
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 
-import org.beangle.commons.collection.CollectUtils;
-import org.beangle.model.pojo.LongIdObject;
 import org.beangle.ems.security.restrict.RestrictEntity;
-import org.beangle.ems.security.restrict.RestrictField;
+import org.beangle.model.pojo.LongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -38,11 +33,6 @@ public class RestrictEntityBean extends LongIdObject implements RestrictEntity {
 	/** 备注 */
 	private String remark;
 
-	/** 实体的属性 */
-	@ManyToMany
-	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
-	private Set<RestrictField> fields = CollectUtils.newHashSet();
-
 	public RestrictEntityBean() {
 		super();
 	}
@@ -59,27 +49,12 @@ public class RestrictEntityBean extends LongIdObject implements RestrictEntity {
 		this.type = type.getName();
 	}
 
-	public RestrictField getField(String paramName) {
-		for (final RestrictField param : fields) {
-			if (param.getName().equals(paramName)) { return param; }
-		}
-		return null;
-	}
-
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Set<RestrictField> getFields() {
-		return fields;
-	}
-
-	public void setFields(Set<RestrictField> params) {
-		this.fields = params;
 	}
 
 	public String getType() {
