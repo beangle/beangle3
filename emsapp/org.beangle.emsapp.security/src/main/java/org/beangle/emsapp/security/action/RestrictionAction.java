@@ -21,14 +21,14 @@ import org.beangle.ems.security.restrict.RestrictField;
 import org.beangle.ems.security.restrict.RestrictPattern;
 import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.ems.security.restrict.RestrictionHolder;
-import org.beangle.ems.security.restrict.service.DataResolver;
+import org.beangle.ems.security.service.UserDataResolver;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.emsapp.security.helper.RestrictionHelper;
 import org.beangle.model.entity.Model;
 import org.beangle.struts2.helper.Params;
 
 public class RestrictionAction extends SecurityActionSupport {
-	protected DataResolver idDataResolver;
+	protected UserDataResolver idDataResolver;
 
 	public String tip() {
 		return forward();
@@ -222,7 +222,7 @@ public class RestrictionAction extends SecurityActionSupport {
 		return restriction;
 	}
 
-	public void setIdDataResolver(DataResolver idDataResolver) {
+	public void setIdDataResolver(UserDataResolver idDataResolver) {
 		this.idDataResolver = idDataResolver;
 	}
 
