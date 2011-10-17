@@ -34,7 +34,7 @@ public class MapConverterTest {
 		int year = 2010;
 		int month = 9;
 		int day = 1;
-		datas.put("birthday", year + "-0" + month + "-0" + day);
+		datas.put("birthday", year + "-" + month + "-" + day);
 
 		Date birthday = converter.get(datas, "birthday", Date.class);
 		Calendar calendar = Calendar.getInstance();

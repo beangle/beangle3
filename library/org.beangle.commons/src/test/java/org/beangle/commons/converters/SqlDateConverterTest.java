@@ -16,8 +16,8 @@ import org.apache.commons.beanutils.Converter;
 import org.apache.commons.beanutils.converters.LongConverter;
 import org.testng.annotations.Test;
 
+@Test
 public class SqlDateConverterTest {
-	@Test
 	public void testConvertoDate() throws Exception {
 		String date1 = "19800909";
 		converToDate(date1, 1980, 8, 9);
@@ -25,7 +25,6 @@ public class SqlDateConverterTest {
 		converToDate(date1, 1980, 8, 9);
 	}
 
-	@Test
 	public void testConvertBasic() {
 		assertEquals(0L, ConvertUtils.convert("", Long.class));
 		ConvertUtils.register(new LongConverter(null), Long.class);
@@ -40,5 +39,13 @@ public class SqlDateConverterTest {
 		assertEquals(calendar.get(Calendar.YEAR), year);
 		assertEquals(calendar.get(Calendar.MONTH), month);
 		assertEquals(calendar.get(Calendar.DAY_OF_MONTH), day);
+	}
+
+	public void testNormalize() {
+		String date1 = "1980-9-1";
+		assertEquals("1980-09-01",SqlDateConverter.normalize("1980-9-1"));
+		assertEquals("1980-09-01",SqlDateConverter.normalize("1980-09-1"));
+		assertEquals("1980-09-01",SqlDateConverter.normalize("1980-9-01"));
+		assertEquals("1980-09-01",SqlDateConverter.normalize("1980-09-01"));
 	}
 }
