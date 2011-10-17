@@ -5,6 +5,8 @@ Beangle 2.5
 	* 支持table缩写*
 	* 支持独立的jdbc/sessions监控数据源*
 	* 支持独立数据库检查服务(表核对、序列核对)*
+	* form redirect params
+	* property action error
 	* web start/db
 	* maven artifact
 	* scala db replication
