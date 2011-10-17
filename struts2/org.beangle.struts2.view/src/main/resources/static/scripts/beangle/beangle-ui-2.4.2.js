@@ -26,7 +26,7 @@
 			return;
 		}
 		this.id=divId;
-		this.separator="|";
+		this.separator="&nbsp;";
 		this.bar.className="toolbar notprint";
 		var defaultToolBarImageName="info.png", defaultItemImageName="action.png", helpImageName="help.png",
 			imageRoot=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/"+ bg.uitheme +"/icons/",
@@ -80,16 +80,16 @@
 				action=action.name;
 			}
 			if(typeof action=="string"){
-				if(action.indexOf("add")!=-1||action.indexOf("new")!=-1) return "new.png";
-				if(action.indexOf("remove")!=-1||action.indexOf("delete")!=-1) return "edit-delete.png";
-				if(action.indexOf("update")!=-1||action.indexOf("edit")!=-1||action.indexOf("Edit")!=-1) return "update.png";
-				if(action.indexOf("export")!=-1) return "excel.png";
-				if(action.indexOf("copy")!=-1) return "edit-copy.png";
-				if(action.indexOf("print")!=-1) return "print.png";
-				if(action.indexOf("refresh")!=-1) return "refresh.png";
-				if(action.indexOf("close")!=-1) return "close.png";
-				if(action.indexOf("save")!=-1) return "save.png";
-				if(action.indexOf("download")!=-1) return "download.png";
+				if(action.indexOf("add")==0 || action.indexOf("batchAdd")==0 ||action.indexOf("new")==0) return "new.png";
+				if(action.indexOf("remove")==0||action.indexOf("delete")==0) return "edit-delete.png";
+				if(action.indexOf("update")==0||action.indexOf("edit")==0||action.indexOf("batchEdit")==0) return "update.png";
+				if(action.indexOf("export")==0) return "excel.png";
+				if(action.indexOf("copy")==0) return "edit-copy.png";
+				if(action.indexOf("print")==0) return "print.png";
+				if(action.indexOf("refresh")==0) return "refresh.png";
+				if(action.indexOf("close")==0) return "close.png";
+				if(action.indexOf("save")==0) return "save.png";
+				if(action.indexOf("download")==0) return "download.png";
 				else return defaultItemImageName;
 			}else return defaultItemImageName;   
 		}

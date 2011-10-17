@@ -5,6 +5,7 @@
 package org.beangle.struts2.view.component;
 
 import java.io.Writer;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -58,7 +59,8 @@ public class Grid extends ClosingUIBean {
 	}
 
 	public boolean isNotFullPage() {
-		return ((Page<?>) items).size() < ((Page<?>) items).getPageSize();
+		if ((items instanceof Page)) return ((Page<?>) items).size() < ((Page<?>) items).getPageSize();
+		else return ((Collection<?>) items).isEmpty();
 	}
 
 	public String defaultSort(String property) {

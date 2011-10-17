@@ -29,7 +29,7 @@
 <tbody id="${tag.id}_data">${tag.body}</tbody>
 </table>
 [#if tag.hasbar]
-[#if tag.pageable && tag.notFullPage]
+[#if tag.notFullPage]
 <div class="gridempty" id="${tag.id}_empty"></div>
 [/#if]
 <div id="${tag.id}_bar2"  class="gridbar"></div>
@@ -44,8 +44,8 @@ bar.pageId('${tag.id}')
 [#if tag.pageable]
 page_${tag.id}.pageInfo(${tag.items.pageNo},${tag.items.pageSize},${tag.items.total});
 bar.addPage(page_${tag.id},[#if tag.parameters['fixPageSize']??][][#else]null[/#if],{${b.text('page.description')}});
-[#if tag.notFullPage]bg.ui.grid.fillEmpty('${tag.id}_empty',${tag.items.pageSize},${tag.items?size},'${tag.emptyMsg!b.text("page.noData")}');[/#if]
 [/#if]
+[#if tag.hasbar && tag.notFullPage]bg.ui.grid.fillEmpty('${tag.id}_empty',[#if tag.pageable]${tag.items.pageSize}[#else]10[/#if],${tag.items?size},'${tag.emptyMsg!b.text("page.noData")}');[/#if]
 [#if tag.var??]action=bar.addEntityAction('${tag.var}',page_${tag.id});[/#if]
 ${tag.bar!}
 [/#if]

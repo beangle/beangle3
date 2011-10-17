@@ -9,6 +9,7 @@
 /home/chaostone/beangle/core/library/org.beangle.commons/target/classes
 /home/chaostone/.m2/repository/org/beanshell/bsh/2.0b4/bsh-2.0b4.jar
 /home/chaostone/.m2/repository/commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar
+/home/chaostone/.m2/repository/commons-codec/commons-codec/1.5/commons-codec-1.5.jar
 /home/chaostone/.m2/repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar
 /home/chaostone/.m2/repository/org/apache/commons/commons-compress/1.1/commons-compress-1.1.jar
 /home/chaostone/.m2/repository/commons-io/commons-io/2.0.1/commons-io-2.0.1.jar
@@ -59,8 +60,6 @@
 /home/chaostone/.m2/repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar
 /home/chaostone/.m2/repository/net/sf/ehcache/ehcache-core/2.4.1/ehcache-core-2.4.1.jar
 /home/chaostone/.m2/repository/org/eclipse/gemini/blueprint/gemini-blueprint-core/1.0.0.M1/gemini-blueprint-core-1.0.0.M1.jar
-/home/chaostone/.m2/repository/org/eclipse/gemini/blueprint/gemini-blueprint-extender/1.0.0.M1/gemini-blueprint-extender-1.0.0.M1.jar
-/home/chaostone/.m2/repository/org/eclipse/gemini/blueprint/gemini-blueprint-io/1.0.0.M1/gemini-blueprint-io-1.0.0.M1.jar
 /home/chaostone/.m2/repository/com/h2database/h2/1.3.148/h2-1.3.148.jar
 /home/chaostone/.m2/repository/org/beangle/hibernate-commons-annotations/3.2.0-1.Final/hibernate-commons-annotations-3.2.0-1.Final.jar
 /home/chaostone/.m2/repository/org/beangle/hibernate-core/3.6.1.Final/hibernate-core-3.6.1.Final.jar
@@ -68,8 +67,13 @@
 /home/chaostone/.m2/repository/org/hibernate/hibernate-validator/4.1.0.Final/hibernate-validator-4.1.0.Final.jar
 /home/chaostone/.m2/repository/com/linuxense/javadbf/0.4.0/javadbf-0.4.0.jar
 /home/chaostone/.m2/repository/javassist/javassist/3.12.0.GA/javassist-3.12.0.GA.jar
+/home/chaostone/.m2/repository/net/sf/jxls/jxls-core/1.0-RC-2/jxls-core-1.0-RC-2.jar
 /home/chaostone/.m2/repository/ognl/ognl/3.0.1/ognl-3.0.1.jar
+/home/chaostone/.m2/repository/org/apache/poi/poi/3.8-beta3/poi-3.8-beta3.jar
+/home/chaostone/.m2/repository/org/apache/poi/poi-ooxml/3.8-beta3/poi-ooxml-3.8-beta3.jar
+/home/chaostone/.m2/repository/org/apache/poi/poi-ooxml-schemas/3.8-beta3/poi-ooxml-schemas-3.8-beta3.jar
 /home/chaostone/.m2/repository/stax/stax-api/1.0.1/stax-api-1.0.1.jar
+/home/chaostone/.m2/repository/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar
 /home/chaostone/.m2/repository/org/apache/xmlbeans/xmlbeans/2.3.0/xmlbeans-2.3.0.jar
 /home/chaostone/beangle/core/security/org.beangle.security.core/target/classes
 /home/chaostone/.m2/repository/org/dbunit/dbunit/2.4.8/dbunit-2.4.8.jar
@@ -95,4 +99,5 @@
 /home/chaostone/beangle/core/struts2/org.beangle.struts2.view/target/classes
 /home/chaostone/beangle/core/emsapp/org.beangle.emsapp.security/target/classes
 /home/chaostone/beangle/core/emsapp/org.beangle.emsapp.system/target/classes
+/home/chaostone/beangle/core/security/org.beangle.security.cas/target/classes
 /home/chaostone/.m2/repository/org/jasig/cas/cas-client-core/3.1.9/cas-client-core-3.1.9.jar

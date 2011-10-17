@@ -323,14 +323,18 @@
 						myForm.appendChild(submitx);
 					}
 					options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#'};
+					origin_onsubmit=myForm.onsubmit;
 					if (typeof jQuery != "undefined") {
 						if(!noHistory && jQuery("input:file",myForm).length==0){
 							beangle.history.historySubmit(myForm.id,action,submitTarget);
+							//这个分支没有使用struts2_jquery的绑定，所以去除myForm.submit,防止两次验证onsubmit函数
+							myForm.onsubmit=null;
 						}else{
 							jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
 						}
 					}
 					submitx.click();
+					myForm.onsubmit=origin_onsubmit;
 					jQuery("#"+sumbitBtnId).unbind();
 				}else{
 					myForm.target = bg.normalTarget(submitTarget);
@@ -489,8 +493,8 @@
 				if((typeof form)!="object"){alert("[goToPage:]form is not well defined.");return;}
 				//form.method="post"; for avoid "method" input
 				if(null!=pageNo){
-					if(isNaN(pageNo)){
-						alert("输入分页的页码是:"+pageNo+",它不是个整数");
+					if(!/^[1-9]\d*$/.test(pageNo)){
+						alert("输入分页的页码是:"+pageNo+",它不是正整数");
 						return;
 					}
 					bg.form.addInput(form,"pageNo",pageNo,"hidden");
@@ -498,8 +502,8 @@
 					bg.form.addInput(form,"pageNo",1,"hidden");
 				}
 				if(null!=pageSize){
-					if(isNaN(pageSize)){
-						alert("输入分页的页长是:"+pageSize+",它不是个整数");
+					if(!/^[1-9]\d*$/.test(pageSize)){
+						alert("输入分页的页长是:"+pageSize+",它不是正整数");
 						return;
 					}
 					bg.form.addInput(form,"pageSize",pageSize,"hidden");
@@ -697,8 +701,8 @@
 		// 检查分页参数
 		this.checkPageParams = function (pageNo, pageSize,orderBy){
 			if(null!=pageNo){
-				if(isNaN(pageNo)){
-					bg.alert("输入分页的页码是:"+pageNo+",它不是个整数");
+				if(!/^[1-9]\d*$/.test(pageNo)){
+					bg.alert("输入分页的页码是:"+pageNo+",它不是正整数");
 					return false;
 				}
 				if(this.maxPageNo!=null){
@@ -709,8 +713,8 @@
 				this.paramMap['pageNo']=pageNo;
 			}
 			if(null!=pageSize){
-				if(isNaN(pageSize)){
-					bg.alert("输入分页的页长是:"+pageSize+",它不是个整数");
+				if(!/^[1-9]\d*$/.test(pageSize)){
+					bg.alert("输入分页的页长是:"+pageSize+",它不是正整数");
 					return false;
 				}
 				this.paramMap["pageSize"]=pageSize;
@@ -844,9 +848,9 @@
 					target = "#" + target;	
 				}
 				jQuery(form).ajaxForm(function(result,message,response) { 
-				    if(message==="success" && response.status==200 && response.readyState==4){
-				    	History.pushState({html:result,target:target},"",action);
-				    }
+					if(message==="success" && response.status==200 && response.readyState==4){
+						History.pushState({html:result,target:target},"",action);
+					}
 					return false; 
 				});	
 			}

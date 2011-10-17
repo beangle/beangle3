@@ -18,7 +18,7 @@
 		  <label for="categoryIds${category.id}">${category.title}</label>
 		  [/#list]
 		&nbsp;&nbsp;&nbsp;默认
-		  <select name="user.defaultCategory.id">
+		  <select name="user.defaultCategory.id" id="user_defaultCategory_id">
 		  [#list categories as category]
 			 <option value="${category.id}" [#if (user.defaultCategory??)&&(user.defaultCategory.id==category.id)]selected="selected"[/#if]>${category.title}</option>
 		  [/#list]
@@ -64,9 +64,11 @@
 [/@]
 <script  type="text/javascript">
 	function validateUser(form){
+		jQuery("#user_defaultCategory_id").parent().find(".error").remove();
 		var cIds = bg.input.getCheckBoxValues("categoryIds");
 		if(""==cIds){
-		   alert("请选择身份");return false;
+			jQuery("#user_defaultCategory_id").parent().append("<label class='error'>请选择身份</label>");
+			return false;
 		}
 		var arr = cIds.split(",");
 		var defaultValue = form["user.defaultCategory.id"].value;
@@ -78,7 +80,7 @@
 			}
 		}
 		if(!isIn){
-			alert("默认身份必须在所选身份中！");
+			jQuery("#user_defaultCategory_id").parent().append("<label class='error'>默认身份必须在所选身份中！</label>");
 			return false;
 		}
 		return true;

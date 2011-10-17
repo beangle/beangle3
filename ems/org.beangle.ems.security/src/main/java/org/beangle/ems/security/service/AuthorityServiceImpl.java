@@ -139,6 +139,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Collection<Group> filter(Collection<Group> groups, Resource resource) {
+		if(groups.isEmpty()) return Collections.EMPTY_LIST;
 		OqlBuilder builder = OqlBuilder.from(Authority.class, "au");
 		builder.where("au.group in (:groups) and au.resource = :resource", groups, resource);
 		builder.select("au.group");

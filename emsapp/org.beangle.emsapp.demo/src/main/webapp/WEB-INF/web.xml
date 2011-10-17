@@ -7,7 +7,7 @@
 	</context-param>
 	<context-param>
 		<param-name>templatePath</param-name>
-		<param-value>webapp:/pages;class:;class:/pages</param-value>
+		<param-value>webapp://pages;class://;class://pages</param-value>
 	</context-param>
 	<!--设置字符集-->
 	<filter>
