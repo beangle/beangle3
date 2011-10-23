@@ -18,11 +18,11 @@ import org.testng.annotations.Test;
 @Test
 public class CsvDataResolverTest {
 	CsvDataResolver resolver = new CsvDataResolver();
-	UserProperty field = null;
+	PropertyMeta field = null;
 
 	@BeforeClass
 	public void setUp() {
-		field = new UserPropertyBean("group", GroupBean.class.getName(), "oql:from Group");
+		field = new PropertyMetaBean("group", GroupBean.class.getName(), "oql:from Group");
 		field.setKeyName("id");
 		field.setPropertyNames("name");
 	}

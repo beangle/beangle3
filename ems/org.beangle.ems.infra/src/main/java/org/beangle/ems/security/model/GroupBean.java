@@ -68,6 +68,9 @@ public class GroupBean extends LongIdHierarchyObject<Group> implements Group {
 	@NotNull
 	public boolean enabled = true;
 
+	/**动态组*/
+	public boolean dynamic=false;
+	
 	/** 访问限制 */
 	@ManyToMany
 	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)

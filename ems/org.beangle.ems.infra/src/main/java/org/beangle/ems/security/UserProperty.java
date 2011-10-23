@@ -4,62 +4,12 @@
  */
 package org.beangle.ems.security;
 
-import org.beangle.model.pojo.LongIdEntity;
 
 /**
- * 用户自定义属性
- * 
+ *
  * @author chaostone
- * @since 2011-09-22
+ * @version $Id: UserProperty.java Oct 18, 2011 8:58:08 AM chaostone $
  */
-public interface UserProperty extends LongIdEntity {
+public interface UserProperty  extends Property {
 
-	/**
-	 * 名称
-	 * 
-	 * @return
-	 */
-	public String getName();
-
-	/**
-	 * 值类型
-	 * 
-	 * @return
-	 */
-	public String getValueType();
-
-	/**
-	 * 主键属性名
-	 * 
-	 * @return
-	 */
-	public String getKeyName();
-
-	/**
-	 * 其它属性列表
-	 * 
-	 * @return
-	 */
-	public String getPropertyNames();
-
-	/**
-	 * 数据源提供者
-	 * 
-	 * @return
-	 */
-	public String getSource();
-
-	/**
-	 * 是否为集合类型
-	 * 
-	 * @return
-	 */
-	public boolean isMultiple();
-
-	/**
-	 * 备注
-	 * 
-	 * @return
-	 */
-	public String getRemark();
 }

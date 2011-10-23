@@ -12,7 +12,7 @@ import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.ems.security.UserProperty;
+import org.beangle.ems.security.PropertyMeta;
 import org.beangle.model.entity.Model;
 import org.beangle.model.entity.types.EntityType;
 import org.beangle.model.persist.EntityDao;
@@ -23,7 +23,7 @@ public class IdentifierDataResolver implements UserDataResolver {
 
 	protected EntityDao entityDao;
 
-	public String marshal(UserProperty field, Collection<?> items) {
+	public String marshal(PropertyMeta field, Collection<?> items) {
 		StringBuilder sb = new StringBuilder();
 		for (Object obj : items) {
 			try {
@@ -43,7 +43,7 @@ public class IdentifierDataResolver implements UserDataResolver {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> List<T> unmarshal(UserProperty field, String text) {
+	public <T> List<T> unmarshal(PropertyMeta field, String text) {
 		if(null==field.getValueType()){
 			return (List<T>)CollectUtils.newArrayList(StringUtils.split(text,","));
 		}else{

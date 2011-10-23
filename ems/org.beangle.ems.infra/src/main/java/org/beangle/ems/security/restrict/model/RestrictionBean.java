@@ -19,7 +19,7 @@ import org.beangle.model.pojo.LongIdObject;
  * @author chaostone
  */
 @Entity(name = "org.beangle.ems.security.restrict.Restriction")
-public abstract class RestrictionBean extends LongIdObject implements Restriction {
+public class RestrictionBean extends LongIdObject implements Restriction {
 	private static final long serialVersionUID = -1157873272781525823L;
 
 	/** 限制内容 */
@@ -37,6 +37,16 @@ public abstract class RestrictionBean extends LongIdObject implements Restrictio
 
 	/** 备注说明 */
 	private String remark;
+
+	public RestrictionBean() {
+		super();
+	}
+
+	public RestrictionBean(RestrictEntity entity, String content) {
+		super();
+		this.entity = entity;
+		this.content = content;
+	}
 
 	public String getContent() {
 		return content;

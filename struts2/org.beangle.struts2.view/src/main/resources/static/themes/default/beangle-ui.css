@@ -5,9 +5,7 @@
 
 body {font-size: 13px;margin:0;}
 
-select {font-size: 13px;}
-
-input {font-size: 13px;}
+select,input,textarea {font-size: 13px;}
 
 a:link {color: #000080;text-decoration: none;}
 a:visited {text-decoration: none;}

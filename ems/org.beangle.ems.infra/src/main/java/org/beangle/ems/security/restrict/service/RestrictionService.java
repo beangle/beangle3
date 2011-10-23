@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
-import org.beangle.ems.security.UserProperty;
 import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.model.query.builder.OqlBuilder;
 
@@ -27,26 +26,10 @@ public interface RestrictionService {
 	/**
 	 * Get field enumerated values.
 	 * 
-	 * @param fieldName
+	 * @param propertyName
 	 * @return
 	 */
-	public List<?> getFieldValues(String fieldName);
-
-	/**
-	 * Extract field values;
-	 * 
-	 * @param restrictions
-	 * @param fieldName
-	 * @return
-	 */
-	public List<?> getFieldValues(String fieldName, List<? extends Restriction> restrictions);
-
-	/**
-	 * @param field
-	 * @param restriction
-	 * @return
-	 */
-	public Object getFieldValue(UserProperty field, Restriction restriction);
+	public Object getPropertyValue(String propertyName,User user);
 
 	/**
 	 * @param builder

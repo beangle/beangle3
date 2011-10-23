@@ -8,22 +8,16 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.Resource;
+import org.beangle.ems.security.SecurityUtils;
 import org.beangle.ems.security.User;
-import org.beangle.ems.security.restrict.RestrictEntity;
-import org.beangle.ems.security.restrict.UserProperty;
-import org.beangle.ems.security.restrict.RestrictPattern;
+import org.beangle.ems.security.PropertyMeta;
 import org.beangle.ems.security.restrict.Restriction;
-import org.beangle.ems.security.restrict.RestrictionHolder;
 import org.beangle.ems.security.service.AuthorityService;
 import org.beangle.ems.security.service.UserDataProvider;
 import org.beangle.ems.security.service.UserDataResolver;
@@ -48,24 +42,13 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 	@SuppressWarnings("unchecked")
 	public List<Restriction> getRestrictions(final User user, final Resource resource) {
 		List<Restriction> restrictions = CollectUtils.newArrayList();
-		final Set<RestrictEntity> entities = CollectUtils.newHashSet(resource.getEntities());
 		// 权限上的限制
-		restrictions.addAll(getAuthorityRestrictions(user, resource));
+		if (null != resource) restrictions.addAll(getAuthorityRestrictions(user, resource));
 		// 用户组自身限制
 		for (Group group : authorityService.filter(user.getGroups(), resource)) {
 			restrictions.addAll(group.getRestrictions());
 		}
-		// 用户自身限制
-		RestrictionHolder<?> userHolder = user;
-		restrictions.addAll(userHolder.getRestrictions());
-		// 实体过滤
-		return (List<Restriction>) CollectionUtils.select(restrictions, new Predicate() {
-			public boolean evaluate(Object obj) {
-				Restriction restriciton = (Restriction) obj;
-				if (restriciton.isEnabled() && entities.contains(restriciton.getPattern().getEntity())) return true;
-				else return false;
-			}
-		});
+		return restrictions;
 	}
 
 	public List<Restriction> getAuthorityRestrictions(User user, Resource resource) {
@@ -80,7 +63,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		return entityDao.search(query);
 	}
 
-	private List<?> getFieldValues(UserProperty field) {
+	private List<?> getPropertyValues(PropertyMeta field) {
 		if (null == field.getSource()) return Collections.emptyList();
 		String source = field.getSource();
 		String prefix = StringUtils.substringBefore(source, ":");
@@ -93,52 +76,32 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		}
 	}
 
-	public List<?> getFieldValues(String fieldName) {
-		return getFieldValues(getUserProperty(fieldName));
+	public List<?> getPropertyValues(String propertyName) {
+		return getPropertyValues(getUserProperty(propertyName));
 	}
 
-	public List<?> getFieldValues(String fieldName, List<? extends Restriction> restrictions) {
-		Set<Object> values = CollectUtils.newHashSet();
-		UserProperty field = getUserProperty(fieldName);
-		boolean gotIt = false;
-		for (Restriction restriction : restrictions) {
-			Object value = getFieldValue(field, restriction);
-			if (null != value) {
-				gotIt = true;
-				if (value instanceof Collection<?>) {
-					values.addAll((Collection<?>) value);
-				} else {
-					values.add(value);
-				}
-			}
-		}
-		if (!gotIt) {
-			return getFieldValues(field);
-		} else {
-			return CollectUtils.newArrayList(values);
-		}
+	public Object getPropertyValue(String propertyName, User user) {
+		PropertyMeta prop=getUserProperty(propertyName);
+		return unmarshal(user.getProperty(prop),prop);
 	}
 
 	/**
 	 * 获取数据限制的某个属性的值
 	 * 
-	 * @param field
+	 * @param property
 	 * @param restriction
 	 * @return
 	 */
-	public Object getFieldValue(UserProperty field, Restriction restriction) {
-		String value = restriction.getItem(field);
-		if (StringUtils.isEmpty(value)) return null;
-		if (ObjectUtils.equals(Restriction.ALL, value)) { return getFieldValues(field); }
+	private Object unmarshal(String value, PropertyMeta property) {
 		try {
-			List<Object> returned = dataResolver.unmarshal(field, value);
-			if (field.isMultiple()) {
+			List<Object> returned = dataResolver.unmarshal(property, value);
+			if (property.isMultiple()) {
 				return returned;
 			} else {
 				return (1 != returned.size()) ? null : returned.get(0);
 			}
 		} catch (Exception e) {
-			logger.error("exception with param type:" + field.getType() + " value:" + value, e);
+			logger.error("exception with param type:" + property.getValueType() + " value:" + value, e);
 			return null;
 		}
 	}
@@ -149,29 +112,29 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		int index = 0;
 		for (final Restriction restriction : restrictions) {
 			// 处理限制对应的模式
-			RestrictPattern pattern = restriction.getPattern();
-			if (null == pattern || StringUtils.isEmpty(pattern.getContent())) {
+			if (StringUtils.isEmpty(restriction.getContent())) {
 				continue;
 			}
-			String patternContent = pattern.getContent();
+			String patternContent = restriction.getContent();
 			patternContent = StringUtils.replace(patternContent, "{alias}", query.getAlias());
 			String[] contents = StringUtils.split(StringUtils.replace(patternContent, " and ", "$"), "$");
 
+			User user = userService.get(SecurityUtils.getUserId());
 			StringBuilder singleConBuf = new StringBuilder("(");
 			for (int i = 0; i < contents.length; i++) {
 				String content = contents[i];
 				Condition c = new Condition(content);
 				List<String> params = c.getParamNames();
 				for (final String paramName : params) {
-					UserProperty param = pattern.getEntity().getField(paramName);
-					String value = restriction.getItem(param);
+					PropertyMeta prop = getUserProperty(paramName);
+					String value = user.getProperty(prop);
 					if (StringUtils.isNotEmpty(value)) {
 						if (value.equals(Restriction.ALL)) {
 							content = "";
 						} else {
-							content = StringUtils.replace(content, ":" + param.getName(),
-									":" + param.getName() + index);
-							paramValues.add(getFieldValue(param, restriction));
+							content = StringUtils.replace(content, ":" + prop.getName(), ":" + prop.getName()
+									+ index);
+							paramValues.add(unmarshal(value, prop));
 						}
 					} else {
 						throw new RuntimeException(paramName + " had not been initialized");
@@ -199,8 +162,8 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		}
 	}
 
-	private UserProperty getUserProperty(String fieldName) {
-		List<UserProperty> fields = entityDao.get(UserProperty.class, "name", fieldName);
+	private PropertyMeta getUserProperty(String fieldName) {
+		List<PropertyMeta> fields = entityDao.get(PropertyMeta.class, "name", fieldName);
 		if (1 != fields.size()) { throw new RuntimeException("bad pattern parameter named :" + fieldName); }
 		return fields.get(0);
 	}

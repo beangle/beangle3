@@ -6,7 +6,6 @@ package org.beangle.ems.security;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.beangle.model.pojo.EnabledEntity;
@@ -154,10 +153,8 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
 
 	/**
 	 * 用户自定义属性
-	 * 
-	 * @return
 	 */
-	public Map<Long, String> getProperties();
+	public List<UserProperty> getProperties();
 
 	/**
 	 * 查询对应自定属性
@@ -165,7 +162,7 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
 	 * @param property
 	 * @return
 	 */
-	public String getProperty(UserProperty property);
+	public String getProperty(PropertyMeta property);
 
 	/**
 	 * 设置自定义属性
@@ -173,6 +170,6 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
 	 * @param property
 	 * @param text
 	 */
-	public void setProperty(UserProperty property, String text);
+	public void setProperty(PropertyMeta property, String text);
 
 }

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.struts2.ServletActionContext;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.Page;
@@ -123,11 +124,12 @@ public class QueryHelper {
 	 */
 	public static int getPageNo() {
 		String pageNo = Params.get(PAGENO);
+		int resultno = 1;
 		if (StringUtils.isNotBlank(pageNo)) {
-			return Integer.valueOf(pageNo.trim()).intValue();
-		} else {
-			return Page.DEFAULT_PAGE_NUM;
+			resultno = NumberUtils.toInt(pageNo.trim());
 		}
+		if (resultno < 1) resultno = Page.DEFAULT_PAGE_NUM;
+		return resultno;
 	}
 
 	/**
@@ -137,15 +139,18 @@ public class QueryHelper {
 	 */
 	public static int getPageSize() {
 		String pageSize = Params.get(PAGESIZE);
+		int pagesize = Page.DEFAULT_PAGE_SIZE;
 		if (StringUtils.isNotBlank(pageSize)) {
-			return Integer.valueOf(pageSize.trim()).intValue();
+			pagesize = NumberUtils.toInt(pageSize.trim());
 		} else {
 			HttpServletRequest request = ServletActionContext.getRequest();
 			pageSize = CookieUtils.getCookieValue(request, PAGESIZE);
 			if (StringUtils.isNotEmpty(pageSize)) {
-				return Integer.valueOf(pageSize).intValue();
-			} else return Page.DEFAULT_PAGE_SIZE;
+				pagesize = NumberUtils.toInt(pageSize);
+			}
 		}
+		if (pagesize < 1) pagesize = Page.DEFAULT_PAGE_SIZE;
+		return pagesize;
 	}
 
 	public static void addDateIntervalCondition(OqlBuilder<?> query, String attr, String beginOn, String endOn) {

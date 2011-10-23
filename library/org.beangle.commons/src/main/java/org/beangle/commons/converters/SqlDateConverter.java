@@ -43,13 +43,8 @@ public class SqlDateConverter implements Converter {
 				return null;
 			} else {
 				String dateStr = (String) value;
-				if (!StringUtils.contains(dateStr, "-")) {
-					StringBuilder dateBuf = new StringBuilder(dateStr);
-					dateBuf.insert("yyyyMM".length(), '-');
-					dateBuf.insert("yyyy".length(), '-');
-					dateStr = dateBuf.toString();
-				}
-				return Date.valueOf(dateStr);
+				// 修复了jdk 1.6_u26 的错误
+				return Date.valueOf(normalize(dateStr));
 			}
 		} else if (value instanceof java.util.Date) {
 			return new Date(((java.util.Date) value).getTime());
@@ -60,5 +55,39 @@ public class SqlDateConverter implements Converter {
 
 	protected Object convertToString(Object value) {
 		return value.toString();
+	}
+
+	public static String normalize(String dateStr) {
+		if (!StringUtils.contains(dateStr, "-")) {
+			StringBuilder dateBuf = new StringBuilder(dateStr);
+			dateBuf.insert("yyyyMM".length(), '-');
+			dateBuf.insert("yyyy".length(), '-');
+			return dateBuf.toString();
+		} else {
+			if (dateStr.length() >= 10) return dateStr;
+			else if (dateStr.length() < 8) throw new IllegalArgumentException();
+			else {
+				// try 2009-9-1
+				char[] value = dateStr.toCharArray();
+				int dayIndex = -1;
+				if (value[6] == '-') dayIndex = 7;
+				if (value[7] == '-') dayIndex = 8;
+				if (dayIndex < 0) throw new IllegalArgumentException();
+				StringBuilder sb = new StringBuilder(10);
+
+				// append year-
+				sb.append(value, 0, 5);
+
+				// append month-
+				if (dayIndex - 5 < 3) sb.append('0').append(value, 5, 2);
+				else sb.append(value, 5, 3);
+
+				// append day
+				if (value.length - dayIndex < 2) sb.append('0').append(value, dayIndex, 1);
+				else sb.append(value, dayIndex, 2);
+
+				return sb.toString();
+			}
+		}
 	}
 }

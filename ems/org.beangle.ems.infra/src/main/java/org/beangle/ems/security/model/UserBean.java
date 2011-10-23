@@ -11,12 +11,8 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,8 +21,9 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
+import org.beangle.ems.security.PropertyMeta;
 import org.beangle.ems.security.User;
-import org.beangle.ems.security.UserProperty;
+import org.beangle.ems.security.UserProfile;
 import org.beangle.model.pojo.LongIdTimeObject;
 import org.beangle.model.util.EntityUtils;
 
@@ -90,11 +87,8 @@ public class UserBean extends LongIdTimeObject implements User {
 	/**
 	 * 用户自定义属性
 	 */
-	@ElementCollection
-	@MapKeyColumn(name = "property_id")
-	@Column(name = "content", length = 2000)
-	@CollectionTable(joinColumns = @JoinColumn(name = "user_id"))
-	protected Map<Long, String> properties = CollectUtils.newHashMap();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	protected List<UserProfile> profiles = CollectUtils.newArrayList();
 
 	/** 备注 */
 	protected String remark;
@@ -203,12 +197,12 @@ public class UserBean extends LongIdTimeObject implements User {
 		this.enabled = enabled;
 	}
 
-	public Map<Long, String> getProperties() {
-		return properties;
+	public List<UserProfile> getProfiles() {
+		return profiles;
 	}
 
-	public void setProperties(Map<Long, String> properties) {
-		this.properties = properties;
+	public void setProfiles(List<UserProfile> profiles) {
+		this.profiles = profiles;
 	}
 
 	public Date getEffectiveAt() {
@@ -239,24 +233,5 @@ public class UserBean extends LongIdTimeObject implements User {
 		return new ToStringBuilder(this).append("id", this.id).append("password", this.password)
 				.append("name", this.getName()).toString();
 	}
-
-	public String getProperty(UserProperty property) {
-		if (null == properties || properties.isEmpty()) {
-			return null;
-		} else {
-			return properties.get(property.getId());
-		}
-	}
-
-	public void setProperty(UserProperty property, String text) {
-		properties.put(property.getId(),text);
-	}
-
-	// public UserProperty getField(String paramName) {
-	// for (final UserProperty param : fields) {
-	// if (param.getName().equals(paramName)) { return param; }
-	// }
-	// return null;
-	// }
 
 }

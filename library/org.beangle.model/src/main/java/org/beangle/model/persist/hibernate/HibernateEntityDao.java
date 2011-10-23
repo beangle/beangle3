@@ -531,12 +531,12 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 	public void remove(Collection<?> entities) {
 		if (null == entities || entities.isEmpty()) return;
 		for (Object entity : entities)
-			getHibernateTemplate().delete(entity);
+			if (null != entity) getHibernateTemplate().delete(entity);
 	}
 
 	public void remove(Object... entities) {
 		for (Object entity : entities) {
-			getHibernateTemplate().delete(entity);
+			if (null != entity) getHibernateTemplate().delete(entity);
 		}
 	}
 

@@ -5,11 +5,10 @@
 package org.beangle.ems.security.model;
 
 import javax.persistence.Cacheable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
+import org.beangle.ems.meta.PropertyMeta;
+import org.beangle.ems.security.UserProfile;
 import org.beangle.ems.security.UserProperty;
 import org.beangle.model.pojo.LongIdObject;
 import org.hibernate.annotations.Cache;
@@ -26,103 +25,34 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 public class UserPropertyBean extends LongIdObject implements UserProperty {
 	private static final long serialVersionUID = 1L;
 
-	/** 名称 */
-	@NotNull
-	@Size(max = 50)
-	@Column(unique = true)
-	private String name;
+	private String value;
 
-	/** 关键字名称 */
-	@Size(max = 20)
-	private String keyName;
+	private PropertyMeta meta;
 
-	/** 其它属性名(逗号隔开) */
-	@Size(max = 100)
-	private String propertyNames;
+	private UserProfile profile;
 
-	/** 类型 */
-	@NotNull
-	@Size(max = 100)
-	private String valueType;
-
-	/** 备注 */
-	@NotNull
-	private String remark;
-
-	/** 数据提供描述 */
-	@Size(max = 200)
-	private String source;
-
-	/** 能够提供多值 */
-	@NotNull
-	private boolean multiple;
-
-	public UserPropertyBean() {
-		super();
+	public String getValue() {
+		return value;
 	}
 
-	public UserPropertyBean(String name, String type, String source) {
-		super();
-		this.name = name;
-		this.valueType = type;
-		this.source = source;
-		this.multiple = true;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
-	public String getKeyName() {
-		return keyName;
+	public PropertyMeta getMeta() {
+		return meta;
 	}
 
-	public void setKeyName(String keyName) {
-		this.keyName = keyName;
+	public void setMeta(PropertyMeta meta) {
+		this.meta = meta;
 	}
 
-	public String getPropertyNames() {
-		return propertyNames;
+	public UserProfile getProfile() {
+		return profile;
 	}
 
-	public void setPropertyNames(String propertyNames) {
-		this.propertyNames = propertyNames;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
-	public String getSource() {
-		return source;
-	}
-
-	public void setSource(String source) {
-		this.source = source;
-	}
-
-	public boolean isMultiple() {
-		return multiple;
-	}
-
-	public void setMultiple(boolean multiple) {
-		this.multiple = multiple;
-	}
-
-	public String getValueType() {
-		return valueType;
-	}
-
-	public void setValueType(String valueType) {
-		this.valueType = valueType;
+	public void setProfile(UserProfile profile) {
+		this.profile = profile;
 	}
 
 }

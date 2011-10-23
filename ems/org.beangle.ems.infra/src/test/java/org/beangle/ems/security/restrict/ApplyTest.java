@@ -7,19 +7,21 @@ package org.beangle.ems.security.restrict;
 import java.util.Map;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.model.query.Query;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.model.GroupBean;
+import org.beangle.ems.security.model.UserBean;
+import org.beangle.ems.security.model.PropertyMetaBean;
 import org.beangle.ems.security.restrict.model.RestrictEntityBean;
-import org.beangle.ems.security.restrict.model.UserPropertyBean;
-import org.beangle.ems.security.restrict.model.RestrictPatternBean;
-import org.beangle.ems.security.restrict.model.UserRestrictionBean;
+import org.beangle.ems.security.restrict.model.RestrictionBean;
 import org.beangle.ems.security.restrict.service.RestrictionServiceImpl;
 import org.beangle.ems.security.service.CsvDataResolver;
+import org.beangle.model.query.Query;
+import org.beangle.model.query.builder.OqlBuilder;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import com.sun.tools.doclets.internal.toolkit.util.Group;
 
 @Test
 public class ApplyTest {
@@ -34,16 +36,17 @@ public class ApplyTest {
 	}
 
 	public void testApply() {
-		UserProperty field = new UserPropertyBean("groups", GroupBean.class.getName(),
-				"id;name,1;group1,2;group2");
-		field.setKeyName("id");
-		field.setPropertyNames("name");
 		RestrictEntity entity = new RestrictEntityBean("user", User.class);
-		entity.getFields().add(field);
-		RestrictPattern pattern = new RestrictPatternBean(entity,
+		Restriction restriction = new RestrictionBean(entity,
 				"exists(from {alias}.groups as g where g.group in(:groups))");
-		Restriction restriction = new UserRestrictionBean(null, pattern);
-		restriction.setItem(field, "id;name,1;group1");
+
+		UserBean user = new UserBean();
+		PropertyMetaBean property = new PropertyMetaBean(1L, "groups", GroupBean.class.getName(), "oql:from "
+				+ Group.class);
+		property.setKeyName("id");
+		property.setPropertyNames("name");
+		user.setProperty(property, "id;name,1;group1");
+
 		OqlBuilder<User> builder = OqlBuilder.from(User.class);
 		restrictionService.apply(builder, CollectUtils.newArrayList(restriction));
 		Query<User> query = builder.build();
