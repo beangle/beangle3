@@ -6,7 +6,7 @@ package org.beangle.ems.security.service;
 
 import java.util.List;
 
-import org.beangle.ems.security.PropertyMeta;
+import org.beangle.ems.security.profile.UserPropertyMeta;
 
 /**
  * @author chaostone
@@ -22,7 +22,7 @@ public interface UserDataProvider {
 	 * @param source
 	 * @return
 	 */
-	public <T> List<T> getData(PropertyMeta field, String source);
+	public <T> List<T> getData(UserPropertyMeta field, String source);
 
 	/**
 	 * provider's unique name

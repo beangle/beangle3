@@ -12,8 +12,9 @@ import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.nav.MenuProfile;
-import org.beangle.ems.security.restrict.RestrictField;
-import org.beangle.ems.security.restrict.RestrictPattern;
+import org.beangle.ems.security.profile.GroupPropertyMeta;
+import org.beangle.ems.security.profile.UserPropertyMeta;
+import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.model.query.builder.OqlBuilder;
 
@@ -39,16 +40,18 @@ public class IndexAction extends SecurityActionSupport {
 		put("resourceStat", entityDao.search(resourceQuery));
 
 		// stat pattern and restriction
-		put("patternStat",
-				entityDao.search(OqlBuilder.from(RestrictPattern.class, "pattern").select("count(*)")));
-		put("paramStat", entityDao.search(OqlBuilder.from(RestrictField.class, "param").select("count(*)")));
+		put("restrictionStat",
+				entityDao.search(OqlBuilder.from(Restriction.class, "pattern").select("count(*)")));
+		put("userPropertyMetaStat",
+				entityDao.search(OqlBuilder.from(UserPropertyMeta.class, "param").select("count(*)")));
+		put("groupPropertyMetaStat",
+				entityDao.search(OqlBuilder.from(GroupPropertyMeta.class, "param").select("count(*)")));
 		return forward();
 	}
 
 	private void populateUserStat() {
 		OqlBuilder<GroupMember> userQuery = OqlBuilder.from(GroupMember.class, "gm");
-		userQuery.select("gm.group.name,gm.user.enabled,count(*)").groupBy(
-				"gm.group.name,gm.user.enabled");
+		userQuery.select("gm.group.name,gm.user.enabled,count(*)").groupBy("gm.group.name,gm.user.enabled");
 		put("userStat", entityDao.search(userQuery));
 	}
 

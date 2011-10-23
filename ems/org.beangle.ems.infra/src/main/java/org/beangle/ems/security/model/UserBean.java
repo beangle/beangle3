@@ -7,7 +7,6 @@ package org.beangle.ems.security.model;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -21,9 +20,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
-import org.beangle.ems.security.PropertyMeta;
 import org.beangle.ems.security.User;
-import org.beangle.ems.security.UserProfile;
 import org.beangle.model.pojo.LongIdTimeObject;
 import org.beangle.model.util.EntityUtils;
 
@@ -83,12 +80,6 @@ public class UserBean extends LongIdTimeObject implements User {
 	/** 是否启用 */
 	@NotNull
 	protected boolean enabled;
-
-	/**
-	 * 用户自定义属性
-	 */
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	protected List<UserProfile> profiles = CollectUtils.newArrayList();
 
 	/** 备注 */
 	protected String remark;
@@ -195,14 +186,6 @@ public class UserBean extends LongIdTimeObject implements User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
-	}
-
-	public List<UserProfile> getProfiles() {
-		return profiles;
-	}
-
-	public void setProfiles(List<UserProfile> profiles) {
-		this.profiles = profiles;
 	}
 
 	public Date getEffectiveAt() {

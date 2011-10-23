@@ -16,7 +16,7 @@ import org.beangle.model.pojo.LongIdObject;
  * @author chaostone
  */
 @Entity
-public class GroupProfileBean extends LongIdObject {
+public class GroupSessionProfileBean extends LongIdObject {
 
 	private static final long serialVersionUID = 1999239598984221565L;
 
@@ -40,11 +40,11 @@ public class GroupProfileBean extends LongIdObject {
 	@NotNull
 	protected int inactiveInterval;
 
-	public GroupProfileBean() {
+	public GroupSessionProfileBean() {
 		super();
 	}
 
-	public GroupProfileBean(Group group, int max, int inactiveInterval) {
+	public GroupSessionProfileBean(Group group, int max, int inactiveInterval) {
 		super();
 		this.group = group;
 		this.capacity = max;

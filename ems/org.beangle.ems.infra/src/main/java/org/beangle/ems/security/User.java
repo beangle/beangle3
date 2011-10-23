@@ -151,25 +151,4 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
 	 */
 	public boolean isPasswordExpired();
 
-	/**
-	 * 用户自定义属性
-	 */
-	public List<UserProperty> getProperties();
-
-	/**
-	 * 查询对应自定属性
-	 * 
-	 * @param property
-	 * @return
-	 */
-	public String getProperty(PropertyMeta property);
-
-	/**
-	 * 设置自定义属性
-	 * 
-	 * @param property
-	 * @param text
-	 */
-	public void setProperty(PropertyMeta property, String text);
-
 }

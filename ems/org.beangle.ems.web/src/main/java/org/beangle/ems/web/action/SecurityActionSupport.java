@@ -4,17 +4,14 @@
  */
 package org.beangle.ems.web.action;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.NoParameters;
-import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.StrUtils;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.SecurityUtils;
-import org.beangle.ems.security.User;
+import org.beangle.ems.security.profile.UserProfile;
 import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.ems.security.restrict.service.RestrictionService;
 import org.beangle.ems.security.service.AuthorityService;
@@ -24,11 +21,7 @@ import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.struts2.action.EntityDrivenAction;
 import org.beangle.web.util.RequestUtils;
 
-import com.opensymphony.xwork2.ActionContext;
-
 public abstract class SecurityActionSupport extends EntityDrivenAction implements NoParameters {
-
-	private static final long serialVersionUID = 8321873197609852795L;
 
 	protected AuthorityService authorityService;
 
@@ -48,35 +41,43 @@ public abstract class SecurityActionSupport extends EntityDrivenAction implement
 	}
 
 	protected List<Restriction> getRestrictions() {
-		final Map<String, Object> session = ActionContext.getContext().getSession();
-		@SuppressWarnings("unchecked")
-		Map<Long, List<Restriction>> restrictionMap = (Map<Long, List<Restriction>>) session
-				.get("security.restriction");
-		if (null == restrictionMap) {
-			restrictionMap = CollectUtils.newHashMap();
-			session.put("security.restriction", restrictionMap);
-		}
+		// final Map<String, Object> session = ActionContext.getContext().getSession();
+		// @SuppressWarnings("unchecked")
+		// Map<Long, List<Restriction>> restrictionMap = (Map<Long, List<Restriction>>) session
+		// .get("security.restriction");
+		// if (null == restrictionMap) {
+		// restrictionMap = CollectUtils.newHashMap();
+		// session.put("security.restriction", restrictionMap);
+		// }
 		Resource resource = getResource();
-		if (resource.getEntities().isEmpty()) { return Collections.emptyList(); }
-		List<Restriction> realms = restrictionMap.get(resource.getId());
-		User user = entityDao.get(User.class, getUserId());
-		if (null == realms) {
-			realms = restrictionService.getRestrictions(user, resource);
-			restrictionMap.put(resource.getId(), realms);
-		}
+		// if (resource.getEntities().isEmpty()) { return Collections.emptyList(); }
+		// List<Restriction> realms = restrictionMap.get(resource.getId());
+//		User user = entityDao.get(User.class, getUserId());
+		// if (null == realms) {
+		UserProfile profile = getUserProfile();
+		List<Restriction> holders = restrictionService.getRestrictions(profile, resource);
+		// restrictionMap.put(resource.getId(), realms);
+		// }
 		// 没有权限就报错
-		if (realms.isEmpty()) { throw new AccessDeniedException(SecurityContextHolder.getContext()
+		if (holders.isEmpty()) { throw new AccessDeniedException(SecurityContextHolder.getContext()
 				.getAuthentication(), resource.getName()); }
-		return realms;
+		return holders;
 	}
 
-	protected List<?> getRestricitonValues(String name) {
-		return restrictionService.getFieldValues(name, getRestrictions());
+	protected Object getUserPropertyValue(String name) {
+		UserProfile profile = getUserProfile();
+		if (null == profile) return null;
+		else return restrictionService.getPropertyValue(name, profile);
+	}
+
+	protected UserProfile getUserProfile() {
+		OqlBuilder<UserProfile> builder=OqlBuilder.from(UserProfile.class,"up").where("up.user.id=:userId",getUserId());
+		List<UserProfile> profiles=entityDao.search(builder);
+		return profiles.isEmpty()?null:profiles.get(0);
 	}
 
 	protected void applyRestriction(OqlBuilder<?> query) {
-		// Resource resource = getResource();
-		restrictionService.apply(query, getRestrictions());
+		restrictionService.apply(query, getRestrictions(), getUserProfile());
 	}
 
 	protected Long getUserId() {

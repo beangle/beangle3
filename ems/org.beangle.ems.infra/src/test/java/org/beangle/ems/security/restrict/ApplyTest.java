@@ -9,8 +9,8 @@ import java.util.Map;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.model.GroupBean;
-import org.beangle.ems.security.model.UserBean;
-import org.beangle.ems.security.model.PropertyMetaBean;
+import org.beangle.ems.security.profile.model.UserProfileBean;
+import org.beangle.ems.security.profile.model.UserPropertyMetaBean;
 import org.beangle.ems.security.restrict.model.RestrictEntityBean;
 import org.beangle.ems.security.restrict.model.RestrictionBean;
 import org.beangle.ems.security.restrict.service.RestrictionServiceImpl;
@@ -40,15 +40,16 @@ public class ApplyTest {
 		Restriction restriction = new RestrictionBean(entity,
 				"exists(from {alias}.groups as g where g.group in(:groups))");
 
-		UserBean user = new UserBean();
-		PropertyMetaBean property = new PropertyMetaBean(1L, "groups", GroupBean.class.getName(), "oql:from "
+		UserPropertyMetaBean property = new UserPropertyMetaBean(1L, "groups", GroupBean.class.getName(), "oql:from "
 				+ Group.class);
 		property.setKeyName("id");
 		property.setPropertyNames("name");
-		user.setProperty(property, "id;name,1;group1");
+
+		UserProfileBean upb = new UserProfileBean();
+		upb.setProperty(property, "id;name,1;group1");
 
 		OqlBuilder<User> builder = OqlBuilder.from(User.class);
-		restrictionService.apply(builder, CollectUtils.newArrayList(restriction));
+		restrictionService.apply(builder, CollectUtils.newArrayList(restriction), upb);
 		Query<User> query = builder.build();
 		String statement = query.getStatement();
 		Map<?, ?> params = query.getParams();

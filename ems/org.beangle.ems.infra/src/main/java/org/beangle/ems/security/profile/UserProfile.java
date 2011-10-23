@@ -2,9 +2,11 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.ems.security;
+package org.beangle.ems.security.profile;
 
 import java.util.List;
+
+import org.beangle.ems.security.User;
 
 /**
  * 用户配置
@@ -12,8 +14,12 @@ import java.util.List;
  * @author chaostone
  * @version $Id: UserProfile.java Oct 21, 2011 8:43:35 AM chaostone $
  */
-public interface UserProfile {
+public interface UserProfile extends Profile {
 
 	public List<UserProperty> getProperties();
+
+	public UserProperty getProperty(UserPropertyMeta meta);
+
+	public User getUser();
 
 }

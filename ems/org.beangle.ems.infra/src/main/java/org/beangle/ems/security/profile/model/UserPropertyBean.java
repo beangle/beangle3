@@ -2,14 +2,14 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.ems.security.model;
+package org.beangle.ems.security.profile.model;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 
-import org.beangle.ems.meta.PropertyMeta;
-import org.beangle.ems.security.UserProfile;
-import org.beangle.ems.security.UserProperty;
+import org.beangle.ems.security.profile.UserPropertyMeta;
+import org.beangle.ems.security.profile.UserProfile;
+import org.beangle.ems.security.profile.UserProperty;
 import org.beangle.model.pojo.LongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -19,7 +19,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * 
  * @author chaostone
  */
-@Entity(name = "org.beangle.ems.security.UserProperty")
+@Entity(name = "org.beangle.ems.security.profile.UserProperty")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class UserPropertyBean extends LongIdObject implements UserProperty {
@@ -27,9 +27,20 @@ public class UserPropertyBean extends LongIdObject implements UserProperty {
 
 	private String value;
 
-	private PropertyMeta meta;
+	private UserPropertyMeta meta;
 
 	private UserProfile profile;
+
+	public UserPropertyBean() {
+		super();
+	}
+
+	public UserPropertyBean(UserProfileBean profile, UserPropertyMeta meta, String value) {
+		super();
+		this.profile = profile;
+		this.meta = meta;
+		this.value = value;
+	}
 
 	public String getValue() {
 		return value;
@@ -39,11 +50,11 @@ public class UserPropertyBean extends LongIdObject implements UserProperty {
 		this.value = value;
 	}
 
-	public PropertyMeta getMeta() {
+	public UserPropertyMeta getMeta() {
 		return meta;
 	}
 
-	public void setMeta(PropertyMeta meta) {
+	public void setMeta(UserPropertyMeta meta) {
 		this.meta = meta;
 	}
 

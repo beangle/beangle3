@@ -9,7 +9,9 @@ import java.util.List;
 
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
+import org.beangle.ems.security.profile.UserProfile;
 import org.beangle.ems.security.restrict.Restriction;
+import org.beangle.ems.security.restrict.RestrictionHolder;
 import org.beangle.model.query.builder.OqlBuilder;
 
 /**
@@ -19,22 +21,30 @@ import org.beangle.model.query.builder.OqlBuilder;
  */
 public interface RestrictionService {
 
-	public List<Restriction> getRestrictions(User user, Resource resource);
-
-	public List<Restriction> getAuthorityRestrictions(User user, Resource resource);
+	/**
+	 * 获得该权限范围适用的数据权限
+	 * 
+	 * @param profile
+	 * @param resource
+	 * @return
+	 */
+	public List<Restriction> getRestrictions(UserProfile profile, Resource resource);
 
 	/**
 	 * Get field enumerated values.
 	 * 
 	 * @param propertyName
+	 * @param profile
 	 * @return
 	 */
-	public Object getPropertyValue(String propertyName,User user);
+	public Object getPropertyValue(String propertyName, UserProfile profile);
 
 	/**
 	 * @param builder
 	 * @param restrictions
+	 * @param profile
 	 */
-	public void apply(OqlBuilder<?> builder, Collection<? extends Restriction> restrictions);
+	public void apply(OqlBuilder<?> builder, Collection<? extends Restriction> restrictions,
+			UserProfile profile);
 
 }

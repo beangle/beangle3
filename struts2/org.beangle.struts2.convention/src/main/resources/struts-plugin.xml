@@ -5,7 +5,7 @@
 
 <struts>
 	<constant name="struts.serve.static" value="true"/>
-	<constant name="struts.serve.static.browserCache" value="false"/>
+	<constant name="struts.serve.static.browserCache" value="true"/>
 	<constant name="struts.i18n.encoding" value="UTF-8"/>
 	<!--默认i18n和配置文件不重复加载-->
 	<constant name="struts.i18n.reload" value="false"/>

@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.security.Group;
-import org.beangle.ems.security.session.model.GroupProfileBean;
+import org.beangle.ems.security.session.model.GroupSessionProfileBean;
 import org.beangle.ems.security.session.model.SessionProfileBean;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
@@ -31,7 +31,7 @@ public class GroupProfileServiceImpl extends BaseServiceImpl implements Category
 
 	public List<CategoryProfile> getCategoryProfiles() {
 		List<CategoryProfile> profiles = CollectUtils.newArrayList();
-		OqlBuilder<?> cbuilder = OqlBuilder.from(GroupProfileBean.class, "cp");
+		OqlBuilder<?> cbuilder = OqlBuilder.from(GroupSessionProfileBean.class, "cp");
 		cbuilder.where("cp.sessionProfile=:profile", getProfile());
 		cbuilder.select("cp.group.name,cp.capacity,cp.userMaxSessions,cp.inactiveInterval");
 		for (Object data : entityDao.search(cbuilder)) {
@@ -44,7 +44,7 @@ public class GroupProfileServiceImpl extends BaseServiceImpl implements Category
 	}
 
 	public boolean hasProfile(Group group) {
-		OqlBuilder<?> cbuilder = OqlBuilder.from(GroupProfileBean.class, "cp");
+		OqlBuilder<?> cbuilder = OqlBuilder.from(GroupSessionProfileBean.class, "cp");
 		cbuilder.where("cp.sessionProfile.name=:serverName", getServerName()).select("cp.id")
 				.where("cp.group=:group", group).cacheable();
 		return !entityDao.search(cbuilder).isEmpty();
@@ -77,9 +77,9 @@ public class GroupProfileServiceImpl extends BaseServiceImpl implements Category
 		return serverName;
 	}
 
-	public void saveOrUpdate(List<GroupProfileBean> profiles) {
+	public void saveOrUpdate(List<GroupSessionProfileBean> profiles) {
 		entityDao.saveOrUpdate(profiles);
-		for (GroupProfileBean profile : profiles) {
+		for (GroupSessionProfileBean profile : profiles) {
 			publish(new CategoryProfileUpdateEvent(new CategoryProfile(profile.getGroup().getName(),
 					profile.getCapacity(), profile.getUserMaxSessions(), profile.getInactiveInterval())));
 		}

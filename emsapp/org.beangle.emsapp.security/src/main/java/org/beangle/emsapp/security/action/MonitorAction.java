@@ -9,7 +9,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.beangle.commons.collection.Order;
-import org.beangle.ems.security.session.model.GroupProfileBean;
+import org.beangle.ems.security.session.model.GroupSessionProfileBean;
 import org.beangle.ems.security.session.service.GroupProfileService;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.model.query.builder.OqlBuilder;
@@ -30,7 +30,7 @@ public class MonitorAction extends SecurityActionSupport {
 	private GroupProfileService categoryProfileService;
 
 	public String profiles() {
-		put("categoryProfiles", entityDao.getAll(GroupProfileBean.class));
+		put("categoryProfiles", entityDao.getAll(GroupSessionProfileBean.class));
 		return forward();
 	}
 
@@ -54,10 +54,10 @@ public class MonitorAction extends SecurityActionSupport {
 	 * 保存设置
 	 */
 	public String saveProfile() {
-		OqlBuilder<GroupProfileBean> builder = OqlBuilder.from(GroupProfileBean.class, "p");
+		OqlBuilder<GroupSessionProfileBean> builder = OqlBuilder.from(GroupSessionProfileBean.class, "p");
 		builder.where("p.sessionProfile.name=:serverName", sessionRegistry.getController().getServerName());
-		List<GroupProfileBean> categories = entityDao.getAll(GroupProfileBean.class);
-		for (final GroupProfileBean profile : categories) {
+		List<GroupSessionProfileBean> categories = entityDao.getAll(GroupSessionProfileBean.class);
+		for (final GroupSessionProfileBean profile : categories) {
 			Long groupId = profile.getGroup().getId();
 			Integer max = getInteger("max_" + groupId);
 			Integer maxSessions = getInteger("maxSessions_" + groupId);

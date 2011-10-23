@@ -51,7 +51,9 @@ public class GroupAction extends SecurityActionSupport {
 			entityQuery.where("gm.user.id=:me and gm.manager=true", getUserId());
 		}
 		populateConditions(entityQuery);
-		entityQuery.limit(getPageLimit()).orderBy(get("orderBy"));
+		String orderBy=get("orderBy");
+		if(null==orderBy)orderBy="userGroup.code";
+		entityQuery.limit(getPageLimit()).orderBy(orderBy);
 		return entityQuery;
 	}
 
@@ -65,6 +67,7 @@ public class GroupAction extends SecurityActionSupport {
 				"edit", "error.notUnique"); }
 		if (!group.isPersisted()) {
 			User creator = userService.get(getUserId());
+			group.setCode("tmp");
 			groupService.createGroup(creator, group);
 		} else {
 			group.setUpdatedAt(new Date(System.currentTimeMillis()));

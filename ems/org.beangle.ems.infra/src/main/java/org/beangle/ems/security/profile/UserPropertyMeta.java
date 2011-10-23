@@ -2,12 +2,14 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.ems.security;
+package org.beangle.ems.security.profile;
+
 /**
- *
+ * 用户自定义属性
+ * 
  * @author chaostone
- * @version $Id: GroupProperty.java Oct 18, 2011 8:58:25 AM chaostone $
+ * @since 2011-09-22
  */
-public interface GroupProperty extends Property{
+public interface UserPropertyMeta extends PropertyMeta {
 
 }

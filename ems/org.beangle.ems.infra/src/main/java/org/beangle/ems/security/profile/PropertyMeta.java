@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.ems.security;
+package org.beangle.ems.security.profile;
 
 import org.beangle.model.pojo.LongIdEntity;
 

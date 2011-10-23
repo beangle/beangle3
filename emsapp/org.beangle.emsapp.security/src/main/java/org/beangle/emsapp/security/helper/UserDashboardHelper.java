@@ -50,7 +50,8 @@ public class UserDashboardHelper {
 		populateOnlineActivities(user);
 		RestrictionHelper helper = new RestrictionHelper(entityDao);
 		helper.setRestrictionService(restrictionService);
-		helper.populateInfo(user);
+		//FIXME user profile
+		//helper.populateInfo(user);
 	}
 
 	private void populateOnlineActivities(User user) {

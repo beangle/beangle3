@@ -4,14 +4,10 @@
  */
 package org.beangle.emsapp.security.action;
 
-import java.util.List;
-
 import org.beangle.ems.security.Authority;
-import org.beangle.ems.security.Group;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.nav.Menu;
-import org.beangle.ems.security.restrict.RestrictEntity;
 import org.beangle.ems.security.service.CacheableAuthorityManager;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.emsapp.security.helper.ResourcePropertyExtractor;
@@ -50,26 +46,12 @@ public class ResourceAction extends SecurityActionSupport {
 		return forward(new Action(this, "search"));
 	}
 
-	protected void editSetting(Entity<?> entity) {
-		Resource resource = (Resource) entity;
-		List<RestrictEntity> entities = entityDao.getAll(RestrictEntity.class);
-		entities.removeAll(resource.getEntities());
-		put("restrictEntities", entities);
-		put("groups", entityDao.getAll(Group.class));
-	}
-
 	protected String saveAndForward(Entity<?> entity) {
 		Resource resource = (Resource) entity;
 		if (null != resource) {
 			if (entityDao.duplicate(Resource.class, resource.getId(), "name", resource.getName())) { return redirect(
 					"edit", "error.notUnique"); }
 		}
-
-		List<RestrictEntity> entities = entityDao.get(RestrictEntity.class,
-				getAll("restrictEntityId", Long.class));
-		resource.getEntities().clear();
-		resource.getEntities().addAll(entities);
-
 		entityDao.saveOrUpdate(resource);
 		authorityManager.refreshCache();
 

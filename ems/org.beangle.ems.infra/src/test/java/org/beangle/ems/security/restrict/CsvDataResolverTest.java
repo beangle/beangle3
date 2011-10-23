@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.ems.security.model.GroupBean;
-import org.beangle.ems.security.restrict.model.UserPropertyBean;
+import org.beangle.ems.security.profile.model.UserPropertyMetaBean;
 import org.beangle.ems.security.service.CsvDataResolver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -18,11 +18,11 @@ import org.testng.annotations.Test;
 @Test
 public class CsvDataResolverTest {
 	CsvDataResolver resolver = new CsvDataResolver();
-	PropertyMeta field = null;
+	UserPropertyMetaBean field = null;
 
 	@BeforeClass
 	public void setUp() {
-		field = new PropertyMetaBean("group", GroupBean.class.getName(), "oql:from Group");
+		field = new UserPropertyMetaBean(1L,"group", GroupBean.class.getName(), "oql:from Group");
 		field.setKeyName("id");
 		field.setPropertyNames("name");
 	}

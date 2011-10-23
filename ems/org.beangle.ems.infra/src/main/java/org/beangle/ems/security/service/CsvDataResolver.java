@@ -15,7 +15,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.converters.Converter;
-import org.beangle.ems.security.PropertyMeta;
+import org.beangle.ems.security.profile.UserPropertyMeta;
 
 /**
  * Store list of objects using comma.
@@ -26,7 +26,7 @@ import org.beangle.ems.security.PropertyMeta;
  */
 public class CsvDataResolver implements UserDataResolver, UserDataProvider {
 
-	public String marshal(PropertyMeta property, Collection<?> items) {
+	public String marshal(UserPropertyMeta property, Collection<?> items) {
 		if (null == items) { return null; }
 		List<String> properties = CollectUtils.newArrayList();
 		if (null != property.getKeyName()) {
@@ -69,7 +69,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> List<T> unmarshal(PropertyMeta property, String source) {
+	public <T> List<T> unmarshal(UserPropertyMeta property, String source) {
 		if (StringUtils.isEmpty(source)) { return Collections.emptyList(); }
 		List<String> properties = CollectUtils.newArrayList();
 		if (null != property.getKeyName()) {
@@ -114,7 +114,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
 		}
 	}
 
-	public <T> List<T> getData(PropertyMeta property, String source) {
+	public <T> List<T> getData(UserPropertyMeta property, String source) {
 		return unmarshal(property, source);
 	}
 

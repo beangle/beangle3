@@ -7,7 +7,7 @@ package org.beangle.ems.security.session.service;
 import java.util.List;
 
 import org.beangle.ems.security.Group;
-import org.beangle.ems.security.session.model.GroupProfileBean;
+import org.beangle.ems.security.session.model.GroupSessionProfileBean;
 
 /**
  * @author chaostone
@@ -15,7 +15,7 @@ import org.beangle.ems.security.session.model.GroupProfileBean;
  */
 public interface GroupProfileService {
 
-	public void saveOrUpdate(List<GroupProfileBean> profiles);
+	public void saveOrUpdate(List<GroupSessionProfileBean> profiles);
 
 	public boolean hasProfile(Group group);
 

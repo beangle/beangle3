@@ -37,9 +37,10 @@ public class DaoUserDetailServiceImpl extends BaseServiceImpl implements UserDet
 					defaultGroup = g;
 				}
 			}
+			String categoryName = (null == defaultGroup) ? "default" : defaultGroup.getName();
 			return new UserToken(user.getId(), user.getName(), user.getFullname(), user.getPassword(),
-					defaultGroup.getName(), user.isEnabled(), user.isAccountExpired(),
-					user.isPasswordExpired(), false, authorities);
+					categoryName, user.isEnabled(), user.isAccountExpired(), user.isPasswordExpired(), false,
+					authorities);
 		}
 	}
 

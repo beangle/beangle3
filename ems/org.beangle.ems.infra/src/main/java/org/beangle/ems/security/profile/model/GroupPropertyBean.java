@@ -2,14 +2,14 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.ems.security.model;
+package org.beangle.ems.security.profile.model;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 
-import org.beangle.ems.meta.PropertyMeta;
-import org.beangle.ems.security.Group;
-import org.beangle.ems.security.GroupProperty;
+import org.beangle.ems.security.profile.GroupProfile;
+import org.beangle.ems.security.profile.GroupProperty;
+import org.beangle.ems.security.profile.GroupPropertyMeta;
 import org.beangle.model.pojo.LongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -19,17 +19,28 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * 
  * @author chaostone
  */
-@Entity(name = "org.beangle.ems.security.GroupProperty")
+@Entity(name = "org.beangle.ems.security.profile.GroupProperty")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class GroupPropertyBean extends LongIdObject implements GroupProperty {
 	private static final long serialVersionUID = 1L;
 
 	private String value;
-	
-	private PropertyMeta meta;
-	
-	private Group group;
+
+	private GroupPropertyMeta meta;
+
+	private GroupProfile profile;
+
+	public GroupPropertyBean() {
+		super();
+	}
+
+	public GroupPropertyBean(GroupProfileBean profile, GroupPropertyMeta meta, String value) {
+		super();
+		this.profile = profile;
+		this.meta = meta;
+		this.value = value;
+	}
 
 	public String getValue() {
 		return value;
@@ -39,20 +50,20 @@ public class GroupPropertyBean extends LongIdObject implements GroupProperty {
 		this.value = value;
 	}
 
-	public PropertyMeta getMeta() {
+	public GroupPropertyMeta getMeta() {
 		return meta;
 	}
 
-	public void setMeta(PropertyMeta meta) {
+	public void setMeta(GroupPropertyMeta meta) {
 		this.meta = meta;
 	}
 
-	public Group getGroup() {
-		return group;
+	public GroupProfile getProfile() {
+		return profile;
 	}
 
-	public void setGroup(Group group) {
-		this.group = group;
+	public void setProfile(GroupProfile profile) {
+		this.profile = profile;
 	}
 
 }

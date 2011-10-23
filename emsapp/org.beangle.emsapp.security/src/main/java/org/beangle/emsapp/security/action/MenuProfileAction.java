@@ -8,11 +8,14 @@ import org.beangle.ems.security.Group;
 import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.model.Entity;
+import org.beangle.model.query.builder.OqlBuilder;
 
 public class MenuProfileAction extends SecurityActionSupport {
 
 	protected void editSetting(Entity<?> entity) {
-		put("groups", entityDao.getAll(Group.class));
+		OqlBuilder<Group> builder = OqlBuilder.from(Group.class, "g");
+		builder.orderBy("g.code");
+		put("groups", entityDao.search(builder));
 	}
 
 	@Override

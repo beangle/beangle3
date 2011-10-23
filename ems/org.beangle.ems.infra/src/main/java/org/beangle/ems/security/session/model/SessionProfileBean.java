@@ -41,7 +41,7 @@ public class SessionProfileBean extends LongIdObject {
 
 	/** 用户种类特定配置 */
 	@OneToMany(mappedBy = "sessionProfile")
-	private List<GroupProfileBean> categoryProfiles = CollectUtils.newArrayList();
+	private List<GroupSessionProfileBean> categoryProfiles = CollectUtils.newArrayList();
 
 	public SessionProfileBean() {
 		super();
@@ -78,11 +78,11 @@ public class SessionProfileBean extends LongIdObject {
 		this.inactiveInterval = inactiveInterval;
 	}
 
-	public List<GroupProfileBean> getCategoryProfiles() {
+	public List<GroupSessionProfileBean> getCategoryProfiles() {
 		return categoryProfiles;
 	}
 
-	public void setCategoryProfiles(List<GroupProfileBean> categoryProfiles) {
+	public void setCategoryProfiles(List<GroupSessionProfileBean> categoryProfiles) {
 		this.categoryProfiles = categoryProfiles;
 	}
 
