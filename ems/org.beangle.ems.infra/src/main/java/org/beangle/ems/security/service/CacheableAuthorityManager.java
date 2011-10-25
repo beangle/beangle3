@@ -15,8 +15,10 @@ import org.beangle.ems.security.SecurityUtils;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.security.access.AuthorityManager;
 import org.beangle.security.auth.AnonymousAuthentication;
+import org.beangle.security.auth.Principals;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.GrantedAuthority;
+import org.beangle.security.core.session.category.CategoryPrincipal;
 import org.beangle.security.web.AuthenticationEntryPoint;
 import org.beangle.security.web.FilterInvocation;
 import org.beangle.security.web.auth.UrlEntryPoint;
@@ -63,6 +65,11 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 		Collection<? extends GrantedAuthority> authories = auth.getAuthorities();
 		for (GrantedAuthority authorty : authories) {
 			if (isAuthorizedByGroup(authorty, resourceName)) { return true; }
+		}
+		// final check root user
+		Object principal = auth.getPrincipal();
+		if (principal instanceof CategoryPrincipal) {
+			if (Principals.ROOT.equals(((CategoryPrincipal) principal).getId())) { return true; }
 		}
 		return false;
 	}

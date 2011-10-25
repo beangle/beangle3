@@ -24,6 +24,7 @@ import org.beangle.ems.security.event.UserStatusEvent;
 import org.beangle.ems.security.model.GroupMemberBean;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.security.auth.Principals;
 
 /**
  * 用户信息服务的实现类
@@ -33,11 +34,11 @@ import org.beangle.model.query.builder.OqlBuilder;
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
 	public boolean isAdmin(User user) {
-		return User.ROOT.equals(user.getId());
+		return Principals.ROOT.equals(user.getId());
 	}
 
 	public boolean isAdmin(Long userId) {
-		return User.ROOT.equals(userId);
+		return Principals.ROOT.equals(userId);
 	}
 
 	public User get(String name, String password) {

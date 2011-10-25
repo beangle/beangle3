@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.commons.lang.Validate;
 import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.security.auth.Principals;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.session.AbstractSessionController;
 import org.beangle.security.core.session.Sessioninfo;
@@ -30,24 +31,34 @@ public class DbCategorySessionController extends AbstractSessionController imple
 
 	@Override
 	protected boolean allocate(Authentication auth, String sessionId) {
-		String category = ((CategoryPrincipal) auth.getPrincipal()).getCategory();
-		int result = entityDao.executeUpdateHql("update " + SessionStat.class.getName()
-				+ " stat set stat.online = stat.online + 1 "
-				+ "where stat.online < stat.capacity and stat.category=? and stat.serverName=?", category,
-				getServerName());
-		return result > 0;
+		CategoryPrincipal principal = (CategoryPrincipal) auth.getPrincipal();
+		if (Principals.ROOT.equals(principal.getId())) {
+			return true;
+		} else {
+			String category = principal.getCategory();
+			int result = entityDao.executeUpdateHql("update " + SessionStat.class.getName()
+					+ " stat set stat.online = stat.online + 1 "
+					+ "where stat.online < stat.capacity and stat.category=? and stat.serverName=?",
+					category, getServerName());
+			return result > 0;
+		}
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public int getMaxSessions(Authentication auth) {
-		String category = ((CategoryPrincipal) auth.getPrincipal()).getCategory();
-		OqlBuilder builder = OqlBuilder.from(SessionStat.class, "stat");
-		builder.select("stat.userMaxSessions")
-				.where("stat.category=:category and stat.serverName=:server", category, getServerName())
-				.cacheable();
-		List nums = entityDao.search(builder);
-		if (nums.isEmpty()) return 1;
-		else return ((Number) nums.get(0)).intValue();
+		CategoryPrincipal principal = (CategoryPrincipal) auth.getPrincipal();
+		if (Principals.ROOT.equals(principal.getId())) {
+			return -1;
+		} else {
+			String category = principal.getCategory();
+			OqlBuilder builder = OqlBuilder.from(SessionStat.class, "stat");
+			builder.select("stat.userMaxSessions")
+					.where("stat.category=:category and stat.serverName=:server", category, getServerName())
+					.cacheable();
+			List nums = entityDao.search(builder);
+			if (nums.isEmpty()) return 1;
+			else return ((Number) nums.get(0)).intValue();
+		}
 	}
 
 	public void onLogout(Sessioninfo info) {

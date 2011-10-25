@@ -8,6 +8,11 @@ import java.io.Serializable;
 import java.security.Principal;
 import java.util.Collection;
 
+/**
+ * 认证信息
+ * 
+ * @author chaostone
+ */
 public interface Authentication extends Principal, Serializable {
 
 	public Object getPrincipal();
@@ -21,5 +26,4 @@ public interface Authentication extends Principal, Serializable {
 	public boolean isAuthenticated();
 
 	public void setAuthenticated(boolean authenticated);
-
 }

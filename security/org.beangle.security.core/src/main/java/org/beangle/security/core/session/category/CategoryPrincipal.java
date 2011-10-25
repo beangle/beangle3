@@ -11,6 +11,8 @@ package org.beangle.security.core.session.category;
  */
 public interface CategoryPrincipal {
 
+	public Long getId();
+	
 	public String getCategory();
 
 	public String getFullname();

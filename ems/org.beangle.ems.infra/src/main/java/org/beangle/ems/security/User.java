@@ -21,10 +21,6 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
 
 	// 新建用户的缺省密码
 	public static final String DEFAULT_PASSWORD = "1";
-
-	/** 根用户id */
-	public static final Long ROOT = 1L;
-
 	/**
 	 * 名称
 	 * 
