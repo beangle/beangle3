@@ -25,7 +25,7 @@ public final class HierarchyEntityUtils {
 	 *            指定根节点
 	 * @return 包含自身的家族节点集合
 	 */
-	public static <T extends HierarchyEntity<T>> Set<T> getFamily(T root) {
+	public static <T extends HierarchyEntity<T, ?>> Set<T> getFamily(T root) {
 		Set<T> nodes = CollectUtils.newHashSet();
 		nodes.add(root);
 		loadChildren(root, nodes);
@@ -38,7 +38,7 @@ public final class HierarchyEntityUtils {
 	 * @param node
 	 * @param children
 	 */
-	private static <T extends HierarchyEntity<T>> void loadChildren(T node, Set<T> children) {
+	private static <T extends HierarchyEntity<T, ?>> void loadChildren(T node, Set<T> children) {
 		if (null == node.getChildren()) { return; }
 		for (T one : node.getChildren()) {
 			children.add(one);
@@ -52,7 +52,7 @@ public final class HierarchyEntityUtils {
 	 * @param datas
 	 * @return
 	 */
-	public static <T extends HierarchyEntity<T>> Map<T, String> sort(List<T> datas) {
+	public static <T extends HierarchyEntity<T, ?>> Map<T, String> sort(List<T> datas) {
 		return sort(datas, null);
 	}
 
@@ -63,10 +63,10 @@ public final class HierarchyEntityUtils {
 	 * @param property
 	 * @return
 	 */
-	public static <T extends HierarchyEntity<T>> Map<T, String> sort(List<T> datas, String property) {
+	public static <T extends HierarchyEntity<T, ?>> Map<T, String> sort(List<T> datas, String property) {
 		final Map<T, String> sortedMap = tag(datas, property);
-		Collections.sort(datas, new Comparator<HierarchyEntity<?>>() {
-			public int compare(HierarchyEntity<?> arg0, HierarchyEntity<?> arg1) {
+		Collections.sort(datas, new Comparator<HierarchyEntity<T, ?>>() {
+			public int compare(HierarchyEntity<T, ?> arg0, HierarchyEntity<T, ?> arg1) {
 				String tag0 = sortedMap.get(arg0);
 				String tag1 = sortedMap.get(arg1);
 				return tag0.compareTo(tag1);
@@ -75,7 +75,7 @@ public final class HierarchyEntityUtils {
 		return sortedMap;
 	}
 
-	public static <T extends HierarchyEntity<T>> Map<T, String> tag(List<T> datas, String property) {
+	public static <T extends HierarchyEntity<T, ?>> Map<T, String> tag(List<T> datas, String property) {
 		final Map<T, String> sortedMap = CollectUtils.newHashMap();
 		for (T de : datas) {
 			String myId = null;
@@ -107,7 +107,7 @@ public final class HierarchyEntityUtils {
 		return sortedMap;
 	}
 
-	private static <T extends HierarchyEntity<T>> void updatedTagFor(String prefix, T root,
+	private static <T extends HierarchyEntity<T, ?>> void updatedTagFor(String prefix, T root,
 			Map<T, String> sortedMap) {
 		for (T child : root.getChildren()) {
 			if (sortedMap.containsKey(child)) {
@@ -117,7 +117,7 @@ public final class HierarchyEntityUtils {
 		}
 	}
 
-	public static <T extends HierarchyEntity<T>> List<T> getRoots(final List<T> nodes) {
+	public static <T extends HierarchyEntity<T, ?>> List<T> getRoots(final List<T> nodes) {
 		List<T> roots = CollectUtils.newArrayList();
 		for (T m : nodes) {
 			if (null == m.getParent() || !nodes.contains(m.getParent())) {
@@ -127,7 +127,7 @@ public final class HierarchyEntityUtils {
 		return roots;
 	}
 
-	public static <T extends HierarchyEntity<T>> List<T> getPath(final T node) {
+	public static <T extends HierarchyEntity<T, ?>> List<T> getPath(final T node) {
 		List<T> path = CollectUtils.newArrayList();
 		T curNode = node;
 		while (null != curNode && !path.contains(curNode)) {
@@ -137,11 +137,11 @@ public final class HierarchyEntityUtils {
 		return path;
 	}
 
-	public static <T extends HierarchyEntity<T>> void addParent(Collection<T> nodes) {
+	public static <T extends HierarchyEntity<T, ?>> void addParent(Collection<T> nodes) {
 		addParent(nodes, null);
 	}
 
-	public static <T extends HierarchyEntity<T>> void addParent(Collection<T> nodes, T toRoot) {
+	public static <T extends HierarchyEntity<T, ?>> void addParent(Collection<T> nodes, T toRoot) {
 		Set<T> parents = CollectUtils.newHashSet();
 		for (T node : nodes) {
 			while (null != node.getParent() && !parents.contains(node.getParent())

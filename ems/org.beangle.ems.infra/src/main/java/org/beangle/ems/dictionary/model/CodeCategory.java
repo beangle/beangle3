@@ -1,4 +1,5 @@
-/* Copyright c 2005-2012.
+/* Copyright c 2005-2012.\
+ * 
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
@@ -16,7 +17,7 @@ import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.HierarchyEntity;
-import org.beangle.model.pojo.LongIdObject;
+import org.beangle.model.pojo.IntegerIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -29,7 +30,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Cacheable
 @Cache(region = "ems.dictionary",usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class CodeCategory extends LongIdObject implements HierarchyEntity<CodeCategory> {
+public class CodeCategory extends IntegerIdObject implements HierarchyEntity<CodeCategory,Integer> {
 
 	private static final long serialVersionUID = -8865890399079481866L;
 

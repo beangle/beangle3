@@ -14,7 +14,7 @@ import org.beangle.model.pojo.LongIdTimeEntity;
  * 
  * @author chaostone 2005-9-26
  */
-public interface Group extends LongIdTimeEntity, HierarchyEntity<Group>, Comparable<Group> {
+public interface Group extends LongIdTimeEntity, HierarchyEntity<Group,Long>, Comparable<Group> {
 
 	/** 匿名用户组id */
 	public static final long ANONYMOUS_ID = 1;

@@ -13,14 +13,14 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.model.pojo.HierarchyEntity;
-import org.beangle.model.pojo.LongIdHierarchyObject;
+import org.beangle.model.pojo.HierarchyLongIdObject;
 
 /**
  * @author chaostone
  * @version $Id: AbstractHierarchyService.java Jul 29, 2011 1:34:01 AM chaostone $
  */
 @SuppressWarnings({ "unchecked" })
-public abstract class AbstractHierarchyService<T extends LongIdHierarchyObject<M>, M extends HierarchyEntity<M>>
+public abstract class AbstractHierarchyService<T extends HierarchyLongIdObject<M>, M extends HierarchyEntity<M, Long>>
 		extends BaseServiceImpl {
 
 	public void move(T node, T location, int indexno) {

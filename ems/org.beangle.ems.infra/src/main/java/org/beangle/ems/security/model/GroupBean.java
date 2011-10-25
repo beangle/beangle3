@@ -21,7 +21,7 @@ import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
-import org.beangle.model.pojo.LongIdHierarchyObject;
+import org.beangle.model.pojo.HierarchyLongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -34,7 +34,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity(name = "org.beangle.ems.security.Group")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class GroupBean extends LongIdHierarchyObject<Group> implements Group {
+public class GroupBean extends HierarchyLongIdObject<Group> implements Group {
 
 	private static final long serialVersionUID = -3404181949500894284L;
 

@@ -21,7 +21,7 @@ import org.beangle.commons.lang.StrUtils;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.nav.MenuProfile;
-import org.beangle.model.pojo.LongIdHierarchyObject;
+import org.beangle.model.pojo.HierarchyLongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -33,7 +33,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity(name = "org.beangle.ems.security.nav.Menu")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class MenuBean extends LongIdHierarchyObject<Menu> implements Menu {
+public class MenuBean extends HierarchyLongIdObject<Menu> implements Menu {
 
 	private static final long serialVersionUID = 3864556621041443066L;
 

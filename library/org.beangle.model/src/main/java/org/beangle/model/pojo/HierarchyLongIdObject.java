@@ -16,8 +16,8 @@ import org.beangle.commons.lang.StrUtils;
  * @version $Id: LongIdHierarchyObject.java Jul 29, 2011 1:18:17 AM chaostone $
  */
 @MappedSuperclass
-public abstract class LongIdHierarchyObject<T> extends LongIdObject implements
-		HierarchyEntity<T>, Comparable<T> {
+public abstract class HierarchyLongIdObject<T> extends LongIdObject implements
+		HierarchyEntity<T,Long>, Comparable<T> {
 	private static final long serialVersionUID = -968320812584144969L;
 	
 	/** 代码 */
@@ -51,8 +51,8 @@ public abstract class LongIdHierarchyObject<T> extends LongIdObject implements
 		}
 	}
 
-	protected LongIdHierarchyObject<?> getParentNode() {
-		return (LongIdHierarchyObject<?>) getParent();
+	protected HierarchyLongIdObject<?> getParentNode() {
+		return (HierarchyLongIdObject<?>) getParent();
 	}
 
 	public String getCode() {
@@ -67,7 +67,7 @@ public abstract class LongIdHierarchyObject<T> extends LongIdObject implements
 	 * 不同级的菜单按照他们固有的级联顺序排序.
 	 */
 	public int compareTo(T other) {
-		return getCode().compareTo(((LongIdHierarchyObject<?>) other).getCode());
+		return getCode().compareTo(((HierarchyLongIdObject<?>) other).getCode());
 	}
 
 }

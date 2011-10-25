@@ -4,11 +4,12 @@
  */
 package org.beangle.model.pojo;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.beangle.model.Entity;
 
-public interface HierarchyEntity<T> extends Entity<Long> {
+public interface HierarchyEntity<T,ID extends Serializable> extends Entity<ID> {
 
 	public T getParent();
 
