@@ -6,7 +6,7 @@ package org.beangle.ems.dictionary.model;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -63,12 +63,12 @@ public abstract class BaseCode<T extends BaseCode> extends LongIdTimeObject impl
 	 * 生效时间
 	 */
 	@NotNull
-	protected Date effectiveAt;
+	protected Date effectOn;
 
 	/**
 	 * 失效时间
 	 */
-	protected Date invalidAt;
+	protected Date invalidOn;
 
 	public BaseCode() {
 	}
@@ -156,18 +156,18 @@ public abstract class BaseCode<T extends BaseCode> extends LongIdTimeObject impl
 	 * 
 	 * @return 生效时间
 	 */
-	public Date getEffectiveAt() {
-		return effectiveAt;
+	public Date getEffectOn() {
+		return effectOn;
 	}
 
 	/**
 	 * 设置生效时间
 	 * 
-	 * @param effectiveAt
+	 * @param effectOn
 	 *            生效时间
 	 */
-	public void setEffectiveAt(Date effectiveAt) {
-		this.effectiveAt = effectiveAt;
+	public void setEffectOn(Date effectOn) {
+		this.effectOn = effectOn;
 	}
 
 	/**
@@ -175,18 +175,18 @@ public abstract class BaseCode<T extends BaseCode> extends LongIdTimeObject impl
 	 * 
 	 * @return 失效时间
 	 */
-	public Date getInvalidAt() {
-		return invalidAt;
+	public Date getInvalidOn() {
+		return invalidOn;
 	}
 
 	/**
 	 * 设置失效时间
 	 * 
-	 * @param invalidAt
+	 * @param invalidOn
 	 *            失效时间
 	 */
-	public void setInvalidAt(Date invalidAt) {
-		this.invalidAt = invalidAt;
+	public void setInvalidOn(Date invalidOn) {
+		this.invalidOn = invalidOn;
 	}
 
 	public int compareTo(T arg0) {

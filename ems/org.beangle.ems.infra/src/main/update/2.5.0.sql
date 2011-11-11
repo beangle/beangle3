@@ -28,3 +28,8 @@ update se_group_members set group_id=68 where group_id=2;
 update se_groups set name='匿名用户组',code='1', parent_id=null,remark='公开访问时需要' where id=1;
 update se_groups set name='默认用户组',code='2',parent_id=null,remark='任何系统内的用户自动归在该组' where id=2;
 
+alter table se_resources alter column scope set null;
+alter table se_resources alter column NEED_PARAMS set null;
+
+select next value for seq_SE_AUTHORITIES from SE_AUTHORITIES
+select max(id) from SE_AUTHORITIES

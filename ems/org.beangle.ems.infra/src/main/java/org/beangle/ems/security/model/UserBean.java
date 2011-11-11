@@ -4,8 +4,8 @@
  */
 package org.beangle.ems.security.model;
 
+import java.sql.Date;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -62,20 +62,20 @@ public class UserBean extends LongIdTimeObject implements User {
 	private User creator;
 
 	/**
-	 * 账户生效时间
+	 * 账户生效日期
 	 */
 	@NotNull
-	protected Date effectiveAt;
+	protected Date effectOn;
 
 	/**
-	 * 账户失效时间
+	 * 账户失效日期
 	 */
-	protected Date invalidAt;
+	protected Date invalidOn;
 
 	/**
-	 * 密码失效时间
+	 * 密码失效日期
 	 */
-	protected Date passwordExpiredAt;
+	protected Date passwordExpiredOn;
 
 	/** 是否启用 */
 	@NotNull
@@ -177,7 +177,7 @@ public class UserBean extends LongIdTimeObject implements User {
 	 * 是否密码过期
 	 */
 	public boolean isPasswordExpired() {
-		return (null != passwordExpiredAt && new Date().after(passwordExpiredAt));
+		return (null != passwordExpiredOn && new Date(System.currentTimeMillis()).after(passwordExpiredOn));
 	}
 
 	public boolean isEnabled() {
@@ -188,28 +188,28 @@ public class UserBean extends LongIdTimeObject implements User {
 		this.enabled = enabled;
 	}
 
-	public Date getEffectiveAt() {
-		return effectiveAt;
+	public Date getEffectOn() {
+		return effectOn;
 	}
 
-	public void setEffectiveAt(Date effectiveAt) {
-		this.effectiveAt = effectiveAt;
+	public void setEffectOn(Date effectOn) {
+		this.effectOn = effectOn;
 	}
 
-	public Date getInvalidAt() {
-		return invalidAt;
+	public Date getInvalidOn() {
+		return invalidOn;
 	}
 
-	public void setInvalidAt(Date invalidAt) {
-		this.invalidAt = invalidAt;
+	public void setInvalidOn(Date invalidOn) {
+		this.invalidOn = invalidOn;
 	}
 
-	public Date getPasswordExpiredAt() {
-		return passwordExpiredAt;
+	public Date getPasswordExpiredOn() {
+		return passwordExpiredOn;
 	}
 
 	public void setPasswordExpiredAt(Date passwordExpiredAt) {
-		this.passwordExpiredAt = passwordExpiredAt;
+		this.passwordExpiredOn = passwordExpiredAt;
 	}
 
 	public String toString() {

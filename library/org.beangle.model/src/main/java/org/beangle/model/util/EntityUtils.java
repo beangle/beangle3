@@ -139,9 +139,9 @@ public final class EntityUtils {
 
 	public static boolean isExpired(TemporalActiveEntity entity) {
 		Date now = new Date();
-		if (null == entity.getEffectiveAt()) return true;
-		return entity.getEffectiveAt().after(now)
-				|| (null != entity.getInvalidAt() && !now.before(entity.getInvalidAt()));
+		if (null == entity.getEffectOn()) return true;
+		return entity.getEffectOn().after(now)
+				|| (null != entity.getInvalidOn() && !now.before(entity.getInvalidOn()));
 	}
 
 }

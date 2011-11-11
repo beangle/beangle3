@@ -75,3 +75,8 @@ drop table sys_parameters
 alter table ems_business_logs alter column resource rename to resrc;
 alter table ems_business_logs alter column operater rename to operator;
 
+
+alter table se_users alter column effective_at rename to effect_on;
+alter table se_users alter column invalid_at rename to invalid_on;
+alter table se_users alter column password_expired_at rename to password_expired_on;
+

@@ -95,6 +95,6 @@ public class PropertyConfigBean implements PropertyConfig {
 	}
 
 	public Set<String> getNames() {
-		return properties.keySet();
+		return CollectUtils.newHashSet(properties.keySet());
 	}
 }

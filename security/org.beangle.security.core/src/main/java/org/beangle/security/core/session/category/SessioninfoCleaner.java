@@ -91,10 +91,10 @@ class SessionCleanerTask extends TimerTask {
 				.getSessioninfoClass(), "info");
 		builder.where("info.serverName=:server and info.lastAccessAt<:givenTime", registry.getController()
 				.getServerName(), DateUtils.rollMinutes(calendar.getTime(), -expiredTime));
-		List<Sessioninfo> activities = entityDao.search(builder);
+		List<Sessioninfo> infos = entityDao.search(builder);
 		int removed = 0;
-		for (Sessioninfo activity : activities) {
-			registry.remove(activity.getId());
+		for (Sessioninfo info : infos) {
+			registry.remove(info.getId());
 			removed++;
 		}
 		if (removed > 0 || watch.getTime() > 50) {
