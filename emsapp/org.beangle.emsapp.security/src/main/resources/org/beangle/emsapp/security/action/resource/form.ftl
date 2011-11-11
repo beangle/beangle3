@@ -9,7 +9,6 @@
 	[@b.textfield name="resource.title" required="true" label="标题" value="${resource.title!}" maxlength="50"/]
 	[@b.textfield name="resource.remark" label="common.remark" value="${resource.remark!}" maxlength="50"/]
 	[@b.radios label="common.status" name="resource.enabled" value=resource.enabled items="1:action.activate,0:action.freeze"/]
-	[@b.select2 label="数据限制对象" name1st="RestrictEntities"  name2nd="restrictEntityId" items1st=restrictEntities items2nd=resource.entities/]
 	[@b.formfoot]
 		[@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit"/]
 		[@b.redirectParams/]

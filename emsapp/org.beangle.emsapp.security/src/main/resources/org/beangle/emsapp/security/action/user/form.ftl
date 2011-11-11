@@ -15,9 +15,9 @@
 		[@b.password label="密码" name="password" value="" comment="默认密码为1"/]
 		[@b.email label="common.email" name="user.mail" value="${user.mail!}" style="width:300px;" required="true" maxlength="50"/]
 		[#if isadmin|| isme]
-		[@b.startend label="common.effective-invalid" name="user.effectiveAt,user.invalidAt" required="true,false" start=user.effectiveAt end=user.invalidAt format="datetime" disabled="disabled"/]
+		[@b.startend label="common.effective-invalid" name="user.effectOn,user.invalidOn" required="true,false" start=user.effectOn end=user.invalidOn format="datetime" disabled="disabled"/]
 		[#else]
-		[@b.startend label="common.effective-invalid" name="user.effectiveAt,user.invalidAt" required="true,false" start=user.effectiveAt end=user.invalidAt format="datetime"/]
+		[@b.startend label="common.effective-invalid" name="user.effectOn,user.invalidOn" required="true,false" start=user.effectOn end=user.invalidOn format="datetime"/]
 		[/#if]
 		[@b.datepicker label="user.passwordExpiredAt" name="user.passwordExpiredAt" value=user.passwordExpiredAt format="datetime"/]
 		[@b.textarea label="common.remark" cols="50" rows="1" name="user.remark" value="${user.remark!}" maxlength="50"/]
@@ -26,8 +26,9 @@
 	[@b.tab label="所在用户组"]
 		[@b.grid  items=members?sort_by(["group","code"]) var="m" sortable="false"]
 			[@b.row]
+				<tr [#if m??]id="${m.group.code}"[/#if]>
 				[@b.col title="" width="5%"]<input name="groupId" type="checkbox" onchange="changeMember(${m.group.id},this)"/>[/@]
-				[@b.col title="序号" width="5%"]${m_index+1}[/@]
+				[@b.treecol title="用户组" width="40%" property="group.name"/]
 				[@b.col title="用户组" width="40%" property="group.name"]<span [#if !m.group.enabled]class="ui-disabled" title="${b.text('action.freeze')}"[/#if]>${m.group.name}</span>[/@]
 				[@b.col title="成员" width="10%"]
 				<input type="checkbox" name="member${m.group.id}" ${(memberMap.get(m.group).member)?default(false)?string('checked="checked"','')}/>
@@ -39,6 +40,7 @@
 				[#if !m.manager && !(memberMap.get(m.group).manager)?default(false)][#else]<input type="checkbox" name="manager${m.group.id}" [#if !m.manager]disabled="disabled"[/#if] ${(memberMap.get(m.group).manager)?default(false)?string('checked="checked"','')}/>[/#if]
 				[/@]
 				[@b.col title="加入时间" width="20%"]${(memberMap.get(m.group).updatedAt?string("yyyy-MM-dd HH:mm"))!}[/@]
+				</tr>
 			[/@]
 		[/@]
 	[/@]

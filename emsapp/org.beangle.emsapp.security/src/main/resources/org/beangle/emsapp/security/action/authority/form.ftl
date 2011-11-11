@@ -93,9 +93,7 @@
 			[#list menu.resources as resource]
 				[#if resources?seq_contains(resource)]
 				<input type="checkbox" name="resourceId" id="checkbox_${menu_index}_${resource_index}" [#if aoResources?seq_contains(resource)]checked="checked"[/#if] value="${resource.id}">[#rt]
-			[#if ((resource.entities?size)>0)&&aoResources?seq_contains(resource)]
-			[@b.a href="restriction!info?forEdit=1&restrictionType=authority&restriction.holder.id=${aoResourceAuthorityMap[resource.id?string]}" target="restictionFrame" ]<font color="red">${resource.title}</font>[/@][#rt]
-			[#else][#lt]${resource.title}[/#if]
+				${resource.title}
 				[/#if]
 				[#if resource_index%2==1]<br/>[/#if]
 			[/#list]

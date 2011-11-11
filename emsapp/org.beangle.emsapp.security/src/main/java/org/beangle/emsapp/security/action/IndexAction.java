@@ -51,8 +51,21 @@ public class IndexAction extends SecurityActionSupport {
 
 	private void populateUserStat() {
 		OqlBuilder<GroupMember> userQuery = OqlBuilder.from(GroupMember.class, "gm");
-		userQuery.select("gm.group.name,gm.user.enabled,count(*)").groupBy("gm.group.name,gm.user.enabled");
-		put("userStat", entityDao.search(userQuery));
+		userQuery.select("gm.group.code,gm.group.name,gm.user.enabled,count(*)").groupBy(
+				"gm.group.name,gm.user.enabled");
+		List<?> datas = entityDao.search(userQuery);
+		Map<String, Map<Object,Object>> rs = CollectUtils.newHashMap();
+		for (Object data : datas) {
+			Object[] groupStat = (Object[]) data;
+			String key = groupStat[0] + " " + groupStat[1];
+			Map<Object,Object> statusMap = rs.get(key);
+			if (null == statusMap) {
+				statusMap = CollectUtils.newHashMap();
+				rs.put(key, statusMap);
+			}
+			statusMap.put(groupStat[2], groupStat[3]);
+		}
+		put("userStat", rs);
 	}
 
 }

@@ -4,8 +4,8 @@
 	[@b.textfield name="baseCode.code" required="true" maxlength="25" label="common.code" value="${baseCode.code!}"/]
 	[@b.textfield name="baseCode.name" required="true" maxlength="25" label="common.name" value="${baseCode.name!}"/]
 	[@b.textfield name="baseCode.engName" maxlength="50" label="common.engName" style="width:200px" value="${baseCode.engName!}"/]
-	[@b.datepicker readOnly="readOnly" name="baseCode.effectiveAt" required="true"  label="生效日期" value="${(baseCode.effectiveAt?string('yyyy-MM-dd'))!}"/]
-	[@b.datepicker readOnly="readOnly" name="baseCode.invalidAt" label="失效日期" value="${(baseCode.invalidAt?string('yyyy-MM-dd'))!}"/]
+	[@b.datepicker readOnly="readOnly" name="baseCode.effectOn" required="true"  label="生效日期" value="${(baseCode.effectOn?string('yyyy-MM-dd'))!}"/]
+	[@b.datepicker readOnly="readOnly" name="baseCode.invalidOn" label="失效日期" value="${(baseCode.invalidOn?string('yyyy-MM-dd'))!}"/]
 	[@b.formfoot]
 	<input type="hidden" name="baseCode.id" value="${baseCode.id?if_exists}" />
 	  <input type="hidden" name="baseCodeId" value="${baseCode.id?if_exists}"/>
