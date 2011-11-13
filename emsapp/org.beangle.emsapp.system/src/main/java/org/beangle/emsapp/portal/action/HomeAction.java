@@ -31,7 +31,7 @@ public class HomeAction extends SecurityActionSupport {
 		put("categoryId", categoryId);
 		MenuProfile profile = getMenuProfile(categoryId);
 		if (null != profile) {
-			put("menus", HierarchyEntityUtil.getRoots(menuService.getMenus(profile, user)));
+			put("menus",HierarchyEntityUtil.getRoots(menuService.getMenus(profile, user)) );
 		} else {
 			put("menus", Collections.EMPTY_LIST);
 		}
@@ -42,6 +42,7 @@ public class HomeAction extends SecurityActionSupport {
 	public String welcome() {
 		put("date", new Date(System.currentTimeMillis()));
 		put("user", SecurityUtils.getFullname());
+		System.out.println(SecurityUtils.getFullname());
 		return forward();
 	}
 

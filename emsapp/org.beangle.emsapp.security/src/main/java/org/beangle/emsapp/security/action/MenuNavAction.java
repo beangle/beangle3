@@ -47,6 +47,7 @@ public class MenuNavAction extends SecurityActionSupport {
 		}
 
 		User user = entityDao.get(User.class, getUserId());
+		System.out.println(user);
 		Long categoryId = getUserCategoryId();
 		MenuProfile profile = getMenuProfile(categoryId);
 		List<Menu> menus = Collections.emptyList();

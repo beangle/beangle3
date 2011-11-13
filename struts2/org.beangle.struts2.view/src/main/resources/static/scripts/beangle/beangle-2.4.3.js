@@ -37,7 +37,8 @@
 					if(document.getElementById(target)) document.getElementById(target).src=url;
 				}else{
 					if(!ajaxHistory){
-						jQuery('#'+target).load(url);
+						//using post ,hack ie8 get cache
+						jQuery('#'+target).load(url,{});
 					}else{
 						beangle.history.historyGo(url,target);
 					}
@@ -826,6 +827,7 @@
 				}
 				jQuery.ajax({
 					url: url,
+					cache:false,
 					type: "GET",
 					dataType: "html",
 					complete: function( jqXHR, status, responseText ) {

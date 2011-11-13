@@ -9,7 +9,7 @@
 	<groupId>org.beangle</groupId>
 	<artifactId>beangle-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>2.4.2</version>
+	<version>2.4.3</version>
 	<name>Beangle Parent</name>
 
 	<properties>

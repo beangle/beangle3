@@ -18,6 +18,7 @@
 </li>
 [/#macro]
 
+
 <div id="menu_panel">
 [#if menus?size>0]
 <ul style="padding-left: 20px;">
