@@ -24,14 +24,14 @@ import org.beangle.model.util.HierarchyEntityUtil;
 public class HomeAction extends SecurityActionSupport {
 
 	private MenuService menuService;
-	
+
 	public String index() {
 		User user = entityDao.get(User.class, getUserId());
 		Long categoryId = getUserCategoryId();
 		put("categoryId", categoryId);
 		MenuProfile profile = getMenuProfile(categoryId);
 		if (null != profile) {
-			put("menus",HierarchyEntityUtil.getRoots(menuService.getMenus(profile, user)) );
+			put("menus", HierarchyEntityUtil.getRoots(menuService.getMenus(profile, user)));
 		} else {
 			put("menus", Collections.EMPTY_LIST);
 		}
@@ -42,7 +42,6 @@ public class HomeAction extends SecurityActionSupport {
 	public String welcome() {
 		put("date", new Date(System.currentTimeMillis()));
 		put("user", SecurityUtils.getFullname());
-		System.out.println(SecurityUtils.getFullname());
 		return forward();
 	}
 
