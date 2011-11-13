@@ -36,7 +36,8 @@
 					//FIXME _blank,_top
 					document.getElementById(target).src=url;
 				}else{
-					jQuery('#'+target).load(url);
+					//using post ,hack ie8 get cache
+					jQuery('#'+target).load(url,{});
 				}
 			}
 			return false;
