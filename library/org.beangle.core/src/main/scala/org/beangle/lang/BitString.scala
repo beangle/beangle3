@@ -4,17 +4,30 @@
  */
 package org.beangle.lang;
 
-object BitString{
-}
-
-class BitString(val value:String) {
- 
-  def and(other:BitString):BitString={
-    val builder= new StringBuilder(value.length)
-    for(i<-0 to value.length){
-      builder += (if('0'==value.charAt(i) || '0'==other.value.charAt(i)) '0' else '1')
-    }
-    new BitString(builder.toString)
+object BitString {
+  def apply(str: String): BitString = {
+    new BitString(str.toLong);
   }
 
+  def apply(value: Long): BitString = {
+    new BitString(value);
+  }
+  def add(first: String, second: String): String = BitString(first).and(BitString(second)).toString
+
+  def or(first: String, second: String): String = BitString(first).or(BitString(second)).toString
+}
+
+class BitString(val value: Long) {
+
+  val str: String = value.toBinaryString
+
+  def length = str.length
+
+  def and(other: BitString): BitString = new BitString(other.value & this.value)
+
+  def or(other: BitString): BitString = new BitString(other.value | this.value)
+
+  override def toString = str
+
+  def toString(maxLength: Int) = "0" * (maxLength - str.length) + str
 }

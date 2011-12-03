@@ -3,25 +3,19 @@
 	<parent>
 		<groupId>org.beangle</groupId>
 		<artifactId>beangle</artifactId>
-		<version>2</version>
+		<version>3</version>
 		<relativePath>../../beangle/pom.xml</relativePath>
 	</parent>
 	<groupId>org.beangle</groupId>
 	<artifactId>beangle-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>2.5.0-SNAPSHOT</version>
+	<version>3.0.0-SNAPSHOT</version>
 	<name>Beangle Parent</name>
 
 	<properties>
-		<gemini.version>1.0.0.M1</gemini.version>
 		<logback.version>0.9.28</logback.version>
-		<commonlang.version>2.6</commonlang.version>
-		<commoncollections.version>3.2.1</commoncollections.version>
-		<commonbeanutils.version>1.8.3</commonbeanutils.version>
 		<h2.version>1.3.148</h2.version>
-		<testng.version>5.14.7</testng.version>
 		<mockito.version>1.8.5</mockito.version>
-		<spring.version>3.0.5.RELEASE</spring.version>
 	</properties>
 
 	<dependencyManagement>
@@ -29,17 +23,7 @@
 			<!--beangle-->
 			<dependency>
 				<groupId>org.beangle</groupId>
-				<artifactId>beangle-commons</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-spring</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-model</artifactId>
+				<artifactId>beangle-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -48,230 +32,9 @@
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-web</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-struts2-convention</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-struts2-view</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-security-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-security-web</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-security-cas</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-security-ldap</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-ems-security</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-ems-infra</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-ems-web</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-emsapp-security</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-emsapp-system</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-emsapp-database</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<!--osgi-->
-			<dependency>
-				<groupId>org.osgi</groupId>
-				<artifactId>osgi_R4_core</artifactId>
-				<version>1.0</version>
-				<scope>provided</scope>
-				<optional>true</optional>
-			</dependency>
-			<dependency>
-				<groupId>org.osgi</groupId>
-				<artifactId>osgi_R4_compendium</artifactId>
-				<version>1.0</version>
-				<scope>provided</scope>
-				<optional>true</optional>
-			</dependency>
-
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-core</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-aop</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-beans</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context-support</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-tx</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-orm</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jdbc</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-asm</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-expression</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-web</artifactId>
-				<version>${spring.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.eclipse.gemini.blueprint</groupId>
-				<artifactId>gemini-blueprint-core</artifactId>
-				<version>${gemini.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>org.springframework</groupId>
-						<artifactId>org.springframework.core</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.springframework</groupId>
-						<artifactId>org.springframework.aop</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.springframework</groupId>
-						<artifactId>org.springframework.beans</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.springframework</groupId>
-						<artifactId>org.springframework.context</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
-				 <groupId>org.eclipse.gemini.blueprint</groupId>
-				 <artifactId>gemini-blueprint-io</artifactId>
-				 <version>${gemini.version}</version>
-			</dependency>
-			<dependency>
-				 <groupId>org.eclipse.gemini.blueprint</groupId>
-				 <artifactId>gemini-blueprint-extender</artifactId>
-				 <version>${gemini.version}</version>
-			</dependency>
-			<!--test-->
-			<dependency>
-				<groupId>org.testng</groupId>
-				<artifactId>testng</artifactId>
-				<version>${testng.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.mockito</groupId>
-				<artifactId>mockito-core</artifactId>
-				<version>${mockito.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-test</artifactId>
-				<version>${spring.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<!--commons-->
-			<dependency>
-				<groupId>commons-collections</groupId>
-				<artifactId>commons-collections</artifactId>
-				<version>${commoncollections.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-beanutils</groupId>
-				<artifactId>commons-beanutils</artifactId>
-				<version>${commonbeanutils.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>log4j</groupId>
-						<artifactId>log4j</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
 				<version>${commonlang.version}</version>
-			</dependency>
-			<!--log-->
-			<dependency>
-				<groupId>ch.qos.logback</groupId>
-				<artifactId>logback-core</artifactId>
-				<version>${logback.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>ch.qos.logback</groupId>
-				<artifactId>logback-classic</artifactId>
-				<version>${logback.version}</version>
 			</dependency>
 			<!-- jdbc driver -->
 			<dependency>
@@ -283,59 +46,10 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>osgi_R4_core</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>osgi_R4_compendium</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
+        <dependency>
+			<groupId>org.scalatest</groupId>
+			<artifactId>scalatest_2.9.1</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-beanutils</groupId>
-			<artifactId>commons-beanutils</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-		</dependency>
-		<dependency>
-	        <groupId>commons-logging</groupId>
-	        <artifactId>commons-logging</artifactId>
-	        <version>99.0-does-not-exist</version>
-	        <scope>test</scope>
-        </dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
 		</dependency>
 	</dependencies>
 
