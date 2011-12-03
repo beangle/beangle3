@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>org.beangle</groupId>
+		<artifactId>beangle-parent</artifactId>
+		<version>2.5.0-SNAPSHOT</version>
+		<relativePath>../../parent/pom.xml</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.beangle</groupId>
+	<artifactId>beangle-commons</artifactId>
+	<packaging>jar<!--bundle--></packaging>
+	<name>Beangle Library Commons</name>
+	
+	<properties>
+		<bundle.symbolicName>org.beangle.commons</bundle.symbolicName>
+		<bundle.namespace>org.beangle.commons</bundle.namespace>
+		<commonsio.version>2.0.1</commonsio.version>
+		<commonscodec.version>1.4</commonscodec.version>
+		<commonscompress.version>1.1</commonscompress.version>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${commonscodec.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<version>${commonscompress.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commonsio.version}</version>
+		</dependency>
+	</dependencies>
+</project>

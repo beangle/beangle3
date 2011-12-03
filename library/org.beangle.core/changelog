@@ -1,0 +1,26 @@
+2011-03-05  duantihua  <chaostone.duan@gmail.com>
+	
+	* 增加spring自动配置
+	
+2010-11-13  duantihua  <chaostone.duan@gmail.com>
+	* 合并ListUtil,MapUtil,SetUtil到CollectUtils
+	* 重命名SeqStringUtil到SeqStrUtils
+	* 重命名BitStringUtil到BitStrUtils
+	* 重命名StringUtil到StrUtils
+	* 重命名ConfigType,ConfigBeanDefinitionHolder到ReconfigType,ReconfigBeanDefinitionHolder
+	
+2010-09-18  duantihua  <chaostone.duan@gmail.com>
+
+	* MapUtil增加了newLinkedHashMap方法
+
+2010-09-18  duantihua  <chaostone.duan@gmail.com>
+
+	* 修复了MapConventer的get(String,Class)数组处理错误
+
+2010-09-16  duantihua  <chaostone.duan@gmail.com>
+
+	* 将ConfigProcessor找不到bean定义时,提示错误改为警告
+
+2010-08-19  duantihua  <chaostone.duan@gmail.com>
+
+	* 将converter包重命名为converters
