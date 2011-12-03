@@ -9,13 +9,14 @@
 	<groupId>org.beangle</groupId>
 	<artifactId>beangle-library</artifactId>
 	<packaging>pom</packaging>
-	<name>Beangle Library</name>
+	<name>Beangle Core</name>
 	<modules>
-		<module>org.beangle.commons</module>
-		<module>org.beangle.web</module>
+		<module>org.beangle.core</module>
+		<!--<module>org.beangle.web</module>
 		<module>org.beangle.spring</module>
 		<module>org.beangle.model</module>
 		<module>org.beangle.test</module>
+		-->
 	</modules>
 	<build>
 		<plugins>

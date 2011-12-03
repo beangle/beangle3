@@ -1,2 +1,0 @@
-[#ftl/]
-[#include "index.ftl"/]

@@ -1,7 +1,0 @@
-<?xml version = "1.0" ?>
-<!DOCTYPE Employee SYSTEM "target/classes/org/beangle/web/xml/example.dtd">
-<Employee>
-<Emp_Id> E-001 </Emp_Id>
-<Emp_Name> Vinod </Emp_Name>
-<Emp_E-mail> Vinod1@yahoo.com </Emp_E-mail>
-</Employee>
