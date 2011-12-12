@@ -6,7 +6,7 @@ package org.beangle.lang;
 
 object BitString {
   def apply(str: String): BitString = {
-    new BitString(str.toLong);
+    new BitString(java.lang.Long.parseLong(str,2));
   }
 
   def apply(value: Long): BitString = {

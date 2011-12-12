@@ -16,7 +16,7 @@ class CsvReader(reader:Reader,format:CsvFormat,skipLines:Int){
     val resultBuffer=new ArrayBuffer[String]();
     var nextLine =  next
     while(nextLine!=None){
-      var r=parser.parseLineMulti(nextLine)
+      var r=parser.parseLineMulti(nextLine.get)
       if (r.length>0) resultBuffer ++=r
       if(parser.pending) nextLine=next
     }
