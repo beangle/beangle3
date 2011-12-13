@@ -28,8 +28,8 @@ ${tag.body}
 	<script type="text/javascript" src="${base}/static/scripts/history/history.adapter.jquery.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/history/history.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/history/history.html4.js"></script>
-	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-2.4.3.js"></script>
-	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui-2.4.3.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-2.4.4.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui-2.4.4.js"></script>
 [#else]
 	[@sj.head/]
 	<link id="beangle_theme_link" href="${base}/static/themes/${b.theme.ui}/beangle-ui.css" rel="stylesheet" type="text/css" />
@@ -39,7 +39,7 @@ ${tag.body}
 	<script type="text/javascript" src="${base}/static/scripts/history/history.adapter.jquery.min.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/history/history.min.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/history/history.html4.min.js"></script>
-	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-2.4.3.min.js"></script>
-	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui-2.4.3.min.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-2.4.4.min.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui-2.4.4.min.js"></script>
 [/#if]
 [/#macro]

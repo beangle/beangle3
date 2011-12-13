@@ -8,7 +8,7 @@ body {font-size: 13px;margin:0;}
 select,input,textarea {font-size: 13px;}
 
 a:link {color: #000080;text-decoration: none;}
-a:visited {text-decoration: none;}
+a:visited {text-decoration: none;color: #810098;}
 a:hover {color: red;}
 
 /* grid */
