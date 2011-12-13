@@ -16,7 +16,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class LongIdObject implements LongIdEntity {
 	private static final long serialVersionUID = -7530111699332363124L;
 
-	/**非业务主键*/
+	/** 非业务主键 */
 	@Id
 	@GeneratedValue(generator = "table_sequence")
 	@GenericGenerator(name = "table_sequence", strategy = "org.beangle.model.persist.hibernate.support.TableSeqGenerator")
@@ -66,6 +66,7 @@ public class LongIdObject implements LongIdEntity {
 	 * @see java.lang.Object#equals(Object)
 	 */
 	public boolean equals(final Object object) {
+		if (this == object) return true;
 		if (!(object instanceof LongIdObject)) { return false; }
 		LongIdObject rhs = (LongIdObject) object;
 		if (null == getId() || null == rhs.getId()) { return false; }

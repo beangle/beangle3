@@ -11,6 +11,7 @@ import java.util.Date;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -166,15 +167,14 @@ public class ExcelItemWriter extends AbstractItemWriter {
 
 	protected HSSFCellStyle getTitleStyle() {
 		HSSFCellStyle style = workbook.createCellStyle();
-		// HSSFFont f = workbook.createFont();
-		// f.setFontHeightInPoints((short ) 10 ); //字号
-		// f.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//加粗
-		// style.setFont(f);
+		HSSFFont f = workbook.createFont();
+		f.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//加粗
+		style.setFont(f);
 		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 左右居中
 		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);// 上下居中
-		style.setFillPattern(HSSFCellStyle.FINE_DOTS);
-		style.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
-		style.setFillBackgroundColor(HSSFColor.LIGHT_BLUE.index);
+		style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		style.setFillForegroundColor(HSSFColor.LIGHT_GREEN.index);
+		style.setBorderBottom((short) 1);
 		return style;
 	}
 }
