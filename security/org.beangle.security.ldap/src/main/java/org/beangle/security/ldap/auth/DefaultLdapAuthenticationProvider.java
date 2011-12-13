@@ -4,7 +4,6 @@
  */
 package org.beangle.security.ldap.auth;
 
-import org.beangle.security.auth.BadCredentialsException;
 import org.beangle.security.auth.dao.AbstractUserDetailAuthenticationProvider;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
@@ -25,7 +24,7 @@ public class DefaultLdapAuthenticationProvider extends AbstractUserDetailAuthent
 	@Override
 	protected void additionalAuthenticationChecks(UserDetail user, Authentication authentication)
 			throws AuthenticationException {
-		if (!ldapValidator.verifyPassword(user.getUsername(), (String) authentication.getCredentials())) { throw new BadCredentialsException(); }
+		if (!ldapValidator.verifyPassword(user.getUsername(), (String) authentication.getCredentials())) { throw new BadLdapCredentialsException(); }
 	}
 
 	@Override
