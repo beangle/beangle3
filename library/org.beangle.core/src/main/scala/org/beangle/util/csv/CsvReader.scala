@@ -1,3 +1,7 @@
+/* Copyright c 2005-2012.
+ * Licensed under GNU  LESSER General Public License, Version 3.
+ * http://www.gnu.org/licenses
+ */
 package org.beangle.util.csv
 import java.io.{Reader,BufferedReader}
 import scala.collection.mutable.ArrayBuffer
@@ -14,11 +18,11 @@ class CsvReader(reader:Reader,format:CsvFormat,skipLines:Int){
 
   def readNext:Array[String]={
     val resultBuffer=new ArrayBuffer[String]();
-    var nextLine =  next
-    while(nextLine!=None){
-      var r=parser.parseLineMulti(nextLine.get)
-      if (r.length>0) resultBuffer ++=r
-      if(parser.pending) nextLine=next
+    var line =  next
+    while(line!=None){
+      var r=parser.parseLineMulti(line.get)
+      if (r.length>0) resultBuffer ++= r
+      if(parser.pending) line=next
     }
     resultBuffer.toArray
   }
@@ -28,8 +32,8 @@ class CsvReader(reader:Reader,format:CsvFormat,skipLines:Int){
       for(i <- 0 to skipLines) br.readLine
       lineSkiped=true
     }
-    val nextLine=br.readLine;
-    hasNext=(null!=nextLine)
-    if(hasNext) new Some(nextLine) else None;
+    val line=br.readLine;
+    hasNext = (null!=line)
+    if(hasNext) new Some(line) else None;
   }
 }

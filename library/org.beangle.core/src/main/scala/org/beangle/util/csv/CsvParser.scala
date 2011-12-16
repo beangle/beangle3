@@ -5,6 +5,9 @@
 package org.beangle.util.csv
 import scala.collection.mutable.ListBuffer
 
+/** A very simple CSV parser released under a commercial-friendly license.
+ * This just implements splitting a single line into fields.
+ */
 class CsvParser(format:CsvFormat){
   var pended:String=_
   private var inField=false
@@ -13,13 +16,13 @@ class CsvParser(format:CsvFormat){
 
   def pending = null!=pended
 
-  def parseLineMulti(nextLine:String) = parseLine(nextLine,true)
+  def parseLineMulti(line:String) = parseLine(line,true)
 
-  //def parseLine(nextLine:String) = parseLine(nextLine,false)
+  def parseLine(line:String):Array[String] = parseLine(line,false)
 
-  def parseLine(nextLine:String,multi:Boolean):Array[String]={
+  def parseLine(line:String,multi:Boolean):Array[String]={
     if(!multi && null!=pended) pended=null
-    if(null==nextLine){
+    if(null==line){
       if(null!=pended){
 	val s=pended
 	pended=null
@@ -39,43 +42,44 @@ class CsvParser(format:CsvFormat){
       inQuotes=true
     }
     var i=0;
-//    for(i <- 0 to nextLine.length){
-//      val c=nextLine(i)
-//      if(format.isEscape(c)){
-//	if(isNextCharEscapable(nextLine,inQuotes || inField,i)){
-//	  sb += nextLine(i+1)
-//	  i=i+1
-//	}
-//      }else if(format.isDelimiter(c)){
-//	if(isNextCharEscapeQuote(nextLine,inQuotes || inField,i)){
-//	  sb += nextLine(i+1)
-//	  i+=1
-//	}else{
-//	  inQuotes = !inQuotes
-//	  // the tricky case of an embedded quote in the middle: a,bc"d"ef,g
-//	  if(!format.isStrictQuotes){
-//	    if(i>2 && !format.isSeparator(nextLine(i-1)) && nextLine.length > (i+1) && !format.isSeparator(nextLine(i+1)){
-//	      if(ignoreLeadingWhiteSpace && sb.length>0 && isAllWhiteSpace(sb)){
-//		sb=new StringBuilder(INITIAL_READ_SIZE)
-//	      }else{
-//		sb +=c
-//	      }
-//	    }
-//	  }
-//	}
-//	inField =!inField
-//      }else if (format.isSeparator(c) && !inQuotes){
-//	tokensOnThisLine += sb.toString
-//	// start work on next token
-//	sb=new StringBuilder(INITIAL_READ_SIZE)
-//	inField = false
-//      }else{
-//	if(!format.isStrictQuotes || inQuotes){
-//	  sb+=c
-//	  inField=true
-//	}
-//      }
-//    }
+    while(i < line.length){
+      val c=line(i)
+      if(format.isEscape(c)){
+	if(isNextCharEscapable(line,inQuotes || inField,i)){
+	  sb += line(i+1)
+	  i=i+1
+	}
+      }else if(format.isDelimiter(c)){
+	if(isNextCharEscapedQuote(line,inQuotes || inField,i)){
+	  sb += line(i+1)
+	  i+=1
+	}else{
+	  inQuotes = !inQuotes
+	  // the tricky case of an embedded quote in the middle: a,bc"d"ef,g
+	  if(!format.strictQuotes){
+	    if(i>2 && !format.isSeparator(line(i-1)) && line.length > (i+1) && !format.isSeparator(line(i+1))){
+	      if(ignoreLeadingWhiteSpace && sb.length>0 && isAllWhiteSpace(sb)){
+		sb=new StringBuilder(INITIAL_READ_SIZE)
+	      }else{
+		sb +=c
+	      }
+	    }
+	  }
+	}
+	inField = !inField
+      }else if (format.isSeparator(c) && !inQuotes){
+	tokensOnThisLine += sb.toString
+	// start work on next token
+	sb=new StringBuilder(INITIAL_READ_SIZE)
+	inField = false
+      }else{
+	if(!format.strictQuotes || inQuotes){
+	  sb+=c
+	  inField=true
+	}
+      }
+      i = i+1
+    }
     // line is done -check status
     if(inQuotes){
       if(multi){
@@ -93,4 +97,7 @@ class CsvParser(format:CsvFormat){
     return tokensOnThisLine.toArray
   }
 
+  private def isNextCharEscapedQuote(line:String,inQuote:Boolean,i:Int) = inQuote && line.length>(i+1) && format.isDelimiter(line(i+1))
+  private def isNextCharEscapable(line:String,inQuote:Boolean,i:Int)= inQuote && line.length>(i+1) && (format.isDelimiter(line(i+1)) || format.isEscape(line(i+1)))
+  private def isAllWhiteSpace(line:StringBuilder):Boolean=line.forall(c=>c.isWhitespace)
 }

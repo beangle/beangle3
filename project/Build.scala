@@ -42,6 +42,7 @@ object Dependencies {
   val slf4j = "org.slf4j" % "slf4j-api" % slf4jVer
   val slf4jJcl = "org.slf4j" % "jcl-over-slf4j" % slf4jVer
   val junit = "junit" % "junit" % junitVer % "test"
+  val scalatest ="org.scalatest" % "scalatest_2.9.1" % "1.6.1" % "test"
 }
 
 
@@ -49,7 +50,7 @@ object BeangleBuild extends Build {
   import Dependencies._
   import BuildSettings._
 
-  val commonDeps= Seq (slf4j,slf4jJcl,junit) 
+  val commonDeps= Seq (slf4j,slf4jJcl,junit,scalatest) 
 
   lazy val root = Project("root", file(".")) aggregate(library)
 
