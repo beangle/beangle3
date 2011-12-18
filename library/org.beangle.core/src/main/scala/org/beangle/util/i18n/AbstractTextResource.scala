@@ -16,32 +16,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.lang
+package org.beangle.util.i18n
 
-object BitString {
-  def apply(str: String): BitString = {
-    new BitString(java.lang.Long.parseLong(str,2));
+import java.text.MessageFormat
+
+abstract class AbstractTextResource extends TextResource{
+
+  def get(key:String,defaultValue:String,args:Any*):String = {
+    val text =getText(key).getOrElse(defaultValue);
+    new MessageFormat(text,locale).format(args)
   }
-
-  def apply(value: Long): BitString = {
-    new BitString(value);
-  }
-  def add(first: String, second: String): String = BitString(first).and(BitString(second)).toString
-
-  def or(first: String, second: String): String = BitString(first).or(BitString(second)).toString
+  protected  def getText(key:String):Option[String];
 }
 
-class BitString(val value: Long) {
+import java.util.Locale
+class NullTextResource extends AbstractTextResource{
+  override def locale= Locale.getDefault
+  override def getText(key:String)=Some(key)
+}
 
-  val str: String = value.toBinaryString
-
-  def length = str.length
-
-  def and(other: BitString): BitString = new BitString(other.value & this.value)
-
-  def or(other: BitString): BitString = new BitString(other.value | this.value)
-
-  override def toString = str
-
-  def toString(maxLength: Int) = "0" * (maxLength - str.length) + str
+import java.util.ResourceBundle
+class BundleTextResource(val locale:Locale,val bundle:ResourceBundle) extends AbstractTextResource{
+  override def getText(key:String):Option[String]={
+    val text=bundle.getString(key)
+    if(null==text) None else Some(text)
+  }
 }

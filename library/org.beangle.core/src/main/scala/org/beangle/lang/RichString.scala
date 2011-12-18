@@ -18,20 +18,37 @@
  */
 package org.beangle.lang
 
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.FlatSpec
+class RichString(s: String) {
 
-@RunWith(classOf[JUnitRunner])
-class BitStringTest extends FlatSpec with ShouldMatchers {
-
-  "bit string" should "have correct value and length." in {
-    BitString("1111").value should be(15)
-    BitString("1111").length should be(4)
-    BitString(15).value should be(15)
-    BitString(15).length should be(4)
-    println(BitString(15).toString(64))
+  def substringBetween(open: String, close: String): String = {
+    if (s == null || open == null || close == null) {
+      return null;
+    }
+    val start = s.indexOf(open);
+    if (start != -1) {
+      val end = s.indexOf(close, start + open.length());
+      if (end != -1) {
+        return s.substring(start + open.length(), end);
+      }
+    }
+    return null;
   }
 
+  def substringAfter(separator: String): String = {
+    if (isEmpty)
+      return s
+    if (separator == null)
+      return ""
+    val pos = s.indexOf(separator);
+    if (pos == -1)
+      ""
+    else s.substring(pos + separator.length());
+  }
+
+  def isEmpty: Boolean = (null == s || s.length == 0)
+
+  def isDigits: Boolean = {
+    if (isEmpty) false
+    else !(s.exists(e => !e.isDigit))
+  }
 }
