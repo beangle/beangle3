@@ -11,5 +11,7 @@ package org.beangle.security.ldap.auth;
  */
 public interface LdapValidator {
 
-	boolean verifyPassword(String name, String password);
+	public boolean verifyPassword(String userdn, String password);
+
+	public String getUserDN(String name);
 }

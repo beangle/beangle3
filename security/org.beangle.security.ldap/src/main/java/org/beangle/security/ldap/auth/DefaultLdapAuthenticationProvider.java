@@ -9,6 +9,7 @@ import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.userdetail.UserDetail;
 import org.beangle.security.core.userdetail.UserDetailService;
+import org.beangle.security.core.userdetail.UsernameNotFoundException;
 
 /**
  * 读取ldap的用户信息<br>
@@ -24,7 +25,9 @@ public class DefaultLdapAuthenticationProvider extends AbstractUserDetailAuthent
 	@Override
 	protected void additionalAuthenticationChecks(UserDetail user, Authentication authentication)
 			throws AuthenticationException {
-		if (!ldapValidator.verifyPassword(user.getUsername(), (String) authentication.getCredentials())) { throw new BadLdapCredentialsException(); }
+		String userDN = ldapValidator.getUserDN(user.getUsername());
+		if (null == userDN || userDN.equals("")) throw new UsernameNotFoundException(user.getUsername());
+		if (!ldapValidator.verifyPassword(userDN, (String) authentication.getCredentials())) { throw new BadLdapCredentialsException(); }
 	}
 
 	@Override

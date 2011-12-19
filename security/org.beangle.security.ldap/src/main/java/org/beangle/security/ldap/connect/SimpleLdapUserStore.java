@@ -71,21 +71,28 @@ public class SimpleLdapUserStore implements LdapUserStore, InitializingBean, Dis
 			}
 			results.close();
 			results = null;
+		} catch (javax.naming.CommunicationException e1) {
+			reset();
+			logger.error("need reconnect to ldap");
 		} catch (Throwable e) {
 			logger.error("Ldap search error,uid=" + uid, e);
 		}
 		return result;
 	}
 
-	public String getPassword(String uid) {
-		Set<Attribute> passwords = getAttributes(uid, "userPassword");
+	private void reset() {
+		ctx = null;
+	}
+
+	public String getPassword(String userDN) {
+		Set<Attribute> passwords = getAttributes(userDN, "userPassword");
 		if (passwords.isEmpty()) return null;
 		for (Attribute attr : passwords) {
 			byte encPassword[];
 			try {
 				encPassword = (byte[]) attr.get();
 			} catch (NamingException e) {
-				logger.error("get password of " + uid + "error", e);
+				logger.error("get password of " + userDN + "error", e);
 				return null;
 			}
 			return new String(encPassword);
@@ -93,17 +100,12 @@ public class SimpleLdapUserStore implements LdapUserStore, InitializingBean, Dis
 		return null;
 	}
 
-	public Set<Attribute> getAttributes(String uid, String attrName) {
+	public Set<Attribute> getAttributes(String userDN, String attrName) {
 		Set<Attribute> values = CollectUtils.newHashSet();
 		DirContext ctx = getContext();
 		if (ctx == null) return values;
 		try {
-			String dn = getUserDN(uid);
-			if (dn == null) {
-				logger.debug("User {} not found", uid);
-				return values;
-			}
-			javax.naming.Name userID = new CompositeName(dn);
+			javax.naming.Name userID = new CompositeName(userDN);
 			Attributes attrs = null;
 			if (null != attrName) {
 				attrs = ctx.getAttributes(userID, new String[] { attrName });
@@ -131,6 +133,7 @@ public class SimpleLdapUserStore implements LdapUserStore, InitializingBean, Dis
 	}
 
 	private synchronized boolean connect() {
+		if (null != ctx) return true;
 		Hashtable<String, String> env = this.getBuildEnv();
 		env.putAll(properties);
 		try {
@@ -202,6 +205,14 @@ public class SimpleLdapUserStore implements LdapUserStore, InitializingBean, Dis
 
 	public void destroy() throws Exception {
 		this.disConnect();
+	}
+
+	public String getUidName() {
+		return uidName;
+	}
+
+	public void setUidName(String uidName) {
+		this.uidName = uidName;
 	}
 
 }

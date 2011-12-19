@@ -21,8 +21,8 @@ public class DefaultLdapValidator implements LdapValidator {
 		this.userStore = userStore;
 	}
 
-	public boolean verifyPassword(String name, String password) {
-		String ldapPwd = userStore.getPassword(name);
+	public boolean verifyPassword(String userDN, String password) {
+		String ldapPwd = userStore.getPassword(userDN);
 		try {
 			return (null != ldapPwd) && (LdapPasswordHandler.getInstance().verify(ldapPwd, password));
 		} catch (NoSuchAlgorithmException e) {
@@ -30,6 +30,10 @@ public class DefaultLdapValidator implements LdapValidator {
 		}
 	}
 
+	public String getUserDN(String name){
+		return userStore.getUserDN(name);
+	}
+	
 	public void setUserStore(LdapUserStore userStore) {
 		this.userStore = userStore;
 	}

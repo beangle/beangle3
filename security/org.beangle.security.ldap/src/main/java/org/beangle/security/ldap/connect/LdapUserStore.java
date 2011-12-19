@@ -17,7 +17,7 @@ public interface LdapUserStore {
 
 	String getUserDN(String uid);
 
-	String getPassword(String uid);
+	String getPassword(String userDn);
 
-	Set<Attribute> getAttributes(String uid, String attrName);
+	Set<Attribute> getAttributes(String userDn, String attrName);
 }

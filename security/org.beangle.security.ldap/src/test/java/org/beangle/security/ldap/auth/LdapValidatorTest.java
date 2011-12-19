@@ -26,15 +26,15 @@ public class LdapValidatorTest {
 	private void tryGet(LdapUserStore store, String name) {
 		String dn = store.getUserDN(name);
 		Assert.assertNotNull(dn);
-		String pwd = store.getPassword(name);
+		String pwd = store.getPassword(dn);
 		Assert.assertNotNull(pwd);
-		Set<Attribute> attrs = store.getAttributes(name, null);
+		Set<Attribute> attrs = store.getAttributes(dn, null);
 		Assert.assertNotNull(attrs);
 	}
 
 	private void tryTestPassword(LdapUserStore store, String name, String password) {
 		LdapValidator ldapValidator = new DefaultLdapValidator(store);
-		Assert.assertTrue(ldapValidator.verifyPassword(name, password));
+		Assert.assertTrue(ldapValidator.verifyPassword(ldapValidator.getUserDN(name), password));
 	}
 
 	public void testLdap() throws NamingException {

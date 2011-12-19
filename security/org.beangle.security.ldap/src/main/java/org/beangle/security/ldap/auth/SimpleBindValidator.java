@@ -20,6 +20,7 @@ public class SimpleBindValidator implements LdapValidator {
 	private Hashtable<String, String> properties = new Hashtable<String, String>();
 
 	private String url;
+
 	private LdapUserStore userStore;
 
 	public SimpleBindValidator() {
@@ -31,7 +32,6 @@ public class SimpleBindValidator implements LdapValidator {
 		this.url = url;
 	}
 
-
 	private Hashtable<String, String> getBuildEnv(String userName, String password) {
 		Hashtable<String, String> env = new Hashtable<String, String>();
 		env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
@@ -42,10 +42,8 @@ public class SimpleBindValidator implements LdapValidator {
 		return env;
 	}
 
-	public boolean verifyPassword(String name, String password) {
-		String dn = userStore.getUserDN(name);
-		if (null == dn) return false;
-		Hashtable<String, String> env = getBuildEnv(dn, password);
+	public boolean verifyPassword(String userDN, String password) {
+		Hashtable<String, String> env = getBuildEnv(userDN, password);
 		env.putAll(properties);
 		try {
 			new InitialDirContext(env).close();
@@ -82,4 +80,7 @@ public class SimpleBindValidator implements LdapValidator {
 		this.userStore = userStore;
 	}
 
+	public String getUserDN(String name) {
+		return userStore.getUserDN(name);
+	}
 }
