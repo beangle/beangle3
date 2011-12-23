@@ -23,9 +23,8 @@ import org.beangle.lang.StrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
 
-public class SimpleLdapUserStore implements LdapUserStore, InitializingBean, DisposableBean {
+public class SimpleLdapUserStore implements LdapUserStore, DisposableBean {
 	private Logger logger = LoggerFactory.getLogger(SimpleLdapUserStore.class);
 	private String url;
 	private String userName;
@@ -41,17 +40,14 @@ public class SimpleLdapUserStore implements LdapUserStore, InitializingBean, Dis
 
 	public SimpleLdapUserStore(String url, String userName, String password, String base) {
 		super();
-		this.url = url;
-		this.userName = userName;
-		this.password = password;
-		this.base = base;
-	}
-
-	public void afterPropertiesSet() throws Exception {
 		Validate.notNull(url);
 		Validate.notNull(userName);
 		Validate.notNull(password);
 		Validate.notNull(base);
+		this.url = url;
+		this.userName = userName;
+		this.password = password;
+		this.base = base;
 	}
 
 	public String getUserDN(String uid) {

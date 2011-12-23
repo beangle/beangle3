@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<bean id="systemVersion" class="org.beangle.commons.meta.SystemVersionBean">
+	<bean id="systemVersion" class="org.beangle.util.meta.SystemVersionBean">
 		<property name="name" value="Beangle Demo"/>
 		<property name="version" value="2.0.2-SNAPSHOT"/>
 		<property name="majorVersion" value="2"/>

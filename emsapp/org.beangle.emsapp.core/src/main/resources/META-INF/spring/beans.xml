@@ -25,7 +25,7 @@
 	</bean>
 
 	<bean name="urlPropertyConfigProvider" autowire="byName"
-		class="org.beangle.spring.config.UrlPropertyConfigProvider">
+		class="org.beangle.util.property.UrlPropertyConfigProvider">
 		<property name="resource">
 			<bean class="org.beangle.spring.config.ConfigResource">
 				<property name="globals" value="classpath*:system-default.properties" />
@@ -36,7 +36,7 @@
 	</bean>
 
 	<bean id="propertyConfig" autowire="byName"
-		class="org.beangle.spring.config.DefaultPropertyConfigFactory">
+		class="org.beangle.util.property.DefaultPropertyConfigFactory">
 		<property name="providers">
 			<list>
 				<ref bean="urlPropertyConfigProvider" />
