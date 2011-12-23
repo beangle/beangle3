@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
-import org.beangle.ems.dictionary.model.BaseCode;
-import org.beangle.ems.dictionary.model.CodeMeta;
-import org.beangle.ems.dictionary.service.BaseCodeService;
+import org.beangle.emsapp.dictionary.model.BaseCode;
+import org.beangle.emsapp.dictionary.model.CodeMeta;
+import org.beangle.emsapp.dictionary.service.BaseCodeService;
 import org.beangle.struts2.action.BaseAction;
 
 /**

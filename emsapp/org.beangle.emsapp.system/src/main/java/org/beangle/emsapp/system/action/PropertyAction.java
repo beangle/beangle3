@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.property.PropertyConfigFactory;
-import org.beangle.ems.config.model.PropertyConfigItemBean;
+import org.beangle.collection.CollectUtils;
+import org.beangle.emsapp.config.model.PropertyConfigItemBean;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.struts2.action.BaseAction;
+import org.beangle.util.property.PropertyConfigFactory;
 
 public class PropertyAction extends BaseAction {
 

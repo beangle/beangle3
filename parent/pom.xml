@@ -22,6 +22,10 @@
 		<testng.version>5.14.7</testng.version>
 		<mockito.version>1.8.5</mockito.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
+		<hibernate.version>3.6.1.Final</hibernate.version>
+		<hibernate.validate.version>4.1.0.Final</hibernate.validate.version>		
+		<ehcache.version>2.4.1</ehcache.version>
+		<poi.version>3.8-beta3</poi.version>
 	</properties>
 
 	<dependencyManagement>
@@ -29,77 +33,22 @@
 			<!--beangle-->
 			<dependency>
 				<groupId>org.beangle</groupId>
-				<artifactId>beangle-commons</artifactId>
+				<artifactId>beangle-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.beangle</groupId>
-				<artifactId>beangle-spring</artifactId>
+				<artifactId>beangle-struts2</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.beangle</groupId>
-				<artifactId>beangle-model</artifactId>
+				<artifactId>beangle-security</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.beangle</groupId>
-				<artifactId>beangle-test</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-web</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-struts2-convention</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-struts2-view</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-security-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-security-web</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-security-cas</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-security-ldap</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-ems-security</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-ems-infra</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-ems-web</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beangle</groupId>
-				<artifactId>beangle-emsapp-security</artifactId>
+				<artifactId>beangle-emsapp-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -278,6 +227,22 @@
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
 				<version>${h2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.ehcache</groupId>
+				<artifactId>ehcache-core</artifactId>
+				<version>${ehcache.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>${poi.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

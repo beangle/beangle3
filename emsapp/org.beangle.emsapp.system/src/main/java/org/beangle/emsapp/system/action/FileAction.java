@@ -13,10 +13,10 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.beangle.commons.collection.CollectUtils;
+import org.beangle.collection.CollectUtils;
+import org.beangle.http.mime.MimeTypeProvider;
 import org.beangle.struts2.action.BaseAction;
 import org.beangle.web.io.StreamDownloader;
-import org.beangle.web.mime.MimeTypeProvider;
 
 public class FileAction extends BaseAction {
 

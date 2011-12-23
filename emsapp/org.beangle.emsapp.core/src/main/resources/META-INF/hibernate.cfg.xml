@@ -1,0 +1,45 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<mapping class="org.beangle.emsapp.rule.model.RuleBean"/>
+		<mapping class="org.beangle.emsapp.rule.model.RuleParameterBean"/>
+		<mapping class="org.beangle.emsapp.rule.model.RuleConfig"/>
+		<mapping class="org.beangle.emsapp.rule.model.RuleConfigParam"/>
+		
+		<mapping class="org.beangle.emsapp.config.model.PropertyConfigItemBean"/>
+		
+		<mapping class="org.beangle.emsapp.log.model.BusinessLogBean"/>
+		<mapping class="org.beangle.emsapp.log.model.BusinessLogDetailBean"/>
+		
+		<mapping class="org.beangle.emsapp.dictionary.model.CodeCategory"/>
+		<mapping class="org.beangle.emsapp.dictionary.model.CodeMeta"/>
+		<mapping class="org.beangle.emsapp.dictionary.model.CodeScript"/>
+		
+		<mapping class="org.beangle.emsapp.meta.model.EntityMetaBean"/>
+		<mapping class="org.beangle.emsapp.meta.model.PropertyMetaBean"/>
+
+		<mapping class="org.beangle.emsapp.security.model.AuthorityBean"/>
+		<mapping class="org.beangle.emsapp.security.model.GroupBean"/>
+		<mapping class="org.beangle.emsapp.security.model.GroupMemberBean"/>
+		<mapping class="org.beangle.emsapp.security.model.ResourceBean"/>
+		<mapping class="org.beangle.emsapp.security.model.UserBean"/>
+
+		<mapping class="org.beangle.emsapp.security.nav.model.MenuBean"/>
+		<mapping class="org.beangle.emsapp.security.nav.model.MenuProfileBean"/>
+		
+		<mapping class="org.beangle.emsapp.security.restrict.model.RestrictionBean"/>
+		<mapping class="org.beangle.emsapp.security.restrict.model.RestrictEntityBean"/>
+		<!--
+		<mapping class="org.beangle.emsapp.security.restrict.model.AuthorityRestrictionBean"/>
+		<mapping class="org.beangle.emsapp.security.restrict.model.GroupRestrictionBean"/>
+		<mapping class="org.beangle.emsapp.security.restrict.model.RestrictFieldBean"/>
+		<mapping class="org.beangle.emsapp.security.restrict.model.RestrictPatternBean"/>
+		<mapping class="org.beangle.emsapp.security.restrict.model.UserRestrictionBean"/>
+		-->
+		<mapping class="org.beangle.emsapp.security.session.model.GroupSessionProfileBean"/>
+		<mapping class="org.beangle.emsapp.security.session.model.SessionProfileBean"/>
+
+	</session-factory>
+</hibernate-configuration>

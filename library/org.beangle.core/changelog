@@ -1,0 +1,70 @@
+2011-03-05  duantihua  <chaostone.duan@gmail.com>
+
+	* Delete EntityExistException ,using jpa's EntityExistsException
+	* Change Entity's getEntityId method to getIndentifier
+	* Implenent Strong HibernateEntityDao's initialize method
+	
+2010-12-03  duantihua  <chaostone.duan@gmail.com>
+
+	* change entityDao.count returntype from int to long
+	
+2010-10-24  duantihua  <chaostone.duan@gmail.com>
+
+	* 删除了entityService,将其他方法合并到entityDao
+	* 将entityDao中结尾以Object[]的方法，扩展至Object...
+	* 将entityDao中的load方法，更名为get方法
+
+2010-09-17  duantihua  <chaostone.duan@gmail.com>
+
+	* 修复了EntityServiceImpl的update更新bug
+
+2010-09-16  duantihua  <chaostone.duan@gmail.com>
+
+	* 增加了HibernateEntityDao的测试类
+
+2010-09-01  duantihua  <chaostone.duan@gmail.com>
+
+	* 修复了OqlBuilder的from(String)的错误
+	* 增强了OqlBuilder的hql之类的方法。
+
+2010-08-15  duantihua  <chaostone.duan@gmail.com>
+
+	* 简化了ItemExporter
+	* 增加了MultiEntityExporter
+
+2010-07-03  duantihua  <chaostone.duan@gmail.com>
+
+	* 重构了Transfer的listenerAPI
+	* 增强了ExcelItemReader,可以读取日期类型的数据
+	* 增强了ExcelItemWriter,可以支持自定义格式的日期和时间输出,自定义标题格式
+
+2010-05-29  duantihua  <chaostone.duan@gmail.com>
+
+	* 重构了model的query部分。精简query接口，构建成builder模式。
+
+2011-03-05  duantihua  <chaostone.duan@gmail.com>
+	
+	* 增加spring自动配置
+	
+2010-11-13  duantihua  <chaostone.duan@gmail.com>
+	* 合并ListUtil,MapUtil,SetUtil到CollectUtils
+	* 重命名SeqStringUtil到SeqStrUtils
+	* 重命名BitStringUtil到BitStrUtils
+	* 重命名StringUtil到StrUtils
+	* 重命名ConfigType,ConfigBeanDefinitionHolder到ReconfigType,ReconfigBeanDefinitionHolder
+	
+2010-09-18  duantihua  <chaostone.duan@gmail.com>
+
+	* MapUtil增加了newLinkedHashMap方法
+
+2010-09-18  duantihua  <chaostone.duan@gmail.com>
+
+	* 修复了MapConventer的get(String,Class)数组处理错误
+
+2010-09-16  duantihua  <chaostone.duan@gmail.com>
+
+	* 将ConfigProcessor找不到bean定义时,提示错误改为警告
+
+2010-08-19  duantihua  <chaostone.duan@gmail.com>
+
+	* 将converter包重命名为converters

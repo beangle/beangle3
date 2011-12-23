@@ -5,8 +5,8 @@
 package org.beangle.emsapp.business.action;
 
 import org.apache.commons.lang.StringUtils;
-import org.beangle.ems.log.BusinessLog;
-import org.beangle.ems.web.action.SecurityActionSupport;
+import org.beangle.emsapp.log.BusinessLog;
+import org.beangle.emsapp.web.action.SecurityActionSupport;
 import org.beangle.model.query.QueryBuilder;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.struts2.helper.QueryHelper;

@@ -8,8 +8,8 @@ import java.net.URL;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.beangle.commons.collection.CollectUtils;
-import org.beangle.ems.io.StaticFileLoader;
+import org.beangle.collection.CollectUtils;
+import org.beangle.emsapp.io.StaticFileLoader;
 import org.beangle.struts2.action.BaseAction;
 import org.beangle.web.io.StreamDownloader;
 

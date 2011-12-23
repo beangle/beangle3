@@ -8,11 +8,11 @@ import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
 
-import org.beangle.ems.security.SecurityUtils;
-import org.beangle.ems.security.User;
-import org.beangle.ems.security.nav.MenuProfile;
-import org.beangle.ems.security.nav.service.MenuService;
-import org.beangle.ems.web.action.SecurityActionSupport;
+import org.beangle.emsapp.security.SecurityUtils;
+import org.beangle.emsapp.security.User;
+import org.beangle.emsapp.security.nav.MenuProfile;
+import org.beangle.emsapp.security.nav.service.MenuService;
+import org.beangle.emsapp.web.action.SecurityActionSupport;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.model.util.HierarchyEntityUtils;
 

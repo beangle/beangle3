@@ -11,7 +11,7 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.beangle.commons.collection.CollectUtils;
+import org.beangle.collection.CollectUtils;
 import org.beangle.struts2.action.BaseAction;
 
 public class InfoAction extends BaseAction {

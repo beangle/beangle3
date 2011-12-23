@@ -4,7 +4,6 @@
  */
 package org.beangle.emsapp.system;
 
-import org.beangle.ems.web.action.LogoutAction;
 import org.beangle.emsapp.business.action.LogAction;
 import org.beangle.emsapp.business.action.RuleAction;
 import org.beangle.emsapp.business.action.RuleParamAction;
@@ -17,8 +16,9 @@ import org.beangle.emsapp.system.action.FileAction;
 import org.beangle.emsapp.system.action.HibernateAction;
 import org.beangle.emsapp.system.action.InfoAction;
 import org.beangle.emsapp.system.action.PropertyAction;
-import org.beangle.spring.bind.AbstractBindModule;
-import org.beangle.spring.bind.Scope;
+import org.beangle.emsapp.web.action.LogoutAction;
+import org.beangle.spring.config.AbstractBindModule;
+import org.beangle.spring.config.Scope;
 
 public final class DefaultModule extends AbstractBindModule {
 

@@ -4,8 +4,8 @@
  */
 package org.beangle.emsapp.business.action;
 
-import org.beangle.ems.rule.RuleParameter;
-import org.beangle.ems.web.action.SecurityActionSupport;
+import org.beangle.emsapp.rule.RuleParameter;
+import org.beangle.emsapp.web.action.SecurityActionSupport;
 import org.beangle.model.Entity;
 import org.beangle.model.query.builder.OqlBuilder;
 

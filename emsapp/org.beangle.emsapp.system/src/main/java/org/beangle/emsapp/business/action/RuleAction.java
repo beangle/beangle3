@@ -6,8 +6,8 @@ package org.beangle.emsapp.business.action;
 
 import java.util.Date;
 
-import org.beangle.ems.rule.Rule;
-import org.beangle.ems.web.action.SecurityActionSupport;
+import org.beangle.emsapp.rule.Rule;
+import org.beangle.emsapp.web.action.SecurityActionSupport;
 import org.beangle.model.Entity;
 import org.beangle.struts2.convention.route.Action;
 

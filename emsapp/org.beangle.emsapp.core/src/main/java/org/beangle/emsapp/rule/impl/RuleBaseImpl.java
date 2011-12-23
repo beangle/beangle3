@@ -1,0 +1,28 @@
+/* Copyright c 2005-2012.
+ * Licensed under GNU  LESSER General Public License, Version 3.
+ * http://www.gnu.org/licenses
+ */
+package org.beangle.emsapp.rule.impl;
+
+import java.util.List;
+
+import org.beangle.emsapp.rule.Rule;
+import org.beangle.emsapp.rule.RuleBase;
+import org.beangle.model.persist.EntityDao;
+import org.beangle.model.query.builder.OqlBuilder;
+
+public class RuleBaseImpl implements RuleBase {
+
+	private EntityDao entityDao;
+
+	public List<Rule> getRules() {
+		OqlBuilder<Rule> query = OqlBuilder.from(Rule.class, "rule");
+		query.orderBy("rule.id desc");
+		return entityDao.search(query);
+	}
+
+	public void setEntityDao(EntityDao entityDao) {
+		this.entityDao = entityDao;
+	}
+
+}

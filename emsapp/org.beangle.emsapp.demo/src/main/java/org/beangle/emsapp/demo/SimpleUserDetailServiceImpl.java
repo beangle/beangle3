@@ -2,7 +2,7 @@ package org.beangle.emsapp.demo;
 
 import java.util.ArrayList;
 
-import org.beangle.ems.security.service.UserToken;
+import org.beangle.emsapp.security.service.UserToken;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.userdetail.UserDetail;

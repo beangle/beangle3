@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="beangleReconfigProcessor"
+		class="org.beangle.spring.config.processor.ReconfigProcessor">
+		<property name="resource">
+			<bean class="org.beangle.spring.config.ConfigResource">
+				<property name="locations" value="classpath*:spring-config.xml" />
+			</bean>
+		</property>
+	</bean>
+	
+	<import resource="classpath:org/beangle/spring/config/context.xml"/>
+
+</beans>

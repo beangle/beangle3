@@ -1,6 +1,6 @@
 package org.beangle.emsapp.demo;
 
-import org.beangle.ems.security.service.CacheableAuthorityManager;
+import org.beangle.emsapp.security.service.CacheableAuthorityManager;
 import org.beangle.security.core.Authentication;
 
 public class MockAuthorityManager extends CacheableAuthorityManager {

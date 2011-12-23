@@ -6,10 +6,10 @@ package org.beangle.emsapp.dictionary.action;
 
 import java.util.Date;
 
-import org.beangle.ems.dictionary.model.CodeScript;
-import org.beangle.ems.dictionary.service.CodeFixture;
-import org.beangle.ems.dictionary.service.CodeGenerator;
-import org.beangle.ems.web.action.SecurityActionSupport;
+import org.beangle.emsapp.dictionary.model.CodeScript;
+import org.beangle.emsapp.dictionary.service.CodeFixture;
+import org.beangle.emsapp.dictionary.service.CodeGenerator;
+import org.beangle.emsapp.web.action.SecurityActionSupport;
 import org.beangle.model.entity.Model;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.struts2.convention.route.Action;

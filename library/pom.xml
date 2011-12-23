@@ -11,11 +11,10 @@
 	<packaging>pom</packaging>
 	<name>Beangle Library</name>
 	<modules>
-		<module>org.beangle.commons</module>
-		<module>org.beangle.web</module>
-		<module>org.beangle.spring</module>
-		<module>org.beangle.model</module>
-		<module>org.beangle.test</module>
+		<module>org.beangle.core</module>
+		<module>org.beangle.security</module>
+		<module>org.beangle.struts2</module>
+		<module>org.beangle.notification</module>
 	</modules>
 	<build>
 		<plugins>

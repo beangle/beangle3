@@ -8,8 +8,8 @@ import java.io.File;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.beangle.commons.collection.CollectUtils;
-import org.beangle.web.mime.MimeTypeProvider;
+import org.beangle.collection.CollectUtils;
+import org.beangle.http.mime.MimeTypeProvider;
 
 public class FileMimeType {
 

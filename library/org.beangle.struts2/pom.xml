@@ -1,0 +1,137 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.or g/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>org.beangle</groupId>
+		<artifactId>beangle-parent</artifactId>
+		<version>2.5.0-SNAPSHOT</version>
+		<relativePath>../../parent/pom.xml</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.beangle</groupId>
+	<artifactId>beangle-struts2</artifactId>
+	<packaging>jar<!--bundle--></packaging>
+	<name>Beangle Struts2</name>
+	
+	<properties>
+		<bundle.symbolicName>org.beangle.struts2</bundle.symbolicName>
+		<bundle.namespace>org.beangle.struts2</bundle.namespace>
+		<hibernate.annotation.version>3.2.0-1.Final</hibernate.annotation.version>
+		<struts.version>2.2.3</struts.version>
+		<jqueryplugin.version>3.1.0</jqueryplugin.version>
+		<freemarker.version>2.3.16</freemarker.version>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.beangle</groupId>
+			<artifactId>beangle-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>${freemarker.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-core</artifactId>
+			<version>${struts.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jgeppert.struts2.jquery</groupId>
+			<artifactId>struts2-jquery-plugin</artifactId>
+			<version>${jqueryplugin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-spring-plugin</artifactId>
+			<version>${struts.version}</version>
+			<exclusions>
+                 <exclusion>
+                   <groupId>org.springframework</groupId>
+                   <artifactId>spring-core</artifactId>
+                 </exclusion>
+                 <exclusion>
+                   <groupId>org.springframework</groupId>
+                   <artifactId>spring-beans</artifactId>
+                 </exclusion>
+                 <exclusion>
+                   <groupId>org.springframework</groupId>
+                   <artifactId>spring-context</artifactId>
+                 </exclusion>
+                 <exclusion>
+                   <groupId>org.springframework</groupId>
+                   <artifactId>spring-web</artifactId>
+                 </exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.beangle</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>${hibernate.annotation.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate.validate.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.12.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>antlr</groupId>
+			<artifactId>antlr</artifactId>
+			<version>2.7.6</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache-core</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+		
+		<!--osgi dependency-->
+		<dependency>
+			<groupId>org.eclipse.gemini.blueprint</groupId>
+			<artifactId>gemini-blueprint-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.gemini.blueprint</groupId>
+			<artifactId>gemini-blueprint-io</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.eclipse.gemini.blueprint</groupId>
+			<artifactId>gemini-blueprint-extender</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<optional>true</optional>
+		</dependency>	
+	</dependencies>
+</project>
