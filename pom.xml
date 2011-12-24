@@ -10,7 +10,7 @@
 	<modules>
 		<module>parent</module>
 		<module>library</module>
-		<module>emsapp</module>
+		<module>ems</module>
 	</modules>
 	<build>
 		<plugins>

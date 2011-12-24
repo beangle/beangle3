@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean name="ems.baseservice.module" class="org.beangle.ems.BaseServiceModule" />
+
+	<bean id="captchaService"
+		class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService">
+		<property name="captchaEngine">
+			<bean class="org.beangle.ems.captcha.GmailEngine" />
+		</property>
+		<property name="minGuarantedStorageDelayInSeconds" value="600" />
+	</bean>
+
+	<bean name="mimeTypeProvider" autowire="byName"
+		class="org.beangle.http.mime.MimeTypeProvider">
+		<property name="resource">
+			<bean class="org.beangle.spring.config.ConfigResource">
+				<property name="globals"
+					value="classpath*:org/beangle/web/mime/mimetypes.properties" />
+				<property name="locations" value="classpath*:META-INF/mimetypes.properties" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean name="urlPropertyConfigProvider" autowire="byName"
+		class="org.beangle.util.property.UrlPropertyConfigProvider">
+		<property name="resource">
+			<bean class="org.beangle.spring.config.ConfigResource">
+				<property name="globals" value="classpath*:system-default.properties" />
+				<property name="locations" value="classpath*:META-INF/system.properties" />
+				<property name="users" value="classpath*:system.properties" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="propertyConfig" autowire="byName"
+		class="org.beangle.util.property.DefaultPropertyConfigFactory">
+		<property name="providers">
+			<list>
+				<ref bean="urlPropertyConfigProvider" />
+				<ref bean="daoPropertyConfigProvider" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="ruleExecutorBuilder" class="org.beangle.ems.rule.engine.impl.DefaultRuleExecutorBuilder"/>
+	<bean id="ruleBase" class="org.beangle.ems.rule.impl.RuleBaseImpl"/>
+
+	<bean id="ems.security.defaultmodule" class="org.beangle.ems.security.DefaultModule"></bean>
+	
+	<!--why name required?-->
+	<bean id="authenticationmanager" name="authenticationManager" class="org.beangle.security.auth.ProviderManager" autowire="byName">
+		<property name="providers">
+			<list>
+				<ref bean="preauthUserDetailProvider"/>
+				<ref bean="daoAuthenticationProvider"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="authenticationEntryPoint" class="org.beangle.security.web.auth.LoginUrlEntryPoint">
+		<property name="loginUrl" value="/login.action"/>
+	</bean>
+	
+	<bean id="securityFilterChain" class="org.beangle.security.web.FilterChainProxy">
+		<property name="filters">
+			<list>
+				<ref bean="httpSessionContextIntegrationFilter"/>
+				<ref bean="usernamePreauthFilter"/>
+				<ref bean="anonymousFilter"/>
+				<ref bean="exceptionTranslationFilter"/>
+				<ref bean="concurrentSessionFilter"/>
+				<ref bean="filterSecurityInterceptor"/>
+			</list>
+		</property>
+	</bean>
+
+	
+	<bean id="logoutHandlerStack" class="org.beangle.security.web.auth.logout.LogoutHandlerStack">
+		<property name="handlers">
+			<list>
+				<ref bean="securityContextLogoutHandler"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="restrictionService" class="org.beangle.ems.security.restrict.service.RestrictionServiceImpl" autowire="byName">
+		<property name="providers">
+			<map>
+				<entry key="csv" value-ref="csvDataResolver"/>
+				<entry key="oql" value-ref="oqlDataProvider"/>
+			</map>
+		</property>
+		<property name="dataResolver" ref="identifierDataResolver"/>
+	</bean>
+	
+</beans>

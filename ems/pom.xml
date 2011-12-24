@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>org.beangle</groupId>
+		<artifactId>beangle-parent</artifactId>
+		<version>2.5.0-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.beangle</groupId>
+	<artifactId>beangle-ems-parent</artifactId>
+	<packaging>pom</packaging>
+	<name>Beangle Ems Parent</name>
+	
+	<modules>
+		<module>org.beangle.ems.core</module>
+		<module>org.beangle.ems.system</module>
+		<module>org.beangle.ems.database</module>
+		<module>org.beangle.ems.demo</module>
+	</modules>
+
+	<properties>
+		<commonupload.version>1.2.2</commonupload.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.beangle</groupId>
+			<artifactId>beangle-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.beangle</groupId>
+			<artifactId>beangle-struts2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.beangle</groupId>
+			<artifactId>beangle-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>${commonupload.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>

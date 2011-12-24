@@ -49,17 +49,17 @@
 			</dependency>
 			<dependency>
 				<groupId>org.beangle</groupId>
-				<artifactId>beangle-emsapp-core</artifactId>
+				<artifactId>beangle-ems-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.beangle</groupId>
-				<artifactId>beangle-emsapp-system</artifactId>
+				<artifactId>beangle-ems-system</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.beangle</groupId>
-				<artifactId>beangle-emsapp-database</artifactId>
+				<artifactId>beangle-ems-database</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!--osgi-->

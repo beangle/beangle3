@@ -61,8 +61,8 @@ public class ProfileTest {
 	}
 
 	public void testInPackage() {
-		assertTrue(Profile.isInPackage("org.beangle.*emsapp.database.internal*.action",
-				"org.beangle.emsapp.database.internal.action"));
+		assertTrue(Profile.isInPackage("org.beangle.*ems.database.internal*.action",
+				"org.beangle.ems.database.internal.action"));
 	}
 
 }
