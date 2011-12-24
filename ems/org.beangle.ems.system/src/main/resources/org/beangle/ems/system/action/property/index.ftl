@@ -1,12 +1,13 @@
 [#ftl]
 [@b.head/]
 [#include "../nav.ftl"/]
+<div style="margin:5px 5px;padding-bottom: 5px;width: 90%;">
 静态参数
-<hr/></div>
+<hr/>
 [#if staticNames?size=0]
 <br>
 [#else]
-[@b.grid items=staticNames var="name" width="90%"]
+[@b.grid items=staticNames var="name"]
 	[@b.row]
 	 [@b.col title="序号" width="10%"]${name_index+1}[/@]
 	 [@b.col title="参数名称" width="20%"]${name}[/@]
@@ -20,5 +21,6 @@
 [@b.a href="property!newConfig" target="editable-properties"]新增配置[/@]
 [/@]
 <hr/>
-[@b.div id="editable-properties" href="!dynaInfo"/]
+[@b.div id="editable-properties" href="!dynaInfo" /]
+</div>
 [@b.foot/]

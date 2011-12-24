@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.ems.system.action;
+package org.beangle.ems.dev.action;
 
 import java.util.ArrayList;
 import java.util.Collections;

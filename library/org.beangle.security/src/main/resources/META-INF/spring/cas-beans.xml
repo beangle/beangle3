@@ -12,7 +12,7 @@
 	
 	<bean id="casPreauthFilter" class="org.beangle.security.cas.web.CasPreauthFilter">
 		<property name="authenticationManager" ref="authenticationManager"/>
-		<property name="sessionStrategy" ref="sessionStrategy"/>
+		<property name="sessionRegistry" ref="sessionRegistry"/>
 		<property name="proxyGrantingTicketStorage" ref="proxyGrantingTicketStorage"/>
 		<property name="config" ref="casConfig"/>
 		<property name="authenticationAliveChecker" ref="authenticationAliveChecker"/>

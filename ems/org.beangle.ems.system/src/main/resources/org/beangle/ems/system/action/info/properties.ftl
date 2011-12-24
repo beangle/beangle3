@@ -1,12 +1,8 @@
 [#ftl]
 [@b.head/]
 [#include "../nav.ftl"/]
-	[@sj.tabbedpanel id="localtabs"]
-	  [@sj.tab id="tab1" target="tone" label="java"/]
-	  [@sj.tab id="tab2" target="ttwo" label="os"/]
-	  [@sj.tab id="tab3" target="tthree" label="user"/]
-	  [@sj.tab id="tab4" target="tfour" label="extra"/]
-	  <div id="tone">
+[@b.tabs style="width: 90%"]
+	[@b.tab label="java"]
 		<table >
 			<thead class="thead">
 				<td>系统属性</td>
@@ -19,8 +15,8 @@
 			</tr>
 			[/#list]
 		</table>
-	  </div>
-	  <div id="ttwo">
+	[/@]
+	[@b.tab label="os"]
 		<table>
 			<thead class="thead">
 				<td>系统属性</td>
@@ -32,10 +28,9 @@
 				<td>${osProps[key]}</td>
 			</tr>
 			[/#list]
-
 		</table>
-	</div>
-	<div id="tthree">
+	[/@]
+	[@b.tab label="user"]
 		<table>
 			<tr class="thead">
 				<td>系统属性</td>
@@ -47,9 +42,9 @@
 				<td>${userProps[key]}</td>
 			</tr>
 			[/#list]
-		</table>
-	  </div>
-	  <div id="tfour" style="width:600px">
+		</table>	
+	[/@]
+	[@b.tab label="extra"]
 		<table>
 			<thead class="thead">
 				<td>系统属性</td>
@@ -62,6 +57,6 @@
 			</tr>
 			[/#list]
 		</table>
-	  </div>
 	[/@]
+[/@]
 [@b.foot/]

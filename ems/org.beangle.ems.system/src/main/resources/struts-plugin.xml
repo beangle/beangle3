@@ -5,7 +5,8 @@
 
 <struts>
 	<bean type="org.apache.struts2.views.TagLibrary" name="ems" class="org.beangle.ems.web.tags.EmsTagLibrary" />
-	
+	<bean class="org.beangle.ems.dev.helper.S2ConfigurationHelper" />
+
 	<package name="org.beangle.ems.web.action" extends="beangle">
 		<action name="logout" class="org.beangle.ems.web.action.LogoutAction" method="index">
 			<result name="success" type="redirectAction">login</result>
@@ -28,4 +29,5 @@
 			</result>
 		</action>
 	</package>
+	
 </struts>

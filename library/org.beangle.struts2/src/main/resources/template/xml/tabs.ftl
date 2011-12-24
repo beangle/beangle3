@@ -1,5 +1,5 @@
 [#ftl/]
-<div id="${tag.id}">
+<div id="${tag.id}" ${tag.parameterString}>
 <ul>
 </ul>
 ${tag.body}

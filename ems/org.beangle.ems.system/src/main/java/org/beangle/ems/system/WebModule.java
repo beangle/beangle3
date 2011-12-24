@@ -7,20 +7,20 @@ package org.beangle.ems.system;
 import org.beangle.ems.business.action.LogAction;
 import org.beangle.ems.business.action.RuleAction;
 import org.beangle.ems.business.action.RuleParamAction;
+import org.beangle.ems.dev.action.HibernateAction;
 import org.beangle.ems.dictionary.action.CodeAction;
 import org.beangle.ems.dictionary.action.CodeMetaAction;
 import org.beangle.ems.dictionary.action.CodeScriptAction;
 import org.beangle.ems.portal.action.HomeAction;
 import org.beangle.ems.portal.action.LoginAction;
 import org.beangle.ems.system.action.FileAction;
-import org.beangle.ems.system.action.HibernateAction;
 import org.beangle.ems.system.action.InfoAction;
 import org.beangle.ems.system.action.PropertyAction;
 import org.beangle.ems.web.action.LogoutAction;
 import org.beangle.spring.config.AbstractBindModule;
 import org.beangle.spring.config.Scope;
 
-public final class DefaultModule extends AbstractBindModule {
+public final class WebModule extends AbstractBindModule {
 
 	@Override
 	protected void doBinding() {

@@ -34,6 +34,7 @@ public class Grid extends ClosingUIBean {
 	private Set<Object> colTitles = CollectUtils.newHashSet();
 	private Object items;
 	private String var;
+	private String caption;
 	// gridbar
 	private String bar;
 	private String sortable = "true";
@@ -77,6 +78,14 @@ public class Grid extends ClosingUIBean {
 	public boolean isFilterable(Col cln) {
 		return ("true".equals(filterable) && !ObjectUtils.equals(cln.getFilterable(), "false") && null != cln
 				.getProperty());
+	}
+
+	public String getCaption() {
+		return caption;
+	}
+
+	public void setCaption(String caption) {
+		this.caption = caption;
 	}
 
 	protected void addCol(Col column) {

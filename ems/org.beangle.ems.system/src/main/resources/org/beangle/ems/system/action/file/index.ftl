@@ -3,7 +3,7 @@
 [#include "../nav.ftl"/]
 <style type="text/css">
 	.file-browser {
-		width: 800px;
+		width: 90%;
 		margin:5px 5px;
 		padding-bottom: 5px;
 	}

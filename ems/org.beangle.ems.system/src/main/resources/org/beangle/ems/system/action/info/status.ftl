@@ -1,7 +1,8 @@
 [#ftl]
 [@b.head/]
 [#include "../nav.ftl"/]
-	<em>摘要</em>
+<div style="margin:5px 5px;padding-bottom: 5px;width: 90%;">
+	<h3>摘要</h3>
 	<hr>
 	<table width="100%">
 		<tr>
@@ -26,8 +27,9 @@
 			<td>启动于:</td><td>${upAt?string("yyyy-MM-dd HH:mm:ss")}(当前:${b.now?string("yyyy-MM-dd HH:mm:ss")})</td><td>运行时间:</td><td>[#assign upsecond=runtimeMBean.uptime/1000?int][#if (upsecond>3600)]${(upsecond/3600)?int}小时[/#if]${((upsecond%3600)/60)?int}分${(upsecond%60)}秒</td>
 		</tr>
 	</table>
-	<br/>
-	<em>内存使用(单位:MB)</em>
+</div>
+<div style="margin:5px 5px;padding-bottom: 5px;width: 90%;">
+	<h3>内存使用(单位:MB)</h3>
 	<hr>
 	<div  class="ui-widget ui-widget-content ui-corner-all" id="progressbar">
 	<table width="100%" style="border-collapse:collapse">
@@ -58,8 +60,9 @@
 		</tr>
 		[/#list]
 	</table>
-	<br/>
-	<em>线程</em>
+</div>
+<div style="margin:5px 5px;padding-bottom: 5px;width: 90%;">
+	<h3>线程</h3>
 	<hr>
 	<table width="100%">
 		<tr>
@@ -67,8 +70,7 @@
 			<td>共启动线程:${threadMBean.totalStartedThreadCount}</td><td>守护线程数:${threadMBean.daemonThreadCount}</td>
 		</tr>
 	</table>
-	<br/>
-	<em>运行时</em>
+	<h3>运行时</h3>
 	<hr>
 	<table width="100%">
 		<tr>
@@ -78,4 +80,5 @@
 			<td>启动类路径:</td><td colspan="3">${runtimeMBean.bootClassPath?replace(":","<br/>:")!}</td>
 		</tr>
 	</table>
+</div>
 [@b.foot/]

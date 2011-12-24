@@ -17,7 +17,7 @@ import org.beangle.spring.config.AbstractBindModule;
  * @author chaostone
  * @version $Id: Module.java Jun 17, 2011 7:56:25 PM chaostone $
  */
-public class DefaultModule extends AbstractBindModule {
+public class ServiceModule extends AbstractBindModule {
 
 	@Override
 	protected void doBinding() {

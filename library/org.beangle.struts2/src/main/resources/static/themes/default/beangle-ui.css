@@ -1,9 +1,9 @@
 /*
  * Beangle UI CSS Framework
- * GLPL version 3.
+ * LGPL version 3.
  */
 
-body {font-size: 13px;margin:0;}
+body {font-size: 13px;margin:0;font-family: Verdana, Arial, sans-serif;}
 
 select,input,textarea {font-size: 13px;}
 

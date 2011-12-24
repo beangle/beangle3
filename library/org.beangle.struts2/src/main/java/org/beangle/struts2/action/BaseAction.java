@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.struts2.ServletActionContext;
 import org.beangle.collection.page.PageLimit;
@@ -75,6 +76,12 @@ public class BaseAction extends DispatchAction {
 		return Params.get(paramName);
 	}
 
+	protected String getOrElse(String paramName, String defaultValue) {
+		String value = Params.get(paramName);
+		if (null == value || StringUtils.isEmpty(value)) return defaultValue;
+		else return value;
+	}
+
 	protected Object getAttribute(String name) {
 		return ActionContext.getContext().getContextMap().get(name);
 	}
@@ -101,6 +108,11 @@ public class BaseAction extends DispatchAction {
 
 	protected Float getFloat(String name) {
 		return Params.getFloat(name);
+	}
+
+	protected int getInt(String name) {
+		Integer rs = Params.getInteger(name);
+		return null == rs ? 0 : rs.intValue();
 	}
 
 	protected Integer getInteger(String name) {

@@ -48,7 +48,7 @@
 	<bean id="ruleExecutorBuilder" class="org.beangle.ems.rule.engine.impl.DefaultRuleExecutorBuilder"/>
 	<bean id="ruleBase" class="org.beangle.ems.rule.impl.RuleBaseImpl"/>
 
-	<bean id="ems.security.defaultmodule" class="org.beangle.ems.security.DefaultModule"></bean>
+	<bean class="org.beangle.ems.security.ServiceModule"></bean>
 	
 	<!--why name required?-->
 	<bean id="authenticationmanager" name="authenticationManager" class="org.beangle.security.auth.ProviderManager" autowire="byName">
