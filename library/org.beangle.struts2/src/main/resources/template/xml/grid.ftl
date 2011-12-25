@@ -1,6 +1,7 @@
 [#ftl/]
-<div class="grid">[@b.messages slash="4"/][#if tag.hasbar]<div id="${tag.id}_bar1" class="gridbar"></div>[/#if]
-[#if tag.caption??]<h4>${tag.caption?html}</h4>[/#if]
+<div class="grid">[@b.messages slash="4"/]
+[#if tag.caption??]<div class="grid-caption">${tag.caption?html}</div>[/#if]
+[#if tag.hasbar]<div id="${tag.id}_bar1" class="gridbar"></div>[/#if]
 <table id="${tag.id}" class="gridtable"${tag.parameterString}>
 [#if tag.cols?size>0]
 <thead class="gridhead">

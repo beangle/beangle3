@@ -1,4 +1,4 @@
-<h3>Actions in <#if namespace == ""> default namespace <#else> ${namespace} </#if></h3>
+<h4>Actions in <#if namespace == ""> default namespace <#else> ${namespace} </#if></h4>
 <table>
 	<tr>
 		<td>

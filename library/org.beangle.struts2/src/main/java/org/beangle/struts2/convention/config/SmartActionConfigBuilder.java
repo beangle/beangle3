@@ -7,6 +7,7 @@ package org.beangle.struts2.convention.config;
 import static org.apache.commons.lang.StringUtils.substringBeforeLast;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.Collection;
@@ -27,6 +28,8 @@ import org.beangle.struts2.convention.factory.SpringBeanNameFinder;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.struts2.convention.route.ActionBuilder;
 import org.beangle.struts2.convention.route.Profile;
+import org.beangle.struts2.convention.route.ProfileService;
+import org.beangle.struts2.convention.route.ViewMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +39,8 @@ import com.opensymphony.xwork2.config.Configuration;
 import com.opensymphony.xwork2.config.ConfigurationException;
 import com.opensymphony.xwork2.config.entities.ActionConfig;
 import com.opensymphony.xwork2.config.entities.PackageConfig;
+import com.opensymphony.xwork2.config.entities.ResultConfig;
+import com.opensymphony.xwork2.config.entities.ResultTypeConfig;
 import com.opensymphony.xwork2.inject.Container;
 import com.opensymphony.xwork2.inject.Inject;
 import com.opensymphony.xwork2.spring.SpringObjectFactory;
@@ -63,6 +68,12 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 
 	private ReloadingClassLoader reloadingClassLoader;
 	private BeanNameFinder beanNameFinder = new DefaultBeanNameFinder();
+
+	@Inject
+	protected ViewMapper viewMapper;
+
+	@Inject
+	protected ProfileService profileService;
 
 	@Inject
 	protected ActionBuilder actionBuilder;
@@ -264,11 +275,50 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 			create = (null == existed);
 		}
 		if (create) {
+			actionConfig.addResultConfigs(buildResultConfigs(actionClass));
 			pkgCfg.addActionConfig(actionName, actionConfig.build());
 			logger.debug("Add {}/{} for {} in {}", new Object[] { pkgCfg.getNamespace(), actionName,
 					actionClass.getName(), pkgCfg.getName() });
 		}
 		return create;
+	}
+
+	protected boolean shouldGenerateResult(Method m) {
+		if (String.class.equals(m.getReturnType()) && m.getParameterTypes().length == 0
+				&& Modifier.isPublic(m.getModifiers()) && !Modifier.isStatic(m.getModifiers())) {
+			String name = m.getName();
+			if (StringUtils.containsIgnoreCase(name, "save")
+					|| StringUtils.containsIgnoreCase(name, "remove")
+					|| StringUtils.containsIgnoreCase(name, "export")
+					|| StringUtils.containsIgnoreCase(name, "import")
+					|| StringUtils.containsIgnoreCase(name, "execute")
+					|| StringUtils.containsIgnoreCase(name, "toString")) { return false; }
+			return true;
+		}
+		return false;
+	}
+
+	protected List<ResultConfig> buildResultConfigs(Class<?> clazz) {
+		List<ResultConfig> configs = CollectUtils.newArrayList();
+		String extention = profileService.getProfile(clazz.getName()).getViewExtension();
+		if (!extention.endsWith("ftl")) return configs;
+		ResultTypeConfig resultTypeConfig = configuration.getPackageConfig("struts-default")
+				.getAllResultTypeConfigs().get("freemarker");
+		for (Method m : clazz.getMethods()) {
+			if (String.class.equals(m.getReturnType()) && m.getParameterTypes().length == 0
+					&& Modifier.isPublic(m.getModifiers()) && !Modifier.isStatic(m.getModifiers())) {
+				String name = m.getName();
+				if (shouldGenerateResult(m)) {
+					StringBuilder buf = new StringBuilder();
+					buf.append(viewMapper.getViewPath(clazz.getName(), name, name));
+					buf.append('.');
+					buf.append(extention);
+					configs.add(new ResultConfig.Builder(name, resultTypeConfig.getClassName()).addParam(
+							resultTypeConfig.getDefaultResultParam(), buf.toString()).build());
+				}
+			}
+		}
+		return configs;
 	}
 
 	protected PackageConfig.Builder getPackageConfig(Profile profile,
@@ -358,6 +408,14 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 
 	public void setActionBuilder(ActionBuilder actionNameBuilder) {
 		this.actionBuilder = actionNameBuilder;
+	}
+
+	public void setViewMapper(ViewMapper viewMapper) {
+		this.viewMapper = viewMapper;
+	}
+
+	public void setProfileService(ProfileService profileService) {
+		this.profileService = profileService;
 	}
 
 }

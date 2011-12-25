@@ -29,7 +29,7 @@
 					<#if namespaces?exists>
 					<div class="label"><strong>Namespaces</strong></div>
 					<div class="body">
-						<#foreach namespace in namespaces><div><@b.a href="!index?namespace=${namespace}"><#if namespace="">default<#else>${namespace}</#if></@></div></#foreach>
+						<#foreach namespace in namespaces?sort><div><@b.a href="!actions?namespace=${namespace}" target="content"><#if namespace="">default<#else>${namespace}</#if></@></div></#foreach>
 					</div>
 					</#if>
 				</div>

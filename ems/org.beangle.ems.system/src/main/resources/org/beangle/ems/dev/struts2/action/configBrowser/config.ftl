@@ -1,6 +1,6 @@
 [#ftl/]
 [@b.head/]
-<h3>Action information - ${actionName}</h3>
+<h4>Action information - ${actionName}</h4>
 
 <table>
 	<tr><td>Action name:</td><td>${actionName}</td></tr>

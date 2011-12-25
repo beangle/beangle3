@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.ems.dev.action;
+package org.beangle.ems.dev.hibernate.action;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +17,7 @@ import org.hibernate.stat.Statistics;
  * @author chaostone
  * @version $Id: HibernateAction.java Nov 6, 2011 8:54:18 PM chaostone $
  */
-public class HibernateAction extends BaseAction {
+public class CacheAction extends BaseAction {
 
 	private SessionFactory sessionFactory;
 

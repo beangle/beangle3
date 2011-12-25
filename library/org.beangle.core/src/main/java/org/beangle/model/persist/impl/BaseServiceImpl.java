@@ -16,7 +16,7 @@ public abstract class BaseServiceImpl implements ApplicationEventPublisherAware 
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	protected EntityDao entityDao;
-	
+
 	protected ApplicationEventPublisher eventPublisher;
 
 	public EntityDao getEntityDao() {
@@ -27,12 +27,12 @@ public abstract class BaseServiceImpl implements ApplicationEventPublisherAware 
 		this.entityDao = entityDao;
 	}
 
-	public void publish(ApplicationEvent event){
-		eventPublisher.publishEvent(event);
+	public void publish(ApplicationEvent event) {
+		if (null != eventPublisher) eventPublisher.publishEvent(event);
 	}
 
 	public void setApplicationEventPublisher(ApplicationEventPublisher eventPublisher) {
 		this.eventPublisher = eventPublisher;
 	}
-	
+
 }

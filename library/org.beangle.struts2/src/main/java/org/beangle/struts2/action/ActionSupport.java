@@ -75,6 +75,10 @@ public class ActionSupport implements Action, Validateable, ValidationAware, Tex
 		}
 	}
 
+	public String execute() throws Exception {
+		return SUCCESS;
+	}
+
 	public boolean hasKey(String key) {
 		return getTextProvider().hasKey(key);
 	}
@@ -133,29 +137,6 @@ public class ActionSupport implements Action, Validateable, ValidationAware, Tex
 
 	public void addFieldError(String fieldName, String errorMessage) {
 		validationAware.addFieldError(fieldName, errorMessage);
-	}
-
-	public String input() throws Exception {
-		return INPUT;
-	}
-
-	public String doDefault() throws Exception {
-		return SUCCESS;
-	}
-
-	/**
-	 * A default implementation that does nothing an returns "success".
-	 * <p/>
-	 * Subclasses should override this method to provide their business logic.
-	 * <p/>
-	 * See also {@link com.opensymphony.xwork2.Action#execute()}.
-	 * 
-	 * @return returns {@link #SUCCESS}
-	 * @throws Exception
-	 *             can be thrown by subclasses.
-	 */
-	public String execute() throws Exception {
-		return SUCCESS;
 	}
 
 	public boolean hasActionErrors() {

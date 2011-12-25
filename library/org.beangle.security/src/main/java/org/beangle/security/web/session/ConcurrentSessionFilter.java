@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.beangle.security.auth.AnonymousAuthentication;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.security.core.session.SessionRegistry;
@@ -65,12 +66,22 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 				+ " isn't a valid redirect URL");
 	}
 
+	/**
+	 * 没有登录或匿名账户不进行session处理
+	 * @param request
+	 * @return
+	 */
+	protected boolean shouldCare(HttpServletRequest request) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return null != auth && !(AnonymousAuthentication.class.isAssignableFrom(auth.getClass()));
+	}
+
 	@Override
 	protected void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpSession session = request.getSession(false);
 		SessionStatus info = null;
-		if (session != null) {
+		if (session != null && shouldCare(request)) {
 			info = sessionRegistry.getSessionStatus(session.getId());
 			// Expired - abort processing
 			if (null != info) {
@@ -91,8 +102,11 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 				}
 			}
 		}
-		String uri = RequestUtils.getServletPath(request);
-		if (null != info) sessionRegistry.access(session.getId(), uri, System.currentTimeMillis());
+		String uri =null;
+		if (null != info) {
+			uri= RequestUtils.getServletPath(request);
+			sessionRegistry.access(session.getId(), uri, System.currentTimeMillis());
+		}
 		try {
 			chain.doFilter(request, response);
 		} finally {

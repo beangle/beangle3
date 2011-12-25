@@ -25,7 +25,7 @@ public class DispatchAction extends ActionSupport {
 	}
 
 	protected String forward() {
-		return SUCCESS;
+		return ActionContext.getContext().getActionInvocation().getProxy().getMethod();
 	}
 
 	protected String forward(String view) {

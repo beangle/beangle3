@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.ems.dev.helper;
+package org.beangle.ems.dev.struts2.helper;
 
 import java.io.IOException;
 import java.net.URL;

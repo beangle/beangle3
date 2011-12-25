@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.ems.dev.action;
+package org.beangle.ems.dev.struts2.action;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -23,7 +23,7 @@ import org.apache.struts2.dispatcher.multipart.MultiPartRequest;
 import org.apache.struts2.util.ClassLoaderUtils;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.apache.struts2.views.velocity.VelocityManager;
-import org.beangle.ems.dev.helper.S2ConfigurationHelper;
+import org.beangle.ems.dev.struts2.helper.S2ConfigurationHelper;
 import org.beangle.struts2.action.BaseAction;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -44,7 +44,7 @@ import com.opensymphony.xwork2.validator.Validator;
  * @author chaostone
  * @version $Id: Struts2Action.java Dec 24, 2011 4:12:37 PM chaostone $
  */
-public class Struts2Action extends BaseAction {
+public class ConfigBrowserAction extends BaseAction {
 
 	protected S2ConfigurationHelper configHelper;
 
@@ -162,7 +162,7 @@ public class Struts2Action extends BaseAction {
 
 	public String jars() throws IOException {
 		put("jarPoms", configHelper.getJarProperties());
-		put("pluginsLoaded", ClassLoaderUtil.getResources("struts-plugin.xml", Struts2Action.class, false));
+		put("pluginsLoaded", ClassLoaderUtil.getResources("struts-plugin.xml", ConfigBrowserAction.class, false));
 		return forward();
 	}
 
@@ -227,7 +227,7 @@ public class Struts2Action extends BaseAction {
 		return clazz.getName().substring(clazz.getName().lastIndexOf('.') + 1);
 	}
 
-	private Class getClassInstance(String clazz) {
+	private Class<?> getClassInstance(String clazz) {
 		try {
 			return ClassLoaderUtils.loadClass(clazz, ActionContext.getContext().getClass());
 		} catch (Exception e) {
@@ -238,20 +238,20 @@ public class Struts2Action extends BaseAction {
 
 	public String validators() {
 		ReflectionContextFactory reflectionContextFactory = configHelper.getReflectionContextFactory();
-		Class clazz = getClassInstance(get("clazz"));
+		Class<?> clazz = getClassInstance(get("clazz"));
+		@SuppressWarnings("rawtypes")
 		List<Validator> validators = Collections.emptyList();
 		if (clazz != null) validators = configHelper.getActionValidatorManager().getValidators(clazz,
 				get("context"));
 
-		Set properties = new TreeSet();
-		put("properties",properties);
-		if(validators.isEmpty()){
-			return forward();
-		}
+		Set<PropertyInfo> properties = new TreeSet<PropertyInfo>();
+		put("properties", properties);
+		if (validators.isEmpty()) { return forward(); }
 		int selected = getInt("selected");
-		Validator validator = (Validator) validators.get(selected);
+		Validator<?> validator = validators.get(selected);
 		try {
-			Map context = reflectionContextFactory.createDefaultContext(validator);
+			@SuppressWarnings("unchecked")
+			Map<String, Object> context = reflectionContextFactory.createDefaultContext(validator);
 			BeanInfo beanInfoFrom = null;
 			try {
 				beanInfoFrom = Introspector.getBeanInfo(validator.getClass(), Object.class);
@@ -287,12 +287,12 @@ public class Struts2Action extends BaseAction {
 		return forward();
 	}
 
-	public static class PropertyInfo implements Comparable {
-		private String name;
-		private Class type;
-		private Object value;
+	public static class PropertyInfo implements Comparable<PropertyInfo> {
+		private final String name;
+		private final Class<?> type;
+		private final Object value;
 
-		public PropertyInfo(String name, Class type, Object value) {
+		public PropertyInfo(String name, Class<?> type, Object value) {
 			if (name == null) { throw new IllegalArgumentException("Name must not be null"); }
 			if (type == null) { throw new IllegalArgumentException("Type must not be null"); }
 			this.name = name;
@@ -300,28 +300,16 @@ public class Struts2Action extends BaseAction {
 			this.value = value;
 		}
 
-		public Class getType() {
+		public Class<?> getType() {
 			return type;
-		}
-
-		public void setType(Class type) {
-			this.type = type;
 		}
 
 		public Object getValue() {
 			return value;
 		}
 
-		public void setValue(Object value) {
-			this.value = value;
-		}
-
 		public String getName() {
 			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
 		}
 
 		public boolean equals(Object o) {
@@ -329,11 +317,9 @@ public class Struts2Action extends BaseAction {
 			if (!(o instanceof PropertyInfo)) return false;
 
 			final PropertyInfo propertyInfo = (PropertyInfo) o;
-
 			if (!name.equals(propertyInfo.name)) return false;
 			if (!type.equals(propertyInfo.type)) return false;
 			if (value != null ? !value.equals(propertyInfo.value) : propertyInfo.value != null) return false;
-
 			return true;
 		}
 
@@ -345,8 +331,7 @@ public class Struts2Action extends BaseAction {
 			return result;
 		}
 
-		public int compareTo(Object o) {
-			PropertyInfo other = (PropertyInfo) o;
+		public int compareTo(PropertyInfo other) {
 			return this.name.compareTo(other.name);
 		}
 	}

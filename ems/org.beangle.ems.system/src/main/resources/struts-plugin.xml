@@ -5,7 +5,7 @@
 
 <struts>
 	<bean type="org.apache.struts2.views.TagLibrary" name="ems" class="org.beangle.ems.web.tags.EmsTagLibrary" />
-	<bean class="org.beangle.ems.dev.helper.S2ConfigurationHelper" />
+	<bean class="org.beangle.ems.dev.struts2.helper.S2ConfigurationHelper" />
 
 	<package name="org.beangle.ems.web.action" extends="beangle">
 		<action name="logout" class="org.beangle.ems.web.action.LogoutAction" method="index">

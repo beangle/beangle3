@@ -4,9 +4,9 @@
  */
 package org.beangle.ems.dev;
 
-import org.beangle.ems.dev.action.HibernateAction;
-import org.beangle.ems.dev.action.SpringAction;
-import org.beangle.ems.dev.action.Struts2Action;
+import org.beangle.ems.dev.hibernate.action.CacheAction;
+import org.beangle.ems.dev.spring.action.SpringAction;
+import org.beangle.ems.dev.struts2.action.ConfigBrowserAction;
 import org.beangle.spring.config.AbstractBindModule;
 import org.beangle.spring.config.Scope;
 
@@ -14,7 +14,7 @@ public final class WebModule extends AbstractBindModule {
 
 	@Override
 	protected void doBinding() {
-		bind(SpringAction.class, Struts2Action.class, HibernateAction.class).in(Scope.PROTOTYPE);
+		bind(SpringAction.class, ConfigBrowserAction.class, CacheAction.class).in(Scope.SINGLETON);
 	}
 
 }
