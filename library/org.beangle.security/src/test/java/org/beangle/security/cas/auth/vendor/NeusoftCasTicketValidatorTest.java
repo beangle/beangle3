@@ -11,22 +11,22 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
-import org.jasig.cas.client.validation.Assertion;
-import org.jasig.cas.client.validation.TicketValidationException;
+import org.beangle.security.cas.validation.Assertion;
+import org.beangle.security.cas.validation.TicketValidationException;
 import org.testng.annotations.Test;
 
 @Test
 public class NeusoftCasTicketValidatorTest {
 
-	NeusoftCasTicketValidator validator = new NeusoftCasTicketValidator("http://cas");
+	NeusoftCasTicketValidator validator = new NeusoftCasTicketValidator();
 
 	public void testParseSuccess() throws TicketValidationException, IOException {
 		File file = new File(NeusoftCasTicketValidatorTest.class.getResource("/neusoft-auth-success.xml")
 				.getFile());
 		String response = FileUtils.readFileToString(file);
-		Assertion assertion = validator.parseResponseFromServer(response);
+		Assertion assertion = validator.parseResponseFromServer("testticket",response);
 		assertNotNull(assertion);
-		assertEquals(assertion.getPrincipal().getName(), "admin");
+		assertEquals(assertion.getPrincipal(), "admin");
 	}
 
 	@Test(expectedExceptions = TicketValidationException.class)
@@ -34,6 +34,6 @@ public class NeusoftCasTicketValidatorTest {
 		File file = new File(NeusoftCasTicketValidatorTest.class.getResource("/neusoft-auth-failure.xml")
 				.getFile());
 		String response = FileUtils.readFileToString(file);
-		validator.parseResponseFromServer(response);
+		validator.parseResponseFromServer("ticket",response);
 	}
 }

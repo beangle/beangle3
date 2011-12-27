@@ -200,4 +200,8 @@ public class SimpleLdapUserStore implements LdapUserStore, DisposableBean {
 		this.disConnect();
 	}
 
+	public void setUidName(String uidName) {
+		this.uidName = uidName;
+	}
+
 }

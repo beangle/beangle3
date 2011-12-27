@@ -50,11 +50,9 @@ import com.opensymphony.xwork2.util.finder.ClassLoaderInterface;
 import com.opensymphony.xwork2.util.finder.ClassLoaderInterfaceDelegate;
 import com.opensymphony.xwork2.util.finder.Test;
 
-/**
- * <p>
+/** <p>
  * This class implements the ActionConfigBuilder interface.
- * </p>
- */
+ * </p> */
 public class SmartActionConfigBuilder implements ActionConfigBuilder {
 	private static final Logger logger = LoggerFactory.getLogger(SmartActionConfigBuilder.class);
 	private final Configuration configuration;
@@ -247,15 +245,13 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 		return createCount;
 	}
 
-	/**
-	 * Interfaces, enums, annotations, and abstract classes cannot be
+	/** Interfaces, enums, annotations, and abstract classes cannot be
 	 * instantiated.
 	 * 
 	 * @param actionClass
-	 *            class to check
+	 *        class to check
 	 * @return returns true if the class cannot be instantiated or should be
-	 *         ignored
-	 */
+	 *         ignored */
 	protected boolean cannotInstantiate(Class<?> actionClass) {
 		return actionClass.isAnnotation() || actionClass.isInterface() || actionClass.isEnum()
 				|| (actionClass.getModifiers() & Modifier.ABSTRACT) != 0 || actionClass.isAnonymousClass();
@@ -300,6 +296,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 
 	protected List<ResultConfig> buildResultConfigs(Class<?> clazz) {
 		List<ResultConfig> configs = CollectUtils.newArrayList();
+		if (null == profileService) return configs;
 		String extention = profileService.getProfile(clazz.getName()).getViewExtension();
 		if (!extention.endsWith("ftl")) return configs;
 		ResultTypeConfig resultTypeConfig = configuration.getPackageConfig("struts-default")
@@ -357,8 +354,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 		return pkgConfig;
 	}
 
-	/**
-	 * Determine all the index handling actions and results based on this logic:
+	/** Determine all the index handling actions and results based on this logic:
 	 * 1. Loop over all the namespaces such as /foo and see if it has an action
 	 * named index 2. If an action doesn't exists in the parent namespace of the
 	 * same name, create an action in the parent namespace of the same name as
@@ -367,8 +363,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 	 * it doesn't exist. e.g. /foo/ the action is "" and the namespace is /foo
 	 * 
 	 * @param packageConfigs
-	 *            Used to store the actions.
-	 */
+	 *        Used to store the actions. */
 	protected int buildIndexActions(Map<String, PackageConfig.Builder> packageConfigs) {
 		int createCount = 0;
 		Map<String, PackageConfig.Builder> byNamespace = new HashMap<String, PackageConfig.Builder>();

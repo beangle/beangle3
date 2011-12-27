@@ -9,13 +9,10 @@ import java.io.StringReader;
 import java.net.URL;
 import java.util.Map;
 
+import org.beangle.security.cas.validation.AbstractTicketValidator;
+import org.beangle.security.cas.validation.Assertion;
+import org.beangle.security.cas.validation.TicketValidationException;
 import org.beangle.web.util.HttpUtils;
-import org.jasig.cas.client.proxy.Cas20ProxyRetriever;
-import org.jasig.cas.client.proxy.ProxyGrantingTicketStorage;
-import org.jasig.cas.client.proxy.ProxyRetriever;
-import org.jasig.cas.client.validation.AbstractUrlBasedTicketValidator;
-import org.jasig.cas.client.validation.Assertion;
-import org.jasig.cas.client.validation.TicketValidationException;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -26,23 +23,11 @@ import org.xml.sax.helpers.XMLReaderFactory;
  * 
  * @author chaostone
  */
-public class NeusoftCasTicketValidator extends AbstractUrlBasedTicketValidator {
-	/** The CAS 2.0 protocol proxy callback url. */
-	private String proxyCallbackUrl;
-
-	/** The storage location of the proxy granting tickets. */
-	private ProxyGrantingTicketStorage proxyGrantingTicketStorage;
-
-	/** Implementation of the proxy retriever. */
-	private ProxyRetriever proxyRetriever;
-
-	public NeusoftCasTicketValidator(String casServerUrlPrefix) {
-		super(casServerUrlPrefix);
-		this.proxyRetriever = new Cas20ProxyRetriever(casServerUrlPrefix);
-	}
+public class NeusoftCasTicketValidator extends AbstractTicketValidator {
 
 	@Override
-	protected Assertion parseResponseFromServer(String response) throws TicketValidationException {
+	protected Assertion parseResponseFromServer(final String ticket, String response)
+			throws TicketValidationException {
 		XMLReader r;
 		try {
 			r = XMLReaderFactory.createXMLReader();
@@ -50,7 +35,7 @@ public class NeusoftCasTicketValidator extends AbstractUrlBasedTicketValidator {
 			ServiceXmlHandler handler = new ServiceXmlHandler();
 			r.setContentHandler(handler);
 			r.parse(new InputSource(new StringReader(response)));
-			return handler.getAssertion(proxyGrantingTicketStorage, proxyRetriever);
+			return handler.getAssertion();
 		} catch (SAXException e) {
 			throw new RuntimeException(e);
 		} catch (IOException e) {
@@ -58,38 +43,8 @@ public class NeusoftCasTicketValidator extends AbstractUrlBasedTicketValidator {
 		}
 	}
 
-	protected String getUrlSuffix() {
-		return "serviceValidate";
-	}
-
-	public void setProxyGrantingTicketStorage(ProxyGrantingTicketStorage proxyGrantingTicketStorage) {
-		this.proxyGrantingTicketStorage = proxyGrantingTicketStorage;
-	}
-
-	public void setProxyRetriever(ProxyRetriever proxyRetriever) {
-		this.proxyRetriever = proxyRetriever;
-	}
-
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	protected final void populateUrlAttributeMap(final Map urlParameters) {
-		urlParameters.put("pgtUrl", encodeUrl(this.proxyCallbackUrl));
+	protected final void populateUrlAttributeMap(final Map<String, String> urlParameters) {
 		urlParameters.put("checkAlive", "true");
-	}
-
-	public String getProxyCallbackUrl() {
-		return proxyCallbackUrl;
-	}
-
-	public void setProxyCallbackUrl(String proxyCallbackUrl) {
-		this.proxyCallbackUrl = proxyCallbackUrl;
-	}
-
-	public ProxyGrantingTicketStorage getProxyGrantingTicketStorage() {
-		return proxyGrantingTicketStorage;
-	}
-
-	public ProxyRetriever getProxyRetriever() {
-		return proxyRetriever;
 	}
 
 	/**

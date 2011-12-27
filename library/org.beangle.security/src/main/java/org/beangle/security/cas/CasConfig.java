@@ -7,16 +7,14 @@ package org.beangle.security.cas;
 import org.apache.commons.lang.Validate;
 import org.springframework.beans.factory.InitializingBean;
 
-/**
- * Stores properties related to this CAS service.
+/** Stores properties related to this CAS service.
  * <p>
  * Each web application capable of processing CAS tickets is known as a service. This class stores
  * the properties that are relevant to the local CAS service, being the application that is being
  * secured by Beangle Security.
  * 
  * @author chaostone
- * @version $Id: ServiceProperties.java $
- */
+ * @version $Id: ServiceProperties.java $ */
 public class CasConfig implements InitializingBean {
 
 	private String casServer;
@@ -29,14 +27,12 @@ public class CasConfig implements InitializingBean {
 
 	private String artifactName = "ticket";
 
-	private String proxyReceptor;
-
 	private String loginUri = "/login";
 
 	private String validateUri = "/serviceValidate";
-	
+
 	private String checkAliveUri = "/checkAlive";
-	
+
 	public CasConfig() {
 		super();
 	}
@@ -60,7 +56,8 @@ public class CasConfig implements InitializingBean {
 	}
 
 	public void setCasServer(String casServer) {
-		this.casServer = casServer;
+		if (casServer.endsWith("/")) this.casServer = casServer.substring(0, casServer.length() - 1);
+		else this.casServer = casServer;
 	}
 
 	public String getLocalServer() {
@@ -71,30 +68,15 @@ public class CasConfig implements InitializingBean {
 		this.localServer = localServer;
 	}
 
-	/**
-	 * The enterprise-wide CAS login URL. Usually something like
+	/** The enterprise-wide CAS login URL. Usually something like
 	 * <code>https://www.mycompany.com/cas/login</code>.
 	 * 
-	 * @return the enterprise-wide CAS login URL
-	 */
+	 * @return the enterprise-wide CAS login URL */
 	public String getLoginUrl() {
 		return casServer + loginUri;
 	}
 
-	public String getProxyCallbackUrl() {
-		if (null == proxyReceptor) { return null; }
-		StringBuilder buffer = new StringBuilder();
-		if (!localServer.startsWith("https://") && !localServer.startsWith("http://")) {
-			buffer.append("http://");
-		}
-
-		buffer.append(localServer);
-		buffer.append(proxyReceptor);
-		return buffer.toString();
-	}
-
-	/**
-	 * Indicates whether the <code>renew</code> parameter should be sent to the
+	/** Indicates whether the <code>renew</code> parameter should be sent to the
 	 * CAS login URL and CAS validation URL.
 	 * <p>
 	 * If <code>true</code>, it will force CAS to authenticate the user again (even if the user has
@@ -102,8 +84,7 @@ public class CasConfig implements InitializingBean {
 	 * as a consequence of an explicit login. High security applications would probably set this to
 	 * <code>true</code>. Defaults to <code>false</code>, providing automated single sign on.
 	 * 
-	 * @return whether to send the <code>renew</code> parameter to CAS
-	 */
+	 * @return whether to send the <code>renew</code> parameter to CAS */
 	public boolean isRenew() {
 		return renew;
 	}
@@ -118,14 +99,6 @@ public class CasConfig implements InitializingBean {
 
 	public void setEncode(boolean encode) {
 		this.encode = encode;
-	}
-
-	public String getProxyReceptor() {
-		return proxyReceptor;
-	}
-
-	public void setProxyReceptor(String proxyReceptor) {
-		this.proxyReceptor = proxyReceptor;
 	}
 
 	public String getLoginUri() {

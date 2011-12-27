@@ -14,16 +14,16 @@ import java.util.Map;
 
 import org.beangle.security.auth.BadCredentialsException;
 import org.beangle.security.auth.UsernamePasswordAuthentication;
+import org.beangle.security.cas.validation.Assertion;
+import org.beangle.security.cas.validation.AssertionBean;
+import org.beangle.security.cas.validation.TicketValidationException;
+import org.beangle.security.cas.validation.TicketValidator;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.authority.GrantedAuthorityBean;
 import org.beangle.security.core.userdetail.DefaultUserDetailBean;
 import org.beangle.security.core.userdetail.UserDetail;
 import org.beangle.security.core.userdetail.UserDetailService;
 import org.beangle.security.core.userdetail.UsernameNotFoundException;
-import org.jasig.cas.client.validation.Assertion;
-import org.jasig.cas.client.validation.AssertionImpl;
-import org.jasig.cas.client.validation.TicketValidationException;
-import org.jasig.cas.client.validation.TicketValidator;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -140,7 +140,7 @@ public class CasAuthenticationProviderTest {
 		}
 
 		public Assertion validate(final String ticket, final String service) throws TicketValidationException {
-			if (returnTicket) { return new AssertionImpl("rod"); }
+			if (returnTicket) { return new AssertionBean("rod",ticket); }
 			throw new BadCredentialsException("As requested from mock");
 		}
 	}

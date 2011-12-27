@@ -4,21 +4,15 @@
  */
 package org.beangle.security.cas.web;
 
-import java.io.IOException;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.Validate;
 import org.beangle.security.cas.CasConfig;
 import org.beangle.security.cas.auth.CasAuthentication;
+import org.beangle.security.cas.validation.TicketValidator;
 import org.beangle.security.web.auth.preauth.AbstractPreauthFilter;
 import org.beangle.security.web.auth.preauth.PreauthAuthentication;
-import org.jasig.cas.client.proxy.ProxyGrantingTicketStorage;
-import org.jasig.cas.client.util.CommonUtils;
-import org.jasig.cas.client.validation.TicketValidator;
 
 /**
  * Processes a CAS service ticket.
@@ -51,15 +45,6 @@ import org.jasig.cas.client.validation.TicketValidator;
  */
 public class CasPreauthFilter extends AbstractPreauthFilter {
 
-	/**
-	 * The backing storage to store ProxyGrantingTicket requests.
-	 */
-	private ProxyGrantingTicketStorage proxyGrantingTicketStorage;
-	/**
-	 * The last portion of the receptor url, i.e. /proxy/receptor
-	 */
-	private String proxyReceptor;
-
 	private CasConfig config;
 
 	protected void initFilterBean() {
@@ -75,35 +60,13 @@ public class CasPreauthFilter extends AbstractPreauthFilter {
 		if (password == null) {
 			return null;
 		} else {
-			String url = CommonUtils.constructServiceUrl(request, response, null, config.getLocalServer(),
+			String url = CasEntryPoint.constructServiceUrl(request, response, null, config.getLocalServer(),
 					"ticket", config.isEncode());
 			return new CasAuthentication(username, password, url);
 		}
 	}
 
-	/**
-	 * Try to authenticate a pre-authenticated user with Beangle Security if the
-	 * user has not yet been authenticated.
-	 */
-	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws IOException, ServletException {
-		if (null != proxyGrantingTicketStorage && CommonUtils.isNotEmpty(proxyReceptor)
-				&& request.getRequestURI().endsWith(proxyReceptor)) {
-			CommonUtils.readAndRespondToProxyReceptorRequest(request, response, proxyGrantingTicketStorage);
-		} else {
-			super.doFilterHttp(request, response, filterChain);
-		}
-	}
-
-	public final void setProxyGrantingTicketStorage(
-			final ProxyGrantingTicketStorage proxyGrantingTicketStorage) {
-		this.proxyGrantingTicketStorage = proxyGrantingTicketStorage;
-	}
-
 	public void setConfig(CasConfig config) {
 		this.config = config;
-		if (null != config) {
-			this.proxyReceptor = config.getProxyReceptor();
-		}
 	}
 }

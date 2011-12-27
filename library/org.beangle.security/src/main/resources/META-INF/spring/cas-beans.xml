@@ -3,8 +3,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<bean id="proxyGrantingTicketStorage" class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl"/>
-	
 	<bean id="casConfig" class="org.beangle.security.cas.CasConfig">
 		<property name="casServer" value="http://your/server/cas"/>
 		<property name="localServer" value="localhost:8080"/>
@@ -13,7 +11,6 @@
 	<bean id="casPreauthFilter" class="org.beangle.security.cas.web.CasPreauthFilter">
 		<property name="authenticationManager" ref="authenticationManager"/>
 		<property name="sessionRegistry" ref="sessionRegistry"/>
-		<property name="proxyGrantingTicketStorage" ref="proxyGrantingTicketStorage"/>
 		<property name="config" ref="casConfig"/>
 		<property name="authenticationAliveChecker" ref="authenticationAliveChecker"/>
 	</bean>
@@ -26,9 +23,8 @@
 		<property name="config" ref="casConfig"/>
 	</bean>
 	
-	<bean id="casTicketValidator" class="org.beangle.security.cas.auth.Cas20ServiceTicketValidatorFactory">
-			<property name="proxyGrantingTicketStorage" ref="proxyGrantingTicketStorage"/>
-			<property name="config" ref="casConfig"/>
+	<bean id="casTicketValidator" class="org.beangle.security.cas.validation.Cas20ServiceTicketValidator">
+		<property name="config" ref="casConfig"/>
 	</bean>
 
 	<bean id="casAuthenticationProvider" class="org.beangle.security.cas.auth.CasAuthenticationProvider">

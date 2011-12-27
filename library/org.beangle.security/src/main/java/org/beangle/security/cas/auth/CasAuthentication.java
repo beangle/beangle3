@@ -6,10 +6,10 @@ package org.beangle.security.cas.auth;
 
 import java.util.Collection;
 
+import org.beangle.security.cas.validation.Assertion;
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.userdetail.UserDetail;
 import org.beangle.security.web.auth.preauth.PreauthAuthentication;
-import org.jasig.cas.client.validation.Assertion;
 
 /**
  * Represents a successful CAS <code>Authentication</code>.

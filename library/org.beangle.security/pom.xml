@@ -21,12 +21,14 @@
 			<groupId>org.beangle</groupId>
 			<artifactId>beangle-core</artifactId>
 		</dependency>
+		<!--
 		<dependency>
-			<groupId>org.jasig.cas</groupId>
+			<groupId>org.jasig.cas.client</groupId>
 			<artifactId>cas-client-core</artifactId>
-			<version>3.1.9</version>
+			<version>3.2.1</version>
 			<optional>true</optional>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>

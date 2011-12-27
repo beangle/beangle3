@@ -12,6 +12,9 @@ import org.beangle.lang.StrUtils;
 import org.beangle.security.auth.AuthenticationProvider;
 import org.beangle.security.auth.BadCredentialsException;
 import org.beangle.security.auth.UsernamePasswordAuthentication;
+import org.beangle.security.cas.validation.Assertion;
+import org.beangle.security.cas.validation.TicketValidationException;
+import org.beangle.security.cas.validation.TicketValidator;
 import org.beangle.security.cas.web.CasPreauthFilter;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
@@ -20,9 +23,6 @@ import org.beangle.security.core.userdetail.UserDetail;
 import org.beangle.security.core.userdetail.UserDetailChecker;
 import org.beangle.security.core.userdetail.UserDetailService;
 import org.beangle.security.core.userdetail.UsernameNotFoundException;
-import org.jasig.cas.client.validation.Assertion;
-import org.jasig.cas.client.validation.TicketValidationException;
-import org.jasig.cas.client.validation.TicketValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -95,7 +95,7 @@ public class CasAuthenticationProvider implements AuthenticationProvider, Initia
 		try {
 			final Assertion assertion = ticketValidator.validate(auth.getCredentials().toString(),
 					auth.getLoginUrl());
-			String name = assertion.getPrincipal().getName();
+			String name = assertion.getPrincipal();
 			final UserDetail userDetail = userDetailService.loadDetail(new UsernamePasswordAuthentication(
 					name, null));
 			if (null == userDetail) {

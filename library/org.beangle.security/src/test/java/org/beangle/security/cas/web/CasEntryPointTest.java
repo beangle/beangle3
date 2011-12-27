@@ -9,6 +9,8 @@ import static org.testng.Assert.assertTrue;
 
 import java.net.URLEncoder;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.beangle.security.cas.CasConfig;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -65,4 +67,23 @@ public class CasEntryPointTest {
 						+ URLEncoder.encode("https://mycompany.com/bigWebApp/some_path", "UTF-8")
 						+ "&renew=true", response.getRedirectedUrl());
 	}
+
+	public void testConstuctServiceUrl() {
+		CasConfig config = new CasConfig();
+		config.setCasServer("http://www.mycompany.com/cas");
+		config.setLocalServer("localhost:8080/demo");
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		request.setContextPath("/demo");
+		request.setServletPath("/home.action");
+		request.setRequestURI("/demo/home.action");
+		HttpServletResponse response = new MockHttpServletResponse();
+		final String urlEncodedService = CasEntryPoint.constructServiceUrl(request, response, null,
+				config.getLocalServer(), "ticket", config.isEncode());
+		System.out.println(urlEncodedService);
+
+		final String urlEncodedService2 = CasEntryPoint.constructServiceUrl(request, response, null,
+				"localhost:8080", "ticket", config.isEncode());
+		System.out.println(urlEncodedService2);
+	}
+
 }

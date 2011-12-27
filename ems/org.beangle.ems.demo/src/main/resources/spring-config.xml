@@ -5,36 +5,56 @@
 			<value>java:comp/env/jdbc/beangle</value>
 		</property>
 	</bean>
+	
+	<bean id="securityFilterChain" class="org.beangle.security.web.FilterChainProxy">
+		<property name="filters">
+			<list>
+				<ref bean="httpSessionContextIntegrationFilter"/>
+				<ref bean="casPreauthFilter"/>
+				<ref bean="anonymousFilter"/>
+				<ref bean="exceptionTranslationFilter"/>
+				<ref bean="concurrentSessionFilter"/>
+				<ref bean="filterSecurityInterceptor"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="authenticationmanager" name="authenticationManager" class="org.beangle.security.auth.ProviderManager" autowire="byName">
+		<property name="providers">
+			<list>
+				<ref bean="casAuthenticationProvider"/>
+				<ref bean="daoAuthenticationProvider"/>
+			</list>
+		</property>
+	</bean>
 
+	<bean id="casTicketValidator" class="org.beangle.security.cas.auth.vendor.NeusoftCasTicketValidator">
+		<property name="config" ref="casConfig"/>
+	</bean>
+	
+	<bean id="authenticationEntryPoint" class="org.beangle.security.cas.web.CasEntryPoint">
+		<property name="config" ref="casConfig"/>
+	</bean>
+	
+	<!--
+	<bean id="authenticationEntryPoint" class="org.beangle.security.web.auth.LoginUrlEntryPoint">
+		<property name="loginUrl" value="/login.action"/>
+	</bean>
+	-->
+	
+	<bean id="casConfig">
+		<property name="casServer" value="http://portal1.ecnu.edu.cn/cas"/>
+		<property name="localServer" value="duan.com:8081"/>
+	</bean>
+	
 	<!-- Database Properties -->
 	<bean id="hibernateConfig">
 		<property name="properties">
 			<props merge="true">
 				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto"></prop>
 			</props>
 		</property>
 	</bean>
-
-<!-- 
-	<bean id="usernamePreauthFilter">
-		<property name="usernameSource">
-			<bean class="org.beangle.ems.demo.GivenUsernameSource" />
-		</property>
-	</bean>
-	 
-	<bean id="userDetailService" class="org.beangle.ems.demo.SimpleUserDetailServiceImpl" autowire="byName"/>
-	
-	<bean id="authorityManager" class="org.beangle.ems.demo.MockAuthorityManager" autowire="byName"/>
-	
-	<bean id="authenticationmanager">
-		<property name="providers">
-			<list>
-				<ref bean="preauthUserDetailProvider"/>
-			</list>
-		</property>
-	</bean>
-	-->
 </beans>
-

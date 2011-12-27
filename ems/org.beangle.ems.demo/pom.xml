@@ -31,13 +31,13 @@
 			<groupId>org.beangle</groupId>
 			<artifactId>beangle-emsapp-database</artifactId>
 		</dependency>
-		-->
 		<dependency>
-			<groupId>org.jasig.cas</groupId>
+			<groupId>org.jasig.cas.client</groupId>
 			<artifactId>cas-client-core</artifactId>
-			<version>3.1.9</version>
+			<version>3.2.1</version>
 			<optional>true</optional>
 		</dependency>
+		-->
 	</dependencies>
 	<build>
 		<plugins>

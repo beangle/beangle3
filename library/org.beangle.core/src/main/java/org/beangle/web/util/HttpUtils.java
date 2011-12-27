@@ -10,6 +10,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+
 public final class HttpUtils {
 
 	public static String getResponseText(String url) {
@@ -21,9 +24,17 @@ public final class HttpUtils {
 	}
 
 	public static String getResponseText(URL constructedUrl, String encoding) {
+		return getResponseText(constructedUrl,null,encoding);
+	}
+
+	public static String getResponseText(URL constructedUrl, final HostnameVerifier hostnameVerifier,
+			String encoding) {
 		HttpURLConnection conn = null;
 		try {
 			conn = (HttpURLConnection) constructedUrl.openConnection();
+			if (conn instanceof HttpsURLConnection) {
+				((HttpsURLConnection) conn).setHostnameVerifier(hostnameVerifier);
+			}
 			BufferedReader in = null;
 			if (null == encoding) {
 				in = new BufferedReader(new InputStreamReader(conn.getInputStream()));

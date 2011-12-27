@@ -8,12 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.beangle.collection.CollectUtils;
-import org.jasig.cas.client.authentication.AttributePrincipalImpl;
-import org.jasig.cas.client.proxy.ProxyGrantingTicketStorage;
-import org.jasig.cas.client.proxy.ProxyRetriever;
-import org.jasig.cas.client.validation.Assertion;
-import org.jasig.cas.client.validation.AssertionImpl;
-import org.jasig.cas.client.validation.TicketValidationException;
+import org.beangle.security.cas.validation.Assertion;
+import org.beangle.security.cas.validation.AssertionBean;
+import org.beangle.security.cas.validation.TicketValidationException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -81,21 +78,9 @@ public class ServiceXmlHandler extends DefaultHandler {
 	protected boolean checkAliveFragment;
 	protected String caKey;
 
-	@SuppressWarnings("unchecked")
-	protected Assertion getAssertion(ProxyGrantingTicketStorage proxyGrantingTicketStorage,
-			ProxyRetriever proxyRetriever) throws TicketValidationException {
-		if (authenticationSuccess) {
-			if (null != pgtIou) {
-				pgtIou = null == proxyGrantingTicketStorage ? null : proxyGrantingTicketStorage
-						.retrieve(pgtIou);
-			}
-			AssertionImpl assertion = new AssertionImpl(new AttributePrincipalImpl(user, userMap, pgtIou,
-					proxyRetriever));
-			if (null != caKey) assertion.getAttributes().put("caKey", caKey);
-			return assertion;
-		} else {
-			throw new TicketValidationException(errorCode + ":" + errorMessage);
-		}
+	protected Assertion getAssertion() throws TicketValidationException {
+		if (authenticationSuccess) return new AssertionBean(user, caKey, userMap);
+		else throw new TicketValidationException(errorCode + ":" + errorMessage);
 	}
 
 }
