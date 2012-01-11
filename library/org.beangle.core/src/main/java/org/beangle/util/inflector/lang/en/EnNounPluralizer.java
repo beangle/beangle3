@@ -32,7 +32,7 @@ public class EnNounPluralizer extends RuleBasedPluralizer {
 			"at", "athwart", "before", "behind", "below", "beneath", "beside", "besides", "between",
 			"betwixt", "beyond", "but", "by", "during", "except", "for", "from", "in", "into", "near", "of",
 			"off", "on", "onto", "out", "over", "since", "till", "to", "under", "until", "unto", "upon",
-			"with", };
+			"with"};
 
 	private static final Map<String, String> NOMINATIVE_PRONOUNS = CollectUtils.toMap(new String[][] {
 			// nominative reflexive

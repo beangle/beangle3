@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.net.ssl.HostnameVerifier;
 
 import org.beangle.security.cas.CasConfig;
+import org.beangle.web.util.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
@@ -121,7 +122,9 @@ public abstract class AbstractTicketValidator implements TicketValidator {
 	 *        the ticket to validate.
 	 * @return the response from the CAS server. */
 
-	protected abstract String retrieveResponseFromServer(URL validationUrl, String ticket);
+	protected String retrieveResponseFromServer(URL validationUrl, String ticket){
+		return HttpUtils.getResponseText(validationUrl, hostnameVerifier, getEncoding());
+	}
 
 	public Assertion validate(final String ticket, final String service) throws TicketValidationException {
 		final String validationUrl = constructValidationUrl(ticket, service);

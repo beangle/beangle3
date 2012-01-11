@@ -38,7 +38,7 @@ public class ApplyTest {
 	public void testApply() {
 		RestrictEntity entity = new RestrictEntityBean("user", User.class);
 		Restriction restriction = new RestrictionBean(entity,
-				"exists(from {alias}.groups as g where g.group in(:groups))");
+				"exists(from {alias}.members as m where m.group in(:groups))");
 
 		UserPropertyMetaBean property = new UserPropertyMetaBean(1L, "groups", GroupBean.class.getName(), "oql:from "
 				+ Group.class);

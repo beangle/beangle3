@@ -7,13 +7,13 @@ package org.beangle.ems.security.service;
 import java.util.Collections;
 import java.util.List;
 
-import org.beangle.ems.security.profile.UserPropertyMeta;
+import org.beangle.ems.security.profile.PropertyMeta;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 
 public class OqlDataProvider extends BaseServiceImpl implements UserDataProvider {
 
 	@SuppressWarnings("unchecked")
-	public <T> List<T> getData(UserPropertyMeta field, String source) {
+	public <T> List<T> getData(PropertyMeta field, String source) {
 		try {
 			return (List<T>) entityDao.searchHQLQuery(source);
 		} catch (Exception e) {

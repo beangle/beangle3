@@ -16,6 +16,7 @@ import org.beangle.ems.security.Group;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.profile.GroupProfile;
+import org.beangle.ems.security.profile.PropertyMeta;
 import org.beangle.ems.security.profile.UserProfile;
 import org.beangle.ems.security.profile.UserProperty;
 import org.beangle.ems.security.profile.UserPropertyMeta;
@@ -114,7 +115,7 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 	 * @param restriction
 	 * @return
 	 */
-	private Object unmarshal(String value, UserPropertyMeta property) {
+	private Object unmarshal(String value, PropertyMeta property) {
 		try {
 			List<Object> returned = dataResolver.unmarshal(property, value);
 			if (property.isMultiple()) {
@@ -147,8 +148,8 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 				Condition c = new Condition(content);
 				List<String> params = c.getParamNames();
 				for (final String paramName : params) {
-					UserPropertyMeta prop = getUserProperty(paramName);
-					UserProperty up = profile.getProperty(prop);
+					UserProperty up = profile.getProperty(paramName);
+					PropertyMeta prop = up.getMeta();
 					String value = null == up ? null : up.getValue();
 					if (StringUtils.isNotEmpty(value)) {
 						if (value.equals(Restriction.ALL)) {

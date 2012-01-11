@@ -15,7 +15,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.bean.converters.Converter;
 import org.beangle.collection.CollectUtils;
-import org.beangle.ems.security.profile.UserPropertyMeta;
+import org.beangle.ems.security.profile.PropertyMeta;
 
 /**
  * Store list of objects using comma.
@@ -26,14 +26,17 @@ import org.beangle.ems.security.profile.UserPropertyMeta;
  */
 public class CsvDataResolver implements UserDataResolver, UserDataProvider {
 
-	public String marshal(UserPropertyMeta property, Collection<?> items) {
-		if (null == items) { return null; }
+	public String marshal(PropertyMeta property, Collection<?> items) {
+		if (null == items) {
+			return null;
+		}
 		List<String> properties = CollectUtils.newArrayList();
 		if (null != property.getKeyName()) {
 			properties.add(property.getKeyName());
 		}
 		if (null != property.getPropertyNames()) {
-			String[] names = StringUtils.split(property.getPropertyNames(), ",");
+			String[] names = StringUtils
+					.split(property.getPropertyNames(), ",");
 			properties.addAll(Arrays.asList(names));
 		}
 		StringBuilder sb = new StringBuilder();
@@ -69,14 +72,17 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> List<T> unmarshal(UserPropertyMeta property, String source) {
-		if (StringUtils.isEmpty(source)) { return Collections.emptyList(); }
+	public <T> List<T> unmarshal(PropertyMeta property, String source) {
+		if (StringUtils.isEmpty(source)) {
+			return Collections.emptyList();
+		}
 		List<String> properties = CollectUtils.newArrayList();
 		if (null != property.getKeyName()) {
 			properties.add(property.getKeyName());
 		}
 		if (null != property.getPropertyNames()) {
-			String[] names = StringUtils.split(property.getPropertyNames(), ",");
+			String[] names = StringUtils
+					.split(property.getPropertyNames(), ",");
 			properties.addAll(Arrays.asList(names));
 		}
 		String[] datas = StringUtils.split(source, ",");
@@ -92,18 +98,19 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
 				return rs;
 			} else {
 				properties.clear();
-				int startIndex=0;
-				String[] names = new String[]{property.getKeyName()};
-				if(-1!=datas[0].indexOf(';')){
-					names= StringUtils.split(datas[0], ";");
-					startIndex=1;
+				int startIndex = 0;
+				String[] names = new String[] { property.getKeyName() };
+				if (-1 != datas[0].indexOf(';')) {
+					names = StringUtils.split(datas[0], ";");
+					startIndex = 1;
 				}
 				properties.addAll(Arrays.asList(names));
 				for (int i = startIndex; i < datas.length; i++) {
 					Object obj = type.newInstance();
 					String[] dataItems = StringUtils.split(datas[i], ";");
 					for (int j = 0; j < properties.size(); j++) {
-						BeanUtils.setProperty(obj, properties.get(j), dataItems[j]);
+						BeanUtils.setProperty(obj, properties.get(j),
+								dataItems[j]);
 					}
 					rs.add((T) obj);
 				}
@@ -114,7 +121,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
 		}
 	}
 
-	public <T> List<T> getData(UserPropertyMeta property, String source) {
+	public <T> List<T> getData(PropertyMeta property, String source) {
 		return unmarshal(property, source);
 	}
 

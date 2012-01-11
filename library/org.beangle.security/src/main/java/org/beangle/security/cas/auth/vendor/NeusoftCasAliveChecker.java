@@ -21,7 +21,7 @@ public class NeusoftCasAliveChecker implements AuthenticationAliveChecker {
 	public boolean check(Authentication auth, HttpServletRequest request) {
 		if (auth instanceof CasAuthentication) {
 			CasAuthentication casAu = (CasAuthentication) auth;
-			String key = (String) casAu.getAssertion().getAttributes().get("caKey");
+			String key = (String) casAu.getAssertion().getTicket();
 			if (null != key) {
 				String text = HttpUtils.getResponseText(StrUtils.concat(config.getCasServer(),
 						config.getCheckAliveUri(), "?", config.getArtifactName(), "=", key));

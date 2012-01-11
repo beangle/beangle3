@@ -58,7 +58,20 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
 			return null;
 		} else {
 			for (UserProperty p : properties) {
-				if (p.getMeta().equals(meta)) return p;
+				if (p.getMeta().equals(meta))
+					return p;
+			}
+		}
+		return null;
+	}
+
+	public UserProperty getProperty(String name) {
+		if (null == properties || properties.isEmpty()) {
+			return null;
+		} else {
+			for (UserProperty p : properties) {
+				if (p.getMeta().getName().equals(name))
+					return p;
 			}
 		}
 		return null;

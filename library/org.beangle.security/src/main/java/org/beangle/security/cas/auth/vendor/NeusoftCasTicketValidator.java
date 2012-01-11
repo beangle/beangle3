@@ -6,24 +6,25 @@ package org.beangle.security.cas.auth.vendor;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.URL;
 import java.util.Map;
 
 import org.beangle.security.cas.validation.AbstractTicketValidator;
 import org.beangle.security.cas.validation.Assertion;
 import org.beangle.security.cas.validation.TicketValidationException;
-import org.beangle.web.util.HttpUtils;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-/**
- * Neusoft custom cas implemention.
+/** Neusoft custom cas implemention.
  * 
- * @author chaostone
- */
+ * @author chaostone */
 public class NeusoftCasTicketValidator extends AbstractTicketValidator {
+
+	public NeusoftCasTicketValidator() {
+		super();
+		setEncoding("GBK");
+	}
 
 	@Override
 	protected Assertion parseResponseFromServer(final String ticket, String response)
@@ -45,14 +46,6 @@ public class NeusoftCasTicketValidator extends AbstractTicketValidator {
 
 	protected final void populateUrlAttributeMap(final Map<String, String> urlParameters) {
 		urlParameters.put("checkAlive", "true");
-	}
-
-	/**
-	 * Retrieves the response from the server by opening a connection and merely reading the
-	 * response.
-	 */
-	protected final String retrieveResponseFromServer(final URL validationUrl, final String ticket) {
-		return HttpUtils.getResponseText(validationUrl, "GBK");
 	}
 
 }

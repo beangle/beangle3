@@ -7,7 +7,7 @@ package org.beangle.ems.security.service;
 import java.util.Collection;
 import java.util.List;
 
-import org.beangle.ems.security.profile.UserPropertyMeta;
+import org.beangle.ems.security.profile.PropertyMeta;
 
 public interface UserDataResolver {
 
@@ -18,7 +18,7 @@ public interface UserDataResolver {
 	 * @param items
 	 * @return
 	 */
-	public String marshal(UserPropertyMeta field, Collection<?> items);
+	public String marshal(PropertyMeta field, Collection<?> items);
 
 	/**
 	 * Convert text to list of objects
@@ -28,5 +28,5 @@ public interface UserDataResolver {
 	 * @param text
 	 * @return
 	 */
-	public <T> List<T> unmarshal(UserPropertyMeta field, String text);
+	public <T> List<T> unmarshal(PropertyMeta field, String text);
 }

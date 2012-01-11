@@ -14,7 +14,8 @@
 
 	<properties>
 		<gemini.version>1.0.0.M1</gemini.version>
-		<logback.version>0.9.28</logback.version>
+		<logback.version>1.0.0</logback.version>
+		<slf4j.version>1.6.4</slf4j.version>
 		<commonlang.version>2.6</commonlang.version>
 		<commoncollections.version>3.2.1</commoncollections.version>
 		<commonbeanutils.version>1.8.3</commonbeanutils.version>

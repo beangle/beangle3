@@ -20,6 +20,8 @@ public interface UserProfile extends Profile {
 
 	public UserProperty getProperty(UserPropertyMeta meta);
 
+	public UserProperty getProperty(String name);
+
 	public User getUser();
 
 }

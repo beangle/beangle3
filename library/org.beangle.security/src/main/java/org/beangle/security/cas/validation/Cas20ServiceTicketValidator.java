@@ -7,7 +7,6 @@ package org.beangle.security.cas.validation;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.beangle.web.util.HttpUtils;
 
 /**
  * @author chaostone
@@ -108,10 +106,4 @@ public class Cas20ServiceTicketValidator extends AbstractTicketValidator {
 			throws TicketValidationException {
 		// nothing to do
 	}
-
-	@Override
-	protected final String retrieveResponseFromServer(final URL validationUrl, final String ticket) {
-		return HttpUtils.getResponseText(validationUrl, hostnameVerifier, getEncoding());
-	}
-
 }

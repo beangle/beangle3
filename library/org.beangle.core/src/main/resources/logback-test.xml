@@ -1,14 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-	<jmxConfigurator/>
-	<!-- 控制台输出日志 -->
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="true">
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<pattern>%d{MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
 		</encoder>
 	</appender>
-	<root>
-		<level value="INFO"/>
-		<appender-ref ref="STDOUT"/>
+	<root level="INFO">  
+		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>
