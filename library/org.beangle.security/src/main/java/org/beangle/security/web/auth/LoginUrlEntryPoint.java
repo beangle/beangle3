@@ -13,15 +13,16 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.beangle.security.core.AuthenticationException;
+import org.beangle.web.url.UrlBuilder;
 import org.beangle.web.util.RedirectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 
-/**
- * <p>
+/** <p>
  * Used by the <code>SecurityEnforcementFilter</code> to commence authentication via the
  * {@link UsernamePasswordAuthenticationFilter}. This object holds the location of the login form,
  * relative to the web app context path, and is used to commence a redirect to that form.
@@ -33,8 +34,7 @@ import org.springframework.beans.factory.InitializingBean;
  * URL. For the forced HTTPS feature to work, the {@link PortMapper} is consulted to determine the
  * HTTP:HTTPS pairs.
  * 
- * @author chaostone
- */
+ * @author chaostone */
 public class LoginUrlEntryPoint implements UrlEntryPoint, InitializingBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginUrlEntryPoint.class);
@@ -47,26 +47,28 @@ public class LoginUrlEntryPoint implements UrlEntryPoint, InitializingBean {
 		Validate.notEmpty(loginUrl, "loginFormUrl must be specified");
 	}
 
-	/**
-	 * Allows subclasses to modify the login form URL that should be applicable
+	/** Allows subclasses to modify the login form URL that should be applicable
 	 * for a given request.
 	 * 
 	 * @param request
-	 *            the request
+	 *        the request
 	 * @param response
-	 *            the response
+	 *        the response
 	 * @param exception
-	 *            the exception
-	 * @return the URL (cannot be null or empty; defaults to {@link #getLoginFormUrl()})
-	 */
+	 *        the exception
+	 * @return the URL (cannot be null or empty; defaults to {@link #getLoginFormUrl()}) */
 	protected String determineUrlToUseForThisRequest(HttpServletRequest request,
 			HttpServletResponse response, AuthenticationException exception) {
-		return getLoginUrl();
+		String originLoginUrl = getLoginUrl();
+		if (originLoginUrl.contains("${goto}")) {
+			UrlBuilder builder= new UrlBuilder(request.getContextPath());
+			builder.scheme(request.getScheme()).serverName(request.getServerName()).port(request.getServerPort()).queryString(request.getQueryString());
+			originLoginUrl = StringUtils.replace(originLoginUrl, "${goto}",builder.buildUrl());
+		}
+		return originLoginUrl;
 	}
 
-	/**
-	 * Performs the redirect (or forward) to the login form URL.
-	 */
+	/** Performs the redirect (or forward) to the login form URL. */
 	public void commence(ServletRequest request, ServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -86,11 +88,9 @@ public class LoginUrlEntryPoint implements UrlEntryPoint, InitializingBean {
 		RedirectUtils.sendRedirect(httpRequest, httpResponse, redirectUrl);
 	}
 
-	/**
-	 * The URL where the <code>AuthenticationProcessingFilter</code> login page
+	/** The URL where the <code>AuthenticationProcessingFilter</code> login page
 	 * can be found. Should be relative to the web-app context path, and include
-	 * a leading <code>/</code>
-	 */
+	 * a leading <code>/</code> */
 	public void setLoginUrl(String loginUrl) {
 		this.loginUrl = loginUrl;
 	}
@@ -99,12 +99,10 @@ public class LoginUrlEntryPoint implements UrlEntryPoint, InitializingBean {
 		return loginUrl;
 	}
 
-	/**
-	 * Tells if we are to do a server side include of the <code>loginFormUrl</code> instead of a 302
+	/** Tells if we are to do a server side include of the <code>loginFormUrl</code> instead of a 302
 	 * redirect.
 	 * 
-	 * @param serverSideRedirect
-	 */
+	 * @param serverSideRedirect */
 	public void setServerSideRedirect(boolean serverSideRedirect) {
 		this.serverSideRedirect = serverSideRedirect;
 	}

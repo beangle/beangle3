@@ -5,6 +5,7 @@
 package org.beangle.spring.config;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.collection.CollectUtils;
@@ -20,6 +21,8 @@ public class BeanConfig {
 		public final Class<?> clazz;
 		public String scope;
 
+		public Map<String,Object> properties=CollectUtils.newHashMap();
+		
 		public Definition(String beanName, Class<?> clazz, String scope) {
 			super();
 			this.beanName = beanName;
@@ -30,6 +33,11 @@ public class BeanConfig {
 				this.scope = scope;
 			}
 		}
+
+		public Map<String, Object> getProperties() {
+			return properties;
+		}
+		
 	}
 
 	public final static class DefinitionBinder {
@@ -79,6 +87,14 @@ public class BeanConfig {
 			return this;
 		}
 
+		public DefinitionBinder property(String property,Object value) {
+			if (null != config.lastAdded) {
+				for (Definition def : config.lastAdded) {
+					def.properties.put(property, value);
+				}
+			}
+			return this;
+		}
 		public DefinitionBinder bind(Class<?>... classes) {
 			config.lastAdded = CollectUtils.newArrayList();
 			for (Class<?> clazz : classes) {

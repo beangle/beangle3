@@ -12,6 +12,7 @@ import org.beangle.security.web.auth.AnonymousFilter;
 import org.beangle.security.web.auth.WebAuthenticationDetailsSource;
 import org.beangle.security.web.auth.logout.SecurityContextLogoutHandler;
 import org.beangle.security.web.auth.preauth.PreauthUserDetailProvider;
+import org.beangle.security.web.auth.preauth.UsernameAliveChecker;
 import org.beangle.security.web.auth.preauth.UsernamePreauthFilter;
 import org.beangle.security.web.auth.preauth.j2ee.RemoteUsernameSource;
 import org.beangle.security.web.context.HttpSessionContextIntegrationFilter;
@@ -19,12 +20,10 @@ import org.beangle.security.web.session.ConcurrentSessionFilter;
 import org.beangle.security.web.session.WebSessioninfoBuilder;
 import org.beangle.spring.config.AbstractBindModule;
 
-/**
- * 权限系统web模块bean定义
+/** 权限系统web模块bean定义
  * 
  * @author chaostone
- * @version $Id: DefaultModule.java Jun 17, 2011 8:01:41 PM chaostone $
- */
+ * @version $Id: DefaultModule.java Jun 17, 2011 8:01:41 PM chaostone $ */
 public class WebModule extends AbstractBindModule {
 
 	@Override
@@ -34,7 +33,7 @@ public class WebModule extends AbstractBindModule {
 
 		// auth bean
 		bind(PreauthUserDetailProvider.class, RemoteUsernameSource.class, UsernamePreauthFilter.class,
-				AnonymousFilter.class, SecurityContextLogoutHandler.class,
+				AnonymousFilter.class, SecurityContextLogoutHandler.class, UsernameAliveChecker.class,
 				WebAuthenticationDetailsSource.class).shortName();
 
 		bind(HttpSessionContextIntegrationFilter.class).shortName();

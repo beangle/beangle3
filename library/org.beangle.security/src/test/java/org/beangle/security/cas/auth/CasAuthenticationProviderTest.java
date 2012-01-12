@@ -102,8 +102,8 @@ public class CasAuthenticationProviderTest {
 		assertEquals("ST-456", newResult.getCredentials());
 	}
 
-	private class MockAuthoritiesPopulator implements UserDetailService<Authentication> {
-		public UserDetail loadDetail(final Authentication token) throws UsernameNotFoundException {
+	private class MockAuthoritiesPopulator implements UserDetailService {
+		public UserDetail loadDetail(final String token) throws UsernameNotFoundException {
 			return makeUserDetailsFromAuthoritiesPopulator();
 		}
 	}

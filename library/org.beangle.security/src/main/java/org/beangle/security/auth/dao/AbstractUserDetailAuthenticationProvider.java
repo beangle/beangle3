@@ -4,6 +4,7 @@
  */
 package org.beangle.security.auth.dao;
 
+import org.apache.commons.lang.StringUtils;
 import org.beangle.security.auth.AccountExpiredException;
 import org.beangle.security.auth.AuthenticationProvider;
 import org.beangle.security.auth.CredentialsExpiredException;
@@ -24,17 +25,28 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 	protected abstract void additionalAuthenticationChecks(UserDetail userDetails,
 			Authentication authentication) throws AuthenticationException;
 
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		// Determine username
-		String username = (authentication.getPrincipal() == null) ? "NONE_PROVIDED" : authentication
-				.getName();
+	/** 从token中找出用户名
+	 * 
+	 * @param authentication
+	 * @return */
+	protected String determinePrincipal(Authentication authentication) {
+		return (authentication.getPrincipal() == null) ? "NONE_PROVIDED" : authentication.getName();
+	}
 
-		UserDetail user = retrieveUser(username, authentication);
+	public Authentication authenticate(Authentication auth) throws AuthenticationException {
+		String username = determinePrincipal(auth);
+		if (StringUtils.isEmpty(username)) {
+			AuthenticationException ex = new AuthenticationException("cannot find username for "
+					+ auth.getPrincipal());
+			ex.setAuthentication(auth);
+			throw ex;
+		}
+		UserDetail user = retrieveUser(username, auth);
 
 		if (null == user) { throw new UsernameNotFoundException(); }
 		preAuthenticationChecker.check(user);
 
-		additionalAuthenticationChecks(user, authentication);
+		additionalAuthenticationChecks(user, auth);
 
 		postAuthenticationChecker.check(user);
 
@@ -44,7 +56,7 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 			principalToReturn = user.getUsername();
 		}
 
-		return createSuccessAuthentication(principalToReturn, authentication, user);
+		return createSuccessAuthentication(principalToReturn, auth, user);
 	}
 
 	protected Authentication createSuccessAuthentication(Object principal, Authentication authentication,
@@ -62,8 +74,7 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 		return forcePrincipalAsString;
 	}
 
-	/**
-	 * Allows subclasses to actually retrieve the <code>UserDetails</code> from
+	/** Allows subclasses to actually retrieve the <code>UserDetails</code> from
 	 * an implementation-specific location, with the option of throwing an
 	 * <code>AuthenticationException</code> immediately if the presented
 	 * credentials are incorrect (this is especially useful if it is necessary
@@ -90,18 +101,16 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 	 * </p>
 	 * 
 	 * @param username
-	 *            The username to retrieve
+	 *        The username to retrieve
 	 * @param authentication
-	 *            The authentication request, which subclasses <em>may</em> need
-	 *            to perform a binding-based retrieval of the <code>UserDetails</code>
+	 *        The authentication request, which subclasses <em>may</em> need
+	 *        to perform a binding-based retrieval of the <code>UserDetails</code>
 	 * @return the user information (never <code>null</code> - instead an
 	 *         exception should the thrown)
 	 * @throws AuthenticationException
-	 *             if the credentials could not be validated (generally a
-	 *             <code>BadCredentialsException</code>, an
-	 *             <code>AuthenticationServiceException</code> or
-	 *             <code>UsernameNotFoundException</code>)
-	 */
+	 *         if the credentials could not be validated (generally a
+	 *         <code>BadCredentialsException</code>, an <code>AuthenticationServiceException</code>
+	 *         or <code>UsernameNotFoundException</code>) */
 	protected abstract UserDetail retrieveUser(String username, Authentication authentication)
 			throws AuthenticationException;
 
@@ -117,14 +126,12 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 		return preAuthenticationChecker;
 	}
 
-	/**
-	 * Sets the policy will be used to verify the status of the loaded <tt>UserDetails</tt>
+	/** Sets the policy will be used to verify the status of the loaded <tt>UserDetails</tt>
 	 * <em>before</em> validation of the credentials takes
 	 * place.
 	 * 
 	 * @param preAuthenticationChecks
-	 *            strategy to be invoked prior to authentication.
-	 */
+	 *        strategy to be invoked prior to authentication. */
 	public void setPreAuthenticationChecks(UserDetailChecker preAuthenticationChecks) {
 		this.preAuthenticationChecker = preAuthenticationChecks;
 	}

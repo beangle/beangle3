@@ -10,14 +10,11 @@ import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.userdetail.UserDetail;
 import org.beangle.security.core.userdetail.UserDetailService;
 
-/**
- * Provider preauthed authentication detail.
+/** Provider preauthed authentication detail.
  * 
  * @author chaostone
  * @version $Id: PreauthUserDetailProvider.java Oct 29, 2010 8:24:15 AM
- *          chaostone $
- */
-@SuppressWarnings("rawtypes")
+ *          chaostone $ */
 public class PreauthUserDetailProvider extends AbstractUserDetailAuthenticationProvider {
 
 	private UserDetailService userDetailService;
@@ -28,11 +25,10 @@ public class PreauthUserDetailProvider extends AbstractUserDetailAuthenticationP
 		// preauthed token,ignore password validation;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected UserDetail retrieveUser(String username, Authentication authentication)
 			throws AuthenticationException {
-		return userDetailService.loadDetail(authentication);
+		return userDetailService.loadDetail(username);
 	}
 
 	public boolean supports(Class<? extends Authentication> authentication) {

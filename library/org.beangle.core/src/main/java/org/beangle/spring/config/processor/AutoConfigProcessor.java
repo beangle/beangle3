@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -68,7 +69,7 @@ public class AutoConfigProcessor implements BeanDefinitionRegistryPostProcessor 
 				if (bindRegistry.contains(beanName)) {
 					logger.warn("Ingore exists bean definition {}", beanName);
 				} else {
-					BeanDefinition def = register(beanName, definition.clazz, definition.scope, registry);
+					BeanDefinition def = register(beanName, definition.clazz, definition.scope,definition.getProperties(), registry);
 					newBeanDefinitions.put(beanName, def);
 				}
 			}
@@ -81,11 +82,16 @@ public class AutoConfigProcessor implements BeanDefinitionRegistryPostProcessor 
 	 * @param registry
 	 * @param definition
 	 */
-	protected BeanDefinition register(String beanName, Class<?> clazz, String scope,
+	protected BeanDefinition register(String beanName, Class<?> clazz, String scope,Map<String,Object> properties,
 			BeanDefinitionRegistry registry) {
 		GenericBeanDefinition def = new GenericBeanDefinition();
 		def.setBeanClass(clazz);
 		def.setScope(scope);
+		MutablePropertyValues mpv = new MutablePropertyValues();
+		for(Map.Entry<String, Object> entry:properties.entrySet()){
+			mpv.addPropertyValue(entry.getKey(), entry.getValue());
+		}
+		def.setPropertyValues(mpv);
 		registry.registerBeanDefinition(beanName, def);
 		bindRegistry.register(clazz, beanName);
 		logger.debug("Register definition {} for {}", beanName, clazz);

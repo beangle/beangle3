@@ -15,7 +15,7 @@ public class DaoAuthenticationProvider extends AbstractUserDetailAuthenticationP
 
 	private PasswordEncoder passwordEncoder;
 
-	private UserDetailService<Authentication> userDetailService;
+	private UserDetailService userDetailService;
 
 	@Override
 	protected void additionalAuthenticationChecks(UserDetail user, Authentication auth)
@@ -26,18 +26,18 @@ public class DaoAuthenticationProvider extends AbstractUserDetailAuthenticationP
 	@Override
 	protected UserDetail retrieveUser(String username, Authentication authentication)
 			throws AuthenticationException {
-		return userDetailService.loadDetail(authentication);
+		return userDetailService.loadDetail(username);
 	}
 
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}
 
-	public UserDetailService<Authentication> getUserDetailService() {
+	public UserDetailService getUserDetailService() {
 		return userDetailService;
 	}
 
-	public void setUserDetailService(UserDetailService<Authentication> userDetailService) {
+	public void setUserDetailService(UserDetailService userDetailService) {
 		this.userDetailService = userDetailService;
 	}
 }

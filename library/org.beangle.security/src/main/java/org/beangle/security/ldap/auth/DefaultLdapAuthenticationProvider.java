@@ -11,16 +11,14 @@ import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.userdetail.UserDetail;
 import org.beangle.security.core.userdetail.UserDetailService;
 
-/**
- * 读取ldap的用户信息<br>
+/** 读取ldap的用户信息<br>
  * 
- * @author chaostone
- */
+ * @author chaostone */
 public class DefaultLdapAuthenticationProvider extends AbstractUserDetailAuthenticationProvider {
 
 	protected LdapValidator ldapValidator;
 
-	private UserDetailService<Authentication> userDetailService;
+	private UserDetailService userDetailService;
 
 	@Override
 	protected void additionalAuthenticationChecks(UserDetail user, Authentication authentication)
@@ -31,10 +29,10 @@ public class DefaultLdapAuthenticationProvider extends AbstractUserDetailAuthent
 	@Override
 	protected UserDetail retrieveUser(String username, Authentication authentication)
 			throws AuthenticationException {
-		return userDetailService.loadDetail(authentication);
+		return userDetailService.loadDetail(username);
 	}
 
-	public void setUserDetailService(UserDetailService<Authentication> userDetailService) {
+	public void setUserDetailService(UserDetailService userDetailService) {
 		this.userDetailService = userDetailService;
 	}
 

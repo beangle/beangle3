@@ -11,7 +11,6 @@ import org.apache.commons.lang.Validate;
 import org.beangle.lang.StrUtils;
 import org.beangle.security.auth.AuthenticationProvider;
 import org.beangle.security.auth.BadCredentialsException;
-import org.beangle.security.auth.UsernamePasswordAuthentication;
 import org.beangle.security.cas.validation.Assertion;
 import org.beangle.security.cas.validation.TicketValidationException;
 import org.beangle.security.cas.validation.TicketValidator;
@@ -40,7 +39,7 @@ import org.springframework.beans.factory.InitializingBean;
  */
 public class CasAuthenticationProvider implements AuthenticationProvider, InitializingBean {
 	private static final Logger logger = LoggerFactory.getLogger(CasAuthenticationProvider.class);
-	private UserDetailService<Authentication> userDetailService;
+	private UserDetailService userDetailService;
 	private UserDetailChecker userDetailChecker;
 	private StatelessTicketCache statelessTicketCache = new NullTicketCache();
 	private String key;
@@ -96,8 +95,7 @@ public class CasAuthenticationProvider implements AuthenticationProvider, Initia
 			final Assertion assertion = ticketValidator.validate(auth.getCredentials().toString(),
 					auth.getLoginUrl());
 			String name = assertion.getPrincipal();
-			final UserDetail userDetail = userDetailService.loadDetail(new UsernamePasswordAuthentication(
-					name, null));
+			final UserDetail userDetail = userDetailService.loadDetail(name);
 			if (null == userDetail) {
 				logger.error("cannot load {}'s detail from system", name);
 				throw new UsernameNotFoundException(StrUtils.concat("user ", name, " not found in system"));
@@ -110,11 +108,11 @@ public class CasAuthenticationProvider implements AuthenticationProvider, Initia
 		}
 	}
 
-	protected UserDetailService<Authentication> getUserDetailService() {
+	protected UserDetailService getUserDetailService() {
 		return userDetailService;
 	}
 
-	public void setUserDetailService(UserDetailService<Authentication> userDetailsService) {
+	public void setUserDetailService(UserDetailService userDetailsService) {
 		this.userDetailService = userDetailsService;
 	}
 

@@ -15,9 +15,13 @@ public final class RedirectUtils {
 
 	public static final void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url)
 			throws IOException {
-		String contextPath = request.getContextPath();
-		String redirectUrl = response.encodeRedirectURL((contextPath.equals("/") ? "" : (contextPath)) + url);
-		response.sendRedirect(redirectUrl);
+		if (!url.startsWith("http")) {
+			String cxtPath = request.getContextPath();
+			String redirectUrl = response.encodeRedirectURL((cxtPath.equals("/") ? "" : (cxtPath)) + url);
+			response.sendRedirect(redirectUrl);
+		} else {
+			response.sendRedirect(url);
+		}
 	}
 
 	public static boolean isValidRedirectUrl(String url) {
