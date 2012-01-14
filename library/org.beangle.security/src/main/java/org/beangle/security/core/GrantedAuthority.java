@@ -27,5 +27,5 @@ public interface GrantedAuthority extends Serializable, Comparable<GrantedAuthor
 	 * @return a representation of the granted authority (or <code>null</code> if the granted
 	 *         authority cannot be expressed as a <code>String</code> with sufficient precision).
 	 */
-	String getAuthority();
+	Object getAuthority();
 }

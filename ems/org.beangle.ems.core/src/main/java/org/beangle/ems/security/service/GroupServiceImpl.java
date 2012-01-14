@@ -39,7 +39,7 @@ public class GroupServiceImpl extends AbstractHierarchyService<GroupBean, Group>
 	public void removeGroup(User manager, List<Group> groups) {
 		List<Object> removed = CollectUtils.newArrayList();
 		for (final Group group : groups) {
-			if (group.getOwner().equals(manager) || userService.isAdmin(manager)) entityDao.remove(group);
+			if (group.getOwner().equals(manager) || userService.isRoot(manager)) entityDao.remove(group);
 		}
 		entityDao.remove(removed);
 	}

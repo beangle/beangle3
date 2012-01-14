@@ -10,7 +10,7 @@ import java.util.Set;
 
 import org.apache.commons.lang.Validate;
 import org.beangle.collection.CollectUtils;
-import org.beangle.ems.security.Group;
+import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.SecurityUtils;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.security.access.AuthorityManager;
@@ -42,11 +42,9 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 
 	private boolean expired = true;
 
-	/**
-	 * 资源是否被授权<br>
+	/** 资源是否被授权<br>
 	 * 1)检查是否是属于公有资源<br>
-	 * 2)检查用户组权限<br>
-	 */
+	 * 2)检查用户组权限<br> */
 	public boolean isAuthorized(Authentication auth, Object resource) {
 		loadResourceNecessary();
 		String resourceName = null;
@@ -60,7 +58,6 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 		SecurityUtils.setResource(resourceName);
 		if (publicResources.contains(resourceName)) { return true; }
 		if (AnonymousAuthentication.class.isAssignableFrom(auth.getClass())) { return false; }
-		if (authorityService.getUserService().isAdmin(((UserToken) auth.getPrincipal()).getId())) return true;
 		if (protectedResources.contains(resourceName)) { return true; }
 		Collection<? extends GrantedAuthority> authories = auth.getAuthorities();
 		for (GrantedAuthority authorty : authories) {
@@ -74,13 +71,11 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 		return false;
 	}
 
-	/**
-	 * 判断组内是否含有该资源
+	/** 判断组内是否含有该资源
 	 * 
 	 * @param authority
 	 * @param resource
-	 * @return
-	 */
+	 * @return */
 	private boolean isAuthorizedByGroup(GrantedAuthority authority, Object resource) {
 		Set<?> actions = authorities.get(authority);
 		if (null == actions) {
@@ -90,7 +85,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 	}
 
 	public Set<?> refreshGroupAuthorities(GrantedAuthority group) {
-		Set<?> actions = authorityService.getResourceNamesByGroup(group.getAuthority());
+		Set<?> actions = authorityService.getResourceNamesByGroup((Long)group.getAuthority());
 		authorities.put(group, actions);
 		logger.debug("add authorities for group:{} resource:{}", group, actions);
 		return actions;
@@ -105,11 +100,9 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 		}
 	}
 
-	/**
-	 * 加载三类资源
-	 */
+	/** 加载三类资源 */
 	public void refreshCache() {
-		publicResources = authorityService.getResourceNamesByGroup(Group.ANONYMOUS_ID);
+		publicResources = authorityService.getResourceNamesByScope(Resource.Scope.PUBLIC);
 		if (null != authenticationEntryPoint && authenticationEntryPoint instanceof UrlEntryPoint) {
 			UrlEntryPoint fep = (UrlEntryPoint) authenticationEntryPoint;
 			String loginResource = authorityService.extractResource(fep.getLoginUrl());
@@ -117,7 +110,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 				publicResources.add(loginResource);
 			}
 		}
-		protectedResources = authorityService.getResourceNamesByGroup(Group.ANYONE_ID);
+		protectedResources = authorityService.getResourceNamesByScope(Resource.Scope.PUBLIC);
 		expired = false;
 	}
 

@@ -109,7 +109,7 @@ public interface UserService {
 	 * @param user
 	 * @return
 	 */
-	public boolean isAdmin(User user);
+	public boolean isRoot(User user);
 
 	/**
 	 * 是否是超级管理员
@@ -117,6 +117,6 @@ public interface UserService {
 	 * @param userId
 	 * @return
 	 */
-	public boolean isAdmin(Long userId);
+	public boolean isRoot(Long userId);
 
 }

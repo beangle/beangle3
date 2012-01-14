@@ -15,4 +15,4 @@
 		<menu entry="/system/info" name="Security Management" title="系统信息" parent="System" remark="查看和设置系统信息"/>
 		<menu entry="/business/log" name="Business Monitor" title="业务监控" parent="System" remark="查看和设置业务状态信息"/>
 	</profile>
-<settings>
+</settings>

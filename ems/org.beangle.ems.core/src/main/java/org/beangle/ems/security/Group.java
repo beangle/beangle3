@@ -22,7 +22,6 @@ public interface Group extends LongIdTimeEntity, HierarchyEntity<Group,Long>, Co
 	/** 所有用户所在的公共组id */
 	public static final long ANYONE_ID = 2;
 
-//	public static final long GROUP_ID_
 	/**
 	 * 代码
 	 * 

@@ -39,17 +39,17 @@ public interface AuthorityService {
 	/**
 	 * 按照用户组查找资源
 	 * 
-	 * @param groupName
+	 * @param groupId
 	 * @return
 	 */
-	public Set<String> getResourceNamesByGroup(String groupName);
+	public Set<String> getResourceNamesByGroup(Long groupId);
 	/**
 	 * 按照用户组查找资源
 	 * 
 	 * @param groupId
 	 * @return
 	 */
-	public Set<String> getResourceNamesByGroup(Long groupId);
+	public Set<String> getResourceNamesByScope(Resource.Scope groupId);
 	/**
 	 * 用户组内对应的资源
 	 * 

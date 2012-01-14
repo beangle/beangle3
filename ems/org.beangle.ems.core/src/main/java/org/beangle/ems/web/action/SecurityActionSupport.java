@@ -37,7 +37,7 @@ public abstract class SecurityActionSupport extends EntityDrivenAction implement
 	}
 
 	protected boolean isAdmin() {
-		return authorityService.getUserService().isAdmin(getUserId());
+		return authorityService.getUserService().isRoot(getUserId());
 	}
 
 	protected List<Restriction> getRestrictions() {

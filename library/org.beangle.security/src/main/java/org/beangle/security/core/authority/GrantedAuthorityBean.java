@@ -11,30 +11,27 @@ import org.apache.commons.lang.Validate;
 import org.beangle.collection.CollectUtils;
 import org.beangle.security.core.GrantedAuthority;
 
-/**
- * Basic concrete implementation of a {@link GrantedAuthority}.
- */
+/** Basic concrete implementation of a {@link GrantedAuthority}. */
 
 public class GrantedAuthorityBean implements GrantedAuthority, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private String role;
+	private Object role;
 
-	public GrantedAuthorityBean(String role) {
-		Validate.notEmpty(role, "A granted authority textual representation is required");
+	public GrantedAuthorityBean(Object role) {
+		Validate.notNull(role, "A granted authority textual representation is required");
 		this.role = role;
 	}
 
-	public static List<GrantedAuthority> build(String... roles) {
+	public static List<GrantedAuthority> build(Object... roles) {
 		List<GrantedAuthority> authorities = CollectUtils.newArrayList(roles.length);
-		for (String role : roles) {
+		for (Object role : roles) {
 			authorities.add(new GrantedAuthorityBean(role));
 		}
 		return authorities;
 	}
 
 	public boolean equals(Object obj) {
-		// if (obj instanceof String) { return obj.equals(this.role); }
 		if (obj instanceof GrantedAuthority) {
 			GrantedAuthority attr = (GrantedAuthority) obj;
 			return this.role.equals(attr.getAuthority());
@@ -42,7 +39,7 @@ public class GrantedAuthorityBean implements GrantedAuthority, Serializable {
 		return false;
 	}
 
-	public String getAuthority() {
+	public Object getAuthority() {
 		return this.role;
 	}
 
@@ -51,14 +48,19 @@ public class GrantedAuthorityBean implements GrantedAuthority, Serializable {
 	}
 
 	public String toString() {
-		return this.role;
+		return role.toString();
 	}
 
+	@SuppressWarnings("unchecked")
 	public int compareTo(GrantedAuthority o) {
 		if (o != null) {
-			String rhsRole = ((GrantedAuthority) o).getAuthority();
+			Object rhsRole = o.getAuthority();
 			if (rhsRole == null) { return -1; }
-			return role.compareTo(rhsRole);
+			if (role instanceof Comparable) {
+				return ((Comparable<Object>) role).compareTo(rhsRole);
+			} else {
+				throw new RuntimeException("Cannot compare GrantedAuthorityBean using role:" + role);
+			}
 		}
 		return -1;
 	}

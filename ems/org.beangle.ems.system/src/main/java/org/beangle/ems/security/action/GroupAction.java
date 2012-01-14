@@ -36,9 +36,7 @@ public class GroupAction extends SecurityActionSupport {
 	}
 
 	protected void editSetting(Entity<?> entity) {
-		OqlBuilder<Group> query = OqlBuilder.from(Group.class, "g");
-		query.where("g.id not in (:reservedIds) ",new Long[]{Group.ANONYMOUS_ID,Group.ANYONE_ID});
-		List<Group> groups = entityDao.search(query);
+		List<Group> groups = entityDao.getAll(Group.class);
 		Group group = (Group) entity;
 		groups.removeAll(HierarchyEntityUtils.getFamily(group));
 		put("parents", groups);

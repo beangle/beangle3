@@ -33,11 +33,11 @@ import org.beangle.security.auth.Principals;
  */
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
-	public boolean isAdmin(User user) {
+	public boolean isRoot(User user) {
 		return Principals.ROOT.equals(user.getId());
 	}
 
-	public boolean isAdmin(Long userId) {
+	public boolean isRoot(Long userId) {
 		return Principals.ROOT.equals(userId);
 	}
 
@@ -107,11 +107,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	public List<GroupMember> getGroupMembers(User user, GroupMember.Ship ship) {
-		if (isAdmin(user) && !ObjectUtils.equals(ship, GroupMember.Ship.MEMBER)) {
+		if (isRoot(user) && !ObjectUtils.equals(ship, GroupMember.Ship.MEMBER)) {
 			List<GroupMember> members = CollectUtils.newArrayList();
-			OqlBuilder<Group> builder = OqlBuilder.from(Group.class, "g");
-			builder.where("g.id not in(:groupIds)", new Long[] { Group.ANONYMOUS_ID, Group.ANYONE_ID });
-			List<Group> groups = entityDao.search(builder);
+			List<Group> groups = entityDao.getAll(Group.class);
 			for (Group group : groups) {
 				GroupMemberBean gmb = new GroupMemberBean(group, user, GroupMember.Ship.MEMBER);
 				gmb.setGranter(true);
@@ -148,7 +146,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	}
 
 	public boolean isManagedBy(User manager, User user) {
-		return (isAdmin(manager) || manager.equals(user.getCreator()));
+		return (isRoot(manager) || manager.equals(user.getCreator()));
 	}
 
 }

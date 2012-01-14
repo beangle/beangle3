@@ -6,69 +6,61 @@ package org.beangle.ems.security;
 
 import org.beangle.model.pojo.LongIdEntity;
 
-/**
- * 系统资源.<br>
+/** 系统资源.<br>
  * 
- * @author chaostone 2008-7-28
- */
+ * @author chaostone 2008-7-28 */
 public interface Resource extends LongIdEntity {
 
-	/**
-	 * 资源名称
+	/** 资源名称
 	 * 
-	 * @return
-	 */
+	 * @return */
 	public String getName();
 
-	/**
-	 * 资源名称
+	/** 资源名称
 	 * 
-	 * @param name
-	 */
+	 * @param name */
 	public void setName(String name);
 
-	/**
-	 * 资源标题
+	/** 资源标题
 	 * 
-	 * @return
-	 */
+	 * @return */
 	public String getTitle();
 
-	/**
-	 * 资源标题
+	/** 资源标题
 	 * 
-	 * @param title
-	 */
+	 * @param title */
 	public void setTitle(String title);
 
-	/**
-	 * 返回资源描述
+	/** 返回资源描述
 	 * 
-	 * @return
-	 */
+	 * @return */
 	public String getRemark();
 
-	/**
-	 * 资源状态
+	/** 资源状态
 	 * 
-	 * @return
-	 */
+	 * @return */
 	public boolean isEnabled();
 
-	/**
-	 * 设置资源状态
+	/** 设置资源状态
 	 * 
 	 * @param IsActive
-	 * @return
-	 */
+	 * @return */
 	public void setEnabled(boolean isEnabled);
 
-	public static class Scope {
+	public Scope getScope();
+
+	public static enum Scope {
 		/** 不受保护的公共资源 */
-		public static final int PUBLIC = 0;
+		PUBLIC(0),
 		/** 受保护的公有资源 */
-		public static final int PROTECTED = 1;
+		PROTECTED(1),
 		/** 受保护的私有资源 */
-		public static final int PRIVATE = 2;
+		PRIVATE(2);
+		int value;
+
+		private Scope(int value) {
+			this.value = value;
+		}
 	}
+
 }

@@ -183,7 +183,7 @@ public class UserAction extends SecurityActionSupport {
 		}
 		put("memberMap", memberMap);
 		put("members", members);
-		put("isadmin", userService.isAdmin(user));
+		put("isadmin", userService.isRoot(user));
 		put("isme", getUserId().equals(user.getId()));
 	}
 

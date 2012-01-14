@@ -31,7 +31,7 @@ public class DaoUserDetailServiceImpl extends BaseServiceImpl implements UserDet
 			List<GrantedAuthorityBean> authorities = CollectUtils.newArrayList(groups.size());
 			Group defaultGroup = null;
 			for (Group g : groups) {
-				authorities.add(new GrantedAuthorityBean(g.getName()));
+				authorities.add(new GrantedAuthorityBean(g.getId()));
 				if (groupProfileService.hasProfile(g)) {
 					defaultGroup = g;
 				}

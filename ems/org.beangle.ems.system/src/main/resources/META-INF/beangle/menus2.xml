@@ -28,4 +28,4 @@
 			<menu entry="/avatar/board" name="Avatar Management" title="用户头像" parent="Security Management" remark="上传、下载、浏览用户头像"/>
 		</profile>
 	</profiles>
-<settings>
+</settings>

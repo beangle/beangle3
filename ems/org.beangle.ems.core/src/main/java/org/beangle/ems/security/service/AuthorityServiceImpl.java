@@ -20,11 +20,9 @@ import org.beangle.model.entity.Model;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
 
-/**
- * 授权信息的服务实现类
+/** 授权信息的服务实现类
  * 
- * @author dell,chaostone 2005-9-26
- */
+ * @author dell,chaostone 2005-9-26 */
 public class AuthorityServiceImpl extends BaseServiceImpl implements AuthorityService {
 
 	protected UserService userService;
@@ -83,26 +81,21 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 		return CollectUtils.newArrayList(resources);
 	}
 
-	/**
-	 * 找到该组内激活的资源id
-	 */
+	/** 找到该组内激活的资源id */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public Set<String> getResourceNamesByGroup(String group) {
-		String hql = "select m.name from " + Group.class.getName() + " as r join r.authorities as a"
-				+ " join a.resource as m where  r.name = :groupName and m.enabled = true";
-		OqlBuilder query = OqlBuilder.hql(hql).param("groupName", group).cacheable();
+	public Set<String> getResourceNamesByGroup(Long groupId) {
+		String hql = "select a.resource.name from " + Authority.class.getName()
+				+ " as a where a.group.id= :groupId and a.resource.enabled = true";
+		OqlBuilder query = OqlBuilder.hql(hql).param("groupId", groupId).cacheable();
 		return (Set<String>) new HashSet(entityDao.search(query));
 	}
 
-	/**
-	 * 找到该组内激活的资源id
-	 */
+	/** 找到该组内激活的资源id */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public Set<String> getResourceNamesByGroup(Long groupId) {
-		String hql = "select m.name from " + Group.class.getName() + " as r join r.authorities as a"
-				+ " join a.resource as m where  r.id = :groupId and m.enabled = true";
-		OqlBuilder query = OqlBuilder.hql(hql).param("groupId", groupId).cacheable();
-		return (Set<String>) new HashSet(entityDao.search(query));
+	public Set<String> getResourceNamesByScope(Resource.Scope scope) {
+		OqlBuilder builder = OqlBuilder.from(Resource.class, "r").where("r.scope=:scope", scope)
+				.select("r.name").cacheable();
+		return (Set<String>) new HashSet(entityDao.search(builder));
 	}
 
 	public void authorize(Group group, Set<Resource> resources) {
@@ -155,9 +148,7 @@ public class AuthorityServiceImpl extends BaseServiceImpl implements AuthoritySe
 		return entityDao.search(builder);
 	}
 
-	/**
-	 * 查询用户组对应的模块
-	 */
+	/** 查询用户组对应的模块 */
 	public List<Resource> getResources(Group group) {
 		String hql = "select distinct m from " + Group.class.getName() + " as r join r.authorities as a"
 				+ " join a.resource as m where  r.id = :groupId and m.enabled = true";

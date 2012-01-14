@@ -7,6 +7,7 @@ package org.beangle.ems.security.model;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -49,6 +50,11 @@ public class ResourceBean extends LongIdObject implements Resource {
 	@Size(max = 100)
 	private String remark;
 
+	/** 资源访问范围 */
+	@NotNull
+	@Enumerated
+	private Scope scope = Scope.PRIVATE;
+
 	/** 模块是否可用 */
 	@NotNull
 	private boolean enabled = true;
@@ -89,9 +95,16 @@ public class ResourceBean extends LongIdObject implements Resource {
 		return StrUtils.concat(name, "[", title, "]");
 	}
 
+	public Scope getScope() {
+		return scope;
+	}
+
+	public void setScope(Scope scope) {
+		this.scope = scope;
+	}
+
 	public String toString() {
 		return new ToStringBuilder(this).append("name", this.name).append("id", this.id)
 				.append("remark", this.remark).toString();
 	}
-
 }
