@@ -52,13 +52,11 @@ object BeangleBuild extends Build {
 
   val commonDeps= Seq (slf4j,slf4jJcl,junit,scalatest) 
 
-  lazy val root = Project("root", file(".")) aggregate(library)
-
-  lazy val library: Project = Project("library", file("library")) aggregate(core)
+  lazy val library: Project = Project("library", file(".")) aggregate(core)
 
   lazy val core: Project = Project(
     "core",
-    file("library/org.beangle.core"),
+    file("org.beangle.core"),
     settings=buildSettings ++ Seq(libraryDependencies ++= commonDeps)
   )
 }

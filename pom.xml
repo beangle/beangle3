@@ -1,33 +1,153 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.beangle</groupId>
+		<artifactId>beangle</artifactId>
+		<version>3</version>
+		<relativePath>../../beangle/pom.xml</relativePath>
+	</parent>
 	<groupId>org.beangle</groupId>
-	<artifactId>beangle-aggregator</artifactId>
-	<version>3.0.0-SNAPSHOT</version>
+	<artifactId>beangle-library-parent</artifactId>
 	<packaging>pom</packaging>
-	<name>Beangle Aggregator</name>
-	<description>Aggregator of the Beangle modules.</description>
+	<version>3.0.0-SNAPSHOT</version>
+	<name>Beangle Library Parent</name>
+
+	<properties>
+		<logback.version>0.9.28</logback.version>
+		<h2.version>1.3.148</h2.version>
+		<mockito.version>1.8.5</mockito.version>
+	</properties>
 
 	<modules>
-		<module>parent</module>
-		<module>library</module>
-		<!--
-		<module>notification</module>
-		<module>struts2</module>
-		<module>security</module>
-		<module>ems</module>
-		<module>emsapp</module>
+		<module>org.beangle.core</module>
+		<!--<module>org.beangle.security</module>
+		<module>org.beangle.database</module>
+		<module>org.beangle.strut2</module>
+		<module>org.beangle.notification</module>
 		-->
 	</modules>
-	<build>
+
+	<dependencyManagement>
+		<dependencies>
+			<!--beangle-->
+			<dependency>
+				<groupId>org.beangle</groupId>
+				<artifactId>beangle-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>${commonlang.version}</version>
+			</dependency>
+			<!-- jdbc driver -->
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>${h2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.10</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.scalatest</groupId>
+			<artifactId>scalatest_2.9.1</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<reporting>
 		<plugins>
 			<plugin>
+				<groupId>org.codehaus.mojo</groupId>	
+				<artifactId>cobertura-maven-plugin</artifactId> 
+				<version>2.2</version> 
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.4</version>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.0-beta-3</version>
 				<configuration>
-					<skip>true</skip>
+					<locales>zh_CN</locales>
+					<outputEncoding>UTF-8</outputEncoding>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.1.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.5</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<aggregate>true</aggregate>
+					<inputEncoding>UTF-8</inputEncoding>
+					<outputEncoding>UTF-8</outputEncoding>
+					<docTitle>Beangle ${project.version} Cross Reference</docTitle>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<rulesets>
+						<ruleset>/rulesets/basic.xml</ruleset>
+						<ruleset>/rulesets/imports.xml</ruleset>
+						<ruleset>/rulesets/unusedcode.xml</ruleset>
+						<ruleset>/rulesets/codesize.xml</ruleset>
+						<ruleset>/rulesets/clone.xml</ruleset>
+						<ruleset>/rulesets/coupling.xml</ruleset>
+						<ruleset>/rulesets/strings.xml</ruleset>
+						<!--<ruleset>/rulesets/naming.xml</ruleset>-->
+						<ruleset>/rulesets/logging-java.xml</ruleset>
+						<ruleset>/rulesets/logging-jakarta-commons.xml</ruleset>
+						<!--<ruleset>/rulesets/optimizations.xml</ruleset>-->
+						
+						<ruleset>/rulesets/braces.xml</ruleset>
+						<ruleset>/rulesets/design.xml</ruleset>
+						<!--<ruleset>/rulesets/javabeans.xml</ruleset>-->
+						<ruleset>/rulesets/strictexception.xml</ruleset>
+						<!--<ruleset>/rulesets/controversial.xml</ruleset>
+						<ruleset>/rulesets/finalizers.xml</ruleset>-->
+					</rulesets>
+					<reportSet>
+						<reports>
+							<report>pmd</report>
+							<report>cpd</report>
+						</reports>
+					</reportSet>
+					<linkXref>true</linkXref>
+					<minimumTokens>100</minimumTokens>
+					<targetJdk>1.5</targetJdk>
+				</configuration>
+			</plugin>
+			<plugin>
+			        <groupId>org.codehaus.mojo</groupId>
+		        	<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.3</version>
+		      		<configuration>
+	                		<instrumentation>
+                        		<excludes>
+                                		<exclude>**/model/**/*.class</exclude>
+                       		 </excludes>
+	                		</instrumentation>
+		        	</configuration>
+			</plugin>
 		</plugins>
-	</build>
+	</reporting>
 </project>
