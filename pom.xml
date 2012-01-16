@@ -1,5 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 	<groupId>org.beangle</groupId>
 	<artifactId>beangle-parent</artifactId>
 	<packaging>pom</packaging>
@@ -15,12 +20,20 @@
 	The Beangle Software provides agile java/jvm based scaffold and toolkits.
 	</description>
 
+	<url>https://github.com/beangle/library</url>
+
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License</name>
 			<url>http://www.gnu.org/licenses/lgpl.txt</url>
 		</license>
 	</licenses>
+
+	<scm>
+		<connection>scm:git:git://github.com/beangle/library.git</connection>
+		<developerConnection>scm:git:git@github.com:beangle/library.git</developerConnection>
+		<url>git@github.com:beangle/library.git</url>
+	</scm>
 
 	<developers>
 		<developer>
@@ -34,23 +47,16 @@
 			</roles>
 		</developer>
 	</developers>
-		<organization>
-		<name>The Beangle Software Group</name>
-		<url>https://github.com/beangle/beangle-core</url>
+	<organization>
+		<name>The Beangle Software</name>
+		<url>https://github.com/beangle/beangle</url>
 	</organization>
 
-	<url>https://github.com/beangle/beangle-core</url>
 	
 	<issueManagement>
 		<system>github</system>
 		<url>https://github.com/beangle/beangle-core/issues</url>
 	</issueManagement>
-
-	<scm>
-		<connection>scm:git:git://github.com/beangle/beangle.git</connection>
-		<developerConnection>scm:git:git@github.com:beangle/beangle.git</developerConnection>
-		<url>https://github.com/beangle/beangle</url>
-	</scm>
 
 	<properties>
 		<slf4j.version>1.6.4</slf4j.version>
@@ -70,19 +76,6 @@
 		<ehcache.version>2.4.1</ehcache.version>
 		<poi.version>3.8-beta3</poi.version>
 	</properties>
-
-	<distributionManagement>
-		<repository>
-			<id>beangle.release</id>
-			<name>Beangle Releases</name>
-			<url>svn:https://beangle.googlecode.com/svn/maven/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>beangle.snapshot</id>
-			<name>Beangle Snapshots</name>
-			<url>svn:https://beangle.googlecode.com/svn/maven/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<dependencyManagement>
 		<dependencies>
@@ -610,4 +603,51 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+		<build>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</build>
+		</profile>
+	</profiles>
 </project>
