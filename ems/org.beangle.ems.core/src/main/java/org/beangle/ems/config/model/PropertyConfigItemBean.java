@@ -21,19 +21,19 @@ public class PropertyConfigItemBean extends LongIdObject {
 	private static final long serialVersionUID = 1L;
 
 	@NotNull
-	@Size(max = 50)
+	@Size(max = 100)
 	private String name;
 
 	@NotNull
-	@Size(max = 200)
+	@Size(max = 500)
 	private String value;
 
 	@NotNull
-	@Size(max = 200)
+	@Size(max = 500)
 	private String description;
 
 	@NotNull
-	@Size(max = 200)
+	@Size(max = 500)
 	private String type;
 
 	public String getDescription() {
