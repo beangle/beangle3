@@ -123,10 +123,16 @@ public abstract class UIBean extends Component {
 		return req.getRequestURI();
 	}
 
+	private static final String Number_Fmt = "{0,number,#.##}";
+
 	protected Object getValue(Object obj, String property) {
 		stack.push(obj);
 		try {
-			return stack.findValue(property);
+                   Object value = stack.findValue(property);
+                   if(value instanceof Number) {
+                       return MessageFormat.format(Number_Fmt, value);
+                   }
+                   return value;
 		} finally {
 			stack.pop();
 		}
