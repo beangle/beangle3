@@ -3,12 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-
-	<bean id="autoConfigProcessor" class="org.beangle.spring.config.processor.AutoConfigProcessor" />
-
-	<bean id="reconfigProcessor" class="org.beangle.spring.config.processor.ReconfigProcessor">
+	<bean id="spring.configProcessor" class="org.beangle.config.spring.SpringConfigProcessor">
 		<property name="resource">
-			<bean class="org.beangle.spring.config.ConfigResource">
+			<bean class="org.beangle.config.spring.SpringConfigResource">
 				<property name="locations" value="classpath*:spring-config.xml" />
 			</bean>
 		</property>

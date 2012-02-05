@@ -20,7 +20,7 @@ public class HibernateEntityDaoTest extends ConfigurationTest {
 		// SqlQuery("SELECT table_name FROM INFORMATION_SCHEMA.TABLES"));
 		entityDao
 				.searchHQLQuery("from " + Employer.class.getName()
-						+ " where name.firstName=? and contractInfo.add1=?", new Object[] { "john",
+						+ " as emp where emp.name.firstName=? and emp.contractInfo.add1=?", new Object[] { "john",
 						"najing street" });
 	}
 

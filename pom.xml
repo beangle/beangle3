@@ -69,12 +69,13 @@
 		<h2.version>1.3.148</h2.version>
 		<testng.version>5.14.7</testng.version>
 		<mockito.version>1.8.5</mockito.version>
-		<spring.version>3.0.5.RELEASE</spring.version>
-		<hibernate.version>3.6.1.Final</hibernate.version>
-		<hibernate.annotation.version>3.2.0-1.Final</hibernate.annotation.version>
-		<hibernate.validate.version>4.1.0.Final</hibernate.validate.version>		
-		<ehcache.version>2.4.1</ehcache.version>
-		<poi.version>3.8-beta3</poi.version>
+		<spring.version>3.1.0.RELEASE</spring.version>
+		<hibernate.version>4.0.1.Final</hibernate.version>
+		<hibernate.annotation.version>4.1.0.Final</hibernate.annotation.version>
+		<hibernate.validator.version>4.2.0.Final</hibernate.validator.version>
+		<javassist.version>3.15.0-GA</javassist.version>
+		<ehcache.version>2.5.1</ehcache.version>
+		<poi.version>3.8-beta5</poi.version>
 	</properties>
 
 	<dependencyManagement>
@@ -310,19 +311,24 @@
 				</exclusions>
 			</dependency>
 			<dependency>
-				<groupId>org.beangle</groupId>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-commons-annotations</artifactId>
 				<version>${hibernate.annotation.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
-				<version>${hibernate.validate.version}</version>
+				<version>${hibernate.validator.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>javassist</groupId>
+				<groupId>org.javassist</groupId>
 				<artifactId>javassist</artifactId>
-				<version>3.12.0.GA</version>
+				<version>${javassist.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -361,11 +367,11 @@
 			<artifactId>commons-lang</artifactId>
 		</dependency>
 		<dependency>
-	        <groupId>commons-logging</groupId>
-	        <artifactId>commons-logging</artifactId>
-	        <version>99.0-does-not-exist</version>
-	        <scope>test</scope>
-        </dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>99.0-does-not-exist</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -377,10 +383,12 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>

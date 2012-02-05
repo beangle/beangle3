@@ -4,6 +4,7 @@
  */
 package org.beangle.security;
 
+import org.beangle.context.inject.AbstractBindModule;
 import org.beangle.security.auth.dao.DaoAuthenticationProvider;
 import org.beangle.security.auth.encoding.DigestPasswordEncoder;
 import org.beangle.security.core.session.category.DbCategorySessionController;
@@ -11,7 +12,6 @@ import org.beangle.security.core.session.category.SessioninfoCleaner;
 import org.beangle.security.core.session.impl.DbAccessLogger;
 import org.beangle.security.core.session.impl.DbSessionRegistry;
 import org.beangle.security.core.session.impl.MemSessionRegistry;
-import org.beangle.spring.config.AbstractBindModule;
 
 /**
  * @author chaostone

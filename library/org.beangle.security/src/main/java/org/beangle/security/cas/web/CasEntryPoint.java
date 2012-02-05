@@ -16,13 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.beangle.bean.Initializing;
 import org.beangle.security.cas.CasConfig;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.userdetail.UsernameNotFoundException;
 import org.beangle.security.web.AuthenticationEntryPoint;
-import org.springframework.beans.factory.InitializingBean;
 
-/** Used by the <code>ExceptionTranslationFilter</code> to commence
+/**
+ * Used by the <code>ExceptionTranslationFilter</code> to commence
  * authentication via the JA-SIG Central Authentication Service (CAS).
  * <p>
  * The user's browser will be redirected to the JA-SIG CAS enterprise-wide login page. This page is
@@ -32,8 +33,9 @@ import org.springframework.beans.factory.InitializingBean;
  * {@link CasPreauthFilter}, which will validate the CAS login was successful.
  * 
  * @author chaostone
- * @version $Id: CasProcessingFilterEntryPoint.java $ */
-public class CasEntryPoint implements AuthenticationEntryPoint, InitializingBean {
+ * @version $Id: CasProcessingFilterEntryPoint.java $
+ */
+public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
 
 	private CasConfig config;
 
@@ -46,7 +48,7 @@ public class CasEntryPoint implements AuthenticationEntryPoint, InitializingBean
 		this.config = config;
 	}
 
-	public void afterPropertiesSet() throws Exception {
+	public void init() throws Exception {
 		Validate.notNull(this.config, "cas config must be specified");
 	}
 
@@ -66,7 +68,8 @@ public class CasEntryPoint implements AuthenticationEntryPoint, InitializingBean
 		}
 	}
 
-	/** Constructs a service url from the HttpServletRequest or from the given
+	/**
+	 * Constructs a service url from the HttpServletRequest or from the given
 	 * serviceUrl. Prefers the serviceUrl provided if both a serviceUrl and a
 	 * serviceName.
 	 * 
@@ -82,10 +85,11 @@ public class CasEntryPoint implements AuthenticationEntryPoint, InitializingBean
 	 *        the artifact parameter name to remove (i.e. ticket)
 	 * @param encode
 	 *        whether to encode the url or not (i.e. Jsession).
-	 * @return the service url to use. */
-	public static String constructServiceUrl(final HttpServletRequest request, final HttpServletResponse response,
-			final String service, final String serverName, final String artifactParameterName,
-			final boolean encode) {
+	 * @return the service url to use.
+	 */
+	public static String constructServiceUrl(final HttpServletRequest request,
+			final HttpServletResponse response, final String service, final String serverName,
+			final String artifactParameterName, final boolean encode) {
 		if (StringUtils.isNotBlank(service)) { return encode ? response.encodeURL(service) : service; }
 
 		final StringBuilder buffer = new StringBuilder();
@@ -125,14 +129,16 @@ public class CasEntryPoint implements AuthenticationEntryPoint, InitializingBean
 		return returnValue;
 	}
 
-	/** Constructs the URL to use to redirect to the CAS server.
+	/**
+	 * Constructs the URL to use to redirect to the CAS server.
 	 * 
 	 * @param casServerLoginUrl the CAS Server login url.
 	 * @param serviceParameterName the name of the parameter that defines the service.
 	 * @param serviceUrl the actual service's url.
 	 * @param renew whether we should send renew or not.
 	 * @param gateway where we should send gateway or not.
-	 * @return the fully constructed redirect url. */
+	 * @return the fully constructed redirect url.
+	 */
 	public String constructRedirectUrl(final String casServerLoginUrl, final String serviceParameterName,
 			final String serviceUrl, final boolean renew, final boolean gateway) {
 		try {

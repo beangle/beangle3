@@ -40,7 +40,7 @@ public class DefaultNotifictionTaskTest {
 	}
 
 	public void testMail() throws MessagingException {
-		JavaMailSenderImpl mailSender = new org.springframework.mail.javamail.JavaMailSenderImpl();
+		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		mailSender.setHost("localhost");
 		mailSender.setUsername("user1");
 		mailSender.setPassword("password");

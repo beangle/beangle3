@@ -22,9 +22,6 @@ import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.web.filter.GenericHttpFilterBean;
 import org.beangle.web.util.RedirectUtils;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.ApplicationEventPublisherAware;
 
 /**
  * Abstract processor of browser-based HTTP-based authentication requests.
@@ -97,14 +94,11 @@ import org.springframework.context.ApplicationEventPublisherAware;
  * @author chaostone
  * @version $Id: AbstractProcessingFilter.java 3280 2008-09-12 14:57:21Z $
  */
-public abstract class AbstractAuthenticationFilter extends GenericHttpFilterBean implements InitializingBean,
-		ApplicationEventPublisherAware {
+public abstract class AbstractAuthenticationFilter extends GenericHttpFilterBean {
 
 	public static final String SECURITY_SAVED_REQUEST_KEY = "BEANGLE_SECURITY_SAVED_REQUEST_KEY";
 
 	public static final String SECURITY_LAST_EXCEPTION_KEY = "BEANGLE_SECURITY_LAST_EXCEPTION";
-
-	protected ApplicationEventPublisher eventPublisher;
 
 	protected AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
 
@@ -163,11 +157,11 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilterBean
 	 * Performs actual authentication.
 	 * 
 	 * @param request
-	 *            from which to extract parameters and perform the
-	 *            authentication
+	 *        from which to extract parameters and perform the
+	 *        authentication
 	 * @return the authenticated user
 	 * @throws AuthenticationException
-	 *             if authentication fails
+	 *         if authentication fails
 	 */
 	public abstract Authentication attemptAuthentication(HttpServletRequest request)
 			throws AuthenticationException;
@@ -220,9 +214,9 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilterBean
 	 * </p>
 	 * 
 	 * @param request
-	 *            as received from the filter chain
+	 *        as received from the filter chain
 	 * @param response
-	 *            as received from the filter chain
+	 *        as received from the filter chain
 	 * @return <code>true</code> if the filter should attempt authentication, <code>false</code>
 	 *         otherwise
 	 */
@@ -367,10 +361,6 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilterBean
 		this.continueChainBeforeSuccessfulAuthentication = continueChainBeforeSuccessfulAuthentication;
 	}
 
-	public void setApplicationEventPublisher(ApplicationEventPublisher eventPublisher) {
-		this.eventPublisher = eventPublisher;
-	}
-
 	public AuthenticationDetailsSource<HttpServletRequest, ?> getAuthenticationDetailsSource() {
 		return authenticationDetailsSource;
 	}
@@ -401,6 +391,5 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilterBean
 	public void setSessionRegistry(SessionRegistry sessionRegistry) {
 		this.sessionRegistry = sessionRegistry;
 	}
-
 
 }

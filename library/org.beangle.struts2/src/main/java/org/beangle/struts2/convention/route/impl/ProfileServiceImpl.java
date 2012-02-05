@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.collection.CollectUtils;
-import org.beangle.spring.config.ConfigResource;
+import org.beangle.context.inject.ConfigResource;
 import org.beangle.struts2.convention.Constants;
 import org.beangle.struts2.convention.route.Profile;
 import org.beangle.struts2.convention.route.ProfileService;

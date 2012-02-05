@@ -11,12 +11,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.web.filter.GenericHttpFilterBean;
 import org.beangle.web.util.RedirectUtils;
-import org.springframework.util.StringUtils;
 
 /**
  * Logs a principal out.
@@ -61,9 +61,9 @@ public class LogoutFilter extends GenericHttpFilterBean {
 	 * Allow subclasses to modify when a logout should take place.
 	 * 
 	 * @param request
-	 *            the request
+	 *        the request
 	 * @param response
-	 *            the response
+	 *        the response
 	 * @return <code>true</code> if logout should occur, <code>false</code> otherwise
 	 */
 	protected boolean requiresLogout(HttpServletRequest request, HttpServletResponse response) {
@@ -97,15 +97,15 @@ public class LogoutFilter extends GenericHttpFilterBean {
 	protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response) {
 		String targetUrl = request.getParameter("logoutSuccessUrl");
 
-		if (!StringUtils.hasLength(targetUrl)) {
+		if (!StringUtils.isNotEmpty(targetUrl)) {
 			targetUrl = getLogoutSuccessUrl();
 		}
 
-		if (!StringUtils.hasLength(targetUrl)) {
+		if (!StringUtils.isNotEmpty(targetUrl)) {
 			targetUrl = request.getHeader("Referer");
 		}
 
-		if (!StringUtils.hasLength(targetUrl)) {
+		if (!StringUtils.isNotEmpty(targetUrl)) {
 			targetUrl = "/";
 		}
 

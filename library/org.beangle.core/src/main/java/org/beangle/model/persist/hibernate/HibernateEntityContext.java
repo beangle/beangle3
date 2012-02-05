@@ -19,7 +19,6 @@ import org.beangle.model.entity.context.AbstractEntityContext;
 import org.beangle.model.entity.types.CollectionType;
 import org.beangle.model.entity.types.ComponentType;
 import org.beangle.model.entity.types.EntityType;
-import org.hibernate.EntityMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.metadata.CollectionMetadata;
@@ -97,7 +96,7 @@ public class HibernateEntityContext extends AbstractEntityContext {
 			entityType = new EntityType();
 			entityType.setEntityName(cm.getEntityName());
 			entityType.setIdPropertyName(cm.getIdentifierPropertyName());
-			entityType.setEntityClass(cm.getMappedClass(EntityMode.POJO));
+			entityType.setEntityClass(cm.getMappedClass());
 			entityTypes.put(cm.getEntityName(), entityType);
 
 			Map<String, Type> propertyTypes = entityType.getPropertyTypes();

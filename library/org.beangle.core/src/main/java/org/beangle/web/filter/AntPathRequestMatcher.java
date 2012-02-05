@@ -7,11 +7,11 @@ package org.beangle.web.filter;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
 import org.beangle.http.HttpMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.AntPathMatcher;
-import org.springframework.util.Assert;
 
 /**
  * Matcher which compares a pre-defined ant-style pattern against the URL (
@@ -50,7 +50,7 @@ public final class AntPathRequestMatcher implements RequestMatcher {
 	 *            if the incoming request doesn't have the same method.
 	 */
 	public AntPathRequestMatcher(String pattern, String httpMethod) {
-		Assert.hasText(pattern, "Pattern cannot be null or empty");
+		Validate.notEmpty(pattern, "Pattern cannot be null or empty");
 		this.pattern = pattern.toLowerCase();
 		this.httpMethod = StringUtils.isNotEmpty(httpMethod) ? HttpMethod.valueOf(httpMethod) : null;
 	}

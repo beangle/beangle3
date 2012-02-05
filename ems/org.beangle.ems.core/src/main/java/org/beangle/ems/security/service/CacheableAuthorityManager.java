@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.Validate;
+import org.beangle.bean.Initializing;
 import org.beangle.collection.CollectUtils;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.SecurityUtils;
@@ -23,9 +24,8 @@ import org.beangle.security.web.AuthenticationEntryPoint;
 import org.beangle.security.web.FilterInvocation;
 import org.beangle.security.web.auth.UrlEntryPoint;
 import org.beangle.web.util.RequestUtils;
-import org.springframework.beans.factory.InitializingBean;
 
-public class CacheableAuthorityManager extends BaseServiceImpl implements AuthorityManager, InitializingBean {
+public class CacheableAuthorityManager extends BaseServiceImpl implements AuthorityManager, Initializing {
 
 	// 登录入口点
 	protected AuthenticationEntryPoint authenticationEntryPoint;
@@ -114,7 +114,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 		expired = false;
 	}
 
-	public void afterPropertiesSet() throws Exception {
+	public void init() throws Exception {
 		Validate.notNull(authorityService, "authorityService cannot be null");
 	}
 

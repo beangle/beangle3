@@ -13,12 +13,8 @@ import org.beangle.collection.page.PageLimit;
 import org.beangle.collection.page.SinglePage;
 import org.beangle.model.persist.EntityDao;
 import org.beangle.model.persist.hibernate.HibernateEntityDao.QuerySupport;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
-import org.hibernate.criterion.Projection;
-import org.hibernate.criterion.Projections;
-import org.hibernate.impl.CriteriaImpl;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public abstract class BaseDaoHibernate extends HibernateDaoSupport {
@@ -27,30 +23,6 @@ public abstract class BaseDaoHibernate extends HibernateDaoSupport {
 
 	public void setEntityDao(EntityDao entityDao) {
 		this.entityDao = entityDao;
-	}
-
-	@SuppressWarnings("unchecked")
-	public <T> Page<T> paginateCriteria(Criteria criteria, PageLimit limit) {
-		CriteriaImpl criteriaImpl = (CriteriaImpl) criteria;
-		int totalCount = 0;
-		List<T> targetList = null;
-		if (null == criteriaImpl.getProjection()) {
-			criteria.setFirstResult((limit.getPageNo() - 1) * limit.getPageSize()).setMaxResults(
-					limit.getPageSize());
-			targetList = criteria.list();
-			Projection projection = null;
-			criteria.setFirstResult(0).setMaxResults(1);
-			projection = Projections.rowCount();
-			totalCount = ((Number) criteria.setProjection(projection).uniqueResult()).intValue();
-		} else {
-			List<T> list = criteria.list();
-			totalCount = list.size();
-			criteria.setFirstResult((limit.getPageNo() - 1) * limit.getPageSize()).setMaxResults(
-					limit.getPageSize());
-			targetList = criteria.list();
-		}
-		// 返回结果
-		return new SinglePage<T>(limit.getPageNo(), limit.getPageSize(), totalCount, targetList);
 	}
 
 	/**

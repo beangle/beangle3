@@ -12,7 +12,7 @@ public class DefaultMailNotifierTest {
 	private boolean online = false;
 
 	public void testGmail() throws Exception {
-		JavaMailSenderImpl mailSender = new org.springframework.mail.javamail.JavaMailSenderImpl();
+		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		mailSender.setHost("smtp.gmail.com");
 		mailSender.setUsername("eams.demon");
 		mailSender.setPassword("eamsadmin");

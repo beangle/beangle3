@@ -43,24 +43,20 @@ public class CasAuthentication extends PreauthAuthentication {
 	 * Constructor.
 	 * 
 	 * @param key
-	 *            to identify if this object made by a given {@link CasAuthenticationProvider}
+	 *        to identify if this object made by a given {@link CasAuthenticationProvider}
 	 * @param principal
-	 *            typically the UserDetails object (cannot be <code>null</code>)
+	 *        typically the UserDetails object (cannot be <code>null</code>)
 	 * @param credentials
-	 *            the service/proxy ticket ID from CAS (cannot be <code>null</code>)
+	 *        the service/proxy ticket ID from CAS (cannot be <code>null</code>)
 	 * @param authorities
-	 *            the authorities granted to the user (from the
-	 *            {@link org.springframework.security.userdetails.UserDetailsService} ) (cannot be
-	 *            <code>null</code>)
+	 *        the authorities granted to the user (cannot be <code>null</code>)
 	 * @param userDetails
-	 *            the user details (from the
-	 *            {@link org.springframework.security.userdetails.UserDetailsService} ) (cannot be
-	 *            <code>null</code>)
+	 *        the user details (cannot be <code>null</code>)
 	 * @param assertion
-	 *            the assertion returned from the CAS servers. It contains the
-	 *            principal and how to obtain a proxy ticket for the user.
+	 *        the assertion returned from the CAS servers. It contains the
+	 *        principal and how to obtain a proxy ticket for the user.
 	 * @throws IllegalArgumentException
-	 *             if a <code>null</code> was passed
+	 *         if a <code>null</code> was passed
 	 */
 	public CasAuthentication(final String key, final Object principal, final Object credentials,
 			final Collection<? extends GrantedAuthority> authorities, final UserDetail userDetail,

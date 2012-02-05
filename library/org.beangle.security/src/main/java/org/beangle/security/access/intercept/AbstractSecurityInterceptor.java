@@ -5,6 +5,7 @@
 package org.beangle.security.access.intercept;
 
 import org.apache.commons.lang.Validate;
+import org.beangle.bean.Initializing;
 import org.beangle.security.access.AccessDeniedException;
 import org.beangle.security.access.AuthorityManager;
 import org.beangle.security.auth.AuthenticationManager;
@@ -13,7 +14,6 @@ import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.context.SecurityContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 
 /**
  * Abstract class that implements security interception for secure objects.
@@ -63,7 +63,7 @@ import org.springframework.beans.factory.InitializingBean;
  * original caller.</li>
  * </ol>
  */
-public abstract class AbstractSecurityInterceptor implements InitializingBean {
+public abstract class AbstractSecurityInterceptor implements Initializing {
 
 	protected static final Logger logger = LoggerFactory.getLogger(AbstractSecurityInterceptor.class);
 
@@ -79,9 +79,9 @@ public abstract class AbstractSecurityInterceptor implements InitializingBean {
 	 * secure object invocation has been completed.
 	 * 
 	 * @param token
-	 *            as returned by the {@link #beforeInvocation(Object)} method
+	 *        as returned by the {@link #beforeInvocation(Object)} method
 	 * @param returnedObject
-	 *            any object returned from the secure object invocation (may be <tt>null</tt>)
+	 *        any object returned from the secure object invocation (may be <tt>null</tt>)
 	 * @return the object the secure object invocation should ultimately return
 	 *         to its caller (may be <tt>null</tt>)
 	 */
@@ -100,7 +100,7 @@ public abstract class AbstractSecurityInterceptor implements InitializingBean {
 		return returnedObject;
 	}
 
-	public void afterPropertiesSet() throws Exception {
+	public void init() throws Exception {
 		Validate.notNull(getSecureObjectClass(),
 				"Subclass must provide a non-null response to getSecureObjectClass()");
 		Validate.notNull(this.authenticationManager, "An AuthenticationManager is required");
@@ -159,9 +159,7 @@ public abstract class AbstractSecurityInterceptor implements InitializingBean {
 	 */
 	private Authentication authenticateIfRequired() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if(null==authentication){
-			throw new AuthenticationException();
-		}
+		if (null == authentication) { throw new AuthenticationException(); }
 		if (authentication.isAuthenticated() && !alwaysReauthenticate) {
 			logger.debug("Previously Authenticated: {}", authentication);
 			return authentication;
@@ -213,10 +211,10 @@ public abstract class AbstractSecurityInterceptor implements InitializingBean {
 	 * authenticated.
 	 * 
 	 * @param alwaysReauthenticate
-	 *            <code>true</code> to force <code>AbstractSecurityInterceptor</code> to disregard
-	 *            the
-	 *            value of <code>Authentication.isAuthenticated()</code> and
-	 *            always re-authenticate the request (defaults to <code>false</code>).
+	 *        <code>true</code> to force <code>AbstractSecurityInterceptor</code> to disregard
+	 *        the
+	 *        value of <code>Authentication.isAuthenticated()</code> and
+	 *        always re-authenticate the request (defaults to <code>false</code>).
 	 */
 	public void setAlwaysReauthenticate(boolean alwaysReauthenticate) {
 		this.alwaysReauthenticate = alwaysReauthenticate;
@@ -238,10 +236,10 @@ public abstract class AbstractSecurityInterceptor implements InitializingBean {
 	 * object that has no configuration attributes.
 	 * 
 	 * @param rejectPublicInvocations
-	 *            set to <code>true</code> to reject invocations of secure
-	 *            objects that have no configuration attributes (by default it
-	 *            is <code>false</code> which treats undeclared secure objects
-	 *            as "public" or unauthorized).
+	 *        set to <code>true</code> to reject invocations of secure
+	 *        objects that have no configuration attributes (by default it
+	 *        is <code>false</code> which treats undeclared secure objects
+	 *        as "public" or unauthorized).
 	 */
 	public void setRejectPublicInvocations(boolean rejectPublicInvocations) {
 		this.rejectPublicInvocations = rejectPublicInvocations;

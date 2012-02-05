@@ -7,12 +7,12 @@ package org.beangle.ems.rule.model;
 import java.util.List;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.context.spring.SpringTestCase;
 import org.beangle.ems.rule.Context;
 import org.beangle.ems.rule.Rule;
 import org.beangle.ems.rule.engine.RuleExecutor;
 import org.beangle.ems.rule.engine.RuleExecutorBuilder;
 import org.beangle.ems.rule.engine.impl.DefaultRuleExecutorBuilder;
-import org.beangle.spring.test.SpringTestCase;
 
 public class RuleTest extends SpringTestCase {
 

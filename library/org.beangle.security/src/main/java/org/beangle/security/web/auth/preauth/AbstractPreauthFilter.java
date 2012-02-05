@@ -22,9 +22,9 @@ import org.beangle.security.core.userdetail.UsernameNotFoundException;
 import org.beangle.security.web.auth.AbstractAuthenticationFilter;
 import org.beangle.security.web.auth.WebAuthenticationDetailsSource;
 import org.beangle.web.filter.GenericHttpFilterBean;
-import org.springframework.beans.factory.InitializingBean;
 
-/** Base class for processing filters that handle pre-authenticated
+/**
+ * Base class for processing filters that handle pre-authenticated
  * authentication requests. Subclasses must implement the
  * getPreAuthenticatedPrincipal() and getPreAuthenticatedCredentials() methods.
  * <p>
@@ -33,8 +33,9 @@ import org.springframework.beans.factory.InitializingBean;
  * set the <tt>continueFilterChainOnUnsuccessfulAuthentication</tt> flag to false. The exception
  * raised by the <tt>AuthenticationManager</tt> will the be re-thrown. Note that this will not
  * affect cases where the principal returned by {@link #getPreauthAuthentication} is null, when the
- * chain will still proceed as normal. */
-public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implements InitializingBean {
+ * chain will still proceed as normal.
+ */
+public abstract class AbstractPreauthFilter extends GenericHttpFilterBean {
 
 	private AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
 
@@ -53,11 +54,13 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implem
 		Validate.notNull(sessionRegistry, "sessionRegistry must be set");
 	}
 
-	/** 是否应该尝试进行认证
+	/**
+	 * 是否应该尝试进行认证
 	 * 
 	 * @param request
 	 * @param response
-	 * @return */
+	 * @return
+	 */
 	protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth == null) { return true; }
@@ -69,8 +72,10 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implem
 		}
 	}
 
-	/** Try to authenticate a pre-authenticated user with Beangle Security if the
-	 * user has not yet been authenticated. */
+	/**
+	 * Try to authenticate a pre-authenticated user with Beangle Security if the
+	 * user has not yet been authenticated.
+	 */
 	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws IOException, ServletException {
 		if (requiresAuthentication(request, response)) {
@@ -100,16 +105,20 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implem
 		}
 	}
 
-	/** Puts the <code>Authentication</code> instance returned by the
-	 * authentication manager into the secure context. */
+	/**
+	 * Puts the <code>Authentication</code> instance returned by the
+	 * authentication manager into the secure context.
+	 */
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			Authentication authResult) {
 		logger.debug("PreAuthentication success: {}", authResult);
 		SecurityContextHolder.getContext().setAuthentication(authResult);
 	}
 
-	/** Ensures the authentication object in the secure context is set to null
-	 * when authentication fails. */
+	/**
+	 * Ensures the authentication object in the secure context is set to null
+	 * when authentication fails.
+	 */
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) {
 		SecurityContextHolder.clearContext();
@@ -122,16 +131,20 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilterBean implem
 		}
 	}
 
-	/** @param userDetailsSource
-	 *        The UserDetailsSource to use */
+	/**
+	 * @param userDetailsSource
+	 *        The UserDetailsSource to use
+	 */
 	public void setAuthenticationDetailsSource(
 			AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource) {
 		Validate.notNull(authenticationDetailsSource, "AuthenticationDetailsSource required");
 		this.authenticationDetailsSource = authenticationDetailsSource;
 	}
 
-	/** @param authenticationManager
-	 *        The AuthenticationManager to use */
+	/**
+	 * @param authenticationManager
+	 *        The AuthenticationManager to use
+	 */
 	public void setAuthenticationManager(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
 	}

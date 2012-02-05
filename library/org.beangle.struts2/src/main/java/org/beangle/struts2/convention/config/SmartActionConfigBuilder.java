@@ -24,12 +24,12 @@ import org.apache.struts2.StrutsException;
 import org.beangle.collection.CollectUtils;
 import org.beangle.struts2.convention.factory.BeanNameFinder;
 import org.beangle.struts2.convention.factory.DefaultBeanNameFinder;
-import org.beangle.struts2.convention.factory.SpringBeanNameFinder;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.struts2.convention.route.ActionBuilder;
 import org.beangle.struts2.convention.route.Profile;
 import org.beangle.struts2.convention.route.ProfileService;
 import org.beangle.struts2.convention.route.ViewMapper;
+import org.beangle.struts2.spring.SpringBeanNameFinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

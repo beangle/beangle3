@@ -13,7 +13,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.Validate;
+import org.beangle.bean.Initializing;
 import org.beangle.collection.CollectUtils;
+import org.beangle.context.event.Event;
+import org.beangle.context.event.EventListener;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.session.SessionController;
 import org.beangle.security.core.session.SessionDestroyedEvent;
@@ -24,11 +27,9 @@ import org.beangle.security.core.session.Sessioninfo;
 import org.beangle.security.core.session.SessioninfoBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.ApplicationListener;
 
-public class MemSessionRegistry implements SessionRegistry, ApplicationListener<SessionDestroyedEvent>,
-		InitializingBean {
+public class MemSessionRegistry implements SessionRegistry, EventListener<SessionDestroyedEvent>,
+		Initializing {
 
 	protected static final Logger logger = LoggerFactory.getLogger(MemSessionRegistry.class);
 
@@ -42,7 +43,7 @@ public class MemSessionRegistry implements SessionRegistry, ApplicationListener<
 	// <sessionid,Sessioninfo>
 	protected Map<String, Sessioninfo> sessionids = new ConcurrentHashMap<String, Sessioninfo>();
 
-	public void afterPropertiesSet() throws Exception {
+	public void init() throws Exception {
 		Validate.notNull(controller, "controller must set");
 		Validate.notNull(sessioninfoBuilder, "sessioninfoBuilder must set");
 	}
@@ -120,8 +121,16 @@ public class MemSessionRegistry implements SessionRegistry, ApplicationListener<
 	}
 
 	// 当会话消失时，退出用户
-	public void onApplicationEvent(SessionDestroyedEvent event) {
+	public void onEvent(SessionDestroyedEvent event) {
 		remove(event.getId());
+	}
+
+	public boolean supportsEventType(Class<? extends Event> eventType) {
+		return eventType.equals(SessionDestroyedEvent.class);
+	}
+
+	public boolean supportsSourceType(Class<?> sourceType) {
+		return true;
 	}
 
 	public void expire(String sessionid) {
@@ -156,17 +165,16 @@ public class MemSessionRegistry implements SessionRegistry, ApplicationListener<
 	}
 
 	public void access(String sessionid, String resource, long beginAt) {
-		//DO nothing
+		// DO nothing
 	}
 
 	public void endAccess(String sessionid, String resource, long endAt) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public String getResource(String sessionid) {
 		return null;
 	}
-	
 
 }

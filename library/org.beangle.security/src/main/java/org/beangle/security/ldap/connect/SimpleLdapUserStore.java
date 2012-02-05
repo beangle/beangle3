@@ -18,13 +18,13 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
 import org.apache.commons.lang.Validate;
+import org.beangle.bean.Disposable;
 import org.beangle.collection.CollectUtils;
 import org.beangle.lang.StrUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.DisposableBean;
 
-public class SimpleLdapUserStore implements LdapUserStore, DisposableBean {
+public class SimpleLdapUserStore implements LdapUserStore, Disposable {
 	private Logger logger = LoggerFactory.getLogger(SimpleLdapUserStore.class);
 	private String url;
 	private String userName;
@@ -196,7 +196,7 @@ public class SimpleLdapUserStore implements LdapUserStore, DisposableBean {
 		return ctx;
 	}
 
-	public void destroy() throws Exception {
+	public void destroy() {
 		this.disConnect();
 	}
 

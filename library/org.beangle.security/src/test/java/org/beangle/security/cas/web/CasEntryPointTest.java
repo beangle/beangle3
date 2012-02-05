@@ -22,14 +22,14 @@ public class CasEntryPointTest {
 	@Test(expectedExceptions = IllegalArgumentException.class)
 	public void testDetectsMissingUrl() throws Exception {
 		CasConfig config = new CasConfig();
-		config.afterPropertiesSet();
+		config.init();
 		CasEntryPoint ep = new CasEntryPoint(config);
-		ep.afterPropertiesSet();
+		ep.init();
 	}
 
 	@Test(expectedExceptions = IllegalArgumentException.class)
 	public void testDetectsMissingConfig() throws Exception {
-		new CasEntryPoint().afterPropertiesSet();
+		new CasEntryPoint().init();
 	}
 
 	public void testGettersSetters() {
@@ -46,7 +46,7 @@ public class CasEntryPointTest {
 		CasEntryPoint ep = new CasEntryPoint(config);
 		MockHttpServletRequest request = new MockHttpServletRequest(null, "/some_path");
 		MockHttpServletResponse response = new MockHttpServletResponse();
-		ep.afterPropertiesSet();
+		ep.init();
 		ep.commence(request, response, null);
 		assertEquals(
 				response.getRedirectedUrl(),
@@ -60,7 +60,7 @@ public class CasEntryPointTest {
 		CasEntryPoint ep = new CasEntryPoint(config);
 		MockHttpServletRequest request = new MockHttpServletRequest(null, "/some_path");
 		MockHttpServletResponse response = new MockHttpServletResponse();
-		ep.afterPropertiesSet();
+		ep.init();
 		ep.commence(request, response, null);
 		assertEquals(
 				"https://cas/login?service="

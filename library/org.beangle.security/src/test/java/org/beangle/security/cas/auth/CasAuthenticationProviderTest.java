@@ -40,7 +40,7 @@ public class CasAuthenticationProviderTest {
 		cache = new MockStatelessTicketCache();
 		cap.setStatelessTicketCache(cache);
 		cap.setTicketValidator(new MockTicketValidator(true));
-		cap.afterPropertiesSet();
+		cap.init();
 	}
 
 	public void supportsRequiredTokens() {

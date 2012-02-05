@@ -4,7 +4,7 @@
  */
 package org.beangle.security.core.session;
 
-import org.springframework.context.ApplicationEvent;
+import org.beangle.context.event.Event;
 
 /**
  * Generic session creation event which indicates that a session (potentially
@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationEvent;
  * 
  * @author chaostone
  */
-public abstract class SessionCreationEvent extends ApplicationEvent {
+public abstract class SessionCreationEvent extends Event {
 
 	private static final long serialVersionUID = 1L;
 

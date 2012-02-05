@@ -4,8 +4,8 @@
  */
 package org.beangle.security.core.session;
 
+import org.beangle.context.event.Event;
 import org.beangle.security.core.context.SecurityContext;
-import org.springframework.context.ApplicationEvent;
 
 /**
  * Generic "session termination" event which indicates that a session
@@ -13,7 +13,7 @@ import org.springframework.context.ApplicationEvent;
  * 
  * @author chaostone
  */
-public abstract class SessionDestroyedEvent extends ApplicationEvent {
+public abstract class SessionDestroyedEvent extends Event {
 
 	private static final long serialVersionUID = 1L;
 

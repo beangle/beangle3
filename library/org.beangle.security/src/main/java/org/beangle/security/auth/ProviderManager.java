@@ -7,22 +7,20 @@ package org.beangle.security.auth;
 import java.util.Iterator;
 import java.util.List;
 
+import org.beangle.bean.Initializing;
 import org.beangle.collection.CollectUtils;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 
-public class ProviderManager extends AbstractAuthenticationManager implements InitializingBean {
+public class ProviderManager extends AbstractAuthenticationManager implements Initializing {
 
 	protected final Logger logger = LoggerFactory.getLogger(ProviderManager.class);
 
 	protected List<AuthenticationProvider> providers = CollectUtils.newArrayList();
 
-	// protected SessionController sessionController;
-
-	public void afterPropertiesSet() throws Exception {
+	public void init() throws Exception {
 		if (providers.isEmpty()) { throw new RuntimeException("authentication provider list is empty"); }
 		logger.info("providers:" + providers);
 	}

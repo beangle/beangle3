@@ -4,7 +4,7 @@
  */
 package org.beangle.ems.security;
 
-import org.beangle.spring.test.SpringTestCase;
+import org.beangle.context.spring.SpringTestCase;
 
 
 public class ConfigTest extends SpringTestCase {

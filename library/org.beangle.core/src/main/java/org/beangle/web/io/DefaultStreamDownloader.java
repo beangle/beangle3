@@ -17,18 +17,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.beangle.bean.Initializing;
 import org.beangle.http.mime.MimeTypeProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 
-public class DefaultStreamDownloader implements InitializingBean, StreamDownloader {
+public class DefaultStreamDownloader implements Initializing, StreamDownloader {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected MimeTypeProvider mimeTypeProvider;
 
-	public void afterPropertiesSet() throws Exception {
+	public void init() throws Exception {
 		Validate.notNull(mimeTypeProvider, "mimeTypeProvider must be set");
 	}
 

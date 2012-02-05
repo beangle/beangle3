@@ -19,6 +19,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.Validate;
+import org.beangle.bean.Disposable;
+import org.beangle.bean.Initializing;
 import org.beangle.web.io.ServletContextResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,21 +32,17 @@ import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.BeanNameAware;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceEditor;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
  * @author chaostone
  * @version $Id: AbstractFilterBean.java Nov 20, 2010 7:12:16 PM chaostone $
  */
-public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, InitializingBean,
-		DisposableBean {
+public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, Initializing, Disposable {
 
 	/** Logger available to subclasses */
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -75,7 +74,6 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, In
 	 * Only relevant in case of initialization as bean, to have a name as fallback to the filter
 	 * name usually provided by a FilterConfig instance.
 	 * 
-	 * @see org.springframework.beans.factory.BeanNameAware
 	 * @see #getFilterName()
 	 */
 	public final void setBeanName(String beanName) {
@@ -92,7 +90,7 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, In
 	 * @see #initFilterBean()
 	 * @see #init(javax.servlet.FilterConfig)
 	 */
-	public void afterPropertiesSet() throws ServletException {
+	public void init() throws Exception {
 		initFilterBean();
 	}
 
@@ -106,7 +104,7 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, In
 	 * instance.
 	 * 
 	 * @param property
-	 *            name of the required property
+	 *        name of the required property
 	 */
 	protected final void addRequiredProperty(String property) {
 		this.requiredProperties.add(property);
@@ -117,14 +115,14 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, In
 	 * properties of this filter, and invoke subclass initialization.
 	 * 
 	 * @param filterConfig
-	 *            the configuration for this filter
+	 *        the configuration for this filter
 	 * @throws ServletException
-	 *             if bean properties are invalid (or required properties are
-	 *             missing), or if subclass initialization fails.
+	 *         if bean properties are invalid (or required properties are
+	 *         missing), or if subclass initialization fails.
 	 * @see #initFilterBean
 	 */
 	public final void init(FilterConfig filterConfig) throws ServletException {
-		Assert.notNull(filterConfig, "FilterConfig must not be null");
+		Validate.notNull(filterConfig, "FilterConfig must not be null");
 		if (logger.isDebugEnabled()) {
 			logger.debug("Initializing filter '" + filterConfig.getFilterName() + "'");
 		}
@@ -161,10 +159,9 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, In
 	 * This default implementation is empty.
 	 * 
 	 * @param bw
-	 *            the BeanWrapper to initialize
+	 *        the BeanWrapper to initialize
 	 * @throws BeansException
-	 *             if thrown by BeanWrapper methods
-	 * @see org.springframework.beans.BeanWrapper#registerCustomEditor
+	 *         if thrown by BeanWrapper methods
 	 */
 	protected void initBeanWrapper(BeanWrapper bw) throws BeansException {
 	}
@@ -228,7 +225,7 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, In
 	 * This default implementation is empty.
 	 * 
 	 * @throws ServletException
-	 *             if subclass initialization fails
+	 *         if subclass initialization fails
 	 * @see #getFilterName()
 	 * @see #getServletContext()
 	 */
@@ -257,12 +254,12 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, In
 		 * Create new FilterConfigPropertyValues.
 		 * 
 		 * @param config
-		 *            FilterConfig we'll use to take PropertyValues from
+		 *        FilterConfig we'll use to take PropertyValues from
 		 * @param requiredProperties
-		 *            set of property names we need, where we can't accept
-		 *            default values
+		 *        set of property names we need, where we can't accept
+		 *        default values
 		 * @throws ServletException
-		 *             if any required properties are missing
+		 *         if any required properties are missing
 		 */
 		public FilterConfigPropertyValues(FilterConfig config, Set<String> requiredProperties)
 				throws ServletException {

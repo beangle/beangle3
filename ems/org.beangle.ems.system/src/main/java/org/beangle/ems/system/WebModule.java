@@ -4,6 +4,8 @@
  */
 package org.beangle.ems.system;
 
+import org.beangle.context.inject.AbstractBindModule;
+import org.beangle.context.inject.Scope;
 import org.beangle.ems.business.action.LogAction;
 import org.beangle.ems.business.action.RuleAction;
 import org.beangle.ems.business.action.RuleParamAction;
@@ -16,8 +18,6 @@ import org.beangle.ems.system.action.FileAction;
 import org.beangle.ems.system.action.InfoAction;
 import org.beangle.ems.system.action.PropertyAction;
 import org.beangle.ems.web.action.LogoutAction;
-import org.beangle.spring.config.AbstractBindModule;
-import org.beangle.spring.config.Scope;
 
 public final class WebModule extends AbstractBindModule {
 

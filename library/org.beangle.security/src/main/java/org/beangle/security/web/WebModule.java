@@ -4,6 +4,7 @@
  */
 package org.beangle.security.web;
 
+import org.beangle.context.inject.AbstractBindModule;
 import org.beangle.security.web.access.DefaultAccessDeniedHandler;
 import org.beangle.security.web.access.ExceptionTranslationFilter;
 import org.beangle.security.web.access.intercept.FilterSecurityInterceptor;
@@ -18,7 +19,6 @@ import org.beangle.security.web.auth.preauth.j2ee.RemoteUsernameSource;
 import org.beangle.security.web.context.HttpSessionContextIntegrationFilter;
 import org.beangle.security.web.session.ConcurrentSessionFilter;
 import org.beangle.security.web.session.WebSessioninfoBuilder;
-import org.beangle.spring.config.AbstractBindModule;
 
 /** 权限系统web模块bean定义
  * 

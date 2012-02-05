@@ -4,6 +4,7 @@
  */
 package org.beangle.ems.security;
 
+import org.beangle.context.inject.AbstractBindModule;
 import org.beangle.ems.security.nav.service.MenuServiceImpl;
 import org.beangle.ems.security.service.AuthorityServiceImpl;
 import org.beangle.ems.security.service.CacheableAuthorityManager;
@@ -15,7 +16,6 @@ import org.beangle.ems.security.service.OqlDataProvider;
 import org.beangle.ems.security.service.UserServiceImpl;
 import org.beangle.ems.security.session.service.GroupProfileServiceImpl;
 import org.beangle.security.core.session.impl.DbSessionRegistry;
-import org.beangle.spring.config.AbstractBindModule;
 
 /**
  * 权限缺省服务配置

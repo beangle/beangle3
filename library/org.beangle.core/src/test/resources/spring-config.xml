@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans >
-	<!-- Database Properties -->
+
 	<bean id="hibernateConfig" >
 		<property name="properties">
 			<props merge="true">
@@ -23,6 +23,6 @@
 		</property>
 	</bean>
 
-	<bean id="userLdapProvider" class="org.beangle.spring.testbean.AdvancedUserLdapProvider" />
+	<bean id="userLdapProvider" class="org.beangle.context.testbean.AdvancedUserLdapProvider" />
 </beans>
 

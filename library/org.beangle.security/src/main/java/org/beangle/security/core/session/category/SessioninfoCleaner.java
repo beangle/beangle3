@@ -11,6 +11,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.commons.lang.time.StopWatch;
+import org.beangle.bean.Initializing;
 import org.beangle.lang.DateUtils;
 import org.beangle.model.persist.EntityDao;
 import org.beangle.model.persist.impl.BaseServiceImpl;
@@ -19,20 +20,19 @@ import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.security.core.session.Sessioninfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 
 /**
  * @author chaostone
  * @version $Id: SessionCleaner.java Jun 6, 2011 12:21:24 PM chaostone $
  */
-public class SessioninfoCleaner extends BaseServiceImpl implements InitializingBean {
+public class SessioninfoCleaner extends BaseServiceImpl implements Initializing {
 
 	private SessionRegistry sessionRegistry;
 
 	// 默认5分钟清理一次
 	private int cleanInterval = 1000 * 300;
 
-	public void afterPropertiesSet() throws Exception {
+	public void init() throws Exception {
 		if (null != sessionRegistry) {
 			SessionCleanerTask sessionCleanerTask = new SessionCleanerTask(sessionRegistry);
 			sessionCleanerTask.setEntityDao(entityDao);

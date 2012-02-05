@@ -4,13 +4,13 @@
  */
 package org.beangle.ems;
 
+import org.beangle.context.inject.AbstractBindModule;
 import org.beangle.ems.avatar.service.FileSystemAvatarBase;
 import org.beangle.ems.config.service.DaoPropertyConfigProvider;
 import org.beangle.ems.dictionary.service.impl.BaseCodeServiceImpl;
 import org.beangle.ems.dictionary.service.impl.SeqCodeGenerator;
 import org.beangle.ems.io.ClasspathDocLoader;
 import org.beangle.ems.log.service.BusinessEventLogger;
-import org.beangle.spring.config.AbstractBindModule;
 import org.beangle.web.io.SplitStreamDownloader;
 
 public class BaseServiceModule extends AbstractBindModule {

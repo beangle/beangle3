@@ -6,12 +6,12 @@ package org.beangle.security.web.session;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.context.ApplicationEvent;
+import org.beangle.context.event.Event;
 
 /**
  * Parent class for published HttpSession events
  */
-public abstract class HttpSessionApplicationEvent extends ApplicationEvent {
+public abstract class HttpSessionApplicationEvent extends Event {
 	private static final long serialVersionUID = 1L;
 
 	/**

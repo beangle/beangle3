@@ -4,11 +4,11 @@
  */
 package org.beangle.ems.dev;
 
+import org.beangle.context.inject.AbstractBindModule;
+import org.beangle.context.inject.Scope;
 import org.beangle.ems.dev.hibernate.action.CacheAction;
 import org.beangle.ems.dev.spring.action.SpringAction;
 import org.beangle.ems.dev.struts2.action.ConfigBrowserAction;
-import org.beangle.spring.config.AbstractBindModule;
-import org.beangle.spring.config.Scope;
 
 public final class WebModule extends AbstractBindModule {
 

@@ -23,14 +23,12 @@
 		</property>
 	</bean>
 	
-	
-	<!-- Database Properties -->
 	<bean id="hibernateConfig" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="properties">
 			<props>
 			    <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
 				<prop key="hibernate.connection.provider_class">org.hibernate.connection.DatasourceConnectionProvider</prop>
-				<prop key="hibernate.query.factory_class">org.hibernate.hql.ast.ASTQueryTranslatorFactory</prop>
+				<!--<prop key="hibernate.query.factory_class">org.hibernate.hql.ast.ASTQueryTranslatorFactory</prop>-->
 				<prop key="hibernate.max_fetch_depth">1</prop>
 				<prop key="hibernate.default_batch_fetch_size">8</prop>
 				<prop key="hibernate.jdbc.fetch_size">8</prop>
@@ -38,10 +36,10 @@
 				<prop key="hibernate.jdbc.batch_versioned_data">true</prop>
 				<prop key="hibernate.jdbc.use_streams_for_binary">true</prop>
 				<prop key="hibernate.jdbc.use_get_generated_keys">true</prop>
-				<prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory
-</prop>
+				<!--<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.internal.NoCachingRegionFactory</prop>
 				<prop key="hibernate.cache.use_second_level_cache">true</prop>
 				<prop key="hibernate.cache.use_query_cache">true</prop>
+				-->
 				<prop key="hibernate.query.substitutions">true 1, false 0, yes 'Y', no 'N'</prop>
 				<prop key="hibernate.show_sql">false</prop>
 			</props>
@@ -49,19 +47,19 @@
 	</bean>
 	
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="namingStrategy" ref="railsNamingStrategy"/>
-		<property name="lobHandler" ref="lobHandler"/>
+		<!--<property name="lobHandler" ref="lobHandler"/>-->
 		<property name="hibernateProperties" ref="hibernateConfig"/>
-		<property name="configurationClass" value="org.beangle.model.persist.hibernate.OverrideConfiguration"/>
+		<!--<property name="configurationClass" value="org.beangle.model.persist.hibernate.OverrideConfiguration"/>-->
 		<property name="configLocations">
 			<value>classpath*:META-INF/hibernate.cfg.xml</value>
 		</property>
 	</bean>
 	
 	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	
@@ -102,7 +100,7 @@
 	
 	<bean id="tableNamingStrategy" class="org.beangle.model.persist.DefaultTableNamingStrategy">
 		<property name="resource">
-			<bean class="org.beangle.spring.config.ConfigResource">
+			<bean class="org.beangle.context.spring.SpringConfigResource">
 				<property name="locations" value="classpath*:META-INF/beangle/table.properties"/>
 				<property name="users" value="classpath*:beangle/table.properties"/>
 			</bean>

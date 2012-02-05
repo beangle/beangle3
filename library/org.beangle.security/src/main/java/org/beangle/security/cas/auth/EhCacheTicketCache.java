@@ -8,10 +8,10 @@ import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 
 import org.apache.commons.lang.Validate;
+import org.beangle.bean.Initializing;
 import org.hibernate.cache.CacheException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 
 /**
  * Caches tickets using a Spring IoC defined <A
@@ -19,13 +19,13 @@ import org.springframework.beans.factory.InitializingBean;
  * 
  * @author chaostone
  */
-public class EhCacheTicketCache implements StatelessTicketCache, InitializingBean {
+public class EhCacheTicketCache implements StatelessTicketCache, Initializing {
 
 	private static final Logger logger = LoggerFactory.getLogger(EhCacheTicketCache.class);
 
 	private Ehcache cache;
 
-	public void afterPropertiesSet() throws Exception {
+	public void init() throws Exception {
 		Validate.notNull(cache, "cache mandatory");
 	}
 

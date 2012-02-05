@@ -32,23 +32,25 @@ import org.beangle.model.query.LimitQuery;
 import org.beangle.model.query.QueryBuilder;
 import org.beangle.model.query.builder.Condition;
 import org.beangle.model.query.builder.OqlBuilder;
-import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.criterion.Projection;
-import org.hibernate.criterion.Projections;
+import org.hibernate.SessionFactory;
 import org.hibernate.engine.jdbc.StreamUtils;
-import org.hibernate.impl.CriteriaImpl;
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.LazyInitializer;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
  * @author chaostone
  */
-public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao {
+public class HibernateEntityDao implements EntityDao {
+
+	protected SessionFactory sessionFactory;
+
+	protected Session getSession() {
+		return sessionFactory.getCurrentSession();
+	}
 
 	@SuppressWarnings("unchecked")
 	public <T> T get(Class<T> clazz, Serializable id) {
@@ -58,7 +60,7 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 	@SuppressWarnings("unchecked")
 	public <T> T get(String entityName, Serializable id) {
 		if (StringUtils.contains(entityName, '.')) {
-			return (T) getHibernateTemplate().get(entityName, id);
+			return (T) getSession().get(entityName, id);
 		} else {
 			String hql = "from " + entityName + " where id =:id";
 			Query query = getSession().createQuery(hql);
@@ -267,37 +269,13 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 	}
 
 	public <T> Page<T> paginateNamedQuery(String queryName, Map<String, Object> params, PageLimit limit) {
-		Query query = this.getSession().getNamedQuery(queryName);
+		Query query = getSession().getNamedQuery(queryName);
 		return paginateQuery(query, params, limit);
 	}
 
 	public <T> Page<T> paginateHQLQuery(String hql, Map<String, Object> params, PageLimit limit) {
-		Query query = this.getSession().createQuery(hql);
+		Query query = getSession().createQuery(hql);
 		return paginateQuery(query, params, limit);
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public Page<?> paginateCriteria(Criteria criteria, PageLimit limit) {
-		CriteriaImpl criteriaImpl = (CriteriaImpl) criteria;
-		int totalCount = 0;
-		List<?> targetList = null;
-		if (null == criteriaImpl.getProjection()) {
-			criteria.setFirstResult((limit.getPageNo() - 1) * limit.getPageSize()).setMaxResults(
-					limit.getPageSize());
-			targetList = criteria.list();
-			Projection projection = null;
-			criteria.setFirstResult(0).setMaxResults(1);
-			projection = Projections.rowCount();
-			totalCount = ((Integer) criteria.setProjection(projection).uniqueResult()).intValue();
-		} else {
-			List<?> list = criteria.list();
-			totalCount = list.size();
-			criteria.setFirstResult((limit.getPageNo() - 1) * limit.getPageSize()).setMaxResults(
-					limit.getPageSize());
-			targetList = criteria.list();
-		}
-		// 返回结果
-		return new SinglePage(limit.getPageNo(), limit.getPageSize(), totalCount, targetList);
 	}
 
 	public void evict(Object entity) {
@@ -360,9 +338,9 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 		if (proxy instanceof HibernateProxy) {
 			LazyInitializer init = ((HibernateProxy) proxy).getHibernateLazyInitializer();
 			if (null == init.getSession() || init.getSession().isClosed()) {
-				proxy = (T) getHibernateTemplate().get(init.getEntityName(), init.getIdentifier());
+				proxy = (T) getSession().get(init.getEntityName(), init.getIdentifier());
 			} else {
-				getHibernateTemplate().initialize(proxy);
+				Hibernate.initialize(proxy);
 			}
 		}
 		return proxy;
@@ -458,12 +436,12 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 	private void saveEntity(Object entity, String entityName) {
 		if (null == entity) return;
 		if (null != entityName) {
-			getHibernateTemplate().save(entityName, entity);
+			getSession().save(entityName, entity);
 		} else {
 			if (entity instanceof HibernateProxy) {
-				getHibernateTemplate().save(entity);
+				getSession().save(entity);
 			} else {
-				getHibernateTemplate().save(Model.getEntityType(entity.getClass()).getEntityName(), entity);
+				getSession().save(Model.getEntityType(entity.getClass()).getEntityName(), entity);
 			}
 		}
 	}
@@ -471,13 +449,12 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 	private void persistEntity(Object entity, String entityName) {
 		if (null == entity) return;
 		if (null != entityName) {
-			getHibernateTemplate().saveOrUpdate(entityName, entity);
+			getSession().saveOrUpdate(entityName, entity);
 		} else {
 			if (entity instanceof HibernateProxy) {
-				getHibernateTemplate().saveOrUpdate(entity);
+				getSession().saveOrUpdate(entity);
 			} else {
-				getHibernateTemplate().saveOrUpdate(Model.getEntityType(entity.getClass()).getEntityName(),
-						entity);
+				getSession().saveOrUpdate(Model.getEntityType(entity.getClass()).getEntityName(), entity);
 			}
 		}
 	}
@@ -531,12 +508,12 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 	public void remove(Collection<?> entities) {
 		if (null == entities || entities.isEmpty()) return;
 		for (Object entity : entities)
-			if (null != entity) getHibernateTemplate().delete(entity);
+			if (null != entity) getSession().delete(entity);
 	}
 
 	public void remove(Object... entities) {
 		for (Object entity : entities) {
-			if (null != entity) getHibernateTemplate().delete(entity);
+			if (null != entity) getSession().delete(entity);
 		}
 	}
 
@@ -713,6 +690,10 @@ public class HibernateEntityDao extends HibernateDaoSupport implements EntityDao
 			queryStr += query.getQueryString().substring(indexOfFrom);
 		}
 		return queryStr;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 
 	public static final class QuerySupport {

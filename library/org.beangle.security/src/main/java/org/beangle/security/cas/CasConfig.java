@@ -5,17 +5,19 @@
 package org.beangle.security.cas;
 
 import org.apache.commons.lang.Validate;
-import org.springframework.beans.factory.InitializingBean;
+import org.beangle.bean.Initializing;
 
-/** Stores properties related to this CAS service.
+/**
+ * Stores properties related to this CAS service.
  * <p>
  * Each web application capable of processing CAS tickets is known as a service. This class stores
  * the properties that are relevant to the local CAS service, being the application that is being
  * secured by Beangle Security.
  * 
  * @author chaostone
- * @version $Id: ServiceProperties.java $ */
-public class CasConfig implements InitializingBean {
+ * @version $Id: ServiceProperties.java $
+ */
+public class CasConfig implements Initializing {
 
 	private String casServer;
 
@@ -43,7 +45,7 @@ public class CasConfig implements InitializingBean {
 		this.localServer = localServer;
 	}
 
-	public void afterPropertiesSet() throws Exception {
+	public void init() throws Exception {
 		Validate.notEmpty(this.casServer, "cas server must be specified.");
 		Validate.isTrue(!this.casServer.endsWith("/"), "cas server should not end with /");
 		Validate.notEmpty(this.localServer, "local server must be specified.");
@@ -68,15 +70,18 @@ public class CasConfig implements InitializingBean {
 		this.localServer = localServer;
 	}
 
-	/** The enterprise-wide CAS login URL. Usually something like
+	/**
+	 * The enterprise-wide CAS login URL. Usually something like
 	 * <code>https://www.mycompany.com/cas/login</code>.
 	 * 
-	 * @return the enterprise-wide CAS login URL */
+	 * @return the enterprise-wide CAS login URL
+	 */
 	public String getLoginUrl() {
 		return casServer + loginUri;
 	}
 
-	/** Indicates whether the <code>renew</code> parameter should be sent to the
+	/**
+	 * Indicates whether the <code>renew</code> parameter should be sent to the
 	 * CAS login URL and CAS validation URL.
 	 * <p>
 	 * If <code>true</code>, it will force CAS to authenticate the user again (even if the user has
@@ -84,7 +89,8 @@ public class CasConfig implements InitializingBean {
 	 * as a consequence of an explicit login. High security applications would probably set this to
 	 * <code>true</code>. Defaults to <code>false</code>, providing automated single sign on.
 	 * 
-	 * @return whether to send the <code>renew</code> parameter to CAS */
+	 * @return whether to send the <code>renew</code> parameter to CAS
+	 */
 	public boolean isRenew() {
 		return renew;
 	}

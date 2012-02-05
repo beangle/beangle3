@@ -4,14 +4,14 @@
  */
 package org.beangle.security.core.session.category;
 
-import org.springframework.context.ApplicationEvent;
+import org.beangle.context.event.Event;
 
 /**
  * 会话配置的调整事件
  * @author chaostone
  * @version $Id: CategoryProfileModifyEvent.java Jul 14, 2011 7:52:50 AM chaostone $
  */
-public class CategoryProfileUpdateEvent extends ApplicationEvent {
+public class CategoryProfileUpdateEvent extends Event {
 
 	private static final long serialVersionUID = 803263309728051161L;
 

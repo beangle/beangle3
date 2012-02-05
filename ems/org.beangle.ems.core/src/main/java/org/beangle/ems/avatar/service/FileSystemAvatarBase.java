@@ -16,11 +16,11 @@ import org.beangle.collection.page.Page;
 import org.beangle.collection.page.PageLimit;
 import org.beangle.collection.page.PagedList;
 import org.beangle.collection.page.Pages;
+import org.beangle.context.property.PropertyConfig;
+import org.beangle.context.property.PropertyConfigEvent;
+import org.beangle.context.property.PropertyConfigListener;
 import org.beangle.ems.avatar.Avatar;
 import org.beangle.ems.avatar.model.FileAvatar;
-import org.beangle.util.property.PropertyConfig;
-import org.beangle.util.property.PropertyConfigEvent;
-import org.beangle.util.property.PropertyConfigListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

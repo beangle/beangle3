@@ -7,14 +7,15 @@ package org.beangle.security.core.session.category;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
+import org.beangle.bean.Initializing;
+import org.beangle.context.event.Event;
+import org.beangle.context.event.EventListener;
 import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.auth.Principals;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.session.AbstractSessionController;
 import org.beangle.security.core.session.Sessioninfo;
 import org.beangle.security.core.session.SessioninfoBuilder;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.ApplicationListener;
 
 /**
  * 基于数据库的集中session控制器
@@ -22,8 +23,8 @@ import org.springframework.context.ApplicationListener;
  * @author chaostone
  * @version $Id: DbCategorySessionController.java Jul 8, 2011 9:08:14 AM chaostone $
  */
-public class DbCategorySessionController extends AbstractSessionController implements InitializingBean,
-		ApplicationListener<CategoryProfileUpdateEvent> {
+public class DbCategorySessionController extends AbstractSessionController implements Initializing,
+		EventListener<CategoryProfileUpdateEvent> {
 
 	private CategoryProfileProvider categoryProfileProvider = new SimpleCategoryProfileProvider();
 
@@ -71,7 +72,7 @@ public class DbCategorySessionController extends AbstractSessionController imple
 		}
 	}
 
-	public void afterPropertiesSet() throws Exception {
+	public void init() throws Exception {
 		Validate.notNull(categoryProfileProvider);
 		this.serverName = categoryProfileProvider.getServerName();
 		Validate.notNull(this.serverName);
@@ -89,7 +90,7 @@ public class DbCategorySessionController extends AbstractSessionController imple
 		}
 	}
 
-	public void onApplicationEvent(CategoryProfileUpdateEvent event) {
+	public void onEvent(CategoryProfileUpdateEvent event) {
 		CategoryProfile profile = (CategoryProfile) event.getSource();
 		entityDao.executeUpdateHql("update " + SessionStat.class.getName()
 				+ " stat  set stat.capacity=?,stat.userMaxSessions=?,stat.inactiveInterval=?"
@@ -118,6 +119,14 @@ public class DbCategorySessionController extends AbstractSessionController imple
 
 	public void setSessioninfoBuilder(SessioninfoBuilder sessioninfoBuilder) {
 		this.sessioninfoBuilder = sessioninfoBuilder;
+	}
+
+	public boolean supportsEventType(Class<? extends Event> eventType) {
+		return eventType.equals(CategoryProfileUpdateEvent.class);
+	}
+
+	public boolean supportsSourceType(Class<?> sourceType) {
+		return true;
 	}
 
 }

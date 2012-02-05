@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.Validate;
 import org.beangle.security.auth.AnonymousAuthentication;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.SecurityContextHolder;
@@ -33,7 +34,6 @@ import org.beangle.security.web.auth.logout.SecurityContextLogoutHandler;
 import org.beangle.web.filter.GenericHttpFilterBean;
 import org.beangle.web.util.RedirectUtils;
 import org.beangle.web.util.RequestUtils;
-import org.springframework.util.Assert;
 
 /**
  * Filter required by concurrent session handling package.
@@ -61,8 +61,8 @@ public class ConcurrentSessionFilter extends GenericHttpFilterBean {
 
 	@Override
 	protected void initFilterBean() {
-		Assert.notNull(sessionRegistry, "SessionRegistry required");
-		Assert.isTrue(expiredUrl == null || RedirectUtils.isValidRedirectUrl(expiredUrl), expiredUrl
+		Validate.notNull(sessionRegistry, "SessionRegistry required");
+		Validate.isTrue(expiredUrl == null || RedirectUtils.isValidRedirectUrl(expiredUrl), expiredUrl
 				+ " isn't a valid redirect URL");
 	}
 

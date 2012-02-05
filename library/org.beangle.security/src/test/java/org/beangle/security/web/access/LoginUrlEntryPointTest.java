@@ -16,7 +16,7 @@ public class LoginUrlEntryPointTest {
 	public void testDetectsMissingLoginFormUrl() throws Exception {
 		LoginUrlEntryPoint ep = new LoginUrlEntryPoint();
 		try {
-			ep.afterPropertiesSet();
+			ep.init();
 			fail("Should have thrown IllegalArgumentException");
 		} catch (IllegalArgumentException expected) {
 			assertEquals("loginFormUrl must be specified", expected.getMessage());

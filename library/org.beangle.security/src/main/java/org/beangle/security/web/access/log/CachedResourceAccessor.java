@@ -11,11 +11,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.Validate;
+import org.beangle.bean.Initializing;
 import org.beangle.collection.CollectUtils;
 import org.beangle.security.core.session.impl.AccessLog;
-import org.springframework.beans.factory.InitializingBean;
 
-public class CachedResourceAccessor extends DefaultResourceAccessor implements InitializingBean {
+public class CachedResourceAccessor extends DefaultResourceAccessor implements Initializing {
 
 	private List<AccessLog> accessLogs = CollectUtils.newArrayList();
 
@@ -25,7 +25,7 @@ public class CachedResourceAccessor extends DefaultResourceAccessor implements I
 	// default 500
 	private int cacheSize = 500;
 
-	public void afterPropertiesSet() throws Exception {
+	public void init() throws Exception {
 		Validate.isTrue(minDuration > 0, "minDuration must greater then 0");
 		Validate.isTrue(cacheSize > 100, "cacheSize should greate then 100");
 	}

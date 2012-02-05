@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 
 import org.beangle.model.pojo.LongIdTimeObject;
@@ -20,6 +21,7 @@ public class ManagerEmployer extends LongIdTimeObject implements Employer {
 
 	Name name;
 
+	@ManyToOne
 	ContractInfo contractInfo;
 
 	@ManyToMany

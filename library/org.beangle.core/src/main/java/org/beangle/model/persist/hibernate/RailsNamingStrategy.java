@@ -6,12 +6,12 @@ package org.beangle.model.persist.hibernate;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.StringUtils;
 import org.beangle.lang.StrUtils;
 import org.beangle.model.persist.TableNamingStrategy;
 import org.hibernate.AssertionFailure;
 import org.hibernate.cfg.DefaultNamingStrategy;
 import org.hibernate.cfg.NamingStrategy;
-import org.hibernate.util.StringHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,7 +73,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 * </pre>
 	 */
 	public String logicalColumnName(String columnName, String propertyName) {
-		return StringHelper.isNotEmpty(columnName) ? columnName : propertyToColumnName(propertyName);
+		return StringUtils.isNotEmpty(columnName) ? columnName : propertyToColumnName(propertyName);
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 	 * name and the referenced column
 	 */
 	public String logicalCollectionColumnName(String columnName, String propertyName, String referencedColumn) {
-		return StringHelper.isNotEmpty(columnName) ? columnName : unqualify(propertyName) + "_"
+		return StringUtils.isNotEmpty(columnName) ? columnName : unqualify(propertyName) + "_"
 				+ referencedColumn;
 	}
 

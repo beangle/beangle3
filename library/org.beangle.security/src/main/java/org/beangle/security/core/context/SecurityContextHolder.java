@@ -6,7 +6,7 @@ package org.beangle.security.core.context;
 
 import java.lang.reflect.Constructor;
 
-import org.springframework.util.ReflectionUtils;
+import org.apache.commons.lang.UnhandledException;
 
 /**
  * Associates a given {@link SecurityContext} with the current execution thread.
@@ -100,7 +100,7 @@ public class SecurityContextHolder {
 						.getConstructor(new Class[] {});
 				strategy = (SecurityContextHolderStrategy) customStrategy.newInstance(new Object[] {});
 			} catch (Exception ex) {
-				ReflectionUtils.handleReflectionException(ex);
+				throw new UnhandledException(ex);
 			}
 		}
 

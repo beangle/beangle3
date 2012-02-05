@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.UnhandledException;
 import org.apache.commons.lang.Validate;
 import org.beangle.security.core.context.SecurityContext;
 import org.beangle.security.core.context.SecurityContextBean;
 import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.web.filter.GenericHttpFilterBean;
-import org.springframework.util.ReflectionUtils;
 
 /**
  * Populates the {@link SecurityContextHolder} with information obtained from
@@ -254,7 +254,7 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
 				}
 				contextFromSessionObject = m.invoke(contextFromSessionObject, new Object[] {});
 			} catch (Exception ex) {
-				ReflectionUtils.handleReflectionException(ex);
+				throw new UnhandledException(ex);
 			}
 		}
 

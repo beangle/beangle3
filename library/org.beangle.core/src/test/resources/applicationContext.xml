@@ -2,10 +2,10 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-	<bean id="beangleConfig"
-	 class="org.beangle.spring.config.processor.ReconfigProcessor">
+	<bean id="BeangleSpringConfigProcessor"
+		class="org.beangle.context.spring.SpringConfigProcessor">
 		<property name="resource">
-			<bean class="org.beangle.spring.config.ConfigResource">
+			<bean class="org.beangle.context.spring.SpringConfigResource">
 				<property name="locations" value="classpath*:spring-config.xml" />
 			</bean>
 		</property>

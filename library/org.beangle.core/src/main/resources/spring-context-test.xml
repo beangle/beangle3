@@ -2,12 +2,11 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-	<bean id="autoConfigProcessor" class="org.beangle.spring.config.processor.AutoConfigProcessor" />
-	
-	<bean id="beangleConfig" class="org.beangle.spring.config.processor.ReconfigProcessor">
+	<bean id="BeangleSpringConfigProcessor"
+		class="org.beangle.context.spring.SpringConfigProcessor">
 		<property name="resource">
-			<bean class="org.beangle.spring.config.ConfigResource">
-				<property name="locations" value="classpath*:spring-config-test.xml" />
+			<bean class="org.beangle.context.spring.SpringConfigResource">
+				<property name="locations" value="classpath*:spring-config.xml" />
 			</bean>
 		</property>
 	</bean>

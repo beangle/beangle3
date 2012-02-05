@@ -4,20 +4,19 @@
  */
 package org.beangle.model.persist.impl;
 
+import org.beangle.context.event.Event;
+import org.beangle.context.event.EventMulticaster;
 import org.beangle.model.persist.EntityDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.ApplicationEventPublisherAware;
 
-public abstract class BaseServiceImpl implements ApplicationEventPublisherAware {
+public abstract class BaseServiceImpl {
 
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	protected EntityDao entityDao;
 
-	protected ApplicationEventPublisher eventPublisher;
+	protected EventMulticaster eventMulticaster;
 
 	public EntityDao getEntityDao() {
 		return entityDao;
@@ -27,12 +26,16 @@ public abstract class BaseServiceImpl implements ApplicationEventPublisherAware 
 		this.entityDao = entityDao;
 	}
 
-	public void publish(ApplicationEvent event) {
-		if (null != eventPublisher) eventPublisher.publishEvent(event);
+	public void publish(Event e) {
+		if (null != eventMulticaster) eventMulticaster.multicast(e);
 	}
 
-	public void setApplicationEventPublisher(ApplicationEventPublisher eventPublisher) {
-		this.eventPublisher = eventPublisher;
+	public EventMulticaster getEventMulticaster() {
+		return eventMulticaster;
+	}
+
+	public void setEventMulticaster(EventMulticaster eventMulticaster) {
+		this.eventMulticaster = eventMulticaster;
 	}
 
 }

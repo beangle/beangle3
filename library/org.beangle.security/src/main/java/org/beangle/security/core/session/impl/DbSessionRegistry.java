@@ -10,7 +10,10 @@ import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.Validate;
+import org.beangle.bean.Initializing;
 import org.beangle.collection.CollectUtils;
+import org.beangle.context.event.Event;
+import org.beangle.context.event.EventListener;
 import org.beangle.model.persist.EntityDao;
 import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.model.query.builder.OqlBuilder;
@@ -26,11 +29,9 @@ import org.beangle.security.core.session.Sessioninfo;
 import org.beangle.security.core.session.SessioninfoBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.ApplicationListener;
 
 public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistry,
-		ApplicationListener<SessionDestroyedEvent>, InitializingBean {
+		EventListener<SessionDestroyedEvent>, Initializing {
 
 	protected static final Logger logger = LoggerFactory.getLogger(DbSessionRegistry.class);
 
@@ -48,7 +49,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 
 	private int updatedInterval = 5 * 60 * 1000;// 5分钟
 
-	public void afterPropertiesSet() throws Exception {
+	public void init() throws Exception {
 		Validate.notNull(controller, "controller must set");
 		Validate.notNull(sessioninfoBuilder, "sessioninfoBuilder must set");
 	}
@@ -140,8 +141,16 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 	}
 
 	// 当会话消失时，退出用户
-	public void onApplicationEvent(SessionDestroyedEvent event) {
+	public void onEvent(SessionDestroyedEvent event) {
 		remove(event.getId());
+	}
+
+	public boolean supportsEventType(Class<? extends Event> eventType) {
+		return eventType.equals(SessionDestroyedEvent.class);
+	}
+
+	public boolean supportsSourceType(Class<?> sourceType) {
+		return true;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

@@ -16,8 +16,8 @@ import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.collection.CollectUtils;
+import org.beangle.context.inject.ConfigResource;
 import org.beangle.lang.StrUtils;
-import org.beangle.spring.config.ConfigResource;
 import org.beangle.util.inflector.Pluralizer;
 import org.beangle.util.inflector.lang.en.EnNounPluralizer;
 import org.slf4j.Logger;
@@ -220,7 +220,6 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
 	public void setRelationTableMaxLength(int relationTableMaxLength) {
 		this.relationTableMaxLength = relationTableMaxLength;
 	}
-
 }
 
 /**
@@ -241,7 +240,8 @@ class TableNamePattern implements Comparable<TableNamePattern> {
 	public TableNamePattern(String packageName, String schemaName, String prefix) {
 		this.packageName = packageName;
 		this.schema = schemaName;
-		this.prefix = prefix;
+		if (null == prefix) this.prefix = "";
+		else this.prefix = prefix;
 	}
 
 	public int compareTo(TableNamePattern other) {
@@ -279,5 +279,4 @@ class TableNamePattern implements Comparable<TableNamePattern> {
 		sb.append(", abbreviations:").append(abbreviations).append(']');
 		return sb.toString();
 	}
-
 }

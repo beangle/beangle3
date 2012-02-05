@@ -4,6 +4,8 @@
  */
 package org.beangle.ems.security;
 
+import org.beangle.context.inject.AbstractBindModule;
+import org.beangle.context.inject.Scope;
 import org.beangle.ems.avatar.action.BoardAction;
 import org.beangle.ems.avatar.action.MyUploadAction;
 import org.beangle.ems.security.action.AuthorityAction;
@@ -22,8 +24,6 @@ import org.beangle.ems.security.action.RestrictionAction;
 import org.beangle.ems.security.action.SessioninfoLogAction;
 import org.beangle.ems.security.action.UserAction;
 import org.beangle.ems.security.helper.UserDashboardHelper;
-import org.beangle.spring.config.AbstractBindModule;
-import org.beangle.spring.config.Scope;
 
 public final class WebModule extends AbstractBindModule {
 

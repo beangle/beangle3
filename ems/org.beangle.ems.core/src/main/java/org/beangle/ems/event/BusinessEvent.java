@@ -6,7 +6,7 @@ package org.beangle.ems.event;
 
 import java.util.Date;
 
-import org.springframework.context.ApplicationEvent;
+import org.beangle.context.event.Event;
 
 /**
  * 业务事件
@@ -14,7 +14,7 @@ import org.springframework.context.ApplicationEvent;
  * @author chaostone
  * @version $Id: BusinessEvent.java Jun 22, 2011 8:47:39 AM chaostone $
  */
-public class BusinessEvent extends ApplicationEvent {
+public class BusinessEvent extends Event {
 
 	private static final long serialVersionUID = -3105001733284410829L;
 

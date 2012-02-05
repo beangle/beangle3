@@ -5,6 +5,8 @@
 package org.beangle.ems.log.service;
 
 import org.apache.commons.lang.StringUtils;
+import org.beangle.context.event.Event;
+import org.beangle.context.event.EventListener;
 import org.beangle.ems.event.BusinessEvent;
 import org.beangle.ems.log.model.BusinessLogBean;
 import org.beangle.ems.log.model.BusinessLogDetailBean;
@@ -13,17 +15,16 @@ import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.security.web.auth.WebAuthenticationDetails;
-import org.springframework.context.ApplicationListener;
 
 /**
  * @author chaostone
  * @version $Id: BusinessEventLogger.java Jun 29, 2011 9:28:33 AM chaostone $
  */
-public class BusinessEventLogger extends BaseServiceImpl implements ApplicationListener<BusinessEvent> {
+public class BusinessEventLogger extends BaseServiceImpl implements EventListener<BusinessEvent> {
 
 	private SessionRegistry sessionRegistry;
 
-	public void onApplicationEvent(BusinessEvent event) {
+	public void onEvent(BusinessEvent event) {
 		BusinessLogBean log = new BusinessLogBean();
 		log.setOperateAt(event.getIssueAt());
 		log.setOperation(StringUtils.defaultIfBlank(event.getDescription(), "  "));
@@ -47,5 +48,14 @@ public class BusinessEventLogger extends BaseServiceImpl implements ApplicationL
 	public void setSessionRegistry(SessionRegistry sessionRegistry) {
 		this.sessionRegistry = sessionRegistry;
 	}
+
+	public boolean supportsEventType(Class<? extends Event> eventType) {
+		return eventType.equals(BusinessEvent.class);
+	}
+
+	public boolean supportsSourceType(Class<?> sourceType) {
+		return true;
+	}
+	
 
 }

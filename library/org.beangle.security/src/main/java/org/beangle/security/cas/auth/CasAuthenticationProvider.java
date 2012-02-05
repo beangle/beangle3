@@ -8,6 +8,7 @@ import static org.beangle.security.cas.auth.CasAuthentication.STATELESS_ID;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.beangle.bean.Initializing;
 import org.beangle.lang.StrUtils;
 import org.beangle.security.auth.AuthenticationProvider;
 import org.beangle.security.auth.BadCredentialsException;
@@ -24,7 +25,6 @@ import org.beangle.security.core.userdetail.UserDetailService;
 import org.beangle.security.core.userdetail.UsernameNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 
 /**
  * An {@link AuthenticationProvider} implementation that integrates with JA-SIG
@@ -37,7 +37,7 @@ import org.springframework.beans.factory.InitializingBean;
  * 
  * @author chaostone
  */
-public class CasAuthenticationProvider implements AuthenticationProvider, InitializingBean {
+public class CasAuthenticationProvider implements AuthenticationProvider, Initializing {
 	private static final Logger logger = LoggerFactory.getLogger(CasAuthenticationProvider.class);
 	private UserDetailService userDetailService;
 	private UserDetailChecker userDetailChecker;
@@ -45,7 +45,7 @@ public class CasAuthenticationProvider implements AuthenticationProvider, Initia
 	private String key;
 	private TicketValidator ticketValidator;
 
-	public void afterPropertiesSet() throws Exception {
+	public void init() throws Exception {
 		Validate.notNull(this.userDetailService, "A userDetailsService must be set");
 		Validate.notNull(this.ticketValidator, "A ticketValidator must be set");
 		Validate.notNull(this.statelessTicketCache, "A statelessTicketCache must be set");
