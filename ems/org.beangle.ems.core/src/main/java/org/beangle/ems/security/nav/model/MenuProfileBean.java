@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -44,6 +45,7 @@ public class MenuProfileBean extends LongIdObject implements MenuProfile {
 
 	/** 用户组 */
 	@NotNull
+	@ManyToOne
 	private Group group;
 
 	/** 是否启用 */

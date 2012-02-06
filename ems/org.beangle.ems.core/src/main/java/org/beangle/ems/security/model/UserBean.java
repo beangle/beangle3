@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -59,6 +60,7 @@ public class UserBean extends LongIdTimeObject implements User {
 	private Set<GroupMember> members = CollectUtils.newHashSet();
 
 	/** 创建人 */
+	@ManyToOne
 	private User creator;
 
 	/**

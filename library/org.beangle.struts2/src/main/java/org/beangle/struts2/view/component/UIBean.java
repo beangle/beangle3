@@ -5,6 +5,7 @@
 package org.beangle.struts2.view.component;
 
 import java.io.Writer;
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Random;
@@ -128,11 +129,9 @@ public abstract class UIBean extends Component {
 	protected Object getValue(Object obj, String property) {
 		stack.push(obj);
 		try {
-                   Object value = stack.findValue(property);
-                   if(value instanceof Number) {
-                       return MessageFormat.format(Number_Fmt, value);
-                   }
-                   return value;
+			Object value = stack.findValue(property);
+			if (value instanceof Number) { return MessageFormat.format(Number_Fmt, value); }
+			return value;
 		} finally {
 			stack.pop();
 		}

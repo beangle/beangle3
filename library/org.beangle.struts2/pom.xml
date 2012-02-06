@@ -14,9 +14,13 @@
 	<properties>
 		<bundle.symbolicName>org.beangle.struts2</bundle.symbolicName>
 		<bundle.namespace>org.beangle.struts2</bundle.namespace>
+		<struts.version>2.2.3</struts.version>
+		<freemarker.version>2.3.16</freemarker.version>
+<!--
 		<struts.version>2.3.1.1</struts.version>
-		<jqueryplugin.version>3.1.0</jqueryplugin.version>
 		<freemarker.version>2.3.18</freemarker.version>
+-->
+		<jqueryplugin.version>3.1.0</jqueryplugin.version>
 	</properties>
 	
 	<dependencies>
@@ -39,16 +43,24 @@
 			<artifactId>struts2-jquery-plugin</artifactId>
 			<version>${jqueryplugin.version}</version>
 		</dependency>
+		<!--
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-				
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>

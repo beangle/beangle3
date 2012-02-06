@@ -25,19 +25,8 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
+			<version>3.0.5.RELEASE</version>
 		</dependency>
-		<!--
-		<dependency>
-			<groupId>org.beangle</groupId>
-			<artifactId>beangle-emsapp-database</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jasig.cas.client</groupId>
-			<artifactId>cas-client-core</artifactId>
-			<version>3.2.1</version>
-			<optional>true</optional>
-		</dependency>
-		-->
 	</dependencies>
 	<build>
 		<plugins>

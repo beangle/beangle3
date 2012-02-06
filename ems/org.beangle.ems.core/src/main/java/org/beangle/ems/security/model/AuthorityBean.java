@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.beangle.ems.security.Authority;
@@ -30,10 +31,12 @@ public class AuthorityBean extends LongIdObject implements RestrictionHolder, Au
 
 	/** 用户组 */
 	@NotNull
+	@ManyToOne
 	protected Group group;
 
 	/** 权限实体中的模块 */
 	@NotNull
+	@ManyToOne
 	protected Resource resource;
 
 	/** 该模块对应的数据操作范围 */

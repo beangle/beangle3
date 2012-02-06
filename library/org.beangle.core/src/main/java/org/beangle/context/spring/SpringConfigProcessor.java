@@ -122,7 +122,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
 	protected void registerBuildins(BindRegistry registry) {
 		// FIXME for listeners inject
 		registerBean(DefaultEventMulticaster.class.getName(), DefaultEventMulticaster.class,
-				Scope.SINGLETON.name(), new HashMap<String, Object>(), registry);
+				Scope.SINGLETON.toString(), new HashMap<String, Object>(), registry);
 	}
 
 	/**

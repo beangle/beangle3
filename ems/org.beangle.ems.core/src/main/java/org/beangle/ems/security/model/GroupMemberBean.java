@@ -7,6 +7,7 @@ package org.beangle.ems.security.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.beangle.ems.security.Group;
@@ -27,10 +28,12 @@ public class GroupMemberBean extends LongIdTimeObject implements GroupMember {
 
 	/** 用户组 */
 	@NotNull
+	@ManyToOne
 	private Group group;
 
 	/** 用户 */
 	@NotNull
+	@ManyToOne
 	private User user;
 
 	/** 用户是否是该组的成员 */

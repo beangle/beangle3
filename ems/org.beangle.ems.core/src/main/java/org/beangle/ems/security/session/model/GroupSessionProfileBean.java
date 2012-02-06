@@ -5,6 +5,7 @@
 package org.beangle.ems.security.session.model;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.beangle.ems.security.Group;
@@ -22,10 +23,12 @@ public class GroupSessionProfileBean extends LongIdObject {
 
 	/** 总体在线配置 */
 	@NotNull
+	@ManyToOne
 	protected SessionProfileBean sessionProfile;
 
 	/** 用户组 */
 	@NotNull
+	@ManyToOne
 	protected Group group;
 
 	/** 最大在线人数 */

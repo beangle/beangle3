@@ -11,6 +11,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
@@ -63,9 +64,11 @@ public class MenuBean extends HierarchyLongIdObject<Menu> implements Menu {
 
 	/** 菜单配置 */
 	@NotNull
+	@ManyToOne
 	private MenuProfile profile;
 
 	/** 父级菜单 */
+	@ManyToOne
 	private Menu parent;
 
 	/** 直接下级菜单 */

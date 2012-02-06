@@ -20,8 +20,6 @@ import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.codec.EncryptUtil;
 import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.security.web.session.model.SessioninfoLogBean;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
 
 /**
  * 维护个人账户信息
@@ -30,9 +28,9 @@ import org.springframework.mail.SimpleMailMessage;
  */
 public class MyAction extends SecurityActionSupport {
 
-	private MailSender mailSender;
-
-	private SimpleMailMessage message;
+//	private MailSender mailSender;
+//
+//	private SimpleMailMessage message;
 
 	private SessionRegistry sessionRegistry;
 
@@ -125,19 +123,19 @@ public class MyAction extends SecurityActionSupport {
 			List<Object> values = CollectUtils.newArrayList();
 			values.add(longinName);
 			values.add(password);
-			String body = getText("user.password.sendmail.body", values);
-			try {
-				SimpleMailMessage msg = new SimpleMailMessage(message);
-				msg.setTo(user.getMail());
-				msg.setSubject(title);
-				msg.setText(body.toString());
-				mailSender.send(msg);
-			} catch (Exception e) {
-				e.printStackTrace();
-				logger.info("reset password error for user:" + user.getName() + " with email :"
-						+ user.getMail());
-				return goErrorWithMessage("error.email.sendError");
-			}
+//			String body = getText("user.password.sendmail.body", values);
+//			try {
+//				SimpleMailMessage msg = new SimpleMailMessage(message);
+//				msg.setTo(user.getMail());
+//				msg.setSubject(title);
+//				msg.setText(body.toString());
+//				mailSender.send(msg);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//				logger.info("reset password error for user:" + user.getName() + " with email :"
+//						+ user.getMail());
+//				return goErrorWithMessage("error.email.sendError");
+//			}
 		}
 		entityDao.saveOrUpdate(user);
 		return forward("sendResult");
@@ -152,13 +150,13 @@ public class MyAction extends SecurityActionSupport {
 		this.sessionRegistry = sessionRegistry;
 	}
 
-	public void setMailSender(MailSender mailSender) {
-		this.mailSender = mailSender;
-	}
-
-	public void setMessage(SimpleMailMessage message) {
-		this.message = message;
-	}
+//	public void setMailSender(MailSender mailSender) {
+//		this.mailSender = mailSender;
+//	}
+//
+//	public void setMessage(SimpleMailMessage message) {
+//		this.message = message;
+//	}
 
 	public void setUserDashboardHelper(UserDashboardHelper userDashboardHelper) {
 		this.userDashboardHelper = userDashboardHelper;
