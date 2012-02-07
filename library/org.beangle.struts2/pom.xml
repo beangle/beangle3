@@ -14,12 +14,8 @@
 	<properties>
 		<bundle.symbolicName>org.beangle.struts2</bundle.symbolicName>
 		<bundle.namespace>org.beangle.struts2</bundle.namespace>
-		<struts.version>2.2.3</struts.version>
-		<freemarker.version>2.3.16</freemarker.version>
-<!--
-		<struts.version>2.3.1.1</struts.version>
+		<struts.version>2.3.1.2</struts.version>
 		<freemarker.version>2.3.18</freemarker.version>
--->
 		<jqueryplugin.version>3.1.0</jqueryplugin.version>
 	</properties>
 	

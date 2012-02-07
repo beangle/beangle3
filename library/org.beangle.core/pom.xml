@@ -15,7 +15,7 @@
 		<bundle.symbolicName>org.beangle</bundle.symbolicName>
 		<bundle.namespace>org.beangle</bundle.namespace>
 		<commonsio.version>2.0.1</commonsio.version>
-		<commonscodec.version>1.4</commonscodec.version>
+		<commonscodec.version>1.5</commonscodec.version>
 		<commonscompress.version>1.1</commonscompress.version>
 		<jta.version>1.1</jta.version>
 		<jxls.version>1.0-RC-2</jxls.version>
@@ -71,7 +71,7 @@
 		<dependency>
 			<groupId>ognl</groupId>
 			<artifactId>ognl</artifactId>
-			<version>3.0.1</version>
+			<version>3.0.4</version>
 			<optional>true</optional>
 			<exclusions>
 				<exclusion>
@@ -145,25 +145,6 @@
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
-		
-		<!--osgi dependency-->
-		<dependency>
-			<groupId>org.eclipse.gemini.blueprint</groupId>
-			<artifactId>gemini-blueprint-core</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.gemini.blueprint</groupId>
-			<artifactId>gemini-blueprint-io</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.eclipse.gemini.blueprint</groupId>
-			<artifactId>gemini-blueprint-extender</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		
 	</dependencies>
 	<profiles>
 		<profile>

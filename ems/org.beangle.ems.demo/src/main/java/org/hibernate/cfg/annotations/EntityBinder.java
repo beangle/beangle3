@@ -37,7 +37,6 @@ import javax.persistence.SecondaryTables;
 
 import org.jboss.logging.Logger;
 
-import org.apache.commons.lang.StringUtils;
 import org.hibernate.AnnotationException;
 import org.hibernate.AssertionFailure;
 import org.hibernate.EntityMode;

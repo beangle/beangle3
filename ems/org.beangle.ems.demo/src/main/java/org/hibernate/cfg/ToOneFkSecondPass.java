@@ -27,7 +27,6 @@ import java.util.Iterator;
 
 import javax.persistence.Entity;
 
-import org.apache.commons.lang.StringUtils;
 import org.hibernate.AnnotationException;
 import org.hibernate.AssertionFailure;
 import org.hibernate.MappingException;
@@ -73,7 +72,7 @@ public class ToOneFkSecondPass extends FkSecondPass {
 		try {
 			Entity entityAnno=Class.forName(entityClassName).getAnnotation(Entity.class);
 			if(null!=entityAnno){
-				if(StringUtils.isNotEmpty(entityAnno.name())){
+				if(null!=entityAnno.name() && entityAnno.name().length()>0){
 					this.entityName=entityAnno.name();
 				}
 			}
