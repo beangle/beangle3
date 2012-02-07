@@ -4,6 +4,8 @@
  */
 package org.beangle.security.cas;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.Validate;
 import org.beangle.bean.Initializing;
 
@@ -21,8 +23,6 @@ public class CasConfig implements Initializing {
 
 	private String casServer;
 
-	private String localServer;
-
 	private boolean renew = false;
 
 	private boolean encode = true;
@@ -39,16 +39,14 @@ public class CasConfig implements Initializing {
 		super();
 	}
 
-	public CasConfig(String casServer, String localServer) {
+	public CasConfig(String casServer) {
 		super();
 		this.casServer = casServer;
-		this.localServer = localServer;
 	}
 
 	public void init() throws Exception {
 		Validate.notEmpty(this.casServer, "cas server must be specified.");
 		Validate.isTrue(!this.casServer.endsWith("/"), "cas server should not end with /");
-		Validate.notEmpty(this.localServer, "local server must be specified.");
 		Validate.notEmpty(this.loginUri, "loginUri must be specified. like /login");
 		Validate.notEmpty(this.artifactName, "artifact name  must be specified.etc. ticket");
 	}
@@ -62,12 +60,23 @@ public class CasConfig implements Initializing {
 		else this.casServer = casServer;
 	}
 
-	public String getLocalServer() {
-		return localServer;
-	}
-
-	public void setLocalServer(String localServer) {
-		this.localServer = localServer;
+	public static String getLocalServer(HttpServletRequest request) {
+		StringBuilder sb = new StringBuilder();
+		String scheme = request.getScheme();
+		int port = request.getServerPort();
+		String serverName = request.getServerName();
+		boolean includePort = true;
+		if (null != scheme) {
+			sb.append(scheme).append("://");
+			includePort = (port != (scheme.equals("http") ? 80 : 443));
+		}
+		if (null != serverName) {
+			sb.append(serverName);
+			if (includePort && port > 0) {
+				sb.append(':').append(port);
+			}
+		}
+		return sb.toString();
 	}
 
 	/**

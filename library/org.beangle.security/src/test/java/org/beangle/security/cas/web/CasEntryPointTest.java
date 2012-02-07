@@ -33,7 +33,7 @@ public class CasEntryPointTest {
 	}
 
 	public void testGettersSetters() {
-		CasConfig config = new CasConfig("https://cas", null);
+		CasConfig config = new CasConfig("https://cas");
 		assertEquals("https://cas", config.getCasServer());
 
 		CasEntryPoint ep = new CasEntryPoint(config);
@@ -41,10 +41,13 @@ public class CasEntryPointTest {
 	}
 
 	public void testNormalOperationWithRenewFalse() throws Exception {
-		CasConfig config = new CasConfig("https://cas", "https://mycompany.com/bigWebApp");
+		CasConfig config = new CasConfig("https://cas");
 		config.setRenew(false);
 		CasEntryPoint ep = new CasEntryPoint(config);
-		MockHttpServletRequest request = new MockHttpServletRequest(null, "/some_path");
+		MockHttpServletRequest request = new MockHttpServletRequest(null, "/bigWebApp/some_path");
+		request.setServerName("mycompany.com");
+		request.setScheme("https");
+		request.setServerPort(443);
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		ep.init();
 		ep.commence(request, response, null);
@@ -55,10 +58,14 @@ public class CasEntryPointTest {
 	}
 
 	public void testNormalOperationWithRenewTrue() throws Exception {
-		CasConfig config = new CasConfig("https://cas", "https://mycompany.com/bigWebApp");
+		CasConfig config = new CasConfig("https://cas");
 		config.setRenew(true);
 		CasEntryPoint ep = new CasEntryPoint(config);
-		MockHttpServletRequest request = new MockHttpServletRequest(null, "/some_path");
+		MockHttpServletRequest request = new MockHttpServletRequest(null, "/bigWebApp/some_path");
+		request.setServerName("mycompany.com");
+		request.setScheme("https");
+		request.setServerPort(443);
+		
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		ep.init();
 		ep.commence(request, response, null);
@@ -71,14 +78,14 @@ public class CasEntryPointTest {
 	public void testConstuctServiceUrl() {
 		CasConfig config = new CasConfig();
 		config.setCasServer("http://www.mycompany.com/cas");
-		config.setLocalServer("localhost:8080/demo");
+//		config.setLocalServer("localhost:8080/demo");
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.setContextPath("/demo");
 		request.setServletPath("/home.action");
 		request.setRequestURI("/demo/home.action");
 		HttpServletResponse response = new MockHttpServletResponse();
 		final String urlEncodedService = CasEntryPoint.constructServiceUrl(request, response, null,
-				config.getLocalServer(), "ticket", config.isEncode());
+				CasConfig.getLocalServer(request), "ticket", config.isEncode());
 		System.out.println(urlEncodedService);
 
 		final String urlEncodedService2 = CasEntryPoint.constructServiceUrl(request, response, null,

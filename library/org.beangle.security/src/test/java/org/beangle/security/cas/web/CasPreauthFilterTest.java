@@ -29,7 +29,6 @@ public class CasPreauthFilterTest {
 		filter = new CasPreauthFilter();
 		config = new CasConfig();
 		filter.setConfig(config);
-		config.setLocalServer("http://localhost/demo");
 	}
 
 	public void testGettersSetters() {

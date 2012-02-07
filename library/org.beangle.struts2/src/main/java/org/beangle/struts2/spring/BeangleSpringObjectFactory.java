@@ -11,6 +11,7 @@ import javax.servlet.ServletContext;
 import org.apache.struts2.StrutsConstants;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.apache.struts2.views.freemarker.FreemarkerResult;
+import org.beangle.web.spring.ContextLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -35,6 +36,8 @@ import com.opensymphony.xwork2.util.reflection.ReflectionExceptionHandler;
  * @version $Id: BeangleSpringObjectFactory.java Dec 25, 2011 5:54:57 PM chaostone $
  */
 public class BeangleSpringObjectFactory extends SpringObjectFactory {
+	private static final long serialVersionUID = -1733081389212973935L;
+
 	private static final Logger logger = LoggerFactory.getLogger(BeangleSpringObjectFactory.class);
 
 	@Inject
@@ -65,16 +68,7 @@ public class BeangleSpringObjectFactory extends SpringObjectFactory {
 		boolean useClassCache = "true".equals(useClassCacheStr);
 		logger.info("Initializing Struts-Spring integration...");
 
-		Object rootWebApplicationContext = servletContext
-				.getAttribute("org.springframework.web.context.WebApplicationContext.ROOT");
-
-		if (rootWebApplicationContext instanceof RuntimeException) {
-			RuntimeException runtimeException = (RuntimeException) rootWebApplicationContext;
-			logger.error(runtimeException.getMessage());
-			return;
-		}
-
-		ApplicationContext appContext = (ApplicationContext) rootWebApplicationContext;
+		ApplicationContext appContext = ContextLoader.getContext(servletContext);
 		if (appContext == null) {
 			// uh oh! looks like the lifecycle listener wasn't installed. Let's inform the user
 			String message = "********** FATAL ERROR STARTING UP STRUTS-SPRING INTEGRATION **********\n"
@@ -82,7 +76,7 @@ public class BeangleSpringObjectFactory extends SpringObjectFactory {
 					+ "Nothing will work until WebApplicationContextUtils returns a valid ApplicationContext.\n"
 					+ "You might need to add the following to web.xml: \n"
 					+ "    <listener>\n"
-					+ "        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>\n"
+					+ "        <listener-class>org.beangle.web.spring.ContextListener</listener-class>\n"
 					+ "    </listener>";
 			logger.error(message);
 			return;

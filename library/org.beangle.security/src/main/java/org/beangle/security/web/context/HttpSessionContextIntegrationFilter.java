@@ -19,7 +19,7 @@ import org.apache.commons.lang.Validate;
 import org.beangle.security.core.context.SecurityContext;
 import org.beangle.security.core.context.SecurityContextBean;
 import org.beangle.security.core.context.SecurityContextHolder;
-import org.beangle.web.filter.GenericHttpFilterBean;
+import org.beangle.web.filter.GenericHttpFilter;
 
 /**
  * Populates the {@link SecurityContextHolder} with information obtained from
@@ -75,7 +75,7 @@ import org.beangle.web.filter.GenericHttpFilterBean;
  * @author chaostone
  */
 
-public class HttpSessionContextIntegrationFilter extends GenericHttpFilterBean {
+public class HttpSessionContextIntegrationFilter extends GenericHttpFilter {
 	static final String FILTER_APPLIED = "__beangle_security_session_integration_filter_applied";
 
 	public static final String SECURITY_CONTEXT_KEY = "BEANGLE_SECURITY_CONTEXT";

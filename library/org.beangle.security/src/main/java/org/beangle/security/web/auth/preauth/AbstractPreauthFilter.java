@@ -21,7 +21,7 @@ import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.security.core.userdetail.UsernameNotFoundException;
 import org.beangle.security.web.auth.AbstractAuthenticationFilter;
 import org.beangle.security.web.auth.WebAuthenticationDetailsSource;
-import org.beangle.web.filter.GenericHttpFilterBean;
+import org.beangle.web.filter.GenericHttpFilter;
 
 /**
  * Base class for processing filters that handle pre-authenticated
@@ -35,7 +35,7 @@ import org.beangle.web.filter.GenericHttpFilterBean;
  * affect cases where the principal returned by {@link #getPreauthAuthentication} is null, when the
  * chain will still proceed as normal.
  */
-public abstract class AbstractPreauthFilter extends GenericHttpFilterBean {
+public abstract class AbstractPreauthFilter extends GenericHttpFilter {
 
 	private AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
 

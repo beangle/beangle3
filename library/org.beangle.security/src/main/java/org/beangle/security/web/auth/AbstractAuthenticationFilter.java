@@ -20,7 +20,7 @@ import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.security.core.session.SessionRegistry;
-import org.beangle.web.filter.GenericHttpFilterBean;
+import org.beangle.web.filter.GenericHttpFilter;
 import org.beangle.web.util.RedirectUtils;
 
 /**
@@ -94,7 +94,7 @@ import org.beangle.web.util.RedirectUtils;
  * @author chaostone
  * @version $Id: AbstractProcessingFilter.java 3280 2008-09-12 14:57:21Z $
  */
-public abstract class AbstractAuthenticationFilter extends GenericHttpFilterBean {
+public abstract class AbstractAuthenticationFilter extends GenericHttpFilter {
 
 	public static final String SECURITY_SAVED_REQUEST_KEY = "BEANGLE_SECURITY_SAVED_REQUEST_KEY";
 

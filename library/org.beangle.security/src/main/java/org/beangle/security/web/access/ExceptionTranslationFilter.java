@@ -23,9 +23,9 @@ import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.security.web.AuthenticationEntryPoint;
 import org.beangle.security.web.util.ThrowableAnalyzer;
 import org.beangle.security.web.util.ThrowableCauseExtractor;
-import org.beangle.web.filter.GenericHttpFilterBean;
+import org.beangle.web.filter.GenericHttpFilter;
 
-public class ExceptionTranslationFilter extends GenericHttpFilterBean {
+public class ExceptionTranslationFilter extends GenericHttpFilter {
 
 	private AccessDeniedHandler accessDeniedHandler;
 	private AuthenticationEntryPoint authenticationEntryPoint;

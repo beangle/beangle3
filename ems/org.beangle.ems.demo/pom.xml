@@ -22,11 +22,6 @@
 			<groupId>org.beangle</groupId>
 			<artifactId>beangle-ems-system</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>3.0.5.RELEASE</version>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

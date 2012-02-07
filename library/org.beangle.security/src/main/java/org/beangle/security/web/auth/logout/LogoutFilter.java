@@ -15,7 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.SecurityContextHolder;
-import org.beangle.web.filter.GenericHttpFilterBean;
+import org.beangle.web.filter.GenericHttpFilter;
 import org.beangle.web.util.RedirectUtils;
 
 /**
@@ -30,7 +30,7 @@ import org.beangle.web.util.RedirectUtils;
  * After logout, the URL specified by {@link #logoutSuccessUrl} will be shown.
  * </p>
  */
-public class LogoutFilter extends GenericHttpFilterBean {
+public class LogoutFilter extends GenericHttpFilter {
 	private String filterProcessesUrl = "/logout";
 	private String logoutSuccessUrl;
 	private LogoutHandlerStack handlerStack;

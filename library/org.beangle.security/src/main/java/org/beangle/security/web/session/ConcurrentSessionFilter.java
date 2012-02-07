@@ -31,7 +31,7 @@ import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.security.core.session.SessionStatus;
 import org.beangle.security.web.auth.logout.LogoutHandlerStack;
 import org.beangle.security.web.auth.logout.SecurityContextLogoutHandler;
-import org.beangle.web.filter.GenericHttpFilterBean;
+import org.beangle.web.filter.GenericHttpFilter;
 import org.beangle.web.util.RedirectUtils;
 import org.beangle.web.util.RequestUtils;
 
@@ -53,7 +53,7 @@ import org.beangle.web.util.RequestUtils;
  * 
  * @author chaostone
  */
-public class ConcurrentSessionFilter extends GenericHttpFilterBean {
+public class ConcurrentSessionFilter extends GenericHttpFilter {
 
 	private SessionRegistry sessionRegistry;
 	private String expiredUrl;

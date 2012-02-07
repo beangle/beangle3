@@ -19,30 +19,19 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.beangle.bean.Disposable;
 import org.beangle.bean.Initializing;
-import org.beangle.web.io.ServletContextResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.MutablePropertyValues;
-import org.springframework.beans.PropertyAccessorFactory;
-import org.springframework.beans.PropertyValue;
-import org.springframework.beans.PropertyValues;
-import org.springframework.beans.factory.BeanNameAware;
-import org.springframework.core.io.DefaultResourceLoader;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceEditor;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.util.StringUtils;
 
 /**
  * @author chaostone
- * @version $Id: AbstractFilterBean.java Nov 20, 2010 7:12:16 PM chaostone $
+ * @version $Id: GenericHttpFilter.java Nov 20, 2010 7:12:16 PM chaostone $
  */
-public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, Initializing, Disposable {
+public abstract class GenericHttpFilter implements Filter, Initializing, Disposable {
 
 	/** Logger available to subclasses */
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -56,8 +45,6 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, In
 	/* The FilterConfig of this filter */
 	private FilterConfig filterConfig;
 
-	private String beanName;
-
 	private ServletContext servletContext;
 
 	public final void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -67,18 +54,6 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, In
 
 	protected abstract void doFilterHttp(HttpServletRequest request, HttpServletResponse response,
 			FilterChain chain) throws IOException, ServletException;
-
-	/**
-	 * Stores the bean name as defined in the Spring bean factory.
-	 * <p>
-	 * Only relevant in case of initialization as bean, to have a name as fallback to the filter
-	 * name usually provided by a FilterConfig instance.
-	 * 
-	 * @see #getFilterName()
-	 */
-	public final void setBeanName(String beanName) {
-		this.beanName = beanName;
-	}
 
 	/**
 	 * Calls the <code>initFilterBean()</code> method that might contain custom
@@ -128,22 +103,7 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, In
 		}
 
 		this.filterConfig = filterConfig;
-
-		// Set bean properties from init parameters.
-		try {
-			PropertyValues pvs = new FilterConfigPropertyValues(filterConfig, this.requiredProperties);
-			BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(this);
-			ResourceLoader resourceLoader = new ServletContextResourceLoader(filterConfig.getServletContext());
-			bw.registerCustomEditor(Resource.class, new ResourceEditor(resourceLoader));
-			initBeanWrapper(bw);
-			bw.setPropertyValues(pvs, true);
-		} catch (BeansException ex) {
-			String msg = "Failed to set bean properties on filter '" + filterConfig.getFilterName() + "': "
-					+ ex.getMessage();
-			logger.error(msg, ex);
-			throw new RuntimeException(msg, ex);
-		}
-
+		initParams(filterConfig);
 		// Let subclasses do whatever initialization they like.
 		initFilterBean();
 
@@ -152,18 +112,32 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, In
 		}
 	}
 
-	/**
-	 * Initialize the BeanWrapper for this GenericFilterBean, possibly with
-	 * custom editors.
-	 * <p>
-	 * This default implementation is empty.
-	 * 
-	 * @param bw
-	 *        the BeanWrapper to initialize
-	 * @throws BeansException
-	 *         if thrown by BeanWrapper methods
-	 */
-	protected void initBeanWrapper(BeanWrapper bw) throws BeansException {
+	protected void initParams(FilterConfig config) throws ServletException {
+		Set<String> missingProps = (requiredProperties != null && !requiredProperties.isEmpty()) ? new HashSet<String>(
+				requiredProperties) : null;
+
+		@SuppressWarnings("unchecked")
+		Enumeration<String> en = config.getInitParameterNames();
+		while (en.hasMoreElements()) {
+			String property = en.nextElement();
+			Object value = config.getInitParameter(property);
+			try {
+				PropertyUtils.setProperty(this, property, value);
+			} catch (Exception e) {
+				throw new ServletException("Set filter property'" + property + "' failed; the value is: "
+						+ value);
+			}
+			if (missingProps != null) {
+				missingProps.remove(property);
+			}
+		}
+
+		// Fail if we are still missing properties.
+		if (missingProps != null && missingProps.size() > 0) { throw new ServletException(
+				"Initialization from FilterConfig for filter '" + config.getFilterName()
+						+ "' failed; the following required properties were missing: "
+						+ StringUtils.join(missingProps, ", ")); }
+
 	}
 
 	/**
@@ -193,7 +167,7 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, In
 	 * @see #setBeanName
 	 */
 	protected final String getFilterName() {
-		return (this.filterConfig != null ? this.filterConfig.getFilterName() : this.beanName);
+		return (this.filterConfig != null ? this.filterConfig.getFilterName() : "None");
 	}
 
 	/**
@@ -241,63 +215,6 @@ public abstract class GenericHttpFilterBean implements Filter, BeanNameAware, In
 	 * This default implementation is empty.
 	 */
 	public void destroy() {
-	}
-
-	/**
-	 * PropertyValues implementation created from FilterConfig init parameters.
-	 */
-	private static class FilterConfigPropertyValues extends MutablePropertyValues {
-
-		private static final long serialVersionUID = -8941593023343028404L;
-
-		/**
-		 * Create new FilterConfigPropertyValues.
-		 * 
-		 * @param config
-		 *        FilterConfig we'll use to take PropertyValues from
-		 * @param requiredProperties
-		 *        set of property names we need, where we can't accept
-		 *        default values
-		 * @throws ServletException
-		 *         if any required properties are missing
-		 */
-		public FilterConfigPropertyValues(FilterConfig config, Set<String> requiredProperties)
-				throws ServletException {
-
-			Set<String> missingProps = (requiredProperties != null && !requiredProperties.isEmpty()) ? new HashSet<String>(
-					requiredProperties) : null;
-
-			@SuppressWarnings("unchecked")
-			Enumeration<String> en = config.getInitParameterNames();
-			while (en.hasMoreElements()) {
-				String property = en.nextElement();
-				Object value = config.getInitParameter(property);
-				addPropertyValue(new PropertyValue(property, value));
-				if (missingProps != null) {
-					missingProps.remove(property);
-				}
-			}
-
-			// Fail if we are still missing properties.
-			if (missingProps != null && missingProps.size() > 0) { throw new ServletException(
-					"Initialization from FilterConfig for filter '" + config.getFilterName()
-							+ "' failed; the following required properties were missing: "
-							+ StringUtils.collectionToDelimitedString(missingProps, ", ")); }
-		}
-	}
-}
-
-class ServletContextResourceLoader extends DefaultResourceLoader {
-
-	private final ServletContext servletContext;
-
-	public ServletContextResourceLoader(ServletContext servletContext) {
-		this.servletContext = servletContext;
-	}
-
-	@Override
-	protected Resource getResourceByPath(String path) {
-		return new ServletContextResource(this.servletContext, path);
 	}
 
 }

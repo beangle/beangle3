@@ -44,7 +44,6 @@
 	
 	<bean id="casConfig">
 		<property name="casServer" value="http://portal1.ecnu.edu.cn/cas"/>
-		<property name="localServer" value="duan.com:8081"/>
 	</bean>
 	
 	<!-- Database Properties -->

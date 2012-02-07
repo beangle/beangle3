@@ -16,13 +16,13 @@ import org.beangle.security.auth.AnonymousAuthentication;
 import org.beangle.security.auth.AuthenticationDetailsSource;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.SecurityContextHolder;
-import org.beangle.web.filter.GenericHttpFilterBean;
+import org.beangle.web.filter.GenericHttpFilter;
 
 /**
  * Detects if there is no <code>Authentication</code> object in the
  * <code>SecurityContextHolder</code>, and populates it with one if needed.
  */
-public class AnonymousFilter extends GenericHttpFilterBean {
+public class AnonymousFilter extends GenericHttpFilter {
 
 	private AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
 	private String key;

@@ -61,7 +61,7 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
 					.append(ae.getMessage());
 		} else {
 			final String encodedServiceUrl = constructServiceUrl(request, response, null,
-					config.getLocalServer(), config.getArtifactName(), config.isEncode());
+					CasConfig.getLocalServer(request), config.getArtifactName(), config.isEncode());
 			final String redirectUrl = constructRedirectUrl(config.getLoginUrl(), "service",
 					encodedServiceUrl, config.isRenew(), false);
 			response.sendRedirect(redirectUrl);

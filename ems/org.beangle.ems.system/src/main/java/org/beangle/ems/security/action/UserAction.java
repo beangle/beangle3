@@ -71,7 +71,7 @@ public class UserAction extends SecurityActionSupport {
 		List<Object> params = CollectUtils.newArrayList();
 		boolean queryGroup = false;
 		if (!isAdmin()) {
-			List<GroupMember> members = userService.getGroupMembers(manager, GroupMember.Ship.MANAGER);
+			List<GroupMember> members = userService.getGroupMembers(manager, GroupMember.Ship.GRANTER);
 			List<Group> mngGroups = CollectUtils.newArrayList();
 			for (GroupMember m : members) {
 				mngGroups.add(m.getGroup());

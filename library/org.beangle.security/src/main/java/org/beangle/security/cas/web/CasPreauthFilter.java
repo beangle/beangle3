@@ -60,8 +60,8 @@ public class CasPreauthFilter extends AbstractPreauthFilter {
 		if (password == null) {
 			return null;
 		} else {
-			String url = CasEntryPoint.constructServiceUrl(request, response, null, config.getLocalServer(),
-					"ticket", config.isEncode());
+			String url = CasEntryPoint.constructServiceUrl(request, response, null,
+					CasConfig.getLocalServer(request), "ticket", config.isEncode());
 			return new CasAuthentication(username, password, url);
 		}
 	}

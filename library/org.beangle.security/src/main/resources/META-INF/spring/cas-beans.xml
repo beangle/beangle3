@@ -5,7 +5,6 @@
 	
 	<bean id="casConfig" class="org.beangle.security.cas.CasConfig">
 		<property name="casServer" value="http://your/server/cas"/>
-		<property name="localServer" value="localhost:8080"/>
 	</bean>
 	
 	<bean id="casPreauthFilter" class="org.beangle.security.cas.web.CasPreauthFilter">
