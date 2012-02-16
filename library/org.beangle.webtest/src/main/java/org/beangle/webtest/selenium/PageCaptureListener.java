@@ -1,4 +1,4 @@
-package org.beangle.test.selenium;
+package org.beangle.webtest.selenium;
 
 import java.io.File;
 import java.text.MessageFormat;

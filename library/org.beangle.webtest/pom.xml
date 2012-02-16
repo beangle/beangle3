@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.or g/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.beangle</groupId>
-	<artifactId>beangle-test</artifactId>
-	<version>2.5.0</version>
+	<artifactId>beangle-webtest</artifactId>
+	<version>1.0.0</version>
 	<packaging>jar<!--bundle--></packaging>
-	<name>Beangle Test Toolkit</name>
+	<name>Beangle Web Test Toolkit</name>
 	
 	<properties>
-		<bundle.symbolicName>org.beangle.test</bundle.symbolicName>
-		<bundle.namespace>org.beangle.test</bundle.namespace>
+		<bundle.symbolicName>org.beangle.webtest</bundle.symbolicName>
+		<bundle.namespace>org.beangle.webtest</bundle.namespace>
 		<beangle.version>2.5.0-SNAPSHOT</beangle.version>
 		<spring-test.version>3.1.0.RELEASE</spring-test.version>
 		<testng.version>6.3.1</testng.version>
@@ -16,16 +16,6 @@
 	</properties>
 	
 	<dependencies>
-		<dependency>
-			<groupId>org.beangle</groupId>
-			<artifactId>beangle-core</artifactId>
-			<version>${beangle.version}</version>
-		</dependency>
-		<dependency>
-		   <groupId>org.springframework</groupId>
-		   <artifactId>spring-test</artifactId>
-		   <version>${spring-test.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
