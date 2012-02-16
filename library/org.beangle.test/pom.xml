@@ -9,18 +9,32 @@
 	<properties>
 		<bundle.symbolicName>org.beangle.test</bundle.symbolicName>
 		<bundle.namespace>org.beangle.test</bundle.namespace>
+		<beangle.version>2.5.0-SNAPSHOT</beangle.version>
+		<spring-test.version>3.1.0.RELEASE</spring-test.version>
+		<testng.version>6.3.1</testng.version>
+		<selenium-java.version>2.19.0</selenium-java.version>
 	</properties>
 	
 	<dependencies>
 		<dependency>
+			<groupId>org.beangle</groupId>
+			<artifactId>beangle-core</artifactId>
+			<version>${beangle.version}</version>
+		</dependency>
+		<dependency>
+		   <groupId>org.springframework</groupId>
+		   <artifactId>spring-test</artifactId>
+		   <version>${spring-test.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>2.19.0</version>
+			<version>${selenium-java.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>6.3.1</version>
+			<version>${testng.version}</version>
 		</dependency>
 	</dependencies>
 </project>
