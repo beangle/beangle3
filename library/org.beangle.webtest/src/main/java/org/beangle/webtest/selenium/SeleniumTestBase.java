@@ -3,10 +3,8 @@ package org.beangle.webtest.selenium;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
-import java.text.MessageFormat;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
