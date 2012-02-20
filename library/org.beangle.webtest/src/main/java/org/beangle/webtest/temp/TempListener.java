@@ -1,5 +1,9 @@
 package org.beangle.webtest.temp;
 
+import java.text.MessageFormat;
+import java.util.Date;
+
+import org.apache.commons.lang.StringUtils;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
 import org.testng.ISuite;
@@ -10,24 +14,29 @@ import org.testng.ITestResult;
 
 public class TempListener implements ISuiteListener, ITestListener, IInvokedMethodListener {
 
+    private void log(String message) {
+        String format = "TempListener : #{0} {1, time} {2}";
+        System.out.println(MessageFormat.format(format, Thread.currentThread().getId(), new Date(), message));
+    }
+    
     @Override
     public void onFinish(ISuite suite) {
-        System.out.println("ISuiteListener.onFinish");
+        log("suite.onFinish : " + suite.getName());
     }
 
     @Override
     public void onStart(ISuite suite) {
-        System.out.println("ISuiteListener.onStart");
+        log("suite.onStart : " + suite.getName());
     }
 
     @Override
     public void onFinish(ITestContext context) {
-        System.out.println("ITestListener.onFinish");
+        log("test.onFinish : " + context.getName());
     }
 
     @Override
     public void onStart(ITestContext context) {
-        System.out.println("ITestListener.onStart");
+        log("test.onStart : " + context.getName());
     }
 
     @Override
@@ -38,32 +47,34 @@ public class TempListener implements ISuiteListener, ITestListener, IInvokedMeth
 
     @Override
     public void onTestFailure(ITestResult result) {
-        System.out.println("ITestListener.onTestFailure");
+        log("test.onTestFailure : " + StringUtils.join(new String[]{result.getTestClass().getXmlTest().getName(), result.getTestClass().getName(), result.getInstance().toString(), result.getMethod().getConstructorOrMethod().getMethod().toString()}, '/'));
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        System.out.println("ITestListener.onTestSkipped");
+        log("test.onTestSkipped : " + StringUtils.join(new String[]{result.getTestClass().getXmlTest().getName(), result.getTestClass().getName(), result.getInstance().toString(), result.getMethod().getConstructorOrMethod().getMethod().toString()}, '/'));
     }
 
     @Override
     public void onTestStart(ITestResult result) {
-        System.out.println("ITestListener.onTestStart");
+        log("test.onTestStart : " + StringUtils.join(new String[]{result.getTestClass().getXmlTest().getName(), result.getTestClass().getName(), result.getInstance().toString(), result.getMethod().getConstructorOrMethod().getMethod().toString()}, '/'));
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        System.out.println("ITestListener.onTestSuccess");
-    }
-
-    @Override
-    public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-        System.out.println("IInvokedMethodListener.afterInvocation");
+        log("test.onTestSuccess : " + StringUtils.join(new String[]{result.getTestClass().getXmlTest().getName(), result.getTestClass().getName(), result.getInstance().toString(), result.getMethod().getConstructorOrMethod().getMethod().toString()}, '/'));
     }
 
     @Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-        System.out.println("IInvokedMethodListener.beforeInvocation");
+        log("method.beforeInvocation : " + StringUtils.join(new String[]{testResult.getTestClass().getXmlTest().getName(), testResult.getTestClass().getName(), testResult.getInstance().toString(), testResult.getMethod().getConstructorOrMethod().getMethod().toString()}, '/'));
+//        log("method.beforeInvocation : " + method.getTestMethod().getTestClass().getName() + " : " + testResult.getInstance() + " : " + method.toString());
+    }
+    
+    @Override
+    public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
+        log("method.afterInvocation : " + StringUtils.join(new String[]{testResult.getTestClass().getXmlTest().getName(), testResult.getTestClass().getName(), testResult.getInstance().toString(), testResult.getMethod().getConstructorOrMethod().getMethod().toString()}, '/'));
+//        log("method.afterInvocation : " + method.getTestMethod().getTestClass().getName() + " : " + testResult.getInstance() + " : " + method.toString());
     }
 
 }

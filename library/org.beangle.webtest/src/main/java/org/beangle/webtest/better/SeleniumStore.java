@@ -39,8 +39,6 @@ public class SeleniumStore {
      */
     public static synchronized void set(String path, Selenium selenium) {
         Map<String, Selenium> map = pathToSeleniums.get();
-        if(map.get(path) == null) {
-            map.put(path, selenium);
-        }
+        map.put(path, selenium);
     }
 }
