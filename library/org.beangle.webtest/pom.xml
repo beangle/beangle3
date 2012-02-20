@@ -34,6 +34,12 @@
 			<version>${testng.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>${guice.version}</version>
+		</dependency>
+<!--  
+		<dependency>
 			<groupId>org.uncommons</groupId>
 			<artifactId>reportng</artifactId>
 			<version>${reportng.version}</version>
@@ -44,11 +50,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- reportng needs guice -->
-		<dependency>
-			<groupId>com.google.inject</groupId>
-			<artifactId>guice</artifactId>
-			<version>${guice.version}</version>
-		</dependency>
+-->
 	</dependencies>
 </project>
