@@ -1,8 +1,9 @@
 package org.beangle.webtest.better;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Formatter;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.testng.IInvokedMethod;
@@ -12,6 +13,7 @@ import org.testng.ISuiteListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.log4testng.Logger;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
@@ -47,6 +49,8 @@ import com.thoughtworks.selenium.Selenium;
  */
 public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInvokedMethodListener {
 
+    private static final Logger LOGGER = Logger.getLogger(SeleniumConfigurator.class);
+            
     private ISeleniumMaker sm = new WebDriverSeleniumMaker();
     
     private static final String PARALLEL_MODE_TEST = "tests";
@@ -106,10 +110,8 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
             String path = TestNGPath.getPath(xmlTest);
             log("test.onStart : create Selenium Instance : " + path);
             SeleniumStore.set(path, sm.make(xmlTest));
-        } else if (PARALLEL_MODE_CLASS.equals(parallelMode)) {
-            // 如果是class级别的多线程模式，那么在某个test上绑定一个selenium是没有意义的
-        } else if (PARALLEL_MODE_INSTANCES.equals(parallelMode)) {
-            // 如果是instance级别的多线程模式，那么在某个test上绑定一个selenium是没有意义的
+        } else if (PARALLEL_MODE_CLASS.equals(parallelMode) || PARALLEL_MODE_INSTANCES.equals(parallelMode)) {
+            // 如果是class/instance级别的多线程模式，那么在某个test上绑定一个selenium是没有意义的
         } else if (PARALLEL_MODE_METHOD.equals(parallelMode)) {
             // 如果是method级别的多线程模式，那么在某个test上绑定一个selenium是没有意义的
         } else {
@@ -129,13 +131,25 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
         // invoked after all the test classes in the <test> element is tested 
         XmlTest xmlTest = context.getCurrentXmlTest();
         log("test.onFinish : " + xmlTest.getName());
-        
-        String path = TestNGPath.getPath(xmlTest);
-        Selenium selenium = SeleniumStore.getNotRecursively(path);
         // 如果找到了test级别的selenium，那么就可以断定使用的是test级别的多线程模式
-        if(selenium != null) {
-            log("suite.onFinish : close Selenium Instance : " + path);
-            selenium.close();   
+        String parallelMode = context.getSuite().getParallel();
+        List<Selenium> seleniums = new ArrayList<Selenium>();
+        String path = TestNGPath.getPath(xmlTest);
+        if(PARALLEL_MODE_TEST.equals(parallelMode)) {
+            seleniums.add(SeleniumStore.getNotRecursively(path));
+        } else if (PARALLEL_MODE_CLASS.equals(parallelMode)) {
+            seleniums.addAll(SeleniumStore.getWhenClassesParallelMode(path));
+        } else if (PARALLEL_MODE_INSTANCES.equals(parallelMode)) {
+            seleniums.addAll(SeleniumStore.getWhenClassesParallelMode(path));
+        } else if(PARALLEL_MODE_METHOD.equals(parallelMode)) {
+        } else {
+            // 如果是单线程模式，什么都不用做，交给suite去做
+        }
+        for(Selenium selenium : seleniums) {
+            if(selenium != null) {
+                log("suite.onFinish : close Selenium Instance : " + path);
+                selenium.close();   
+            }
         }
     }
     
@@ -182,25 +196,18 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
         String parallelMode = result.getTestClass().getXmlTest().getSuite().getParallel();
         if(PARALLEL_MODE_TEST.equals(parallelMode)) {
             // 如果是test级别的多线程模式，什么都不用做，因为一个test内的所有class共享一个selenium instance
-        } else if (PARALLEL_MODE_CLASS.equals(parallelMode)) {
-            // 如果是class级别的多线程模式，绑定selenium instance到test class instance上去
+        } else if (PARALLEL_MODE_CLASS.equals(parallelMode) || PARALLEL_MODE_INSTANCES.equals(parallelMode)) {
+            // 如果是class/instance级别的多线程模式，绑定selenium instance到test class instance上去
             XmlTest xmlTest = result.getTestClass().getXmlTest();
             String path = TestNGPath.getPathToInstance(result);
-            // 同一个instance内的方法调用是单线程的
+            // 同一个instance内的方法调用是单线程的，所以应该能够覆盖原先的selenium
             if(SeleniumStore.getNotRecursively(path) == null) {
                 log("testClass.onTestStart : create Selenium Instance : " + path);
-                SeleniumStore.set(path, sm.make(xmlTest));
+                Selenium selenium = sm.make(xmlTest);
+                SeleniumStore.set(path, selenium);
+                SeleniumStore.setWhenClassesParallelMode(TestNGPath.getPath(xmlTest), selenium);
             }
-        } else if (PARALLEL_MODE_INSTANCES.equals(parallelMode)) {
-            // 如果是instance级别的多线程模式，绑定selenium instance到test class instance上去
-            XmlTest xmlTest = result.getTestClass().getXmlTest();
-            String path = TestNGPath.getPathToInstance(result);
-            // 同一个instance内的方法调用是单线程的
-            if(SeleniumStore.getNotRecursively(path) == null) {
-                log("testClass.onTestStart : create Selenium Instance : " + path);
-                SeleniumStore.set(path, sm.make(xmlTest));
-            }
-        }else if(PARALLEL_MODE_METHOD.equals(parallelMode)) {
+        } else if(PARALLEL_MODE_METHOD.equals(parallelMode)) {
             // 如果是method级别的多线程模式，绑定selenium instance到test class instance上去
             // 之所以这样做可以，是因为method级别的多线程模式开启后，每一个method(除了configration method)调用，
             // 都会开启一个新的thread，所以不用担心method和method之间的selenium instance会冲突
@@ -221,17 +228,14 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
         Selenium selenium = null;
         String path = null;
         if(PARALLEL_MODE_TEST.equals(parallelMode)) {
-        } else if (PARALLEL_MODE_CLASS.equals(parallelMode)) {
-            path = TestNGPath.getPathToInstance(result);
-            selenium = SeleniumStore.getNotRecursively(path);
-        } else if (PARALLEL_MODE_INSTANCES.equals(parallelMode)) {
-            path = TestNGPath.getPathToInstance(result);
-            selenium = SeleniumStore.getNotRecursively(path);
-        }else if(PARALLEL_MODE_METHOD.equals(parallelMode)) {
+            // tests 模式的，给test去做
+        } else if (PARALLEL_MODE_CLASS.equals(parallelMode) || PARALLEL_MODE_INSTANCES.equals(parallelMode)) {
+            // classes/instances 模式的，给test去做
+        } else if(PARALLEL_MODE_METHOD.equals(parallelMode)) {
             path = TestNGPath.getPathToInstance(result);
             selenium = SeleniumStore.getNotRecursively(path);
         } else {
-            // 如果是单线程模式，什么都不用做
+            // 如果是单线程模式，给suite去做
         }
         if(selenium != null) {
             log("testClass.onTestMethodFinish : close Selenium Instance : " + path);
@@ -258,8 +262,8 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
     }
 
     private void log(String message) {
-        String format = "{0} {1, time}" + this.getClass().getName() + ": {2}";
-        System.out.println(MessageFormat.format(format, StringUtils.rightPad("#" + Thread.currentThread().getId(), 4), new Date(), message));
+        String format = "{0} {1, time} : {2}";
+        LOGGER.debug(MessageFormat.format(format, StringUtils.rightPad("#" + Thread.currentThread().getId(), 4), new Date(), message));
     }
     
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="study" verbose="1" parallel="tests">
+<suite name="study" verbose="1" parallel="instances">
 	<listeners>
 		<listener class-name="org.beangle.webtest.better.SeleniumConfigurator"/>
 	</listeners>
@@ -9,7 +9,7 @@
 		<parameter name="selenium.baseurl" value="http://www.baidu.com"></parameter>
 		<classes>
 			<class name="org.beangle.webtest.temp.TestA" />
-			<!--			<class name="org.beangle.webtest.temp.TestB" />-->
+			<class name="org.beangle.webtest.temp.TestB" />
 		</classes>
 	</test>
 </suite>

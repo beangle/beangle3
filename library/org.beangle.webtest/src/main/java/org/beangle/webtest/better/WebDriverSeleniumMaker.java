@@ -30,7 +30,6 @@ public class WebDriverSeleniumMaker implements ISeleniumMaker {
         Map<String, String> params = new HashMap<String, String>();
         params.put("selenium.browser", TestNGParam.getParameter(xmlTest, "selenium.browser"));
         params.put("selenium.baseurl", TestNGParam.getParameter(xmlTest, "selenium.baseurl"));
-        
         return makeSelenium(params);
     }
     
@@ -38,6 +37,9 @@ public class WebDriverSeleniumMaker implements ISeleniumMaker {
         String browser = params.get("selenium.browser");
         String baseurl = params.get("selenium.baseurl");
         
+        if(StringUtils.isBlank(browser) && StringUtils.isBlank(baseurl)) {
+            return null;
+        }
         WebDriver seleniumDriver = new FirefoxDriver();
         seleniumDriver.manage().deleteAllCookies();
         seleniumDriver.manage().window().setPosition(new Point(0, 0));
