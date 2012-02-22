@@ -1,10 +1,5 @@
 package org.beangle.webtest.better;
 
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
@@ -16,8 +11,6 @@ import org.testng.ITestResult;
 import org.testng.log4testng.Logger;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
-
-import com.thoughtworks.selenium.Selenium;
 
 /**
  * This class is used to prepare selenium instance for each suite, test, and methods.<br>
@@ -53,11 +46,6 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
             
     private ISeleniumMaker sm = new WebDriverSeleniumMaker();
     
-    private static final String PARALLEL_MODE_TEST = "tests";
-    private static final String PARALLEL_MODE_CLASS = "classes";
-    private static final String PARALLEL_MODE_INSTANCES = "instances";
-    private static final String PARALLEL_MODE_METHOD = "methods";
-    
     ///////////////////////////
     // suite part
     ///////////////////////////
@@ -66,15 +54,15 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
         // invoked after <suite> element is instantiated
         XmlSuite xmlSuite = suite.getXmlSuite();
         String parallelMode = xmlSuite.getParallel();
-        log("suite.onStart : " + suite.getName() + ", parallel mode=" + parallelMode);
+        LoggerHelper.debug(LOGGER, "suite.onStart : " + suite.getName() + ", parallel mode=" + parallelMode);
 
         // 如果没有使用多线程模式
         if(StringUtils.isBlank(parallelMode)) {
             // 如果child suite override了parent suite的某部分或全部selenium配置，那么就应该新建一个
             if(sm.isOverrideConfiguration(xmlSuite)) {
                 String path = TestNGPath.getPath(xmlSuite);
-                log("suite.onStart : create Selenium Instance : " + path);
-                SeleniumStore.set(path, sm.make(xmlSuite));
+                LoggerHelper.debug(LOGGER, "suite.onStart : create Selenium Instance : " + path);
+                SeleniumStore.put(path, sm.make(xmlSuite));
             }
         } else {
             // 如果是多线程模式，那么不论是哪种模式，suite上绑定一个selenium都是没有意义的
@@ -83,16 +71,11 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
     
     @Override
     public void onFinish(ISuite suite) {
-        log("suite.onFinish : " + suite.getName());
+        LoggerHelper.debug(LOGGER, "suite.onFinish : " + suite.getName());
         // invoked after <suite> is finished
         XmlSuite xmlSuite = suite.getXmlSuite();
         String path = TestNGPath.getPath(xmlSuite);
-        Selenium selenium = SeleniumStore.getNotRecursively(path);
-        // 只能对只属于自己的selenium进行关闭，其他都不行
-        if(selenium != null) {
-            log("suite.onFinish : close Selenium Instance : " + path);
-            selenium.close();   
-        }
+        SeleniumStore.close(path);
     }
 
     ///////////////////////////
@@ -102,25 +85,25 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
     public void onStart(ITestContext context) {
         // invoked after all the test classes in the <test> element is instantiated
         XmlTest xmlTest = context.getCurrentXmlTest();
-        String parallelMode = context.getSuite().getXmlSuite().getParallel();
+        String parallelMode = context.getCurrentXmlTest().getParallel();
         
-        log("test.onStart : " + xmlTest.getName());
-        if(PARALLEL_MODE_TEST.equals(parallelMode)) {
+        LoggerHelper.debug(LOGGER, "test.onStart : " + xmlTest.getName());
+        if(XmlSuite.PARALLEL_TESTS.equals(parallelMode)) {
             // 如果是test级别的多线程模式，那么每个<test>都应anObject该有一个selenium
             String path = TestNGPath.getPath(xmlTest);
-            log("test.onStart : create Selenium Instance : " + path);
-            SeleniumStore.set(path, sm.make(xmlTest));
-        } else if (PARALLEL_MODE_CLASS.equals(parallelMode) || PARALLEL_MODE_INSTANCES.equals(parallelMode)) {
+            LoggerHelper.debug(LOGGER, "test.onStart : create Selenium Instance : " + path);
+            SeleniumStore.put(path, sm.make(xmlTest));
+        } else if (XmlSuite.PARALLEL_CLASSES.equals(parallelMode) || XmlSuite.PARALLEL_INSTANCES.equals(parallelMode)) {
             // 如果是class/instance级别的多线程模式，那么在某个test上绑定一个selenium是没有意义的
-        } else if (PARALLEL_MODE_METHOD.equals(parallelMode)) {
+        } else if (XmlSuite.PARALLEL_METHODS.equals(parallelMode)) {
             // 如果是method级别的多线程模式，那么在某个test上绑定一个selenium是没有意义的
         } else {
             // 单线程模式下
             // 如果test override了suite的某部分或全部selenium配置，那么就应该新建一个
             if(sm.isOverrideConfiguration(xmlTest)) {
                 String path = TestNGPath.getPath(xmlTest);
-                log("test.onStart : create Selenium Instance for override : " + path);
-                SeleniumStore.set(path, sm.make(xmlTest));
+                LoggerHelper.debug(LOGGER, "test.onStart : create Selenium Instance for override : " + path);
+                SeleniumStore.put(path, sm.make(xmlTest));
             }
         }
     }
@@ -130,26 +113,19 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
     public void onFinish(ITestContext context) {
         // invoked after all the test classes in the <test> element is tested 
         XmlTest xmlTest = context.getCurrentXmlTest();
-        log("test.onFinish : " + xmlTest.getName());
+        LoggerHelper.debug(LOGGER, "test.onFinish : " + xmlTest.getName());
         // 如果找到了test级别的selenium，那么就可以断定使用的是test级别的多线程模式
-        String parallelMode = context.getSuite().getParallel();
-        List<Selenium> seleniums = new ArrayList<Selenium>();
+        String parallelMode = context.getCurrentXmlTest().getParallel();
         String path = TestNGPath.getPath(xmlTest);
-        if(PARALLEL_MODE_TEST.equals(parallelMode)) {
-            seleniums.add(SeleniumStore.getNotRecursively(path));
-        } else if (PARALLEL_MODE_CLASS.equals(parallelMode)) {
-            seleniums.addAll(SeleniumStore.getWhenClassesParallelMode(path));
-        } else if (PARALLEL_MODE_INSTANCES.equals(parallelMode)) {
-            seleniums.addAll(SeleniumStore.getWhenClassesParallelMode(path));
-        } else if(PARALLEL_MODE_METHOD.equals(parallelMode)) {
+        if(XmlSuite.PARALLEL_TESTS.equals(parallelMode)) {
+            SeleniumStore.close(path);
+        } else if (XmlSuite.PARALLEL_CLASSES.equals(parallelMode)) {
+            SeleniumStore.closeInClassesParallelMode(path);
+        } else if (XmlSuite.PARALLEL_INSTANCES.equals(parallelMode)) {
+            SeleniumStore.closeInClassesParallelMode(path);
+        } else if(XmlSuite.PARALLEL_METHODS.equals(parallelMode)) {
         } else {
             // 如果是单线程模式，什么都不用做，交给suite去做
-        }
-        for(Selenium selenium : seleniums) {
-            if(selenium != null) {
-                log("suite.onFinish : close Selenium Instance : " + path);
-                selenium.close();   
-            }
         }
     }
     
@@ -158,88 +134,69 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
     ///////////////////////////
     @Override
     public void onTestStart(ITestResult result) {
-        log("testClass.onTestStart : " + result.getMethod().getConstructorOrMethod().getMethod().toString());
+        LoggerHelper.debug(LOGGER, "testClass.onTestStart : " + result.getMethod().getConstructorOrMethod().getMethod().toString());
         // invoked after a @Test annotated method invoked and also after IInvokedMethodListener.beforeInvocation
-        onTestMethodOrConfigurationMethodStart(result);
+        onTestOrConfigurationMethodStart(result);
     }
     
     @Override
     public void onTestSuccess(ITestResult result) {
-        log("testClass.onTestSuccess : " + result.getMethod().getConstructorOrMethod().getMethod().toString());
+        LoggerHelper.debug(LOGGER, "testClass.onTestSuccess : " + result.getMethod().getConstructorOrMethod().getMethod().toString());
         // invoked after a @Test annotated method invoked and also after IInvokedMethodListener.afterInvocation
-        onTestMethodOrConfigurationMethodFinish(result);
+        onTestOrConfigurationMethodFinish(result);
     }
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-        log("testClass.onTestFailedButWithinSuccessPercentage : " + result.getMethod().getConstructorOrMethod().getMethod().toString());
+        LoggerHelper.debug(LOGGER, "testClass.onTestFailedButWithinSuccessPercentage : " + result.getMethod().getConstructorOrMethod().getMethod().toString());
         // invoked after a @Test annotated method invoked and also after IInvokedMethodListener.afterInvocation
-        onTestMethodOrConfigurationMethodFinish(result);
+        onTestOrConfigurationMethodFinish(result);
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        log("testClass.onTestFailure : " + result.getMethod().getConstructorOrMethod().getMethod().toString());
+        LoggerHelper.debug(LOGGER, "testClass.onTestFailure : " + result.getMethod().getConstructorOrMethod().getMethod().toString());
         // invoked after a @Test annotated method invoked and also after IInvokedMethodListener.afterInvocation
-        onTestMethodOrConfigurationMethodFinish(result);
+        onTestOrConfigurationMethodFinish(result);
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        log("testClass.onTestSkipped : " + result.getMethod().getConstructorOrMethod().getMethod().toString());
+        LoggerHelper.debug(LOGGER, "testClass.onTestSkipped : " + result.getMethod().getConstructorOrMethod().getMethod().toString());
         // invoked after a @Test annotated method invoked and also after IInvokedMethodListener.afterInvocation
-        onTestMethodOrConfigurationMethodFinish(result);
+        onTestOrConfigurationMethodFinish(result);
     }
 
-    private void onTestMethodOrConfigurationMethodStart(ITestResult result) {
+    private void onTestOrConfigurationMethodStart(ITestResult result) {
         // 实际上还没看出classes和instances级别的多线程模式有什么区别
-        String parallelMode = result.getTestClass().getXmlTest().getSuite().getParallel();
-        if(PARALLEL_MODE_TEST.equals(parallelMode)) {
+        String parallelMode = result.getTestClass().getXmlTest().getParallel();
+        if(XmlSuite.PARALLEL_TESTS.equals(parallelMode)) {
             // 如果是test级别的多线程模式，什么都不用做，因为一个test内的所有class共享一个selenium instance
-        } else if (PARALLEL_MODE_CLASS.equals(parallelMode) || PARALLEL_MODE_INSTANCES.equals(parallelMode)) {
+        } else if (XmlSuite.PARALLEL_CLASSES.equals(parallelMode) || XmlSuite.PARALLEL_INSTANCES.equals(parallelMode)) {
             // 如果是class/instance级别的多线程模式，绑定selenium instance到test class instance上去
-            XmlTest xmlTest = result.getTestClass().getXmlTest();
-            String path = TestNGPath.getPathToInstance(result);
-            // 同一个instance内的方法调用是单线程的，所以应该能够覆盖原先的selenium
-            if(SeleniumStore.getNotRecursively(path) == null) {
-                log("testClass.onTestStart : create Selenium Instance : " + path);
-                Selenium selenium = sm.make(xmlTest);
-                SeleniumStore.set(path, selenium);
-                SeleniumStore.setWhenClassesParallelMode(TestNGPath.getPath(xmlTest), selenium);
-            }
-        } else if(PARALLEL_MODE_METHOD.equals(parallelMode)) {
+            SeleniumStore.setInClassesParallelMode(result, sm);
+        } else if(XmlSuite.PARALLEL_METHODS.equals(parallelMode)) {
             // 如果是method级别的多线程模式，绑定selenium instance到test class instance上去
             // 之所以这样做可以，是因为method级别的多线程模式开启后，每一个method(除了configration method)调用，
             // 都会开启一个新的thread，所以不用担心method和method之间的selenium instance会冲突
-            XmlTest xmlTest = result.getTestClass().getXmlTest();
-            // 每一个method已经通过thread隔离开来
-            String path = TestNGPath.getPathToInstance(result);
-            if(SeleniumStore.getNotRecursively(path) == null) {
-                log("testClass.onTestStart : create Selenium Instance : " + path);
-                SeleniumStore.set(path, sm.make(xmlTest));
-            }
+            SeleniumStore.setInMethodsParallelMode(result, sm);
         } else {
             // 如果是单线程模式，什么都不用做
         }
     }
     
-    private void onTestMethodOrConfigurationMethodFinish(ITestResult result) {
-        String parallelMode = result.getTestClass().getXmlTest().getSuite().getParallel();
-        Selenium selenium = null;
+    private void onTestOrConfigurationMethodFinish(ITestResult result) {
+        String parallelMode = result.getTestClass().getXmlTest().getParallel();
         String path = null;
-        if(PARALLEL_MODE_TEST.equals(parallelMode)) {
+        if(XmlSuite.PARALLEL_TESTS.equals(parallelMode)) {
             // tests 模式的，给test去做
-        } else if (PARALLEL_MODE_CLASS.equals(parallelMode) || PARALLEL_MODE_INSTANCES.equals(parallelMode)) {
+        } else if (XmlSuite.PARALLEL_CLASSES.equals(parallelMode) || XmlSuite.PARALLEL_INSTANCES.equals(parallelMode)) {
             // classes/instances 模式的，给test去做
-        } else if(PARALLEL_MODE_METHOD.equals(parallelMode)) {
+        } else if(XmlSuite.PARALLEL_METHODS.equals(parallelMode)) {
             path = TestNGPath.getPathToInstance(result);
-            selenium = SeleniumStore.getNotRecursively(path);
+            SeleniumStore.close(path);
         } else {
             // 如果是单线程模式，给suite去做
-        }
-        if(selenium != null) {
-            log("testClass.onTestMethodFinish : close Selenium Instance : " + path);
-            selenium.close();   
         }
     }
     
@@ -252,8 +209,8 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
         // 如果是@Before @After之类的方法，那么需要初始化selenium instance因为可能这些方法内也需要selenium
         // 但是不必担心会在没有@Test方法的情况下调用本方法，因为如果没有@Test方法，testng压根就不执行了
         if(method.isConfigurationMethod()) {
-            log("testClass.beforeConfigurationMethod : " + method.getTestMethod().getConstructorOrMethod().getMethod().toString());
-            onTestMethodOrConfigurationMethodStart(testResult);
+            LoggerHelper.debug(LOGGER, "testClass.beforeConfigurationMethod : " + method.getTestMethod().getConstructorOrMethod().getMethod().toString());
+            onTestOrConfigurationMethodStart(testResult);
         }
     }
     
@@ -261,9 +218,5 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
     }
 
-    private void log(String message) {
-        String format = "{0} {1, time} : {2}";
-        LOGGER.debug(MessageFormat.format(format, StringUtils.rightPad("#" + Thread.currentThread().getId(), 4), new Date(), message));
-    }
     
 }

@@ -1,7 +1,9 @@
 package org.beangle.webtest.better;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Dimension;
@@ -16,24 +18,38 @@ import com.thoughtworks.selenium.Selenium;
 
 public class WebDriverSeleniumMaker implements ISeleniumMaker {
 
+    /**
+     * 新建selenium时所关心的参数
+     */
+    protected Set<String> concernedParams = new HashSet<String>();
+    
+    public WebDriverSeleniumMaker() {
+        concernedParams.add("selenium.browser");
+        concernedParams.add("selenium.baseurl");
+    }
+    
     @Override
     public Selenium make(XmlSuite xmlSuite) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("selenium.browser", TestNGParam.getParameter(xmlSuite, "selenium.browser"));
-        params.put("selenium.baseurl", TestNGParam.getParameter(xmlSuite, "selenium.baseurl"));
+        for(String key : concernedParams) {
+            params.put(key, TestNGParam.getParameter(xmlSuite, key));
+            params.put(key, TestNGParam.getParameter(xmlSuite, key));
+        }
         
-        return makeSelenium(params);
+        return make(params);
     }
 
     @Override
     public Selenium make(XmlTest xmlTest) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("selenium.browser", TestNGParam.getParameter(xmlTest, "selenium.browser"));
-        params.put("selenium.baseurl", TestNGParam.getParameter(xmlTest, "selenium.baseurl"));
-        return makeSelenium(params);
+        for(String key : concernedParams) {
+            params.put(key, TestNGParam.getParameter(xmlTest, key));
+            params.put(key, TestNGParam.getParameter(xmlTest, key));
+        }
+        return make(params);
     }
     
-    protected Selenium makeSelenium(Map<String, String> params) {
+    protected Selenium make(Map<String, String> params) {
         String browser = params.get("selenium.browser");
         String baseurl = params.get("selenium.baseurl");
         
@@ -52,23 +68,21 @@ public class WebDriverSeleniumMaker implements ISeleniumMaker {
 
     @Override
     public boolean isOverrideConfiguration(XmlSuite xmlSuite) {
-        if(!StringUtils.equals(TestNGParam.getParameter(xmlSuite, "selenium.browser"), xmlSuite.getParameter("selenium.browser"))) {
-            return true;
-        };
-        if(!StringUtils.equals(TestNGParam.getParameter(xmlSuite, "selenium.baseurl"), xmlSuite.getParameter("selenium.baseurl"))) {
-            return true;
-        };
+        for(String key : concernedParams) {
+            if(!StringUtils.equals(TestNGParam.getParameter(xmlSuite, key), xmlSuite.getParameter(key))) {
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
     public boolean isOverrideConfiguration(XmlTest xmlTest) {
-        if(!StringUtils.equals(TestNGParam.getParameter(xmlTest, "selenium.browser"), xmlTest.getParameter("selenium.browser"))) {
-            return true;
-        };
-        if(!StringUtils.equals(TestNGParam.getParameter(xmlTest, "selenium.baseurl"), xmlTest.getParameter("selenium.baseurl"))) {
-            return true;
-        };
+        for(String key : concernedParams) {
+            if(!StringUtils.equals(TestNGParam.getParameter(xmlTest, key), xmlTest.getParameter(key))) {
+                return true;
+            }
+        }
         return false;
     }
 

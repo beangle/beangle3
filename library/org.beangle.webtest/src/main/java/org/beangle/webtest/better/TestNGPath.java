@@ -62,9 +62,18 @@ public class TestNGPath {
         return StringUtils.join(
                 new String[] {
                     getPath(testResult.getTestClass().getXmlTest()),
-                    testResult.getTestClass().getName(),
+                    testResult.getInstance().getClass().getName(),
                     testResult.getInstance().toString(),
 //                    testResult.getMethod().getConstructorOrMethod().getMethod().toString()
+                }, '/');
+    }
+    
+    public static String getPathToInstance(ITestContext context, Object testObject) {
+        return StringUtils.join(
+                new String[] {
+                    getPath(context.getCurrentXmlTest()),
+                    testObject.getClass().getName(),
+                    testObject.toString(),
                 }, '/');
     }
     

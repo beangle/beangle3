@@ -12,7 +12,7 @@ import org.testng.xml.XmlTest;
 public class TestNGParam {
 
     /**
-     * find the parameter value from the suite, recursively
+     * get the parameter value from the suite, recursively
      * @param xmlSuite
      * @param name
      * @return
