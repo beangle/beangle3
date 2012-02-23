@@ -1,9 +1,0 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-
-<suite name="suite" verbose="1" parallel="instances" thread-count="1">
-	<test name="test1">
-		<classes>
-			<class name="org.beangle.webtest.temp.TestD" />
-		</classes>
-	</test>
-</suite>

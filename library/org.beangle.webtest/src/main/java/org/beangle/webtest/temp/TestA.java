@@ -1,6 +1,5 @@
 package org.beangle.webtest.temp;
 
-import org.testng.ITestContext;
 import org.testng.annotations.Test;
 
 public class TestA extends TestBase {
@@ -9,12 +8,13 @@ public class TestA extends TestBase {
     }
 
     @Test
-    public void test1(ITestContext context) {
-        System.out.println(getSelenium(context));
+    public void test1() {
+        selenium().open("/");
+        selenium().type("xpath=//input[@type='text']", "selenium");
+        selenium().click("xpath=//input[@type='submit' and @value='Google 搜索']");
     }
     
     @Test
-    public void test2(ITestContext context) {
-        System.out.println(getSelenium(context));
+    public void test2() {
     }
 }

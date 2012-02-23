@@ -30,6 +30,8 @@ public class TestNGParam {
     
     /**
      * find the parameter value from the test, recursively
+     * @see #getParameter(XmlSuite, String) 
+     * 
      * @param xmlTest
      * @param name
      * @return

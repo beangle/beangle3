@@ -23,6 +23,8 @@ public class WebDriverSeleniumMaker implements ISeleniumMaker {
      */
     protected Set<String> concernedParams = new HashSet<String>();
     
+    private java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+    
     public WebDriverSeleniumMaker() {
         concernedParams.add("selenium.browser");
         concernedParams.add("selenium.baseurl");
@@ -54,13 +56,11 @@ public class WebDriverSeleniumMaker implements ISeleniumMaker {
         String baseurl = params.get("selenium.baseurl");
         
         if(StringUtils.isBlank(browser) && StringUtils.isBlank(baseurl)) {
-            return null;
+            throw new RuntimeException("Please set selenium.baseurl in TestNG configuration file.");
         }
         WebDriver seleniumDriver = new FirefoxDriver();
         seleniumDriver.manage().deleteAllCookies();
         seleniumDriver.manage().window().setPosition(new Point(0, 0));
-        // maximize browser size
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         seleniumDriver.manage().window().setSize(new Dimension((int)screenSize.getWidth(), (int)screenSize.getHeight()));
         Selenium selenium = new WebDriverBackedSelenium(seleniumDriver, baseurl);
         return selenium;
@@ -79,7 +79,7 @@ public class WebDriverSeleniumMaker implements ISeleniumMaker {
     @Override
     public boolean isOverrideConfiguration(XmlTest xmlTest) {
         for(String key : concernedParams) {
-            if(!StringUtils.equals(TestNGParam.getParameter(xmlTest, key), xmlTest.getParameter(key))) {
+            if(!StringUtils.equals(TestNGParam.getParameter(xmlTest.getSuite(), key), xmlTest.getParameter(key))) {
                 return true;
             }
         }

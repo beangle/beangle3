@@ -36,7 +36,13 @@ import org.testng.xml.XmlTest;
  * it will use its own selenium instance, whether testng is running in test parallel mode or not. 
  * <br><br>
  * <b>If testng is running in methods parallel mode, each method invocation will create a new selenium instance</b>
- *
+ * <br><br>
+ * <h2>Binding path</h2>
+ * single thread mode: /parentSuiteName/.../suiteName<br>
+ * tests parallel mode : /parentSuiteName/.../suiteName/testName<br>
+ * classes/instances parallel mode : /parentSuiteName/.../suiteName/testName/className/instance<br>
+ * methods parallel mode : /parentSuiteName/.../suiteName/testName/className/instance<br>
+ * @see SeleniumStore
  * @author qianjia
  *
  */
@@ -56,10 +62,11 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
         String parallelMode = xmlSuite.getParallel();
         LoggerHelper.debug(LOGGER, "suite.onStart : " + suite.getName() + ", parallel mode=" + parallelMode);
 
-        // 如果没有使用多线程模式
-        if(StringUtils.isBlank(parallelMode)) {
-            // 如果child suite override了parent suite的某部分或全部selenium配置，那么就应该新建一个
-            if(sm.isOverrideConfiguration(xmlSuite)) {
+        // 如果是单线程模式
+        if(XmlSuite.DEFAULT_PARALLEL.equals(parallelMode)) {
+            if((xmlSuite.getParentSuite() == null) 
+                // 如果child suite override了parent suite的某部分或全部selenium配置，那么就应该新建一个
+                || (xmlSuite.getParentSuite() != null && sm.isOverrideConfiguration(xmlSuite))) {
                 String path = TestNGPath.getPath(xmlSuite);
                 LoggerHelper.debug(LOGGER, "suite.onStart : create Selenium Instance : " + path);
                 SeleniumStore.put(path, sm.make(xmlSuite));
@@ -86,11 +93,11 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
         // invoked after all the test classes in the <test> element is instantiated
         XmlTest xmlTest = context.getCurrentXmlTest();
         String parallelMode = context.getCurrentXmlTest().getParallel();
+        String path = TestNGPath.getPath(xmlTest);
         
         LoggerHelper.debug(LOGGER, "test.onStart : " + xmlTest.getName());
         if(XmlSuite.PARALLEL_TESTS.equals(parallelMode)) {
             // 如果是test级别的多线程模式，那么每个<test>都应anObject该有一个selenium
-            String path = TestNGPath.getPath(xmlTest);
             LoggerHelper.debug(LOGGER, "test.onStart : create Selenium Instance : " + path);
             SeleniumStore.put(path, sm.make(xmlTest));
         } else if (XmlSuite.PARALLEL_CLASSES.equals(parallelMode) || XmlSuite.PARALLEL_INSTANCES.equals(parallelMode)) {
@@ -101,7 +108,6 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
             // 单线程模式下
             // 如果test override了suite的某部分或全部selenium配置，那么就应该新建一个
             if(sm.isOverrideConfiguration(xmlTest)) {
-                String path = TestNGPath.getPath(xmlTest);
                 LoggerHelper.debug(LOGGER, "test.onStart : create Selenium Instance for override : " + path);
                 SeleniumStore.put(path, sm.make(xmlTest));
             }
@@ -125,7 +131,11 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
             SeleniumStore.closeInClassesParallelMode(path);
         } else if(XmlSuite.PARALLEL_METHODS.equals(parallelMode)) {
         } else {
-            // 如果是单线程模式，什么都不用做，交给suite去做
+            // 如果是单线程模式，那么就有可能test override了suite的selenium配置造成新建了一个selenium
+            // 那么这时就需要关掉这个selenium
+            if(sm.isOverrideConfiguration(xmlTest)) {
+                SeleniumStore.close(path);
+            }
         }
     }
     
@@ -137,6 +147,9 @@ public class SeleniumConfigurator implements ISuiteListener, ITestListener, IInv
         LoggerHelper.debug(LOGGER, "testClass.onTestStart : " + result.getMethod().getConstructorOrMethod().getMethod().toString());
         // invoked after a @Test annotated method invoked and also after IInvokedMethodListener.beforeInvocation
         onTestOrConfigurationMethodStart(result);
+        
+        String path = TestNGPath.getPathToInstance(result);
+        CurrentSelenium.currentSelenium.set(SeleniumStore.getRecursively(path));
     }
     
     @Override

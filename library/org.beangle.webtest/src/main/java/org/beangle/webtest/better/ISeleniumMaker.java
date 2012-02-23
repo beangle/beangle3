@@ -22,14 +22,14 @@ public interface ISeleniumMaker {
     Selenium make(XmlTest xmlTest);
  
     /**
-     * 判断suite是否override了parent suite的selenium配置
+     * Determine whether this suite override its parent suite's the selenium configuration
      * @param xmlSuite
      * @return
      */
     boolean isOverrideConfiguration(XmlSuite xmlSuite);
     
     /**
-     * 判断test是否override了suite的selenium配置
+     * Determine whether this test override its suite's the selenium configuration
      * @param xmlTest
      * @return
      */
