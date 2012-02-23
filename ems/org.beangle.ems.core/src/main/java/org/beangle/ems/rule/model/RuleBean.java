@@ -49,7 +49,7 @@ public class RuleBean extends LongIdTimeObject implements Rule {
 	private String serviceName;
 
 	/** 规则参数集合 */
-	@OneToMany(mappedBy = "rule", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "rule", cascade = CascadeType.ALL, orphanRemoval=true)
 	private Set<RuleParameter> params = CollectUtils.newHashSet();
 
 	/** 是否启用 */
