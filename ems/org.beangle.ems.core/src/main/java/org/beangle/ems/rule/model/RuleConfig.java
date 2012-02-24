@@ -28,7 +28,7 @@ public class RuleConfig extends LongIdTimeObject {
 	private boolean enabled;
 
 	/** 规则配置参数 */
-	@OneToMany(mappedBy = "config", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "config", cascade = CascadeType.ALL, orphanRemoval=true)
 	private Set<RuleConfigParam> params = CollectUtils.newHashSet();
 
 	public Set<RuleConfigParam> getParams() {
