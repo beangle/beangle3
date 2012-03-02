@@ -13,6 +13,7 @@
 		<module>org.beangle.security</module>
 		<module>org.beangle.struts2</module>
 		<module>org.beangle.notification</module>
+		<module>org.beangle.webtest</module>
 	</modules>
 	<build>
 		<plugins>
