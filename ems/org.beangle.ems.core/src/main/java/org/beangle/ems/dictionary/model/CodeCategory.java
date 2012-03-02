@@ -16,8 +16,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.collection.CollectUtils;
-import org.beangle.model.pojo.HierarchyEntity;
-import org.beangle.model.pojo.IntegerIdObject;
+import org.beangle.dao.pojo.HierarchyEntity;
+import org.beangle.dao.pojo.IntegerIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -27,7 +27,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * @author chaostone
  * @version $Id: CodeCategory.java Jun 28, 2011 8:32:18 PM chaostone $
  */
-@Entity
+@Entity//(name="org.beangle.ems.dictionary.model.CodeCategory")
 @Cacheable
 @Cache(region = "ems.dictionary",usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class CodeCategory extends IntegerIdObject implements HierarchyEntity<CodeCategory,Integer> {

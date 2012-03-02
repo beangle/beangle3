@@ -4,7 +4,7 @@
  */
 package org.beangle.security.core.session.impl;
 
-import org.beangle.model.persist.impl.BaseServiceImpl;
+import org.beangle.dao.impl.BaseServiceImpl;
 import org.beangle.security.core.session.AccessLogger;
 
 /**

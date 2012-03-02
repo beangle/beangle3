@@ -4,7 +4,7 @@
  */
 package org.beangle.ems.security.restrict;
 
-import org.beangle.model.pojo.LongIdEntity;
+import org.beangle.dao.pojo.LongIdEntity;
 
 /**
  * 数据限制对象

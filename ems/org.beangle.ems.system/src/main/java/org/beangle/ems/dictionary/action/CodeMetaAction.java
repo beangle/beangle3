@@ -9,11 +9,11 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.Entity;
 import org.beangle.ems.dictionary.model.CodeCategory;
 import org.beangle.ems.dictionary.model.CodeMeta;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.lang.StrUtils;
-import org.beangle.model.Entity;
 import org.beangle.struts2.convention.route.Action;
 
 /**

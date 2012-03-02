@@ -6,7 +6,7 @@ package org.beangle.ems.security.restrict;
 
 import java.util.Set;
 
-import org.beangle.model.pojo.LongIdEntity;
+import org.beangle.dao.pojo.LongIdEntity;
 
 public interface RestrictionHolder extends LongIdEntity {
 

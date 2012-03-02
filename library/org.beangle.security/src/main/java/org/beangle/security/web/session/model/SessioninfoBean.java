@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.beangle.model.pojo.StringIdObject;
+import org.beangle.dao.pojo.StringIdObject;
 import org.beangle.security.core.session.category.CategorySessioninfo;
 
 /**
@@ -19,7 +19,7 @@ import org.beangle.security.core.session.category.CategorySessioninfo;
  * @author chaostone
  * @version $Id: SessioninfoBean.java Jul 7, 2011 10:04:48 PM chaostone $
  */
-@Entity
+@Entity(name="org.beangle.security.web.session.model.SessioninfoBean")
 public class SessioninfoBean extends StringIdObject implements CategorySessioninfo {
 	private static final long serialVersionUID = -6144822263608415556L;
 

@@ -4,10 +4,15 @@
  */
 package org.beangle.security.web;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.beangle.collection.CollectUtils;
@@ -20,6 +25,10 @@ public class FilterChainProxy extends GenericCompositeFilter {
 	/** Compiled pattern version of the filter chain map */
 	private Map<RequestMatcher, List<Filter>> filterChainMap;
 
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		new VirtualFilterChain(chain, getFilters(request)).doFilter(request, response);
+	}
 	/**
 	 * Returns the first filter chain matching the supplied URL.
 	 * 
@@ -27,7 +36,9 @@ public class FilterChainProxy extends GenericCompositeFilter {
 	 *            the request URL
 	 * @return an ordered array of Filters defining the filter chain
 	 */
-	public List<Filter> getFilters(HttpServletRequest request) {
+	public List<Filter> getFilters(ServletRequest res) {
+		HttpServletRequest request=(HttpServletRequest)res;
+		//FIXME
 		for (Map.Entry<RequestMatcher, List<Filter>> entry : filterChainMap.entrySet()) {
 			RequestMatcher matcher = entry.getKey();
 			boolean matched = matcher.matches(request);

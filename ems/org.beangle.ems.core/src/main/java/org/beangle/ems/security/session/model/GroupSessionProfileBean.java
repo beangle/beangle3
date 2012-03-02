@@ -8,15 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.security.Group;
-import org.beangle.model.pojo.LongIdObject;
 
 /**
  * 用户组会话配置
  * 
  * @author chaostone
  */
-@Entity
+@Entity(name="org.beangle.ems.security.session.model.GroupSessionProfileBean")
 public class GroupSessionProfileBean extends LongIdObject {
 
 	private static final long serialVersionUID = 1999239598984221565L;

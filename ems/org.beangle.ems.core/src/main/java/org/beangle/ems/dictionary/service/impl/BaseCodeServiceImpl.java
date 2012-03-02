@@ -7,11 +7,11 @@ package org.beangle.ems.dictionary.service.impl;
 import java.sql.Date;
 import java.util.List;
 
+import org.beangle.dao.impl.BaseServiceImpl;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.dictionary.model.BaseCode;
 import org.beangle.ems.dictionary.model.CodeMeta;
 import org.beangle.ems.dictionary.service.BaseCodeService;
-import org.beangle.model.persist.impl.BaseServiceImpl;
-import org.beangle.model.query.builder.OqlBuilder;
 
 /**
  *
@@ -29,7 +29,7 @@ public class BaseCodeServiceImpl extends BaseServiceImpl implements BaseCodeServ
 
 	public <T extends BaseCode<?>> List<T> getCodes(Class<T> codeClass) {
 		OqlBuilder<T> builder = OqlBuilder.from(codeClass, "basecode").where(
-				"basecode.effectOn <= :now and (basecode.invalidOn is null or basecode.invalidOn >= :now)",
+				"basecode.effectAt <= :now and (basecode.invalidAt is null or basecode.invalidAt >= :now)",
 				new java.util.Date());
 		builder.orderBy("basecode.code");
 		return entityDao.search(builder);

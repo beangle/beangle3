@@ -10,13 +10,13 @@ import java.util.Map;
 
 import org.beangle.bean.comparators.PropertyComparator;
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.EntityDao;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.ems.security.restrict.RestrictionHolder;
 import org.beangle.ems.security.restrict.service.RestrictionService;
-import org.beangle.model.persist.EntityDao;
 import org.beangle.struts2.helper.ContextHelper;
 import org.beangle.struts2.helper.Params;
 

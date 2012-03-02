@@ -6,9 +6,9 @@ package org.beangle.ems.security.nav;
 
 import java.util.Set;
 
+import org.beangle.dao.pojo.HierarchyEntity;
+import org.beangle.dao.pojo.LongIdEntity;
 import org.beangle.ems.security.Resource;
-import org.beangle.model.pojo.HierarchyEntity;
-import org.beangle.model.pojo.LongIdEntity;
 
 /**
  * 系统菜单

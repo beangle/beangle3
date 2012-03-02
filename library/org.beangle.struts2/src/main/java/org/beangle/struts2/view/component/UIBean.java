@@ -8,7 +8,6 @@ import java.io.Writer;
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +15,7 @@ import org.apache.commons.lang.CharUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.util.TextProviderHelper;
+import org.beangle.struts2.view.UIIdGenerator;
 import org.beangle.struts2.view.template.TemplateEngine;
 import org.beangle.struts2.view.template.Theme;
 import org.beangle.struts2.view.template.ThemeStack;
@@ -28,7 +28,6 @@ import com.opensymphony.xwork2.util.ValueStack;
  * @author chaostone
  */
 public abstract class UIBean extends Component {
-	final protected static transient Random RANDOM = new Random();
 	protected String id;
 
 	protected Theme theme;
@@ -146,10 +145,8 @@ public abstract class UIBean extends Component {
 	}
 
 	protected void generateIdIfEmpty() {
-		if (StringUtils.isEmpty(this.id)) {
-			int nextInt = RANDOM.nextInt();
-			nextInt = (nextInt == Integer.MIN_VALUE) ? Integer.MAX_VALUE : Math.abs(nextInt);
-			this.id = Theme.getTemplateName(getClass()) + String.valueOf(nextInt);
+		if (StringUtils.isEmpty(id)) {
+			id = ((UIIdGenerator) stack.getContext().get(UIIdGenerator.GENERATOR)).generate(getClass());
 		}
 	}
 }

@@ -13,6 +13,10 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.collection.CollectUtils;
 import org.beangle.collection.Order;
+import org.beangle.dao.Entity;
+import org.beangle.dao.Operation;
+import org.beangle.dao.query.builder.Condition;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
@@ -21,13 +25,9 @@ import org.beangle.ems.security.helper.UserPropertyExtractor;
 import org.beangle.ems.security.model.GroupMemberBean;
 import org.beangle.ems.security.service.UserService;
 import org.beangle.ems.web.action.SecurityActionSupport;
-import org.beangle.model.Entity;
-import org.beangle.model.persist.Operation;
-import org.beangle.model.query.builder.Condition;
-import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.model.transfer.exporter.PropertyExtractor;
 import org.beangle.security.codec.EncryptUtil;
 import org.beangle.struts2.convention.route.Action;
+import org.beangle.transfer.exporter.PropertyExtractor;
 
 /**
  * 用户管理响应处理类

@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.metadata.Model;
 import org.beangle.ems.rule.Rule;
 import org.beangle.ems.rule.engine.RuleExecutor;
 import org.beangle.ems.rule.engine.RuleExecutorBuilder;
 import org.beangle.ems.rule.model.RuleConfig;
 import org.beangle.ems.rule.model.RuleConfigParam;
-import org.beangle.model.entity.Model;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;

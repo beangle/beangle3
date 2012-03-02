@@ -5,8 +5,8 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 import org.apache.commons.lang.UnhandledException;
 import org.beangle.web.filter.GenericHttpFilter;
@@ -26,8 +26,7 @@ public class DelegatingFilterProxy extends GenericHttpFilter {
 
 	private String targetBeanName;
 
-	@Override
-	protected void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		delegate.doFilter(request, response, chain);
 	}

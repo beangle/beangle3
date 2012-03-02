@@ -14,6 +14,8 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.impl.BaseServiceImpl;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
@@ -22,8 +24,6 @@ import org.beangle.ems.security.event.UserCreationEvent;
 import org.beangle.ems.security.event.UserRemoveEvent;
 import org.beangle.ems.security.event.UserStatusEvent;
 import org.beangle.ems.security.model.GroupMemberBean;
-import org.beangle.model.persist.impl.BaseServiceImpl;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.auth.Principals;
 
 /**

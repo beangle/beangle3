@@ -7,8 +7,8 @@ package org.beangle.ems.security.restrict.model;
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 
+import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.security.restrict.RestrictEntity;
-import org.beangle.model.pojo.LongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 

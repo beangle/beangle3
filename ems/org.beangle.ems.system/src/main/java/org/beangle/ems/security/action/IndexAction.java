@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.nav.Menu;
@@ -16,7 +17,6 @@ import org.beangle.ems.security.profile.GroupPropertyMeta;
 import org.beangle.ems.security.profile.UserPropertyMeta;
 import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.ems.web.action.SecurityActionSupport;
-import org.beangle.model.query.builder.OqlBuilder;
 
 public class IndexAction extends SecurityActionSupport {
 

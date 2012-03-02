@@ -9,8 +9,8 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.security.profile.UserPropertyMeta;
-import org.beangle.model.pojo.LongIdObject;
 
 /**
  * 数据限制域

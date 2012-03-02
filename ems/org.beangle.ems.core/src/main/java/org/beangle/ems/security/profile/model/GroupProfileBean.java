@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.profile.GroupProfile;
 import org.beangle.ems.security.profile.GroupProperty;
@@ -20,7 +21,6 @@ import org.beangle.ems.security.profile.GroupPropertyMeta;
 import org.beangle.ems.security.profile.Property;
 import org.beangle.ems.security.profile.PropertyMeta;
 import org.beangle.ems.security.restrict.Restriction;
-import org.beangle.model.pojo.LongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 

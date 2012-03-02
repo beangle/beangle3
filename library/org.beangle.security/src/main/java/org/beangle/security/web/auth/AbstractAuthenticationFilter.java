@@ -9,6 +9,8 @@ import java.util.Properties;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -166,8 +168,11 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilter {
 	public abstract Authentication attemptAuthentication(HttpServletRequest request)
 			throws AuthenticationException;
 
-	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
+			ServletException {
+		HttpServletRequest request = (HttpServletRequest) req;
+		HttpServletResponse response = (HttpServletResponse) res;
+		
 		if (requiresAuthentication(request, response)) {
 			logger.debug("Request is to process authentication");
 			Authentication authResult;

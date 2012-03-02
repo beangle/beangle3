@@ -13,9 +13,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.rule.Rule;
 import org.beangle.ems.rule.RuleParameter;
-import org.beangle.model.pojo.LongIdObject;
 @Entity(name="org.beangle.ems.rule.RuleParameter")
 public class RuleParameterBean extends LongIdObject implements RuleParameter {
 

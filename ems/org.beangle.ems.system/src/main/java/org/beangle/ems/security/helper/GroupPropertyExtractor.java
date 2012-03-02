@@ -5,7 +5,7 @@
 package org.beangle.ems.security.helper;
 
 import org.beangle.ems.security.Group;
-import org.beangle.model.transfer.exporter.DefaultPropertyExtractor;
+import org.beangle.transfer.exporter.DefaultPropertyExtractor;
 import org.beangle.util.i18n.TextResource;
 
 public class GroupPropertyExtractor extends DefaultPropertyExtractor {

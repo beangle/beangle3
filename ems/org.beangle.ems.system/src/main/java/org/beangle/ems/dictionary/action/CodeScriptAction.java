@@ -6,12 +6,12 @@ package org.beangle.ems.dictionary.action;
 
 import java.util.Date;
 
+import org.beangle.dao.metadata.Model;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.dictionary.model.CodeScript;
 import org.beangle.ems.dictionary.service.CodeFixture;
 import org.beangle.ems.dictionary.service.CodeGenerator;
 import org.beangle.ems.web.action.SecurityActionSupport;
-import org.beangle.model.entity.Model;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.struts2.helper.Params;
 

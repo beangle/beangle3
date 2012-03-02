@@ -4,10 +4,10 @@
  */
 package org.beangle.ems.business.action;
 
+import org.beangle.dao.Entity;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.rule.RuleParameter;
 import org.beangle.ems.web.action.SecurityActionSupport;
-import org.beangle.model.Entity;
-import org.beangle.model.query.builder.OqlBuilder;
 
 /**
  * 规则参数管理

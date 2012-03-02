@@ -1,12 +1,7 @@
-insert into se_groups(id,owner_id,enabled,name,created_at,remark,category_id,updated_at,parent_id)
-values(-1,1,1,'anonymous',current time,'匿名用户',3,current time,null);
-
-insert into se_groups(id,owner_id,enabled,name,created_at,remark,category_id,updated_at,parent_id)
-values(0,1,1,'anyone',current time,'所有用户',3,current time,null);
-
 --convert category to group
 insert into se_groups(id,owner_id,enabled,name,created_at,remark,category_id,updated_at,parent_id)
 select -10-a.id,1,1,a.name,current time,a.title,3,current time,null from se_categories a;
+
 update se_groups  g set g.parent_id=(select pg.id from se_groups pg where 0-pg.id-10=g.category_id);
 alter table se_groups drop column category_id;
 
@@ -14,12 +9,6 @@ alter table se_groups add column code varchar2(30);
 update se_groups set code =id;
 alter table se_groups alter column code  set not null;
 
--- insert anonymous and alluser authority
-insert into se_authorities(id,group_id,resource_id) select next value for seq_se_authorities,-1,r.id from se_resources r where r.scope=0;
-insert into se_authorities(id,group_id,resource_id) select next value for seq_se_authorities,0,r.id from se_resources r where r.scope=1;
-
-alter table se_resources drop column scope;
-alter table se_resources drop column need_params;
 drop table se_resources_categories;
 
 -- alter menu_profiles
@@ -54,7 +43,6 @@ create sequence seq_se_session_stats;
 drop table se_categories;
 
 update se_groups  set parent_id =null where id=parent_id;
-update se_groups  set parent_id =null where id in(0,-1);
 update se_groups  a set a.code = (select b.code from se_groups b where b.id=a.parent_id)||'.'||a.code where exists(select b.code from se_groups b where b.id=a.parent_id)
 
 --rename sys_ to ems_
@@ -74,9 +62,3 @@ drop table sys_parameters
 
 alter table ems_business_logs alter column resource rename to resrc;
 alter table ems_business_logs alter column operater rename to operator;
-
-
-alter table se_users alter column effective_at rename to effect_on;
-alter table se_users alter column invalid_at rename to invalid_on;
-alter table se_users alter column password_expired_at rename to password_expired_on;
-

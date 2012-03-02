@@ -6,7 +6,7 @@ package org.beangle.ems.security.profile;
 
 import java.util.List;
 
-import org.beangle.model.pojo.LongIdEntity;
+import org.beangle.dao.pojo.LongIdEntity;
 
 /**
  * 属性配置

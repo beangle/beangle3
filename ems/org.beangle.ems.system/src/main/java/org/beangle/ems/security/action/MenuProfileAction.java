@@ -4,11 +4,11 @@
  */
 package org.beangle.ems.security.action;
 
+import org.beangle.dao.Entity;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.web.action.SecurityActionSupport;
-import org.beangle.model.Entity;
-import org.beangle.model.query.builder.OqlBuilder;
 
 public class MenuProfileAction extends SecurityActionSupport {
 

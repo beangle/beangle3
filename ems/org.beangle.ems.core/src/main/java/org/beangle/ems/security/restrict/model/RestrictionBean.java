@@ -9,9 +9,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.StringUtils;
+import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.security.restrict.RestrictEntity;
 import org.beangle.ems.security.restrict.Restriction;
-import org.beangle.model.pojo.LongIdObject;
 
 /**
  * 资源访问限制

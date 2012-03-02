@@ -5,11 +5,11 @@
 package org.beangle.ems.dictionary.service.impl;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.beangle.dao.Entity;
 import org.beangle.ems.dictionary.service.CodeFixture;
 import org.beangle.ems.dictionary.service.CodeGenerator;
-import org.beangle.model.Entity;
-import org.beangle.model.transfer.AbstractTransferListener;
-import org.beangle.model.transfer.TransferResult;
+import org.beangle.transfer.AbstractTransferListener;
+import org.beangle.transfer.TransferResult;
 
 /**
  * @author chaostone

@@ -6,7 +6,7 @@ package org.beangle.security.core.session;
 
 import java.util.List;
 
-import org.beangle.model.persist.impl.BaseServiceImpl;
+import org.beangle.dao.impl.BaseServiceImpl;
 import org.beangle.security.core.Authentication;
 
 /**

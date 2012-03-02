@@ -7,11 +7,11 @@ package org.beangle.ems.security.session.service;
 import java.util.List;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.impl.BaseServiceImpl;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.session.model.GroupSessionProfileBean;
 import org.beangle.ems.security.session.model.SessionProfileBean;
-import org.beangle.model.persist.impl.BaseServiceImpl;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.core.session.category.CategoryProfile;
 import org.beangle.security.core.session.category.CategoryProfileProvider;
 import org.beangle.security.core.session.category.CategoryProfileUpdateEvent;

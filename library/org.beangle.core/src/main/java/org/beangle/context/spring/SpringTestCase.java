@@ -4,7 +4,7 @@
  */
 package org.beangle.context.spring;
 
-import org.beangle.model.persist.EntityDao;
+import org.beangle.dao.EntityDao;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 

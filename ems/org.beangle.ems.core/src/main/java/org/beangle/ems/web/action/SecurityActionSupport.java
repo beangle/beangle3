@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.NoParameters;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.SecurityUtils;
 import org.beangle.ems.security.profile.UserProfile;
@@ -15,7 +16,6 @@ import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.ems.security.restrict.service.RestrictionService;
 import org.beangle.ems.security.service.AuthorityService;
 import org.beangle.lang.StrUtils;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.access.AccessDeniedException;
 import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.struts2.action.EntityDrivenAction;

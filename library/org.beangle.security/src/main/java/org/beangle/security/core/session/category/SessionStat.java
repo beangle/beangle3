@@ -10,8 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
-import org.beangle.model.pojo.FlashEntity;
-import org.beangle.model.pojo.LongIdObject;
+import org.beangle.dao.pojo.FlashEntity;
+import org.beangle.dao.pojo.LongIdObject;
 
 /**
  * 分类会话计数状态
@@ -19,7 +19,7 @@ import org.beangle.model.pojo.LongIdObject;
  * @author chaostone
  * @version $Id: CategorySessionStat.java Jun 18, 2011 2:56:08 PM chaostone $
  */
-@Entity
+@Entity(name="org.beangle.security.core.session.category.SessionStat")
 public class SessionStat extends LongIdObject implements FlashEntity {
 
 	private static final long serialVersionUID = 8698006403892972254L;

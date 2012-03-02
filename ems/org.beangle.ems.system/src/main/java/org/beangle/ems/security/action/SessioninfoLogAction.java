@@ -14,9 +14,9 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.bean.comparators.PropertyComparator;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.User;
 import org.beangle.ems.web.action.SecurityActionSupport;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.web.session.model.SessioninfoLogBean;
 
 

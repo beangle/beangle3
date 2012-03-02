@@ -8,14 +8,14 @@ import java.sql.Date;
 import java.util.List;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.impl.AbstractHierarchyService;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.event.GroupCreationEvent;
 import org.beangle.ems.security.model.GroupBean;
 import org.beangle.ems.security.model.GroupMemberBean;
-import org.beangle.model.persist.impl.AbstractHierarchyService;
-import org.beangle.model.query.builder.OqlBuilder;
 
 /**
  * @author chaostone

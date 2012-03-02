@@ -8,9 +8,9 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
-import org.beangle.model.pojo.EnabledEntity;
-import org.beangle.model.pojo.LongIdTimeEntity;
-import org.beangle.model.pojo.TemporalActiveEntity;
+import org.beangle.dao.pojo.EnabledEntity;
+import org.beangle.dao.pojo.LongIdTimeEntity;
+import org.beangle.dao.pojo.TemporalActiveEntity;
 
 /**
  * 系统中所有用户的账号、权限、状态信息.

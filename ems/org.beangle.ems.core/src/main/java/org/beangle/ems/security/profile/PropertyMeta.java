@@ -4,7 +4,7 @@
  */
 package org.beangle.ems.security.profile;
 
-import org.beangle.model.pojo.LongIdEntity;
+import org.beangle.dao.pojo.LongIdEntity;
 
 /**
  * 用户自定义属性

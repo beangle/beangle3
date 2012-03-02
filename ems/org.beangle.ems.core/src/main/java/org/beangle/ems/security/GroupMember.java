@@ -4,7 +4,7 @@
  */
 package org.beangle.ems.security;
 
-import org.beangle.model.pojo.LongIdTimeEntity;
+import org.beangle.dao.pojo.LongIdTimeEntity;
 
 /**
  * @author chaostone

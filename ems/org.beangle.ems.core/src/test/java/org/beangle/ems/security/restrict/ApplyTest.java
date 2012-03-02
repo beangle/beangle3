@@ -7,6 +7,8 @@ package org.beangle.ems.security.restrict;
 import java.util.Map;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.query.Query;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.model.GroupBean;
 import org.beangle.ems.security.profile.model.UserProfileBean;
@@ -15,8 +17,6 @@ import org.beangle.ems.security.restrict.model.RestrictEntityBean;
 import org.beangle.ems.security.restrict.model.RestrictionBean;
 import org.beangle.ems.security.restrict.service.RestrictionServiceImpl;
 import org.beangle.ems.security.service.CsvDataResolver;
-import org.beangle.model.query.Query;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

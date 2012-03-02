@@ -8,8 +8,9 @@ import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.Validate;
 import org.beangle.security.auth.AnonymousAuthentication;
@@ -42,17 +43,17 @@ public class AnonymousFilter extends GenericHttpFilter {
 	 *         token should be setup for this
 	 *         request
 	 */
-	protected boolean applyAnonymousForThisRequest(HttpServletRequest request) {
+	protected boolean applyAnonymousForThisRequest(ServletRequest request) {
 		return true;
 	}
 
-	protected Authentication createAuthentication(HttpServletRequest request) {
+	protected Authentication createAuthentication(ServletRequest request) {
 		AnonymousAuthentication auth = new AnonymousAuthentication(key, null);
 		auth.setDetails(authenticationDetailsSource.buildDetails((HttpServletRequest) request));
 		return auth;
 	}
 
-	protected void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		boolean addedToken = false;
 

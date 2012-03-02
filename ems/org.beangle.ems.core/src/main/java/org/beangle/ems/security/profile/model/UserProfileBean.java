@@ -11,13 +11,13 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.profile.Property;
 import org.beangle.ems.security.profile.PropertyMeta;
 import org.beangle.ems.security.profile.UserProfile;
 import org.beangle.ems.security.profile.UserProperty;
 import org.beangle.ems.security.profile.UserPropertyMeta;
-import org.beangle.model.pojo.LongIdObject;
 
 /**
  * 用户配置

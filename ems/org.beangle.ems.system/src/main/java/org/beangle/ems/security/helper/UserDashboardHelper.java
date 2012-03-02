@@ -11,6 +11,8 @@ import java.util.Set;
 
 import org.beangle.collection.CollectUtils;
 import org.beangle.collection.page.PageLimit;
+import org.beangle.dao.EntityDao;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
@@ -19,8 +21,6 @@ import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.security.nav.service.MenuService;
 import org.beangle.ems.security.restrict.service.RestrictionService;
 import org.beangle.ems.security.service.AuthorityService;
-import org.beangle.model.persist.EntityDao;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.security.web.session.model.SessioninfoLogBean;
 import org.beangle.struts2.helper.ContextHelper;

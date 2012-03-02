@@ -12,29 +12,19 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public abstract class GenericCompositeFilter extends GenericHttpFilter {
-
-	protected abstract List<? extends Filter> getFilters(HttpServletRequest request);
-
-	@Override
-	protected void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		new VirtualFilterChain(chain, getFilters(request)).doFilter(request, response);
-	}
 	/**
 	 * A <code>FilterChain</code> that records whether or not
 	 * {@link FilterChain#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse)} is
 	 * called.
 	 */
-	private static class VirtualFilterChain implements FilterChain {
+	protected static class VirtualFilterChain implements FilterChain {
 		private final FilterChain originalChain;
 		private final List<? extends Filter> additionalFilters;
 		private int currentPosition = 0;
 
-		private VirtualFilterChain(FilterChain chain, List<? extends Filter> additionalFilters) {
+		public VirtualFilterChain(FilterChain chain, List<? extends Filter> additionalFilters) {
 			this.originalChain = chain;
 			this.additionalFilters = additionalFilters;
 		}

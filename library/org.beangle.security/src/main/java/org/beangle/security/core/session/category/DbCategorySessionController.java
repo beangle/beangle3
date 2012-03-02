@@ -10,7 +10,7 @@ import org.apache.commons.lang.Validate;
 import org.beangle.bean.Initializing;
 import org.beangle.context.event.Event;
 import org.beangle.context.event.EventListener;
-import org.beangle.model.query.builder.OqlBuilder;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.security.auth.Principals;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.session.AbstractSessionController;

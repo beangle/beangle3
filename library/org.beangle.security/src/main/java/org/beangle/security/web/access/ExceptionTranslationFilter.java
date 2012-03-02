@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.Validate;
 import org.beangle.security.BeangleSecurityException;
@@ -37,7 +36,7 @@ public class ExceptionTranslationFilter extends GenericHttpFilter {
 		Validate.notNull(throwableAnalyzer, "throwableAnalyzer must be specified");
 	}
 
-	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		try {
 			chain.doFilter(request, response);

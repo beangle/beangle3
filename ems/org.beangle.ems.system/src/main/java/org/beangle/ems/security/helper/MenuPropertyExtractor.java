@@ -5,7 +5,7 @@
 package org.beangle.ems.security.helper;
 
 import org.beangle.ems.security.nav.Menu;
-import org.beangle.model.transfer.exporter.DefaultPropertyExtractor;
+import org.beangle.transfer.exporter.DefaultPropertyExtractor;
 import org.beangle.util.i18n.TextResource;
 
 /**

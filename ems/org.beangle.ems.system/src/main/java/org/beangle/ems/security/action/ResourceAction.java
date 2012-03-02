@@ -4,17 +4,17 @@
  */
 package org.beangle.ems.security.action;
 
+import org.beangle.dao.Entity;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
+import org.beangle.ems.security.helper.ResourcePropertyExtractor;
 import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.service.CacheableAuthorityManager;
 import org.beangle.ems.web.action.SecurityActionSupport;
-import org.beangle.ems.security.helper.ResourcePropertyExtractor;
-import org.beangle.model.Entity;
-import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.model.transfer.exporter.PropertyExtractor;
 import org.beangle.struts2.convention.route.Action;
+import org.beangle.transfer.exporter.PropertyExtractor;
 
 /**
  * 系统模块管理响应类

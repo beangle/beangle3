@@ -12,10 +12,10 @@ import java.util.TimerTask;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.beangle.bean.Initializing;
+import org.beangle.dao.EntityDao;
+import org.beangle.dao.impl.BaseServiceImpl;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.lang.DateUtils;
-import org.beangle.model.persist.EntityDao;
-import org.beangle.model.persist.impl.BaseServiceImpl;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.security.core.session.Sessioninfo;
 import org.slf4j.Logger;

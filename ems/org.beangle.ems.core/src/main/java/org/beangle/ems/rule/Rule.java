@@ -6,7 +6,7 @@ package org.beangle.ems.rule;
 
 import java.util.Set;
 
-import org.beangle.model.pojo.LongIdTimeEntity;
+import org.beangle.dao.pojo.LongIdTimeEntity;
 
 public interface Rule extends LongIdTimeEntity {
 

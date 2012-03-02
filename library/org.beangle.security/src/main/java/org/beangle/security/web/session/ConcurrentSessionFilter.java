@@ -19,6 +19,8 @@ import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -68,6 +70,7 @@ public class ConcurrentSessionFilter extends GenericHttpFilter {
 
 	/**
 	 * 没有登录或匿名账户不进行session处理
+	 * 
 	 * @param request
 	 * @return
 	 */
@@ -76,9 +79,11 @@ public class ConcurrentSessionFilter extends GenericHttpFilter {
 		return null != auth && !(AnonymousAuthentication.class.isAssignableFrom(auth.getClass()));
 	}
 
-	@Override
-	protected void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
+			ServletException {
+		HttpServletRequest request = (HttpServletRequest) req;
+		HttpServletResponse response = (HttpServletResponse) res;
+		
 		HttpSession session = request.getSession(false);
 		SessionStatus info = null;
 		if (session != null && shouldCare(request)) {
@@ -102,9 +107,9 @@ public class ConcurrentSessionFilter extends GenericHttpFilter {
 				}
 			}
 		}
-		String uri =null;
+		String uri = null;
 		if (null != info) {
-			uri= RequestUtils.getServletPath(request);
+			uri = RequestUtils.getServletPath(request);
 			sessionRegistry.access(session.getId(), uri, System.currentTimeMillis());
 		}
 		try {

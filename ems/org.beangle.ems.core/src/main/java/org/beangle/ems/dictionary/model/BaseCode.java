@@ -6,7 +6,7 @@ package org.beangle.ems.dictionary.model;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -15,8 +15,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.beangle.model.pojo.LongIdTimeObject;
-import org.beangle.model.pojo.TemporalActiveEntity;
+import org.beangle.dao.pojo.LongIdTimeObject;
+import org.beangle.dao.pojo.TemporalActiveEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -63,12 +63,12 @@ public abstract class BaseCode<T extends BaseCode> extends LongIdTimeObject impl
 	 * 生效时间
 	 */
 	@NotNull
-	protected Date effectOn;
+	protected Date effectAt;
 
 	/**
 	 * 失效时间
 	 */
-	protected Date invalidOn;
+	protected Date invalidAt;
 
 	public BaseCode() {
 	}
@@ -156,18 +156,18 @@ public abstract class BaseCode<T extends BaseCode> extends LongIdTimeObject impl
 	 * 
 	 * @return 生效时间
 	 */
-	public Date getEffectOn() {
-		return effectOn;
+	public Date getEffectAt() {
+		return effectAt;
 	}
 
 	/**
 	 * 设置生效时间
 	 * 
-	 * @param effectOn
+	 * @param effectAt
 	 *            生效时间
 	 */
-	public void setEffectOn(Date effectOn) {
-		this.effectOn = effectOn;
+	public void setEffectAt(Date effectAt) {
+		this.effectAt = effectAt;
 	}
 
 	/**
@@ -175,18 +175,18 @@ public abstract class BaseCode<T extends BaseCode> extends LongIdTimeObject impl
 	 * 
 	 * @return 失效时间
 	 */
-	public Date getInvalidOn() {
-		return invalidOn;
+	public Date getInvalidAt() {
+		return invalidAt;
 	}
 
 	/**
 	 * 设置失效时间
 	 * 
-	 * @param invalidOn
+	 * @param invalidAt
 	 *            失效时间
 	 */
-	public void setInvalidOn(Date invalidOn) {
-		this.invalidOn = invalidOn;
+	public void setInvalidAt(Date invalidAt) {
+		this.invalidAt = invalidAt;
 	}
 
 	public int compareTo(T arg0) {

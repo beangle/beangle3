@@ -94,7 +94,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
 		StopWatch watch = new StopWatch();
 		watch.start();
 		BindRegistry registry = new SpringBindRegistry(definitionRegistry);
-		Map<String, BeanDefinition> newDefinitions = registerModules(registry);
+		Map<String, BeanDefinition> newDefinitions = findRegistedModules(registry);
 		// should register after all beans
 		registerBuildins(registry);
 		autowire(newDefinitions, registry);
@@ -105,9 +105,10 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
 
 	protected void lifecycle(BindRegistry registry, BeanDefinitionRegistry definitionRegistry) {
 		for (String name : registry.getBeanNames()) {
-			if (name.startsWith("&")) continue;
+			String springName=name;
+			if (name.startsWith("&")) springName = name.substring(1);
 			Class<?> clazz = registry.getBeanType(name);
-			AbstractBeanDefinition def = (AbstractBeanDefinition) definitionRegistry.getBeanDefinition(name);
+			AbstractBeanDefinition def = (AbstractBeanDefinition) definitionRegistry.getBeanDefinition(springName);
 			if (Initializing.class.isAssignableFrom(clazz)
 					&& !def.getPropertyValues().contains("init-method")) {
 				def.setInitMethodName("init");
@@ -155,7 +156,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
 		return source.getBeanName();
 	}
 
-	protected Map<String, BeanDefinition> registerModules(BindRegistry registry) {
+	protected Map<String, BeanDefinition> findRegistedModules(BindRegistry registry) {
 		List<String> modules = registry.getBeanNames(BindModule.class);
 		Map<String, BeanDefinition> newBeanDefinitions = CollectUtils.newHashMap();
 		for (String name : modules) {

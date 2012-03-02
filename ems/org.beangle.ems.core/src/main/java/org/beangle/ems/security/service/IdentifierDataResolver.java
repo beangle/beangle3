@@ -12,11 +12,11 @@ import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.EntityDao;
+import org.beangle.dao.metadata.EntityType;
+import org.beangle.dao.metadata.Model;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.profile.PropertyMeta;
-import org.beangle.model.entity.Model;
-import org.beangle.model.entity.types.EntityType;
-import org.beangle.model.persist.EntityDao;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.springframework.beans.BeanUtils;
 
 public class IdentifierDataResolver implements UserDataResolver {

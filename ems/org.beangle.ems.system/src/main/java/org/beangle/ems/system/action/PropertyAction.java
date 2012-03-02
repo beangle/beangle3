@@ -9,10 +9,10 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.collection.CollectUtils;
-import org.beangle.ems.config.model.PropertyConfigItemBean;
-import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.struts2.action.BaseAction;
 import org.beangle.context.property.PropertyConfigFactory;
+import org.beangle.dao.query.builder.OqlBuilder;
+import org.beangle.ems.config.model.PropertyConfigItemBean;
+import org.beangle.struts2.action.BaseAction;
 
 public class PropertyAction extends BaseAction {
 

@@ -4,8 +4,8 @@
  */
 package org.beangle.ems.security.model;
 
-import java.sql.Date;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -19,11 +19,11 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.pojo.LongIdTimeObject;
+import org.beangle.dao.util.EntityUtils;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
-import org.beangle.model.pojo.LongIdTimeObject;
-import org.beangle.model.util.EntityUtils;
 
 /**
  * 系统用户
@@ -67,17 +67,17 @@ public class UserBean extends LongIdTimeObject implements User {
 	 * 账户生效日期
 	 */
 	@NotNull
-	protected Date effectOn;
+	protected Date effectAt;
 
 	/**
 	 * 账户失效日期
 	 */
-	protected Date invalidOn;
+	protected Date invalidAt;
 
 	/**
 	 * 密码失效日期
 	 */
-	protected Date passwordExpiredOn;
+	protected Date passwordExpiredAt;
 
 	/** 是否启用 */
 	@NotNull
@@ -179,7 +179,7 @@ public class UserBean extends LongIdTimeObject implements User {
 	 * 是否密码过期
 	 */
 	public boolean isPasswordExpired() {
-		return (null != passwordExpiredOn && new Date(System.currentTimeMillis()).after(passwordExpiredOn));
+		return (null != passwordExpiredAt && new Date(System.currentTimeMillis()).after(passwordExpiredAt));
 	}
 
 	public boolean isEnabled() {
@@ -190,28 +190,28 @@ public class UserBean extends LongIdTimeObject implements User {
 		this.enabled = enabled;
 	}
 
-	public Date getEffectOn() {
-		return effectOn;
+	public Date getEffectAt() {
+		return effectAt;
 	}
 
-	public void setEffectOn(Date effectOn) {
-		this.effectOn = effectOn;
+	public void setEffectAt(Date effectAt) {
+		this.effectAt = effectAt;
 	}
 
-	public Date getInvalidOn() {
-		return invalidOn;
+	public Date getInvalidAt() {
+		return invalidAt;
 	}
 
-	public void setInvalidOn(Date invalidOn) {
-		this.invalidOn = invalidOn;
+	public void setInvalidAt(Date invalidAt) {
+		this.invalidAt = invalidAt;
 	}
 
-	public Date getPasswordExpiredOn() {
-		return passwordExpiredOn;
+	public Date getPasswordExpiredAt() {
+		return passwordExpiredAt;
 	}
 
 	public void setPasswordExpiredAt(Date passwordExpiredAt) {
-		this.passwordExpiredOn = passwordExpiredAt;
+		this.passwordExpiredAt = passwordExpiredAt;
 	}
 
 	public String toString() {

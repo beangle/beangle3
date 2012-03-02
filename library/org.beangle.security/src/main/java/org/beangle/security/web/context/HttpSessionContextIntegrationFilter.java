@@ -9,6 +9,8 @@ import java.lang.reflect.Method;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -149,9 +151,11 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilter {
 		contextObject = generateNewContext();
 	}
 
-	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
+			ServletException {
+		HttpServletRequest request = (HttpServletRequest) req;
+		HttpServletResponse response = (HttpServletResponse) res;
+		
 		if (request.getAttribute(FILTER_APPLIED) != null) {
 			// ensure that filter is only applied once per request
 			chain.doFilter(request, response);
@@ -226,7 +230,7 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilter {
 	 * and return the cloned instance.
 	 * 
 	 * @param httpSession
-	 *            the session obtained from the request.
+	 *        the session obtained from the request.
 	 */
 	private SecurityContext readSecurityContextFromSession(HttpSession httpSession) {
 		if (httpSession == null) {
@@ -282,24 +286,24 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilter {
 	 * then the context will not be stored.
 	 * 
 	 * @param securityContext
-	 *            the context object obtained from the SecurityContextHolder
-	 *            after the request has been processed by the filter chain.
-	 *            SecurityContextHolder.getContext() cannot be used to obtain
-	 *            the context as it has already been cleared by the time this
-	 *            method is called.
+	 *        the context object obtained from the SecurityContextHolder
+	 *        after the request has been processed by the filter chain.
+	 *        SecurityContextHolder.getContext() cannot be used to obtain
+	 *        the context as it has already been cleared by the time this
+	 *        method is called.
 	 * @param request
-	 *            the request object (used to obtain the session, if one
-	 *            exists).
+	 *        the request object (used to obtain the session, if one
+	 *        exists).
 	 * @param httpSessionExistedAtStartOfRequest
-	 *            indicates whether there was a session in place before the
-	 *            filter chain executed. If this is true, and the session is
-	 *            found to be null, this indicates that it was invalidated
-	 *            during the request and a new session will now be created.
+	 *        indicates whether there was a session in place before the
+	 *        filter chain executed. If this is true, and the session is
+	 *        found to be null, this indicates that it was invalidated
+	 *        during the request and a new session will now be created.
 	 * @param contextHashBeforeChainExecution
-	 *            the hashcode of the context before the filter chain executed.
-	 *            The context will only be stored if it has a different
-	 *            hashcode, indicating that the context changed during the
-	 *            request.
+	 *        the hashcode of the context before the filter chain executed.
+	 *        The context will only be stored if it has a different
+	 *        hashcode, indicating that the context changed during the
+	 *        request.
 	 */
 	private void storeSecurityContextInSession(SecurityContext securityContext, HttpServletRequest request,
 			boolean httpSessionExistedAtStartOfRequest, int contextHashBeforeChainExecution) {

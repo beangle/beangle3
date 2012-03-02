@@ -7,10 +7,10 @@ package org.beangle.ems.security.action;
 import java.util.Map;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.util.ValidEntityKeyPredicate;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.service.UserService;
 import org.beangle.ems.web.action.SecurityActionSupport;
-import org.beangle.model.util.ValidEntityKeyPredicate;
 
 public class PasswordAction extends SecurityActionSupport {
 

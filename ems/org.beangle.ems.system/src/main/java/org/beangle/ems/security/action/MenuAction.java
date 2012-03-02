@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.Entity;
+import org.beangle.dao.query.builder.OqlBuilder;
+import org.beangle.dao.util.HierarchyEntityUtils;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.helper.MenuPropertyExtractor;
@@ -16,10 +19,7 @@ import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.security.nav.service.MenuService;
 import org.beangle.ems.web.action.SecurityActionSupport;
-import org.beangle.model.Entity;
-import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.model.transfer.exporter.PropertyExtractor;
-import org.beangle.model.util.HierarchyEntityUtils;
+import org.beangle.transfer.exporter.PropertyExtractor;
 
 /**
  * 系统模块(菜单)管理响应类

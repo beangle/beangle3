@@ -7,8 +7,8 @@ package org.beangle.ems.security.service;
 import java.util.Collections;
 import java.util.List;
 
+import org.beangle.dao.impl.BaseServiceImpl;
 import org.beangle.ems.security.profile.PropertyMeta;
-import org.beangle.model.persist.impl.BaseServiceImpl;
 
 public class OqlDataProvider extends BaseServiceImpl implements UserDataProvider {
 

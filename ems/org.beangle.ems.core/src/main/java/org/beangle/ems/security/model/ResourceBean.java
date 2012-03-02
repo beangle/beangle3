@@ -7,14 +7,15 @@ package org.beangle.ems.security.model;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.security.Resource;
 import org.beangle.lang.StrUtils;
-import org.beangle.model.pojo.LongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -52,12 +53,16 @@ public class ResourceBean extends LongIdObject implements Resource {
 
 	/** 资源访问范围 */
 	@NotNull
-	@Enumerated
+	@Enumerated(value = EnumType.ORDINAL)
 	private Scope scope = Scope.PRIVATE;
 
 	/** 模块是否可用 */
 	@NotNull
 	private boolean enabled = true;
+
+	/** 是否为入口 */
+	@NotNull
+	private boolean entry = true;
 
 	public String getRemark() {
 		return remark;
@@ -101,6 +106,14 @@ public class ResourceBean extends LongIdObject implements Resource {
 
 	public void setScope(Scope scope) {
 		this.scope = scope;
+	}
+
+	public boolean isEntry() {
+		return entry;
+	}
+
+	public void setEntry(boolean entry) {
+		this.entry = entry;
 	}
 
 	public String toString() {

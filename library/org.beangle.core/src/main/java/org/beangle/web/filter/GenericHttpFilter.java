@@ -4,20 +4,14 @@
  */
 package org.beangle.web.filter;
 
-import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.Filter;
-import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
@@ -47,13 +41,13 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
 
 	private ServletContext servletContext;
 
-	public final void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		doFilterHttp((HttpServletRequest) request, (HttpServletResponse) response, chain);
-	}
-
-	protected abstract void doFilterHttp(HttpServletRequest request, HttpServletResponse response,
-			FilterChain chain) throws IOException, ServletException;
+//	public final void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+//			throws IOException, ServletException {
+//		doFilterHttp((HttpServletRequest) request, (HttpServletResponse) response, chain);
+//	}
+//
+//	protected abstract void doFilterHttp(HttpServletRequest request, HttpServletResponse response,
+//			FilterChain chain) throws IOException, ServletException;
 
 	/**
 	 * Calls the <code>initFilterBean()</code> method that might contain custom

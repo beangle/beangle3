@@ -13,14 +13,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.collection.CollectUtils;
-import org.beangle.model.pojo.LongIdObject;
+import org.beangle.dao.pojo.LongIdObject;
 
 /**
  * 会话配置
  * 
  * @author chaostone
  */
-@Entity
+@Entity(name="org.beangle.ems.security.session.model.SessionProfileBean")
 public class SessionProfileBean extends LongIdObject {
 
 	private static final long serialVersionUID = 7877599995789627073L;

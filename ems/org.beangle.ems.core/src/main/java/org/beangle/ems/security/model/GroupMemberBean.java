@@ -10,10 +10,10 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.beangle.dao.pojo.LongIdTimeObject;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.User;
-import org.beangle.model.pojo.LongIdTimeObject;
 
 /**
  * 用户组成员关系

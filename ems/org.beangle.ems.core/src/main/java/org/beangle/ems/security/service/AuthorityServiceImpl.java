@@ -11,14 +11,14 @@ import java.util.Map;
 import java.util.Set;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.impl.BaseServiceImpl;
+import org.beangle.dao.metadata.Model;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.event.GroupAuthorityEvent;
-import org.beangle.model.entity.Model;
-import org.beangle.model.persist.impl.BaseServiceImpl;
-import org.beangle.model.query.builder.OqlBuilder;
 
 /** 授权信息的服务实现类
  * 

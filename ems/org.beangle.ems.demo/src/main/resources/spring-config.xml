@@ -6,6 +6,7 @@
 		</property>
 	</bean>
 	
+	<!--
 	<bean id="securityFilterChain" class="org.beangle.security.web.FilterChainProxy">
 		<property name="filters">
 			<list>
@@ -36,15 +37,10 @@
 		<property name="config" ref="casConfig"/>
 	</bean>
 	
-	<!--
-	<bean id="authenticationEntryPoint" class="org.beangle.security.web.auth.LoginUrlEntryPoint">
-		<property name="loginUrl" value="/login.action"/>
-	</bean>
-	-->
-	
 	<bean id="casConfig">
 		<property name="casServer" value="http://portal1.ecnu.edu.cn/cas"/>
 	</bean>
+	-->
 	
 	<!-- Database Properties -->
 	<bean id="hibernateConfig">

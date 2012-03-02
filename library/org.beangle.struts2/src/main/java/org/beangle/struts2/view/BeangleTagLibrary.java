@@ -73,6 +73,8 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 		theme.setUi(getUitheme());
 		theme.setUibase(req.getContextPath());
 		this.stack.getContext().put(Theme.THEME, theme);
+		this.stack.getContext().put(UIIdGenerator.GENERATOR,
+				new IndexableIdGenerator(req.getRequestURI().hashCode()));
 	}
 
 	public Object getFreemarkerModels(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {

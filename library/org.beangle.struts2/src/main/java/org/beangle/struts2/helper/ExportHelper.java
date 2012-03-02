@@ -7,17 +7,17 @@ package org.beangle.struts2.helper;
 import java.net.URL;
 
 import org.apache.commons.lang.StringUtils;
-import org.beangle.model.transfer.csv.CsvItemWriter;
-import org.beangle.model.transfer.dbf.DBFItemWriter;
-import org.beangle.model.transfer.excel.ExcelItemWriter;
-import org.beangle.model.transfer.excel.ExcelTemplateWriter;
-import org.beangle.model.transfer.exporter.Context;
-import org.beangle.model.transfer.exporter.Exporter;
-import org.beangle.model.transfer.exporter.SimpleEntityExporter;
-import org.beangle.model.transfer.exporter.TemplateExporter;
-import org.beangle.model.transfer.exporter.TemplateWriter;
-import org.beangle.model.transfer.io.TransferFormats;
-import org.beangle.model.transfer.io.Writer;
+import org.beangle.transfer.csv.CsvItemWriter;
+import org.beangle.transfer.dbf.DBFItemWriter;
+import org.beangle.transfer.excel.ExcelItemWriter;
+import org.beangle.transfer.excel.ExcelTemplateWriter;
+import org.beangle.transfer.exporter.Context;
+import org.beangle.transfer.exporter.Exporter;
+import org.beangle.transfer.exporter.SimpleEntityExporter;
+import org.beangle.transfer.exporter.TemplateExporter;
+import org.beangle.transfer.exporter.TemplateWriter;
+import org.beangle.transfer.io.TransferFormats;
+import org.beangle.transfer.io.Writer;
 
 import com.opensymphony.xwork2.util.ClassLoaderUtil;
 

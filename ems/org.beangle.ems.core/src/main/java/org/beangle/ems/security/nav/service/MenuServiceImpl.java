@@ -9,15 +9,15 @@ import java.util.List;
 import java.util.Set;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.impl.AbstractHierarchyService;
+import org.beangle.dao.query.builder.OqlBuilder;
+import org.beangle.dao.util.HierarchyEntityUtils;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.security.nav.model.MenuBean;
-import org.beangle.model.persist.impl.AbstractHierarchyService;
-import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.model.util.HierarchyEntityUtils;
 
 /**
  * @author chaostone

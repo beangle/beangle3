@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.beangle.http.HttpMethod;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.AntPathMatcher;
 
 /**
@@ -21,7 +19,6 @@ import org.springframework.util.AntPathMatcher;
  * @see AntPathMatcher
  */
 public final class AntPathRequestMatcher implements RequestMatcher {
-	private final static Logger logger = LoggerFactory.getLogger(AntPathRequestMatcher.class);
 
 	private static final AntPathMatcher antMatcher = new AntPathMatcher();
 
@@ -33,7 +30,7 @@ public final class AntPathRequestMatcher implements RequestMatcher {
 	 * methods.
 	 * 
 	 * @param pattern
-	 *            the ant pattern to use for matching
+	 *        the ant pattern to use for matching
 	 */
 	public AntPathRequestMatcher(String pattern) {
 		this(pattern, null);
@@ -44,10 +41,10 @@ public final class AntPathRequestMatcher implements RequestMatcher {
 	 * methods.
 	 * 
 	 * @param pattern
-	 *            the ant pattern to use for matching
+	 *        the ant pattern to use for matching
 	 * @param httpMethod
-	 *            the HTTP method. The {@code matches} method will return false
-	 *            if the incoming request doesn't have the same method.
+	 *        the HTTP method. The {@code matches} method will return false
+	 *        if the incoming request doesn't have the same method.
 	 */
 	public AntPathRequestMatcher(String pattern, String httpMethod) {
 		Validate.notEmpty(pattern, "Pattern cannot be null or empty");
@@ -60,24 +57,15 @@ public final class AntPathRequestMatcher implements RequestMatcher {
 	 * the supplied request.
 	 * 
 	 * @param request
-	 *            the request to match against. The ant pattern will be matched
-	 *            against the {@code servletPath} + {@code pathInfo} of the
-	 *            request.
+	 *        the request to match against. The ant pattern will be matched
+	 *        against the {@code servletPath} + {@code pathInfo} of the
+	 *        request.
 	 */
 	public boolean matches(HttpServletRequest request) {
 		if (httpMethod != null && httpMethod != HttpMethod.valueOf(request.getMethod())) { return false; }
-
 		String url = request.getServletPath();
-
-		if (request.getPathInfo() != null) {
-			url += request.getPathInfo();
-		}
-
+		if (request.getPathInfo() != null) url += request.getPathInfo();
 		url = url.toLowerCase();
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("Checking match of request : '" + url + "'; against '" + pattern + "'");
-		}
 		// TODO: Optimise, since the pattern is fixed.
 		return antMatcher.match(pattern, url);
 	}

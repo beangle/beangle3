@@ -29,7 +29,7 @@
 	   </tr>
 	   <tr>
 		<td class="title" >&nbsp;有效期限:</td>
-		<td class="content">${(user.effectOn?string("yyyy-MM-dd"))!}～${(user.invalidOn?string("yyyy-MM-dd"))!}</td>
+		<td class="content">${(user.effectAt?string("yyyy-MM-dd"))!}～${(user.invalidAt?string("yyyy-MM-dd"))!}</td>
 		<td class="title" >&nbsp;密码过期:</td>
 		<td class="content">[#if user.passwordExpiredAt??]${(user.passwordExpiredAt?string("yyyy-MM-dd"))!}[#else]永不过期[/#if]</td>
 	   </tr>

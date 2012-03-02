@@ -6,10 +6,10 @@ package org.beangle.ems.rule.impl;
 
 import java.util.List;
 
+import org.beangle.dao.EntityDao;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.rule.Rule;
 import org.beangle.ems.rule.RuleBase;
-import org.beangle.model.persist.EntityDao;
-import org.beangle.model.query.builder.OqlBuilder;
 
 public class RuleBaseImpl implements RuleBase {
 

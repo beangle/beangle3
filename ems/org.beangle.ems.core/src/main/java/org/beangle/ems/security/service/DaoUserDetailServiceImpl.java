@@ -7,10 +7,10 @@ package org.beangle.ems.security.service;
 import java.util.List;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.impl.BaseServiceImpl;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.session.service.GroupProfileService;
-import org.beangle.model.persist.impl.BaseServiceImpl;
 import org.beangle.security.core.authority.GrantedAuthorityBean;
 import org.beangle.security.core.userdetail.UserDetail;
 import org.beangle.security.core.userdetail.UserDetailService;

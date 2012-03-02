@@ -7,7 +7,7 @@ package org.beangle.security.web.session;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.beangle.model.persist.impl.BaseServiceImpl;
+import org.beangle.dao.impl.BaseServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

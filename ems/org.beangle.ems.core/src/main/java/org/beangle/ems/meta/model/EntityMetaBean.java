@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.meta.EntityMeta;
-import org.beangle.model.pojo.LongIdObject;
 
 /**
  * 实体元信息

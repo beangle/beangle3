@@ -7,9 +7,9 @@ package org.beangle.ems.log.model;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 
+import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.log.BusinessLog;
 import org.beangle.ems.log.BusinessLogDetail;
-import org.beangle.model.pojo.LongIdObject;
 
 /**
  * 业务日志明细

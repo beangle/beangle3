@@ -12,7 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
-import org.beangle.model.pojo.LongIdObject;
+import org.beangle.dao.pojo.LongIdObject;
 
 /**
  * Access log entry

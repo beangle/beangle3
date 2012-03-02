@@ -5,10 +5,10 @@
 package org.beangle.ems.business.action;
 
 import org.apache.commons.lang.StringUtils;
+import org.beangle.dao.query.QueryBuilder;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.log.BusinessLog;
 import org.beangle.ems.web.action.SecurityActionSupport;
-import org.beangle.model.query.QueryBuilder;
-import org.beangle.model.query.builder.OqlBuilder;
 import org.beangle.struts2.helper.QueryHelper;
 
 /**

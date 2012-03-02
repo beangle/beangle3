@@ -4,8 +4,8 @@
  */
 package org.beangle.ems.security;
 
+import org.beangle.dao.pojo.LongIdEntity;
 import org.beangle.ems.security.restrict.RestrictionHolder;
-import org.beangle.model.pojo.LongIdEntity;
 
 /**
  * 权限

@@ -18,11 +18,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.pojo.HierarchyLongIdObject;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.lang.StrUtils;
-import org.beangle.model.pojo.HierarchyLongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 

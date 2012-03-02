@@ -8,10 +8,13 @@ import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.Validate;
+import org.beangle.security.auth.AnonymousAuthentication;
 import org.beangle.security.auth.AuthenticationDetailsSource;
 import org.beangle.security.auth.AuthenticationManager;
 import org.beangle.security.core.Authentication;
@@ -63,7 +66,7 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
 	 */
 	protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth == null) { return true; }
+		if (auth == null || auth instanceof AnonymousAuthentication) { return true; }
 		if (null != authenticationAliveChecker && !authenticationAliveChecker.check(auth, request)) {
 			unsuccessfulAuthentication(request, response, null);
 			return true;
@@ -76,12 +79,14 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
 	 * Try to authenticate a pre-authenticated user with Beangle Security if the
 	 * user has not yet been authenticated.
 	 */
-	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
+			ServletException {
+		HttpServletRequest request = (HttpServletRequest) req;
+		HttpServletResponse response = (HttpServletResponse) res;
 		if (requiresAuthentication(request, response)) {
 			doAuthenticate(request, response);
 		}
-		filterChain.doFilter(request, response);
+		chain.doFilter(req, res);
 	}
 
 	/** Do the actual authentication for a pre-authenticated user. */

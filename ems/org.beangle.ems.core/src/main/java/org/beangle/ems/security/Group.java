@@ -6,8 +6,8 @@ package org.beangle.ems.security;
 
 import java.util.Set;
 
-import org.beangle.model.pojo.HierarchyEntity;
-import org.beangle.model.pojo.LongIdTimeEntity;
+import org.beangle.dao.pojo.HierarchyEntity;
+import org.beangle.dao.pojo.LongIdTimeEntity;
 
 /**
  * 系统用户组的基本信息

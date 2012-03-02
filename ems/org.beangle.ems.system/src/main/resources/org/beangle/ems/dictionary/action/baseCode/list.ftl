@@ -16,8 +16,8 @@
 			<td><input style="width:99%" type="text" name="${shortName}.name" maxlength="32" value="${Parameters['${shortName}.name']?if_exists}"/></td>
 			<td><input style="width:99%" type="text" name="${shortName}.engName" maxlength="32" value="${Parameters['${shortName}.engName']?if_exists}"/></td>
 			<td><input style="width:99%" type="hidden" name="${shortName}.updatedAt" maxlength="32" value="${Parameters['${shortName}.updatedAt']?if_exists}"/></td>
-			<td><input style="width:99%" type="hidden" name="${shortName}.effectOn" maxlength="32" value="${Parameters['${shortName}.enabled']?if_exists}"/></td>
-			<td><input style="width:99%" type="hidden" name="${shortName}.invalidOn" maxlength="32" value="${Parameters['${shortName}.enabled']?if_exists}"/></td>		  
+			<td><input style="width:99%" type="hidden" name="${shortName}.effectAt" maxlength="32" value="${Parameters['${shortName}.enabled']?if_exists}"/></td>
+			<td><input style="width:99%" type="hidden" name="${shortName}.invalidAt" maxlength="32" value="${Parameters['${shortName}.enabled']?if_exists}"/></td>		  
 	   </tr>
 	   [@b.row]
 		 	[@b.boxcol/]
@@ -27,11 +27,11 @@
 		 	[@b.col property="updatedAt" title="common.updatedAt"]
 		 		${(baseCode.updatedAt?string("yyyy-MM-dd"))?if_exists}
 		 	[/@]
-		 	[@b.col property="effectOn" title="生效日期"]
-		 		${(baseCode.effectOn?string("yyyy-MM-dd"))?if_exists}
+		 	[@b.col property="effectAt" title="生效日期"]
+		 		${(baseCode.effectAt?string("yyyy-MM-dd"))?if_exists}
 		 	[/@]
-		 	[@b.col property="invalidOn" title="失效日期"]
-		 		${(baseCode.invalidOn?string("yyyy-MM-dd"))?if_exists}
+		 	[@b.col property="invalidAt" title="失效日期"]
+		 		${(baseCode.invalidAt?string("yyyy-MM-dd"))?if_exists}
 		 	[/@]
 	   	[/@]
 	[/@]
@@ -43,7 +43,7 @@
 	form.target = "_self";
 	goToPage(form,pageNo,pageSize,orderBy);
    }
-	keys="code,name,engName,updatedAt,effectOn,invalidOn";
+	keys="code,name,engName,updatedAt,effectAt,invalidAt";
 	titles="代码,名称,英文名,修改时间,生效时间,失效时间";
 [#list 1..30 as i]<br/>[/#list]
 [@b.foot/]

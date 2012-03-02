@@ -7,17 +7,17 @@ package org.beangle.ems.security.action;
 import java.sql.Date;
 import java.util.List;
 
+import org.beangle.dao.Entity;
+import org.beangle.dao.query.builder.OqlBuilder;
+import org.beangle.dao.util.HierarchyEntityUtils;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.User;
+import org.beangle.ems.security.helper.GroupPropertyExtractor;
 import org.beangle.ems.security.service.AuthorityService;
 import org.beangle.ems.security.service.GroupService;
 import org.beangle.ems.security.service.UserService;
 import org.beangle.ems.web.action.SecurityActionSupport;
-import org.beangle.ems.security.helper.GroupPropertyExtractor;
-import org.beangle.model.Entity;
-import org.beangle.model.query.builder.OqlBuilder;
-import org.beangle.model.transfer.exporter.PropertyExtractor;
-import org.beangle.model.util.HierarchyEntityUtils;
+import org.beangle.transfer.exporter.PropertyExtractor;
 
 /**
  * 用户组信息维护响应类

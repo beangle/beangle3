@@ -11,9 +11,9 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.log.BusinessLog;
 import org.beangle.ems.log.BusinessLogDetail;
-import org.beangle.model.pojo.LongIdObject;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 

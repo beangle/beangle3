@@ -12,9 +12,9 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.pojo.LongIdTimeObject;
 import org.beangle.ems.rule.Rule;
-import org.beangle.model.pojo.LongIdTimeObject;
-@Entity
+@Entity(name="org.beangle.ems.rule.model.RuleConfig")
 public class RuleConfig extends LongIdTimeObject {
 
 	private static final long serialVersionUID = -5404097831423072886L;

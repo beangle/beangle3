@@ -11,6 +11,9 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.impl.BaseServiceImpl;
+import org.beangle.dao.query.builder.Condition;
+import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.Resource;
@@ -26,9 +29,6 @@ import org.beangle.ems.security.service.AuthorityService;
 import org.beangle.ems.security.service.UserDataProvider;
 import org.beangle.ems.security.service.UserDataResolver;
 import org.beangle.ems.security.service.UserService;
-import org.beangle.model.persist.impl.BaseServiceImpl;
-import org.beangle.model.query.builder.Condition;
-import org.beangle.model.query.builder.OqlBuilder;
 
 public class RestrictionServiceImpl extends BaseServiceImpl implements RestrictionService {
 

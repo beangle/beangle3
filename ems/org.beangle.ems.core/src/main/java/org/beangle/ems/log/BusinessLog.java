@@ -6,7 +6,7 @@ package org.beangle.ems.log;
 
 import java.util.Date;
 
-import org.beangle.model.pojo.LongIdEntity;
+import org.beangle.dao.pojo.LongIdEntity;
 
 /**
  * 业务日志

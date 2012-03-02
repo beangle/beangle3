@@ -7,9 +7,9 @@ package org.beangle.ems.rule.model;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
+import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.rule.RuleParameter;
-import org.beangle.model.pojo.LongIdObject;
-@Entity
+@Entity(name="org.beangle.ems.rule.model.RuleConfigParam")
 public class RuleConfigParam extends LongIdObject {
 
 	private static final long serialVersionUID = 8711866530914907008L;

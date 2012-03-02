@@ -7,10 +7,10 @@ package org.beangle.ems.security.profile.model;
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 
+import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.security.profile.GroupProfile;
 import org.beangle.ems.security.profile.GroupProperty;
 import org.beangle.ems.security.profile.GroupPropertyMeta;
-import org.beangle.model.pojo.LongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 

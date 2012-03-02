@@ -6,8 +6,8 @@ package org.beangle.ems.security.nav;
 
 import java.util.List;
 
+import org.beangle.dao.pojo.LongIdEntity;
 import org.beangle.ems.security.Group;
-import org.beangle.model.pojo.LongIdEntity;
 
 public interface MenuProfile extends LongIdEntity {
 

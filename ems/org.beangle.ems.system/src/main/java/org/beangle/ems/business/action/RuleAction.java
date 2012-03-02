@@ -6,9 +6,9 @@ package org.beangle.ems.business.action;
 
 import java.util.Date;
 
+import org.beangle.dao.Entity;
 import org.beangle.ems.rule.Rule;
 import org.beangle.ems.web.action.SecurityActionSupport;
-import org.beangle.model.Entity;
 import org.beangle.struts2.convention.route.Action;
 
 /**

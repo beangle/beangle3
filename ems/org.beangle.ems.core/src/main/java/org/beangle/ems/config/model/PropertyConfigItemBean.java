@@ -8,14 +8,14 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.beangle.model.pojo.LongIdObject;
+import org.beangle.dao.pojo.LongIdObject;
 
 /**
  * 系统配置项
  * 
  * @author chaostone
  */
-@Entity
+@Entity(name="org.beangle.ems.config.model.PropertyConfigItemBean")
 public class PropertyConfigItemBean extends LongIdObject {
 
 	private static final long serialVersionUID = 1L;

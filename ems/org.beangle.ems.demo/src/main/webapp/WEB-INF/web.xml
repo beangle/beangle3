@@ -18,7 +18,7 @@
 	<!--首先打开hibernate Session-->
 	<filter>
 		<filter-name>OpenSessionInViewFilter</filter-name>
-		<filter-class>org.beangle.web.spring.OpenSessionInViewFilter</filter-class>
+		<filter-class>org.beangle.orm.hibernate.OpenSessionInViewFilter</filter-class>
 	</filter>
 
 	<filter>

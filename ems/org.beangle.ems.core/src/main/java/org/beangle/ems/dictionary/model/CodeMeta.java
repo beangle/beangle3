@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.beangle.model.pojo.LongIdObject;
+import org.beangle.dao.pojo.LongIdObject;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -22,7 +22,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * @version $Id: Dictionary.java May 4, 2011 7:29:38 PM chaostone $
  * @author chaostone
  */
-@Entity
+@Entity(name="org.beangle.ems.dictionary.model.CodeMeta")
 @Cacheable
 @Cache(region = "ems.dictionary",usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class CodeMeta extends LongIdObject {

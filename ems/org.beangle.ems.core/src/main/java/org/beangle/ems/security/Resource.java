@@ -4,7 +4,7 @@
  */
 package org.beangle.ems.security;
 
-import org.beangle.model.pojo.LongIdEntity;
+import org.beangle.dao.pojo.LongIdEntity;
 
 /** 系统资源.<br>
  * 
