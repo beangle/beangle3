@@ -54,7 +54,7 @@ public class GroupBean extends HierarchyLongIdObject<Group> implements Group {
 	private Group parent;
 
 	/** 下级组 */
-	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Group> children = CollectUtils.newArrayList();
 
 	/** 创建人 */
@@ -69,9 +69,8 @@ public class GroupBean extends HierarchyLongIdObject<Group> implements Group {
 	@NotNull
 	public boolean enabled = true;
 
-	/**动态组*/
-	public boolean dynamic=false;
-	
+	/** 动态组 */
+	public boolean dynamic = false;
 
 	/** 权限 */
 	@OneToMany(mappedBy = "group", cascade = CascadeType.ALL)

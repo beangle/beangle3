@@ -24,6 +24,8 @@ public class Div extends ClosingUIBean {
 		if (null != href) {
 			generateIdIfEmpty();
 			href = render(this.href);
+		} else {
+			if (null == astarget) astarget = "false";
 		}
 		if (!ObjectUtils.equals(astarget, "false")) {
 			String className = "";

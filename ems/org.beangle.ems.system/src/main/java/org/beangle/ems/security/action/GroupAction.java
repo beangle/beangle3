@@ -49,8 +49,8 @@ public class GroupAction extends SecurityActionSupport {
 			entityQuery.where("gm.user.id=:me and gm.manager=true", getUserId());
 		}
 		populateConditions(entityQuery);
-		String orderBy=get("orderBy");
-		if(null==orderBy)orderBy="userGroup.code";
+		String orderBy = get("orderBy");
+		if (null == orderBy) orderBy = "userGroup.code";
 		entityQuery.limit(getPageLimit()).orderBy(orderBy);
 		return entityQuery;
 	}
@@ -90,7 +90,7 @@ public class GroupAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String remove() {
-		Long[] groupIds = getEntityIds(getShortName());
+		Long[] groupIds = getIds(getShortName());
 		User curUser = userService.get(getUserId());
 		groupService.removeGroup(curUser, entityDao.get(Group.class, groupIds));
 		return redirect("search", "info.remove.success");

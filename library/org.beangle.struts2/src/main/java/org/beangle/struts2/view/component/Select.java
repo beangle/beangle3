@@ -16,7 +16,7 @@ public class Select extends ClosingUIBean {
 
 	protected String name;
 
-	private Object items=Collections.emptyList();
+	private Object items = Collections.emptyList();
 	private String empty;
 	private Object value;
 
@@ -29,6 +29,9 @@ public class Select extends ClosingUIBean {
 	protected String comment;
 	protected String check;
 	protected String required;
+
+	/** option text template */
+	protected String option;
 
 	public Select(ValueStack stack) {
 		super(stack);
@@ -120,7 +123,9 @@ public class Select extends ClosingUIBean {
 
 	public void setOption(String option) {
 		if (null != option) {
-			if (StringUtils.contains(option, ",")) {
+			if (StringUtils.contains(option, "$")) {
+				this.option = option;
+			} else if (StringUtils.contains(option, ",")) {
 				keyName = StringUtils.substringBefore(option, ",");
 				valueName = StringUtils.substringAfter(option, ",");
 			}
@@ -158,5 +163,9 @@ public class Select extends ClosingUIBean {
 	public void setRequired(String required) {
 		this.required = required;
 	}
-	
+
+	public String getOption() {
+		return option;
+	}
+
 }

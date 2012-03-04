@@ -116,4 +116,7 @@ public class GroupMemberBean extends LongIdTimeObject implements GroupMember {
 		return false;
 	}
 
+	public int getDepth() {
+		return group.getDepth();
+	}
 }

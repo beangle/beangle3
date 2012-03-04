@@ -2,7 +2,6 @@
 [@b.head/]
 <script type="text/javascript">
 	bg.ui.load("tabletree");
-	defaultColumn=1;
 </script>
 [#include "../status.ftl"/]
 [@b.grid  items=userGroups var="userGroup" sortable="false"]

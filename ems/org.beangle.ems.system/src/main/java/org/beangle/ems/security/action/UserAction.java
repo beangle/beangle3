@@ -173,16 +173,24 @@ public class UserAction extends SecurityActionSupport {
 	}
 
 	protected void editSetting(Entity<?> entity) {
-		User user = (User) entity;
 		User manager = entityDao.get(User.class, getUserId());
+		Set<Group> groups=CollectUtils.newHashSet();
+		Map<Group, GroupMember> curMemberMap = CollectUtils.newHashMap();
 		Collection<GroupMember> members = userService.getGroupMembers(manager, GroupMember.Ship.GRANTER);
+		for (GroupMember gm : members) {
+			groups.add(gm.getGroup());
+			curMemberMap.put(gm.getGroup(), gm);
+		}
+		put("groups", groups);
+
+		User user = (User) entity;
 		Set<GroupMember> userMembers = user.getMembers();
 		Map<Group, GroupMember> memberMap = CollectUtils.newHashMap();
 		for (GroupMember gm : userMembers) {
 			memberMap.put(gm.getGroup(), gm);
 		}
 		put("memberMap", memberMap);
-		put("members", members);
+		put("curMemberMap", curMemberMap);
 		put("isadmin", userService.isRoot(user));
 		put("isme", getUserId().equals(user.getId()));
 	}
@@ -193,7 +201,7 @@ public class UserAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String remove() {
-		Long[] userIds = getEntityIds();
+		Long[] userIds = getIds("user");
 		User creator = userService.get(getUserId());
 		List<User> toBeRemoved = userService.getUsers(userIds);
 		StringBuilder sb = new StringBuilder();
@@ -230,7 +238,7 @@ public class UserAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String activate() {
-		Long[] userIds = getEntityIds();
+		Long[] userIds = getIds("user");
 		String isActivate = get("isActivate");
 		int successCnt;
 		User manager = userService.get(getUserId());

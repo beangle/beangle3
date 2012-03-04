@@ -62,3 +62,5 @@ drop table sys_parameters
 
 alter table ems_business_logs alter column resource rename to resrc;
 alter table ems_business_logs alter column operater rename to operator;
+
+alter table se_resources alter column need_params rename to entry;

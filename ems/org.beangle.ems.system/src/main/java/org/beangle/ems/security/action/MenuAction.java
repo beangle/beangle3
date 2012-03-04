@@ -101,7 +101,7 @@ public class MenuAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String activate() {
-		Long[] menuIds = getEntityIds(getShortName());
+		Long[] menuIds = getIds(getShortName());
 		Boolean enabled = getBoolean("isActivate");
 		if (null == enabled) {
 			enabled = Boolean.TRUE;
@@ -134,7 +134,7 @@ public class MenuAction extends SecurityActionSupport {
 
 	@Override
 	public String info() {
-		Long entityId = getEntityId(getShortName());
+		Long entityId = getId(getShortName());
 		if (null == entityId) {
 			logger.warn("cannot get paremeter {}Id or {}.id", getShortName(), getShortName());
 		}

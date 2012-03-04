@@ -4,8 +4,10 @@
  */
 package org.beangle.dao.metadata;
 
+import java.io.Serializable;
 import java.util.Map;
 
+import org.apache.commons.lang.UnhandledException;
 import org.beangle.collection.CollectUtils;
 import org.beangle.dao.Entity;
 
@@ -107,4 +109,13 @@ public class EntityType extends AbstractType {
 		this.idPropertyName = idName;
 	}
 
+	@SuppressWarnings("unchecked")
+	public Class<? extends Serializable> getIdClass() {
+		if (null == this.idPropertyName) return null;
+		else try {
+			return (Class<? extends Serializable>) entityClass.getField(idPropertyName).getType();
+		} catch (Exception e) {
+			throw new UnhandledException(e);
+		}
+	}
 }

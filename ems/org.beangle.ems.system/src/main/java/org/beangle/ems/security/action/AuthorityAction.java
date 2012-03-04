@@ -57,11 +57,16 @@ public class AuthorityAction extends SecurityActionSupport {
 			}
 		}
 		put("mngGroups", mngGroups);
-		put("menuProfiles", menuService.getProfiles(ao));
+		List<MenuProfile> menuProfiles=menuService.getProfiles(ao);
+		put("menuProfiles", menuProfiles);
 
 		MenuProfile menuProfile = menuService.getProfile(ao, getLong("menuProfileId"));
+		if(null==menuProfile && !menuProfiles.isEmpty()){
+			menuProfile = menuProfiles.get(0);
+		}
+		List<Menu> menus = CollectUtils.newArrayList();
+		put("menus", menus);
 		if (null != menuProfile) {
-			List<Menu> menus = null;
 			Collection<Resource> resources = null;
 			if (isAdmin()) {
 				menus = menuProfile.getMenus();
@@ -81,8 +86,6 @@ public class AuthorityAction extends SecurityActionSupport {
 				}
 				menus.removeAll(freezed);
 			}
-			put("menus", menus);
-
 			Set<Resource> aoResources = CollectUtils.newHashSet();
 			Map<String, Long> aoResourceAuthorityMap = CollectUtils.newHashMap();
 			List<Authority> authorities = authorityService.getAuthorities(ao);

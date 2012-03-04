@@ -73,16 +73,14 @@ public class MonitorAction extends SecurityActionSupport {
 	}
 
 	public String invalidate() {
-		String[] sessionIds = getEntityIds("sessioninfo", String.class);
+		String[] sessionIds = getIds(String.class, "sessioninfo");
 		String mySessionId = ServletActionContext.getRequest().getSession().getId();
 		boolean killed = getBool("kill");
 		int success = 0;
-		if (null != sessionIds) {
-			for (String sessionId : sessionIds) {
-				if (mySessionId.equals(sessionId)) continue;
-				sessionRegistry.expire(sessionId);
-				success++;
-			}
+		for (String sessionId : sessionIds) {
+			if (mySessionId.equals(sessionId)) continue;
+			sessionRegistry.expire(sessionId);
+			success++;
 		}
 		addFlashMessage(killed ? "security.info.session.kill" : "security.info.session.expire", success);
 		return redirect("index");

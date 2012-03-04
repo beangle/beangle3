@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
@@ -83,7 +84,7 @@ public class EntityDrivenAction extends BaseAction {
 	 * @return
 	 */
 	public String edit() {
-		Long entityId = getEntityId(getShortName());
+		Serializable entityId = getId(Model.getEntityType(getEntityName()).getIdClass(), getShortName());
 		Entity<?> entity = null;
 		if (null == entityId) {
 			entity = populateEntity();
@@ -101,10 +102,11 @@ public class EntityDrivenAction extends BaseAction {
 	 * @return
 	 */
 	public String remove() throws Exception {
-		Long entityId = getEntityId(getShortName());
+		Class<? extends Serializable> idclass = Model.getEntityType(getEntityName()).getIdClass();
+		Serializable entityId = getId(idclass, getShortName());
 		Collection<?> entities = null;
 		if (null == entityId) {
-			entities = getModels(getEntityName(), getEntityIds(getShortName()));
+			entities = getModels(getEntityName(), getIds(idclass, getShortName()));
 		} else {
 			Entity<?> entity = getModel(getEntityName(), entityId);
 			entities = Collections.singletonList(entity);
@@ -125,49 +127,80 @@ public class EntityDrivenAction extends BaseAction {
 		return populateEntity(getEntityName(), getShortName());
 	}
 
-	protected Long getEntityId(String shortName) {
-		Long entityId = getLong(shortName + ".id");
-		if (null == entityId) {
-			entityId = getLong(shortName + "Id");
-		}
-		if (null == entityId) {
-			entityId = getLong("id");
-		}
-		return entityId;
+	protected Long getId(String shortName) {
+		return getId(Long.class, shortName);
 	}
 
 	/**
-	 * Get entity's id shortname.id[],shortname.ids,shortnameIds
+	 * Get entity's id from shortname.id,shortnameId,id
 	 * 
-	 * @param <T>
 	 * @param shortName
 	 * @param clazz
 	 * @return
 	 */
-	protected <T> T[] getEntityIds(String shortName, Class<T> clazz) {
+	protected <T> T getId(Class<T> clazz, String shortName) {
+		String entityId = get(shortName + ".id");
+		if (null == entityId) {
+			entityId = get(shortName + "Id");
+		}
+		if (null == entityId) {
+			entityId = get("id");
+		}
+		if (null == entityId) return null;
+		else return Params.converter.convert(entityId, clazz);
+	}
+
+	/**
+	 * Get entity's long id array from parameters shortname.id,shortname.ids,shortnameIds
+	 * 
+	 * @param shortName
+	 * @return
+	 */
+	protected Long[] getIds(String shortName) {
+		return getIds(Long.class, shortName);
+	}
+
+	/**
+	 * Get entity's id array from parameters shortname.id,shortname.ids,shortnameIds
+	 * 
+	 * @param shortName
+	 * @param clazz
+	 * @return empty array if not found
+	 */
+	protected <T> T[] getIds(Class<T> clazz, String shortName) {
 		T[] datas = Params.getAll(shortName + ".id", clazz);
 		if (null == datas) {
 			String datastring = Params.get(shortName + ".ids");
 			if (null == datastring) datastring = Params.get(shortName + "Ids");
-			if (null != datastring) { return Params.converter.convert(StringUtils.split(datastring, ","),
-					clazz); }
+			if (null == datastring) {
+				Array.newInstance(clazz, 0);
+			} else {
+				return Params.converter.convert(StringUtils.split(datastring, ","), clazz);
+			}
 		}
 		return datas;
 	}
 
+	/**
+	 * @deprecated Use getId
+	 * @param shortName
+	 * @return
+	 */
+	protected Long getEntityId(String shortName) {
+		return getId(Long.class, shortName);
+	}
+
+	/**
+	 * @deprecated user getIds directly
+	 * @param shortName
+	 * @return
+	 */
 	protected Long[] getEntityIds(String shortName) {
-		return getEntityIds(shortName, Long.class);
-	}
-
-	protected Long[] getEntityIds() {
-		return getEntityIds(getShortName(), Long.class);
-	}
-
-	protected <T> void foo(Class<T> a) {
+		return getIds(Long.class, shortName);
 	}
 
 	protected Entity<?> populateEntity(String entityName, String shortName) {
-		Long entityId = getEntityId(shortName);
+		Serializable entityId = getId(Model.getEntityType(getEntityName()).getIdClass(), shortName);
 		Entity<?> entity = null;
 		if (null == entityId) {
 			entity = (Entity<?>) populate(entityName, shortName);
@@ -194,10 +227,10 @@ public class EntityDrivenAction extends BaseAction {
 	}
 
 	protected Entity<?> getEntity(String entityName, String name) {
-		Long entityId = getEntityId(name);
+		EntityType type = Model.getEntityType(entityName);
+		Serializable entityId = getId(type.getIdClass(), name);
 		Entity<?> entity = null;
 		try {
-			EntityType type = Model.getEntityType(entityName);
 			if (null == entityId) {
 				entity = (Entity<?>) populate(type.newInstance(), type.getEntityName(), name);
 			} else {
@@ -226,7 +259,7 @@ public class EntityDrivenAction extends BaseAction {
 	 * @return
 	 */
 	public String info() throws Exception {
-		Long entityId = getEntityId(getShortName());
+		Serializable entityId = getId(Model.getEntityType(getEntityName()).getIdClass(), getShortName());
 		if (null == entityId) {
 			logger.warn("cannot get paremeter {}Id or {}.id", getShortName(), getShortName());
 		}
@@ -305,12 +338,12 @@ public class EntityDrivenAction extends BaseAction {
 	}
 
 	@SuppressWarnings("rawtypes")
-	protected List getModels(String entityName, Long[] ids) {
-		return entityDao.get(entityName, "id", (Object[]) ids);
+	protected List getModels(String entityName, Object[] ids) {
+		return entityDao.get(entityName, "id", ids);
 	}
 
-	protected <T> List<T> getModels(Class<T> modelClass, Long[] ids) {
-		return entityDao.get(modelClass, "id", (Object[]) ids);
+	protected <T> List<T> getModels(Class<T> modelClass, Object[] ids) {
+		return entityDao.get(modelClass, "id", ids);
 	}
 
 	/**

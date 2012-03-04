@@ -2,7 +2,6 @@
 [@b.head/]
 <script type="text/javascript">
 	bg.ui.load("tabletree");
-	defaultColumn=1;
 </script>
 [#include "../status.ftl"/]
 [@b.grid  items=menus var="menu" sortable="false"]
@@ -24,16 +23,12 @@
 [/@]
 	[@b.row]
 		<tr [#if menu??] title="入口及备注:${menu.entry!} ${(menu.remark?html)!}" id="${menu.code}"[/#if]>
-		[@b.boxcol /]
-		[@b.treecol title="common.title"][@b.a href="!info?menu.id=${menu.id}"]${menu.code} ${menu.title}[/@][/@]
-		[@b.col property="name" title="common.name"/]
-		[@b.col width="30%" title="使用资源"][#list menu.resources as re]${re.title?html}[#if re_has_next],[/#if][/#list][/@]
+		[@b.boxcol width="5%"/]
+		[@b.treecol title="common.title" width="30%"][@b.a href="!info?menu.id=${menu.id}"]${menu.code} ${menu.title}[/@][/@]
+		[@b.col property="name" title="common.name" width="15%"/]
+		[@b.col width="40%" title="使用资源"][#list menu.resources as re]${re.title?html}[#if re_has_next],[/#if][/#list][/@]
 		[@b.col property="enabled" width="10%" title="common.status"][@enableInfo menu.enabled/][/@]
 		</tr>
 	[/@]
 [/@]
-<script type="text/javascript">
-   //展开所有菜单
-   displayAllRowsFor(1);
-</script>
 [@b.foot/]

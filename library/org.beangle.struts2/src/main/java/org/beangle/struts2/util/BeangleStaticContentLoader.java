@@ -77,7 +77,7 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
 	 * Modify state of StrutsConstants.STRUTS_SERVE_STATIC_CONTENT setting.
 	 * 
 	 * @param val
-	 *            New setting
+	 *        New setting
 	 */
 	@Inject(StrutsConstants.STRUTS_SERVE_STATIC_CONTENT)
 	public void setServeStaticContent(String val) {
@@ -89,7 +89,7 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
 	 * setting.
 	 * 
 	 * @param val
-	 *            New setting
+	 *        New setting
 	 */
 	@Inject(StrutsConstants.STRUTS_SERVE_STATIC_BROWSER_CACHE)
 	public void setServeStaticBrowserCache(String val) {
@@ -100,7 +100,7 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
 	 * Modify state of StrutsConstants.STRUTS_I18N_ENCODING setting.
 	 * 
 	 * @param val
-	 *            New setting
+	 *        New setting
 	 */
 	@Inject(StrutsConstants.STRUTS_I18N_ENCODING)
 	public void setEncoding(String val) {
@@ -129,7 +129,7 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
 	 * Create a string array from a comma-delimited list of packages.
 	 * 
 	 * @param packages
-	 *            A comma-delimited String listing packages
+	 *        A comma-delimited String listing packages
 	 * @return A string array of packages
 	 */
 	protected String[] parse(String packages) {
@@ -179,8 +179,15 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
 		String namestr = path;
 		List<InputStream> iss = CollectUtils.newArrayList();
 		String[] names = StringUtils.split(namestr, ",");
+		String pathDir = null;
 		for (String name : names) {
-			name = cleanupPath(name);
+			if (null == pathDir) {
+				name = cleanupPath(name);
+				pathDir = StringUtils.substringBeforeLast(name, "/");
+			} else if (!name.startsWith("/")) {
+				name = pathDir + "/" + name;
+			}
+			int oldsize = iss.size();
 			for (String pathPrefix : pathPrefixes) {
 				URL resourceUrl = findResource(buildPath(name, pathPrefix));
 				if (resourceUrl != null) {
@@ -200,6 +207,9 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
 						break;
 					}
 				}
+			}
+			if (iss.size() == oldsize) {
+				logger.info("cannot find resource {}", name);
 			}
 		}
 
@@ -236,10 +246,10 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
 	 * Look for a static resource in the classpath.
 	 * 
 	 * @param path
-	 *            The resource path
+	 *        The resource path
 	 * @return The inputstream of the resource
 	 * @throws IOException
-	 *             If there is a problem locating the resource
+	 *         If there is a problem locating the resource
 	 */
 	protected URL findResource(String path) throws IOException {
 		return ClassLoaderUtil.getResource(path, getClass());
@@ -247,9 +257,9 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
 
 	/**
 	 * @param name
-	 *            resource name
+	 *        resource name
 	 * @param packagePrefix
-	 *            The package prefix to use to locate the resource
+	 *        The package prefix to use to locate the resource
 	 * @return full path
 	 * @throws UnsupportedEncodingException
 	 * @throws IOException
@@ -269,7 +279,7 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
 	 * Determine the content type for the resource name.
 	 * 
 	 * @param name
-	 *            The resource name
+	 *        The resource name
 	 * @return The mime type
 	 */
 	protected String getContentType(String name) {
@@ -298,11 +308,11 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
 	 * Copy bytes from the input stream to the output stream.
 	 * 
 	 * @param input
-	 *            The input stream
+	 *        The input stream
 	 * @param output
-	 *            The output stream
+	 *        The output stream
 	 * @throws IOException
-	 *             If anything goes wrong
+	 *         If anything goes wrong
 	 */
 	protected void copy(InputStream input, OutputStream output) throws IOException {
 		final byte[] buffer = new byte[4096];
@@ -319,7 +329,7 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
 
 	/**
 	 * @param path
-	 *            requested path
+	 *        requested path
 	 * @return path without leading "/struts" or "/static"
 	 */
 	protected String cleanupPath(String path) {

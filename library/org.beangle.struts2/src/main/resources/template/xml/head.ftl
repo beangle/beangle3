@@ -12,7 +12,7 @@
 	<meta http-equiv="content-style-type" content="text/css"/>
 	<meta http-equiv="content-script-type" content="text/javascript"/>
 	[@beangle_js_head compressed=(Parameters['devMode']?exists)?string("false","true") /]
-	[#--<script type="text/javascript" src="${base}/static/scripts/my97/WdatePicker-4.72.js"></script>--]
+	<script type="text/javascript" src="${base}/static/scripts/my97/WdatePicker-4.72.js"></script>
 ${tag.body}
 </head>
 <body>
@@ -20,20 +20,24 @@ ${tag.body}
 
 [#macro beangle_js_head(compressed)]
 [#if compressed=="false"]
-	<script type="text/javascript" src="/demo/struts/js/base/jquery-1.5.2.js"></script>
-	<script type="text/javascript" src="/demo/struts/js/base/jquery.ui.core.js"></script>
-	<script type="text/javascript" src="/demo/struts/js/plugins/jquery.subscribe.js"></script>
-	<script type="text/javascript" src="/demo/struts/js/struts2/jquery.struts2-3.1.0.js"></script>
-	<script type="text/javascript">jQuery(document).ready(function () {jQuery.scriptPath = "/demo/struts/";jQuery.struts2_jquery.minSuffix = "";jQuery.ajaxSettings.traditional = true;jQuery.ajaxSetup ({cache: false});});</script>
+	<script type="text/javascript" src="${base}/struts/js/base/jquery-1.5.2.js"></script>
+	<script type="text/javascript" src="${base}/struts/js/base/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="${base}/struts/js/plugins/jquery.subscribe.js"></script>
+	<script type="text/javascript" src="${base}/struts/js/struts2/jquery.struts2-3.1.0.js"></script>
+	<script type="text/javascript">jQuery(document).ready(function () {jQuery.scriptPath = "${base}/struts/";jQuery.struts2_jquery.minSuffix = "";jQuery.ajaxSettings.traditional = true;jQuery.ajaxSetup ({cache: false});});</script>
 	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-2.5.0.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui-2.5.0.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/colorbox/jquery-colorbox-1.3.17.1.js"></script>
-	<link id="jquery_theme_link" rel="stylesheet" href="/demo/struts/themes/smoothness/jquery-ui.css" type="text/css"/>
+	<link id="jquery_theme_link" rel="stylesheet" href="${base}/struts/themes/smoothness/jquery-ui.css" type="text/css"/>
 	<link id="beangle_theme_link" href="${base}/static/themes/${b.theme.ui}/beangle-ui.css" rel="stylesheet" type="text/css" />
 	<link href="${base}/static/themes/${b.theme.ui}/colorbox.css" rel="stylesheet" type="text/css" />
 [#else]
-	<script type="text/javascript" src="/demo/struts/js/base/jquery-1.5.2.min.js,/struts/js/base/jquery.ui.core.min.js,/struts/js/plugins/jquery.subscribe.min.js,/struts/js/struts2/jquery.struts2-3.1.0.min.js,/static/scripts/beangle/beangle-2.5.0.min.js,/static/scripts/beangle/beangle-ui-2.5.0.min.js,/static/scripts/colorbox/jquery-colorbox-1.3.17.1.min.js"></script>
-	<script type="text/javascript">jQuery(document).ready(function () {jQuery.scriptPath = "/demo/struts/";jQuery.ajaxSettings.traditional = true;jQuery.ajaxSetup ({cache: false});});</script>
-	<link id="jquery_theme_link" rel="stylesheet" href="/demo/struts/themes/smoothness/jquery-ui.css,/static/themes/${b.theme.ui}/beangle-ui.css,static/themes/${b.theme.ui}/colorbox.css" type="text/css"/>
+	<script type="text/javascript" src="${base}/struts/js/base/jquery-1.5.2.min.js,jquery.ui.core.min.js"></script>
+	<script type="text/javascript" src="${base}/struts/js/plugins/jquery.subscribe.min.js,/js/struts2/jquery.struts2-3.1.0.min.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-2.5.0.min.js,beangle-ui-2.5.0.min.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/colorbox/jquery-colorbox-1.3.17.1.min.js"></script>
+	<script type="text/javascript">jQuery(document).ready(function () {jQuery.scriptPath = "${base}/struts/";jQuery.ajaxSettings.traditional = true;jQuery.ajaxSetup ({cache: false});});</script>
+	<link id="jquery_theme_link" rel="stylesheet" href="${base}/struts/themes/smoothness/jquery-ui.css" type="text/css"/>
+	<link id="beangle_theme_link" rel="stylesheet" href="${base}/static/themes/${b.theme.ui}/beangle-ui.css,colorbox.css" type="text/css"/>
 [/#if]
 [/#macro]

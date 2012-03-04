@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.util.List;
 
 import org.beangle.collection.CollectUtils;
+import org.beangle.dao.Operation;
 import org.beangle.dao.impl.AbstractHierarchyService;
 import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Group;
@@ -37,11 +38,20 @@ public class GroupServiceImpl extends AbstractHierarchyService<GroupBean, Group>
 	 * 超级管理员不能删除
 	 */
 	public void removeGroup(User manager, List<Group> groups) {
+		List<Object> saved = CollectUtils.newArrayList();
 		List<Object> removed = CollectUtils.newArrayList();
+		
 		for (final Group group : groups) {
-			if (group.getOwner().equals(manager) || userService.isRoot(manager)) entityDao.remove(group);
+			if (group.getOwner().equals(manager) || userService.isRoot(manager)) {
+				if (null != group.getParent()) {
+					group.getParent().getChildren().remove(group);
+					saved.add(group.getParent());
+				} else {
+					removed.add(group);
+				}
+			}
 		}
-		entityDao.remove(removed);
+		entityDao.execute(Operation.saveOrUpdate(saved).remove(removed));
 	}
 
 	public void moveGroup(Group group, Group parent, int indexno) {

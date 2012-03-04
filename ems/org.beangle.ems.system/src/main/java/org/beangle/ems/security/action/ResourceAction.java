@@ -31,7 +31,7 @@ public class ResourceAction extends SecurityActionSupport {
 	 * @return
 	 */
 	public String activate() {
-		Long[] resourceIds = getEntityIds();
+		Long[] resourceIds = getIds("resource");
 		Boolean enabled = getBoolean("enabled");
 		if (null == enabled) {
 			enabled = Boolean.FALSE;
@@ -60,7 +60,7 @@ public class ResourceAction extends SecurityActionSupport {
 	}
 
 	public String info() {
-		Long entityId = getEntityId(getShortName());
+		Long entityId = getId(getShortName());
 		Entity<?> entity = getModel(getEntityName(), entityId);
 		OqlBuilder<Menu> query = OqlBuilder.from(Menu.class, "menu");
 		query.join("menu.resources", "r").where("r.id=:resourceId", entity.getIdentifier())

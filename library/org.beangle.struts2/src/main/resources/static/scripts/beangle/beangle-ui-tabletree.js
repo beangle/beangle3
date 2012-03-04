@@ -7,8 +7,6 @@
  |<script language="JavaScript" type="text/JavaScript"             |
  |    src="scripts/tableTree.js"></script>                         |
  |<!--if your collapse column is not 0,here can be redefined       |
- |<script> defaultColumn=1;</script>                               |
- |.......you own html code....                                     |
  |<table>                                                          |
  |    <tr id="1">                                                  |
  |      <td>                                                       |
@@ -31,19 +29,20 @@
  |  </table>                                                       |
  \----------------------------------------------------------------*/
 // default collapse column
-var defaultColumn=0;
 var treeIdComma=".";
 // for collapse or display child nodes.
 var treeImagePath=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/" + bg.uitheme + "/icons/16x16/tree/";
+
 function toggleRows(elm) {
- var rows = document.getElementsByTagName("TR");
- elm.style.backgroundImage = "url("+treeImagePath+"plus.png)";
- var newDisplay = "none";
- var thisID = elm.parentNode.parentNode.parentNode.id + treeIdComma;
- // Are we expanding or contracting? If the first child is hidden, we expand
-  for (var i = 0; i < rows.length; i++) {
-   var r = rows[i];
-   if (matchStart(r.id, thisID, true)) {
+    var fireColumn=getFireColumnIndex(elm);
+    var rows = document.getElementsByTagName("TR");
+    elm.style.backgroundImage = "url("+treeImagePath+"plus.png)";
+    var newDisplay = "none";
+    var thisID = elm.parentNode.parentNode.parentNode.id + treeIdComma;
+    // Are we expanding or contracting? If the first child is hidden, we expand
+    for (var i = 0; i < rows.length; i++) {
+    var r = rows[i];
+    if (matchStart(r.id, thisID, true)) {
 
     if (r.style.display == "none") {
      if (document.all) newDisplay = "block"; //IE4+ specific code
@@ -61,8 +60,7 @@ function toggleRows(elm) {
    var s = rows[j];
    if (matchStart(s.id, thisID, matchDirectChildrenOnly)) {
      s.style.display = newDisplay;
-     // chang 0 to defaultColumn by chaostone for add a checkbox before tree sometime
-     var cell = s.getElementsByTagName("td")[defaultColumn]; 
+     var cell = s.getElementsByTagName("td")[fireColumn]; 
      var tier = cell.getElementsByTagName("div")[0];
      var folder = tier.getElementsByTagName("a")[0];
 
@@ -150,10 +148,11 @@ function displayAllRowsFor(depth) {
        if(null==toggleParent){
           toggleParent=true;
        }
+       fireColumn=getFireColumnIndex(elm);
        for (var i = 0; i < rows.length; i++) {
              var r = rows[i];
              if (r.id!=""&&((r.id.indexOf(thisID)==0)||(thisID.indexOf(r.id)==0))){
-                 var cell = r.getElementsByTagName("td")[0];
+                 var cell = r.getElementsByTagName("td")[fireColumn];
                  var input = cell.getElementsByTagName("input")[0];
                  var fireCallback=false;
                  if(thisID.indexOf(r.id)==0){
@@ -167,14 +166,25 @@ function displayAllRowsFor(depth) {
              }
        }             
     }
+    
+    function getFireColumnIndex(elm){
+        var rowTds=elm.parentNode.parentNode.getElementsByTagName("td");
+        var fireColumn=0;
+        for(j=0;j<rowTds.length;j++){
+            if(rowTds[j]==elm.parentNode)  fireColumn=j;
+        }
+        return fireColumn;
+    }
+    
     function treeToggleAll(elm,callback){
-     var rows = document.getElementsByTagName("tr");
+       var fireColumn=getFireColumnIndex(elm);
+       var rows = document.getElementsByTagName("tr");
        var thisID = elm.parentNode.parentNode.id;
        var checked = elm.checked;
         for (var i = 0; i < rows.length; i++) {
              var r = rows[i];
              if (r.id){
-                 var cell = r.getElementsByTagName("td")[0];
+                 var cell = r.getElementsByTagName("td")[fireColumn];
                  var inputs=cell.getElementsByTagName("input");
                  if(inputs.length==1){
                      var input = cell.getElementsByTagName("input")[0];
