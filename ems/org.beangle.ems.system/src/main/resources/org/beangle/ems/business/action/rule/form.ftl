@@ -8,7 +8,6 @@
 	[@b.radios label="是否启用" name="rule.enabled" checked="${rule.enabled?string('1','0')}"/]
 	[@b.formfoot]
 		<input type="hidden" name="rule.id" value="${rule.id!}"/>
-		[@b.redirectParams/]
 		[@b.submit value="action.submit"/]
 		<input type="button" onclick='reset()' value="${b.text("action.reset")}" class="buttonStyle"/>
 	[/@]

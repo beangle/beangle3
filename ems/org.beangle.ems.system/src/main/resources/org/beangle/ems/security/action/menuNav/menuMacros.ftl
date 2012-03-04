@@ -52,7 +52,7 @@
 		[#local moreitem=true/]
 		[#local i=i+1][#break/]
 		[#else]
-		<li class="resource">[#if resource.needParams]${resource.title}[#else][@b.a href=resource.name! title=resource.remark!""]${resource.title}[/@][/#if]</li>
+		<li class="resource">[#if !resource.entry]${resource.title}[#else][@b.a href=resource.name! title=resource.remark!""]${resource.title}[/@][/#if]</li>
 		[#local i=i+1]
 		[/#if]
 	[/@]

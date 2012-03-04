@@ -10,6 +10,7 @@ import java.util.Map;
 import org.apache.commons.lang.UnhandledException;
 import org.beangle.collection.CollectUtils;
 import org.beangle.dao.Entity;
+import org.testng.internal.PropertyUtils;
 
 public class EntityType extends AbstractType {
 
@@ -113,7 +114,7 @@ public class EntityType extends AbstractType {
 	public Class<? extends Serializable> getIdClass() {
 		if (null == this.idPropertyName) return null;
 		else try {
-			return (Class<? extends Serializable>) entityClass.getField(idPropertyName).getType();
+			return (Class<? extends Serializable>) PropertyUtils.getPropertyType(entityClass, idPropertyName);
 		} catch (Exception e) {
 			throw new UnhandledException(e);
 		}

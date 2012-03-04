@@ -9,8 +9,6 @@
 [@b.tabs]
 [@b.form name="userForm" action="!save" class="listform" theme="list"]
 	<input type="hidden" name="user.id" value="${user.id!}" />
-	[@b.redirectParams/]
-
 	[@b.tab label="用户信息"]
 		[@b.textfield label="user.name"  name="user.name" value="${user.name!}" style="width:200px;" required="true" maxlength="30"/]
 		[@b.radios name="user.enabled" label="common.status" value=user.enabled items="1:action.activate,0:action.freeze"/]

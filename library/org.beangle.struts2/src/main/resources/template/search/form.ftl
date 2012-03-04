@@ -1,5 +1,6 @@
 [#ftl]
 <form id="${tag.id}" name="${tag.name}" action="${tag.action}" method="post"[#if tag.target??] target="${tag.target}"[/#if]>
+[#if Parameters['params']??]<input name="params" type="hidden" value="${Parameters['params']?html}" />[/#if]
 <table class="search-widget">
 [#if tag.title??]
 <tr><td><img src="${b.theme.iconurl("actions/info.png")}" alt="info" class="toolbar-icon"/><em>${tag.title}</em></td></tr>

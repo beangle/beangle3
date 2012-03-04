@@ -29,13 +29,21 @@
 			<option value="false" [#if (Parameters['resource.enabled']!"")="false"]selected="selected"[/#if]>${b.text("action.freeze")}</option>
 		</select>
 	[/@]
+	[@b.gridfilter property="entry"]
+		<select  name="resource.entry" style="width:95%;" onchange="bg.form.submit(this.form)">
+			<option value="" [#if (Parameters['resource.entry']!"")=""]selected="selected"[/#if]>..</option>
+			<option value="true" [#if (Parameters['resource.entry']!"")="true"]selected="selected"[/#if]>是</option>
+			<option value="false" [#if (Parameters['resource.entry']!"")="false"]selected="selected"[/#if]>否</option>
+		</select>
+	[/@]
 	[@b.row]
-		[@b.boxcol/]
+		[@b.boxcol width="5%"/]
+		[@b.col  width="30%" property="name" align="left" title="common.name"/]
 		[@b.col  width="20%" property="title" title="common.title" ][@b.a href="resource!info?resource.id=${resource.id}"]${(resource.title)!}[/@][/@]
-		[@b.col  width="40%" property="name" align="left" title="common.name"/]
+		[@b.col  width="10%" property="entry" title="菜单入口"][#if resource.entry][@b.a target="_blank" href=resource.name]打开[/@][#else]否[/#if][/@]
 		[@b.col  width="10%" property="scope" title="可见范围"][@resourceScope resource.scope/][/@]
 		[@b.col  width="10%" property="enabled" title="common.status"][@enableInfo resource.enabled/][/@]
-		[@b.col  width="25%" property="remark" title="common.remark"/]
+		[@b.col  width="15%" property="remark" title="common.remark"/]
 	[/@]
 [/@]
 [/@]

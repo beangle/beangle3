@@ -68,14 +68,7 @@ public class ResourceAction extends SecurityActionSupport {
 
 		OqlBuilder<Authority> groupQuery = OqlBuilder.from(Authority.class, "auth");
 		groupQuery.where("auth.resource=:resource", entity).select("auth.group");
-
-		OqlBuilder<?> userQuery = OqlBuilder.hql("select distinct u from " + User.class.getName()
-				+ " u join u.groups g," + Authority.class.getName()
-				+ " a where g=a.group and a.resource=:resource");
-		userQuery.param("resource", entity);
-
 		put(getShortName(), entity);
-		put("users", entityDao.search(userQuery));
 		put("groups", entityDao.search(groupQuery));
 		put("menus", entityDao.search(query));
 		return forward();

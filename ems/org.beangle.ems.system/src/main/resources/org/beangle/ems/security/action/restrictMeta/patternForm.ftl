@@ -10,7 +10,6 @@ bar.addBack("${b.text("action.back")}");
 	[@b.formfoot]
 		<input type="hidden" name="pattern.id" value="${(pattern.id)!}"/>
 		<input type="hidden" name="pattern.entity.id" value="${(pattern.entity.id)!}" />
-		[@b.redirectParams/]
 		[@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit" /]
 	[/@]
 </table>

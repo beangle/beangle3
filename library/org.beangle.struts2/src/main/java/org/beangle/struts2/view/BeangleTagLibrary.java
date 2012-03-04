@@ -43,7 +43,6 @@ import org.beangle.struts2.view.component.Pagebar;
 import org.beangle.struts2.view.component.Password;
 import org.beangle.struts2.view.component.Radio;
 import org.beangle.struts2.view.component.Radios;
-import org.beangle.struts2.view.component.RedirectParams;
 import org.beangle.struts2.view.component.Reset;
 import org.beangle.struts2.view.component.Select;
 import org.beangle.struts2.view.component.Select2;
@@ -260,10 +259,6 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 			models.put(Anchor.class, model);
 		}
 		return model;
-	}
-
-	public TagModel getRedirectParams() {
-		return get(RedirectParams.class);
 	}
 
 	public TagModel getMessages() {

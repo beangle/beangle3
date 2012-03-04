@@ -10,7 +10,6 @@
 	[@b.textfield name="codeMeta.className" value=codeMeta.className label="实体类名" required="true" maxlength="100"/]
 	[@b.select name="codeMeta.category.id" items=categories value=(codeMeta.category.id)! empty="..." required="true" label="类别" style="width:100px"/]
 	[@b.formfoot]
-		[@b.redirectParams/]
 		<input type="hidden" name="codeMeta.id" value="${codeMeta.id!}"/>
 		[@b.submit value="action.submit"/]
 		<input type="button" onclick='reset()' value="${b.text("action.reset")}" class="buttonStyle"/>

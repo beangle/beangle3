@@ -9,7 +9,7 @@
 	[@b.formfoot]
 	<input type="hidden" value="${(ruleParameter.rule.id)}" name="ruleParameter.rule.id"/>
 	<input type="hidden" value="${(ruleParameter.id)!}" name="ruleParameter.id"/>
-	[@b.redirectParams/][@b.submit value="action.submit"/]
+	[@b.submit value="action.submit"/]
 	[/@]
 [/@]
 [@b.foot/]

@@ -9,7 +9,6 @@
 	[@b.formfoot]
 	<input type="hidden" name="baseCode.id" value="${baseCode.id?if_exists}" />
 	  <input type="hidden" name="baseCodeId" value="${baseCode.id?if_exists}"/>
-	  [@b.redirectParams/]
 	  <input type="hidden" name="codeName" value="${Parameters['codeName']}"/>
 	  [#if baseCode.createdAt?exists]
 	  <input type="hidden" name="baseCode.createdAt" value="${baseCode.createdAt?string("yyyy-MM-dd")}"/>

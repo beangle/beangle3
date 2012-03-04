@@ -53,8 +53,11 @@ public class GroupBean extends HierarchyLongIdObject<Group> implements Group {
 	@ManyToOne
 	private Group parent;
 
-	/** 下级组 */
-	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+	/**
+	 * 下级组
+	 * 这里不是用orphanRemoval = true 因为会出现下级组移动到别的组，而不是删除在新加入的逻辑
+	 */
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
 	private List<Group> children = CollectUtils.newArrayList();
 
 	/** 创建人 */

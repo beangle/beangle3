@@ -11,7 +11,6 @@
 			[@b.textfield name="userGroup.remark" label="common.remark" value="${userGroup.remark!}" maxlength="50"/]
 			[@b.formfoot]
 				<input type="hidden" name="userGroup.id" value="${userGroup.id!}" />
-				[@b.redirectParams/]
 				[@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit"/]
 			[/@]
 		[/@]

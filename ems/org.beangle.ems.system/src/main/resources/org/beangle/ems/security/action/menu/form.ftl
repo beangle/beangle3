@@ -27,7 +27,6 @@
 	[@b.formfoot]
 		[@b.reset/]&nbsp;&nbsp;
 		[@b.submit value="action.submit" /]
-		[@b.redirectParams/]
 		<input type="hidden" name="menu.id" value="${menu.id!}" />
 	[/@]
 [/@]
