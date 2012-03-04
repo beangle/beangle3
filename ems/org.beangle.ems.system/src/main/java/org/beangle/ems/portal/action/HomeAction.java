@@ -28,13 +28,18 @@ public class HomeAction extends SecurityActionSupport {
 	public String index() {
 		User user = entityDao.get(User.class, getUserId());
 		List<MenuProfile> profiles = menuService.getProfiles(user);
+
 		if (profiles.isEmpty()) {
 			put("menus", Collections.EMPTY_LIST);
 		} else {
-			MenuProfile profile = menuService.getProfile(user, getLong("security.menuProfileId"));
+			Long profileId = getLong("security.menuProfileId");
+			MenuProfile profile = null;
+			if (null != profileId) profile = menuService.getProfile(user, profileId);
+			else profile = profiles.get(0);
 			put("menus", HierarchyEntityUtils.getRoots(menuService.getMenus(profile, user)));
+			put("profile", profile);
 		}
-		put("menuProfiles",profiles);
+		put("menuProfiles", profiles);
 		put("user", user);
 		return forward();
 	}

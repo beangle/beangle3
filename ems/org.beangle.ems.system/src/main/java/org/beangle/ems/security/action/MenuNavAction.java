@@ -34,19 +34,22 @@ public class MenuNavAction extends SecurityActionSupport {
 	@Override
 	public String index() throws Exception {
 		final String name = get("name");
+		final MenuProfile profile;
 		final Long menuId = getLong("menu.id");
 		final Set<Menu> family;
 		final Menu givenMenu;
+		User user = entityDao.get(User.class, getUserId());
 		if (null != menuId) {
 			givenMenu = entityDao.get(Menu.class, menuId);
+			profile=givenMenu.getProfile();
 			family = HierarchyEntityUtils.getFamily(givenMenu);
 		} else {
 			family = null;
 			givenMenu = null;
+			profile= menuService.getProfile(user, getLong("profile.id"));
 		}
+		put("profile", profile);
 
-		User user = entityDao.get(User.class, getUserId());
-		MenuProfile profile = menuService.getProfile(user, getLong("security.menuProfileId"));
 		List<Menu> menus = Collections.emptyList();
 		if (null != profile) {
 			menus = menuService.getMenus(profile, user);
@@ -85,7 +88,7 @@ public class MenuNavAction extends SecurityActionSupport {
 
 	public String search() {
 		User user = entityDao.get(User.class, getUserId());
-		MenuProfile profile = menuService.getProfile(user, getLong("security.menuProfileId"));
+		MenuProfile profile = menuService.getProfile(user, getLong("profile.id"));
 		List<Menu> menus = menuService.getMenus(profile, user);
 		List<Menu> menuPath = CollectUtils.newArrayList();
 		Long menuId = getLong("menu.id");

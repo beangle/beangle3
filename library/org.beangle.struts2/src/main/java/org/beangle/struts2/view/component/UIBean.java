@@ -123,6 +123,12 @@ public abstract class UIBean extends Component {
 		return req.getRequestURI();
 	}
 
+	protected String getRequestParameter(String name) {
+		HttpServletRequest req = (HttpServletRequest) stack.getContext().get(
+				ServletActionContext.HTTP_REQUEST);
+		return req.getParameter(name);
+	}
+
 	private static final String Number_Fmt = "{0,number,#.##}";
 
 	protected Object getValue(Object obj, String property) {

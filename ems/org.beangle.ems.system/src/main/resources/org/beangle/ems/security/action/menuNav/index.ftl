@@ -2,12 +2,12 @@
 [@b.head/]
 <link href="${base}/static/themes/${b.theme.ui}/menu.css" rel="stylesheet" type="text/css" />
 [#include "menuMacros.ftl"/]
-
 <div id="menu_area">
 	<div style="height:25px">
-		<div style="float:left">页面导航:[@b.a href="!index?name=${(Parameters['name']!)?url('utf-8')}"]全部[/@][#list menuPath as m] >> [@displayMenuAnchor m]${m.title}[/@][/#list]</div>
+		<div style="float:left">页面导航:[@b.a href="!index?profile.id=${(profile.id)!}&name=${(Parameters['name']!)?url('utf-8')}"]全部[/@][#list menuPath as m] >> [@displayMenuAnchor m]${m.title}[/@][/#list]</div>
 		<div style="float:right">
 		[@b.form  name="menusearchform" action="!index"]
+		<input type="hidden" name="profile.id" value="${profile.id}"/>
 		<input type="hidden" name="menu.id" value="${Parameters['menu.id']!?html}"/>
 		[@b.textfield name="name" value=Parameters['name']/][@b.submit value="搜索"/][/@]
 		</div>

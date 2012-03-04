@@ -61,12 +61,20 @@ public class Select extends ClosingUIBean {
 			if ("true".equals(required)) myform.addCheck(id, "require()");
 			if (null != check) myform.addCheck(id, check);
 		}
+		if (null == value) {
+			value = getRequestParameter(name);
+		}
 	}
 
 	public boolean isSelected(Object obj) {
 		if (null == value) return false;
 		else try {
-			return value.equals(obj) || value.equals(PropertyUtils.getSimpleProperty(obj, keyName));
+			if (value instanceof String) {
+				return value.equals(obj)
+						|| value.equals(String.valueOf(PropertyUtils.getSimpleProperty(obj, keyName)));
+			} else {
+				return value.equals(obj) || value.equals(PropertyUtils.getSimpleProperty(obj, keyName));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

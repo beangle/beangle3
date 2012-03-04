@@ -20,9 +20,11 @@
 	</div>
 	[/@]
 </div>
-
-[@b.div id="main" href="/security/menu-nav"/]
-
+[#if profile??]
+[@b.div id="main" href="/security/menu-nav?profile.id=${profile.id}"/]
+[#else]
+	没有相应的菜单配置，无法显示菜单。
+[/#if]
 <script type="text/javascript">
   function editAccount(){
 	  var url = "${b.url('/security/my!edit')}";
