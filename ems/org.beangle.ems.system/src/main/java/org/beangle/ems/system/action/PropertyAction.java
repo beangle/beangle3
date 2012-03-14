@@ -10,6 +10,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.beangle.collection.CollectUtils;
 import org.beangle.context.property.PropertyConfigFactory;
+import org.beangle.dao.EntityDao;
 import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.config.model.PropertyConfigItemBean;
 import org.beangle.struts2.action.BaseAction;
@@ -17,6 +18,12 @@ import org.beangle.struts2.action.BaseAction;
 public class PropertyAction extends BaseAction {
 
 	private PropertyConfigFactory configFactory;
+
+	private EntityDao entityDao;
+	
+	public void setEntityDao(EntityDao entityDao) {
+		this.entityDao = entityDao;
+	}
 
 	public String bulkEdit() {
 		OqlBuilder<PropertyConfigItemBean> builder = OqlBuilder.from(PropertyConfigItemBean.class, "config");

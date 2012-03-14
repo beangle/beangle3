@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
+import org.beangle.dao.EntityDao;
 import org.beangle.ems.dictionary.model.BaseCode;
 import org.beangle.ems.dictionary.model.CodeMeta;
 import org.beangle.ems.dictionary.service.BaseCodeService;
@@ -26,6 +27,11 @@ import org.beangle.struts2.action.BaseAction;
 public class CodeAction extends BaseAction {
 
 	private BaseCodeService baseCodeService;
+	private EntityDao entityDao;
+
+	public void setEntityDao(EntityDao entityDao) {
+		this.entityDao = entityDao;
+	}
 
 	public void index() {
 		String simpleName = get("type");

@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.NoParameters;
+import org.beangle.dao.EntityDao;
 import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.SecurityUtils;
@@ -27,6 +28,8 @@ public abstract class SecurityActionSupport extends BaseAction implements NoPara
 
 	protected RestrictionService restrictionService;
 
+	protected EntityDao entityDao;
+	
 	protected Resource getResource() {
 		String resourceName = SecurityUtils.getResource();
 		if (null == resourceName) {
@@ -99,4 +102,9 @@ public abstract class SecurityActionSupport extends BaseAction implements NoPara
 	public void setRestrictionService(RestrictionService restrictionService) {
 		this.restrictionService = restrictionService;
 	}
+
+	public void setEntityDao(EntityDao entityDao) {
+		this.entityDao = entityDao;
+	}
+	
 }

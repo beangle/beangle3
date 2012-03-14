@@ -24,6 +24,7 @@ import org.apache.struts2.ServletActionContext;
 import org.beangle.collection.CollectUtils;
 import org.beangle.collection.Order;
 import org.beangle.dao.Entity;
+import org.beangle.dao.EntityDao;
 import org.beangle.dao.metadata.EntityType;
 import org.beangle.dao.metadata.Model;
 import org.beangle.dao.pojo.TimeEntity;
@@ -45,8 +46,49 @@ import org.beangle.transfer.importer.DefaultEntityImporter;
 import org.beangle.transfer.importer.EntityImporter;
 import org.beangle.transfer.importer.listener.ImporterForeignerListener;
 import org.beangle.transfer.io.TransferFormats;
+import org.beangle.util.meta.SystemVersion;
 
-public abstract class EntityDrivenAction extends BaseAction {
+public abstract class EntityActionSupport extends BaseAction {
+	protected EntityDao entityDao;
+	protected SystemVersion systemVersion;
+
+	public SystemVersion getSystemVersion() {
+		return systemVersion;
+	}
+
+	public void setSystemVersion(SystemVersion systemVersion) {
+		this.systemVersion = systemVersion;
+	}
+
+	// CURD----------------------------------------
+	protected void remove(Collection<?> list) {
+		entityDao.remove(list);
+	}
+
+	protected void remove(Object obj) {
+		entityDao.remove(obj);
+	}
+
+	protected void saveOrUpdate(Collection<?> list) {
+		entityDao.saveOrUpdate(list);
+	}
+
+	protected void saveOrUpdate(Object obj) {
+		entityDao.saveOrUpdate(obj);
+	}
+
+	@SuppressWarnings("rawtypes")
+	protected List search(QueryBuilder<?> query) {
+		return entityDao.search(query);
+	}
+
+	protected EntityDao getEntityDao() {
+		return entityDao;
+	}
+
+	public void setEntityDao(EntityDao entityDao) {
+		this.entityDao = entityDao;
+	}
 
 	/**
 	 * 主页面

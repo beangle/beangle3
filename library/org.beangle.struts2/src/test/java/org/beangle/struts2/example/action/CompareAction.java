@@ -4,9 +4,9 @@
  */
 package org.beangle.struts2.example.action;
 
-import org.beangle.struts2.action.EntityDrivenAction;
+import org.beangle.struts2.action.EntityActionSupport;
 
-public class CompareAction extends EntityDrivenAction {
+public class CompareAction extends EntityActionSupport {
 
 	public String index() {
 		return SUCCESS;
