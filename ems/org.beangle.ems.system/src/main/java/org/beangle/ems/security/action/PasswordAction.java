@@ -10,9 +10,9 @@ import org.beangle.collection.CollectUtils;
 import org.beangle.dao.util.ValidEntityKeyPredicate;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.service.UserService;
-import org.beangle.ems.web.action.SecurityActionSupport;
+import org.beangle.ems.web.action.SecurityEntityActionSupport;
 
-public class PasswordAction extends SecurityActionSupport {
+public class PasswordAction extends SecurityEntityActionSupport {
 
 	private UserService userService;
 

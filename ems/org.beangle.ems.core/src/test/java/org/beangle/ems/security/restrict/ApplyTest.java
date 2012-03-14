@@ -12,7 +12,7 @@ import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.model.GroupBean;
 import org.beangle.ems.security.profile.model.UserProfileBean;
-import org.beangle.ems.security.profile.model.UserPropertyMetaBean;
+import org.beangle.ems.security.profile.model.PropertyMetaBean;
 import org.beangle.ems.security.restrict.model.RestrictEntityBean;
 import org.beangle.ems.security.restrict.model.RestrictionBean;
 import org.beangle.ems.security.restrict.service.RestrictionServiceImpl;
@@ -40,7 +40,7 @@ public class ApplyTest {
 		Restriction restriction = new RestrictionBean(entity,
 				"exists(from {alias}.members as m where m.group in(:groups))");
 
-		UserPropertyMetaBean property = new UserPropertyMetaBean(1L, "groups", GroupBean.class.getName(), "oql:from "
+		PropertyMetaBean property = new PropertyMetaBean(1L, "groups", GroupBean.class.getName(), "oql:from "
 				+ Group.class);
 		property.setKeyName("id");
 		property.setPropertyNames("name");

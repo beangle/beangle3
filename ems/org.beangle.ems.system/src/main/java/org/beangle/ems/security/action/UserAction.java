@@ -24,7 +24,7 @@ import org.beangle.ems.security.helper.UserDashboardHelper;
 import org.beangle.ems.security.helper.UserPropertyExtractor;
 import org.beangle.ems.security.model.GroupMemberBean;
 import org.beangle.ems.security.service.UserService;
-import org.beangle.ems.web.action.SecurityActionSupport;
+import org.beangle.ems.web.action.SecurityEntityActionSupport;
 import org.beangle.security.codec.EncryptUtil;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.transfer.exporter.PropertyExtractor;
@@ -34,7 +34,7 @@ import org.beangle.transfer.exporter.PropertyExtractor;
  * 
  * @author chaostone 2005-9-29
  */
-public class UserAction extends SecurityActionSupport {
+public class UserAction extends SecurityEntityActionSupport {
 
 	private UserService userService;
 

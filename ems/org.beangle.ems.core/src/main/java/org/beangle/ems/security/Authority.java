@@ -5,14 +5,13 @@
 package org.beangle.ems.security;
 
 import org.beangle.dao.pojo.LongIdEntity;
-import org.beangle.ems.security.restrict.RestrictionHolder;
 
 /**
  * 权限
  * 
  * @author chaostone 2005-9-26
  */
-public interface Authority extends LongIdEntity, Cloneable, RestrictionHolder {
+public interface Authority extends LongIdEntity, Cloneable {
 	/**
 	 * 系统资源
 	 * 

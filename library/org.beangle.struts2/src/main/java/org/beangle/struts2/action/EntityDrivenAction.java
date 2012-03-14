@@ -12,8 +12,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -48,11 +46,7 @@ import org.beangle.transfer.importer.EntityImporter;
 import org.beangle.transfer.importer.listener.ImporterForeignerListener;
 import org.beangle.transfer.io.TransferFormats;
 
-import com.opensymphony.xwork2.util.ClassLoaderUtil;
-
-public class EntityDrivenAction extends BaseAction {
-
-	protected String entityName;
+public abstract class EntityDrivenAction extends BaseAction {
 
 	/**
 	 * 主页面
@@ -125,60 +119,6 @@ public class EntityDrivenAction extends BaseAction {
 
 	protected Entity<?> populateEntity() {
 		return populateEntity(getEntityName(), getShortName());
-	}
-
-	protected Long getId(String shortName) {
-		return getId(Long.class, shortName);
-	}
-
-	/**
-	 * Get entity's id from shortname.id,shortnameId,id
-	 * 
-	 * @param shortName
-	 * @param clazz
-	 * @return
-	 */
-	protected <T> T getId(Class<T> clazz, String shortName) {
-		String entityId = get(shortName + ".id");
-		if (null == entityId) {
-			entityId = get(shortName + "Id");
-		}
-		if (null == entityId) {
-			entityId = get("id");
-		}
-		if (null == entityId) return null;
-		else return Params.converter.convert(entityId, clazz);
-	}
-
-	/**
-	 * Get entity's long id array from parameters shortname.id,shortname.ids,shortnameIds
-	 * 
-	 * @param shortName
-	 * @return
-	 */
-	protected Long[] getIds(String shortName) {
-		return getIds(Long.class, shortName);
-	}
-
-	/**
-	 * Get entity's id array from parameters shortname.id,shortname.ids,shortnameIds
-	 * 
-	 * @param shortName
-	 * @param clazz
-	 * @return empty array if not found
-	 */
-	protected <T> T[] getIds(Class<T> clazz, String shortName) {
-		T[] datas = Params.getAll(shortName + ".id", clazz);
-		if (null == datas) {
-			String datastring = Params.get(shortName + ".ids");
-			if (null == datastring) datastring = Params.get(shortName + "Ids");
-			if (null == datastring) {
-				Array.newInstance(clazz, 0);
-			} else {
-				return Params.converter.convert(StringUtils.split(datastring, ","), clazz);
-			}
-		}
-		return datas;
 	}
 
 	/**
@@ -317,15 +257,7 @@ public class EntityDrivenAction extends BaseAction {
 		return builder;
 	}
 
-	public void setEntityName(String entityName) {
-		this.entityName = entityName;
-	}
-
-	protected String getEntityName() {
-		if (null == entityName) { throw new RuntimeException("entityName not set for :"
-				+ getClass().getName()); }
-		return entityName;
-	}
+	protected abstract String getEntityName();
 
 	protected String getShortName() {
 		String name = getEntityName();
@@ -406,14 +338,6 @@ public class EntityDrivenAction extends BaseAction {
 
 	protected PropertyExtractor getPropertyExtractor() {
 		return new DefaultPropertyExtractor(getTextResource());
-	}
-
-	protected URL getResource(String name) {
-		URL url = ClassLoaderUtil.getResource(name, getClass());
-		if (url == null) {
-			logger.error("Cannot load template {}", name);
-		}
-		return url;
 	}
 
 	protected Exporter buildExporter(Context context) {

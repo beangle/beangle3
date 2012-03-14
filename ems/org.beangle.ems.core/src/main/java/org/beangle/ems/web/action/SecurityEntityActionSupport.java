@@ -18,10 +18,10 @@ import org.beangle.ems.security.service.AuthorityService;
 import org.beangle.lang.StrUtils;
 import org.beangle.security.access.AccessDeniedException;
 import org.beangle.security.core.context.SecurityContextHolder;
-import org.beangle.struts2.action.BaseAction;
+import org.beangle.struts2.action.EntityDrivenAction;
 import org.beangle.web.util.RequestUtils;
 
-public abstract class SecurityActionSupport extends BaseAction implements NoParameters {
+public abstract class SecurityEntityActionSupport extends EntityDrivenAction implements NoParameters {
 
 	protected AuthorityService authorityService;
 

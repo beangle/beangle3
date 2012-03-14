@@ -12,7 +12,7 @@ import org.beangle.collection.CollectUtils;
 import org.beangle.dao.Entity;
 import org.beangle.ems.dictionary.model.CodeCategory;
 import org.beangle.ems.dictionary.model.CodeMeta;
-import org.beangle.ems.web.action.SecurityActionSupport;
+import org.beangle.ems.web.action.SecurityEntityActionSupport;
 import org.beangle.lang.StrUtils;
 import org.beangle.struts2.convention.route.Action;
 
@@ -22,7 +22,7 @@ import org.beangle.struts2.convention.route.Action;
  * @author chaostone
  * @version $Id: CodeMetaAction.java Jun 29, 2011 5:20:35 PM chaostone $
  */
-public class CodeMetaAction extends SecurityActionSupport {
+public class CodeMetaAction extends SecurityEntityActionSupport {
 
 	@Override
 	public String index() throws Exception {

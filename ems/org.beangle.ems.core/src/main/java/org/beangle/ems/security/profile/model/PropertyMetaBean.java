@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.dao.pojo.LongIdObject;
-import org.beangle.ems.security.profile.UserPropertyMeta;
+import org.beangle.ems.security.profile.PropertyMeta;
 
 /**
  * 数据限制域
@@ -18,7 +18,7 @@ import org.beangle.ems.security.profile.UserPropertyMeta;
  * @author chaostone
  */
 @MappedSuperclass
-public class PropertyMetaBean extends LongIdObject implements UserPropertyMeta {
+public class PropertyMetaBean extends LongIdObject implements PropertyMeta {
 	private static final long serialVersionUID = 1L;
 
 	/** 名称 */

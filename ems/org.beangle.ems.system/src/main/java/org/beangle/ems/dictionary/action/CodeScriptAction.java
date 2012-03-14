@@ -23,8 +23,6 @@ import org.beangle.struts2.helper.Params;
  */
 public class CodeScriptAction extends SecurityActionSupport {
 
-	private static final long serialVersionUID = 5763797691688360592L;
-
 	private CodeGenerator codeGenerator;
 
 	/**

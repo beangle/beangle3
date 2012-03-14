@@ -38,4 +38,10 @@ public class SimpleContext implements Context {
 	public Map<String, Object> getParams() {
 		return params;
 	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T getParam(String paramName, Class<T> clazz) {
+		return (T) getParams().get(paramName);
+	}
+
 }

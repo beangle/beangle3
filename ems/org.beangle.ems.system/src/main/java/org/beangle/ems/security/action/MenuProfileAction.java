@@ -8,9 +8,9 @@ import org.beangle.dao.Entity;
 import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.nav.MenuProfile;
-import org.beangle.ems.web.action.SecurityActionSupport;
+import org.beangle.ems.web.action.SecurityEntityActionSupport;
 
-public class MenuProfileAction extends SecurityActionSupport {
+public class MenuProfileAction extends SecurityEntityActionSupport {
 
 	protected void editSetting(Entity<?> entity) {
 		OqlBuilder<Group> builder = OqlBuilder.from(Group.class, "g");

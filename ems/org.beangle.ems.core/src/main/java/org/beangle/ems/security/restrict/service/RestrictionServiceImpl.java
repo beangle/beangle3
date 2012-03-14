@@ -17,14 +17,11 @@ import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.Resource;
-import org.beangle.ems.security.User;
 import org.beangle.ems.security.profile.GroupProfile;
 import org.beangle.ems.security.profile.PropertyMeta;
 import org.beangle.ems.security.profile.UserProfile;
 import org.beangle.ems.security.profile.UserProperty;
-import org.beangle.ems.security.profile.UserPropertyMeta;
 import org.beangle.ems.security.restrict.Restriction;
-import org.beangle.ems.security.restrict.RestrictionHolder;
 import org.beangle.ems.security.service.AuthorityService;
 import org.beangle.ems.security.service.UserDataProvider;
 import org.beangle.ems.security.service.UserDataResolver;
@@ -44,7 +41,6 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 	 * 查询用户在指定模块的数据权限
 	 */
 	public List<Restriction> getRestrictions(final UserProfile profile, final Resource resource) {
-		
 //		// 权限上的限制
 //		if (null != resource) {
 //			List<RestrictionHolder> authHolders = getAuthorityRestrictions(profile.getUser(), resource);
@@ -72,19 +68,19 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		return entityDao.search(builder);
 	}
 
-	private List<RestrictionHolder> getAuthorityRestrictions(User user, Resource resource) {
-		OqlBuilder<RestrictionHolder> query = OqlBuilder.hql("from " + Authority.class.getName() + " r "
-				+ "join r.group.members as gmember join r.restrictions as restriction"
-				+ " where gmember.user=:user and gmember.member=true and r.resource=:resource"
-				+ " and restriction.enabled=true");
-		Map<String, Object> params = CollectUtils.newHashMap();
-		params.put("user", user);
-		params.put("resource", resource);
-		query.params(params);
-		return entityDao.search(query);
-	}
+//	private List<RestrictionHolder> getAuthorityRestrictions(User user, Resource resource) {
+//		OqlBuilder<RestrictionHolder> query = OqlBuilder.hql("from " + Authority.class.getName() + " r "
+//				+ "join r.group.members as gmember join r.restrictions as restriction"
+//				+ " where gmember.user=:user and gmember.member=true and r.resource=:resource"
+//				+ " and restriction.enabled=true");
+//		Map<String, Object> params = CollectUtils.newHashMap();
+//		params.put("user", user);
+//		params.put("resource", resource);
+//		query.params(params);
+//		return entityDao.search(query);
+//	}
 
-	private List<?> getPropertyValues(UserPropertyMeta field) {
+	private List<?> getPropertyValues(PropertyMeta field) {
 		if (null == field.getSource()) return Collections.emptyList();
 		String source = field.getSource();
 		String prefix = StringUtils.substringBefore(source, ":");
@@ -98,11 +94,11 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 	}
 
 	public List<?> getPropertyValues(String propertyName) {
-		return getPropertyValues(getUserProperty(propertyName));
+		return getPropertyValues(getPropertyMeta(propertyName));
 	}
 
 	public Object getPropertyValue(String propertyName, UserProfile profile) {
-		UserPropertyMeta prop = getUserProperty(propertyName);
+		PropertyMeta prop = getPropertyMeta(propertyName);
 		UserProperty property = profile.getProperty(prop);
 		if (null == property) return null;
 		return unmarshal(property.getValue(), prop);
@@ -185,8 +181,8 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 		}
 	}
 
-	private UserPropertyMeta getUserProperty(String fieldName) {
-		List<UserPropertyMeta> fields = entityDao.get(UserPropertyMeta.class, "name", fieldName);
+	private PropertyMeta getPropertyMeta(String fieldName) {
+		List<PropertyMeta> fields = entityDao.get(PropertyMeta.class, "name", fieldName);
 		if (1 != fields.size()) { throw new RuntimeException("bad pattern parameter named :" + fieldName); }
 		return fields.get(0);
 	}

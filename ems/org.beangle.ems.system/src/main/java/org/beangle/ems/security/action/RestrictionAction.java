@@ -33,7 +33,8 @@ public class RestrictionAction extends SecurityActionSupport {
 	public String info() {
 		RestrictionHelper helper = new RestrictionHelper(entityDao);
 		helper.setRestrictionService(restrictionService);
-		helper.populateInfo(helper.getHolder());
+		//FIXME
+//		helper.populateInfo(helper.getHolder());
 		return forward();
 	}
 

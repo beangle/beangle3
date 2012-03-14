@@ -25,8 +25,6 @@ import org.beangle.struts2.action.BaseAction;
  */
 public class CodeAction extends BaseAction {
 
-	private static final long serialVersionUID = -3799353282810314506L;
-
 	private BaseCodeService baseCodeService;
 
 	public void index() {

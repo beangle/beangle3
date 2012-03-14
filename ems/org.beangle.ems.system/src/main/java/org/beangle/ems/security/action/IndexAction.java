@@ -13,8 +13,7 @@ import org.beangle.ems.security.GroupMember;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.nav.MenuProfile;
-import org.beangle.ems.security.profile.GroupPropertyMeta;
-import org.beangle.ems.security.profile.UserPropertyMeta;
+import org.beangle.ems.security.profile.PropertyMeta;
 import org.beangle.ems.security.restrict.Restriction;
 import org.beangle.ems.web.action.SecurityActionSupport;
 
@@ -42,10 +41,8 @@ public class IndexAction extends SecurityActionSupport {
 		// stat pattern and restriction
 		put("restrictionStat",
 				entityDao.search(OqlBuilder.from(Restriction.class, "pattern").select("count(*)")));
-		put("userPropertyMetaStat",
-				entityDao.search(OqlBuilder.from(UserPropertyMeta.class, "param").select("count(*)")));
-		put("groupPropertyMetaStat",
-				entityDao.search(OqlBuilder.from(GroupPropertyMeta.class, "param").select("count(*)")));
+		put("propertyMetaStat",
+				entityDao.search(OqlBuilder.from(PropertyMeta.class, "param").select("count(*)")));
 		return forward();
 	}
 

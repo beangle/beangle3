@@ -10,12 +10,12 @@ import javax.persistence.Entity;
 import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.security.profile.GroupProfile;
 import org.beangle.ems.security.profile.GroupProperty;
-import org.beangle.ems.security.profile.GroupPropertyMeta;
+import org.beangle.ems.security.profile.PropertyMeta;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
- * 数据限制域
+ * 用户组属性
  * 
  * @author chaostone
  */
@@ -27,7 +27,7 @@ public class GroupPropertyBean extends LongIdObject implements GroupProperty {
 
 	private String value;
 
-	private GroupPropertyMeta meta;
+	private PropertyMeta meta;
 
 	private GroupProfile profile;
 
@@ -35,7 +35,7 @@ public class GroupPropertyBean extends LongIdObject implements GroupProperty {
 		super();
 	}
 
-	public GroupPropertyBean(GroupProfileBean profile, GroupPropertyMeta meta, String value) {
+	public GroupPropertyBean(GroupProfileBean profile, PropertyMeta meta, String value) {
 		super();
 		this.profile = profile;
 		this.meta = meta;
@@ -50,11 +50,11 @@ public class GroupPropertyBean extends LongIdObject implements GroupProperty {
 		this.value = value;
 	}
 
-	public GroupPropertyMeta getMeta() {
+	public PropertyMeta getMeta() {
 		return meta;
 	}
 
-	public void setMeta(GroupPropertyMeta meta) {
+	public void setMeta(PropertyMeta meta) {
 		this.meta = meta;
 	}
 

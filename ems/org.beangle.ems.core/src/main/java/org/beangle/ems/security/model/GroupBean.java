@@ -183,6 +183,14 @@ public class GroupBean extends HierarchyLongIdObject<Group> implements Group {
 		this.updatedAt = updatedAt;
 	}
 
+	public boolean isDynamic() {
+		return dynamic;
+	}
+
+	public void setDynamic(boolean dynamic) {
+		this.dynamic = dynamic;
+	}
+
 	public int compareTo(Group o) {
 		return getCode().compareTo(o.getCode());
 	}

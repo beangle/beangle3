@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.security.profile.UserProfile;
 import org.beangle.ems.security.profile.UserProperty;
-import org.beangle.ems.security.profile.UserPropertyMeta;
+import org.beangle.ems.security.profile.PropertyMeta;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -27,7 +27,7 @@ public class UserPropertyBean extends LongIdObject implements UserProperty {
 
 	private String value;
 
-	private UserPropertyMeta meta;
+	private PropertyMeta meta;
 
 	private UserProfile profile;
 
@@ -35,7 +35,7 @@ public class UserPropertyBean extends LongIdObject implements UserProperty {
 		super();
 	}
 
-	public UserPropertyBean(UserProfileBean profile, UserPropertyMeta meta, String value) {
+	public UserPropertyBean(UserProfileBean profile, PropertyMeta meta, String value) {
 		super();
 		this.profile = profile;
 		this.meta = meta;
@@ -50,11 +50,11 @@ public class UserPropertyBean extends LongIdObject implements UserProperty {
 		this.value = value;
 	}
 
-	public UserPropertyMeta getMeta() {
+	public PropertyMeta getMeta() {
 		return meta;
 	}
 
-	public void setMeta(UserPropertyMeta meta) {
+	public void setMeta(PropertyMeta meta) {
 		this.meta = meta;
 	}
 

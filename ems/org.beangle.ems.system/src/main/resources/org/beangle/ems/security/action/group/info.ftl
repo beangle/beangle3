@@ -17,8 +17,8 @@ bar.addBack("${b.text("action.back")}");
 	 <td class="content">${userGroup.updatedAt?string("yyyy-MM-dd")}</td>
 	</tr>
 	<tr>
-	<td class="title" >适用身份:</td>
-	<td  class="content">${userGroup.category.title}</td>
+	<td class="title" >是否动态组:</td>
+	<td  class="content">${userGroup.dynamic?string("是","否")}</td>
 	<td class="title" >&nbsp;${b.text("common.status")}:</td>
 	<td class="content">
 		[#if userGroup.enabled] ${b.text("action.activate")}
@@ -34,8 +34,9 @@ bar.addBack("${b.text("action.back")}");
 	<td class="title" >${b.text("common.remark")}:</td>
 	<td  class="content" colspan="3">${userGroup.remark!}</td>
 	</tr>
-	<tr>
+	[#--<tr>
 		<td colspan="4">[@b.div href="restriction!info?restriction.holder.id=${userGroup.id}&restrictionType=group" /]</td>
 	</tr>
+	--]
 </table>
 [@b.foot/]

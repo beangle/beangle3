@@ -8,7 +8,7 @@ import java.util.Date;
 
 import org.beangle.dao.Entity;
 import org.beangle.ems.rule.Rule;
-import org.beangle.ems.web.action.SecurityActionSupport;
+import org.beangle.ems.web.action.SecurityEntityActionSupport;
 import org.beangle.struts2.convention.route.Action;
 
 /**
@@ -17,7 +17,7 @@ import org.beangle.struts2.convention.route.Action;
  * @author chaostone
  * @version $Id: RuleAction.java Jun 27, 2011 7:41:11 PM chaostone $
  */
-public class RuleAction extends SecurityActionSupport {
+public class RuleAction extends SecurityEntityActionSupport {
 
 	@Override
 	protected String saveAndForward(Entity<?> entity) {

@@ -13,11 +13,9 @@ import javax.persistence.OneToMany;
 import org.beangle.collection.CollectUtils;
 import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.security.User;
-import org.beangle.ems.security.profile.Property;
 import org.beangle.ems.security.profile.PropertyMeta;
 import org.beangle.ems.security.profile.UserProfile;
 import org.beangle.ems.security.profile.UserProperty;
-import org.beangle.ems.security.profile.UserPropertyMeta;
 
 /**
  * 用户配置
@@ -53,7 +51,7 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
 		this.properties = properties;
 	}
 
-	public UserProperty getProperty(UserPropertyMeta meta) {
+	public UserProperty getProperty(PropertyMeta meta) {
 		if (null == properties || properties.isEmpty()) {
 			return null;
 		} else {
@@ -77,11 +75,7 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
 		return null;
 	}
 
-	public Property getProperty(PropertyMeta meta) {
-		return getProperty((UserPropertyMeta) meta);
-	}
-
-	public void setProperty(UserPropertyMeta meta, String text) {
+	public void setProperty(PropertyMeta meta, String text) {
 		UserProperty property = getProperty(meta);
 		if (null == property) {
 			property = new UserPropertyBean(this, meta, text);

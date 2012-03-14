@@ -11,4 +11,10 @@ public class CompareAction extends EntityDrivenAction {
 	public String index() {
 		return SUCCESS;
 	}
+
+	@Override
+	protected String getEntityName() {
+		return null;
+	}
+	
 }

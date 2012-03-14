@@ -8,11 +8,10 @@ import org.beangle.dao.Entity;
 import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Resource;
-import org.beangle.ems.security.User;
 import org.beangle.ems.security.helper.ResourcePropertyExtractor;
 import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.service.CacheableAuthorityManager;
-import org.beangle.ems.web.action.SecurityActionSupport;
+import org.beangle.ems.web.action.SecurityEntityActionSupport;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.transfer.exporter.PropertyExtractor;
 
@@ -21,7 +20,7 @@ import org.beangle.transfer.exporter.PropertyExtractor;
  * 
  * @author chaostone 2005-10-9
  */
-public class ResourceAction extends SecurityActionSupport {
+public class ResourceAction extends SecurityEntityActionSupport {
 
 	private CacheableAuthorityManager authorityManager;
 

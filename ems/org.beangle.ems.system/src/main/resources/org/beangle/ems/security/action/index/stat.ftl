@@ -30,7 +30,6 @@
 
 [@b.module title="数据权限"]
 	限制模式数量:${restrictionStat[0]}<br/>
-	用户配置数量:${userPropertyMetaStat[0]!0}<br/>
-	用户组配置数量:${userPropertyMetaStat[0]!0}<br/>
+	属性配置数量:${propertyMetaStat[0]!0}<br/>
 [/@]
 </div>

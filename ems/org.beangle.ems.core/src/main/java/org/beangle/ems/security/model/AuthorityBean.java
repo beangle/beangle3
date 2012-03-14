@@ -4,10 +4,7 @@
  */
 package org.beangle.ems.security.model;
 
-import java.util.Set;
-
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -15,8 +12,6 @@ import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.security.Authority;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.Resource;
-import org.beangle.ems.security.restrict.Restriction;
-import org.beangle.ems.security.restrict.RestrictionHolder;
 
 /**
  * 系统授权实体
@@ -25,7 +20,7 @@ import org.beangle.ems.security.restrict.RestrictionHolder;
  * @author dell,chaostone 2005-9-26
  */
 @Entity(name = "org.beangle.ems.security.Authority")
-public class AuthorityBean extends LongIdObject implements RestrictionHolder, Authority {
+public class AuthorityBean extends LongIdObject implements  Authority {
 
 	private static final long serialVersionUID = -8956079356245507990L;
 
@@ -38,10 +33,6 @@ public class AuthorityBean extends LongIdObject implements RestrictionHolder, Au
 	@NotNull
 	@ManyToOne
 	protected Resource resource;
-
-	/** 该模块对应的数据操作范围 */
-	@ManyToMany
-	protected Set<Restriction> restrictions;
 
 	public AuthorityBean() {
 		super();
@@ -63,14 +54,6 @@ public class AuthorityBean extends LongIdObject implements RestrictionHolder, Au
 
 	public void setResource(Resource resource) {
 		this.resource = (Resource) resource;
-	}
-
-	public Set<Restriction> getRestrictions() {
-		return restrictions;
-	}
-
-	public void setRestrictions(Set<Restriction> restrictions) {
-		this.restrictions = restrictions;
 	}
 
 	public Group getGroup() {

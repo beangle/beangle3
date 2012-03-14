@@ -31,7 +31,6 @@ public class MenuNavAction extends SecurityActionSupport {
 
 	private MenuService menuService;
 
-	@Override
 	public String index() throws Exception {
 		final String name = get("name");
 		final MenuProfile profile;

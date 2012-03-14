@@ -18,7 +18,7 @@ import org.beangle.ems.security.helper.MenuPropertyExtractor;
 import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.security.nav.service.MenuService;
-import org.beangle.ems.web.action.SecurityActionSupport;
+import org.beangle.ems.web.action.SecurityEntityActionSupport;
 import org.beangle.transfer.exporter.PropertyExtractor;
 
 /**
@@ -26,7 +26,7 @@ import org.beangle.transfer.exporter.PropertyExtractor;
  * 
  * @author 鄂州蚊子 2008-8-4
  */
-public class MenuAction extends SecurityActionSupport {
+public class MenuAction extends SecurityEntityActionSupport {
 
 	private MenuService menuService;
 
