@@ -33,7 +33,7 @@ public class CodeAction extends BaseAction {
 		this.entityDao = entityDao;
 	}
 
-	public void index() {
+	public String index() {
 		String simpleName = get("type");
 		StringBuilder builder = new StringBuilder();
 		PrintWriter out = null;
@@ -57,7 +57,6 @@ public class CodeAction extends BaseAction {
 										+ baseCode.getName().trim() + "["
 										+ PropertyUtils.getProperty(baseCode, format) + "]" + "</option>");
 							}
-
 						} else {
 							for (BaseCode<?> baseCode : baseCodes) {
 								builder.append("<option value='" + baseCode.getId() + "'>"
@@ -73,6 +72,7 @@ public class CodeAction extends BaseAction {
 				}
 			}
 		}
+		return null;
 	}
 
 	public void setBaseCodeService(BaseCodeService baseCodeService) {

@@ -45,7 +45,7 @@ public class OverrideConfiguration extends Configuration {
 			String jpaEntityName= persistentClass.getJpaEntityName();
 			String entityName = persistentClass.getEntityName();
 			String entityClassName=null;
-			if(jpaEntityName.contains(".")){
+			if(null!=jpaEntityName && jpaEntityName.contains(".")){
 				entityClassName=entityName;
 				entityName=jpaEntityName;
 				persistentClass.setEntityName(entityName);

@@ -13,7 +13,7 @@
 	[/@]
 	[@b.row]
 		<tr id="${userGroup.code}">
-		[@b.boxcol/]
+		[@b.boxcol width="5%"/]
 		[@b.col property="name" width="35%" title="common.name"]
 			<div class="tier${userGroup.depth}" align="left">
 			[#if (userGroup.children?size==0)]
@@ -24,10 +24,11 @@
 				[@b.a href="!info?id=${userGroup.id}"]${userGroup.code} ${userGroup.name}[/@]
 			</div>
 		[/@]
-		[@b.col width="20%" property="owner.name" title="common.creator"/]
+		[@b.col width="20%" property="owner.name" title="common.creator"]${(userGroup.owner.name)!} ${(userGroup.owner.fullname)!}[/@]
+		[@b.col width="10%" property="dynamic" title="动态组"]${userGroup.dynamic?string("是","否")}[/@]
 		[@b.col width="10%" property="enabled" title="common.status"][@enableInfo userGroup.enabled/][/@]
-		[@b.col width="15%" property="updatedAt" title="common.updatedAt"]${userGroup.updatedAt?string("yyyy-MM-dd")}[/@]
-		[@b.col title="设置权限" width="15%"][@b.a target="_blank" href="authority!edit?group.id=${userGroup.id}"]<img style="border:0px" src="${b.theme.iconurl('actions/config.png')}"/>设置权限[/@][/@]
+		[@b.col width="10%" property="updatedAt" title="common.updatedAt"]${userGroup.updatedAt?string("yyyy-MM-dd")}[/@]
+		[@b.col title="设置权限" width="10%"][@b.a target="_blank" href="authority!edit?group.id=${userGroup.id}"]<img style="border:0px" src="${b.theme.iconurl('actions/config.png')}"/>设置权限[/@][/@]
 		</tr>
 	[/@]
 [/@]

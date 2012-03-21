@@ -10,7 +10,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.beangle.collection.Order;
 import org.beangle.dao.query.builder.OqlBuilder;
+import org.beangle.ems.security.Group;
 import org.beangle.ems.security.session.model.GroupSessionProfileBean;
+import org.beangle.ems.security.session.model.SessionProfileBean;
 import org.beangle.ems.security.session.service.GroupProfileService;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.security.core.session.SessionRegistry;
@@ -30,7 +32,24 @@ public class MonitorAction extends SecurityActionSupport {
 	private GroupProfileService categoryProfileService;
 
 	public String profiles() {
-		put("categoryProfiles", entityDao.getAll(GroupSessionProfileBean.class));
+		Long profileId = getId("sessionProfile");
+		SessionProfileBean current = null;
+		List<SessionProfileBean> profiles = entityDao.getAll(SessionProfileBean.class);
+		if (null == profileId) {
+			for (SessionProfileBean profile : profiles) {
+				if (profile.getName().equals(sessionRegistry.getController().getServerName())) {
+					current = profile;
+					break;
+				}
+			}
+		} else {
+			current = entityDao.get(SessionProfileBean.class, profileId);
+		}
+		put("sessionProfile", current);
+		put("profiles", profiles);
+		put("groups",
+				entityDao.search(OqlBuilder.from(Group.class, "g").where("g.parent is null")
+						.orderBy("g.code")));
 		return forward();
 	}
 

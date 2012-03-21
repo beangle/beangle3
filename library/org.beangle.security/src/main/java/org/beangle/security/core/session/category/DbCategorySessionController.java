@@ -92,10 +92,15 @@ public class DbCategorySessionController extends AbstractSessionController imple
 
 	public void onEvent(CategoryProfileUpdateEvent event) {
 		CategoryProfile profile = (CategoryProfile) event.getSource();
-		entityDao.executeUpdateHql("update " + SessionStat.class.getName()
+		int cnt = entityDao.executeUpdateHql("update " + SessionStat.class.getName()
 				+ " stat  set stat.capacity=?,stat.userMaxSessions=?,stat.inactiveInterval=?"
 				+ " where stat.category=?", profile.getCapacity(), profile.getUserMaxSessions(),
 				profile.getInactiveInterval(), profile.getCategory());
+		if (cnt == 0) {
+			SessionStat stat = new SessionStat(getServerName(), profile.getCategory(), profile.getCapacity(),
+					profile.getInactiveInterval());
+			entityDao.saveOrUpdate(stat);
+		}
 	}
 
 	public void stat() {

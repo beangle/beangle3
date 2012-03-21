@@ -44,9 +44,9 @@
 <table width="100%" class="searchTable" id="meunAuthorityTable">
 	<tr>
 		<td>
-		用户组:<select name="group.id" onchange="this.form.submit()" style="width:150px">
-			 [#list mngGroups?sort_by("name")! as group]
-			  <option value="${group.id}" [#if group.id=ao.id]selected="selected"[/#if]>${group.name}</option>
+		用户组:<select name="group.id" onchange="this.form.submit()" style="width:250px">
+			 [#list mngGroups?sort_by("code")! as group]
+			  <option value="${group.id}" [#if group.id=ao.id]selected="selected"[/#if]>${group.code} ${group.name}</option>
 			 [/#list]
 		</select>
 		</td>

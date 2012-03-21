@@ -3,7 +3,7 @@
 [@b.toolbar title="菜单配置"]bar.addClose();[/@]
 [@b.form action="!save" theme="list" title="info.module.detail"]
 	[@b.textfield name="menuProfile.name" label="common.name" value="${menuProfile.name!}" required="true" maxlength="50"/]
-	[@b.select name="menuProfile.group.id" label="entity.group" option=r"[#ftl][#list 1..item.depth as i]&nbsp;[/#list]${item.code} ${item.name}" value=(menuProfile.group.id)! required="true" style="width:250px;" items=groups/]
+	[@b.select name="menuProfile.group.id" label="entity.group" option=r"${item.code} ${item.name}" value=(menuProfile.group.id)! required="true" style="width:250px;" items=groups/]
 	[@b.formfoot]
 		<input type="hidden" name="menuProfile.id" value="${menuProfile.id!}" />
 		[@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit"/]

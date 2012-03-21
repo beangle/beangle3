@@ -3,9 +3,9 @@
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>	
-	<class name="org.beangle.model.example.SkillType">
+	<class name="org.beangle.dao.example.SkillType">
 		<id name="id" unsaved-value="null">
-			<generator class="org.beangle.model.persist.hibernate.TableSeqGenerator"/>
+			<generator class="org.beangle.orm.hibernate.TableSeqGenerator"/>
 		</id>
 		<property name="name"/>
 	</class>

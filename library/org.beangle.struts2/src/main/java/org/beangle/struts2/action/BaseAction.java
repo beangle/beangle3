@@ -38,6 +38,9 @@ import com.opensymphony.xwork2.util.ClassLoaderUtil;
 
 public abstract class BaseAction extends ActionSupport {
 
+	public String index() throws Exception {
+		return forward();
+	}
 	/**
 	 * forward to index method
 	 */

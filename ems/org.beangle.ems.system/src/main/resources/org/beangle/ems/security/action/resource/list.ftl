@@ -38,7 +38,7 @@
 	[/@]
 	[@b.row]
 		[@b.boxcol width="5%"/]
-		[@b.col  width="30%" property="name" align="left" title="common.name"/]
+		[@b.col  width="30%" property="name" align="left" style="padding-left:10px"title="common.name"/]
 		[@b.col  width="20%" property="title" title="common.title" ][@b.a href="resource!info?resource.id=${resource.id}"]${(resource.title)!}[/@][/@]
 		[@b.col  width="10%" property="entry" title="菜单入口"][#if resource.entry][@b.a target="_blank" href=resource.name]打开[/@][#else]否[/#if][/@]
 		[@b.col  width="10%" property="scope" title="可见范围"][@resourceScope resource.scope/][/@]

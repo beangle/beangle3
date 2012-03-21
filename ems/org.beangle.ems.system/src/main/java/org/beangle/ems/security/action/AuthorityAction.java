@@ -53,7 +53,7 @@ public class AuthorityAction extends SecurityActionSupport {
 			mngGroups = entityDao.getAll(Group.class);
 		} else {
 			for (GroupMember m : user.getMembers()) {
-				if (m.isManager()) mngGroups.add(m.getGroup());
+				if (m.isGranter()) mngGroups.add(m.getGroup());
 			}
 		}
 		put("mngGroups", mngGroups);
@@ -65,7 +65,6 @@ public class AuthorityAction extends SecurityActionSupport {
 			menuProfile = menuProfiles.get(0);
 		}
 		List<Menu> menus = CollectUtils.newArrayList();
-		put("menus", menus);
 		if (null != menuProfile) {
 			Collection<Resource> resources = null;
 			if (isAdmin()) {
@@ -98,6 +97,7 @@ public class AuthorityAction extends SecurityActionSupport {
 			put("aoResources", aoResources);
 			put("aoResourceAuthorityMap", aoResourceAuthorityMap);
 		}
+		put("menus", menus);
 		put("menuProfile", menuProfile);
 		put("ao", ao);
 		return forward();
@@ -133,7 +133,7 @@ public class AuthorityAction extends SecurityActionSupport {
 		}
 		newResources.retainAll(mngResources);
 		authorityService.authorize(mao, newResources);
-		authorityManager.refreshGroupAuthorities(new GrantedAuthorityBean(mao.getName()));
+		authorityManager.refreshGroupAuthorities(new GrantedAuthorityBean(mao.getId()));
 
 		Action redirect = Action.to(this).method("edit");
 		redirect.param("group.id", mao.getId()).param("menuProfileId", menuProfile.getId());
