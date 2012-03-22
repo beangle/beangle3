@@ -11,6 +11,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,21 +28,25 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * @author chaostone
  * @version $Id: CodeCategory.java Jun 28, 2011 8:32:18 PM chaostone $
  */
-@Entity//(name="org.beangle.ems.dictionary.model.CodeCategory")
+@Entity(name = "org.beangle.ems.dictionary.model.CodeCategory")
 @Cacheable
-@Cache(region = "ems.dictionary",usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class CodeCategory extends IntegerIdObject implements HierarchyEntity<CodeCategory,Integer> {
+@Cache(region = "ems.dictionary", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+public class CodeCategory extends IntegerIdObject implements HierarchyEntity<CodeCategory, Integer> {
 
 	private static final long serialVersionUID = -8865890399079481866L;
 
+	/** 类别名称 */
 	@NotNull
 	@Size(max = 50)
 	@Column(unique = true)
 	private String name;
 
+	/** 上级类别 */
+	@ManyToOne
 	private CodeCategory parent;
 
-	@OneToMany(mappedBy="parent",cascade=CascadeType.ALL)
+	/** 下级类别列表 */
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
 	private List<CodeCategory> children = CollectUtils.newArrayList();
 
 	public String getName() {

@@ -39,8 +39,7 @@ public class DbCategorySessionController extends AbstractSessionController imple
 			String category = principal.getCategory();
 			int result = entityDao.executeUpdateHql("update " + SessionStat.class.getName()
 					+ " stat set stat.online = stat.online + 1 "
-					+ "where stat.online < stat.capacity and stat.category=? and stat.serverName=?",
-					category, getServerName());
+					+ "where stat.online < stat.capacity and stat.category=?", category);
 			return result > 0;
 		}
 	}
@@ -53,9 +52,7 @@ public class DbCategorySessionController extends AbstractSessionController imple
 		} else {
 			String category = principal.getCategory();
 			OqlBuilder builder = OqlBuilder.from(SessionStat.class, "stat");
-			builder.select("stat.userMaxSessions")
-					.where("stat.category=:category and stat.serverName=:server", category, getServerName())
-					.cacheable();
+			builder.select("stat.userMaxSessions").where("stat.category=:category", category).cacheable();
 			List nums = entityDao.search(builder);
 			if (nums.isEmpty()) return 1;
 			else return ((Number) nums.get(0)).intValue();
@@ -66,24 +63,20 @@ public class DbCategorySessionController extends AbstractSessionController imple
 		CategorySessioninfo categoryinfo = (CategorySessioninfo) info;
 		if (!info.isExpired()) {
 			entityDao.executeUpdateHql("update " + SessionStat.class.getName()
-					+ " stat set stat.online=stat.online -1 "
-					+ "where stat.online>0 and stat.category=? and stat.serverName=?",
-					categoryinfo.getCategory(), getServerName());
+					+ " stat set stat.online=stat.online -1 " + "where stat.online>0 and stat.category=?",
+					categoryinfo.getCategory());
 		}
 	}
 
 	public void init() throws Exception {
 		Validate.notNull(categoryProfileProvider);
-		this.serverName = categoryProfileProvider.getServerName();
-		Validate.notNull(this.serverName);
 
 		for (CategoryProfile profile : categoryProfileProvider.getCategoryProfiles()) {
 			OqlBuilder<SessionStat> builder = OqlBuilder.from(SessionStat.class, "stat");
-			builder.where("stat.category=:category and stat.serverName=:server", profile.getCategory(),
-					getServerName());
+			builder.where("stat.category=:category", profile.getCategory());
 			SessionStat stat = entityDao.uniqueResult(builder);
 			if (null == stat) {
-				stat = new SessionStat(getServerName(), profile.getCategory(), profile.getCapacity(),
+				stat = new SessionStat(profile.getCategory(), profile.getCapacity(),
 						profile.getInactiveInterval());
 				entityDao.saveOrUpdate(stat);
 			}
@@ -97,7 +90,7 @@ public class DbCategorySessionController extends AbstractSessionController imple
 				+ " where stat.category=?", profile.getCapacity(), profile.getUserMaxSessions(),
 				profile.getInactiveInterval(), profile.getCategory());
 		if (cnt == 0) {
-			SessionStat stat = new SessionStat(getServerName(), profile.getCategory(), profile.getCapacity(),
+			SessionStat stat = new SessionStat(profile.getCategory(), profile.getCapacity(),
 					profile.getInactiveInterval());
 			entityDao.saveOrUpdate(stat);
 		}
@@ -105,13 +98,11 @@ public class DbCategorySessionController extends AbstractSessionController imple
 
 	public void stat() {
 		entityDao
-				.executeUpdateHql(
-						"update "
-								+ SessionStat.class.getName()
-								+ " stat  set stat.online=(select count(*) from "
-								+ sessioninfoBuilder.getSessioninfoClass().getName()
-								+ " info where info.serverName=stat.serverName and info.expiredAt is null and info.category=stat.category)"
-								+ " where stat.serverName=?", getServerName());
+				.executeUpdateHql("update "
+						+ SessionStat.class.getName()
+						+ " stat  set stat.online=(select count(*) from "
+						+ sessioninfoBuilder.getSessioninfoClass().getName()
+						+ " info where info.serverName=stat.serverName and info.expiredAt is null and info.category=stat.category)");
 	}
 
 	public CategoryProfileProvider getCategoryProfileProvider() {

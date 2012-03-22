@@ -8,6 +8,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -60,7 +61,9 @@ public class BusinessLogBean extends LongIdObject implements BusinessLog {
 	@Size(max = 100)
 	private String agent;
 
+	/**操作明细*/
 	@Cascade(CascadeType.ALL)
+	@ManyToOne
 	private BusinessLogDetail detail;
 
 	public String getAgent() {

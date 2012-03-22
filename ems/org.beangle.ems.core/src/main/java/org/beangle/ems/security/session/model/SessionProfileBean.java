@@ -4,70 +4,65 @@
  */
 package org.beangle.ems.security.session.model;
 
-import java.util.List;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
-import org.beangle.collection.CollectUtils;
 import org.beangle.dao.pojo.LongIdObject;
+import org.beangle.ems.security.Group;
 
 /**
- * 会话配置
+ * 用户组会话配置
  * 
  * @author chaostone
  */
 @Entity(name="org.beangle.ems.security.session.model.SessionProfileBean")
 public class SessionProfileBean extends LongIdObject {
 
-	private static final long serialVersionUID = 7877599995789627073L;
+	private static final long serialVersionUID = 1999239598984221565L;
 
-	/** 配置名称 */
+	/** 用户组 */
 	@NotNull
-	@Size(max = 50)
-	@Column(unique = true)
-	private String name;
+	@ManyToOne
+	protected Group group;
 
-	/** 单用户最大session数 */
+	/** 最大在线人数 */
 	@NotNull
-	private int userMaxSessions;
+	protected int capacity;
 
-	/** 过期时间(min) */
+	/** 单用户的同时最大会话数 */
 	@NotNull
-	private int inactiveInterval;
+	protected int userMaxSessions = 1;
 
-	/** 用户种类特定配置 */
-	@OneToMany(mappedBy = "sessionProfile")
-	private List<GroupSessionProfileBean> categoryProfiles = CollectUtils.newArrayList();
+	/** 不操作过期时间(以分为单位) */
+	@NotNull
+	protected int inactiveInterval;
 
 	public SessionProfileBean() {
 		super();
 	}
 
-	public SessionProfileBean(String name, int userMaxSessions, int inactiveInterval) {
+	public SessionProfileBean(Group group, int max, int inactiveInterval) {
 		super();
-		this.name = name;
-		this.userMaxSessions = userMaxSessions;
+		this.group = group;
+		this.capacity = max;
 		this.inactiveInterval = inactiveInterval;
 	}
-
-	public String getName() {
-		return name;
+	
+	public Group getGroup() {
+		return group;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 
-	public int getUserMaxSessions() {
-		return userMaxSessions;
+	public int getCapacity() {
+		return capacity;
 	}
 
-	public void setUserMaxSessions(int maxSessions) {
-		this.userMaxSessions = maxSessions;
+	public void setCapacity(int max) {
+		this.capacity = max;
 	}
 
 	public int getInactiveInterval() {
@@ -78,12 +73,21 @@ public class SessionProfileBean extends LongIdObject {
 		this.inactiveInterval = inactiveInterval;
 	}
 
-	public List<GroupSessionProfileBean> getCategoryProfiles() {
-		return categoryProfiles;
+	public int getUserMaxSessions() {
+		return userMaxSessions;
 	}
 
-	public void setCategoryProfiles(List<GroupSessionProfileBean> categoryProfiles) {
-		this.categoryProfiles = categoryProfiles;
+	public void setUserMaxSessions(int maxSessions) {
+		this.userMaxSessions = maxSessions;
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(group.getName());
+		sb.append(":{max=").append(capacity).append(',');
+		sb.append("maxSessions=").append(userMaxSessions).append(',');
+		sb.append("inactiveInterval=").append(inactiveInterval).append('}');
+		return sb.toString();
 	}
 
 }

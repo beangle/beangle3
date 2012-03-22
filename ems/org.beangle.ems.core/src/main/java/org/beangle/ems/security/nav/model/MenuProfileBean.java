@@ -40,6 +40,7 @@ public class MenuProfileBean extends LongIdObject implements MenuProfile {
 	@Column(unique = true)
 	private String name;
 
+	/**菜单列表*/
 	@OneToMany(mappedBy = "profile")
 	private List<Menu> menus = CollectUtils.newArrayList();
 

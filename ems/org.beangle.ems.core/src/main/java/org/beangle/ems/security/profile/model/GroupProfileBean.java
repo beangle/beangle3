@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.beangle.collection.CollectUtils;
@@ -27,11 +28,12 @@ import org.beangle.ems.security.profile.PropertyMeta;
 public class GroupProfileBean extends LongIdObject implements GroupProfile {
 
 	private static final long serialVersionUID = -9047586316477373803L;
+
 	/** 用户组 */
+	@ManyToOne
 	private Group group;
-	/**
-	 * 用户组自定义属性
-	 */
+	
+	/**用户组自定义属性*/
 	@OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
 	protected List<GroupProperty> properties = CollectUtils.newArrayList();
 

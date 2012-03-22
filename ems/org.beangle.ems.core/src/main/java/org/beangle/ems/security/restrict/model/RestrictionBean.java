@@ -4,7 +4,9 @@
  */
 package org.beangle.ems.security.restrict.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -31,21 +33,28 @@ public class RestrictionBean extends LongIdObject implements Restriction {
 
 	/** 限制实体 */
 	@NotNull
+	@ManyToOne
 	private RestrictEntity entity;
 
 	/** 适用资源(可用正则表达式) */
+	@Size(max = 200)
+	@Column(name="resrc")
 	private String resource;
 
 	/** 适用用户组 */
+	@ManyToOne
 	private Group group;
 
 	/** 适用用户 */
+	@ManyToOne
 	private User user;
+
 	/** 是否启用 */
 	@NotNull
 	protected boolean enabled = true;
 
 	/** 备注说明 */
+	@Size(max = 200)
 	private String remark;
 
 	public RestrictionBean() {

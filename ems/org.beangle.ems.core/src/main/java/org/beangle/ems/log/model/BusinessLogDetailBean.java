@@ -6,6 +6,7 @@ package org.beangle.ems.log.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
 import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.log.BusinessLog;
@@ -24,27 +25,28 @@ public class BusinessLogDetailBean extends LongIdObject implements BusinessLogDe
 
 	/** 操作参数 */
 	@Lob
-	private String conent;
+	private String content;
 
 	/** 操作日志 */
+	@ManyToOne
 	private BusinessLog log;
 
 	public BusinessLogDetailBean() {
 		super();
 	}
 
-	public BusinessLogDetailBean(BusinessLog log, String conent) {
+	public BusinessLogDetailBean(BusinessLog log, String content) {
 		super();
-		this.conent = conent;
+		this.content = content;
 		this.log = log;
 	}
 
-	public String getConent() {
-		return conent;
+	public String getContent() {
+		return content;
 	}
 
-	public void setConent(String conent) {
-		this.conent = conent;
+	public void setcontent(String content) {
+		this.content = content;
 	}
 
 	public BusinessLog getLog() {

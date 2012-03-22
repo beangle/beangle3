@@ -14,7 +14,7 @@ import org.beangle.ems.security.service.GroupServiceImpl;
 import org.beangle.ems.security.service.IdentifierDataResolver;
 import org.beangle.ems.security.service.OqlDataProvider;
 import org.beangle.ems.security.service.UserServiceImpl;
-import org.beangle.ems.security.session.service.GroupProfileServiceImpl;
+import org.beangle.ems.security.session.service.SessionProfileServiceImpl;
 import org.beangle.security.core.session.impl.DbSessionRegistry;
 
 /**
@@ -32,7 +32,7 @@ public class ServiceModule extends AbstractBindModule {
 		bind("menuService", MenuServiceImpl.class);
 		bind("userDetailService",DaoUserDetailServiceImpl.class);
 		bind("authorityManager",CacheableAuthorityManager.class);
-		bind(GroupProfileServiceImpl.class).shortName();
+		bind(SessionProfileServiceImpl.class).shortName();
 		
 		bind("sessionRegistry",DbSessionRegistry.class);
 		bind(IdentifierDataResolver.class,CsvDataResolver.class,OqlDataProvider.class).shortName();

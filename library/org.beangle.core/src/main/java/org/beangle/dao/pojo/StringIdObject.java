@@ -18,6 +18,7 @@ public class StringIdObject implements StringIdEntity {
 
 	private static final long serialVersionUID = -6898498932182877104L;
 
+	/** 非业务主键 */
 	@Id
 	@GeneratedValue(generator = "id_assigned")
 	@GenericGenerator(name = "id_assigned", strategy = "assigned")

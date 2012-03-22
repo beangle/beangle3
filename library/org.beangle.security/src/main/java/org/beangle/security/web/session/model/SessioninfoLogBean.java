@@ -22,11 +22,6 @@ public class SessioninfoLogBean extends StringIdObject {
 
 	private static final long serialVersionUID = -3144771635148215917L;
 
-	/** 服务器 */
-	@NotNull
-	@Size(max = 100)
-	private String serverName;
-
 	/** 系统登录用户 */
 	@NotNull
 	@Size(max = 40)
@@ -72,7 +67,6 @@ public class SessioninfoLogBean extends StringIdObject {
 	public SessioninfoLogBean(SessioninfoBean info) {
 		super();
 		this.id = info.getId();
-		this.serverName = info.getServerName();
 		this.username = info.getUsername();
 		this.fullname = info.getFullname();
 		this.loginAt = info.getLoginAt();
@@ -103,14 +97,6 @@ public class SessioninfoLogBean extends StringIdObject {
 		} else {
 			setOnlineTime(Long.valueOf(logoutAt.getTime() - loginAt.getTime()));
 		}
-	}
-
-	public String getServerName() {
-		return serverName;
-	}
-
-	public void setServerName(String serverName) {
-		this.serverName = serverName;
 	}
 
 	public String getUsername() {

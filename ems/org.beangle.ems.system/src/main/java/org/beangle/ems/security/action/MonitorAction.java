@@ -11,9 +11,8 @@ import org.apache.struts2.ServletActionContext;
 import org.beangle.collection.Order;
 import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.ems.security.Group;
-import org.beangle.ems.security.session.model.GroupSessionProfileBean;
 import org.beangle.ems.security.session.model.SessionProfileBean;
-import org.beangle.ems.security.session.service.GroupProfileService;
+import org.beangle.ems.security.session.service.SessionProfileService;
 import org.beangle.ems.web.action.SecurityActionSupport;
 import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.security.core.session.category.SessionStat;
@@ -29,23 +28,10 @@ public class MonitorAction extends SecurityActionSupport {
 
 	private SessionRegistry sessionRegistry;
 
-	private GroupProfileService categoryProfileService;
+	private SessionProfileService categoryProfileService;
 
 	public String profiles() {
-		Long profileId = getId("sessionProfile");
-		SessionProfileBean current = null;
 		List<SessionProfileBean> profiles = entityDao.getAll(SessionProfileBean.class);
-		if (null == profileId) {
-			for (SessionProfileBean profile : profiles) {
-				if (profile.getName().equals(sessionRegistry.getController().getServerName())) {
-					current = profile;
-					break;
-				}
-			}
-		} else {
-			current = entityDao.get(SessionProfileBean.class, profileId);
-		}
-		put("sessionProfile", current);
 		put("profiles", profiles);
 		put("groups",
 				entityDao.search(OqlBuilder.from(Group.class, "g").where("g.parent is null")
@@ -60,11 +46,9 @@ public class MonitorAction extends SecurityActionSupport {
 		}
 		OqlBuilder<SessioninfoBean> builder = OqlBuilder.from(SessioninfoBean.class, "sessioninfo");
 		populateConditions(builder);
-		builder.where("sessioninfo.serverName=:server", sessionRegistry.getController().getServerName());
 		builder.orderBy(get(Order.ORDER_STR)).limit(getPageLimit());
 		put("sessioninfos", entityDao.search(builder));
 		OqlBuilder<SessionStat> statBuilder = OqlBuilder.from(SessionStat.class, "stat");
-		statBuilder.where("stat.serverName=:server", sessionRegistry.getController().getServerName());
 		put("sessionStats", entityDao.search(statBuilder));
 		return forward();
 	}
@@ -73,10 +57,8 @@ public class MonitorAction extends SecurityActionSupport {
 	 * 保存设置
 	 */
 	public String saveProfile() {
-		OqlBuilder<GroupSessionProfileBean> builder = OqlBuilder.from(GroupSessionProfileBean.class, "p");
-		builder.where("p.sessionProfile.name=:serverName", sessionRegistry.getController().getServerName());
-		List<GroupSessionProfileBean> categories = entityDao.getAll(GroupSessionProfileBean.class);
-		for (final GroupSessionProfileBean profile : categories) {
+		List<SessionProfileBean> categories = entityDao.getAll(SessionProfileBean.class);
+		for (final SessionProfileBean profile : categories) {
 			Long groupId = profile.getGroup().getId();
 			Integer max = getInteger("max_" + groupId);
 			Integer maxSessions = getInteger("maxSessions_" + groupId);
@@ -124,7 +106,7 @@ public class MonitorAction extends SecurityActionSupport {
 		this.sessionRegistry = sessionRegistry;
 	}
 
-	public void setCategoryProfileService(GroupProfileService categoryProfileService) {
+	public void setCategoryProfileService(SessionProfileService categoryProfileService) {
 		this.categoryProfileService = categoryProfileService;
 	}
 

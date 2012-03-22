@@ -15,27 +15,32 @@ import javax.validation.constraints.NotNull;
 import org.beangle.dao.pojo.LongIdObject;
 
 /**
- * Access log entry
+ * 访问日志
  * 
  * @author chaostone
  */
-@Entity
+@Entity(name = "org.beangle.security.core.session.impl.AccessLog")
 public class AccessLog extends LongIdObject {
 	private static final long serialVersionUID = 1L;
-	
+
+	/** 会话ID */
 	@NotNull
 	private String sessionid;
-	
+
+	/** 资源 */
 	@NotNull
 	@Column(name = "resrc")
 	private String resource;
-	
+
+	/** 开始时间 */
 	@NotNull
-	private Date beginAt=new Date();
-	
+	private Date beginAt = new Date();
+
+	/** 结束时间 */
 	@NotNull
 	private Date endAt;
-	
+
+	/** 用户名 */
 	@NotNull
 	private String username;
 
@@ -99,7 +104,7 @@ public class AccessLog extends LongIdObject {
 	public void setEndAt(Date endAt) {
 		this.endAt = endAt;
 	}
-	
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder(resource);
 		sb.append('(');

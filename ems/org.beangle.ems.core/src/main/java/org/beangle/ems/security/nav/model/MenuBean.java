@@ -54,6 +54,7 @@ public class MenuBean extends HierarchyLongIdObject<Menu> implements Menu {
 	/** 菜单备注 */
 	private String remark;
 
+	/** 引用资源集合 */
 	@ManyToMany
 	@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 	private Set<Resource> resources = CollectUtils.newHashSet();

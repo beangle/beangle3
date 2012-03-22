@@ -105,7 +105,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 			remove(sessionId, " expired with replacement.");
 		}
 		// 新生
-		entityDao.save(sessioninfoBuilder.build(auth, controller.getServerName(), sessionId));
+		entityDao.save(sessioninfoBuilder.build(auth, sessionId));
 	}
 
 	public Sessioninfo remove(String sessionId) {

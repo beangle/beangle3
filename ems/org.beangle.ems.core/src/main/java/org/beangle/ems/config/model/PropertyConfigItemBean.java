@@ -20,18 +20,22 @@ public class PropertyConfigItemBean extends LongIdObject {
 
 	private static final long serialVersionUID = 1L;
 
+	/**名称*/
 	@NotNull
 	@Size(max = 100)
 	private String name;
 
+	/**值*/
 	@NotNull
 	@Size(max = 500)
 	private String value;
 
+	/**描述*/
 	@NotNull
 	@Size(max = 500)
 	private String description;
 
+	/**类型*/
 	@NotNull
 	@Size(max = 500)
 	private String type;

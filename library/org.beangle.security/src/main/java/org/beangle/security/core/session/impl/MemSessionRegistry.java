@@ -90,7 +90,7 @@ public class MemSessionRegistry implements SessionRegistry, EventListener<Sessio
 			remove(sessionid);
 		}
 		// 新生
-		sessionids.put(sessionid, sessioninfoBuilder.build(auth, controller.getServerName(), sessionid));
+		sessionids.put(sessionid, sessioninfoBuilder.build(auth, sessionid));
 		Set<String> sessionsUsedByPrincipal = principals.get(principal);
 		if (sessionsUsedByPrincipal == null) {
 			sessionsUsedByPrincipal = Collections.synchronizedSet(new HashSet<String>(4));

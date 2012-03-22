@@ -22,9 +22,8 @@ public class SimpleSessioninfoBuilder implements SessioninfoBuilder {
 		return SimpleSessioninfo.class;
 	}
 
-	public Sessioninfo build(Authentication auth, String serverName, String sessionid) {
-		SimpleSessioninfo info = new SimpleSessioninfo(sessionid, serverName, auth.getName(),
-				auth.getName());
+	public Sessioninfo build(Authentication auth, String sessionid) {
+		SimpleSessioninfo info = new SimpleSessioninfo(sessionid, auth.getName(), auth.getName());
 		return info;
 	}
 
@@ -37,9 +36,6 @@ public class SimpleSessioninfoBuilder implements SessioninfoBuilder {
 class SimpleSessioninfo extends StringIdObject implements CategorySessioninfo {
 
 	private static final long serialVersionUID = 1462323011613320213L;
-
-	/** 会话所处的服务器节点 */
-	private String serverName;
 
 	/** 系统登录用户 */
 	private String username;
@@ -55,9 +51,9 @@ class SimpleSessioninfo extends StringIdObject implements CategorySessioninfo {
 	/** 过期时间 */
 	private Date expiredAt;
 
-	/** 最后访问时间*/
+	/** 最后访问时间 */
 	private Date lastAccessAt;
-	
+
 	/** 备注 */
 	private String remark;
 
@@ -65,10 +61,9 @@ class SimpleSessioninfo extends StringIdObject implements CategorySessioninfo {
 		super();
 	}
 
-	public SimpleSessioninfo(String id, String serverName, String username, String fullname) {
+	public SimpleSessioninfo(String id, String username, String fullname) {
 		super();
 		this.id = id;
-		this.serverName = serverName;
 		this.username = username;
 		this.fullname = fullname;
 		this.loginAt = new Date(System.currentTimeMillis());
@@ -94,14 +89,6 @@ class SimpleSessioninfo extends StringIdObject implements CategorySessioninfo {
 	public long getOnlineTime() {
 		if (null == expiredAt) return System.currentTimeMillis() - loginAt.getTime();
 		else return expiredAt.getTime() - loginAt.getTime();
-	}
-
-	public String getServerName() {
-		return serverName;
-	}
-
-	public void setServerName(String serverName) {
-		this.serverName = serverName;
 	}
 
 	public String getUsername() {

@@ -6,6 +6,9 @@ package org.beangle.ems.security.profile.model;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.security.profile.GroupProfile;
@@ -25,10 +28,18 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 public class GroupPropertyBean extends LongIdObject implements GroupProperty {
 	private static final long serialVersionUID = 1L;
 
+	/**值*/
+	@Size(max=1000)
 	private String value;
 
+	/**属性元*/
+	@NotNull
+	@ManyToOne
 	private PropertyMeta meta;
-
+	
+	/**用户组属性配置*/
+	@NotNull
+	@ManyToOne
 	private GroupProfile profile;
 
 	public GroupPropertyBean() {

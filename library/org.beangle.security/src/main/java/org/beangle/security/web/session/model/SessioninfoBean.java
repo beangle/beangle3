@@ -14,19 +14,14 @@ import org.beangle.dao.pojo.StringIdObject;
 import org.beangle.security.core.session.category.CategorySessioninfo;
 
 /**
- * 默认会话活动bean
+ * 活动会话信息
  * 
  * @author chaostone
  * @version $Id: SessioninfoBean.java Jul 7, 2011 10:04:48 PM chaostone $
  */
-@Entity(name="org.beangle.security.web.session.model.SessioninfoBean")
+@Entity(name = "org.beangle.security.web.session.model.SessioninfoBean")
 public class SessioninfoBean extends StringIdObject implements CategorySessioninfo {
 	private static final long serialVersionUID = -6144822263608415556L;
-
-	/** 会话所处的服务器节点 */
-	@NotNull
-	@Size(max = 100)
-	private String serverName;
 
 	/** 系统登录用户 */
 	@NotNull
@@ -38,6 +33,8 @@ public class SessioninfoBean extends StringIdObject implements CategorySessionin
 	@Size(max = 50)
 	private String fullname;
 
+	/** 用户分类 */
+	@Size(max = 50)
 	private String category;
 
 	/** 登录IP */
@@ -59,9 +56,9 @@ public class SessioninfoBean extends StringIdObject implements CategorySessionin
 	/** 过期时间 */
 	private Date expiredAt;
 
-	/** 最后访问时间*/
+	/** 最后访问时间 */
 	private Date lastAccessAt;
-	
+
 	/** 备注 */
 	@Size(max = 100)
 	private String remark;
@@ -70,14 +67,13 @@ public class SessioninfoBean extends StringIdObject implements CategorySessionin
 		super();
 	}
 
-	public SessioninfoBean(String id, String serverName, String username, String fullname) {
+	public SessioninfoBean(String id, String username, String fullname) {
 		super();
 		this.id = id;
-		this.serverName = serverName;
 		this.username = username;
 		this.fullname = fullname;
 		this.loginAt = new Date(System.currentTimeMillis());
-		this.lastAccessAt=loginAt;
+		this.lastAccessAt = loginAt;
 	}
 
 	public String toString() {
@@ -100,14 +96,6 @@ public class SessioninfoBean extends StringIdObject implements CategorySessionin
 	public long getOnlineTime() {
 		if (null == expiredAt) return System.currentTimeMillis() - loginAt.getTime();
 		else return expiredAt.getTime() - loginAt.getTime();
-	}
-
-	public String getServerName() {
-		return serverName;
-	}
-
-	public void setServerName(String serverName) {
-		this.serverName = serverName;
 	}
 
 	public String getUsername() {

@@ -10,7 +10,7 @@ import org.beangle.collection.CollectUtils;
 import org.beangle.dao.impl.BaseServiceImpl;
 import org.beangle.ems.security.Group;
 import org.beangle.ems.security.User;
-import org.beangle.ems.security.session.service.GroupProfileService;
+import org.beangle.ems.security.session.service.SessionProfileService;
 import org.beangle.security.core.authority.GrantedAuthorityBean;
 import org.beangle.security.core.userdetail.UserDetail;
 import org.beangle.security.core.userdetail.UserDetailService;
@@ -19,7 +19,7 @@ public class DaoUserDetailServiceImpl extends BaseServiceImpl implements UserDet
 
 	protected UserService userService;
 
-	protected GroupProfileService groupProfileService;
+	protected SessionProfileService groupProfileService;
 
 	public UserDetail loadDetail(String principle) {
 		List<User> users = entityDao.get(User.class, "name", principle);
@@ -47,7 +47,7 @@ public class DaoUserDetailServiceImpl extends BaseServiceImpl implements UserDet
 		this.userService = userService;
 	}
 
-	public void setGroupProfileService(GroupProfileService groupProfileService) {
+	public void setGroupProfileService(SessionProfileService groupProfileService) {
 		this.groupProfileService = groupProfileService;
 	}
 

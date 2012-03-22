@@ -15,6 +15,4 @@ import java.util.List;
 public interface CategoryProfileProvider {
 
 	public List<CategoryProfile> getCategoryProfiles();
-
-	public String getServerName();
 }

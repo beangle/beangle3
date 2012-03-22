@@ -15,8 +15,6 @@ import org.beangle.security.core.Authentication;
  */
 public abstract class AbstractSessionController extends BaseServiceImpl implements SessionController {
 	
-	protected String serverName;
-
 	public boolean onRegister(Authentication auth, String sessionId, SessionRegistry registry)
 			throws SessionException {
 		List<Sessioninfo> sessions = registry.getSessioninfos(auth.getName(), false);
@@ -56,9 +54,5 @@ public abstract class AbstractSessionController extends BaseServiceImpl implemen
 	 * @return 如果成功返回true,否则false
 	 */
 	protected abstract boolean allocate(Authentication auth, String sessionId);
-
-	public String getServerName() {
-		return serverName;
-	}
 
 }

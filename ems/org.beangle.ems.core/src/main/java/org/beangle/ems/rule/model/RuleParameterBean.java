@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -16,35 +17,43 @@ import org.beangle.collection.CollectUtils;
 import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.rule.Rule;
 import org.beangle.ems.rule.RuleParameter;
-@Entity(name="org.beangle.ems.rule.RuleParameter")
+
+/**
+ * 规则参数
+ * 
+ * @author chaostone
+ */
+@Entity(name = "org.beangle.ems.rule.RuleParameter")
 public class RuleParameterBean extends LongIdObject implements RuleParameter {
 
 	private static final long serialVersionUID = -5534831174352027516L;
 
 	/** 业务规则 */
+	@ManyToOne
 	private Rule rule;
 
 	/** 参数名称 */
 	@NotNull
-	@Size(max=100)
+	@Size(max = 100)
 	private String name;
 
 	/** 参数类型 */
 	@NotNull
-	@Size(max=100)
+	@Size(max = 100)
 	private String type;
 
 	/** 参数标题 */
 	@NotNull
-	@Size(max=100)
+	@Size(max = 100)
 	private String title;
 
 	/** 参数描述 */
 	@NotNull
-	@Size(max=100)
+	@Size(max = 100)
 	private String description;
 
 	/** 上级参数 */
+	@ManyToOne
 	private RuleParameter parent;
 
 	/** 所有的子参数 */

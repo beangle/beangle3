@@ -137,12 +137,9 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
 
 	public void setResource(ConfigResource resource) {
 		if (null != resource) {
-			for (final URL url : resource.getAllPaths()) {
+			for (final URL url : resource.getAllPaths())
 				addConfig(url);
-			}
-			if (logger.isInfoEnabled()) {
-				logger.info("Table name pattern: -> \n{}", this.toString());
-			}
+			logger.info("Table name pattern: -> \n{}", this);
 		}
 	}
 

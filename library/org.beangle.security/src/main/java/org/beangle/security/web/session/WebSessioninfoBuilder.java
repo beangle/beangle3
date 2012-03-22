@@ -22,9 +22,9 @@ public class WebSessioninfoBuilder implements SessioninfoBuilder {
 		return SessioninfoBean.class;
 	}
 
-	public Sessioninfo build(Authentication auth, String serverName, String sessionid) {
+	public Sessioninfo build(Authentication auth, String sessionid) {
 		CategoryPrincipal principal = (CategoryPrincipal) auth.getPrincipal();
-		SessioninfoBean info = new SessioninfoBean(sessionid, serverName, auth.getName(),
+		SessioninfoBean info = new SessioninfoBean(sessionid, auth.getName(),
 				principal.getFullname());
 		info.setCategory(principal.getCategory());
 		Object details = auth.getDetails();

@@ -17,7 +17,7 @@ public interface SessioninfoBuilder {
 	@SuppressWarnings("rawtypes")
 	public Class getSessioninfoClass();
 
-	public Sessioninfo build(Authentication auth, String serverName, String sessionid);
+	public Sessioninfo build(Authentication auth, String sessionid);
 
 	public Object buildLog(Sessioninfo info);
 }

@@ -15,13 +15,6 @@ import org.beangle.dao.pojo.StringIdEntity;
  */
 public interface Sessioninfo extends StringIdEntity {
 	/**
-	 * 会话所处的服务器节点
-	 * 
-	 * @return
-	 */
-	public String getServerName();
-
-	/**
 	 * 用户名
 	 * 
 	 * @return

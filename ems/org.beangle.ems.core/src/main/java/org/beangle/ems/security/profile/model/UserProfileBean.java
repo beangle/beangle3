@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.beangle.collection.CollectUtils;
@@ -27,7 +28,9 @@ import org.beangle.ems.security.profile.UserProperty;
 public class UserProfileBean extends LongIdObject implements UserProfile {
 
 	private static final long serialVersionUID = -9047586316477373803L;
+	
 	/** 用户 */
+	@ManyToOne
 	private User user;
 	/**
 	 * 用户自定义属性

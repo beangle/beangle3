@@ -26,6 +26,28 @@ import com.sun.javadoc.RootDoc;
 
 /**
  * 扫描@Entity头和字段的注释,生成sql语句
+ * <p>
+ * pom文件中添加一下配置
+ * 
+ * <pre>
+ * &lt;plugin&gt;
+ *  &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+ *  &lt;artifactId&gt;maven-javadoc-plugin&lt;/artifactId&gt;
+ *  &lt;version&gt;2.7&lt;/version&gt;
+ *  &lt;inherited&gt;false&lt;/inherited&gt;
+ *  &lt;configuration&gt;
+ *   &lt;charset&gt;UTF-8&lt;/charset&gt;
+ *   &lt;doclet&gt;org.beangle.orm.misc.SqlCommentGenerator&lt;/doclet&gt;
+ *   &lt;docletArtifact&gt;
+ *    &lt;groupId&gt;org.beangle&lt;/groupId&gt;
+ *    &lt;artifactId&gt;beangle-core&lt;/artifactId&gt;
+ *    &lt;version&gt;2.5.0-SNAPSHOT&lt;/version&gt;
+ *   &lt;/docletArtifact&gt;
+ *   &lt;additionalparam&gt;-config /your/path/to/table.properties&lt;/additionalparam&gt;
+ *   &lt;useStandardDocletOptions&gt;false&lt;/useStandardDocletOptions&gt;
+ *  &lt;/configuration&gt;
+ * &lt;/plugin&gt;
+ * </pre>
  * 
  * @author chaostone
  * @version $Id: ListTags.java Jul 30, 2011 12:42:54 AM chaostone $

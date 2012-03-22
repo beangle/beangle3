@@ -5,7 +5,7 @@
 package org.beangle.ems.security.profile.model;
 
 import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -13,11 +13,11 @@ import org.beangle.dao.pojo.LongIdObject;
 import org.beangle.ems.security.profile.PropertyMeta;
 
 /**
- * 数据限制域
+ * 用户属性元信息
  * 
  * @author chaostone
  */
-@MappedSuperclass
+@Entity(name = "org.beangle.ems.security.profile.PropertyMeta")
 public class PropertyMetaBean extends LongIdObject implements PropertyMeta {
 	private static final long serialVersionUID = 1L;
 

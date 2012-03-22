@@ -89,8 +89,7 @@ class SessionCleanerTask extends TimerTask {
 		@SuppressWarnings("unchecked")
 		OqlBuilder<Sessioninfo> builder = OqlBuilder.from(registry.getSessioninfoBuilder()
 				.getSessioninfoClass(), "info");
-		builder.where("info.serverName=:server and info.lastAccessAt<:givenTime", registry.getController()
-				.getServerName(), DateUtils.rollMinutes(calendar.getTime(), -expiredTime));
+		builder.where("info.lastAccessAt<:givenTime", DateUtils.rollMinutes(calendar.getTime(), -expiredTime));
 		List<Sessioninfo> infos = entityDao.search(builder);
 		int removed = 0;
 		for (Sessioninfo info : infos) {

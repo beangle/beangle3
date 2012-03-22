@@ -19,36 +19,38 @@ import org.beangle.dao.pojo.LongIdObject;
  * @author chaostone
  * @version $Id: CategorySessionStat.java Jun 18, 2011 2:56:08 PM chaostone $
  */
-@Entity(name="org.beangle.security.core.session.category.SessionStat")
+@Entity(name = "org.beangle.security.core.session.category.SessionStat")
 public class SessionStat extends LongIdObject implements FlashEntity {
 
 	private static final long serialVersionUID = 8698006403892972254L;
 
-	@NotNull
-	private String serverName;
-
+	/** 统计时间戳 */
 	@NotNull
 	private Date statAt = new Date();
 
+	/** 用户分类 */
 	@NotNull
 	private String category;
 
+	/** 最大容量 */
 	private int capacity;
 
+	/** 实际在线 */
 	@Column(name = "on_line")
 	private int online;
 
+	/** 过期时间 */
 	private int inactiveInterval;
 
+	/** 单用户最大会话数 */
 	private int userMaxSessions;
 
 	public SessionStat() {
 		super();
 	}
 
-	public SessionStat(String serverName, String category, int capacity, int userMaxSessions) {
+	public SessionStat(String category, int capacity, int userMaxSessions) {
 		super();
-		this.serverName = serverName;
 		this.category = category;
 		this.capacity = capacity;
 		this.userMaxSessions = userMaxSessions;
@@ -73,14 +75,6 @@ public class SessionStat extends LongIdObject implements FlashEntity {
 
 	public boolean isFull() {
 		return !hasCapacity();
-	}
-
-	public String getServerName() {
-		return serverName;
-	}
-
-	public void setServerName(String serverName) {
-		this.serverName = serverName;
 	}
 
 	public Date getStatAt() {
