@@ -6,7 +6,7 @@ package org.beangle.ems.security.session.service;
 
 import java.util.List;
 
-import org.beangle.ems.security.Group;
+import org.beangle.ems.security.Role;
 import org.beangle.ems.security.session.model.SessionProfileBean;
 
 /**
@@ -17,6 +17,6 @@ public interface SessionProfileService {
 
 	public void saveOrUpdate(List<SessionProfileBean> profiles);
 
-	public boolean hasProfile(Group group);
+	public boolean hasProfile(Role role);
 
 }

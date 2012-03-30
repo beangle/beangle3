@@ -25,8 +25,8 @@ public class RestrictionHelper {
 //		RestrictionHolder holer = null;
 //		if ("user".equals(restrictionType)) {
 //			holer = (RestrictionHolder) entityDao.get(User.class, restrictionHolderId);
-//		} else if ("group".equals(restrictionType)) {
-//			holer = (RestrictionHolder) entityDao.get(Group.class, restrictionHolderId);
+//		} else if ("role".equals(restrictionType)) {
+//			holer = (RestrictionHolder) entityDao.get(Role.class, restrictionHolderId);
 //		} else {
 //			holer = (RestrictionHolder) entityDao.get(Authority.class, restrictionHolderId);
 //		}

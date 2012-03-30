@@ -35,7 +35,7 @@
 <tr>
 <td valign="top">
 [@b.toolbar]
-	bar.setTitle('用户组-->菜单和资源权限');
+	bar.setTitle('角色-->菜单和资源权限');
 	bar.addItem("${b.text("action.spread")}","displayAllRowsFor(1);",'${b.theme.iconurl('tree/plus.png')}');
 	bar.addItem("${b.text("action.collapse")}","collapseAllRowsFor(1);",'${b.theme.iconurl('tree/minus.png')}');
 	bar.addItem("${b.text("action.save")}",save,'save.png');
@@ -44,9 +44,9 @@
 <table width="100%" class="searchTable" id="meunAuthorityTable">
 	<tr>
 		<td>
-		用户组:<select name="group.id" onchange="this.form.submit()" style="width:250px">
-			 [#list mngGroups?sort_by("code")! as group]
-			  <option value="${group.id}" [#if group.id=ao.id]selected="selected"[/#if]>${group.code} ${group.name}</option>
+		角色:<select name="role.id" onchange="this.form.submit()" style="width:250px">
+			 [#list mngRoles?sort_by("code")! as role]
+			  <option value="${role.id}" [#if role.id=ao.id]selected="selected"[/#if]>${role.code} ${role.name}</option>
 			 [/#list]
 		</select>
 		</td>

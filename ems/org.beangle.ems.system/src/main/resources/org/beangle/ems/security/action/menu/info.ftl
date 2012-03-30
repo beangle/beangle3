@@ -29,7 +29,7 @@ bar.addBack("${b.text("action.back")}");
 	 <td class="content">[#list menu.resources as resource](${resource.name})${resource.title}<br/>[/#list]</td>
 	 <td class="title">使用组:</td>
 	 <td>
-	  [#list groups! as group]${group.name}[#if group_has_next]<br/>[/#if][/#list]
+	  [#list roles! as role]${role.name}[#if role_has_next]<br/>[/#if][/#list]
 	 </td>
    </tr>
 </table>

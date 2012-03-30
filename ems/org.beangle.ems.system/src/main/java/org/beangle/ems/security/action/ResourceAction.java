@@ -6,7 +6,7 @@ package org.beangle.ems.security.action;
 
 import org.beangle.dao.Entity;
 import org.beangle.dao.query.builder.OqlBuilder;
-import org.beangle.ems.security.Authority;
+import org.beangle.ems.security.Permission;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.helper.ResourcePropertyExtractor;
 import org.beangle.ems.security.nav.Menu;
@@ -65,10 +65,10 @@ public class ResourceAction extends SecurityEntityActionSupport {
 		query.join("menu.resources", "r").where("r.id=:resourceId", entity.getIdentifier())
 				.orderBy("menu.profile.id,menu.code");
 
-		OqlBuilder<Authority> groupQuery = OqlBuilder.from(Authority.class, "auth");
-		groupQuery.where("auth.resource=:resource", entity).select("auth.group");
+		OqlBuilder<Permission> roleQuery = OqlBuilder.from(Permission.class, "auth");
+		roleQuery.where("auth.resource=:resource", entity).select("auth.role");
 		put(getShortName(), entity);
-		put("groups", entityDao.search(groupQuery));
+		put("roles", entityDao.search(roleQuery));
 		put("menus", entityDao.search(query));
 		return forward();
 	}

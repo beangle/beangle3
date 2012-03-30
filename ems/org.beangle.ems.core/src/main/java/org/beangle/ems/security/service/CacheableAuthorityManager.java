@@ -29,7 +29,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 
 	// 登录入口点
 	protected AuthenticationEntryPoint authenticationEntryPoint;
-	/** 用户组权限 */
+	/** 角色权限 */
 	protected Map<GrantedAuthority, Set<?>> authorities = CollectUtils.newHashMap();
 
 	/** 公开资源name */
@@ -44,7 +44,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 
 	/** 资源是否被授权<br>
 	 * 1)检查是否是属于公有资源<br>
-	 * 2)检查用户组权限<br> */
+	 * 2)检查角色权限<br> */
 	public boolean isAuthorized(Authentication auth, Object resource) {
 		loadResourceNecessary();
 		String resourceName = null;
@@ -61,7 +61,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 		if (protectedResources.contains(resourceName)) { return true; }
 		Collection<? extends GrantedAuthority> authories = auth.getAuthorities();
 		for (GrantedAuthority authorty : authories) {
-			if (isAuthorizedByGroup(authorty, resourceName)) { return true; }
+			if (isAuthorizedByRole(authorty, resourceName)) { return true; }
 		}
 		// final check root user
 		Object principal = auth.getPrincipal();
@@ -76,18 +76,18 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 	 * @param authority
 	 * @param resource
 	 * @return */
-	private boolean isAuthorizedByGroup(GrantedAuthority authority, Object resource) {
+	private boolean isAuthorizedByRole(GrantedAuthority authority, Object resource) {
 		Set<?> actions = authorities.get(authority);
 		if (null == actions) {
-			actions = refreshGroupAuthorities(authority);
+			actions = refreshRolePermissions(authority);
 		}
 		return actions.contains(resource);
 	}
 
-	public Set<?> refreshGroupAuthorities(GrantedAuthority group) {
-		Set<?> actions = authorityService.getResourceNamesByGroup((Long)group.getAuthority());
-		authorities.put(group, actions);
-		logger.debug("add authorities for group:{} resource:{}", group, actions);
+	public Set<?> refreshRolePermissions(GrantedAuthority authority) {
+		Set<?> actions = authorityService.getResourceNamesByRole((Long)authority.getAuthority());
+		authorities.put(authority, actions);
+		logger.debug("Refresh role:{}'s permissions:{}", authority, actions);
 		return actions;
 	}
 

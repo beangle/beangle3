@@ -9,9 +9,9 @@ import static org.testng.Assert.assertEquals;
 import java.util.List;
 
 import org.beangle.collection.CollectUtils;
-import org.beangle.ems.security.model.GroupBean;
+import org.beangle.ems.security.model.RoleBean;
 import org.beangle.ems.security.profile.model.PropertyMetaBean;
-import org.beangle.ems.security.service.CsvDataResolver;
+import org.beangle.ems.security.service.impl.CsvDataResolver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -22,20 +22,20 @@ public class CsvDataResolverTest {
 
 	@BeforeClass
 	public void setUp() {
-		field = new PropertyMetaBean(1L,"group", GroupBean.class.getName(), "oql:from Group");
+		field = new PropertyMetaBean(1L,"role", RoleBean.class.getName(), "oql:from Role");
 		field.setKeyName("id");
 		field.setPropertyNames("name");
 	}
 
 	public void testMarshal() {
 		String text = resolver.marshal(field,
-				CollectUtils.newArrayList(new GroupBean(1L, "group1"), new GroupBean(2L, "group2")));
-		assertEquals(text, "id;name,1;group1,2;group2");
+				CollectUtils.newArrayList(new RoleBean(1L, "role1"), new RoleBean(2L, "role2")));
+		assertEquals(text, "id;name,1;role1,2;role2");
 	}
 
 	public void testUnmarshal() throws Exception {
-		List<?> rs = resolver.unmarshal(field, "id;name,1;group1,2;group2");
-		List<?> objs = CollectUtils.newArrayList(new GroupBean(1L, "group1"), new GroupBean(2L, "group2"));
+		List<?> rs = resolver.unmarshal(field, "id;name,1;role1,2;role2");
+		List<?> objs = CollectUtils.newArrayList(new RoleBean(1L, "role1"), new RoleBean(2L, "role2"));
 		assertEquals(rs, objs);
 	}
 }

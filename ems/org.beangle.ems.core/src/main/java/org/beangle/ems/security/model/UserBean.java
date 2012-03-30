@@ -21,8 +21,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.beangle.collection.CollectUtils;
 import org.beangle.dao.pojo.LongIdTimeObject;
 import org.beangle.dao.util.EntityUtils;
-import org.beangle.ems.security.Group;
-import org.beangle.ems.security.GroupMember;
+import org.beangle.ems.security.Role;
+import org.beangle.ems.security.Member;
 import org.beangle.ems.security.User;
 
 /**
@@ -55,9 +55,9 @@ public class UserBean extends LongIdTimeObject implements User {
 	@NotNull
 	private String mail;
 
-	/** 对应用户组 */
+	/** 对应角色 */
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<GroupMember> members = CollectUtils.newHashSet();
+	private Set<Member> members = CollectUtils.newHashSet();
 
 	/** 创建人 */
 	@ManyToOne
@@ -142,29 +142,29 @@ public class UserBean extends LongIdTimeObject implements User {
 		this.creator = creator;
 	}
 
-	public Set<GroupMember> getMembers() {
+	public Set<Member> getMembers() {
 		return members;
 	}
 
-	public List<Group> getGroups() {
-		List<Group> groups = CollectUtils.newArrayList();
-		for (GroupMember member : members) {
-			if (member.isMember()) groups.add(member.getGroup());
+	public List<Role> getRoles() {
+		List<Role> roles = CollectUtils.newArrayList();
+		for (Member member : members) {
+			if (member.isMember()) roles.add(member.getRole());
 		}
-		Set<Group> allGroups = CollectUtils.newHashSet();
-		for (Group g : groups) {
-			while (null != g && !allGroups.contains(g)) {
-				allGroups.add(g);
+		Set<Role> allRoles = CollectUtils.newHashSet();
+		for (Role g : roles) {
+			while (null != g && !allRoles.contains(g)) {
+				allRoles.add(g);
 				g = g.getParent();
 			}
 		}
-		groups.clear();
-		groups.addAll(allGroups);
-		Collections.sort(groups);
-		return groups;
+		roles.clear();
+		roles.addAll(allRoles);
+		Collections.sort(roles);
+		return roles;
 	}
 
-	public void setMembers(Set<GroupMember> members) {
+	public void setMembers(Set<Member> members) {
 		this.members = members;
 	}
 

@@ -10,7 +10,7 @@ import org.beangle.ems.avatar.action.BoardAction;
 import org.beangle.ems.avatar.action.MyUploadAction;
 import org.beangle.ems.security.action.AuthorityAction;
 import org.beangle.ems.security.action.CaptchaAction;
-import org.beangle.ems.security.action.GroupAction;
+import org.beangle.ems.security.action.RoleAction;
 import org.beangle.ems.security.action.IndexAction;
 import org.beangle.ems.security.action.MenuAction;
 import org.beangle.ems.security.action.MenuNavAction;
@@ -30,7 +30,7 @@ public final class WebModule extends AbstractBindModule {
 	@Override
 	protected void doBinding() {
 		// security
-		bind(SessioninfoLogAction.class, AuthorityAction.class, GroupAction.class, IndexAction.class,
+		bind(SessioninfoLogAction.class, AuthorityAction.class, RoleAction.class, IndexAction.class,
 				MenuAction.class, MenuNavAction.class, MenuProfileAction.class, MonitorAction.class,
 				MyAction.class, PasswordAction.class, ResourceAction.class, RestrictionAction.class,
 				RestrictMetaAction.class, UserAction.class, CaptchaAction.class).in(Scope.PROTOTYPE);

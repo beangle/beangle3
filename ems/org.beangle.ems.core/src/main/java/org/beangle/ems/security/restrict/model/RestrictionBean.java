@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.StringUtils;
 import org.beangle.dao.pojo.LongIdObject;
-import org.beangle.ems.security.Group;
+import org.beangle.ems.security.Role;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.restrict.RestrictEntity;
 import org.beangle.ems.security.restrict.Restriction;
@@ -41,9 +41,9 @@ public class RestrictionBean extends LongIdObject implements Restriction {
 	@Column(name="resrc")
 	private String resource;
 
-	/** 适用用户组 */
+	/** 适用角色 */
 	@ManyToOne
-	private Group group;
+	private Role role;
 
 	/** 适用用户 */
 	@ManyToOne
@@ -75,12 +75,12 @@ public class RestrictionBean extends LongIdObject implements Restriction {
 		this.resource = resource;
 	}
 
-	public Group getGroup() {
-		return group;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setGroup(Group group) {
-		this.group = group;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public User getUser() {

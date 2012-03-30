@@ -8,7 +8,7 @@
 		姓名:<input name="sessioninfoLog.fullname" value="" style="width:100px" maxlength="32"/>
 		</td>
 		<td>
-			用户组名:<input name="groupName" value="" style="width:100px" maxlength="50"/>
+			角色名:<input name="roleName" value="" style="width:100px" maxlength="50"/>
 		</td>
 	</tr>
 	<tr>

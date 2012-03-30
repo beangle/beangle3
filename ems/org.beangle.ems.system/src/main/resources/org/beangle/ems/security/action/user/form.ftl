@@ -24,22 +24,22 @@
 		[@b.textarea label="common.remark" cols="50" rows="1" name="user.remark" value="${user.remark!}" maxlength="50"/]
 		[@b.formfoot][@b.reset/]&nbsp;&nbsp;[@b.submit value="action.submit"/][/@]
 	[/@]
-	[@b.tab label="所在用户组"]
-		[@b.grid  items=groups?sort_by("code") var="group" sortable="false"]
+	[@b.tab label="所在角色"]
+		[@b.grid  items=roles?sort_by("code") var="role" sortable="false"]
 			[@b.row]
-				<tr [#if group??]id="${group.code}"[/#if]>
-				[@b.col title="序号" width="5%"]${group_index+1}[/@]
-				[@b.treecol title="用户组" property="name"]<span [#if !group.enabled]class="ui-disabled" title="${b.text('action.freeze')}"[/#if]>${group.code} ${group.name}</span>[/@]
+				<tr [#if role??]id="${role.code}"[/#if]>
+				[@b.col title="序号" width="5%"]${role_index+1}[/@]
+				[@b.treecol title="角色" property="name"]<span [#if !role.enabled]class="ui-disabled" title="${b.text('action.freeze')}"[/#if]>${role.code} ${role.name}</span>[/@]
 				[@b.col title="成员" width="10%"]
-				<input type="checkbox" name="member${group.id}" onchange="changeMember(${group.id},this)" ${(memberMap.get(group).member)?default(false)?string('checked="checked"','')}/>
+				<input type="checkbox" name="member${role.id}" onchange="changeMember(${role.id},this)" ${(memberMap.get(role).member)?default(false)?string('checked="checked"','')}/>
 				[/@]
 				[@b.col title="授权" width="10%"]
-				[#if !curMemberMap.get(group).manager && !(memberMap.get(group).granter)?default(false)][#else]<input type="checkbox" name="granter${group.id}" [#if !curMemberMap.get(group).manager]disabled="disabled"[/#if] ${(memberMap.get(group).granter)?default(false)?string('checked="checked"','')}/>[/#if]
+				[#if !curMemberMap.get(role).manager && !(memberMap.get(role).granter)?default(false)][#else]<input type="checkbox" name="granter${role.id}" [#if !curMemberMap.get(role).manager]disabled="disabled"[/#if] ${(memberMap.get(role).granter)?default(false)?string('checked="checked"','')}/>[/#if]
 				[/@]
 				[@b.col title="管理" width="10%"]
-				[#if !curMemberMap.get(group).manager && !(memberMap.get(group).manager)?default(false)][#else]<input type="checkbox" name="manager${group.id}" [#if !curMemberMap.get(group).manager]disabled="disabled"[/#if] ${(memberMap.get(group).manager)?default(false)?string('checked="checked"','')}/>[/#if]
+				[#if !curMemberMap.get(role).manager && !(memberMap.get(role).manager)?default(false)][#else]<input type="checkbox" name="manager${role.id}" [#if !curMemberMap.get(role).manager]disabled="disabled"[/#if] ${(memberMap.get(role).manager)?default(false)?string('checked="checked"','')}/>[/#if]
 				[/@]
-				[@b.col title="加入时间" width="20%"]${(memberMap.get(group).updatedAt?string("yyyy-MM-dd HH:mm"))!}[/@]
+				[@b.col title="加入时间" width="20%"]${(memberMap.get(role).updatedAt?string("yyyy-MM-dd HH:mm"))!}[/@]
 				</tr>
 			[/@]
 		[/@]
@@ -53,19 +53,19 @@
 	/**
 	 * 改变每行之前的复选框
 	 */
-	function changeMember(groupId,checkbox){
+	function changeMember(roleId,checkbox){
 		if(null==checkbox) return;
 		treeToggle(checkbox)
 		newStatus=checkbox.checked
 		var form=document.userForm;
-		if(typeof form['member'+groupId]!="undefined"){
-			form['member'+groupId].checked=newStatus;
+		if(typeof form['member'+roleId]!="undefined"){
+			form['member'+roleId].checked=newStatus;
 		}
-		/*if(typeof form['granter'+groupId]!="undefined"){
-			if(!form['granter'+groupId].disabled) form['granter'+groupId].checked=newStatus;
+		/*if(typeof form['granter'+roleId]!="undefined"){
+			if(!form['granter'+roleId].disabled) form['granter'+roleId].checked=newStatus;
 		}
-		if(typeof form['manager'+groupId]!="undefined"){
-			if(!form['manager'+groupId].disabled) form['manager'+groupId].checked=newStatus;
+		if(typeof form['manager'+roleId]!="undefined"){
+			if(!form['manager'+roleId].disabled) form['manager'+roleId].checked=newStatus;
 		}*/
 	}
 </script>

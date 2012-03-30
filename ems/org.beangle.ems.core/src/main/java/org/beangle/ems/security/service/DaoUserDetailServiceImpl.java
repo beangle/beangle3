@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.beangle.collection.CollectUtils;
 import org.beangle.dao.impl.BaseServiceImpl;
-import org.beangle.ems.security.Group;
+import org.beangle.ems.security.Role;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.session.service.SessionProfileService;
 import org.beangle.security.core.authority.GrantedAuthorityBean;
@@ -19,7 +19,7 @@ public class DaoUserDetailServiceImpl extends BaseServiceImpl implements UserDet
 
 	protected UserService userService;
 
-	protected SessionProfileService groupProfileService;
+	protected SessionProfileService sessionProfileService;
 
 	public UserDetail loadDetail(String principle) {
 		List<User> users = entityDao.get(User.class, "name", principle);
@@ -27,16 +27,16 @@ public class DaoUserDetailServiceImpl extends BaseServiceImpl implements UserDet
 			return null;
 		} else {
 			User user = users.get(0);
-			List<Group> groups = user.getGroups();
-			List<GrantedAuthorityBean> authorities = CollectUtils.newArrayList(groups.size());
-			Group defaultGroup = null;
-			for (Group g : groups) {
+			List<Role> roles = user.getRoles();
+			List<GrantedAuthorityBean> authorities = CollectUtils.newArrayList(roles.size());
+			Role defaultRole = null;
+			for (Role g : roles) {
 				authorities.add(new GrantedAuthorityBean(g.getId()));
-				if (groupProfileService.hasProfile(g)) {
-					defaultGroup = g;
+				if (sessionProfileService.hasProfile(g)) {
+					defaultRole = g;
 				}
 			}
-			String categoryName = (null == defaultGroup) ? "default" : defaultGroup.getName();
+			String categoryName = (null == defaultRole) ? "default" : defaultRole.getName();
 			return new UserToken(user.getId(), user.getName(), user.getFullname(), user.getPassword(),
 					categoryName, user.isEnabled(), user.isAccountExpired(), user.isPasswordExpired(), false,
 					authorities);
@@ -47,8 +47,8 @@ public class DaoUserDetailServiceImpl extends BaseServiceImpl implements UserDet
 		this.userService = userService;
 	}
 
-	public void setGroupProfileService(SessionProfileService groupProfileService) {
-		this.groupProfileService = groupProfileService;
+	public void setSessionProfileService(SessionProfileService sessionProfileService) {
+		this.sessionProfileService = sessionProfileService;
 	}
 
 }

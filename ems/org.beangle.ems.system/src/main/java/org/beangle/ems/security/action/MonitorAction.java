@@ -10,7 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.beangle.collection.Order;
 import org.beangle.dao.query.builder.OqlBuilder;
-import org.beangle.ems.security.Group;
+import org.beangle.ems.security.Role;
 import org.beangle.ems.security.session.model.SessionProfileBean;
 import org.beangle.ems.security.session.service.SessionProfileService;
 import org.beangle.ems.web.action.SecurityActionSupport;
@@ -33,9 +33,8 @@ public class MonitorAction extends SecurityActionSupport {
 	public String profiles() {
 		List<SessionProfileBean> profiles = entityDao.getAll(SessionProfileBean.class);
 		put("profiles", profiles);
-		put("groups",
-				entityDao.search(OqlBuilder.from(Group.class, "g").where("g.parent is null")
-						.orderBy("g.code")));
+		put("roles", entityDao.search(OqlBuilder.from(Role.class, "g").where("g.parent is null")
+				.orderBy("g.code")));
 		return forward();
 	}
 
@@ -59,10 +58,10 @@ public class MonitorAction extends SecurityActionSupport {
 	public String saveProfile() {
 		List<SessionProfileBean> categories = entityDao.getAll(SessionProfileBean.class);
 		for (final SessionProfileBean profile : categories) {
-			Long groupId = profile.getGroup().getId();
-			Integer max = getInteger("max_" + groupId);
-			Integer maxSessions = getInteger("maxSessions_" + groupId);
-			Integer inactiveInterval = getInteger("inactiveInterval_" + groupId);
+			Long roleId = profile.getRole().getId();
+			Integer max = getInteger("max_" + roleId);
+			Integer maxSessions = getInteger("maxSessions_" + roleId);
+			Integer inactiveInterval = getInteger("inactiveInterval_" + roleId);
 			if (null != max && null != maxSessions && null != inactiveInterval) {
 				profile.setCapacity(max);
 				profile.setUserMaxSessions(maxSessions);

@@ -78,25 +78,25 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
 	public void setMail(String mail);
 
 	/**
-	 * 对应用户组成员
+	 * 对应角色成员
 	 * 
 	 * @return
 	 */
-	public Set<GroupMember> getMembers();
+	public Set<Member> getMembers();
 
 	/**
-	 * 对应用户组
+	 * 对应角色
 	 * 
-	 * @return 按照用户组代码排序的group列表
+	 * @return 按照角色代码排序的role列表
 	 */
-	public List<Group> getGroups();
+	public List<Role> getRoles();
 
 	/**
-	 * 设置对应用户组
+	 * 设置对应角色
 	 * 
-	 * @param groups
+	 * @param members
 	 */
-	public void setMembers(Set<GroupMember> members);
+	public void setMembers(Set<Member> members);
 
 	/**
 	 * 创建者

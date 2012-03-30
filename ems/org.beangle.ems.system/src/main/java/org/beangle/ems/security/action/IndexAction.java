@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.beangle.collection.CollectUtils;
 import org.beangle.dao.query.builder.OqlBuilder;
-import org.beangle.ems.security.GroupMember;
+import org.beangle.ems.security.Member;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.nav.MenuProfile;
@@ -47,20 +47,20 @@ public class IndexAction extends SecurityActionSupport {
 	}
 
 	private void populateUserStat() {
-		OqlBuilder<GroupMember> userQuery = OqlBuilder.from(GroupMember.class, "gm");
-		userQuery.select("gm.group.code,gm.group.name,gm.user.enabled,count(*)").groupBy(
-				"gm.group.name,gm.user.enabled");
+		OqlBuilder<Member> userQuery = OqlBuilder.from(Member.class, "gm");
+		userQuery.select("gm.role.code,gm.role.name,gm.user.enabled,count(*)").groupBy(
+				"gm.role.name,gm.user.enabled");
 		List<?> datas = entityDao.search(userQuery);
-		Map<String, Map<Object,Object>> rs = CollectUtils.newHashMap();
+		Map<String, Map<Object, Object>> rs = CollectUtils.newHashMap();
 		for (Object data : datas) {
-			Object[] groupStat = (Object[]) data;
-			String key = groupStat[0] + " " + groupStat[1];
-			Map<Object,Object> statusMap = rs.get(key);
+			Object[] roleStat = (Object[]) data;
+			String key = roleStat[0] + " " + roleStat[1];
+			Map<Object, Object> statusMap = rs.get(key);
 			if (null == statusMap) {
 				statusMap = CollectUtils.newHashMap();
 				rs.put(key, statusMap);
 			}
-			statusMap.put(groupStat[2], groupStat[3]);
+			statusMap.put(roleStat[2], roleStat[3]);
 		}
 		put("userStat", rs);
 	}

@@ -29,12 +29,12 @@
 	<td class="content">${(user.creator.name)!}  </td>
 	</tr>
 	<tr>
-	<td class="title" >${b.text("group")}:</td>
-	<td  class="content" colspan="3">[#list user.members! as m]${m.group.name}([#if m.member]成员[/#if][#if m.manager] 管理[/#if][#if m.granter] 授权[/#if])[/#list]</td>
+	<td class="title" >${b.text("role")}:</td>
+	<td  class="content" colspan="3">[#list user.members! as m]${m.role.name}([#if m.member]成员[/#if][#if m.manager] 管理[/#if][#if m.granter] 授权[/#if])[/#list]</td>
 	</tr>
 	<tr>
-	<td class="title" >${b.text("user.mngGroups")}:</td>
-	<td  class="content" colspan="3">[#list user.mngGroups! as group]${group.name}[/#list]</td>
+	<td class="title" >${b.text("user.mngRoles")}:</td>
+	<td  class="content" colspan="3">[#list user.mngRoles! as role]${role.name}[/#list]</td>
 	</tr>
 	<tr>
 	<td class="title" >${b.text("common.remark")}:</td>

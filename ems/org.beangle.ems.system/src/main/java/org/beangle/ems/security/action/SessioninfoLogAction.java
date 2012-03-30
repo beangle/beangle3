@@ -87,16 +87,16 @@ public class SessioninfoLogAction extends SecurityActionSupport {
 	private void addConditions(OqlBuilder<SessioninfoLogBean> query) {
 		populateConditions(query);
 		addTimeCondition(query);
-		String groupName = get("groupName");
-		if (StringUtils.isNotEmpty(groupName)) {
-			query.where("exists(select u.id from " + User.class.getName() + " u join u.groups as gm "
-					+ "where u.name=sessioninfoLog.username and gm.group.name like :groupName )", "%"
-					+ groupName + "%");
+		String roleName = get("roleName");
+		if (StringUtils.isNotEmpty(roleName)) {
+			query.where("exists(select u.id from " + User.class.getName() + " u join u.roles as gm "
+					+ "where u.name=sessioninfoLog.username and gm.role.name like :roleName )", "%"
+					+ roleName + "%");
 		}
 	}
 
 	/**
-	 * 显示用户组某时间段的登陆记录
+	 * 显示角色某时间段的登陆记录
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public String timeIntervalStat() {

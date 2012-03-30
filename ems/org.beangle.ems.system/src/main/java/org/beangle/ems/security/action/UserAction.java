@@ -17,12 +17,12 @@ import org.beangle.dao.Entity;
 import org.beangle.dao.Operation;
 import org.beangle.dao.query.builder.Condition;
 import org.beangle.dao.query.builder.OqlBuilder;
-import org.beangle.ems.security.Group;
-import org.beangle.ems.security.GroupMember;
+import org.beangle.ems.security.Member;
+import org.beangle.ems.security.Role;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.helper.UserDashboardHelper;
 import org.beangle.ems.security.helper.UserPropertyExtractor;
-import org.beangle.ems.security.model.GroupMemberBean;
+import org.beangle.ems.security.model.MemberBean;
 import org.beangle.ems.security.service.UserService;
 import org.beangle.ems.web.action.SecurityEntityActionSupport;
 import org.beangle.security.codec.EncryptUtil;
@@ -66,38 +66,38 @@ public class UserAction extends SecurityEntityActionSupport {
 	protected OqlBuilder<User> getQueryBuilder() {
 		User manager = entityDao.get(User.class, getUserId());
 		OqlBuilder<User> userQuery = OqlBuilder.from(getEntityName(), "user");
-		// 查询用户组
+		// 查询角色
 		StringBuilder sb = new StringBuilder("exists(from user.members m where ");
 		List<Object> params = CollectUtils.newArrayList();
-		boolean queryGroup = false;
+		boolean queryRole = false;
 		if (!isAdmin()) {
-			List<GroupMember> members = userService.getGroupMembers(manager, GroupMember.Ship.GRANTER);
-			List<Group> mngGroups = CollectUtils.newArrayList();
-			for (GroupMember m : members) {
-				mngGroups.add(m.getGroup());
+			List<Member> members = userService.getMembers(manager, Member.Ship.GRANTER);
+			List<Role> mngRoles = CollectUtils.newArrayList();
+			for (Member m : members) {
+				mngRoles.add(m.getRole());
 			}
-			if (mngGroups.isEmpty()) {
+			if (mngRoles.isEmpty()) {
 				sb.append("1=0");
 			} else {
-				sb.append("m.group in(:groups) ");
-				params.add(mngGroups);
+				sb.append("m.role in(:roles) ");
+				params.add(mngRoles);
 			}
-			queryGroup = true;
+			queryRole = true;
 		}
-		String groupName = get("groupName");
-		if (StringUtils.isNotEmpty(groupName)) {
-			if (queryGroup) {
+		String roleName = get("roleName");
+		if (StringUtils.isNotEmpty(roleName)) {
+			if (queryRole) {
 				sb.append(" and ");
 			}
-			sb.append("m.group.name like :groupName ");
-			params.add("%" + groupName + "%");
-			queryGroup = true;
+			sb.append("m.role.name like :roleName ");
+			params.add("%" + roleName + "%");
+			queryRole = true;
 		}
-		if (queryGroup) {
+		if (queryRole) {
 			sb.append(')');
-			Condition groupCondition = new Condition(sb.toString());
-			groupCondition.params(params);
-			userQuery.where(groupCondition);
+			Condition roleCondition = new Condition(sb.toString());
+			roleCondition.params(params);
+			userQuery.where(roleCondition);
 		}
 
 		Long categoryId = getLong("categoryId");
@@ -134,25 +134,25 @@ public class UserAction extends SecurityEntityActionSupport {
 		} else {
 			userService.saveOrUpdate(user);
 		}
-		updateUserGroup(user);
+		updateUserRole(user);
 		return redirect("search", "info.save.success");
 	}
 
-	private void updateUserGroup(User user) {
-		Set<GroupMember> userMembers = user.getMembers();
-		Map<Group, GroupMember> memberMap = CollectUtils.newHashMap();
-		for (GroupMember gm : userMembers) {
-			memberMap.put(gm.getGroup(), gm);
+	private void updateUserRole(User user) {
+		Set<Member> userMembers = user.getMembers();
+		Map<Role, MemberBean> memberMap = CollectUtils.newHashMap();
+		for (Member gm : userMembers) {
+			memberMap.put(gm.getRole(), (MemberBean)gm);
 		}
-		Set<GroupMember> newMembers = CollectUtils.newHashSet();
-		Set<GroupMember> removedMembers = CollectUtils.newHashSet();
+		Set<Member> newMembers = CollectUtils.newHashSet();
+		Set<Member> removedMembers = CollectUtils.newHashSet();
 		User manager = entityDao.get(User.class, getUserId());
-		Collection<GroupMember> members = userService.getGroupMembers(manager, GroupMember.Ship.GRANTER);
-		for (GroupMember member : members) {
-			GroupMember myMember = memberMap.get(member.getGroup());
-			boolean isMember = getBool("member" + member.getGroup().getId());
-			boolean isGranter = getBool("granter" + member.getGroup().getId());
-			boolean isManager = getBool("manager" + member.getGroup().getId());
+		Collection<Member> members = userService.getMembers(manager, Member.Ship.GRANTER);
+		for (Member member : members) {
+			MemberBean myMember = memberMap.get(member.getRole());
+			boolean isMember = getBool("member" + member.getRole().getId());
+			boolean isGranter = getBool("granter" + member.getRole().getId());
+			boolean isManager = getBool("manager" + member.getRole().getId());
 			if (!isMember && !isGranter && !isManager) {
 				if (null != myMember) {
 					user.getMembers().remove(myMember);
@@ -160,7 +160,7 @@ public class UserAction extends SecurityEntityActionSupport {
 				}
 			} else {
 				if (null == myMember) {
-					myMember = new GroupMemberBean(member.getGroup(), user, null);
+					myMember = new MemberBean(member.getRole(), user, null);
 				}
 				myMember.setUpdatedAt(new Date());
 				myMember.setMember(isMember);
@@ -174,20 +174,20 @@ public class UserAction extends SecurityEntityActionSupport {
 
 	protected void editSetting(Entity<?> entity) {
 		User manager = entityDao.get(User.class, getUserId());
-		Set<Group> groups=CollectUtils.newHashSet();
-		Map<Group, GroupMember> curMemberMap = CollectUtils.newHashMap();
-		Collection<GroupMember> members = userService.getGroupMembers(manager, GroupMember.Ship.GRANTER);
-		for (GroupMember gm : members) {
-			groups.add(gm.getGroup());
-			curMemberMap.put(gm.getGroup(), gm);
+		Set<Role> roles=CollectUtils.newHashSet();
+		Map<Role, Member> curMemberMap = CollectUtils.newHashMap();
+		Collection<Member> members = userService.getMembers(manager, Member.Ship.GRANTER);
+		for (Member gm : members) {
+			roles.add(gm.getRole());
+			curMemberMap.put(gm.getRole(), gm);
 		}
-		put("groups", groups);
+		put("roles", roles);
 
 		User user = (User) entity;
-		Set<GroupMember> userMembers = user.getMembers();
-		Map<Group, GroupMember> memberMap = CollectUtils.newHashMap();
-		for (GroupMember gm : userMembers) {
-			memberMap.put(gm.getGroup(), gm);
+		Set<Member> userMembers = user.getMembers();
+		Map<Role, Member> memberMap = CollectUtils.newHashMap();
+		for (Member gm : userMembers) {
+			memberMap.put(gm.getRole(), gm);
 		}
 		put("memberMap", memberMap);
 		put("curMemberMap", curMemberMap);

@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.beangle.collection.CollectUtils;
-import org.beangle.ems.security.Authority;
-import org.beangle.ems.security.Group;
-import org.beangle.ems.security.GroupMember;
+import org.beangle.ems.security.Permission;
+import org.beangle.ems.security.Role;
+import org.beangle.ems.security.Member;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.nav.Menu;
@@ -41,27 +41,24 @@ public class AuthorityAction extends SecurityActionSupport {
 	 * @author 鄂州蚊子
 	 */
 	public String edit() {
-		Long groupId = getLong("group.id");
-		if (null == groupId) {
-			groupId = getLong("groupIds");
-		}
-		Group ao = entityDao.get(Group.class, groupId);
+		Long roleId = getId("role");
+		Role ao = entityDao.get(Role.class, roleId);
 		User user = entityDao.get(User.class, getUserId());
 		put("manager", user);
-		List<Group> mngGroups = CollectUtils.newArrayList();
+		List<Role> mngRoles = CollectUtils.newArrayList();
 		if (isAdmin()) {
-			mngGroups = entityDao.getAll(Group.class);
+			mngRoles = entityDao.getAll(Role.class);
 		} else {
-			for (GroupMember m : user.getMembers()) {
-				if (m.isGranter()) mngGroups.add(m.getGroup());
+			for (Member m : user.getMembers()) {
+				if (m.isGranter()) mngRoles.add(m.getRole());
 			}
 		}
-		put("mngGroups", mngGroups);
-		List<MenuProfile> menuProfiles=menuService.getProfiles(ao);
+		put("mngRoles", mngRoles);
+		List<MenuProfile> menuProfiles = menuService.getProfiles(ao);
 		put("menuProfiles", menuProfiles);
 
 		MenuProfile menuProfile = menuService.getProfile(ao, getLong("menuProfileId"));
-		if(null==menuProfile && !menuProfiles.isEmpty()){
+		if (null == menuProfile && !menuProfiles.isEmpty()) {
 			menuProfile = menuProfiles.get(0);
 		}
 		List<Menu> menus = CollectUtils.newArrayList();
@@ -87,9 +84,9 @@ public class AuthorityAction extends SecurityActionSupport {
 			}
 			Set<Resource> aoResources = CollectUtils.newHashSet();
 			Map<String, Long> aoResourceAuthorityMap = CollectUtils.newHashMap();
-			List<Authority> authorities = authorityService.getAuthorities(ao);
-			Collection<Menu> aoMenus = menuService.getMenus(menuProfile, (Group) ao, null);
-			for (final Authority authority : authorities) {
+			List<Permission> authorities = authorityService.getPermissions(ao);
+			Collection<Menu> aoMenus = menuService.getMenus(menuProfile, (Role) ao, null);
+			for (final Permission authority : authorities) {
 				aoResources.add(authority.getResource());
 				aoResourceAuthorityMap.put(authority.getResource().getId().toString(), authority.getId());
 			}
@@ -114,7 +111,7 @@ public class AuthorityAction extends SecurityActionSupport {
 	 * 保存模块级权限
 	 */
 	public String save() {
-		Group mao = entityDao.get(Group.class, getLong("group.id"));
+		Role mao = entityDao.get(Role.class, getLong("role.id"));
 		MenuProfile menuProfile = (MenuProfile) entityDao.get(MenuProfile.class, getLong("menuProfileId"));
 		Set<Resource> newResources = CollectUtils.newHashSet(entityDao.get(Resource.class,
 				StrUtils.splitToLong(get("resourceId"))));
@@ -133,10 +130,10 @@ public class AuthorityAction extends SecurityActionSupport {
 		}
 		newResources.retainAll(mngResources);
 		authorityService.authorize(mao, newResources);
-		authorityManager.refreshGroupAuthorities(new GrantedAuthorityBean(mao.getId()));
+		authorityManager.refreshRolePermissions(new GrantedAuthorityBean(mao.getId()));
 
 		Action redirect = Action.to(this).method("edit");
-		redirect.param("group.id", mao.getId()).param("menuProfileId", menuProfile.getId());
+		redirect.param("role.id", mao.getId()).param("menuProfileId", menuProfile.getId());
 		String displayFreezen = get("displayFreezen");
 		if (null != displayFreezen) {
 			redirect.param("displayFreezen", displayFreezen);

@@ -13,7 +13,7 @@ import org.beangle.collection.CollectUtils;
 import org.beangle.collection.page.PageLimit;
 import org.beangle.dao.EntityDao;
 import org.beangle.dao.query.builder.OqlBuilder;
-import org.beangle.ems.security.Group;
+import org.beangle.ems.security.Role;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.nav.Menu;
@@ -80,13 +80,13 @@ public class UserDashboardHelper {
 			MenuProfile menuProfile = (MenuProfile) entityDao.get(MenuProfile.class, menuProfileId);
 			List<Menu> menus = menuService.getMenus(menuProfile, user);
 			Set<Resource> resources = CollectUtils.newHashSet(authorityService.getResources(user));
-			Map<Group, List<Menu>> groupMenusMap = CollectUtils.newHashMap();
+			Map<Role, List<Menu>> roleMenusMap = CollectUtils.newHashMap();
 
-			for (Group group : user.getGroups()) {
-				groupMenusMap.put(group, menuService.getMenus(menuProfile, group, Boolean.TRUE));
+			for (Role role : user.getRoles()) {
+				roleMenusMap.put(role, menuService.getMenus(menuProfile, role, Boolean.TRUE));
 			}
 			ContextHelper.put("menus", menus);
-			ContextHelper.put("groupMenusMap", groupMenusMap);
+			ContextHelper.put("roleMenusMap", roleMenusMap);
 			ContextHelper.put("resources", resources);
 		}
 	}

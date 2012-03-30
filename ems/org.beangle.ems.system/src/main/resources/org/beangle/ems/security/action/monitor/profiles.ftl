@@ -24,7 +24,7 @@
 	</tr>
 	[/#list]
 	<tr style="background-color:"#e1e8f5">
-		<td>新增:[@b.select name="category_new" items=groups option=r"${item.code} ${item.name}"/]</td>
+		<td>新增:[@b.select name="category_new" items=roles option=r"${item.code} ${item.name}"/]</td>
 		<td><input name="max_new" value="" style="width:50px" maxlength="5"/></td>
 		<td><input name="inactiveInterval_new" value="" style="width:50px" maxlength="5"/>分</td>
 		<td><input name="maxSessions_new" value="" style="width:35px" maxlength="2"/></td>

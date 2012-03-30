@@ -48,7 +48,7 @@ public class QueryHelper {
 	 * 
 	 * @param entityQuery
 	 * @param exclusiveAttrNames
-	 *            以entityQuery中alias开头的属性串
+	 *        以entityQuery中alias开头的属性串
 	 */
 	public static void populateConditions(OqlBuilder<?> entityQuery, String exclusiveAttrNames) {
 		entityQuery.where(extractConditions(entityQuery.getEntityClass(), entityQuery.getAlias(),
@@ -97,8 +97,7 @@ public class QueryHelper {
 						}
 					}
 				} catch (Exception e) {
-					logger.debug("[populateFromParams]:error in populate entity " + prefix + "'s attribute "
-							+ attr);
+					logger.error("Error populate entity " + prefix + "'s attribute " + attr, e);
 				}
 			}
 		}
@@ -164,11 +163,11 @@ public class QueryHelper {
 	 * @param query
 	 * @param alias
 	 * @param attr
-	 *            时间限制属性
+	 *        时间限制属性
 	 * @param beginOn
-	 *            开始的属性名字(全名)
+	 *        开始的属性名字(全名)
 	 * @param endOn
-	 *            结束的属性名字(全名)
+	 *        结束的属性名字(全名)
 	 * @throws ParseException
 	 */
 	public static void addDateIntervalCondition(OqlBuilder<?> query, String alias, String attr,

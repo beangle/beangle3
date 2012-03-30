@@ -9,10 +9,10 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.beangle.dao.pojo.LongIdObject;
-import org.beangle.ems.security.Group;
+import org.beangle.ems.security.Role;
 
 /**
- * 用户组会话配置
+ * 角色会话配置
  * 
  * @author chaostone
  */
@@ -21,10 +21,10 @@ public class SessionProfileBean extends LongIdObject {
 
 	private static final long serialVersionUID = 1999239598984221565L;
 
-	/** 用户组 */
+	/** 角色 */
 	@NotNull
 	@ManyToOne
-	protected Group group;
+	protected Role role;
 
 	/** 最大在线人数 */
 	@NotNull
@@ -42,19 +42,19 @@ public class SessionProfileBean extends LongIdObject {
 		super();
 	}
 
-	public SessionProfileBean(Group group, int max, int inactiveInterval) {
+	public SessionProfileBean(Role role, int max, int inactiveInterval) {
 		super();
-		this.group = group;
+		this.role = role;
 		this.capacity = max;
 		this.inactiveInterval = inactiveInterval;
 	}
 	
-	public Group getGroup() {
-		return group;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setGroup(Group group) {
-		this.group = group;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public int getCapacity() {
@@ -83,7 +83,7 @@ public class SessionProfileBean extends LongIdObject {
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(group.getName());
+		sb.append(role.getName());
 		sb.append(":{max=").append(capacity).append(',');
 		sb.append("maxSessions=").append(userMaxSessions).append(',');
 		sb.append("inactiveInterval=").append(inactiveInterval).append('}');

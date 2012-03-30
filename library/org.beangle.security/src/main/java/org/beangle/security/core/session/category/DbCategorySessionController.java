@@ -97,12 +97,10 @@ public class DbCategorySessionController extends AbstractSessionController imple
 	}
 
 	public void stat() {
-		entityDao
-				.executeUpdateHql("update "
-						+ SessionStat.class.getName()
-						+ " stat  set stat.online=(select count(*) from "
-						+ sessioninfoBuilder.getSessioninfoClass().getName()
-						+ " info where info.serverName=stat.serverName and info.expiredAt is null and info.category=stat.category)");
+		entityDao.executeUpdateHql("update " + SessionStat.class.getName()
+				+ " stat  set stat.online=(select count(*) from "
+				+ sessioninfoBuilder.getSessioninfoClass().getName()
+				+ " info where info.expiredAt is null and info.category=stat.category)");
 	}
 
 	public CategoryProfileProvider getCategoryProfileProvider() {

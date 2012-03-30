@@ -6,8 +6,8 @@ package org.beangle.ems.security.service;
 
 import java.util.List;
 
-import org.beangle.ems.security.Group;
-import org.beangle.ems.security.GroupMember;
+import org.beangle.ems.security.Role;
+import org.beangle.ems.security.Member;
 import org.beangle.ems.security.User;
 
 public interface UserService {
@@ -52,12 +52,12 @@ public interface UserService {
 	public List<User> getUsers(Long userIds[]);
 
 	/**
-	 * 查询用户关联的member用户组
+	 * 查询用户关联的member角色
 	 * 
 	 * @param user
 	 * @return
 	 */
-	public List<Group> getGroups(User user);
+	public List<Role> getRoles(User user);
 
 	/**
 	 * 查找关联组关系
@@ -66,7 +66,7 @@ public interface UserService {
 	 * @param ship
 	 * @return
 	 */
-	public List<GroupMember> getGroupMembers(User user, GroupMember.Ship ship);
+	public List<Member> getMembers(User user, Member.Ship ship);
 
 	/**
 	 * 设置用户状态

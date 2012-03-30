@@ -7,7 +7,7 @@ package org.beangle.ems.security.nav;
 import java.util.List;
 
 import org.beangle.dao.pojo.LongIdEntity;
-import org.beangle.ems.security.Group;
+import org.beangle.ems.security.Role;
 
 public interface MenuProfile extends LongIdEntity {
 
@@ -19,9 +19,9 @@ public interface MenuProfile extends LongIdEntity {
 
 	public void setMenus(List<Menu> menus);
 
-	public Group getGroup();
+	public Role getRole();
 
-	public void setGroup(Group group);
+	public void setRole(Role role);
 
 	/**
 	 * 资源状态

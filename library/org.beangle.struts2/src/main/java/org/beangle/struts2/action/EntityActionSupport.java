@@ -299,7 +299,9 @@ public abstract class EntityActionSupport extends BaseAction {
 		return builder;
 	}
 
-	protected abstract String getEntityName();
+	protected String getEntityName() {
+		throw new RuntimeException(this.getClass() + " should override getEntityName");
+	}
 
 	protected String getShortName() {
 		String name = getEntityName();

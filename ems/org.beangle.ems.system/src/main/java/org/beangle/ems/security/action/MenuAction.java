@@ -12,7 +12,7 @@ import org.beangle.collection.CollectUtils;
 import org.beangle.dao.Entity;
 import org.beangle.dao.query.builder.OqlBuilder;
 import org.beangle.dao.util.HierarchyEntityUtils;
-import org.beangle.ems.security.Authority;
+import org.beangle.ems.security.Permission;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.helper.MenuPropertyExtractor;
 import org.beangle.ems.security.nav.Menu;
@@ -141,10 +141,10 @@ public class MenuAction extends SecurityEntityActionSupport {
 		Menu menu = (Menu) getModel(getEntityName(), entityId);
 		put(getShortName(), menu);
 		if (!menu.getResources().isEmpty()) {
-			OqlBuilder<Authority> groupQuery = OqlBuilder.from(Authority.class, "auth");
-			groupQuery.where("auth.resource in(:resources)", menu.getResources()).select(
-					"distinct auth.group");
-			put("groups", entityDao.search(groupQuery));
+			OqlBuilder<Permission> roleQuery = OqlBuilder.from(Permission.class, "auth");
+			roleQuery.where("auth.resource in(:resources)", menu.getResources()).select(
+					"distinct auth.role");
+			put("roles", entityDao.search(roleQuery));
 		}
 		return forward();
 	}

@@ -8,14 +8,14 @@ import java.beans.Introspector;
 import java.lang.reflect.Method;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.beangle.ems.security.model.GroupBean;
+import org.beangle.ems.security.model.RoleBean;
 import org.testng.annotations.Test;
 
 @Test
 public class ReflectorTest {
 
 	public void testGet() {
-		Method a = getterMethod(GroupBean.class, "parent");
+		Method a = getterMethod(RoleBean.class, "parent");
 		System.out.println(a.getReturnType());
 	}
 

@@ -6,16 +6,16 @@ package org.beangle.ems.security.action;
 
 import org.beangle.dao.Entity;
 import org.beangle.dao.query.builder.OqlBuilder;
-import org.beangle.ems.security.Group;
+import org.beangle.ems.security.Role;
 import org.beangle.ems.security.nav.MenuProfile;
 import org.beangle.ems.web.action.SecurityEntityActionSupport;
 
 public class MenuProfileAction extends SecurityEntityActionSupport {
 
 	protected void editSetting(Entity<?> entity) {
-		OqlBuilder<Group> builder = OqlBuilder.from(Group.class, "g");
+		OqlBuilder<Role> builder = OqlBuilder.from(Role.class, "g");
 		builder.orderBy("g.code");
-		put("groups", entityDao.search(builder));
+		put("roles", entityDao.search(builder));
 	}
 
 	@Override

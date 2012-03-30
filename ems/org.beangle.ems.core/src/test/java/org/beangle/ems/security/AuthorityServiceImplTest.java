@@ -7,7 +7,7 @@ package org.beangle.ems.security;
 import static org.testng.Assert.assertEquals;
 
 import org.beangle.ems.security.service.AuthorityService;
-import org.beangle.ems.security.service.AuthorityServiceImpl;
+import org.beangle.ems.security.service.impl.AuthorityServiceImpl;
 import org.testng.annotations.Test;
 
 @Test

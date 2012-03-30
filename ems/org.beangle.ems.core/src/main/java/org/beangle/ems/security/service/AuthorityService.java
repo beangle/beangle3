@@ -7,13 +7,13 @@ package org.beangle.ems.security.service;
 import java.util.List;
 import java.util.Set;
 
-import org.beangle.ems.security.Authority;
-import org.beangle.ems.security.Group;
+import org.beangle.ems.security.Permission;
+import org.beangle.ems.security.Role;
 import org.beangle.ems.security.Resource;
 import org.beangle.ems.security.User;
 
 /**
- * 用户用户组权限管理服务接口. 权限实体@see <code>Authority</code> 系统资源实体@see <code>Resource</code> 系统功能点实体@see
+ * 用户角色权限管理服务接口. 权限实体@see <code>Authority</code> 系统资源实体@see <code>Resource</code> 系统功能点实体@see
  * <code>Action</code> 数据权限实体@see <code>Restriction</code>
  * 
  * @author dell,chaostone 2005-9-27
@@ -37,26 +37,28 @@ public interface AuthorityService {
 	public List<Resource> getResources(User user);
 
 	/**
-	 * 按照用户组查找资源
+	 * 按照角色查找资源
 	 * 
-	 * @param groupId
+	 * @param roleId
 	 * @return
 	 */
-	public Set<String> getResourceNamesByGroup(Long groupId);
+	public Set<String> getResourceNamesByRole(Long roleId);
+
 	/**
-	 * 按照用户组查找资源
+	 * 按照角色查找资源
 	 * 
-	 * @param groupId
+	 * @param scope
 	 * @return
 	 */
-	public Set<String> getResourceNamesByScope(Resource.Scope groupId);
+	public Set<String> getResourceNamesByScope(Resource.Scope scope);
+
 	/**
-	 * 用户组内对应的资源
+	 * 角色内对应的资源
 	 * 
-	 * @param group
+	 * @param role
 	 * @return
 	 */
-	public List<Resource> getResources(Group group);
+	public List<Resource> getResources(Role role);
 
 	/**
 	 * 更新资源状态
@@ -72,41 +74,23 @@ public interface AuthorityService {
 	 * @param user
 	 * @return
 	 */
-	public List<Authority> getAuthorities(User user);
+	public List<Permission> getPermissions(User user);
 
 	/**
-	 * 依据默认深度得到用户组拥有的权限
+	 * 依据默认深度得到角色拥有的权限
 	 * 
-	 * @param group
+	 * @param role
 	 * @return
 	 */
-	public List<Authority> getAuthorities(Group group);
-
-	/**
-	 * 依据资源和用户取得对应的权限
-	 * 
-	 * @param user
-	 * @param resource
-	 * @return
-	 */
-	public Authority getAuthority(User user, Resource resource);
-
-	/**
-	 * 依据资源和用户组取得对应的权限
-	 * 
-	 * @param userId
-	 * @param resource
-	 * @return
-	 */
-	public Authority getAuthority(Group group, Resource resource);
+	public List<Permission> getPermissions(Role role);
 
 	/**
 	 * 授权
 	 * 
-	 * @param ao
+	 * @param role
 	 * @param resources
 	 */
-	public void authorize(Group group, Set<Resource> resources);
+	public void authorize(Role role, Set<Resource> resources);
 
 	/**
 	 * @param userService
@@ -122,7 +106,7 @@ public interface AuthorityService {
 	 * Extract Resource from uri
 	 * 
 	 * @param uri
-	 *            with out context path
+	 *        with out context path
 	 * @return
 	 */
 	public String extractResource(String uri);

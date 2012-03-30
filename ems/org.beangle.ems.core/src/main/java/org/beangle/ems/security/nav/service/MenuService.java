@@ -6,7 +6,7 @@ package org.beangle.ems.security.nav.service;
 
 import java.util.List;
 
-import org.beangle.ems.security.Group;
+import org.beangle.ems.security.Role;
 import org.beangle.ems.security.User;
 import org.beangle.ems.security.nav.Menu;
 import org.beangle.ems.security.nav.MenuProfile;
@@ -26,12 +26,12 @@ public interface MenuService {
 	public List<MenuProfile> getProfiles(User user);
 
 	/**
-	 * 查询用户组能够适用的菜单配置
+	 * 查询角色能够适用的菜单配置
 	 * 
-	 * @param groups
+	 * @param roles
 	 * @return
 	 */
-	public List<MenuProfile> getProfiles(Group... groups);
+	public List<MenuProfile> getProfiles(Role... roles);
 
 	/**
 	 * 查询用户能够适用的单个菜单配置
@@ -42,16 +42,16 @@ public interface MenuService {
 	public MenuProfile getProfile(User user, Long profileId);
 
 	/**
-	 * 查询用户组能够适用的单个菜单配置
+	 * 查询角色能够适用的单个菜单配置
 	 * 
-	 * @param group
+	 * @param role
 	 * @param profileId
 	 * @return
 	 */
-	public MenuProfile getProfile(Group group, Long profileId);
+	public MenuProfile getProfile(Role role, Long profileId);
 
 	/**
-	 * 获取用户的直接权限范围内的资源和所具有用户组的资源.
+	 * 获取用户的直接权限范围内的资源和所具有角色的资源.
 	 * 
 	 * @param userId
 	 * @return
@@ -59,21 +59,23 @@ public interface MenuService {
 	public List<Menu> getMenus(MenuProfile profile, User user);
 
 	/**
-	 * 用户组内对应的资源
+	 * 角色内对应的资源
 	 * 
-	 * @param groupId
+	 * @param profile
+	 * @param role
+	 * @param enabled
 	 * @return
 	 */
-	public List<Menu> getMenus(MenuProfile profile, Group group, Boolean enabled);
+	public List<Menu> getMenus(MenuProfile profile, Role role, Boolean enabled);
 
 	/**
 	 * 移动菜单到指定的位置
 	 * 
 	 * @param menu
 	 * @param location
-	 *            新的位置
+	 *        新的位置
 	 * @param indexno
-	 *            新位置的顺序号
+	 *        新位置的顺序号
 	 */
 	public void move(Menu menu, Menu location, int indexno);
 

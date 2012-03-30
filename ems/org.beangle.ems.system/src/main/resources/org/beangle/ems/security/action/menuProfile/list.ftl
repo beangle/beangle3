@@ -9,7 +9,7 @@
 	[@b.row]
 		[@b.boxcol/]
 		[@b.col title="名称" property="name" sortable="false"/]
-		[@b.col title="使用的用户组" property="group.name"/]
+		[@b.col title="使用的角色" property="role.name"/]
 	[/@]
 [/@]
 [@b.foot/]

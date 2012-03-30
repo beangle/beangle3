@@ -14,10 +14,10 @@ import org.beangle.collection.CollectUtils;
 import org.beangle.dao.impl.BaseServiceImpl;
 import org.beangle.dao.query.builder.Condition;
 import org.beangle.dao.query.builder.OqlBuilder;
-import org.beangle.ems.security.Authority;
-import org.beangle.ems.security.Group;
+import org.beangle.ems.security.Permission;
+import org.beangle.ems.security.Role;
 import org.beangle.ems.security.Resource;
-import org.beangle.ems.security.profile.GroupProfile;
+import org.beangle.ems.security.profile.RoleProfile;
 import org.beangle.ems.security.profile.PropertyMeta;
 import org.beangle.ems.security.profile.UserProfile;
 import org.beangle.ems.security.profile.UserProperty;
@@ -47,30 +47,30 @@ public class RestrictionServiceImpl extends BaseServiceImpl implements Restricti
 //			if (!authHolders.isEmpty()) return authHolders;
 //			else return Collections.emptyList();
 //		} else {
-//			List<RestrictionHolder> groupHolders = CollectUtils.newArrayList();
-//			// 用户组自身限制
-//			for (GroupProfile groupProfile : getProfiles(profile.getUser().getGroups(), resource)) {
-//				if (!groupProfile.getRestrictions().isEmpty()) {
-//					groupHolders.add(groupProfile);
+//			List<RestrictionHolder> roleHolders = CollectUtils.newArrayList();
+//			// 角色自身限制
+//			for (RoleProfile roleProfile : getProfiles(profile.getUser().getRoles(), resource)) {
+//				if (!roleProfile.getRestrictions().isEmpty()) {
+//					roleHolders.add(roleProfile);
 //				}
 //			}
-//			return groupHolders;
+//			return roleHolders;
 //		}
 		return Collections.emptyList();
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public Collection<GroupProfile> getProfiles(Collection<Group> groups, Resource resource) {
-		if (groups.isEmpty()) return Collections.EMPTY_LIST;
-		OqlBuilder builder = OqlBuilder.from("from "+ Authority.class.getName() + " au,"+GroupProfile.class.getName()+" gp");
-		builder.where("au.group in (:groups) and au.resource = :resource and au.group=gp.group", groups, resource);
+	public Collection<RoleProfile> getProfiles(Collection<Role> roles, Resource resource) {
+		if (roles.isEmpty()) return Collections.EMPTY_LIST;
+		OqlBuilder builder = OqlBuilder.from("from "+ Permission.class.getName() + " au,"+RoleProfile.class.getName()+" gp");
+		builder.where("au.role in (:roles) and au.resource = :resource and au.role=gp.role", roles, resource);
 		builder.select("gp");
 		return entityDao.search(builder);
 	}
 
 //	private List<RestrictionHolder> getAuthorityRestrictions(User user, Resource resource) {
 //		OqlBuilder<RestrictionHolder> query = OqlBuilder.hql("from " + Authority.class.getName() + " r "
-//				+ "join r.group.members as gmember join r.restrictions as restriction"
+//				+ "join r.role.members as gmember join r.restrictions as restriction"
 //				+ " where gmember.user=:user and gmember.member=true and r.resource=:resource"
 //				+ " and restriction.enabled=true");
 //		Map<String, Object> params = CollectUtils.newHashMap();

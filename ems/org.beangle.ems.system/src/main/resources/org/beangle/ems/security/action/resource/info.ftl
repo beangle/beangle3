@@ -26,7 +26,7 @@
    <tr>
 	 <td class="title">使用组:</td>
 	 <td  colspan="3">
-	  [#list groups as group]${group.name}[#if group_has_next]&nbsp;[/#if][/#list]
+	  [#list roles as role]${role.name}[#if role_has_next]&nbsp;[/#if][/#list]
 	 </td>
 	</tr>
 </table>

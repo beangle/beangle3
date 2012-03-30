@@ -9,7 +9,7 @@ import java.util.List;
 import org.beangle.collection.CollectUtils;
 import org.beangle.dao.impl.BaseServiceImpl;
 import org.beangle.dao.query.builder.OqlBuilder;
-import org.beangle.ems.security.Group;
+import org.beangle.ems.security.Role;
 import org.beangle.ems.security.session.model.SessionProfileBean;
 import org.beangle.security.core.session.category.CategoryProfile;
 import org.beangle.security.core.session.category.CategoryProfileProvider;
@@ -25,7 +25,7 @@ public class SessionProfileServiceImpl extends BaseServiceImpl implements Catego
 	public List<CategoryProfile> getCategoryProfiles() {
 		List<CategoryProfile> profiles = CollectUtils.newArrayList();
 		OqlBuilder<?> cbuilder = OqlBuilder.from(SessionProfileBean.class, "cp");
-		cbuilder.select("cp.group.name,cp.capacity,cp.userMaxSessions,cp.inactiveInterval");
+		cbuilder.select("cp.role.name,cp.capacity,cp.userMaxSessions,cp.inactiveInterval");
 		for (Object data : entityDao.search(cbuilder)) {
 			Object[] datas = (Object[]) data;
 			profiles.add(new CategoryProfile((String) datas[0], (Integer) datas[1], (Integer) datas[2],
@@ -35,16 +35,16 @@ public class SessionProfileServiceImpl extends BaseServiceImpl implements Catego
 
 	}
 
-	public boolean hasProfile(Group group) {
+	public boolean hasProfile(Role role) {
 		OqlBuilder<?> cbuilder = OqlBuilder.from(SessionProfileBean.class, "cp");
-		cbuilder.select("cp.id").where("cp.group=:group", group).cacheable();
+		cbuilder.select("cp.id").where("cp.role=:role", role).cacheable();
 		return !entityDao.search(cbuilder).isEmpty();
 	}
 
 	public void saveOrUpdate(List<SessionProfileBean> profiles) {
 		entityDao.saveOrUpdate(profiles);
 		for (SessionProfileBean profile : profiles) {
-			publish(new CategoryProfileUpdateEvent(new CategoryProfile(profile.getGroup().getName(),
+			publish(new CategoryProfileUpdateEvent(new CategoryProfile(profile.getRole().getName(),
 					profile.getCapacity(), profile.getUserMaxSessions(), profile.getInactiveInterval())));
 		}
 	}

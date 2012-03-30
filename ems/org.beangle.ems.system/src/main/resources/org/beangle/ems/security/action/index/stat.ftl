@@ -3,7 +3,7 @@
 [@b.module title="用户统计"]
 	[@b.grid  items=userStat?keys?sort var="stat" width="94%" ]
 		[@b.row]
-			[@b.col width="70%" title="用户组"]${stat}[/@]
+			[@b.col width="70%" title="角色"]${stat}[/@]
 			[@b.col width="15%" title="激活"]${userStat[stat].get(true)!}[/@]
 			[@b.col width="15%" title="禁用"]${userStat[stat].get(false)!}[/@]
 		[/@]

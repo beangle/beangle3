@@ -78,7 +78,7 @@ div .portlet-content{margin:2px;}
 		</div>
 	</div>
 	[#include "../user/panels/online_portlet.ftl"/]
-	[#include "../user/panels/group_portlet.ftl"/]
+	[#include "../user/panels/role_portlet.ftl"/]
 </div>
 <div id="mspace">
 [@b.div id="user-info"][#include "infolet.ftl"/][/@]

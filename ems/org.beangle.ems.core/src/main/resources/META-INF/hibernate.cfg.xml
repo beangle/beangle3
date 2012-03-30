@@ -20,9 +20,9 @@
 		<mapping class="org.beangle.ems.meta.model.EntityMetaBean"/>
 		<mapping class="org.beangle.ems.meta.model.PropertyMetaBean"/>
 
-		<mapping class="org.beangle.ems.security.model.AuthorityBean"/>
-		<mapping class="org.beangle.ems.security.model.GroupBean"/>
-		<mapping class="org.beangle.ems.security.model.GroupMemberBean"/>
+		<mapping class="org.beangle.ems.security.model.PermissionBean"/>
+		<mapping class="org.beangle.ems.security.model.RoleBean"/>
+		<mapping class="org.beangle.ems.security.model.MemberBean"/>
 		<mapping class="org.beangle.ems.security.model.ResourceBean"/>
 		<mapping class="org.beangle.ems.security.model.UserBean"/>
 
@@ -32,8 +32,8 @@
 		<mapping class="org.beangle.ems.security.restrict.model.RestrictionBean"/>
 		<mapping class="org.beangle.ems.security.restrict.model.RestrictEntityBean"/>
 		
-		<mapping class="org.beangle.ems.security.profile.model.GroupProfileBean"/>
-		<mapping class="org.beangle.ems.security.profile.model.GroupPropertyBean"/>
+		<mapping class="org.beangle.ems.security.profile.model.RoleProfileBean"/>
+		<mapping class="org.beangle.ems.security.profile.model.RolePropertyBean"/>
 		<mapping class="org.beangle.ems.security.profile.model.UserProfileBean"/>
 		<mapping class="org.beangle.ems.security.profile.model.UserPropertyBean"/>
 		<mapping class="org.beangle.ems.security.profile.model.PropertyMetaBean"/>

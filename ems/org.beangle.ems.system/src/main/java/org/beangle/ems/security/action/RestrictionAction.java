@@ -140,9 +140,9 @@ public class RestrictionAction extends SecurityActionSupport {
 //		User me = entityDao.get(User.class, getUserId());
 //		if (type.equals("user")) {
 //			restrictions = CollectUtils.newArrayList(((RestrictionHolder<?>) me).getRestrictions());
-//		} else if (type.equals("group")) {
-//			for (GroupMember member : me.getMembers()) {
-//				if (member.isMember()) restrictions.addAll(member.getGroup().getRestrictions());
+//		} else if (type.equals("role")) {
+//			for (pMember member : me.getMembers()) {
+//				if (member.isMember()) restrictions.addAll(member.getRole().getRestrictions());
 //			}
 //		} else if (type.equals("authority")) {
 //			Object aa = holder;
