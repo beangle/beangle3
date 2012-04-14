@@ -9,7 +9,7 @@
 		<th width="60%">可用资源</th>
 	  </tr>
 		[#macro i18nTitle(entity)][#if locale.language?index_of("en")!=-1][#if entity.engTitle!?trim==""]${entity.title!}[#else]${entity.engTitle!}[/#if][#else][#if entity.title!?trim!=""]${entity.title!}[#else]${entity.engTitle!}[/#if][/#if][/#macro]
-		[#list menus?sort_by("code") as menu]
+		[#if menus??][#list menus?sort_by("code") as menu]
 		<tr class="[#if menu_index%2==0]griddata-even[#else]griddata-odd[/#if]">
 		   <td align="left" title="[#list roleMenusMap?keys as role][#if roleMenusMap.get(role)?seq_contains(menu)]${role.name}&nbsp;[/#if][/#list]">
 		   [#list 1..menu.depth as i]&nbsp;&nbsp;[/#list][#if menu.children?size!=0]<em>${menu.code}[@i18nTitle menu/]</em>[#else]${menu.code}[@i18nTitle menu/][/#if]
@@ -21,6 +21,7 @@
 		   </td>
 		  </tr>
 		 [/#list]
+		[/#if]
 	  </tbody>
 	 </table>
 	</div>

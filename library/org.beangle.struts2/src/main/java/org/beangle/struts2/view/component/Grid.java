@@ -329,6 +329,11 @@ public class Grid extends ClosingUIBean {
 			return StrUtils.concat(row.table.var, ".", property);
 		}
 
+		/**
+		 * 支持按照属性提取国际化英文名
+		 * 
+		 * @return
+		 */
 		public String getTitle() {
 			if (null == title) {
 				title = StrUtils.concat(row.table.var, ".", property);
@@ -363,15 +368,15 @@ public class Grid extends ClosingUIBean {
 		public Object getCurObj() {
 			return row.curObj;
 		}
-		
+
 	}
 
-	public static class Treecol extends Col{
+	public static class Treecol extends Col {
 
 		public Treecol(ValueStack stack) {
 			super(stack);
 		}
-		
+
 		@Override
 		public boolean doEnd(Writer writer, String body) {
 			this.body = body;
@@ -382,8 +387,9 @@ public class Grid extends ClosingUIBean {
 			}
 			return false;
 		}
-		
+
 	}
+
 	public static class Boxcol extends Col {
 
 		public Boxcol(ValueStack stack) {

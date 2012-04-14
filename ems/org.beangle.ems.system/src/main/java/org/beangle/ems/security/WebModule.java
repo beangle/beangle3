@@ -10,7 +10,6 @@ import org.beangle.ems.avatar.action.BoardAction;
 import org.beangle.ems.avatar.action.MyUploadAction;
 import org.beangle.ems.security.action.AuthorityAction;
 import org.beangle.ems.security.action.CaptchaAction;
-import org.beangle.ems.security.action.RoleAction;
 import org.beangle.ems.security.action.IndexAction;
 import org.beangle.ems.security.action.MenuAction;
 import org.beangle.ems.security.action.MenuNavAction;
@@ -18,9 +17,10 @@ import org.beangle.ems.security.action.MenuProfileAction;
 import org.beangle.ems.security.action.MonitorAction;
 import org.beangle.ems.security.action.MyAction;
 import org.beangle.ems.security.action.PasswordAction;
-import org.beangle.ems.security.action.ResourceAction;
-import org.beangle.ems.security.action.RestrictMetaAction;
+import org.beangle.ems.security.action.ProfileAction;
 import org.beangle.ems.security.action.RestrictionAction;
+import org.beangle.ems.security.action.ResourceAction;
+import org.beangle.ems.security.action.RoleAction;
 import org.beangle.ems.security.action.SessioninfoLogAction;
 import org.beangle.ems.security.action.UserAction;
 import org.beangle.ems.security.helper.UserDashboardHelper;
@@ -32,8 +32,8 @@ public final class WebModule extends AbstractBindModule {
 		// security
 		bind(SessioninfoLogAction.class, AuthorityAction.class, RoleAction.class, IndexAction.class,
 				MenuAction.class, MenuNavAction.class, MenuProfileAction.class, MonitorAction.class,
-				MyAction.class, PasswordAction.class, ResourceAction.class, RestrictionAction.class,
-				RestrictMetaAction.class, UserAction.class, CaptchaAction.class).in(Scope.PROTOTYPE);
+				MyAction.class, PasswordAction.class, ResourceAction.class, UserAction.class,
+				CaptchaAction.class, ProfileAction.class, RestrictionAction.class).in(Scope.PROTOTYPE);
 
 		bind(UserDashboardHelper.class).shortName();
 

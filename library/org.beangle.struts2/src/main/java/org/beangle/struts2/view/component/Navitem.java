@@ -28,6 +28,7 @@ public class Navitem extends UIBean {
 	@Override
 	protected void evaluateParams() {
 		this.href = render(this.href);
+		title = getText(title);
 		this.selected = findAncestor(Navmenu.class).isSelected(this.href);
 		if (null == onclick) {
 			if (null != target) {

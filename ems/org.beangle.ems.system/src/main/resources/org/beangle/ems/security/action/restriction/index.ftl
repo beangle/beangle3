@@ -1,0 +1,8 @@
+[#ftl]
+[@b.head/]
+[#include "../nav.ftl"/]
+[@b.tabs]
+	[@b.tab label="业务数据和模式" href="!entities"/]
+	[@b.tab label="业务数据限制项" href="!fields"/]
+[/@]
+[@b.foot/]

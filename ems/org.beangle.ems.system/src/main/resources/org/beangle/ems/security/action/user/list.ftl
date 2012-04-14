@@ -8,19 +8,17 @@
 	bar.addItem("${b.text("action.freeze")}",activateUser('false'),'${b.theme.iconurl('actions/freeze.png')}');
 	bar.addItem("${b.text("action.activate")}",activateUser('true'),'${b.theme.iconurl('actions/activate.png')}');
 	bar.addItem("${b.text("action.delete")}",action.remove());
-	bar.addItem("${b.text("action.export")}",action.exportData("name:登录名,fullname:姓名,mail:电子邮件,roles:角色,creator.fullname:创建者,effectAt:账户生效时间,invalidAt:账户失效时间,passwordExpiredAt:密码失效时间,createdAt:创建时间,updatedAt:修改时间,enabled:状态",null,"&fileName=用户信息"));
-	function activateUser(isActivate){
-		return action.multi("activate","确定提交?","isActivate="+isActivate);
-	}
+	bar.addItem("${b.text("action.export")}",action.exportData("name,fullname,mail,roles,creator.fullname,effectAt,invalidAt,passwordExpiredAt,createdAt,updatedAt,enabled",null,"&fileName=用户信息"));
+	function activateUser(isActivate){return action.multi("activate","确定提交?","isActivate="+isActivate);}
 	[/@]
 	[@b.row]
 		[@b.boxcol/]
-		[@b.col property="name" width="20%"]&nbsp;[@ems.avatar user=user/]&nbsp;[@b.a href="!dashboard?user.id=${user.id}" target="_blank"]${user.name}[/@][/@]
+		[@b.col property="name" width="20%"]&nbsp;[@b.a href="!dashboard?user.id=${user.id}" target="_blank"]${user.name}[/@][/@]
 		[@b.col property="fullname" width="13%"/]
-		[@b.col property="mail" title="common.email" width="23%"/]
-		[@b.col property="effectAt" title="有效期" width="20%"]${user.effectAt?string("yyyy-MM-dd")}~${(user.invalidOn?string("yyyy-MM-dd"))!}[/@]
-		[@b.col property="passwordExpiredOn" title="密码失效日期" width="10%"]${(user.passwordExpiredOn?string("yyyy-MM-dd"))!}[/@]
-		[@b.col property="enabled" title="common.status" width="9%"][@enableInfo user.enabled/][/@]
+		[@b.col property="mail" width="23%"/]
+		[@b.col property="effectAt" width="20%"]${user.effectAt?string("yyyy-MM-dd")}~${(user.invalidOn?string("yyyy-MM-dd"))!}[/@]
+		[@b.col property="passwordExpiredAt" width="10%"]${(user.passwordExpiredAt?string("yyyy-MM-dd"))!}[/@]
+		[@b.col property="enabled" width="9%"][@enableInfo user.enabled/][/@]
 	[/@]
 [/@]
 [@b.foot/]

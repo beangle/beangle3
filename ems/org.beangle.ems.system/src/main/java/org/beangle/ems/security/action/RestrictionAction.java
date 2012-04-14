@@ -4,208 +4,146 @@
  */
 package org.beangle.ems.security.action;
 
-import org.beangle.ems.security.helper.RestrictionHelper;
-import org.beangle.ems.security.service.UserDataResolver;
-import org.beangle.ems.web.action.SecurityActionSupport;
+import java.util.List;
 
-public class RestrictionAction extends SecurityActionSupport {
-	protected UserDataResolver idDataResolver;
+import org.beangle.dao.query.builder.OqlBuilder;
+import org.beangle.ems.security.profile.PropertyMeta;
+import org.beangle.ems.security.restrict.RestrictEntity;
+import org.beangle.ems.security.restrict.model.RestrictionBean;
+import org.beangle.struts2.action.EntityActionSupport;
+import org.beangle.struts2.convention.route.Action;
 
-	public String tip() {
+/**
+ * 数据限制元信息配置类
+ * 
+ * @author chaostone
+ * @version $Id: RestrictionAction.java Apr 13, 2012 10:01:36 PM chaostone $
+ */
+public class RestrictionAction extends EntityActionSupport {
+
+	public String fields() {
+		OqlBuilder<PropertyMeta> query = OqlBuilder.from(PropertyMeta.class, "propertyMeta");
+		populateConditions(query);
+		query.orderBy(get("orderBy")).limit(getPageLimit());
+		put("propertyMetas", search(query));
 		return forward();
 	}
 
-	/**
-	 * 删除数据限制权限
-	 */
-//	public String remove() {
-//		Restriction restriction = getRestriction();
-//		RestrictionHolder holer = new RestrictionHelper(entityDao).getHolder();
-//		holer.getRestrictions().remove(restriction);
-//		entityDao.remove(restriction);
-//		entityDao.saveOrUpdate(holer);
-//		return redirect("info", "info.remove.success");
-//	}
+	public String removeField() {
+		Long fieldId = getId("propertyMeta");
+		if (null != fieldId) {
+			PropertyMeta field = entityDao.get(PropertyMeta.class, fieldId);
+			try {
+				entityDao.remove(field);
+			} catch (Exception e) {
+				return redirect("entityInfo", "info.remove.failure");
+			}
+			logger.info("remove field with name {}", field.getName());
+		}
+		return redirect("fields", "info.remove.success");
+	}
 
-	/**
-	 * 查看限制资源界面
-	 */
-	public String info() {
-		RestrictionHelper helper = new RestrictionHelper(entityDao);
-		helper.setRestrictionService(restrictionService);
-		//FIXME
-//		helper.populateInfo(helper.getHolder());
+	public String editField() {
+		put("propertyMeta", getEntity(PropertyMeta.class, "propertyMeta"));
+		return forward("fieldForm");
+	}
+
+	public String saveField() {
+		PropertyMeta field = populateEntity(PropertyMeta.class, "propertyMeta");
+		if (entityDao.duplicate(PropertyMeta.class, field.getId(), "name", field.getName())) {
+			addFlashErrorNow("名称重复");
+			return forward(new Action(this, "editField"));
+		}
+		entityDao.saveOrUpdate(field);
+		return redirect("fields", "info.save.success");
+	}
+
+	public String entities() {
+		List<RestrictEntity> entities = entityDao.getAll(RestrictEntity.class);
+		put("entities", entities);
 		return forward();
 	}
 
-//	public String save() {
-//		Restriction restriction = getRestriction();
-//		RestrictionHolder holder = new RestrictionHelper(entityDao).getHolder();
-//		List<Restriction> myRestrictions = getMyRestrictions(restriction.getPattern(), holder);
-//		Set<RestrictField> ignoreFields = getIgnoreFields(myRestrictions);
-//		boolean isAdmin = isAdmin();
-//		for (final RestrictField field : restriction.getPattern().getEntity().getFields()) {
-//			String[] values = (String[]) getAll(field.getName());
-//			if ((ignoreFields.contains(field) || isAdmin) && getBool("ignoreField" + field.getId())) {
-//				restriction.setItem(field, "*");
-//			} else {
-//				if (null == values || values.length == 0) {
-//					restriction.getItems().remove(field.getId());
-//				} else {
-//					String storedValue = null;
-//					if (null != field.getKeyName()) {
-//						final Set<String> keys = CollectUtils.newHashSet(values);
-//						Collection<?> allValues = restrictionService.getFieldValues(field.getName());
-//						allValues = CollectionUtils.select(allValues, new Predicate() {
-//							public boolean evaluate(Object arg0) {
-//								try {
-//									String keyValue = String.valueOf(PropertyUtils.getProperty(arg0,
-//											field.getKeyName()));
-//									return keys.contains(keyValue);
-//								} catch (Exception e) {
-//									e.printStackTrace();
-//								}
-//								return false;
-//							}
-//						});
-//						storedValue = idDataResolver.marshal(field, allValues);
-//					} else {
-//						storedValue = StrUtils.join(values);
-//					}
-//					restriction.setItem(field, storedValue);
-//				}
-//			}
-//		}
-//		if (restriction.getItems().isEmpty()) {
-//			holder.getRestrictions().remove(restriction);
-//			if (restriction.isPersisted()) entityDao.remove(restriction);
-//			entityDao.saveOrUpdate(holder);
-//			return redirect("info", "info.save.success");
-//		} else {
-//			if (!restriction.isPersisted()) {
-//				holder.getRestrictions().add(restriction);
-//				entityDao.saveOrUpdate(holder);
-//			} else {
-//				entityDao.saveOrUpdate(
-//						(String) RestrictionHelper.restrictionTypeMap.get(get("restrictionType")),
-//						restriction);
-//			}
-//			return redirect("info", "info.save.success");
-//		}
-//	}
-//
-//	/**
-//	 * 编辑权限<br>
-//	 */
-//	public String edit() {
-//		// 取得各参数的值
-//		Restriction restriction = getRestriction();
-//		boolean isAdmin = isAdmin();
-//		Map<String, Object> mngFields = CollectUtils.newHashMap();
-//		Map<String, Object> aoFields = CollectUtils.newHashMap();
-//		List<Restriction> myRestricitons = getMyRestrictions(restriction.getPattern(),
-//				restriction.getHolder());
-//		Set<RestrictField> ignores = getIgnoreFields(myRestricitons);
-//		put("ignoreFields", ignores);
-//		Set<RestrictField> holderIgnoreFields = CollectUtils.newHashSet();
-//		put("holderIgnoreFields", holderIgnoreFields);
-//		for (RestrictField field : restriction.getPattern().getEntity().getFields()) {
-//			List<?> mngField = restrictionService.getFieldValues(field.getName());
-//			if (!isAdmin) {
-//				mngField.retainAll(getMyRestrictionValues(myRestricitons, field.getName()));
-//			} else {
-//				ignores.add(field);
-//			}
-//			String fieldValue = restriction.getItem(field);
-//			if ("*".equals(fieldValue)) {
-//				holderIgnoreFields.add(field);
-//			}
-//			mngFields.put(field.getName(), mngField);
-//			if (null == field.getSource()) {
-//				aoFields.put(field.getName(), fieldValue);
-//			} else {
-//				aoFields.put(field.getName(), restrictionService.getFieldValue(field, restriction));
-//			}
-//		}
-//		put("mngFields", mngFields);
-//		put("aoFields", aoFields);
-//		put("restriction", restriction);
-//		return forward();
-//	}
-//
-//	private List<Restriction> getMyRestrictions(RestrictPattern pattern,
-//			RestrictionHolder<? extends Restriction> holder) {
-//		String type = get("restrictionType");
-//		List<Restriction> restrictions = CollectUtils.newArrayList();
-//		User me = entityDao.get(User.class, getUserId());
-//		if (type.equals("user")) {
-//			restrictions = CollectUtils.newArrayList(((RestrictionHolder<?>) me).getRestrictions());
-//		} else if (type.equals("role")) {
-//			for (pMember member : me.getMembers()) {
-//				if (member.isMember()) restrictions.addAll(member.getRole().getRestrictions());
-//			}
-//		} else if (type.equals("authority")) {
-//			Object aa = holder;
-//			restrictions = restrictionService.getAuthorityRestrictions(me, ((Authority) aa).getResource());
-//		}
-//		List<Restriction> rt = CollectUtils.newArrayList();
-//		for (Restriction restriction : restrictions) {
-//			if (!restriction.getPattern().equals(pattern)) {
-//				continue;
-//			}
-//			rt.add(restriction);
-//		}
-//		return rt;
-//	}
-//
-//	private Set<RestrictField> getIgnoreFields(List<Restriction> restrictions) {
-//		Set<RestrictField> ignores = CollectUtils.newHashSet();
-//		for (Restriction restriction : restrictions) {
-//			for (RestrictField field : restriction.getPattern().getEntity().getFields()) {
-//				String value = restriction.getItem(field);
-//				if ("*".equals(value)) ignores.add(field);
-//			}
-//		}
-//		return ignores;
-//	}
-//
-//	private List<Object> getMyRestrictionValues(List<Restriction> restrictions, String name) {
-//		List<Object> values = CollectUtils.newArrayList();
-//		for (Restriction restriction : restrictions) {
-//			RestrictField field = restriction.getPattern().getEntity().getField(name);
-//			if (null != field) {
-//				String value = restriction.getItem(field);
-//				if (null != value) {
-//					if (field.isMultiple()) {
-//						values.addAll((Collection<?>) restrictionService.getFieldValue(field, restriction));
-//					} else {
-//						values.add(restrictionService.getFieldValue(field, restriction));
-//					}
-//				}
-//			}
-//		}
-//		return values;
-//	}
-//
-//	private Restriction getRestriction() {
-//		Long restrictionId = getLong("restriction.id");
-//		Restriction restriction = null;
-//		String entityName = (String) RestrictionHelper.restrictionTypeMap.get(get("restrictionType"));
-//		if (null == restrictionId) {
-//			restriction = (Restriction) Model.getEntityType(entityName).newInstance();
-//		} else {
-//			restriction = (Restriction) entityDao.get(entityName, restrictionId);
-//		}
-//		populate(Params.sub("restriction"), restriction, entityName);
-//		if (null == restrictionId) {
-//			restriction.setPattern((RestrictPattern) entityDao.get(RestrictPattern.class, restriction
-//					.getPattern().getId()));
-//		}
-//		return restriction;
-//	}
-
-	public void setIdDataResolver(UserDataResolver idDataResolver) {
-		this.idDataResolver = idDataResolver;
+	public String saveEntity() {
+		RestrictEntity entity = (RestrictEntity) populateEntity(RestrictEntity.class, "entity");
+		if (null != entity.getName()) {
+			if (entityDao.duplicate(RestrictEntity.class, entity.getId(), "name", entity.getName())) {
+				addFlashErrorNow("名称重复");
+				return forward(new Action(this, "editEntity"));
+			}
+			entityDao.saveOrUpdate(entity);
+			logger.info("save restrict entity with name {}", entity.getName());
+		}
+		return redirect("entities", "info.save.success");
 	}
 
+	public String removeEntity() {
+		Long entityId = getId("entity");
+		if (null != entityId) {
+			RestrictEntity entity = entityDao.get(RestrictEntity.class, entityId);
+			try {
+				entityDao.remove(entity);
+			} catch (Exception e) {
+				return redirect("entities", "info.remove.failure");
+			}
+			logger.info("remove entity with name {}", entity.getName());
+		}
+		return redirect("entities", "info.remove.success");
+	}
+
+	public String editEntity() {
+		RestrictEntity entity = getEntity(RestrictEntity.class, "entity");
+		put("entity", entity);
+		return forward("entityForm");
+	}
+
+	// public String entityInfo() {
+	// RestrictEntity entity = getEntity(RestrictEntity.class, "entity");
+	// put("entity", entity);
+	// Map<RestrictEntity, List<RestrictField>> fieldMap = CollectUtils.newHashMap();
+	// Map<RestrictEntity, List<RestrictPattern>> patternMap = CollectUtils.newHashMap();
+	// OqlBuilder<RestrictField> query = OqlBuilder.from(RestrictField.class, "field");
+	// query.join("field.entities", "entity");
+	// query.where("entity.id=:entityId", entity.getId());
+	// fieldMap.put(entity, entityDao.search(query));
+	// patternMap.put(entity, entityDao.get(RestrictPattern.class, "entity", entity));
+	// put("fieldMap", fieldMap);
+	// put("patternMap", patternMap);
+	// return forward();
+	// }
+	//
+
+	public String editRestriction() {
+		RestrictionBean pattern = getEntity(RestrictionBean.class, "restriction");
+		Long entityId = getLong("restriction.entity.id");
+		if (null == entityId) {
+			entityId = getLong("entity.id");
+		}
+		pattern.setEntity(entityDao.get(RestrictEntity.class, entityId));
+		put("restriction", pattern);
+		return forward("restrictionForm");
+	}
+
+	public String saveRestriction() {
+		RestrictionBean pattern = populateEntity(RestrictionBean.class, "pattern");
+		if (entityDao.duplicate(RestrictionBean.class, pattern.getId(), "remark", pattern.getRemark())) {
+			addFlashErrorNow("限制模式描述重复");
+			return forward(new Action(this, "editPattern"));
+		} else {
+			entityDao.saveOrUpdate(pattern);
+			return redirect("entityInfo", "info.save.success");
+		}
+	}
+
+	public String removePattern() {
+		Long[] patternIds = getIds("restriction");
+		if (null != patternIds) {
+			try {
+				entityDao.remove(entityDao.get(RestrictionBean.class, patternIds));
+			} catch (Exception e) {
+				return redirect("entityInfo", "info.remove.failure");
+			}
+		}
+		return redirect("entityInfo", "info.remove.success");
+	}
 }

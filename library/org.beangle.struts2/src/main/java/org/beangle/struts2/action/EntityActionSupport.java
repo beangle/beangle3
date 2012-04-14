@@ -350,8 +350,13 @@ public abstract class EntityActionSupport extends BaseAction {
 			List<String> keys = CollectUtils.newArrayList();
 			List<String> titles = CollectUtils.newArrayList();
 			for (String prop : props) {
-				keys.add(StringUtils.substringBefore(prop, ":"));
-				titles.add(getTextInternal(StringUtils.substringAfter(prop, ":")));
+				if (prop.contains(":")) {
+					keys.add(StringUtils.substringBefore(prop, ":"));
+					titles.add(getTextInternal(StringUtils.substringAfter(prop, ":")));
+				} else {
+					keys.add(prop);
+					titles.add(getTextInternal(getShortName() + "." + prop));
+				}
 			}
 			context.put(Context.KEYS, StrUtils.join(keys, ","));
 			context.put(Context.TITLES, StrUtils.join(titles, ","));

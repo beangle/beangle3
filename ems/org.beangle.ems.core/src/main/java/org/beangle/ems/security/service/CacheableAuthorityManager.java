@@ -110,7 +110,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 				publicResources.add(loginResource);
 			}
 		}
-		protectedResources = authorityService.getResourceNamesByScope(Resource.Scope.PUBLIC);
+		protectedResources = authorityService.getResourceNamesByScope(Resource.Scope.PROTECTED);
 		expired = false;
 	}
 

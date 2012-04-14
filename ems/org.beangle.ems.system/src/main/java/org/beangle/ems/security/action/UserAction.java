@@ -41,7 +41,7 @@ public class UserAction extends SecurityEntityActionSupport {
 	private UserDashboardHelper userDashboardHelper;
 
 	public String dashboard() {
-		Long userId = getLong("user.id");
+		Long userId = getId("user");
 		User managed = null;
 		if (null != userId) {
 			managed = entityDao.get(User.class, userId);
