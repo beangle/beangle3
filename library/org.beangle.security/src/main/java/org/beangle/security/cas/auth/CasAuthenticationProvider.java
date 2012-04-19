@@ -42,7 +42,7 @@ public class CasAuthenticationProvider implements AuthenticationProvider, Initia
 	private UserDetailService userDetailService;
 	private UserDetailChecker userDetailChecker;
 	private StatelessTicketCache statelessTicketCache = new NullTicketCache();
-	private String key;
+	private String key="an_id_for_this_auth_provider_only";
 	private TicketValidator ticketValidator;
 
 	public void init() throws Exception {

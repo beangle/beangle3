@@ -18,7 +18,7 @@
 		<commonscodec.version>1.5</commonscodec.version>
 		<commonscompress.version>1.1</commonscompress.version>
 		<jta.version>1.1</jta.version>
-		<jxls.version>1.0-RC-2</jxls.version>
+		<jxls.version>1.0/jxls.version>
 	</properties>
 	
 	<dependencies>
