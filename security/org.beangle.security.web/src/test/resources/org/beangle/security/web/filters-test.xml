@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="mockFilter" class="org.beangle.commons.web.filter.MockFilter"/>
+	
+	<bean id="mockFilter2" class="org.beangle.commons.web.filter.MockFilter"/>
+	
+	<!-- These are just here so we have filters of a specfic type to check the ordering is as expected -->
+	<bean id="sif" class="org.beangle.security.web.context.HttpSessionContextIntegrationFilter"/>
+	
+	<bean id="apf" class="org.beangle.security.web.auth.UsernamePasswordAuthenticationFilter">
+		<property name="defaultTargetUrl" value="/whocares"/>
+		<property name="authenticationFailureUrl" value="/whocares2"/>
+		<property name="filterUrl" value="/j_security_check"/>
+		<property name="authenticationManager">
+			<bean class="org.beangle.security.web.auth.MockAuthenticationManager"/>
+		</property>
+	</bean>
+	
+	<bean id="filterChain" class="org.beangle.security.web.FilterChainProxy">
+		<property name="filterChainMap">
+			<map>
+				<entry>
+					<key>
+						<bean class="org.beangle.commons.web.filter.AntPathRequestMatcher">
+							<constructor-arg value="/foo/**" />
+						</bean>
+					</key>
+					<list>
+						<ref local="mockFilter"/>
+					</list>
+				</entry>
+				<entry>
+					<key>
+						<bean class="org.beangle.commons.web.filter.AntPathRequestMatcher">
+							<constructor-arg value="/some/other/path/**" />
+						</bean>
+					</key>
+					<list>
+						<ref local="sif"/>
+						<ref local="mockFilter"/>
+						<ref local="mockFilter2"/>
+					</list>
+				</entry>
+				<entry>
+					<key>
+						<bean class="org.beangle.commons.web.filter.AntPathRequestMatcher">
+							<constructor-arg value="/do/not/filter" />
+						</bean>
+					</key>
+					<list/>
+				</entry>
+				<entry>
+					<key>
+						<bean class="org.beangle.commons.web.filter.AntPathRequestMatcher">
+							<constructor-arg value="/**" />
+						</bean>
+					</key>
+					<list>
+						<ref local="sif"/>
+						<ref local="apf"/>
+						<ref local="mockFilter"/>
+					</list>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="newFilterChainProxyNoDefaultPath" class="org.beangle.security.web.FilterChainProxy">
+		<property name="filterChainMap">
+			<map>
+				<entry>
+					<key>
+						<bean class="org.beangle.commons.web.filter.AntPathRequestMatcher">
+							<constructor-arg value="/foo/**"/>
+						</bean>
+					</key>
+					<list>
+						<ref local="mockFilter"/>
+					</list>
+				</entry>
+				<entry >
+					<key>
+						<bean class="org.beangle.commons.web.filter.AntPathRequestMatcher">
+							<constructor-arg value="/*.bar" />
+						</bean>
+					</key>
+					<list>
+						<ref local="mockFilter"/>
+						<ref local="mockFilter2"/>
+					</list>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>

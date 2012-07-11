@@ -1,4 +1,0 @@
-<test name="T1">
-  <parameter name="selenium.url" value="http://localhost:8080/"/>
-  <class name= "org.beangle.demo.SeleniumTest" />
-</test>

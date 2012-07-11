@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans >
+
+	<bean id="hibernateConfig" >
+		<property name="properties">
+			<props merge="true">
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+			</props>
+		</property>
+	</bean>
+</beans>
+

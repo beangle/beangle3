@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans >
+
+	<bean id="hibernateConfig" >
+		<property name="properties">
+			<props merge="true">
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="userService">
+		<property name="someMap">
+			<map>
+				<entry key="string" value="override string" />
+			</map>
+		</property>
+		<property name="someList">
+			<list merge="true">
+				<value>just third string</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="userLdapProvider" class="org.beangle.commons.context.testbean.AdvancedUserLdapProvider" />
+</beans>
+

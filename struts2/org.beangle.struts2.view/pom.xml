@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>org.beangle.struts2</groupId>
+    <artifactId>beangle-struts2-parent</artifactId>
+    <version>3.0.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.beangle.struts2</groupId>
+  <artifactId>beangle-struts2-view</artifactId>
+  <packaging>jar<!--bundle--></packaging>
+  <name>Beangle Struts2 View</name>
+  
+  <properties>
+    <bundle.symbolicName>org.beangle.struts2.view</bundle.symbolicName>
+  </properties>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.beangle.struts2</groupId>
+      <artifactId>beangle-struts2-convention</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+</project>
