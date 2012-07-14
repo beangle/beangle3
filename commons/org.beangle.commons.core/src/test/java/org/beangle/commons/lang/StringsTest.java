@@ -62,4 +62,9 @@ public class StringsTest {
     assertEquals(",2,", Strings.subtractSeq("1,2", "1"));
     assertFalse(Strings.isEqualSeq(",2005-9,", ",2005-9,2006-9,"));
   }
+
+  public void testRepeat() {
+    assertEquals("", Strings.repeat("ad", 0));
+    assertEquals("adadad", Strings.repeat("ad", 3));
+  }
 }

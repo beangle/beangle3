@@ -45,8 +45,7 @@ public class Strings {
    * {@link Character#toTitleCase(char)}. No other letters are changed.
    * </p>
    * <p>
-   * For a word based algorithm, see
-   * returns {@code null}.
+   * For a word based algorithm, see returns {@code null}.
    * </p>
    * 
    * <pre>
@@ -698,7 +697,26 @@ public class Strings {
    * @since 3.0
    */
   public static String repeat(String str, int repeat) {
-    return StringUtils.repeat(str, repeat);
+    if (str == null) return null;
+    if (repeat <= 1) {
+      Assert.isTrue(repeat >= 0, "invalid count: %s", repeat);
+      return (repeat == 0) ? "" : str;
+    }
+    final int len = str.length();
+    final long longSize = (long) len * (long) repeat;
+    final int size = (int) longSize;
+    if (size != longSize) { throw new ArrayIndexOutOfBoundsException("Required array size too large: "
+        + String.valueOf(longSize)); }
+
+    final char[] array = new char[size];
+    str.getChars(0, len, array, 0);
+    int n;
+    for (n = len; n < size - n; n <<= 1) {
+      System.arraycopy(array, 0, array, n, n);
+    }
+    System.arraycopy(array, 0, array, n, size - n);
+    return new String(array);
+
   }
 
   /**
