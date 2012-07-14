@@ -67,6 +67,7 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
   protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth == null || auth instanceof AnonymousAuthentication) { return true; }
+    if (!(auth instanceof PreauthAuthentication)) return false;
     if (null != authenticationAliveChecker && !authenticationAliveChecker.check(auth, request)) {
       unsuccessfulAuthentication(request, response, null);
       return true;

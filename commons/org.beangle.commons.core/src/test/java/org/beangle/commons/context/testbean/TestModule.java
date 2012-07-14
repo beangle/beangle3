@@ -16,7 +16,7 @@ public class TestModule extends AbstractBindModule {
     bind(UserLdapProvider.class, UserDaoProvider.class).shortName();
     bind(TestService.class).shortName();
 
-    bind(ProviderManager.class).list("providers", UserDaoProvider.class);
+    bind(ProviderManager.class).property("providers", list(UserDaoProvider.class));
     
     bind(SpringResourcesConsumer.class).property(
         "resources",

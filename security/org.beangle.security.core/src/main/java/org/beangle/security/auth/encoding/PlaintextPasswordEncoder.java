@@ -4,7 +4,7 @@
  */
 package org.beangle.security.auth.encoding;
 
-public class PlantextPasswordEncoder implements PasswordEncoder {
+public class PlaintextPasswordEncoder implements PasswordEncoder {
 
   public boolean isPasswordValid(String encPass, String rawPass) {
     return encPass.equals(rawPass);

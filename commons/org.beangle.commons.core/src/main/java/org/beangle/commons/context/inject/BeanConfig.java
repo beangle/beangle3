@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.tuple.Pair;
 
 /**
  * <p>
@@ -24,26 +26,49 @@ public final class BeanConfig {
 
   private List<Definition> lastAdded;
 
-  public final static class ReferenceProperty {
+  public final static class ReferenceValue {
     public final String ref;
 
-    public ReferenceProperty(String ref) {
+    public ReferenceValue(String ref) {
       super();
       this.ref = ref;
     }
-
   }
 
-  public final static class ListProperty {
+  public final static class ListValue {
     public final List<Object> items = CollectUtils.newArrayList();
 
-    public ListProperty(Object... datas) {
+    public ListValue(Object... datas) {
       for (Object obj : datas) {
         if (obj instanceof Class<?>) {
-          items.add(new ReferenceProperty(((Class<?>) obj).getName()));
+          items.add(new ReferenceValue(((Class<?>) obj).getName()));
         } else {
           items.add(obj);
         }
+      }
+    }
+  }
+
+  public final static class MapValue {
+    public final Map<Object, Object> items = CollectUtils.newHashMap();
+
+    public MapValue(Pair<?, ?>... datas) {
+      for (Map.Entry<?, ?> entry : datas) {
+        if (entry.getValue() instanceof Class<?>) {
+          items.put(entry.getKey(), new ReferenceValue(((Class<?>) entry.getValue()).getName()));
+        } else {
+          items.put(entry.getKey(), entry.getValue());
+        }
+      }
+    }
+  }
+
+  public final static class PropertiesValue {
+    public final Map<String,String> properties = CollectUtils.newHashMap();
+    public PropertiesValue(String... keyValuePairs) {
+      for (String pair : keyValuePairs) {
+        Assert.isTrue(pair.indexOf('=') > 0, "property entry [" + pair + "] should contain =");
+        properties.put(Strings.substringBefore(pair, "="), Strings.substringAfter(pair, "="));
       }
     }
   }
@@ -57,6 +82,11 @@ public final class BeanConfig {
 
     public boolean lazyInit = false;
     public boolean abstractFlag = false;
+
+    public boolean primary = false;
+    public String parent;
+
+    public Class<?> targetClass;
 
     public Definition(String beanName, Class<?> clazz, String scope) {
       super();
@@ -81,7 +111,6 @@ public final class BeanConfig {
       properties.put(property, value);
       return this;
     }
-
   }
 
   public final static class DefinitionBinder {
@@ -120,6 +149,41 @@ public final class BeanConfig {
       return this;
     }
 
+    public DefinitionBinder parent(String parent) {
+      if (null != config.lastAdded) {
+        for (Definition def : config.lastAdded) {
+          def.parent = parent;
+        }
+      }
+      return this;
+    };
+
+    public DefinitionBinder proxy(String property, Class<?> clazz) {
+      if (null != config.lastAdded) {
+        // first bind inner bean
+        StringBuilder sb = new StringBuilder();
+        for (Definition def : config.lastAdded)
+          sb.append(def.beanName);
+        String targetBean = clazz.getName() + "#" + Math.abs(sb.hashCode());
+        config.add(new Definition(targetBean, clazz, scope.toString()));
+        // second
+        for (Definition def : config.lastAdded) {
+          def.targetClass = clazz;
+          def.properties.put(property, new ReferenceValue(targetBean));
+        }
+      }
+      return this;
+    }
+
+    public DefinitionBinder primary() {
+      if (null != config.lastAdded) {
+        for (Definition def : config.lastAdded) {
+          def.primary = true;
+        }
+      }
+      return this;
+    }
+
     public DefinitionBinder setAbstract() {
       if (null != config.lastAdded) {
         for (Definition def : config.lastAdded) {
@@ -152,17 +216,9 @@ public final class BeanConfig {
     public DefinitionBinder property(String property, Object value) {
       if (null != config.lastAdded) {
         for (Definition def : config.lastAdded) {
-          def.properties.put(property, value);
-        }
-      }
-      return this;
-    }
-
-    public DefinitionBinder list(String property, Object... datas) {
-      if (null != config.lastAdded) {
-        Object value = new ListProperty(datas);
-        for (Definition def : config.lastAdded) {
-          def.properties.put(property, value);
+          if (value instanceof Class<?>) def.properties.put(property,
+              new ReferenceValue(((Class<?>) value).getName()));
+          else def.properties.put(property, value);
         }
       }
       return this;
@@ -183,7 +239,7 @@ public final class BeanConfig {
       return this;
     }
 
-    public DefinitionBinder bind(Class<?>... classes) {
+    private DefinitionBinder bind(Class<?>... classes) {
       config.lastAdded = CollectUtils.newArrayList();
       for (Class<?> clazz : classes) {
         Definition def = build(clazz);
@@ -193,7 +249,7 @@ public final class BeanConfig {
       return this;
     }
 
-    public DefinitionBinder bind(String name, Class<?> clazz) {
+    private DefinitionBinder bind(String name, Class<?> clazz) {
       config.lastAdded = CollectUtils.newArrayList();
       Definition def = new Definition(name, clazz, scope.toString());
       config.add(def);

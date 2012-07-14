@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.commons.web.io;
+package org.beangle.commons.web.spring;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,11 +13,11 @@ import java.net.URL;
 
 import javax.servlet.ServletContext;
 
+import org.beangle.commons.lang.Assert;
 import org.beangle.commons.web.util.RequestUtils;
 import org.springframework.core.io.AbstractFileResolvingResource;
 import org.springframework.core.io.ContextResource;
 import org.springframework.core.io.Resource;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
@@ -126,7 +126,6 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
    * This implementation creates a ServletContextResource, applying the given path
    * relative to the path of the underlying file of this resource descriptor.
    * 
-   * @see org.springframework.util.Strings#applyRelativePath(String, String)
    */
   @Override
   public Resource createRelative(String relativePath) {
@@ -138,7 +137,6 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
    * This implementation returns the name of the file that this ServletContext
    * resource refers to.
    * 
-   * @see org.springframework.util.Strings#getFilename(String)
    */
   @Override
   public String getFilename() {

@@ -19,8 +19,10 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.context.event.DefaultEventMulticaster;
 import org.beangle.commons.context.inject.BeanConfig;
 import org.beangle.commons.context.inject.BeanConfig.Definition;
-import org.beangle.commons.context.inject.BeanConfig.ListProperty;
-import org.beangle.commons.context.inject.BeanConfig.ReferenceProperty;
+import org.beangle.commons.context.inject.BeanConfig.ListValue;
+import org.beangle.commons.context.inject.BeanConfig.MapValue;
+import org.beangle.commons.context.inject.BeanConfig.PropertiesValue;
+import org.beangle.commons.context.inject.BeanConfig.ReferenceValue;
 import org.beangle.commons.context.inject.BindModule;
 import org.beangle.commons.context.inject.BindRegistry;
 import org.beangle.commons.context.inject.Resources;
@@ -33,18 +35,21 @@ import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.FactoryBean;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
+import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.beans.factory.support.ManagedList;
+import org.springframework.beans.factory.support.ManagedMap;
+import org.springframework.beans.factory.support.ManagedProperties;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.io.UrlResource;
+import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 /**
@@ -81,15 +86,14 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
       for (ReconfigBeanDefinitionHolder holder : holders) {
         if (holder.getConfigType().equals(ReconfigType.REMOVE)) {
         } else {
-          BeanDefinition definition = null;
-          try {
-            definition = registry.getBeanDefinition(holder.getBeanName());
-          } catch (NoSuchBeanDefinitionException e) {
+          if (registry.containsBeanDefinition(holder.getBeanName())) {
+            BeanDefinition definition = registry.getBeanDefinition(holder.getBeanName());
+            String successName = mergeDefinition(definition, holder);
+            if (null != successName) beanNames.add(successName);
+          } else {
             logger.warn("No bean {} to reconfig defined in {}.", holder.getBeanName(), url);
             continue;
           }
-          String successName = mergeDefinition(definition, holder);
-          if (null != successName) beanNames.add(successName);
         }
       }
     }
@@ -122,9 +126,12 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    */
   protected void lifecycle(BindRegistry registry, BeanDefinitionRegistry definitionRegistry) {
     for (String name : registry.getBeanNames()) {
-      String springName = name;
-      if (name.startsWith("&")) springName = name.substring(1);
       Class<?> clazz = registry.getBeanType(name);
+
+      String springName = name;
+      if (springName.startsWith("&")) springName = springName.substring(1);
+      if (!definitionRegistry.containsBeanDefinition(springName)) continue;
+
       AbstractBeanDefinition def = (AbstractBeanDefinition) definitionRegistry.getBeanDefinition(springName);
       if (Initializing.class.isAssignableFrom(clazz) && null == def.getInitMethodName()
           && !def.getPropertyValues().contains("init-method")) {
@@ -222,24 +229,38 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
     MutablePropertyValues mpv = new MutablePropertyValues();
     for (Map.Entry<String, Object> entry : definition.getProperties().entrySet()) {
       Object value = entry.getValue();
-      if (value instanceof ListProperty) {
-        // create a spring managed list
+      if (value instanceof ListValue) {
         List<Object> list = new ManagedList<Object>();
-        for (Object item : ((ListProperty) value).items) {
-          if (item instanceof ReferenceProperty) {
-            list.add(new RuntimeBeanReference(((ReferenceProperty) item).ref));
-          } else {
-            list.add(item);
-          }
+        for (Object item : ((ListValue) value).items) {
+          if (item instanceof ReferenceValue) list.add(new RuntimeBeanReference(((ReferenceValue) item).ref));
+          else list.add(item);
         }
         value = list;
+      } else if (value instanceof MapValue) {
+        Map<Object, Object> maps = new ManagedMap<Object, Object>();
+        for (Map.Entry<Object, Object> item : maps.entrySet()) {
+          if (item.getValue() instanceof ReferenceValue) maps.put(item.getKey(), new RuntimeBeanReference(
+              ((ReferenceValue) item.getValue()).ref));
+          else maps.put(item.getKey(), item.getValue());
+        }
+        value = maps;
+      } else if (value instanceof PropertiesValue) {
+        ManagedProperties props = new ManagedProperties();
+        for (Map.Entry<String, String> pentry : ((PropertiesValue) value).properties.entrySet())
+          props.put(new TypedStringValue(pentry.getKey()), new TypedStringValue(pentry.getValue()));
+        
+        value = props;
       } else if (value instanceof Definition) {
         value = new BeanDefinitionHolder(convert((Definition) value), ((Definition) value).beanName);
+      } else if (value instanceof ReferenceValue) {
+        value = new RuntimeBeanReference(((ReferenceValue) value).ref);
       }
       mpv.add(entry.getKey(), value);
     }
     def.setLazyInit(definition.lazyInit);
     def.setAbstract(definition.isAbstract());
+    def.setParentName(definition.parent);
+    def.setPrimary(definition.primary);
     def.setPropertyValues(mpv);
     return def;
   }
@@ -253,21 +274,27 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * @param registry a {@link org.beangle.commons.context.inject.BindRegistry} object.
    * @return a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    */
-  protected BeanDefinition registerBean(Definition definition, BindRegistry registry) {
-    BeanDefinition def = convert(definition);
-    registry.register(definition.clazz, definition.beanName, def);
-
-    if (FactoryBean.class.isAssignableFrom(definition.clazz)) {
-      registry.register(definition.clazz, "&" + definition.beanName);
+  protected BeanDefinition registerBean(Definition def, BindRegistry registry) {
+    BeanDefinition bd = convert(def);
+    if (FactoryBean.class.isAssignableFrom(def.clazz)) {
       try {
-        Class<?> artifactClass = ((FactoryBean<?>) definition.clazz.newInstance()).getObjectType();
-        if (null != artifactClass) registry.register(artifactClass, definition.beanName);
+        Class<?> target = def.targetClass;
+
+        if (null == target) target = ((FactoryBean<?>) def.clazz.newInstance()).getObjectType();
+        Assert.isTrue(null != target || def.isAbstract(), "Concrete bean [" + def.beanName
+            + "]should has class.");
+
+        registry.register(target, def.beanName, bd);
+        // register concrete factory bean
+        if (!def.isAbstract()) registry.register(def.clazz, "&" + def.beanName);
       } catch (Exception e) {
-        logger.error("Cannot get Factory's Object Type {}", definition.clazz);
+        logger.error("Cannot get Factory's Object Type {}", def.clazz);
       }
+    } else {
+      registry.register(def.clazz, def.beanName, bd);
     }
-    logger.debug("Register definition {} for {}", definition.beanName, definition.clazz);
-    return def;
+    logger.debug("Register definition {} for {}", def.beanName, def.clazz);
+    return bd;
   }
 
   /**
@@ -308,17 +335,28 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
         mbd.getPropertyValues().add(propertyName, new RuntimeBeanReference(beanNames.get(0)));
         binded = true;
       } else if (beanNames.size() > 1) {
+        // first autowire by name
         for (String name : beanNames) {
           if (name.equals(propertyName)) {
-            mbd.getPropertyValues().add(propertyName, new RuntimeBeanReference(propertyName));
+            mbd.getPropertyValues().add(propertyName, new RuntimeBeanReference(name));
             binded = true;
             break;
+          }
+        }
+        // second autowire by primary
+        if (!binded) {
+          for (String name : beanNames) {
+            if (registry.isPrimary(name)) {
+              mbd.getPropertyValues().add(propertyName, new RuntimeBeanReference(name));
+              binded = true;
+              break;
+            }
           }
         }
       }
       if (!binded) {
         if (beanNames.isEmpty()) {
-          logger.debug(beanName + "'s " + propertyName + "  cannot  found candidate bean");
+          logger.debug(beanName + "'s " + propertyName + " cannot found candidate bean");
         } else {
           logger.warn(beanName + "'s " + propertyName + " expected single bean but found {} : {}",
               beanNames.size(), beanNames);
@@ -340,6 +378,15 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
     return !ClassUtils.hasMethod(superclass, wm.getName(), wm.getParameterTypes());
   }
 
+  /**
+   * <p>
+   * Find unsatisfied properties
+   * </p>
+   * Unsatisfied property is empty value and not primary type and not starts with java.
+   * 
+   * @param mbd
+   * @return
+   */
   private Map<String, PropertyDescriptor> unsatisfiedNonSimpleProperties(BeanDefinition mbd) {
     Map<String, PropertyDescriptor> properties = CollectUtils.newHashMap();
     PropertyValues pvs = mbd.getPropertyValues();
@@ -353,7 +400,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
     PropertyDescriptor[] pds = PropertyUtils.getPropertyDescriptors(clazz);
     for (PropertyDescriptor pd : pds) {
       if (pd.getWriteMethod() != null && !isExcludedFromDependencyCheck(pd) && !pvs.contains(pd.getName())
-          && !BeanUtils.isSimpleProperty(pd.getPropertyType())) {
+          && !BeanUtils.isSimpleProperty(pd.getPropertyType())
+          && !pd.getPropertyType().getName().startsWith("java.")) {
         properties.put(pd.getName(), pd);
       }
     }

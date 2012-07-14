@@ -101,7 +101,9 @@ public class SpringBindRegistry implements BindRegistry {
     }
   }
 
-  /** {@inheritDoc} */
+  /**
+   * Get bean name list according given type 
+   */
   public List<String> getBeanNames(Class<?> type) {
     if (typeNames.containsKey(type)) { return typeNames.get(type); }
     List<String> names = CollectUtils.newArrayList();
@@ -134,16 +136,25 @@ public class SpringBindRegistry implements BindRegistry {
    * @param args a {@link java.lang.Object} object.
    */
   public void register(Class<?> type, String name, Object... args) {
-    Assert.notNull(type, "name's class is null");
-    nameTypes.put(name, type);
-    if (args.length > 0) {
+    Assert.notNull(name, "class'name is null");
+    if (0 == args.length) {
+      nameTypes.put(name, type);
+    } else {
       // 注册bean的name和别名
       BeanDefinition bd = (BeanDefinition) args[0];
       definitionRegistry.registerBeanDefinition(name, bd);
+      // for list(a.class,b.class) binding usage
       if (bd.isSingleton() && !name.equals(bd.getBeanClassName())) {
         definitionRegistry.registerAlias(name, bd.getBeanClassName());
       }
+      if (null == type) {
+        if (!bd.isAbstract()) throw new RuntimeException("Concrete bean should has class.");
+      } else nameTypes.put(name, type);
     }
+  }
+
+  public boolean isPrimary(String name) {
+    return definitionRegistry.getBeanDefinition(name).isPrimary();
   }
 
 }

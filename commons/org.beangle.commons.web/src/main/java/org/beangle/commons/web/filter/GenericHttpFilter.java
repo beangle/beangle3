@@ -150,8 +150,8 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    * Make the name of this filter available to subclasses. Analogous to
    * GenericServlet's <code>getServletName()</code>.
    * <p>
-   * Takes the FilterConfig's filter name by default. If initialized as bean in a Spring application
-   * context, it falls back to the bean name as defined in the bean factory.
+   * Takes the FilterConfig's filter name by default. If initialized as bean in application context,
+   * it falls back to the bean name as defined in the bean factory.
    * 
    * @return the filter name, or <code>null</code> if none available
    * @see javax.servlet.GenericServlet#getServletName()
@@ -166,8 +166,8 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    * Make the ServletContext of this filter available to subclasses. Analogous
    * to GenericServlet's <code>getServletContext()</code>.
    * <p>
-   * Takes the FilterConfig's ServletContext by default. If initialized as bean in a Spring
-   * application context, it falls back to the ServletContext that the bean factory runs in.
+   * Takes the FilterConfig's ServletContext by default. If initialized as bean in application
+   * context, it falls back to the ServletContext that the bean factory runs in.
    * 
    * @return the ServletContext instance, or <code>null</code> if none
    *         available
@@ -185,7 +185,7 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    * invoked.
    * <p>
    * Note: This method will be called from standard filter initialization as well as filter bean
-   * initialization in a Spring application context. Filter name and ServletContext will be
+   * initialization in a application context. Filter name and ServletContext will be
    * available in both cases.
    * <p>
    * This default implementation is empty.
@@ -202,7 +202,7 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    * Subclasses may override this to perform custom filter shutdown.
    * <p>
    * Note: This method will be called from standard filter destruction as well as filter bean
-   * destruction in a Spring application context.
+   * destruction in a application context.
    * <p>
    * This default implementation is empty.
    */

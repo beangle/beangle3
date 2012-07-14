@@ -67,4 +67,14 @@ public interface BindRegistry {
    */
   Set<String> getBeanNames();
 
+  /**
+   * <p>
+   * Whether the bean is primary
+   * </p>
+   * 
+   * @param name
+   * @return
+   */
+  boolean isPrimary(String name);
+
 }

@@ -6,6 +6,11 @@ package org.beangle.commons.context.inject;
 
 import org.beangle.commons.context.inject.BeanConfig.Definition;
 import org.beangle.commons.context.inject.BeanConfig.DefinitionBinder;
+import org.beangle.commons.context.inject.BeanConfig.ListValue;
+import org.beangle.commons.context.inject.BeanConfig.MapValue;
+import org.beangle.commons.context.inject.BeanConfig.PropertiesValue;
+import org.beangle.commons.context.inject.BeanConfig.ReferenceValue;
+import org.beangle.commons.lang.tuple.Pair;
 
 /**
  * <p>
@@ -46,11 +51,60 @@ public abstract class AbstractBindModule implements BindModule {
     return config.bind(classes);
   }
 
-  protected Definition bean(Class<?> clazz){
-    Definition  def= new Definition(clazz.getName(),clazz,Scope.SINGLETON.toString());
-    def.beanName=clazz.getName()+"#"+Math.abs(System.identityHashCode(def));
+  /**
+   * Create a reference definition based on Name;
+   * 
+   * @param name
+   * @return
+   */
+  protected ReferenceValue ref(String name) {
+    return new ReferenceValue(name);
+  }
+
+  /**
+   * Create Map Entry
+   * 
+   * @param left
+   * @param right
+   * @return
+   */
+  protected Pair<?, ?> entry(Object key, Object value) {
+    return Pair.of(key, value);
+  }
+
+  /**
+   * Generate a inner bean definition
+   * 
+   * @param clazz
+   * @return
+   */
+  protected Definition bean(Class<?> clazz) {
+    Definition def = new Definition(clazz.getName(), clazz, Scope.SINGLETON.toString());
+    def.beanName = clazz.getName() + "#" + Math.abs(System.identityHashCode(def));
     return def;
   }
+
+  /**
+   * Generate a list property
+   * <p>
+   * List singleton bean references with list(A.class,B.class) or list(ref("someBeanId"),C.class).<br>
+   * List simple values with list("strValue1","strValue2")
+   * 
+   * @param datas
+   * @return
+   */
+  protected ListValue list(Object... datas) {
+    return new ListValue(datas);
+  }
+
+  protected MapValue map(Pair<?, ?>... entries) {
+    return new MapValue(entries);
+  }
+
+  protected PropertiesValue props(String... keyValuePairs) {
+    return new PropertiesValue(keyValuePairs);
+  }
+
   /**
    * <p>
    * bind.
@@ -70,6 +124,7 @@ public abstract class AbstractBindModule implements BindModule {
    * </p>
    */
   abstract protected void doBinding();
+
   /**
    * <p>
    * getObjectType.

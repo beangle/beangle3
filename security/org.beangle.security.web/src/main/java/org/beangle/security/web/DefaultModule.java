@@ -5,12 +5,16 @@
 package org.beangle.security.web;
 
 import org.beangle.commons.context.inject.AbstractBindModule;
+import org.beangle.security.auth.ProviderManager;
+import org.beangle.security.auth.dao.DaoAuthenticationProvider;
 import org.beangle.security.web.access.DefaultAccessDeniedHandler;
 import org.beangle.security.web.access.ExceptionTranslationFilter;
 import org.beangle.security.web.access.intercept.FilterSecurityInterceptor;
 import org.beangle.security.web.access.log.CachedResourceAccessor;
 import org.beangle.security.web.auth.AnonymousFilter;
+import org.beangle.security.web.auth.LoginUrlEntryPoint;
 import org.beangle.security.web.auth.WebAuthenticationDetailsSource;
+import org.beangle.security.web.auth.logout.LogoutHandlerStack;
 import org.beangle.security.web.auth.logout.SecurityContextLogoutHandler;
 import org.beangle.security.web.auth.preauth.PreauthUserDetailProvider;
 import org.beangle.security.web.auth.preauth.UsernameAliveChecker;
@@ -34,9 +38,10 @@ public class DefaultModule extends AbstractBindModule {
     bind(ConcurrentSessionFilter.class).shortName();
 
     // auth bean
+    bind(UsernameAliveChecker.class).primary();
     bind(PreauthUserDetailProvider.class, RemoteUsernameSource.class, UsernamePreauthFilter.class,
-        AnonymousFilter.class, SecurityContextLogoutHandler.class, UsernameAliveChecker.class,
-        WebAuthenticationDetailsSource.class).shortName();
+        AnonymousFilter.class, SecurityContextLogoutHandler.class, WebAuthenticationDetailsSource.class)
+        .shortName();
 
     bind(HttpSessionContextIntegrationFilter.class).shortName();
 
@@ -45,6 +50,18 @@ public class DefaultModule extends AbstractBindModule {
         FilterSecurityInterceptor.class).shortName();
 
     bind(WebSessioninfoBuilder.class);
+    bind(LoginUrlEntryPoint.class).property("loginUrl", "/login.action").primary();
+    bind(LogoutHandlerStack.class).shortName().property("handlers", list(SecurityContextLogoutHandler.class));
+
+    bind("authenticationmanager", ProviderManager.class).property("providers",
+        list(PreauthUserDetailProvider.class, DaoAuthenticationProvider.class));
+
+    bind("securityFilterChain", FilterChainProxy.class)
+        .property(
+            "filters",
+            list(HttpSessionContextIntegrationFilter.class, UsernamePreauthFilter.class,
+                AnonymousFilter.class, ExceptionTranslationFilter.class, ConcurrentSessionFilter.class,
+                FilterSecurityInterceptor.class));
   }
 
 }
