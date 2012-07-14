@@ -7,7 +7,7 @@ package org.beangle.commons.collection.predicates;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Objects;
-import org.beangle.commons.lang.UnhandledException;
+import org.beangle.commons.lang.Throwables;
 
 /**
  * Property Equals Predicate
@@ -45,7 +45,7 @@ public class PropertyEqualPredicate {
     try {
       return Objects.equals(PropertyUtils.getProperty(arg0, propertyName), propertyValue);
     } catch (Exception e) {
-      throw new UnhandledException(e);
+      throw Throwables.propagate(e);
     }
   }
 

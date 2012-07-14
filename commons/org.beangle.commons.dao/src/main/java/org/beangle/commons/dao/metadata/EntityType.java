@@ -10,7 +10,7 @@ import java.util.Map;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.Entity;
-import org.beangle.commons.lang.UnhandledException;
+import org.beangle.commons.lang.Throwables;
 
 /**
  * <p>
@@ -223,7 +223,7 @@ public class EntityType extends AbstractType {
     else try {
       return (Class<? extends Serializable>) PropertyUtils.getPropertyType(entityClass, idPropertyName);
     } catch (Exception e) {
-      throw new UnhandledException(e);
+      throw Throwables.propagate(e);
     }
   }
 }

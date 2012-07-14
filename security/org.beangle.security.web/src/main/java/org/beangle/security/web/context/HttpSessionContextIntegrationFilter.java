@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 
 import org.beangle.commons.lang.Assert;
-import org.beangle.commons.lang.UnhandledException;
+import org.beangle.commons.lang.Throwables;
 import org.beangle.commons.web.filter.GenericHttpFilter;
 import org.beangle.security.core.context.SecurityContext;
 import org.beangle.security.core.context.SecurityContextBean;
@@ -258,7 +258,7 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilter {
         }
         contextFromSessionObject = m.invoke(contextFromSessionObject, new Object[] {});
       } catch (Exception ex) {
-        throw new UnhandledException(ex);
+        Throwables.propagate(ex);
       }
     }
 

@@ -23,6 +23,7 @@ public class CsvWriterTest {
     StringWriter sw = new StringWriter();
     CsvWriter csvw = new CsvWriter(sw, new CsvFormat.Builder().delimiter('\'').build());
     csvw.write(args);
+    csvw.close();
     return sw.toString();
   }
 
@@ -31,6 +32,7 @@ public class CsvWriterTest {
     CsvWriter csvw = new CsvWriter(sw, new CsvFormat.Builder().delimiter('\'')
         .escape(CsvWriter.NO_ESCAPE_CHARACTER).build());
     csvw.write(args);
+    csvw.close();
     return sw.toString();
   }
 
@@ -39,6 +41,7 @@ public class CsvWriterTest {
     StringWriter sw = new StringWriter();
     CsvWriter csvw = new CsvWriter(sw, new CsvFormat.Builder().escape('\'').build());
     csvw.write((String[]) null);
+    csvw.close();
     assertEquals(0, sw.toString().length());
   }
 
@@ -144,7 +147,7 @@ public class CsvWriterTest {
     StringWriter sw = new StringWriter();
     CsvWriter csvw = new CsvWriter(sw);
     csvw.write(allElements);
-
+    csvw.close();
     String result = sw.toString();
     String[] lines = result.split("\n");
 
@@ -166,7 +169,7 @@ public class CsvWriterTest {
         .build());
     csvw.write(line);
     String result = sw.toString();
-
+    csvw.close();
     assertEquals("Foo,Bar,Baz\n", result);
   }
 
@@ -185,7 +188,7 @@ public class CsvWriterTest {
         .escape(CsvWriter.NO_ESCAPE_CHARACTER).build());
     csvw.write(line);
     String result = sw.toString();
-
+    csvw.close();
     assertEquals("Foo,Bar,Baz\n", result);
   }
 
@@ -203,7 +206,7 @@ public class CsvWriterTest {
     CsvWriter csvw = new CsvWriter(sw);
     csvw.write(line);
     String result = sw.toString();
-
+    csvw.close();
     assertEquals("\"Foo\",,\"Bar\",\"baz\"\n", result);
 
   }
@@ -231,6 +234,7 @@ public class CsvWriterTest {
     StringWriter sw = new StringWriter();
     CsvWriter csvw = new CsvWriter(sw, new CsvFormat.Builder().escape('\'').build());
     csvw.write(line);
+    csvw.close();
     assertEquals("\"Foo\",\"bar's\"\n", sw.toString());
   }
 
@@ -242,6 +246,7 @@ public class CsvWriterTest {
         .escape(CsvWriter.NO_ESCAPE_CHARACTER).build());
     csvw.write(line);
     assertEquals("\"Foo\",\"Bar\"\n", sw.toString());
+    csvw.close();
   }
 
   @Test
@@ -263,11 +268,7 @@ public class CsvWriterTest {
 
     // write the test data:
     writer.write(data);
-
-    try {
-      writer.close();
-    } catch (IOException e) {
-    }
+    writer.close();
 
     try {
       fwriter.flush();

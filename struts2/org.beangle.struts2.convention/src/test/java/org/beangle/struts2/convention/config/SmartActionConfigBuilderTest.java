@@ -39,6 +39,8 @@ public class SmartActionConfigBuilderTest {
     ObjectFactory of = new ObjectFactory();
     final DummyContainer mockContainer = new DummyContainer();
     Configuration configuration = new DefaultConfiguration() {
+      private static final long serialVersionUID = 1L;
+
       @Override
       public Container getContainer() {
         return mockContainer;
@@ -130,6 +132,7 @@ public class SmartActionConfigBuilderTest {
   }
 
   public class DummyContainer implements Container {
+    private static final long serialVersionUID = 1L;
     private ActionBuilder actionNameBuilder;
 
     public void setActionNameBuilder(ActionBuilder actionNameBuilder) {

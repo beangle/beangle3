@@ -10,7 +10,8 @@ import org.beangle.commons.context.inject.BindRegistry;
 import org.beangle.commons.context.testbean.ProxyFactoryBean;
 import org.beangle.commons.context.testbean.TestDao;
 import org.beangle.commons.context.testbean.TestEntityDao;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.core.io.ClassPathResource;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -19,8 +20,11 @@ import org.testng.annotations.Test;
 public class DefinitionBindRegistryTest {
 
   public void testGet() {
-    XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource(
+    DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
+    XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
+    reader.loadBeanDefinitions(new ClassPathResource(
         "/org/beangle/commons/context/spring/context-registry.xml"));
+
     BindRegistry registry = new SpringBindRegistry(factory);
     List<String> names = registry.getBeanNames(TestDao.class);
     Assert.assertNotNull(names);

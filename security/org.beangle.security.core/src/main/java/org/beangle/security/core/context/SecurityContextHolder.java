@@ -6,7 +6,7 @@ package org.beangle.security.core.context;
 
 import java.lang.reflect.Constructor;
 
-import org.beangle.commons.lang.UnhandledException;
+import org.beangle.commons.lang.Throwables;
 
 /**
  * Associates a given {@link SecurityContext} with the current execution thread.
@@ -99,7 +99,7 @@ public class SecurityContextHolder {
         Constructor<SecurityContextHolderStrategy> customStrategy = clazz.getConstructor(new Class[] {});
         strategy = (SecurityContextHolderStrategy) customStrategy.newInstance(new Object[] {});
       } catch (Exception ex) {
-        throw new UnhandledException(ex);
+        Throwables.propagate(ex);
       }
     }
 

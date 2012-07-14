@@ -8,7 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import org.beangle.commons.lang.UnhandledException;
+import org.beangle.commons.lang.Throwables;
 import org.beangle.commons.web.filter.GenericHttpFilter;
 import org.springframework.context.ApplicationContext;
 
@@ -43,7 +43,7 @@ public class DelegatingFilterProxy extends GenericHttpFilter {
           try {
             setDelegate(initDelegate(context));
           } catch (ServletException e) {
-            throw new UnhandledException(e);
+            Throwables.propagate(e);
           }
         }
       });

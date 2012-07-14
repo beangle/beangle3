@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.beangle.commons.lang.UnhandledException;
+import org.beangle.commons.lang.Throwables;
 
 /**
  * <p>
@@ -240,7 +240,7 @@ public final class CollectUtils {
       try {
         key = PropertyUtils.getProperty(obj, keyProperty);
       } catch (Exception e) {
-        throw new UnhandledException(e);
+        Throwables.propagate(e);
       }
       map.put(key, obj);
     }
@@ -266,7 +266,7 @@ public final class CollectUtils {
         key = PropertyUtils.getProperty(obj, keyProperty);
         value = PropertyUtils.getProperty(obj, valueProperty);
       } catch (Exception e) {
-        throw new UnhandledException(e);
+        Throwables.propagate(e);
       }
       map.put(key, value);
     }

@@ -10,6 +10,8 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.List;
 
+import org.beangle.commons.lang.Throwables;
+
 /**
  * <p>
  * CsvWriter class.
@@ -154,10 +156,14 @@ public class CsvWriter implements Closeable {
    * 
    * @throws java.io.IOException if any.
    */
-  public void close() throws IOException {
-    flush();
-    pw.close();
-    rawWriter.close();
+  public void close() {
+    try {
+      flush();
+      pw.close();
+      rawWriter.close();
+    } catch (IOException e) {
+      Throwables.propagate(e);
+    }
   }
 
   /**
