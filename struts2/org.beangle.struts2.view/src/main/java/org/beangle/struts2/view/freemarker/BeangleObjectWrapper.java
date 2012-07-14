@@ -13,15 +13,7 @@ import freemarker.core.CollectionAndSequence;
 import freemarker.ext.beans.CollectionModel;
 import freemarker.ext.beans.MapModel;
 import freemarker.ext.util.ModelFactory;
-import freemarker.template.AdapterTemplateModel;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.ObjectWrapper;
-import freemarker.template.SimpleSequence;
-import freemarker.template.TemplateCollectionModel;
-import freemarker.template.TemplateHashModelEx;
-import freemarker.template.TemplateMethodModelEx;
-import freemarker.template.TemplateModel;
-import freemarker.template.TemplateModelException;
+import freemarker.template.*;
 
 /**
  * BeangleObjectWrapper不同于StrutsBeanWrapper，他扩展了DefaultObjectWrapper。提供了<br>

@@ -4,7 +4,6 @@
  */
 package org.beangle.notification;
 
-import org.beangle.notification.Notifier;
 
 /**
  * 消息通知任务

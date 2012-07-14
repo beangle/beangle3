@@ -7,8 +7,8 @@ package org.beangle.commons.util.seq;
 import java.util.Collections;
 import java.util.List;
 
-import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.lang.Strings;
 
 /**

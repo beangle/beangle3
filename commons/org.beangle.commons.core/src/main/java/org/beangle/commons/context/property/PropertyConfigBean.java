@@ -4,17 +4,11 @@
  */
 package org.beangle.commons.context.property;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.commons.beanutils.ConvertUtils;
-import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.lang.Strings;
 
 /**

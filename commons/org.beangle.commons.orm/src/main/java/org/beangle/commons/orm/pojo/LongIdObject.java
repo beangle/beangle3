@@ -60,9 +60,11 @@ public class LongIdObject implements LongIdEntity {
   }
 
   /**
-   * 比较id,如果任一方id是null,则不相等
    * <p>
-   * 因为业务对象被CGlib或者javassist增强的原因，这里只提供一般的基于id的比较,不提供基于Class的比较。如果在存在继承结构， 请重置equals方法。
+   * 比较id,如果任一方id是null,则不相等
+   * </p>
+   * 由于业务对象被CGlib或者javassist增强的原因，这里只提供一般的基于id的比较,不提供基于Class的比较。<br>
+   * 如果在存在继承结构， 请重置equals方法。
    * 
    * @see java.lang.Object#equals(Object)
    */

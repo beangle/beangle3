@@ -5,8 +5,8 @@
 package org.beangle.commons.collection.predicates;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Assert;
+import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.UnhandledException;
 
 /**

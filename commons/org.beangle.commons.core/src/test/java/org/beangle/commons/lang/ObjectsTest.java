@@ -7,7 +7,6 @@ package org.beangle.commons.lang;
 import static org.testng.Assert.assertTrue;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.beangle.commons.lang.Objects;
 import org.testng.annotations.Test;
 
 @Test

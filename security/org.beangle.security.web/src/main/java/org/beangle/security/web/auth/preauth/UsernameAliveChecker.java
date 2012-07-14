@@ -6,8 +6,8 @@ package org.beangle.security.web.auth.preauth;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Assert;
+import org.beangle.commons.lang.Objects;
 import org.beangle.security.core.Authentication;
 
 /**

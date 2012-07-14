@@ -7,13 +7,7 @@ package org.beangle.commons.orm.hibernate.internal;
 import javax.sql.DataSource;
 
 import org.beangle.commons.orm.hibernate.DataSourceConnectionProvider;
-import org.hibernate.HibernateException;
-import org.hibernate.ObjectDeletedException;
-import org.hibernate.PersistentObjectException;
-import org.hibernate.PropertyValueException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.TransientObjectException;
+import org.hibernate.*;
 import org.hibernate.connection.ConnectionProvider;
 import org.hibernate.engine.SessionFactoryImplementor;
 import org.hibernate.exception.ConstraintViolationException;
@@ -23,13 +17,7 @@ import org.hibernate.exception.LockAcquisitionException;
 import org.hibernate.exception.SQLGrammarException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.CannotAcquireLockException;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataAccessResourceFailureException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
-import org.springframework.dao.InvalidDataAccessResourceUsageException;
-import org.springframework.dao.UncategorizedDataAccessException;
+import org.springframework.dao.*;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 /**

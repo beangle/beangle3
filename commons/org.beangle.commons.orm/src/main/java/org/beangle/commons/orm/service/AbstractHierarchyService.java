@@ -8,11 +8,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import org.beangle.commons.lang.Objects;
-import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.entity.HierarchyEntity;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
+import org.beangle.commons.lang.Numbers;
+import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.orm.pojo.HierarchyLongIdObject;
 

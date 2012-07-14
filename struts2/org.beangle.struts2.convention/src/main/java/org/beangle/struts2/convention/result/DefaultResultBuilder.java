@@ -4,6 +4,12 @@
  */
 package org.beangle.struts2.convention.result;
 
+import static org.beangle.commons.lang.Strings.contains;
+import static org.beangle.commons.lang.Strings.isBlank;
+import static org.beangle.commons.lang.Strings.isEmpty;
+import static org.beangle.commons.lang.Strings.isNotEmpty;
+import static org.beangle.commons.lang.Strings.substringAfter;
+import static org.beangle.commons.lang.Strings.substringBefore;
 import static org.beangle.commons.web.util.RequestUtils.getServletPath;
 
 import java.util.LinkedHashMap;
@@ -13,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.ServletRedirectResult;
-import org.beangle.commons.lang.Strings;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.struts2.convention.route.ActionBuilder;
 import org.beangle.struts2.convention.route.ProfileService;
@@ -64,19 +69,18 @@ public class DefaultResultBuilder implements ResultBuilder {
 
   public Result build(String resultCode, ActionConfig actionConfig, ActionContext context) {
     String path = null;
-    ResultTypeConfig resultTypeConfig = null;
+    ResultTypeConfig cfg = null;
 
     logger.debug("result code:{} for actionConfig:{}", resultCode, actionConfig);
     if (null == resultTypeConfigs) {
       PackageConfig pc = configuration.getPackageConfig(actionConfig.getPackageName());
       this.resultTypeConfigs = pc.getAllResultTypeConfigs();
     }
-    // prefix
-    // TODO jsp,vm,ftl
-    if (!Strings.contains(resultCode, ':')) {
+    // first route by common result
+    if (!contains(resultCode, ':')) {
       String className = context.getActionInvocation().getProxy().getAction().getClass().getName();
       String methodName = context.getActionInvocation().getProxy().getMethod();
-      if (Strings.isEmpty(resultCode)) {
+      if (isEmpty(resultCode)) {
         resultCode = "index";
       }
       StringBuilder buf = new StringBuilder();
@@ -84,22 +88,23 @@ public class DefaultResultBuilder implements ResultBuilder {
       buf.append('.');
       buf.append(profileService.getProfile(className).getViewExtension());
       path = buf.toString();
-      resultTypeConfig = resultTypeConfigs.get("freemarker");
-      return buildResult(resultCode, resultTypeConfig, context, buildResultParams(path, resultTypeConfig));
+      cfg = resultTypeConfigs.get("freemarker");
+      return buildResult(resultCode, cfg, context, buildResultParams(path, cfg));
     } else {
-      String prefix = Strings.substringBefore(resultCode, ":");
-      resultTypeConfig = (ResultTypeConfig) resultTypeConfigs.get(prefix);
+      // by prefix
+      String prefix = substringBefore(resultCode, ":");
+      cfg = (ResultTypeConfig) resultTypeConfigs.get(prefix);
       if (prefix.startsWith("chain")) {
-        Action action = buildAction(Strings.substringAfter(resultCode, ":"));
-        Map<String, String> params = buildResultParams(path, resultTypeConfig);
+        Action action = buildAction(substringAfter(resultCode, ":"));
+        Map<String, String> params = buildResultParams(path, cfg);
         addNamespaceAction(action, params);
-        if (Strings.isNotEmpty(action.getMethod())) {
+        if (isNotEmpty(action.getMethod())) {
           params.put("method", action.getMethod());
         }
-        return buildResult(resultCode, resultTypeConfig, context, params);
+        return buildResult(resultCode, cfg, context, params);
       } else if (prefix.startsWith("redirect")) {
-        String targetResource = Strings.substringAfter(resultCode, ":");
-        if (Strings.contains(targetResource, ':')) { return new ServletRedirectResult(targetResource); }
+        String targetResource = substringAfter(resultCode, ":");
+        if (contains(targetResource, ':')) { return new ServletRedirectResult(targetResource); }
         Action action = buildAction(targetResource);
         // add special param and ajax tag for redirect
         HttpServletRequest request = ServletActionContext.getRequest();
@@ -109,25 +114,26 @@ public class DefaultResultBuilder implements ResultBuilder {
         if (null != request.getHeader("x-requested-with")) {
           action.param("x-requested-with", "1");
         }
-        Map<String, String> params = buildResultParams(path, resultTypeConfig);
+        Map<String, String> params = buildResultParams(path, cfg);
         if (null != action.getParams().get("method")) {
           params.put("method", (String) action.getParams().get("method"));
           action.getParams().remove("method");
         }
-        if (Strings.isNotEmpty(action.getMethod())) {
+        if (isNotEmpty(action.getMethod())) {
           params.put("method", action.getMethod());
         }
         addNamespaceAction(action, params);
 
-        ServletRedirectResult result = (ServletRedirectResult) buildResult(resultCode, resultTypeConfig,
-            context, params);
+        ServletRedirectResult result = (ServletRedirectResult) buildResult(resultCode, cfg, context, params);
         for (Map.Entry<String, String> param : action.getParams().entrySet()) {
           String property = param.getKey();
           result.addParameter(property, param.getValue());
         }
         return result;
       } else {
-        return buildResult(resultCode, resultTypeConfig, context, buildResultParams(path, resultTypeConfig));
+        path = substringAfter(resultCode, ":");
+        resultCode = "success";
+        return buildResult(resultCode, cfg, context, buildResultParams(path, cfg));
       }
     }
   }
@@ -154,7 +160,7 @@ public class DefaultResultBuilder implements ResultBuilder {
         Action newAction = actionNameBuilder.build(action.getClazz());
         action.name(newAction.getName()).namespace(newAction.getNamespace());
       }
-      if (Strings.isBlank(action.getName())) {
+      if (isBlank(action.getName())) {
         action.path(getServletPath(ServletActionContext.getRequest()));
       }
     }

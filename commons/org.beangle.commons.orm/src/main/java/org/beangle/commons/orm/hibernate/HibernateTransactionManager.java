@@ -10,14 +10,7 @@ import javax.sql.DataSource;
 
 import org.beangle.commons.orm.hibernate.internal.SessionHolder;
 import org.beangle.commons.orm.hibernate.internal.SessionUtils;
-import org.hibernate.ConnectionReleaseMode;
-import org.hibernate.FlushMode;
-import org.hibernate.HibernateException;
-import org.hibernate.Interceptor;
-import org.hibernate.JDBCException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.exception.GenericJDBCException;
 import org.hibernate.impl.SessionImpl;
 import org.springframework.beans.BeansException;
