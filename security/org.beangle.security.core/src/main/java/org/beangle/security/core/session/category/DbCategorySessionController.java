@@ -70,7 +70,6 @@ public class DbCategorySessionController extends AbstractSessionController imple
 
   public void init() throws Exception {
     Assert.notNull(categoryProfileProvider);
-
     for (CategoryProfile profile : categoryProfileProvider.getCategoryProfiles()) {
       OqlBuilder<SessionStat> builder = OqlBuilder.from(SessionStat.class, "stat");
       builder.where("stat.category=:category", profile.getCategory());

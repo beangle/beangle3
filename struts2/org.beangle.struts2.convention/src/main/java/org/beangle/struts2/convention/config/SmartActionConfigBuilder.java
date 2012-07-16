@@ -53,7 +53,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
   private final Configuration configuration;
   private final String defaultParentPackage;
 
-  private String[] actionPackages = null;
+  private List<String> actionPackages = CollectUtils.newArrayList();
   private String actionSuffix = "Action";
   private boolean checkImplementsAction = true;
   private boolean devMode = false;
@@ -93,19 +93,14 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
   public void buildActionConfigs() {
     long start = System.currentTimeMillis();
     logger.info("Action scan starting....");
-    List<String> packages = CollectUtils.newArrayList();
     for (Profile profile : actionBuilder.getProfileService().getProfiles()) {
-      if (profile.isActionScan()) {
-        packages.add(profile.getActionPattern());
-      }
+      if (profile.isActionScan()) actionPackages.add(profile.getActionPattern());
     }
-    if (packages.isEmpty()) { return; }
-    actionPackages = new String[packages.size()];
-    packages.toArray(actionPackages);
+    if (actionPackages.isEmpty()) { return; }
     // setup reload class loader based on dev settings
     initReloadClassLoader();
     @SuppressWarnings("rawtypes")
-    Set<Class> classes = findActions();
+    List<Class> classes = findActions();
     int newActions = buildConfiguration(classes);
     logger.info("Action scan completely,create {} action in {} ms", newActions, System.currentTimeMillis()
         - start);
@@ -128,8 +123,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
   }
 
   @SuppressWarnings("rawtypes")
-  protected Set<Class> findActions() {
-    Set<Class> classes = CollectUtils.newHashSet();
+  protected List<Class> findActions() {
     try {
       @SuppressWarnings("serial")
       Set<String> jarProtocols = new HashSet<String>() {
@@ -138,15 +132,12 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
           return !Objects.equals(o, "file");
         }
       };
-      ClassFinder finder = new ClassFinder(getClassLoaderInterface(), buildUrls(), false, jarProtocols);
-      for (String packageName : actionPackages) {
-        Test<ClassFinder.ClassInfo> test = getPackageFinderTest(packageName);
-        classes.addAll(finder.findClasses(test));
-      }
+      Test<String> test = new ActionTest(actionSuffix, actionPackages);
+      return new ClassFinder(getClassLoaderInterface(), buildUrls(), false, jarProtocols, test).findClasses();
     } catch (Exception ex) {
       logger.error("Unable to scan named packages", ex);
     }
-    return classes;
+    return CollectUtils.newArrayList();
   }
 
   protected Test<ClassFinder.ClassInfo> getPackageFinderTest(final String packageName) {
@@ -192,7 +183,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
   }
 
   @SuppressWarnings("rawtypes")
-  protected int buildConfiguration(Set<Class> classes) {
+  protected int buildConfiguration(List<Class> classes) {
     Map<String, PackageConfig.Builder> packageConfigs = new HashMap<String, PackageConfig.Builder>();
     int createCount = 0;
     for (Class<?> actionClass : classes) {
@@ -404,4 +395,38 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
     this.profileService = profileService;
   }
 
+}
+
+/**
+ * Test whether the class is a action class
+ * 
+ * @author chaostone
+ */
+class ActionTest implements Test<String> {
+
+  final String actionSuffix;
+  final List<String> packageNames;
+
+  public ActionTest(String actionSuffix, List<String> packageNames) {
+    super();
+    this.actionSuffix = actionSuffix;
+    this.packageNames = packageNames;
+  }
+
+  public boolean test(String name) {
+    boolean isAction = name.endsWith(actionSuffix);
+    if (isAction) {
+      boolean inPackage = false;
+      final String classPackageName = name.indexOf(".") > 0 ? name.substring(0, name.lastIndexOf(".")) : "";
+      for (String packageName : packageNames) {
+        if (Profile.isInPackage(packageName, classPackageName)) {
+          inPackage = true;
+          break;
+        }
+      }
+      return inPackage;
+    } else {
+      return false;
+    }
+  }
 }

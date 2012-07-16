@@ -35,7 +35,7 @@ public class MimeTypeProvider {
     try {
       InputStream im = url.openStream();
       contentTypes.load(im);
-      logger.info("content types loaded ");
+      logger.info("Content types loaded ");
       im.close();
     } catch (IOException e) {
       logger.error("load " + url + " error", e);
