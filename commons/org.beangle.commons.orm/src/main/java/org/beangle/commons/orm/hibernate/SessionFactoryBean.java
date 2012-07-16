@@ -4,13 +4,14 @@
  */
 package org.beangle.commons.orm.hibernate;
 
-import java.io.File;
+import java.util.List;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
 import org.beangle.commons.bean.Disposable;
 import org.beangle.commons.bean.Initializing;
+import org.beangle.commons.collection.CollectUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -44,13 +45,7 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
 
   private String[] mappingResources;
 
-  private Resource[] mappingLocations;
-
-  private Resource[] cacheableMappingLocations;
-
-  private Resource[] mappingJarLocations;
-
-  private Resource[] mappingDirectoryLocations;
+  private List<String> classNames = CollectUtils.newArrayList();
 
   private NamingStrategy namingStrategy;
 
@@ -63,19 +58,6 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
   private Configuration configuration;
 
   /**
-   * Set the location of a single Hibernate XML config file, for example as
-   * classpath resource "classpath:hibernate.cfg.xml".
-   * <p>
-   * Note: Can be omitted when all necessary properties and mapping resources are specified locally
-   * via this bean.
-   * 
-   * @see org.hibernate.cfg.Configuration#configure(java.net.URL)
-   */
-  public void setConfigLocation(Resource configLocation) {
-    this.configLocations = new Resource[] { configLocation };
-  }
-
-  /**
    * Set the locations of multiple Hibernate XML config files, for example as
    * classpath resources "classpath:hibernate.cfg.xml,classpath:extension.cfg.xml".
    * <p>
@@ -86,6 +68,19 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
    */
   public void setConfigLocations(Resource[] configLocations) {
     this.configLocations = configLocations;
+    // for (Resource res : configLocations) {
+    // try {
+    // InputStream is = res.getURL().openStream();
+    // List<String> lines = IOUtils.readLines(is);
+    // is.close();
+    // for (String line : lines) {
+    // if (line.contains("<mapping")) {
+    // classNames.add(Strings.substringBetween(line, "\"", "\"").trim());
+    // }
+    // }
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // }
   }
 
   /**
@@ -102,62 +97,6 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
    */
   public void setMappingResources(String[] mappingResources) {
     this.mappingResources = mappingResources;
-  }
-
-  /**
-   * Set locations of Hibernate mapping files, for example as classpath
-   * resource "classpath:example.hbm.xml". Supports any resource location
-   * via Spring's resource abstraction, for example relative paths like
-   * "WEB-INF/mappings/example.hbm.xml" when running in an application context.
-   * <p>
-   * Can be used to add to mappings from a Hibernate XML config file, or to specify all mappings
-   * locally.
-   * 
-   * @see org.hibernate.cfg.Configuration#addInputStream
-   */
-  public void setMappingLocations(Resource[] mappingLocations) {
-    this.mappingLocations = mappingLocations;
-  }
-
-  /**
-   * Set locations of cacheable Hibernate mapping files, for example as web app
-   * resource "/WEB-INF/mapping/example.hbm.xml". Supports any resource location
-   * via Spring's resource abstraction, as long as the resource can be resolved
-   * in the file system.
-   * <p>
-   * Can be used to add to mappings from a Hibernate XML config file, or to specify all mappings
-   * locally.
-   * 
-   * @see org.hibernate.cfg.Configuration#addCacheableFile(java.io.File)
-   */
-  public void setCacheableMappingLocations(Resource[] cacheableMappingLocations) {
-    this.cacheableMappingLocations = cacheableMappingLocations;
-  }
-
-  /**
-   * Set locations of jar files that contain Hibernate mapping resources,
-   * like "WEB-INF/lib/example.hbm.jar".
-   * <p>
-   * Can be used to add to mappings from a Hibernate XML config file, or to specify all mappings
-   * locally.
-   * 
-   * @see org.hibernate.cfg.Configuration#addJar(java.io.File)
-   */
-  public void setMappingJarLocations(Resource[] mappingJarLocations) {
-    this.mappingJarLocations = mappingJarLocations;
-  }
-
-  /**
-   * Set locations of directories that contain Hibernate mapping resources,
-   * like "WEB-INF/mappings".
-   * <p>
-   * Can be used to add to mappings from a Hibernate XML config file, or to specify all mappings
-   * locally.
-   * 
-   * @see org.hibernate.cfg.Configuration#addDirectory(java.io.File)
-   */
-  public void setMappingDirectoryLocations(Resource[] mappingDirectoryLocations) {
-    this.mappingDirectoryLocations = mappingDirectoryLocations;
   }
 
   /**
@@ -248,29 +187,10 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
         }
       }
 
-      if (this.mappingLocations != null) {
-        for (Resource resource : this.mappingLocations)
-          configuration.addInputStream(resource.getInputStream());
+      for (String className : classNames) {
+        configuration.addAnnotatedClass(Class.forName(className, true, beanClassLoader));
       }
 
-      if (this.cacheableMappingLocations != null) {
-        for (Resource resource : this.cacheableMappingLocations)
-          configuration.addCacheableFile(resource.getFile());
-      }
-
-      if (this.mappingJarLocations != null) {
-        for (Resource resource : this.mappingJarLocations)
-          configuration.addJar(resource.getFile());
-      }
-
-      if (this.mappingDirectoryLocations != null) {
-        for (Resource resource : this.mappingDirectoryLocations) {
-          File file = resource.getFile();
-          if (!file.isDirectory()) { throw new IllegalArgumentException("Mapping directory location ["
-              + resource + "] does not denote a directory"); }
-          configuration.addDirectory(file);
-        }
-      }
       logger.info("Building new Hibernate SessionFactory");
       this.sessionFactory = configuration.buildSessionFactory();
     }

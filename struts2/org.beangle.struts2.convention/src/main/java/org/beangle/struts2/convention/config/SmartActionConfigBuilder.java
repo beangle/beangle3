@@ -12,7 +12,6 @@ import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.*;
 
-import org.apache.struts2.StrutsException;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
@@ -52,7 +51,6 @@ import com.opensymphony.xwork2.util.finder.Test;
 public class SmartActionConfigBuilder implements ActionConfigBuilder {
   private static final Logger logger = LoggerFactory.getLogger(SmartActionConfigBuilder.class);
   private final Configuration configuration;
-  private final ObjectFactory objectFactory;
   private final String defaultParentPackage;
 
   private String[] actionPackages = null;
@@ -76,12 +74,10 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
   public SmartActionConfigBuilder(Configuration configuration, Container container,
       ObjectFactory objectFactory) {
     this.configuration = configuration;
-    this.objectFactory = objectFactory;
     this.defaultParentPackage = "beangle";
     if (objectFactory instanceof SpringObjectFactory) {
       beanNameFinder = new SpringBeanNameFinder();
-      SpringObjectFactory sf = (SpringObjectFactory) objectFactory;
-      sf.autoWireBean(beanNameFinder);
+      ((SpringObjectFactory) objectFactory).autoWireBean(beanNameFinder);
     }
   }
 
@@ -206,12 +202,14 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
             actionClass.getName());
         continue;
       }
-      try {
-        objectFactory.getClassInstance(actionClass.getName());
-      } catch (ClassNotFoundException e) {
-        logger.error("Object Factory was unable to load class {}", actionClass.getName());
-        throw new StrutsException("Object Factory was unable to load class " + actionClass.getName(), e);
-      }
+      // 2012-07-16 comments for performance
+      // try {
+      // objectFactory.getClassInstance(actionClass.getName());
+      // } catch (ClassNotFoundException e) {
+      // logger.error("Object Factory was unable to load class {}", actionClass.getName());
+      // throw new StrutsException("Object Factory was unable to load class " +
+      // actionClass.getName(), e);
+      // }
       String[] beanNames = beanNameFinder.getBeanNames(actionClass);
       switch (beanNames.length) {
       case 0:
@@ -243,8 +241,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
    * Interfaces, enums, annotations, and abstract classes cannot be
    * instantiated.
    * 
-   * @param actionClass
-   *          class to check
+   * @param actionClass class to check
    * @return returns true if the class cannot be instantiated or should be
    *         ignored
    */

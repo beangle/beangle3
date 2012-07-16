@@ -42,6 +42,8 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 public class HibernateTransactionManager extends AbstractPlatformTransactionManager implements
     ResourceTransactionManager, BeanFactoryAware, InitializingBean {
 
+  private static final long serialVersionUID = 1L;
+
   private SessionFactory sessionFactory;
 
   private DataSource dataSource;

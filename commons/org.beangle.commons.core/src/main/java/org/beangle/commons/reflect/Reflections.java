@@ -2,11 +2,14 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.commons.dao.metadata;
+package org.beangle.commons.reflect;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.List;
 
 import org.apache.commons.beanutils.MethodUtils;
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
 
 /**
@@ -17,9 +20,9 @@ import org.beangle.commons.lang.Strings;
  * @author chaostone
  * @version $Id: $
  */
-public final class ReflectHelper {
+public final class Reflections {
 
-  private ReflectHelper() {
+  private Reflections() {
   }
 
   /**
@@ -39,5 +42,18 @@ public final class ReflectHelper {
     } else {
       return getMethod.getReturnType();
     }
+  }
+
+  public static List<Method> getBeanSetters(Class<?> clazz) {
+    List<Method> methods = CollectUtils.newArrayList();
+    for (Method m : clazz.getMethods()) {
+      if (m.getName().startsWith("set") && m.getName().length() > 3) {
+        if (Modifier.isPublic(m.getModifiers()) && !Modifier.isStatic(m.getModifiers())
+            && m.getParameterTypes().length == 1) {
+          methods.add(m);
+        }
+      }
+    }
+    return methods;
   }
 }

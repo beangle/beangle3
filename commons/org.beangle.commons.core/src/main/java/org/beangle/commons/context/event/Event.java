@@ -17,6 +17,15 @@ public abstract class Event extends EventObject {
   /** System time when the event happened */
   private final long timestamp;
 
+  /**event subject*/
+  private String subject;
+
+  /**event details*/
+  private String detail;
+  
+  /**location where the event happened*/
+  private String location;
+  
   /**
    * Create a new ApplicationEvent.
    * 
@@ -34,6 +43,30 @@ public abstract class Event extends EventObject {
    */
   public final long getTimestamp() {
     return this.timestamp;
+  }
+
+  public String getSubject() {
+    return subject;
+  }
+
+  public void setSubject(String subject) {
+    this.subject = subject;
+  }
+
+  public String getDetail() {
+    return detail;
+  }
+
+  public void setDetail(String detail) {
+    this.detail = detail;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public void setLocation(String location) {
+    this.location = location;
   }
 
 }

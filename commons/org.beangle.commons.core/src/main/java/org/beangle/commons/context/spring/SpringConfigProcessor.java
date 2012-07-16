@@ -4,14 +4,12 @@
  */
 package org.beangle.commons.context.spring;
 
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.time.StopWatch;
 import org.beangle.commons.bean.Disposable;
 import org.beangle.commons.bean.Initializing;
@@ -23,6 +21,8 @@ import org.beangle.commons.context.inject.BeanConfig.ListValue;
 import org.beangle.commons.context.inject.BeanConfig.MapValue;
 import org.beangle.commons.context.inject.BeanConfig.PropertiesValue;
 import org.beangle.commons.context.inject.BeanConfig.ReferenceValue;
+import org.beangle.commons.lang.Strings;
+import org.beangle.commons.reflect.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -37,7 +37,6 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.beans.factory.support.*;
-import org.springframework.core.MethodParameter;
 import org.springframework.core.io.UrlResource;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
@@ -57,6 +56,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
   /** {@inheritDoc} */
   public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry definitionRegistry)
       throws BeansException {
+    logger.info("Auto register and wire beans starting...");
     // 自动注册
     autoconfig(definitionRegistry);
     // 再配置
@@ -99,10 +99,13 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
     Map<String, BeanDefinition> newDefinitions = findRegistedModules(registry);
     // should register after all beans
     registerBuildins(registry);
+    logger.info("Auto register {} beans using {} mills", newDefinitions.size(), watch.getTime());
+    watch.reset();
+    watch.start();
     autowire(newDefinitions, registry);
     lifecycle(registry, definitionRegistry);
     logger.debug("Auto register and wire bean [{}]", newDefinitions.keySet());
-    logger.info("Auto register and wire {} beans using {} mills", newDefinitions.size(), watch.getTime());
+    logger.info("Auto wire {} beans using {} mills", newDefinitions.size(), watch.getTime());
   }
 
   /**
@@ -238,7 +241,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
         ManagedProperties props = new ManagedProperties();
         for (Map.Entry<String, String> pentry : ((PropertiesValue) value).properties.entrySet())
           props.put(new TypedStringValue(pentry.getKey()), new TypedStringValue(pentry.getValue()));
-        
+
         value = props;
       } else if (value instanceof Definition) {
         value = new BeanDefinitionHolder(convert((Definition) value), ((Definition) value).beanName);
@@ -247,6 +250,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
       }
       mpv.add(entry.getKey(), value);
     }
+    def.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_NO);
     def.setLazyInit(definition.lazyInit);
     def.setAbstract(definition.isAbstract());
     def.setParentName(definition.parent);
@@ -313,13 +317,13 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * @param registry a {@link org.beangle.commons.context.inject.BindRegistry} object.
    */
   protected void autowireBean(String beanName, BeanDefinition mbd, BindRegistry registry) {
-    Map<String, PropertyDescriptor> properties = unsatisfiedNonSimpleProperties(mbd);
-    for (Map.Entry<String, PropertyDescriptor> entry : properties.entrySet()) {
+    Map<String, Class<?>> properties = unsatisfiedNonSimpleProperties(mbd);
+    for (Map.Entry<String, Class<?>> entry : properties.entrySet()) {
       String propertyName = entry.getKey();
-      PropertyDescriptor pd = entry.getValue();
-      if (Object.class.equals(pd.getPropertyType())) continue;
-      MethodParameter methodParam = BeanUtils.getWriteMethodParameter(pd);
-      List<String> beanNames = registry.getBeanNames(methodParam.getParameterType());
+      Class<?> propertyType = entry.getValue();
+      // if (Object.class.equals(propertyType)) continue;
+      // MethodParameter methodParam = BeanUtils.getWriteMethodParameter(pd);
+      List<String> beanNames = registry.getBeanNames(propertyType);
       boolean binded = false;
       if (beanNames.size() == 1) {
         mbd.getPropertyValues().add(propertyName, new RuntimeBeanReference(beanNames.get(0)));
@@ -355,8 +359,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
     }
   }
 
-  private static boolean isExcludedFromDependencyCheck(PropertyDescriptor pd) {
-    Method wm = pd.getWriteMethod();
+  private static boolean isExcludedFromDependencyCheck(Method wm) {
     if (wm == null) { return false; }
     if (!wm.getDeclaringClass().getName().contains("$$")) {
       // Not a CGLIB method so it's OK.
@@ -377,22 +380,17 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * @param mbd
    * @return
    */
-  private Map<String, PropertyDescriptor> unsatisfiedNonSimpleProperties(BeanDefinition mbd) {
-    Map<String, PropertyDescriptor> properties = CollectUtils.newHashMap();
+  private Map<String, Class<?>> unsatisfiedNonSimpleProperties(BeanDefinition mbd) {
+    Map<String, Class<?>> properties = CollectUtils.newHashMap();
+    Class<?> clazz = (Class<?>) ((GenericBeanDefinition) mbd).getBeanClass();
+    if (mbd.isAbstract()) return properties;
     PropertyValues pvs = mbd.getPropertyValues();
-    Class<?> clazz = null;
-    try {
-      clazz = Class.forName(mbd.getBeanClassName());
-    } catch (ClassNotFoundException e) {
-      logger.error("Class " + mbd.getBeanClassName() + "not found", e);
-      return properties;
-    }
-    PropertyDescriptor[] pds = PropertyUtils.getPropertyDescriptors(clazz);
-    for (PropertyDescriptor pd : pds) {
-      if (pd.getWriteMethod() != null && !isExcludedFromDependencyCheck(pd) && !pvs.contains(pd.getName())
-          && !BeanUtils.isSimpleProperty(pd.getPropertyType())
-          && !pd.getPropertyType().getName().startsWith("java.")) {
-        properties.put(pd.getName(), pd);
+    for (Method m : Reflections.getBeanSetters(clazz)) {
+      String propertyName = Strings.uncapitalize(m.getName().substring(3));
+      Class<?> propertyType = m.getParameterTypes()[0];
+      if (!isExcludedFromDependencyCheck(m) && !pvs.contains(propertyName)
+          && !BeanUtils.isSimpleProperty(propertyType) && !propertyType.getName().startsWith("java.")) {
+        properties.put(propertyName, propertyType);
       }
     }
     return properties;

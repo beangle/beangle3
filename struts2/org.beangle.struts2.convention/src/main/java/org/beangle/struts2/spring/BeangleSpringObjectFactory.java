@@ -124,7 +124,7 @@ public class BeangleSpringObjectFactory extends SpringObjectFactory {
 
     this.setAlwaysRespectAutowireStrategy("true".equalsIgnoreCase(alwaysAutoWire));
 
-    logger.info("... initialized Struts-Spring integration successfully");
+    logger.info("Initialized Struts-Spring integration successfully");
   }
 
   /**

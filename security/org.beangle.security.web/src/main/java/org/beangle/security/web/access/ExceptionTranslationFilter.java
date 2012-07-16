@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.web.filter.GenericHttpFilter;
 import org.beangle.security.BeangleSecurityException;
+import org.beangle.security.SecurityUtils;
 import org.beangle.security.access.AccessDeniedException;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
-import org.beangle.security.core.context.AuthenticationUtils;
 import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.security.web.AuthenticationEntryPoint;
 import org.beangle.security.web.util.ThrowableAnalyzer;
@@ -70,7 +70,7 @@ public class ExceptionTranslationFilter extends GenericHttpFilter {
     } else if (exception instanceof AccessDeniedException) {
       AccessDeniedException ae = (AccessDeniedException) exception;
       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-      if (AuthenticationUtils.isValid(auth)) {
+      if (SecurityUtils.isValid(auth)) {
         logger.debug("{} access {} is denied", auth.getName(), ae.getResource());
         accessDeniedHandler.handle(request, response, (AccessDeniedException) exception);
       } else {

@@ -16,7 +16,7 @@ import org.beangle.security.core.session.impl.MemSessionRegistry;
 
 /**
  * @author chaostone
- * @version $Id: Module.java Jun 17, 2011 7:56:25 PM chaostone $
+ * @version $Id: DefaultModule.java Jun 17, 2011 7:56:25 PM chaostone $
  */
 public class DefaultModule extends AbstractBindModule {
 

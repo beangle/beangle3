@@ -11,6 +11,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.Entity;
 import org.beangle.commons.lang.Throwables;
+import org.beangle.commons.reflect.Reflections;
 
 /**
  * <p>
@@ -138,7 +139,7 @@ public class EntityType extends AbstractType {
   public Type getPropertyType(String property) {
     Type type = (Type) propertyTypes.get(property);
     if (null == type) {
-      Class<?> propertyType = ReflectHelper.getProperty(entityClass, property);
+      Class<?> propertyType = Reflections.getProperty(entityClass, property);
       if (null != propertyType) {
         if (Entity.class.isAssignableFrom(propertyType)) {
           type = new EntityType(propertyType);

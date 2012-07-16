@@ -18,6 +18,7 @@
   <modules>
     <module>org.beangle.security.core</module>
     <module>org.beangle.security.web</module>
+    <module>org.beangle.security.blueprint</module>
   </modules>
 
   <dependencies>
