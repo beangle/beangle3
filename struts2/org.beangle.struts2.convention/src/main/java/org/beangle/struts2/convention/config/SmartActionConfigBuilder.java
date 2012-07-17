@@ -4,25 +4,24 @@
  */
 package org.beangle.struts2.convention.config;
 
-import static org.beangle.commons.lang.Strings.substringBeforeLast;
-
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.net.URL;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
-import org.beangle.struts2.convention.factory.BeanNameFinder;
-import org.beangle.struts2.convention.factory.DefaultBeanNameFinder;
+import org.beangle.struts2.convention.config.ActionFinder.ActionTest;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.struts2.convention.route.ActionBuilder;
 import org.beangle.struts2.convention.route.Profile;
 import org.beangle.struts2.convention.route.ProfileService;
 import org.beangle.struts2.convention.route.ViewMapper;
-import org.beangle.struts2.spring.SpringBeanNameFinder;
+import org.beangle.struts2.spring.SpringActionFinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,10 +37,8 @@ import com.opensymphony.xwork2.inject.Container;
 import com.opensymphony.xwork2.inject.Inject;
 import com.opensymphony.xwork2.spring.SpringObjectFactory;
 import com.opensymphony.xwork2.util.classloader.ReloadingClassLoader;
-import com.opensymphony.xwork2.util.finder.ClassFinder;
 import com.opensymphony.xwork2.util.finder.ClassLoaderInterface;
 import com.opensymphony.xwork2.util.finder.ClassLoaderInterfaceDelegate;
-import com.opensymphony.xwork2.util.finder.Test;
 
 /**
  * <p>
@@ -55,11 +52,10 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 
   private List<String> actionPackages = CollectUtils.newArrayList();
   private String actionSuffix = "Action";
-  private boolean checkImplementsAction = true;
   private boolean devMode = false;
 
   private ReloadingClassLoader reloadingClassLoader;
-  private BeanNameFinder beanNameFinder = new DefaultBeanNameFinder();
+  private ActionFinder actionFinder;
 
   @Inject
   protected ViewMapper viewMapper;
@@ -76,8 +72,8 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
     this.configuration = configuration;
     this.defaultParentPackage = "beangle";
     if (objectFactory instanceof SpringObjectFactory) {
-      beanNameFinder = new SpringBeanNameFinder();
-      ((SpringObjectFactory) objectFactory).autoWireBean(beanNameFinder);
+      actionFinder = new SpringActionFinder(new ActionTest(actionSuffix, actionPackages));
+      ((SpringObjectFactory) objectFactory).autoWireBean(actionFinder);
     }
   }
 
@@ -99,9 +95,23 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
     if (actionPackages.isEmpty()) { return; }
     // setup reload class loader based on dev settings
     initReloadClassLoader();
-    @SuppressWarnings("rawtypes")
-    List<Class> classes = findActions();
-    int newActions = buildConfiguration(classes);
+    Map<String, PackageConfig.Builder> packageConfigs = new HashMap<String, PackageConfig.Builder>();
+    int newActions = 0;
+    Map<Class<?>, String> actionTypes = actionFinder.getActions();
+    for (Map.Entry<Class<?>, String> entry : actionTypes.entrySet()) {
+      Class<?> actionClass = entry.getKey();
+      Profile profile = actionBuilder.getProfileService().getProfile(actionClass.getName());
+      Action action = actionBuilder.build(actionClass.getName());
+      PackageConfig.Builder packageConfig = getPackageConfig(profile, packageConfigs, action, actionClass);
+      if (createActionConfig(packageConfig, action, actionClass, entry.getValue())) newActions++;
+    }
+    newActions += buildIndexActions(packageConfigs);
+    // Add the new actions to the configuration
+    Set<String> packageNames = packageConfigs.keySet();
+    for (String packageName : packageNames) {
+      configuration.removePackageConfig(packageName);
+      configuration.addPackageConfig(packageName, packageConfigs.get(packageName).build());
+    }
     logger.info("Action scan completely,create {} action in {} ms", newActions, System.currentTimeMillis()
         - start);
   }
@@ -120,125 +130,6 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 
   protected boolean isReloadEnabled() {
     return devMode;
-  }
-
-  @SuppressWarnings("rawtypes")
-  protected List<Class> findActions() {
-    try {
-      @SuppressWarnings("serial")
-      Set<String> jarProtocols = new HashSet<String>() {
-        @Override
-        public boolean contains(Object o) {
-          return !Objects.equals(o, "file");
-        }
-      };
-      Test<String> test = new ActionTest(actionSuffix, actionPackages);
-      return new ClassFinder(getClassLoaderInterface(), buildUrls(), false, jarProtocols, test).findClasses();
-    } catch (Exception ex) {
-      logger.error("Unable to scan named packages", ex);
-    }
-    return CollectUtils.newArrayList();
-  }
-
-  protected Test<ClassFinder.ClassInfo> getPackageFinderTest(final String packageName) {
-    // so "my.package" does not match "my.package2.test"
-    // final String strictPackageName = packageName + ".";
-    return new Test<ClassFinder.ClassInfo>() {
-      public boolean test(ClassFinder.ClassInfo classInfo) {
-        String classPackageName = classInfo.getPackageName();
-        boolean inPackage = Profile.isInPackage(packageName, classPackageName);
-        boolean nameMatches = classInfo.getName().endsWith(actionSuffix);
-        try {
-          return inPackage
-              && (nameMatches || (checkImplementsAction && com.opensymphony.xwork2.Action.class
-                  .isAssignableFrom(classInfo.get())));
-        } catch (ClassNotFoundException ex) {
-          logger.error("Unable to load class " + classInfo.getName(), ex);
-          return false;
-        }
-      }
-    };
-  }
-
-  private Set<URL> buildUrls() {
-    Set<URL> urls = CollectUtils.newHashSet();
-    Enumeration<URL> em;
-    ClassLoaderInterface classloader = getClassLoaderInterface();
-    try {
-      em = classloader.getResources("struts-plugin.xml");
-      while (em.hasMoreElements()) {
-        URL url = em.nextElement();
-        urls.add(new URL(substringBeforeLast(url.toExternalForm(), "struts-plugin.xml")));
-      }
-      em = classloader.getResources("struts.xml");
-      while (em.hasMoreElements()) {
-        URL url = em.nextElement();
-        urls.add(new URL(substringBeforeLast(url.toExternalForm(), "struts.xml")));
-      }
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-    logger.info("build action from {}", urls);
-    return urls;
-  }
-
-  @SuppressWarnings("rawtypes")
-  protected int buildConfiguration(List<Class> classes) {
-    Map<String, PackageConfig.Builder> packageConfigs = new HashMap<String, PackageConfig.Builder>();
-    int createCount = 0;
-    for (Class<?> actionClass : classes) {
-      // Skip classes that can't be instantiated
-      if (cannotInstantiate(actionClass)) {
-        logger.debug("Class {} did not pass the instantiation test and will be ignored",
-            actionClass.getName());
-        continue;
-      }
-      // 2012-07-16 comments for performance
-      // try {
-      // objectFactory.getClassInstance(actionClass.getName());
-      // } catch (ClassNotFoundException e) {
-      // logger.error("Object Factory was unable to load class {}", actionClass.getName());
-      // throw new StrutsException("Object Factory was unable to load class " +
-      // actionClass.getName(), e);
-      // }
-      String[] beanNames = beanNameFinder.getBeanNames(actionClass);
-      switch (beanNames.length) {
-      case 0:
-        logger.warn("Cannot find bean definition for {}.", actionClass);
-        break;
-      case 1:
-        Profile profile = actionBuilder.getProfileService().getProfile(actionClass.getName());
-        Action action = actionBuilder.build(actionClass.getName());
-        PackageConfig.Builder packageConfig = getPackageConfig(profile, packageConfigs, action, actionClass);
-        if (createActionConfig(packageConfig, action, actionClass, beanNames[0])) {
-          createCount++;
-        }
-        break;
-      default:
-        logger.warn("Duplicated action definition for {}", actionClass);
-      }
-    }
-    createCount += buildIndexActions(packageConfigs);
-    // Add the new actions to the configuration
-    Set<String> packageNames = packageConfigs.keySet();
-    for (String packageName : packageNames) {
-      configuration.removePackageConfig(packageName);
-      configuration.addPackageConfig(packageName, packageConfigs.get(packageName).build());
-    }
-    return createCount;
-  }
-
-  /**
-   * Interfaces, enums, annotations, and abstract classes cannot be
-   * instantiated.
-   * 
-   * @param actionClass class to check
-   * @return returns true if the class cannot be instantiated or should be
-   *         ignored
-   */
-  protected boolean cannotInstantiate(Class<?> actionClass) {
-    return actionClass.isAnnotation() || actionClass.isInterface() || actionClass.isEnum()
-        || (actionClass.getModifiers() & Modifier.ABSTRACT) != 0 || actionClass.isAnonymousClass();
   }
 
   protected boolean createActionConfig(PackageConfig.Builder pkgCfg, Action action, Class<?> actionClass,
@@ -395,38 +286,4 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
     this.profileService = profileService;
   }
 
-}
-
-/**
- * Test whether the class is a action class
- * 
- * @author chaostone
- */
-class ActionTest implements Test<String> {
-
-  final String actionSuffix;
-  final List<String> packageNames;
-
-  public ActionTest(String actionSuffix, List<String> packageNames) {
-    super();
-    this.actionSuffix = actionSuffix;
-    this.packageNames = packageNames;
-  }
-
-  public boolean test(String name) {
-    boolean isAction = name.endsWith(actionSuffix);
-    if (isAction) {
-      boolean inPackage = false;
-      final String classPackageName = name.indexOf(".") > 0 ? name.substring(0, name.lastIndexOf(".")) : "";
-      for (String packageName : packageNames) {
-        if (Profile.isInPackage(packageName, classPackageName)) {
-          inPackage = true;
-          break;
-        }
-      }
-      return inPackage;
-    } else {
-      return false;
-    }
-  }
 }

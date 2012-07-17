@@ -187,5 +187,4 @@ public class BeangleSpringObjectFactory extends SpringObjectFactory {
   public void setFreemarkerManager(FreemarkerManager freemarkerManager) {
     this.freemarkerManager = freemarkerManager;
   }
-
 }
