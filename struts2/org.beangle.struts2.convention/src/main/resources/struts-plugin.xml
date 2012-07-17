@@ -16,7 +16,7 @@
 	<constant name="struts.mapper.class" value="beangle"/>
 	<constant name="struts.objectFactory" value="beangle" />
 	<constant name="struts.staticContentLoader" value="beangle" />
-	
+
 	<package name="beangle" extends="struts-default">
 		<interceptors>
 			<interceptor name="flash" class="org.beangle.struts2.interceptor.FlashInterceptor"/>
@@ -57,6 +57,6 @@
 	<bean type="org.beangle.struts2.convention.route.ViewMapper" class="org.beangle.struts2.convention.route.impl.DefaultViewMapper"/>
 	<bean type="org.beangle.struts2.convention.route.ProfileService" class="org.beangle.struts2.convention.route.impl.ProfileServiceImpl"/>
 
-	<bean type="com.opensymphony.xwork2.ObjectFactory" name="beangle" class="org.beangle.struts2.spring.BeangleSpringObjectFactory" />
+	<bean type="com.opensymphony.xwork2.ObjectFactory" name="beangle" class="org.beangle.struts2.spring.BeangleObjectFactory" />
 	<bean type="org.apache.struts2.dispatcher.StaticContentLoader" name="beangle" class="org.beangle.struts2.util.BeangleStaticContentLoader" />
 </struts>

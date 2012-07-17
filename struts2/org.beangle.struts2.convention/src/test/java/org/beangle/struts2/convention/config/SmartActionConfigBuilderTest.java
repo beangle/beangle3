@@ -31,7 +31,7 @@ import com.opensymphony.xwork2.util.reflection.ReflectionException;
 @Test
 public class SmartActionConfigBuilderTest {
 
-  public void test21() {
+  public void test21() throws Exception {
     ActionBuilder actionNameBuilder = new DefaultActionBuilder();
     ProfileService profileService = new ProfileServiceImpl();
     actionNameBuilder.setProfileService(profileService);

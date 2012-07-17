@@ -36,7 +36,9 @@ public class SessioninfoCleaner extends BaseServiceImpl implements Initializing 
     if (null != sessionRegistry) {
       SessionCleanerTask sessionCleanerTask = new SessionCleanerTask(sessionRegistry);
       sessionCleanerTask.setEntityDao(entityDao);
-      new Timer("Beangle Session Cleaner", true).schedule(sessionCleanerTask, new Date(), cleanInterval);
+      // 下一次间隔开始清理，不要浪费启动时间
+      new Timer("Beangle Session Cleaner", true).schedule(sessionCleanerTask,
+          new Date(System.currentTimeMillis() + cleanInterval), cleanInterval);
     }
   }
 

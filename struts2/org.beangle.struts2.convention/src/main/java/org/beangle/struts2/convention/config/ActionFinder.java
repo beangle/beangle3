@@ -24,7 +24,7 @@ public interface ActionFinder {
    * @param actoinType
    * @return
    */
-  public Map< Class<?>,String> getActions();
+  public Map< Class<?>,String> getActions(ActionTest test);
   /**
    * Test whether the class is a action class
    * 

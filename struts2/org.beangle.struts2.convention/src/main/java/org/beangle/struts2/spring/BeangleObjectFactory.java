@@ -11,64 +11,62 @@ import javax.servlet.ServletContext;
 import org.apache.struts2.StrutsConstants;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.apache.struts2.views.freemarker.FreemarkerResult;
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.web.spring.ContextLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import com.opensymphony.xwork2.ObjectFactory;
 import com.opensymphony.xwork2.Result;
 import com.opensymphony.xwork2.config.entities.ResultConfig;
 import com.opensymphony.xwork2.inject.Container;
 import com.opensymphony.xwork2.inject.Inject;
-import com.opensymphony.xwork2.spring.SpringObjectFactory;
 import com.opensymphony.xwork2.util.reflection.ReflectionException;
 import com.opensymphony.xwork2.util.reflection.ReflectionExceptionHandler;
 
 /**
  * <pre>
- * 1 specialize for freemarker result creation.
- * 2 prevent buildbean injectinternal twice
+ * 1 Specialize for freemarker result creation.
+ * 2 Cached struts bean with innerFactory map
+ * 3 Dropped spring autowire feature for without any bean needed(action?struts2?)
  * </pre>
  * 
  * @author chaostone
  * @version $Id: BeangleSpringObjectFactory.java Dec 25, 2011 5:54:57 PM chaostone $
  */
-public class BeangleSpringObjectFactory extends SpringObjectFactory {
+public class BeangleObjectFactory extends ObjectFactory {
   private static final long serialVersionUID = -1733081389212973935L;
 
-  private static final Logger logger = LoggerFactory.getLogger(BeangleSpringObjectFactory.class);
+  private static final Logger logger = LoggerFactory.getLogger(BeangleObjectFactory.class);
+
+  protected ApplicationContext appContext;
 
   @Inject
   private FreemarkerManager freemarkerManager;
 
   /**
+   * Extra bean not managed by spring
+   */
+  private Map<String, Object> innerFactory = CollectUtils.newHashMap();
+
+  /**
    * Constructs the spring object factory
    * 
-   * @param autoWire
-   *          The type of autowiring to use
-   * @param alwaysAutoWire
-   *          Whether to always respect the autowiring or not
-   * @param useClassCacheStr
-   *          Whether to use the class cache or not
-   * @param servletContext
-   *          The servlet context
+   * @param servletContext The servlet context
    * @since 2.1.3
    */
   @Inject
-  public BeangleSpringObjectFactory(
+  public BeangleObjectFactory(
       @Inject(value = StrutsConstants.STRUTS_OBJECTFACTORY_SPRING_AUTOWIRE, required = false) String autoWire,
       @Inject(value = StrutsConstants.STRUTS_OBJECTFACTORY_SPRING_AUTOWIRE_ALWAYS_RESPECT, required = false) String alwaysAutoWire,
       @Inject(value = StrutsConstants.STRUTS_OBJECTFACTORY_SPRING_USE_CLASS_CACHE, required = false) String useClassCacheStr,
       @Inject ServletContext servletContext, @Inject(StrutsConstants.STRUTS_DEVMODE) String devMode,
       @Inject Container container) {
 
-    super();
-    boolean useClassCache = "true".equals(useClassCacheStr);
     logger.info("Initializing Struts-Spring integration...");
-
-    ApplicationContext appContext = ContextLoader.getContext(servletContext);
+    appContext = ContextLoader.getContext(servletContext);
     if (appContext == null) {
       // uh oh! looks like the lifecycle listener wasn't installed. Let's inform the user
       String message = "********** FATAL ERROR STARTING UP STRUTS-SPRING INTEGRATION **********\n"
@@ -80,50 +78,6 @@ public class BeangleSpringObjectFactory extends SpringObjectFactory {
       logger.error(message);
       return;
     }
-
-    // String watchList = container.getInstance(String.class,
-    // "struts.class.reloading.watchList");
-    // String acceptClasses = container.getInstance(String.class,
-    // "struts.class.reloading.acceptClasses");
-    // String reloadConfig = container.getInstance(String.class,
-    // "struts.class.reloading.reloadConfig");
-    //
-    // if ("true".equals(devMode) && Strings.isNotBlank(watchList)
-    // && appContext instanceof ClassReloadingXMLWebApplicationContext) {
-    // // prevent class caching
-    // useClassCache = false;
-    //
-    // ClassReloadingXMLWebApplicationContext reloadingContext =
-    // (ClassReloadingXMLWebApplicationContext) appContext;
-    // reloadingContext.setupReloading(watchList.split(","), acceptClasses, servletContext,
-    // "true".equals(reloadConfig));
-    // logger.info("Class reloading is enabled. Make sure this is not used on a production environment!",
-    // watchList);
-    //
-    // setClassLoader(reloadingContext.getReloadingClassLoader());
-    //
-    // // we need to reload the context, so our isntance of the factory is picked up
-    // reloadingContext.refresh();
-    // }
-
-    this.setApplicationContext(appContext);
-
-    int type = AutowireCapableBeanFactory.AUTOWIRE_BY_NAME; // default
-    if ("name".equals(autoWire)) {
-      type = AutowireCapableBeanFactory.AUTOWIRE_BY_NAME;
-    } else if ("type".equals(autoWire)) {
-      type = AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE;
-    } else if ("constructor".equals(autoWire)) {
-      type = AutowireCapableBeanFactory.AUTOWIRE_CONSTRUCTOR;
-    } else if ("no".equals(autoWire)) {
-      type = AutowireCapableBeanFactory.AUTOWIRE_NO;
-    }
-    this.setAutowireStrategy(type);
-
-    this.setUseClassCache(useClassCache);
-
-    this.setAlwaysRespectAutowireStrategy("true".equalsIgnoreCase(alwaysAutoWire));
-
     logger.info("Initialized Struts-Spring integration successfully");
   }
 
@@ -173,18 +127,52 @@ public class BeangleSpringObjectFactory extends SpringObjectFactory {
   @Override
   public Object buildBean(String beanName, Map<String, Object> extraContext, boolean injectInternal)
       throws Exception {
-    Object o = null;
+    Object bean = null;
     if (appContext.containsBeanDefinition(beanName)) {
-      o = appContext.getBean(beanName);
-      if (injectInternal) injectInternalBeans(o);
+      bean = appContext.getBean(beanName);
+      if (injectInternal) injectInternalBeans(bean);
     } else {
-      Class<?> beanClazz = getClassInstance(beanName);
-      o = buildBean(beanClazz, extraContext);
+      bean = innerFactory.get(beanName);
+      if (null == bean) {
+        bean = buildBean(getClassInstance(beanName), extraContext);
+        if (null != bean) innerFactory.put(beanName, bean);
+      }
     }
-    return o;
+    return bean;
+  }
+
+  /**
+   * @param clazz
+   * @param extraContext
+   * @throws Exception
+   */
+  @SuppressWarnings("rawtypes")
+  @Override
+  public Object buildBean(Class clazz, Map<String, Object> extraContext) throws Exception {
+    Object bean = clazz.newInstance();
+    if (bean instanceof ApplicationContextAware) ((ApplicationContextAware) bean)
+        .setApplicationContext(appContext);
+    bean = injectInternalBeans(bean);
+    return bean;
   }
 
   public void setFreemarkerManager(FreemarkerManager freemarkerManager) {
     this.freemarkerManager = freemarkerManager;
   }
+
+  @Override
+  public Class<?> getClassInstance(String className) throws ClassNotFoundException {
+    Class<?> clazz = null;
+    if (appContext.containsBean(className)) {
+      clazz = appContext.getBean(className).getClass();
+    } else {
+      clazz = super.getClassInstance(className);
+    }
+    return clazz;
+  }
+
+  public ApplicationContext getApplicationContext() {
+    return appContext;
+  }
+
 }

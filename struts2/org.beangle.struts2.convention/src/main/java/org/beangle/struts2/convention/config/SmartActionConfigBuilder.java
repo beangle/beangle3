@@ -35,7 +35,6 @@ import com.opensymphony.xwork2.config.entities.ResultConfig;
 import com.opensymphony.xwork2.config.entities.ResultTypeConfig;
 import com.opensymphony.xwork2.inject.Container;
 import com.opensymphony.xwork2.inject.Inject;
-import com.opensymphony.xwork2.spring.SpringObjectFactory;
 import com.opensymphony.xwork2.util.classloader.ReloadingClassLoader;
 import com.opensymphony.xwork2.util.finder.ClassLoaderInterface;
 import com.opensymphony.xwork2.util.finder.ClassLoaderInterfaceDelegate;
@@ -68,13 +67,11 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 
   @Inject
   public SmartActionConfigBuilder(Configuration configuration, Container container,
-      ObjectFactory objectFactory) {
+      ObjectFactory objectFactory) throws Exception {
     this.configuration = configuration;
     this.defaultParentPackage = "beangle";
-    if (objectFactory instanceof SpringObjectFactory) {
-      actionFinder = new SpringActionFinder(new ActionTest(actionSuffix, actionPackages));
-      ((SpringObjectFactory) objectFactory).autoWireBean(actionFinder);
-    }
+    actionFinder = (ActionFinder) objectFactory.buildBean(SpringActionFinder.class,
+        new HashMap<String, Object>(0));
   }
 
   protected void initReloadClassLoader() {
@@ -97,7 +94,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
     initReloadClassLoader();
     Map<String, PackageConfig.Builder> packageConfigs = new HashMap<String, PackageConfig.Builder>();
     int newActions = 0;
-    Map<Class<?>, String> actionTypes = actionFinder.getActions();
+    Map<Class<?>, String> actionTypes = actionFinder.getActions(new ActionTest(actionSuffix, actionPackages));
     for (Map.Entry<Class<?>, String> entry : actionTypes.entrySet()) {
       Class<?> actionClass = entry.getKey();
       Profile profile = actionBuilder.getProfileService().getProfile(actionClass.getName());

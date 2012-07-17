@@ -16,18 +16,11 @@ public class SpringActionFinder implements ActionFinder, ApplicationContextAware
 
   ApplicationContext appContext;
 
-  final ActionTest test;
-
-  public SpringActionFinder(ActionTest test) {
-    super();
-    this.test = test;
-  }
-
-  public Map<Class<?>, String> getActions() {
+  public Map<Class<?>, String> getActions(ActionTest actionTest) {
     Map<Class<?>, String> actions = CollectUtils.newHashMap();
     for (String name : appContext.getBeanDefinitionNames()) {
       Class<?> type = appContext.getType(name);
-      if (null != type && test.evaluate(type.getName())) {
+      if (null != type && actionTest.evaluate(type.getName())) {
         actions.put(type, name);
       }
     }
