@@ -24,8 +24,6 @@ public final class BeanConfig {
 
   private List<Definition> definitions = CollectUtils.newArrayList();
 
-  private List<Definition> last = CollectUtils.newArrayList(0);
-
   public final static class ReferenceValue {
     public final String ref;
 
@@ -74,6 +72,11 @@ public final class BeanConfig {
     }
   }
 
+  /**
+   * Bean Definition
+   * @author chaostone
+   * @since 3.0.0
+   */
   public final static class Definition {
     public String beanName;
     public final Class<?> clazz;
@@ -116,8 +119,7 @@ public final class BeanConfig {
 
   public final static class DefinitionBinder {
     private BeanConfig config;
-    private Scope scope = Scope.SINGLETON;
-    private boolean useShortName;
+    private List<Definition> last = CollectUtils.newArrayList(0);
 
     public DefinitionBinder(BeanConfig config, Class<?>... classes) {
       super();
@@ -125,45 +127,31 @@ public final class BeanConfig {
       bind(classes);
     }
 
-    public DefinitionBinder(BeanConfig config, boolean useShortName) {
-      super();
-      this.config = config;
-      this.useShortName = useShortName;
-    }
-
-    public DefinitionBinder(BeanConfig config, Scope scope) {
-      super();
-      this.config = config;
-      this.scope = scope;
-    }
-
     public DefinitionBinder shortName() {
       return shortName(true);
     }
 
     public DefinitionBinder lazy() {
-      for (Definition def : config.last) {
+      for (Definition def : last)
         def.lazyInit = true;
-      }
       return this;
     }
 
     public DefinitionBinder parent(String parent) {
-      for (Definition def : config.last) {
+      for (Definition def : last)
         def.parent = parent;
-      }
       return this;
-    };
+    }
 
     public DefinitionBinder proxy(String property, Class<?> clazz) {
       // first bind inner bean
       StringBuilder sb = new StringBuilder();
-      for (Definition def : config.last)
+      for (Definition def : last)
         sb.append(def.beanName);
       String targetBean = clazz.getName() + "#" + Math.abs(sb.hashCode());
-      config.add(new Definition(targetBean, clazz, scope.toString()));
+      config.add(new Definition(targetBean, clazz, Scope.SINGLETON.toString()));
       // second
-      for (Definition def : config.last) {
+      for (Definition def : last) {
         def.targetClass = clazz;
         def.properties.put(property, new ReferenceValue(targetBean));
       }
@@ -171,33 +159,31 @@ public final class BeanConfig {
     }
 
     public DefinitionBinder primary() {
-      for (Definition def : config.last)
+      for (Definition def : last)
         def.primary = true;
       return this;
     }
 
     public DefinitionBinder setAbstract() {
-      for (Definition def : config.last)
+      for (Definition def : last)
         def.abstractFlag = true;
       return this;
     }
 
     public DefinitionBinder shortName(boolean b) {
-      useShortName = b;
-      for (Definition def : config.last)
-        def.beanName = getBeanName(def.clazz);
+      for (Definition def : last)
+        def.beanName = getBeanName(def.clazz, b);
       return this;
     }
 
     public DefinitionBinder in(Scope scope) {
-      this.scope = scope;
-      for (Definition def : config.last)
+      for (Definition def : last)
         def.scope = scope.toString();
       return this;
     }
 
     public DefinitionBinder property(String property, Object value) {
-      for (Definition def : config.last) {
+      for (Definition def : last) {
         if (value instanceof Class<?>) def.properties.put(property,
             new ReferenceValue(((Class<?>) value).getName()));
         else def.properties.put(property, value);
@@ -212,37 +198,35 @@ public final class BeanConfig {
      * @return
      */
     public DefinitionBinder init(String method) {
-      for (Definition def : config.last)
+      for (Definition def : last)
         def.initMethod = method;
       return this;
     }
 
     private DefinitionBinder bind(Class<?>... classes) {
-      config.last = CollectUtils.newArrayList(classes.length);
       for (Class<?> clazz : classes) {
         Definition def = build(clazz);
         config.add(def);
-        config.last.add(def);
+        last.add(def);
       }
       return this;
     }
 
     private DefinitionBinder bind(String name, Class<?> clazz) {
-      config.last = CollectUtils.newArrayList(1);
-      Definition def = new Definition(name, clazz, scope.toString());
+      Definition def = new Definition(name, clazz, Scope.SINGLETON.toString());
       config.add(def);
-      config.last.add(def);
+      last.add(def);
       return this;
     }
 
-    private String getBeanName(Class<?> clazz) {
+    private String getBeanName(Class<?> clazz, boolean shortName) {
       String className = clazz.getName();
-      if (useShortName) className = Strings.uncapitalize(Strings.substringAfterLast(className, "."));
+      if (shortName) className = Strings.uncapitalize(Strings.substringAfterLast(className, "."));
       return className;
     }
 
     private Definition build(Class<?> clazz) {
-      return new Definition(getBeanName(clazz), clazz, scope.toString());
+      return new Definition(getBeanName(clazz, false), clazz, Scope.SINGLETON.toString());
     }
   }
 

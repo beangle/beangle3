@@ -25,7 +25,6 @@ import org.beangle.commons.lang.Strings;
 import org.beangle.commons.reflect.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValue;
@@ -39,7 +38,6 @@ import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.beans.factory.support.*;
 import org.springframework.core.io.UrlResource;
 import org.springframework.util.Assert;
-import org.springframework.util.ClassUtils;
 
 /**
  * 完成springbean的自动注册和再配置
@@ -301,9 +299,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    */
   protected void autowire(Map<String, BeanDefinition> newBeanDefinitions, BindRegistry registry) {
     for (Map.Entry<String, BeanDefinition> entry : newBeanDefinitions.entrySet()) {
-      String beanName = entry.getKey();
-      BeanDefinition mbd = entry.getValue();
-      autowireBean(beanName, mbd, registry);
+      autowireBean(entry.getKey(), entry.getValue(), registry);
     }
   }
 
@@ -321,8 +317,6 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
     for (Map.Entry<String, Class<?>> entry : properties.entrySet()) {
       String propertyName = entry.getKey();
       Class<?> propertyType = entry.getValue();
-      // if (Object.class.equals(propertyType)) continue;
-      // MethodParameter methodParam = BeanUtils.getWriteMethodParameter(pd);
       List<String> beanNames = registry.getBeanNames(propertyType);
       boolean binded = false;
       if (beanNames.size() == 1) {
@@ -358,19 +352,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
       }
     }
   }
-
-  private static boolean isExcludedFromDependencyCheck(Method wm) {
-    if (wm == null) { return false; }
-    if (!wm.getDeclaringClass().getName().contains("$$")) {
-      // Not a CGLIB method so it's OK.
-      return false;
-    }
-    // It was declared by CGLIB, but we might still want to autowire it
-    // if it was actually declared by the superclass.
-    Class<?> superclass = wm.getDeclaringClass().getSuperclass();
-    return !ClassUtils.hasMethod(superclass, wm.getName(), wm.getParameterTypes());
-  }
-
+  
   /**
    * <p>
    * Find unsatisfied properties
@@ -388,8 +370,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
     for (Method m : Reflections.getBeanSetters(clazz)) {
       String propertyName = Strings.uncapitalize(m.getName().substring(3));
       Class<?> propertyType = m.getParameterTypes()[0];
-      if (!isExcludedFromDependencyCheck(m) && !pvs.contains(propertyName)
-          && !BeanUtils.isSimpleProperty(propertyType) && !propertyType.getName().startsWith("java.")) {
+      if (!pvs.contains(propertyName)
+          && !propertyType.isArray() && !propertyType.getName().startsWith("java.")) {
         properties.put(propertyName, propertyType);
       }
     }
