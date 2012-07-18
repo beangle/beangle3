@@ -51,15 +51,15 @@ public class DefaultModule extends AbstractBindModule {
 
     bind(WebSessioninfoBuilder.class);
     bind(LoginUrlEntryPoint.class).property("loginUrl", "/login.action").primary();
-    bind(LogoutHandlerStack.class).shortName().property("handlers", list(SecurityContextLogoutHandler.class));
+    bind(LogoutHandlerStack.class).shortName().property("handlers", listref(SecurityContextLogoutHandler.class));
 
     bind("authenticationmanager", ProviderManager.class).property("providers",
-        list(PreauthUserDetailProvider.class, DaoAuthenticationProvider.class));
+        listref(PreauthUserDetailProvider.class, DaoAuthenticationProvider.class));
 
     bind("securityFilterChain", FilterChainProxy.class)
         .property(
             "filters",
-            list(HttpSessionContextIntegrationFilter.class, UsernamePreauthFilter.class,
+            listref(HttpSessionContextIntegrationFilter.class, UsernamePreauthFilter.class,
                 AnonymousFilter.class, ExceptionTranslationFilter.class, ConcurrentSessionFilter.class,
                 FilterSecurityInterceptor.class));
   }

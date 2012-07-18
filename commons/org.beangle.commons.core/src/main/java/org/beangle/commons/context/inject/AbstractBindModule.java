@@ -4,12 +4,17 @@
  */
 package org.beangle.commons.context.inject;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.context.inject.BeanConfig.Definition;
 import org.beangle.commons.context.inject.BeanConfig.DefinitionBinder;
-import org.beangle.commons.context.inject.BeanConfig.ListValue;
-import org.beangle.commons.context.inject.BeanConfig.MapValue;
-import org.beangle.commons.context.inject.BeanConfig.PropertiesValue;
 import org.beangle.commons.context.inject.BeanConfig.ReferenceValue;
+import org.beangle.commons.lang.Assert;
+import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.tuple.Pair;
 
 /**
@@ -33,7 +38,7 @@ public abstract class AbstractBindModule implements BindModule {
    */
   public final BeanConfig getConfig() {
     if (null == config) {
-      config = new BeanConfig();
+      config = new BeanConfig(getClass().getName());
       doBinding();
     }
     return config;
@@ -59,6 +64,10 @@ public abstract class AbstractBindModule implements BindModule {
    */
   protected ReferenceValue ref(String name) {
     return new ReferenceValue(name);
+  }
+
+  protected ReferenceValue ref(Class<?> clazz) {
+    return new ReferenceValue(clazz.getName());
   }
 
   /**
@@ -93,16 +102,81 @@ public abstract class AbstractBindModule implements BindModule {
    * @param datas
    * @return
    */
-  protected ListValue list(Object... datas) {
-    return new ListValue(datas);
+  protected List<?> list(Object... datas) {
+    List<Object> items = CollectUtils.newArrayList(datas.length);
+    for (Object obj : datas) {
+      if (obj instanceof Class<?>) {
+        items.add(buildInnerReference((Class<?>) obj));
+      } else {
+        items.add(obj);
+      }
+    }
+    return items;
   }
 
-  protected MapValue map(Pair<?, ?>... entries) {
-    return new MapValue(entries);
+  /**
+   * Generate a list property
+   * <p>
+   * List singleton bean references with list(A.class,B.class) or list(ref("someBeanId"),C.class).<br>
+   * List simple values with list("strValue1","strValue2")
+   * 
+   * @param datas
+   * @return
+   */
+  protected List<?> listref(Class<?>... datas) {
+    List<Object> items = CollectUtils.newArrayList(datas.length);
+    for (Class<?> obj : datas) {
+      items.add(buildInnerReference((Class<?>) obj));
+    }
+    return items;
   }
 
-  protected PropertiesValue props(String... keyValuePairs) {
-    return new PropertiesValue(keyValuePairs);
+  /**
+   * Generate a set property
+   * <p>
+   * List singleton bean references with set(A.class,B.class) or set(ref("someBeanId"),C.class).<br>
+   * List simple values with set("strValue1","strValue2")
+   * 
+   * @param datas
+   * @return
+   */
+  protected Set<?> set(Object... datas) {
+    Set<Object> items = CollectUtils.newHashSet();
+    for (Object obj : datas) {
+      if (obj instanceof Class<?>) {
+        items.add(buildInnerReference((Class<?>) obj));
+      } else {
+        items.add(obj);
+      }
+    }
+    return items;
+  }
+
+  private ReferenceValue buildInnerReference(Class<?> clazz) {
+    String targetBean = config.innerBeanName(clazz);
+    config.add(new Definition(targetBean, clazz, Scope.SINGLETON.toString()));
+    return new ReferenceValue(targetBean);
+  }
+
+  protected Map<?, ?> map(Pair<?, ?>... entries) {
+    Map<Object, Object> items = CollectUtils.newHashMap();
+    for (Map.Entry<?, ?> entry : entries) {
+      if (entry.getValue() instanceof Class<?>) {
+        items.put(entry.getKey(), buildInnerReference((Class<?>) entry.getValue()));
+      } else {
+        items.put(entry.getKey(), entry.getValue());
+      }
+    }
+    return items;
+  }
+
+  protected Properties props(String... keyValuePairs) {
+    Properties properties = new Properties();
+    for (String pair : keyValuePairs) {
+      Assert.isTrue(pair.indexOf('=') > 0, "property entry [" + pair + "] should contain =");
+      properties.put(Strings.substringBefore(pair, "="), Strings.substringAfter(pair, "="));
+    }
+    return properties;
   }
 
   /**

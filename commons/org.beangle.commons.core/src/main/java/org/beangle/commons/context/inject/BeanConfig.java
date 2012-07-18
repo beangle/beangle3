@@ -8,9 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.tuple.Pair;
 
 /**
  * <p>
@@ -22,58 +20,30 @@ import org.beangle.commons.lang.tuple.Pair;
  */
 public final class BeanConfig {
 
+  private final String module;
+
+  public BeanConfig(String module) {
+    super();
+    this.module = module;
+  }
+
   private List<Definition> definitions = CollectUtils.newArrayList();
+
+  public String innerBeanName(Class<?> clazz) {
+    return clazz.getName() + "#" + Math.abs(module.hashCode()) + definitions.size();
+  }
 
   public final static class ReferenceValue {
     public final String ref;
-
     public ReferenceValue(String ref) {
       super();
       this.ref = ref;
     }
   }
 
-  public final static class ListValue {
-    public final List<Object> items = CollectUtils.newArrayList();
-
-    public ListValue(Object... datas) {
-      for (Object obj : datas) {
-        if (obj instanceof Class<?>) {
-          items.add(new ReferenceValue(((Class<?>) obj).getName()));
-        } else {
-          items.add(obj);
-        }
-      }
-    }
-  }
-
-  public final static class MapValue {
-    public final Map<Object, Object> items = CollectUtils.newHashMap();
-
-    public MapValue(Pair<?, ?>... datas) {
-      for (Map.Entry<?, ?> entry : datas) {
-        if (entry.getValue() instanceof Class<?>) {
-          items.put(entry.getKey(), new ReferenceValue(((Class<?>) entry.getValue()).getName()));
-        } else {
-          items.put(entry.getKey(), entry.getValue());
-        }
-      }
-    }
-  }
-
-  public final static class PropertiesValue {
-    public final Map<String, String> properties = CollectUtils.newHashMap();
-
-    public PropertiesValue(String... keyValuePairs) {
-      for (String pair : keyValuePairs) {
-        Assert.isTrue(pair.indexOf('=') > 0, "property entry [" + pair + "] should contain =");
-        properties.put(Strings.substringBefore(pair, "="), Strings.substringAfter(pair, "="));
-      }
-    }
-  }
-
   /**
    * Bean Definition
+   * 
    * @author chaostone
    * @since 3.0.0
    */
@@ -145,10 +115,7 @@ public final class BeanConfig {
 
     public DefinitionBinder proxy(String property, Class<?> clazz) {
       // first bind inner bean
-      StringBuilder sb = new StringBuilder();
-      for (Definition def : last)
-        sb.append(def.beanName);
-      String targetBean = clazz.getName() + "#" + Math.abs(sb.hashCode());
+      String targetBean = config.innerBeanName(clazz);
       config.add(new Definition(targetBean, clazz, Scope.SINGLETON.toString()));
       // second
       for (Definition def : last) {
@@ -205,7 +172,7 @@ public final class BeanConfig {
 
     private DefinitionBinder bind(Class<?>... classes) {
       for (Class<?> clazz : classes) {
-        Definition def = build(clazz);
+        Definition def = new Definition(getBeanName(clazz, false), clazz, Scope.SINGLETON.toString());
         config.add(def);
         last.add(def);
       }
@@ -224,10 +191,6 @@ public final class BeanConfig {
       if (shortName) className = Strings.uncapitalize(Strings.substringAfterLast(className, "."));
       return className;
     }
-
-    private Definition build(Class<?> clazz) {
-      return new Definition(getBeanName(clazz, false), clazz, Scope.SINGLETON.toString());
-    }
   }
 
   /**
@@ -240,9 +203,7 @@ public final class BeanConfig {
    * @return a {@link org.beangle.commons.context.inject.BeanConfig.DefinitionBinder} object.
    */
   public DefinitionBinder bind(String beanName, Class<?> clazz) {
-    DefinitionBinder binder = new DefinitionBinder(this);
-    binder.bind(beanName, clazz);
-    return binder;
+    return new DefinitionBinder(this).bind(beanName, clazz);
   }
 
   /**

@@ -13,10 +13,10 @@ public class TestModule extends AbstractBindModule {
   @Override
   protected void doBinding() {
     bind(SomeAction.class).in(Scope.PROTOTYPE);
-    bind(UserLdapProvider.class, UserDaoProvider.class).shortName();
+    bind(UserLdapProvider.class,UserDaoProvider.class).shortName();
     bind(TestService.class).shortName();
 
-    bind(ProviderManager.class).property("providers", list(UserDaoProvider.class));
+    bind(ProviderManager.class).property("providers", listref(UserDaoProvider.class));
     
     bind(SpringResourcesConsumer.class).property(
         "resources",

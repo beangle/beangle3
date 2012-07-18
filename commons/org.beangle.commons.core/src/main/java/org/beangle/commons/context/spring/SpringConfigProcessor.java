@@ -6,8 +6,11 @@ package org.beangle.commons.context.spring;
 
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.Collection;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import org.apache.commons.lang3.time.StopWatch;
@@ -17,9 +20,6 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.context.event.DefaultEventMulticaster;
 import org.beangle.commons.context.inject.*;
 import org.beangle.commons.context.inject.BeanConfig.Definition;
-import org.beangle.commons.context.inject.BeanConfig.ListValue;
-import org.beangle.commons.context.inject.BeanConfig.MapValue;
-import org.beangle.commons.context.inject.BeanConfig.PropertiesValue;
 import org.beangle.commons.context.inject.BeanConfig.ReferenceValue;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.reflect.Reflections;
@@ -220,27 +220,41 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
     MutablePropertyValues mpv = new MutablePropertyValues();
     for (Map.Entry<String, Object> entry : definition.getProperties().entrySet()) {
       Object value = entry.getValue();
-      if (value instanceof ListValue) {
-        List<Object> list = new ManagedList<Object>();
-        for (Object item : ((ListValue) value).items) {
-          if (item instanceof ReferenceValue) list.add(new RuntimeBeanReference(((ReferenceValue) item).ref));
-          else list.add(item);
+      if (value instanceof Collection<?>) {
+        if (value instanceof List<?>) {
+          List<Object> list = new ManagedList<Object>();
+          for (Object item : ((List<?>) value)) {
+            if (item instanceof ReferenceValue) list
+                .add(new RuntimeBeanReference(((ReferenceValue) item).ref));
+            else list.add(item);
+          }
+          value = list;
         }
-        value = list;
-      } else if (value instanceof MapValue) {
+        if (value instanceof Set<?>) {
+          Set<Object> set = new ManagedSet<Object>();
+          for (Object item : (Set<?>) value) {
+            if (item instanceof ReferenceValue) set
+                .add(new RuntimeBeanReference(((ReferenceValue) item).ref));
+            else set.add(item);
+          }
+          value = set;
+        }
+      } else if (value instanceof Properties) {
+        ManagedProperties props = new ManagedProperties();
+        Enumeration<?> propertyNames = ((Properties) value).propertyNames();
+        while (propertyNames.hasMoreElements()) {
+          String key = propertyNames.nextElement().toString();
+          props.put(new TypedStringValue(key), new TypedStringValue(((Properties) value).getProperty(key)));
+        }
+        value = props;
+      } else if (value instanceof Map<?, ?>) {
         Map<Object, Object> maps = new ManagedMap<Object, Object>();
-        for (Map.Entry<Object, Object> item : maps.entrySet()) {
+        for (Map.Entry<?, ?> item : ((Map<?, ?>) value).entrySet()) {
           if (item.getValue() instanceof ReferenceValue) maps.put(item.getKey(), new RuntimeBeanReference(
               ((ReferenceValue) item.getValue()).ref));
           else maps.put(item.getKey(), item.getValue());
         }
         value = maps;
-      } else if (value instanceof PropertiesValue) {
-        ManagedProperties props = new ManagedProperties();
-        for (Map.Entry<String, String> pentry : ((PropertiesValue) value).properties.entrySet())
-          props.put(new TypedStringValue(pentry.getKey()), new TypedStringValue(pentry.getValue()));
-
-        value = props;
       } else if (value instanceof Definition) {
         value = new BeanDefinitionHolder(convert((Definition) value), ((Definition) value).beanName);
       } else if (value instanceof ReferenceValue) {
@@ -352,7 +366,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
       }
     }
   }
-  
+
   /**
    * <p>
    * Find unsatisfied properties
@@ -370,8 +384,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
     for (Method m : Reflections.getBeanSetters(clazz)) {
       String propertyName = Strings.uncapitalize(m.getName().substring(3));
       Class<?> propertyType = m.getParameterTypes()[0];
-      if (!pvs.contains(propertyName)
-          && !propertyType.isArray() && !propertyType.getName().startsWith("java.")) {
+      if (!pvs.contains(propertyName) && !propertyType.isArray()
+          && !propertyType.getName().startsWith("java.")) {
         properties.put(propertyName, propertyType);
       }
     }
