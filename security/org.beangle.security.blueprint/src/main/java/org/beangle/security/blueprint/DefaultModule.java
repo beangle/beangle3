@@ -38,8 +38,8 @@ public class DefaultModule extends AbstractBindModule {
     bind(IdentifierDataResolver.class, CsvDataResolver.class, OqlDataProvider.class).shortName();
 
     bind("restrictionService", RestrictionServiceImpl.class).property("providers",
-        map(entry("csv", CsvDataResolver.class), entry("oql", OqlDataProvider.class))).property(
-        "dataResolver",IdentifierDataResolver.class);
+        map(entry("csv", ref(CsvDataResolver.class)), entry("oql", ref(OqlDataProvider.class)))).property(
+        "dataResolver",ref(IdentifierDataResolver.class));
   }
 
 }

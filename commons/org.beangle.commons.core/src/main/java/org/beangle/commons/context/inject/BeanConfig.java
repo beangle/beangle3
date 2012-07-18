@@ -150,11 +150,8 @@ public final class BeanConfig {
     }
 
     public DefinitionBinder property(String property, Object value) {
-      for (Definition def : last) {
-        if (value instanceof Class<?>) def.properties.put(property,
-            new ReferenceValue(((Class<?>) value).getName()));
-        else def.properties.put(property, value);
-      }
+      for (Definition def : last) 
+        def.properties.put(property, value);
       return this;
     }
 
