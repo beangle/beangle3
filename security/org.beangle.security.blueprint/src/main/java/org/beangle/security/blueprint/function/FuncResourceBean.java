@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.security.blueprint.model;
+package org.beangle.security.blueprint.function;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -20,7 +20,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
- * 系统资源
+ * 系统功能资源
  * 代表一组系统功能点的集合.<br>
  * <p>
  * 系统模块之间存在基于代码表示上的父子级联关系.<br>
@@ -30,10 +30,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * 
  * @author dell,chaostone 2005-9-26
  */
-@Entity(name = "org.beangle.security.blueprint.Resource")
+@Entity
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class ResourceBean extends LongIdObject implements Resource {
+public class FuncResourceBean extends LongIdObject implements Resource {
   private static final long serialVersionUID = -8285208615351119572L;
 
   /** 模块名字 */

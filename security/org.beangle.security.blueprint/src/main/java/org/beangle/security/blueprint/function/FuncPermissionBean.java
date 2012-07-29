@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.security.blueprint.model;
+package org.beangle.security.blueprint.function;
 
 import java.util.Date;
 
@@ -24,7 +24,7 @@ import org.beangle.security.blueprint.Role;
  * @author dell,chaostone 2005-9-26
  */
 @Entity(name = "org.beangle.security.blueprint.Permission")
-public class PermissionBean extends LongIdObject implements Permission, TemporalActiveEntity {
+public class FuncPermissionBean extends LongIdObject implements Permission, TemporalActiveEntity {
 
   private static final long serialVersionUID = -8956079356245507990L;
 
@@ -36,11 +36,20 @@ public class PermissionBean extends LongIdObject implements Permission, Temporal
   /** 权限实体中的模块 */
   @NotNull
   @ManyToOne
-  protected Resource resource;
+  protected FuncResourceBean resource;
 
   @Size(max = 100)
   /** 授权的操作 */
   protected String actions;
+
+  /** 资源过滤器 */
+  protected String filters;
+
+  /** 访问检查器 */
+  protected String guards;
+
+  /** 允许访问的方法 */
+  protected String parts;
 
   /** 生效时间 */
   protected Date effectiveAt;
@@ -48,15 +57,15 @@ public class PermissionBean extends LongIdObject implements Permission, Temporal
   /** 失效时间 */
   protected Date invalidAt;
 
-  public PermissionBean() {
+  public FuncPermissionBean() {
     super();
   }
 
-  public PermissionBean(Long id) {
+  public FuncPermissionBean(Long id) {
     super(id);
   }
 
-  public PermissionBean(Role role, Resource resource, String actions) {
+  public FuncPermissionBean(Role role, FuncResourceBean resource, String actions) {
     super();
     this.role = role;
     this.resource = resource;
@@ -67,8 +76,8 @@ public class PermissionBean extends LongIdObject implements Permission, Temporal
     return resource;
   }
 
-  public void setResource(Resource resource) {
-    this.resource = (Resource) resource;
+  public void setResource(FuncResourceBean resource) {
+    this.resource = resource;
   }
 
   public Role getRole() {
@@ -80,7 +89,7 @@ public class PermissionBean extends LongIdObject implements Permission, Temporal
   }
 
   public Object clone() {
-    return new PermissionBean(role, resource, actions);
+    return new FuncPermissionBean(role, resource, actions);
   }
 
   public String getActions() {
