@@ -30,7 +30,7 @@ import org.beangle.security.blueprint.data.model.RoleDataPermissionBean;
 import org.beangle.security.blueprint.data.service.DataPermissionService;
 import org.beangle.security.blueprint.data.service.UserDataProvider;
 import org.beangle.security.blueprint.data.service.UserDataResolver;
-import org.beangle.security.blueprint.function.service.FunctionPermissionService;
+import org.beangle.security.blueprint.function.service.PermissionService;
 import org.beangle.security.blueprint.service.UserService;
 
 public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPermissionService {
@@ -41,7 +41,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
 
   protected UserDataResolver dataResolver;
 
-  protected FunctionPermissionService functionPermissionService;
+  protected PermissionService permissionService;
 
   public List<UserProfile> getUserProfiles(Long userId, Map<String, Object> selectors) {
     OqlBuilder<UserProfile> builder = OqlBuilder.from(UserProfile.class, "up").where("up.user.id=:userId",
@@ -192,8 +192,8 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
     this.userService = userService;
   }
 
-  public void setFunctionPermissionService(FunctionPermissionService functionPermissionService) {
-    this.functionPermissionService = functionPermissionService;
+  public void setPermissionService(PermissionService permissionService) {
+    this.permissionService = permissionService;
   }
 
   public Map<String, UserDataProvider> getProviders() {

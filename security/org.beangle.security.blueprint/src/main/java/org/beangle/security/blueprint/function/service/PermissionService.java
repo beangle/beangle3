@@ -21,7 +21,7 @@ import org.beangle.security.blueprint.service.UserService;
  * @see <code>Action</code> 数据权限实体
  * @author dell,chaostone 2005-9-27
  */
-public interface FunctionPermissionService {
+public interface PermissionService {
 
   /**
    * 按照资源名称查询单独的资源

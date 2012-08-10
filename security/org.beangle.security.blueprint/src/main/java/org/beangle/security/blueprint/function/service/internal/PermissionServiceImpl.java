@@ -18,8 +18,8 @@ import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.event.RoleAuthorityEvent;
 import org.beangle.security.blueprint.function.FunctionPermission;
 import org.beangle.security.blueprint.function.FunctionResource;
-import org.beangle.security.blueprint.function.model.RoleFunctionPermissionBean;
-import org.beangle.security.blueprint.function.service.FunctionPermissionService;
+import org.beangle.security.blueprint.function.model.RolePermissionBean;
+import org.beangle.security.blueprint.function.service.PermissionService;
 import org.beangle.security.blueprint.service.UserService;
 
 /**
@@ -27,7 +27,7 @@ import org.beangle.security.blueprint.service.UserService;
  * 
  * @author dell,chaostone 2005-9-26
  */
-public class FunctionPermissionServiceImpl extends BaseServiceImpl implements FunctionPermissionService {
+public class PermissionServiceImpl extends BaseServiceImpl implements PermissionService {
 
   protected UserService userService;
 
@@ -88,7 +88,7 @@ public class FunctionPermissionServiceImpl extends BaseServiceImpl implements Fu
     }
     permissions.removeAll(removed);
     for (FunctionResource resource : resources) {
-      RoleFunctionPermissionBean authority = new RoleFunctionPermissionBean(role, resource, null);
+      RolePermissionBean authority = new RolePermissionBean(role, resource, null);
       permissions.add(authority);
     }
     entityDao.remove(removed);

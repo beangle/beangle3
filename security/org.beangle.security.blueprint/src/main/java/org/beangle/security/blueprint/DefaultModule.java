@@ -10,7 +10,7 @@ import org.beangle.security.blueprint.data.service.internal.DataPermissionServic
 import org.beangle.security.blueprint.data.service.internal.IdentifierDataResolver;
 import org.beangle.security.blueprint.data.service.internal.OqlDataProvider;
 import org.beangle.security.blueprint.function.service.internal.CacheableAuthorityManager;
-import org.beangle.security.blueprint.function.service.internal.FunctionPermissionServiceImpl;
+import org.beangle.security.blueprint.function.service.internal.PermissionServiceImpl;
 import org.beangle.security.blueprint.nav.service.MenuServiceImpl;
 import org.beangle.security.blueprint.service.internal.DaoUserDetailServiceImpl;
 import org.beangle.security.blueprint.service.internal.RoleServiceImpl;
@@ -29,7 +29,7 @@ public class DefaultModule extends AbstractBindModule {
   protected void doBinding() {
     bind("userService", UserServiceImpl.class);
     bind("roleService", RoleServiceImpl.class);
-    bind("authorityService", FunctionPermissionServiceImpl.class);
+    bind("authorityService", PermissionServiceImpl.class);
     bind("menuService", MenuServiceImpl.class);
     bind("userDetailService", DaoUserDetailServiceImpl.class);
     bind("authorityManager", CacheableAuthorityManager.class);

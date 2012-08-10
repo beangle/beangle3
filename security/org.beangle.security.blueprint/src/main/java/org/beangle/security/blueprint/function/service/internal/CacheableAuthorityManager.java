@@ -18,7 +18,7 @@ import org.beangle.security.auth.AnonymousAuthentication;
 import org.beangle.security.auth.Principals;
 import org.beangle.security.blueprint.SecurityUtils;
 import org.beangle.security.blueprint.function.FunctionResource;
-import org.beangle.security.blueprint.function.service.FunctionPermissionService;
+import org.beangle.security.blueprint.function.service.PermissionService;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.session.category.CategoryPrincipal;
@@ -39,7 +39,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
   /** 公有资源names */
   protected Set<?> protectedResources;
 
-  protected FunctionPermissionService functionPermissionService;
+  protected PermissionService permissionService;
 
   private boolean expired = true;
 
@@ -53,7 +53,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
     String resourceName = null;
     if (resource instanceof FilterInvocation) {
       FilterInvocation fi = (FilterInvocation) resource;
-      resourceName = functionPermissionService.extractResource(RequestUtils.getServletPath(fi.getHttpRequest()));
+      resourceName = permissionService.extractResource(RequestUtils.getServletPath(fi.getHttpRequest()));
     } else {
       resourceName = resource.toString();
     }
@@ -90,7 +90,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
   }
 
   public Set<?> refreshRolePermissions(GrantedAuthority authority) {
-    Set<?> actions = functionPermissionService.getResourceNamesByRole((Long) authority.getAuthority());
+    Set<?> actions = permissionService.getResourceNamesByRole((Long) authority.getAuthority());
     authorities.put(authority, actions);
     logger.debug("Refresh role:{}'s permissions:{}", authority, actions);
     return actions;
@@ -107,24 +107,24 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 
   /** 加载三类资源 */
   public void refreshCache() {
-    publicResources = functionPermissionService.getResourceNamesByScope(FunctionResource.Scope.PUBLIC);
+    publicResources = permissionService.getResourceNamesByScope(FunctionResource.Scope.PUBLIC);
     if (null != authenticationEntryPoint && authenticationEntryPoint instanceof UrlEntryPoint) {
       UrlEntryPoint fep = (UrlEntryPoint) authenticationEntryPoint;
-      String loginResource = functionPermissionService.extractResource(fep.getLoginUrl());
+      String loginResource = permissionService.extractResource(fep.getLoginUrl());
       if (null != loginResource) {
         publicResources.add(loginResource);
       }
     }
-    protectedResources = functionPermissionService.getResourceNamesByScope(FunctionResource.Scope.PROTECTED);
+    protectedResources = permissionService.getResourceNamesByScope(FunctionResource.Scope.PROTECTED);
     expired = false;
   }
 
   public void init() throws Exception {
-    Assert.notNull(functionPermissionService, "authorityService cannot be null");
+    Assert.notNull(permissionService, "authorityService cannot be null");
   }
 
-  public void setFunctionPermissionService(FunctionPermissionService funcPermissionService) {
-    this.functionPermissionService = funcPermissionService;
+  public void setPermissionService(PermissionService funcPermissionService) {
+    this.permissionService = funcPermissionService;
   }
 
   public void setAuthenticationEntryPoint(AuthenticationEntryPoint authenticationEntryPoint) {

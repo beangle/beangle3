@@ -25,8 +25,8 @@ import org.beangle.security.blueprint.function.FunctionResource;
  * 
  * @author dell,chaostone 2005-9-26
  */
-@Entity(name = "org.beangle.security.blueprint.function.model.RoleFunctionPermissionBean")
-public class RoleFunctionPermissionBean extends LongIdObject implements TemporalActiveEntity,
+@Entity(name = "org.beangle.security.blueprint.function.model.RolePermissionBean")
+public class RolePermissionBean extends LongIdObject implements TemporalActiveEntity,
     FunctionPermission {
 
   private static final long serialVersionUID = -8956079356245507990L;
@@ -58,15 +58,15 @@ public class RoleFunctionPermissionBean extends LongIdObject implements Temporal
   @Size(max = 100)
   protected String remark;
   
-  public RoleFunctionPermissionBean() {
+  public RolePermissionBean() {
     super();
   }
 
-  public RoleFunctionPermissionBean(Long id) {
+  public RolePermissionBean(Long id) {
     super(id);
   }
 
-  public RoleFunctionPermissionBean(Role role, FunctionResource resource, String actions) {
+  public RolePermissionBean(Role role, FunctionResource resource, String actions) {
     super();
     this.role = role;
     this.resource = resource;
@@ -86,7 +86,7 @@ public class RoleFunctionPermissionBean extends LongIdObject implements Temporal
   }
 
   public Object clone() {
-    return new RoleFunctionPermissionBean(role, resource, actions);
+    return new RolePermissionBean(role, resource, actions);
   }
 
   public String getActions() {
