@@ -13,5 +13,11 @@
   <properties>
     <bundle.symbolicName>org.beangle.struts2.convention</bundle.symbolicName>
   </properties>
-  
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+  </dependencies>
 </project>

@@ -84,7 +84,7 @@
         <groupId>org.beangle.commons</groupId>
         <artifactId>beangle-commons-web</artifactId>
         <version>${project.version}</version>
-      </dependency>      
+      </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-core</artifactId>
