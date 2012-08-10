@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.dao.impl.AbstractHierarchyService;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.util.HierarchyEntityUtils;
-import org.beangle.commons.orm.service.AbstractHierarchyService;
 import org.beangle.security.blueprint.Permission;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;

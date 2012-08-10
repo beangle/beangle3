@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.commons.orm.service;
+package org.beangle.commons.dao.impl;
 
 import java.util.Collections;
 import java.util.List;

@@ -4,13 +4,13 @@
  */
 package org.beangle.security.blueprint.service.internal;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.Operation;
+import org.beangle.commons.dao.impl.AbstractHierarchyService;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
-import org.beangle.commons.orm.service.AbstractHierarchyService;
 import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;

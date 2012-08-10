@@ -32,7 +32,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.beangle.commons</groupId>
-			<artifactId>beangle-commons-orm</artifactId>
+			<artifactId>beangle-commons-dao</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
