@@ -16,6 +16,7 @@ import org.beangle.commons.collection.page.Page;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.commons.dao.query.Query;
 import org.beangle.commons.dao.query.QueryBuilder;
+import org.beangle.commons.entity.Entity;
 
 /**
  * dao 查询辅助类

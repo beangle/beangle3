@@ -12,7 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
-import org.beangle.commons.orm.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.LongIdObject;
 
 /**
  * 访问日志

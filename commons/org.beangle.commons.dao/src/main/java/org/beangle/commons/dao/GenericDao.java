@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.beangle.commons.dao.query.builder.Condition;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
+import org.beangle.commons.entity.Entity;
 
 public abstract class GenericDao<T extends Entity<ID>, ID extends Serializable> implements Dao<T, ID> {
 

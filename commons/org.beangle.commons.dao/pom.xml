@@ -22,6 +22,11 @@
       <groupId>org.beangle.commons</groupId>
       <artifactId>beangle-commons-core</artifactId>
     </dependency>
+	<dependency>
+      <groupId>org.beangle.commons</groupId>
+      <artifactId>beangle-commons-web</artifactId>
+      <optional>true</optional>
+    </dependency>
     <!--transfer dependency-->
     <dependency>
       <groupId>net.sf.jxls</groupId>
@@ -47,13 +52,46 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>com.google.collections</groupId>
-      <artifactId>google-collections</artifactId>
-      <version>1.0</version>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-ehcache</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ognl</groupId>
+      <artifactId>ognl</artifactId>
       <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>javassist</groupId>
+      <artifactId>javassist</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache-core</artifactId>
+      <optional>true</optional>
+    </dependency>    
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <!--
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-tx</artifactId>
@@ -62,6 +100,17 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
     </dependency>
-    -->
+    <dependency>
+      <groupId>com.google.collections</groupId>
+      <artifactId>google-collections</artifactId>
+      <version>1.0</version>
+      <optional>true</optional>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>

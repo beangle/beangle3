@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.orm.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.LongIdObject;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.data.PropertyMeta;
 import org.beangle.security.blueprint.data.UserProfile;

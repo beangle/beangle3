@@ -20,8 +20,8 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.dao.util.EntityUtils;
-import org.beangle.commons.orm.pojo.LongIdTimeObject;
+import org.beangle.commons.entity.pojo.LongIdTimeObject;
+import org.beangle.commons.entity.util.EntityUtils;
 import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;

@@ -12,8 +12,8 @@ import java.util.Map;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.dao.metadata.ContractInfo;
-import org.beangle.commons.dao.metadata.ManagerEmployer;
+import org.beangle.commons.entity.metadata.ContractInfo;
+import org.beangle.commons.entity.metadata.ManagerEmployer;
 import org.testng.annotations.Test;
 
 @Test

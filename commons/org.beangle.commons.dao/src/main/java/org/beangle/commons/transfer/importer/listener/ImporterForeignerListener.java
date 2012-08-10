@@ -9,10 +9,10 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.dao.Entity;
 import org.beangle.commons.dao.EntityDao;
-import org.beangle.commons.dao.metadata.Model;
-import org.beangle.commons.dao.util.EntityUtils;
+import org.beangle.commons.entity.Entity;
+import org.beangle.commons.entity.metadata.Model;
+import org.beangle.commons.entity.util.EntityUtils;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.transfer.TransferResult;
 import org.beangle.commons.transfer.importer.MultiEntityImporter;

@@ -11,11 +11,11 @@ import java.util.Set;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.dao.Entity;
-import org.beangle.commons.dao.metadata.EntityType;
-import org.beangle.commons.dao.metadata.Model;
-import org.beangle.commons.dao.metadata.ObjectAndType;
-import org.beangle.commons.dao.metadata.Populator;
+import org.beangle.commons.entity.Entity;
+import org.beangle.commons.entity.metadata.EntityType;
+import org.beangle.commons.entity.metadata.Model;
+import org.beangle.commons.entity.metadata.ObjectAndType;
+import org.beangle.commons.entity.metadata.Populator;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.transfer.TransferMessage;
 import org.slf4j.Logger;

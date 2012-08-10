@@ -6,8 +6,8 @@ package org.beangle.security.blueprint;
 
 import java.security.Principal;
 
-import org.beangle.commons.dao.entity.LongIdEntity;
-import org.beangle.commons.dao.entity.TemporalActiveEntity;
+import org.beangle.commons.entity.pojo.LongIdEntity;
+import org.beangle.commons.entity.pojo.TemporalActiveEntity;
 
 /**
  * 权限

@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.orm.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.LongIdObject;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.nav.Menu;
 import org.beangle.security.blueprint.nav.MenuProfile;

@@ -6,7 +6,7 @@ package org.beangle.security.core.session.impl;
 
 import java.util.Date;
 
-import org.beangle.commons.orm.pojo.StringIdObject;
+import org.beangle.commons.entity.pojo.StringIdObject;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.session.Sessioninfo;
 import org.beangle.security.core.session.SessioninfoBuilder;

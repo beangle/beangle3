@@ -4,7 +4,7 @@
  */
 package org.beangle.security.blueprint;
 
-import org.beangle.commons.dao.entity.LongIdTimeEntity;
+import org.beangle.commons.entity.pojo.LongIdTimeEntity;
 
 /**
  * @author chaostone

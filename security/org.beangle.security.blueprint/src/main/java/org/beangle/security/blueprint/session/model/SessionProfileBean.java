@@ -9,7 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import org.beangle.commons.orm.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.LongIdObject;
 import org.beangle.security.blueprint.Role;
 
 /**

@@ -6,8 +6,8 @@ package org.beangle.security.blueprint.nav;
 
 import java.util.Set;
 
-import org.beangle.commons.dao.entity.HierarchyEntity;
-import org.beangle.commons.dao.entity.LongIdEntity;
+import org.beangle.commons.entity.pojo.HierarchyEntity;
+import org.beangle.commons.entity.pojo.LongIdEntity;
 import org.beangle.security.blueprint.function.FunctionResource;
 
 /**

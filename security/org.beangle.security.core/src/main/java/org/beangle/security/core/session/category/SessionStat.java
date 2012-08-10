@@ -10,8 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
-import org.beangle.commons.dao.annotation.FlashEntity;
-import org.beangle.commons.orm.pojo.LongIdObject;
+import org.beangle.commons.entity.annotation.FlashEntity;
+import org.beangle.commons.entity.pojo.LongIdObject;
 
 /**
  * 分类会话计数状态

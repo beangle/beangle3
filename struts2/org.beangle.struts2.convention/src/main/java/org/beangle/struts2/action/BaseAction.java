@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 import org.beangle.commons.collection.page.PageLimit;
-import org.beangle.commons.dao.Entity;
-import org.beangle.commons.dao.metadata.Model;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
+import org.beangle.commons.entity.Entity;
+import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.i18n.TextResource;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Chars;

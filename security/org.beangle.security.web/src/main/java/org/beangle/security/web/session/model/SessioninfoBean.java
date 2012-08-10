@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.beangle.commons.orm.pojo.StringIdObject;
+import org.beangle.commons.entity.pojo.StringIdObject;
 import org.beangle.security.core.session.category.CategorySessioninfo;
 
 /**

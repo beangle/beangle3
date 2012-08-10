@@ -13,8 +13,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.beangle.commons.entity.pojo.LongIdObject;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.orm.pojo.LongIdObject;
 import org.beangle.security.blueprint.function.FunctionResource;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;

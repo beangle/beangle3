@@ -4,8 +4,8 @@
  */
 package org.beangle.commons.transfer.importer;
 
-import org.beangle.commons.dao.metadata.EntityType;
-import org.beangle.commons.dao.metadata.Model;
+import org.beangle.commons.entity.metadata.EntityType;
+import org.beangle.commons.entity.metadata.Model;
 
 /**
  * <p>

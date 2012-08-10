@@ -7,8 +7,8 @@ package org.beangle.security.blueprint;
 import java.security.Principal;
 import java.util.Set;
 
-import org.beangle.commons.dao.entity.HierarchyEntity;
-import org.beangle.commons.dao.entity.LongIdTimeEntity;
+import org.beangle.commons.entity.pojo.HierarchyEntity;
+import org.beangle.commons.entity.pojo.LongIdTimeEntity;
 
 /**
  * 系统角色的基本信息

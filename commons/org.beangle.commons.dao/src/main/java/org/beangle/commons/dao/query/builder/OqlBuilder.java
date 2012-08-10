@@ -15,10 +15,10 @@ import java.util.Map;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
 import org.beangle.commons.collection.page.PageLimit;
-import org.beangle.commons.dao.metadata.EntityType;
-import org.beangle.commons.dao.metadata.Model;
 import org.beangle.commons.dao.query.Lang;
-import org.beangle.commons.dao.util.EntityUtils;
+import org.beangle.commons.entity.metadata.EntityType;
+import org.beangle.commons.entity.metadata.Model;
+import org.beangle.commons.entity.util.EntityUtils;
 import org.beangle.commons.lang.Strings;
 
 /**

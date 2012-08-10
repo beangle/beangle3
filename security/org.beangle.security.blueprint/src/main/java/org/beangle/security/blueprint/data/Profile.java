@@ -6,7 +6,7 @@ package org.beangle.security.blueprint.data;
 
 import java.util.List;
 
-import org.beangle.commons.dao.entity.LongIdEntity;
+import org.beangle.commons.entity.pojo.LongIdEntity;
 
 /**
  * 属性配置

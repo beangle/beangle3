@@ -6,7 +6,7 @@ package org.beangle.security.core.session;
 
 import java.util.Date;
 
-import org.beangle.commons.dao.entity.StringIdEntity;
+import org.beangle.commons.entity.pojo.StringIdEntity;
 
 /**
  * 在线活动

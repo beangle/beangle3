@@ -6,7 +6,7 @@ package org.beangle.commons.transfer.importer;
 
 import java.util.Set;
 
-import org.beangle.commons.dao.metadata.Populator;
+import org.beangle.commons.entity.metadata.Populator;
 import org.beangle.commons.transfer.io.ItemReader;
 
 /**

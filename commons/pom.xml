@@ -15,7 +15,6 @@
     <module>org.beangle.commons.core</module>
     <module>org.beangle.commons.dao</module>
     <module>org.beangle.commons.web</module>
-    <module>org.beangle.commons.orm</module>
   </modules>
 
   <description>

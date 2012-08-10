@@ -8,9 +8,9 @@ import java.util.*;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.dao.Component;
-import org.beangle.commons.dao.Entity;
-import org.beangle.commons.dao.util.ValidEntityKeyPredicate;
+import org.beangle.commons.entity.Component;
+import org.beangle.commons.entity.Entity;
+import org.beangle.commons.entity.util.ValidEntityKeyPredicate;
 import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

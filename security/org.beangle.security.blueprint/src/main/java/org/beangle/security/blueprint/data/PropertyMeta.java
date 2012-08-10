@@ -4,7 +4,7 @@
  */
 package org.beangle.security.blueprint.data;
 
-import org.beangle.commons.dao.entity.LongIdEntity;
+import org.beangle.commons.entity.pojo.LongIdEntity;
 
 /**
  * 用户自定义属性

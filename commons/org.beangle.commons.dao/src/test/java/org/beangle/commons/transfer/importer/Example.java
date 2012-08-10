@@ -6,7 +6,7 @@ package org.beangle.commons.transfer.importer;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.beangle.commons.dao.entity.LongIdEntity;
+import org.beangle.commons.entity.pojo.LongIdEntity;
 
 public class Example implements LongIdEntity {
 

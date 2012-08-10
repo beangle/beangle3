@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.orm.pojo.HierarchyLongIdObject;
+import org.beangle.commons.entity.pojo.HierarchyLongIdObject;
 import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;

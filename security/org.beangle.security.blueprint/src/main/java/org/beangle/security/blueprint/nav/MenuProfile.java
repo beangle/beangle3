@@ -6,7 +6,7 @@ package org.beangle.security.blueprint.nav;
 
 import java.util.List;
 
-import org.beangle.commons.dao.entity.LongIdEntity;
+import org.beangle.commons.entity.pojo.LongIdEntity;
 import org.beangle.security.blueprint.Role;
 
 public interface MenuProfile extends LongIdEntity {

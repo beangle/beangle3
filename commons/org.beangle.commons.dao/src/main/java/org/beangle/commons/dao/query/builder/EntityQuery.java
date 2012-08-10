@@ -10,10 +10,10 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.beangle.commons.collection.Order;
 import org.beangle.commons.collection.page.PageLimit;
-import org.beangle.commons.dao.metadata.EntityType;
-import org.beangle.commons.dao.metadata.Model;
 import org.beangle.commons.dao.query.Lang;
 import org.beangle.commons.dao.query.Query;
+import org.beangle.commons.entity.metadata.EntityType;
+import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.lang.Strings;
 
 /**
