@@ -4,7 +4,6 @@
  */
 package org.beangle.commons.orm.pojo;
 
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
@@ -12,7 +11,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.beangle.commons.dao.entity.StringIdEntity;
 import org.beangle.commons.dao.util.ValidEntityKeyPredicate;
-import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
 public class StringIdObject implements StringIdEntity {
@@ -21,8 +19,6 @@ public class StringIdObject implements StringIdEntity {
 
   /** 非业务主键 */
   @Id
-  @GeneratedValue(generator = "id_assigned")
-  @GenericGenerator(name = "id_assigned", strategy = "assigned")
   protected String id;
 
   public StringIdObject() {

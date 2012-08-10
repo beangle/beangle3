@@ -8,19 +8,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Cacheable;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.orm.pojo.HierarchyLongIdObject;
 import org.beangle.security.blueprint.Member;
-import org.beangle.security.blueprint.Permission;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
 import org.hibernate.annotations.Cache;
@@ -50,7 +44,7 @@ public class RoleBean extends HierarchyLongIdObject<Role> implements Role {
   private Set<Member> members = CollectUtils.newHashSet();
 
   /** 父级组 */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private Role parent;
 
   /**
@@ -62,10 +56,11 @@ public class RoleBean extends HierarchyLongIdObject<Role> implements Role {
 
   /** 创建人 */
   @NotNull
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private User owner;
 
   /** 备注 */
+  @Size(max = 100)
   protected String remark;
 
   /** 是否启用 */
@@ -74,11 +69,6 @@ public class RoleBean extends HierarchyLongIdObject<Role> implements Role {
 
   /** 动态组 */
   public boolean dynamic = false;
-
-  /** 权限 */
-  @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-  @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
-  protected Set<Permission> permissions = CollectUtils.newHashSet();
 
   /** 创建时间 */
   protected Date createdAt;
@@ -113,14 +103,6 @@ public class RoleBean extends HierarchyLongIdObject<Role> implements Role {
 
   public void setRemark(String remark) {
     this.remark = remark;
-  }
-
-  public void setAuthorities(Set<Permission> permissions) {
-    this.permissions = permissions;
-  }
-
-  public Set<Permission> getPermissions() {
-    return permissions;
   }
 
   public boolean isEnabled() {

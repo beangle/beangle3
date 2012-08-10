@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -53,6 +54,7 @@ public class UserBean extends LongIdTimeObject implements User {
 
   /** 用户联系email */
   @NotNull
+  @Size(max = 100)
   private String mail;
 
   /** 对应角色 */
@@ -60,7 +62,7 @@ public class UserBean extends LongIdTimeObject implements User {
   private Set<Member> members = CollectUtils.newHashSet();
 
   /** 创建人 */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private User creator;
 
   /**
@@ -84,6 +86,7 @@ public class UserBean extends LongIdTimeObject implements User {
   protected boolean enabled;
 
   /** 备注 */
+  @Size(max = 200)
   protected String remark;
 
   public UserBean() {

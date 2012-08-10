@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
@@ -21,7 +22,7 @@ public class ManagerEmployer extends LongIdTimeObject implements Employer {
 
   Name name;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   ContractInfo contractInfo;
 
   @ManyToMany

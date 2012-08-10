@@ -16,6 +16,7 @@ import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
+import org.beangle.security.auth.Principals;
 import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
@@ -25,7 +26,6 @@ import org.beangle.security.blueprint.event.UserRemoveEvent;
 import org.beangle.security.blueprint.event.UserStatusEvent;
 import org.beangle.security.blueprint.model.MemberBean;
 import org.beangle.security.blueprint.service.UserService;
-import org.beangle.security.auth.Principals;
 
 /**
  * 用户信息服务的实现类
@@ -91,18 +91,17 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
   public void saveOrUpdate(User user) {
     user.setUpdatedAt(new Date(System.currentTimeMillis()));
-    if (!user.isPersisted()) {
-      user.setCreatedAt(new Date(System.currentTimeMillis()));
-    }
+    if (!user.isPersisted()) user.setCreatedAt(new Date(System.currentTimeMillis()));
     entityDao.saveOrUpdate(user);
     publish(new UserAlterationEvent(Collections.singletonList(user)));
   }
 
   // workground for no session
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public List<Role> getRoles(User user) {
+  public List<Role> getRoles(Long userId) {
     OqlBuilder builder = OqlBuilder.from(Member.class, "gm");
-    builder.where("gm.user=:user and gm.member=true", user).select("gm.role").orderBy("gm.role.code");
+    builder.where("gm.user.id=:userId and gm.member=true", userId).select("gm.role")
+        .orderBy("gm.role.code");
     builder.cacheable();
     return entityDao.search(builder);
   }

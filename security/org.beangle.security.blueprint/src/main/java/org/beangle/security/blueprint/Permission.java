@@ -4,6 +4,8 @@
  */
 package org.beangle.security.blueprint;
 
+import java.security.Principal;
+
 import org.beangle.commons.dao.entity.LongIdEntity;
 import org.beangle.commons.dao.entity.TemporalActiveEntity;
 
@@ -25,7 +27,7 @@ public interface Permission extends LongIdEntity, Cloneable, TemporalActiveEntit
    * 
    * @param ao
    */
-  public Role getRole();
+  public Principal getPrincipal();
 
   /**
    * 授权的操作
@@ -35,27 +37,16 @@ public interface Permission extends LongIdEntity, Cloneable, TemporalActiveEntit
   public String getActions();
 
   /**
-   * 资源过滤器
-   * 
-   * @return
-   */
-  public String getFilters();
-
-  /**
    * 访问资源时执行的检查条件
    * 
    * @return
    */
-  public String getGuards();
+  public String getRestrictions();
 
   /**
-   * 允许访问的部分
+   * 说明
    * 
    * @return
    */
-  public String getParts();
-  
-  public void merge(Permission other);
-
-  public Object clone();
+  public String getRemark();
 }

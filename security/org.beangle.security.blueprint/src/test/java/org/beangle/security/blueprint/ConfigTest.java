@@ -5,7 +5,9 @@
 package org.beangle.security.blueprint;
 
 import org.beangle.commons.context.spring.SpringTestCase;
+import org.testng.annotations.Test;
 
+@Test
 public class ConfigTest extends SpringTestCase {
 
   public void testCfg() {

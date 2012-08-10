@@ -4,6 +4,7 @@
  */
 package org.beangle.security.blueprint;
 
+import java.security.Principal;
 import java.util.Set;
 
 import org.beangle.commons.dao.entity.HierarchyEntity;
@@ -14,7 +15,7 @@ import org.beangle.commons.dao.entity.LongIdTimeEntity;
  * 
  * @author chaostone 2005-9-26
  */
-public interface Role extends LongIdTimeEntity, HierarchyEntity<Role, Long>, Comparable<Role> {
+public interface Role extends LongIdTimeEntity, HierarchyEntity<Role, Long>, Comparable<Role>,Principal {
 
   /** 匿名角色id */
   static final long ANONYMOUS_ID = 1;
@@ -35,13 +36,6 @@ public interface Role extends LongIdTimeEntity, HierarchyEntity<Role, Long>, Com
    * @return
    */
   String getName();
-
-  /**
-   * 查询权限
-   * 
-   * @return
-   */
-  Set<Permission> getPermissions();
 
   /**
    * 关联的系统用户

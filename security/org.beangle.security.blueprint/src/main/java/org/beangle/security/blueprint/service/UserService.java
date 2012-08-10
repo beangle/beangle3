@@ -54,10 +54,10 @@ public interface UserService {
   /**
    * 查询用户关联的member角色
    * 
-   * @param user
+   * @param userId
    * @return
    */
-  public List<Role> getRoles(User user);
+  public List<Role> getRoles(Long userId);
 
   /**
    * 查找关联组关系

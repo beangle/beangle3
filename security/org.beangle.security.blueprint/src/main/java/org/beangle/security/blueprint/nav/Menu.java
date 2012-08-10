@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.beangle.commons.dao.entity.HierarchyEntity;
 import org.beangle.commons.dao.entity.LongIdEntity;
-import org.beangle.security.blueprint.Resource;
+import org.beangle.security.blueprint.function.FunctionResource;
 
 /**
  * 系统菜单
@@ -74,9 +74,9 @@ public interface Menu extends LongIdEntity, HierarchyEntity<Menu, Long>, Compara
 
   public void setRemark(String remark);
 
-  public Set<Resource> getResources();
+  public Set<FunctionResource> getResources();
 
-  public void setResources(Set<Resource> resources);
+  public void setResources(Set<FunctionResource> resources);
 
   public boolean isEnabled();
 

@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.orm.pojo.HierarchyLongIdObject;
-import org.beangle.security.blueprint.Resource;
+import org.beangle.security.blueprint.function.FunctionResource;
 import org.beangle.security.blueprint.nav.Menu;
 import org.beangle.security.blueprint.nav.MenuProfile;
 import org.hibernate.annotations.Cache;
@@ -51,7 +51,7 @@ public class MenuBean extends HierarchyLongIdObject<Menu> implements Menu {
   /** 引用资源集合 */
   @ManyToMany
   @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
-  private Set<Resource> resources = CollectUtils.newHashSet();
+  private Set<FunctionResource> resources = CollectUtils.newHashSet();
 
   /** 是否启用 */
   @NotNull
@@ -59,11 +59,11 @@ public class MenuBean extends HierarchyLongIdObject<Menu> implements Menu {
 
   /** 菜单配置 */
   @NotNull
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private MenuProfile profile;
 
   /** 父级菜单 */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private Menu parent;
 
   /** 直接下级菜单 */
@@ -104,11 +104,11 @@ public class MenuBean extends HierarchyLongIdObject<Menu> implements Menu {
     this.remark = remark;
   }
 
-  public Set<Resource> getResources() {
+  public Set<FunctionResource> getResources() {
     return resources;
   }
 
-  public void setResources(Set<Resource> resources) {
+  public void setResources(Set<FunctionResource> resources) {
     this.resources = resources;
   }
 

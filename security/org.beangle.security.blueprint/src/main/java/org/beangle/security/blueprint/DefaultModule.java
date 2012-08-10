@@ -5,13 +5,13 @@
 package org.beangle.security.blueprint;
 
 import org.beangle.commons.context.inject.AbstractBindModule;
+import org.beangle.security.blueprint.data.service.internal.CsvDataResolver;
+import org.beangle.security.blueprint.data.service.internal.DataPermissionServiceImpl;
+import org.beangle.security.blueprint.data.service.internal.IdentifierDataResolver;
+import org.beangle.security.blueprint.data.service.internal.OqlDataProvider;
+import org.beangle.security.blueprint.function.service.internal.CacheableAuthorityManager;
+import org.beangle.security.blueprint.function.service.internal.FunctionPermissionServiceImpl;
 import org.beangle.security.blueprint.nav.service.MenuServiceImpl;
-import org.beangle.security.blueprint.profile.service.internal.CsvDataResolver;
-import org.beangle.security.blueprint.profile.service.internal.IdentifierDataResolver;
-import org.beangle.security.blueprint.profile.service.internal.OqlDataProvider;
-import org.beangle.security.blueprint.restrict.service.RestrictionServiceImpl;
-import org.beangle.security.blueprint.service.internal.AuthorityServiceImpl;
-import org.beangle.security.blueprint.service.internal.CacheableAuthorityManager;
 import org.beangle.security.blueprint.service.internal.DaoUserDetailServiceImpl;
 import org.beangle.security.blueprint.service.internal.RoleServiceImpl;
 import org.beangle.security.blueprint.service.internal.UserServiceImpl;
@@ -29,7 +29,7 @@ public class DefaultModule extends AbstractBindModule {
   protected void doBinding() {
     bind("userService", UserServiceImpl.class);
     bind("roleService", RoleServiceImpl.class);
-    bind("authorityService", AuthorityServiceImpl.class);
+    bind("authorityService", FunctionPermissionServiceImpl.class);
     bind("menuService", MenuServiceImpl.class);
     bind("userDetailService", DaoUserDetailServiceImpl.class);
     bind("authorityManager", CacheableAuthorityManager.class);
@@ -37,7 +37,7 @@ public class DefaultModule extends AbstractBindModule {
 
     bind(IdentifierDataResolver.class, CsvDataResolver.class, OqlDataProvider.class).shortName();
 
-    bind("restrictionService", RestrictionServiceImpl.class).property("providers",
+    bind("restrictionService", DataPermissionServiceImpl.class).property("providers",
         map(entry("csv", ref(CsvDataResolver.class)), entry("oql", ref(OqlDataProvider.class)))).property(
         "dataResolver",ref(IdentifierDataResolver.class));
   }

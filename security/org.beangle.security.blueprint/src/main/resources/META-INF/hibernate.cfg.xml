@@ -3,23 +3,23 @@
 	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
-		<mapping class="org.beangle.security.blueprint.model.PermissionBean"/>
 		<mapping class="org.beangle.security.blueprint.model.RoleBean"/>
 		<mapping class="org.beangle.security.blueprint.model.MemberBean"/>
-		<mapping class="org.beangle.security.blueprint.model.ResourceBean"/>
 		<mapping class="org.beangle.security.blueprint.model.UserBean"/>
 
+		<mapping class="org.beangle.security.blueprint.function.model.RoleFunctionPermissionBean"/>
+		<mapping class="org.beangle.security.blueprint.function.model.FunctionResourceBean"/>
+
+		<mapping class="org.beangle.security.blueprint.data.model.RoleDataPermissionBean"/>
+		<mapping class="org.beangle.security.blueprint.data.model.DataResourceBean"/>
+		<mapping class="org.beangle.security.blueprint.data.model.RoleProfileBean"/>
+		<mapping class="org.beangle.security.blueprint.data.model.RolePropertyBean"/>
+		<mapping class="org.beangle.security.blueprint.data.model.UserProfileBean"/>
+		<mapping class="org.beangle.security.blueprint.data.model.UserPropertyBean"/>
+		<mapping class="org.beangle.security.blueprint.data.model.PropertyMetaBean"/>
+		
 		<mapping class="org.beangle.security.blueprint.nav.model.MenuBean"/>
 		<mapping class="org.beangle.security.blueprint.nav.model.MenuProfileBean"/>
-		
-		<mapping class="org.beangle.security.blueprint.restrict.model.RestrictionBean"/>
-		<mapping class="org.beangle.security.blueprint.restrict.model.RestrictEntityBean"/>
-		
-		<mapping class="org.beangle.security.blueprint.profile.model.RoleProfileBean"/>
-		<mapping class="org.beangle.security.blueprint.profile.model.RolePropertyBean"/>
-		<mapping class="org.beangle.security.blueprint.profile.model.UserProfileBean"/>
-		<mapping class="org.beangle.security.blueprint.profile.model.UserPropertyBean"/>
-		<mapping class="org.beangle.security.blueprint.profile.model.PropertyMetaBean"/>
 		
 		<mapping class="org.beangle.security.blueprint.session.model.SessionProfileBean"/>
 	</session-factory>

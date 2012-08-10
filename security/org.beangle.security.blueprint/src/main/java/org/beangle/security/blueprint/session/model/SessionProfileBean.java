@@ -5,6 +5,7 @@
 package org.beangle.security.blueprint.session.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -23,7 +24,7 @@ public class SessionProfileBean extends LongIdObject {
 
   /** 角色 */
   @NotNull
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   protected Role role;
 
   /** 最大在线人数 */

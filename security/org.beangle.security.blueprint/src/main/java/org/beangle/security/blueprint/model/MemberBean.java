@@ -7,6 +7,7 @@ package org.beangle.security.blueprint.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -28,12 +29,12 @@ public class MemberBean extends LongIdTimeObject implements Member {
 
   /** 角色 */
   @NotNull
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private Role role;
 
   /** 用户 */
   @NotNull
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private User user;
 
   /** 用户是否是该组的成员 */

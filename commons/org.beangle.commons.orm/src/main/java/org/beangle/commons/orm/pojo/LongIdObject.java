@@ -11,7 +11,6 @@ import javax.persistence.MappedSuperclass;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.beangle.commons.dao.entity.LongIdEntity;
 import org.beangle.commons.dao.util.ValidEntityKeyPredicate;
-import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
 public class LongIdObject implements LongIdEntity {
@@ -20,7 +19,6 @@ public class LongIdObject implements LongIdEntity {
   /** 非业务主键 */
   @Id
   @GeneratedValue(generator = "table_sequence")
-  @GenericGenerator(name = "table_sequence", strategy = "org.beangle.commons.orm.hibernate.TableSeqGenerator")
   protected Long id;
 
   public LongIdObject() {

@@ -5,6 +5,7 @@
 package org.beangle.commons.collection.predicates;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.collections.Predicate;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Throwables;
@@ -15,7 +16,7 @@ import org.beangle.commons.lang.Throwables;
  * @author chaostone
  * @version $Id: $
  */
-public class PropertyEqualPredicate {
+public class PropertyEqualPredicate implements Predicate{
   private String propertyName;
   private Object propertyValue;
 

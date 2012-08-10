@@ -4,11 +4,13 @@
  */
 package org.beangle.commons.orm.hibernate.internal;
 
+import org.beangle.commons.orm.hibernate.TableSeqGenerator;
 import org.hibernate.DuplicateMappingException;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Mappings;
 import org.hibernate.cfg.SettingsFactory;
 import org.hibernate.mapping.Collection;
+import org.hibernate.mapping.IdGenerator;
 import org.hibernate.mapping.PersistentClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +41,15 @@ public class OverrideConfiguration extends Configuration {
   }
 
   protected class OverrideMappings extends MappingsImpl {
+    
+    public OverrideMappings() {
+      super();
+      IdGenerator idGen=new IdGenerator();
+      idGen.setName("table_sequence");
+      idGen.setIdentifierGeneratorStrategy(TableSeqGenerator.class.getName());
+      this.addDefaultGenerator(idGen);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public void addClass(PersistentClass persistentClass) throws DuplicateMappingException {

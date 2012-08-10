@@ -13,47 +13,53 @@ import org.beangle.commons.dao.entity.LongIdEntity;
  */
 public interface Resource extends LongIdEntity {
 
+  /** 资源的所有部分 */
+  public static final String AllParts = "*";
+
+  /** 允许所有操作 */
+  public static final String AllActions = "*";
+
   /**
    * 资源名称
    * 
    * @return
    */
-  public String getName();
+  String getName();
 
   /**
    * 资源名称
    * 
    * @param name
    */
-  public void setName(String name);
+  void setName(String name);
 
   /**
    * 资源标题
    * 
    * @return
    */
-  public String getTitle();
+  String getTitle();
 
   /**
    * 资源标题
    * 
    * @param title
    */
-  public void setTitle(String title);
+  void setTitle(String title);
 
   /**
-   * 返回资源描述
+   * 允许的操作
    * 
    * @return
    */
-  public String getRemark();
+  String getActions();
 
   /**
    * 资源状态
    * 
    * @return
    */
-  public boolean isEnabled();
+  boolean isEnabled();
 
   /**
    * 设置资源状态
@@ -61,22 +67,13 @@ public interface Resource extends LongIdEntity {
    * @param IsActive
    * @return
    */
-  public void setEnabled(boolean isEnabled);
+  void setEnabled(boolean isEnabled);
 
-  public Scope getScope();
-
-  public static enum Scope {
-    /** 不受保护的公共资源 */
-    PUBLIC(0),
-    /** 受保护的公有资源 */
-    PROTECTED(1),
-    /** 受保护的私有资源 */
-    PRIVATE(2);
-    int value;
-
-    private Scope(int value) {
-      this.value = value;
-    }
-  }
+  /**
+   * 返回资源描述
+   * 
+   * @return
+   */
+  String getRemark();
 
 }

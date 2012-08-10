@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -46,7 +47,7 @@ public class MenuProfileBean extends LongIdObject implements MenuProfile {
 
   /** 角色 */
   @NotNull
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private Role role;
 
   /** 是否启用 */
