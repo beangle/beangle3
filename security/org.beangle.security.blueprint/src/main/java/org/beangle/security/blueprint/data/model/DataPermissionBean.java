@@ -20,7 +20,7 @@ import org.beangle.commons.entity.pojo.LongIdObject;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.data.DataPermission;
 import org.beangle.security.blueprint.data.DataResource;
-import org.beangle.security.blueprint.function.FunctionResource;
+import org.beangle.security.blueprint.function.FuncResource;
 
 import com.google.gson.GsonBuilder;
 
@@ -30,8 +30,8 @@ import com.google.gson.GsonBuilder;
  * @author chaostone
  * @since 3.0.0
  */
-@Entity(name = "org.beangle.security.blueprint.data.model.RoleDataPermissionBean")
-public class RoleDataPermissionBean extends LongIdObject implements TemporalActiveEntity, DataPermission {
+@Entity(name = "org.beangle.security.blueprint.data.model.DataPermissionBean")
+public class DataPermissionBean extends LongIdObject implements TemporalActiveEntity, DataPermission {
 
   private static final long serialVersionUID = -8956079356245507990L;
 
@@ -47,7 +47,7 @@ public class RoleDataPermissionBean extends LongIdObject implements TemporalActi
 
   /** 功能资源 */
   @ManyToOne(fetch = FetchType.LAZY)
-  protected FunctionResource funcResource;
+  protected FuncResource funcResource;
 
   /** 授权的操作 */
   @Size(max = 100)
@@ -75,15 +75,15 @@ public class RoleDataPermissionBean extends LongIdObject implements TemporalActi
   @Size(max = 100)
   protected String remark;
 
-  public RoleDataPermissionBean() {
+  public DataPermissionBean() {
     super();
   }
 
-  public RoleDataPermissionBean(Long id) {
+  public DataPermissionBean(Long id) {
     super(id);
   }
 
-  public RoleDataPermissionBean(Role role, DataResource resource, String actions) {
+  public DataPermissionBean(Role role, DataResource resource, String actions) {
     super();
     this.role = role;
     this.resource = resource;
@@ -99,7 +99,7 @@ public class RoleDataPermissionBean extends LongIdObject implements TemporalActi
   }
 
   public Object clone() {
-    return new RoleDataPermissionBean(role, resource, actions);
+    return new DataPermissionBean(role, resource, actions);
   }
 
   public String getActions() {
@@ -171,11 +171,11 @@ public class RoleDataPermissionBean extends LongIdObject implements TemporalActi
     return role;
   }
 
-  public FunctionResource getFuncResource() {
+  public FuncResource getFuncResource() {
     return funcResource;
   }
 
-  public void setFuncResource(FunctionResource funcResource) {
+  public void setFuncResource(FuncResource funcResource) {
     this.funcResource = funcResource;
   }
 

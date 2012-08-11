@@ -6,13 +6,13 @@ package org.beangle.security.blueprint.function.internal;
 
 import static org.testng.Assert.assertEquals;
 
-import org.beangle.security.blueprint.function.service.PermissionService;
-import org.beangle.security.blueprint.function.service.internal.PermissionServiceImpl;
+import org.beangle.security.blueprint.function.service.FuncPermissionService;
+import org.beangle.security.blueprint.function.service.internal.FuncPermissionServiceImpl;
 import org.testng.annotations.Test;
 @Test
 public class PermissionServiceImplTest {
 
-  PermissionService permissionService = new PermissionServiceImpl();
+  FuncPermissionService permissionService = new FuncPermissionServiceImpl();
 
   public void testextractResource() throws Exception {
     assertEquals(permissionService.extractResource("a.jsp"), "a");

@@ -9,8 +9,8 @@ import java.util.Set;
 
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.function.FunctionPermission;
-import org.beangle.security.blueprint.function.FunctionResource;
+import org.beangle.security.blueprint.function.FuncPermission;
+import org.beangle.security.blueprint.function.FuncResource;
 import org.beangle.security.blueprint.service.UserService;
 
 /**
@@ -21,7 +21,7 @@ import org.beangle.security.blueprint.service.UserService;
  * @see <code>Action</code> 数据权限实体
  * @author dell,chaostone 2005-9-27
  */
-public interface PermissionService {
+public interface FuncPermissionService {
 
   /**
    * 按照资源名称查询单独的资源
@@ -29,7 +29,7 @@ public interface PermissionService {
    * @param name
    * @return
    */
-  public FunctionResource getResource(String name);
+  public FuncResource getResource(String name);
 
   /**
    * 查询用户的访问资源范围
@@ -37,7 +37,7 @@ public interface PermissionService {
    * @param user
    * @return
    */
-  public List<FunctionResource> getResources(User user);
+  public List<FuncResource> getResources(User user);
 
   /**
    * 按照角色查找资源
@@ -53,7 +53,7 @@ public interface PermissionService {
    * @param scope
    * @return
    */
-  public Set<String> getResourceNamesByScope(FunctionResource.Scope scope);
+  public Set<String> getResourceNamesByScope(FuncResource.Scope scope);
 
   /**
    * 角色内对应的资源
@@ -61,7 +61,7 @@ public interface PermissionService {
    * @param role
    * @return
    */
-  public List<FunctionResource> getResources(Role role);
+  public List<FuncResource> getResources(Role role);
 
   /**
    * 更新资源状态
@@ -77,7 +77,7 @@ public interface PermissionService {
    * @param user
    * @return
    */
-  public List<FunctionPermission> getPermissions(User user);
+  public List<FuncPermission> getPermissions(User user);
 
   /**
    * 依据默认深度得到角色拥有的权限
@@ -85,7 +85,7 @@ public interface PermissionService {
    * @param role
    * @return
    */
-  public List<FunctionPermission> getPermissions(Role role);
+  public List<FuncPermission> getPermissions(Role role);
 
   /**
    * 授权
@@ -93,7 +93,7 @@ public interface PermissionService {
    * @param role
    * @param resources
    */
-  public void authorize(Role role, Set<FunctionResource> resources);
+  public void authorize(Role role, Set<FuncResource> resources);
 
   /**
    * @param userService

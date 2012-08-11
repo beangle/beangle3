@@ -12,13 +12,13 @@ import org.beangle.security.blueprint.Permission;
  * @author chaostone
  * @since 3.0.0
  */
-public interface FunctionPermission extends Permission {
+public interface FuncPermission extends Permission {
 
   /**
    * 系统资源
    * 
    * @return
    */
-  public FunctionResource getResource();
+  public FuncResource getResource();
 
 }

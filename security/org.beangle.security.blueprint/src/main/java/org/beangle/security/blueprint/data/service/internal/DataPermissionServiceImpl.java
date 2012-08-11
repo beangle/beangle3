@@ -26,11 +26,11 @@ import org.beangle.security.blueprint.data.PropertyMeta;
 import org.beangle.security.blueprint.data.RoleProfile;
 import org.beangle.security.blueprint.data.UserProfile;
 import org.beangle.security.blueprint.data.UserProperty;
-import org.beangle.security.blueprint.data.model.RoleDataPermissionBean;
+import org.beangle.security.blueprint.data.model.DataPermissionBean;
 import org.beangle.security.blueprint.data.service.DataPermissionService;
 import org.beangle.security.blueprint.data.service.UserDataProvider;
 import org.beangle.security.blueprint.data.service.UserDataResolver;
-import org.beangle.security.blueprint.function.service.PermissionService;
+import org.beangle.security.blueprint.function.service.FuncPermissionService;
 import org.beangle.security.blueprint.service.UserService;
 
 public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPermissionService {
@@ -41,7 +41,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
 
   protected UserDataResolver dataResolver;
 
-  protected PermissionService permissionService;
+  protected FuncPermissionService permissionService;
 
   public List<UserProfile> getUserProfiles(Long userId, Map<String, Object> selectors) {
     OqlBuilder<UserProfile> builder = OqlBuilder.from(UserProfile.class, "up").where("up.user.id=:userId",
@@ -60,12 +60,12 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
    */
   private List<? extends DataPermission> getPermissions(Role role, String dataResourceName,
       String funcResourceName) {
-    OqlBuilder<RoleDataPermissionBean> builder = OqlBuilder.from(RoleDataPermissionBean.class, "dp")
+    OqlBuilder<DataPermissionBean> builder = OqlBuilder.from(DataPermissionBean.class, "dp")
         .where("dp.resource=:dataresource.name and dp.role =:role", dataResourceName, role).cacheable();
-    List<RoleDataPermissionBean> rs = entityDao.search(builder);
+    List<DataPermissionBean> rs = entityDao.search(builder);
 
     @SuppressWarnings("unchecked")
-    List<RoleDataPermissionBean> permissions = (List<RoleDataPermissionBean>) CollectionUtils.select(rs,
+    List<DataPermissionBean> permissions = (List<DataPermissionBean>) CollectionUtils.select(rs,
         new PropertyEqualPredicate("funcResource.name", funcResourceName));
     return (permissions.isEmpty()) ? rs : permissions;
   }
@@ -192,7 +192,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
     this.userService = userService;
   }
 
-  public void setPermissionService(PermissionService permissionService) {
+  public void setPermissionService(FuncPermissionService permissionService) {
     this.permissionService = permissionService;
   }
 

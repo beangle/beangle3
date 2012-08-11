@@ -23,7 +23,7 @@ public class DefaultModule extends AbstractBindModule {
         .property("url", "jdbc:h2:./target/beangle;AUTO_SERVER=TRUE").property("username", "sa")
         .property("password", "");
 
-    //"hibernate.dialect=org.hibernate.dialect.H2Dialect", 
+    // "hibernate.dialect=org.hibernate.dialect.H2Dialect",
     bind("hibernateConfig", PropertiesFactoryBean.class).property(
         "properties",
         props("hibernate.max_fetch_depth=1", "hibernate.default_batch_fetch_size=8",

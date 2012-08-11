@@ -7,11 +7,12 @@
 		<mapping class="org.beangle.security.blueprint.model.MemberBean"/>
 		<mapping class="org.beangle.security.blueprint.model.UserBean"/>
 
-		<mapping class="org.beangle.security.blueprint.function.model.RolePermissionBean"/>
-		<mapping class="org.beangle.security.blueprint.function.model.FunctionResourceBean"/>
+		<mapping class="org.beangle.security.blueprint.function.model.FuncPermissionBean"/>
+		<mapping class="org.beangle.security.blueprint.function.model.FuncResourceBean"/>
 
-		<mapping class="org.beangle.security.blueprint.data.model.RoleDataPermissionBean"/>
+		<mapping class="org.beangle.security.blueprint.data.model.DataPermissionBean"/>
 		<mapping class="org.beangle.security.blueprint.data.model.DataResourceBean"/>
+		
 		<mapping class="org.beangle.security.blueprint.data.model.RoleProfileBean"/>
 		<mapping class="org.beangle.security.blueprint.data.model.RolePropertyBean"/>
 		<mapping class="org.beangle.security.blueprint.data.model.UserProfileBean"/>

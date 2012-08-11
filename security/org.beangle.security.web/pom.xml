@@ -29,6 +29,7 @@
 			<groupId>org.beangle.commons</groupId>
 			<artifactId>beangle-commons-orm</artifactId>
 			<version>${project.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>

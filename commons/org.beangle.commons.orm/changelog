@@ -1,2 +1,4 @@
 2011-08-10  duantihua  <chaostone.duan@gmail.com>
 	* 默认hibernate配置中取消dialect属性，让hibernate自行检测,一般情况下无需手工配置
+	* 通过spring-context-test.xml/spring-config-test/spring-test/*.xml支持测试spring配置
+

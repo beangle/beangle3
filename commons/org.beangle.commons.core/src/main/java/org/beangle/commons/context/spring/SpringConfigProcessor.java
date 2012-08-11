@@ -49,7 +49,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
 
   private static final Logger logger = LoggerFactory.getLogger(SpringConfigProcessor.class);
 
-  private Resources resources;
+  private Resources reconfigResources;
 
   /** {@inheritDoc} */
   public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry definitionRegistry)
@@ -66,10 +66,10 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
   }
 
   private void reconfig(BeanDefinitionRegistry registry) {
-    if (null == resources || resources.isEmpty()) return;
+    if (null == reconfigResources || reconfigResources.isEmpty()) return;
     Set<String> beanNames = CollectUtils.newHashSet();
     BeanDefinitionReader reader = new BeanDefinitionReader();
-    for (URL url : resources.getAllPaths()) {
+    for (URL url : reconfigResources.getAllPaths()) {
       List<ReconfigBeanDefinitionHolder> holders = reader.load(new UrlResource(url));
       for (ReconfigBeanDefinitionHolder holder : holders) {
         if (holder.getConfigType().equals(ReconfigType.REMOVE)) {
@@ -394,13 +394,13 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
 
   /**
    * <p>
-   * Setter for the field <code>resource</code>.
+   * Setter for the field <code>reconfigResources</code>.
    * </p>
    * 
-   * @param resources a {@link org.beangle.commons.context.inject.Resources} object.
+   * @param reconfigResources a {@link org.beangle.commons.context.inject.Resources} object.
    */
-  public void setResources(Resources resources) {
-    this.resources = resources;
+  public void setReconfigResources(Resources reconfigResources) {
+    this.reconfigResources = reconfigResources;
   }
 
 }

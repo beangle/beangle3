@@ -12,7 +12,7 @@ import org.beangle.security.blueprint.Resource;
  * @author chaostone
  * @since 3.0.0
  */
-public interface FunctionResource extends Resource {
+public interface FuncResource extends Resource {
 
   /**
    * 资源范围

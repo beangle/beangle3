@@ -16,8 +16,8 @@ import javax.validation.constraints.Size;
 import org.beangle.commons.entity.pojo.TemporalActiveEntity;
 import org.beangle.commons.entity.pojo.LongIdObject;
 import org.beangle.security.blueprint.Role;
-import org.beangle.security.blueprint.function.FunctionPermission;
-import org.beangle.security.blueprint.function.FunctionResource;
+import org.beangle.security.blueprint.function.FuncPermission;
+import org.beangle.security.blueprint.function.FuncResource;
 
 /**
  * 系统授权实体
@@ -25,9 +25,9 @@ import org.beangle.security.blueprint.function.FunctionResource;
  * 
  * @author dell,chaostone 2005-9-26
  */
-@Entity(name = "org.beangle.security.blueprint.function.model.RolePermissionBean")
-public class RolePermissionBean extends LongIdObject implements TemporalActiveEntity,
-    FunctionPermission {
+@Entity(name = "org.beangle.security.blueprint.function.model.FuncPermissionBean")
+public class FuncPermissionBean extends LongIdObject implements TemporalActiveEntity,
+    FuncPermission {
 
   private static final long serialVersionUID = -8956079356245507990L;
 
@@ -39,7 +39,7 @@ public class RolePermissionBean extends LongIdObject implements TemporalActiveEn
   /** 功能资源 */
   @NotNull
   @ManyToOne(fetch = FetchType.LAZY)
-  protected FunctionResource resource;
+  protected FuncResource resource;
 
   @Size(max = 100)
   /** 授权的操作 */
@@ -58,22 +58,22 @@ public class RolePermissionBean extends LongIdObject implements TemporalActiveEn
   @Size(max = 100)
   protected String remark;
   
-  public RolePermissionBean() {
+  public FuncPermissionBean() {
     super();
   }
 
-  public RolePermissionBean(Long id) {
+  public FuncPermissionBean(Long id) {
     super(id);
   }
 
-  public RolePermissionBean(Role role, FunctionResource resource, String actions) {
+  public FuncPermissionBean(Role role, FuncResource resource, String actions) {
     super();
     this.role = role;
     this.resource = resource;
     this.actions = actions;
   }
 
-  public void setResource(FunctionResourceBean resource) {
+  public void setResource(FuncResourceBean resource) {
     this.resource = resource;
   }
 
@@ -86,7 +86,7 @@ public class RolePermissionBean extends LongIdObject implements TemporalActiveEn
   }
 
   public Object clone() {
-    return new RolePermissionBean(role, resource, actions);
+    return new FuncPermissionBean(role, resource, actions);
   }
 
   public String getActions() {
@@ -113,11 +113,11 @@ public class RolePermissionBean extends LongIdObject implements TemporalActiveEn
     this.invalidAt = invalidAt;
   }
 
-  public FunctionResource getResource() {
+  public FuncResource getResource() {
     return resource;
   }
 
-  public void setResource(FunctionResource resource) {
+  public void setResource(FuncResource resource) {
     this.resource = resource;
   }
 

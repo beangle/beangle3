@@ -17,8 +17,8 @@ import org.beangle.security.access.AuthorityManager;
 import org.beangle.security.auth.AnonymousAuthentication;
 import org.beangle.security.auth.Principals;
 import org.beangle.security.blueprint.SecurityUtils;
-import org.beangle.security.blueprint.function.FunctionResource;
-import org.beangle.security.blueprint.function.service.PermissionService;
+import org.beangle.security.blueprint.function.FuncResource;
+import org.beangle.security.blueprint.function.service.FuncPermissionService;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.session.category.CategoryPrincipal;
@@ -39,7 +39,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
   /** 公有资源names */
   protected Set<?> protectedResources;
 
-  protected PermissionService permissionService;
+  protected FuncPermissionService permissionService;
 
   private boolean expired = true;
 
@@ -107,7 +107,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 
   /** 加载三类资源 */
   public void refreshCache() {
-    publicResources = permissionService.getResourceNamesByScope(FunctionResource.Scope.PUBLIC);
+    publicResources = permissionService.getResourceNamesByScope(FuncResource.Scope.PUBLIC);
     if (null != authenticationEntryPoint && authenticationEntryPoint instanceof UrlEntryPoint) {
       UrlEntryPoint fep = (UrlEntryPoint) authenticationEntryPoint;
       String loginResource = permissionService.extractResource(fep.getLoginUrl());
@@ -115,7 +115,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
         publicResources.add(loginResource);
       }
     }
-    protectedResources = permissionService.getResourceNamesByScope(FunctionResource.Scope.PROTECTED);
+    protectedResources = permissionService.getResourceNamesByScope(FuncResource.Scope.PROTECTED);
     expired = false;
   }
 
@@ -123,7 +123,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
     Assert.notNull(permissionService, "authorityService cannot be null");
   }
 
-  public void setPermissionService(PermissionService funcPermissionService) {
+  public void setPermissionService(FuncPermissionService funcPermissionService) {
     this.permissionService = funcPermissionService;
   }
 

@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 public class DataPermissionBeanTest {
 
   public void testValidate() {
-    RoleDataPermissionBean permission = new RoleDataPermissionBean();
+    DataPermissionBean permission = new DataPermissionBean();
     permission.setRestrictions("{\"user\":admin,\"resource\"=\"/home/resource\"}");
     Map<String, String> datas = CollectUtils.newHashMap();
     datas.put("user", "admin");

@@ -16,10 +16,10 @@ import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.event.RoleAuthorityEvent;
-import org.beangle.security.blueprint.function.FunctionPermission;
-import org.beangle.security.blueprint.function.FunctionResource;
-import org.beangle.security.blueprint.function.model.RolePermissionBean;
-import org.beangle.security.blueprint.function.service.PermissionService;
+import org.beangle.security.blueprint.function.FuncPermission;
+import org.beangle.security.blueprint.function.FuncResource;
+import org.beangle.security.blueprint.function.model.FuncPermissionBean;
+import org.beangle.security.blueprint.function.service.FuncPermissionService;
 import org.beangle.security.blueprint.service.UserService;
 
 /**
@@ -27,33 +27,33 @@ import org.beangle.security.blueprint.service.UserService;
  * 
  * @author dell,chaostone 2005-9-26
  */
-public class PermissionServiceImpl extends BaseServiceImpl implements PermissionService {
+public class FuncPermissionServiceImpl extends BaseServiceImpl implements FuncPermissionService {
 
   protected UserService userService;
 
-  public FunctionResource getResource(String name) {
-    OqlBuilder<FunctionResource> query = OqlBuilder.from(FunctionResource.class, "r");
+  public FuncResource getResource(String name) {
+    OqlBuilder<FuncResource> query = OqlBuilder.from(FuncResource.class, "r");
     query.where("r.name=:name", name).cacheable();
     return entityDao.uniqueResult(query);
   }
 
-  public List<FunctionPermission> getPermissions(User user) {
+  public List<FuncPermission> getPermissions(User user) {
     if (null == user) return Collections.emptyList();
-    List<FunctionPermission> permissions = CollectUtils.newArrayList();
+    List<FuncPermission> permissions = CollectUtils.newArrayList();
     for (final Role role : user.getRoles())
       permissions.addAll(getPermissions(role));
     return permissions;
   }
 
-  public List<FunctionResource> getResources(User user) {
-    Set<FunctionResource> resources = CollectUtils.newHashSet();
+  public List<FuncResource> getResources(User user) {
+    Set<FuncResource> resources = CollectUtils.newHashSet();
     Map<String, Object> params = CollectUtils.newHashMap();
     String hql = "select distinct m from " + Role.class.getName() + " as r join r.permissions as a"
         + " join a.resource as m where  r.id = :roleId";
     params.clear();
     for (final Role role : user.getRoles()) {
       params.put("roleId", role.getId());
-      List<FunctionResource> roleResources = entityDao.searchHQLQuery(hql, params);
+      List<FuncResource> roleResources = entityDao.searchHQLQuery(hql, params);
       resources.addAll(roleResources);
     }
     return CollectUtils.newArrayList(resources);
@@ -62,7 +62,7 @@ public class PermissionServiceImpl extends BaseServiceImpl implements Permission
   /** 找到该组内激活的资源id */
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Set<String> getResourceNamesByRole(Long roleId) {
-    String hql = "select a.resource.name from " + FunctionPermission.class.getName()
+    String hql = "select a.resource.name from " + FuncPermission.class.getName()
         + " as a where a.role.id= :roleId and a.resource.enabled = true";
     OqlBuilder query = OqlBuilder.hql(hql).param("roleId", roleId).cacheable();
     return (Set<String>) new HashSet(entityDao.search(query));
@@ -70,16 +70,16 @@ public class PermissionServiceImpl extends BaseServiceImpl implements Permission
 
   /** 找到该组内激活的资源id */
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  public Set<String> getResourceNamesByScope(FunctionResource.Scope scope) {
-    OqlBuilder builder = OqlBuilder.from(FunctionResource.class, "r").where("r.scope=:scope", scope)
+  public Set<String> getResourceNamesByScope(FuncResource.Scope scope) {
+    OqlBuilder builder = OqlBuilder.from(FuncResource.class, "r").where("r.scope=:scope", scope)
         .select("r.name").cacheable();
     return (Set<String>) new HashSet(entityDao.search(builder));
   }
 
-  public void authorize(Role role, Set<FunctionResource> resources) {
-    Set<FunctionPermission> removed = CollectUtils.newHashSet();
-    List<FunctionPermission> permissions = getPermissions(role);
-    for (final FunctionPermission au : permissions) {
+  public void authorize(Role role, Set<FuncResource> resources) {
+    Set<FuncPermission> removed = CollectUtils.newHashSet();
+    List<FuncPermission> permissions = getPermissions(role);
+    for (final FuncPermission au : permissions) {
       if (!resources.contains(au.getResource())) {
         removed.add(au);
       } else {
@@ -87,8 +87,8 @@ public class PermissionServiceImpl extends BaseServiceImpl implements Permission
       }
     }
     permissions.removeAll(removed);
-    for (FunctionResource resource : resources) {
-      RolePermissionBean authority = new RolePermissionBean(role, resource, null);
+    for (FuncResource resource : resources) {
+      FuncPermissionBean authority = new FuncPermissionBean(role, resource, null);
       permissions.add(authority);
     }
     entityDao.remove(removed);
@@ -97,27 +97,27 @@ public class PermissionServiceImpl extends BaseServiceImpl implements Permission
   }
 
   public void updateState(Long[] resourceIds, boolean isEnabled) {
-    OqlBuilder<FunctionResource> query = OqlBuilder.from(FunctionResource.class, "resource");
+    OqlBuilder<FuncResource> query = OqlBuilder.from(FuncResource.class, "resource");
     query.where("resource.id in (:ids)", resourceIds);
-    List<FunctionResource> resources = entityDao.search(query);
-    for (FunctionResource resource : resources) {
+    List<FuncResource> resources = entityDao.search(query);
+    for (FuncResource resource : resources) {
       resource.setEnabled(isEnabled);
     }
     entityDao.saveOrUpdate(resources);
   }
 
-  public List<FunctionPermission> getPermissions(Role role) {
-    OqlBuilder<FunctionPermission> builder = OqlBuilder.hql("select distinct a from  " + Role.class.getName()
+  public List<FuncPermission> getPermissions(Role role) {
+    OqlBuilder<FuncPermission> builder = OqlBuilder.hql("select distinct a from  " + Role.class.getName()
         + " as r join r.permissions as a join a.resource as m  where r = :role");
     builder.param("role", role);
     return entityDao.search(builder);
   }
 
   /** 查询角色对应的模块 */
-  public List<FunctionResource> getResources(Role role) {
+  public List<FuncResource> getResources(Role role) {
     String hql = "select distinct m from " + Role.class.getName() + " as r join r.permissions as a"
         + " join a.resource as m where  r.id = :roleId and m.enabled = true";
-    OqlBuilder<FunctionResource> query = OqlBuilder.hql(hql);
+    OqlBuilder<FuncResource> query = OqlBuilder.hql(hql);
     query.param("roleId", role.getId()).cacheable();
     return entityDao.search(query);
   }
