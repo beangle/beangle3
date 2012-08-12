@@ -48,8 +48,8 @@ public class FuncPermissionServiceImpl extends BaseServiceImpl implements FuncPe
   public List<FuncResource> getResources(User user) {
     Set<FuncResource> resources = CollectUtils.newHashSet();
     Map<String, Object> params = CollectUtils.newHashMap();
-    String hql = "select distinct m from " + Role.class.getName() + " as r join r.permissions as a"
-        + " join a.resource as m where  r.id = :roleId";
+    String hql = "select distinct fp.resource from " + FuncPermission.class.getName()
+        + " fp where fp.role.id = :roleId";
     params.clear();
     for (final Role role : user.getRoles()) {
       params.put("roleId", role.getId());
@@ -107,10 +107,7 @@ public class FuncPermissionServiceImpl extends BaseServiceImpl implements FuncPe
   }
 
   public List<FuncPermission> getPermissions(Role role) {
-    OqlBuilder<FuncPermission> builder = OqlBuilder.hql("select distinct a from  " + Role.class.getName()
-        + " as r join r.permissions as a join a.resource as m  where r = :role");
-    builder.param("role", role);
-    return entityDao.search(builder);
+    return entityDao.search(OqlBuilder.from(FuncPermission.class, "fp").where("fp.role=:role", role));
   }
 
   /** 查询角色对应的模块 */

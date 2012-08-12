@@ -16,7 +16,7 @@ import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.lang.Strings;
-import org.beangle.security.blueprint.data.PropertyMeta;
+import org.beangle.security.blueprint.data.DataField;
 import org.beangle.security.blueprint.data.service.UserDataResolver;
 import org.springframework.beans.BeanUtils;
 
@@ -24,7 +24,7 @@ public class IdentifierDataResolver implements UserDataResolver {
 
   protected EntityDao entityDao;
 
-  public String marshal(PropertyMeta field, Collection<?> items) {
+  public String marshal(DataField field, Collection<?> items) {
     StringBuilder sb = new StringBuilder();
     for (Object obj : items) {
       try {
@@ -44,7 +44,7 @@ public class IdentifierDataResolver implements UserDataResolver {
   }
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> unmarshal(PropertyMeta field, String text) {
+  public <T> List<T> unmarshal(DataField field, String text) {
     if (null == field.getValueType()) {
       return (List<T>) CollectUtils.newArrayList(Strings.split(text, ","));
     } else {

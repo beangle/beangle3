@@ -48,7 +48,7 @@ public class DefaultViewMapper implements ViewMapper {
     StringBuilder buf = new StringBuilder();
     if (profile.getViewPathStyle().equals(Constants.FULL_VIEWPATH)) {
       buf.append(Constants.separator);
-      buf.append(profile.getSimpleName(className));
+      buf.append(profile.getFullPath(className));
     } else if (profile.getViewPathStyle().equals(Constants.SIMPLE_VIEWPATH)) {
       buf.append(profile.getViewPath());
       // 添加中缀路径

@@ -204,9 +204,7 @@ public class ConvertPopulatorBean implements Populator {
           logger.error("error attr:[" + attr + "] value:[" + value + "]", e);
         }
       }
-      if (logger.isDebugEnabled()) {
-        logger.debug("populate attr:[" + attr + "] value:[" + value + "]");
-      }
+      if (logger.isDebugEnabled()) logger.debug("populate attr:[" + attr + "] value:[" + value + "]");
     }
     return entity;
   }

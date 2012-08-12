@@ -20,12 +20,7 @@ import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.Permission;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.Role;
-import org.beangle.security.blueprint.data.DataPermission;
-import org.beangle.security.blueprint.data.Property;
-import org.beangle.security.blueprint.data.PropertyMeta;
-import org.beangle.security.blueprint.data.RoleProfile;
-import org.beangle.security.blueprint.data.UserProfile;
-import org.beangle.security.blueprint.data.UserProperty;
+import org.beangle.security.blueprint.data.*;
 import org.beangle.security.blueprint.data.model.DataPermissionBean;
 import org.beangle.security.blueprint.data.service.DataPermissionService;
 import org.beangle.security.blueprint.data.service.UserDataProvider;
@@ -97,7 +92,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
     return entityDao.search(builder);
   }
 
-  private List<?> getPropertyValues(PropertyMeta field) {
+  private List<?> getPropertyValues(DataField field) {
     if (null == field.getSource()) return Collections.emptyList();
     String source = field.getSource();
     String prefix = Strings.substringBefore(source, ":");
@@ -111,12 +106,12 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
   }
 
   public List<?> getPropertyValues(String propertyName) {
-    return getPropertyValues(getPropertyMeta(propertyName));
+    return getPropertyValues(getDataField(propertyName));
   }
 
-  public Object getPropertyValue(String propertyName, UserProfile profile) {
-    PropertyMeta prop = getPropertyMeta(propertyName);
-    UserProperty property = profile.getProperty(prop);
+  public Object getPropertyValue(String propertyName, Profile profile) {
+    DataField prop = getDataField(propertyName);
+    Property property = profile.getProperty(prop);
     if (null == property) return null;
     return unmarshal(property.getValue(), prop);
   }
@@ -128,7 +123,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
    * @param restriction
    * @return
    */
-  private Object unmarshal(String value, PropertyMeta property) {
+  private Object unmarshal(String value, DataField property) {
     try {
       List<Object> returned = dataResolver.unmarshal(property, value);
       if (property.isMultiple()) {
@@ -158,7 +153,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
       List<String> params = c.getParamNames();
       for (final String paramName : params) {
         UserProperty up = profile.getProperty(paramName);
-        PropertyMeta prop = up.getMeta();
+        DataField prop = up.getField();
         String value = null == up ? null : up.getValue();
         if (Strings.isNotEmpty(value)) {
           if (value.equals(Property.AllValue)) {
@@ -182,8 +177,8 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
     }
   }
 
-  private PropertyMeta getPropertyMeta(String fieldName) {
-    List<PropertyMeta> fields = entityDao.get(PropertyMeta.class, "name", fieldName);
+  private DataField getDataField(String fieldName) {
+    List<DataField> fields = entityDao.get(DataField.class, "name", fieldName);
     if (1 != fields.size()) { throw new RuntimeException("bad pattern parameter named :" + fieldName); }
     return fields.get(0);
   }

@@ -48,10 +48,9 @@ public class SimpleEntityContext extends AbstractEntityContext {
       for (Map.Entry<Object, Object> entry : props.entrySet()) {
         String key = (String) entry.getKey();
         String value = (String) entry.getValue();
-        EntityType entityType = new EntityType();
-        entityType.setEntityName(key);
+        EntityType entityType = null;
         try {
-          entityType.setEntityClass(Class.forName(value));
+          entityType = new EntityType(key, Class.forName(value), "id");
         } catch (ClassNotFoundException e) {
           logger.error(value + " was not correct class name", e);
         }

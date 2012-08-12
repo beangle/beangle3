@@ -12,7 +12,7 @@ import org.beangle.commons.entity.pojo.LongIdEntity;
  * @author chaostone
  * @since 2011-09-22
  */
-public interface PropertyMeta extends LongIdEntity {
+public interface DataField extends LongIdEntity {
 
   /**
    * 名称

@@ -16,7 +16,7 @@ public interface Property extends LongIdEntity {
 
   public static final String AllValue = "*";
 
-  public PropertyMeta getMeta();
+  public DataField getField();
 
   public String getValue();
 

@@ -18,6 +18,6 @@ public interface Profile extends LongIdEntity {
 
   public List<? extends Property> getProperties();
 
-  public Property getProperty(PropertyMeta meta);
+  public Property getProperty(DataField meta);
 
 }

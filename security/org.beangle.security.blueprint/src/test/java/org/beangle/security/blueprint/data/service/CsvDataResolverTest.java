@@ -9,7 +9,7 @@ import static org.testng.Assert.assertEquals;
 import java.util.List;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.security.blueprint.data.model.PropertyMetaBean;
+import org.beangle.security.blueprint.data.model.DataFieldBean;
 import org.beangle.security.blueprint.data.service.internal.CsvDataResolver;
 import org.beangle.security.blueprint.model.RoleBean;
 import org.testng.annotations.BeforeClass;
@@ -18,11 +18,11 @@ import org.testng.annotations.Test;
 @Test
 public class CsvDataResolverTest {
   CsvDataResolver resolver = new CsvDataResolver();
-  PropertyMetaBean field = null;
+  DataFieldBean field = null;
 
   @BeforeClass
   public void setUp() {
-    field = new PropertyMetaBean(1L, "role", RoleBean.class.getName(), "oql:from Role");
+    field = new DataFieldBean(1L, "role", RoleBean.class.getName(), "oql:from Role");
     field.setKeyName("id");
     field.setPropertyNames("name");
   }

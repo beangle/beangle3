@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.entity.pojo.LongIdObject;
-import org.beangle.security.blueprint.data.PropertyMeta;
+import org.beangle.security.blueprint.data.DataField;
 import org.beangle.security.blueprint.data.UserProfile;
 import org.beangle.security.blueprint.data.UserProperty;
 import org.hibernate.annotations.Cache;
@@ -36,7 +36,7 @@ public class UserPropertyBean extends LongIdObject implements UserProperty {
   /** 属性元 */
   @NotNull
   @ManyToOne(fetch = FetchType.LAZY)
-  private PropertyMeta meta;
+  private DataField field;
 
   /** 用户属性配置 */
   @NotNull
@@ -47,10 +47,10 @@ public class UserPropertyBean extends LongIdObject implements UserProperty {
     super();
   }
 
-  public UserPropertyBean(UserProfileBean profile, PropertyMeta meta, String value) {
+  public UserPropertyBean(UserProfileBean profile, DataField field, String value) {
     super();
     this.profile = profile;
-    this.meta = meta;
+    this.field = field;
     this.value = value;
   }
 
@@ -62,12 +62,12 @@ public class UserPropertyBean extends LongIdObject implements UserProperty {
     this.value = value;
   }
 
-  public PropertyMeta getMeta() {
-    return meta;
+  public DataField getField() {
+    return field;
   }
 
-  public void setMeta(PropertyMeta meta) {
-    this.meta = meta;
+  public void setField(DataField field) {
+    this.field = field;
   }
 
   public UserProfile getProfile() {

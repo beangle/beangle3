@@ -135,10 +135,10 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
     actionConfig.methodName(action.getMethod());
     String actionName = action.getName();
     // check action exists on that package (from XML config probably)
-    PackageConfig existingPkg = configuration.getPackageConfig(pkgCfg.getName());
+    PackageConfig existedPkg = configuration.getPackageConfig(pkgCfg.getName());
     boolean create = true;
-    if (existingPkg != null) {
-      ActionConfig existed = existingPkg.getActionConfigs().get(actionName);
+    if (existedPkg != null) {
+      ActionConfig existed = existedPkg.getActionConfigs().get(actionName);
       create = (null == existed);
     }
     if (create) {

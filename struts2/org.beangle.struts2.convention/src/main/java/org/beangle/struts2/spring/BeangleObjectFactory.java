@@ -11,7 +11,6 @@ import javax.servlet.ServletContext;
 import org.apache.struts2.StrutsConstants;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.apache.struts2.views.freemarker.FreemarkerResult;
-import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.web.spring.ContextLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +28,7 @@ import com.opensymphony.xwork2.util.reflection.ReflectionExceptionHandler;
 /**
  * <pre>
  * 1 Specialize for freemarker result creation.
- * 2 Cached struts bean with innerFactory map
- * 3 Dropped spring autowire feature for without any bean needed(action?struts2?)
+ * 2 Dropped spring autowire feature for without any bean needed(action?struts2?)
  * </pre>
  * 
  * @author chaostone
@@ -45,11 +43,6 @@ public class BeangleObjectFactory extends ObjectFactory {
 
   @Inject
   private FreemarkerManager freemarkerManager;
-
-  /**
-   * Extra bean not managed by spring
-   */
-  private Map<String, Object> innerFactory = CollectUtils.newHashMap();
 
   /**
    * Constructs the spring object factory
@@ -89,10 +82,8 @@ public class BeangleObjectFactory extends ObjectFactory {
     Result result = null;
     if (resultClassName != null) {
       if (resultClassName.equals("org.apache.struts2.views.freemarker.FreemarkerResult")) {
-        result = new FreemarkerResult();
-        FreemarkerResult fresult = (FreemarkerResult) result;
-        fresult.setFreemarkerManager(freemarkerManager);
-        fresult.setLocation(resultConfig.getParams().get("location"));
+        result = new FreemarkerResult(resultConfig.getParams().get("location"));
+        ((FreemarkerResult) result).setFreemarkerManager(freemarkerManager);
       } else {
         result = (Result) buildBean(resultClassName, extraContext);
         Map<String, String> params = resultConfig.getParams();
@@ -117,8 +108,7 @@ public class BeangleObjectFactory extends ObjectFactory {
    * Looks up beans using Spring's application context before falling back to the method defined
    * in the {@link ObjectFactory}.
    * 
-   * @param beanName
-   *          The name of the bean to look up in the application context
+   * @param beanName The name of the bean to look up in the application context
    * @param extraContext
    * @return A bean from Spring or the result of calling the overridden
    *         method.
@@ -132,12 +122,9 @@ public class BeangleObjectFactory extends ObjectFactory {
       bean = appContext.getBean(beanName);
       if (injectInternal) injectInternalBeans(bean);
     } else {
-      bean = innerFactory.get(beanName);
-      if (null == bean) {
-        bean = buildBean(getClassInstance(beanName), extraContext);
-        if (null != bean) innerFactory.put(beanName, bean);
-      }
+      bean = buildBean(getClassInstance(beanName), extraContext);
     }
+
     return bean;
   }
 

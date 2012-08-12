@@ -131,7 +131,13 @@ public class Profile implements Comparable<Profile> {
     return new CompareToBuilder().append(other.actionPattern, this.actionPattern).toComparison();
   }
 
-  public String getSimpleName(String className) {
+  /**
+   * 取得类名称对应的全路经，仅仅把类名第一个字母小写。
+   * 
+   * @param className
+   * @return
+   */
+  public String getFullPath(String className) {
     String postfix = getActionSuffix();
     String simpleName = className.substring(className.lastIndexOf('.') + 1);
     if (Strings.contains(simpleName, postfix)) {
@@ -173,21 +179,20 @@ public class Profile implements Comparable<Profile> {
 
     MatchInfo match = getCtlMatchInfo(className);
     StringBuilder infix = new StringBuilder(match.getReserved().toString());
-    if (infix.length() > 0) {
-      infix.append('.');
-    }
+    if (infix.length() > 0) infix.append('.');
+
     String remainder = Strings.substringBeforeLast(className, ".").substring(match.getStartIndex() + 1);
     if (remainder.length() > 0) {
+      if ('.' == remainder.charAt(0)) remainder = remainder.substring(1);
       infix.append(remainder).append('.');
     }
+
     if (infix.length() == 0) return simpleName;
     infix.append(simpleName);
 
     // 将.替换成/
     for (int i = 0; i < infix.length(); i++) {
-      if (infix.charAt(i) == '.') {
-        infix.setCharAt(i, '/');
-      }
+      if (infix.charAt(i) == '.') infix.setCharAt(i, '/');
     }
     return infix.toString();
   }

@@ -118,7 +118,7 @@ public abstract class EntityActionSupport extends BaseAction {
    * @return
    */
   public String edit() {
-    Serializable entityId = getId(Model.getEntityType(getEntityName()).getIdClass(), getShortName());
+    Serializable entityId = getId(Model.getEntityType(getEntityName()).getIdType(), getShortName());
     Entity<?> entity = null;
     if (null == entityId) {
       entity = populateEntity();
@@ -136,7 +136,7 @@ public abstract class EntityActionSupport extends BaseAction {
    * @return
    */
   public String remove() throws Exception {
-    Class<? extends Serializable> idclass = Model.getEntityType(getEntityName()).getIdClass();
+    Class<? extends Serializable> idclass = Model.getEntityType(getEntityName()).getIdType();
     Serializable entityId = getId(idclass, getShortName());
     Collection<?> entities = null;
     if (null == entityId) {
@@ -180,7 +180,7 @@ public abstract class EntityActionSupport extends BaseAction {
   }
 
   protected Entity<?> populateEntity(String entityName, String shortName) {
-    Serializable entityId = getId(Model.getEntityType(getEntityName()).getIdClass(), shortName);
+    Serializable entityId = getId(Model.getEntityType(entityName).getIdType(), shortName);
     Entity<?> entity = null;
     if (null == entityId) {
       entity = (Entity<?>) populate(entityName, shortName);
@@ -208,7 +208,7 @@ public abstract class EntityActionSupport extends BaseAction {
 
   protected Entity<?> getEntity(String entityName, String name) {
     EntityType type = Model.getEntityType(entityName);
-    Serializable entityId = getId(type.getIdClass(), name);
+    Serializable entityId = getId(type.getIdType(), name);
     Entity<?> entity = null;
     try {
       if (null == entityId) {
@@ -239,7 +239,7 @@ public abstract class EntityActionSupport extends BaseAction {
    * @return
    */
   public String info() throws Exception {
-    Serializable entityId = getId(Model.getEntityType(getEntityName()).getIdClass(), getShortName());
+    Serializable entityId = getId(Model.getEntityType(getEntityName()).getIdType(), getShortName());
     if (null == entityId) {
       logger.warn("cannot get paremeter {}Id or {}.id", getShortName(), getShortName());
     }

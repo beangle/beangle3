@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.pojo.LongIdObject;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.data.PropertyMeta;
+import org.beangle.security.blueprint.data.DataField;
 import org.beangle.security.blueprint.data.UserProfile;
 import org.beangle.security.blueprint.data.UserProperty;
 
@@ -55,12 +55,12 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
     this.properties = properties;
   }
 
-  public UserProperty getProperty(PropertyMeta meta) {
+  public UserProperty getProperty(DataField meta) {
     if (null == properties || properties.isEmpty()) {
       return null;
     } else {
       for (UserProperty p : properties) {
-        if (p.getMeta().equals(meta)) return p;
+        if (p.getField().equals(meta)) return p;
       }
     }
     return null;
@@ -71,13 +71,13 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
       return null;
     } else {
       for (UserProperty p : properties) {
-        if (p.getMeta().getName().equals(name)) return p;
+        if (p.getField().getName().equals(name)) return p;
       }
     }
     return null;
   }
 
-  public void setProperty(PropertyMeta meta, String text) {
+  public void setProperty(DataField meta, String text) {
     UserProperty property = getProperty(meta);
     if (null == property) {
       property = new UserPropertyBean(this, meta, text);

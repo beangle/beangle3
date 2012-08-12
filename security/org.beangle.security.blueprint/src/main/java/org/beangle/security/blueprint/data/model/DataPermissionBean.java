@@ -30,13 +30,12 @@ import com.google.gson.GsonBuilder;
  * @author chaostone
  * @since 3.0.0
  */
-@Entity(name = "org.beangle.security.blueprint.data.model.DataPermissionBean")
+@Entity(name = "org.beangle.security.blueprint.data.DataPermission")
 public class DataPermissionBean extends LongIdObject implements TemporalActiveEntity, DataPermission {
 
   private static final long serialVersionUID = -8956079356245507990L;
 
   /** 角色 */
-  @NotNull
   @ManyToOne(fetch = FetchType.LAZY)
   protected Role role;
 

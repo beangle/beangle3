@@ -15,7 +15,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.bean.converters.Converter;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
-import org.beangle.security.blueprint.data.PropertyMeta;
+import org.beangle.security.blueprint.data.DataField;
 import org.beangle.security.blueprint.data.service.UserDataProvider;
 import org.beangle.security.blueprint.data.service.UserDataResolver;
 
@@ -28,7 +28,7 @@ import org.beangle.security.blueprint.data.service.UserDataResolver;
  */
 public class CsvDataResolver implements UserDataResolver, UserDataProvider {
 
-  public String marshal(PropertyMeta property, Collection<?> items) {
+  public String marshal(DataField property, Collection<?> items) {
     if (null == items) { return null; }
     List<String> properties = CollectUtils.newArrayList();
     if (null != property.getKeyName()) {
@@ -71,7 +71,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
   }
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> unmarshal(PropertyMeta property, String source) {
+  public <T> List<T> unmarshal(DataField property, String source) {
     if (Strings.isEmpty(source)) { return Collections.emptyList(); }
     List<String> properties = CollectUtils.newArrayList();
     if (null != property.getKeyName()) {
@@ -116,7 +116,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
     }
   }
 
-  public <T> List<T> getData(PropertyMeta property, String source) {
+  public <T> List<T> getData(DataField property, String source) {
     return unmarshal(property, source);
   }
 

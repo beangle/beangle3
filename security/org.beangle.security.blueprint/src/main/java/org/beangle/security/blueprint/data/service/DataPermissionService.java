@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.security.blueprint.data.DataPermission;
+import org.beangle.security.blueprint.data.Profile;
 import org.beangle.security.blueprint.data.UserProfile;
 
 /**
@@ -39,11 +40,11 @@ public interface DataPermissionService {
   /**
    * Get field enumerated values.
    * 
-   * @param propertyName
+   * @param fieldName
    * @param profile
    * @return
    */
-  Object getPropertyValue(String propertyName, UserProfile profile);
+  Object getPropertyValue(String fieldName, Profile profile);
 
   /**
    * 查找用户对应的数据配置

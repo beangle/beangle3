@@ -45,6 +45,7 @@ public class FuncPermissionBean extends LongIdObject implements TemporalActiveEn
   /** 授权的操作 */
   protected String actions;
 
+  @Size(max=200)
   /** 访问检查器 */
   protected String restrictions;
 

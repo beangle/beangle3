@@ -12,9 +12,9 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.impl.AbstractHierarchyService;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.util.HierarchyEntityUtils;
-import org.beangle.security.blueprint.Permission;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
+import org.beangle.security.blueprint.function.FuncPermission;
 import org.beangle.security.blueprint.nav.Menu;
 import org.beangle.security.blueprint.nav.MenuProfile;
 import org.beangle.security.blueprint.nav.model.MenuBean;
@@ -105,9 +105,7 @@ public class MenuServiceImpl extends AbstractHierarchyService<MenuBean, Menu> im
    */
   public List<Menu> getMenus(MenuProfile profile, Role role, Boolean enabled) {
     OqlBuilder<Menu> query = buildMenuQuery(profile, role).cacheable();
-    if (null != enabled) {
-      query.where("menu.enabled=:enabled", enabled);
-    }
+    if (null != enabled) query.where("menu.enabled=:enabled", enabled);
     List<Menu> menus = entityDao.search(query);
     return addParentMenus(CollectUtils.newHashSet(menus));
   }
@@ -115,11 +113,9 @@ public class MenuServiceImpl extends AbstractHierarchyService<MenuBean, Menu> im
   private OqlBuilder<Menu> buildMenuQuery(MenuProfile profile, Role role) {
     OqlBuilder<Menu> builder = OqlBuilder.from(Menu.class);
     builder.join("menu.resources", "mr");
-    builder.where("exists(from " + Permission.class.getName() + " a where a.role=:role and a.resource=mr)",
-        role);
-    if (null != profile) {
-      builder.where("menu.profile=:profile", profile);
-    }
+    builder.where("exists(from " + FuncPermission.class.getName()
+        + " a where a.role=:role and a.resource=mr)", role);
+    if (null != profile) builder.where("menu.profile=:profile", profile);
     return builder;
   }
 
@@ -127,14 +123,12 @@ public class MenuServiceImpl extends AbstractHierarchyService<MenuBean, Menu> im
   @Override
   protected List<MenuBean> getTopNodes(MenuBean menu) {
     List sibling = CollectUtils.newArrayList();
-    for (Menu m : menu.getProfile().getMenus()) {
+    for (Menu m : menu.getProfile().getMenus())
       if (null == m.getParent()) sibling.add(m);
-    }
     return sibling;
   }
 
   public void move(Menu menu, Menu location, int indexno) {
     this.move((MenuBean) menu, (MenuBean) location, indexno);
   }
-
 }

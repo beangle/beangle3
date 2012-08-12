@@ -18,7 +18,7 @@ public interface UserProfile extends Profile {
 
   public List<UserProperty> getProperties();
 
-  public UserProperty getProperty(PropertyMeta meta);
+  public UserProperty getProperty(DataField meta);
 
   public UserProperty getProperty(String name);
 

@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.pojo.LongIdObject;
 import org.beangle.security.blueprint.Role;
-import org.beangle.security.blueprint.data.PropertyMeta;
+import org.beangle.security.blueprint.data.DataField;
 import org.beangle.security.blueprint.data.RoleProfile;
 import org.beangle.security.blueprint.data.RoleProperty;
 
@@ -54,18 +54,18 @@ public class RoleProfileBean extends LongIdObject implements RoleProfile {
     this.properties = properties;
   }
 
-  public RoleProperty getProperty(PropertyMeta meta) {
+  public RoleProperty getProperty(DataField meta) {
     if (null == properties || properties.isEmpty()) {
       return null;
     } else {
       for (RoleProperty p : properties) {
-        if (p.getMeta().equals(meta)) return p;
+        if (p.getField().equals(meta)) return p;
       }
     }
     return null;
   }
 
-  public void setProperty(PropertyMeta meta, String text) {
+  public void setProperty(DataField meta, String text) {
     RoleProperty property = getProperty(meta);
     if (null == property) {
       property = new RolePropertyBean(this, meta, text);

@@ -8,7 +8,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
-import org.apache.commons.beanutils.MethodUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
 
@@ -34,14 +33,18 @@ public final class Reflections {
    * @param property a {@link java.lang.String} object.
    * @return a {@link java.lang.Class} object.
    */
-  public static Class<?> getProperty(Class<?> clazz, String property) {
-    Method getMethod = MethodUtils.getAccessibleMethod(clazz, "get" + Strings.capitalize(property),
-        (Class[]) null);
-    if (null == getMethod) {
-      return null;
-    } else {
-      return getMethod.getReturnType();
+  public static Class<?> getPropertyType(Class<?> clazz, String property) {
+    // MethodUtils.getAccessibleMethod(clazz, "get" + Strings.capitalize(property),(Class[]) null);
+    Method method = null;
+    try {
+      method = clazz.getMethod("get" + Strings.capitalize(property), (Class[]) null);
+    } catch (Exception e) {
     }
+    try {
+      if (null == method) method = clazz.getMethod("is" + Strings.capitalize(property), (Class[]) null);
+    } catch (Exception e) {
+    }
+    return null == method ? null : method.getReturnType();
   }
 
   public static List<Method> getBeanSetters(Class<?> clazz) {

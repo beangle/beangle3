@@ -10,15 +10,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.entity.pojo.LongIdObject;
-import org.beangle.security.blueprint.data.PropertyMeta;
+import org.beangle.security.blueprint.data.DataField;
 
 /**
  * 用户属性元信息
  * 
  * @author chaostone
  */
-@Entity(name = "org.beangle.security.blueprint.data.PropertyMeta")
-public class PropertyMetaBean extends LongIdObject implements PropertyMeta {
+@Entity(name = "org.beangle.security.blueprint.data.DataField")
+public class DataFieldBean extends LongIdObject implements DataField {
   private static final long serialVersionUID = 1L;
 
   /** 名称 */
@@ -55,15 +55,15 @@ public class PropertyMetaBean extends LongIdObject implements PropertyMeta {
   /** 是否必填项 */
   protected boolean required;
 
-  public PropertyMetaBean() {
+  public DataFieldBean() {
     super();
   }
 
-  public PropertyMetaBean(Long id) {
+  public DataFieldBean(Long id) {
     super(id);
   }
 
-  public PropertyMetaBean(Long id, String name, String type, String source) {
+  public DataFieldBean(Long id, String name, String type, String source) {
     super(id);
     this.name = name;
     this.valueType = type;

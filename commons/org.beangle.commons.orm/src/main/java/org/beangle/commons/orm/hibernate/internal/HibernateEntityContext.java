@@ -88,10 +88,8 @@ public class HibernateEntityContext extends AbstractEntityContext {
         logger.error("Cannot find ClassMetadata for {}", entityName);
         return null;
       }
-      entityType = new EntityType();
-      entityType.setEntityName(cm.getEntityName());
-      entityType.setIdPropertyName(cm.getIdentifierPropertyName());
-      entityType.setEntityClass(cm.getMappedClass(EntityMode.POJO));
+      entityType = new EntityType(cm.getEntityName(), cm.getMappedClass(EntityMode.POJO),
+          cm.getIdentifierPropertyName());
       entityTypes.put(cm.getEntityName(), entityType);
 
       Map<String, Type> propertyTypes = entityType.getPropertyTypes();

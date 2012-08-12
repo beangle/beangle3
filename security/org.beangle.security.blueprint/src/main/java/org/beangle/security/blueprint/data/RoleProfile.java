@@ -16,6 +16,6 @@ public interface RoleProfile extends Profile {
 
   public List<RoleProperty> getProperties();
 
-  public RoleProperty getProperty(PropertyMeta meta);
+  public RoleProperty getProperty(DataField meta);
 
 }

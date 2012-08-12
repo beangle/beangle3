@@ -7,10 +7,9 @@ package org.beangle.commons.entity.metadata;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.Entity;
-import org.beangle.commons.lang.Throwables;
+import org.beangle.commons.lang.Assert;
 import org.beangle.commons.reflect.Reflections;
 
 /**
@@ -35,23 +34,21 @@ public class EntityType extends AbstractType {
    * <p>
    * Constructor for EntityType.
    * </p>
-   */
-  public EntityType() {
-    super();
-  }
-
-  /**
-   * <p>
-   * Constructor for EntityType.
-   * </p>
    * 
    * @param entityName a {@link java.lang.String} object.
    * @param entityClass a {@link java.lang.Class} object.
    */
-  public EntityType(String entityName, Class<?> entityClass) {
+  public EntityType(String entityName, Class<?> entityClass, String idPropertyName) {
     super();
+    Assert.notNull(idPropertyName);
+    Assert.notNull(entityName);
+    Assert.notNull(entityClass);
+    
     this.entityName = entityName;
     this.entityClass = entityClass;
+    this.idPropertyName = idPropertyName;
+    Class<?> clazz = Reflections.getPropertyType(entityClass, idPropertyName);
+    if (null != clazz) propertyTypes.put(idPropertyName, new IdentifierType(clazz));
   }
 
   /**
@@ -62,9 +59,7 @@ public class EntityType extends AbstractType {
    * @param entityClass a {@link java.lang.Class} object.
    */
   public EntityType(Class<?> entityClass) {
-    super();
-    this.entityClass = entityClass;
-    this.entityName = entityClass.getName();
+    this(entityClass.getName(), entityClass, "id");
   }
 
   /**
@@ -139,7 +134,7 @@ public class EntityType extends AbstractType {
   public Type getPropertyType(String property) {
     Type type = (Type) propertyTypes.get(property);
     if (null == type) {
-      Class<?> propertyType = Reflections.getProperty(entityClass, property);
+      Class<?> propertyType = Reflections.getPropertyType(entityClass, property);
       if (null != propertyType) {
         if (Entity.class.isAssignableFrom(propertyType)) {
           type = new EntityType(propertyType);
@@ -219,12 +214,8 @@ public class EntityType extends AbstractType {
    * @return a {@link java.lang.Class} object.
    */
   @SuppressWarnings("unchecked")
-  public Class<? extends Serializable> getIdClass() {
-    if (null == this.idPropertyName) return null;
-    else try {
-      return (Class<? extends Serializable>) PropertyUtils.getPropertyType(entityClass, idPropertyName);
-    } catch (Exception e) {
-      throw Throwables.propagate(e);
-    }
+  public Class<? extends Serializable> getIdType() {
+    Type type = propertyTypes.get(idPropertyName);
+    return (Class<? extends Serializable>) (null != type ? type.getReturnedClass() : null);
   }
 }

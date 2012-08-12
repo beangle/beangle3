@@ -61,11 +61,11 @@ public class ConventionsTest {
   }
 
   @Test
-  public void testGetSimpleName() {
+  public void testGetFullPath() {
     Profile profile = new Profile();
     profile.setActionSuffix("Action");
     assertEquals("org/beangle/struts2/convention/example/action/anotherNested/third",
-        profile.getSimpleName(ThirdAction.class.getName()));
+        profile.getFullPath(ThirdAction.class.getName()));
 
   }
 }
