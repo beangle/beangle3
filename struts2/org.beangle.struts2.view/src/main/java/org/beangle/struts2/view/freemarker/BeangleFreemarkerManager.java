@@ -42,6 +42,22 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 
   private final Logger logger = LoggerFactory.getLogger(BeangleFreemarkerManager.class);
 
+  public BeangleFreemarkerManager() {
+    super();
+    selectSLF4jLogger();
+  }
+
+  /**
+   * Force freemarker user slf4j api
+   */
+  protected void selectSLF4jLogger() {
+    try {
+      freemarker.log.Logger.selectLoggerLibrary(freemarker.log.Logger.LIBRARY_SLF4J);
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
+
   @Override
   protected ObjectWrapper createObjectWrapper(ServletContext servletContext) {
     BeansWrapper wrapper = new BeangleObjectWrapper(altMapWrapper);
@@ -129,7 +145,7 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
       logger.error("Error while setting freemarker.properties", e);
     }
   }
-  
+
   public void addSetting(String name, String value) throws TemplateException {
     if (name.equals("content_type") || name.equals(INITPARAM_CONTENT_TYPE)) {
       contentType = value;
