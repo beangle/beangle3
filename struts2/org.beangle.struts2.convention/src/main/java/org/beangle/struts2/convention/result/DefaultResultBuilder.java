@@ -131,6 +131,7 @@ public class DefaultResultBuilder implements ResultBuilder {
         }
         return result;
       } else {
+        // 从结果中抽取路径和返回值
         path = substringAfter(resultCode, ":");
         resultCode = "success";
         return buildResult(resultCode, cfg, context, buildResultParams(path, cfg));

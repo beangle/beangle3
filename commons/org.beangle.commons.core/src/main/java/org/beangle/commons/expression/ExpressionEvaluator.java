@@ -14,28 +14,27 @@ import java.util.Map;
  * @since 2012-03-05
  */
 public interface ExpressionEvaluator {
+  /**
+   * <p>
+   * Eval a expression within context
+   * </p>
+   * 
+   * @param exp a java's expression
+   * @param context params.
+   * @return evaluate result
+   */
+  Object eval(String exp, Map<String, ?> context);
 
   /**
    * <p>
-   * eval.
+   * Eval a expression within context,Return the given type
    * </p>
    * 
-   * @param exp a {@link java.lang.String} object.
-   * @param context a {@link java.util.Map} object.
-   * @param resultType a {@link java.lang.Class} object.
-   * @param <T> a T object.
-   * @return a T object.
+   * @param exp a java's expression
+   * @param context params.
+   * @param resultType What type of the result
+   * @return evaluate result
    */
   <T> T eval(String exp, Map<String, ?> context, Class<T> resultType);
 
-  /**
-   * <p>
-   * eval.
-   * </p>
-   * 
-   * @param exp a {@link java.lang.String} object.
-   * @param context a {@link java.util.Map} object.
-   * @return a {@link java.lang.Object} object.
-   */
-  Object eval(String exp, Map<String, ?> context);
 }

@@ -22,7 +22,15 @@ public class OgnlExpressionEvaluator implements ExpressionEvaluator {
 
   private Map<String, Object> trees = new java.util.WeakHashMap<String, Object>();
 
-  /** {@inheritDoc} */
+  /**
+   * <p>
+   * Eval a expression within context
+   * </p>
+   * 
+   * @param exp a java's expression
+   * @param context params.
+   * @return evaluate result
+   */
   public Object eval(String exp, Map<String, ?> context) {
     try {
       Object tree = trees.get(exp);
