@@ -38,6 +38,8 @@ import org.beangle.security.web.AuthenticationEntryPoint;
 public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
 
   private CasConfig config;
+  /** 本地登录地址 */
+  private String localLogin;
 
   public CasEntryPoint() {
     super();
@@ -59,7 +61,21 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
     if (null != ae && (ae instanceof UsernameNotFoundException)) {
       response.getWriter().append(String.valueOf(ae.getAuthentication().getPrincipal()))
           .append(ae.getMessage());
+      return;
+    }
+    if (null != localLogin) {
+      // 防止在localLogin也不是公开资源的错误配置情况下，出现CasEntryPoint和CasServer之间的死循环
+      if (request.getServletPath().endsWith(localLogin)) {
+        response.sendRedirect(request.getContextPath() + localLogin);
+      } else {
+        final String encodedServiceUrl = constructLocalLoginServiceUrl(request, response, null,
+            CasConfig.getLocalServer(request), config.getArtifactName(), config.isEncode());
+        final String redirectUrl = constructRedirectUrl(config.getLoginUrl(), "service", encodedServiceUrl,
+            config.isRenew(), false);
+        response.sendRedirect(redirectUrl + "&isLoginService=11");
+      }
     } else {
+
       final String encodedServiceUrl = constructServiceUrl(request, response, null,
           CasConfig.getLocalServer(request), config.getArtifactName(), config.isEncode());
       final String redirectUrl = constructRedirectUrl(config.getLoginUrl(), "service", encodedServiceUrl,
@@ -69,22 +85,43 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
   }
 
   /**
+   * Construct local login Service Url
+   * 
+   * @param request
+   * @param response
+   * @param service
+   * @param serverName
+   * @param artifactParameterName
+   * @param encode
+   * @return
+   */
+  public String constructLocalLoginServiceUrl(final HttpServletRequest request,
+      final HttpServletResponse response, final String service, final String serverName,
+      final String artifactParameterName, final boolean encode) {
+    if (Strings.isNotBlank(service)) return encode ? response.encodeURL(service) : service;
+    final StringBuilder buffer = new StringBuilder();
+
+    if (!serverName.startsWith("https://") && !serverName.startsWith("http://")) {
+      buffer.append(request.isSecure() ? "https://" : "http://");
+    }
+    buffer.append(serverName);
+    buffer.append(request.getContextPath());
+    buffer.append(localLogin);
+    final String returnValue = encode ? response.encodeURL(buffer.toString()) : buffer.toString();
+    return returnValue;
+  }
+
+  /**
    * Constructs a service url from the HttpServletRequest or from the given
    * serviceUrl. Prefers the serviceUrl provided if both a serviceUrl and a
    * serviceName.
    * 
-   * @param request
-   *          the HttpServletRequest
-   * @param response
-   *          the HttpServletResponse
-   * @param service
-   *          the configured service url (this will be used if not null)
-   * @param serverName
-   *          the server name to use to constuct the service url if the service param is empty
-   * @param artifactParameterName
-   *          the artifact parameter name to remove (i.e. ticket)
-   * @param encode
-   *          whether to encode the url or not (i.e. Jsession).
+   * @param request the HttpServletRequest
+   * @param response the HttpServletResponse
+   * @param service the configured service url (this will be used if not null)
+   * @param serverName the server name to use to constuct the service url if service param is empty
+   * @param artifactParameterName the artifact parameter name to remove (i.e. ticket)
+   * @param encode whether to encode the url or not (i.e. Jsession).
    * @return the service url to use.
    */
   public static String constructServiceUrl(final HttpServletRequest request,
@@ -93,7 +130,6 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
     if (Strings.isNotBlank(service)) { return encode ? response.encodeURL(service) : service; }
 
     final StringBuilder buffer = new StringBuilder();
-
     if (!serverName.startsWith("https://") && !serverName.startsWith("http://")) {
       buffer.append(request.isSecure() ? "https://" : "http://");
     }
@@ -108,19 +144,13 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
         final String returnValue = encode ? response.encodeURL(buffer.toString()) : buffer.toString();
         return returnValue;
       }
-
       buffer.append("?");
-
       if (location == -1) {
         buffer.append(request.getQueryString());
       } else if (location > 0) {
         final int actualLocation = request.getQueryString().indexOf("&" + artifactParameterName + "=");
-
-        if (actualLocation == -1) {
-          buffer.append(request.getQueryString());
-        } else if (actualLocation > 0) {
-          buffer.append(request.getQueryString().substring(0, actualLocation));
-        }
+        if (actualLocation == -1) buffer.append(request.getQueryString());
+        else if (actualLocation > 0) buffer.append(request.getQueryString().substring(0, actualLocation));
       }
     }
 
@@ -156,4 +186,13 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
   public void setConfig(CasConfig config) {
     this.config = config;
   }
+
+  public String getLocalLogin() {
+    return localLogin;
+  }
+
+  public void setLocalLogin(String localLogin) {
+    this.localLogin = localLogin;
+  }
+
 }
