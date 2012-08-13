@@ -36,9 +36,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
    */
   public String classToTableName(String className) {
     String tableName = tableNamingStrategy.classToTableName(className);
-    if (tableName.length() > MaxLength) {
-      logger.error("{}'s length greate than 30, database(e.g oracle) will not be supported!", tableName);
-    }
+    if (tableName.length() > MaxLength) logger.warn("{}'s length greate than 30!", tableName);
     logger.debug("Mapping entity[{}] to {}", className, tableName);
     return tableName;
   }
@@ -56,9 +54,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 
   /** 对配置文件起好的列名,不进行处理 */
   public String columnName(String columnName) {
-    if (columnName.length() > MaxLength) {
-      logger.error("{}'s length greate than 30, database will not be supported!", columnName);
-    }
+    if (columnName.length() > MaxLength) logger.warn("{}'s length greate than 30!", columnName);
     return columnName;
   }
 
@@ -111,7 +107,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
   public String collectionTableName(String ownerEntity, String ownerEntityTable, String associatedEntity,
       String associatedEntityTable, String propertyName) {
     String ownerTable = null;
-    // just for annotation configuration,it;s ownerEntity is classname(not entityName), and
+    // Just for annotation configuration,it's ownerEntity is classname(not entityName), and
     // ownerEntityTable is class shortname
     if (Character.isUpperCase(ownerEntityTable.charAt(0))) {
       ownerTable = tableNamingStrategy.classToTableName(ownerEntity);
@@ -119,9 +115,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
       ownerTable = tableName(ownerEntityTable);
     }
     String tblName = tableNamingStrategy.collectionToTableName(ownerEntity, ownerTable, propertyName);
-    if (tblName.length() > MaxLength) {
-      logger.error("{}'s length greate than 30, database will not be supported!", tblName);
-    }
+    if (tblName.length() > MaxLength) logger.warn("{}'s length greate than 30!", tblName);
     return tblName;
   }
 

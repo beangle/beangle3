@@ -51,7 +51,10 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
 
   private Resources reconfigResources;
 
-  /** {@inheritDoc} */
+  /**
+   * Automate register and wire bean<br/>
+   * Reconfig beans
+   */
   public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry definitionRegistry)
       throws BeansException {
     logger.info("Auto register and wire beans starting...");

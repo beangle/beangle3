@@ -12,6 +12,11 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+/**
+ * Find actions from application context
+ * @author chaostone
+ *
+ */
 public class SpringActionFinder implements ActionFinder, ApplicationContextAware {
 
   ApplicationContext appContext;
