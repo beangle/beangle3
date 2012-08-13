@@ -1,3 +1,9 @@
+2011-08-13  duantihua  <duantihua@gmail.com>
+
+	* Use SimpleHash stored within request in FreemarkerTemplateEngin instead of build it. 
+	  It could avoid build hashmodel twice overhead and other bugs issued by multi IndexableIdGernerators.
+    * 
+    
 2011-06-11  duantihua  <duantihua@gmail.com>
 
 	* merge with beangle-struts2-legacy-2.4.0's templates and static resources

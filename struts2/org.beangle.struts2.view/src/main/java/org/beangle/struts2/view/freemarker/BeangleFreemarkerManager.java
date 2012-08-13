@@ -129,7 +129,7 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
       logger.error("Error while setting freemarker.properties", e);
     }
   }
-
+  
   public void addSetting(String name, String value) throws TemplateException {
     if (name.equals("content_type") || name.equals(INITPARAM_CONTENT_TYPE)) {
       contentType = value;

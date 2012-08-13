@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.dao.Operation;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.security.blueprint.Role;
@@ -80,19 +81,15 @@ public class FuncPermissionServiceImpl extends BaseServiceImpl implements FuncPe
     Set<FuncPermission> removed = CollectUtils.newHashSet();
     List<FuncPermission> permissions = getPermissions(role);
     for (final FuncPermission au : permissions) {
-      if (!resources.contains(au.getResource())) {
-        removed.add(au);
-      } else {
-        resources.remove(au.getResource());
-      }
+      if (!resources.contains(au.getResource())) removed.add(au);
+      else resources.remove(au.getResource());
     }
     permissions.removeAll(removed);
     for (FuncResource resource : resources) {
       FuncPermissionBean authority = new FuncPermissionBean(role, resource, null);
       permissions.add(authority);
     }
-    entityDao.remove(removed);
-    entityDao.saveOrUpdate(role);
+    entityDao.execute(Operation.remove(removed).saveOrUpdate(permissions).saveOrUpdate(role));
     publish(new RoleAuthorityEvent(role));
   }
 

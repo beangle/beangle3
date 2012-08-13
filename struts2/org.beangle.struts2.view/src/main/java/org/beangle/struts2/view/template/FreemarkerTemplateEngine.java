@@ -28,12 +28,23 @@ import freemarker.template.Configuration;
 import freemarker.template.SimpleHash;
 import freemarker.template.Template;
 
+/**
+ * Freemarker Template Engin
+ * <ul>
+ * <li>Cache freemaker envionment in context</li>
+ * <li>User hashmodel store in request</li>
+ * <li>Load hierarchical templates</li>
+ * <li>Disabled freemarker localized lookup in template loading</li>
+ * </ul>
+ * 
+ * @author chaostone
+ */
 public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
   private static final Logger logger = LoggerFactory.getLogger(FreemarkerTemplateEngine.class);
+  private static final String UI_ENV_CACHE = ".ui.envs";
+  
   protected FreemarkerManager freemarkerManager;
   protected Configuration config;
-  private static final String UI_ENV_CACHE = ".ui.envs";
-  private static final String TEMPLATE_MODEL = ".beangle.TemplateModel";
 
   public void render(String template, ValueStack stack, Writer writer, Component component) throws Exception {
     SimpleHash model = buildModel(stack, component);
@@ -41,9 +52,7 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
     model.put("tag", component);
     Environment env = getEnvironment(template, stack, model, writer);
     env.process();
-    if (null != prevTag) {
-      model.put("tag", prevTag);
-    }
+    if (null != prevTag) model.put("tag", prevTag);
   }
 
   @Inject
@@ -56,6 +65,13 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
     }
   }
 
+  /**
+   * Load template in hierarchical path
+   * 
+   * @param templateName
+   * @return
+   * @throws Exception
+   */
   private Template loadTemplate(String templateName) throws Exception {
     Template template = null;
     String curTemplate = templateName;
@@ -76,6 +92,9 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
     return template;
   }
 
+  /**
+   * Generator Envionment from template or Get it from stack.context
+   */
   @SuppressWarnings("unchecked")
   private Environment getEnvironment(String templateName, ValueStack stack, SimpleHash model, Writer writer)
       throws Exception {
@@ -109,12 +128,12 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
     Map<?, ?> context = stack.getContext();
     HttpServletRequest req = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);
     // build hash
-    SimpleHash model = (SimpleHash) req.getAttribute(TEMPLATE_MODEL);
+    SimpleHash model = (SimpleHash) req.getAttribute(FreemarkerManager.ATTR_TEMPLATE_MODEL);
     if (null == model) {
       model = freemarkerManager.buildTemplateModel(stack, null,
           (ServletContext) context.get(ServletActionContext.SERVLET_CONTEXT), req,
           (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE), config.getObjectWrapper());
-      req.setAttribute(TEMPLATE_MODEL, model);
+      req.setAttribute(FreemarkerManager.ATTR_TEMPLATE_MODEL, model);
     }
     return model;
   }

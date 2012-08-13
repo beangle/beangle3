@@ -35,8 +35,8 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
     super(stack, req, res);
     theme.setUi(getUitheme());
     theme.setUibase(req.getContextPath());
-    this.stack.getContext().put(Theme.THEME, theme);
-    this.stack.getContext().put(UIIdGenerator.GENERATOR,
+    stack.getContext().put(Theme.THEME, theme);
+    stack.getContext().put(UIIdGenerator.GENERATOR,
         new IndexableIdGenerator(Math.abs(req.getRequestURI().hashCode())));
   }
 

@@ -26,7 +26,7 @@ public abstract class AbstractTextBean extends UIBean {
 
   @Override
   protected void evaluateParams() {
-    if (null == this.id) generateIdIfEmpty();
+    generateIdIfEmpty();
 
     if (null != label) label = getText(label);
     else label = getText(name);
