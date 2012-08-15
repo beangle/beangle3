@@ -23,12 +23,16 @@ public class PropertyConfigBean implements PropertyConfig {
 
   private List<PropertyConfigListener> listeners = CollectUtils.newArrayList();
 
-  /** {@inheritDoc} */
+  /**
+   * Get value according to name
+   */
   public Object get(String name) {
     return (Object) properties.get(name);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * Insert or Update name's value
+   */
   public void set(String name, Object value) {
     properties.put(name, value);
   }
