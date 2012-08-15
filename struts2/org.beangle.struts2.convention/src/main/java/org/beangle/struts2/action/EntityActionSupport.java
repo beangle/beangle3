@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
+import org.beangle.commons.context.property.PropertyConfig;
+import org.beangle.commons.context.property.PropertyConfigFactory;
 import org.beangle.commons.dao.EntityDao;
 import org.beangle.commons.dao.query.QueryBuilder;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
@@ -48,10 +50,17 @@ import org.beangle.struts2.helper.Params;
 
 public abstract class EntityActionSupport extends BaseAction {
   protected EntityDao entityDao;
+
   protected SystemVersion systemVersion;
 
-  public SystemVersion getSystemVersion() {
+  protected PropertyConfigFactory configFactory;
+
+  protected SystemVersion getSystemVersion() {
     return systemVersion;
+  }
+
+  protected PropertyConfig getSystemConfig() {
+    return null != configFactory ? configFactory.getConfig() : null;
   }
 
   public void setSystemVersion(SystemVersion systemVersion) {
@@ -498,4 +507,9 @@ public abstract class EntityActionSupport extends BaseAction {
   protected List<? extends TransferListener> getImporterListeners() {
     return Collections.singletonList(new ImporterForeignerListener(entityDao));
   }
+
+  public void setConfigFactory(PropertyConfigFactory configFactory) {
+    this.configFactory = configFactory;
+  }
+
 }
