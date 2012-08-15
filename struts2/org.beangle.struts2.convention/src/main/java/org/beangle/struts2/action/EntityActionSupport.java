@@ -59,7 +59,7 @@ public abstract class EntityActionSupport extends BaseAction {
     return systemVersion;
   }
 
-  protected PropertyConfig getSystemConfig() {
+  protected PropertyConfig getConfig() {
     return null != configFactory ? configFactory.getConfig() : null;
   }
 

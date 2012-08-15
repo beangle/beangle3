@@ -836,7 +836,7 @@
 			var base=bg.getContextPath();
 			if(uimodule=="validity"){
 				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/jquery.validity.css",base);
-				jQuery.struts2_jquery.require("/static/scripts/jquery.validity-1.1.1.js",null,base);
+				jQuery.struts2_jquery.require("/static/scripts/jquery/jquery.validity-1.1.1.js",null,base);
 				if(jQuery.struts2_jquery.scriptCache["/static/scripts/i18n/zh_CN/jquery.validity.js"] && callback){
 					callback()
 				}else{
@@ -847,8 +847,12 @@
 				jQuery.struts2_jquery.require("/static/scripts/beangle/beangle-ui-tabletree.js",callback,base);
 			}else if(uimodule=="colorbox"){
 				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/colorbox.css",base);
-				jQuery.struts2_jquery.require("/static/scripts/colorbox/jquery-colorbox-1.3.17.1.min.js",callback,base);
-			}
+				jQuery.struts2_jquery.require("/static/scripts/jquery/jquery-colorbox-1.3.17.1.min.js",callback,base);
+			}else if(uimodule=="jquery.pstrength"){
+				jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/jquery-pstrength.css",base);
+				jQuery.struts2_jquery.require("/static/scripts/jquery/jquery-pstrength.2.1.js",callback,base);
+				jQuery.struts2_jquery.require("/static/scripts/i18n/zh_CN/jquery-pstrength.js",callback,base);
+			}			
 		}
 	});
 })(beangle)

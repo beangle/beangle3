@@ -37,7 +37,7 @@ public final class Settings {
 
     Integer maxLength = config.get(Integer.class, MaxPasswordLength);
     if (null != maxLength && maxLength > 0) maxPwdLength = maxLength.intValue();
-    else maxPwdLength = 60;
+    else maxPwdLength = 30;
 
     Integer minStrength = config.get(Integer.class, MinPasswordStrength);
     if (null != minStrength && minStrength > 0) minPwdStrength = minStrength.intValue();

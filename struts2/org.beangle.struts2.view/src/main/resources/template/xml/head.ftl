@@ -12,7 +12,6 @@
 	<meta http-equiv="content-style-type" content="text/css"/>
 	<meta http-equiv="content-script-type" content="text/javascript"/>
 	[@beangle_js_head compressed=(Parameters['devMode']?exists)?string("false","true") /]
-	<script type="text/javascript" src="${base}/static/scripts/my97/WdatePicker-4.72.js"></script>
 ${tag.body}
 </head>
 <body>
@@ -23,20 +22,23 @@ ${tag.body}
 	<script type="text/javascript" src="${base}/struts/js/base/jquery-1.7.2.js"></script>
 	<script type="text/javascript" src="${base}/struts/js/base/jquery.ui.core.js"></script>
 	<script type="text/javascript" src="${base}/struts/js/plugins/jquery.subscribe.js"></script>
-	<script type="text/javascript" src="${base}/struts/js/struts2/jquery.struts2-3.3.1.js"></script>
-	<script type="text/javascript">jQuery(document).ready(function () {jQuery.struts2_jquery.version="3.3.1";jQuery.scriptPath = "${base}/struts/";jQuery.struts2_jquery.minSuffix = "";jQuery.ajaxSettings.traditional = true;jQuery.ajaxSetup ({cache: false});jQuery.struts2_jquery.require("js/struts2/jquery.ui.struts2-3.3.1.js");});</script>
+	<script type="text/javascript" src="${base}/struts/js/struts2/jquery.struts2-3.3.1.js,jquery.ui.struts2-3.3.1.js"></script>
+	<script type="text/javascript">jQuery(document).ready(function () {jQuery.struts2_jquery.version="3.3.1";jQuery.scriptPath = "${base}/struts/";jQuery.struts2_jquery.minSuffix = "";jQuery.ajaxSettings.traditional = true;jQuery.ajaxSetup ({cache: false});});</script>
 	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-3.0.0.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui-3.0.0.js"></script>
-	<script type="text/javascript" src="${base}/static/scripts/colorbox/jquery-colorbox-1.3.17.1.js"></script>
+	<script type="text/javascript" src="${base}/static/scripts/jquery/jquery-colorbox-1.3.17.1.js"></script>
+    <script type="text/javascript" src="${base}/static/scripts/my97/WdatePicker-4.72.js"></script>
 	<link id="jquery_theme_link" rel="stylesheet" href="${base}/struts/themes/smoothness/jquery-ui.css?s2j=3.3.1" type="text/css"/>
 	<link id="beangle_theme_link" href="${base}/static/themes/${b.theme.ui}/beangle-ui.css" rel="stylesheet" type="text/css" />
 	<link href="${base}/static/themes/${b.theme.ui}/colorbox.css" rel="stylesheet" type="text/css" />
 [#else]
 	<script type="text/javascript" src="${base}/struts/js/base/jquery-1.7.2.min.js,jquery.ui.core.min.js"></script>
-	<script type="text/javascript" src="${base}/struts/js/plugins/jquery.subscribe.min.js,/js/struts2/jquery.struts2-3.3.1.min.js"></script>
+	<script type="text/javascript" src="${base}/struts/js/plugins/jquery.subscribe.min.js"></script>
+	<script type="text/javascript" src="${base}/struts/js/struts2/jquery.struts2-3.3.1.min.js,jquery.ui.struts2-3.3.1.min.js"></script>
 	<script type="text/javascript" src="${base}/static/scripts/beangle/beangle-3.0.0.min.js,beangle-ui-3.0.0.min.js"></script>
-	<script type="text/javascript" src="${base}/static/scripts/colorbox/jquery-colorbox-1.3.17.1.min.js"></script>
-	<script type="text/javascript">jQuery(document).ready(function () {jQuery.struts2_jquery.version="3.3.1";jQuery.scriptPath = "${base}/struts/";jQuery.ajaxSettings.traditional = true;jQuery.ajaxSetup ({cache: false});jQuery.struts2_jquery.require("js/struts2/jquery.ui.struts2-3.3.1.min.js");});</script>
+	<script type="text/javascript" src="${base}/static/scripts/jquery/jquery-colorbox-1.3.17.1.min.js"></script>
+	<script type="text/javascript">jQuery(document).ready(function () {jQuery.struts2_jquery.version="3.3.1";jQuery.scriptPath = "${base}/struts/";jQuery.ajaxSettings.traditional = true;jQuery.ajaxSetup ({cache: false});});</script>
+	<script type="text/javascript" src="${base}/static/scripts/my97/WdatePicker-4.72.js"></script>
 	<link id="jquery_theme_link" rel="stylesheet" href="${base}/struts/themes/smoothness/jquery-ui.css" type="text/css"/>
 	<link id="beangle_theme_link" rel="stylesheet" href="${base}/static/themes/${b.theme.ui}/beangle-ui.css,colorbox.css" type="text/css"/>
 [/#if]

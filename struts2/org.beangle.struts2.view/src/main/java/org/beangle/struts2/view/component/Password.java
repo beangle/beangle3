@@ -12,9 +12,30 @@ import com.opensymphony.xwork2.util.ValueStack;
  */
 public class Password extends AbstractTextBean {
 
+  protected String minlength;
+
+  protected String showStrength = "true";
+
   public Password(ValueStack stack) {
     super(stack);
+    minlength = "6";
     maxlength = "10";
+  }
+
+  public String getMinlength() {
+    return minlength;
+  }
+
+  public void setMinlength(String minlength) {
+    this.minlength = minlength;
+  }
+
+  public String getShowStrength() {
+    return showStrength;
+  }
+
+  public void setShowStrength(String showStrength) {
+    this.showStrength = showStrength;
   }
 
 }
