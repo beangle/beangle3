@@ -107,11 +107,6 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
     encoding = val;
   }
 
-  /*
-   * (non-Javadoc)
-   * @see
-   * org.apache.struts2.dispatcher.StaticResourceLoader#setHostConfig(javax.servlet.FilterConfig)
-   */
   public void setHostConfig(HostConfig filterConfig) {
     String param = filterConfig.getInitParameter("packages");
     String packages = getAdditionalPackages();
@@ -148,12 +143,7 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
     return pathPrefixes.toArray(new String[pathPrefixes.size()]);
   }
 
-  /*
-   * (non-Javadoc)
-   * @see org.apache.struts2.dispatcher.StaticResourceLoader#findStaticResource(java.lang.String,
-   * javax.servlet.http.HttpServletRequest,
-   * javax.servlet.http.HttpServletResponse)
-   */
+  
   public void findStaticResource(String path, HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     Calendar cal = Calendar.getInstance();
