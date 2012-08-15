@@ -28,28 +28,26 @@
 		this.id=divId;
 		this.separator="&nbsp;";
 		this.bar.className="toolbar notprint";
-		var defaultToolBarImageName="info.png", defaultItemImageName="action.png", helpImageName="help.png",
-			imageRoot=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/"+ bg.uitheme +"/icons/",
+		var imageRoot=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/"+ bg.uitheme +"/icons/",
 			imagePath=imageRoot + "16x16/actions/";
 		
 		this.setTitle=function(newTitle,imageName){
 			if(!newTitle) return;
-			if(imageName==null)imageName=defaultToolBarImageName;
-			this.title_div.innerHTML='<img class="toolbar-icon" src="'+getImagePath(imagePath,imageName)+'" /><strong>'+newTitle+"</strong>";
+			if(imageName==null)imageName="action-info";
+			this.title_div.innerHTML=genIconElement(null,imageName) + '<strong>'+newTitle+"</strong>";
 		}
 		this.setSeparator=function(separator){
 			this.separator=separator;
 		}
 		/**
 		 * 设置抬头
-		 * 
 		 */
 		this.init = function (title,imageName){
 			var title_div = document.createElement('div'), msg_div, items_div;
 			title_div.className="toolbar-title";
 			this.bar.appendChild(title_div);
 			this.title_div=title_div;
-			this.setTitle(title);
+			this.setTitle(title,imageName);
 			msg_div = document.createElement('div');
 			msg_div.className="toolbar-msg";
 			msg_div.id=this.id+"_msg";
@@ -66,36 +64,37 @@
 			hrdiv=this.appendDiv(null,"toolbar-line");
 			hrdiv.innerHTML='<img height="1" width="100%" align="top" src="' + imagePath + 'keyline.png" />';
 		}
-		function getImagePath(path,imageName){
-			if(imageName.charAt(0)=='/'){
-				return imageName;
-			}else{
-				return path+imageName;
-			}
-		}
 		
-		function getDefaultImageName(action){
-			if(null==action) return defaultItemImageName;
-			if (typeof action == "object") {
-				action=action.name;
+		function genIconElement(action,cssClassOrIconPath){
+			var cssClass ="action-default";
+			if(null != cssClassOrIconPath){
+				if(cssClassOrIconPath.indexOf('.')>-1){
+					if(cssClassOrIconPath.charAt(0)!='/'){
+						cssClassOrIconPath=imagePath+cssClassOrIconPath;
+					}
+					return '<img class="toolbar-icon" src="'+cssClassOrIconPath+'"/>';
+				}
+				else cssClass=cssClassOrIconPath;
 			}
-			if(typeof action=="string"){
-				if(action.indexOf("add")==0 || action.indexOf("batchAdd")==0 ||action.indexOf("new")==0) return "new.png";
-				if(action.indexOf("remove")==0||action.indexOf("delete")==0) return "edit-delete.png";
-				if(action.indexOf("update")==0||action.indexOf("edit")==0||action.indexOf("batchEdit")==0) return "update.png";
-				if(action.indexOf("export")==0) return "excel.png";
-				if(action.indexOf("copy")==0) return "edit-copy.png";
-				if(action.indexOf("print")==0) return "print.png";
-				if(action.indexOf("refresh")==0) return "refresh.png";
-				if(action.indexOf("close")==0) return "close.png";
-				if(action.indexOf("save")==0) return "save.png";
-				if(action.indexOf("download")==0) return "download.png";
-				else return defaultItemImageName;
-			}else return defaultItemImageName;
+			if(null==cssClassOrIconPath && null != action){
+				if(typeof action == "object") action = action.name;
+				if(typeof action=="string"){
+					if(action.indexOf("add")==0 || action.indexOf("batchAdd")==0 ||action.indexOf("new")==0) cssClass= "action-new";
+					else if(action.indexOf("remove")==0||action.indexOf("delete")==0) cssClass="action-edit-delete";
+					else if(action.indexOf("update")==0||action.indexOf("edit")==0||action.indexOf("batchEdit")==0) cssClass= "action-update";
+					else if(action.indexOf("export")==0) cssClass="action-excel";
+					else if(action.indexOf("copy")==0) cssClass="action-edit-copy";
+					else if(action.indexOf("print")==0) cssClass= "action-print";
+					else if(action.indexOf("refresh")==0) cssClass="action-refresh";
+					else if(action.indexOf("close")==0) cssClass="action-close";
+					else if(action.indexOf("save")==0) cssClass= "action-save";
+					else if(action.indexOf("download")==0) cssClass="action-download";
+				}
+			}
+			return '<span class="toolbar-icon ' + cssClass + '" ></span>';
 		}
 		/**
 		 * 设置按钮的动作
-		 * 
 		 */
 		function setAction(item,action){
 			if(null==action){
@@ -124,15 +123,15 @@
 		
 		this.addBack = function (title){
 			if(null==title){
-				this.addItem("返回",function (){history.back(-1)},'backward.png');
+				this.addItem("返回",function (){history.back(-1)},'action-backward');
 			}else{
-				this.addItem(title,function (){history.back(-1)},'backward.png');
+				this.addItem(title,function (){history.back(-1)},'action-backward');
 			}
 		}
 		this.addHelp = function (module){
 			this.addItem("帮助",function (){
 				if(null==module) bg.alert("施工中..");
-				else window.open("help.action?helpId="+module);},'help-contents.png');
+				else window.open("help.action?helpId="+module);},'action-help-contents');
 		}
 
 		this.addPrint = function (msg){
@@ -144,31 +143,21 @@
 		}
 
 		this.addClose = function (msg){
-			if(''==msg|| null==msg){
-				msg="关闭";
-			}
-			this.addItem(msg,"window.close()",'close.png');
+			if(''==msg|| null==msg)	msg="关闭";
+			this.addItem(msg,"window.close()",'action-close');
 		}
 		/**
-		 * 添加菜单
-		 * 
+		 * 添加按钮
 		 */
 		this.addItem = function(title,action,imageName,alt){
 			this.addSeparatorAsNeed();
 			var item_div = document.createElement('div');
-			if(null==imageName){
-				imageName=getDefaultImageName(action);
-			}
-			if(alt==""||alt==null){
-				alt=title;
-			}
-			item_div.innerHTML='<img class="toolbar-icon" src="'+getImagePath(imagePath,imageName)+'" alt="' +alt+'" />'+title;
-
+			item_div.innerHTML=genIconElement(action,imageName)+title;
 			item_div.onmouseout=MouseOutItem;
 			item_div.onmouseover=MouseOverItem;
 			setAction(item_div,action);
 			item_div.className="toolbar-item";
-			item_div.title=alt;
+			item_div.title=(alt==null?title:alt);
 			this.items_div.appendChild(item_div);
 			this.itemCount++;
 			return item_div;
@@ -228,26 +217,23 @@
 		this.addMenu = function(title,action,imageName,alt){
 			this.addSeparatorAsNeed();
 			var item_div = document.createElement('div');
-			if(null==imageName){
-				imageName=getDefaultImageName(action);
-			}
-			alt=alt||title;
 			item_div.className="toolbar-item";
 			var menuTableId=this.id+this.itemCount+"_menu";
 			item_div.id=menuTableId;
 			item_div.tabIndex = 0;
+			item_div.title=alt||title;
 			item_div.onmouseout=MouseOutItem;
 			item_div.onmouseover=MouseOverItem;
 			this.items_div.appendChild(item_div);
 			if(action == null){
-				item_div.innerHTML='<img class="toolbar-icon" src="'+getImagePath(imagePath,imageName)+'" alt="' +alt+'" />'+title+ '&nbsp;<img src="'+imageRoot+'8x8/actions/downarrow.png" class="toolbar-icon" />';
+				item_div.innerHTML=genIconElement(null,imageName) + title + '&nbsp;'+ genIconElement(null,'action-downarrow');
 				item_div.onclick=function (event){displayMenu(event);};
 			}else{
 				var span1 = document.createElement("span");
-				span1.innerHTML = '<img class="toolbar-icon" src="'+getImagePath(imagePath,imageName)+'" alt="' +alt+'" />'+title;
+				span1.innerHTML=genIconElement(action,imageName)+title;
 				setAction(span1,action);
 				var span2 = document.createElement("span");
-				span2.innerHTML = '&nbsp;<img src="'+imageRoot+'8x8/actions/downarrow.png" class="toolbar-icon" />';
+				span2.innerHTML=genIconElement(action,"action-downarrow");
 				span2.onclick = function (event){displayMenu(event);};
 				item_div.appendChild(span1);
 				item_div.appendChild(span2);
@@ -309,23 +295,16 @@
 			 */
 			this.addItem = function (title,action,imageName,alt){
 				var itemTd = document.createElement('td');
-				if(null==imageName){
-					imageName=getDefaultImageName(action);
-				}
-				if(alt==""||alt==null){
-					alt=title;
-				}
-				itemTd.innerHTML='<img class="toolbar-icon" src="'+getImagePath(imagePath,imageName)+'" alt="' +alt+'" />'+title;
+				itemTd.innerHTML=genIconElement(action,imageName)+title;
 				itemTd.onmouseout=MouseOutMenuItem;
 				itemTd.onmouseover=MouseOverMenuItem;
+				itemTd.title=alt||title;
 				setAction(itemTd,action);
 				itemTd.className="toolbar-menuitem";
 				itemTd.width="100%";
 				var tr = document.createElement('tr');
 				tr.appendChild(itemTd);
-				if(this.table.tBodies.length==0){
-					this.table.appendChild(document.createElement("tbody"));
-				}
+				if(this.table.tBodies.length==0) this.table.appendChild(document.createElement("tbody"));
 				this.table.tBodies[0].appendChild(tr);
 			}
 		}
@@ -640,7 +619,7 @@
 							}
 							if(orderBy.indexOf(desc)!=-1){
 								cell.className="gridhead-desc"
-									cell.innerHTML=cell.innerHTML+'<img src="'+bg.getContextPath()+'/static/themes/' + bg.uitheme + '/icons/16x16/actions/sort-desc.png"  style="border:0"  alt="Arrow" />'
+									cell.innerHTML=cell.innerHTML+'<span class="gridhead-icon action-sort-desc"></span>'
 								continue;
 							}
 							asc = cell.id+" asc";
@@ -649,7 +628,7 @@
 							}
 							if(orderBy==asc){
 								cell.className="gridhead-asc"
-									cell.innerHTML=cell.innerHTML+'<img src="'+bg.getContextPath()+'/static/themes/' + bg.uitheme + '/icons/16x16/actions/sort-asc.png"  style="border:0"  alt="Arrow" />'
+									cell.innerHTML=cell.innerHTML+'<span class="gridhead-icon action-sort-asc"></span>'
 								continue;
 							}
 						}
