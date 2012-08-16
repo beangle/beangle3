@@ -14,7 +14,7 @@ public class Password extends AbstractTextBean {
 
   protected String minlength;
 
-  protected String showStrength = "true";
+  protected String showStrength = "false";
 
   public Password(ValueStack stack) {
     super(stack);

@@ -54,15 +54,15 @@ a:hover {color: red;}
 
 .gridbar-items{float:left;}
 
-.girdbar-pgbar{float:right;margin-top:2px;margin-right:5px;margin-bottom:0px;vertical-align:middle}
+.girdbar-pgbar{float:right;margin:1px 5px 0px 0px;vertical-align:middle;}
 
 .pgbar-label{background-color:#e9f2f8;}
 
-.pgbar-input{width:45px;height:12px;}
+.pgbar-input{vertical-align:middle;width:45px;height:16px;border-collapse: collapse;border:solid;border-width:1px;border-color:#006CB2;padding:0px;margin:0px 2px 0px 0px;}
 
-.pgbar-selbox{width:50px;height:20px;font-size: 0.8em;margin:0px;}
+.pgbar-selbox{vertical-align:middle;width:75px;height:21px;font-size: 0.8em;margin:0px 2px 0px 0px;}
 
-.pgbar-go{width:30px;height:20px;font-size: 0.8em;margin:0px;}
+.pgbar-go{vertical-align:middle;width:30px;height:18px;font-size: 0.8em;text-align:center;margin:0px;padding:0px 0px 2px 0px;border:solid;border-width:1px;border-color:#006CB2;}
 
 /*toolbar*/
 .toolbar{height:22px;border-collapse:separate;display:block;font-size: 13px;}

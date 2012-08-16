@@ -443,18 +443,7 @@
 		
 		var pagespan=document.createElement('span');
 		pagespan.style.display="none";
-		var pageInput=document.createElement('input');
-		pagespan.innerHTML=titles['no'];
-		pageInput.className="pgbar-input";
-		pagespan.appendChild(pageInput);
-
-		var pageInputJ=jQuery(pageInput)
-		pageInputJ.attr("value",onePage.pageNo+"/"+maxPageNo);
-		pageInputJ.attr("id",pageDiv.id+"_input");
-		pageInputJ.focus(function(){this.value=''});
-		pageInputJ.blur(function(){if(!this.value) this.value= onePage.pageNo+"/"+maxPageNo});
-		//pageInputJ.change(function(){onePage.goPage(this.value)});
-		
+		//add pagesize select
 		if(ranks && (ranks.length>0)){
 			var pageNoSelect=document.createElement('select');
 			pageNoSelect.id=pageDiv.id+"_select";
@@ -464,11 +453,23 @@
 			var selectIndex=0;
 			for(var i=0;i<ranks.length;i++){
 				if(ranks[i]==onePage.pageSize) selectIndex=i;
-				pageNoSelect.options.add(new Option(ranks[i], ranks[i]));
+				pageNoSelect.options.add(new Option(titles['size']+ranks[i], ranks[i]));
 			}
-			//jQuery(pageNoSelect).change(function (){onePage.goPage(1,this.value)});
 			pageNoSelect.selectedIndex = selectIndex;
 		}
+
+		//add pageno input
+		var pageInput=document.createElement('input');
+		pageInput.className="pgbar-input";
+		pagespan.appendChild(pageInput);
+
+		var pageInputJ=jQuery(pageInput)
+		pageInputJ.attr("value",onePage.pageNo+"/"+maxPageNo);
+		pageInputJ.attr("id",pageDiv.id+"_input");
+		pageInputJ.attr('title',(onePage.startNo +" - " + onePage.endNo + " of " + onePage.total));
+		pageInputJ.focus(function(){this.value=''});
+		pageInputJ.blur(function(){if(!this.value) this.value= onePage.pageNo+"/"+maxPageNo});
+		
 		//add go button
 		var submitBtn = document.createElement('input');
 		submitBtn.setAttribute("type",'button');
