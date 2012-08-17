@@ -69,6 +69,8 @@ a:hover {color: red;}
 
 .toolbar-icon{background-image: url(icons/16x16/actions.png);display:inline-block;vertical-align:bottom;margin-top:2px;margin-right:2px;border:0px}
 
+.toolbar-img {vertical-align:bottom;margin-top:2px;margin-right:2px;border:0px}
+
 .toolbar-separator{padding-left:0px;width:1px;float:left;}
 
 .toolbar-title{float:left;}
@@ -452,6 +454,7 @@ form.listform li.foot {
 .header{background-image:none} 
 .field{margin-top:2px;padding-top:2px} 
 
+.icon-action{background-image: url(icons/16x16/actions.png);display:inline-block;vertical-align:bottom;margin-top:2px;margin-right:2px;border:0px}
 .action-activate{ background-position: 0 0; width: 16px; height: 16px; } 
 .action-backward{ background-position: -66px 0; width: 16px; height: 16px; } 
 .action-close{ background-position: -132px 0; width: 16px; height: 16px; } 

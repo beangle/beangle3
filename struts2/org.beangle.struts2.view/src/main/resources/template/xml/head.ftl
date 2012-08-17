@@ -19,8 +19,7 @@ ${tag.body}
 
 [#macro beangle_js_head(compressed)]
 [#if compressed=="false"]
-	<script type="text/javascript" src="${base}/struts/js/base/jquery-1.7.2.js"></script>
-	<script type="text/javascript" src="${base}/struts/js/base/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="${base}/struts/js/base/jquery-1.7.2.js,jquery.ui.core.js"></script>
 	<script type="text/javascript" src="${base}/struts/js/plugins/jquery.subscribe.js"></script>
 	<script type="text/javascript" src="${base}/struts/js/struts2/jquery.struts2-3.3.1.js,jquery.ui.struts2-3.3.1.js"></script>
 	<script type="text/javascript">jQuery(document).ready(function () {jQuery.struts2_jquery.version="3.3.1";jQuery.scriptPath = "${base}/struts/";jQuery.struts2_jquery.minSuffix = "";jQuery.ajaxSettings.traditional = true;jQuery.ajaxSetup ({cache: false});});</script>

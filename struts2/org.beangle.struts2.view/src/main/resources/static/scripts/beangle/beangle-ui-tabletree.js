@@ -5,50 +5,39 @@
  |<table>														|
  |	<tr id="1">													|
  |	  <td>														|
- |	  <div class="tier1">										|
- |		  <a href="#" class="folder"onclick="toggleRows(this)"></a>|
+ |	  <div class="tree-tier1">									|
+ |		  <a href="#" class="tree-folder"onclick="toggleRows(this)"></a>|
  |		other html code..										|
  |		</div>													|
  |	  </td>														|
  |	</tr>														|
  |	<tr id="1.1">												|
  |	  <td>														|
- |	  <div class="tier2">										|
- |		  <a href="#" class="doc" onclick="toggleRows(this)"></a>|
+ |	  <div class="tree-tier2">									|
+ |		  <a href="#" class="tree-doc" onclick="toggleRows(this)"></a>|
  |		other html code..										|
  |		</div>													|
  |	  </td>														|
  |	</tr>														|
  |  </table>													|
  \-------------------------------------------------------------*/
-
 var treeIdComma=".";
 // for collapse or display child nodes.
-var treeImagePath=self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)+"/static/themes/" + bg.uitheme + "/icons/16x16/tree/";
-
 function toggleRows(elm) {
 	var fireColumn=getFireColumnIndex(elm);
 	var fireCell=getFireCell(elm);
 	var rows =fireCell.parentNode.parentNode.getElementsByTagName("TR");
-	elm.style.backgroundImage = "url("+treeImagePath+"plus.png)";
-	var newDisplay = "none";
 	var thisID = fireCell.parentNode.id + treeIdComma;
-	// Are we expanding or contracting? If the first child is hidden, we expand
-	for (var i = 0; i < rows.length; i++) {
-		var r = rows[i];
-		if (matchStart(r.id, thisID, true)) {
-			if (r.style.display == "none") {
-				if (document.all) newDisplay = "block"; //IE4+ specific code
-				else newDisplay = "table-row"; //Netscape and Mozilla
-				elm.style.backgroundImage = "url("+treeImagePath+"minus.png)";
-			}
-			break;
-		}
+	var newDisplay = "none";
+	if(elm.className=="tree-folder"){
+		if (document.all) newDisplay = "block"; //IE4+ specific code
+		else newDisplay = "table-row"; //Netscape and Mozilla
+		elm.className="tree-folder-open";
+	}else{
+		elm.className="tree-folder";
 	}
-
 	// When expanding, only expand one level.  Collapse all desendants.
 	var matchDirectChildrenOnly = (newDisplay != "none");
-
 	for (var j = 0; j < rows.length; j++) {
 		var s = rows[j];
 		if (matchStart(s.id, thisID, matchDirectChildrenOnly)) {
@@ -58,7 +47,7 @@ function toggleRows(elm) {
 			var folder = tier.getElementsByTagName("a")[0];
 
 			if (folder.getAttribute("onclick") != null) {
-				folder.style.backgroundImage = "url("+treeImagePath+"plus.png)";
+				folder.className="tree-folder";
 			}
 		}
 	}
@@ -98,14 +87,11 @@ function collapseAllRowsFor(depth) {
  var rows = document.getElementsByTagName("tr");
  for (var j = 0; j < rows.length; j++) {
    var r = rows[j];
-   if (countchar(r.id) >depth ) {
-	 r.style.display = "none";
-   }
+   if(countchar(r.id) >depth ) r.style.display = "none";
    if(countchar(r.id) >=depth ) {
 	 var rowFolder=document.getElementById(r.id+"_folder");
 	 if(rowFolder){
-	 	rowFolder.style.backgroundImage = "url("+treeImagePath+"plus.png)";
-	 	rowFolder.className="folder";
+	 	rowFolder.className="tree-folder";
 	 }
    }
  }
@@ -119,14 +105,11 @@ function displayAllRowsFor(depth) {
 	var rows = document.getElementsByTagName("tr");
 	for (var j = 0; j < rows.length; j++) {
 		var r = rows[j];
-		if (countchar(r.id) > depth) {
-			r.style.display = "";
-		}
+		if (countchar(r.id) > depth) r.style.display = "";
 		if (countchar(r.id) >= depth) {
 			var rowFolder=document.getElementById(r.id+"_folder");
 			if(rowFolder){
-	 			rowFolder.style.backgroundImage = "url("+treeImagePath+"minus.png)";
-	 			rowFolder.className="folder_open";
+	 			rowFolder.className="tree-folder-open";
 			}
 		}
 	}

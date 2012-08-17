@@ -72,7 +72,7 @@
 					if(cssClassOrIconPath.charAt(0)!='/'){
 						cssClassOrIconPath=imagePath+cssClassOrIconPath;
 					}
-					return '<img class="toolbar-icon" src="'+cssClassOrIconPath+'"/>';
+					return '<img class="toolbar-img" src="'+cssClassOrIconPath+'"/>';
 				}
 				else cssClass=cssClassOrIconPath;
 			}
@@ -439,6 +439,7 @@
 		numSpan.attr('title',titles['change'])
 		numSpan.mouseover(function (){this.className='pgbar-label'});
 		numSpan.mouseout(function(){this.className=''});
+		// 为了防止其他信息上下移动错误
 		numSpan.click(function(){this.parentNode.style.marginTop="0px";this.nextSibling.style.display='';this.style.display='none'});
 		
 		var pagespan=document.createElement('span');
