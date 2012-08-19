@@ -8,9 +8,9 @@
 	<constant name="struts.serve.static.browserCache" value="true"/>
 	<constant name="struts.i18n.encoding" value="UTF-8"/>
 	<!--默认i18n和配置文件不重复加载-->
-	<constant name="struts.i18n.reload" value="false"/>
+	<constant name="struts.i18n.reload" value="true"/>
 	<constant name="struts.configuration.xml.reload" value="false"/>
-	<constant name="struts.custom.i18n.resources" value="beangle,application"/>
+	<constant name="beangle.custom.i18n.resources" value="beangle,application"/>
 	<!-- max 50M -->
 	<constant name="struts.multipart.maxSize" value="52428800"/>
 	<constant name="struts.mapper.class" value="beangle"/>
@@ -40,8 +40,10 @@
 		</global-exception-mappings>
 	</package>
 	
-	<bean type="com.opensymphony.xwork2.UnknownHandler" class="org.beangle.struts2.convention.ConventionRouteHandler"/>
+	<bean type="org.beangle.commons.i18n.TextBundleRegistry" class="org.beangle.commons.i18n.impl.DefaultTextBundleRegistry"  scope="singleton"/>
+	<bean type="org.beangle.commons.i18n.TextFormater" class="org.beangle.commons.i18n.impl.DefaultTextFormater"  scope="singleton"/>
 	
+	<bean type="com.opensymphony.xwork2.UnknownHandler" class="org.beangle.struts2.convention.ConventionRouteHandler"/>
 	<!--mapper-->
 	<bean type="org.apache.struts2.dispatcher.mapper.ActionMapper" name="beangle" class="org.beangle.struts2.convention.mapper.ConventionActionMapper"/>
 	

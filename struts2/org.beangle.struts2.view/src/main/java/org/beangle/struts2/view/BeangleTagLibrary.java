@@ -4,10 +4,9 @@
  */
 package org.beangle.struts2.view;
 
-import static org.apache.struts2.util.TextProviderHelper.getText;
+import static org.beangle.struts2.util.TextResourceHelper.getText;
 
 import java.io.StringWriter;
-import java.util.Collections;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.Page;
 import org.beangle.struts2.view.component.*;
 import org.beangle.struts2.view.template.Theme;
@@ -102,15 +100,18 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
   }
 
   public String text(String name) {
-    return getText(name, name, Collections.emptyList(), stack, false);
+    long start = System.currentTimeMillis();
+    String msg= getText(name, name, stack);
+    System.out.println("I18n:" + name + "->" + msg + " use :" + (System.currentTimeMillis() - start));
+    return msg;
   }
 
   public String text(String name, Object arg0) {
-    return getText(name, name, Collections.singletonList(arg0), stack, false);
+    return getText(name, name,stack,arg0);
   }
 
   public String text(String name, Object arg0, Object arg1) {
-    return getText(name, name, CollectUtils.newArrayList(arg0, arg1), stack, false);
+    return getText(name, name, stack, arg0, arg1);
   }
 
   public TagModel getHead() {

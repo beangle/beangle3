@@ -6,7 +6,6 @@ package org.beangle.struts2.action;
 
 import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +19,6 @@ import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.metadata.Model;
-import org.beangle.commons.i18n.TextResource;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Chars;
 import org.beangle.commons.lang.Strings;
@@ -116,8 +114,7 @@ public abstract class BaseAction extends ActionSupport {
   protected String getTextInternal(String msgKey, Object... args) {
     if (null == msgKey) return null;
     if (Chars.isAsciiAlpha(msgKey.charAt(0)) && msgKey.indexOf('.') > 0) {
-      if (args.length > 0) return getText(msgKey, Arrays.asList(args));
-      else return getText(msgKey);
+      return getText(msgKey, msgKey, args);
     } else {
       return msgKey;
     }
@@ -195,10 +192,6 @@ public abstract class BaseAction extends ActionSupport {
     HttpServletRequest request = ServletActionContext.getRequest();
     if (null == request) return null;
     return RequestUtils.getIpAddr(request);
-  }
-
-  protected TextResource getTextResource() {
-    return new ActionTextResource(this, this);
   }
 
   protected void put(String key, Object value) {

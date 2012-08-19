@@ -307,7 +307,8 @@ public abstract class EntityActionSupport extends BaseAction {
   }
 
   protected String getEntityName() {
-    throw new RuntimeException(this.getClass() + " should override getEntityName");
+    return null;
+    //throw new RuntimeException(this.getClass() + " should override getEntityName");
   }
 
   protected String getShortName() {

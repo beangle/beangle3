@@ -8,8 +8,10 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
+import org.beangle.commons.i18n.impl.DefaultTextBundleRegistry;
+import org.beangle.commons.i18n.impl.DefaultTextFormater;
+import org.beangle.commons.i18n.impl.DefaultTextResource;
 import org.testng.annotations.Test;
 
 public class BundleTextResourceTest {
@@ -17,11 +19,14 @@ public class BundleTextResourceTest {
   @Test
   public void testGetText() {
     Locale locale = new Locale("zh", "CN");
-    ResourceBundle bundle = ResourceBundle.getBundle("message", locale);
+    DefaultTextBundleRegistry registry = new DefaultTextBundleRegistry();
+    TextBundle bundle = registry.load(locale, "message");
+    TextBundle bundle2 = registry.load(locale, "message2");
     assertNotNull(bundle);
-    BundleTextResource tr = new BundleTextResource();
-    tr.setLocale(locale);
-    tr.setBundle(bundle);
-    assertEquals(tr.getText("hello.world"), "nihao");
+    assertNotNull(bundle2);
+    assertEquals(bundle.getText("hello.world"), "你好");
+    DefaultTextResource tr = new DefaultTextResource(locale, registry, new DefaultTextFormater());
+    assertEquals(tr.getText("hello.world"), "你好");
+    assertEquals(tr.getText("china"), "中国");
   }
 }

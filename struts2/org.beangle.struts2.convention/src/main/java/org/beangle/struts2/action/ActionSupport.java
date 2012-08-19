@@ -8,12 +8,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
-import com.opensymphony.xwork2.*;
+import org.beangle.commons.i18n.TextBundleRegistry;
+import org.beangle.commons.i18n.TextFormater;
+import org.beangle.commons.i18n.TextResource;
+import org.beangle.struts2.util.ActionTextResource;
+
+import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.Validateable;
+import com.opensymphony.xwork2.ValidationAware;
+import com.opensymphony.xwork2.ValidationAwareSupport;
 import com.opensymphony.xwork2.inject.Container;
 import com.opensymphony.xwork2.inject.Inject;
-import com.opensymphony.xwork2.util.ValueStack;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
@@ -24,13 +31,13 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
  * <p>
  * Not a serializable class
  */
-public class ActionSupport implements Action, Validateable, ValidationAware, TextProvider, LocaleProvider {
+public class ActionSupport implements Action, Validateable, ValidationAware ,TextResource{
 
   protected static Logger logger = LoggerFactory.getLogger(ActionSupport.class);
 
   private final ValidationAwareSupport validationAware = new ValidationAwareSupport();
 
-  private transient TextProvider textProvider;
+  private transient TextResource textResource;
 
   private Container container;
 
@@ -72,52 +79,12 @@ public class ActionSupport implements Action, Validateable, ValidationAware, Tex
     return SUCCESS;
   }
 
-  public boolean hasKey(String key) {
-    return getTextProvider().hasKey(key);
-  }
-
   public String getText(String aTextName) {
-    return getTextProvider().getText(aTextName);
+    return getTextResource().getText(aTextName);
   }
 
-  public String getText(String aTextName, String defaultValue) {
-    return getTextProvider().getText(aTextName, defaultValue);
-  }
-
-  public String getText(String aTextName, String defaultValue, String obj) {
-    return getTextProvider().getText(aTextName, defaultValue, obj);
-  }
-
-  public String getText(String aTextName, List<?> args) {
-    return getTextProvider().getText(aTextName, args);
-  }
-
-  public String getText(String key, String[] args) {
-    return getTextProvider().getText(key, args);
-  }
-
-  public String getText(String aTextName, String defaultValue, List<?> args) {
-    return getTextProvider().getText(aTextName, defaultValue, args);
-  }
-
-  public String getText(String key, String defaultValue, String[] args) {
-    return getTextProvider().getText(key, defaultValue, args);
-  }
-
-  public String getText(String key, String defaultValue, List<?> args, ValueStack stack) {
-    return getTextProvider().getText(key, defaultValue, args, stack);
-  }
-
-  public String getText(String key, String defaultValue, String[] args, ValueStack stack) {
-    return getTextProvider().getText(key, defaultValue, args, stack);
-  }
-
-  public ResourceBundle getTexts() {
-    return getTextProvider().getTexts();
-  }
-
-  public ResourceBundle getTexts(String aBundleName) {
-    return getTextProvider().getTexts(aBundleName);
+  public String getText(String key, String defaultValue, Object... args) {
+    return getTextResource().getText(key, defaultValue, args);
   }
 
   public void addActionError(String anErrorMessage) {
@@ -221,25 +188,14 @@ public class ActionSupport implements Action, Validateable, ValidationAware, Tex
   public void pause(String result) {
   }
 
-  /**
-   * If called first time it will create {@link com.opensymphony.xwork2.TextProviderFactory},
-   * inject dependency
-   * (if {@link com.opensymphony.xwork2.inject.Container} is accesible) into
-   * in, then will create new {@link com.opensymphony.xwork2.TextProvider} and
-   * store it in a field for future references and at the returns reference to
-   * that field
-   * 
-   * @return reference to field with TextProvider
-   */
-  private TextProvider getTextProvider() {
-    if (textProvider == null) {
-      TextProviderFactory tpf = new TextProviderFactory();
-      if (container != null) {
-        container.inject(tpf);
-      }
-      textProvider = tpf.createInstance(getClass(), this);
+  protected TextResource getTextResource() {
+    if (textResource == null) {
+      TextFormater formater = container.getInstance(TextFormater.class);
+      TextBundleRegistry registry = container.getInstance(TextBundleRegistry.class);
+      textResource = new ActionTextResource(getClass(), getLocale(), registry, formater, ActionContext
+          .getContext().getValueStack());
     }
-    return textProvider;
+    return textResource;
   }
 
   @Inject

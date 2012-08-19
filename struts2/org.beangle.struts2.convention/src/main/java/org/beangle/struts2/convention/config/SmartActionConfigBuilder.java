@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.i18n.TextBundleRegistry;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
 import org.beangle.struts2.convention.config.ActionFinder.ActionTest;
@@ -66,6 +67,12 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
   protected ActionBuilder actionBuilder;
 
   @Inject
+  protected TextBundleRegistry registry;
+
+  @Inject("beangle.custom.i18n.resources")
+  protected String defaultBundleNames;
+
+  @Inject
   public SmartActionConfigBuilder(Configuration configuration, Container container,
       ObjectFactory objectFactory) throws Exception {
     this.configuration = configuration;
@@ -84,6 +91,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
   }
 
   public void buildActionConfigs() {
+    registry.addDefaults(Strings.split(defaultBundleNames));
     long start = System.currentTimeMillis();
     logger.info("Action scan starting....");
     for (Profile profile : actionBuilder.getProfileService().getProfiles()) {
@@ -281,6 +289,14 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 
   public void setProfileService(ProfileService profileService) {
     this.profileService = profileService;
+  }
+
+  public void setRegistry(TextBundleRegistry registry) {
+    this.registry = registry;
+  }
+
+  public void setDefaultBundleNames(String defaultBundleNames) {
+    this.defaultBundleNames = defaultBundleNames;
   }
 
 }

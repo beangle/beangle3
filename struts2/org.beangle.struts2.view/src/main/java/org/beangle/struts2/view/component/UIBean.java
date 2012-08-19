@@ -6,15 +6,14 @@ package org.beangle.struts2.view.component;
 
 import java.io.Writer;
 import java.text.MessageFormat;
-import java.util.Collections;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.util.TextProviderHelper;
 import org.beangle.commons.lang.Chars;
 import org.beangle.commons.lang.Strings;
+import org.beangle.struts2.util.TextResourceHelper;
 import org.beangle.struts2.view.UIIdGenerator;
 import org.beangle.struts2.view.template.TemplateEngine;
 import org.beangle.struts2.view.template.Theme;
@@ -113,10 +112,13 @@ public abstract class UIBean extends Component {
     if (-1 == text.indexOf('.') || -1 < text.indexOf(' ')) {
       return defaultText;
     } else {
-      return TextProviderHelper.getText(text, defaultText, Collections.emptyList(), stack, false);
+      long start = System.currentTimeMillis();
+      String msg = TextResourceHelper.getText(text, defaultText, stack);
+      System.out.println("I18n:" + text + "->" + msg + " use :" + (System.currentTimeMillis() - start));
+      return msg;
+
     }
   }
-
 
   protected String getRequestURI() {
     HttpServletRequest req = (HttpServletRequest) stack.getContext().get(ServletActionContext.HTTP_REQUEST);
