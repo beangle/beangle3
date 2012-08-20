@@ -47,6 +47,10 @@ public class DataResourceBean extends LongIdObject implements DataResource {
   @Size(max = 100)
   private String actions;
   
+  /** 能够访问哪些属性 */
+  @Size(max = 500)
+  protected String attrs;
+
   /** 模块是否可用 */
   @NotNull
   private boolean enabled = true;
@@ -103,6 +107,14 @@ public class DataResourceBean extends LongIdObject implements DataResource {
 
   public void setActions(String actions) {
     this.actions = actions;
+  }
+
+  public String getAttrs() {
+    return attrs;
+  }
+
+  public void setAttrs(String attrs) {
+    this.attrs = attrs;
   }
 
   public String toString() {

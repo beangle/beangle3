@@ -102,6 +102,10 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
       return null;
     } finally {
     }
+    System.out.println("=============" + bundleName);
+    for (Object key : properties.keySet()) {
+      System.out.println(key + "=" + properties.get(key));
+    }
     return new DefaultTextBundle(locale, resource, properties);
   }
 

@@ -1,4 +1,4 @@
-package org.beangle.struts2.util;
+package org.beangle.struts2.action;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -11,6 +11,8 @@ import org.beangle.commons.i18n.impl.DefaultTextResource;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.reflect.Reflections;
 
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.util.ValueStack;
 
 public class ActionTextResource extends DefaultTextResource {
@@ -24,7 +26,7 @@ public class ActionTextResource extends DefaultTextResource {
     this.actionClass = actionClass;
     this.valueStack = valueStack;
   }
-  
+
   /**
    * 1 remove index key
    * 2 change ModelDriven to EntitySupport
@@ -35,11 +37,28 @@ public class ActionTextResource extends DefaultTextResource {
     if (key == null) { return ""; }
     Set<String> checked = new HashSet<String>(5);
     // search up class hierarchy
-    String msg = getMessage(actionClass.getName(), locale, key, checked);
+    String msg = getMessage(actionClass.getName(), locale, key);
     if (msg != null) { return msg; }
     // nothing still? all right, search the package hierarchy now
-    msg= this.getPackageMessage(actionClass, key, checked);
+    msg = getPackageMessage(actionClass.getName(), key, checked);
     if (msg != null) { return msg; }
+
+    if (EntityActionSupport.class.isAssignableFrom(actionClass)) {
+      ActionContext context = ActionContext.getContext();
+      // search up model's class hierarchy
+      ActionInvocation actionInvocation = context.getActionInvocation();
+      // ActionInvocation may be null if we're being run from a Sitemesh filter
+      if (actionInvocation != null) {
+        Object action = actionInvocation.getAction();
+        if (action instanceof EntityActionSupport) {
+          String entityName = ((EntityActionSupport) action).getEntityName();
+          if (entityName != null) {
+            msg = getPackageMessage(entityName, key, checked);
+            if (msg != null) { return msg; }
+          }
+        }
+      }
+    }
 
     // see if it's a child property
     int idx = key.indexOf(".");
@@ -50,7 +69,7 @@ public class ActionTextResource extends DefaultTextResource {
         Class<?> aClass = obj.getClass();
         String newKey = key;
         while (null != aClass) {
-          msg = getPackageMessage(aClass, newKey, checked);
+          msg = getPackageMessage(aClass.getName(), newKey, checked);
           if (null == msg) {
             int nextIdx = newKey.indexOf(".", idx + 1);
             if (nextIdx == -1) break;
@@ -71,13 +90,15 @@ public class ActionTextResource extends DefaultTextResource {
     return registry.getDefaultText(key, locale);
   }
 
-  private String getPackageMessage(Class<?> aClass, String key, Set<String> checked) {
+  private String getPackageMessage(String className, String key, Set<String> checked) {
     String msg = null;
-    String basePackageName = aClass.getName();
-    while (basePackageName.lastIndexOf('.') != -1) {
-      basePackageName = basePackageName.substring(0, basePackageName.lastIndexOf('.'));
-      msg = getMessage(basePackageName + ".package", locale, key, checked);
+    String baseName = className;
+    while (baseName.lastIndexOf('.') != -1) {
+      baseName = baseName.substring(0, baseName.lastIndexOf('.'));
+      if (checked.contains(baseName)) { return null; }
+      msg = getMessage(baseName + ".package", locale, key);
       if (msg != null) { return msg; }
+      checked.add(baseName);
     }
     return null;
   }
@@ -85,8 +106,7 @@ public class ActionTextResource extends DefaultTextResource {
   /**
    * Gets the message from the named resource bundle.
    */
-  private String getMessage(String bundleName, Locale locale, String key, Set<String> checked) {
-    if (checked.contains(bundleName)) { return null; }
+  private String getMessage(String bundleName, Locale locale, String key) {
     TextBundle bundle = registry.load(locale, bundleName);
     return null == bundle ? null : bundle.getText(key);
   }

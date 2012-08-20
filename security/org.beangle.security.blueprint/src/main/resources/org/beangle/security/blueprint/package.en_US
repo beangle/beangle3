@@ -1,0 +1,30 @@
+entity.user=User
+entity.userCategory=category
+entity.menu=Menu
+entity.role=Role
+entity.restrictEntity=Restrict Entity
+
+user.name=login name
+user.fullname=full name
+user.password=password
+user.mail=Email
+user.remark=Remark
+user.enabled=Enabled
+user.effectiveAt=Effective At
+
+user.password=Password
+user.newPassword=New Password
+user.manage=User Management
+user.creator.fullname=Creator
+user.passwordExpiredAt=Password Expired At
+user.members=Roles
+menu.entry=Entry
+role=role
+role.managers=Managers
+role.users=Associated Users
+
+member.member=Member
+member.granter=Granter
+member.manager=Manager
+restriction.entities=Entities
+restrictPattern.content=Content
