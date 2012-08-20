@@ -100,14 +100,15 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
   }
 
   public String text(String name) {
-    long start = System.currentTimeMillis();
-    String msg= getText(name, name, stack);
-    System.out.println("I18n:" + name + "->" + msg + " use :" + (System.currentTimeMillis() - start));
+    // long start = System.currentTimeMillis();
+    String msg = getText(name, name, stack);
+    // System.out.println("I18n:" + name + "->" + msg + " use :" + (System.currentTimeMillis() -
+    // start));
     return msg;
   }
 
   public String text(String name, Object arg0) {
-    return getText(name, name,stack,arg0);
+    return getText(name, name, stack, arg0);
   }
 
   public String text(String name, Object arg0, Object arg1) {

@@ -14,8 +14,9 @@ import org.springframework.context.ApplicationContextAware;
 
 /**
  * Find actions from application context
+ * 
  * @author chaostone
- *
+ * @since 3.0.0
  */
 public class SpringActionFinder implements ActionFinder, ApplicationContextAware {
 
@@ -23,10 +24,12 @@ public class SpringActionFinder implements ActionFinder, ApplicationContextAware
 
   public Map<Class<?>, String> getActions(ActionTest actionTest) {
     Map<Class<?>, String> actions = CollectUtils.newHashMap();
-    for (String name : appContext.getBeanDefinitionNames()) {
-      Class<?> type = appContext.getType(name);
-      if (null != type && actionTest.evaluate(type.getName())) {
-        actions.put(type, name);
+    if (null != appContext) {
+      for (String name : appContext.getBeanDefinitionNames()) {
+        Class<?> type = appContext.getType(name);
+        if (null != type && actionTest.evaluate(type.getName())) {
+          actions.put(type, name);
+        }
       }
     }
     return actions;

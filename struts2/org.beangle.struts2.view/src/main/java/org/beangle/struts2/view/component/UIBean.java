@@ -112,9 +112,10 @@ public abstract class UIBean extends Component {
     if (-1 == text.indexOf('.') || -1 < text.indexOf(' ')) {
       return defaultText;
     } else {
-      long start = System.currentTimeMillis();
+      // long start = System.currentTimeMillis();
       String msg = TextResourceHelper.getText(text, defaultText, stack);
-      System.out.println("I18n:" + text + "->" + msg + " use :" + (System.currentTimeMillis() - start));
+      // System.out.println("I18n:" + text + "->" + msg + " use :" + (System.currentTimeMillis() -
+      // start));
       return msg;
 
     }

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.beangle.commons.i18n.impl.DefaultTextBundleRegistry;
 import org.beangle.struts2.convention.route.ActionBuilder;
 import org.beangle.struts2.convention.route.ProfileService;
 import org.beangle.struts2.convention.route.impl.DefaultActionBuilder;
@@ -57,6 +58,8 @@ public class SmartActionConfigBuilderTest {
 
     SmartActionConfigBuilder builder = new SmartActionConfigBuilder(configuration, mockContainer, of);
     builder.setActionBuilder(actionNameBuilder);
+    builder.setRegistry(new DefaultTextBundleRegistry());
+    
     builder.buildActionConfigs();
     Set<String> names = configuration.getPackageConfigNames();
     for (String a : names) {

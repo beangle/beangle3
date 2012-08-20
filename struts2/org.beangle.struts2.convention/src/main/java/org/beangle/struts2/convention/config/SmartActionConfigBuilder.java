@@ -55,6 +55,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
   private boolean devMode = false;
 
   private ReloadingClassLoader reloadingClassLoader;
+  
   private ActionFinder actionFinder;
 
   @Inject

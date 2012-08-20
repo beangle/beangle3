@@ -12,7 +12,6 @@ import java.util.Map;
 import org.beangle.commons.i18n.TextBundleRegistry;
 import org.beangle.commons.i18n.TextFormater;
 import org.beangle.commons.i18n.TextResource;
-import org.beangle.struts2.util.ActionTextResource;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
@@ -31,7 +30,7 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
  * <p>
  * Not a serializable class
  */
-public class ActionSupport implements Action, Validateable, ValidationAware ,TextResource{
+public class ActionSupport implements Action, Validateable, ValidationAware, TextResource {
 
   protected static Logger logger = LoggerFactory.getLogger(ActionSupport.class);
 
@@ -65,7 +64,7 @@ public class ActionSupport implements Action, Validateable, ValidationAware ,Tex
     return validationAware.getFieldErrors();
   }
 
-  public Locale getLocale() {
+  protected Locale getLocale() {
     ActionContext ctx = ActionContext.getContext();
     if (ctx != null) {
       return ctx.getLocale();
