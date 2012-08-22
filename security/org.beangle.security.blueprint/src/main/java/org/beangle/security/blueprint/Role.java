@@ -79,4 +79,6 @@ public interface Role extends LongIdTimeEntity, HierarchyEntity<Role, Long>, Com
    */
   int getDepth();
 
+  boolean isDynamic();
+
 }

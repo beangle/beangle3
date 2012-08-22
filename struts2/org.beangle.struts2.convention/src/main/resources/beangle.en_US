@@ -76,6 +76,8 @@ common.updatedAt=updated at
 common.yes=yes
 common.title=Title
 common.index=Index
+common.dashboard=Dashboard
+
 
 ui.searchForm=Search Form
 ui.editForm={0}'s Edit Form

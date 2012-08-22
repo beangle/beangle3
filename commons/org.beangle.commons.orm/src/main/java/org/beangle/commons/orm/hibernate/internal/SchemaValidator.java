@@ -76,7 +76,7 @@ public class SchemaValidator {
 
     Mapping mapping = config.buildMapping();
 
-    Iterator iter = config.getTableMappings();
+    Iterator<?> iter = config.getTableMappings();
     while (iter.hasNext()) {
       Table table = (Table) iter.next();
       if (table.isPhysicalTable()) {
@@ -103,7 +103,7 @@ public class SchemaValidator {
   }
 
   private void validateColumns(Table table, Dialect dialect, Mapping mapping, TableMetadata tableInfo) {
-    Iterator iter = table.getColumnIterator();
+    Iterator<?> iter = table.getColumnIterator();
     Set<ColumnMetadata> processed = CollectUtils.newHashSet();
     String tableName = Table.qualify(tableInfo.getCatalog(), tableInfo.getSchema(), tableInfo.getName());
     while (iter.hasNext()) {
@@ -125,6 +125,7 @@ public class SchemaValidator {
     // 检查多出的列
     try {
       Field field = tableInfo.getClass().getField("columns");
+      @SuppressWarnings("unchecked")
       Set<ColumnMetadata> allColumns = CollectUtils.newHashSet(((Map<String, ColumnMetadata>) field
           .get(tableInfo)).values());
       allColumns.removeAll(processed);
@@ -138,7 +139,7 @@ public class SchemaValidator {
     }
   }
 
-  @SuppressWarnings({ "unchecked" })
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   // borrow from Configuration code
   private Iterator<IdentifierGenerator> iterateGenerators(Configuration config, Dialect dialect)
       throws MappingException {

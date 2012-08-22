@@ -13,22 +13,22 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.entity.pojo.LongIdObject;
-import org.beangle.security.blueprint.data.DataField;
-import org.beangle.security.blueprint.data.DataResource;
 import org.beangle.security.blueprint.data.DataType;
+import org.beangle.security.blueprint.data.ProfileField;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
+ * 用户属性元信息
+ * 
  * @author chaostone
  * @since 3.0.0
  */
-@Entity(name = "org.beangle.security.blueprint.data.DataField")
+@Entity(name = "org.beangle.security.blueprint.data.ProfileField")
 @Cacheable
 @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class DataFieldBean extends LongIdObject implements DataField {
-
-  private static final long serialVersionUID = -8782866706523521386L;
+public class ProfileFieldBean extends LongIdObject implements ProfileField {
+  private static final long serialVersionUID = 1L;
 
   /** 名称 */
   @NotNull
@@ -46,10 +46,32 @@ public class DataFieldBean extends LongIdObject implements DataField {
   @ManyToOne(fetch = FetchType.LAZY)
   protected DataType type;
 
-  /** 数据资源 */
+  /** 数据提供描述 */
+  @Size(max = 200)
+  protected String source;
+
+  /** 能够提供多值 */
   @NotNull
-  @ManyToOne(fetch = FetchType.LAZY)
-  protected DataResource resource;
+  protected boolean multiple;
+
+  /** 是否必填项 */
+  protected boolean required;
+
+  public ProfileFieldBean() {
+    super();
+  }
+
+  public ProfileFieldBean(Long id) {
+    super(id);
+  }
+
+  public ProfileFieldBean(Long id, String name, DataType type, String source) {
+    super(id);
+    this.name = name;
+    this.type = type;
+    this.source = source;
+    this.multiple = true;
+  }
 
   public String getName() {
     return name;
@@ -67,20 +89,36 @@ public class DataFieldBean extends LongIdObject implements DataField {
     this.title = title;
   }
 
+  public String getSource() {
+    return source;
+  }
+
+  public void setSource(String source) {
+    this.source = source;
+  }
+
+  public boolean isMultiple() {
+    return multiple;
+  }
+
+  public void setMultiple(boolean multiple) {
+    this.multiple = multiple;
+  }
+
+  public boolean isRequired() {
+    return required;
+  }
+
+  public void setRequired(boolean required) {
+    this.required = required;
+  }
+
   public DataType getType() {
     return type;
   }
 
   public void setType(DataType type) {
     this.type = type;
-  }
-
-  public DataResource getResource() {
-    return resource;
-  }
-
-  public void setResource(DataResource resource) {
-    this.resource = resource;
   }
 
 }

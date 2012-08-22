@@ -4,14 +4,20 @@
  */
 package org.beangle.security.blueprint.data.model;
 
+import java.util.Set;
+
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.security.blueprint.data.DataField;
 import org.beangle.security.blueprint.data.DataResource;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -46,16 +52,15 @@ public class DataResourceBean extends LongIdObject implements DataResource {
   /** 允许的操作 */
   @Size(max = 100)
   private String actions;
-  
+
   /** 能够访问哪些属性 */
-  @Size(max = 500)
-  protected String attrs;
+  @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL, orphanRemoval = true)
+  protected Set<DataField> fields = CollectUtils.newHashSet();
 
   /** 模块是否可用 */
   @NotNull
   private boolean enabled = true;
 
-  
   public DataResourceBean() {
     super();
   }
@@ -109,12 +114,12 @@ public class DataResourceBean extends LongIdObject implements DataResource {
     this.actions = actions;
   }
 
-  public String getAttrs() {
-    return attrs;
+  public Set<DataField> getFields() {
+    return fields;
   }
 
-  public void setAttrs(String attrs) {
-    this.attrs = attrs;
+  public void setFields(Set<DataField> fields) {
+    this.fields = fields;
   }
 
   public String toString() {

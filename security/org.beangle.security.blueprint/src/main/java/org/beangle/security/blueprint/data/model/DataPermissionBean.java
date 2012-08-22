@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -21,6 +22,8 @@ import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.data.DataPermission;
 import org.beangle.security.blueprint.data.DataResource;
 import org.beangle.security.blueprint.function.FuncResource;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.google.gson.GsonBuilder;
 
@@ -31,6 +34,8 @@ import com.google.gson.GsonBuilder;
  * @since 3.0.0
  */
 @Entity(name = "org.beangle.security.blueprint.data.DataPermission")
+@Cacheable
+@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class DataPermissionBean extends LongIdObject implements TemporalActiveEntity, DataPermission {
 
   private static final long serialVersionUID = -8956079356245507990L;

@@ -95,7 +95,7 @@ public class ActionTextResource extends DefaultTextResource {
     String baseName = className;
     while (baseName.lastIndexOf('.') != -1) {
       baseName = baseName.substring(0, baseName.lastIndexOf('.'));
-      if (checked.contains(baseName)) { return null; }
+      if (checked.contains(baseName)) { continue; }
       msg = getMessage(baseName + ".package", locale, key);
       if (msg != null) { return msg; }
       checked.add(baseName);

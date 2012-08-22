@@ -9,7 +9,8 @@ import static org.testng.Assert.assertEquals;
 import java.util.List;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.security.blueprint.data.model.DataFieldBean;
+import org.beangle.security.blueprint.data.model.DataTypeBean;
+import org.beangle.security.blueprint.data.model.ProfileFieldBean;
 import org.beangle.security.blueprint.data.service.internal.CsvDataResolver;
 import org.beangle.security.blueprint.model.RoleBean;
 import org.testng.annotations.BeforeClass;
@@ -18,13 +19,14 @@ import org.testng.annotations.Test;
 @Test
 public class CsvDataResolverTest {
   CsvDataResolver resolver = new CsvDataResolver();
-  DataFieldBean field = null;
+  ProfileFieldBean field = null;
 
   @BeforeClass
   public void setUp() {
-    field = new DataFieldBean(1L, "role", RoleBean.class.getName(), "oql:from Role");
-    field.setKeyName("id");
-    field.setPropertyNames("name");
+    DataTypeBean type = new DataTypeBean("role", RoleBean.class.getName());
+    type.setKeyName("id");
+    type.setProperties("name");
+    field = new ProfileFieldBean(1L, "role", type, "oql:from Role");
   }
 
   public void testMarshal() {

@@ -25,19 +25,19 @@ public interface TextBundleRegistry {
   TextBundle load(Locale locale, String bundleName);
 
   /**
+   * list bundles
+   * 
+   * @return
+   */
+  List<TextBundle> getBundles(Locale locale);
+
+  /**
    * Load and cache default bundles
    * 
    * @param bundleNames
    * @return
    */
   void addDefaults(String... bundleNames);
-
-  /**
-   * list bundles
-   * 
-   * @return
-   */
-  List<TextBundle> getBundles(Locale locale);
 
   /**
    * Get default locale message
@@ -47,5 +47,11 @@ public interface TextBundleRegistry {
    * @return
    */
   String getDefaultText(String key, Locale locale);
+
+  /**
+   * Whether cache bundles
+   * @param reloadBundles
+   */
+  void setReloadBundles(boolean reloadBundles);
 
 }

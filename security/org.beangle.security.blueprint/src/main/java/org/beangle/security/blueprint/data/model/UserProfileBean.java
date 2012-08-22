@@ -4,6 +4,7 @@
  */
 package org.beangle.security.blueprint.data.model;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,8 +15,9 @@ import javax.persistence.OneToMany;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.data.DataField;
+import org.beangle.security.blueprint.data.ProfileField;
 import org.beangle.security.blueprint.data.UserProfile;
 import org.beangle.security.blueprint.data.UserProperty;
 
@@ -36,8 +38,12 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
   /**
    * 用户自定义属性
    */
-  @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
   protected List<UserProperty> properties = CollectUtils.newArrayList();
+
+  public Principal getPrincipal() {
+    return user;
+  }
 
   public User getUser() {
     return user;
@@ -55,7 +61,7 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
     this.properties = properties;
   }
 
-  public UserProperty getProperty(DataField meta) {
+  public UserProperty getProperty(ProfileField meta) {
     if (null == properties || properties.isEmpty()) {
       return null;
     } else {
@@ -77,21 +83,14 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
     return null;
   }
 
-  public void setProperty(DataField meta, String text) {
+  public void setProperty(ProfileField meta, String text) {
     UserProperty property = getProperty(meta);
     if (null == property) {
       property = new UserPropertyBean(this, meta, text);
       properties.add(property);
     } else {
-      property.setValue(text);
+      if (Strings.isEmpty(text)) properties.remove(property);
+      else property.setValue(text);
     }
   }
-
-  // public UserProperty getField(String paramName) {
-  // for (final UserProperty param : fields) {
-  // if (param.getName().equals(paramName)) { return param; }
-  // }
-  // return null;
-  // }
-
 }

@@ -422,6 +422,7 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
           logger.debug("Preparing JDBC Connection of Hibernate Session [" + SessionUtils.toString(session)
               + "]");
         }
+        @SuppressWarnings("deprecation")
         Connection con = session.connection();
         Integer previousIsolationLevel = DataSourceUtils.prepareConnectionForTransaction(con, definition);
         txObject.setPreviousIsolationLevel(previousIsolationLevel);
@@ -476,6 +477,7 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
 
       // Register the Hibernate Session's JDBC Connection for the DataSource, if set.
       if (getDataSource() != null) {
+        @SuppressWarnings("deprecation")
         Connection con = session.connection();
         ConnectionHolder conHolder = new ConnectionHolder(con);
         if (timeout != TransactionDefinition.TIMEOUT_DEFAULT) {
@@ -628,6 +630,7 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
       // the isolation level and/or read-only flag of the JDBC Connection here.
       // Else, we need to rely on the connection pool to perform proper cleanup.
       try {
+        @SuppressWarnings("deprecation")
         Connection con = session.connection();
         DataSourceUtils.resetConnectionAfterTransaction(con, txObject.getPreviousIsolationLevel());
       } catch (HibernateException ex) {

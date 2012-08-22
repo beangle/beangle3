@@ -16,7 +16,7 @@ import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.lang.Strings;
-import org.beangle.security.blueprint.data.DataField;
+import org.beangle.security.blueprint.data.ProfileField;
 import org.beangle.security.blueprint.data.service.UserDataResolver;
 import org.springframework.beans.BeanUtils;
 
@@ -24,13 +24,13 @@ public class IdentifierDataResolver implements UserDataResolver {
 
   protected EntityDao entityDao;
 
-  public String marshal(DataField field, Collection<?> items) {
+  public String marshal(ProfileField field, Collection<?> items) {
     StringBuilder sb = new StringBuilder();
     for (Object obj : items) {
       try {
         Object value = obj;
-        if (null != field.getKeyName()) {
-          value = PropertyUtils.getProperty(obj, field.getKeyName());
+        if (null != field.getType().getKeyName()) {
+          value = PropertyUtils.getProperty(obj, field.getType().getKeyName());
         }
         sb.append(String.valueOf(value)).append(',');
       } catch (Exception e) {
@@ -44,29 +44,29 @@ public class IdentifierDataResolver implements UserDataResolver {
   }
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> unmarshal(DataField field, String text) {
-    if (null == field.getValueType()) {
+  public <T> List<T> unmarshal(ProfileField field, String text) {
+    if (null == field.getType().getTypeName()) {
       return (List<T>) CollectUtils.newArrayList(Strings.split(text, ","));
     } else {
       Class<?> clazz = null;
       try {
-        clazz = Class.forName(field.getValueType());
+        clazz = Class.forName(field.getType().getTypeName());
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
         throw new RuntimeException(e);
       }
       EntityType myType = Model.getEntityType(clazz);
-      OqlBuilder<T> builder = OqlBuilder.from(myType.getEntityName(), "restrictField");
+      OqlBuilder<T> builder = OqlBuilder.from(myType.getEntityName(), "field");
 
       String[] ids = Strings.split(text, ",");
-      PropertyDescriptor pd = BeanUtils.getPropertyDescriptor(clazz, field.getKeyName());
+      PropertyDescriptor pd = BeanUtils.getPropertyDescriptor(clazz, field.getType().getKeyName());
       Class<?> propertyType = pd.getReadMethod().getReturnType();
       List<Object> realIds = CollectUtils.newArrayList(ids.length);
       for (String id : ids) {
         Object realId = ConvertUtils.convert(id, propertyType);
         realIds.add(realId);
       }
-      builder.where("restrictField." + field.getKeyName() + " in (:ids)", realIds).cacheable();
+      builder.where("field." + field.getType().getKeyName() + " in (:ids)", realIds).cacheable();
       return entityDao.search(builder);
     }
   }

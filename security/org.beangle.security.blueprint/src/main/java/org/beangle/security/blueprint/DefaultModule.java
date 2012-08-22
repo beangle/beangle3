@@ -9,6 +9,7 @@ import org.beangle.security.blueprint.data.service.internal.CsvDataResolver;
 import org.beangle.security.blueprint.data.service.internal.DataPermissionServiceImpl;
 import org.beangle.security.blueprint.data.service.internal.IdentifierDataResolver;
 import org.beangle.security.blueprint.data.service.internal.OqlDataProvider;
+import org.beangle.security.blueprint.data.service.internal.SqlDataProvider;
 import org.beangle.security.blueprint.function.service.internal.CacheableAuthorityManager;
 import org.beangle.security.blueprint.function.service.internal.FuncPermissionServiceImpl;
 import org.beangle.security.blueprint.nav.service.MenuServiceImpl;
@@ -35,11 +36,14 @@ public class DefaultModule extends AbstractBindModule {
     bind("authorityManager", CacheableAuthorityManager.class);
     bind(SessionProfileServiceImpl.class).shortName();
 
-    bind(IdentifierDataResolver.class, CsvDataResolver.class, OqlDataProvider.class).shortName();
+    bind(IdentifierDataResolver.class, CsvDataResolver.class, OqlDataProvider.class, SqlDataProvider.class)
+        .shortName();
 
-    bind("restrictionService", DataPermissionServiceImpl.class).property("providers",
-        map(entry("csv", ref(CsvDataResolver.class)), entry("oql", ref(OqlDataProvider.class)))).property(
-        "dataResolver",ref(IdentifierDataResolver.class));
+    bind("restrictionService", DataPermissionServiceImpl.class).property(
+        "providers",
+        map(entry("csv", ref(CsvDataResolver.class)), entry("oql", ref(OqlDataProvider.class)),
+            entry("sql", ref(SqlDataProvider.class)))).property("dataResolver",
+        ref(IdentifierDataResolver.class));
   }
 
 }

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.entity.pojo.LongIdObject;
-import org.beangle.security.blueprint.data.DataField;
+import org.beangle.security.blueprint.data.ProfileField;
 import org.beangle.security.blueprint.data.RoleProfile;
 import org.beangle.security.blueprint.data.RoleProperty;
 import org.hibernate.annotations.Cache;
@@ -36,7 +36,7 @@ public class RolePropertyBean extends LongIdObject implements RoleProperty {
   /** 属性元 */
   @NotNull
   @ManyToOne(fetch = FetchType.LAZY)
-  private DataField field;
+  private ProfileField field;
 
   /** 角色属性配置 */
   @NotNull
@@ -47,7 +47,7 @@ public class RolePropertyBean extends LongIdObject implements RoleProperty {
     super();
   }
 
-  public RolePropertyBean(RoleProfileBean profile, DataField field, String value) {
+  public RolePropertyBean(RoleProfileBean profile, ProfileField field, String value) {
     super();
     this.profile = profile;
     this.field = field;
@@ -62,11 +62,11 @@ public class RolePropertyBean extends LongIdObject implements RoleProperty {
     this.value = value;
   }
 
-  public DataField getField() {
+  public ProfileField getField() {
     return field;
   }
 
-  public void setField(DataField field) {
+  public void setField(ProfileField field) {
     this.field = field;
   }
 

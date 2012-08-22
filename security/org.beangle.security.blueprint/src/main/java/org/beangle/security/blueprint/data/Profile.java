@@ -4,6 +4,7 @@
  */
 package org.beangle.security.blueprint.data;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.beangle.commons.entity.pojo.LongIdEntity;
@@ -16,8 +17,11 @@ import org.beangle.commons.entity.pojo.LongIdEntity;
  */
 public interface Profile extends LongIdEntity {
 
-  public List<? extends Property> getProperties();
+  Principal getPrincipal();
 
-  public Property getProperty(DataField meta);
+  List<? extends Property> getProperties();
 
+  Property getProperty(ProfileField field);
+
+  void setProperty(ProfileField field, String value);
 }

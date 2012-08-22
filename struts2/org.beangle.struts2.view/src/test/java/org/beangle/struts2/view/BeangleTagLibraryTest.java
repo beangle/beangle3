@@ -77,6 +77,7 @@ public class BeangleTagLibraryTest {
     cfg.setDefaultEncoding("utf-8");
   }
 
+  @SuppressWarnings("unused")
   public void testText() throws Exception {
     Map<String, Object> datas = CollectUtils.newHashMap();
     datas.put("b", new BeangleTagLibrary(ActionContext.getContext().getValueStack(),
@@ -86,6 +87,6 @@ public class BeangleTagLibraryTest {
     datas.put("watch", new StopWatch());
     StringWriter writer = new StringWriter();
     Template template = cfg.getTemplate("comp.ftl");
-    // template.process(datas, writer);
+    //template.process(datas, writer);
   }
 }

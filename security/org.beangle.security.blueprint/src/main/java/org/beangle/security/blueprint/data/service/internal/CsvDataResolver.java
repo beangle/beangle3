@@ -15,7 +15,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.bean.converters.Converter;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
-import org.beangle.security.blueprint.data.DataField;
+import org.beangle.security.blueprint.data.ProfileField;
 import org.beangle.security.blueprint.data.service.UserDataProvider;
 import org.beangle.security.blueprint.data.service.UserDataResolver;
 
@@ -28,14 +28,14 @@ import org.beangle.security.blueprint.data.service.UserDataResolver;
  */
 public class CsvDataResolver implements UserDataResolver, UserDataProvider {
 
-  public String marshal(DataField property, Collection<?> items) {
+  public String marshal(ProfileField property, Collection<?> items) {
     if (null == items) { return null; }
     List<String> properties = CollectUtils.newArrayList();
-    if (null != property.getKeyName()) {
-      properties.add(property.getKeyName());
+    if (null != property.getType().getKeyName()) {
+      properties.add(property.getType().getKeyName());
     }
-    if (null != property.getPropertyNames()) {
-      String[] names = Strings.split(property.getPropertyNames(), ",");
+    if (null != property.getType().getProperties()) {
+      String[] names = Strings.split(property.getType().getProperties(), ",");
       properties.addAll(Arrays.asList(names));
     }
     StringBuilder sb = new StringBuilder();
@@ -71,20 +71,20 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
   }
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> unmarshal(DataField property, String source) {
+  public <T> List<T> unmarshal(ProfileField property, String source) {
     if (Strings.isEmpty(source)) { return Collections.emptyList(); }
     List<String> properties = CollectUtils.newArrayList();
-    if (null != property.getKeyName()) {
-      properties.add(property.getKeyName());
+    if (null != property.getType().getKeyName()) {
+      properties.add(property.getType().getKeyName());
     }
-    if (null != property.getPropertyNames()) {
-      String[] names = Strings.split(property.getPropertyNames(), ",");
+    if (null != property.getType().getProperties()) {
+      String[] names = Strings.split(property.getType().getProperties(), ",");
       properties.addAll(Arrays.asList(names));
     }
     String[] datas = Strings.split(source, ",");
     try {
       Class<?> type = null;
-      type = Class.forName(property.getValueType());
+      type = Class.forName(property.getType().getTypeName());
       List<T> rs = CollectUtils.newArrayList();
       if (properties.isEmpty()) {
         ConvertUtilsBean converter = Converter.getDefault();
@@ -95,7 +95,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
       } else {
         properties.clear();
         int startIndex = 0;
-        String[] names = new String[] { property.getKeyName() };
+        String[] names = new String[] { property.getType().getKeyName() };
         if (-1 != datas[0].indexOf(';')) {
           names = Strings.split(datas[0], ";");
           startIndex = 1;
@@ -116,7 +116,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
     }
   }
 
-  public <T> List<T> getData(DataField property, String source) {
+  public <T> List<T> getData(ProfileField property, String source,Object... keys) {
     return unmarshal(property, source);
   }
 

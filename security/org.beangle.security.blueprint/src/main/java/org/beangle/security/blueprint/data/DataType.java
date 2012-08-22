@@ -10,14 +10,14 @@ import org.beangle.commons.entity.pojo.LongIdEntity;
  * @author chaostone
  * @since 3.0.0
  */
-public interface DataField extends LongIdEntity{
+public interface DataType extends LongIdEntity{
 
   String getName();
 
-  String getTitle();
+  String getKeyName();
 
-  DataType getType();
+  String getProperties();
 
-  DataResource getResource();
+  String getTypeName();
 
 }

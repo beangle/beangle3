@@ -20,6 +20,7 @@ import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.Permission;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.Role;
+import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.data.*;
 import org.beangle.security.blueprint.data.model.DataPermissionBean;
 import org.beangle.security.blueprint.data.service.DataPermissionService;
@@ -38,10 +39,13 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
 
   protected FuncPermissionService permissionService;
 
-  public List<UserProfile> getUserProfiles(Long userId, Map<String, Object> selectors) {
-    OqlBuilder<UserProfile> builder = OqlBuilder.from(UserProfile.class, "up").where("up.user.id=:userId",
-        userId);
-    return entityDao.search(builder);
+  public List<UserProfile> getUserProfiles(User user) {
+    return entityDao.search(OqlBuilder.from(UserProfile.class, "up").where("up.user=:user", user));
+  }
+
+  public RoleProfile getRoleProfile(Role role) {
+    return entityDao.uniqueResult(OqlBuilder.from(RoleProfile.class, "rp").where("rp.role=:role", role)
+        .cacheable());
   }
 
   /**
@@ -92,28 +96,23 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
     return entityDao.search(builder);
   }
 
-  private List<?> getPropertyValues(DataField field) {
+  public List<?> getFieldValues(ProfileField field,Object... keys) {
     if (null == field.getSource()) return Collections.emptyList();
     String source = field.getSource();
     String prefix = Strings.substringBefore(source, ":");
     source = Strings.substringAfter(source, ":");
     UserDataProvider provider = providers.get(prefix);
     if (null != provider) {
-      return provider.getData(field, source);
+      return provider.getData(field, source,keys);
     } else {
       throw new RuntimeException("not support data provider:" + prefix);
     }
   }
 
-  public List<?> getPropertyValues(String propertyName) {
-    return getPropertyValues(getDataField(propertyName));
-  }
-
-  public Object getPropertyValue(String propertyName, Profile profile) {
-    DataField prop = getDataField(propertyName);
-    Property property = profile.getProperty(prop);
+  public Object getPropertyValue(ProfileField field, Profile profile) {
+    Property property = profile.getProperty(field);
     if (null == property) return null;
-    return unmarshal(property.getValue(), prop);
+    return unmarshal(property.getValue(), field);
   }
 
   /**
@@ -123,7 +122,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
    * @param restriction
    * @return
    */
-  private Object unmarshal(String value, DataField property) {
+  private Object unmarshal(String value, ProfileField property) {
     try {
       List<Object> returned = dataResolver.unmarshal(property, value);
       if (property.isMultiple()) {
@@ -132,7 +131,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
         return (1 != returned.size()) ? null : returned.get(0);
       }
     } catch (Exception e) {
-      logger.error("exception with param type:" + property.getValueType() + " value:" + value, e);
+      logger.error("exception with param type:" + property.getType().getTypeName() + " value:" + value, e);
       return null;
     }
   }
@@ -153,7 +152,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
       List<String> params = c.getParamNames();
       for (final String paramName : params) {
         UserProperty up = profile.getProperty(paramName);
-        DataField prop = up.getField();
+        ProfileField prop = up.getField();
         String value = null == up ? null : up.getValue();
         if (Strings.isNotEmpty(value)) {
           if (value.equals(Property.AllValue)) {
@@ -177,8 +176,8 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
     }
   }
 
-  private DataField getDataField(String fieldName) {
-    List<DataField> fields = entityDao.get(DataField.class, "name", fieldName);
+  public ProfileField getProfileField(String fieldName) {
+    List<ProfileField> fields = entityDao.get(ProfileField.class, "name", fieldName);
     if (1 != fields.size()) { throw new RuntimeException("bad pattern parameter named :" + fieldName); }
     return fields.get(0);
   }

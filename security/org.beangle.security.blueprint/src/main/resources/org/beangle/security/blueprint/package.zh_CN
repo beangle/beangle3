@@ -1,8 +1,11 @@
 entity.menu=菜单
-entity.restrictEntity=限制实体
+entity.dataResource=数据实体
 entity.role=角色
-entity.userCategory=身份
+entity.funcResource=功能资源
 entity.user=用户
+entity.dataPermission=数据权限
+entity.dataType=数据类型
+entity.profileField=数据权限纬度
 
 user.creator.fullname=创建者
 user.effectiveAt=生效时间
@@ -11,13 +14,15 @@ user.enabled=状态
 user.fullname=姓名
 user.mail=邮箱
 user.remark=备注
-user.members=Roles
+user.members=角色
 user.name=登录名
 member.granter=Granter
 member.manager=Manager
 member.member=Member
 menu.entry=模块入口
-restriction.entities=关联实体
-restrictPattern.content=内容
 role.managers=管理者
 role.users=使用用户
+
+
+dataPermission.resource=关联实体
+dataPermission.filters=过滤条件

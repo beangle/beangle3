@@ -16,7 +16,7 @@ public interface Property extends LongIdEntity {
 
   public static final String AllValue = "*";
 
-  public DataField getField();
+  public ProfileField getField();
 
   public String getValue();
 

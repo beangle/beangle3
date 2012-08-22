@@ -26,5 +26,6 @@ role.users=Associated Users
 member.member=Member
 member.granter=Granter
 member.manager=Manager
-restriction.entities=Entities
-restrictPattern.content=Content
+
+dataPermission.resource=Data Resource
+dataPermission.filters=Filter

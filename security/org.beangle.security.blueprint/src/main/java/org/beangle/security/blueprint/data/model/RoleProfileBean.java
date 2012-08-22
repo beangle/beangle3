@@ -4,8 +4,10 @@
  */
 package org.beangle.security.blueprint.data.model;
 
+import java.security.Principal;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,10 +16,13 @@ import javax.persistence.OneToMany;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.Role;
-import org.beangle.security.blueprint.data.DataField;
+import org.beangle.security.blueprint.data.ProfileField;
 import org.beangle.security.blueprint.data.RoleProfile;
 import org.beangle.security.blueprint.data.RoleProperty;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 角色属性配置
@@ -26,6 +31,8 @@ import org.beangle.security.blueprint.data.RoleProperty;
  * @version $Id: RoleProfileBean.java Oct 21, 2011 8:39:05 AM chaostone $
  */
 @Entity(name = "org.beangle.security.blueprint.data.RoleProfile")
+@Cacheable
+@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RoleProfileBean extends LongIdObject implements RoleProfile {
 
   private static final long serialVersionUID = -9047586316477373803L;
@@ -35,8 +42,13 @@ public class RoleProfileBean extends LongIdObject implements RoleProfile {
   private Role role;
 
   /** 角色自定义属性 */
-  @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
+  @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
   protected List<RoleProperty> properties = CollectUtils.newArrayList();
+
+  public Principal getPrincipal() {
+    return role;
+  }
 
   public Role getRole() {
     return role;
@@ -54,7 +66,7 @@ public class RoleProfileBean extends LongIdObject implements RoleProfile {
     this.properties = properties;
   }
 
-  public RoleProperty getProperty(DataField meta) {
+  public RoleProperty getProperty(ProfileField meta) {
     if (null == properties || properties.isEmpty()) {
       return null;
     } else {
@@ -65,21 +77,15 @@ public class RoleProfileBean extends LongIdObject implements RoleProfile {
     return null;
   }
 
-  public void setProperty(DataField meta, String text) {
+  public void setProperty(ProfileField meta, String text) {
     RoleProperty property = getProperty(meta);
     if (null == property) {
       property = new RolePropertyBean(this, meta, text);
       properties.add(property);
     } else {
-      property.setValue(text);
+      if (Strings.isEmpty(text)) properties.remove(property);
+      else property.setValue(text);
     }
   }
-
-  // public RoleProperty getField(String paramName) {
-  // for (final RoleProperty param : fields) {
-  // if (param.getName().equals(paramName)) { return param; }
-  // }
-  // return null;
-  // }
 
 }

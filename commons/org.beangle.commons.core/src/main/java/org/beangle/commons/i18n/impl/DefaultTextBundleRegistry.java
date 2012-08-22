@@ -24,9 +24,10 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
 
   private static final Logger logger = LoggerFactory.getLogger(DefaultTextBundleRegistry.class);
 
-  final Map<Locale, Map<String, TextBundle>> caches = CollectUtils.newConcurrentHashMap();
-  final Map<Locale, Set<String>> missings = CollectUtils.newConcurrentHashMap();
-  final List<String> defaults = CollectUtils.newArrayList();
+  protected final Map<Locale, Map<String, TextBundle>> caches = CollectUtils.newConcurrentHashMap();
+  protected final Map<Locale, Set<String>> missings = CollectUtils.newConcurrentHashMap();
+  protected final List<String> defaults = CollectUtils.newArrayList();
+  protected boolean reloadBundles = false;
 
   public void addDefaults(String... bundleNames) {
     for (String name : bundleNames)
@@ -35,6 +36,10 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
   }
 
   public TextBundle load(Locale locale, String bundleName) {
+    if (reloadBundles) {
+      caches.clear();
+      missings.clear();
+    }
     Map<String, TextBundle> localeBundles = caches.get(locale);
     if (null == localeBundles) {
       localeBundles = CollectUtils.newConcurrentHashMap();
@@ -145,31 +150,18 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
 
   protected final String toLocaleStr(Locale locale) {
     if (locale == Locale.ROOT) { return ""; }
-
     String language = locale.getLanguage();
-    String script = locale.getScript();
     String country = locale.getCountry();
     String variant = locale.getVariant();
     if (language == "" && country == "" && variant == "") { return ""; }
 
     StringBuilder sb = new StringBuilder();
-    if (script != "") {
-      if (variant != "") {
-        sb.append(language).append('_').append(script).append('_').append(country).append('_')
-            .append(variant);
-      } else if (country != "") {
-        sb.append(language).append('_').append(script).append('_').append(country);
-      } else {
-        sb.append(language).append('_').append(script);
-      }
+    if (variant != "") {
+      sb.append(language).append('_').append(country).append('_').append(variant);
+    } else if (country != "") {
+      sb.append(language).append('_').append(country);
     } else {
-      if (variant != "") {
-        sb.append(language).append('_').append(country).append('_').append(variant);
-      } else if (country != "") {
-        sb.append(language).append('_').append(country);
-      } else {
-        sb.append(language);
-      }
+      sb.append(language);
     }
     return sb.toString();
   }
@@ -189,4 +181,9 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
     }
     return null;
   }
+
+  public void setReloadBundles(boolean reloadBundles) {
+    this.reloadBundles = reloadBundles;
+  }
+
 }

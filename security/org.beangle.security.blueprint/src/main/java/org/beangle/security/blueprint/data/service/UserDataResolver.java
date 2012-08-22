@@ -7,7 +7,7 @@ package org.beangle.security.blueprint.data.service;
 import java.util.Collection;
 import java.util.List;
 
-import org.beangle.security.blueprint.data.DataField;
+import org.beangle.security.blueprint.data.ProfileField;
 
 public interface UserDataResolver {
 
@@ -18,7 +18,7 @@ public interface UserDataResolver {
    * @param items
    * @return
    */
-  public String marshal(DataField field, Collection<?> items);
+  public String marshal(ProfileField field, Collection<?> items);
 
   /**
    * Convert text to list of objects
@@ -28,5 +28,5 @@ public interface UserDataResolver {
    * @param text
    * @return
    */
-  public <T> List<T> unmarshal(DataField field, String text);
+  public <T> List<T> unmarshal(ProfileField field, String text);
 }

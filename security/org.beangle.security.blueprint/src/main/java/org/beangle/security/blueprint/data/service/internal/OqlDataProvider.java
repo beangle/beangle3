@@ -4,23 +4,29 @@
  */
 package org.beangle.security.blueprint.data.service.internal;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
-import org.beangle.security.blueprint.data.DataField;
+import org.beangle.security.blueprint.data.ProfileField;
 import org.beangle.security.blueprint.data.service.UserDataProvider;
 
 public class OqlDataProvider extends BaseServiceImpl implements UserDataProvider {
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> getData(DataField field, String source) {
-    try {
-      return (List<T>) entityDao.searchHQLQuery(source);
-    } catch (Exception e) {
-      logger.error("Get data error", e);
+  public <T> List<T> getData(ProfileField field, String source, Object... keys) {
+    Map<String, Object> params = CollectUtils.newHashMap();
+    if (keys.length > 0) {
+      String lowerSourse = source.toLowerCase();
+      int index = lowerSourse.indexOf("order ");
+      if (-1 == index) index = source.length();
+      boolean hasCondition = lowerSourse.contains(" where ");
+      source = source.substring(0, index) + (hasCondition ? " and " : " where ")
+          + field.getType().getKeyName() + " in (:ids)";
+      params.put("ids", keys);
     }
-    return Collections.emptyList();
+    return (List<T>) entityDao.searchHQLQuery(source, params);
   }
 
   public String getName() {

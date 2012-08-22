@@ -5,11 +5,14 @@
 package org.beangle.security.blueprint.data.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.beangle.commons.dao.query.builder.OqlBuilder;
+import org.beangle.security.blueprint.Role;
+import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.data.DataPermission;
 import org.beangle.security.blueprint.data.Profile;
+import org.beangle.security.blueprint.data.ProfileField;
+import org.beangle.security.blueprint.data.RoleProfile;
 import org.beangle.security.blueprint.data.UserProfile;
 
 /**
@@ -40,19 +43,42 @@ public interface DataPermissionService {
   /**
    * Get field enumerated values.
    * 
-   * @param fieldName
+   * @param field
    * @param profile
    * @return
    */
-  Object getPropertyValue(String fieldName, Profile profile);
+  Object getPropertyValue(ProfileField field, Profile profile);
 
   /**
    * 查找用户对应的数据配置
    * 
    * @param userId
-   * @param selectors
    * @return
    */
-  List<UserProfile> getUserProfiles(Long userId, Map<String, Object> selectors);
+  List<UserProfile> getUserProfiles(User user);
+
+  /**
+   * Search Role profile
+   * 
+   * @param role
+   * @return
+   */
+  RoleProfile getRoleProfile(Role role);
+
+  /**
+   * Search field values
+   * 
+   * @param field
+   * @return
+   */
+  List<?> getFieldValues(ProfileField field,Object... keys);
+
+  /**
+   * Search field
+   * 
+   * @param fieldName
+   * @return
+   */
+  ProfileField getProfileField(String fieldName);
 
 }

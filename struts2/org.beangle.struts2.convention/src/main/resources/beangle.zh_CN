@@ -75,6 +75,7 @@ common.status=状态
 common.title=标题
 common.updatedAt=修改时间
 common.yes=是
+common.dashboard=控制台
 
 error.model.existed=相同数据已存在
 

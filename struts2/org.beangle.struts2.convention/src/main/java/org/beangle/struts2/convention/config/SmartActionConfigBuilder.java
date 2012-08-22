@@ -70,9 +70,11 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
   @Inject
   protected TextBundleRegistry registry;
 
-  @Inject("beangle.custom.i18n.resources")
+  @Inject("beangle.i18n.resources")
   protected String defaultBundleNames;
 
+  @Inject("beangle.i18n.reload")
+  private String reloadBundles="false";
   @Inject
   public SmartActionConfigBuilder(Configuration configuration, Container container,
       ObjectFactory objectFactory) throws Exception {
@@ -93,6 +95,8 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
 
   public void buildActionConfigs() {
     registry.addDefaults(Strings.split(defaultBundleNames));
+    registry.setReloadBundles(Boolean.valueOf(reloadBundles));
+    
     long start = System.currentTimeMillis();
     logger.info("Action scan starting....");
     for (Profile profile : actionBuilder.getProfileService().getProfiles()) {

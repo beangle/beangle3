@@ -65,10 +65,10 @@ public class RoleBean extends HierarchyLongIdObject<Role> implements Role {
 
   /** 是否启用 */
   @NotNull
-  public boolean enabled = true;
+  protected boolean enabled = true;
 
   /** 动态组 */
-  public boolean dynamic = false;
+  protected boolean dynamic = false;
 
   /** 创建时间 */
   protected Date createdAt;
