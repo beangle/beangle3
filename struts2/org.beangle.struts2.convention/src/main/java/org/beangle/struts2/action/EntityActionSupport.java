@@ -43,28 +43,23 @@ import org.beangle.commons.transfer.importer.DefaultEntityImporter;
 import org.beangle.commons.transfer.importer.EntityImporter;
 import org.beangle.commons.transfer.importer.listener.ImporterForeignerListener;
 import org.beangle.commons.transfer.io.TransferFormats;
-import org.beangle.commons.util.meta.SystemVersion;
 import org.beangle.commons.web.util.RequestUtils;
 import org.beangle.struts2.helper.ExportHelper;
 import org.beangle.struts2.helper.Params;
 
+/**
+ * 
+ * @author chaostone
+ * @since 3.0.0
+ */
 public abstract class EntityActionSupport extends BaseAction {
-  protected EntityDao entityDao;
 
-  protected SystemVersion systemVersion;
+  protected EntityDao entityDao;
 
   protected PropertyConfigFactory configFactory;
 
-  protected SystemVersion getSystemVersion() {
-    return systemVersion;
-  }
-
   protected PropertyConfig getConfig() {
     return null != configFactory ? configFactory.getConfig() : null;
-  }
-
-  public void setSystemVersion(SystemVersion systemVersion) {
-    this.systemVersion = systemVersion;
   }
 
   // CURD----------------------------------------

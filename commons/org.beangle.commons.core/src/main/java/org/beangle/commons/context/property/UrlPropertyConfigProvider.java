@@ -37,17 +37,15 @@ public class UrlPropertyConfigProvider implements PropertyConfigFactory.Provider
   public Properties getConfig() {
     try {
       Properties properties = new Properties();
-      if (null != resources.getGlobal()) {
-        populateConfigItems(properties, resources.getGlobal());
-      }
+      if (null != resources.getGlobal()) populateConfigItems(properties, resources.getGlobal());
+
       if (null != resources.getLocals()) {
         for (URL url : resources.getLocals()) {
           populateConfigItems(properties, url);
         }
       }
-      if (null != resources.getUser()) {
-        populateConfigItems(properties, resources.getUser());
-      }
+      
+      if (null != resources.getUser()) populateConfigItems(properties, resources.getUser());
       return properties;
     } catch (Exception e) {
       logger.error("Exception", e);

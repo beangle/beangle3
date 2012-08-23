@@ -8,8 +8,11 @@ public class DefaultModule extends AbstractBindModule {
 
   @Override
   protected void doBinding() {
-    bind(MimeTypeProvider.class).property("resources", bean(SpringResources.class).property("globals", "classpath*:org/beangle/web/mime/mimetypes.properties").property("locations",
-        "classpath*:META-INF/mimetypes.properties"));
+    bind(MimeTypeProvider.class).property(
+        "resources",
+        bean(SpringResources.class).property("globals",
+            "classpath*:org/beangle/commons/http/mime/mimetypes.properties").property("locations",
+            "classpath*:META-INF/mimetypes.properties"));
   }
 
 }

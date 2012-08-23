@@ -115,18 +115,16 @@ public abstract class AbstractBindModule implements BindModule {
   }
 
   /**
-   * Generate a list property
+   * Generate a list reference property
    * <p>
-   * List singleton bean references with list(A.class,B.class) or list(ref("someBeanId"),C.class).<br>
-   * List simple values with list("strValue1","strValue2")
    * 
-   * @param datas
+   * @param classes
    * @return
    */
-  protected List<?> listref(Class<?>... datas) {
-    List<Object> items = CollectUtils.newArrayList(datas.length);
-    for (Class<?> obj : datas) {
-      items.add(buildInnerReference((Class<?>) obj));
+  protected List<?> listref(Class<?>... classes) {
+    List<Object> items = CollectUtils.newArrayList(classes.length);
+    for (Class<?> clazz : classes) {
+      items.add(new ReferenceValue(clazz.getName()));
     }
     return items;
   }

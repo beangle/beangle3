@@ -9,6 +9,7 @@ import static org.testng.Assert.assertTrue;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.beangle.commons.context.testbean.SomeAction;
+import org.beangle.commons.context.testbean.SpringResourcesConsumer;
 import org.beangle.commons.context.testbean.TestService;
 import org.beangle.commons.context.testbean.UserDaoProvider;
 import org.beangle.commons.context.testbean.UserLdapProvider;
@@ -44,6 +45,9 @@ public class AutoConfigProcessorTest {
         "/org/beangle/commons/context/spring/context-auto.xml");
     // test Alias
     assertNotNull(factory.getBean(TestService.class.getName()));
+    SpringResourcesConsumer consumer=(SpringResourcesConsumer)factory.getBean(SpringResourcesConsumer.class.getName());
+    assertNotNull(consumer);
+    assertNotNull(consumer.getResources());
     
   }
 
