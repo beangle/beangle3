@@ -9,7 +9,7 @@ import java.util.Map;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.beangle.commons.bean.converters.Converter;
+import org.beangle.commons.bean.converters.Converters;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.entity.metadata.ObjectAndType;
@@ -43,7 +43,7 @@ public class ConvertPopulatorBean implements Populator {
    * </p>
    */
   public ConvertPopulatorBean() {
-    beanUtils = new BeanUtilsBean(Converter.getDefault());
+    beanUtils = new BeanUtilsBean(Converters.Instance);
   }
 
   /**

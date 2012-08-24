@@ -12,7 +12,7 @@ import java.util.List;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.beangle.commons.bean.converters.Converter;
+import org.beangle.commons.bean.converters.Converters;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.data.ProfileField;
@@ -87,7 +87,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
       type = Class.forName(property.getType().getTypeName());
       List<T> rs = CollectUtils.newArrayList();
       if (properties.isEmpty()) {
-        ConvertUtilsBean converter = Converter.getDefault();
+        ConvertUtilsBean converter = Converters.Instance;
         for (String data : datas) {
           rs.add((T) converter.convert(data, type));
         }

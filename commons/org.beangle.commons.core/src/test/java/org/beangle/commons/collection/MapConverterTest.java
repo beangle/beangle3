@@ -13,7 +13,7 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.Map;
 
-import org.beangle.commons.bean.converters.Converter;
+import org.beangle.commons.bean.converters.Converters;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -21,7 +21,7 @@ import org.testng.annotations.Test;
 public class MapConverterTest {
 
   Map<String, Object> datas = CollectUtils.newHashMap();
-  MapConverter converter = new MapConverter(Converter.getDefault());
+  MapConverter converter = new MapConverter(Converters.Instance);
 
   @BeforeClass
   public void setUp() {

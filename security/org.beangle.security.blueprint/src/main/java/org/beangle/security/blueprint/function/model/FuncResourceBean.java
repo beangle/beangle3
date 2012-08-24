@@ -112,6 +112,10 @@ public class FuncResourceBean extends LongIdObject implements FuncResource {
   public void setScope(Scope scope) {
     this.scope = scope;
   }
+  
+  public void setScope(String scopeName){
+    this.scope=Scope.valueOf(scopeName);
+  }
 
   public boolean isEntry() {
     return entry;

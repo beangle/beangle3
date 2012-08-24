@@ -4,6 +4,7 @@
  */
 package org.beangle.security.blueprint.function;
 
+import org.beangle.commons.bean.converters.Converters;
 import org.beangle.security.blueprint.Resource;
 
 /**
@@ -23,10 +24,11 @@ public interface FuncResource extends Resource {
 
   /**
    * 资源可见范围
+   * 
    * @author chaostone
-   *
    */
   public static enum Scope {
+
     /** 不受保护的公共资源 */
     PUBLIC(0),
     /** 受保护的公有资源 */
@@ -34,6 +36,10 @@ public interface FuncResource extends Resource {
     /** 受保护的私有资源 */
     PRIVATE(2);
     int value;
+
+    static {
+      Converters.registerEnum(Scope.class);
+    }
 
     private Scope(int value) {
       this.value = value;
