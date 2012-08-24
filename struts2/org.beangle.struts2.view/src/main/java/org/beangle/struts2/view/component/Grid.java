@@ -88,10 +88,9 @@ public class Grid extends ClosingUIBean {
   }
 
   protected void addCol(Col column) {
-    Object title = column.getTitle();
-    if (null == title) {
-      title = column.getProperty();
-    }
+    String title = column.getTitle();
+    if (null == title) title = column.getProperty();
+
     if (!colTitles.contains(title)) {
       colTitles.add(title);
       cols.add(column);
@@ -396,22 +395,22 @@ public class Grid extends ClosingUIBean {
     }
 
     String type = "checkbox";
+
     // checkbox or radiobox name
     String boxname = null;
+
+    boolean disabled = false;
+
     boolean checked;
 
     @Override
     public boolean start(Writer writer) {
-      if (null == property) {
-        this.property = "id";
-      }
+      if (null == property) this.property = "id";
+
       row = (Row) findAncestor(Row.class);
-      if (null == boxname) {
-        boxname = row.table.var + "." + property;
-      }
-      if (row.index == 0) {
-        row.table.addCol(this);
-      }
+      if (null == boxname) boxname = row.table.var + "." + property;
+
+      if (row.index == 0) row.table.addCol(this);
       return null != row.curObj;
     }
 
@@ -422,13 +421,13 @@ public class Grid extends ClosingUIBean {
           writer.append("<td class=\"gridselect\"");
           if (null != id) writer.append(" id=\"").append(id).append("\"");
           writer.append(getParameterString()).append(">");
-          writer.append("<input class=\"box\" name=\"").append(boxname).append("\" value=\"")
-              .append(String.valueOf(getValue())).append("\" type=\"").append(type).append("\"");
-          if (checked) writer.append(" checked=\"checked\"");
-          writer.append("/>");
-          if (Strings.isNotEmpty(body)) {
-            writer.append(body);
+          if (!disabled) {
+            writer.append("<input class=\"box\" name=\"").append(boxname).append("\" value=\"")
+                .append(String.valueOf(getValue())).append("\" type=\"").append(type).append("\"");
+            if (checked) writer.append(" checked=\"checked\"");
+            writer.append("/>");
           }
+          if (Strings.isNotEmpty(body)) writer.append(body);
           writer.append("</td>");
         } catch (Exception e) {
           e.printStackTrace();
@@ -467,5 +466,14 @@ public class Grid extends ClosingUIBean {
     public void setChecked(boolean checked) {
       this.checked = checked;
     }
+
+    public boolean isDisabled() {
+      return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+      this.disabled = disabled;
+    }
+
   }
 }
