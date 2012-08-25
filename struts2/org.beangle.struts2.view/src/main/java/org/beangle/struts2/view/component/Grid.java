@@ -399,7 +399,8 @@ public class Grid extends ClosingUIBean {
     // checkbox or radiobox name
     String boxname = null;
 
-    boolean disabled = false;
+    /** display or none */
+    boolean display = true;
 
     boolean checked;
 
@@ -421,7 +422,7 @@ public class Grid extends ClosingUIBean {
           writer.append("<td class=\"gridselect\"");
           if (null != id) writer.append(" id=\"").append(id).append("\"");
           writer.append(getParameterString()).append(">");
-          if (!disabled) {
+          if (display) {
             writer.append("<input class=\"box\" name=\"").append(boxname).append("\" value=\"")
                 .append(String.valueOf(getValue())).append("\" type=\"").append(type).append("\"");
             if (checked) writer.append(" checked=\"checked\"");
@@ -467,13 +468,12 @@ public class Grid extends ClosingUIBean {
       this.checked = checked;
     }
 
-    public boolean isDisabled() {
-      return disabled;
+    public boolean isDisplay() {
+      return display;
     }
 
-    public void setDisabled(boolean disabled) {
-      this.disabled = disabled;
+    public void setDisplay(boolean display) {
+      this.display = display;
     }
-
   }
 }
