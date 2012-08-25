@@ -30,7 +30,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.nav.MenuProfile")
 @Cacheable
-@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MenuProfileBean extends LongIdObject implements MenuProfile {
 
   private static final long serialVersionUID = 9147563981118270960L;

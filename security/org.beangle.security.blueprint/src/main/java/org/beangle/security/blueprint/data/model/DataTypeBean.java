@@ -20,7 +20,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.data.DataType")
 @Cacheable
-@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class DataTypeBean extends LongIdObject implements DataType {
 
   private static final long serialVersionUID = 1440238057448114481L;

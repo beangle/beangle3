@@ -26,7 +26,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.data.ProfileField")
 @Cacheable
-@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ProfileFieldBean extends LongIdObject implements ProfileField {
   private static final long serialVersionUID = 1L;
 

@@ -28,7 +28,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.Role")
 @Cacheable
-@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RoleBean extends HierarchyLongIdObject<Role> implements Role {
 
   private static final long serialVersionUID = -3404181949500894284L;

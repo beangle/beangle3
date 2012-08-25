@@ -27,7 +27,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.nav.Menu")
 @Cacheable
-@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MenuBean extends HierarchyLongIdObject<Menu> implements Menu {
 
   private static final long serialVersionUID = 3864556621041443066L;
@@ -50,7 +50,7 @@ public class MenuBean extends HierarchyLongIdObject<Menu> implements Menu {
 
   /** 引用资源集合 */
   @ManyToMany
-  @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
+  @Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
   private Set<FuncResource> resources = CollectUtils.newHashSet();
 
   /** 是否启用 */
@@ -68,7 +68,7 @@ public class MenuBean extends HierarchyLongIdObject<Menu> implements Menu {
 
   /** 直接下级菜单 */
   @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-  @Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
+  @Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
   @OrderBy("code")
   private List<Menu> children;
 

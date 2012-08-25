@@ -35,7 +35,7 @@ import com.google.gson.GsonBuilder;
  */
 @Entity(name = "org.beangle.security.blueprint.data.DataPermission")
 @Cacheable
-@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class DataPermissionBean extends LongIdObject implements TemporalActiveEntity, DataPermission {
 
   private static final long serialVersionUID = -8956079356245507990L;

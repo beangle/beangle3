@@ -33,7 +33,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.function.FuncResource")
 @Cacheable
-@Cache(region = "beangle.security", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class FuncResourceBean extends LongIdObject implements FuncResource {
   private static final long serialVersionUID = -8285208615351119572L;
 
