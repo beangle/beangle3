@@ -7,12 +7,12 @@ package org.beangle.struts2.view;
 import java.io.StringWriter;
 import java.util.Map;
 
-import org.apache.commons.lang3.time.StopWatch;
 import org.apache.struts2.dispatcher.Dispatcher;
 import org.apache.struts2.util.StrutsTestCaseHelper;
 import org.apache.struts2.views.freemarker.StrutsClassTemplateLoader;
 import org.apache.struts2.views.freemarker.tags.StrutsModels;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.struts2.view.freemarker.BeangleObjectWrapper;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -84,7 +84,7 @@ public class BeangleTagLibraryTest {
         new MockHttpServletRequest(), new MockHttpServletResponse()));
     datas.put("s", new StrutsModels(ActionContext.getContext().getValueStack(), new MockHttpServletRequest(),
         new MockHttpServletResponse()));
-    datas.put("watch", new StopWatch());
+    datas.put("watch", new Stopwatch());
     StringWriter writer = new StringWriter();
     Template template = cfg.getTemplate("comp.ftl");
     //template.process(datas, writer);

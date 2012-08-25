@@ -7,12 +7,12 @@ package org.beangle.commons.context.spring;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
-import org.apache.commons.lang3.time.StopWatch;
 import org.beangle.commons.context.testbean.SomeAction;
 import org.beangle.commons.context.testbean.SpringResourcesConsumer;
 import org.beangle.commons.context.testbean.TestService;
 import org.beangle.commons.context.testbean.UserDaoProvider;
 import org.beangle.commons.context.testbean.UserLdapProvider;
+import org.beangle.commons.lang.time.Stopwatch;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.testng.annotations.Test;
@@ -29,18 +29,16 @@ public class AutoConfigProcessorTest {
    * Test get normal and factory bean.
    */
   public void testGet() {
-    StopWatch watch = new StopWatch();
-    watch.start();
+    Stopwatch watch = new Stopwatch().start();
     ApplicationContext factory = new ClassPathXmlApplicationContext(
         "/org/beangle/commons/context/spring/context-auto.xml");
     testBean(factory);
     testFactoryBean(factory);
-    System.out.println("config  context-auto completed using " + watch.getTime());
+    System.out.println("config  context-auto completed using " + watch);
   }
 
   public void testAdvance() {
-    StopWatch watch = new StopWatch();
-    watch.start();
+    Stopwatch watch = new Stopwatch().start();
     ApplicationContext factory = new ClassPathXmlApplicationContext(
         "/org/beangle/commons/context/spring/context-auto.xml");
     // test Alias
@@ -48,6 +46,7 @@ public class AutoConfigProcessorTest {
     SpringResourcesConsumer consumer=(SpringResourcesConsumer)factory.getBean(SpringResourcesConsumer.class.getName());
     assertNotNull(consumer);
     assertNotNull(consumer.getResources());
+    System.out.println("config  advance context-auto completed using " + watch);
     
   }
 

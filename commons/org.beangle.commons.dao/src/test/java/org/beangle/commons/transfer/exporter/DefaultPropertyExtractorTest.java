@@ -10,10 +10,10 @@ import static org.testng.Assert.assertNull;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.time.StopWatch;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.metadata.ContractInfo;
 import org.beangle.commons.entity.metadata.ManagerEmployer;
+import org.beangle.commons.lang.time.Stopwatch;
 import org.testng.annotations.Test;
 
 @Test
@@ -40,24 +40,13 @@ public class DefaultPropertyExtractorTest {
   @Test(timeOut = 10000)
   public void testPerformance() throws Exception {
     DefaultPropertyExtractor extractor = new DefaultPropertyExtractor();
-    StopWatch watch = new StopWatch();
-    watch.start();
+    Stopwatch watch = new Stopwatch().start();
     for (int i = 0; i < 1000; i++) {
       extract(extractor);
     }
-    // System.out.println(watch.getTime());
+    System.out.println("1000 extract using" + watch);
   }
 
-  @Test(timeOut = 1000)
-  public void testPerformance2() throws Exception {
-    DefaultPropertyExtractor extractor = new DefaultPropertyExtractor();
-    StopWatch watch = new StopWatch();
-    watch.start();
-    for (int i = 0; i < 1000; i++) {
-      extract(extractor);
-    }
-    // System.out.println(watch.getTime());
-  }
 
   private void extract(PropertyExtractor extractor) throws Exception {
     List<Object> datas = CollectUtils.newArrayList();

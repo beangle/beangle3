@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.time.StopWatch;
 import org.beangle.commons.http.mime.MimeTypeProvider;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.time.Stopwatch;
 
 /**
  * SplitStreamDownloader
@@ -64,8 +64,7 @@ public class SplitStreamDownloader extends DefaultStreamDownloader {
     long start = 0L;
     long begin = 0L;
     long stop = 0L;
-    StopWatch watch = new StopWatch();
-    watch.start();
+    Stopwatch watch = new Stopwatch().start();
     try {
       length = input.available();
       stop = length - 1;
@@ -106,7 +105,7 @@ public class SplitStreamDownloader extends DefaultStreamDownloader {
         } else {
           percent = ((int) (((start - begin) * 1.0 / length) * 10000)) / 100.0f + "%";
         }
-        long time = watch.getTime();
+        long time = watch.elapsedMillis();
         int rate = 0;
         if (start - begin > 0) {
           rate = (int) (((start - begin) * 1.0 / time * 1000) / 1024);

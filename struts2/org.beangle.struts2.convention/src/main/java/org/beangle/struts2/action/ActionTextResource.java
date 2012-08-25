@@ -9,7 +9,7 @@ import org.beangle.commons.i18n.TextBundleRegistry;
 import org.beangle.commons.i18n.TextFormater;
 import org.beangle.commons.i18n.impl.DefaultTextResource;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.reflect.Reflections;
+import org.beangle.commons.lang.reflect.Reflections;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;

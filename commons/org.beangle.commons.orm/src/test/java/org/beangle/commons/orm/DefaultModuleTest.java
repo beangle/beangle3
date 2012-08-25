@@ -4,19 +4,18 @@
  */
 package org.beangle.commons.orm;
 
-import org.apache.commons.lang3.time.StopWatch;
+import org.beangle.commons.lang.time.Stopwatch;
 import org.testng.annotations.Test;
 
 @Test
 public class DefaultModuleTest {
 
   public void testSpeed() {
-    StopWatch sw = new StopWatch();
-    sw.start();
+    Stopwatch sw = new Stopwatch().start();
     for (int i = 0; i < 1; i++) {
       DefaultModule module = new DefaultModule();
       module.getConfig();
     }
-    System.out.println(sw.getTime());
+    System.out.println(sw);
   }
 }

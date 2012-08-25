@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.commons.reflect;
+package org.beangle.commons.lang.reflect;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -50,6 +50,7 @@ public final class Reflections {
   public static List<Method> getBeanSetters(Class<?> clazz) {
     List<Method> methods = CollectUtils.newArrayList();
     for (Method m : clazz.getMethods()) {
+      m.setAccessible(true);
       if (m.getName().startsWith("set") && m.getName().length() > 3) {
         if (Modifier.isPublic(m.getModifiers()) && !Modifier.isStatic(m.getModifiers())
             && m.getParameterTypes().length == 1) {

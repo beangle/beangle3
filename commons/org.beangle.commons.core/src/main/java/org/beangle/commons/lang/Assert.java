@@ -6,8 +6,6 @@ package org.beangle.commons.lang;
 
 import java.util.Iterator;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 /**
  * Assertion tool class
  * 
@@ -63,7 +61,7 @@ public class Assert {
    * @see #isTrue(boolean)
    */
   public static void isTrue(boolean expression, String message, Object... values) {
-    if (expression == false) { throw new IllegalArgumentException(String.format(message, values)); }
+    if (!expression) { throw new IllegalArgumentException(String.format(message, values)); }
   }
 
   /**
@@ -191,8 +189,7 @@ public class Assert {
     int i = 0;
     for (Iterator<?> it = iterable.iterator(); it.hasNext(); i++) {
       if (it.next() == null) {
-        Object[] values2 = ArrayUtils.addAll(values, Integer.valueOf(i));
-        throw new IllegalArgumentException(String.format(message, values2));
+        throw new IllegalArgumentException(String.format(message,  Integer.valueOf(i)));
       }
     }
     return iterable;

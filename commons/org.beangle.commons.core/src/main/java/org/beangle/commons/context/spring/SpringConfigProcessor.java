@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.commons.lang3.time.StopWatch;
 import org.beangle.commons.bean.Disposable;
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.collection.CollectUtils;
@@ -21,8 +20,10 @@ import org.beangle.commons.context.event.DefaultEventMulticaster;
 import org.beangle.commons.context.inject.*;
 import org.beangle.commons.context.inject.BeanConfig.Definition;
 import org.beangle.commons.context.inject.BeanConfig.ReferenceValue;
+import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.reflect.Reflections;
+import org.beangle.commons.lang.reflect.Reflections;
+import org.beangle.commons.lang.time.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -37,7 +38,6 @@ import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.beans.factory.support.*;
 import org.springframework.core.io.UrlResource;
-import org.springframework.util.Assert;
 
 /**
  * 完成springbean的自动注册和再配置
@@ -94,19 +94,14 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
   }
 
   private void autoconfig(BeanDefinitionRegistry definitionRegistry) {
-    StopWatch watch = new StopWatch();
-    watch.start();
+    Stopwatch watch = new Stopwatch().start();
     BindRegistry registry = new SpringBindRegistry(definitionRegistry);
     Map<String, BeanDefinition> newDefinitions = findRegistedModules(registry);
     // should register after all beans
     registerBuildins(registry);
-    logger.info("Auto register {} beans using {} mills", newDefinitions.size(), watch.getTime());
-    watch.reset();
-    watch.start();
     autowire(newDefinitions, registry);
     lifecycle(registry, definitionRegistry);
-    logger.debug("Auto register and wire bean [{}]", newDefinitions.keySet());
-    logger.info("Auto wire {} beans using {} mills", newDefinitions.size(), watch.getTime());
+    logger.info("Auto register and wire {} beans using {}", newDefinitions.size(), watch);
   }
 
   /**
@@ -290,8 +285,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
         Class<?> target = def.targetClass;
 
         if (null == target) target = ((FactoryBean<?>) def.clazz.newInstance()).getObjectType();
-        Assert.isTrue(null != target || def.isAbstract(), "Concrete bean [" + def.beanName
-            + "]should has class.");
+        Assert.isTrue(null != target || def.isAbstract(), "Concrete bean [%1$s] should has class.",
+            def.beanName);
 
         registry.register(target, def.beanName, bd);
         // register concrete factory bean
@@ -361,7 +356,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
       }
       if (!binded) {
         if (beanNames.isEmpty()) {
-          logger.debug(beanName + "'s " + propertyName + " cannot found candidate bean");
+          logger.debug(beanName + "'s " + propertyName + " cannot found candidate beans.");
         } else {
           logger.warn(beanName + "'s " + propertyName + " expected single bean but found {} : {}",
               beanNames.size(), beanNames);

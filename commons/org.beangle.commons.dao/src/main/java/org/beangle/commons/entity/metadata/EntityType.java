@@ -10,7 +10,7 @@ import java.util.Map;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.Entity;
 import org.beangle.commons.lang.Assert;
-import org.beangle.commons.reflect.Reflections;
+import org.beangle.commons.lang.reflect.Reflections;
 
 /**
  * <p>

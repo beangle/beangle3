@@ -6,13 +6,13 @@ package org.beangle.commons.orm.hibernate.internal;
 
 import java.util.*;
 
-import org.apache.commons.lang3.time.StopWatch;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.metadata.CollectionType;
 import org.beangle.commons.entity.metadata.ComponentType;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Type;
 import org.beangle.commons.entity.metadata.impl.AbstractEntityContext;
+import org.beangle.commons.lang.time.Stopwatch;
 import org.hibernate.EntityMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.metadata.ClassMetadata;
@@ -38,15 +38,14 @@ public class HibernateEntityContext extends AbstractEntityContext {
 
   public void initFrom(SessionFactory sessionFactory) {
     if (null != sessionFactory && entityTypes.isEmpty()) {
-      StopWatch watch = new StopWatch();
-      watch.start();
+      Stopwatch watch = new Stopwatch().start();
       Map<String, ClassMetadata> classMetadatas = sessionFactory.getAllClassMetadata();
       for (Iterator<ClassMetadata> iter = classMetadatas.values().iterator(); iter.hasNext();) {
         ClassMetadata cm = (ClassMetadata) iter.next();
         buildEntityType(sessionFactory, cm.getEntityName());
       }
-      logger.info("Find {} entities,{} collections from hibernate in {} ms",
-          new Object[] { entityTypes.size(), collectionTypes.size(), watch.getTime() });
+      logger.info("Find {} entities,{} collections from hibernate in {}", new Object[] { entityTypes.size(),
+          collectionTypes.size(), watch });
       if (logger.isDebugEnabled()) {
         loggerTypeInfo();
       }

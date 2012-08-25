@@ -14,7 +14,6 @@ import org.beangle.commons.context.inject.BeanConfig.Definition;
 import org.beangle.commons.context.inject.BeanConfig.DefinitionBinder;
 import org.beangle.commons.context.inject.BeanConfig.ReferenceValue;
 import org.beangle.commons.lang.Assert;
-import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.tuple.Pair;
 
 /**
@@ -171,8 +170,9 @@ public abstract class AbstractBindModule implements BindModule {
   protected Properties props(String... keyValuePairs) {
     Properties properties = new Properties();
     for (String pair : keyValuePairs) {
-      Assert.isTrue(pair.indexOf('=') > 0, "property entry [" + pair + "] should contain =");
-      properties.put(Strings.substringBefore(pair, "="), Strings.substringAfter(pair, "="));
+      int index = pair.indexOf('=');
+      Assert.isTrue(index > 0, "property entry %1$s should contain =", pair);
+      properties.put(pair.substring(0, index), pair.substring(index + 1));
     }
     return properties;
   }

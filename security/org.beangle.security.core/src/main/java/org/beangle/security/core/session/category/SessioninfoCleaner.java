@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.apache.commons.lang3.time.StopWatch;
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.dao.EntityDao;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Dates;
+import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.security.core.session.Sessioninfo;
 import org.slf4j.Logger;
@@ -83,8 +83,7 @@ class SessionCleanerTask extends TimerTask {
 
   @Override
   public void run() {
-    StopWatch watch = new StopWatch();
-    watch.start();
+    Stopwatch watch = new Stopwatch().start();
     logger.debug("clean up expired or over maxOnlineTime session start ...");
     Calendar calendar = Calendar.getInstance();
     @SuppressWarnings("unchecked")
@@ -97,8 +96,8 @@ class SessionCleanerTask extends TimerTask {
       registry.remove(info.getId());
       removed++;
     }
-    if (removed > 0 || watch.getTime() > 50) {
-      logger.info("removed {} expired sessions in {} ms", removed, watch.getTime());
+    if (removed > 0 || watch.elapsedMillis() > 50) {
+      logger.info("removed {} expired sessions in {}", removed, watch);
     }
     registry.getController().stat();
   }

@@ -16,6 +16,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.i18n.TextBundleRegistry;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.struts2.convention.config.ActionFinder.ActionTest;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.struts2.convention.route.ActionBuilder;
@@ -55,7 +56,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
   private boolean devMode = false;
 
   private ReloadingClassLoader reloadingClassLoader;
-  
+
   private ActionFinder actionFinder;
 
   @Inject
@@ -74,7 +75,8 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
   protected String defaultBundleNames;
 
   @Inject("beangle.i18n.reload")
-  private String reloadBundles="false";
+  private String reloadBundles = "false";
+
   @Inject
   public SmartActionConfigBuilder(Configuration configuration, Container container,
       ObjectFactory objectFactory) throws Exception {
@@ -96,14 +98,14 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
   public void buildActionConfigs() {
     registry.addDefaults(Strings.split(defaultBundleNames));
     registry.setReloadBundles(Boolean.valueOf(reloadBundles));
-    
-    long start = System.currentTimeMillis();
+
+    Stopwatch watch = new Stopwatch().start();
     logger.info("Action scan starting....");
     for (Profile profile : actionBuilder.getProfileService().getProfiles()) {
       if (profile.isActionScan()) actionPackages.add(profile.getActionPattern());
     }
     if (actionPackages.isEmpty()) { return; }
-    // setup reload class loader based on dev settings
+    
     initReloadClassLoader();
     Map<String, PackageConfig.Builder> packageConfigs = new HashMap<String, PackageConfig.Builder>();
     int newActions = 0;
@@ -122,8 +124,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
       configuration.removePackageConfig(packageName);
       configuration.addPackageConfig(packageName, packageConfigs.get(packageName).build());
     }
-    logger.info("Action scan completely,create {} action in {} ms", newActions, System.currentTimeMillis()
-        - start);
+    logger.info("Action scan completely,create {} action in {}.", newActions, watch);
   }
 
   protected ClassLoaderInterface getClassLoaderInterface() {
