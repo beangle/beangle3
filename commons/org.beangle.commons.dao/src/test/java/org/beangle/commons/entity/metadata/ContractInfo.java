@@ -4,7 +4,11 @@
  */
 package org.beangle.commons.entity.metadata;
 
-public class ContractInfo {
+import org.beangle.commons.entity.pojo.LongIdObject;
+
+public class ContractInfo extends LongIdObject{
+
+  private static final long serialVersionUID = 1107093259619325625L;
 
   String add1;
 

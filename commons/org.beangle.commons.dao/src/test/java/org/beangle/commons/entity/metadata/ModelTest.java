@@ -6,13 +6,25 @@ package org.beangle.commons.entity.metadata;
 
 import static org.testng.Assert.assertNotNull;
 
+import java.util.Map;
+
+import org.beangle.commons.collection.CollectUtils;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Test
 public class ModelTest {
 
-  public void test() {
+  public void testNewInstance() {
     SimpleBean entity = Model.newInstance(SimpleBean.class);
     assertNotNull(entity);
+  }
+
+  public void testPopulate() {
+    Map<String, Object> params = CollectUtils.newHashMap();
+    params.put("contractInfo.id", "");
+    ManagerEmployer employer = (ManagerEmployer) Model.getPopulator().populate(new ManagerEmployer(),
+        ManagerEmployer.class.getName(), params);
+    Assert.assertNull(employer.getContractInfo());
   }
 }

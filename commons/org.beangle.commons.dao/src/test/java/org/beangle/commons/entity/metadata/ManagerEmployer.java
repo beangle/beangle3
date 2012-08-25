@@ -4,8 +4,12 @@
  */
 package org.beangle.commons.entity.metadata;
 
-public class ManagerEmployer {
+import org.beangle.commons.entity.pojo.LongIdObject;
 
+public class ManagerEmployer extends LongIdObject {
+  
+  private static final long serialVersionUID = 1371741254315503984L;
+  
   ContractInfo contractInfo;
 
   public ContractInfo getContractInfo() {

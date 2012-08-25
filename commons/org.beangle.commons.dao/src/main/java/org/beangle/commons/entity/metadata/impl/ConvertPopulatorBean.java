@@ -134,7 +134,8 @@ public class ConvertPopulatorBean implements Populator {
   }
 
   /**
-   * {@inheritDoc} 将params中的属性([attr(string)->value(object)]，放入到实体类中。<br>
+   * 将params中的属性([attr(string)->value(object)]，放入到实体类中。
+   * <p>
    * 如果引用到了别的实体，那么<br>
    * 如果params中的id为null，则将该实体的置为null.<br>
    * 否则新生成一个实体，将其id设为params中指定的值。 空字符串按照null处理
@@ -204,7 +205,7 @@ public class ConvertPopulatorBean implements Populator {
           logger.error("error attr:[" + attr + "] value:[" + value + "]", e);
         }
       }
-      if (logger.isDebugEnabled()) logger.debug("populate attr:[" + attr + "] value:[" + value + "]");
+      if (logger.isDebugEnabled()) logger.debug("populate attr:[{}] value:[{}]", attr, value);
     }
     return entity;
   }
