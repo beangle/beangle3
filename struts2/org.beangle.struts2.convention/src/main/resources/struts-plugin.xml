@@ -7,9 +7,10 @@
 	<constant name="struts.serve.static" value="true"/>
 	<constant name="struts.serve.static.browserCache" value="true"/>
 	<constant name="struts.i18n.encoding" value="UTF-8"/>
+	<constant name="struts.devMode" value="true"/>
 	<!--默认i18n和配置文件不重复加载-->
 	<constant name="struts.configuration.xml.reload" value="false"/>
-	<constant name="beangle.i18n.reload" value="true"/>
+	<constant name="beangle.i18n.reload" value="false"/>
 	<constant name="beangle.i18n.resources" value="beangle,application"/>
 	<!-- max 50M -->
 	<constant name="struts.multipart.maxSize" value="52428800"/>
@@ -23,6 +24,7 @@
 			<interceptor name="i18n2" class="org.beangle.struts2.interceptor.I18nInterceptor"/>
 			<interceptor name="ssc" class="org.beangle.struts2.interceptor.SimpleServletConfigInterceptor"/>
 			<interceptor-stack name="beangleStack">
+				<interceptor-ref name="profiling"/>
 				<interceptor-ref name="exception"/>
 				<interceptor-ref name="i18n2"/>
 				<interceptor-ref name="fileUpload"/>

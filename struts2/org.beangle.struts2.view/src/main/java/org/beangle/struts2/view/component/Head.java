@@ -8,8 +8,18 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 public class Head extends ClosingUIBean {
 
+  private boolean loadui = true;
+
   public Head(ValueStack stack) {
     super(stack);
+  }
+
+  public boolean isLoadui() {
+    return loadui;
+  }
+
+  public void setLoadui(boolean loadui) {
+    this.loadui = loadui;
   }
 
 }

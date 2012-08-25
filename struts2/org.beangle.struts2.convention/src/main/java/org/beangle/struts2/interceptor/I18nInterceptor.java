@@ -49,12 +49,11 @@ public class I18nInterceptor extends AbstractInterceptor {
   }
 
   private String findLocaleParameter(Map<String, Object> params, String parameterName) {
-    Object requested_locale = params.remove(parameterName);
-    if (requested_locale != null && requested_locale.getClass().isArray()
-        && ((Object[]) requested_locale).length == 1) {
-      requested_locale = ((Object[]) requested_locale)[0];
+    Object localParam = params.remove(parameterName);
+    if (localParam != null && localParam.getClass().isArray() && ((Object[]) localParam).length == 1) {
+      localParam = ((Object[]) localParam)[0];
     }
-    return null == requested_locale ? null : requested_locale.toString();
+    return null == localParam ? null : localParam.toString();
   }
 
   public void setSessionParameterName(String sessionParameterName) {
