@@ -85,10 +85,8 @@ public class Component {
    * <p/>
    * <b>NOTE:</b> will pop component stack.
    * 
-   * @param writer
-   *          the output writer.
-   * @param body
-   *          the rendered body.
+   * @param writer the output writer.
+   * @param body the rendered body.
    * @return true if the body should be evaluated again
    */
   public boolean end(Writer writer, String body) {
@@ -101,25 +99,20 @@ public class Component {
    * <p/>
    * <b>NOTE:</b> has a parameter to determine to pop the component stack.
    * 
-   * @param writer
-   *          the output writer.
-   * @param body
-   *          the rendered body.
+   * @param writer the output writer.
+   * @param body the rendered body.
    * @param popComponentStack
    *          should the component stack be popped?
    * @return true if the body should be evaluated again
    */
   protected boolean end(Writer writer, String body, boolean popComponentStack) {
     assert (body != null);
-
     try {
       writer.write(body);
     } catch (IOException e) {
       throw new StrutsException("IOError while writing the body: " + e.getMessage(), e);
     }
-    if (popComponentStack) {
-      popComponentStack();
-    }
+    if (popComponentStack) popComponentStack();
     return false;
   }
 
@@ -140,16 +133,10 @@ public class Component {
   @SuppressWarnings("unchecked")
   protected <T extends Component> T findAncestor(Class<T> clazz) {
     Stack<? extends Component> componentStack = getComponentStack();
-    int currPosition = componentStack.search(this);
-    if (currPosition >= 0) {
-      int start = componentStack.size() - currPosition - 1;
-      // for (int i = componentStack.size() - 2; i >= 0; i--) {
-      for (int i = start; i >= 0; i--) {
-        Component component = componentStack.get(i);
-        if (clazz.isAssignableFrom(component.getClass()) && component != this) { return (T) component; }
-      }
+    for (int i = componentStack.size() - 2; i >= 0; i--) {
+      Component component = componentStack.get(i);
+      if (clazz.equals(component.getClass())) return (T) component;
     }
-
     return null;
   }
 

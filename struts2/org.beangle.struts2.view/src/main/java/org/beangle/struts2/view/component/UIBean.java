@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.beangle.commons.lang.Chars;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.struts2.util.TextResourceHelper;
 import org.beangle.struts2.view.UIIdGenerator;
 import org.beangle.struts2.view.template.TemplateEngine;
@@ -46,12 +47,15 @@ public abstract class UIBean extends Component {
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
+    popComponentStack();
     return false;
   }
 
   protected void mergeTemplate(Writer writer) throws Exception {
     TemplateEngine engine = getContainer().getInstance(TemplateEngine.class);
+    Stopwatch watch = new Stopwatch().start();
     engine.render(getTheme().getTemplatePath(getClass(), engine.getSuffix()), stack, writer, this);
+    System.out.println(getClass().getName() + " "+ watch);
   }
 
   /**

@@ -42,7 +42,7 @@ import freemarker.template.Template;
 public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
   private static final Logger logger = LoggerFactory.getLogger(FreemarkerTemplateEngine.class);
   private static final String UI_ENV_CACHE = ".ui.envs";
-  
+
   protected FreemarkerManager freemarkerManager;
   protected Configuration config;
 
@@ -72,7 +72,7 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
    * @return
    * @throws Exception
    */
-  private Template loadTemplate(String templateName) throws Exception {
+  private Template getTemplate(String templateName) throws Exception {
     Template template = null;
     String curTemplate = templateName;
     while (null == template) {
@@ -106,7 +106,7 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
     Environment env = envs.get(templateName);
     if (null == env) {
       try {
-        Template template = loadTemplate(templateName);
+        Template template = getTemplate(templateName);
         env = template.createProcessingEnvironment(model, writer);
         envs.put(templateName, env);
       } catch (ParseException pe) {

@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.struts2.util.MakeIterator;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.Page;
@@ -22,6 +21,8 @@ import org.beangle.commons.lang.Strings;
 import org.beangle.struts2.view.template.Theme;
 
 import com.opensymphony.xwork2.util.ValueStack;
+
+import freemarker.template.utility.StringUtil;
 
 /**
  * Data table
@@ -237,7 +238,16 @@ public class Grid extends ClosingUIBean {
 
     public boolean isHasTr() {
       if (null != innerTr) return innerTr;
-      innerTr = Strings.contains(body, "<tr");
+      int i = 0;
+      innerTr = Boolean.FALSE;
+      // max try count is 10
+      while (i < body.length() && i < 10) {
+        if (body.charAt(i) == '<' && Strings.substring(body, i, i + 3).equals("<tr")) {
+          innerTr = Boolean.TRUE;
+          break;
+        }
+        i++;
+      }
       return innerTr;
     }
 
@@ -274,10 +284,8 @@ public class Grid extends ClosingUIBean {
 
     @Override
     public boolean start(Writer writer) {
-      row = (Row) findAncestor(Row.class);
-      if (row.index == 0) {
-        row.table.addCol(this);
-      }
+      row = findAncestor(Row.class);
+      if (row.index == 0) row.table.addCol(this);
       return null != row.curObj;
     }
 
@@ -290,7 +298,7 @@ public class Grid extends ClosingUIBean {
             writer.append(body);
           } else if (null != property) {
             Object val = getValue();
-            if (null != val) writer.append(StringEscapeUtils.escapeHtml4(val.toString()));
+            if (null != val) writer.append(StringUtil.HTMLEnc(val.toString()));
           }
           writer.append("</td>");
         } catch (Exception e) {

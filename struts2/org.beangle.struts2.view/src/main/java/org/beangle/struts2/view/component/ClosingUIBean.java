@@ -31,6 +31,7 @@ public class ClosingUIBean extends UIBean {
   public final boolean end(Writer writer, String body) {
     boolean evaluatedAgain = doEnd(writer, body);
     if (useNewTheme) popTheme();
+    if (!evaluatedAgain) popComponentStack();
     return evaluatedAgain;
   }
 

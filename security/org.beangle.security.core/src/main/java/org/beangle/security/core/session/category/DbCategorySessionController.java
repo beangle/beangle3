@@ -4,9 +4,13 @@
  */
 package org.beangle.security.core.session.category;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.beangle.commons.bean.Initializing;
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.context.event.Event;
 import org.beangle.commons.context.event.EventListener;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
@@ -68,17 +72,24 @@ public class DbCategorySessionController extends AbstractSessionController imple
     }
   }
 
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public void init() throws Exception {
     Assert.notNull(categoryProfileProvider);
+    Map<String, CategoryProfile> profileMap = CollectUtils.newHashMap();
     for (CategoryProfile profile : categoryProfileProvider.getCategoryProfiles()) {
-      OqlBuilder<SessionStat> builder = OqlBuilder.from(SessionStat.class, "stat");
-      builder.where("stat.category=:category", profile.getCategory());
-      SessionStat stat = entityDao.uniqueResult(builder);
-      if (null == stat) {
-        stat = new SessionStat(profile.getCategory(), profile.getCapacity(), profile.getInactiveInterval());
-        entityDao.saveOrUpdate(stat);
-      }
+      profileMap.put(profile.getCategory(), profile);
     }
+    OqlBuilder builder = OqlBuilder.from(SessionStat.class, "stat").select("stat.category ");
+    builder.where("stat.category in(:categories)", profileMap.keySet());
+    List<String> existed = entityDao.search(builder);
+    Collection<String> newers = CollectionUtils.subtract(profileMap.keySet(), existed);
+    List<SessionStat> newStats = CollectUtils.newArrayList(newers.size());
+    for (String category : newers) {
+      CategoryProfile profile = profileMap.get(category);
+      newStats.add(new SessionStat(profile.getCategory(), profile.getCapacity(), profile
+          .getInactiveInterval()));
+    }
+    if (!newStats.isEmpty()) entityDao.saveOrUpdate(newStats);
   }
 
   public void onEvent(CategoryProfileUpdateEvent event) {
