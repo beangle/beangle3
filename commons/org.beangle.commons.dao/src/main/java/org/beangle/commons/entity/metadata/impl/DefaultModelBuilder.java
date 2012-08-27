@@ -11,6 +11,7 @@ import org.beangle.commons.entity.metadata.EntityContext;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.entity.metadata.ModelBuilder;
 import org.beangle.commons.entity.metadata.Populator;
+import org.beangle.commons.lang.ClassLoaders;
 
 /**
  * <p>
@@ -32,15 +33,13 @@ public class DefaultModelBuilder implements ModelBuilder {
   public void build() {
     try {
       Properties props = new Properties();
-      InputStream is = AbstractEntityContext.class
-          .getResourceAsStream("/org/beangle/commons/entity/metadata/model-default.properties");
-      if (null != is) {
-        props.load(is);
-      }
-      is = AbstractEntityContext.class.getResourceAsStream("/model.properties");
-      if (null != is) {
-        props.load(is);
-      }
+      InputStream is = ClassLoaders.getResourceAsStream(
+          "org/beangle/commons/entity/metadata/model-default.properties", getClass());
+      if (null != is) props.load(is);
+
+      is = ClassLoaders.getResourceAsStream("model.properties", getClass());
+      if (null != is) props.load(is);
+
       if (null == Model.getContext()) {
         Class<?> contextClass = Class.forName((String) props.get(CONTEXT_PRO));
         Model.setContext((EntityContext) contextClass.newInstance());

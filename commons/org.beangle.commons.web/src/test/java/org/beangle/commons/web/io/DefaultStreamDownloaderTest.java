@@ -9,6 +9,7 @@ import java.net.URLDecoder;
 
 import org.apache.commons.codec.net.URLCodec;
 import org.beangle.commons.http.mime.MimeTypeProvider;
+import org.beangle.commons.lang.ClassLoaders;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.testng.Assert;
@@ -22,7 +23,7 @@ public class DefaultStreamDownloaderTest {
   public void download() {
     MockHttpServletRequest request = new MockHttpServletRequest();
     MockHttpServletResponse response = new MockHttpServletResponse();
-    URL testDoc = DefaultStreamDownloaderTest.class.getResource("/download.txt");
+    URL testDoc = ClassLoaders.getResource("download.txt",getClass());
     streamDownloader.download(request, response, testDoc, null);
   }
 

@@ -6,9 +6,8 @@ package org.beangle.struts2.view.freemarker;
 
 import java.net.URL;
 
+import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Strings;
-
-import com.opensymphony.xwork2.util.ClassLoaderUtil;
 
 import freemarker.cache.URLTemplateLoader;
 
@@ -19,6 +18,7 @@ import freemarker.cache.URLTemplateLoader;
  */
 public class BeangleClassTemplateLoader extends URLTemplateLoader {
 
+  /**Not starts with /,but end with /*/
   String prefix = null;
 
   public BeangleClassTemplateLoader(String prefix) {
@@ -27,10 +27,8 @@ public class BeangleClassTemplateLoader extends URLTemplateLoader {
   }
 
   protected URL getURL(String name) {
-    URL url = ClassLoaderUtil.getResource(name, getClass());
-    if (null != prefix) {
-      url = ClassLoaderUtil.getResource(prefix + name, getClass());
-    }
+    URL url = ClassLoaders.getResource(name, getClass());
+    if (null != prefix) url = ClassLoaders.getResource(prefix + name, getClass());
     return url;
   }
 
@@ -39,21 +37,15 @@ public class BeangleClassTemplateLoader extends URLTemplateLoader {
   }
 
   public void setPrefix(String pre) {
-    if (Strings.isBlank(pre)) {
-      this.prefix = null;
-    } else {
-      this.prefix = pre.trim();
-    }
+    if (Strings.isBlank(pre)) this.prefix = null;
+    else this.prefix = pre.trim();
+
     if (null != prefix) {
       if (prefix.equals("/")) {
         prefix = null;
       } else {
-        if (!prefix.endsWith("/")) {
-          prefix += "/";
-        }
-        if (prefix.startsWith("/")) {
-          prefix = prefix.substring(1);
-        }
+        if (!prefix.endsWith("/")) prefix += "/";
+        if (prefix.startsWith("/")) prefix = prefix.substring(1);
       }
     }
   }

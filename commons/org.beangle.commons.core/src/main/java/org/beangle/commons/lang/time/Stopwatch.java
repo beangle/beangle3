@@ -27,15 +27,23 @@ public final class Stopwatch {
    * Creates (but does not start) a new stopwatch using {@link System#nanoTime} as its time source.
    */
   public Stopwatch() {
-    this(Ticker.systemTicker());
+    this(Ticker.systemTicker(), false);
+  }
+
+  public Stopwatch(boolean start) {
+    this(Ticker.systemTicker(), true);
   }
 
   /**
    * Creates (but does not start) a new stopwatch, using the specified time
    * source.
    */
-  public Stopwatch(Ticker ticker) {
+  public Stopwatch(Ticker ticker, boolean start) {
     this.ticker = ticker;
+    if (start) {
+      isRunning = true;
+      startTick = ticker.read();
+    }
   }
 
   /**

@@ -32,11 +32,15 @@ import freemarker.template.TemplateException;
 /**
  * BeangleFreemarkerManager provide:
  * <p>
+ * <ul>
  * <li>Better template loader sequence like classpath:,file:,webapp:</li>
  * <li>Multi freemark properties loading(META-INF/freemarker.properties,freemarker.properties)</li>
  * <li>Friendly Collection/Map/Object objectwrapper</li>
+ * <li>Select Slf4j for freemarker</li>
+ * </ul>
  * 
  * @author chaostone
+ * @since 2.1
  */
 public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarker.FreemarkerManager {
 

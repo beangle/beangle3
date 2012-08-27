@@ -5,6 +5,7 @@
 package org.beangle.commons.orm.hibernate;
 
 import org.beangle.commons.context.inject.Resources;
+import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.orm.DefaultTableNamingStrategy;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -15,8 +16,7 @@ public class DefaultTableNamingStrategyTest {
   public void testGetSchemaName() {
     DefaultTableNamingStrategy config = new DefaultTableNamingStrategy();
     Resources resources = new Resources();
-    resources.setGlobal(DefaultTableNamingStrategyTest.class.getClassLoader().getResource(
-        "META-INF/beangle/table.properties"));
+    resources.setGlobal(ClassLoaders.getResource("META-INF/beangle/table.properties", getClass()));
     config.setResources(resources);
     Assert.assertEquals("security_online", config.getSchema("org.beangle.security.online.model"));
     Assert.assertEquals("sys_", config.getPrefix("org.beangle.security"));

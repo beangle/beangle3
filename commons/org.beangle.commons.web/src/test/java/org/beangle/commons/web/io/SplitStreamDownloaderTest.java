@@ -8,6 +8,7 @@ import java.io.File;
 import java.net.URL;
 
 import org.beangle.commons.http.mime.MimeTypeProvider;
+import org.beangle.commons.lang.ClassLoaders;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.testng.Assert;
@@ -21,7 +22,7 @@ public class SplitStreamDownloaderTest {
   public void download() throws Exception {
     MockHttpServletRequest request = new MockHttpServletRequest();
     MockHttpServletResponse response = new MockHttpServletResponse();
-    URL testDoc = DefaultStreamDownloaderTest.class.getResource("/download.txt");
+    URL testDoc = ClassLoaders.getResource("download.txt",getClass());
     streamDownloader.download(request, response, testDoc, null);
     Assert.assertEquals(response.getStatus(), 200);
     Assert.assertEquals(response.getHeader("Accept-Ranges"), "bytes");

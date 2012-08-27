@@ -22,7 +22,7 @@ import com.opensymphony.xwork2.util.ClassLoaderUtil;
  */
 public abstract class AbstractTemplateEngine implements TemplateEngine {
   private static final Logger logger = LoggerFactory.getLogger(AbstractTemplateEngine.class);
-  final Map<String, Properties> themeProps = new HashMap<String, Properties>();
+  protected final Map<String, Properties> themeProps = new HashMap<String, Properties>();
   public static final String DEFAULT_THEME_PROPERTIES_FILE_NAME = "theme.properties";
 
   public Properties getThemeProps(String theme) {

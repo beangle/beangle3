@@ -13,6 +13,7 @@ import java.util.*;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.i18n.TextBundle;
 import org.beangle.commons.i18n.TextBundleRegistry;
+import org.beangle.commons.lang.ClassLoaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,7 +69,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
     Map<String, String> texts = CollectUtils.newHashMap();
     String resource = toDefaultResourceName(bundleName, locale);
     try {
-      InputStream is = getClass().getClassLoader().getResourceAsStream(resource);
+      InputStream is = ClassLoaders.getResourceAsStream(resource,getClass());
       if (null == is) return null;
       LineNumberReader reader = new LineNumberReader(new InputStreamReader(is, "UTF-8"));
       String line;
@@ -98,7 +99,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
     Properties properties = new Properties();
     String resource = toJavaResourceName(bundleName, locale);
     try {
-      InputStream is = getClass().getClassLoader().getResourceAsStream(resource);
+      InputStream is = ClassLoaders.getResourceAsStream(resource,getClass());
       if (null == is) return null;
       properties.load(is);
       is.close();
@@ -106,10 +107,6 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
       e.printStackTrace();
       return null;
     } finally {
-    }
-    System.out.println("=============" + bundleName);
-    for (Object key : properties.keySet()) {
-      System.out.println(key + "=" + properties.get(key));
     }
     return new DefaultTextBundle(locale, resource, properties);
   }

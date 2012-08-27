@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.Throwables;
 import org.beangle.struts2.view.component.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.opensymphony.xwork2.inject.Inject;
 import com.opensymphony.xwork2.util.ValueStack;
 
+import freemarker.cache.StrongCacheStorage;
 import freemarker.core.Environment;
 import freemarker.core.ParseException;
 import freemarker.template.Configuration;
@@ -58,10 +60,22 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
   @Inject
   public void setFreemarkerManager(FreemarkerManager mgr) {
     this.freemarkerManager = mgr;
-    // Disable freemarker localized lookup
     if (null != freemarkerManager) {
       config = (Configuration) freemarkerManager.getConfig().clone();
+      // Disable freemarker localized lookup
       config.setLocalizedLookup(false);
+
+      // Cache one hour and Strong cache
+      config.setTemplateUpdateDelay(3600);
+      // config.setCacheStorage(new MruCacheStorage(100,250));
+      config.setCacheStorage(new StrongCacheStorage());
+
+      // Disable auto imports and includes
+      config.setAutoImports(CollectUtils.newHashMap());
+      config.setAutoIncludes(CollectUtils.newArrayList(0));
+
+      // Only class path class loader
+      config.setTemplateLoader(new HierarchicalTemplateLoader(this));
     }
   }
 
@@ -72,24 +86,16 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
    * @return
    * @throws Exception
    */
-  private Template getTemplate(String templateName) throws Exception {
-    Template template = null;
-    String curTemplate = templateName;
-    while (null == template) {
-      try {
-        template = config.getTemplate(curTemplate);
-      } catch (ParseException e) {
-        throw e;
-      } catch (IOException e) {
-        curTemplate = getParentTemplate(curTemplate);
-        if (null == curTemplate) {
-          logger.error("Could not load template named '{}',TemplateLoader is {}", templateName, config
-              .getTemplateLoader().getClass());
-          throw e;
-        }
-      }
+  private Template getTemplate(String templateName) throws ParseException {
+    try {
+      return config.getTemplate(templateName);
+    } catch (ParseException e) {
+      throw e;
+    } catch (IOException e) {
+      logger.error("Could not load template named '{}',TemplateLoader is {}", templateName, config
+          .getTemplateLoader().getClass());
+      throw Throwables.propagate(e);
     }
-    return template;
   }
 
   /**

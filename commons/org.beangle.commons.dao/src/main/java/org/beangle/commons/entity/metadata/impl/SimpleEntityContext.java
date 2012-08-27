@@ -12,6 +12,7 @@ import java.util.Properties;
 
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Type;
+import org.beangle.commons.lang.ClassLoaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +36,7 @@ public class SimpleEntityContext extends AbstractEntityContext {
   public SimpleEntityContext() {
     Properties props = new Properties();
     try {
-      InputStream is = AbstractEntityContext.class.getResourceAsStream("/model.properties");
+      InputStream is = ClassLoaders.getResourceAsStream("model.properties",getClass());
       if (null != is) {
         props.load(is);
       }

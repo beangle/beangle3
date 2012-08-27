@@ -79,17 +79,19 @@ public class DbCategorySessionController extends AbstractSessionController imple
     for (CategoryProfile profile : categoryProfileProvider.getCategoryProfiles()) {
       profileMap.put(profile.getCategory(), profile);
     }
-    OqlBuilder builder = OqlBuilder.from(SessionStat.class, "stat").select("stat.category ");
-    builder.where("stat.category in(:categories)", profileMap.keySet());
-    List<String> existed = entityDao.search(builder);
-    Collection<String> newers = CollectionUtils.subtract(profileMap.keySet(), existed);
-    List<SessionStat> newStats = CollectUtils.newArrayList(newers.size());
-    for (String category : newers) {
-      CategoryProfile profile = profileMap.get(category);
-      newStats.add(new SessionStat(profile.getCategory(), profile.getCapacity(), profile
-          .getInactiveInterval()));
+    if (!profileMap.isEmpty()) {
+      OqlBuilder builder = OqlBuilder.from(SessionStat.class, "stat").select("stat.category ");
+      builder.where("stat.category in(:categories)", profileMap.keySet());
+      List<String> existed = entityDao.search(builder);
+      Collection<String> newers = CollectionUtils.subtract(profileMap.keySet(), existed);
+      List<SessionStat> newStats = CollectUtils.newArrayList(newers.size());
+      for (String category : newers) {
+        CategoryProfile profile = profileMap.get(category);
+        newStats.add(new SessionStat(profile.getCategory(), profile.getCapacity(), profile
+            .getInactiveInterval()));
+      }
+      if (!newStats.isEmpty()) entityDao.saveOrUpdate(newStats);
     }
-    if (!newStats.isEmpty()) entityDao.saveOrUpdate(newStats);
   }
 
   public void onEvent(CategoryProfileUpdateEvent event) {

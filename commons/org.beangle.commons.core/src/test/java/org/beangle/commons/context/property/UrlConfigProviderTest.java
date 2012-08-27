@@ -9,6 +9,7 @@ import static org.testng.Assert.assertEquals;
 import java.util.Properties;
 
 import org.beangle.commons.context.inject.Resources;
+import org.beangle.commons.lang.ClassLoaders;
 import org.testng.annotations.Test;
 
 @Test
@@ -19,8 +20,8 @@ public class UrlConfigProviderTest {
     UrlPropertyConfigProvider provider = new UrlPropertyConfigProvider();
     Resources resources = new Resources();
     // META-INF/system.properties
-    resources.setGlobal(UrlPropertyConfigProvider.class.getResource("/system-default.properties"));
-    resources.setUser(UrlPropertyConfigProvider.class.getResource("/system.properties"));
+    resources.setGlobal(ClassLoaders.getResource("system-default.properties",getClass()));
+    resources.setUser(ClassLoaders.getResource("system.properties",getClass()));
     provider.setResources(resources);
     Properties properties = provider.getConfig();
     config.set(properties);
