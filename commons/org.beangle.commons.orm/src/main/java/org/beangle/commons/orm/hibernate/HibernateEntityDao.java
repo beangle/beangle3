@@ -34,6 +34,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.engine.jdbc.StreamUtils;
 import org.hibernate.proxy.HibernateProxy;
+import org.hibernate.collection.PersistentCollection;
 import org.hibernate.proxy.LazyInitializer;
 
 /**
@@ -335,6 +336,8 @@ public class HibernateEntityDao implements EntityDao {
       } else {
         Hibernate.initialize(proxy);
       }
+    } else if (proxy instanceof PersistentCollection) {
+      getHibernateTemplate().initialize(proxy);
     }
     return proxy;
   }
