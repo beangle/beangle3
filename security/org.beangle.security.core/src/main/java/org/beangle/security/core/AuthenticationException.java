@@ -4,8 +4,8 @@
  */
 package org.beangle.security.core;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.Throwables;
 import org.beangle.security.BeangleSecurityException;
 
 /**
@@ -34,7 +34,7 @@ public class AuthenticationException extends BeangleSecurityException {
    * @param cause
    */
   public AuthenticationException(Throwable cause) {
-    super(ExceptionUtils.getStackTrace(cause));
+    super(Throwables.getStackTrace(cause));
   }
 
   public AuthenticationException(String msg, Object extraInfo) {

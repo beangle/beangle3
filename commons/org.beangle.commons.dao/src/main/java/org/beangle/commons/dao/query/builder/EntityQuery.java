@@ -20,7 +20,7 @@ import org.beangle.commons.lang.Strings;
  * 实体类查询
  * 
  * @author chaostone
- * @deprecated use HqlBuilder ,will remove in 3.1.0
+ * @deprecated use HqlBuilder ,It will be removed in 3.1.0.
  * @version $Id: $
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })

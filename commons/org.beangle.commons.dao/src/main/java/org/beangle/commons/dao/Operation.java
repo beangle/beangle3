@@ -8,8 +8,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.Arrays;
 
 /**
  * <p>
@@ -101,7 +101,7 @@ public class Operation {
     }
 
     public Builder saveOrUpdate(Object... entities) {
-      if (ArrayUtils.isEmpty(entities)) { return this; }
+      if (Arrays.isEmpty(entities)) { return this; }
       for (Object entity : entities) {
         if (null != entity) operations.add(new Operation(OperationType.SAVE_UPDATE, entity));
       }
@@ -117,7 +117,7 @@ public class Operation {
     }
 
     public Builder remove(Object... entities) {
-      if (ArrayUtils.isEmpty(entities)) { return this; }
+      if (Arrays.isEmpty(entities)) { return this; }
       for (Object entity : entities) {
         if (null != entity) operations.add(new Operation(OperationType.REMOVE, entity));
       }

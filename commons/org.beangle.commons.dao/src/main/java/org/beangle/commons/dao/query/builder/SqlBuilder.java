@@ -13,6 +13,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.commons.dao.query.Lang;
+import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
 
 /**
@@ -349,10 +350,21 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
   public SqlBuilder groupBy(final String what) {
-    if (Strings.isNotEmpty(what)) {
-      groups.add(what);
-    }
+    if (Strings.isNotEmpty(what)) groups.add(what);
     return this;
   }
 
+  /**
+   * <p>
+   * Having subclause.
+   * </p>
+   * 
+   * @param having subclause
+   * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
+   */
+  public SqlBuilder having(final String what) {
+    Assert.isTrue(null != groups && !groups.isEmpty());
+    if (Strings.isNotEmpty(what)) having = what;
+    return this;
+  }
 }

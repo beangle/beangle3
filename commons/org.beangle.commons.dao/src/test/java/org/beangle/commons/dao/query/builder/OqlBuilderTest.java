@@ -10,6 +10,7 @@ import static org.testng.Assert.assertTrue;
 
 import org.beangle.commons.dao.query.LimitQuery;
 import org.beangle.commons.dao.query.TestModel;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Test
@@ -31,6 +32,12 @@ public class OqlBuilderTest {
             + " union all from Ware where price is null order by releaseDate desc");
     LimitQuery<Object> query = (LimitQuery<Object>) queryBuilder.build();
     assertNull(query.getCountQuery());
+  }
+
+  public void testHaving() throws Exception {
+    OqlBuilder<Object> queryBuilder = OqlBuilder.from("SomeClass a ").groupBy("a.name").having("sum(a.id)>0");
+    Assert.assertEquals(queryBuilder.build().getStatement(),
+        "from SomeClass a  group by a.name having sum(a.id)>0");
   }
 
 }

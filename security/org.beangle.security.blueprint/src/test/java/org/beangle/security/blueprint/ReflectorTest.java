@@ -7,7 +7,6 @@ package org.beangle.security.blueprint;
 import java.beans.Introspector;
 import java.lang.reflect.Method;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.beangle.security.blueprint.model.RoleBean;
 import org.testng.annotations.Test;
 
@@ -21,7 +20,6 @@ public class ReflectorTest {
 
   private static Method getterMethod(Class<?> theClass, String propertyName) {
     Method[] methods = theClass.getDeclaredMethods();
-    ArrayUtils.reverse(methods);
     for (Method method : methods) {
       if ("getParent".equals(method.getName())) {
         System.out.println(method.getReturnType());

@@ -11,7 +11,6 @@ import java.sql.Blob;
 import java.sql.Clob;
 import java.util.*;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.Page;
 import org.beangle.commons.collection.page.PageLimit;
@@ -24,6 +23,7 @@ import org.beangle.commons.dao.query.builder.Condition;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.metadata.Model;
+import org.beangle.commons.lang.Arrays;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.orm.hibernate.internal.SessionUtils;
@@ -32,9 +32,9 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.collection.PersistentCollection;
 import org.hibernate.engine.jdbc.StreamUtils;
 import org.hibernate.proxy.HibernateProxy;
-import org.hibernate.collection.PersistentCollection;
 import org.hibernate.proxy.LazyInitializer;
 
 /**
@@ -124,7 +124,7 @@ public class HibernateEntityDao implements EntityDao {
         if (end > values.length) {
           end = values.length;
         }
-        parameterMap.put("keyName", ArrayUtils.subarray(values, i, end));
+        parameterMap.put("keyName", Arrays.subarray(values, i, end));
         rs.addAll(search(query.params(parameterMap).build()));
         i += 500;
       }
@@ -337,7 +337,7 @@ public class HibernateEntityDao implements EntityDao {
         Hibernate.initialize(proxy);
       }
     } else if (proxy instanceof PersistentCollection) {
-      getHibernateTemplate().initialize(proxy); 
+      Hibernate.initialize(proxy);
     }
     return proxy;
   }

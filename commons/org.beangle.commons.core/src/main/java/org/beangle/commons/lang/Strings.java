@@ -1321,4 +1321,18 @@ public class Strings {
     return new StringBuilder(strLen).append(Character.toLowerCase(str.charAt(0))).append(str.substring(1))
         .toString();
   }
+
+  /**
+   * <p>
+   * Returns either the passed in CharSequence, or if the CharSequence is whitespace, empty ("") or
+   * {@code null}, the value of {@code defaultStr}.
+   * </p>
+   * 
+   * @param str
+   * @param defaultStr
+   * @return
+   */
+  public static <T extends CharSequence> T defaultIfBlank(T str, T defaultStr) {
+    return isBlank(str) ? defaultStr : str;
+  }
 }

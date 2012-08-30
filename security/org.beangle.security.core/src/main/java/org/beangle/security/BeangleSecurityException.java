@@ -4,7 +4,6 @@
  */
 package org.beangle.security;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
 
 public class BeangleSecurityException extends RuntimeException {
 
@@ -25,6 +24,6 @@ public class BeangleSecurityException extends RuntimeException {
    * @param cause
    */
   public BeangleSecurityException(Throwable cause) {
-    super(ExceptionUtils.getStackTrace(cause));
+    super(cause);
   }
 }

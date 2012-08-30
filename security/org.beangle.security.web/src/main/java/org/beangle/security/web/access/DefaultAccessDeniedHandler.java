@@ -14,9 +14,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.beangle.security.access.AccessDeniedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base implementation of {@link AccessDeniedHandler}.
@@ -34,7 +34,7 @@ import org.beangle.security.access.AccessDeniedException;
 public class DefaultAccessDeniedHandler implements AccessDeniedHandler {
 
   public static final String ACCESS_DENIED_EXCEPTION_KEY = "403_EXCEPTION";
-  protected static final Log logger = LogFactory.getLog(DefaultAccessDeniedHandler.class);
+  protected static final Logger logger = LoggerFactory.getLogger(DefaultAccessDeniedHandler.class);
 
   private String errorPage;
 

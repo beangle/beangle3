@@ -19,6 +19,7 @@ import org.beangle.commons.dao.query.Lang;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.entity.util.EntityUtils;
+import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
 
 /**
@@ -448,6 +449,20 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
     if (Strings.isNotEmpty(what)) {
       groups.add(what);
     }
+    return this;
+  }
+
+  /**
+   * <p>
+   * Having subclause.
+   * </p>
+   * 
+   * @param having subclause
+   * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
+   */
+  public OqlBuilder<T> having(final String what) {
+    Assert.isTrue(null != groups && !groups.isEmpty());
+    if (Strings.isNotEmpty(what)) having = what;
     return this;
   }
 

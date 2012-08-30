@@ -39,7 +39,6 @@ public final class Throwables {
     if (throwable != null && declaredType.isInstance(throwable)) { throw declaredType.cast(throwable); }
   }
 
-
   /**
    * Propagates {@code throwable} as-is if it is an instance of {@link RuntimeException} or
    * {@link Error}, or else as a last resort, wraps
@@ -78,9 +77,9 @@ public final class Throwables {
    * parsing the resulting string; if you need programmatic access to the stack
    * frames, you can call {@link Throwable#getStackTrace()}.
    */
-  public static String getStackTraceAsString(Throwable throwable) {
-    StringWriter stringWriter = new StringWriter();
-    throwable.printStackTrace(new PrintWriter(stringWriter));
-    return stringWriter.toString();
+  public static String getStackTrace(Throwable throwable) {
+    StringWriter sw = new StringWriter();
+    throwable.printStackTrace(new PrintWriter(sw));
+    return sw.toString();
   }
 }

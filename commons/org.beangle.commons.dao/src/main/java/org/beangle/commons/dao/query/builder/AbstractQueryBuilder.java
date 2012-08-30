@@ -60,6 +60,8 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
 
   protected List<String> groups = CollectUtils.newArrayList();
 
+  protected String having;
+
   /** 缓存查询结果 */
   protected boolean cacheable = false;
 
@@ -145,11 +147,8 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * @return a {@link java.lang.String} object.
    */
   protected String genStatement() {
-    if (Strings.isNotEmpty(statement)) {
-      return statement;
-    } else {
-      return genQueryStatement(true);
-    }
+    if (Strings.isNotEmpty(statement)) return statement;
+    else return genQueryStatement(true);
   }
 
   /**
@@ -172,7 +171,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
   protected String genQueryStatement(final boolean hasOrder) {
     if (null == from) { return statement; }
     final StringBuilder buf = new StringBuilder(50);
-    buf.append((select == null) ? "" : select).append(' ').append(from);
+    buf.append((select == null) ? "" : (select + " ")).append(from);
     if (!conditions.isEmpty()) {
       buf.append(" where ").append(ConditionUtils.toQueryString(conditions));
     }
@@ -186,6 +185,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
     if (hasOrder && !CollectionUtils.isEmpty(orders)) {
       buf.append(' ').append(Order.toSortString(orders));
     }
+    if (null != having) buf.append(" having ").append(having);
     return buf.toString();
   }
 

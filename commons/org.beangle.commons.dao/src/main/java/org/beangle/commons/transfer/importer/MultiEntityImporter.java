@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.metadata.EntityType;
@@ -59,7 +58,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    */
   public void transferItem() {
     if (logger.isDebugEnabled()) {
-      logger.debug("tranfer index:" + getTranferIndex() + ":" + ArrayUtils.toString(values));
+      logger.debug("tranfer index:{} : {}", getTranferIndex(), values);
     }
     // 在给定的值的范围内
     for (int i = 0; i < attrs.length; i++) {
