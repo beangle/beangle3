@@ -27,12 +27,12 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
 
   protected final Map<Locale, Map<String, TextBundle>> caches = CollectUtils.newConcurrentHashMap();
   protected final Map<Locale, Set<String>> missings = CollectUtils.newConcurrentHashMap();
-  protected final List<String> defaults = CollectUtils.newArrayList();
+  protected final List<String> defaultBundleNames = CollectUtils.newArrayList();
   protected boolean reloadBundles = false;
 
   public void addDefaults(String... bundleNames) {
     for (String name : bundleNames)
-      defaults.add(name);
+      defaultBundleNames.add(name);
     logger.info("Add {} global message bundles", Arrays.toString(bundleNames));
   }
 
@@ -69,7 +69,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
     Map<String, String> texts = CollectUtils.newHashMap();
     String resource = toDefaultResourceName(bundleName, locale);
     try {
-      InputStream is = ClassLoaders.getResourceAsStream(resource,getClass());
+      InputStream is = ClassLoaders.getResourceAsStream(resource, getClass());
       if (null == is) return null;
       LineNumberReader reader = new LineNumberReader(new InputStreamReader(is, "UTF-8"));
       String line;
@@ -99,7 +99,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
     Properties properties = new Properties();
     String resource = toJavaResourceName(bundleName, locale);
     try {
-      InputStream is = ClassLoaders.getResourceAsStream(resource,getClass());
+      InputStream is = ClassLoaders.getResourceAsStream(resource, getClass());
       if (null == is) return null;
       properties.load(is);
       is.close();
@@ -169,7 +169,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
 
   public String getDefaultText(String key, Locale locale) {
     String msg = null;
-    for (String defaultBundleName : defaults) {
+    for (String defaultBundleName : defaultBundleNames) {
       TextBundle bundle = load(locale, defaultBundleName);
       if (null != bundle) {
         msg = bundle.getText(key);
