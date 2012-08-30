@@ -337,7 +337,7 @@ public class HibernateEntityDao implements EntityDao {
         Hibernate.initialize(proxy);
       }
     } else if (proxy instanceof PersistentCollection) {
-      getHibernateTemplate().initialize(proxy);
+      getHibernateTemplate().initialize(proxy); 
     }
     return proxy;
   }
