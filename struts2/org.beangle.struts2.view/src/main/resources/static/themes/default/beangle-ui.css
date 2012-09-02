@@ -214,13 +214,17 @@ table.infoTable {
 	font-size: 13px;
 	vertical-align: middle;
 	width:100%;
+	table-layout:fixed;
 	border-collapse: collapse;
 	background-color: #EEEEEE;
 }
 
 table.infoTable td {
 	border: 1px solid #FFFFFF;
+	overflow:hidden;
+	word-wrap:break-word;
 }
+
 table.infoTable th {
 	background-color: #E1ECFF;
 	height: 22px;
@@ -228,7 +232,6 @@ table.infoTable th {
 
 .infoTable .title{
 	height: 22px;
-	width: 110px;
 	background-color:#F5EDDB;
 	padding-left: 2px;
 	padding-right: 2px;

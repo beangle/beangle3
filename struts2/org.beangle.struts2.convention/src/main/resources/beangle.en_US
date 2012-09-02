@@ -77,7 +77,8 @@ common.yes=yes
 common.title=Title
 common.index=Index
 common.dashboard=Dashboard
-
+common.invalidAt=Invalid At
+common.effectiveAt=Effective At
 
 ui.searchForm=Search Form
 ui.editForm={0}'s Edit Form

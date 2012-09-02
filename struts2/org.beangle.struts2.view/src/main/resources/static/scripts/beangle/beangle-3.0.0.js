@@ -347,8 +347,8 @@
        */
       submitId : function (form,id,isMulti,action,promptMsg,ajax){
         var selectId = bg.input.getCheckBoxValues(id);
-        if(null==isMulti)
-          isMulti=false;
+        if(null==isMulti) isMulti=false;
+        
         if(""==selectId){
           alert(isMulti?"请选择一个或多个进行操作":"请选择一个进行操作");
           return;

@@ -20,7 +20,7 @@ user.creator.name=Creator Name
 user.passwordExpiredAt=Password Expired At
 user.members=Roles
 menu.entry=Entry
-role=role
+
 role.managers=Managers
 role.users=Associated Users
 

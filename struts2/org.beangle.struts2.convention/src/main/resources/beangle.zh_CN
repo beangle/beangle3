@@ -76,6 +76,8 @@ common.title=标题
 common.updatedAt=修改时间
 common.yes=是
 common.dashboard=控制台
+common.invalidAt=截至时间
+common.effectiveAt=起始时间
 
 error.model.existed=相同数据已存在
 
