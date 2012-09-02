@@ -45,3 +45,5 @@ jQuery.extend(jQuery.validity.messages, {
 	
 	generic:"无效"
 });
+
+jQuery.validity.messages.notBlank="请在#{field}中填写非空白字符";

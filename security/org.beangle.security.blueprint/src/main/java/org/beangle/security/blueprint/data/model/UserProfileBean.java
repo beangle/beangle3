@@ -85,12 +85,14 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
 
   public void setProperty(ProfileField meta, String text) {
     UserProperty property = getProperty(meta);
-    if (null == property) {
-      property = new UserPropertyBean(this, meta, text);
-      properties.add(property);
+    if (Strings.isNotBlank(text)) {
+      if (null == property) {
+        property = new UserPropertyBean(this, meta, text);
+        properties.add(property);
+      } else property.setValue(text);
     } else {
-      if (Strings.isEmpty(text)) properties.remove(property);
-      else property.setValue(text);
+      if (null != property) properties.remove(property);
     }
+
   }
 }

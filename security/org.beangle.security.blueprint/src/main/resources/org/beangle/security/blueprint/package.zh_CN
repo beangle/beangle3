@@ -8,6 +8,7 @@ entity.dataType=数据类型
 entity.profileField=数据权限维度
 
 user.creator.fullname=创建者
+user.creator.name=创建者
 user.effectiveAt=生效时间
 user.effective-invalid=生效失效时间
 user.enabled=状态
@@ -16,13 +17,13 @@ user.mail=邮箱
 user.remark=备注
 user.members=角色
 user.name=登录名
-member.granter=Granter
-member.manager=Manager
-member.member=Member
+
+member.granter=授权
+member.manager=管理
+member.member=成员
 menu.entry=模块入口
 role.managers=管理者
 role.users=使用用户
-
 
 dataPermission.resource=关联数据对象
 dataPermission.filters=过滤条件

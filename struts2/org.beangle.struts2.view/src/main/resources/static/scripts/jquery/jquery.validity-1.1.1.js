@@ -1261,3 +1261,6 @@
         }
     };
 })(jQuery);
+
+// duantihua 2012-09-02 
+jQuery.validity.patterns.notBlank=/[^\s]+$/;

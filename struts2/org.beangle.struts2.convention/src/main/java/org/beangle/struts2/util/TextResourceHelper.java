@@ -28,7 +28,7 @@ public final class TextResourceHelper {
     for (Object o : stack.getRoot()) {
       if (o instanceof TextResource) {
         tp = (TextResource) o;
-        msg = tp.getText(key, defaultMessage);
+        msg = tp.getText(key, defaultMessage,args);
         break;
       }
     }

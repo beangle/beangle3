@@ -67,7 +67,7 @@ common.enabled=启用
 common.endAt=截止时间
 common.endOn=截止日期
 common.id=代码
-common.index=Index
+common.index=序号
 common.name=名称
 common.no=否
 common.remark=备注
@@ -83,6 +83,8 @@ info.action.success=操作成功
 info.remove.failure=删除失败
 info.remove.success=删除成功
 info.save.success=保存成功
+info.save.failure=保存失败
+info.upload.success=上传成功
 
 page.description=first:'«首页',previous:'‹前页',next:'后页›',last:'末页»',no:'页码:',size:'每页',change:'点击改变每页数据量',pagesize:'每页数据量'
 page.first=首页

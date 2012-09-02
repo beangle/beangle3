@@ -91,7 +91,10 @@ page.description=first:'\u00ab First',previous:'\u2039 Previous',next:'Next \u20
 page.noData=No result matched your search.
 
 info.save.success=Save Success
+info.save.failure=Save failure
 info.action.success=Operation Success
 info.remove.success=Remove Success
 info.remove.failure=Remove Failure
+info.upload.success=Upload Success
+
 error.model.existed=Data Existed

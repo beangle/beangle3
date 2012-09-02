@@ -265,7 +265,16 @@
       submit : function (myForm,action,target,onsubmit,ajax){
         var submitTarget, rs, sumbitBtnId, submitx,origin_target, origin_action,options_submit;
         if((typeof myForm)=='string') myForm = document.getElementById(myForm);
-        //1. submit hook
+        //First native onsubmit will benefit to user's onsubmit hook on data validation.
+        //1.native onsubmit
+        if(myForm.onsubmit){
+          rs=null;
+          try{rs=myForm.onsubmit();}catch(e){alert(e);return;}
+          if(rs==false){
+            return;
+          }
+        }
+        //2. submit hook
         if(onsubmit){
           rs=null;
           if(typeof onsubmit == "function"){
@@ -273,14 +282,6 @@
           }else{
             rs=eval(onsubmit);
           }
-          if(rs==false){
-            return;
-          }
-        }
-        //2.native onsubmit
-        if(myForm.onsubmit){
-          rs=null;
-          try{rs=myForm.onsubmit();}catch(e){alert(e);return;}
           if(rs==false){
             return;
           }

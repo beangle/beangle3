@@ -14,6 +14,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.i18n.TextBundle;
 import org.beangle.commons.i18n.TextBundleRegistry;
 import org.beangle.commons.lang.ClassLoaders;
+import org.beangle.commons.lang.time.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +34,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
   public void addDefaults(String... bundleNames) {
     for (String name : bundleNames)
       defaultBundleNames.add(name);
-    logger.info("Add {} global message bundles", Arrays.toString(bundleNames));
+    logger.info("Add {} global message bundles in {}", Arrays.toString(bundleNames));
   }
 
   public TextBundle load(Locale locale, String bundleName) {
@@ -66,6 +67,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
   }
 
   protected TextBundle loadNewBundle(String bundleName, Locale locale) {
+    Stopwatch watch = new Stopwatch(true);
     Map<String, String> texts = CollectUtils.newHashMap();
     String resource = toDefaultResourceName(bundleName, locale);
     try {
@@ -85,7 +87,9 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
       return null;
     } finally {
     }
-    return new DefaultTextBundle(locale, resource, texts);
+    DefaultTextBundle bundle = new DefaultTextBundle(locale, resource, texts);
+    logger.info("Load bundle {} in {}", bundleName, watch);
+    return bundle;
   }
 
   /**

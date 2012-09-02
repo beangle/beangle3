@@ -58,7 +58,7 @@ public class Select extends ClosingUIBean {
     }
     Form myform = findAncestor(Form.class);
     if (null != myform) {
-      if ("true".equals(required)) myform.addCheck(id, "require()");
+      if ("true".equals(required)) myform.addRequire(id);
       if (null != check) myform.addCheck(id, check);
     }
     if (null == value) {

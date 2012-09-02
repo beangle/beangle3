@@ -37,7 +37,7 @@ public abstract class AbstractTextBean extends UIBean {
       title = label;
     }
     Form myform = findAncestor(Form.class);
-    if ("true".equals(required)) myform.addCheck(id, "require()");
+    if ("true".equals(required)) myform.addRequire(id);
     if (null != check) myform.addCheck(id, check);
   }
 

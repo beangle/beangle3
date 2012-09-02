@@ -22,9 +22,9 @@ public class Form extends ClosingUIBean {
   protected String validate;
   private String title;
 
-  private Map<String, StringBuilder> checks = CollectUtils.newHashMap();
+  private Map<String, StringBuilder> elementChecks = CollectUtils.newHashMap();
 
-  private StringBuilder validity;
+  private StringBuilder extraChecks;
 
   public Form(ValueStack stack) {
     super(stack);
@@ -84,10 +84,8 @@ public class Form extends ClosingUIBean {
 
   public String getValidate() {
     if (null == validate) {
-      if (!checks.isEmpty()) validate = "true";
-      else {
-        validate = "false";
-      }
+      if (!elementChecks.isEmpty()) validate = "true";
+      else validate = "false";
     }
     return validate;
   }
@@ -96,27 +94,38 @@ public class Form extends ClosingUIBean {
     this.validate = validate;
   }
 
+  /**
+   * Required element by id;
+   * 
+   * @param id
+   */
+  public void addRequire(String id) {
+    this.addCheck(id, "require().match('notBlank')");
+  }
+
   public void addCheck(String id, String check) {
-    StringBuilder sb = checks.get(id);
+    StringBuilder sb = elementChecks.get(id);
     if (null == sb) {
-      sb = new StringBuilder(20);
-      checks.put(id, sb);
+      sb = new StringBuilder(100);
+      elementChecks.put(id, sb);
     }
     sb.append('.').append(check);
   }
 
   public void addCheck(String check) {
-    if (null == validity) validity = new StringBuilder();
-    validity.append(check);
+    if (null == extraChecks) extraChecks = new StringBuilder();
+    extraChecks.append(check);
   }
 
   public String getValidity() {
-    if (null == validity) validity = new StringBuilder();
-    StringBuilder sb = new StringBuilder(validity);
-    for (Map.Entry<String, StringBuilder> check : checks.entrySet()) {
+    // every element initial validity buffer is 80 chars.
+    StringBuilder sb = new StringBuilder((elementChecks.size() * 80)
+        + ((null == extraChecks) ? 0 : extraChecks.length()));
+    for (Map.Entry<String, StringBuilder> check : elementChecks.entrySet()) {
       sb.append("jQuery('#").append(Strings.replace(check.getKey(), ".", "\\\\.")).append("')")
           .append(check.getValue()).append(";\n");
     }
+    if (null != extraChecks) sb.append(extraChecks);
     return sb.toString();
   }
 

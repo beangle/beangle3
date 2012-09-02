@@ -57,7 +57,6 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    */
   public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry definitionRegistry)
       throws BeansException {
-    logger.info("Auto register and wire beans starting...");
     // 自动注册
     autoconfig(definitionRegistry);
     // 再配置
@@ -69,6 +68,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
   }
 
   private void reconfig(BeanDefinitionRegistry registry) {
+    Stopwatch watch = new Stopwatch(true);
     if (null == reconfigResources || reconfigResources.isEmpty()) return;
     Set<String> beanNames = CollectUtils.newHashSet();
     BeanDefinitionReader reader = new BeanDefinitionReader();
@@ -88,9 +88,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
         }
       }
     }
-    if (!beanNames.isEmpty()) {
-      logger.info("Reconfig bean : {}", beanNames);
-    }
+    if (!beanNames.isEmpty()) logger.info("Reconfig bean : {} in {}", beanNames, watch);
   }
 
   private void autoconfig(BeanDefinitionRegistry definitionRegistry) {
@@ -101,7 +99,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
     registerBuildins(registry);
     autowire(newDefinitions, registry);
     lifecycle(registry, definitionRegistry);
-    logger.info("Auto register and wire {} beans using {}", newDefinitions.size(), watch);
+    logger.info("Auto register and wire {} beans in {}", newDefinitions.size(), watch);
   }
 
   /**

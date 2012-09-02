@@ -49,7 +49,7 @@ public class Date extends UIBean {
     }
     Form myform = findAncestor(Form.class);
     if (null != myform) {
-      if ("true".equals(required)) myform.addCheck(id, "require()");
+      if ("true".equals(required)) myform.addRequire(id);
       if (null != check) myform.addCheck(id, check);
     }
     String format2 = ResvervedFormats.get(format);

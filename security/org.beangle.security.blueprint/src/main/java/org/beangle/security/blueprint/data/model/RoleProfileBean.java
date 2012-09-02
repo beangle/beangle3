@@ -79,12 +79,13 @@ public class RoleProfileBean extends LongIdObject implements RoleProfile {
 
   public void setProperty(ProfileField meta, String text) {
     RoleProperty property = getProperty(meta);
-    if (null == property) {
-      property = new RolePropertyBean(this, meta, text);
-      properties.add(property);
+    if (Strings.isNotBlank(text)) {
+      if (null == property) {
+        property = new RolePropertyBean(this, meta, text);
+        properties.add(property);
+      } else property.setValue(text);
     } else {
-      if (Strings.isEmpty(text)) properties.remove(property);
-      else property.setValue(text);
+      if (null != property) properties.remove(property);
     }
   }
 

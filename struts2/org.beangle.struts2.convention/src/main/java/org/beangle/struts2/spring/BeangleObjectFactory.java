@@ -11,6 +11,7 @@ import javax.servlet.ServletContext;
 import org.apache.struts2.StrutsConstants;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.apache.struts2.views.freemarker.FreemarkerResult;
+import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.commons.web.spring.ContextLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +59,7 @@ public class BeangleObjectFactory extends ObjectFactory {
       @Inject ServletContext servletContext, @Inject(StrutsConstants.STRUTS_DEVMODE) String devMode,
       @Inject Container container) {
 
-    logger.info("Initializing Struts-Spring integration...");
+    Stopwatch watch = new Stopwatch(true);
     appContext = ContextLoader.getContext(servletContext);
     if (appContext == null) {
       // uh oh! looks like the lifecycle listener wasn't installed. Let's inform the user
@@ -71,7 +72,7 @@ public class BeangleObjectFactory extends ObjectFactory {
       logger.error(message);
       return;
     }
-    logger.info("Initialized Struts-Spring integration successfully");
+    logger.info("Initialized Struts-Spring integration successfully in {}.", watch);
   }
 
   /**

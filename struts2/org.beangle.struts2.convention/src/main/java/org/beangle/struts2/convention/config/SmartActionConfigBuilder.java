@@ -99,8 +99,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
     registry.addDefaults(Strings.split(defaultBundleNames));
     registry.setReloadBundles(Boolean.valueOf(reloadBundles));
 
-    Stopwatch watch = new Stopwatch().start();
-    logger.info("Action scan starting....");
+    Stopwatch watch = new Stopwatch(true);
     for (Profile profile : actionBuilder.getProfileService().getProfiles()) {
       if (profile.isActionScan()) actionPackages.add(profile.getActionPattern());
     }
@@ -124,7 +123,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
       configuration.removePackageConfig(packageName);
       configuration.addPackageConfig(packageName, packageConfigs.get(packageName).build());
     }
-    logger.info("Action scan completely,create {} action in {}.", newActions, watch);
+    logger.info("Action scan completed,create {} action in {}.", newActions, watch);
   }
 
   protected ClassLoaderInterface getClassLoaderInterface() {

@@ -16,6 +16,7 @@ user.password=Password
 user.newPassword=New Password
 user.manage=User Management
 user.creator.fullname=Creator
+user.creator.name=Creator Name
 user.passwordExpiredAt=Password Expired At
 user.members=Roles
 menu.entry=Entry

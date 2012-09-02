@@ -29,8 +29,7 @@ public final class HierarchyEntityUtils {
   /**
    * 得到给定节点的所有家族结点，包括自身
    * 
-   * @param root
-   *          指定根节点
+   * @param root 指定根节点
    * @return 包含自身的家族节点集合
    * @param <T> a T object.
    */
@@ -159,11 +158,10 @@ public final class HierarchyEntityUtils {
 
   /**
    * <p>
-   * getPath.
+   * Get the path from current node to root. First element is current and last is root.
    * </p>
    * 
-   * @param node a T object.
-   * @param <T> a T object.
+   * @param node current node
    * @return a {@link java.util.List} object.
    */
   public static <T extends HierarchyEntity<T, ?>> List<T> getPath(final T node) {

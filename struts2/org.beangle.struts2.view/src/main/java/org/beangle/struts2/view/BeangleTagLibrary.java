@@ -294,4 +294,8 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
   public TagModel getCheckboxes() {
     return get(Checkboxes.class);
   }
+
+  public TagModel getValidity() {
+    return get(Validity.class);
+  }
 }
