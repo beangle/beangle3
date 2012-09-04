@@ -11,7 +11,7 @@
 	function NamedFunction(name,func,objectCount){
 		this.name=name;
 		this.func=func;
-		this.objectCount=(null==objectCount)?0:objectCount;		
+		this.objectCount=(null==objectCount)?'ge0':objectCount;		
 	}
 	/**
 	 * 生成一个工具栏
