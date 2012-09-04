@@ -22,7 +22,7 @@
 </tr>
 [/#if]
 <tr>
-[#list tag.cols as cln]<th [#if cln.width??]width="${cln.width}" [/#if][#if cln.type??] class="gridselect-top"[#if cln.type!="checkbox"]>[#else]><input type="${cln.type}" name="${cln.boxname}box" onclick="bg.input.toggleCheckBox(document.getElementsByName('${cln.boxname}'),event)" title="${b.text('action.selectall')}"/>[/#if][#else][#if tag.isSortable(cln)]class="gridhead-sortable" id="${cln.parameters['sort']!(tag.defaultSort(cln.property))}"[/#if]>${cln.title}[/#if]</th>
+[#list tag.cols as cln]<th [#if cln.width??]width="${cln.width}" [/#if][#if cln.type??] class="gridselect-top"[#if cln.type!="checkbox"]>[#else]><input type="${cln.type}" name="${cln.boxname}box" onclick="bg.ui.grid.toggleAll(event)" title="${b.text('action.selectall')}"/>[/#if][#else][#if tag.isSortable(cln)]class="gridhead-sortable" id="${cln.parameters['sort']!(tag.defaultSort(cln.property))}"[/#if]>${cln.title}[/#if]</th>
 [/#list]
 </tr>
 </thead>

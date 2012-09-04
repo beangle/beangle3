@@ -75,11 +75,21 @@ a:hover {color: red;}
 
 .toolbar-title{float:left;}
 
-.toolbar-msg{float:left}
+.toolbar-msg{float:left;height:15px;padding:2px 3px 2px 3px; margin:2px 0px 1px 10px;background-color:#F9EDBE;border-top-left-radius:5px;border-top-right-radius:5px;border-bottom-left-radius:5px;border-bottom-right-radius:5px}
 
 .toolbar-items{float:right;}
 
 .toolbar-item{float:left;padding:2px 3px 2px 3px;cursor:pointer;}
+
+.toolbar-item-ge0{}
+
+.toolbar-item-e1{}
+
+.toolbar-item-ge1{}
+
+.toolbar-item-ge2{}
+
+.toolbar-item-disabled{display:none;}
 
 .toolbar-item-selected{background-color:#4791C5;float:left;padding:2px 3px 2px 3px;cursor:pointer;}
 

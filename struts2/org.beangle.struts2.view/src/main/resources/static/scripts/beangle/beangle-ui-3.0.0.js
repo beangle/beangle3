@@ -8,9 +8,10 @@
 	}
 	bg.uitheme="default"
 	
-	function NamedFunction(name,func){
+	function NamedFunction(name,func,objectCount){
 		this.name=name;
 		this.func=func;
+		this.objectCount=(null==objectCount)?0:objectCount;		
 	}
 	/**
 	 * 生成一个工具栏
@@ -48,15 +49,16 @@
 			this.bar.appendChild(title_div);
 			this.title_div=title_div;
 			this.setTitle(title,imageName);
-			msg_div = document.createElement('div');
-			msg_div.className="toolbar-msg";
-			msg_div.id=this.id+"_msg";
-			this.bar.appendChild(msg_div);
 			items_div = document.createElement('div');
 			items_div.className="toolbar-items";
 			items_div.id=this.id+"_items";
 			this.items_div=items_div;
 			this.bar.appendChild(items_div);
+			msg_div = document.createElement('div');
+			msg_div.className="toolbar-msg";
+			msg_div.style.display="none";
+			msg_div.id=this.id+"_msg";
+			this.bar.appendChild(msg_div);
 		}
 		this.init(title,imageName);
 		
@@ -131,15 +133,13 @@
 		this.addHelp = function (module){
 			this.addItem("帮助",function (){
 				if(null==module) bg.alert("施工中..");
-				else window.open("help.action?helpId="+module);},'action-help-contents');
+				else window.open("help.action?helpId="+module);
+				},'action-help-contents');
 		}
 
 		this.addPrint = function (msg){
-			if(null==msg){
-				this.addItem("打印","print()");
-			}else{
-				this.addItem(msg,"print()");
-			}
+			if(null==msg) this.addItem("打印","print()");
+			else this.addItem(msg,"print()");
 		}
 
 		this.addClose = function (msg){
@@ -149,14 +149,16 @@
 		/**
 		 * 添加按钮
 		 */
-		this.addItem = function(title,action,imageName,alt){
+		this.addItem = function(title,action,imageName,alt,objectCount){
 			this.addSeparatorAsNeed();
 			var item_div = document.createElement('div');
 			item_div.innerHTML=genIconElement(action,imageName)+title;
 			item_div.onmouseout=MouseOutItem;
 			item_div.onmouseover=MouseOverItem;
 			setAction(item_div,action);
-			item_div.className="toolbar-item";
+			if(!objectCount) { if(typeof action=='object'){objectCount=action.objectCount;}}
+			if(!objectCount) objectCount='ge0';
+			item_div.className=("toolbar-item toolbar-item-"+objectCount) + ((objectCount!='ge0')?" toolbar-item-disabled":"");
 			item_div.title=(alt==null?title:alt);
 			this.items_div.appendChild(item_div);
 			this.itemCount++;
@@ -328,7 +330,7 @@
 		function MouseOverItem(e){
 			var o=bg.event.getTarget(e);
 			while (o&&o.tagName.toLowerCase()!="div"){o=o.parentNode;}
-			if(o)o.className="toolbar-item-transfer";
+			if(o) jQuery(o).removeClass("toolbar-item").addClass("toolbar-item-transfer");
 		}
 		/**
 		 * 当鼠标离开工具栏的按钮时
@@ -336,7 +338,7 @@
 		function MouseOutItem(e){
 			var o=bg.event.getTarget(e);
 			while (o&&o.tagName.toLowerCase()!="div"){o=o.parentNode;}
-			if(o)o.className="toolbar-item";
+			if(o) jQuery(o).removeClass("toolbar-item-transfer").addClass("toolbar-item");
 		}
 	}
 	bg.extend({'ui.toolbar':function (divId,title,imageName){
@@ -499,6 +501,8 @@
 	});
 	bg.extend({
 		'ui.grid':{
+			enableSingleRowSelect : false,
+			enableDynaBar:false,
 			// 鼠标经过和移出排序表格的表头时
 			overSortTableHeader : function  (){
 				this.style.color='white';
@@ -522,42 +526,139 @@
 					this.className=myclass.substring(0,overIndex);
 				}
 			},
-			/**
-			 * 行选函数。单击行内的任一处，可以选定行头的checkbox或者radio 用法:onclick="onRowChange(event)"
-			 */
-			onRowChange : function (event){    
+			setGridMessage : function (gridId,message){
+				var msgDiv1=document.getElementById(gridId+'_bar1_msg');
+				var msgDiv2=document.getElementById(gridId+'_bar2_msg');
+				if(msgDiv1){
+					msgDiv1.style.display=(message?"":"none");
+					msgDiv1.innerHTML=(message?message:"");
+				}
+				if(msgDiv2){
+					msgDiv2.style.display=(message?"":"none");
+					msgDiv2.innerHTML=(message?message:"");
+				}
+			},
+			toggleAll : function(event){
 				var ele =  bg.event.getTarget(event);
-				var changed=true;
-				if(null!=ele && ele.tagName.toLowerCase()=="td"){
-					var firstChild = ele.parentNode.firstChild;
-					while(firstChild.tagName ==null || firstChild.tagName.toLowerCase()!="td"){
-						firstChild=firstChild.nextSibling;
+				//find fired grid table
+				var ownGridTable=ele;
+				while(ownGridTable.tagName != null && ownGridTable.tagName.toLowerCase()!="table"){
+					ownGridTable=ownGridTable.parentNode;
+					if(null==ownGridTable) break;
+				}
+				var firstCell=ele.parentNode;
+				var isFireOnBoxCell=true;
+				if(null==ownGridTable) return;
+
+				var selectedCount=0;
+				jQuery("#"+ownGridTable.id + " .gridselect").each(function(){
+					if(ele.checked){
+						jQuery(this).find("input").attr("checked","checked");
+						jQuery(this).parent("tr").addClass("griddata-selected");
+						selectedCount++;
+					}else{
+						if(jQuery(this).find("input").is(":checked")){
+							jQuery(this).find("input").removeAttr("checked");
+							jQuery(this).parent("tr").removeClass("griddata-selected");
+						}
 					}
-					ele=firstChild.firstChild;
+				});
+				
+				bg.ui.grid.notifyGridbar(ownGridTable.id,selectedCount);
+			},
+			/**通知gridbar中的按钮,更新是否显示等状态*/
+			notifyGridbar: function (gridId,selectedCount){
+				//change toolbar item
+				var changeToolbarItem=function(){
+					if(selectedCount>=2) {
+						if(jQuery(this).hasClass("toolbar-item-e1")) jQuery(this).addClass('toolbar-item-disabled');
+						else jQuery(this).removeClass('toolbar-item-disabled');
+					} else if(selectedCount==1) {
+						if(jQuery(this).hasClass("toolbar-item-ge2"))	jQuery(this).addClass('toolbar-item-disabled');
+						else jQuery(this).removeClass('toolbar-item-disabled');
+					} else{
+						if(jQuery(this).hasClass("toolbar-item-ge0"))	jQuery(this).removeClass('toolbar-item-disabled');
+						else jQuery(this).addClass('toolbar-item-disabled');
+					}
+				};
+				if(bg.ui.grid.enableDynaBar){
+					jQuery('#'+gridId+'_bar1_items .toolbar-item').each(changeToolbarItem);
+					jQuery('#'+gridId+'_bar2_items .toolbar-item').each(changeToolbarItem);
+				}
+				if(selectedCount>1){
+					bg.ui.grid.setGridMessage(gridId,"已选择 <b>"+selectedCount+"</b> 条");
+				}else{
+					bg.ui.grid.setGridMessage(gridId,"");
+				}
+			},
+			/**
+			 * 行选函数。单击行内的任一处，可以选定行头的checkbox或者radio 用法:onclick="toggleRow(event)"
+			 */
+			toggleRow : function (event){
+				var ele =  bg.event.getTarget(event);
+				//find fired grid table
+				var ownGridTable=ele;
+				while(ownGridTable.tagName != null && ownGridTable.tagName.toLowerCase()!="table"){
+					ownGridTable=ownGridTable.parentNode;
+					if(null==ownGridTable) break;
+				}
+				var changed=true;
+				var firstCell=null;
+				var isFireOnBoxCell=false;
+				if(null!=ele && ele.tagName.toLowerCase()=="td"){
+					firstCell = ele.parentNode.firstChild;
+					//find first cell
+					while(firstCell.tagName == null || firstCell.tagName.toLowerCase()!="td"){
+						firstCell=firstCell.nextSibling;
+					}
+					isFireOnBoxCell=(ele==firstCell);
+					//shall we reserve other select
+					// find box input
+					ele=firstCell.firstChild;
 					while(((typeof ele.tagName)=="undefined")||ele.tagName.toLowerCase()!="input"){
 						ele=ele.nextSibling;
 						if(ele==null)return;
 					}
 					ele.checked = !ele.checked;
 				}else if((ele.type=="checkbox")||(ele.type=="radio")){
+					firstCell=ele.parentNode;
+					isFireOnBoxCell=true;
 				}else{
 					changed=false;
 				}
+				if(null==ele || null==firstCell || null==ownGridTable || !changed) return;
+				
 				// 改变选定行的颜色
-				if(null!=ele&&changed){
-					if(typeof ele.onchange =="function"){
-						ele.onchange();
-					}
-					if(ele.type=="radio") return;
-					var row=ele.parentNode.parentNode;
-					if((typeof row.className)=="undefined") return;
-					var selectIndex=row.className.indexOf("griddata-selected");
-					if(ele.checked){
-						if(-1 == selectIndex) row.className=row.className +" "+ "griddata-selected";
-					}else{
-						if(-1 != selectIndex) row.className=row.className.substring(0,selectIndex);
+				var row=firstCell.parentNode;
+				if((typeof row.className)=="undefined") return;
+				if(ele.checked) jQuery(row).removeClass("griddata-over").addClass("griddata-selected");
+				else jQuery(row).removeClass("griddata-selected").addClass("griddata-over");
+				
+				var selectedCount=0;
+				if(ele.type=="radio") {
+					if(ele.checked)	selectedCount=1;
+				}else{
+					var isReserveOtherSelect = !bg.ui.grid.enableSingleRowSelect || isFireOnBoxCell || event.ctrlKey ;
+					jQuery("#"+ownGridTable.id + " .gridselect").each(function(){
+						if(jQuery(this).find("input").is(":checked")){
+							if(firstCell != this && !isReserveOtherSelect){
+								jQuery(this).find("input").removeAttr("checked");
+								jQuery(this).parent("tr").removeClass("griddata-selected");
+							}else{
+								selectedCount++;
+							}
+						}
+					});
+					if(!isReserveOtherSelect){
+						jQuery("#"+ownGridTable.id + " .gridselect-top").each(function(){
+							jQuery(this).find("input").removeAttr("checked");
+						});
 					}
 				}
+
+				bg.ui.grid.notifyGridbar(ownGridTable.id,selectedCount);
+				// 激发自定义事件
+				if(typeof ele.onchange =="function") ele.onchange();
 			},
 			//列排序对应的onePage和选中的列
 			sort : function (onePage,ele){
@@ -651,7 +752,7 @@
 					}else{
 						row.className="griddata-even" + orignRowCls;
 					}
-					row.onclick = bg.ui.grid.onRowChange;
+					row.onclick = bg.ui.grid.toggleRow;
 					row.onmouseover=bg.ui.grid.mouseOverGrid;
 					row.onmouseout=bg.ui.grid.mouseOverGrid;
 				}
@@ -729,7 +830,7 @@
 			confirmMsg=confirmMsg||'确认删除?';
 			return new NamedFunction('remove',function(){
 				selfaction.submitIdAction('remove',true,confirmMsg);
-			});
+			},bg.ui.grid.enableDynaBar?'ge1':'ge0');
 		}
 		this.add = function(){
 			return new NamedFunction('add',function(){
@@ -744,13 +845,13 @@
 		this.info = function(){
 			return new NamedFunction('info',function(){
 				selfaction.submitIdAction('info',false)
-			});
+			},bg.ui.grid.enableDynaBar?'e1':'ge0');
 		}
 		
 		this.edit = function (){
 			return new NamedFunction('edit',function(){
 				selfaction.submitIdAction('edit',false);
-			});
+			},bg.ui.grid.enableDynaBar?'e1':'ge0');
 		}
 		
 		this.single = function(methodName,confirmMsg,extparams){
@@ -758,7 +859,7 @@
 				var form=selfaction.getForm();
 				if(null!=extparams) bg.form.addHiddens(form,extparams);
 				selfaction.submitIdAction(methodName,false,confirmMsg);
-			});
+			},bg.ui.grid.enableDynaBar?'e1':'ge0');
 		}
 		
 		this.multi = function(methodName,confirmMsg,extparams,ajax){
@@ -770,7 +871,7 @@
 				}catch(e){
 					bg.alert(e)
 				}
-			});
+			},bg.ui.grid.enableDynaBar?'ge1':'ge0');
 		}
 		this.method=function(methodName,confirmMsg,extparams,ajax){
 			return  new NamedFunction(methodName,function(){

@@ -34,7 +34,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
   public void addDefaults(String... bundleNames) {
     for (String name : bundleNames)
       defaultBundleNames.add(name);
-    logger.info("Add {} global message bundles in {}", Arrays.toString(bundleNames));
+    logger.info("Add {} global message bundles.", Arrays.toString(bundleNames));
   }
 
   public TextBundle load(Locale locale, String bundleName) {
