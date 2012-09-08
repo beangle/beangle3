@@ -11,7 +11,6 @@ import org.beangle.security.web.access.DefaultAccessDeniedHandler;
 import org.beangle.security.web.access.ExceptionTranslationFilter;
 import org.beangle.security.web.access.intercept.FilterSecurityInterceptor;
 import org.beangle.security.web.access.log.CachedResourceAccessor;
-import org.beangle.security.web.auth.AnonymousFilter;
 import org.beangle.security.web.auth.LoginUrlEntryPoint;
 import org.beangle.security.web.auth.WebAuthenticationDetailsSource;
 import org.beangle.security.web.auth.logout.LogoutHandlerStack;
@@ -20,7 +19,7 @@ import org.beangle.security.web.auth.preauth.PreauthUserDetailProvider;
 import org.beangle.security.web.auth.preauth.UsernameAliveChecker;
 import org.beangle.security.web.auth.preauth.UsernamePreauthFilter;
 import org.beangle.security.web.auth.preauth.j2ee.RemoteUsernameSource;
-import org.beangle.security.web.context.HttpSessionContextIntegrationFilter;
+import org.beangle.security.web.context.HttpSessionContextFilter;
 import org.beangle.security.web.session.ConcurrentSessionFilter;
 import org.beangle.security.web.session.WebSessioninfoBuilder;
 
@@ -40,10 +39,9 @@ public class DefaultModule extends AbstractBindModule {
     // auth bean
     bind(UsernameAliveChecker.class).primary();
     bind(PreauthUserDetailProvider.class, RemoteUsernameSource.class, UsernamePreauthFilter.class,
-        AnonymousFilter.class, SecurityContextLogoutHandler.class, WebAuthenticationDetailsSource.class)
-        .shortName();
+        SecurityContextLogoutHandler.class, WebAuthenticationDetailsSource.class).shortName();
 
-    bind(HttpSessionContextIntegrationFilter.class).shortName();
+    bind(HttpSessionContextFilter.class).shortName();
 
     // access bean
     bind(DefaultAccessDeniedHandler.class, ExceptionTranslationFilter.class, CachedResourceAccessor.class,
@@ -51,17 +49,16 @@ public class DefaultModule extends AbstractBindModule {
 
     bind(WebSessioninfoBuilder.class);
     bind(LoginUrlEntryPoint.class).property("loginUrl", "/login.action").primary();
-    bind(LogoutHandlerStack.class).shortName().property("handlers", listref(SecurityContextLogoutHandler.class));
+    bind(LogoutHandlerStack.class).shortName().property("handlers",
+        listref(SecurityContextLogoutHandler.class));
 
     bind("authenticationmanager", ProviderManager.class).property("providers",
         listref(PreauthUserDetailProvider.class, DaoAuthenticationProvider.class));
 
-    bind("securityFilterChain", FilterChainProxy.class)
-        .property(
-            "filters",
-            listref(HttpSessionContextIntegrationFilter.class, UsernamePreauthFilter.class,
-                AnonymousFilter.class, ExceptionTranslationFilter.class, ConcurrentSessionFilter.class,
-                FilterSecurityInterceptor.class));
+    bind("securityFilterChain", FilterChainProxy.class).property(
+        "filters",
+        listref(HttpSessionContextFilter.class, ExceptionTranslationFilter.class,
+            UsernamePreauthFilter.class, ConcurrentSessionFilter.class, FilterSecurityInterceptor.class));
   }
 
 }

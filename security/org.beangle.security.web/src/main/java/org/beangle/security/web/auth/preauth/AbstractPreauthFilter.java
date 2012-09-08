@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.web.filter.GenericHttpFilter;
+import org.beangle.security.auth.AccountStatusException;
 import org.beangle.security.auth.AnonymousAuthentication;
 import org.beangle.security.auth.AuthenticationDetailsSource;
 import org.beangle.security.auth.AuthenticationManager;
@@ -66,7 +67,7 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
    */
   protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    if (auth == null || auth instanceof AnonymousAuthentication) { return true; }
+    if (auth == null) return true;
     if (!(auth instanceof PreauthAuthentication)) return false;
     if (null != authenticationAliveChecker && !authenticationAliveChecker.check(auth, request)) {
       unsuccessfulAuthentication(request, response, null);
@@ -80,23 +81,42 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
    * Try to authenticate a pre-authenticated user with Beangle Security if the
    * user has not yet been authenticated.
    */
-  public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
+  public final void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
       ServletException {
     HttpServletRequest request = (HttpServletRequest) req;
     HttpServletResponse response = (HttpServletResponse) res;
-    if (requiresAuthentication(request, response)) {
-      doAuthenticate(request, response);
+    boolean requireAuth = requiresAuthentication(request, response);
+    AnonymousAuthentication anonymous = null;
+    if (requireAuth) {
+      Authentication newAuth = doAuthenticate(request, response);
+      // Create anonymous authentication
+      if (null == newAuth) {
+        anonymous = createAnonymousAuthentication(request);
+        SecurityContextHolder.getContext().setAuthentication(anonymous);
+        logger.debug("Populated SecurityContextHolder with anonymous token: '{}'", anonymous);
+      }
     }
-    chain.doFilter(req, res);
+    try {
+      chain.doFilter(req, res);
+    } finally {
+      if (null != anonymous
+          && SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthentication) {
+        SecurityContextHolder.getContext().setAuthentication(null);
+      }
+    }
+  }
+
+  protected AnonymousAuthentication createAnonymousAuthentication(ServletRequest request) {
+    return new AnonymousAuthentication("anonymous", null);
   }
 
   /** Do the actual authentication for a pre-authenticated user. */
-  private void doAuthenticate(HttpServletRequest request, HttpServletResponse response) {
+  private Authentication doAuthenticate(HttpServletRequest request, HttpServletResponse response) {
     Authentication authResult = null;
     PreauthAuthentication auth = getPreauthAuthentication(request, response);
     if (auth == null) {
       logger.debug("No pre-authenticated principal found in request");
-      return;
+      return null;
     } else {
       logger.debug("trying to authenticate preauth={}", auth);
     }
@@ -105,9 +125,12 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
       authResult = authenticationManager.authenticate(auth);
       sessionRegistry.register(authResult, request.getSession().getId());
       successfulAuthentication(request, response, authResult);
+      return authResult;
     } catch (AuthenticationException failed) {
       unsuccessfulAuthentication(request, response, failed);
-      if (!continueOnFail) { throw failed; }
+      if (!continueOnFail) {
+        throw failed;
+      } else return null;
     }
   }
 
@@ -132,7 +155,7 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
     if (null != failed) {
       logger.debug("Cleared security context due to exception", failed);
       request.getSession().setAttribute(AbstractAuthenticationFilter.SECURITY_LAST_EXCEPTION_KEY, failed);
-      if (failed instanceof UsernameNotFoundException) { throw failed; }
+      if (failed instanceof UsernameNotFoundException || failed instanceof AccountStatusException) { throw failed; }
     }
   }
 

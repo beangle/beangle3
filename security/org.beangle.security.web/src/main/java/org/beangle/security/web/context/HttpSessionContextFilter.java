@@ -77,8 +77,8 @@ import org.beangle.security.core.context.SecurityContextHolder;
  * @author chaostone
  */
 
-public class HttpSessionContextIntegrationFilter extends GenericHttpFilter {
-  static final String FILTER_APPLIED = "__beangle_security_session_integration_filter_applied";
+public class HttpSessionContextFilter extends GenericHttpFilter {
+  static final String FILTER_APPLIED = "__beangle_security_session_context_filter_applied";
 
   public static final String SECURITY_CONTEXT_KEY = "BEANGLE_SECURITY_CONTEXT";
 
@@ -135,7 +135,7 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilter {
     this.cloneFromHttpSession = cloneFromHttpSession;
   }
 
-  public HttpSessionContextIntegrationFilter() throws ServletException {
+  public HttpSessionContextFilter() throws ServletException {
     this.contextObject = generateNewContext();
   }
 
@@ -424,7 +424,7 @@ public class HttpSessionContextIntegrationFilter extends GenericHttpFilter {
      * addition to the
      * response object we are wrapping.
      * 
-     * @see HttpSessionContextIntegrationFilter#storeSecurityContextInSession(SecurityContext,
+     * @see HttpSessionContextFilter#storeSecurityContextInSession(SecurityContext,
      *      HttpServletRequest, boolean, int)
      */
     public OnRedirectUpdateSessionResponseWrapper(HttpServletResponse response, HttpServletRequest request,

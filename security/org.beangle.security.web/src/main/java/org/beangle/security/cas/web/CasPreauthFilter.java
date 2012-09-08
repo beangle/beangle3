@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.beangle.commons.lang.Assert;
 import org.beangle.security.cas.CasConfig;
 import org.beangle.security.cas.auth.CasAuthentication;
-import org.beangle.security.cas.validation.TicketValidator;
 import org.beangle.security.web.auth.preauth.AbstractPreauthFilter;
 import org.beangle.security.web.auth.preauth.PreauthAuthentication;
 
@@ -35,10 +34,6 @@ import org.beangle.security.web.auth.preauth.PreauthAuthentication;
  * name, and process them accordingly by validation with the CAS server.
  * </p>
  * <p>
- * By configuring a shared {@link ProxyGrantingTicketStorage} between the {@link TicketValidator}
- * and the CasPreauthFilter one can have the CasPreauthFilter handle the proxying requirements for
- * CAS. In addition, the URI endpoint for the proxying would also need to be configured (i.e. the
- * part after protocol, hostname, and port).
  * 
  * @author chaostone
  * @version $Id: CasPreauthFilter.java$

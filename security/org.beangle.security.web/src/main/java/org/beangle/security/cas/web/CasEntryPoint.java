@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
+import org.beangle.security.auth.AccountStatusException;
 import org.beangle.security.cas.CasConfig;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.userdetail.UsernameNotFoundException;
@@ -58,7 +59,7 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
       final AuthenticationException ae) throws IOException, ServletException {
     final HttpServletRequest request = (HttpServletRequest) servletRequest;
     final HttpServletResponse response = (HttpServletResponse) servletResponse;
-    if (null != ae && (ae instanceof UsernameNotFoundException)) {
+    if (null != ae && (ae instanceof UsernameNotFoundException || ae instanceof AccountStatusException)) {
       response.getWriter().append(String.valueOf(ae.getAuthentication().getPrincipal()))
           .append(ae.getMessage());
       return;
@@ -75,7 +76,6 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
         response.sendRedirect(redirectUrl + "&isLoginService=11");
       }
     } else {
-
       final String encodedServiceUrl = constructServiceUrl(request, response, null,
           CasConfig.getLocalServer(request), config.getArtifactName(), config.isEncode());
       final String redirectUrl = constructRedirectUrl(config.getLoginUrl(), "service", encodedServiceUrl,

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.beangle.security.core.context.SecurityContext;
 import org.beangle.security.core.session.SessionDestroyedEvent;
-import org.beangle.security.web.context.HttpSessionContextIntegrationFilter;
+import org.beangle.security.web.context.HttpSessionContextFilter;
 
 /**
  * Published by the {@link HttpSessionEventPublisher} when a HttpSession is
@@ -29,7 +29,7 @@ public class HttpSessionDestroyedEvent extends SessionDestroyedEvent {
   @Override
   public SecurityContext getSecurityContext() {
     return (SecurityContext) getSession().getAttribute(
-        HttpSessionContextIntegrationFilter.SECURITY_CONTEXT_KEY);
+        HttpSessionContextFilter.SECURITY_CONTEXT_KEY);
   }
 
   @Override

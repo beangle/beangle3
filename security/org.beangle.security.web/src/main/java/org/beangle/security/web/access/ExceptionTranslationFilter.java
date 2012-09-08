@@ -81,14 +81,14 @@ public class ExceptionTranslationFilter extends GenericHttpFilter {
   }
 
   /**
-   * If <code>true</code>, indicates that <code>SecurityEnforcementFilter</code> is permitted to
+   * If <code>true</code>, indicates that is permitted to
    * store the target
    * URL and exception information in the <code>HttpSession</code> (the
    * default). In situations where you do not wish to unnecessarily create <code>HttpSession</code>s
    * - because the user agent will know the failed
    * URL, such as with BASIC or Digest authentication - you may wish to set
    * this property to <code>false</code>. Remember to also set the
-   * {@link org.beangle.security.web.context.security.context.HttpSessionContextIntegrationFilter#allowSessionCreation}
+   * {@link org.beangle.security.web.context.HttpSessionContextFilter#allowSessionCreation}
    * to <code>false</code> if you set this property to <code>false</code>.
    * 
    * @return <code>true</code> if the <code>HttpSession</code> will be used to
