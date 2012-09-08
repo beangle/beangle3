@@ -4,38 +4,16 @@
  */
 package org.beangle.security.core.session.category;
 
-public class CategoryProfile {
+public interface CategoryProfile {
 
-  private final String category;
+  Long getId();
+  
+  String getCategory();
 
-  private final int capacity;
+  int getCapacity();
 
-  private final int userMaxSessions;
+  int getUserMaxSessions();
 
-  private final int inactiveInterval;
-
-  public CategoryProfile(String category, int capacity, int userMaxSessions, int inactiveInterval) {
-    super();
-    this.category = category;
-    this.capacity = capacity;
-    this.userMaxSessions = userMaxSessions;
-    this.inactiveInterval = inactiveInterval;
-  }
-
-  public String getCategory() {
-    return category;
-  }
-
-  public int getCapacity() {
-    return capacity;
-  }
-
-  public int getUserMaxSessions() {
-    return userMaxSessions;
-  }
-
-  public int getInactiveInterval() {
-    return inactiveInterval;
-  }
+  int getInactiveInterval();
 
 }

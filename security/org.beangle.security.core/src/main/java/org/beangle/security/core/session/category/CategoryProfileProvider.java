@@ -14,5 +14,7 @@ import java.util.List;
  */
 public interface CategoryProfileProvider {
 
-  public List<CategoryProfile> getCategoryProfiles();
+  List<? extends CategoryProfile> getProfiles();
+  
+  CategoryProfile getProfile(String category);
 }

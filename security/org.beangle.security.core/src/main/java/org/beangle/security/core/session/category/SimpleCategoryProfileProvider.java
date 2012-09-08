@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class SimpleCategoryProfileProvider implements CategoryProfileProvider {
 
-  public List<CategoryProfile> getCategoryProfiles() {
+  public List<CategoryProfile> getProfiles() {
     return Collections.emptyList();
   }
 
@@ -21,4 +21,9 @@ public class SimpleCategoryProfileProvider implements CategoryProfileProvider {
     return "localhost";
   }
 
+  public CategoryProfile getProfile(String category) {
+    return null;
+  }
+
+  
 }

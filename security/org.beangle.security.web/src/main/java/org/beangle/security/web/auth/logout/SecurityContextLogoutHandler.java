@@ -20,25 +20,21 @@ import org.beangle.security.core.context.SecurityContextHolder;
  * <code>true</code> and the session is not <code>null</code>.
  */
 public class SecurityContextLogoutHandler implements LogoutHandler {
-  private boolean invalidateHttpSession = false;
+
+  private boolean invalidateHttpSession = true;
 
   /**
    * Requires the request to be passed in.
    * 
-   * @param request
-   *          from which to obtain a HTTP session (cannot be null)
-   * @param response
-   *          not used (can be <code>null</code>)
-   * @param authentication
-   *          not used (can be <code>null</code>)
+   * @param request from which to obtain a HTTP session (cannot be null)
+   * @param response not used (can be <code>null</code>)
+   * @param authentication not used (can be <code>null</code>)
    */
   public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
     Assert.notNull(request, "HttpServletRequest required");
     if (invalidateHttpSession) {
       HttpSession session = request.getSession(false);
-      if (session != null) {
-        session.invalidate();
-      }
+      if (session != null) session.invalidate();
     }
     SecurityContextHolder.clearContext();
   }

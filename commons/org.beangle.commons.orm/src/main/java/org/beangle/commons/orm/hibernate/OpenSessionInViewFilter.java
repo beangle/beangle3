@@ -10,12 +10,12 @@ import javax.servlet.ServletResponse;
 import org.beangle.commons.orm.hibernate.internal.SessionUtils;
 import org.beangle.commons.web.filter.OncePerRequestFilter;
 import org.beangle.commons.web.spring.ContextLoader;
-import org.beangle.commons.web.spring.LazyInitProcessor;
+import org.beangle.commons.web.spring.InitializingContextAware;
 import org.hibernate.FlushMode;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 
-public class OpenSessionInViewFilter extends OncePerRequestFilter {
+public class OpenSessionInViewFilter extends OncePerRequestFilter implements InitializingContextAware {
 
   private SessionFactory sessionFactory;
 
@@ -26,12 +26,12 @@ public class OpenSessionInViewFilter extends OncePerRequestFilter {
     if (null != context) {
       setSessionFactory(context.getBean(SessionFactory.class));
     } else {
-      ContextLoader.getOrCreateLazyInitProcessors(getServletContext()).add(new LazyInitProcessor() {
-        public void init(ApplicationContext context) {
-          setSessionFactory(context.getBean(SessionFactory.class));
-        }
-      });
+      ContextLoader.getLazyInitialHooks(getServletContext()).add(this);
     }
+  }
+
+  public void init(ApplicationContext context) {
+    setSessionFactory(context.getBean(SessionFactory.class));
   }
 
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

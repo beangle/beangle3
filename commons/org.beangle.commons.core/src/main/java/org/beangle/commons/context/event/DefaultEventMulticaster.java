@@ -1,3 +1,7 @@
+/* Copyright c 2005-2012.
+ * Licensed under GNU  LESSER General Public License, Version 3.
+ * http://www.gnu.org/licenses
+ */
 package org.beangle.commons.context.event;
 
 import java.util.List;
@@ -15,16 +19,14 @@ import org.beangle.commons.collection.CollectUtils;
  */
 public class DefaultEventMulticaster implements EventMulticaster {
 
-  @SuppressWarnings("rawtypes")
-  private List<EventListener> listeners = CollectUtils.newArrayList();
+  protected List<EventListener<?>> listeners = CollectUtils.newArrayList();
 
-  @SuppressWarnings("rawtypes")
-  private Map<ListenerCacheKey, List<EventListener>> listenerCache = CollectUtils.newConcurrentHashMap();
+  private Map<ListenerCacheKey, List<EventListener<?>>> listenerCache = CollectUtils.newConcurrentHashMap();
 
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public void multicast(Event e) {
-    List<EventListener> adapted = getListeners(e);
+    List<EventListener<?>> adapted = getListeners(e);
     for (EventListener listener : adapted)
       listener.onEvent(e);
   }
@@ -57,20 +59,26 @@ public class DefaultEventMulticaster implements EventMulticaster {
     }
   }
 
-  @SuppressWarnings("rawtypes")
-  private List<EventListener> getListeners(Event e) {
+  protected void initListeners() {
+
+  }
+
+  private List<EventListener<?>> getListeners(Event e) {
+    initListeners();
     ListenerCacheKey key = new ListenerCacheKey(e.getClass(), e.getSource().getClass());
-    List<EventListener> adapted = listenerCache.get(key);
+    List<EventListener<?>> adapted = listenerCache.get(key);
     if (null == adapted) {
       synchronized (this) {
-        adapted = CollectUtils.newArrayList();
-        for (EventListener<?> listener : listeners) {
-          if (listener.supportsEventType(e.getClass())
-              && listener.supportsSourceType(e.getSource().getClass())) {
-            adapted.add(listener);
+        if (null == adapted) {
+          adapted = CollectUtils.newArrayList();
+          for (EventListener<?> listener : listeners) {
+            if (listener.supportsEventType(e.getClass())
+                && listener.supportsSourceType(e.getSource().getClass())) {
+              adapted.add(listener);
+            }
           }
+          listenerCache.put(key, adapted);
         }
-        listenerCache.put(key, adapted);
       }
     }
     return adapted;

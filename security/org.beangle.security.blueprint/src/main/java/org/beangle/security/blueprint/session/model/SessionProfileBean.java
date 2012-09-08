@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 
 import org.beangle.commons.entity.pojo.LongIdObject;
 import org.beangle.security.blueprint.Role;
+import org.beangle.security.blueprint.model.RoleBean;
+import org.beangle.security.core.session.category.CategoryProfile;
 
 /**
  * 角色会话配置
@@ -18,7 +20,7 @@ import org.beangle.security.blueprint.Role;
  * @author chaostone
  */
 @Entity(name = "org.beangle.security.blueprint.session.model.SessionProfileBean")
-public class SessionProfileBean extends LongIdObject {
+public class SessionProfileBean extends LongIdObject implements CategoryProfile {
 
   private static final long serialVersionUID = 1999239598984221565L;
 
@@ -43,11 +45,26 @@ public class SessionProfileBean extends LongIdObject {
     super();
   }
 
-  public SessionProfileBean(Role role, int max, int inactiveInterval) {
+  /**
+   * Quick construct profile
+   * 
+   * @param id
+   * @param category
+   * @param capacity
+   * @param userMaxSessions
+   * @param inactiveInterval
+   */
+  public SessionProfileBean(Long id, String category, int capacity, int userMaxSessions, int inactiveInterval) {
     super();
-    this.role = role;
-    this.capacity = max;
+    this.id = id;
+    this.role = new RoleBean(null, category);
+    this.capacity = capacity;
+    this.userMaxSessions = userMaxSessions;
     this.inactiveInterval = inactiveInterval;
+  }
+
+  public String getCategory() {
+    return role.getName();
   }
 
   public Role getRole() {

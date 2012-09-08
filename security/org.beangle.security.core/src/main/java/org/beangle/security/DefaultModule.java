@@ -8,7 +8,7 @@ import org.beangle.commons.context.inject.AbstractBindModule;
 import org.beangle.security.auth.dao.DaoAuthenticationProvider;
 import org.beangle.security.auth.encoding.DigestPasswordEncoder;
 import org.beangle.security.auth.encoding.PlaintextPasswordEncoder;
-import org.beangle.security.core.session.category.DbCategorySessionController;
+import org.beangle.security.core.session.category.DbSessionController;
 import org.beangle.security.core.session.category.SessioninfoCleaner;
 import org.beangle.security.core.session.impl.DbAccessLogger;
 import org.beangle.security.core.session.impl.DbSessionRegistry;
@@ -24,7 +24,7 @@ public class DefaultModule extends AbstractBindModule {
   protected void doBinding() {
     // session control bean
     bind(DbSessionRegistry.class, DigestPasswordEncoder.class).primary();
-    bind(MemSessionRegistry.class, DbCategorySessionController.class, SessioninfoCleaner.class).shortName();
+    bind(MemSessionRegistry.class, DbSessionController.class, SessioninfoCleaner.class).shortName();
 
     bind(DaoAuthenticationProvider.class).shortName();
     bind(PlaintextPasswordEncoder.class, DbAccessLogger.class);

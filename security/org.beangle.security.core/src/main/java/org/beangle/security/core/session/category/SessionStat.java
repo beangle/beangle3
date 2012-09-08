@@ -31,6 +31,7 @@ public class SessionStat extends LongIdObject {
 
   /** 用户分类 */
   @NotNull
+  @Column(unique = true)
   private String category;
 
   /** 最大容量 */
@@ -40,21 +41,15 @@ public class SessionStat extends LongIdObject {
   @Column(name = "on_line")
   private int online;
 
-  /** 过期时间 */
-  private int inactiveInterval;
-
-  /** 单用户最大会话数 */
-  private int userMaxSessions;
-
   public SessionStat() {
     super();
   }
 
-  public SessionStat(String category, int capacity, int userMaxSessions) {
+  public SessionStat(Long id, String category, int capacity) {
     super();
+    this.id = id;
     this.category = category;
     this.capacity = capacity;
-    this.userMaxSessions = userMaxSessions;
   }
 
   public boolean allocate(String sessionId) {
@@ -108,22 +103,6 @@ public class SessionStat extends LongIdObject {
 
   public void setOnline(int online) {
     this.online = online;
-  }
-
-  public int getInactiveInterval() {
-    return inactiveInterval;
-  }
-
-  public void setInactiveInterval(int inactiveInterval) {
-    this.inactiveInterval = inactiveInterval;
-  }
-
-  public int getUserMaxSessions() {
-    return userMaxSessions;
-  }
-
-  public void setUserMaxSessions(int userMaxSessions) {
-    this.userMaxSessions = userMaxSessions;
   }
 
   public void adjust(int newAllocated) {

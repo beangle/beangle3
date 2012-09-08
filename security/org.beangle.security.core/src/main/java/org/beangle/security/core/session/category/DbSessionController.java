@@ -27,7 +27,7 @@ import org.beangle.security.core.session.SessioninfoBuilder;
  * @author chaostone
  * @version $Id: DbCategorySessionController.java Jul 8, 2011 9:08:14 AM chaostone $
  */
-public class DbCategorySessionController extends AbstractSessionController implements Initializing,
+public class DbSessionController extends AbstractSessionController implements Initializing,
     EventListener<CategoryProfileUpdateEvent> {
 
   private CategoryProfileProvider categoryProfileProvider = new SimpleCategoryProfileProvider();
@@ -48,18 +48,14 @@ public class DbCategorySessionController extends AbstractSessionController imple
     }
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
   public int getMaxSessions(Authentication auth) {
     CategoryPrincipal principal = (CategoryPrincipal) auth.getPrincipal();
     if (Principals.ROOT.equals(principal.getId())) {
       return -1;
     } else {
-      String category = principal.getCategory();
-      OqlBuilder builder = OqlBuilder.from(SessionStat.class, "stat");
-      builder.select("stat.userMaxSessions").where("stat.category=:category", category).cacheable();
-      List nums = entityDao.search(builder);
-      if (nums.isEmpty()) return 1;
-      else return ((Number) nums.get(0)).intValue();
+      CategoryProfile cp = categoryProfileProvider.getProfile(principal.getCategory());
+      if (null == cp) return 1;
+      else return cp.getUserMaxSessions();
     }
   }
 
@@ -76,34 +72,29 @@ public class DbCategorySessionController extends AbstractSessionController imple
   public void init() throws Exception {
     Assert.notNull(categoryProfileProvider);
     Map<String, CategoryProfile> profileMap = CollectUtils.newHashMap();
-    for (CategoryProfile profile : categoryProfileProvider.getCategoryProfiles()) {
+    for (CategoryProfile profile : categoryProfileProvider.getProfiles()) {
       profileMap.put(profile.getCategory(), profile);
     }
-    if (!profileMap.isEmpty()) {
-      OqlBuilder builder = OqlBuilder.from(SessionStat.class, "stat").select("stat.category ");
-      builder.where("stat.category in(:categories)", profileMap.keySet());
-      List<String> existed = entityDao.search(builder);
-      Collection<String> newers = CollectionUtils.subtract(profileMap.keySet(), existed);
-      List<SessionStat> newStats = CollectUtils.newArrayList(newers.size());
-      for (String category : newers) {
-        CategoryProfile profile = profileMap.get(category);
-        newStats.add(new SessionStat(profile.getCategory(), profile.getCapacity(), profile
-            .getInactiveInterval()));
-      }
-      if (!newStats.isEmpty()) entityDao.saveOrUpdate(newStats);
+    if (profileMap.isEmpty()) return;
+
+    OqlBuilder builder = OqlBuilder.from(SessionStat.class, "stat").select("stat.category ");
+    builder.where("stat.category in(:categories)", profileMap.keySet());
+    List<String> existed = entityDao.search(builder);
+    Collection<String> newers = CollectionUtils.subtract(profileMap.keySet(), existed);
+    List<SessionStat> newStats = CollectUtils.newArrayList(newers.size());
+    for (String category : newers) {
+      CategoryProfile profile = profileMap.get(category);
+      newStats.add(new SessionStat(profile.getId(), profile.getCategory(), profile.getCapacity()));
     }
+    if (!newStats.isEmpty()) entityDao.save(newStats);
   }
 
   public void onEvent(CategoryProfileUpdateEvent event) {
     CategoryProfile profile = (CategoryProfile) event.getSource();
     int cnt = entityDao.executeUpdateHql("update " + SessionStat.class.getName()
-        + " stat  set stat.capacity=?,stat.userMaxSessions=?,stat.inactiveInterval=?"
-        + " where stat.category=?", profile.getCapacity(), profile.getUserMaxSessions(),
-        profile.getInactiveInterval(), profile.getCategory());
+        + " stat set stat.capacity=? where stat.category=?", profile.getCapacity(), profile.getCategory());
     if (cnt == 0) {
-      SessionStat stat = new SessionStat(profile.getCategory(), profile.getCapacity(),
-          profile.getInactiveInterval());
-      entityDao.saveOrUpdate(stat);
+      entityDao.save(new SessionStat(profile.getId(), profile.getCategory(), profile.getCapacity()));
     }
   }
 

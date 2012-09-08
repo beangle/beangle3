@@ -6,7 +6,6 @@ package org.beangle.security.blueprint.session.service;
 
 import java.util.List;
 
-import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.security.blueprint.Role;
@@ -22,17 +21,10 @@ import org.beangle.security.core.session.category.CategoryProfileUpdateEvent;
 public class SessionProfileServiceImpl extends BaseServiceImpl implements CategoryProfileProvider,
     SessionProfileService {
 
-  public List<CategoryProfile> getCategoryProfiles() {
-    List<CategoryProfile> profiles = CollectUtils.newArrayList();
-    OqlBuilder<?> cbuilder = OqlBuilder.from(SessionProfileBean.class, "cp");
-    cbuilder.select("cp.role.name,cp.capacity,cp.userMaxSessions,cp.inactiveInterval");
-    for (Object data : entityDao.search(cbuilder)) {
-      Object[] datas = (Object[]) data;
-      profiles.add(new CategoryProfile((String) datas[0], (Integer) datas[1], (Integer) datas[2],
-          (Integer) datas[3]));
-    }
-    return profiles;
-
+  public List<? extends CategoryProfile> getProfiles() {
+    return entityDao.search(OqlBuilder.from(SessionProfileBean.class, "p").select(
+        "new " + SessionProfileBean.class.getName()
+            + "(p.id,p.role.name,p.capacity,p.userMaxSessions,p.inactiveInterval)"));
   }
 
   public boolean hasProfile(Role role) {
@@ -43,10 +35,16 @@ public class SessionProfileServiceImpl extends BaseServiceImpl implements Catego
 
   public void saveOrUpdate(List<SessionProfileBean> profiles) {
     entityDao.saveOrUpdate(profiles);
-    for (SessionProfileBean profile : profiles) {
-      publish(new CategoryProfileUpdateEvent(new CategoryProfile(profile.getRole().getName(),
-          profile.getCapacity(), profile.getUserMaxSessions(), profile.getInactiveInterval())));
-    }
+    for (SessionProfileBean profile : profiles)
+      publish(new CategoryProfileUpdateEvent(profile));
+  }
+
+  public CategoryProfile getProfile(String category) {
+    OqlBuilder<SessionProfileBean> builder = OqlBuilder.from(SessionProfileBean.class, "p");
+    builder.select("new " + SessionProfileBean.class.getName()
+        + "(p.id,p.role.name,p.capacity,p.userMaxSessions,p.inactiveInterval)");
+    builder.where("p.role.name=:category", category).cacheable();
+    return entityDao.uniqueResult(builder);
   }
 
 }

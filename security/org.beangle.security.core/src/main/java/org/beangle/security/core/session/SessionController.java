@@ -14,14 +14,6 @@ import org.beangle.security.core.Authentication;
 public interface SessionController {
 
   /**
-   * 根据用户确定单个用户的最大会话数
-   * 
-   * @param auth
-   * @return -1 or positive number
-   */
-  public int getMaxSessions(Authentication auth);
-
-  /**
    * reserve space for given sessionid
    * 
    * @param auth

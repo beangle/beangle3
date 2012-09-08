@@ -44,6 +44,7 @@ public class OverrideConfiguration extends Configuration {
     
     public OverrideMappings() {
       super();
+      //注册缺省的sequence生成器
       IdGenerator idGen=new IdGenerator();
       idGen.setName("table_sequence");
       idGen.setIdentifierGeneratorStrategy(TableSeqGenerator.class.getName());

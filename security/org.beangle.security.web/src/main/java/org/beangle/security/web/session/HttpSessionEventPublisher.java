@@ -7,16 +7,16 @@ package org.beangle.security.web.session;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.beangle.commons.dao.impl.BaseServiceImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.beangle.commons.context.event.EventMulticaster;
+import org.beangle.commons.web.spring.ContextLoader;
+import org.springframework.util.Assert;
 
 /**
  * Declared in web.xml as
  * 
  * <pre>
  * &lt;listener&gt;
- *     &lt;listener-class&gt;org.beangle.security.ui.session.HttpSessionEventPublisher&lt;/listener-class&gt;
+ *     &lt;listener-class&gt;org.beangle.security.web.session.HttpSessionEventPublisher&lt;/listener-class&gt;
  * &lt;/listener&gt;
  * </pre>
  * 
@@ -25,9 +25,9 @@ import org.slf4j.LoggerFactory;
  * javax.servlet.http.HttpSessionListener.sessionCreated() to {@link HttpSessionCreationEvent}. Maps
  * javax.servlet.http.HttpSessionListener.sessionDestroyed() to {@link HttpSessionDestroyedEvent}.
  */
-public class HttpSessionEventPublisher extends BaseServiceImpl implements HttpSessionListener {
+public class HttpSessionEventPublisher implements HttpSessionListener {
 
-  private static final Logger logger = LoggerFactory.getLogger(HttpSessionEventPublisher.class);
+  protected EventMulticaster eventMulticaster;
 
   /**
    * Handles the HttpSessionEvent by publishing a {@link HttpSessionCreationEvent} to the
@@ -37,9 +37,12 @@ public class HttpSessionEventPublisher extends BaseServiceImpl implements HttpSe
    *          HttpSessionEvent passed in by the container
    */
   public void sessionCreated(HttpSessionEvent event) {
-    HttpSessionCreationEvent e = new HttpSessionCreationEvent(event.getSession());
-    logger.debug("Publishing event: {}", e);
-    publish(e);
+    if (null == eventMulticaster) {
+      eventMulticaster = ContextLoader.getContext(event.getSession().getServletContext()).getBean(
+          EventMulticaster.class);
+      Assert.notNull(eventMulticaster);
+    }
+    eventMulticaster.multicast(new HttpSessionCreationEvent(event.getSession()));
   }
 
   /**
@@ -50,8 +53,6 @@ public class HttpSessionEventPublisher extends BaseServiceImpl implements HttpSe
    *          The HttpSessionEvent pass in by the container
    */
   public void sessionDestroyed(HttpSessionEvent event) {
-    HttpSessionDestroyedEvent e = new HttpSessionDestroyedEvent(event.getSession());
-    logger.debug("Publishing event: {}", e);
-    publish(e);
+    eventMulticaster.multicast(new HttpSessionDestroyedEvent(event.getSession()));
   }
 }

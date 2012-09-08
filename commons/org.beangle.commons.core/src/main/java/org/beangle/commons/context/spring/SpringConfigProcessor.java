@@ -16,7 +16,7 @@ import java.util.Set;
 import org.beangle.commons.bean.Disposable;
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.context.event.DefaultEventMulticaster;
+import org.beangle.commons.context.event.EventListener;
 import org.beangle.commons.context.inject.*;
 import org.beangle.commons.context.inject.BeanConfig.Definition;
 import org.beangle.commons.context.inject.BeanConfig.ReferenceValue;
@@ -139,9 +139,13 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * @param registry a {@link org.beangle.commons.context.inject.BindRegistry} object.
    */
   protected void registerBuildins(BindRegistry registry) {
-    // FIXME for listeners inject
-    registerBean(new Definition(DefaultEventMulticaster.class.getName(), DefaultEventMulticaster.class,
-        Scope.SINGLETON.toString()), registry);
+    List<String> listenerBeans = registry.getBeanNames(EventListener.class);
+
+    Definition eventMulticaster = new Definition(SpringEventMulticaster.class.getName(),
+        SpringEventMulticaster.class, Scope.SINGLETON.toString());
+    eventMulticaster.property("listenerBeans", listenerBeans);
+
+    registerBean(eventMulticaster, registry);
   }
 
   /**

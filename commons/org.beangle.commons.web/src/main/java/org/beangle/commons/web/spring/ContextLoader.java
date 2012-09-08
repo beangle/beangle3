@@ -27,7 +27,7 @@ public class ContextLoader implements ServletContextListener {
 
   public static final String CONFIG_LOCATION_PARAM = "contextConfigLocation";
 
-  public static final String LAZY_INIT_PROCESSORS = "LazyInitProcessors";
+  public static final String LAZY_INIT_HOOKS = "LazyInitHooks";
 
   public void contextInitialized(ServletContextEvent sce) {
     initApplicationContext(sce.getServletContext());
@@ -68,11 +68,11 @@ public class ContextLoader implements ServletContextListener {
       long elapsedTime = System.currentTimeMillis() - startTime;
       logger.info("Root ApplicationContext: initialization completed in " + elapsedTime + " ms");
 
-      // lazy init processor
-      List<LazyInitProcessor> processors = getOrCreateLazyInitProcessors(servletContext);
-      for (LazyInitProcessor processor : processors)
-        processor.init(context);
-      servletContext.removeAttribute(LAZY_INIT_PROCESSORS);
+      // lazy initializing hooks
+      List<InitializingContextAware> hooks = getLazyInitialHooks(servletContext);
+      for (InitializingContextAware hook : hooks)
+        hook.init(context);
+      servletContext.removeAttribute(LAZY_INIT_HOOKS);
 
       return context;
     } catch (RuntimeException ex) {
@@ -130,15 +130,15 @@ public class ContextLoader implements ServletContextListener {
     return null;
   }
 
-  public static List<LazyInitProcessor> getOrCreateLazyInitProcessors(ServletContext servletContext) {
+  public static List<InitializingContextAware> getLazyInitialHooks(ServletContext servletContext) {
     @SuppressWarnings("unchecked")
-    List<LazyInitProcessor> processors = (List<LazyInitProcessor>) servletContext
-        .getAttribute(LAZY_INIT_PROCESSORS);
-    if (null == processors) {
-      processors = new ArrayList<LazyInitProcessor>();
-      servletContext.setAttribute(LAZY_INIT_PROCESSORS, processors);
+    List<InitializingContextAware> hooks = (List<InitializingContextAware>) servletContext
+        .getAttribute(LAZY_INIT_HOOKS);
+    if (null == hooks) {
+      hooks = new ArrayList<InitializingContextAware>();
+      servletContext.setAttribute(LAZY_INIT_HOOKS, hooks);
     }
-    return processors;
+    return hooks;
   }
 
 }

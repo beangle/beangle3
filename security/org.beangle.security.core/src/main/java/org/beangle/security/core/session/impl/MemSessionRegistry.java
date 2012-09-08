@@ -120,7 +120,7 @@ public class MemSessionRegistry implements SessionRegistry, EventListener<Sessio
   }
 
   public boolean supportsEventType(Class<? extends Event> eventType) {
-    return eventType.equals(SessionDestroyedEvent.class);
+    return SessionDestroyedEvent.class.isAssignableFrom(eventType);
   }
 
   public boolean supportsSourceType(Class<?> sourceType) {

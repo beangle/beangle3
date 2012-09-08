@@ -2,7 +2,7 @@ package org.beangle.commons.web.spring;
 
 import org.springframework.context.ApplicationContext;
 
-public interface LazyInitProcessor {
+public interface InitializingContextAware {
 
   void init(ApplicationContext context);
 }

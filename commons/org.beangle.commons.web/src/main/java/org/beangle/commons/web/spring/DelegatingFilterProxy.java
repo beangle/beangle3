@@ -20,7 +20,7 @@ import org.springframework.context.ApplicationContext;
  * 
  * @author chaostone
  */
-public class DelegatingFilterProxy extends GenericHttpFilter {
+public class DelegatingFilterProxy extends GenericHttpFilter implements InitializingContextAware {
 
   private Filter delegate;
 
@@ -31,6 +31,14 @@ public class DelegatingFilterProxy extends GenericHttpFilter {
     delegate.doFilter(request, response, chain);
   }
 
+  public void init(ApplicationContext context) {
+    try {
+      setDelegate(initDelegate(context));
+    } catch (ServletException e) {
+      Throwables.propagate(e);
+    }
+  }
+
   @Override
   protected void initFilterBean() throws ServletException {
     if (null == targetBeanName) targetBeanName = getFilterName();
@@ -38,15 +46,7 @@ public class DelegatingFilterProxy extends GenericHttpFilter {
     if (wac != null) {
       delegate = initDelegate(wac);
     } else {
-      ContextLoader.getOrCreateLazyInitProcessors(getServletContext()).add(new LazyInitProcessor() {
-        public void init(ApplicationContext context) {
-          try {
-            setDelegate(initDelegate(context));
-          } catch (ServletException e) {
-            Throwables.propagate(e);
-          }
-        }
-      });
+      ContextLoader.getLazyInitialHooks(getServletContext()).add(this);
     }
   }
 

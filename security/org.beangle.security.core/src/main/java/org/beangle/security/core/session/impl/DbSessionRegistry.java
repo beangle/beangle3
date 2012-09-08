@@ -59,9 +59,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     @SuppressWarnings("unchecked")
     OqlBuilder<Sessioninfo> builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoClass(), "info");
     builder.where("info.username=:username", principal);
-    if (!includeExpiredSessions) {
-      builder.where("info.expiredAt is null");
-    }
+    if (!includeExpiredSessions) builder.where("info.expiredAt is null");
     return entityDao.search(builder);
   }
 
@@ -94,9 +92,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     boolean success = controller.onRegister(auth, sessionId, this);
     if (!success) throw new SessionException("security.OvermaxSession");
     // 注销同会话的其它账户
-    if (null != existed) {
-      remove(sessionId, " expired with replacement.");
-    }
+    if (null != existed) remove(sessionId, " expired with replacement.");
     // 新生
     entityDao.save(sessioninfoBuilder.build(auth, sessionId));
   }
@@ -110,15 +106,13 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     if (null == info) {
       return null;
     } else {
-      // FIXME not in a transcation
+      // FIXME not in a transaction
       if (null != reason) info.addRemark(reason);
       entityDao.remove(info);
       controller.onLogout(info);
       entries.remove(info.getId());
       Object sessioninfoLog = sessioninfoBuilder.buildLog(info);
-      if (null != sessioninfoLog) {
-        entityDao.save(sessioninfoLog);
-      }
+      if (null != sessioninfoLog) entityDao.save(sessioninfoLog);
       logger.debug("Remove session {} for {}", sessionId, info.getUsername());
       return info;
     }
@@ -139,7 +133,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
   }
 
   public boolean supportsEventType(Class<? extends Event> eventType) {
-    return eventType.equals(SessionDestroyedEvent.class);
+    return SessionDestroyedEvent.class.isAssignableFrom(eventType);
   }
 
   public boolean supportsSourceType(Class<?> sourceType) {

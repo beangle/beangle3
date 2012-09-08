@@ -43,7 +43,7 @@ import org.beangle.security.web.auth.logout.SecurityContextLogoutHandler;
  * This filter performs two functions. First, it calls
  * {@link org.beangle.security.core.session.SessionRegistry#refreshLastRequest(String)} for each
  * request so that registered sessions always have a correct "last update" date/time. Second, it
- * retrieves a {@link org.beangle.security.core.session.SessionInformation} from the
+ * retrieves a {@link org.beangle.security.core.session.Sessioninfo} from the
  * <code>SessionRegistry</code> for each request and checks if the session has been marked as
  * expired. If it has been marked as expired, the configured logout handlers will be called (as
  * happens with {@link org.beangle.security.web.auth.logout.LogoutFilter}), typically to invalidate
