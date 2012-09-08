@@ -12,7 +12,7 @@ import org.beangle.commons.lang.Assert;
  * 
  * @author chaostone
  * @see java.lang.ThreadLocal
- * @see org.beangle.security.web.context.security.context.HttpSessionContextIntegrationFilter
+ * @see org.beangle.security.web.context.security.context.HttpSessionContextFilter
  */
 public class InheritableThreadLocalSecurityContextHolderStrategy implements SecurityContextHolderStrategy {
 

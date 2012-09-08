@@ -9,7 +9,7 @@ import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.SecurityContext;
 import org.beangle.security.core.context.SecurityContextHolder;
 
-public final class SecurityUtils {
+public final class Securities {
 
   public static boolean isValid(Authentication auth) {
     return (null != auth && !AnonymousAuthentication.class.isAssignableFrom(auth.getClass()));

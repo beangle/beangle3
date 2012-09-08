@@ -14,7 +14,7 @@ import org.beangle.commons.lang.Assert;
  * @version $Id: ThreadLocalSecurityContextHolderStrategy.java 2217 2007-10-27
  *          00:45:30Z $
  * @see java.lang.ThreadLocal
- * @see org.beangle.security.web.context.security.context.HttpSessionContextIntegrationFilter
+ * @see org.beangle.security.web.context.security.context.HttpSessionContextFilter
  */
 public class ThreadLocalSecurityContextHolderStrategy implements SecurityContextHolderStrategy {
 

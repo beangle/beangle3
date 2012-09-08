@@ -64,7 +64,7 @@ public class ActionSupport implements Action, Validateable, ValidationAware, Tex
     return validationAware.getFieldErrors();
   }
 
-  protected Locale getLocale() {
+  public Locale getLocale() {
     ActionContext ctx = ActionContext.getContext();
     if (ctx != null) {
       return ctx.getLocale();

@@ -8,7 +8,7 @@
 	<bean id="mockFilter2" class="org.beangle.commons.web.filter.MockFilter"/>
 	
 	<!-- These are just here so we have filters of a specfic type to check the ordering is as expected -->
-	<bean id="sif" class="org.beangle.security.web.context.HttpSessionContextIntegrationFilter"/>
+	<bean id="sif" class="org.beangle.security.web.context.HttpSessionContextFilter"/>
 	
 	<bean id="apf" class="org.beangle.security.web.auth.UsernamePasswordAuthenticationFilter">
 		<property name="defaultTargetUrl" value="/whocares"/>

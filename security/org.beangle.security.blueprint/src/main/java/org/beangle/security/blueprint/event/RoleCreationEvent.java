@@ -4,7 +4,7 @@
  */
 package org.beangle.security.blueprint.event;
 
-import org.beangle.security.SecurityUtils;
+import org.beangle.security.Securities;
 import org.beangle.security.blueprint.Role;
 
 /**
@@ -16,6 +16,6 @@ public class RoleCreationEvent extends RoleEvent {
 
   public RoleCreationEvent(Role role) {
     super(role);
-    setSubject(SecurityUtils.getUsername() + " 创建了 " + getRole().getName());
+    setSubject(Securities.getUsername() + " 创建了 " + getRole().getName());
   }
 }

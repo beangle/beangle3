@@ -76,4 +76,8 @@ public class DefaultTextResource implements TextResource {
     this.keyAsDefault = keyAsDefault;
   }
 
+  public Locale getLocale() {
+    return locale;
+  }
+
 }

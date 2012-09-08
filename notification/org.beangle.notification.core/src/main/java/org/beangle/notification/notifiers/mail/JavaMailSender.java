@@ -58,10 +58,10 @@ public class JavaMailSender implements MailSender {
 
   protected MimeMessage createMimeMessage(MailMessage mailMsg) throws MessagingException {
     MimeMessage mimeMsg = new MimeMessage(getSession());
-    if (null == mailMsg.getSendAt()) {
+    if (null == mailMsg.getSentAt()) {
       mimeMsg.setSentDate(new Date());
     } else {
-      mimeMsg.setSentDate(mailMsg.getSendAt());
+      mimeMsg.setSentDate(mailMsg.getSentAt());
     }
     String encoding = Strings.substringAfter(mailMsg.getContentType(), "charset=");
     final String text = mailMsg.getText();

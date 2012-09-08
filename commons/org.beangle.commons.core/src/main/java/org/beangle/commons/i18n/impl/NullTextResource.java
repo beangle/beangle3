@@ -4,6 +4,8 @@
  */
 package org.beangle.commons.i18n.impl;
 
+import java.util.Locale;
+
 import org.beangle.commons.i18n.TextResource;
 
 /**
@@ -23,6 +25,10 @@ public class NullTextResource implements TextResource {
 
   public String getText(String key, String defaultValue, Object... obj) {
     return key;
+  }
+
+  public Locale getLocale() {
+    return null;
   }
 
 }

@@ -9,7 +9,7 @@ import org.beangle.security.core.Authentication;
 /**
  * Base implementation of {@link SecurityContext}.
  * <p>
- * Used by default by {@link SecurityContextHolder} and {@link HttpSessionContextIntegrationFilter}.
+ * Used by default by {@link SecurityContextHolder} and {@link HttpSessionContextFilter}.
  * </p>
  * 
  * @author chaostone

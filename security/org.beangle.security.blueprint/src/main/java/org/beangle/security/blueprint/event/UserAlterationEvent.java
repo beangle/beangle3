@@ -6,7 +6,7 @@ package org.beangle.security.blueprint.event;
 
 import java.util.List;
 
-import org.beangle.security.SecurityUtils;
+import org.beangle.security.Securities;
 import org.beangle.security.blueprint.User;
 
 /**
@@ -19,7 +19,7 @@ public class UserAlterationEvent extends UserEvent {
 
   public UserAlterationEvent(List<User> users) {
     super(users);
-    setSubject(SecurityUtils.getUsername() + " 修改了" + getUserNames() + "的用户信息");
+    setSubject(Securities.getUsername() + " 修改了" + getUserNames() + "的用户信息");
   }
 
 }

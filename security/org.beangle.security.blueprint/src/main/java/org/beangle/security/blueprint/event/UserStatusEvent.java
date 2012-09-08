@@ -6,7 +6,7 @@ package org.beangle.security.blueprint.event;
 
 import java.util.List;
 
-import org.beangle.security.SecurityUtils;
+import org.beangle.security.Securities;
 import org.beangle.security.blueprint.User;
 
 /**
@@ -21,7 +21,7 @@ public class UserStatusEvent extends UserEvent {
   public UserStatusEvent(List<User> users, boolean enabled) {
     super(users);
     this.enabled = enabled;
-    setSubject(SecurityUtils.getUsername() + (enabled ? "激活" : "禁用") + "了" + getUserNames());
+    setSubject(Securities.getUsername() + (enabled ? "激活" : "禁用") + "了" + getUserNames());
   }
 
   public boolean isEnabled() {

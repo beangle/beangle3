@@ -35,7 +35,7 @@ import org.beangle.commons.lang.Throwables;
  * 
  * @author chaostone
  * @version $Id: SecurityContextHolder.java 2217 2007-10-27 00:45:30Z $
- * @see org.beangle.security.web.context.security.context.HttpSessionContextIntegrationFilter
+ * @see org.beangle.security.web.context.security.context.HttpSessionContextFilter
  */
 public class SecurityContextHolder {
 

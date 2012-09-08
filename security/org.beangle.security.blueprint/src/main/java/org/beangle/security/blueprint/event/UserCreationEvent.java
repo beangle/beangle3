@@ -6,7 +6,7 @@ package org.beangle.security.blueprint.event;
 
 import java.util.List;
 
-import org.beangle.security.SecurityUtils;
+import org.beangle.security.Securities;
 import org.beangle.security.blueprint.User;
 
 /**
@@ -19,7 +19,7 @@ public class UserCreationEvent extends UserEvent {
 
   public UserCreationEvent(List<User> users) {
     super(users);
-    setSubject(SecurityUtils.getUsername() + " 创建了" + getUserNames() + " 用户");
+    setSubject(Securities.getUsername() + " 创建了" + getUserNames() + " 用户");
   }
 
 }

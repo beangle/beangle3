@@ -25,7 +25,7 @@ public class MailMessage extends AbstractMessage {
 
   private List<InternetAddress> bcc = CollectUtils.newArrayList();
 
-  private Date sendAt;
+  private Date sentAt;
 
   public MailMessage() {
     super();
@@ -99,12 +99,12 @@ public class MailMessage extends AbstractMessage {
     this.bcc.addAll(MimeUtils.parseAddress(sendBcc, getEncoding()));
   }
 
-  public Date getSendAt() {
-    return sendAt;
+  public Date getSentAt() {
+    return sentAt;
   }
 
-  public void setSendAt(Date sendAt) {
-    this.sendAt = sendAt;
+  public void setSentAt(Date sendAt) {
+    this.sentAt = sendAt;
   }
 
 }

@@ -86,12 +86,11 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
     HttpServletRequest request = (HttpServletRequest) req;
     HttpServletResponse response = (HttpServletResponse) res;
     boolean requireAuth = requiresAuthentication(request, response);
-    AnonymousAuthentication anonymous = null;
     if (requireAuth) {
       Authentication newAuth = doAuthenticate(request, response);
       // Create anonymous authentication
       if (null == newAuth) {
-        anonymous = createAnonymousAuthentication(request);
+        AnonymousAuthentication anonymous = createAnonymousAuthentication(request);
         SecurityContextHolder.getContext().setAuthentication(anonymous);
         logger.debug("Populated SecurityContextHolder with anonymous token: '{}'", anonymous);
       }
@@ -99,7 +98,7 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
     try {
       chain.doFilter(req, res);
     } finally {
-      if (null != anonymous
+      if (requireAuth
           && SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthentication) {
         SecurityContextHolder.getContext().setAuthentication(null);
       }
