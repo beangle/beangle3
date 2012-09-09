@@ -373,7 +373,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
    * 
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
-  public OqlBuilder<T> cleanOrders() {
+  public OqlBuilder<T> clearOrders() {
     this.orders.clear();
     return this;
   }

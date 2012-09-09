@@ -27,8 +27,8 @@ public abstract class Event extends EventObject {
   /**event details*/
   private String detail;
   
-  /**location where the event happened*/
-  private String location;
+  /**resource where the event happened*/
+  private String resource;
   
   /**
    * Create a new ApplicationEvent.
@@ -65,12 +65,12 @@ public abstract class Event extends EventObject {
     this.detail = detail;
   }
 
-  public String getLocation() {
-    return location;
+  public String getResource() {
+    return resource;
   }
 
-  public void setLocation(String location) {
-    this.location = location;
+  public void setResource(String resource) {
+    this.resource = resource;
   }
 
 }

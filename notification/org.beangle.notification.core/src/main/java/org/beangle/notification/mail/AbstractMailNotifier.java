@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.notification.notifiers.mail;
+package org.beangle.notification.mail;
 
 import org.beangle.commons.lang.Assert;
 import org.beangle.notification.Message;

@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.notification.notifiers.mail;
+package org.beangle.notification.mail;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import javax.mail.internet.InternetAddress;
 
 import junit.framework.Assert;
 
+import org.beangle.notification.mail.MimeUtils;
 import org.testng.annotations.Test;
 
 @Test

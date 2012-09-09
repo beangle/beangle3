@@ -2,8 +2,11 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.notification.notifiers.mail;
+package org.beangle.notification.mail;
 
+import org.beangle.notification.mail.DefaultMailNotifier;
+import org.beangle.notification.mail.JavaMailSender;
+import org.beangle.notification.mail.MailMessage;
 import org.testng.annotations.Test;
 
 @Test

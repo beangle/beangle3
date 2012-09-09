@@ -17,7 +17,7 @@ public class RoleEvent extends Event {
 
   public RoleEvent(Role role) {
     super(role);
-    setLocation("角色管理");
+    setResource("角色管理");
   }
 
   protected Role getRole() {

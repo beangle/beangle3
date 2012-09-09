@@ -20,7 +20,7 @@ public class UserEvent extends Event {
 
   public UserEvent(List<User> users) {
     super(users);
-    setLocation("用户管理");
+    setResource("用户管理");
   }
 
   @SuppressWarnings("unchecked")

@@ -36,12 +36,17 @@ import org.hibernate.collection.PersistentCollection;
 import org.hibernate.engine.jdbc.StreamUtils;
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.LazyInitializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author chaostone
  */
 public class HibernateEntityDao implements EntityDao {
 
+  /** Logger available to subclasses */
+  protected Logger logger = LoggerFactory.getLogger(getClass());
+  
   protected SessionFactory sessionFactory;
 
   protected Session getSession() {

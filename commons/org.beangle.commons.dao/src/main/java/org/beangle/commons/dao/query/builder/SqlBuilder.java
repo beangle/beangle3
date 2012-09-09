@@ -279,7 +279,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * 
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
-  public SqlBuilder cleanOrders() {
+  public SqlBuilder clearOrders() {
     this.orders.clear();
     return this;
   }

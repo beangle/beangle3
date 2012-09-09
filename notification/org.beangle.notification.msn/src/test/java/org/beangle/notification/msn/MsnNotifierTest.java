@@ -2,8 +2,9 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.notification.notifiers.msn;
+package org.beangle.notification.msn;
 
+import org.beangle.notification.msn.MsnNotifier;
 import org.codehaus.plexus.msn.DefaultMsnClient;
 import org.testng.annotations.Test;
 

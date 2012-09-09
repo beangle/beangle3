@@ -56,4 +56,12 @@ public final class ClassLoaders {
       return null;
     }
   }
+
+  public static Class<?> loadClass(String className) {
+    try {
+      return Class.forName(className);
+    } catch (ClassNotFoundException e) {
+      throw Throwables.propagate(e);
+    }
+  }
 }

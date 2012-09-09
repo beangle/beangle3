@@ -24,6 +24,7 @@ import org.hibernate.impl.CriteriaImpl;
  * @author chaostone
  */
 public class BaseDaoHibernate extends HibernateEntityDao {
+  
   protected EntityDao entityDao;
 
   public void setEntityDao(EntityDao entityDao) {

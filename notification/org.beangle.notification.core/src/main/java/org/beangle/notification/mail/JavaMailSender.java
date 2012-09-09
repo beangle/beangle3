@@ -1,4 +1,4 @@
-package org.beangle.notification.notifiers.mail;
+package org.beangle.notification.mail;
 
 import java.util.Date;
 import java.util.LinkedHashMap;

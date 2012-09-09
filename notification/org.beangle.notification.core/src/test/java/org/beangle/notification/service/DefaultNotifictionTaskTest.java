@@ -9,10 +9,10 @@ import static org.testng.Assert.assertEquals;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.beangle.notification.notifiers.mail.AbstractMailNotifier;
-import org.beangle.notification.notifiers.mail.DefaultMailNotifier;
-import org.beangle.notification.notifiers.mail.JavaMailSender;
-import org.beangle.notification.notifiers.mail.MailMessage;
+import org.beangle.notification.mail.AbstractMailNotifier;
+import org.beangle.notification.mail.DefaultMailNotifier;
+import org.beangle.notification.mail.JavaMailSender;
+import org.beangle.notification.mail.MailMessage;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
