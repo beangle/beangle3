@@ -13,11 +13,6 @@ package org.beangle.commons.transfer.importer;
 @SuppressWarnings("serial")
 public class IllegalImportFormatException extends RuntimeException {
 
-  public IllegalImportFormatException(String message, Throwable cause, boolean enableSuppression,
-      boolean writableStackTrace) {
-    super(message, cause, enableSuppression, writableStackTrace);
-  }
-
   public IllegalImportFormatException(String message, Throwable cause) {
     super(message, cause);
   }
