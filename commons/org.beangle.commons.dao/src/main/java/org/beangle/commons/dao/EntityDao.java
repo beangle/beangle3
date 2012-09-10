@@ -206,7 +206,8 @@ public interface EntityDao {
   public <T> List<T> searchHQLQuery(final String hql, final Map<String, Object> params);
 
   /**
-   * HQL查询
+   * HQL查询<br>
+   * hql语句中使用?表示参数
    * 
    * @param hql
    * @param params

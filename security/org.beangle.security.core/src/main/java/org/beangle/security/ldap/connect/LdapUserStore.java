@@ -20,4 +20,6 @@ public interface LdapUserStore {
   String getPassword(String uid);
 
   Set<Attribute> getAttributes(String uid, String attrName);
+
+  String getUrl();
 }
