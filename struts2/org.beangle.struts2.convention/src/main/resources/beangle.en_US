@@ -99,3 +99,4 @@ info.remove.failure=Remove Failure
 info.upload.success=Upload Success
 
 error.model.existed=Data Existed
+error.importformat=Error import format

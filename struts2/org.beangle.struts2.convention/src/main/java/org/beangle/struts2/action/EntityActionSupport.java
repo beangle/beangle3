@@ -41,6 +41,7 @@ import org.beangle.commons.transfer.exporter.Exporter;
 import org.beangle.commons.transfer.exporter.PropertyExtractor;
 import org.beangle.commons.transfer.importer.DefaultEntityImporter;
 import org.beangle.commons.transfer.importer.EntityImporter;
+import org.beangle.commons.transfer.importer.IllegalImportFormatException;
 import org.beangle.commons.transfer.importer.listener.ImporterForeignerListener;
 import org.beangle.commons.transfer.io.TransferFormats;
 import org.beangle.commons.web.util.RequestUtils;
@@ -48,7 +49,6 @@ import org.beangle.struts2.helper.ExportHelper;
 import org.beangle.struts2.helper.Params;
 
 /**
- * 
  * @author chaostone
  * @since 3.0.0
  */
@@ -303,7 +303,7 @@ public abstract class EntityActionSupport extends BaseAction {
 
   protected String getEntityName() {
     return null;
-    //throw new RuntimeException(this.getClass() + " should override getEntityName");
+    // throw new RuntimeException(this.getClass() + " should override getEntityName");
   }
 
   protected String getShortName() {
@@ -484,13 +484,19 @@ public abstract class EntityActionSupport extends BaseAction {
     TransferResult tr = new TransferResult();
     EntityImporter importer = buildEntityImporter();
     if (null == importer) { return forward("/components/importData/error"); }
-    configImporter(importer);
-    importer.transfer(tr);
-    put("importResult", tr);
-    if (tr.hasErrors()) {
+    try {
+      configImporter(importer);
+      importer.transfer(tr);
+      put("importResult", tr);
+      if (tr.hasErrors()) {
+        return forward("/components/importData/error");
+      } else {
+        return forward("/components/importData/result");
+      }
+    } catch (IllegalImportFormatException e) {
+      tr.addFailure(getText("error.importformat"), e.getMessage());
+      put("importResult", tr);
       return forward("/components/importData/error");
-    } else {
-      return forward("/components/importData/result");
     }
   }
 

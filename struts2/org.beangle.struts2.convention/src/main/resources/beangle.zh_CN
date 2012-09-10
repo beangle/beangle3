@@ -80,6 +80,7 @@ common.invalidAt=截至时间
 common.effectiveAt=起始时间
 
 error.model.existed=相同数据已存在
+error.importformat=导入数据格式有错误
 
 info.action.success=操作成功
 info.remove.failure=删除失败
@@ -98,3 +99,4 @@ page.previous=上页
 ui.editForm={0}详细信息
 ui.indexPanel={0} Management
 ui.searchForm=查询条件
+

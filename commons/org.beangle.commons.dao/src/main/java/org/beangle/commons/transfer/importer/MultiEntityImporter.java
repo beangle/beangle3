@@ -197,7 +197,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
       EntityType entityType = (EntityType) entityTypes.get(alias);
       if (null == entityType) {
         logger.error("Not register entity type for {}", alias);
-        throw new RuntimeException("Not register entity type for " + alias);
+        throw new IllegalImportFormatException("Not register entity type for " + alias);
       } else {
         entity = entityType.newInstance();
         current.put(alias, entity);
