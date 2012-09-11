@@ -1,8 +1,4 @@
-<#if Session['WW_TRANS_I18N_LOCALE']??>
-<#assign language= Session['WW_TRANS_I18N_LOCALE'].language>
-<#else>
-<#assign language="zh">
-</#if>
+<#assign language= locale.language>
 
 <#macro i18nName(entity)><#if language?index_of("en")!=-1><#if entity.engName!?trim=="">${entity.name!}<#else>${entity.engName!}</#if><#else><#if entity.name!?trim!="">${entity.name!}<#else>${entity.engName!}</#if></#if></#macro>
 

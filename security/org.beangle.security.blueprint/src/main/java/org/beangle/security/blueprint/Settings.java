@@ -5,7 +5,7 @@
 package org.beangle.security.blueprint;
 
 import org.beangle.commons.context.property.PropertyConfig;
-import org.springframework.util.Assert;
+import org.beangle.commons.lang.Assert;
 
 /**
  * Security Settings

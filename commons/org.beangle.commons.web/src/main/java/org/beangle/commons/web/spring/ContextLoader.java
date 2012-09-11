@@ -19,7 +19,7 @@ import org.springframework.util.ClassUtils;
 
 public class ContextLoader implements ServletContextListener {
 
-  public static final String ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE = "WebApplicationContext.ROOT";
+  public static final String ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE = "org.springframework.web.context.WebApplicationContext.ROOT";
 
   public static final String APPLICATION_CONTEXT_ID_PREFIX = "WebApplicationContext:";
 
