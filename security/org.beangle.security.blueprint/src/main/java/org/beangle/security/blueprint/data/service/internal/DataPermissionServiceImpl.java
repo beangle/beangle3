@@ -6,13 +6,14 @@ package org.beangle.security.blueprint.data.service.internal;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.collection.predicates.PropertyEqualPredicate;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.Condition;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
@@ -60,13 +61,42 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
   private List<? extends DataPermission> getPermissions(Role role, String dataResourceName,
       String funcResourceName) {
     OqlBuilder<DataPermissionBean> builder = OqlBuilder.from(DataPermissionBean.class, "dp")
-        .where("dp.resource.name=:name and dp.role =:role", dataResourceName, role).cacheable();
+        .where("dp.resource.name=:name", dataResourceName).cacheable();
     List<DataPermissionBean> rs = entityDao.search(builder);
 
-    @SuppressWarnings("unchecked")
-    List<DataPermissionBean> permissions = (List<DataPermissionBean>) CollectionUtils.select(rs,
-        new PropertyEqualPredicate("funcResource.name", funcResourceName));
-    return (permissions.isEmpty()) ? rs : permissions;
+    final String roleName = role.getName();
+    final String funcResourceName1 = funcResourceName;
+    final Date now = new Date();
+    CollectionUtils.filter(rs, new Predicate() {
+      public boolean evaluate(Object object) {
+        DataPermissionBean dp = (DataPermissionBean) object;
+        if (null != dp.getEffectiveAt() && now.before(dp.getEffectiveAt())) return false;
+        if (null != dp.getInvalidAt() && now.after(dp.getInvalidAt())) return false;
+        if (dp.getRole() == null || dp.getRole().getName().equals(roleName)) {
+          if (dp.getFuncResource() == null || dp.getFuncResource().getName().equals(funcResourceName1)) { return true; }
+        }
+        return false;
+      }
+    });
+
+    Collections.sort(rs, new Comparator<DataPermissionBean>() {
+      static final int general = 4;
+      static final int onlyRoleMatch = 3;
+      static final int onlyFuncMatch = 2;
+      static final int matchAll = 1;
+
+      public int compare(DataPermissionBean lhs, DataPermissionBean rhs) {
+        return getWeight(lhs) - getWeight(rhs);
+      }
+
+      private int getWeight(DataPermissionBean dp) {
+        if (dp.getRole() == null && dp.getFuncResource() == null) { return general; }
+        if (dp.getRole() != null && dp.getFuncResource() == null) { return onlyRoleMatch; }
+        if (dp.getRole() == null && dp.getFuncResource() != null) { return onlyFuncMatch; }
+        return matchAll;
+      }
+    });
+    return rs;
   }
 
   /**
@@ -74,15 +104,10 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
    */
   public DataPermission getPermission(Long userId, String dataResourceName, String funcResourceName) {
     List<Role> roles = userService.getRoles(userId);
-    Date now = new Date();
     for (Role role : roles) {
-      for (DataPermission permission : getPermissions(role, dataResourceName, funcResourceName)) {
-        if (null != permission.getEffectiveAt() && now.before(permission.getEffectiveAt())) continue;
-        if (null != permission.getInvalidAt() && now.after(permission.getInvalidAt())) continue;
-        return permission;
-      }
+      List<? extends DataPermission> permissions = getPermissions(role, dataResourceName, funcResourceName);
+      if (!permissions.isEmpty()) { return permissions.get(0); }
     }
-    // FIXME try alluser
     return null;
   }
 
@@ -96,14 +121,14 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
     return entityDao.search(builder);
   }
 
-  public List<?> getFieldValues(ProfileField field,Object... keys) {
+  public List<?> getFieldValues(ProfileField field, Object... keys) {
     if (null == field.getSource()) return Collections.emptyList();
     String source = field.getSource();
     String prefix = Strings.substringBefore(source, ":");
     source = Strings.substringAfter(source, ":");
     UserDataProvider provider = providers.get(prefix);
     if (null != provider) {
-      return provider.getData(field, source,keys);
+      return provider.getData(field, source, keys);
     } else {
       throw new RuntimeException("not support data provider:" + prefix);
     }

@@ -41,11 +41,11 @@ public class OverrideConfiguration extends Configuration {
   }
 
   protected class OverrideMappings extends MappingsImpl {
-    
+
     public OverrideMappings() {
       super();
-      //注册缺省的sequence生成器
-      IdGenerator idGen=new IdGenerator();
+      // 注册缺省的sequence生成器
+      IdGenerator idGen = new IdGenerator();
       idGen.setName("table_sequence");
       idGen.setIdentifierGeneratorStrategy(TableSeqGenerator.class.getName());
       this.addDefaultGenerator(idGen);
@@ -59,6 +59,7 @@ public class OverrideConfiguration extends Configuration {
       String entityClassName = null;
       if (null != jpaEntityName && jpaEntityName.contains(".")) {
         entityClassName = entityName;
+        // Set real entityname is jpa entityname
         entityName = jpaEntityName;
         persistentClass.setEntityName(entityName);
       }
@@ -70,9 +71,8 @@ public class OverrideConfiguration extends Configuration {
         logger.info("{} override {} for entity configuration", persistentClass.getClassName(),
             old.getClassName());
       }
-      if (null != entityClassName) {
-        classes.put(entityClassName, persistentClass);
-      }
+      // 为了欺骗hibernate中的ToOneFkSecondPass的部分代码,例如isInPrimaryKey。这些代码会根据className查找persistentClass，而不是根据entityName
+      if (null != entityClassName) classes.put(entityClassName, persistentClass);
     }
 
     @Override

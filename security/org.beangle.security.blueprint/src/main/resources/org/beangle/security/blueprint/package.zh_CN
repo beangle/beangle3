@@ -1,11 +1,11 @@
 entity.menu=菜单
-entity.dataResource=业务对象
 entity.role=角色
 entity.funcResource=功能资源
 entity.user=用户
-entity.dataPermission=数据权限
-entity.dataType=数据类型
+entity.dataResource=业务对象
+entity.dataPermission=数据限制策略
 entity.profileField=数据权限维度
+entity.dataType=业务对象属性元信息
 
 user.creator.fullname=创建者
 user.creator.name=创建者

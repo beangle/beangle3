@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.views.TagLibrary;
 import org.beangle.commons.collection.CollectUtils;
@@ -39,6 +40,26 @@ public abstract class AbstractTagLibrary implements TagLibrary {
     this.stack = stack;
     this.req = req;
     this.res = res;
+
+    theme.setUi(getUitheme());
+    theme.setUibase(req.getContextPath());
+    stack.getContext().put(Theme.THEME, theme);
+    stack.getContext().put(UIIdGenerator.GENERATOR,
+        new IndexableIdGenerator(Math.abs(req.getRequestURI().hashCode())));
+  }
+
+  protected String getUitheme() {
+    String uitheme = req.getParameter("ui.theme");
+    if (null == uitheme) {
+      HttpSession session = req.getSession(false);
+      if (null != session && null != session.getAttribute("ui.theme")) {
+        uitheme = (String) session.getAttribute("ui.theme");
+      }
+    }
+    if (null == uitheme) {
+      uitheme = "default";
+    }
+    return uitheme;
   }
 
   protected TagModel get(final Class<? extends Component> clazz) {

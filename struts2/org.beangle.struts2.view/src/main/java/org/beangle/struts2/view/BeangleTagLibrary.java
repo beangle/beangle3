@@ -11,12 +11,10 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.beangle.commons.collection.page.Page;
 import org.beangle.struts2.view.component.*;
-import org.beangle.struts2.view.template.Theme;
 
 import com.opensymphony.xwork2.inject.Inject;
 import com.opensymphony.xwork2.util.ValueStack;
@@ -31,31 +29,12 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 
   public BeangleTagLibrary(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
     super(stack, req, res);
-    theme.setUi(getUitheme());
-    theme.setUibase(req.getContextPath());
-    stack.getContext().put(Theme.THEME, theme);
-    stack.getContext().put(UIIdGenerator.GENERATOR,
-        new IndexableIdGenerator(Math.abs(req.getRequestURI().hashCode())));
   }
 
   public Object getFreemarkerModels(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
     BeangleTagLibrary models = new BeangleTagLibrary(stack, req, res);
     models.render = this.render;
     return models;
-  }
-
-  protected String getUitheme() {
-    String uitheme = req.getParameter("ui.theme");
-    if (null == uitheme) {
-      HttpSession session = req.getSession(false);
-      if (null != session && null != session.getAttribute("ui.theme")) {
-        uitheme = (String) session.getAttribute("ui.theme");
-      }
-    }
-    if (null == uitheme) {
-      uitheme = "default";
-    }
-    return uitheme;
   }
 
   @Inject
