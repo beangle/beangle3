@@ -44,6 +44,7 @@ import freemarker.template.Template;
 public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
   private static final Logger logger = LoggerFactory.getLogger(FreemarkerTemplateEngine.class);
   private static final String UI_ENV_CACHE = ".ui.envs";
+  private static final String Attr_ui_model = ".Attr_UI_MODEL";
 
   protected FreemarkerManager freemarkerManager;
   protected Configuration config;
@@ -134,12 +135,12 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
     Map<?, ?> context = stack.getContext();
     HttpServletRequest req = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);
     // build hash
-    SimpleHash model = (SimpleHash) req.getAttribute(FreemarkerManager.ATTR_TEMPLATE_MODEL);
+    SimpleHash model = (SimpleHash) req.getAttribute(Attr_ui_model);
     if (null == model) {
       model = freemarkerManager.buildTemplateModel(stack, null,
           (ServletContext) context.get(ServletActionContext.SERVLET_CONTEXT), req,
           (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE), config.getObjectWrapper());
-      req.setAttribute(FreemarkerManager.ATTR_TEMPLATE_MODEL, model);
+      req.setAttribute(Attr_ui_model, model);
     }
     return model;
   }

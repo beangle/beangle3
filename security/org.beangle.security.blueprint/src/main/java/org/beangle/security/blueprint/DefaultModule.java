@@ -30,7 +30,7 @@ public class DefaultModule extends AbstractBindModule {
   protected void doBinding() {
     bind("userService", UserServiceImpl.class);
     bind("roleService", RoleServiceImpl.class);
-    bind("authorityService", FuncPermissionServiceImpl.class);
+    bind("funcPermissionService", FuncPermissionServiceImpl.class);
     bind("menuService", MenuServiceImpl.class);
     bind("userDetailService", DaoUserDetailServiceImpl.class);
     bind("authorityManager", CacheableAuthorityManager.class);
