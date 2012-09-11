@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.Properties;
 
 import org.beangle.commons.context.inject.Resources;
+import org.beangle.commons.lang.time.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,13 +30,17 @@ public class MimeTypeProvider {
     return contentTypes.getProperty(ext);
   }
 
-
-  // META-INF/mimetypes.properties
+  /**
+   * META-INF/mimetypes.properties
+   * 
+   * @param url
+   */
   private void loadMimeType(URL url) {
     try {
+      Stopwatch watch = new Stopwatch(true);
       InputStream im = url.openStream();
       contentTypes.load(im);
-      logger.info("Content types loaded ");
+      logger.info("Load {} content types in {}", contentTypes.size(), watch);
       im.close();
     } catch (IOException e) {
       logger.error("load " + url + " error", e);
