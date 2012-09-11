@@ -60,7 +60,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
   private List<? extends DataPermission> getPermissions(Role role, String dataResourceName,
       String funcResourceName) {
     OqlBuilder<DataPermissionBean> builder = OqlBuilder.from(DataPermissionBean.class, "dp")
-        .where("dp.resource=:dataresource.name and dp.role =:role", dataResourceName, role).cacheable();
+        .where("dp.resource.name=:name and dp.role =:role", dataResourceName, role).cacheable();
     List<DataPermissionBean> rs = entityDao.search(builder);
 
     @SuppressWarnings("unchecked")
