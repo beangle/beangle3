@@ -54,10 +54,10 @@ public class Anchor extends ClosingUIBean {
     if (!isReserved()) {
       if (null == onclick) {
         if (null != target) {
-          onclick = Strings.concat("return bg.Go(this,'", target, "')");
+          onclick = Strings.concat("return bg.Go(this,'", target, "',true)");
           target = null;
         } else {
-          onclick = "return bg.Go(this)";
+          onclick = "return bg.Go(this,null,true)";
         }
       }
     }

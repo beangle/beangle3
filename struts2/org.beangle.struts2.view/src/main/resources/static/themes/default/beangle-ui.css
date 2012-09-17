@@ -58,7 +58,9 @@ a:hover {color: red;}
 
 .pgbar-label{background-color:#e9f2f8;}
 
-.pgbar-input{vertical-align:middle;width:45px;height:16px;border-collapse: collapse;border:solid;border-width:1px;border-color:#006CB2;padding:0px;margin:0px 2px 0px 0px;}
+.pgbar-input-label{vertical-align:middle;}
+
+.pgbar-input{vertical-align:middle;width:35px;height:16px;border-collapse: collapse;border:solid;border-width:1px;border-color:#006CB2;padding:0px;margin:0px 2px 0px 0px;}
 
 .pgbar-selbox{vertical-align:middle;width:75px;height:21px;font-size: 0.8em;margin:0px 2px 0px 0px;}
 

@@ -18,7 +18,7 @@
   window.bg=beangle;
   beangle.extend({
     //jump to href or anchor
-    Go : function (obj,target){
+    Go : function (obj,target,ajaxHistory){
       var url=obj;
       if(typeof obj =="object" && obj.tagName.toLowerCase()=="a"){
         url=obj.href;
@@ -37,7 +37,11 @@
           document.getElementById(target).src=url;
         }else{
           //using post ,hack ie8 get cache
-          jQuery('#'+target).load(url,{});
+          if(!ajaxHistory){
+          	jQuery('#'+target).load(url,{});
+          }else{
+          	beangle.history.historyGo(url,target);
+          }
         }
       }
       return false;
@@ -262,7 +266,7 @@
   //About From
   beangle.extend({
     form:{
-      submit : function (myForm,action,target,onsubmit,ajax){
+      submit : function (myForm,action,target,onsubmit,ajax,noHistory){
         var submitTarget, rs, sumbitBtnId, submitx,origin_target, origin_action,options_submit;
         if((typeof myForm)=='string') myForm = document.getElementById(myForm);
         //First native onsubmit will benefit to user's onsubmit hook on data validation.
@@ -322,7 +326,14 @@
           options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#'};
           origin_onsubmit=myForm.onsubmit;
           if (typeof jQuery != "undefined") {
-            jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
+            if(!noHistory && jQuery("input:file",myForm).length==0){
+              beangle.history.historySubmit(myForm.id,action,submitTarget);
+              //qianjun 这个分支没有使用struts2_jquery的绑定，所以去除myForm.submit,防止两次验证onsubmit函数
+              //FIXME 不能简单的去除
+              myForm.onsubmit=null;
+            }else{
+              jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
+            }
           }
           submitx.click();
           myForm.onsubmit=origin_onsubmit;
@@ -782,4 +793,68 @@
   
   // alert(document.body);
   beangle.ready(beangle.iframe.adaptSelf);
+})(window);
+
+//History
+(function( window, undefined ) {
+	if(beangle.history) return;
+	jQuery.struts2_jquery.require("/static/js/plugins/jquery.form"+jQuery.struts2_jquery.minSuffix+".js",function(){
+		window.beangle.history = {
+			init : function(){
+				if ( document.location.protocol === 'file:' ) {
+					alert('The HTML5 History API (and thus History.js) do not work on files, please upload it to a server.');
+				}
+				jQuery(document).ready(function(){
+					History.Adapter.bind(window,'statechange',function(e){	
+						var currState = History.getState();
+						if(jQuery.type((currState.data||{}).target)!="undefined" &&  jQuery.type((currState.data||{}).html)!="undefined"){
+							jQuery(currState.data.target).empty();
+							jQuery(currState.data.target).html(currState.data.html);
+						}
+					});
+				});	
+			},
+			historyGo : function(url,target){
+				var off = url.indexOf( " " );
+				if ( off >= 0 ) {
+					var selector = url.slice( off, url.length );
+					url = url.slice( 0, off );
+				}
+				jQuery.ajax({
+					url: url,
+					cache:false,
+					type: "GET",
+					dataType: "html",
+					complete: function( jqXHR, status, responseText ) {
+						responseText = jqXHR.responseText;
+						if ( jqXHR.isResolved() ) {
+							jqXHR.done(function( r ) {
+								responseText = r;
+							});
+							var html = selector ?jQuery("<div>").append(responseText.replace(rscript, "")).find(selector) :responseText;
+							History.pushState({html:html,target:"#"+target},"",url);
+						}
+					}
+				});
+			},
+			historySubmit : function(form,action,target){
+				if(jQuery.type(form)=="string" && form.indexOf("#")!=0){
+					form = "#" + form;	
+				}
+				if(jQuery.type(target)=="string" && target.indexOf("#")!=0){
+					target = "#" + target;	
+				}
+				jQuery(form).ajaxForm(function(result,message,response) {
+					if(message==="success" && response.status==200 && response.readyState==4){
+						//var originValue=jQuery(target).html();
+						//History.replaceState({html:originValue,target:target},"",document.location);
+						//alert(History.getState().url);
+						History.pushState({html:result,target:target},"",action);
+					}
+					return false; 
+				});	
+			}
+		}
+	},bg.getContextPath());
+	beangle.history.init();
 })(window);
