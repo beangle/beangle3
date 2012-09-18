@@ -18,7 +18,7 @@ import freemarker.cache.URLTemplateLoader;
  */
 public class BeangleClassTemplateLoader extends URLTemplateLoader {
 
-  /**Not starts with /,but end with /*/
+  /** Not starts with /,but end with / */
   String prefix = null;
 
   public BeangleClassTemplateLoader(String prefix) {
@@ -28,7 +28,7 @@ public class BeangleClassTemplateLoader extends URLTemplateLoader {
 
   protected URL getURL(String name) {
     URL url = ClassLoaders.getResource(name, getClass());
-    if (null != prefix) url = ClassLoaders.getResource(prefix + name, getClass());
+    if (null != prefix && null == url) url = ClassLoaders.getResource(prefix + name, getClass());
     return url;
   }
 

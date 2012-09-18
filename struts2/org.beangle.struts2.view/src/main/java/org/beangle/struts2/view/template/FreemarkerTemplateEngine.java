@@ -76,7 +76,7 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
       config.setAutoIncludes(CollectUtils.newArrayList(0));
 
       // Only class path class loader
-      config.setTemplateLoader(new HierarchicalTemplateLoader(this));
+      config.setTemplateLoader(new HierarchicalTemplateLoader(this, config.getTemplateLoader()));
     }
   }
 

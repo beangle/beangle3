@@ -4,34 +4,49 @@
  */
 package org.beangle.struts2.view.template;
 
-import java.net.URL;
+import java.io.IOException;
+import java.io.Reader;
 
-import org.beangle.commons.lang.ClassLoaders;
-
-import freemarker.cache.URLTemplateLoader;
+import freemarker.cache.TemplateLoader;
 
 /**
  * 搜索带有固定前缀下的资源，排除/org/和/com/
  * 
  * @author chaostone
  */
-public class HierarchicalTemplateLoader extends URLTemplateLoader {
+public class HierarchicalTemplateLoader implements TemplateLoader {
 
   final AbstractTemplateEngine templateEngine;
 
-  public HierarchicalTemplateLoader(AbstractTemplateEngine templateEngine) {
+  final TemplateLoader loader;
+
+  public HierarchicalTemplateLoader(AbstractTemplateEngine templateEngine, TemplateLoader loader) {
     this.templateEngine = templateEngine;
+    this.loader = loader;
   }
 
-  protected URL getURL(final String name) {
-    URL url = ClassLoaders.getResource(name, getClass());
-    if (null == url) {
+  public Object findTemplateSource(String name) throws IOException {
+    Object source = loader.findTemplateSource(name);
+    if (null == source) {
       do {
         String parent = templateEngine.getParentTemplate(name);
         if (null == parent) break;
-        url = ClassLoaders.getResource(parent, getClass());
-      } while (null == url);
+        source = loader.findTemplateSource(parent);
+      } while (null == source);
     }
-    return url;
+    return source;
   }
+
+  public long getLastModified(Object templateSource) {
+    return loader.getLastModified(templateSource);
+  }
+
+  public Reader getReader(Object templateSource, String encoding) throws IOException {
+    return loader.getReader(templateSource, encoding);
+  }
+
+  public void closeTemplateSource(Object templateSource) throws IOException {
+    loader.closeTemplateSource(templateSource);
+  }
+
 }
