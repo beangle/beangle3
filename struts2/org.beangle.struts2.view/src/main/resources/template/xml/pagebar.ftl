@@ -1,9 +1,11 @@
 [#ftl/]
 <script type="text/javascript">
+bg.ready(function(){
 	page_${tag.id}=bg.page("${request.requestURI}","${tag.parameters['target']!""}");
 	page_${tag.id}.maxPageNo=${tag.page.maxPageNo};
 	page_${tag.id}.addParams('${b.paramstring}');
 	page_${tag.id}.target(null,'${tag.id}');
+});
 </script>
 [#if tag.parameters['fixPageSize']?? && (tag.parameters['fixPageSize']=='1' || tag.parameters['fixPageSize']=='true')][#assign fixPageSize=true][#else][#assign fixPageSize=false][/#if]
 <div [#if tag.parameters['cssClass']??]class="${tag.parameters['cssClass']}"[#else]class="girdbar-pgbar"[/#if] [#if tag.parameters['cssStyle']??]style="${tag.parameters['style']}"[/#if]>

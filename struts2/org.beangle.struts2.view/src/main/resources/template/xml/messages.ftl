@@ -24,7 +24,6 @@
 </div>
 [#if tag.parameters['slash']??]
 <script>
-	//jQuery("${tag.id}").fadeOut("fast",function(){alert(1)});
 	setTimeout(function(){var msgdiv=document.getElementById('${tag.id}');if(msgdiv) msgdiv.style.display="none";},${tag.parameters['slash']}*1000);
 </script>
 [/#if]

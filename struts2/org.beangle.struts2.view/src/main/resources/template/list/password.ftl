@@ -6,6 +6,6 @@ ${tag.label}:</label>[/#if]<input type="password" id="${tag.id}" [#if tag.title?
 [#if tag.showStrength='true']
 <script>
 bg.ui.load("jquery.pstrength");
-jQuery(document).ready(function() { jQuery('#${tag.id}').pstrength({minChar:${tag.minlength}}); });
+bg.ready(function() { jQuery('#${tag.id}').pstrength({minChar:${tag.minlength}}); });
 </script>
 [/#if]

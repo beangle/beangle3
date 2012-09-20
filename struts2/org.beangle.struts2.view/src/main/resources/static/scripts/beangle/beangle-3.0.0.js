@@ -1,8 +1,9 @@
 (function( window, undefined ) {
-		if(beangle) return;
+  if(beangle) return;
   var beangle=function (){
     return true;
   };
+  
   /** extend function */
   beangle.extend= function(map){
     for(attr in map){
@@ -16,9 +17,86 @@
   }
   window.beangle=beangle;
   window.bg=beangle;
+
+  //History--------------------------
+  beangle.history = {
+    init : function(){
+        if ( document.location.protocol === 'file:' ) {
+            alert('The HTML5 History API (and thus History.js) do not work on files, please upload it to a server.');
+            return;
+        }
+        jQuery(document).ready(function(){
+            History.Adapter.bind(window,'statechange',function(e){    
+                var currState = History.getState();
+                if(jQuery.type((currState.data||{}).container)!="undefined" &&  jQuery.type((currState.data||{}).content)!="undefined"){
+                    if(currState.data.updatedAt){
+                        var updatedInterval=(new Date()).getTime()-currState.data.updatedAt;
+                        //从更新发生到现在的时间间隔小于1秒的认为是从replaceState发出的，这类更改状态的改变，不做任何处理。
+                        if(updatedInterval<=1000) return;
+                    }
+                    //jQuery(currState.data.container).empty();
+                    jQuery(currState.data.container).html(currState.data.content);
+                    bg.history.applyState(currState);
+                }
+            });
+        });    
+    },
+    Go : function(url,target){
+        jQuery.ajax({
+            url: url,cache:false,
+            type: "GET",dataType: "html",
+            complete: function( jqXHR, status ) {
+                target="#"+target;
+                if(jQuery(target).html().length>0){
+                    bg.history.snapshot();
+                    History.pushState({content:jqXHR.responseText,container:target},"",url);
+                }else{
+                    var state=History.getState();
+                    History.replaceState({content:jqXHR.responseText,container:target,updatedAt:(new Date()).getTime()},state.title,state.url);
+                    jQuery(target).html(jqXHR.responseText);
+                }
+            }
+        });
+    },
+    snapshot:function(){
+        var state = History.getState();
+        if(state.data.content){
+            var _t = [];
+            jQuery(state.data.container +' .box:checked').each(function(index, e) {_t[_t.length] = e.value;});
+            state.data.boxes=_t;
+            state.updatedAt=(new Date()).getTime();
+            if(_t.length>0) History.replaceState(state.data,state.title,state.url);
+        }
+    },
+    applyState:function(state){
+        if(state.data.boxes){
+            jQuery(state.data.boxes).each(function(index, value) {
+                jQuery(state.data.container +' .box[value=' + value + ']').attr('checked', 'checked'); 
+            });
+        }
+    },
+    submit : function(form,action,target){
+        if(jQuery.type(form)=="string" && form.indexOf("#")!=0){
+            form = "#" + form;
+        }
+        if(jQuery.type(target)=="string" && target.indexOf("#")!=0){
+            target = "#" + target;    
+        }
+        bg.require("jquery.form");
+        jQuery(form).ajaxForm(function(result,message,response) {
+            if(message==="success" && response.status==200 && response.readyState==4){
+                bg.history.snapshot();
+                History.pushState({content:result,container:target},"",action);
+            }
+            return false; 
+        });    
+    }
+  };
+
+  //Go and ajax---------------------------------
   beangle.extend({
     //jump to href or anchor
-    Go : function (obj,target,ajaxHistory){
+    Go : function (obj,target){
       var url=obj;
       if(typeof obj =="object" && obj.tagName.toLowerCase()=="a"){
         url=obj.href;
@@ -36,12 +114,7 @@
           //FIXME _blank,_top
           document.getElementById(target).src=url;
         }else{
-          //using post ,hack ie8 get cache
-          if(!ajaxHistory){
-          	jQuery('#'+target).load(url,{});
-          }else{
-          	beangle.history.historyGo(url,target);
-          }
+          beangle.history.Go(url,target);
         }
       }
       return false;
@@ -50,11 +123,7 @@
       return self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)
     },
     ready:function (fn){
-      if (window.addEventListener) {
-         window.addEventListener("load", fn, false);
-      }else if (window.attachEvent) {
-        window.attachEvent("onload", fn);
-      }else {window.onload = fn;}
+        jQuery(document).ready(fn);
     },
     isAjaxTarget : function (target){
       if(!target) return false;
@@ -81,7 +150,7 @@
       var p = ele.parentNode,finalTarget = "_self";
       while(p){
         //FIXME ui-tabs-panel
-        if(p.id && p.className  && (p.className.indexOf("_ajax_target")>-1 )){//||p.className.indexOf("ui-tabs-panel")>-1
+        if(p.id && p.className  && (p.className.indexOf("ajax_container")>-1 )){//||p.className.indexOf("ui-tabs-panel")>-1
           finalTarget = p.id;
           break;
         }else{
@@ -141,9 +210,7 @@
           return e;
         }
       },
-      /**
-       *获得事件背后的元素
-       */
+      /**获得事件背后的元素*/
       getTarget: function (e){
         e=bg.event.portable(e);
         return e.target || e.srcElement;
@@ -327,7 +394,7 @@
           origin_onsubmit=myForm.onsubmit;
           if (typeof jQuery != "undefined") {
             if(!noHistory && jQuery("input:file",myForm).length==0){
-              beangle.history.historySubmit(myForm.id,action,submitTarget);
+              beangle.history.submit(myForm.id,action,submitTarget);
               //qianjun 这个分支没有使用struts2_jquery的绑定，所以去除myForm.submit,防止两次验证onsubmit函数
               //FIXME 不能简单的去除
               myForm.onsubmit=null;
@@ -791,78 +858,15 @@
     }
   };
   
-  // alert(document.body);
+  bg.extend({'require':
+    function (module,callback){
+        var base=bg.getContextPath();
+        if(module=="jquery.form"){
+            jQuery.struts2_jquery.require("/static/scripts/jquery/jquery-form-3.09.js",callback,base);
+        }
+    }
+  });
+
   beangle.ready(beangle.iframe.adaptSelf);
-})(window);
-
-//var backQuene=new Object();
-
-//History
-(function( window, undefined ) {
-	if(beangle.history) return;
-	jQuery.struts2_jquery.require("/static/js/plugins/jquery.form"+jQuery.struts2_jquery.minSuffix+".js",function(){
-		window.beangle.history = {
-			init : function(){
-				if ( document.location.protocol === 'file:' ) {
-					alert('The HTML5 History API (and thus History.js) do not work on files, please upload it to a server.');
-				}
-				jQuery(document).ready(function(){
-					History.Adapter.bind(window,'statechange',function(e){	
-						var currState = History.getState();
-						if(jQuery.type((currState.data||{}).target)!="undefined" &&  jQuery.type((currState.data||{}).html)!="undefined"){
-							//var originDom=backQuene["m"+currState.id];
-							//if(typeof originDom == "undefined"){
-								jQuery(currState.data.target).empty();
-								jQuery(currState.data.target).html(currState.data.html);
-							/*}else{
-								var me=document.getElementById(originDom.id);
-								var parent=me.parentNode;
-								parent.replaceChild(originDom,me);
-							}*/
-						}
-					});
-				});	
-			},
-			historyGo : function(url,target){
-				var off = url.indexOf( " " );
-				if ( off >= 0 ) {
-					var selector = url.slice( off, url.length );
-					url = url.slice( 0, off );
-				}
-				jQuery.ajax({
-					url: url,
-					cache:false,
-					type: "GET",
-					dataType: "html",
-					complete: function( jqXHR, status, responseText ) {
-						responseText = jqXHR.responseText;
-						if ( jqXHR.isResolved() ) {
-							jqXHR.done(function( r ) {
-								responseText = r;
-							});
-							var html = selector ?jQuery("<div>").append(responseText.replace(rscript, "")).find(selector) :responseText;
-							History.pushState({html:html,target:"#"+target},"",url);
-						}
-					}
-				});
-			},
-			historySubmit : function(form,action,target){
-				if(jQuery.type(form)=="string" && form.indexOf("#")!=0){
-					form = "#" + form;	
-				}
-				if(jQuery.type(target)=="string" && target.indexOf("#")!=0){
-					target = "#" + target;	
-				}
-				jQuery(form).ajaxForm(function(result,message,response) {
-					if(message==="success" && response.status==200 && response.readyState==4){
-						//var mm=document.getElementById(target.substring(1));
-						//backQuene["m"+History.getState().id]=mm.cloneNode();
-						History.pushState({html:result,target:target},"",action);
-					}
-					return false; 
-				});	
-			}
-		}
-	},bg.getContextPath());
-	beangle.history.init();
+  beangle.history.init();
 })(window);

@@ -32,7 +32,7 @@ public class Div extends ClosingUIBean {
       if (null != parameters.get("class")) {
         className = " " + parameters.get("class").toString();
       }
-      parameters.put("class", Strings.concat("_ajax_target", className));
+      parameters.put("class", Strings.concat("ajax_container", className));
     }
   }
 

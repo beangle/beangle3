@@ -37,24 +37,26 @@
 <div id="${tag.id}_bar2"  class="gridbar"></div>
 [/#if]
 <script type="text/javascript">
-page_${tag.id} = bg.page("${request.requestURI}","${tag.parameters['target']!""}");
-page_${tag.id}.target("${tag.parameters['target']!""}",'${tag.id}').action("${request.requestURI}").addParams('${b.paramstring}').orderBy("${Parameters['orderBy']!('null')}");
-bg.ui.grid.init('${tag.id}',page_${tag.id});
-[#if tag.hasbar]
-bar=new bg.ui.gridbar(['${tag.id}_bar1','${tag.id}_bar2'],'${(tag.parameters['title']?default(''))?replace("'","\"")}');
-bar.pageId('${tag.id}')
-[#if tag.pageable]
-page_${tag.id}.pageInfo(${tag.items.pageNo},${tag.items.pageSize},${tag.items.total});
-bar.addPage(page_${tag.id},[#if tag.parameters['fixPageSize']??][][#else]null[/#if],{${b.text('page.description')}});
-[/#if]
-[#if tag.hasbar && tag.notFullPage]bg.ui.grid.fillEmpty('${tag.id}_empty',[#if tag.pageable]${tag.items.pageSize}[#else]10[/#if],${tag.items?size},'${tag.emptyMsg!b.text("page.noData")}');[/#if]
-[#if tag.var??]action=bar.addEntityAction('${tag.var}',page_${tag.id});[/#if]
-${tag.bar!}
-[/#if]
-[#-- refresh interval --]
-[#if tag.refresh??]
-if(typeof ${tag.id}_timer !="undefined"){clearTimeout(${tag.id}_timer)}
-var ${tag.id}_timer=setTimeout(function(){if(document.getElementById('${tag.id}')) page_${tag.id}.goPage()},${tag.refresh}*1000);
-[/#if]
+bg.ready(function(){
+	page_${tag.id} = bg.page("${request.requestURI}","${tag.parameters['target']!""}");
+	page_${tag.id}.target("${tag.parameters['target']!""}",'${tag.id}').action("${request.requestURI}").addParams('${b.paramstring}').orderBy("${Parameters['orderBy']!('null')}");
+	bg.ui.grid.init('${tag.id}',page_${tag.id});
+	[#if tag.hasbar]
+	bar=new bg.ui.gridbar(['${tag.id}_bar1','${tag.id}_bar2'],'${(tag.parameters['title']?default(''))?replace("'","\"")}');
+	bar.pageId('${tag.id}')
+	[#if tag.pageable]
+	page_${tag.id}.pageInfo(${tag.items.pageNo},${tag.items.pageSize},${tag.items.total});
+	bar.addPage(page_${tag.id},[#if tag.parameters['fixPageSize']??][][#else]null[/#if],{${b.text('page.description')}});
+	[/#if]
+	[#if tag.hasbar && tag.notFullPage]bg.ui.grid.fillEmpty('${tag.id}_empty',[#if tag.pageable]${tag.items.pageSize}[#else]10[/#if],${tag.items?size},'${tag.emptyMsg!b.text("page.noData")}');[/#if]
+	[#if tag.var??]action=bar.addEntityAction('${tag.var}',page_${tag.id});[/#if]
+	${tag.bar!}
+	[/#if]
+	[#-- refresh interval --]
+	[#if tag.refresh??]
+	if(typeof ${tag.id}_timer !="undefined"){clearTimeout(${tag.id}_timer)}
+	var ${tag.id}_timer=setTimeout(function(){if(document.getElementById('${tag.id}')) page_${tag.id}.goPage()},${tag.refresh}*1000);
+	[/#if]
+});
 </script>
 </div>

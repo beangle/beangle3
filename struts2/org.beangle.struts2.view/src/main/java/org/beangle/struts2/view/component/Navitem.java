@@ -32,10 +32,10 @@ public class Navitem extends UIBean {
     this.selected = findAncestor(Navmenu.class).isSelected(this.href);
     if (null == onclick) {
       if (null != target) {
-        onclick = Strings.concat("return bg.Go(this,'", target, "',true)");
+        onclick = Strings.concat("return bg.Go(this,'", target, "')");
         target = null;
       } else {
-        onclick = "return bg.Go(this,null,true)";
+        onclick = "return bg.Go(this,null)";
       }
     }
   }
