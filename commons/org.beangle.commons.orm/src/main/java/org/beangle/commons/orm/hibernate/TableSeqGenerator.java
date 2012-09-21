@@ -7,7 +7,9 @@ package org.beangle.commons.orm.hibernate;
 import java.util.Properties;
 
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.orm.TableNamingStrategy;
 import org.hibernate.dialect.Dialect;
+import org.hibernate.id.IdentifierGenerator;
 import org.hibernate.id.PersistentIdentifierGenerator;
 import org.hibernate.id.SequenceGenerator;
 import org.hibernate.id.enhanced.SequenceStyleGenerator;
@@ -30,6 +32,10 @@ import org.slf4j.LoggerFactory;
  */
 public class TableSeqGenerator extends SequenceStyleGenerator {
   private static final Logger logger = LoggerFactory.getLogger(TableSeqGenerator.class);
+
+  /** Updated by OverrideConfiguration.secondPass */
+  public static TableNamingStrategy namingStrategy;
+
   // 表名、字段名、序列长度
   private static final int MaxLength = 30;
   /** 序列命名模式 */
@@ -43,11 +49,16 @@ public class TableSeqGenerator extends SequenceStyleGenerator {
     if (Strings.isEmpty(params.getProperty(SEQUENCE_PARAM))) {
       String tableName = params.getProperty(PersistentIdentifierGenerator.TABLE);
       String pk = params.getProperty(PersistentIdentifierGenerator.PK);
-      if (tableName != null) {
+      if (null != tableName) {
         String seqName = Strings.replace(sequencePattern, "{table}", tableName);
         seqName = Strings.replace(seqName, "{pk}", pk);
         if (seqName.length() > MaxLength) {
-          logger.error("{}'s length has greate more then 30, database will not be supported!", seqName);
+          logger.error("{}'s length >=30, wouldn't be supported in some db!", seqName);
+        }
+        String entityName = params.getProperty(IdentifierGenerator.ENTITY_NAME);
+        if (null != entityName && null != namingStrategy) {
+          String schema = namingStrategy.getSchema(entityName);
+          if (null != schema) seqName = schema + "." + seqName;
         }
         params.setProperty(SEQUENCE_PARAM, seqName);
       }

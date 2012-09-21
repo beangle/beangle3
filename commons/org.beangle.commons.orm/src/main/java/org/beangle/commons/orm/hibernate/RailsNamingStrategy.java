@@ -148,6 +148,10 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
     this.tableNamingStrategy = tableNamingStrategy;
   }
 
+  public TableNamingStrategy getTableNamingStrategy() {
+    return tableNamingStrategy;
+  }
+
   protected static String addUnderscores(String name) {
     return Strings.unCamel(name.replace('.', '_'), '_');
   }

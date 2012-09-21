@@ -10,4 +10,6 @@ public interface TableNamingStrategy {
 
   public String collectionToTableName(String className, String tableName, String collectionName);
 
+  String getSchema(String packageName);
+
 }

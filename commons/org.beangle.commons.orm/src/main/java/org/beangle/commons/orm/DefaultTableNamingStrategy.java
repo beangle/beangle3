@@ -223,7 +223,7 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
  * @author chaostone
  */
 class TableNamePattern implements Comparable<TableNamePattern> {
-  // 报名
+  // 包名
   String packageName;
   // 模式名
   String schema;
