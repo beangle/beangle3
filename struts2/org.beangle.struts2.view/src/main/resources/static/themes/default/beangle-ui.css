@@ -276,7 +276,8 @@ table.infoTable th {
 }
 
 .index_content{
-	vertical-align: top; 
+	vertical-align: top;
+	padding:0; 
 }
 
 .index_title{
@@ -338,14 +339,18 @@ table.settingTable td{
 	list-style-type: none;
 	margin: 0 2px 0 0;
 	padding: 0;
+	vertical-align:bottom;
 	white-space: nowrap;
 }
+
 .navmenu li a {
 	color: #FFFFFF;
 	display: block;
 	font-weight: bold;
 	margin: 0;
-	padding: 4px 10px;
+	padding: 0px 10px;
+	height: 25px;
+	line-height: 24px;
 	outline: 0 none;
 	text-decoration: none;
 }

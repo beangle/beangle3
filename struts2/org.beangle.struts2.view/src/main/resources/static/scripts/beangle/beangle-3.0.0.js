@@ -26,8 +26,8 @@
             return;
         }
         jQuery(document).ready(function(){
-            if(!(History && History.Adapter)) return;
-            History.Adapter.bind(window,'statechange',function(e){    
+            if(typeof History=="undefined" || typeof History.Adapter =="undefined") return;
+            History.Adapter.bind(window,'statechange',function(e){
                 var currState = History.getState();
                 if(jQuery.type((currState.data||{}).container)!="undefined" &&  jQuery.type((currState.data||{}).content)!="undefined"){
                     if(currState.data.updatedAt){
@@ -40,7 +40,7 @@
                     bg.history.applyState(currState);
                 }
             });
-        });    
+        });
     },
     Go : function(url,target){
         jQuery.ajax({
