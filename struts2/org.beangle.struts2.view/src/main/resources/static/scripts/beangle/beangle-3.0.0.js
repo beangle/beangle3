@@ -26,12 +26,13 @@
             return;
         }
         jQuery(document).ready(function(){
+            if(!(History && History.Adapter)) return;
             History.Adapter.bind(window,'statechange',function(e){    
                 var currState = History.getState();
                 if(jQuery.type((currState.data||{}).container)!="undefined" &&  jQuery.type((currState.data||{}).content)!="undefined"){
                     if(currState.data.updatedAt){
                         var updatedInterval=(new Date()).getTime()-currState.data.updatedAt;
-                        //从更新发生到现在的时间间隔小于1秒的认为是从replaceState发出的，这类更改状态的改变，不做任何处理。
+                        //从更新发生到现在的时间间隔小于1秒的,是从replaceState发出的，这类更改状态的改变，不做任何处理。
                         if(updatedInterval<=1000) return;
                     }
                     //jQuery(currState.data.container).empty();

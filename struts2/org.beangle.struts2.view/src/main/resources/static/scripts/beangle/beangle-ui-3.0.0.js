@@ -928,7 +928,7 @@
                 jQuery.struts2_jquery.require("/static/scripts/i18n/zh_CN/jquery.validity.js",callback,base);
             }else if(module=="tabletree"){
                 jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/beangle-ui-tabletree.css",base);
-                jQuery.struts2_jquery.require("/static/scripts/beangle/beangle-ui-tabletree.js",callback,base);
+                jQuery.struts2_jquery.require("/static/scripts/beangle/beangle-ui-tabletree-3.0.0.js",callback,base);
             }else if(module=="colorbox"){
                 jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/colorbox.css",base);
                 jQuery.struts2_jquery.require("/static/scripts/jquery/jquery-colorbox-1.3.17.1.min.js",callback,base);

@@ -101,7 +101,7 @@ public class MenuServiceImpl extends AbstractHierarchyService<MenuBean, Menu> im
   }
 
   /**
-   * 查询角色对应的模块
+   * 查询角色对应的菜单
    */
   public List<Menu> getMenus(MenuProfile profile, Role role, Boolean enabled) {
     OqlBuilder<Menu> query = buildMenuQuery(profile, role).cacheable();

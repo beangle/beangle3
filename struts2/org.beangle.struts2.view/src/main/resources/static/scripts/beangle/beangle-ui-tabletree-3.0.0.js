@@ -133,9 +133,10 @@ function treeToggle(elm,callback,toggleParent){
 		 if (r.id!=""&&((r.id.indexOf(thisID)==0)||(thisID.indexOf(r.id)==0))){
 			 var cell = r.getElementsByTagName("td")[fireColumn];
 			 var input = cell.getElementsByTagName("input")[0];
+			 if(input.disabled) continue;
 			 var fireCallback=false;
 			 if(thisID.indexOf(r.id)==0){
-				if(checked&&toggleParent) input.checked=true;
+				if(checked && toggleParent) input.checked=true;
 				if(thisID==r.id) fireCallback=true;
 			 }else{
 				input.checked = checked;
@@ -177,8 +178,10 @@ function treeToggleAll(elm,callback){
 			 var inputs=cell.getElementsByTagName("input");
 			 if(inputs.length==1){
 				 var input = cell.getElementsByTagName("input")[0];
-				 input.checked = checked;
-				 if(callback) callback(input);
+				 if(!input.disabled) {
+				 	input.checked = checked;
+				 	if(callback) callback(input);
+				 }
 			 }
 		 }
 	} 

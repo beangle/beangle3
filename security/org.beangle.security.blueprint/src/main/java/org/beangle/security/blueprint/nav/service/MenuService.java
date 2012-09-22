@@ -59,7 +59,7 @@ public interface MenuService {
   public List<Menu> getMenus(MenuProfile profile, User user);
 
   /**
-   * 角色内对应的资源
+   * 查询角色对应的菜单
    * 
    * @param profile
    * @param role
