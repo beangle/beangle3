@@ -18,6 +18,8 @@
   window.beangle=beangle;
   window.bg=beangle;
 
+  beangle.ajaxhistory=(typeof History!="undefined" && typeof History.Adapter !="undefined");
+  
   //History--------------------------
   beangle.history = {
     init : function(){
@@ -26,7 +28,6 @@
             return;
         }
         jQuery(document).ready(function(){
-            if(typeof History=="undefined" || typeof History.Adapter =="undefined") return;
             History.Adapter.bind(window,'statechange',function(e){
                 var currState = History.getState();
                 if(jQuery.type((currState.data||{}).container)!="undefined" &&  jQuery.type((currState.data||{}).content)!="undefined"){
@@ -115,7 +116,12 @@
           //FIXME _blank,_top
           document.getElementById(target).src=url;
         }else{
-          beangle.history.Go(url,target);
+          if(beangle.ajaxhistory){
+            beangle.history.Go(url,target);
+          }else {
+            //using post ,hack ie8 get cache
+            jQuery('#'+target).load(url,{});
+          }
         }
       }
       return false;
@@ -394,7 +400,7 @@
           options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#'};
           origin_onsubmit=myForm.onsubmit;
           if (typeof jQuery != "undefined") {
-            if(!noHistory && jQuery("input:file",myForm).length==0){
+            if(!noHistory && jQuery("input:file",myForm).length==0 && beangle.ajaxhistory){
               beangle.history.submit(myForm.id,action,submitTarget);
               //qianjun 这个分支没有使用struts2_jquery的绑定，所以去除myForm.submit,防止两次验证onsubmit函数
               //FIXME 不能简单的去除
@@ -869,5 +875,5 @@
   });
 
   beangle.ready(beangle.iframe.adaptSelf);
-  beangle.history.init();
+  if(beangle.ajaxhistory)beangle.history.init();
 })(window);

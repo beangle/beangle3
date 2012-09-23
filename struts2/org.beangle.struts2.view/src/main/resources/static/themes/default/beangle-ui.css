@@ -7,6 +7,11 @@ body {font-size: 13px;margin:0;font-family: Verdana, Arial, sans-serif;}
 
 select,input,textarea {font-size: 13px;}
 
+form {
+    padding:0px;
+    margin:0px;
+}
+
 a:link {color: #000080;text-decoration: none;}
 a:visited {text-decoration: none;}
 a:hover {color: red;}
@@ -24,11 +29,11 @@ a:hover {color: red;}
 
 .gridtable th{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;}
 
-.gridselect{text-align:center;background-color: #e0ecff;width:25px;}
-
 .grid-filter-submit {background-image: url(icons/16x16/actions/edit-find.png);background-repeat: no-repeat;background-color:transparent;width:16px;height:16px;border-style:none}
 
-.gridselect-top{text-align:center;width:25px;}
+.gridselect{text-align:center;background-color: #e0ecff;}
+
+.gridselect-top{text-align:center;}
 
 .gridhead{color: #000000;text-decoration: none;text-align:center;letter-spacing:0;background-color: #c7dbff;}
 
@@ -50,26 +55,40 @@ a:hover {color: red;}
 
 .griddata-over{background-color: #BFFFBF;}
 
-.gridbar{height:22px;background-color: #c7dbff;border:solid;border-color:#006CB2;border-width:0px;}
+.gridbar{
+    height:22px;
+    background-color: #c7dbff;
+    border:solid;
+    border-color:#006CB2;
+    border-width:0px;
+}
 
 .gridbar-items{float:left;}
 
-.girdbar-pgbar{float:right;margin:1px 5px 0px 0px;vertical-align:middle;}
+.girdbar-pgbar{height:22px;float:right;margin:0px 5px 0px 0px;line-height: 22px;}
 
 .pgbar-label{background-color:#e9f2f8;}
 
-.pgbar-input-label{vertical-align:middle;}
+.pgbar-input-label{}
 
-.pgbar-input{vertical-align:middle;width:35px;height:16px;border-collapse: collapse;border:solid;border-width:1px;border-color:#006CB2;padding:0px;margin:0px 2px 0px 0px;}
+.pgbar-input{text-align:center;width:35px;height:16px;border-collapse: collapse;border:solid;border-width:1px;border-color:#006CB2;padding:0px;margin:0px 2px 0px 0px;}
 
-.pgbar-selbox{vertical-align:middle;width:75px;height:21px;font-size: 0.8em;margin:0px 2px 0px 0px;}
+.pgbar-selbox{vertical-align: bottom;width:75px;height:21px;font-size: 0.8em;margin:0px 2px 0px 0px;}
 
-.pgbar-go{vertical-align:middle;width:30px;height:18px;font-size: 0.8em;text-align:center;margin:0px;padding:0px 0px 2px 0px;border:solid;border-width:1px;border-color:#006CB2;}
+.pgbar-go{width:30px;height:18px;font-size: 0.8em;text-align:center;margin:0px;padding:0px 0px 2px 0px;border:solid;border-width:1px;border-color:#006CB2;}
 
 /*toolbar*/
 .toolbar{height:22px;border-collapse:separate;display:block;font-size: 13px;}
 
-.toolbar-icon{background-image: url(icons/16x16/actions.png);display:inline-block;vertical-align:bottom;margin-top:2px;margin-right:2px;border:0px}
+.toolbar-icon{
+    background-image: url(icons/16x16/actions.png);
+    display:inline-block;
+    /**ie6 hack*/
+    vertical-align:bottom !important;
+    vertical-align:baseline;
+    margin:2px 2px 0px 0px;
+    border:0px
+}
 
 .toolbar-img {vertical-align:bottom;margin-top:2px;margin-right:2px;border:0px}
 
@@ -105,346 +124,343 @@ a:hover {color: red;}
 
 .toolbar-group-separator{float:left;margin:0px 10px 0px 10px;}
 
-.toolbar-line {height:1px;font-size:0pt;}
+.toolbar-line {height:1px;font-size:0pt;clear:both;}
 
-._ajax_target{}
+.ajax_container{}
 
 /* message */
 div.error, div.message {
-	background-color: #ECD83C;
-	border: 0px solid #000;
-	color: #000000;
-	font-family: Arial, Helvetica, sans-serif;
-	font-weight: normal;
-	text-align: center;
-	vertical-align: bottom;
+    background-color: #ECD83C;
+    border: 0px solid #000;
+    color: #000000;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: bottom;
 }
 
 /* use a different color for the errors */
 div.error {
-	border: 0px solid red;
+    border: 0px solid red;
 }
 
 img.validationWarning, div.errors img.icon, div.messages img.icon {
-	border: 0;
-	width: 14px;
-	height: 13px;
-	vertical-align: top;
+    border: 0;
+    width: 14px;
+    height: 13px;
+    vertical-align: top;
 }
 
 span.fieldError {
-	color: red;
-	font-weight: bold;
+    color: red;
+    font-weight: bold;
 }
 div.message a {
-	background: transparent;
-	color: #0000FF;
+    background: transparent;
+    color: #0000FF;
 }
 
 div.message a:visited {
-	background: transparent;
-	color: #0000FF;
+    background: transparent;
+    color: #0000FF;
 }
 
 div.message a:hover {
-	background: transparent;
-	color: #008000;
+    background: transparent;
+    color: #008000;
 }
 
 div.message a:active {
-	text-decoration: underline overline;
+    text-decoration: underline overline;
 }
 
 div.message img.icon {
-	vertical-align: middle;
+    vertical-align: middle;
 }
 
 .search-widget{
-	border-collapse: collapse;
-	border-width:0px;
-	margin:auto;
+    border-collapse: collapse;
+    border-width:0px;
+    margin:auto;
 }
 .search-widget .search-item{
-	text-align:right;
+    text-align:right;
 }
 .search-item input{
-	width:100px;
+    width:100px;
 }
 .search-item select{
-	width:105px;
+    width:105px;
 }
 
 .V {height:1px;font-size:0pt;padding:0px;border-top:1px solid #4791C5;}
 
 /* FormTable */
 .formTable{
-	border-collapse: collapse;
-	border:solid;
-	border-width:1px;
-	border-color:#006CB2;
-	text-align: left;
+    border-collapse: collapse;
+    border:solid;
+    border-width:1px;
+    border-color:#006CB2;
+    text-align: left;
 }
 
 .formTable .thead {
-	color: #000000; 
-	text-decoration: none; 
-	letter-spacing:0;
-	background-color: #c7dbff;
-	font-weight:bolder;
+    color: #000000; 
+    text-decoration: none; 
+    letter-spacing:0;
+    background-color: #c7dbff;
+    font-weight:bolder;
 }
 .formTable .tfoot{
-	color: #000000; 
-	text-decoration: none;
-	text-align:center;
-	letter-spacing:0;
-	background-color: #c7dbff;
-	font-weight:bolder;
+    color: #000000; 
+    text-decoration: none;
+    text-align:center;
+    letter-spacing:0;
+    background-color: #c7dbff;
+    font-weight:bolder;
 }
 
 .formTable td{
-	border:solid;
-	border-width:0px;
-	border-right-width:1px;
-	border-bottom-width:1px;
-	border-color:#006CB2;
-	color: #000000; 
-	text-decoration: none; 
-	letter-spacing:0;
+    border:solid;
+    border-width:0px;
+    border-right-width:1px;
+    border-bottom-width:1px;
+    border-color:#006CB2;
+    color: #000000; 
+    text-decoration: none; 
+    letter-spacing:0;
 }
 
 .formTable .title{
-	text-align: right;
-	background-color: #EBEBEB;
+    text-align: right;
+    background-color: #EBEBEB;
 }
 .formTable .content{
-	text-align: left;
-	background-color: white
+    text-align: left;
+    background-color: white
 }
 
 /*详细信息页面*/
 table.infoTable {
-	font-size: 13px;
-	vertical-align: middle;
-	width:100%;
-	table-layout:fixed;
-	border-collapse: collapse;
-	background-color: #EEEEEE;
+    font-size: 13px;
+    vertical-align: middle;
+    width:100%;
+    table-layout:fixed;
+    border-collapse: collapse;
+    background-color: #EEEEEE;
 }
 
 table.infoTable td {
-	border: 1px solid #FFFFFF;
-	overflow:hidden;
-	word-wrap:break-word;
+    border: 1px solid #FFFFFF;
+    overflow:hidden;
+    word-wrap:break-word;
 }
 
 table.infoTable th {
-	background-color: #E1ECFF;
-	height: 22px;
+    background-color: #E1ECFF;
+    height: 22px;
 }
 
 .infoTable .title{
-	height: 22px;
-	background-color:#F5EDDB;
-	padding-left: 2px;
-	padding-right: 2px;
-	text-align:right;
+    height: 22px;
+    background-color:#F5EDDB;
+    padding-left: 2px;
+    padding-right: 2px;
+    text-align:right;
 }
 .infoTable .content{
-	padding-left: 1px;
-	padding-right: 1px;
+    padding-left: 1px;
+    padding-right: 1px;
 }
 .infoTitle{
 }
 
 /** Index Panel*/
 .indexpanel{
-	border-collapse: collapse;
-	border:solid;
-	border-width:1px;
-	border-color:#006CB2;
-	margin:0px 0px 0px 0px;
-	width:100%;
+    border-collapse: collapse;
+    border:solid;
+    border-width:1px;
+    border-color:#006CB2;
+    margin:0px 0px 0px 0px;
+    width:100%;
 }
 .index_view{
-	border:solid;
-	border-width:0px;
-	border-right-width:1px;
-	border-color:#006CB2;
-	vertical-align: top; 
-	background-color: #E1ECFF;
-	width:170px;
+    border:solid;
+    border-width:0px;
+    border-right-width:1px;
+    border-color:#006CB2;
+    vertical-align: top; 
+    background-color: #E1ECFF;
+    width:170px;
 }
 
 .index_content{
-	vertical-align: top;
-	padding:0; 
+    vertical-align: top;
+    padding:0; 
 }
 
 .index_title{
-	border:solid;
-	border-width:1px;
-	margin:0px 0px 0px 0px;
-	background-color :#E1ECFF;
-	border-color:#006CB2;
-	width:100%;
+    border:solid;
+    border-width:1px;
+    margin:0px 0px 0px 0px;
+    background-color :#E1ECFF;
+    border-color:#006CB2;
+    width:100%;
 }
 
 table.settingTable td{
-	border:solid;
-	border-width:0px;
-	border-color:#006CB2;
-	height:30px;
+    border:solid;
+    border-width:0px;
+    border-color:#006CB2;
+    height:30px;
 }
 
 /** Print */
 @media print {
-	.notprint {
-		display:none;
-	}
+    .notprint {
+        display:none;
+    }
 }
 
 /** 验证框架使用的两个class */
 .tfvHighlight {
-	font-weight: bold; 
-	color: red; 
-	background-color: #EBEBEB;
-	/*text-align: right;*/
+    font-weight: bold; 
+    color: red; 
+    background-color: #EBEBEB;
+    /*text-align: right;*/
 }
 .tfvNormal {
-	font-weight: normal;
-	color: black; 
+    font-weight: normal;
+    color: black; 
 }
 
 /*
  * 导航菜单
  */
 .navmenu {
-	left: 6px;
-	background: none repeat scroll 0 0 #507AAA;
-	clear: both;
-	height: 30px;
-	padding: 0 10px;
-	font-size: 13px;
+    left: 6px;
+    background: none repeat scroll 0 0 #507AAA;
+    clear: both;
+    height: 30px;
+    padding: 0 10px;
+    font-size: 13px;
 }
 
 .navmenu ul {
-	padding: 0;
-	float: left;
-	height: 25px;
-	margin: 5px 0 0;
+    padding: 0;
+    float: left;
+    height: 25px;
+    margin: 5px 0 0;
+    list-style-type: none;
 }
 
 .navmenu li {
-	float: left;
-	list-style-type: none;
-	margin: 0 2px 0 0;
-	padding: 0;
-	vertical-align:bottom;
-	white-space: nowrap;
+    float: left;
+    margin: 0 2px 0 0;
+    padding: 0;
+    white-space: nowrap;
+    font-weight: bold;
 }
 
 .navmenu li a {
-	color: #FFFFFF;
-	display: block;
-	font-weight: bold;
-	margin: 0;
-	padding: 0px 10px;
-	height: 25px;
-	line-height: 24px;
-	outline: 0 none;
-	text-decoration: none;
+    color: #FFFFFF;
+    display: inline-block;
+    margin: 0;
+    padding: 0px 10px;
+    height: 25px;
+    line-height: 24px;
+    outline: 0 none;
+    text-decoration: none;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .navmenu li a:hover {
-	background: none repeat scroll 0 0 #759FCF;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	color: #FFFFFF;
+    background: none repeat scroll 0 0 #759FCF;
+    color: #FFFFFF;
 }
 .navmenu li a.selected, .navmenu li a.selected:hover {
-	color: #555555;
-	background: none repeat scroll 0 0 #FFFFFF;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+    color: #555555;
+    background: none repeat scroll 0 0 #FFFFFF;
 }
 
 .ui-disabled{
-	color:#999999;
+    color:#999999;
 }
 /*
  * Pretty List Form Style
  */
 
 form.listform {
-	font-size: 12px;
+    font-size: 12px;
 }
 form.listform label.title{
-	clear: left;
-	float: left;
-	display: block;
-	margin: 0 0 8px;
-	padding-right: 5px;
-	text-align: right;
-	width: 100px;
-	font-weight: bold;
+    clear: left;
+    float: left;
+    display: block;
+    margin: 0 0 8px;
+    padding-right: 5px;
+    text-align: right;
+    width: 100px;
+    font-weight: bold;
 }
 
 form.listform label.comment{
-	padding-left: 5px;
+    padding-left: 5px;
 }
 form.listform em{
-	color: #FF0000;
-	font-style: normal;
-	font-weight: bold;
+    color: #FF0000;
+    font-style: normal;
+    font-weight: bold;
 }
 
 form.listform legend {
-	font-weight: bold;
-	padding: 0 2px;
+    font-weight: bold;
+    padding: 0 2px;
 }
 
 form.listform fieldset{
-	border-style: solid none none;
-	margin: 10px 0px 0px 10px;
+    border-style: solid none none;
+    margin: 10px 0px 0px 10px;
 }
 
 form.listform fieldset.emptytitle{
-	border-style: none;
-	margin: 0px 0px 0px 0px;
+    border-style: none;
+    margin: 0px 0px 0px 0px;
 }
 
 form.listform fieldset ol {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 form.listform fieldset li{
-	background: url("images/form-divider.gif") repeat-x scroll left bottom transparent;
-	padding: 4px 10px 7px;
-	list-style: none outside none;
-	margin: 0;
+    background: url("images/form-divider.gif") repeat-x scroll left bottom transparent;
+    padding: 4px 10px 7px;
+    list-style: none outside none;
+    margin: 0;
 }
 
 form.listform fieldset fieldset {
-	border: medium none;
-	margin: 3px 0 0;
-	background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    margin: 3px 0 0;
+    background: none repeat scroll 0 0 transparent;
 }
 form.listform fieldset fieldset legend {
-	font-weight: normal;
-	padding: 0 0 5px;
+    font-weight: normal;
+    padding: 0 0 5px;
 }
 
 form.listform fieldset fieldset label {
-	display: block;
-	width: auto;
+    display: block;
+    width: auto;
 }
 form.listform fieldset fieldset label {
-	margin-left: 103px;
+    margin-left: 103px;
 }
 
 form.listform li.foot {
-	padding-left: 110px;
+    padding-left: 110px;
 }
 
 
@@ -456,12 +472,12 @@ form.listform li.foot {
 .collapsed .modulebody,.collapsed .collapsed{display:none}
 .header{background:#94aef3;margin:0;padding:0;font-size:100%;line-height:1.2em}
 .expanded .header,.collapsed .header{
-	background-image:url("images/arrow_down.gif");
-	background-repeat:no-repeat;background-position:4px 45%
+    background-image:url("images/arrow_down.gif");
+    background-repeat:no-repeat;background-position:4px 45%
 } 
 .collapsed .header{background-image:url("images/arrow_right.gif")}
 .header .toggle,.header .toggle:visited{
-	display:block;padding:4px;text-decoration:none;color:#000
+    display:block;padding:4px;text-decoration:none;color:#000
 }
 .expanded .header .toggle,.collapsed .header .toggle,.expanded .header .toggle:visited,.collapsed .header .toggle:visited{padding-left:18px}
 .header .toggle:hover{color:#25a;text-decoration:none}

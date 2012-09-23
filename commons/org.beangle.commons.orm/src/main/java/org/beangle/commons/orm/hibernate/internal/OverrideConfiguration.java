@@ -43,12 +43,7 @@ public class OverrideConfiguration extends Configuration {
     return new OverrideMappings();
   }
 
-  /**
-   * Update persistentclass and collection's schema.
-   */
-  @Override
-  protected void secondPassCompile() throws MappingException {
-    super.secondPassCompile();
+  private void configSchema() {
     TableNamingStrategy namingStrategy = null;
     if (getNamingStrategy() instanceof RailsNamingStrategy) {
       namingStrategy = ((RailsNamingStrategy) getNamingStrategy()).getTableNamingStrategy();
@@ -74,8 +69,16 @@ public class OverrideConfiguration extends Configuration {
     }
   }
 
-  protected class OverrideMappings extends MappingsImpl {
+  /**
+   * Update persistentclass and collection's schema.
+   */
+  @Override
+  protected void secondPassCompile() throws MappingException {
+    super.secondPassCompile();
+    configSchema();
+  }
 
+  protected class OverrideMappings extends MappingsImpl {
     // 注册缺省的sequence生成器
     public OverrideMappings() {
       super();
