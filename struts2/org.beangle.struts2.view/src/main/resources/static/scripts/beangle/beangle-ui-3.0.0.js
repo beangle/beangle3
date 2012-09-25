@@ -557,13 +557,15 @@
 
                 var selectedCount=0;
                 jQuery("#"+ownGridTable.id + " .gridselect").each(function(){
+                    var inputs=jQuery(this).find("input");
+                    if(inputs.length==0)return;
                     if(ele.checked){
-                        jQuery(this).find("input").attr("checked","checked");
+                        inputs.attr("checked","checked");
                         jQuery(this).parent("tr").addClass("griddata-selected");
                         selectedCount++;
                     }else{
-                        if(jQuery(this).find("input").is(":checked")){
-                            jQuery(this).find("input").removeAttr("checked");
+                        if(inputs.is(":checked")){
+                            inputs.removeAttr("checked");
                             jQuery(this).parent("tr").removeClass("griddata-selected");
                         }
                     }

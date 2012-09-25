@@ -4,7 +4,9 @@
  */
 package org.beangle.security.blueprint.service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
@@ -40,5 +42,14 @@ public interface RoleService {
    * @param indexno
    */
   public void moveRole(Role role, Role parent, int indexno);
+  
+  
+  /**
+   * 过滤能编辑的角色
+   * @param user
+   * @param roles
+   * @return
+   */
+  public Set<Role> editable(User user,Collection<Role> roles);
 
 }

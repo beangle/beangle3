@@ -4,8 +4,10 @@
  */
 package org.beangle.security.blueprint.service.internal;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.Operation;
@@ -61,9 +63,20 @@ public class RoleServiceImpl extends AbstractHierarchyService<RoleBean, Role> im
   @Override
   @SuppressWarnings({ "rawtypes", "unchecked" })
   protected List<RoleBean> getTopNodes(RoleBean m) {
-    OqlBuilder builder = OqlBuilder.from(Role.class, "g");
-    builder.where("g.parent is null");
+    OqlBuilder builder = OqlBuilder.from(Role.class, "r").where("r.parent is null");
     return entityDao.search(builder);
+  }
+
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  public Set<Role> editable(User user, Collection<Role> roles) {
+    if (userService.isRoot(user)) return CollectUtils.newHashSet(roles);
+    else {
+      OqlBuilder builder = OqlBuilder.from(Member.class, "m");
+      builder.where("m.manager=true and m.user=:user", user);
+      builder.join("m.role.children", "mc").where("mc in(:children)", roles);
+      builder.select("distinct mc");
+      return CollectUtils.newHashSet(entityDao.search(builder));
+    }
   }
 
   public void setUserService(UserService userService) {

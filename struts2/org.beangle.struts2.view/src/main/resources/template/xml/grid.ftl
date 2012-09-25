@@ -37,7 +37,6 @@
 <div id="${tag.id}_bar2"  class="gridbar"></div>
 [/#if]
 <script type="text/javascript">
-bg.ready(function(){
 	page_${tag.id} = bg.page("${request.requestURI}","${tag.parameters['target']!""}");
 	page_${tag.id}.target("${tag.parameters['target']!""}",'${tag.id}').action("${request.requestURI}").addParams('${b.paramstring}').orderBy("${Parameters['orderBy']!('null')}");
 	bg.ui.grid.init('${tag.id}',page_${tag.id});
@@ -57,6 +56,5 @@ bg.ready(function(){
 	if(typeof ${tag.id}_timer !="undefined"){clearTimeout(${tag.id}_timer)}
 	var ${tag.id}_timer=setTimeout(function(){if(document.getElementById('${tag.id}')) page_${tag.id}.goPage()},${tag.refresh}*1000);
 	[/#if]
-});
 </script>
 </div>
