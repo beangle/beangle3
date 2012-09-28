@@ -67,7 +67,7 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
       config.setLocalizedLookup(false);
 
       // Cache one hour(3600s) and Strong cache
-      config.setTemplateUpdateDelay(3600);
+      config.setTemplateUpdateDelay(0);
       // config.setCacheStorage(new MruCacheStorage(100,250));
       config.setCacheStorage(new StrongCacheStorage());
 

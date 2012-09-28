@@ -6,7 +6,6 @@ package org.beangle.struts2.convention;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,7 +15,6 @@ public class Flash implements Map<Object, Object>, Serializable {
 
   private static final long serialVersionUID = -5292283953338410228L;
   public static final String MESSAGES = "messages";
-  public static final String ERRORS = "errors";
 
   /**
    * current request
@@ -113,13 +111,12 @@ public class Flash implements Map<Object, Object>, Serializable {
    * @param message
    */
   public void addMessage(String message) {
-    @SuppressWarnings("unchecked")
-    List<String> messages = (List<String>) next.get(Flash.MESSAGES);
+    ActionMessages messages = (ActionMessages) next.get(Flash.MESSAGES);
     if (null == messages) {
-      messages = CollectUtils.newArrayList();
+      messages = new ActionMessages();
       put(Flash.MESSAGES, messages);
     }
-    messages.add(message);
+    messages.getMessages().add(message);
   }
 
   /**
@@ -128,13 +125,12 @@ public class Flash implements Map<Object, Object>, Serializable {
    * @param message
    */
   public void addError(String error) {
-    @SuppressWarnings("unchecked")
-    List<String> errors = (List<String>) next.get(Flash.ERRORS);
-    if (null == errors) {
-      errors = CollectUtils.newArrayList();
-      put(Flash.ERRORS, errors);
+    ActionMessages messages = (ActionMessages) next.get(Flash.MESSAGES);
+    if (null == messages) {
+      messages = new ActionMessages();
+      put(Flash.MESSAGES, messages);
     }
-    errors.add(error);
+    messages.getErrors().add(error);
   }
 
   /**
@@ -143,13 +139,12 @@ public class Flash implements Map<Object, Object>, Serializable {
    * @param message
    */
   public void addMessageNow(String message) {
-    @SuppressWarnings("unchecked")
-    List<String> messages = (List<String>) now.get(Flash.MESSAGES);
+    ActionMessages messages = (ActionMessages) now.get(Flash.MESSAGES);
     if (null == messages) {
-      messages = CollectUtils.newArrayList();
+      messages = new ActionMessages();
       now.put(Flash.MESSAGES, messages);
     }
-    messages.add(message);
+    messages.getMessages().add(message);
   }
 
   /**
@@ -158,12 +153,11 @@ public class Flash implements Map<Object, Object>, Serializable {
    * @param message
    */
   public void addErrorNow(String message) {
-    @SuppressWarnings("unchecked")
-    List<String> errors = (List<String>) now.get(Flash.ERRORS);
-    if (null == errors) {
-      errors = CollectUtils.newArrayList();
-      now.put(Flash.ERRORS, errors);
+    ActionMessages messages = (ActionMessages) now.get(Flash.MESSAGES);
+    if (null == messages) {
+      messages = new ActionMessages();
+      now.put(Flash.MESSAGES, messages);
     }
-    errors.add(message);
+    messages.getErrors().add(message);
   }
 }

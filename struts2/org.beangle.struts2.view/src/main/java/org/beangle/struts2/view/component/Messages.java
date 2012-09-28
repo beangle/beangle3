@@ -5,16 +5,19 @@
 package org.beangle.struts2.view.component;
 
 import java.util.Collection;
+import java.util.List;
 
-import org.beangle.struts2.action.ActionSupport;
+import org.beangle.commons.collection.CollectUtils;
+import org.beangle.struts2.convention.ActionMessages;
+import org.beangle.struts2.convention.Flash;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.ValueStack;
 
 public class Messages extends UIBean {
 
-  Collection<String> actionMessages = null;
-  Collection<String> actionErrors = null;
+  List<String> actionMessages = null;
+  List<String> actionErrors = null;
 
   private String clear = "true";
 
@@ -22,18 +25,24 @@ public class Messages extends UIBean {
     super(stack);
   }
 
+  protected Flash getFlash() {
+    Flash flash = (Flash) ActionContext.getContext().getSession().get("flash");
+    if (null == flash) {
+      flash = new Flash();
+      ActionContext.getContext().getSession().put("flash", flash);
+    }
+    return flash;
+  }
+
   @Override
-  @SuppressWarnings("unchecked")
   protected void evaluateParams() {
-    actionMessages = (Collection<String>) findValue("actionMessages");
-    actionErrors = (Collection<String>) findValue("actionErrors");
-    if (!actionErrors.isEmpty() || !actionMessages.isEmpty()) {
+    ActionMessages messages = (ActionMessages) getFlash().get(Flash.MESSAGES);
+    if (null != messages && (!messages.getMessages().isEmpty() || !messages.getErrors().isEmpty())) {
       generateIdIfEmpty();
+      actionMessages = CollectUtils.newArrayList(messages.getMessages());
+      actionErrors = CollectUtils.newArrayList(messages.getErrors());
       if ("true".equals(clear)) {
-        Object action = ActionContext.getContext().getActionInvocation().getAction();
-        if (action instanceof ActionSupport) {
-          ((ActionSupport) action).clearErrorsAndMessages();
-        }
+        messages.clear();
       }
     }
   }

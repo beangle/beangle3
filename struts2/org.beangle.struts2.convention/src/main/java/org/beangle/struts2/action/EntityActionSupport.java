@@ -52,7 +52,7 @@ import org.beangle.struts2.helper.Params;
  * @author chaostone
  * @since 3.0.0
  */
-public abstract class EntityActionSupport extends BaseAction {
+public abstract class EntityActionSupport extends ActionSupport {
 
   protected EntityDao entityDao;
 
