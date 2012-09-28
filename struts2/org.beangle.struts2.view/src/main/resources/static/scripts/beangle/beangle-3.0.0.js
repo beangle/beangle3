@@ -20,6 +20,33 @@
 
   beangle.ajaxhistory=(typeof History!="undefined" && typeof History.Adapter !="undefined");
   
+  beangle.displayAjaxMessage=function() {
+    var loadingMessage = "Loading...";
+    var mz = document.getElementById('messageZone');
+    if (!mz) {
+        var mz = document.createElement('div');
+        mz.setAttribute('id', 'messageZone');
+        mz.style.position = "absolute";
+        mz.style.zIndex = "1000";
+        mz.style.top = "0px";
+        mz.style.right = "0px";
+        mz.style.width = "55px";
+        mz.style.height = "20px"
+        mz.style.background = "#F9EDBE";
+        mz.style.padding = "2px";
+        document.body.appendChild(mz);
+        var text = document.createTextNode(loadingMessage);
+        mz.appendChild(text);
+    }else {
+        mz.innerHTML=loadingMessage;
+        mz.style.visibility = 'visible';
+    }
+  };
+  beangle.hideAjaxMessage=function(){
+      var mz = document.getElementById('messageZone');
+      if(mz)mz.style.visibility='hidden';
+  };
+  
   //History--------------------------
   beangle.history = {
     init : function(){
@@ -43,6 +70,7 @@
             });
         });
     },
+    
     Go : function(url,target){
         jQuery.ajax({
             url: url,cache:false,
@@ -57,7 +85,9 @@
                     History.replaceState({content:jqXHR.responseText,container:target,updatedAt:(new Date()).getTime()},state.title,state.url);
                     jQuery(target).html(jqXHR.responseText);
                 }
-            }
+                beangle.hideAjaxMessage();
+            },
+            beforeSend: beangle.displayAjaxMessage
         });
     },
     snapshot:function(){
@@ -85,13 +115,15 @@
             target = "#" + target;    
         }
         bg.require("jquery.form");
+        bg.displayAjaxMessage();
         jQuery(form).ajaxForm(function(result,message,response) {
             if(message==="success" && response.status==200 && response.readyState==4){
                 bg.history.snapshot();
                 History.pushState({content:result,container:target},"",action);
             }
+            bg.hideAjaxMessage();
             return false; 
-        });    
+        });
     }
   };
 
