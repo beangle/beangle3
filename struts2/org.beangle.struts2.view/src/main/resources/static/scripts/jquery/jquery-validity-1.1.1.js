@@ -1264,3 +1264,5 @@
 
 // duantihua 2012-09-02 
 jQuery.validity.patterns.notBlank=/[^\s]+$/;
+jQuery.validity.patterns.chinaIdcard=/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)?$/i;
+jQuery.validity.patterns.yearMonth=/^\d{1,4}-((0?\d)|(1[012]))$/;

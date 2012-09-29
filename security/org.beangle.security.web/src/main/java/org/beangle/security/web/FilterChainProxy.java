@@ -65,9 +65,7 @@ public class FilterChainProxy extends GenericCompositeFilter {
   }
 
   public void setFilters(List<Filter> filters) {
-    if (null == filterChainMap) {
-      filterChainMap = CollectUtils.newHashMap();
-    }
+    if (null == filterChainMap) filterChainMap = CollectUtils.newHashMap();
     filterChainMap.put(new AntPathRequestMatcher("/**"), filters);
   }
 

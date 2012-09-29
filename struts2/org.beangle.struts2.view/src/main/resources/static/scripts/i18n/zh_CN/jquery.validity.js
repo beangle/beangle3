@@ -47,3 +47,5 @@ jQuery.extend(jQuery.validity.messages, {
 });
 
 jQuery.validity.messages.notBlank="请在#{field}中填写非空白字符";
+jQuery.validity.messages.chinaIdcard="请在#{field}中输入15位或18位身份证号";
+jQuery.validity.messages.yearMonth="请在#{field}中输入格式为yyyy-mm格式的年月";
