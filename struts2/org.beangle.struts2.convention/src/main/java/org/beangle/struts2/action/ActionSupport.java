@@ -81,15 +81,15 @@ public class ActionSupport implements TextResource {
     return forward();
   }
 
-  protected String forward() {
+  protected final String forward() {
     return ActionContext.getContext().getActionInvocation().getProxy().getMethod();
   }
 
-  protected String forward(String view) {
+  protected final String forward(String view) {
     return view;
   }
 
-  protected String forward(String view, String message) {
+  protected final String forward(String view, String message) {
     addMessage(getText(message));
     return view;
   }
@@ -98,12 +98,12 @@ public class ActionSupport implements TextResource {
    * @param action
    * @return
    */
-  protected String forward(Action action) {
+  protected final String forward(Action action) {
     ActionContext.getContext().getContextMap().put("dispatch_action", action);
     return "chain:dispatch_action";
   }
 
-  protected String forward(Action action, String message) {
+  protected final String forward(Action action, String message) {
     if (Strings.isNotBlank(message)) {
       if (Strings.contains(message, "error")) addError(message);
       else addMessage(message);
@@ -117,11 +117,11 @@ public class ActionSupport implements TextResource {
    * @param params
    * @return
    */
-  protected String redirect(String method, String message, String params) {
+  protected final String redirect(String method, String message, String params) {
     return redirect(new Action((String) null, method, params), message);
   }
 
-  protected String redirect(String method) {
+  protected final String redirect(String method) {
     return redirect(new Action(method), null);
   }
 
@@ -130,11 +130,11 @@ public class ActionSupport implements TextResource {
    * @param message
    * @return
    */
-  protected String redirect(String method, String message) {
+  protected final String redirect(String method, String message) {
     return redirect(new Action(method), message);
   }
 
-  protected String redirect(Action action, String message) {
+  protected final String redirect(Action action, String message) {
     if (Strings.isNotEmpty(message)) addFlashMessage(message);
     ActionContext.getContext().getContextMap().put("dispatch_action", action);
     return "redirectAction:dispatch_action";
@@ -150,15 +150,15 @@ public class ActionSupport implements TextResource {
     }
   }
 
-  public String getText(String aTextName) {
+  public final String getText(String aTextName) {
     return getTextResource().getText(aTextName);
   }
 
-  public String getText(String key, String defaultValue, Object... args) {
+  public final String getText(String key, String defaultValue, Object... args) {
     return getTextResource().getText(key, defaultValue, args);
   }
 
-  protected TextResource getTextResource() {
+  protected final TextResource getTextResource() {
     if (textResource == null) {
       TextFormater formater = container.getInstance(TextFormater.class);
       TextBundleRegistry registry = container.getInstance(TextBundleRegistry.class);
@@ -168,7 +168,7 @@ public class ActionSupport implements TextResource {
     return textResource;
   }
 
-  protected String getTextInternal(String msgKey, Object... args) {
+  protected final String getTextInternal(String msgKey, Object... args) {
     if (null == msgKey) return null;
     if (Chars.isAsciiAlpha(msgKey.charAt(0)) && msgKey.indexOf('.') > 0) {
       return getText(msgKey, msgKey, args);
@@ -177,23 +177,23 @@ public class ActionSupport implements TextResource {
     }
   }
 
-  protected void addMessage(String msgKey, Object... args) {
+  protected final void addMessage(String msgKey, Object... args) {
     getFlash().addMessageNow(getTextInternal(msgKey, args));
   }
 
-  protected void addError(String msgKey, Object... args) {
+  protected final void addError(String msgKey, Object... args) {
     getFlash().addErrorNow(getTextInternal(msgKey, args));
   }
 
-  protected void addFlashError(String msgKey, Object... args) {
+  protected final void addFlashError(String msgKey, Object... args) {
     getFlash().addError(getTextInternal(msgKey, args));
   }
 
-  protected void addFlashMessage(String msgKey, Object... args) {
+  protected final void addFlashMessage(String msgKey, Object... args) {
     getFlash().addMessage(getTextInternal(msgKey, args));
   }
 
-  protected Flash getFlash() {
+  protected final Flash getFlash() {
     Flash flash = (Flash) ActionContext.getContext().getSession().get("flash");
     if (null == flash) {
       flash = new Flash();
@@ -205,7 +205,7 @@ public class ActionSupport implements TextResource {
   /**
    * 获得action消息<br>
    */
-  public List<String> getActionMessages() {
+  public final List<String> getActionMessages() {
     Flash flash = getFlash();
     ActionMessages messages = (ActionMessages) flash.get(Flash.MESSAGES);
     if (null == messages) return Collections.emptyList();
@@ -215,7 +215,7 @@ public class ActionSupport implements TextResource {
   /**
    * 获得aciton错误消息<br>
    */
-  public List<String> getActionErrors() {
+  public final List<String> getActionErrors() {
     Flash flash = getFlash();
     ActionMessages messages = (ActionMessages) flash.get(Flash.MESSAGES);
     if (null == messages) return Collections.emptyList();
@@ -223,82 +223,82 @@ public class ActionSupport implements TextResource {
   }
 
   // get parameters
-  protected String getRemoteAddr() {
+  protected final String getRemoteAddr() {
     HttpServletRequest request = ServletActionContext.getRequest();
     if (null == request) return null;
     return RequestUtils.getIpAddr(request);
   }
 
-  protected void put(String key, Object value) {
+  protected final void put(String key, Object value) {
     ContextHelper.put(key, value);
   }
 
-  protected Object[] getAll(String paramName) {
+  protected final Object[] getAll(String paramName) {
     return Params.getAll(paramName);
   }
 
-  protected <T> T[] getAll(String paramName, Class<T> clazz) {
+  protected final <T> T[] getAll(String paramName, Class<T> clazz) {
     return Params.getAll(paramName, clazz);
   }
 
-  protected String get(String paramName) {
+  protected final String get(String paramName) {
     return Params.get(paramName);
   }
 
   @SuppressWarnings({ "unchecked" })
-  protected <T> T get(String paramName, T defaultValue) {
+  protected final <T> T get(String paramName, T defaultValue) {
     String value = Params.get(paramName);
     if (null == value || Strings.isEmpty(value)) return defaultValue;
     else return (T) Params.converter.convert(value, defaultValue.getClass());
   }
 
-  protected Object getAttribute(String name) {
+  protected final Object getAttribute(String name) {
     return ActionContext.getContext().getContextMap().get(name);
   }
 
   @SuppressWarnings("unchecked")
-  protected <T> Object getAttribute(String name, Class<T> clazz) {
+  protected final <T> Object getAttribute(String name, Class<T> clazz) {
     return (T) ActionContext.getContext().getContextMap().get(name);
   }
 
-  protected <T> T get(String name, Class<T> clazz) {
+  protected final <T> T get(String name, Class<T> clazz) {
     return Params.get(name, clazz);
   }
 
-  protected Boolean getBoolean(String name) {
+  protected final Boolean getBoolean(String name) {
     return Params.getBoolean(name);
   }
 
-  protected boolean getBool(String name) {
+  protected final boolean getBool(String name) {
     return Params.getBool(name);
   }
 
-  protected java.sql.Date getDate(String name) {
+  protected final java.sql.Date getDate(String name) {
     return Params.getDate(name);
   }
 
-  protected Date getDateTime(String name) {
+  protected final Date getDateTime(String name) {
     return Params.getDateTime(name);
   }
 
-  protected Float getFloat(String name) {
+  protected final Float getFloat(String name) {
     return Params.getFloat(name);
   }
 
-  protected int getInt(String name) {
+  protected final int getInt(String name) {
     Integer rs = Params.getInteger(name);
     return null == rs ? 0 : rs.intValue();
   }
 
-  protected Integer getInteger(String name) {
+  protected final Integer getInteger(String name) {
     return Params.getInteger(name);
   }
 
-  protected Long getLong(String name) {
+  protected final Long getLong(String name) {
     return Params.getLong(name);
   }
 
-  protected Long getId(String shortName) {
+  protected final Long getId(String shortName) {
     return getId(Long.class, shortName);
   }
 
@@ -309,7 +309,7 @@ public class ActionSupport implements TextResource {
    * @param clazz
    * @return
    */
-  protected <T> T getId(Class<T> clazz, String shortName) {
+  protected final <T> T getId(Class<T> clazz, String shortName) {
     String entityId = get(shortName + ".id");
     if (null == entityId) {
       entityId = get(shortName + "Id");
@@ -327,7 +327,7 @@ public class ActionSupport implements TextResource {
    * @param shortName
    * @return
    */
-  protected Long[] getIds(String shortName) {
+  protected final Long[] getIds(String shortName) {
     return getIds(Long.class, shortName);
   }
 
@@ -338,7 +338,7 @@ public class ActionSupport implements TextResource {
    * @param clazz
    * @return empty array if not found
    */
-  protected <T> T[] getIds(Class<T> clazz, String shortName) {
+  protected final <T> T[] getIds(Class<T> clazz, String shortName) {
     T[] datas = Params.getAll(shortName + ".id", clazz);
     if (null == datas) {
       String datastring = Params.get(shortName + ".ids");
@@ -362,46 +362,46 @@ public class ActionSupport implements TextResource {
    * @param title
    * @return
    */
-  protected <T> T populate(Class<T> clazz, String shortName) {
+  protected final <T> T populate(Class<T> clazz, String shortName) {
     return PopulateHelper.populate(clazz, shortName);
   }
 
-  protected void populate(Object obj, String shortName) {
+  protected final void populate(Object obj, String shortName) {
     Model.populate(Params.sub(shortName), obj);
   }
 
-  protected Object populate(String entityName) {
+  protected final Object populate(String entityName) {
     return PopulateHelper.populate(entityName);
   }
 
-  protected Object populate(Class<?> clazz) {
+  protected final Object populate(Class<?> clazz) {
     return PopulateHelper.populate(clazz);
   }
 
-  protected Object populate(String entityName, String shortName) {
+  protected final Object populate(String entityName, String shortName) {
     return PopulateHelper.populate(entityName, shortName);
   }
 
-  protected Object populate(Object obj, String entityName, String shortName) {
+  protected final Object populate(Object obj, String entityName, String shortName) {
     return PopulateHelper.populate(obj, entityName, shortName);
   }
 
-  protected void populate(Map<String, Object> params, Entity<?> entity, String entityName) {
+  protected final void populate(Map<String, Object> params, Entity<?> entity, String entityName) {
     Assert.notNull(entity, "Cannot populate to null.");
     Model.getPopulator().populate(entity, entityName, params);
   }
 
-  protected void populate(Map<String, Object> params, Entity<?> entity) {
+  protected final void populate(Map<String, Object> params, Entity<?> entity) {
     Assert.notNull(entity, "Cannot populate to null.");
     Model.populate(params, entity);
   }
 
   // query------------------------------------------------------
-  protected int getPageNo() {
+  protected final int getPageNo() {
     return QueryHelper.getPageNo();
   }
 
-  protected int getPageSize() {
+  protected final int getPageSize() {
     return QueryHelper.getPageSize();
   }
 
@@ -411,23 +411,23 @@ public class ActionSupport implements TextResource {
    * @param request
    * @return
    */
-  protected PageLimit getPageLimit() {
+  protected final PageLimit getPageLimit() {
     return QueryHelper.getPageLimit();
   }
 
-  protected void populateConditions(OqlBuilder<?> builder) {
+  protected final void populateConditions(OqlBuilder<?> builder) {
     QueryHelper.populateConditions(builder);
   }
 
-  protected void populateConditions(OqlBuilder<?> builder, String exclusiveAttrNames) {
+  protected final void populateConditions(OqlBuilder<?> builder, String exclusiveAttrNames) {
     QueryHelper.populateConditions(builder, exclusiveAttrNames);
   }
 
-  protected String getCookieValue(String cookieName) {
+  protected final String getCookieValue(String cookieName) {
     return CookieUtils.getCookieValue(ServletActionContext.getRequest(), cookieName);
   }
 
-  protected void addCookie(String name, String value, String path, int age) {
+  protected final void addCookie(String name, String value, String path, int age) {
     try {
       CookieUtils.addCookie(ServletActionContext.getRequest(), ServletActionContext.getResponse(), name,
           value, path, age);
@@ -436,7 +436,7 @@ public class ActionSupport implements TextResource {
     }
   }
 
-  protected void addCookie(String name, String value, int age) {
+  protected final void addCookie(String name, String value, int age) {
     try {
       CookieUtils.addCookie(ServletActionContext.getRequest(), ServletActionContext.getResponse(), name,
           value, age);
@@ -445,12 +445,12 @@ public class ActionSupport implements TextResource {
     }
   }
 
-  protected void deleteCookie(String name) {
+  protected final void deleteCookie(String name) {
     CookieUtils.deleteCookieByName(ServletActionContext.getRequest(), ServletActionContext.getResponse(),
         name);
   }
 
-  protected URL getResource(String name) {
+  protected final URL getResource(String name) {
     URL url = ClassLoaders.getResource(name, getClass());
     if (url == null) {
       logger.error("Cannot load template {}", name);
@@ -458,20 +458,20 @@ public class ActionSupport implements TextResource {
     return url;
   }
 
-  protected HttpServletRequest getRequest() {
+  protected final HttpServletRequest getRequest() {
     return ServletActionContext.getRequest();
   }
 
-  protected HttpServletResponse getResponse() {
+  protected final HttpServletResponse getResponse() {
     return ServletActionContext.getResponse();
   }
 
-  protected Map<String, Object> getSession() {
+  protected final Map<String, Object> getSession() {
     return ActionContext.getContext().getSession();
   }
 
   @Inject
-  public void setContainer(Container container) {
+  public final void setContainer(Container container) {
     this.container = container;
   }
 
