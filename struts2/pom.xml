@@ -12,7 +12,7 @@
   <name>Beangle Struts2 Parent</name>
   
   <properties>
-    <struts.version>2.3.3</struts.version>
+    <struts.version>2.3.4.1</struts.version>
     <freemarker.version>2.3.19</freemarker.version>
     <jqueryplugin.version>3.3.1</jqueryplugin.version>
   </properties>

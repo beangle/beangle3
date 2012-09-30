@@ -9,6 +9,12 @@ import java.util.Map;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
 
+/**
+ * Template Theme
+ * 
+ * @author chaostone
+ * @since 2.4
+ */
 public class Theme {
 
   public static final String THEME = ".beangle_theme";
@@ -17,57 +23,35 @@ public class Theme {
 
   public static final String DEFAULT_THEME = "xml";
 
+  /**
+   * Default tagName corresponding TagClass
+   * 
+   * @see getTemplateName
+   */
   private final static Map<Class<?>, String> defaultNames = CollectUtils.newHashMap();
 
+  /**
+   * Registe all theme
+   */
+  private final static Map<String, Theme> themes = CollectUtils.newHashMap();
+
+  /**
+   * Theme's name ,xml,list,xhtml etc.
+   */
   private final String name;
 
-  private String ui;
-
-  private String uibase;
-
-  public Theme() {
-    this.name = DEFAULT_THEME;
+  public static Theme getTheme(String name) {
+    Theme theme = themes.get(name);
+    if (null == theme) {
+      theme = new Theme(name);
+      themes.put(name, theme);
+    }
+    return theme;
   }
 
-  public Theme(String name) {
+  private Theme(String name) {
     super();
     this.name = name;
-  }
-
-  public String iconurl(String name) {
-    return iconurl(name, "16x16");
-  }
-
-  public String iconurl(String name, int size) {
-    StringBuilder sb = new StringBuilder();
-    sb.append(size).append('x').append(size);
-    return iconurl(name, sb.toString());
-  }
-
-  public String iconurl(String name, String size) {
-    StringBuilder sb = new StringBuilder(80);
-    if (uibase.length() < 2) {
-      sb.append("/static/themes/");
-    } else {
-      sb.append(uibase).append("/static/themes/");
-    }
-    sb.append(getUi()).append("/icons/").append(size);
-    if (!name.startsWith("/")) sb.append('/');
-    sb.append(name);
-    return sb.toString();
-  }
-
-  public String cssurl(String name) {
-    StringBuilder sb = new StringBuilder(80);
-    if (uibase.length() < 2) {
-      sb.append("/static/themes/");
-    } else {
-      sb.append(uibase).append("/static/themes/");
-    }
-    sb.append(getUi());
-    if (!name.startsWith("/")) sb.append('/');
-    sb.append(name);
-    return sb.toString();
   }
 
   public String getTemplatePath(Class<?> clazz, String suffix) {
@@ -87,22 +71,6 @@ public class Theme {
 
   public String getName() {
     return name;
-  }
-
-  public String getUi() {
-    return ui;
-  }
-
-  public void setUi(String uitheme) {
-    this.ui = uitheme;
-  }
-
-  public String getUibase() {
-    return uibase;
-  }
-
-  public void setUibase(String uibase) {
-    this.uibase = uibase;
   }
 
   @Override

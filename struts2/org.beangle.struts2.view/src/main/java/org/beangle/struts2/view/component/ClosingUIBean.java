@@ -55,7 +55,7 @@ public class ClosingUIBean extends UIBean {
   }
 
   public final void setTheme(String newTheme) {
-    this.theme = new Theme(newTheme);
+    this.theme = Theme.getTheme(newTheme);
     pushTheme(theme);
     useNewTheme = true;
   }

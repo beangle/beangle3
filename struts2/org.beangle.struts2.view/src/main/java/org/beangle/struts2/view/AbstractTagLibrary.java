@@ -29,7 +29,7 @@ public abstract class AbstractTagLibrary implements TagLibrary {
   protected HttpServletResponse res;
   protected Map<Class<?>, TagModel> models = CollectUtils.newHashMap();
 
-  protected Theme theme = new Theme(Theme.DEFAULT_THEME);
+  protected UITheme theme;
 
   public AbstractTagLibrary() {
 
@@ -41,9 +41,8 @@ public abstract class AbstractTagLibrary implements TagLibrary {
     this.req = req;
     this.res = res;
 
-    theme.setUi(getUitheme());
-    theme.setUibase(req.getContextPath());
-    stack.getContext().put(Theme.THEME, theme);
+    theme = UITheme.getTheme(getUitheme(), req.getContextPath());
+    stack.getContext().put(Theme.THEME, Theme.getTheme(Theme.DEFAULT_THEME));
     stack.getContext().put(UIIdGenerator.GENERATOR,
         new IndexableIdGenerator(Math.abs(req.getRequestURI().hashCode())));
   }
@@ -56,9 +55,7 @@ public abstract class AbstractTagLibrary implements TagLibrary {
         uitheme = (String) session.getAttribute("ui.theme");
       }
     }
-    if (null == uitheme) {
-      uitheme = "default";
-    }
+    if (null == uitheme) uitheme = "default";
     return uitheme;
   }
 
@@ -76,7 +73,7 @@ public abstract class AbstractTagLibrary implements TagLibrary {
     return null;
   }
 
-  public Theme getTheme() {
+  public UITheme getTheme() {
     return theme;
   }
 

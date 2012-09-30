@@ -90,7 +90,7 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
       Authentication newAuth = doAuthenticate(request, response);
       // Create anonymous authentication
       if (null == newAuth) {
-        AnonymousAuthentication anonymous = createAnonymousAuthentication(request);
+        AnonymousAuthentication anonymous = AnonymousAuthentication.Instance;
         SecurityContextHolder.getContext().setAuthentication(anonymous);
         logger.debug("Populated SecurityContextHolder with anonymous token: '{}'", anonymous);
       }
@@ -103,10 +103,6 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
         SecurityContextHolder.getContext().setAuthentication(null);
       }
     }
-  }
-
-  protected AnonymousAuthentication createAnonymousAuthentication(ServletRequest request) {
-    return new AnonymousAuthentication("anonymous", null);
   }
 
   /** Do the actual authentication for a pre-authenticated user. */

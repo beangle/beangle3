@@ -15,6 +15,11 @@ public class AnonymousAuthentication extends AbstractAuthentication {
 
   private Object principal;
 
+  /**
+   * Default anonymous instance
+   */
+  public static AnonymousAuthentication Instance = new AnonymousAuthentication("anonymous", null);
+
   public AnonymousAuthentication(Object principal, Collection<? extends GrantedAuthority> authorities) {
     super(authorities);
     this.principal = principal;
