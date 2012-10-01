@@ -53,6 +53,8 @@ public class HttpSessionEventPublisher implements HttpSessionListener {
    *          The HttpSessionEvent pass in by the container
    */
   public void sessionDestroyed(HttpSessionEvent event) {
-    eventMulticaster.multicast(new HttpSessionDestroyedEvent(event.getSession()));
+    if (null != eventMulticaster) {
+      eventMulticaster.multicast(new HttpSessionDestroyedEvent(event.getSession()));
+    }
   }
 }

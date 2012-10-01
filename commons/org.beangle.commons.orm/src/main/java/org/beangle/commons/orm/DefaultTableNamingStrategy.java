@@ -7,12 +7,7 @@ package org.beangle.commons.orm;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.context.inject.Resources;
@@ -102,32 +97,39 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
 
   public String getSchema(String packageName) {
     String schemaName = null;
-    for (TableNamePattern packageSchema : patterns) {
-      if (packageName.indexOf(packageSchema.getPackageName()) == 0) {
-        schemaName = packageSchema.getSchema();
-      }
+    for (TableNamePattern pattern : patterns) {
+      if (packageName.indexOf(pattern.getPackageName()) == 0) schemaName = pattern.getSchema();
     }
     return schemaName;
   }
 
   public TableNamePattern getPattern(String packageName) {
-    TableNamePattern pattern = null;
-    for (TableNamePattern packageSchema : patterns) {
-      if (packageName.indexOf(packageSchema.getPackageName()) == 0) {
-        pattern = packageSchema;
-      }
+    TableNamePattern last = null;
+    for (TableNamePattern pattern : patterns) {
+      if (packageName.indexOf(pattern.getPackageName()) == 0) last = pattern;
     }
-    return pattern;
+    return last;
   }
 
   public String getPrefix(String packageName) {
     String prefix = null;
-    for (TableNamePattern packageSchema : patterns) {
-      if (packageName.indexOf(packageSchema.getPackageName()) == 0) {
-        prefix = packageSchema.getPrefix();
-      }
+    for (TableNamePattern pattern : patterns) {
+      if (packageName.indexOf(pattern.getPackageName()) == 0) prefix = pattern.getPrefix();
     }
     return prefix;
+  }
+
+  /**
+   * is Multiple schema for entity
+   * 
+   * @return
+   */
+  public boolean isMultiSchema() {
+    Set<String> schemas = CollectUtils.newHashSet();
+    for (TableNamePattern pattern : patterns) {
+      schemas.add((null == pattern.getSchema()) ? "" : pattern.getSchema());
+    }
+    return schemas.size() > 1;
   }
 
   public List<TableNamePattern> getPatterns() {

@@ -56,16 +56,18 @@ public class OverrideConfiguration extends Configuration {
       TableSeqGenerator.namingStrategy = namingStrategy;
     }
 
-    for (PersistentClass clazz : classes.values()) {
-      String schema = namingStrategy.getSchema(clazz.getEntityName());
-      if (null != schema) clazz.getTable().setSchema(schema);
-    }
+    if (namingStrategy.isMultiSchema()) {
+      for (PersistentClass clazz : classes.values()) {
+        String schema = namingStrategy.getSchema(clazz.getEntityName());
+        if (null != schema) clazz.getTable().setSchema(schema);
+      }
 
-    for (Collection collection : collections.values()) {
-      final Table table = collection.getCollectionTable();
-      if (null == table) continue;
-      String schema = namingStrategy.getSchema(collection.getRole());
-      if (null != schema) table.setSchema(schema);
+      for (Collection collection : collections.values()) {
+        final Table table = collection.getCollectionTable();
+        if (null == table) continue;
+        String schema = namingStrategy.getSchema(collection.getRole());
+        if (null != schema) table.setSchema(schema);
+      }
     }
   }
 

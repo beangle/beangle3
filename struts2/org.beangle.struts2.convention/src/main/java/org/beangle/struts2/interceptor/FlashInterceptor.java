@@ -21,8 +21,11 @@ public class FlashInterceptor extends AbstractInterceptor {
   @Override
   public String intercept(ActionInvocation invocation) throws Exception {
     String result = invocation.invoke();
-    Flash flash = (Flash) invocation.getInvocationContext().getSession().get("flash");
-    if (null != flash) flash.nextToNow();
+    try {
+      Flash flash = (Flash) invocation.getInvocationContext().getSession().get("flash");
+      if (null != flash) flash.nextToNow();
+    } catch (IllegalStateException e) {
+    }
     return result;
   }
 

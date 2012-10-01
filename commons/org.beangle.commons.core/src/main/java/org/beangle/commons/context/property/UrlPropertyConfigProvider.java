@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author chaostone
  * @version $Id: $
  */
-public class UrlPropertyConfigProvider implements PropertyConfigFactory.Provider {
+public class UrlPropertyConfigProvider implements PropertyConfig.Provider {
 
   /** Constant <code>logger</code> */
   protected static final Logger logger = LoggerFactory.getLogger(UrlPropertyConfigProvider.class);

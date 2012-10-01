@@ -23,6 +23,8 @@ public class PropertyConfigBean implements PropertyConfig {
 
   private List<PropertyConfigListener> listeners = CollectUtils.newArrayList();
 
+  private List<PropertyConfig.Provider> providers = new ArrayList<PropertyConfig.Provider>();
+
   /**
    * Get value according to name
    */
@@ -73,19 +75,19 @@ public class PropertyConfigBean implements PropertyConfig {
   }
 
   /** {@inheritDoc} */
-  public void set(Properties newer) {
+  public void add(Properties newer) {
     for (Object key : newer.keySet()) {
       this.properties.put(key.toString(), newer.get(key));
     }
   }
 
   /** {@inheritDoc} */
-  public void addConfigListener(PropertyConfigListener listener) {
+  public void addListener(PropertyConfigListener listener) {
     listeners.add(listener);
   }
 
   /** {@inheritDoc} */
-  public void removeConfigListener(PropertyConfigListener listener) {
+  public void removeListener(PropertyConfigListener listener) {
     listeners.remove(listener);
   }
 
@@ -137,4 +139,31 @@ public class PropertyConfigBean implements PropertyConfig {
   public Set<String> getNames() {
     return CollectUtils.newHashSet(properties.keySet());
   }
+
+  public void addProvider(PropertyConfig.Provider provider) {
+    providers.add(provider);
+  }
+
+  /**
+   * <p>
+   * reload.
+   * </p>
+   */
+  public synchronized void reload() {
+    for (PropertyConfig.Provider provider : providers)
+      add(provider.getConfig());
+    multicast();
+  }
+
+  /**
+   * <p>
+   * Setter for the field <code>providers</code>.
+   * </p>
+   * 
+   * @param providers a {@link java.util.List} object.
+   */
+  public void setProviders(List<PropertyConfig.Provider> providers) {
+    this.providers = providers;
+  }
+
 }

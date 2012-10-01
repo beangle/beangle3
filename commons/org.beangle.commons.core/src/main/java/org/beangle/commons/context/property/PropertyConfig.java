@@ -49,12 +49,12 @@ public interface PropertyConfig {
 
   /**
    * <p>
-   * set.
+   * add.
    * </p>
    * 
    * @param properties a {@link java.util.Properties} object.
    */
-  public void set(Properties properties);
+  public void add(Properties properties);
 
   /**
    * <p>
@@ -72,7 +72,7 @@ public interface PropertyConfig {
    * 
    * @param listener a {@link org.beangle.commons.context.property.PropertyConfigListener} object.
    */
-  public void addConfigListener(PropertyConfigListener listener);
+  public void addListener(PropertyConfigListener listener);
 
   /**
    * <p>
@@ -81,7 +81,7 @@ public interface PropertyConfig {
    * 
    * @param listener a {@link org.beangle.commons.context.property.PropertyConfigListener} object.
    */
-  public void removeConfigListener(PropertyConfigListener listener);
+  public void removeListener(PropertyConfigListener listener);
 
   /**
    * <p>
@@ -90,4 +90,24 @@ public interface PropertyConfig {
    */
   public void multicast();
 
+  /**
+   * <p>
+   * reload.
+   * </p>
+   */
+  public void reload();
+
+  /**
+   * <p>
+   * addConfigProvider.
+   * </p>
+   * 
+   * @param provider a {@link org.beangle.commons.context.property.PropertyConfigFactory.Provider}
+   *          object.
+   */
+  public void addProvider(Provider provider);
+
+  public interface Provider {
+    public Properties getConfig();
+  }
 }

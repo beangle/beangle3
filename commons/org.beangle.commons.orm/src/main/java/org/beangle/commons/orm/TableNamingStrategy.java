@@ -4,12 +4,44 @@
  */
 package org.beangle.commons.orm;
 
+/**
+ * Entity table and Collection Table Naming Strategy.
+ * 
+ * @author chaostone
+ */
 public interface TableNamingStrategy {
 
-  public String classToTableName(String className);
+  /**
+   * Convert class to table name
+   * 
+   * @param className
+   * @return
+   */
+  String classToTableName(String className);
 
-  public String collectionToTableName(String className, String tableName, String collectionName);
+  /**
+   * Convert collection to table name
+   * 
+   * @param className
+   * @param tableName
+   * @param collectionName
+   * @return
+   */
+  String collectionToTableName(String className, String tableName, String collectionName);
 
+  /**
+   * Return schema for package
+   * 
+   * @param packageName
+   * @return
+   */
   String getSchema(String packageName);
+
+  /**
+   * Mapped in multischema?
+   * 
+   * @return
+   */
+  boolean isMultiSchema();
 
 }

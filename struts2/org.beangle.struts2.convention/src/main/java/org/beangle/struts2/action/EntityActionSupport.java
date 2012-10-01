@@ -21,7 +21,6 @@ import org.apache.struts2.ServletActionContext;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
 import org.beangle.commons.context.property.PropertyConfig;
-import org.beangle.commons.context.property.PropertyConfigFactory;
 import org.beangle.commons.dao.EntityDao;
 import org.beangle.commons.dao.query.QueryBuilder;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
@@ -56,10 +55,10 @@ public abstract class EntityActionSupport extends ActionSupport {
 
   protected EntityDao entityDao;
 
-  protected PropertyConfigFactory configFactory;
+  protected PropertyConfig config;
 
   protected PropertyConfig getConfig() {
-    return null != configFactory ? configFactory.getConfig() : null;
+    return config;
   }
 
   // CURD----------------------------------------
@@ -510,8 +509,8 @@ public abstract class EntityActionSupport extends ActionSupport {
     return Collections.singletonList(new ImporterForeignerListener(entityDao));
   }
 
-  public void setConfigFactory(PropertyConfigFactory configFactory) {
-    this.configFactory = configFactory;
+  public void setConfig(PropertyConfig propertyConfig) {
+    this.config = propertyConfig;
   }
 
 }

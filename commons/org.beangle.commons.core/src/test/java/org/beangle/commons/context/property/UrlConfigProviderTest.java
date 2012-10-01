@@ -20,11 +20,11 @@ public class UrlConfigProviderTest {
     UrlPropertyConfigProvider provider = new UrlPropertyConfigProvider();
     Resources resources = new Resources();
     // META-INF/system.properties
-    resources.setGlobal(ClassLoaders.getResource("system-default.properties",getClass()));
-    resources.setUser(ClassLoaders.getResource("system.properties",getClass()));
+    resources.setGlobal(ClassLoaders.getResource("system-default.properties", getClass()));
+    resources.setUser(ClassLoaders.getResource("system.properties", getClass()));
     provider.setResources(resources);
     Properties properties = provider.getConfig();
-    config.set(properties);
+    config.add(properties);
     assertEquals(Integer.valueOf(1), config.get(Integer.class, "testInt"));
     assertEquals("beangle.org", config.get("system.vendor"));
     assertEquals("http://localhost", config.get("system.url"));

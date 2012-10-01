@@ -4,11 +4,8 @@
  */
 package org.beangle.security.core.session.category;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.context.event.Event;
@@ -34,6 +31,8 @@ public class DbSessionController extends AbstractSessionController implements In
 
   private SessioninfoBuilder sessioninfoBuilder;
 
+  private Map<String, Long> categoryStatIds = CollectUtils.newConcurrentHashMap();
+
   @Override
   protected boolean allocate(Authentication auth, String sessionId) {
     CategoryPrincipal principal = (CategoryPrincipal) auth.getPrincipal();
@@ -41,9 +40,27 @@ public class DbSessionController extends AbstractSessionController implements In
       return true;
     } else {
       String category = principal.getCategory();
-      int result = entityDao.executeUpdateHql("update " + SessionStat.class.getName()
-          + " stat set stat.online = stat.online + 1 "
-          + "where stat.online < stat.capacity and stat.category=?", category);
+      // Check corresponding stat existence
+      Long statId = categoryStatIds.get(category);
+      if (null == statId) {
+        statId = (Long) entityDao.uniqueResult(OqlBuilder.from(SessionStat.class.getName(), "ss")
+            .where("ss.category=:category", category).select("ss.id"));
+        if (null == statId) {
+          CategoryProfile cp = categoryProfileProvider.getProfile(principal.getCategory());
+          if (null != cp) {
+            entityDao.save(new SessionStat(cp.getId(), cp.getCategory(), cp.getCapacity()));
+            statId = cp.getId();
+          }
+        }
+        if (null != statId) categoryStatIds.put(category, statId);
+      }
+
+      int result = 0;
+      if (null != statId) {
+        result = entityDao.executeUpdateHql("update " + SessionStat.class.getName()
+            + " stat set stat.online = stat.online + 1 " + "where stat.online < stat.capacity and stat.id=?",
+            statId);
+      }
       return result > 0;
     }
   }
@@ -68,25 +85,24 @@ public class DbSessionController extends AbstractSessionController implements In
     }
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
   public void init() throws Exception {
     Assert.notNull(categoryProfileProvider);
-    Map<String, CategoryProfile> profileMap = CollectUtils.newHashMap();
-    for (CategoryProfile profile : categoryProfileProvider.getProfiles()) {
-      profileMap.put(profile.getCategory(), profile);
-    }
-    if (profileMap.isEmpty()) return;
-
-    OqlBuilder builder = OqlBuilder.from(SessionStat.class, "stat").select("stat.category ");
-    builder.where("stat.category in(:categories)", profileMap.keySet());
-    List<String> existed = entityDao.search(builder);
-    Collection<String> newers = CollectionUtils.subtract(profileMap.keySet(), existed);
-    List<SessionStat> newStats = CollectUtils.newArrayList(newers.size());
-    for (String category : newers) {
-      CategoryProfile profile = profileMap.get(category);
-      newStats.add(new SessionStat(profile.getId(), profile.getCategory(), profile.getCapacity()));
-    }
-    if (!newStats.isEmpty()) entityDao.save(newStats);
+    // Map<String, CategoryProfile> profileMap = CollectUtils.newHashMap();
+    // for (CategoryProfile profile : categoryProfileProvider.getProfiles()) {
+    // profileMap.put(profile.getCategory(), profile);
+    // }
+    // if (profileMap.isEmpty()) return;
+    //
+    // OqlBuilder builder = OqlBuilder.from(SessionStat.class, "stat").select("stat.category ");
+    // builder.where("stat.category in(:categories)", profileMap.keySet());
+    // List<String> existed = entityDao.search(builder);
+    // Collection<String> newers = CollectionUtils.subtract(profileMap.keySet(), existed);
+    // List<SessionStat> newStats = CollectUtils.newArrayList(newers.size());
+    // for (String category : newers) {
+    // CategoryProfile profile = profileMap.get(category);
+    // newStats.add(new SessionStat(profile.getId(), profile.getCategory(), profile.getCapacity()));
+    // }
+    // if (!newStats.isEmpty()) entityDao.save(newStats);
   }
 
   public void onEvent(CategoryProfileUpdateEvent event) {
