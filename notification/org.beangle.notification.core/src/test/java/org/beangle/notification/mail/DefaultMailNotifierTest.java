@@ -4,9 +4,6 @@
  */
 package org.beangle.notification.mail;
 
-import org.beangle.notification.mail.DefaultMailNotifier;
-import org.beangle.notification.mail.JavaMailSender;
-import org.beangle.notification.mail.MailMessage;
 import org.testng.annotations.Test;
 
 @Test
@@ -17,10 +14,9 @@ public class DefaultMailNotifierTest {
     JavaMailSender mailSender = new JavaMailSender();
     mailSender.setHost("smtp.gmail.com");
     mailSender.setUsername("eams.demon");
-    mailSender.setPassword("eamsadmin");
+    mailSender.setPassword("xxxxxs");
     mailSender.setPort(465);
     mailSender.setProtocol("smtp");
-    // Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
     mailSender.getJavaMailProperties().put("mail.smtp.auth", "true");
     mailSender.getJavaMailProperties().put("mail.smtp.port", new Integer(465));
     mailSender.getJavaMailProperties().put("mail.smtp.starttls.enable", "true");
@@ -28,11 +24,9 @@ public class DefaultMailNotifierTest {
     mailSender.getJavaMailProperties().put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
     mailSender.getJavaMailProperties().put("mail.smtp.socketFactory.fallback", "false");
 
-    MailMessage mmc = new MailMessage("测试", "测试简单邮件发送机制", "eams.demon@gmail.com", "gjloverfly@163.com",
-        "chaostone.duan@gmail.com");
-    DefaultMailNotifier<MailMessage> mailNotifier = new DefaultMailNotifier<MailMessage>();
-    mailNotifier.setMailSender(mailSender);
-    mailNotifier.setFrom("测试name<eams.demon@gmail.com>");
+    MailMessage mmc = new MailMessage("测试", "测试简单邮件发送机制", "duantihua@163.com");
+    DefaultMailNotifier<MailMessage> mailNotifier = new DefaultMailNotifier<MailMessage>(mailSender);
+    mailNotifier.setFrom("段体华<duantihua@gmail.com>");
     if (online) mailNotifier.deliver(mmc);
   }
 
@@ -40,7 +34,7 @@ public class DefaultMailNotifierTest {
     JavaMailSender mailSender = new JavaMailSender();
     mailSender.setHost("mail.shufe.edu.cn");
     mailSender.setUsername("infocms");
-    mailSender.setPassword("shufejw");
+    mailSender.setPassword("xxxx");
     mailSender.getJavaMailProperties().put("mail.smtp.auth", "true");
 
     MailMessage mmc = new MailMessage("测试", "测试简单邮件发送机制", "infocms@mail.shufe.edu.cn");

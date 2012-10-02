@@ -26,6 +26,7 @@ public abstract class AbstractMailNotifier<T extends MailMessage> implements Not
   public void deliver(T msg) throws NotificationException {
     beforeSend(msg);
     try {
+      if (null == msg.getFrom() && null != getFrom()) msg.from(getFrom());
       mailSender.send(msg);
       afterSend(msg);
     } catch (NotificationException e) {

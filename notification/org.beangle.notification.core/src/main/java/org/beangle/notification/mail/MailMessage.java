@@ -74,9 +74,7 @@ public class MailMessage extends AbstractMessage {
 
   public MailMessage from(String from) {
     List<InternetAddress> froms = MimeUtils.parseAddress(from, getEncoding());
-    if (froms.size() > 0) {
-      this.from = froms.get(0);
-    }
+    if (froms.size() > 0) this.from = froms.get(0);
     return this;
   }
 

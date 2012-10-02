@@ -1,12 +1,12 @@
 package org.beangle.notification.mail;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.mail.Address;
 import javax.mail.AuthenticationFailedException;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
@@ -17,10 +17,13 @@ import javax.mail.internet.MimeMessage;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.Throwables;
 import org.beangle.notification.NotificationException;
 import org.beangle.notification.NotificationSendException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeUtility;
 
 public class JavaMailSender implements MailSender {
 
@@ -58,43 +61,37 @@ public class JavaMailSender implements MailSender {
 
   protected MimeMessage createMimeMessage(MailMessage mailMsg) throws MessagingException {
     MimeMessage mimeMsg = new MimeMessage(getSession());
-    if (null == mailMsg.getSentAt()) {
-      mimeMsg.setSentDate(new Date());
-    } else {
-      mimeMsg.setSentDate(mailMsg.getSentAt());
-    }
+
+    mimeMsg.setSentDate(null == mailMsg.getSentAt() ? new Date() : mailMsg.getSentAt());
+    if (null != mailMsg.getFrom()) mimeMsg.setFrom(mailMsg.getFrom());
+    addRecipient(mimeMsg, mailMsg);
+
     String encoding = Strings.substringAfter(mailMsg.getContentType(), "charset=");
+    try {
+      mimeMsg.setSubject(MimeUtility.encodeText(mailMsg.getSubject(), encoding, "B"));
+    } catch (UnsupportedEncodingException e) {
+      Throwables.propagate(e);
+    }
     final String text = mailMsg.getText();
     boolean html = Strings.contains(mailMsg.getContentType(), "html");
     if (html) {
-      if (Strings.isEmpty(encoding)) {
-        mimeMsg.setContent(text, "text/html");
-      } else {
-        mimeMsg.setContent(text, "text/html;charset=" + encoding);
-      }
+      if (Strings.isEmpty(encoding)) mimeMsg.setContent(text, "text/html");
+      else mimeMsg.setContent(text, "text/html;charset=" + encoding);
     } else {
-      if (Strings.isEmpty(encoding)) {
-        mimeMsg.setText(text);
-      } else {
-        mimeMsg.setText(text, encoding);
-      }
+      if (Strings.isEmpty(encoding)) mimeMsg.setText(text);
+      else mimeMsg.setText(text, encoding);
     }
-    addRecipient(mimeMsg, mailMsg);
     return mimeMsg;
   }
 
   protected synchronized Session getSession() {
-    if (this.session == null) {
-      this.session = Session.getInstance(this.javaMailProperties);
-    }
+    if (this.session == null) this.session = Session.getInstance(this.javaMailProperties);
     return this.session;
   }
 
   protected Transport getTransport(Session session) throws NoSuchProviderException {
     String protocol = getProtocol();
-    if (protocol == null) {
-      protocol = session.getProperty("mail.transport.protocol");
-    }
+    if (protocol == null) protocol = session.getProperty("mail.transport.protocol");
     return session.getTransport(protocol);
   }
 
@@ -116,12 +113,9 @@ public class JavaMailSender implements MailSender {
     }
 
     try {
-      for (int i = 0; i < mimeMessages.length; i++) {
-        MimeMessage mimeMessage = mimeMessages[i];
+      for (MimeMessage mimeMessage : mimeMessages) {
         try {
-          if (mimeMessage.getSentDate() == null) {
-            mimeMessage.setSentDate(new Date());
-          }
+          if (mimeMessage.getSentDate() == null) mimeMessage.setSentDate(new Date());
           String messageId = mimeMessage.getMessageID();
           mimeMessage.saveChanges();
           if (messageId != null) {
@@ -151,7 +145,6 @@ public class JavaMailSender implements MailSender {
 
   private int addRecipient(MimeMessage mimeMsg, MailMessage mailMsg) throws MessagingException {
     int recipients = 0;
-    if (null != mailMsg.getFrom()) mimeMsg.addFrom(new Address[] { mailMsg.getFrom() });
     for (InternetAddress to : mailMsg.getTo()) {
       mimeMsg.addRecipient(javax.mail.Message.RecipientType.TO, to);
       recipients++;
