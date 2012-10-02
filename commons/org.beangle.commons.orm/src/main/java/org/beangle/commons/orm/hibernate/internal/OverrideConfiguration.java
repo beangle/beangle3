@@ -4,6 +4,10 @@
  */
 package org.beangle.commons.orm.hibernate.internal;
 
+import java.util.Map;
+import java.util.Set;
+
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.orm.TableNamingStrategy;
 import org.beangle.commons.orm.hibernate.RailsNamingStrategy;
 import org.beangle.commons.orm.hibernate.TableSeqGenerator;
@@ -73,11 +77,22 @@ public class OverrideConfiguration extends Configuration {
 
   /**
    * Update persistentclass and collection's schema.
+   * 
+   * @see addClass
    */
   @Override
   protected void secondPassCompile() throws MappingException {
     super.secondPassCompile();
     configSchema();
+    // remove duplicated persistentClass register in classes map.
+    // see addClass
+    Set<String> hackedEntityNames = CollectUtils.newHashSet();
+    for (Map.Entry<String, PersistentClass> entry : classes.entrySet()) {
+      if (!entry.getKey().equals(entry.getValue().getEntityName())) hackedEntityNames.add(entry.getKey());
+    }
+    for (String entityName : hackedEntityNames) {
+      classes.remove(entityName);
+    }
   }
 
   protected class OverrideMappings extends MappingsImpl {
