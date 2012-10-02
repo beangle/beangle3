@@ -34,6 +34,18 @@ public class OqlBuilderTest {
     assertNull(query.getCountQuery());
   }
 
+  public void testToCountString3() throws Exception {
+    OqlBuilder<Object> queryBuilder = OqlBuilder.from("Ware", "w");
+    queryBuilder.select("(select count(*) from Product p where p.ware=w) pcount,w.id");
+    queryBuilder.where("w.price is not null").orderBy("w.releaseDate desc");
+    LimitQuery<Object> query = (LimitQuery<Object>) queryBuilder.build();
+    assertEquals(
+        query.getStatement(),
+        "select (select count(*) from Product p where p.ware=w) pcount,w.id from Ware w where (w.price is not null) order by w.releaseDate desc");
+    assertEquals(query.getCountQuery().getStatement(),
+        "select count(*) from Ware w where (w.price is not null)");
+  }
+
   public void testHaving() throws Exception {
     OqlBuilder<Object> queryBuilder = OqlBuilder.from("SomeClass a ").groupBy("a.name").having("sum(a.id)>0");
     Assert.assertEquals(queryBuilder.build().getStatement(),

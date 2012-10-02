@@ -88,7 +88,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   public static <E> OqlBuilder<E> from(final String entityName, final String alias) {
     EntityType type = Model.getEntityType(entityName);
     OqlBuilder<E> query = new OqlBuilder<E>();
-    query.entityClass = (Class<E>) type.getEntityClass();
+    if (null != type) query.entityClass = (Class<E>) type.getEntityClass();
     query.alias = alias;
     query.select = "select " + alias;
     query.from = concat("from ", entityName, " ", alias);
@@ -106,9 +106,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
    */
   public static <E> OqlBuilder<E> from(final Class<E> entityClass) {
     EntityType type = Model.getEntityType(entityClass.getName());
-    if (null == type) {
-      type = Model.getEntityType(entityClass);
-    }
+    if (null == type) type = Model.getEntityType(entityClass);
     return from(entityClass, EntityUtils.getCommandName(type.getEntityName()));
   }
 
@@ -125,9 +123,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   @SuppressWarnings("unchecked")
   public static <E> OqlBuilder<E> from(final Class<E> entityClass, final String alias) {
     EntityType type = Model.getEntityType(entityClass.getName());
-    if (null == type) {
-      type = Model.getEntityType(entityClass);
-    }
+    if (null == type) type = Model.getEntityType(entityClass);
     OqlBuilder<E> query = new OqlBuilder<E>();
     query.entityClass = (Class<E>) type.getEntityClass();
     query.alias = alias;
@@ -407,7 +403,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
     if (null == what) {
       this.select = null;
     } else {
-      if (Strings.contains(what.toLowerCase(), "select")) {
+      if (what.toLowerCase().trim().startsWith("select")) {
         this.select = what;
       } else {
         this.select = "select " + what;
@@ -481,16 +477,16 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
     if (Strings.contains(lowerCaseQueryStr, " group ")) { return ""; }
     if (Strings.contains(lowerCaseQueryStr, " union ")) { return ""; }
 
-    final int indexOfFrom = lowerCaseQueryStr.indexOf("from");
+    final int indexOfFrom = lowerCaseQueryStr.lastIndexOf(" from ") + 1;
     final String selectWhat = lowerCaseQueryStr.substring(0, indexOfFrom);
     final int indexOfDistinct = selectWhat.indexOf("distinct");
     // select distinct a from table;
     if (-1 != indexOfDistinct) {
       if (Strings.contains(selectWhat, ",")) {
-        return null;
+        return "";
       } else {
         countString = new StringBuilder("select count(");
-        countString.append(genQueryStr.substring(indexOfDistinct, indexOfFrom)).append(')');
+        countString.append(genQueryStr.substring(indexOfDistinct, indexOfFrom)).append(") ");
       }
     }
     countString.append(genQueryStr.substring(indexOfFrom));

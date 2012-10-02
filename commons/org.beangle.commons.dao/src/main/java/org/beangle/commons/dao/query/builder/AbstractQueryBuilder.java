@@ -169,12 +169,11 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * @return a {@link java.lang.String} object.
    */
   protected String genQueryStatement(final boolean hasOrder) {
-    if (null == from) { return statement; }
+    if (null == from) return statement;
     final StringBuilder buf = new StringBuilder(50);
     buf.append((select == null) ? "" : (select + " ")).append(from);
-    if (!conditions.isEmpty()) {
-      buf.append(" where ").append(ConditionUtils.toQueryString(conditions));
-    }
+    if (!conditions.isEmpty()) buf.append(" where ").append(ConditionUtils.toQueryString(conditions));
+
     if (!groups.isEmpty()) {
       buf.append(" group by ");
       for (final String groupBy : groups) {
@@ -182,9 +181,8 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
       }
       buf.deleteCharAt(buf.length() - 1);
     }
-    if (hasOrder && !CollectionUtils.isEmpty(orders)) {
-      buf.append(' ').append(Order.toSortString(orders));
-    }
+    if (hasOrder && !CollectionUtils.isEmpty(orders)) buf.append(' ').append(Order.toSortString(orders));
+
     if (null != having) buf.append(" having ").append(having);
     return buf.toString();
   }
