@@ -78,7 +78,7 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
   }
 
   /**
-   * Try to authenticate a pre-authenticated user with Beangle Security if the
+   * Try to authenticate a pre-authenticated user if the
    * user has not yet been authenticated.
    */
   public final void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
