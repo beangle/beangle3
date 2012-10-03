@@ -51,19 +51,17 @@ public class Select extends ClosingUIBean {
     }
     if (null == this.id) generateIdIfEmpty();
     if (null != label) label = getText(label);
-    if (null != title) {
-      title = getText(title);
-    } else {
-      title = label;
-    }
+    if (null != title) title = getText(title);
+    else title = label;
+
     Form myform = findAncestor(Form.class);
     if (null != myform) {
       if ("true".equals(required)) myform.addRequire(id);
       if (null != check) myform.addCheck(id, check);
     }
-    if (null == value) {
-      value = getRequestParameter(name);
-    }
+    if (null == value) value = getRequestParameter(name);
+    // trim empty string to null for speed up isSelected
+    if ((value instanceof String) && Strings.isEmpty((String) value)) value = null;
   }
 
   public boolean isSelected(Object obj) {
