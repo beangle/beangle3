@@ -4,6 +4,7 @@
  */
 package org.beangle.security.core.session;
 
+import org.beangle.commons.lang.Option;
 import org.beangle.security.core.Authentication;
 
 /**
@@ -48,8 +49,8 @@ public interface SessionController {
    * User online max inactive interval
    * 
    * @param auth
-   * @return -1 represent not specified.
+   * @return None or inactive interval
    */
-  int getInactiveInterval(Authentication auth);
+  Option<Integer> getInactiveInterval(Authentication auth);
 
 }

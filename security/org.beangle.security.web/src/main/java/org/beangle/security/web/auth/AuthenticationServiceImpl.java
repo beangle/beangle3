@@ -7,6 +7,7 @@ package org.beangle.security.web.auth;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.beangle.commons.lang.Option;
 import org.beangle.security.Securities;
 import org.beangle.security.auth.AbstractAuthentication;
 import org.beangle.security.auth.AuthenticationDetailsSource;
@@ -35,9 +36,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     Authentication authRequest = auth;
     authRequest = authenticationManager.authenticate(authRequest);
     sessionRegistry.register(authRequest, request.getSession().getId());
-    int inactiveInterval = sessionRegistry.getController().getInactiveInterval(authRequest);
+    Option<Integer> interval = sessionRegistry.getController().getInactiveInterval(authRequest);
     // inactiveInterval in minutes
-    if (inactiveInterval > 0) request.getSession(true).setMaxInactiveInterval(inactiveInterval * 60);
+    if (interval.isDefined()) request.getSession(true).setMaxInactiveInterval(interval.get() * 60);
     SecurityContextHolder.getContext().setAuthentication(authRequest);
   }
 

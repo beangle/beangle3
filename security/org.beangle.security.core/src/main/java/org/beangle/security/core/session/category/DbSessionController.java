@@ -12,6 +12,7 @@ import org.beangle.commons.context.event.Event;
 import org.beangle.commons.context.event.EventListener;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Assert;
+import org.beangle.commons.lang.Option;
 import org.beangle.security.auth.Principals;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.session.AbstractSessionController;
@@ -81,11 +82,11 @@ public class DbSessionController extends AbstractSessionController implements In
    * @param auth
    * @return -1 represent not specified
    */
-  public int getInactiveInterval(Authentication auth) {
+  public Option<Integer> getInactiveInterval(Authentication auth) {
     CategoryPrincipal principal = (CategoryPrincipal) auth.getPrincipal();
     CategoryProfile cp = categoryProfileProvider.getProfile(principal.getCategory());
-    if (null == cp) return -1;
-    else return cp.getInactiveInterval();
+    if (null == cp) return Option.none();
+    else return Option.some(cp.getInactiveInterval());
   }
 
   public void onLogout(Sessioninfo info) {
