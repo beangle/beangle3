@@ -95,21 +95,21 @@ public class ConvertPopulatorBean implements Populator {
   /**
    * {@inheritDoc} 安静的拷贝属性，如果属性非法或其他错误则记录日志
    */
-  public void populateValue(final Object target, String entityName, final String attr, final Object value) {
+  public boolean populateValue(final Object target, String entityName, final String attr, final Object value) {
     try {
-      if (attr.indexOf('.') > -1) {
-        initProperty(target, entityName, Strings.substringBeforeLast(attr, "."));
-      }
+      if (attr.indexOf('.') > -1) initProperty(target, entityName, Strings.substringBeforeLast(attr, "."));
       beanUtils.copyProperty(target, attr, value);
+      return true;
     } catch (Exception e) {
-      logger.error("copy property failure:[class:" + entityName + " attr:" + attr + " value:" + value + "]:",
+      logger.warn("copy property failure:[class:" + entityName + " attr:" + attr + " value:" + value + "]:",
           e);
+      return false;
     }
   }
 
   /** {@inheritDoc} */
-  public void populateValue(Object target, String attr, Object value) {
-    populateValue(target, Model.getEntityType(target.getClass()).getEntityName(), attr, value);
+  public boolean populateValue(Object target, String attr, Object value) {
+    return populateValue(target, Model.getEntityType(target.getClass()).getEntityName(), attr, value);
   }
 
   /** {@inheritDoc} */

@@ -4,13 +4,17 @@
  */
 package org.beangle.commons.entity.metadata;
 
+import java.sql.Date;
+
 import org.beangle.commons.entity.pojo.LongIdObject;
 
 public class ManagerEmployer extends LongIdObject {
-  
+
   private static final long serialVersionUID = 1371741254315503984L;
-  
+
   ContractInfo contractInfo;
+
+  Date birthday;
 
   public ContractInfo getContractInfo() {
     return contractInfo;
@@ -18,6 +22,14 @@ public class ManagerEmployer extends LongIdObject {
 
   public void setContractInfo(ContractInfo contractInfo) {
     this.contractInfo = contractInfo;
+  }
+
+  public Date getBirthday() {
+    return birthday;
+  }
+
+  public void setBirthday(Date birthday) {
+    this.birthday = birthday;
   }
 
 }

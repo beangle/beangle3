@@ -57,9 +57,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * </p>
    */
   public void transferItem() {
-    if (logger.isDebugEnabled()) {
-      logger.debug("tranfer index:{} : {}", getTranferIndex(), values);
-    }
+    if (logger.isDebugEnabled()) logger.debug("tranfer index:{} : {}", getTranferIndex(), values);
     // 在给定的值的范围内
     for (int i = 0; i < attrs.length; i++) {
       Object value = values.get(attrs[i]);
@@ -68,19 +66,14 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
       // 处理空字符串并对所有的字符串进行trim
       if (value instanceof String) {
         String strValue = (String) value;
-        if (Strings.isBlank(strValue)) {
-          value = null;
-        } else {
-          value = Strings.trim(strValue);
-        }
+        if (Strings.isBlank(strValue)) value = null;
+        else value = Strings.trim(strValue);
       }
       // 处理null值
       if (null == value) {
         continue;
       } else {
-        if (value.equals(Model.NULL)) {
-          value = null;
-        }
+        if (value.equals(Model.NULL)) value = null;
       }
       Object entity = getCurrent(attrs[i]);
       String attr = processAttr(attrs[i]);
@@ -104,7 +97,9 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
           }
         }
       }
-      populator.populateValue(entity, attr, value);
+      if (!populator.populateValue(entity, attr, value)) {
+        transferResult.addFailure(descriptions.get(attr) + " data format error.", value);
+      }
     }
   }
 
@@ -136,9 +131,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
   protected EntityType getEntityType(String attr) {
     String alias = Strings.substringBefore(attr, ".");
     EntityType entityType = (EntityType) entityTypes.get(alias);
-    if (null == entityType) {
-      entityType = (EntityType) entityTypes.get(attr);
-    }
+    if (null == entityType) entityType = (EntityType) entityTypes.get(attr);
     return entityType;
   }
 
@@ -230,9 +223,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
     List<String> errorAttrs = CollectUtils.newArrayList();
     List<String> rightAttrs = CollectUtils.newArrayList();
     for (int i = 0; i < attrs.length; i++) {
-      if (Strings.isBlank(attrs[i])) {
-        continue;
-      }
+      if (Strings.isBlank(attrs[i])) continue;
       try {
         EntityType entityType = getEntityType(attrs[i]);
         Entity<?> example = (Entity<?>) entityType.newInstance();

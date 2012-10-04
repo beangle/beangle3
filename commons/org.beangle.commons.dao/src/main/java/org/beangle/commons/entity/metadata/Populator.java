@@ -62,27 +62,21 @@ public interface Populator {
   public Object populate(String entityName, Map<String, Object> params);
 
   /**
-   * <p>
-   * populateValue.
-   * </p>
-   * 
-   * @param target a {@link java.lang.Object} object.
-   * @param attr a {@link java.lang.String} object.
-   * @param value a {@link java.lang.Object} object.
+   * @param target
+   * @param attr
+   * @param value
+   * @return
    */
-  public void populateValue(Object target, String attr, Object value);
+  public boolean populateValue(Object target, String attr, Object value);
 
   /**
-   * <p>
-   * populateValue.
-   * </p>
-   * 
-   * @param target a {@link java.lang.Object} object.
-   * @param entityName a {@link java.lang.String} object.
-   * @param attr a {@link java.lang.String} object.
-   * @param value a {@link java.lang.Object} object.
+   * @param target
+   * @param entityName
+   * @param attr
+   * @param value
+   * @return
    */
-  public void populateValue(Object target, String entityName, String attr, Object value);
+  public boolean populateValue(Object target, String entityName, String attr, Object value);
 
   /**
    * <p>
