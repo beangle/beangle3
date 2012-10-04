@@ -48,8 +48,9 @@ public class DbSessionController extends AbstractSessionController implements In
         if (null == statId) {
           CategoryProfile cp = categoryProfileProvider.getProfile(principal.getCategory());
           if (null != cp) {
-            entityDao.save(new SessionStat(cp.getId(), cp.getCategory(), cp.getCapacity()));
-            statId = cp.getId();
+            SessionStat stat = new SessionStat(cp.getCategory(), cp.getCapacity());
+            entityDao.saveOrUpdate(stat);
+            statId = stat.getId();
           }
         }
         if (null != statId) categoryStatIds.put(category, statId);
@@ -76,6 +77,17 @@ public class DbSessionController extends AbstractSessionController implements In
     }
   }
 
+  /**
+   * @param auth
+   * @return -1 represent not specified
+   */
+  public int getInactiveInterval(Authentication auth) {
+    CategoryPrincipal principal = (CategoryPrincipal) auth.getPrincipal();
+    CategoryProfile cp = categoryProfileProvider.getProfile(principal.getCategory());
+    if (null == cp) return -1;
+    else return cp.getInactiveInterval();
+  }
+
   public void onLogout(Sessioninfo info) {
     CategorySessioninfo categoryinfo = (CategorySessioninfo) info;
     if (!info.isExpired()) {
@@ -87,31 +99,13 @@ public class DbSessionController extends AbstractSessionController implements In
 
   public void init() throws Exception {
     Assert.notNull(categoryProfileProvider);
-    // Map<String, CategoryProfile> profileMap = CollectUtils.newHashMap();
-    // for (CategoryProfile profile : categoryProfileProvider.getProfiles()) {
-    // profileMap.put(profile.getCategory(), profile);
-    // }
-    // if (profileMap.isEmpty()) return;
-    //
-    // OqlBuilder builder = OqlBuilder.from(SessionStat.class, "stat").select("stat.category ");
-    // builder.where("stat.category in(:categories)", profileMap.keySet());
-    // List<String> existed = entityDao.search(builder);
-    // Collection<String> newers = CollectionUtils.subtract(profileMap.keySet(), existed);
-    // List<SessionStat> newStats = CollectUtils.newArrayList(newers.size());
-    // for (String category : newers) {
-    // CategoryProfile profile = profileMap.get(category);
-    // newStats.add(new SessionStat(profile.getId(), profile.getCategory(), profile.getCapacity()));
-    // }
-    // if (!newStats.isEmpty()) entityDao.save(newStats);
   }
 
   public void onEvent(CategoryProfileUpdateEvent event) {
     CategoryProfile profile = (CategoryProfile) event.getSource();
     int cnt = entityDao.executeUpdateHql("update " + SessionStat.class.getName()
         + " stat set stat.capacity=? where stat.category=?", profile.getCapacity(), profile.getCategory());
-    if (cnt == 0) {
-      entityDao.save(new SessionStat(profile.getId(), profile.getCategory(), profile.getCapacity()));
-    }
+    if (cnt == 0) entityDao.saveOrUpdate(new SessionStat(profile.getCategory(), profile.getCapacity()));
   }
 
   public void stat() {

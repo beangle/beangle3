@@ -54,12 +54,4 @@ public abstract class AbstractSessionController extends BaseServiceImpl implemen
    * @return 如果成功返回true,否则false
    */
   protected abstract boolean allocate(Authentication auth, String sessionId);
-
-  /**
-   * 根据用户确定单个用户的最大会话数
-   * 
-   * @param auth
-   * @return -1 or positive number
-   */
-  protected abstract int getMaxSessions(Authentication auth);
 }

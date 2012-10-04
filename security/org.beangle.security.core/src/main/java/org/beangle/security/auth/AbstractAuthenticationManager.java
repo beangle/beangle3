@@ -21,9 +21,7 @@ public abstract class AbstractAuthenticationManager implements AuthenticationMan
       return auth;
     } catch (AuthenticationException e) {
       e.setAuthentication(authRequest);
-      if (clearExtraInfo) {
-        e.clearExtraInfo();
-      }
+      if (clearExtraInfo) e.clearExtraInfo();
       throw e;
     }
   }

@@ -25,15 +25,13 @@ public class LogoutHandlerStack {
   }
 
   public LogoutHandlerStack(LogoutHandler... initHandlers) {
-    for (LogoutHandler handler : initHandlers) {
+    for (LogoutHandler handler : initHandlers)
       handlers.add(handler);
-    }
   }
 
   public void logout(HttpServletRequest request, HttpServletResponse response, Authentication auth) {
-    for (LogoutHandler handler : handlers) {
+    for (LogoutHandler handler : handlers)
       handler.logout(request, response, auth);
-    }
   }
 
   public List<LogoutHandler> getHandlers() {

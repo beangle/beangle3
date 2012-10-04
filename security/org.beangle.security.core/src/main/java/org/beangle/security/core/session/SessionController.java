@@ -36,4 +36,20 @@ public interface SessionController {
    */
   public void stat();
 
+  /**
+   * Max session number for single user
+   * 
+   * @param auth
+   * @return -1 or positive number
+   */
+  public int getMaxSessions(Authentication auth);
+
+  /**
+   * User online max inactive interval
+   * 
+   * @param auth
+   * @return -1 represent not specified.
+   */
+  int getInactiveInterval(Authentication auth);
+
 }

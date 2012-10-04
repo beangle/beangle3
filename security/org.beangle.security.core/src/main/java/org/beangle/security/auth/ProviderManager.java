@@ -32,34 +32,21 @@ public class ProviderManager extends AbstractAuthenticationManager implements In
 
     while (iter.hasNext()) {
       AuthenticationProvider provider = iter.next();
-      if (!provider.supports(toTest)) {
-        continue;
-      }
+      if (!provider.supports(toTest)) continue;
+
       Authentication result;
       try {
         result = provider.authenticate(auth);
-        if (result != null) {
-          copyDetails(auth, result);
-          // sessionController.checkAuthenticationAllowed(result);
-        }
+        if (result != null) copyDetails(auth, result);
       } catch (AuthenticationException ae) {
         lastException = ae;
         result = null;
       }
-      if (lastException instanceof AccountStatusException) {
-        // || lastException instanceof ConcurrentLoginException) {
-        break;
-      }
-
-      if (null != result) {
-        // sessionController.registerAuthentication(result);
-        return result;
-      }
+      if (lastException instanceof AccountStatusException) break;
+      if (null != result) return result;
     }
 
-    if (lastException == null) {
-      lastException = new ProviderNotFoundException("Provider not found!");
-    }
+    if (lastException == null) lastException = new ProviderNotFoundException("Provider not found!");
     throw lastException;
   }
 

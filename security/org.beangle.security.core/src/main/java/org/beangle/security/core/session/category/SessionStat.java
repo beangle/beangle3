@@ -45,9 +45,8 @@ public class SessionStat extends LongIdObject {
     super();
   }
 
-  public SessionStat(Long id, String category, int capacity) {
+  public SessionStat(String category, int capacity) {
     super();
-    this.id = id;
     this.category = category;
     this.capacity = capacity;
   }

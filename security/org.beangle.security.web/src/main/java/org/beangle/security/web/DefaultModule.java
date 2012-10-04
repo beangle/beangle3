@@ -11,6 +11,7 @@ import org.beangle.security.web.access.DefaultAccessDeniedHandler;
 import org.beangle.security.web.access.ExceptionTranslationFilter;
 import org.beangle.security.web.access.intercept.FilterSecurityInterceptor;
 import org.beangle.security.web.access.log.CachedResourceAccessor;
+import org.beangle.security.web.auth.AuthenticationServiceImpl;
 import org.beangle.security.web.auth.LoginUrlEntryPoint;
 import org.beangle.security.web.auth.WebAuthenticationDetailsSource;
 import org.beangle.security.web.auth.logout.LogoutHandlerStack;
@@ -54,6 +55,8 @@ public class DefaultModule extends AbstractBindModule {
 
     bind("authenticationmanager", ProviderManager.class).property("providers",
         listref(PreauthUserDetailProvider.class, DaoAuthenticationProvider.class));
+
+    bind(AuthenticationServiceImpl.class);
 
     bind("securityFilterChain", FilterChainProxy.class).property(
         "filters",
