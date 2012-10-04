@@ -24,16 +24,14 @@ import com.opensymphony.xwork2.inject.Inject;
 import com.opensymphony.xwork2.util.ValueStack;
 
 import freemarker.cache.StrongCacheStorage;
-import freemarker.core.Environment;
 import freemarker.core.ParseException;
 import freemarker.template.Configuration;
 import freemarker.template.SimpleHash;
 import freemarker.template.Template;
 
 /**
- * Freemarker Template Engin
+ * Freemarker Template Engine
  * <ul>
- * <li>Cache freemaker envionment in context</li>
  * <li>User hashmodel store in request</li>
  * <li>Load hierarchical templates</li>
  * <li>Disabled freemarker localized lookup in template loading</li>
@@ -43,8 +41,6 @@ import freemarker.template.Template;
  */
 public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
   private static final Logger logger = LoggerFactory.getLogger(FreemarkerTemplateEngine.class);
-  private static final String UI_ENV_CACHE = ".ui.envs";
-  private static final String Attr_ui_model = ".Attr_UI_MODEL";
 
   protected FreemarkerManager freemarkerManager;
   protected Configuration config;
@@ -53,8 +49,7 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
     SimpleHash model = buildModel(stack, component);
     Object prevTag = model.get("tag");
     model.put("tag", component);
-    Environment env = getEnvironment(template, stack, model, writer);
-    env.process();
+    getTemplate(template).process(model, writer);
     if (null != prevTag) model.put("tag", prevTag);
   }
 
@@ -93,54 +88,29 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
     } catch (ParseException e) {
       throw e;
     } catch (IOException e) {
-      logger.error("Could not load template named '{}',TemplateLoader is {}", templateName, config
-          .getTemplateLoader().getClass());
+      logger.error("Couldn't load template '{}',loader is {}", templateName, config.getTemplateLoader()
+          .getClass());
       throw Throwables.propagate(e);
     }
   }
 
   /**
-   * Generator Envionment from template or Get it from stack.context
-   */
-  @SuppressWarnings("unchecked")
-  private Environment getEnvironment(String templateName, ValueStack stack, SimpleHash model, Writer writer)
-      throws Exception {
-    Map<String, Environment> envs = (Map<String, Environment>) stack.getContext().get(UI_ENV_CACHE);
-    if (null == envs) {
-      envs = CollectUtils.newHashMap();
-      stack.getContext().put(UI_ENV_CACHE, envs);
-    }
-    Environment env = envs.get(templateName);
-    if (null == env) {
-      try {
-        Template template = getTemplate(templateName);
-        env = template.createProcessingEnvironment(model, writer);
-        envs.put(templateName, env);
-      } catch (ParseException pe) {
-        throw pe;
-      }
-    } else {
-      env.setOut(writer);
-    }
-    return env;
-  }
-
-  /**
-   * componentless model(one per request).
+   * componentless model(one per request)
    * 
-   * @param templateContext
+   * @param stack
+   * @param component
    * @return
    */
   private SimpleHash buildModel(ValueStack stack, Component component) {
     Map<?, ?> context = stack.getContext();
     HttpServletRequest req = (HttpServletRequest) context.get(ServletActionContext.HTTP_REQUEST);
     // build hash
-    SimpleHash model = (SimpleHash) req.getAttribute(Attr_ui_model);
+    SimpleHash model = (SimpleHash) req.getAttribute(FreemarkerManager.ATTR_TEMPLATE_MODEL);
     if (null == model) {
       model = freemarkerManager.buildTemplateModel(stack, null,
           (ServletContext) context.get(ServletActionContext.SERVLET_CONTEXT), req,
           (HttpServletResponse) context.get(ServletActionContext.HTTP_RESPONSE), config.getObjectWrapper());
-      req.setAttribute(Attr_ui_model, model);
+      req.setAttribute(FreemarkerManager.ATTR_TEMPLATE_MODEL, model);
     }
     return model;
   }
