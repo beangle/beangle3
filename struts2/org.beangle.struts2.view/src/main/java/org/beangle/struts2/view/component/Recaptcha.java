@@ -4,6 +4,10 @@
  */
 package org.beangle.struts2.view.component;
 
+import java.util.Set;
+
+import org.beangle.commons.collection.CollectUtils;
+
 import com.opensymphony.xwork2.util.ValueStack;
 
 /**
@@ -17,6 +21,8 @@ public class Recaptcha extends UIBean {
   private String theming = "red";
 
   private String publickey;
+
+  private static Set<String> buildins = CollectUtils.newHashSet("red", "clean", "white", "blackglass");
 
   public Recaptcha(ValueStack stack) {
     super(stack);
@@ -37,6 +43,10 @@ public class Recaptcha extends UIBean {
 
   public void setPublickey(String publickey) {
     this.publickey = publickey;
+  }
+
+  public boolean isBuildinTheming() {
+    return buildins.contains(theming);
   }
 
 }
