@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.net.ssl.HostnameVerifier;
@@ -15,10 +17,17 @@ import javax.net.ssl.HttpsURLConnection;
 
 public final class HttpUtils {
 
-  public static String getResponseText(String url) {
+  public static String getResponseText(String urlString) {
     try {
-      return getResponseText(new URL(url), null);
+      // escape special char(space)
+      URL url = new URL(urlString);
+      URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(),
+          url.getQuery(), url.getRef());
+      url = uri.toURL();
+      return getResponseText(url, null);
     } catch (MalformedURLException e) {
+      throw new RuntimeException(e);
+    } catch (URISyntaxException e) {
       throw new RuntimeException(e);
     }
   }
@@ -32,7 +41,7 @@ public final class HttpUtils {
     HttpURLConnection conn = null;
     try {
       conn = (HttpURLConnection) constructedUrl.openConnection();
-      if (conn instanceof HttpsURLConnection) {
+      if (conn instanceof HttpsURLConnection && null != hostnameVerifier) {
         ((HttpsURLConnection) conn).setHostnameVerifier(hostnameVerifier);
       }
       BufferedReader in = null;
@@ -52,7 +61,6 @@ public final class HttpUtils {
         return stringBuffer.toString();
       }
     } catch (final Exception e) {
-      e.printStackTrace();
       throw new RuntimeException(e);
     } finally {
       if (conn != null) {

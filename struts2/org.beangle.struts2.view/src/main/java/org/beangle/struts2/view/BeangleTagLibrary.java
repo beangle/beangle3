@@ -262,6 +262,10 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
     return get(Radios.class);
   }
 
+  public TagModel getRecaptcha() {
+    return get(Recaptcha.class);
+  }
+
   public TagModel getStartend() {
     return get(Startend.class);
   }
