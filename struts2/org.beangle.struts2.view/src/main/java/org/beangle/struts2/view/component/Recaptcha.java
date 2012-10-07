@@ -16,7 +16,7 @@ import com.opensymphony.xwork2.util.ValueStack;
  * @author chaostone
  * @since 3.0.0
  */
-public class Recaptcha extends UIBean {
+public class Recaptcha extends ClosingUIBean {
 
   private String theming = "red";
 

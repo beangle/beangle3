@@ -7,10 +7,12 @@
 <a href="javascript:Recaptcha.reload()" title="Refresh">
 <img width="25" height="17" id="recaptcha_reload" src="http://www.google.com/recaptcha/api/img/red/refresh.gif" alt="Get a new challenge">
 </a>
+[#else]
+${tag.body}
 [/#if]
 </div>
 <script type="text/javascript">
 jQuery(document).ready(function () {
-	Recaptcha.create("${tag.publickey}","${tag.id}",{theme: "${tag.buildinTheming?string(tag.theming,'custom')}",callback: Recaptcha.focus_response_field});
+	Recaptcha.create("${tag.publickey}","${tag.id}",{theme: "${(tag.buildinTheming&&tag.body?length==0)?string(tag.theming,'custom')}",callback: Recaptcha.focus_response_field});
 });
 </script>
