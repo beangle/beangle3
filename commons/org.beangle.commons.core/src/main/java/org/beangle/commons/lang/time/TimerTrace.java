@@ -67,8 +67,6 @@ public final class TimerTrace {
   /**
    * End a preformance profiling with the <code>name</code> given. Deal with
    * profile hierarchy automatically, so caller don't have to be concern about it.
-   * 
-   * @param name profile name
    */
   public static void end() {
     if (!active) return;

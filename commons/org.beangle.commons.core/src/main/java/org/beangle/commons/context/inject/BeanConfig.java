@@ -156,10 +156,9 @@ public final class BeanConfig {
     }
 
     /**
-     * assign init method
+     * Assign init method
      * 
      * @param method
-     * @return
      */
     public DefinitionBinder init(String method) {
       for (Definition def : last)

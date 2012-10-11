@@ -80,7 +80,7 @@ public class UrlPropertyConfigProvider implements PropertyConfig.Provider {
    * Setter for the field <code>resource</code>.
    * </p>
    * 
-   * @param resources a {@link org.Resources.commons.context.inject.Resources} object.
+   * @param resources a {@link org.beangle.commons.context.inject.Resources} object.
    */
   public void setResources(Resources resources) {
     this.resources = resources;

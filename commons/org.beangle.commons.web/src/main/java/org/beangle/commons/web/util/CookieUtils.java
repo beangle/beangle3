@@ -15,6 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Cookie manipulate utility
+ * 
+ * @author chaostone
+ * @since 2.0
+ */
 public final class CookieUtils {
 
   private static final Logger LOG = LoggerFactory.getLogger(CookieUtils.class);
@@ -36,7 +42,7 @@ public final class CookieUtils {
    * 
    * @param request
    * @param cookieName
-   * @return
+   * @return null when cannot find the cookie
    */
   public static String getCookieValue(HttpServletRequest request, String cookieName) {
     try {

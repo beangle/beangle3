@@ -17,6 +17,12 @@ import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Request Utility
+ * 
+ * @author chaostone
+ * @since 2.0
+ */
 public final class RequestUtils {
 
   private static final Logger logger = LoggerFactory.getLogger(RequestUtils.class);
@@ -25,10 +31,13 @@ public final class RequestUtils {
   }
 
   /**
-   * 获取远程访问的客户IP
+   * Returns remote ip address.
+   * <ul>
+   * <li>First,it lookup request header("x-forwarded-for"->"Proxy-Client-IP"->"WL-Proxy-Client-IP")
+   * <li>Second,invoke request.getRemoteAddr()
+   * </ul>
    * 
    * @param request
-   * @return
    */
   public static String getIpAddr(HttpServletRequest request) {
     String ip = request.getHeader("x-forwarded-for");
@@ -45,11 +54,12 @@ public final class RequestUtils {
   }
 
   /**
+   * Return the true servlet path.
+   * When servletPath provided by container is empty,It will return requestURI'
+   * <p>
    * 查找当前调用的action对应的.do<br>
    * 例如http://localhost/myapp/dd.do 返回/dd.do<br>
    * http://localhost/myapp/dir/to/dd.do 返回/dir/to/dd.do
-   * 
-   * @return
    */
   public static String getServletPath(HttpServletRequest request) {
     String servletPath = request.getServletPath();
@@ -90,8 +100,9 @@ public final class RequestUtils {
   }
 
   /**
+   * Return {@code Useragent} of request.
+   * 
    * @param request
-   * @return
    */
   public static Useragent getUserAgent(HttpServletRequest request) {
     String head = request.getHeader("USER-AGENT");

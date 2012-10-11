@@ -54,7 +54,7 @@ public interface BindRegistry {
    * </p>
    * 
    * @param beanName a {@link java.lang.String} object.
-   * @return a boolean.
+   * @return true if contains
    */
   boolean contains(String beanName);
 
@@ -63,7 +63,7 @@ public interface BindRegistry {
    * getBeanNames.
    * </p>
    * 
-   * @return a {@link java.util.Set} object.
+   * @return bean name set
    */
   Set<String> getBeanNames();
 
@@ -73,7 +73,7 @@ public interface BindRegistry {
    * </p>
    * 
    * @param name
-   * @return
+   * @return true if the bean is primary
    */
   boolean isPrimary(String name);
 

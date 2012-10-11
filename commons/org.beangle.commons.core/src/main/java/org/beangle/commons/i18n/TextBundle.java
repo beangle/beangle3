@@ -28,10 +28,11 @@ public interface TextBundle {
    * @return the locale of this resource bundle
    */
   Locale getLocale();
-  
+
   /**
-   * bundle resource path
-   * @return
+   * Get the bundle resource path
+   * 
+   * @return bundle resource path
    */
   String getResource();
 

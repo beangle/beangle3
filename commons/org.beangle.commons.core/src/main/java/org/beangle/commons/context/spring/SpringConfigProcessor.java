@@ -276,7 +276,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * registerBean.
    * </p>
    * 
-   * @param beanName a {@link java.lang.String} object.
+   * @param def bean definition.
    * @param registry a {@link org.beangle.commons.context.inject.BindRegistry} object.
    * @return a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    */
@@ -374,7 +374,6 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * Unsatisfied property is empty value and not primary type and not starts with java.
    * 
    * @param mbd
-   * @return
    */
   private Map<String, Class<?>> unsatisfiedNonSimpleProperties(BeanDefinition mbd) {
     Map<String, Class<?>> properties = CollectUtils.newHashMap();

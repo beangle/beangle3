@@ -55,7 +55,7 @@ public class ActionSupport implements TextResource {
   protected static Logger logger = LoggerFactory.getLogger(ActionSupport.class);
 
   private TextResource textResource;
-
+  
   private Container container;
 
   /**
@@ -177,18 +177,38 @@ public class ActionSupport implements TextResource {
     }
   }
 
+  /**
+   * Add action message.
+   * @param msgKey
+   * @param args
+   */
   protected final void addMessage(String msgKey, Object... args) {
     getFlash().addMessageNow(getTextInternal(msgKey, args));
   }
 
+  /**
+   * Add action error. 
+   * @param msgKey
+   * @param args
+   */
   protected final void addError(String msgKey, Object... args) {
     getFlash().addErrorNow(getTextInternal(msgKey, args));
   }
 
+  /**
+   * Add error  to next action.
+   * @param msgKey
+   * @param args
+   */
   protected final void addFlashError(String msgKey, Object... args) {
     getFlash().addError(getTextInternal(msgKey, args));
   }
 
+  /**
+   * Add message to next action.
+   * @param msgKey
+   * @param args
+   */
   protected final void addFlashMessage(String msgKey, Object... args) {
     getFlash().addMessage(getTextInternal(msgKey, args));
   }

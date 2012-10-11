@@ -6,7 +6,6 @@ package org.beangle.commons.i18n;
 
 import java.util.Locale;
 
-
 /**
  * <p>
  * TextResource interface.
@@ -45,8 +44,7 @@ public interface TextResource {
   String getText(String key, String defaultValue, Object... obj);
 
   /**
-   * Get locale
-   * @return
+   * @return locale
    */
   Locale getLocale();
 

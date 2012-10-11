@@ -26,7 +26,6 @@ public abstract class PageWapper<E> implements Page<E> {
    * getFirstPageNo.
    * </p>
    * 
-   * @param <E> a E object.
    * @return a int.
    */
   public int getFirstPageNo() {

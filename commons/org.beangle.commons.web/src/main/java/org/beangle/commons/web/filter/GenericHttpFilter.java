@@ -36,18 +36,9 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    */
   private final Set<String> requiredProperties = new HashSet<String>();
 
-  /* The FilterConfig of this filter */
   private FilterConfig filterConfig;
 
   private ServletContext servletContext;
-
-  // public final void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-  // throws IOException, ServletException {
-  // doFilterHttp((HttpServletRequest) request, (HttpServletResponse) response, chain);
-  // }
-  //
-  // protected abstract void doFilterHttp(HttpServletRequest request, HttpServletResponse response,
-  // FilterChain chain) throws IOException, ServletException;
 
   /**
    * Calls the <code>initFilterBean()</code> method that might contain custom
@@ -185,8 +176,8 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    * invoked.
    * <p>
    * Note: This method will be called from standard filter initialization as well as filter bean
-   * initialization in a application context. Filter name and ServletContext will be
-   * available in both cases.
+   * initialization in a application context. Filter name and ServletContext will be available in
+   * both cases.
    * <p>
    * This default implementation is empty.
    * 

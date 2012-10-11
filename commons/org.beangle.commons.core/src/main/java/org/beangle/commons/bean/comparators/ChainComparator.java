@@ -26,8 +26,7 @@ public class ChainComparator<T> implements Comparator<T> {
    * 
    * @param first a T object.
    * @param second a T object.
-   * @param <T> a T object.
-   * @return a int.
+   * @return 0 is equals,-1 first &lt; second ,1 first &gt; second
    */
   public int compare(final T first, final T second) {
     int cmpRs = 0;

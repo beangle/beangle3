@@ -9,7 +9,7 @@ import org.apache.commons.collections.Transformer;
 
 /**
  * bean属性提取器<br>
- * CollectionUtls.transform(collections,new PropertyTransformer('myAttr'))
+ * CollectionUtils.transform(collections,new PropertyTransformer('myAttr'))
  * 
  * @author chaostone
  * @version $Id: $

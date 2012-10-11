@@ -97,6 +97,9 @@ public class UserBean extends LongIdTimeObject implements User {
     setId(id);
   }
 
+  /**
+   * @return user's name
+   */
   public String getName() {
     return name;
   }

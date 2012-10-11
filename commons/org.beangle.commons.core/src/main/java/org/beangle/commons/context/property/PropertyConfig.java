@@ -102,8 +102,7 @@ public interface PropertyConfig {
    * addConfigProvider.
    * </p>
    * 
-   * @param provider a {@link org.beangle.commons.context.property.PropertyConfigFactory.Provider}
-   *          object.
+   * @param provider a {@link org.beangle.commons.context.property.PropertyConfig.Provider} object.
    */
   public void addProvider(Provider provider);
 

@@ -39,7 +39,6 @@ public class PropertyComparator<T> implements Comparator<T> {
    * OrderedBeanComparator("[0].name desc");
    * 
    * @param cmpStr a {@link java.lang.String} object.
-   * @param <T> a T object.
    */
   public PropertyComparator(final String cmpStr) {
     if (Strings.isEmpty(cmpStr)) { return; }

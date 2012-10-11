@@ -14,6 +14,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.i18n.TextBundle;
 import org.beangle.commons.i18n.TextBundleRegistry;
 import org.beangle.commons.lang.ClassLoaders;
+import org.beangle.commons.lang.Option;
 import org.beangle.commons.lang.time.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +27,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
 
   private static final Logger logger = LoggerFactory.getLogger(DefaultTextBundleRegistry.class);
 
-  protected final Map<Locale, Map<String, TextBundle>> caches = CollectUtils.newConcurrentHashMap();
-  protected final Map<Locale, Set<String>> missings = CollectUtils.newConcurrentHashMap();
+  protected final Map<Locale, Map<String, Option<TextBundle>>> caches = CollectUtils.newConcurrentHashMap();
   protected final List<String> defaultBundleNames = CollectUtils.newArrayList();
   protected boolean reloadBundles = false;
 
@@ -37,42 +37,30 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
     logger.info("Add {} global message bundles.", Arrays.toString(bundleNames));
   }
 
-  public TextBundle load(Locale locale, String bundleName) {
-    if (reloadBundles) {
-      caches.clear();
-      missings.clear();
-    }
-    Map<String, TextBundle> localeBundles = caches.get(locale);
+  public Option<TextBundle> load(Locale locale, String bundleName) {
+    if (reloadBundles) caches.clear();
+
+    Map<String, Option<TextBundle>> localeBundles = caches.get(locale);
     if (null == localeBundles) {
       localeBundles = CollectUtils.newConcurrentHashMap();
       caches.put(locale, localeBundles);
     }
-    TextBundle bundle = localeBundles.get(bundleName);
+    Option<TextBundle> bundle = localeBundles.get(bundleName);
     if (null == bundle) {
-      Set<String> localeMissing = missings.get(locale);
-      if (null != localeMissing && localeMissing.contains(bundleName)) return null;
       bundle = loadJavaBundle(bundleName, locale);
-      if (null == bundle) bundle = loadNewBundle(bundleName, locale);
-      if (null == bundle) {
-        if (null == localeMissing) {
-          localeMissing = new HashSet<String>();
-          missings.put(locale, localeMissing);
-        }
-        localeMissing.add(bundleName);
-      } else {
-        localeBundles.put(bundleName, bundle);
-      }
+      if (bundle.isEmpty()) bundle = loadNewBundle(bundleName, locale);
+      localeBundles.put(bundleName, bundle);
     }
     return bundle;
   }
 
-  protected TextBundle loadNewBundle(String bundleName, Locale locale) {
+  protected Option<TextBundle> loadNewBundle(String bundleName, Locale locale) {
     Stopwatch watch = new Stopwatch(true);
     Map<String, String> texts = CollectUtils.newHashMap();
     String resource = toDefaultResourceName(bundleName, locale);
     try {
       InputStream is = ClassLoaders.getResourceAsStream(resource, getClass());
-      if (null == is) return null;
+      if (null == is) return Option.none();
       LineNumberReader reader = new LineNumberReader(new InputStreamReader(is, "UTF-8"));
       String line;
       while (null != (line = reader.readLine())) {
@@ -83,13 +71,12 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
       }
       is.close();
     } catch (IOException e) {
-      e.printStackTrace();
-      return null;
+      return Option.none();
     } finally {
     }
     DefaultTextBundle bundle = new DefaultTextBundle(locale, resource, texts);
     logger.info("Load bundle {} in {}", bundleName, watch);
-    return bundle;
+    return Option.<TextBundle> from(bundle);
   }
 
   /**
@@ -97,22 +84,21 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
    * 
    * @param bundleName
    * @param locale
-   * @return
+   * @return None or bundle corresponding bindleName.locale.properties
    */
-  protected TextBundle loadJavaBundle(String bundleName, Locale locale) {
+  protected Option<TextBundle> loadJavaBundle(String bundleName, Locale locale) {
     Properties properties = new Properties();
     String resource = toJavaResourceName(bundleName, locale);
     try {
       InputStream is = ClassLoaders.getResourceAsStream(resource, getClass());
-      if (null == is) return null;
+      if (null == is) return Option.none();
       properties.load(is);
       is.close();
     } catch (IOException e) {
-      e.printStackTrace();
-      return null;
+      return Option.none();
     } finally {
     }
-    return new DefaultTextBundle(locale, resource, properties);
+    return Option.<TextBundle> from(new DefaultTextBundle(locale, resource, properties));
   }
 
   /**
@@ -120,7 +106,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
    * 
    * @param bundleName
    * @param locale
-   * @return
+   * @return convented properties ended file path.
    */
   protected final String toJavaResourceName(String bundleName, Locale locale) {
     String fullName = bundleName;
@@ -137,7 +123,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
    * 
    * @param bundleName
    * @param locale
-   * @return
+   * @return resource name end with locale
    */
   protected final String toDefaultResourceName(String bundleName, Locale locale) {
     String fullName = bundleName;
@@ -149,6 +135,12 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
     return sb.toString();
   }
 
+  /**
+   * Convert locale to string with language_country[_variant]
+   * 
+   * @param locale
+   * @return locale string
+   */
   protected final String toLocaleStr(Locale locale) {
     if (locale == Locale.ROOT) { return ""; }
     String language = locale.getLanguage();
@@ -168,15 +160,17 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
   }
 
   public List<TextBundle> getBundles(Locale locale) {
-    return CollectUtils.newArrayList(caches.get(locale).values());
+    Collection<Option<TextBundle>> localeBundles = caches.get(locale).values();
+    if (null == localeBundles) return Collections.emptyList();
+    else return Option.getAll(localeBundles);
   }
 
   public String getDefaultText(String key, Locale locale) {
     String msg = null;
     for (String defaultBundleName : defaultBundleNames) {
-      TextBundle bundle = load(locale, defaultBundleName);
-      if (null != bundle) {
-        msg = bundle.getText(key);
+      Option<TextBundle> bundle = load(locale, defaultBundleName);
+      if (bundle.isDefined()) {
+        msg = bundle.get().getText(key);
         if (null != msg) return msg;
       }
     }

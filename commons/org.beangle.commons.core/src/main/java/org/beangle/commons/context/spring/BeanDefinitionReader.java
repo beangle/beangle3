@@ -26,7 +26,7 @@ import org.xml.sax.InputSource;
  * @author chaostone
  * @version $Id: $
  */
-public class BeanDefinitionReader {
+class BeanDefinitionReader {
 
   /**
    * <p>

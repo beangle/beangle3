@@ -34,9 +34,7 @@ public class UrlBuilder {
   }
 
   /**
-   * ServetPath without contextPath
-   * 
-   * @return
+   * Returns servetPath without contextPath
    */
   private String buildServletPath() {
     String uri = servletPath;
@@ -48,9 +46,7 @@ public class UrlBuilder {
   }
 
   /**
-   * Request Url contain pathinfo and queryString but without contextPath .
-   * 
-   * @return
+   * Returns request Url contain pathinfo and queryString but without contextPath.
    */
   public String buildRequestUrl() {
     StringBuilder sb = new StringBuilder();
@@ -65,9 +61,7 @@ public class UrlBuilder {
   }
 
   /**
-   * build full url
-   * 
-   * @return
+   * Returns full url
    */
   public String buildUrl() {
     StringBuilder sb = new StringBuilder();
@@ -108,7 +102,6 @@ public class UrlBuilder {
    * ContextPath should start with / but not ended with /
    * 
    * @param contextPath
-   * @return
    */
   public UrlBuilder contextPath(String contextPath) {
     this.contextPath = contextPath;
@@ -116,10 +109,9 @@ public class UrlBuilder {
   }
 
   /**
-   * start with /
+   * Set servletPath ,start with /
    * 
    * @param servletPath
-   * @return
    */
   public UrlBuilder servletPath(String servletPath) {
     this.servletPath = servletPath;
@@ -127,10 +119,9 @@ public class UrlBuilder {
   }
 
   /**
-   * start with /
+   * Set requestURI ,it should start with /
    * 
    * @param requestURI
-   * @return
    */
   public UrlBuilder requestURI(String requestURI) {
     this.requestURI = requestURI;

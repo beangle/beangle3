@@ -20,18 +20,12 @@ public class CollectionSizeComparator<T extends Collection<?>> implements Compar
    * compare.
    * </p>
    * 
-   * @param object1 a T object.
-   * @param object2 a T object.
-   * @param <T> a T object.
-   * @return a int.
+   * @param first a T object.
+   * @param second a T object.
+   * @return equals : 0,first less then second : -1 or small , first greate then second : 1 or big
    */
-  public int compare(final T object1, final T object2) {
-    Collection<?> first = object1;
-    Collection<?> second = object2;
-    if (first.equals(second)) {
-      return 0;
-    } else {
-      return first.size() - second.size();
-    }
+  public int compare(final T first, final T second) {
+    if (first.equals(second)) return 0;
+    else return first.size() - second.size();
   }
 }

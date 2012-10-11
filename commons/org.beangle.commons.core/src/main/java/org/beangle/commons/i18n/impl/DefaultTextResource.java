@@ -60,10 +60,8 @@ public class DefaultTextResource implements TextResource {
 
   protected String getText(String key, Locale locale) {
     for (TextBundle bundle : registry.getBundles(locale)) {
-      if (locale.equals(bundle.getLocale())) {
-        String msg = bundle.getText(key);
-        if (null != msg) return msg;
-      }
+      String msg = bundle.getText(key);
+      if (null != msg) return msg;
     }
     return null;
   }

@@ -7,6 +7,8 @@ package org.beangle.commons.i18n;
 import java.util.List;
 import java.util.Locale;
 
+import org.beangle.commons.lang.Option;
+
 /**
  * TextBundleRegistry
  * 
@@ -16,18 +18,18 @@ import java.util.Locale;
 public interface TextBundleRegistry {
 
   /**
-   * load and cache bundle
+   * Load and cache bundle
    * 
    * @param locale
    * @param bundleName
-   * @return
+   * @return Option.None when not found
    */
-  TextBundle load(Locale locale, String bundleName);
+  Option<TextBundle> load(Locale locale, String bundleName);
 
   /**
-   * list bundles
+   * List locale bundles
    * 
-   * @return
+   * @return empty list when not found
    */
   List<TextBundle> getBundles(Locale locale);
 
@@ -35,7 +37,6 @@ public interface TextBundleRegistry {
    * Load and cache default bundles
    * 
    * @param bundleNames
-   * @return
    */
   void addDefaults(String... bundleNames);
 
@@ -44,12 +45,13 @@ public interface TextBundleRegistry {
    * 
    * @param key
    * @param locale
-   * @return
+   * @return null when not found
    */
   String getDefaultText(String key, Locale locale);
 
   /**
    * Whether cache bundles
+   * 
    * @param reloadBundles
    */
   void setReloadBundles(boolean reloadBundles);

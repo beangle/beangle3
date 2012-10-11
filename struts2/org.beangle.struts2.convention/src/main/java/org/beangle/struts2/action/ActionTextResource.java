@@ -8,6 +8,7 @@ import org.beangle.commons.i18n.TextBundle;
 import org.beangle.commons.i18n.TextBundleRegistry;
 import org.beangle.commons.i18n.TextFormater;
 import org.beangle.commons.i18n.impl.DefaultTextResource;
+import org.beangle.commons.lang.Option;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.reflect.Reflections;
 
@@ -95,7 +96,9 @@ public class ActionTextResource extends DefaultTextResource {
     String baseName = className;
     while (baseName.lastIndexOf('.') != -1) {
       baseName = baseName.substring(0, baseName.lastIndexOf('.'));
-      if (checked.contains(baseName)) { continue; }
+      if (checked.contains(baseName)) {
+        continue;
+      }
       msg = getMessage(baseName + ".package", locale, key);
       if (msg != null) { return msg; }
       checked.add(baseName);
@@ -107,7 +110,7 @@ public class ActionTextResource extends DefaultTextResource {
    * Gets the message from the named resource bundle.
    */
   private String getMessage(String bundleName, Locale locale, String key) {
-    TextBundle bundle = registry.load(locale, bundleName);
-    return null == bundle ? null : bundle.getText(key);
+    Option<TextBundle> bundle = registry.load(locale, bundleName);
+    return bundle.isDefined() ? bundle.get().getText(key) : null;
   }
 }

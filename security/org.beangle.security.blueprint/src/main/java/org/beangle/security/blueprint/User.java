@@ -25,7 +25,7 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
   /**
    * 名称
    * 
-   * @return
+   * @return user's name
    */
   public String getName();
 

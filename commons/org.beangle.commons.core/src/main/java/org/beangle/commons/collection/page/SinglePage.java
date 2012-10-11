@@ -29,8 +29,6 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * Constructor for SinglePage.
    * </p>
-   * 
-   * @param <E> a E object.
    */
   public SinglePage() {
     super();

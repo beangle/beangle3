@@ -20,7 +20,6 @@ public class MultiPropertyComparator<T> extends ChainComparator<T> {
    * </p>
    * 
    * @param propertyStr a {@link java.lang.String} object.
-   * @param <T> a T object.
    */
   public MultiPropertyComparator(final String propertyStr) {
     super();

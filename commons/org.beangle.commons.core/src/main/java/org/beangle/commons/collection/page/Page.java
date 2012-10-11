@@ -23,7 +23,6 @@ public interface Page<E> extends List<E> {
    * 第一页.
    * 
    * @return 1
-   * @param <E> a E object.
    */
   public int getFirstPageNo();
 

@@ -44,7 +44,7 @@ import org.w3c.dom.NodeList;
  * @author chaostone
  * @version $Id: $
  */
-public class BeanDefinitionParser {
+class BeanDefinitionParser {
 
   protected final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -1262,7 +1262,7 @@ public class BeanDefinitionParser {
   /**
    * Determines whether the name of the supplied node is equal to the supplied
    * name. The default implementation checks the supplied desired name against
-   * both {@link Node#getNodeName) and {@link #getLoclName}. Subclasses may
+   * both {@link Node#getNodeName} and {@link #getLocalName}. Subclasses may
    * override the default implementation to provide a different mechanism for
    * comparing node names.
    * 

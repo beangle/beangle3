@@ -4,8 +4,11 @@
  */
 package org.beangle.commons.lang;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import org.beangle.commons.collection.CollectUtils;
 
 /**
  * Represents optional values. Instances of Option are either an instance of Some or the object
@@ -16,20 +19,31 @@ import java.util.List;
  */
 public abstract class Option<T> {
 
+  private static final None None = new None();
+
   Option() {
     super();
   }
 
+  /**
+   * Returns an {@code Option} instance containing the given non-null reference.
+   */
   public static <T> Option<T> some(T reference) {
-    Assert.notNull(reference);
-    return new Some<T>(reference);
+    return new Some<T>(Assert.notNull(reference));
   }
 
+  /**
+   * Returns an {@code Option} instance with no contained reference.
+   */
   @SuppressWarnings("unchecked")
   public static <T> Option<T> none() {
-    return (Option<T>) None.Instance;
+    return (Option<T>) None;
   }
 
+  /**
+   * If {@code nullable} is non-null, returns an {@code Option} instance containing that
+   * reference; otherwise returns {@link Option#none}.
+   */
   public static <T> Option<T> from(T nullable) {
     return (null == nullable) ? Option.<T> none() : new Some<T>(nullable);
   }
@@ -48,7 +62,6 @@ public abstract class Option<T> {
    * {@link #get()} instead.
    * 
    * @param defaultValue
-   * @return
    */
   public abstract T getOrElse(T defaultValue);
 
@@ -61,8 +74,6 @@ public abstract class Option<T> {
   /**
    * Returns a singleton list containing the Option's value if it is nonempty, or the empty list if
    * the Option is empty.
-   * 
-   * @return
    */
   public abstract List<T> toList();
 
@@ -85,6 +96,18 @@ public abstract class Option<T> {
   @Override
   public abstract boolean equals(Object object);
 
+  /**
+   * Return all value from Option Collection
+   * 
+   * @param values
+   */
+  public static <T> List<T> getAll(Collection<Option<T>> values) {
+    List<T> results = CollectUtils.newArrayList(values.size());
+    for (Option<T> op : values) {
+      if (op.isDefined()) results.add(op.get());
+    }
+    return results;
+  }
 }
 
 /**
@@ -153,9 +176,7 @@ class Some<T> extends Option<T> {
 
 class None extends Option<Object> {
 
-  static final None Instance = new None();
-
-  private None() {
+  None() {
   }
 
   @Override

@@ -56,10 +56,9 @@ public abstract class AbstractBindModule implements BindModule {
   }
 
   /**
-   * Create a reference definition based on Name;
+   * Returns a reference definition based on Name;
    * 
    * @param name
-   * @return
    */
   protected ReferenceValue ref(String name) {
     return new ReferenceValue(name);
@@ -70,11 +69,10 @@ public abstract class AbstractBindModule implements BindModule {
   }
 
   /**
-   * Create Map Entry
+   * Return new map entry
    * 
-   * @param left
-   * @param right
-   * @return
+   * @param key
+   * @param value
    */
   protected Pair<?, ?> entry(Object key, Object value) {
     return Pair.of(key, value);
@@ -84,7 +82,6 @@ public abstract class AbstractBindModule implements BindModule {
    * Generate a inner bean definition
    * 
    * @param clazz
-   * @return
    */
   protected Definition bean(Class<?> clazz) {
     Definition def = new Definition(clazz.getName(), clazz, Scope.SINGLETON.toString());
@@ -99,7 +96,6 @@ public abstract class AbstractBindModule implements BindModule {
    * List simple values with list("strValue1","strValue2")
    * 
    * @param datas
-   * @return
    */
   protected List<?> list(Object... datas) {
     List<Object> items = CollectUtils.newArrayList(datas.length);
@@ -118,7 +114,6 @@ public abstract class AbstractBindModule implements BindModule {
    * <p>
    * 
    * @param classes
-   * @return
    */
   protected List<?> listref(Class<?>... classes) {
     List<Object> items = CollectUtils.newArrayList(classes.length);
@@ -135,7 +130,6 @@ public abstract class AbstractBindModule implements BindModule {
    * List simple values with set("strValue1","strValue2")
    * 
    * @param datas
-   * @return
    */
   protected Set<?> set(Object... datas) {
     Set<Object> items = CollectUtils.newHashSet();

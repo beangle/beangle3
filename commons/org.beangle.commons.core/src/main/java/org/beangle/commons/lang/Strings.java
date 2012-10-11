@@ -181,10 +181,10 @@ public class Strings {
   }
 
   /**
-   * @param cs
+   * Returns index of searchChar in cs with begin index {@code start}
+   * 
    * @param searchChar
    * @param start
-   * @return
    */
   private static int indexOf(CharSequence cs, CharSequence searchChar, int start) {
     return cs.toString().indexOf(searchChar.toString(), start);
@@ -312,8 +312,7 @@ public class Strings {
   }
 
   /**
-   * @param cs
-   * @return
+   * Returns true is cs is null or cs.length equals 0.
    */
   public static boolean isEmpty(CharSequence cs) {
     return cs == null || cs.length() == 0;
@@ -324,10 +323,8 @@ public class Strings {
    * isEqualSeq.
    * </p>
    * 
-   * @param first
-   *          a {@link java.lang.String} object.
-   * @param second
-   *          a {@link java.lang.String} object.
+   * @param first not null
+   * @param second not null
    * @return a boolean.
    */
   public static boolean isEqualSeq(final String first, final String second) {
@@ -387,8 +384,7 @@ public class Strings {
   }
 
   /**
-   * @param cs
-   * @return
+   * Return true if cs not null and cs has length.
    */
   public static boolean isNotEmpty(CharSequence cs) {
     return !isEmpty(cs);
@@ -1330,7 +1326,6 @@ public class Strings {
    * 
    * @param str
    * @param defaultStr
-   * @return
    */
   public static <T extends CharSequence> T defaultIfBlank(T str, T defaultStr) {
     return isBlank(str) ? defaultStr : str;

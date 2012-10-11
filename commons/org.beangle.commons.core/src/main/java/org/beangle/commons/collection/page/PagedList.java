@@ -31,7 +31,6 @@ public class PagedList<E> extends PageWapper<E> {
    * 
    * @param datas a {@link java.util.List} object.
    * @param pageSize a int.
-   * @param <E> a E object.
    */
   public PagedList(List<E> datas, int pageSize) {
     this(datas, new PageLimit(1, pageSize));
