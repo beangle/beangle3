@@ -4,6 +4,7 @@
  */
 package org.beangle.security.blueprint;
 
+import org.beangle.security.Securities;
 import org.beangle.security.blueprint.service.UserToken;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
@@ -15,7 +16,7 @@ public final class SecurityUtils {
 
   public static UserToken getPrincipal() {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    if (null == auth) throw new AuthenticationException();
+    if (!Securities.isValid(auth)) throw new AuthenticationException();
     UserToken user = (UserToken) auth.getPrincipal();
     if (null == user.getId()) throw new AuthenticationException();
     return user;

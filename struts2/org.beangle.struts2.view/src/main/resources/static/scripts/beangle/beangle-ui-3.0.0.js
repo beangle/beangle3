@@ -508,6 +508,7 @@
         'ui.grid':{
             enableSingleRowSelect : false,
             enableDynaBar:false,
+            enableSelectTip:true,
             // 鼠标经过和移出排序表格的表头时
             overSortTableHeader : function  (){
                 this.style.color='white';
@@ -592,10 +593,9 @@
                     jQuery('#'+gridId+'_bar1_items .toolbar-item').each(changeToolbarItem);
                     jQuery('#'+gridId+'_bar2_items .toolbar-item').each(changeToolbarItem);
                 }
-                if(selectedCount>1){
-                    bg.ui.grid.setGridMessage(gridId,"已选择 <b>"+selectedCount+"</b> 条");
-                }else{
-                    bg.ui.grid.setGridMessage(gridId,"");
+                if(bg.ui.grid.enableSelectTip){
+                    if(selectedCount>1) bg.ui.grid.setGridMessage(gridId,"已选择 <b>"+selectedCount+"</b> 条");
+                    else  bg.ui.grid.setGridMessage(gridId,"");
                 }
             },
             /**

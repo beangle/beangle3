@@ -55,7 +55,7 @@ public class ActionSupport implements TextResource {
   protected static Logger logger = LoggerFactory.getLogger(ActionSupport.class);
 
   private TextResource textResource;
-  
+
   private Container container;
 
   /**
@@ -79,6 +79,21 @@ public class ActionSupport implements TextResource {
 
   public String index() throws Exception {
     return forward();
+  }
+
+  /**
+   * A default implementation that does nothing an returns "success".
+   * <p/>
+   * Subclasses should override this method to provide their business logic.
+   * <p/>
+   * See also {@link com.opensymphony.xwork2.Action#execute()}.
+   * 
+   * @return returns {@link #SUCCESS}
+   * @throws Exception
+   *           can be thrown by subclasses.
+   */
+  public String execute() throws Exception {
+    return forward(new Action((Class<?>) null, "index"));
   }
 
   protected final String forward() {
@@ -179,6 +194,7 @@ public class ActionSupport implements TextResource {
 
   /**
    * Add action message.
+   * 
    * @param msgKey
    * @param args
    */
@@ -187,7 +203,8 @@ public class ActionSupport implements TextResource {
   }
 
   /**
-   * Add action error. 
+   * Add action error.
+   * 
    * @param msgKey
    * @param args
    */
@@ -196,7 +213,8 @@ public class ActionSupport implements TextResource {
   }
 
   /**
-   * Add error  to next action.
+   * Add error to next action.
+   * 
    * @param msgKey
    * @param args
    */
@@ -206,6 +224,7 @@ public class ActionSupport implements TextResource {
 
   /**
    * Add message to next action.
+   * 
    * @param msgKey
    * @param args
    */

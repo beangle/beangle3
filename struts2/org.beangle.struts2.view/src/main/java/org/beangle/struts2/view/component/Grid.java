@@ -91,7 +91,7 @@ public class Grid extends ClosingUIBean {
   protected void addCol(Col column) {
     String title = column.getTitle();
     if (null == title) title = column.getProperty();
-
+    if (null == column.getWidth() && column instanceof Boxcol) column.setWidth("25px");
     if (!colTitles.contains(title)) {
       colTitles.add(title);
       cols.add(column);
