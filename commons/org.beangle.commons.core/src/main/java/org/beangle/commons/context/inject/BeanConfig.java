@@ -35,6 +35,7 @@ public final class BeanConfig {
 
   public final static class ReferenceValue {
     public final String ref;
+
     public ReferenceValue(String ref) {
       super();
       this.ref = ref;
@@ -89,7 +90,7 @@ public final class BeanConfig {
 
   public final static class DefinitionBinder {
     private BeanConfig config;
-    private List<Definition> last = CollectUtils.newArrayList(0);
+    private List<Definition> beans = CollectUtils.newArrayList(0);
 
     public DefinitionBinder(BeanConfig config, Class<?>... classes) {
       super();
@@ -101,14 +102,24 @@ public final class BeanConfig {
       return shortName(true);
     }
 
+    public DefinitionBinder shortName(boolean b) {
+      for (Definition def : beans)
+        def.beanName = getBeanName(def.clazz, b);
+      return this;
+    }
+
     public DefinitionBinder lazy() {
-      for (Definition def : last)
-        def.lazyInit = true;
+      return lazy(true);
+    }
+
+    public DefinitionBinder lazy(boolean lazy) {
+      for (Definition def : beans)
+        def.lazyInit = lazy;
       return this;
     }
 
     public DefinitionBinder parent(String parent) {
-      for (Definition def : last)
+      for (Definition def : beans)
         def.parent = parent;
       return this;
     }
@@ -118,7 +129,7 @@ public final class BeanConfig {
       String targetBean = config.innerBeanName(clazz);
       config.add(new Definition(targetBean, clazz, Scope.SINGLETON.toString()));
       // second
-      for (Definition def : last) {
+      for (Definition def : beans) {
         def.targetClass = clazz;
         def.properties.put(property, new ReferenceValue(targetBean));
       }
@@ -126,31 +137,25 @@ public final class BeanConfig {
     }
 
     public DefinitionBinder primary() {
-      for (Definition def : last)
+      for (Definition def : beans)
         def.primary = true;
       return this;
     }
 
     public DefinitionBinder setAbstract() {
-      for (Definition def : last)
+      for (Definition def : beans)
         def.abstractFlag = true;
       return this;
     }
 
-    public DefinitionBinder shortName(boolean b) {
-      for (Definition def : last)
-        def.beanName = getBeanName(def.clazz, b);
-      return this;
-    }
-
     public DefinitionBinder in(Scope scope) {
-      for (Definition def : last)
+      for (Definition def : beans)
         def.scope = scope.toString();
       return this;
     }
 
     public DefinitionBinder property(String property, Object value) {
-      for (Definition def : last) 
+      for (Definition def : beans)
         def.properties.put(property, value);
       return this;
     }
@@ -161,7 +166,7 @@ public final class BeanConfig {
      * @param method
      */
     public DefinitionBinder init(String method) {
-      for (Definition def : last)
+      for (Definition def : beans)
         def.initMethod = method;
       return this;
     }
@@ -170,7 +175,7 @@ public final class BeanConfig {
       for (Class<?> clazz : classes) {
         Definition def = new Definition(getBeanName(clazz, false), clazz, Scope.SINGLETON.toString());
         config.add(def);
-        last.add(def);
+        beans.add(def);
       }
       return this;
     }
@@ -178,7 +183,7 @@ public final class BeanConfig {
     private DefinitionBinder bind(String name, Class<?> clazz) {
       Definition def = new Definition(name, clazz, Scope.SINGLETON.toString());
       config.add(def);
-      last.add(def);
+      beans.add(def);
       return this;
     }
 
