@@ -23,10 +23,12 @@ public class DefaultModule extends AbstractBindModule {
         .property("url", "jdbc:h2:./target/beangle;AUTO_SERVER=TRUE").property("username", "sa")
         .property("password", "");
 
-    // "hibernate.dialect=org.hibernate.dialect.H2Dialect",
     bind("hibernateConfig", PropertiesFactoryBean.class).property(
         "properties",
-        props("hibernate.max_fetch_depth=1", "hibernate.default_batch_fetch_size=500",
+        props(
+            // "hibernate.temp.use_jdbc_metadata_defaults=false",
+            // "hibernate.dialect=org.hibernate.dialect.H2Dialect",
+            "hibernate.max_fetch_depth=1", "hibernate.default_batch_fetch_size=500",
             "hibernate.jdbc.fetch_size=8", "hibernate.jdbc.batch_size=20",
             "hibernate.jdbc.batch_versioned_data=true", "hibernate.jdbc.use_streams_for_binary=true",
             "hibernate.jdbc.use_get_generated_keys=true",
@@ -58,7 +60,7 @@ public class DefaultModule extends AbstractBindModule {
 
     bind("entityDao", TransactionProxyFactoryBean.class).proxy("target", HibernateEntityDao.class).parent(
         "baseTransactionProxy");
-    bind(DefaultLobHandler.class).shortName().lazy();
+    bind(DefaultLobHandler.class).shortName();
   }
 
 }

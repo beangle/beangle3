@@ -22,6 +22,11 @@ import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Default Stream Downloader
+ * @author chaostone
+ * @since 2.4
+ */
 public class DefaultStreamDownloader implements Initializing, StreamDownloader {
 
   protected Logger logger = LoggerFactory.getLogger(getClass());
@@ -105,27 +110,23 @@ public class DefaultStreamDownloader implements Initializing, StreamDownloader {
   }
 
   /**
-   * 根据路径得到真实的文件名.
+   * Returns the file name by path.
    * 
    * @param file_name
-   * @return
    */
   protected static String getFileName(String file_name) {
     if (file_name == null) return "";
     file_name = file_name.trim();
     int iPos = 0;
     iPos = file_name.lastIndexOf("\\");
-    if (iPos > -1) {
-      file_name = file_name.substring(iPos + 1);
-    }
+    if (iPos > -1) file_name = file_name.substring(iPos + 1);
+
     iPos = file_name.lastIndexOf("/");
-    if (iPos > -1) {
-      file_name = file_name.substring(iPos + 1);
-    }
+    if (iPos > -1) file_name = file_name.substring(iPos + 1);
+
     iPos = file_name.lastIndexOf(File.separator);
-    if (iPos > -1) {
-      file_name = file_name.substring(iPos + 1);
-    }
+    if (iPos > -1) file_name = file_name.substring(iPos + 1);
+
     return file_name;
   }
 

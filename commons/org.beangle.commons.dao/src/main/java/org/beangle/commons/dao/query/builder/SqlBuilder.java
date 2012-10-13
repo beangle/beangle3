@@ -359,7 +359,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * Having subclause.
    * </p>
    * 
-   * @param having subclause
+   * @param what having subclause
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
   public SqlBuilder having(final String what) {

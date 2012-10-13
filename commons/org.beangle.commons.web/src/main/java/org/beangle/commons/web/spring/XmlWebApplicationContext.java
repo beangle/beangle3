@@ -9,6 +9,7 @@ import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.support.AbstractRefreshableConfigApplicationContext;
 
 public class XmlWebApplicationContext extends AbstractRefreshableConfigApplicationContext {
+
   @Override
   protected void loadBeanDefinitions(DefaultListableBeanFactory beanFactory) throws BeansException,
       IOException {
@@ -17,10 +18,13 @@ public class XmlWebApplicationContext extends AbstractRefreshableConfigApplicati
 
     // Configure the bean definition reader with this context's
     // resource loading environment.
+
     beanDefinitionReader.setEnvironment(this.getEnvironment());
     beanDefinitionReader.setResourceLoader(this);
     beanDefinitionReader.setEntityResolver(new ResourceEntityResolver(this));
 
+    // Disable xml validating
+    beanDefinitionReader.setValidating(false);
     // Allow a subclass to provide custom initialization of the reader,
     // then proceed with actually loading the bean definitions.
     loadBeanDefinitions(beanDefinitionReader);

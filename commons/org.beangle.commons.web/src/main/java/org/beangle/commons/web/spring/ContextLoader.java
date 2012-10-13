@@ -8,9 +8,9 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.beangle.commons.lang.Objects;
+import org.beangle.commons.lang.reflect.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -18,6 +18,8 @@ import org.springframework.context.support.AbstractRefreshableConfigApplicationC
 import org.springframework.util.ClassUtils;
 
 public class ContextLoader implements ServletContextListener {
+
+  private static final Logger logger = LoggerFactory.getLogger(ContextLoader.class);
 
   public static final String ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE = "org.springframework.web.context.WebApplicationContext.ROOT";
 
@@ -42,8 +44,8 @@ public class ContextLoader implements ServletContextListener {
     if (!ConfigurableApplicationContext.class.isAssignableFrom(contextClass)) { throw new ApplicationContextException(
         "Custom context class [" + contextClass.getName() + "] is not of type ["
             + ConfigurableApplicationContext.class.getName() + "]"); }
-    ConfigurableApplicationContext wac = (ConfigurableApplicationContext) BeanUtils
-        .instantiateClass(contextClass);
+    ConfigurableApplicationContext wac = (ConfigurableApplicationContext) Reflections
+        .newInstance(contextClass);
     return wac;
   }
 
@@ -51,26 +53,22 @@ public class ContextLoader implements ServletContextListener {
     if (null != getContext(servletContext)) { throw new IllegalStateException(
         "Cannot initialize context because there is already a root application context present - "
             + "check whether you have multiple ContextListener* definitions in your web.xml!"); }
-    Logger logger = LoggerFactory.getLogger(ContextLoader.class);
-    servletContext.log("Initializing Spring root ApplicationContext");
-    if (logger.isInfoEnabled()) {
-      logger.info("Root ApplicationContext: initialization started");
-    }
+
+    logger.info("Root ApplicationContext: initialization started");
     long startTime = System.currentTimeMillis();
     try {
       ConfigurableApplicationContext context = createApplicationContext(servletContext);
       configureAndRefreshApplicationContext((ConfigurableApplicationContext) context, servletContext);
-
       servletContext.setAttribute(ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, context);
 
-      logger.debug("Published root ApplicationContext as ServletContext attribute with name ["
-          + ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE + "]");
-      long elapsedTime = System.currentTimeMillis() - startTime;
-      logger.info("Root ApplicationContext: initialization completed in " + elapsedTime + " ms");
+      logger.debug("Published root ApplicationContext as ServletContext attribute with name [{}]",
+          ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+
+      logger.info("Root ApplicationContext: initialization completed in {} ms", System.currentTimeMillis()
+          - startTime);
 
       // lazy initializing hooks
-      List<InitializingContextAware> hooks = getLazyInitialHooks(servletContext);
-      for (InitializingContextAware hook : hooks)
+      for (InitializingContextAware hook : getLazyInitialHooks(servletContext))
         hook.init(context);
       servletContext.removeAttribute(LAZY_INIT_HOOKS);
 
@@ -115,7 +113,7 @@ public class ContextLoader implements ServletContextListener {
   }
 
   public void closeApplicationContext(ServletContext servletContext) {
-    servletContext.log("Closing Spring root ApplicationContext");
+    logger.info("Closing Spring root ApplicationContext");
     ConfigurableApplicationContext context = getContext(servletContext);
     if (null != context) context.close();
     servletContext.removeAttribute(ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);

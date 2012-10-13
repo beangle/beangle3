@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 /**
  * @author chaostone
+ * @since 2.4
  * @version $Id: Useragent.java Nov 15, 2010 7:39:29 AM chaostone $
  */
 public class Useragent implements Serializable {
@@ -28,10 +29,7 @@ public class Useragent implements Serializable {
   }
 
   /**
-   * Indicates the TCP/IP address the authentication request was received
-   * from.
-   * 
-   * @return
+   * Returns the TCP/IP address the authentication request was received from.
    */
   public String getIp() {
     return ip;

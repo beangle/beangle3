@@ -35,12 +35,7 @@ public class QueryBean<T> implements LimitQuery<T> {
   private Map<String, Object> params;
 
   /**
-   * <p>
-   * getCountQuery.
-   * </p>
-   * 
-   * @param <T> a T object.
-   * @return a {@link org.beangle.commons.dao.query.Query} object.
+   * Returns count query {@link org.beangle.commons.dao.query.Query}.
    */
   public Query<T> getCountQuery() {
     if (Strings.isEmpty(countStatement)) { return null; }
@@ -53,11 +48,7 @@ public class QueryBean<T> implements LimitQuery<T> {
   }
 
   /**
-   * <p>
-   * Getter for the field <code>statement</code>.
-   * </p>
-   * 
-   * @return a {@link java.lang.String} object.
+   * Returns statement.
    */
   public String getStatement() {
     return statement;

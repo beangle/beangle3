@@ -54,7 +54,7 @@ public final class BeanConfig {
     public String initMethod;
     public Map<String, Object> properties = CollectUtils.newHashMap();
 
-    public boolean lazyInit = false;
+    public boolean lazyInit = true;
     public boolean abstractFlag = false;
 
     public boolean primary = false;

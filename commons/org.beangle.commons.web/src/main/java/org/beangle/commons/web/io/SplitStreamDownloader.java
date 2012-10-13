@@ -41,6 +41,7 @@ import org.beangle.commons.lang.time.Stopwatch;
  * </pre>
  * 
  * @author chaostone
+ * @since 2.4
  */
 public class SplitStreamDownloader extends DefaultStreamDownloader {
 

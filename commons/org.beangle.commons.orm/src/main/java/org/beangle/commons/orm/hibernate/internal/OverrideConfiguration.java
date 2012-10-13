@@ -4,6 +4,10 @@
  */
 package org.beangle.commons.orm.hibernate.internal;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,7 +15,11 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.orm.TableNamingStrategy;
 import org.beangle.commons.orm.hibernate.RailsNamingStrategy;
 import org.beangle.commons.orm.hibernate.TableSeqGenerator;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
 import org.hibernate.DuplicateMappingException;
+import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Mappings;
@@ -22,6 +30,7 @@ import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.InputSource;
 
 /**
  * Provide schema reconfig and overriderable class mapping in sessionFactory
@@ -40,6 +49,31 @@ public class OverrideConfiguration extends Configuration {
 
   public OverrideConfiguration(SettingsFactory settingsFactory) {
     super(settingsFactory);
+  }
+
+  /**
+   * Override for disable validation.
+   */
+  @Override
+  protected Configuration doConfigure(InputStream stream, String resourceName) throws HibernateException {
+    try {
+      @SuppressWarnings("rawtypes")
+      List errors = new ArrayList();
+      SAXReader reader = xmlHelper.createSAXReader(resourceName, errors, this.getEntityResolver());
+      reader.setValidation(false);
+      Document document = reader.read(new InputSource(stream));
+      if (errors.size() != 0) { throw new MappingException("invalid configuration", (Throwable) errors.get(0)); }
+      doConfigure(document);
+    } catch (DocumentException e) {
+      throw new HibernateException("Could not parse configuration: " + resourceName, e);
+    } finally {
+      try {
+        stream.close();
+      } catch (IOException ioe) {
+        logger.warn("could not close input stream for: " + resourceName, ioe);
+      }
+    }
+    return this;
   }
 
   @Override

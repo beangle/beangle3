@@ -12,6 +12,9 @@ import javax.sql.DataSource;
 import org.beangle.commons.bean.Disposable;
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.ClassLoaders;
+import org.beangle.commons.lang.reflect.Reflections;
+import org.beangle.commons.lang.time.Stopwatch;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -19,12 +22,10 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.cfg.NamingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.util.ClassUtils;
 
 /**
  * @author chaostone
@@ -53,7 +54,7 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
 
   private SessionFactory sessionFactory;
 
-  private ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
+  private ClassLoader beanClassLoader = ClassLoaders.getDefaultClassLoader();
 
   private Configuration configuration;
 
@@ -80,6 +81,7 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
     // }
     // } catch (IOException e) {
     // e.printStackTrace();
+    // }
     // }
   }
 
@@ -119,9 +121,7 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
    * configuration through property paths that specify individual keys.
    */
   public Properties getHibernateProperties() {
-    if (this.hibernateProperties == null) {
-      this.hibernateProperties = new Properties();
-    }
+    if (this.hibernateProperties == null) this.hibernateProperties = new Properties();
     return this.hibernateProperties;
   }
 
@@ -136,16 +136,8 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
   }
 
   public void init() throws Exception {
-    if (dataSource != null) {
-      configTimeDataSourceHolder.set(dataSource);
-    }
+    if (dataSource != null) configTimeDataSourceHolder.set(dataSource);
     configuration = newConfiguration();
-    //
-    // if (this.lobHandler != null) {
-    // // Make given LobHandler available for SessionFactory configuration.
-    // // Do early because because mapping resource might refer to custom types.
-    // configTimeLobHandlerHolder.set(this.lobHandler);
-    // }
 
     // Analogous to Hibernate EntityManager's Ejb3Configuration:
     // Hibernate doesn't allow setting the bean ClassLoader explicitly,
@@ -190,15 +182,13 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
       for (String className : classNames) {
         configuration.addAnnotatedClass(Class.forName(className, true, beanClassLoader));
       }
-
-      logger.info("Building new Hibernate SessionFactory");
+      Stopwatch watch = new Stopwatch(true);
       this.sessionFactory = configuration.buildSessionFactory();
+      logger.info("Building Hibernate SessionFactory in {}", watch);
     }
 
     finally {
-      if (dataSource != null) {
-        configTimeDataSourceHolder.remove();
-      }
+      if (dataSource != null) configTimeDataSourceHolder.remove();
       if (overrideClassLoader) {
         // Reset original thread context ClassLoader.
         currentThread.setContextClassLoader(threadContextClassLoader);
@@ -220,7 +210,7 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
    * @see org.hibernate.cfg.Configuration#Configuration()
    */
   protected Configuration newConfiguration() throws HibernateException {
-    return BeanUtils.instantiateClass(this.configurationClass);
+    return Reflections.newInstance(this.configurationClass);
   }
 
   public void destroy() throws HibernateException {

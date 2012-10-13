@@ -21,18 +21,17 @@ public class Div extends ClosingUIBean {
 
   @Override
   protected void evaluateParams() {
+    if (null == astarget && (null != id || null != href)) astarget = "true";
     if (null != href) {
       generateIdIfEmpty();
       href = render(this.href);
-    } else {
-      if (null == astarget) astarget = "false";
     }
     if (!Objects.equals(astarget, "false")) {
-      String className = "";
+      String className = "ajax_container";
       if (null != parameters.get("class")) {
-        className = " " + parameters.get("class").toString();
+        className = Strings.concat(className, " ", parameters.get("class").toString());
       }
-      parameters.put("class", Strings.concat("ajax_container", className));
+      parameters.put("class", className);
     }
   }
 

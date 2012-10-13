@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.Throwables;
 
 /**
  * <p>
@@ -60,4 +61,14 @@ public final class Reflections {
     }
     return methods;
   }
+
+  public static <T> T newInstance(Class<T> clazz) {
+    try {
+      return clazz.newInstance();
+    } catch (Exception e) {
+      Throwables.propagate(e);
+    }
+    return null;
+  }
+
 }

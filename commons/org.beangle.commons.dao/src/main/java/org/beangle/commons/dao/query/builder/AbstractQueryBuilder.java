@@ -140,11 +140,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
   abstract protected Lang getLang();
 
   /**
-   * {@inheritDoc}
-   * <p>
    * 生成查询语句（如果查询语句已经存在则不进行生成）
-   * 
-   * @return a {@link java.lang.String} object.
    */
   protected String genStatement() {
     if (Strings.isNotEmpty(statement)) return statement;

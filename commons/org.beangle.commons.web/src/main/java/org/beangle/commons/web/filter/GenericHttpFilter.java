@@ -147,7 +147,6 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    * @return the filter name, or <code>null</code> if none available
    * @see javax.servlet.GenericServlet#getServletName()
    * @see javax.servlet.FilterConfig#getFilterName()
-   * @see #setBeanName
    */
   protected final String getFilterName() {
     return (this.filterConfig != null ? this.filterConfig.getFilterName() : "None");
@@ -164,7 +163,6 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    *         available
    * @see javax.servlet.GenericServlet#getServletContext()
    * @see javax.servlet.FilterConfig#getServletContext()
-   * @see #setServletContext
    */
   protected final ServletContext getServletContext() {
     return (this.filterConfig != null ? this.filterConfig.getServletContext() : this.servletContext);

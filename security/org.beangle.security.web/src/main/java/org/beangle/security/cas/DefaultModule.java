@@ -20,7 +20,7 @@ public class DefaultModule extends AbstractBindModule {
   @Override
   protected void doBinding() {
     bind(CasConfig.class, CasEntryPoint.class, NeusoftCasAliveChecker.class,
-        Cas20ServiceTicketValidator.class, CasAuthenticationProvider.class).shortName().lazy();
+        Cas20ServiceTicketValidator.class, CasAuthenticationProvider.class).shortName();
   }
 
 }
