@@ -32,7 +32,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 
   private SessioninfoBuilder sessioninfoBuilder = new SimpleSessioninfoBuilder();
 
-  Map<String, AccessEntry> entries = CollectUtils.newConcurrentHashMap();
+  protected final Map<String, AccessEntry> entries = CollectUtils.newConcurrentHashMap();
 
   private boolean enableLog;
 
@@ -172,10 +172,10 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     AccessEntry entry = entries.get(sessionid);
     if (null == entry) entries.put(sessionid, new AccessEntry(resource, accessAt));
     else entry.access(resource, accessAt);
-
   }
 
   public void endAccess(String sessionid, String resource, long endAt) {
+    // FIXME
     if (enableLog) {
       AccessEntry entry = entries.get(sessionid);
       accessLogger.log(sessionid, SecurityContextHolder.getContext().getAuthentication().getName(), resource,

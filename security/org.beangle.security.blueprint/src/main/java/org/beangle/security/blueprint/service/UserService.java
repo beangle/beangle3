@@ -10,6 +10,12 @@ import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
 
+/**
+ * User service
+ * 
+ * @author chaostone
+ * @since 2.0
+ */
 public interface UserService {
   /**
    * 根据用户名和密码查找用户
@@ -17,42 +23,42 @@ public interface UserService {
    * @param name
    * @param password
    */
-  public User get(String name, String password);
+  User get(String name, String password);
 
   /**
    * 根据登陆名查找用户
    * 
    * @param name
    */
-  public User get(String name);
+  User get(String name);
 
   /**
    * 查询指定id的用户，不存在时返回null
    * 
    * @param id
    */
-  public User get(Long id);
+  User get(Long id);
 
   /**
    * 保存新用户，用户存在时，抛出异常
    * 
    * @param user
    */
-  public void saveOrUpdate(User user);
+  void saveOrUpdate(User user);
 
   /**
    * 返回userIds指定的用户
    * 
    * @param userIds
    */
-  public List<User> getUsers(Long userIds[]);
+  List<User> getUsers(Long userIds[]);
 
   /**
    * 查询用户关联的member角色
    * 
    * @param userId
    */
-  public List<Role> getRoles(Long userId);
+  List<Role> getRoles(Long userId);
 
   /**
    * 查找关联组关系
@@ -60,7 +66,7 @@ public interface UserService {
    * @param user
    * @param ship
    */
-  public List<Member> getMembers(User user, Member.Ship ship);
+  List<Member> getMembers(User user, Member.Ship ship);
 
   /**
    * 设置用户状态
@@ -70,7 +76,7 @@ public interface UserService {
    * @param userIds
    * @param enabled
    */
-  public int updateState(User manager, Long[] userIds, boolean enabled);
+  int updateState(User manager, Long[] userIds, boolean enabled);
 
   /**
    * 创建帐户
@@ -78,36 +84,36 @@ public interface UserService {
    * @param creator
    * @param newUser
    */
-  public void createUser(User creator, User newUser);
+  void createUser(User creator, User newUser);
 
   /**
    * 删除creator与managed的管理关系，如该用户为creator所创建，则删除user
    * 
    * @param creator
-   * @param managed
+   * @param user
    */
-  public void removeUser(User creator, User user);
+  void removeUser(User creator, User user);
 
   /**
    * 是否属于管理关系
    * 
    * @param manager
-   * @param managed
+   * @param user
    */
-  public boolean isManagedBy(User manager, User user);
+  boolean isManagedBy(User manager, User user);
 
   /**
    * 是否是超级管理员
    * 
    * @param user
    */
-  public boolean isRoot(User user);
+  boolean isRoot(User user);
 
   /**
    * 是否是超级管理员
    * 
    * @param userId
    */
-  public boolean isRoot(Long userId);
+  boolean isRoot(Long userId);
 
 }

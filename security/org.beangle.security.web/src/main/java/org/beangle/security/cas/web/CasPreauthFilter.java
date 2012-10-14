@@ -20,12 +20,11 @@ import org.beangle.security.web.auth.preauth.PreauthAuthentication;
  * browser successfully authenticating using CAS, and then receiving a HTTP redirect to a
  * <code>service</code>. The opaque ticket string is presented in the <code>ticket</code> request
  * parameter. This filter monitors the <code>service</code> URL so it can receive the service ticket
- * and process it. The CAS server knows which <code>service</code> URL to use via the
- * {@link CasConfig#getService()} method.
+ * and process it.
  * </p>
  * <p>
  * Processing the service ticket involves creating a <code>PreauthAuthentication</code> which uses
- * {@link #STATEFUL_ID} for the <code>principal</code> and the opaque ticket string as the
+ * {@link CasAuthentication#STATEFUL_ID} for the <code>principal</code> and the opaque ticket string as the
  * <code>credentials</code>.
  * </p>
  * <p>

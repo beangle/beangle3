@@ -32,8 +32,7 @@ import org.slf4j.LoggerFactory;
  * protocol used for the login form to be <code>HTTPS</code>, even if the original intercepted
  * request for a resource used the <code>HTTP</code> protocol. When this happens, after a successful
  * login (via HTTPS), the original resource will still be accessed as HTTP, via the original request
- * URL. For the forced HTTPS feature to work, the {@link PortMapper} is consulted to determine the
- * HTTP:HTTPS pairs.
+ * URL.
  * 
  * @author chaostone
  */
@@ -53,13 +52,10 @@ public class LoginUrlEntryPoint implements UrlEntryPoint, Initializing {
    * Allows subclasses to modify the login form URL that should be applicable
    * for a given request.
    * 
-   * @param request
-   *          the request
-   * @param response
-   *          the response
-   * @param exception
-   *          the exception
-   * @return the URL (cannot be null or empty; defaults to {@link #getLoginFormUrl()})
+   * @param request the request
+   * @param response the response
+   * @param exception the exception
+   * @return the URL (cannot be null or empty)
    */
   protected String determineUrlToUseForThisRequest(HttpServletRequest request, HttpServletResponse response,
       AuthenticationException exception) {

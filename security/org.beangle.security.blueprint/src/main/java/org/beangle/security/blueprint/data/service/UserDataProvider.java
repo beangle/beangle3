@@ -10,7 +10,7 @@ import org.beangle.security.blueprint.data.ProfileField;
 
 /**
  * @author chaostone
- * @version $Id: SourceProvider.java Nov 9, 2010 7:18:38 PM chaostone $
+ * @version $Id: UserDataProvider.java Nov 9, 2010 7:18:38 PM chaostone $
  */
 public interface UserDataProvider {
 
@@ -18,8 +18,9 @@ public interface UserDataProvider {
    * extract data from source
    * 
    * @param <T>
-   * @param type
+   * @param field
    * @param source
+   * @param keys
    */
   public <T> List<T> getData(ProfileField field, String source,Object... keys);
 

@@ -23,7 +23,7 @@ public interface RoleService {
    * @param creator
    * @param role
    */
-  public void createRole(User creator, Role role);
+  void createRole(User creator, Role role);
 
   /**
    * 删除管理者与角色的管理关系，如果该角色为其所创建则彻底删除. 1)超级管理员不能被删除.<br>
@@ -32,7 +32,7 @@ public interface RoleService {
    * @param manager
    * @param roles
    */
-  public void removeRole(User manager, List<Role> roles);
+  void removeRole(User manager, List<Role> roles);
 
   /**
    * 移动组
@@ -41,14 +41,14 @@ public interface RoleService {
    * @param parent
    * @param indexno
    */
-  public void moveRole(Role role, Role parent, int indexno);
-  
-  
+  void moveRole(Role role, Role parent, int indexno);
+
   /**
    * 过滤能编辑的角色
+   * 
    * @param user
    * @param roles
    */
-  public Set<Role> editable(User user,Collection<Role> roles);
+  Set<Role> editable(User user, Collection<Role> roles);
 
 }

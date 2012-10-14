@@ -16,7 +16,7 @@ import org.beangle.commons.lang.Assert;
  * 
  * @author chaostone
  */
-public class GlobalSecurityContextHolderStrategy implements SecurityContextHolderStrategy {
+public class GlobalHolderStrategy implements SecurityContextHolderStrategy {
 
   private static SecurityContext contextHolder;
 

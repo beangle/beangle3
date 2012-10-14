@@ -17,32 +17,26 @@ import org.beangle.commons.entity.pojo.TemporalActiveEntity;
 public interface Permission extends LongIdEntity, Cloneable, TemporalActiveEntity {
   /**
    * 系统资源
-   * 
    */
   public Resource getResource();
 
   /**
    * 获得授权对象
-   * 
-   * @param ao
    */
   public Principal getPrincipal();
 
   /**
    * 授权的操作
-   * 
    */
   public String getActions();
 
   /**
    * 访问资源时执行的检查条件
-   * 
    */
   public String getRestrictions();
 
   /**
    * 说明
-   * 
    */
   public String getRemark();
 }

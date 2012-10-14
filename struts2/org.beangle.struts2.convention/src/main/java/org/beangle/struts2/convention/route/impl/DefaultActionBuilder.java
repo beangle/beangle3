@@ -23,7 +23,7 @@ public class DefaultActionBuilder implements ActionBuilder {
    * 否则加上包名，其中的.编成URI路径分割符。包名不做其他处理。<br>
    * 复杂URL,以/开始
    * 
-   * @param clazz
+   * @param className
    */
   public Action build(String className) {
     Profile profile = profileService.getProfile(className);

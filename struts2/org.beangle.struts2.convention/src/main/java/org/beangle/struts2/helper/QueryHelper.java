@@ -154,15 +154,11 @@ public class QueryHelper {
   /**
    * 增加日期区间查询条件
    * 
-   * @param
    * @param query
    * @param alias
-   * @param attr
-   *          时间限制属性
-   * @param beginOn
-   *          开始的属性名字(全名)
-   * @param endOn
-   *          结束的属性名字(全名)
+   * @param attr 时间限制属性
+   * @param beginOn 开始的属性名字(全名)
+   * @param endOn 结束的属性名字(全名)
    * @throws ParseException
    */
   public static void addDateIntervalCondition(OqlBuilder<?> query, String alias, String attr, String beginOn,

@@ -33,8 +33,7 @@ public class FilterChainProxy extends GenericCompositeFilter {
   /**
    * Returns the first filter chain matching the supplied URL.
    * 
-   * @param url
-   *          the request URL
+   * @param res the request
    * @return an ordered array of Filters defining the filter chain
    */
   public List<Filter> getFilters(ServletRequest res) {

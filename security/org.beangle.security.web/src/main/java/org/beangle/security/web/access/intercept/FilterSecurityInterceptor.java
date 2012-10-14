@@ -20,10 +20,6 @@ import org.beangle.security.web.FilterInvocation;
 /**
  * Performs security handling of HTTP resources via a filter implementation.
  * <p>
- * The <code>ObjectDefinitionSource</code> required by this security interceptor is of type
- * {@link FilterInvocationDefinitionSource}.
- * </p>
- * <p>
  * Refer to {@link AbstractSecurityInterceptor} for details on the workflow.
  * </p>
  */
@@ -36,10 +32,8 @@ public class FilterSecurityInterceptor extends AbstractSecurityInterceptor imple
   /**
    * Not used (we rely on IoC container lifecycle services instead)
    * 
-   * @param arg0
-   *          ignored
-   * @throws ServletException
-   *           never thrown
+   * @param arg0 ignored
+   * @throws ServletException never thrown
    */
   public void init(FilterConfig arg0) throws ServletException {
   }
@@ -54,16 +48,11 @@ public class FilterSecurityInterceptor extends AbstractSecurityInterceptor imple
    * Method that is actually called by the filter chain. Simply delegates to
    * the {@link #invoke(FilterInvocation)} method.
    * 
-   * @param request
-   *          the servlet request
-   * @param response
-   *          the servlet response
-   * @param chain
-   *          the filter chain
-   * @throws IOException
-   *           if the filter chain fails
-   * @throws ServletException
-   *           if the filter chain fails
+   * @param request the servlet request
+   * @param response the servlet response
+   * @param chain the filter chain
+   * @throws IOException if the filter chain fails
+   * @throws ServletException if the filter chain fails
    */
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
@@ -83,11 +72,8 @@ public class FilterSecurityInterceptor extends AbstractSecurityInterceptor imple
       // once-per-request handling, so don't re-do security checking
       fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
     } else {
-      // first time this request being called, so perform security
-      // checking
-      if (fi.getRequest() != null) {
-        fi.getRequest().setAttribute(FILTER_APPLIED, Boolean.TRUE);
-      }
+      // first time this request being called, so perform security checking
+      if (fi.getRequest() != null) fi.getRequest().setAttribute(FILTER_APPLIED, Boolean.TRUE);
 
       InterceptorStatusToken token = super.beforeInvocation(fi);
 

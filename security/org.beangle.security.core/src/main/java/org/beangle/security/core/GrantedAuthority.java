@@ -13,7 +13,7 @@ public interface GrantedAuthority extends Serializable, Comparable<GrantedAuthor
   /**
    * If the <code>GrantedAuthority</code> can be represented as a <code>String</code> and that
    * <code>String</code> is sufficient in
-   * precision to be relied upon for an access control decision by an {@link AccessDecisionManager}
+   * precision to be relied upon for an access control decision by an AuthorityManager
    * (or delegate), this method should return
    * such a <code>String</code>.
    * <p>

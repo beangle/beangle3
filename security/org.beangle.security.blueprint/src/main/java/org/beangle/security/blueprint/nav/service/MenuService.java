@@ -22,14 +22,14 @@ public interface MenuService {
    * 
    * @param user
    */
-  public List<MenuProfile> getProfiles(User user);
+  List<MenuProfile> getProfiles(User user);
 
   /**
    * 查询角色能够适用的菜单配置
    * 
    * @param roles
    */
-  public List<MenuProfile> getProfiles(Role... roles);
+  List<MenuProfile> getProfiles(Role... roles);
 
   /**
    * 查询用户能够适用的单个菜单配置
@@ -37,7 +37,7 @@ public interface MenuService {
    * @param user
    * @return profiles的第一个如果profileId is null
    */
-  public MenuProfile getProfile(User user, Long profileId);
+  MenuProfile getProfile(User user, Long profileId);
 
   /**
    * 查询角色能够适用的单个菜单配置
@@ -45,14 +45,15 @@ public interface MenuService {
    * @param role
    * @param profileId
    */
-  public MenuProfile getProfile(Role role, Long profileId);
+  MenuProfile getProfile(Role role, Long profileId);
 
   /**
    * 获取用户的直接权限范围内的资源和所具有角色的资源.
    * 
-   * @param userId
+   * @param profile
+   * @param user
    */
-  public List<Menu> getMenus(MenuProfile profile, User user);
+  List<Menu> getMenus(MenuProfile profile, User user);
 
   /**
    * 查询角色对应的菜单
@@ -61,7 +62,7 @@ public interface MenuService {
    * @param role
    * @param enabled
    */
-  public List<Menu> getMenus(MenuProfile profile, Role role, Boolean enabled);
+  List<Menu> getMenus(MenuProfile profile, Role role, Boolean enabled);
 
   /**
    * 移动菜单到指定的位置
@@ -72,6 +73,6 @@ public interface MenuService {
    * @param indexno
    *          新位置的顺序号
    */
-  public void move(Menu menu, Menu location, int indexno);
+  void move(Menu menu, Menu location, int indexno);
 
 }

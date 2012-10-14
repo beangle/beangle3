@@ -28,7 +28,6 @@ public class Flash implements Map<Object, Object>, Serializable {
 
   /**
    * return now and session saved
-   * 
    */
   public Set<Object> keySet() {
     return now.keySet();
@@ -120,7 +119,7 @@ public class Flash implements Map<Object, Object>, Serializable {
   /**
    * 添加错误消息到下一次请求
    * 
-   * @param message
+   * @param error
    */
   public void addError(String error) {
     ActionMessages messages = (ActionMessages) next.get(Flash.MESSAGES);

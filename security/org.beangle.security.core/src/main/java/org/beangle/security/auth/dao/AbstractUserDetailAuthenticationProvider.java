@@ -17,6 +17,10 @@ import org.beangle.security.core.userdetail.UserDetail;
 import org.beangle.security.core.userdetail.UserDetailChecker;
 import org.beangle.security.core.userdetail.UsernameNotFoundException;
 
+/**
+ * @author chaostone
+ * @since 2.0
+ */
 public abstract class AbstractUserDetailAuthenticationProvider implements AuthenticationProvider {
   private boolean forcePrincipalAsString = false;
   private UserDetailChecker preAuthenticationChecker = new DefaultPreAuthenticationChecker();
@@ -90,14 +94,13 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
    * adopting a binding-based strategy in this method. Accordingly it is important that subclasses
    * either disable caching (if they want to ensure that this method is the only method that is
    * capable of authenticating a request, as no <code>UserDetails</code> will ever be cached) or
-   * ensure subclasses implement
-   * {@link #additionalAuthenticationChecks(UserDetail, UsernamePasswordAuthentication)} to compare
-   * the credentials of a cached <code>UserDetails</code> with subsequent authentication requests.
+   * ensure subclasses implement {@link #additionalAuthenticationChecks(UserDetail, Authentication)}
+   * to compare the credentials of a cached <code>UserDetails</code> with subsequent authentication
+   * requests.
    * </p>
    * <p>
    * Most of the time subclasses will not perform credentials inspection in this method, instead
-   * performing it in
-   * {@link #additionalAuthenticationChecks(UserDetail, UsernamePasswordAuthentication)} so that
+   * performing it in {@link #additionalAuthenticationChecks(UserDetail, Authentication)} so that
    * code related to credentials validation need not be duplicated across two methods.
    * </p>
    * 

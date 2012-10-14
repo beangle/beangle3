@@ -34,9 +34,9 @@ public class DefaultViewMapper implements ViewMapper {
   /**
    * 查询control对应的view的名字(没有后缀)
    * 
-   * @param request
-   * @param controllerClass
-   * @param relativePath
+   * @param className
+   * @param methodName
+   * @param viewName
    */
   public String getViewPath(String className, String methodName, String viewName) {
     if (Strings.isNotEmpty(viewName)) {

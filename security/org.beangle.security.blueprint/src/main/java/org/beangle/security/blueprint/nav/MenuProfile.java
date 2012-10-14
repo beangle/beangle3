@@ -9,30 +9,35 @@ import java.util.List;
 import org.beangle.commons.entity.pojo.LongIdEntity;
 import org.beangle.security.blueprint.Role;
 
+/**
+ * Menu profile.
+ * 
+ * @author chaostone
+ * @since 2.0
+ */
 public interface MenuProfile extends LongIdEntity {
 
-  public String getName();
+  String getName();
 
-  public void setName(String name);
+  void setName(String name);
 
-  public List<Menu> getMenus();
+  List<Menu> getMenus();
 
-  public void setMenus(List<Menu> menus);
+  void setMenus(List<Menu> menus);
 
-  public Role getRole();
+  Role getRole();
 
-  public void setRole(Role role);
+  void setRole(Role role);
 
   /**
    * 资源状态
-   * 
    */
-  public boolean isEnabled();
+  boolean isEnabled();
 
   /**
    * 设置资源状态
    * 
-   * @param IsActive
+   * @param isEnabled
    */
-  public void setEnabled(boolean isEnabled);
+  void setEnabled(boolean isEnabled);
 }

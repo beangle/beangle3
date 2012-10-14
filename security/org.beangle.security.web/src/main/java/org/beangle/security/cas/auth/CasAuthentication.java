@@ -42,21 +42,14 @@ public class CasAuthentication extends PreauthAuthentication {
   /**
    * Constructor.
    * 
-   * @param key
-   *          to identify if this object made by a given {@link CasAuthenticationProvider}
-   * @param principal
-   *          typically the UserDetails object (cannot be <code>null</code>)
-   * @param credentials
-   *          the service/proxy ticket ID from CAS (cannot be <code>null</code>)
-   * @param authorities
-   *          the authorities granted to the user (cannot be <code>null</code>)
-   * @param userDetails
-   *          the user details (cannot be <code>null</code>)
-   * @param assertion
-   *          the assertion returned from the CAS servers. It contains the
-   *          principal and how to obtain a proxy ticket for the user.
-   * @throws IllegalArgumentException
-   *           if a <code>null</code> was passed
+   * @param key to identify if this object made by a given {@link CasAuthenticationProvider}
+   * @param principal typically the UserDetails object (cannot be <code>null</code>)
+   * @param credentials the service/proxy ticket ID from CAS (cannot be <code>null</code>)
+   * @param authorities the authorities granted to the user (cannot be <code>null</code>)
+   * @param userDetail the user details (cannot be <code>null</code>)
+   * @param assertion the assertion returned from the CAS servers. It contains the principal and how
+   *          to obtain a proxy ticket for the user.
+   * @throws IllegalArgumentException if a <code>null</code> was passed
    */
   public CasAuthentication(final String key, final Object principal, final Object credentials,
       final Collection<? extends GrantedAuthority> authorities, final UserDetail userDetail,

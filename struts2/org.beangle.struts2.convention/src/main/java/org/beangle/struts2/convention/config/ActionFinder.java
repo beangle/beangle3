@@ -21,7 +21,7 @@ public interface ActionFinder {
   /**
    * Find action's name and class
    * 
-   * @param actoinType
+   * @param test
    */
   public Map< Class<?>,String> getActions(ActionTest test);
   /**

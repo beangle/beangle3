@@ -16,9 +16,8 @@ import org.beangle.security.blueprint.service.UserService;
 /**
  * 用户角色权限管理服务接口. 权限实体
  * 
- * @see <code>Permission</code> 系统资源实体
- * @see <code>Resource</code> 系统功能点实体
- * @see <code>Action</code> 数据权限实体
+ * @see org.beangle.security.blueprint.Permission
+ * @see org.beangle.security.blueprint.Resource
  * @author dell,chaostone 2005-9-27
  */
 public interface FuncPermissionService {

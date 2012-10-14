@@ -391,9 +391,8 @@ public class ActionSupport implements TextResource {
   /**
    * 将request中的参数设置到clazz对应的bean。
    * 
-   * @param request
    * @param clazz
-   * @param title
+   * @param shortName
    */
   protected final <T> T populate(Class<T> clazz, String shortName) {
     return PopulateHelper.populate(clazz, shortName);
@@ -440,8 +439,6 @@ public class ActionSupport implements TextResource {
 
   /**
    * 从request的参数或者cookie中(参数优先)取得分页信息
-   * 
-   * @param request
    */
   protected final PageLimit getPageLimit() {
     return QueryHelper.getPageLimit();

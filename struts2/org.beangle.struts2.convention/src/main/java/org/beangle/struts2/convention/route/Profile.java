@@ -161,8 +161,7 @@ public class Profile implements Comparable<Profile> {
    * 将前后缀去除后，中间的.替换为/<br>
    * 不以/开始。
    * 
-   * @param clazz
-   * @param profile
+   * @param className
    */
   public String getInfix(String className) {
     String postfix = getActionSuffix();

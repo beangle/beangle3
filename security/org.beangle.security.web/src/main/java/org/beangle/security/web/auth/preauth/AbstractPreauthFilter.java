@@ -154,8 +154,7 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
   }
 
   /**
-   * @param userDetailsSource
-   *          The UserDetailsSource to use
+   * @param authenticationDetailsSource
    */
   public void setAuthenticationDetailsSource(
       AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource) {

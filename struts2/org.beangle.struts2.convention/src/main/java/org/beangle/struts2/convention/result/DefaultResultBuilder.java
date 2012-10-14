@@ -184,11 +184,10 @@ public class DefaultResultBuilder implements ResultBuilder {
   /**
    * 构建结果
    * 
-   * @param defaultParam
    * @param resultCode
    * @param resultTypeConfig
    * @param context
-   * @param extraParams
+   * @param params
    */
   protected Result buildResult(String resultCode, ResultTypeConfig resultTypeConfig, ActionContext context,
       Map<String, String> params) {

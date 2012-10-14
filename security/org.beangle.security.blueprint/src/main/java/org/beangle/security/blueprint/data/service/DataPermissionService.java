@@ -50,7 +50,7 @@ public interface DataPermissionService {
   /**
    * 查找用户对应的数据配置
    * 
-   * @param userId
+   * @param user
    */
   List<UserProfile> getUserProfiles(User user);
 
@@ -65,8 +65,9 @@ public interface DataPermissionService {
    * Search field values
    * 
    * @param field
+   * @param keys
    */
-  List<?> getFieldValues(ProfileField field,Object... keys);
+  List<?> getFieldValues(ProfileField field, Object... keys);
 
   /**
    * Search field

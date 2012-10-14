@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * <ol>
  * <li>Obtain the {@link Authentication} object from the {@link SecurityContextHolder}.</li>
  * <li>Determine if the request relates to a secured or public invocation by looking up the secure
- * object request against the {@link ObjectDefinitionSource}.</li>
+ * object request against the ObjectDefinitionSource.</li>
  * <li>For an invocation that is secured (there is a <code>ConfigAttributeDefinition</code> for the
  * secure object invocation):
  * <ol type="a">
@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * <code>Authentication</code> object on the <code>SecurityContextHolder</code> with the returned
  * value.</li>
  * <li>Authorize the request against the configured {@link AuthorityManager}.</li>
- * <li>Perform any run-as replacement via the configured {@link RunAsManager}.</li>
+ * <li>Perform any run-as replacement via the configured RunAsManager.</li>
  * <li>Pass control back to the concrete subclass, which will actually proceed with executing the
  * object. A {@link InterceptorStatusToken} is returned so that after the subclass has finished
  * proceeding with execution of the object, its finally clause can ensure the
@@ -78,23 +78,16 @@ public abstract class AbstractSecurityInterceptor implements Initializing {
    * Completes the work of the <tt>AbstractSecurityInterceptor</tt> after the
    * secure object invocation has been completed.
    * 
-   * @param token
-   *          as returned by the {@link #beforeInvocation(Object)} method
-   * @param returnedObject
-   *          any object returned from the secure object invocation (may be <tt>null</tt>)
+   * @param token as returned by the {@link #beforeInvocation(Object)} method
+   * @param returnedObject any object returned from the secure object invocation (may be
+   *          <tt>null</tt>)
    * @return the object the secure object invocation should ultimately return
    *         to its caller (may be <tt>null</tt>)
    */
   protected Object afterInvocation(InterceptorStatusToken token, Object returnedObject) {
-    if (token == null) {
-      // public object
-      return returnedObject;
-    }
+    if (token == null) return returnedObject;
     if (token.isContextHolderRefreshRequired()) {
-      if (logger.isDebugEnabled()) {
-        logger.debug("Reverting to original Authentication: " + token.getAuthentication().toString());
-      }
-
+      logger.debug("Reverting to original Authentication: {}", token.getAuthentication());
       SecurityContextHolder.getContext().setAuthentication(token.getAuthentication());
     }
     return returnedObject;
@@ -131,17 +124,13 @@ public abstract class AbstractSecurityInterceptor implements Initializing {
     return new InterceptorStatusToken(authenticated, false, object);
 
     // if (runAs == null) {
-    // if (logger.isDebugEnabled()) {
     // logger.debug("RunAsManager did not change Authentication object");
-    // }
     //
     // // no further work post-invocation
     // return new InterceptorStatusToken(authenticated, false, attr,
     // object);
     // } else {
-    // if (logger.isDebugEnabled()) {
-    // logger.debug("Switching to RunAs Authentication: " + runAs);
-    // }
+    // logger.debug("Switching to RunAs Authentication: {}" , runAs);
     // SecurityContextHolder.getContext().setAuthentication(runAs);
     // // revert to token.Authenticated post-invocation
     // return new InterceptorStatusToken(authenticated, true, attr, object);

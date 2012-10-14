@@ -43,8 +43,7 @@ import org.beangle.security.core.session.SessionRegistry;
  * the target URL once authentication is completed successfully. eg: <code>/</code>. The
  * <code>defaultTargetUrl</code> will be treated as relative to the web-app's context path, and
  * should include the leading <code>/</code>. Alternatively, inclusion of a scheme name (eg http://
- * or https://) as the prefix will denote a fully-qualified URL and this is also supported. More
- * complex behaviour can be implemented by using a customised {@link TargetUrlResolver}.</li>
+ * or https://) as the prefix will denote a fully-qualified URL and this is also supported.</li>
  * <li><code>authenticationFailureUrl</code> (optional) indicates the URL that should be used for
  * redirection if the authentication request fails. eg: <code>/login.jsp?login_error=1</code>. If
  * not configured, <tt>sendError</tt> will be called on the response, with the error code
@@ -53,7 +52,7 @@ import org.beangle.security.core.session.SessionRegistry;
  * parameter varies by subclass.</li>
  * <li><code>alwaysUseDefaultTargetUrl</code> causes successful authentication to always redirect to
  * the <code>defaultTargetUrl</code>, even if the <code>HttpSession</code> attribute named
- * {@link # SECURITY_SAVED_REQUEST_KEY} defines the intended target URL.</li>
+ * {@link #SECURITY_SAVED_REQUEST_KEY} defines the intended target URL.</li>
  * </ul>
  * <p>
  * To configure this filter to redirect to specific pages as the result of specific
@@ -73,28 +72,9 @@ import org.beangle.security.core.session.SessionRegistry;
  * The example above would redirect all {@link org.beangle.security.auth.BadCredentialsException}s
  * thrown, to a page in the web-application called /bad_credentials.jsp.
  * <p>
- * Any {@link AuthenticationException} thrown that cannot be matched in the
- * <code>exceptionMappings</code> will be redirected to the <code>authenticationFailureUrl</code>
- * <p>
- * If authentication is successful, an
- * {@link org.beangle.security.event.authentication.InteractiveAuthenticationSuccessEvent} will be
- * published to the application context. No events will be published if authentication was
- * unsuccessful, because this would generally be recorded via an <code>AuthenticationManager</code>
- * -specific application event.
- * <p>
- * The filter has an optional attribute <tt>invalidateSessionOnSuccessfulAuthentication</tt> that
- * will invalidate the current session on successful authentication. This is to protect against
- * session fixation attacks (see <a href="http://en.wikipedia.org/wiki/Session_fixation">this
- * Wikipedia article</a> for more information). The behaviour is turned off by default. Additionally
- * there is a property <tt>migrateInvalidatedSessionAttributes</tt> which tells if on session
- * invalidation we are to migrate all session attributes from the old session to a newly created
- * one. This is turned on by default, but not used unless
- * <tt>invalidateSessionOnSuccessfulAuthentication</tt> is true. If you are using this feature in
- * combination with concurrent session control, you should set the <tt>sessionRegistry</tt> property
- * to make sure that the session information is updated consistently.
  * 
  * @author chaostone
- * @version $Id: AbstractProcessingFilter.java 3280 2008-09-12 14:57:21Z $
+ * @version $Id: AbstractAuthenticationFilter.java 3280 2008-09-12 14:57:21Z $
  */
 public abstract class AbstractAuthenticationFilter extends GenericHttpFilter {
 
@@ -257,10 +237,7 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilter {
     // Don't attempt to obtain the url from the saved request if
     // alwaysUsedefaultTargetUrl is set
     String targetUrl = alwaysUseDefaultTargetUrl ? null : request.getParameter("redirectTo");
-    if (targetUrl == null) {
-      targetUrl = getDefaultTargetUrl();
-    }
-
+    if (targetUrl == null) targetUrl = getDefaultTargetUrl();
     return targetUrl;
   }
 

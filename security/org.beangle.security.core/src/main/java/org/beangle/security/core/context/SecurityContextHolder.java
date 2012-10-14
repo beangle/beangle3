@@ -35,7 +35,6 @@ import org.beangle.commons.lang.Throwables;
  * 
  * @author chaostone
  * @version $Id: SecurityContextHolder.java 2217 2007-10-27 00:45:30Z $
- * @see org.beangle.security.web.context.security.context.HttpSessionContextFilter
  */
 public class SecurityContextHolder {
 
@@ -85,11 +84,11 @@ public class SecurityContextHolder {
       strategyName = MODE_THREADLOCAL;
     }
     if (strategyName.equals(MODE_THREADLOCAL)) {
-      strategy = new ThreadLocalSecurityContextHolderStrategy();
+      strategy = new ThreadLocalHolderStrategy();
     } else if (strategyName.equals(MODE_INHERITABLETHREADLOCAL)) {
-      strategy = new InheritableThreadLocalSecurityContextHolderStrategy();
+      strategy = new InheritableThreadLocalHolderStrategy();
     } else if (strategyName.equals(MODE_GLOBAL)) {
-      strategy = new GlobalSecurityContextHolderStrategy();
+      strategy = new GlobalHolderStrategy();
     } else {
       // Try to load a custom strategy
       try {

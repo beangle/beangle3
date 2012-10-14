@@ -7,16 +7,15 @@ package org.beangle.security.core.context;
 import org.beangle.commons.lang.Assert;
 
 /**
- * An <code>InheritableThreadLocal</code>-based implementation of
+ * A <code>ThreadLocal</code>-based implementation of
  * {@link org.beangle.security.core.context.SecurityContextHolderStrategy}.
  * 
  * @author chaostone
  * @see java.lang.ThreadLocal
- * @see org.beangle.security.web.context.security.context.HttpSessionContextFilter
  */
-public class InheritableThreadLocalSecurityContextHolderStrategy implements SecurityContextHolderStrategy {
+public class ThreadLocalHolderStrategy implements SecurityContextHolderStrategy {
 
-  private static ThreadLocal<SecurityContext> contextHolder = new InheritableThreadLocal<SecurityContext>();
+  private static ThreadLocal<SecurityContext> contextHolder = new ThreadLocal<SecurityContext>();
 
   public void clearContext() {
     contextHolder.set(null);
@@ -26,7 +25,6 @@ public class InheritableThreadLocalSecurityContextHolderStrategy implements Secu
     if (contextHolder.get() == null) {
       contextHolder.set(new SecurityContextBean());
     }
-
     return contextHolder.get();
   }
 

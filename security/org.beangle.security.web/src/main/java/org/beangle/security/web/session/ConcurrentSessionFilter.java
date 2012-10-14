@@ -41,7 +41,7 @@ import org.beangle.security.web.auth.logout.SecurityContextLogoutHandler;
  * Filter required by concurrent session handling package.
  * <p>
  * This filter performs two functions. First, it calls
- * {@link org.beangle.security.core.session.SessionRegistry#refreshLastRequest(String)} for each
+ * {@link org.beangle.security.core.session.SessionRegistry#access(String,String,long)} for each
  * request so that registered sessions always have a correct "last update" date/time. Second, it
  * retrieves a {@link org.beangle.security.core.session.Sessioninfo} from the
  * <code>SessionRegistry</code> for each request and checks if the session has been marked as

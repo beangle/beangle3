@@ -14,7 +14,6 @@ import org.beangle.security.auth.BadCredentialsException;
 import org.beangle.security.cas.validation.Assertion;
 import org.beangle.security.cas.validation.TicketValidationException;
 import org.beangle.security.cas.validation.TicketValidator;
-import org.beangle.security.cas.web.CasPreauthFilter;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.userdetail.AccountStatusChecker;
@@ -29,10 +28,10 @@ import org.slf4j.LoggerFactory;
  * An {@link AuthenticationProvider} implementation that integrates with JA-SIG
  * Central Authentication Service (CAS).
  * <p>
- * This <code>AuthenticationProvider</code> is capable of validating
- * {@link UsernamePasswordAuthenticationToken} requests which contain a <code>principal</code> name
- * equal to either {@link CasPreauthFilter#STATEFUL_ID} or {@link CasPreauthFilter#STATELESS_ID} .
- * It can also validate a previously created {@link CasAuthentication}.
+ * This <code>AuthenticationProvider</code> is capable of validating UsernamePasswordAuthentication
+ * requests which contain a <code>principal</code> name equal to either
+ * {@link CasAuthentication#STATEFUL_ID} or {@link CasAuthentication#STATELESS_ID} . It can also
+ * validate a previously created {@link CasAuthentication}.
  * 
  * @author chaostone
  */
@@ -50,10 +49,7 @@ public class CasAuthenticationProvider implements AuthenticationProvider, Initia
     Assert.notNull(this.statelessTicketCache, "A statelessTicketCache must be set");
     Assert.notEmpty(this.key,
         "A Key is required so CasAuthenticationProvider can identify tokens it previously authenticated");
-    if (null == userDetailChecker) {
-      AccountStatusChecker checker = new AccountStatusChecker();
-      userDetailChecker = checker;
-    }
+    if (null == userDetailChecker) userDetailChecker = new AccountStatusChecker();
   }
 
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {

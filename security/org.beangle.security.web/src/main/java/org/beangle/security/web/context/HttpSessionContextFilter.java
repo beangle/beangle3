@@ -37,8 +37,7 @@ import org.beangle.security.core.context.SecurityContextHolder;
  * <p/>
  * If a valid <code>SecurityContext</code> cannot be obtained from the <code>HttpSession</code> for
  * whatever reason, a fresh <code>SecurityContext</code> will be created and used instead. The
- * created object will be of the instance defined by the {@link #setContextClass(Class)} method
- * (which defaults to {@link org.beangle.security.context.SecurityContextBean}.
+ * created object will be of the instance defined by the {@link #setContextClass(Class)} method.
  * </p>
  * <p/>
  * No <code>HttpSession</code> will be created by this filter if one does not already exist. If at

@@ -19,14 +19,14 @@ public class FilterInvocation {
   private ServletResponse response;
 
   public FilterInvocation(ServletRequest request, ServletResponse response, FilterChain chain) {
-    if ((request == null) || (response == null) || (chain == null)) { throw new IllegalArgumentException(
-        "Cannot pass null values to constructor"); }
+    if ((request == null) || (response == null) || (chain == null)) throw new IllegalArgumentException(
+        "Cannot pass null values to constructor");
 
-    if (!(request instanceof HttpServletRequest)) { throw new IllegalArgumentException(
-        "Can only process HttpServletRequest"); }
+    if (!(request instanceof HttpServletRequest)) throw new IllegalArgumentException(
+        "Can only process HttpServletRequest");
 
-    if (!(response instanceof HttpServletResponse)) { throw new IllegalArgumentException(
-        "Can only process HttpServletResponse"); }
+    if (!(response instanceof HttpServletResponse)) throw new IllegalArgumentException(
+        "Can only process HttpServletResponse");
 
     this.request = request;
     this.response = response;
@@ -39,10 +39,6 @@ public class FilterInvocation {
 
   /**
    * Indicates the URL that the user agent used for this request.
-   * <P>
-   * The returned URL does <b>not</b> reflect the port number determined from a
-   * {@link org.beangle.security.util.PortResolver}.
-   * </p>
    * 
    * @return the full URL of this request
    */
