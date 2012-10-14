@@ -21,7 +21,6 @@ public interface LimitQuery<T> extends Query<T> {
    * getLimit.
    * </p>
    * 
-   * @param <T> a T object.
    * @return a {@link org.beangle.commons.collection.page.PageLimit} object.
    */
   public PageLimit getLimit();

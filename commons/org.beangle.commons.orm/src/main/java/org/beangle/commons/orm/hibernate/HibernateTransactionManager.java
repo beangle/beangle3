@@ -126,7 +126,6 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
    * @see SessionFactoryBean#setDataSource
    * @see org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy
    * @see org.springframework.jdbc.datasource.DataSourceUtils
-   * @see org.springframework.jdbc.core.JdbcTemplate
    */
   public void setDataSource(DataSource dataSource) {
     if (dataSource instanceof TransactionAwareDataSourceProxy) {
@@ -259,7 +258,6 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
    * SessionFactoryBean or HibernateTransactionManager to avoid repeated configuration and guarantee
    * consistent behavior in transactions.
    * 
-   * @see SessionFactoryBean#setEntityInterceptor
    */
   public void setEntityInterceptor(Interceptor entityInterceptor) {
     this.entityInterceptor = entityInterceptor;

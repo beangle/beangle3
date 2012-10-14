@@ -24,7 +24,7 @@ import org.hibernate.impl.CriteriaImpl;
  * @author chaostone
  */
 public class BaseDaoHibernate extends HibernateEntityDao {
-  
+
   protected EntityDao entityDao;
 
   public void setEntityDao(EntityDao entityDao) {
@@ -57,11 +57,8 @@ public class BaseDaoHibernate extends HibernateEntityDao {
 
   /**
    * @param query
-   * @param names
-   * @param values
-   * @param pageNo
-   * @param pageSize
-   * @return
+   * @param params
+   * @param limit
    */
   @SuppressWarnings("unchecked")
   public <T> Page<T> paginateQuery(Query query, Map<String, Object> params, PageLimit limit) {
@@ -86,7 +83,6 @@ public class BaseDaoHibernate extends HibernateEntityDao {
    * 构造查询记录数目的查询字符串
    * 
    * @param query
-   * @return
    */
   private String buildCountQueryStr(Query query) {
     String queryStr = "select count(*) ";

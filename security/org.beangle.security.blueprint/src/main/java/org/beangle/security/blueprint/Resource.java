@@ -22,7 +22,6 @@ public interface Resource extends LongIdEntity {
   /**
    * 资源名称
    * 
-   * @return
    */
   String getName();
 
@@ -36,7 +35,6 @@ public interface Resource extends LongIdEntity {
   /**
    * 资源标题
    * 
-   * @return
    */
   String getTitle();
 
@@ -50,14 +48,12 @@ public interface Resource extends LongIdEntity {
   /**
    * 允许的操作
    * 
-   * @return
    */
   String getActions();
 
   /**
    * 资源状态
    * 
-   * @return
    */
   boolean isEnabled();
 
@@ -65,14 +61,12 @@ public interface Resource extends LongIdEntity {
    * 设置资源状态
    * 
    * @param IsActive
-   * @return
    */
   void setEnabled(boolean isEnabled);
 
   /**
    * 返回资源描述
    * 
-   * @return
    */
   String getRemark();
 

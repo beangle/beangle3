@@ -16,7 +16,6 @@ public interface UserDataResolver {
    * 
    * @param field
    * @param items
-   * @return
    */
   public String marshal(ProfileField field, Collection<?> items);
 
@@ -26,7 +25,6 @@ public interface UserDataResolver {
    * @param <T>
    * @param field
    * @param text
-   * @return
    */
   public <T> List<T> unmarshal(ProfileField field, String text);
 }

@@ -20,7 +20,6 @@ public interface SessionController {
    * @param auth
    * @param sessionId
    * @param registry
-   * @return
    */
   public boolean onRegister(Authentication auth, String sessionId, SessionRegistry registry)
       throws SessionException;

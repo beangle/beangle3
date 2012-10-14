@@ -6,11 +6,13 @@ package org.beangle.commons.orm;
 
 import org.beangle.commons.context.inject.AbstractBindModule;
 import org.beangle.commons.context.spring.SpringResources;
+import org.beangle.commons.entity.metadata.impl.ConvertPopulatorBean;
 import org.beangle.commons.orm.hibernate.HibernateEntityDao;
 import org.beangle.commons.orm.hibernate.HibernateTransactionManager;
 import org.beangle.commons.orm.hibernate.RailsNamingStrategy;
 import org.beangle.commons.orm.hibernate.SessionFactoryBean;
-import org.beangle.commons.orm.hibernate.internal.HibernateModelBuilder;
+import org.beangle.commons.orm.hibernate.internal.HibernateEntityContext;
+import org.beangle.commons.orm.hibernate.internal.HibernateModelMeta;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
@@ -56,7 +58,7 @@ public class DefaultModule extends AbstractBindModule {
         bean(SpringResources.class).property("locations", "classpath*:META-INF/beangle/table.properties")
             .property("users", "classpath*:beangle/table.properties"));
 
-    bind(HibernateModelBuilder.class);
+    bind(HibernateModelMeta.class, ConvertPopulatorBean.class, HibernateEntityContext.class);
 
     bind("entityDao", TransactionProxyFactoryBean.class).proxy("target", HibernateEntityDao.class).parent(
         "baseTransactionProxy");

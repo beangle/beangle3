@@ -36,7 +36,7 @@ public class ValidEntityPredicate implements Predicate {
    * getInstance.
    * </p>
    * 
-   * @return a {@link org.beangle.commons.dao.util.ValidEntityPredicate} object.
+   * @return a {@link org.beangle.commons.entity.util.ValidEntityPredicate} object.
    */
   public static ValidEntityPredicate getInstance() {
     return INSTANCE;

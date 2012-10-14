@@ -15,12 +15,7 @@ import java.util.Map;
 public interface Query<T> {
 
   /**
-   * <p>
-   * getStatement.
-   * </p>
-   * 
-   * @param <T> a T object.
-   * @return a {@link java.lang.String} object.
+   * Returns query statement.
    */
   public String getStatement();
 

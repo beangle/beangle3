@@ -24,7 +24,6 @@ public class DefaultActionBuilder implements ActionBuilder {
    * 复杂URL,以/开始
    * 
    * @param clazz
-   * @return
    */
   public Action build(String className) {
     Profile profile = profileService.getProfile(className);

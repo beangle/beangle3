@@ -29,7 +29,6 @@ public class QueryPage<T> extends AbstractQueryPage<T> {
    * 
    * @param query a {@link org.beangle.commons.dao.query.LimitQuery} object.
    * @param entityDao a {@link org.beangle.commons.dao.EntityDao} object.
-   * @param <T> a T object.
    */
   public QueryPage(LimitQuery<T> query, EntityDao entityDao) {
     super(query);

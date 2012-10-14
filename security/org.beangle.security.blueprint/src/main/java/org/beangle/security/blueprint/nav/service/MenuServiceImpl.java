@@ -91,7 +91,6 @@ public class MenuServiceImpl extends AbstractHierarchyService<MenuBean, Menu> im
    * 添加父菜单并且排序
    * 
    * @param menus
-   * @return
    */
   private List<Menu> addParentMenus(Set<Menu> menus) {
     HierarchyEntityUtils.addParent(menus);

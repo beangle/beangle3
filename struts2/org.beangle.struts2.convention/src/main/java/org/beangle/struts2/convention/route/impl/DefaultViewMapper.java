@@ -37,7 +37,6 @@ public class DefaultViewMapper implements ViewMapper {
    * @param request
    * @param controllerClass
    * @param relativePath
-   * @return
    */
   public String getViewPath(String className, String methodName, String viewName) {
     if (Strings.isNotEmpty(viewName)) {

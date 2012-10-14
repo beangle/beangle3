@@ -26,42 +26,36 @@ public interface Role extends LongIdTimeEntity, HierarchyEntity<Role, Long>, Com
   /**
    * 代码
    * 
-   * @return
    */
   String getCode();
 
   /**
    * 名称
    * 
-   * @return
    */
   String getName();
 
   /**
    * 关联的系统用户
    * 
-   * @return
    */
   Set<Member> getMembers();
 
   /**
    * Owner
    * 
-   * @return
    */
   User getOwner();
 
   /**
    * 状态
    * 
-   * @return
    */
   boolean isEnabled();
 
   /**
    * 备注
    * 
-   * @return
    */
   String getRemark();
 
@@ -75,7 +69,6 @@ public interface Role extends LongIdTimeEntity, HierarchyEntity<Role, Long>, Com
   /**
    * 角色所在的层次
    * 
-   * @return
    */
   int getDepth();
 

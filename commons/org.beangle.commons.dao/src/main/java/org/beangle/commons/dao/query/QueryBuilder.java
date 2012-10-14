@@ -16,14 +16,13 @@ import org.beangle.commons.collection.page.PageLimit;
  * @author chaostone
  * @version $Id: $
  */
-public interface QueryBuilder<T>{
+public interface QueryBuilder<T> {
 
   /**
    * <p>
    * build.
    * </p>
    * 
-   * @param <T> a T object.
    * @return a {@link org.beangle.commons.dao.query.Query} object.
    */
   public Query<T> build();

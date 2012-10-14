@@ -17,42 +17,36 @@ public interface Sessioninfo extends StringIdEntity {
   /**
    * 用户名
    * 
-   * @return
    */
   public String getUsername();
 
   /**
    * 用户全名
    * 
-   * @return
    */
   public String getFullname();
 
   /**
    * 登录时间
    * 
-   * @return
    */
   public Date getLoginAt();
 
   /**
    * 是否过期
    * 
-   * @return
    */
   public boolean isExpired();
 
   /**
    * 在线时间
    * 
-   * @return
    */
   public long getOnlineTime();
 
   /**
    * 备注
    * 
-   * @return
    */
   public String getRemark();
 
@@ -71,14 +65,12 @@ public interface Sessioninfo extends StringIdEntity {
   /**
    * 查询过期时间
    * 
-   * @return
    */
   public Date getExpiredAt();
 
   /**
    * 查询最后访问时间
    * 
-   * @return
    */
   public Date getLastAccessAt();
 

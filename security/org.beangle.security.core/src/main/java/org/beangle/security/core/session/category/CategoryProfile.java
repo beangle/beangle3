@@ -15,35 +15,30 @@ public interface CategoryProfile {
   /**
    * Distingish indentifier
    * 
-   * @return
    */
   Long getId();
 
   /**
    * User cateogory
    * 
-   * @return
    */
   String getCategory();
 
   /**
    * Whole capacity for a category user
    * 
-   * @return
    */
   int getCapacity();
 
   /**
    * Max session for same account
    * 
-   * @return
    */
   int getUserMaxSessions();
 
   /**
    * Max inactiveInterval in minutes
    * 
-   * @return
    */
   int getInactiveInterval();
 

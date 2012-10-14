@@ -66,7 +66,6 @@ public class Profile implements Comparable<Profile> {
    * 得到控制器的起始位置
    * 
    * @param className
-   * @return
    */
   public MatchInfo getCtlMatchInfo(final String className) {
     MatchInfo match = cache.get(className);
@@ -83,7 +82,6 @@ public class Profile implements Comparable<Profile> {
    * 给定action是否符合该配置文件
    * 
    * @param className
-   * @return
    */
   public boolean isMatch(final String className) {
     return -1 != getMatchInfo(patternSegs, className).startIndex;
@@ -135,7 +133,6 @@ public class Profile implements Comparable<Profile> {
    * 取得类名称对应的全路经，仅仅把类名第一个字母小写。
    * 
    * @param className
-   * @return
    */
   public String getFullPath(String className) {
     String postfix = getActionSuffix();
@@ -166,7 +163,6 @@ public class Profile implements Comparable<Profile> {
    * 
    * @param clazz
    * @param profile
-   * @return
    */
   public String getInfix(String className) {
     String postfix = getActionSuffix();

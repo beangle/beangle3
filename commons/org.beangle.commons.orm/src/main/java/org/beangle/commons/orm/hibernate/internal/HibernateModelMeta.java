@@ -6,29 +6,24 @@ package org.beangle.commons.orm.hibernate.internal;
 
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.entity.metadata.Model;
-import org.beangle.commons.entity.metadata.ModelBuilder;
+import org.beangle.commons.entity.metadata.impl.DefaultModelMeta;
 import org.hibernate.SessionFactory;
 
-public class HibernateModelBuilder implements ModelBuilder, Initializing {
+/**
+ * Building model from Hibernate.
+ * 
+ * @author chaostone
+ * @since 2.0
+ */
+public class HibernateModelMeta extends DefaultModelMeta implements Initializing {
 
   private SessionFactory sessionFactory;
-
-  public void build() {
-    try {
-      init();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
 
   public void init() throws Exception {
     HibernateEntityContext entityContext = new HibernateEntityContext();
     entityContext.initFrom(sessionFactory);
-    Model.setContext(entityContext);
-  }
-
-  public Model getModel() {
-    return Model.getInstance();
+    setContext(entityContext);
+    Model.setMeta(this);
   }
 
   public void setSessionFactory(SessionFactory sessionFactory) {

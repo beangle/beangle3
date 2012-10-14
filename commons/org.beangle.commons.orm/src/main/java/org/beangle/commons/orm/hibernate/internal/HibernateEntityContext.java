@@ -77,7 +77,6 @@ public class HibernateEntityContext extends AbstractEntityContext {
    * 调用后，实体类型则存放与entityTypes中.
    * 
    * @param entityName
-   * @return
    */
   private EntityType buildEntityType(SessionFactory sessionFactory, String entityName) {
     EntityType entityType = (EntityType) entityTypes.get(entityName);

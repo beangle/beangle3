@@ -15,7 +15,6 @@ public interface TableNamingStrategy {
    * Convert class to table name
    * 
    * @param className
-   * @return
    */
   String classToTableName(String className);
 
@@ -25,7 +24,6 @@ public interface TableNamingStrategy {
    * @param className
    * @param tableName
    * @param collectionName
-   * @return
    */
   String collectionToTableName(String className, String tableName, String collectionName);
 
@@ -33,14 +31,12 @@ public interface TableNamingStrategy {
    * Return schema for package
    * 
    * @param packageName
-   * @return
    */
   String getSchema(String packageName);
 
   /**
    * Mapped in multischema?
    * 
-   * @return
    */
   boolean isMultiSchema();
 

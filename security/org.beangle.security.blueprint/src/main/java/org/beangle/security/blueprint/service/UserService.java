@@ -16,7 +16,6 @@ public interface UserService {
    * 
    * @param name
    * @param password
-   * @return
    */
   public User get(String name, String password);
 
@@ -24,7 +23,6 @@ public interface UserService {
    * 根据登陆名查找用户
    * 
    * @param name
-   * @return
    */
   public User get(String name);
 
@@ -32,7 +30,6 @@ public interface UserService {
    * 查询指定id的用户，不存在时返回null
    * 
    * @param id
-   * @return
    */
   public User get(Long id);
 
@@ -47,7 +44,6 @@ public interface UserService {
    * 返回userIds指定的用户
    * 
    * @param userIds
-   * @return
    */
   public List<User> getUsers(Long userIds[]);
 
@@ -55,7 +51,6 @@ public interface UserService {
    * 查询用户关联的member角色
    * 
    * @param userId
-   * @return
    */
   public List<Role> getRoles(Long userId);
 
@@ -64,7 +59,6 @@ public interface UserService {
    * 
    * @param user
    * @param ship
-   * @return
    */
   public List<Member> getMembers(User user, Member.Ship ship);
 
@@ -99,7 +93,6 @@ public interface UserService {
    * 
    * @param manager
    * @param managed
-   * @return
    */
   public boolean isManagedBy(User manager, User user);
 
@@ -107,7 +100,6 @@ public interface UserService {
    * 是否是超级管理员
    * 
    * @param user
-   * @return
    */
   public boolean isRoot(User user);
 
@@ -115,7 +107,6 @@ public interface UserService {
    * 是否是超级管理员
    * 
    * @param userId
-   * @return
    */
   public boolean isRoot(Long userId);
 

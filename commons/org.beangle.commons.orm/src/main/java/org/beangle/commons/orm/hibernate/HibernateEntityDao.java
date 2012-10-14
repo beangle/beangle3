@@ -22,7 +22,7 @@ import org.beangle.commons.dao.query.QueryBuilder;
 import org.beangle.commons.dao.query.builder.Condition;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.Entity;
-import org.beangle.commons.entity.metadata.Model;
+import org.beangle.commons.entity.metadata.ModelMeta;
 import org.beangle.commons.lang.Arrays;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
@@ -46,8 +46,10 @@ public class HibernateEntityDao implements EntityDao {
 
   /** Logger available to subclasses */
   protected Logger logger = LoggerFactory.getLogger(getClass());
-  
+
   protected SessionFactory sessionFactory;
+
+  protected ModelMeta modelMeta;
 
   protected Session getSession() {
     return SessionUtils.currentSession(sessionFactory);
@@ -55,7 +57,7 @@ public class HibernateEntityDao implements EntityDao {
 
   @SuppressWarnings({ "unchecked" })
   public <T> T get(Class<T> clazz, Serializable id) {
-    return (T) get(Model.getEntityType(clazz).getEntityName(), id);
+    return (T) get(modelMeta.getEntityType(clazz).getEntityName(), id);
   }
 
   @SuppressWarnings({ "unchecked" })
@@ -77,7 +79,7 @@ public class HibernateEntityDao implements EntityDao {
 
   @SuppressWarnings("unchecked")
   public <T> List<T> getAll(Class<T> clazz) {
-    String hql = "from " + Model.getEntityType(clazz).getEntityName();
+    String hql = "from " + modelMeta.getEntityType(clazz).getEntityName();
     Query query = getSession().createQuery(hql);
     query.setCacheable(true);
     return query.list();
@@ -99,7 +101,7 @@ public class HibernateEntityDao implements EntityDao {
   public <T> List<T> get(Class<T> entityClass, String keyName, Object... values) {
     if (entityClass == null || Strings.isEmpty(keyName) || values == null || values.length == 0) { return Collections
         .emptyList(); }
-    String entityName = Model.getEntityType(entityClass).getEntityName();
+    String entityName = modelMeta.getEntityType(entityClass).getEntityName();
     return (List<T>) get(entityName, keyName, values);
   }
 
@@ -107,7 +109,7 @@ public class HibernateEntityDao implements EntityDao {
   public <T> List<T> get(Class<T> entityClass, String keyName, Collection<?> values) {
     if (entityClass == null || Strings.isEmpty(keyName) || values == null || values.isEmpty()) { return Collections
         .emptyList(); }
-    String entityName = Model.getEntityType(entityClass).getEntityName();
+    String entityName = modelMeta.getEntityType(entityClass).getEntityName();
     return (List<T>) get(entityName, keyName, values.toArray());
   }
 
@@ -148,7 +150,7 @@ public class HibernateEntityDao implements EntityDao {
   /**
    * @param entity
    * @param parameterMap
-   * @return
+   * @return data list
    */
   public <T> List<T> get(Class<T> entity, final Map<String, Object> parameterMap) {
     if (entity == null || parameterMap == null || parameterMap.isEmpty()) { return Collections.emptyList(); }
@@ -184,7 +186,7 @@ public class HibernateEntityDao implements EntityDao {
    * 依据自构造的查询语句进行查询
    * 
    * @see #buildCountQueryStr(Query)
-   * @see org.beangle.entity.query.limit.Pagination
+   * @see org.beangle.commons.collection.page.Page
    */
   public <T> List<T> search(org.beangle.commons.dao.query.Query<T> query) {
     if (query instanceof LimitQuery) {
@@ -205,7 +207,7 @@ public class HibernateEntityDao implements EntityDao {
    * 
    * @param <T>
    * @param builder
-   * @return
+   * @return data list
    */
   public <T> List<T> search(QueryBuilder<T> builder) {
     return (List<T>) search(builder.build());
@@ -349,11 +351,9 @@ public class HibernateEntityDao implements EntityDao {
 
   /**
    * @param query
-   * @param names
-   * @param values
-   * @param pageNo
-   * @param pageSize
-   * @return
+   * @param params
+   * @param limit
+   * @return a page data
    */
   @SuppressWarnings("unchecked")
   public <T> Page<T> paginateQuery(Query query, Map<String, Object> params, PageLimit limit) {
@@ -441,7 +441,7 @@ public class HibernateEntityDao implements EntityDao {
       if (entity instanceof HibernateProxy) {
         getSession().save(entity);
       } else {
-        getSession().save(Model.getEntityType(entity.getClass()).getEntityName(), entity);
+        getSession().save(modelMeta.getEntityType(entity.getClass()).getEntityName(), entity);
       }
     }
   }
@@ -454,7 +454,7 @@ public class HibernateEntityDao implements EntityDao {
       if (entity instanceof HibernateProxy) {
         getSession().saveOrUpdate(entity);
       } else {
-        getSession().saveOrUpdate(Model.getEntityType(entity.getClass()).getEntityName(), entity);
+        getSession().saveOrUpdate(modelMeta.getEntityType(entity.getClass()).getEntityName(), entity);
       }
     }
   }
@@ -519,7 +519,7 @@ public class HibernateEntityDao implements EntityDao {
 
   public boolean remove(Class<?> clazz, String attr, Object... values) {
     if (clazz == null || Strings.isEmpty(attr) || values == null || values.length == 0) { return false; }
-    String entityName = Model.getEntityType(clazz).getEntityName();
+    String entityName = modelMeta.getEntityType(clazz).getEntityName();
     StringBuilder hql = new StringBuilder();
     hql.append("delete from ").append(entityName).append(" where ").append(attr).append(" in (:ids)");
     Map<String, Object> parameterMap = CollectUtils.newHashMap();
@@ -533,7 +533,7 @@ public class HibernateEntityDao implements EntityDao {
 
   public boolean remove(Class<?> clazz, Map<String, Object> keyMap) {
     if (clazz == null || keyMap == null || keyMap.isEmpty()) { return false; }
-    String entityName = Model.getEntityType(clazz).getEntityName();
+    String entityName = modelMeta.getEntityType(clazz).getEntityName();
     StringBuilder hql = new StringBuilder();
     hql.append("delete from ").append(entityName).append(" where ");
     Set<String> keySet = keyMap.keySet();
@@ -612,9 +612,10 @@ public class HibernateEntityDao implements EntityDao {
   /**
    * 检查持久化对象是否存在
    * 
-   * @param entityName
-   * @param keyName
+   * @param clazz
    * @param id
+   * @param codeName
+   * @param codeValue
    * @return boolean(是否存在) 如果entityId为空或者有不一样的entity存在则认为存在。
    */
   public boolean duplicate(Class<? extends Entity<?>> clazz, Serializable id, String codeName,
@@ -664,7 +665,7 @@ public class HibernateEntityDao implements EntityDao {
    * 构造查询记录数目的查询字符串
    * 
    * @param query
-   * @return
+   * @return query string
    */
   private String buildCountQueryStr(Query query) {
     String queryStr = "select count(*) ";
@@ -717,9 +718,9 @@ public class HibernateEntityDao implements EntityDao {
     /**
      * 统计该查询的记录数
      * 
-     * @param query
+     * @param limitQuery
      * @param hibernateSession
-     * @return
+     * @return data count
      */
     public static int count(final org.beangle.commons.dao.query.LimitQuery<?> limitQuery,
         final Session hibernateSession) {
@@ -743,7 +744,7 @@ public class HibernateEntityDao implements EntityDao {
      * 
      * @param query
      * @param hibernateSession
-     * @return
+     * @return result list
      */
     @SuppressWarnings("unchecked")
     public static <T> List<T> find(final org.beangle.commons.dao.query.Query<T> query,
@@ -769,7 +770,6 @@ public class HibernateEntityDao implements EntityDao {
      * 
      * @param query
      * @param argument
-     * @return
      */
     public static Query setParameter(final Query query, final Object[] argument) {
       if (argument != null && argument.length > 0) {
@@ -784,8 +784,8 @@ public class HibernateEntityDao implements EntityDao {
      * 为query设置参数
      * 
      * @param query
-     * @param argument
-     * @return
+     * @param parameterMap
+     * @return query
      */
     public static Query setParameter(final Query query, final Map<String, Object> parameterMap) {
       if (parameterMap != null && !parameterMap.isEmpty()) {
@@ -845,4 +845,9 @@ public class HibernateEntityDao implements EntityDao {
       }
     }
   }
+
+  public void setModelMeta(ModelMeta modelMeta) {
+    this.modelMeta = modelMeta;
+  }
+
 }

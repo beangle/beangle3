@@ -72,7 +72,6 @@ public class ConcurrentSessionFilter extends GenericHttpFilter {
    * 没有登录或匿名账户不进行session处理
    * 
    * @param request
-   * @return
    */
   protected boolean shouldCare(HttpServletRequest request) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();

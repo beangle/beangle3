@@ -27,7 +27,6 @@ public interface SessionRegistry {
    * 注销指定sessionid
    * 
    * @param sessionid
-   * @return
    */
   public Sessioninfo remove(String sessionid);
 
@@ -35,7 +34,6 @@ public interface SessionRegistry {
    * 过期指定会话
    * 
    * @param sessionid
-   * @return
    */
   public void expire(String sessionid);
 
@@ -44,7 +42,6 @@ public interface SessionRegistry {
    * 
    * @param principal
    * @param includeExpiredSessions
-   * @return
    */
   public List<Sessioninfo> getSessioninfos(String principal, boolean includeExpiredSessions);
 
@@ -52,7 +49,6 @@ public interface SessionRegistry {
    * 查询对应sessionid的信息
    * 
    * @param sessionid
-   * @return
    */
   public Sessioninfo getSessioninfo(String sessionid);
 
@@ -60,7 +56,6 @@ public interface SessionRegistry {
    * 查询会话状态
    * 
    * @param sessionid
-   * @return
    */
   public SessionStatus getSessionStatus(String sessionid);
 
@@ -68,14 +63,12 @@ public interface SessionRegistry {
    * 查询帐号是否还有没有过期的在线记录
    * 
    * @param principal
-   * @return
    */
   public boolean isRegisted(String principal);
 
   /**
    * session count
    * 
-   * @return
    */
   public int count();
 
@@ -97,14 +90,12 @@ public interface SessionRegistry {
   /**
    * 查询控制器
    * 
-   * @return
    */
   public SessionController getController();
 
   /**
    * 获取sessinoinfobuilder
    * 
-   * @return
    */
   public SessioninfoBuilder getSessioninfoBuilder();
 
@@ -112,7 +103,6 @@ public interface SessionRegistry {
    * 获取当前session访问的资源
    * 
    * @param sessionid
-   * @return
    */
   public String getResource(String sessionid);
 

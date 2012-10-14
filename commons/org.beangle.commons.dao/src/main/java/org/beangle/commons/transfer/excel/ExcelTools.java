@@ -93,18 +93,12 @@ public class ExcelTools {
   }
 
   /**
-   * <p>
-   * object2Excel.
-   * </p>
+   * List数据集导出生成Excel文件
    * 
-   * @see List数据集导出生成Excel文件
-   * @param list
-   *          对象数据�?
-   * @param propertyKeys
-   *          对象属�?�字符串，中间以","间隔
-   * @param propertyShowKeys
-   *          显示字段的名字字符串，中间以","间隔
-   * @return 返回�?个HSSFWorkbook（excel）类型数�?.
+   * @param list 对象数据列表
+   * @param propertyKeys 对象属字符串，中间以","间隔
+   * @param propertyShowKeys 显示字段的名字字符串，中间以","间隔
+   * @return 返回单个HSSFWorkbook（excel）
    * @throws java.lang.Exception if any.
    * @param exporter a {@link org.beangle.commons.transfer.exporter.PropertyExtractor} object.
    * @param <T> a T object.
@@ -190,11 +184,10 @@ public class ExcelTools {
   }
 
   /**
-   * @see 将StringTokenizer类型数据转化生成字符串数�?
-   * @param sourceStr
-   *          解析","间隔的字符串，变成字符串数组
+   * 将StringTokenizer类型数据转化生成字符串数�?
+   * 
+   * @param sourceStr 解析","间隔的字符串，变成字符串数组
    * @param strDot
-   * @return
    */
   private String[] Tokenizer2StringArray(String sourceStr, String strDot) {
     StringTokenizer st = new StringTokenizer(sourceStr, strDot);
@@ -203,7 +196,6 @@ public class ExcelTools {
     for (int i = 0; i < size; i++) {
       strArray[i] = st.nextToken();
     }
-
     return strArray;
   }
 }

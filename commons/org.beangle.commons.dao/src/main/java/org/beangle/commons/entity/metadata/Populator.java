@@ -62,10 +62,12 @@ public interface Populator {
   public Object populate(String entityName, Map<String, Object> params);
 
   /**
+   * Set value to target's attribute.
+   * 
    * @param target
    * @param attr
    * @param value
-   * @return
+   * @return true if success
    */
   public boolean populateValue(Object target, String attr, Object value);
 
@@ -74,7 +76,7 @@ public interface Populator {
    * @param entityName
    * @param attr
    * @param value
-   * @return
+   * @return true when success populate.
    */
   public boolean populateValue(Object target, String entityName, String attr, Object value);
 

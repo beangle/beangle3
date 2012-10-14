@@ -20,7 +20,6 @@ public interface Menu extends LongIdEntity, HierarchyEntity<Menu, Long>, Compara
   /**
    * 同级菜单索引号
    * 
-   * @return
    */
   public String getCode();
 
@@ -34,14 +33,12 @@ public interface Menu extends LongIdEntity, HierarchyEntity<Menu, Long>, Compara
   /**
    * 菜单的层级，从1开始
    * 
-   * @return
    */
   public int getDepth();
 
   /**
    * 菜单名称
    * 
-   * @return
    */
   public String getName();
 
@@ -55,7 +52,6 @@ public interface Menu extends LongIdEntity, HierarchyEntity<Menu, Long>, Compara
   /**
    * 菜单标题
    * 
-   * @return
    */
   public String getTitle();
 

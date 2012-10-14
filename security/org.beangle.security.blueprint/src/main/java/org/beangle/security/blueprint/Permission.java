@@ -18,7 +18,6 @@ public interface Permission extends LongIdEntity, Cloneable, TemporalActiveEntit
   /**
    * 系统资源
    * 
-   * @return
    */
   public Resource getResource();
 
@@ -32,21 +31,18 @@ public interface Permission extends LongIdEntity, Cloneable, TemporalActiveEntit
   /**
    * 授权的操作
    * 
-   * @return
    */
   public String getActions();
 
   /**
    * 访问资源时执行的检查条件
    * 
-   * @return
    */
   public String getRestrictions();
 
   /**
    * 说明
    * 
-   * @return
    */
   public String getRemark();
 }

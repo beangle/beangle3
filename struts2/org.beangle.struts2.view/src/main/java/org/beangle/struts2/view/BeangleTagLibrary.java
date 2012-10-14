@@ -53,7 +53,6 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
   /**
    * query string and form control
    * 
-   * @return
    */
   public String getParamstring() {
     StringWriter sw = new StringWriter();

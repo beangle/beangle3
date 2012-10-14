@@ -91,7 +91,6 @@ public final class CriterionUtils {
    * @param entity
    * @param excludePropertes
    * @param mode
-   * @return
    */
   @SuppressWarnings("rawtypes")
   public static List<Criterion> getEntityCriterions(String nestedName, Object entity,
@@ -168,7 +167,6 @@ public final class CriterionUtils {
    * @param entity
    * @param properties
    * @param mode
-   * @return
    */
   public static List<Criterion> getLikeCriterions(Object entity, String[] properties, MatchMode mode) {
     List<Criterion> criterions = CollectUtils.newArrayList();
@@ -186,7 +184,6 @@ public final class CriterionUtils {
    * 返回默认采取MatchMode.ANYWHERE的实体参数map
    * 
    * @param entity
-   * @return
    */
   public static Map<String, Object> getParamsMap(Entity<?> entity) {
     if (null == entity) { return Collections.EMPTY_MAP; }
@@ -202,7 +199,6 @@ public final class CriterionUtils {
    *          ,传递null,返回空map.
    * @param mode
    *          若含有非空字符串，采用的like策略
-   * @return
    */
   public static Map<String, Object> getParamsMap(Entity<?> entity, MatchMode mode) {
     if (null == entity) { return Collections.EMPTY_MAP; }
@@ -379,7 +375,6 @@ public final class CriterionUtils {
    * @param excludePropertes
    *          每个元素形式如entityProperty.componentProperty
    * @param enableLike
-   * @return
    */
   private static List<Criterion> getComponentCriterions(String nestedName, Object entity, String property,
       String[] excludePropertes, MatchMode mode, boolean ignoreZero) {

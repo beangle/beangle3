@@ -47,8 +47,6 @@ public final class ConditionUtils {
    * 
    * @param alias
    * @param entity
-   * @param mode
-   * @return
    */
   public static List<Condition> extractConditions(final String alias, final Entity<?> entity) {
     if (null == entity) { return Collections.emptyList(); }
@@ -85,7 +83,6 @@ public final class ConditionUtils {
   /**
    * 获得条件的绑定参数映射
    * 
-   * @param query
    * @param conditions
    */
   public static Map<String, Object> getParamMap(final List<Condition> conditions) {
@@ -99,8 +96,7 @@ public final class ConditionUtils {
   /**
    * 获得条件的绑定参数映射
    * 
-   * @param query
-   * @param conditions
+   * @param condition
    */
   public static Map<String, Object> getParamMap(final Condition condition) {
     final Map<String, Object> params = new HashMap<String, Object>();

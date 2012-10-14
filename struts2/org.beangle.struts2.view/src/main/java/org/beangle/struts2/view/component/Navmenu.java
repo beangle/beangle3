@@ -43,7 +43,6 @@ public class Navmenu extends ClosingUIBean {
    * 
    * @param first
    * @param second
-   * @return
    */
   private boolean sameAction(String first) {
     StringBuilder firstSb = new StringBuilder(Strings.substringBefore(first, "."));

@@ -125,7 +125,7 @@ public final class EntityUtils {
   /**
    * 判断实体类中的属性是否全部为空
    * 
-   * @param entity a {@link org.beangle.commons.dao.Entity} object.
+   * @param entity a {@link org.beangle.commons.entity.Entity} object.
    * @param ignoreDefault
    *          忽略数字和字符串的默认值
    * @return a boolean.

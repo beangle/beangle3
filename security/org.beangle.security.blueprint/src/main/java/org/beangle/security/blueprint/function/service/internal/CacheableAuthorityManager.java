@@ -79,7 +79,6 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
    * 
    * @param authority
    * @param resource
-   * @return
    */
   private boolean isAuthorizedByRole(GrantedAuthority authority, Object resource) {
     Set<?> actions = authorities.get(authority);

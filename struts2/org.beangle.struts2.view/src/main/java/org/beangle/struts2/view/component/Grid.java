@@ -321,8 +321,7 @@ public class Grid extends ClosingUIBean {
     /**
      * find value of row.obj's property
      * 
-     * @return
-     */
+       */
     public Object getValue() {
       return getValue(row.curObj, property);
     }
@@ -338,8 +337,7 @@ public class Grid extends ClosingUIBean {
     /**
      * 支持按照属性提取国际化英文名
      * 
-     * @return
-     */
+       */
     public String getTitle() {
       if (null == title) {
         title = Strings.concat(row.table.var, ".", property);

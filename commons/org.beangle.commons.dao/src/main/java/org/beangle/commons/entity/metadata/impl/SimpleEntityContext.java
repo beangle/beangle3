@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Type;
 import org.beangle.commons.lang.ClassLoaders;
@@ -24,19 +25,14 @@ import org.slf4j.LoggerFactory;
  * @author chaostone
  * @version $Id: $
  */
-public class SimpleEntityContext extends AbstractEntityContext {
+public class SimpleEntityContext extends AbstractEntityContext implements Initializing {
 
   private static final Logger logger = LoggerFactory.getLogger(SimpleEntityContext.class);
 
-  /**
-   * <p>
-   * Constructor for SimpleEntityContext.
-   * </p>
-   */
-  public SimpleEntityContext() {
+  public void init() throws Exception {
     Properties props = new Properties();
     try {
-      InputStream is = ClassLoaders.getResourceAsStream("model.properties",getClass());
+      InputStream is = ClassLoaders.getResourceAsStream("model.properties", getClass());
       if (null != is) {
         props.load(is);
       }
@@ -59,5 +55,6 @@ public class SimpleEntityContext extends AbstractEntityContext {
         entityTypes.put(key, entityType);
       }
     }
+
   }
 }

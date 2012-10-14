@@ -37,8 +37,6 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
    * <p>
    * Constructor for OqlBuilder.
    * </p>
-   * 
-   * @param <T> a T object.
    */
   protected OqlBuilder() {
     super();
@@ -453,8 +451,8 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
    * Having subclause.
    * </p>
    * 
-   * @param having subclause
-   * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
+   * @param what having subclause
+   * @return this
    */
   public OqlBuilder<T> having(final String what) {
     Assert.isTrue(null != groups && !groups.isEmpty());

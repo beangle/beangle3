@@ -63,7 +63,6 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
    * 
    * @param request
    * @param response
-   * @return
    */
   protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();

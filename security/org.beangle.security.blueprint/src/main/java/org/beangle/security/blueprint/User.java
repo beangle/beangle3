@@ -39,7 +39,6 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
   /**
    * 用户真实姓名
    * 
-   * @return
    */
   public String getFullname();
 
@@ -53,7 +52,6 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
   /**
    * 用户密码(不限制是明码还是密文)
    * 
-   * @return
    */
   public String getPassword();
 
@@ -67,21 +65,18 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
   /**
    * 用户邮件
    * 
-   * @return
    */
   public String getMail();
 
   /**
    * 用户邮件
    * 
-   * @return
    */
   public void setMail(String mail);
 
   /**
    * 对应角色成员
    * 
-   * @return
    */
   public Set<Member> getMembers();
 
@@ -102,7 +97,6 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
   /**
    * 创建者
    * 
-   * @return
    */
   public User getCreator();
 
@@ -116,14 +110,12 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
   /**
    * 是否启用
    * 
-   * @return
    */
   public boolean isEnabled();
 
   /**
    * 备注
    * 
-   * @return
    */
   public String getRemark();
 
@@ -137,14 +129,12 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
   /**
    * 账户是否过期
    * 
-   * @return
    */
   public boolean isAccountExpired();
 
   /**
    * 是否密码过期
    * 
-   * @return
    */
   public boolean isPasswordExpired();
 

@@ -94,7 +94,6 @@ public abstract class EntityActionSupport extends ActionSupport {
   /**
    * 主页面
    * 
-   * @return
    */
   public String index() throws Exception {
     indexSetting();
@@ -104,7 +103,6 @@ public abstract class EntityActionSupport extends ActionSupport {
   /**
    * 查找标准
    * 
-   * @return
    */
   public String search() {
     put(getShortName() + "s", search(getQueryBuilder()));
@@ -118,7 +116,6 @@ public abstract class EntityActionSupport extends ActionSupport {
   /**
    * 修改标准
    * 
-   * @return
    */
   public String edit() {
     Serializable entityId = getId(Model.getEntityType(getEntityName()).getIdType(), getShortName());
@@ -136,7 +133,6 @@ public abstract class EntityActionSupport extends ActionSupport {
   /**
    * 删除
    * 
-   * @return
    */
   public String remove() throws Exception {
     Class<? extends Serializable> idclass = Model.getEntityType(getEntityName()).getIdType();
@@ -154,7 +150,6 @@ public abstract class EntityActionSupport extends ActionSupport {
   /**
    * 保存修改后的标准
    * 
-   * @return
    */
   public String save() throws Exception {
     return saveAndForward(populateEntity());
@@ -167,7 +162,6 @@ public abstract class EntityActionSupport extends ActionSupport {
   /**
    * @deprecated Use getId
    * @param shortName
-   * @return
    */
   protected Long getEntityId(String shortName) {
     return getId(Long.class, shortName);
@@ -176,7 +170,6 @@ public abstract class EntityActionSupport extends ActionSupport {
   /**
    * @deprecated user getIds directly
    * @param shortName
-   * @return
    */
   protected Long[] getEntityIds(String shortName) {
     return getIds(Long.class, shortName);
@@ -239,7 +232,6 @@ public abstract class EntityActionSupport extends ActionSupport {
   /**
    * 查看信息
    * 
-   * @return
    */
   public String info() throws Exception {
     Serializable entityId = getId(Model.getEntityType(getEntityName()).getIdType(), getShortName());
@@ -263,7 +255,6 @@ public abstract class EntityActionSupport extends ActionSupport {
    * 保存对象
    * 
    * @param entity
-   * @return
    */
   protected String saveAndForward(Entity<?> entity) {
     try {
@@ -327,7 +318,6 @@ public abstract class EntityActionSupport extends ActionSupport {
   /**
    * 导出数据
    * 
-   * @return
    * @throws Exception
    */
   public String export() throws Exception {
@@ -414,7 +404,6 @@ public abstract class EntityActionSupport extends ActionSupport {
   /**
    * 构建实体导入者
    * 
-   * @return
    */
   protected EntityImporter buildEntityImporter() {
     if (null == getEntityName()) {
@@ -428,7 +417,6 @@ public abstract class EntityActionSupport extends ActionSupport {
    * 用于构建单个实体类的导入构造器
    * 
    * @param clazz
-   * @return
    */
   protected EntityImporter buildEntityImporter(Class<?> clazz) {
     return buildEntityImporter("importFile", clazz);
@@ -439,7 +427,6 @@ public abstract class EntityActionSupport extends ActionSupport {
    * 
    * @param upload
    * @param clazz
-   * @return
    */
   protected EntityImporter buildEntityImporter(String upload, Class<?> clazz) {
     try {
@@ -477,7 +464,6 @@ public abstract class EntityActionSupport extends ActionSupport {
   /**
    * 导入信息
    * 
-   * @return
    */
   public String importData() {
     TransferResult tr = new TransferResult();

@@ -18,7 +18,6 @@ public class PopulateHelper {
    * @param request
    * @param clazz
    * @param name
-   * @return
    */
   @SuppressWarnings("unchecked")
   public static <T> T populate(Class<T> clazz, String name) {

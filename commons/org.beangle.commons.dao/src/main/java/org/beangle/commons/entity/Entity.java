@@ -17,7 +17,6 @@ public interface Entity<ID extends Serializable> extends Serializable{
   /**
    * 返回实体的id
    * 
-   * @param <ID> a ID object.
    * @return a ID object.
    */
   public ID getIdentifier();

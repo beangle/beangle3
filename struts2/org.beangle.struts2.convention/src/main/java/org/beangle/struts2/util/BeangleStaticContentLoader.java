@@ -269,7 +269,6 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
   /**
    * Additional static resource search package
    * 
-   * @return
    */
   protected String getAdditionalPackages() {
     return "static template";

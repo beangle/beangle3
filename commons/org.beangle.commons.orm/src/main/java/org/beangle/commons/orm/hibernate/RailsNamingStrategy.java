@@ -164,7 +164,6 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
   /**
    * 检查是否为ManyToOne调用
    * 
-   * @return
    */
   private boolean isManyToOne() {
     StackTraceElement[] trace = Thread.currentThread().getStackTrace();

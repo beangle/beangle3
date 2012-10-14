@@ -22,14 +22,12 @@ public interface DataPermission extends Permission {
   /**
    * 允许访问的部分
    * 
-   * @return
    */
   String getAttrs();
 
   /**
    * 资源过滤器
    * 
-   * @return
    */
   String getFilters();
 

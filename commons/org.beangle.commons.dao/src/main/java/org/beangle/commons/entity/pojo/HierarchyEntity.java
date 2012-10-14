@@ -24,8 +24,6 @@ public interface HierarchyEntity<T, ID extends Serializable> extends Entity<ID> 
    * getParent.
    * </p>
    * 
-   * @param <T> a T object.
-   * @param <ID> a ID object.
    * @return a T object.
    */
   public T getParent();

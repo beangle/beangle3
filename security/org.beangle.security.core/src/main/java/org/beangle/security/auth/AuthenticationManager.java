@@ -17,7 +17,6 @@ public interface AuthenticationManager {
    * 认证
    * 
    * @param auth
-   * @return
    * @throws AuthenticationException
    */
   public Authentication authenticate(Authentication auth) throws AuthenticationException;

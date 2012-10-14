@@ -126,7 +126,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * </p>
    * 
    * @param attr a {@link java.lang.String} object.
-   * @return a {@link org.beangle.commons.dao.metadata.EntityType} object.
+   * @return a {@link org.beangle.commons.entity.metadata.EntityType} object.
    */
   protected EntityType getEntityType(String attr) {
     String alias = Strings.substringBefore(attr, ".");

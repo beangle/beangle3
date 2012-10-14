@@ -111,7 +111,6 @@ public class ActionSupport implements TextResource {
 
   /**
    * @param action
-   * @return
    */
   protected final String forward(Action action) {
     ActionContext.getContext().getContextMap().put("dispatch_action", action);
@@ -130,7 +129,6 @@ public class ActionSupport implements TextResource {
    * @param method
    * @param message
    * @param params
-   * @return
    */
   protected final String redirect(String method, String message, String params) {
     return redirect(new Action((String) null, method, params), message);
@@ -143,7 +141,6 @@ public class ActionSupport implements TextResource {
   /**
    * @param method
    * @param message
-   * @return
    */
   protected final String redirect(String method, String message) {
     return redirect(new Action(method), message);
@@ -346,7 +343,6 @@ public class ActionSupport implements TextResource {
    * 
    * @param shortName
    * @param clazz
-   * @return
    */
   protected final <T> T getId(Class<T> clazz, String shortName) {
     String entityId = get(shortName + ".id");
@@ -364,7 +360,6 @@ public class ActionSupport implements TextResource {
    * Get entity's long id array from parameters shortname.id,shortname.ids,shortnameIds
    * 
    * @param shortName
-   * @return
    */
   protected final Long[] getIds(String shortName) {
     return getIds(Long.class, shortName);
@@ -399,7 +394,6 @@ public class ActionSupport implements TextResource {
    * @param request
    * @param clazz
    * @param title
-   * @return
    */
   protected final <T> T populate(Class<T> clazz, String shortName) {
     return PopulateHelper.populate(clazz, shortName);
@@ -448,7 +442,6 @@ public class ActionSupport implements TextResource {
    * 从request的参数或者cookie中(参数优先)取得分页信息
    * 
    * @param request
-   * @return
    */
   protected final PageLimit getPageLimit() {
     return QueryHelper.getPageLimit();

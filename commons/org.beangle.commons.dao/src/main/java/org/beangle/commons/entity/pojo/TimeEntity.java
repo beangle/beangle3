@@ -20,12 +20,7 @@ import org.beangle.commons.entity.Entity;
 public interface TimeEntity<T extends Serializable> extends Entity<T> {
 
   /**
-   * <p>
-   * getCreatedAt.
-   * </p>
-   * 
-   * @param <T> a T object.
-   * @return a {@link java.util.Date} object.
+   * Returns Created at.
    */
   public Date getCreatedAt();
 

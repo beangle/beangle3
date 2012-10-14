@@ -26,8 +26,6 @@ public interface Dao<T extends Entity<ID>, ID extends Serializable> {
    * </p>
    * 
    * @param id a ID object.
-   * @param <T> a T object.
-   * @param <ID> a ID object.
    * @return a T object.
    */
   public T get(ID id);

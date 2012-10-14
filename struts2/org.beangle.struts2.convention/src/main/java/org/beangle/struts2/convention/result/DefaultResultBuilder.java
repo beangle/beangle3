@@ -145,7 +145,6 @@ public class DefaultResultBuilder implements ResultBuilder {
    * @param path
    * @param param
    * @param redirectParamStr
-   * @return
    */
   private Action buildAction(String path) {
     Action action = (Action) ActionContext.getContext().getContextMap().get("dispatch_action");
@@ -190,7 +189,6 @@ public class DefaultResultBuilder implements ResultBuilder {
    * @param resultTypeConfig
    * @param context
    * @param extraParams
-   * @return
    */
   protected Result buildResult(String resultCode, ResultTypeConfig resultTypeConfig, ActionContext context,
       Map<String, String> params) {

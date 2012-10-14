@@ -56,7 +56,6 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
    * 
    * @param role
    * @param dataResource
-   * @return
    */
   private List<? extends DataPermission> getPermissions(Role role, String dataResourceName,
       String funcResourceName) {
@@ -145,7 +144,6 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
    * 
    * @param property
    * @param restriction
-   * @return
    */
   private Object unmarshal(String value, ProfileField property) {
     try {

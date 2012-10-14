@@ -66,23 +66,14 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
   protected boolean cacheable = false;
 
   /**
-   * <p>
-   * Getter for the field <code>params</code>.
-   * </p>
-   * 
-   * @param <T> a T object.
-   * @return a {@link java.util.Map} object.
+   * Returns params.
    */
   public Map<String, Object> getParams() {
     return (null == params) ? ConditionUtils.getParamMap(conditions) : CollectUtils.newHashMap(params);
   }
 
   /**
-   * <p>
-   * Getter for the field <code>alias</code>.
-   * </p>
-   * 
-   * @return a {@link java.lang.String} object.
+   * Return entity's alias
    */
   public String getAlias() {
     return alias;

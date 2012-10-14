@@ -79,7 +79,6 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
    * Load template in hierarchical path
    * 
    * @param templateName
-   * @return
    * @throws Exception
    */
   private Template getTemplate(String templateName) throws ParseException {
@@ -99,7 +98,6 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
    * 
    * @param stack
    * @param component
-   * @return
    */
   private SimpleHash buildModel(ValueStack stack, Component component) {
     Map<?, ?> context = stack.getContext();

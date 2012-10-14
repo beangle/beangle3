@@ -29,7 +29,6 @@ public class Flash implements Map<Object, Object>, Serializable {
   /**
    * return now and session saved
    * 
-   * @return
    */
   public Set<Object> keySet() {
     return now.keySet();
@@ -39,7 +38,6 @@ public class Flash implements Map<Object, Object>, Serializable {
    * return now and session saved value
    * 
    * @param key
-   * @return
    */
   public Object get(Object key) {
     return now.get(key);

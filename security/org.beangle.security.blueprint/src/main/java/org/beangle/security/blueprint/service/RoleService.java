@@ -48,7 +48,6 @@ public interface RoleService {
    * 过滤能编辑的角色
    * @param user
    * @param roles
-   * @return
    */
   public Set<Role> editable(User user,Collection<Role> roles);
 

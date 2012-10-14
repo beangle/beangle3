@@ -18,7 +18,6 @@ public interface FuncResource extends Resource {
   /**
    * 资源范围
    * 
-   * @return
    */
   Scope getScope();
 

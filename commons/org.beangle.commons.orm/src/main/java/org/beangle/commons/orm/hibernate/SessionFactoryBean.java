@@ -94,7 +94,6 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
    * Can be used to add to mappings from a Hibernate XML config file, or to specify all mappings
    * locally.
    * 
-   * @see #setMappingLocations
    * @see org.hibernate.cfg.Configuration#addResource
    */
   public void setMappingResources(String[] mappingResources) {

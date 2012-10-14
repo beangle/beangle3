@@ -112,7 +112,7 @@ public class OverrideConfiguration extends Configuration {
   /**
    * Update persistentclass and collection's schema.
    * 
-   * @see addClass
+   * @see #addClass(Class)
    */
   @Override
   protected void secondPassCompile() throws MappingException {

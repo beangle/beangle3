@@ -42,7 +42,7 @@ public interface EntityImporter extends Importer {
    * setPopulator.
    * </p>
    * 
-   * @param populator a {@link org.beangle.commons.dao.metadata.Populator} object.
+   * @param populator a {@link org.beangle.commons.entity.metadata.Populator} object.
    */
   public void setPopulator(Populator populator);
 

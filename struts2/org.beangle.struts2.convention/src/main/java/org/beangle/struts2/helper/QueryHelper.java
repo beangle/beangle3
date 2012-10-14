@@ -61,7 +61,6 @@ public class QueryHelper {
    * @param clazz
    * @param prefix
    * @param exclusiveAttrNames
-   * @return
    */
   public static List<Condition> extractConditions(Class<?> clazz, String prefix, String exclusiveAttrNames) {
     Object entity = null;
@@ -106,7 +105,6 @@ public class QueryHelper {
   /**
    * 从的参数或者cookie中(参数优先)取得分页信息
    * 
-   * @return
    */
   public static PageLimit getPageLimit() {
     PageLimit limit = new PageLimit();
@@ -118,7 +116,6 @@ public class QueryHelper {
   /**
    * 获得请求中的页码
    * 
-   * @return
    */
   public static int getPageNo() {
     String pageNo = Params.get(PAGENO);
@@ -133,7 +130,6 @@ public class QueryHelper {
   /**
    * 获得请求中的页长
    * 
-   * @return
    */
   public static int getPageSize() {
     String pageSize = Params.get(PAGESIZE);

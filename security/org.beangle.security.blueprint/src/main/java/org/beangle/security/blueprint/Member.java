@@ -15,7 +15,6 @@ public interface Member extends LongIdTimeEntity {
   /**
    * get role
    * 
-   * @return
    */
   public Role getRole();
 
@@ -29,35 +28,30 @@ public interface Member extends LongIdTimeEntity {
   /**
    * Get User
    * 
-   * @return
    */
   public User getUser();
 
   /**
    * 是否为成员
    * 
-   * @return
    */
   public boolean isMember();
 
   /**
    * 是否是为管理者
    * 
-   * @return
    */
   public boolean isManager();
 
   /**
    * 是否能授权
    * 
-   * @return
    */
   public boolean isGranter();
 
   /**
    * membership
    * 
-   * @return
    */
   public boolean is(Ship ship);
 

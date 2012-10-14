@@ -20,14 +20,12 @@ public interface UserDataProvider {
    * @param <T>
    * @param type
    * @param source
-   * @return
    */
   public <T> List<T> getData(ProfileField field, String source,Object... keys);
 
   /**
    * provider's unique name
    * 
-   * @return
    */
   public String getName();
 }

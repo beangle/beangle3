@@ -219,11 +219,8 @@ public class ExcelItemReader implements ItemReader {
   }
 
   /**
-   * <p>
-   * getCellValue.
-   * </p>
+   * 取cell单元格中的数据
    * 
-   * @see 取cell单元格中的数据
    * @param cell a {@link org.apache.poi.hssf.usermodel.HSSFCell} object.
    * @return a {@link java.lang.Object} object.
    */

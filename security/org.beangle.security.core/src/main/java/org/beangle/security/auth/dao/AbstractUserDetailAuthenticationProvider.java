@@ -29,7 +29,6 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
    * 从token中找出用户名
    * 
    * @param authentication
-   * @return
    */
   protected String determinePrincipal(Authentication authentication) {
     return (authentication.getPrincipal() == null) ? "NONE_PROVIDED" : authentication.getName();

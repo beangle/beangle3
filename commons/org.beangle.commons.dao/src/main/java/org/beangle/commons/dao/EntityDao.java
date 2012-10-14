@@ -145,7 +145,6 @@ public interface EntityDao {
    * 
    * @param queryName
    * @param params
-   * @param cacheable
    */
   public <T> List<T> searchNamedQuery(final String queryName, final Map<String, Object> params);
 

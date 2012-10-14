@@ -7,32 +7,13 @@ package org.beangle.commons.entity.metadata;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.beangle.commons.entity.metadata.impl.ConvertPopulatorBean;
-import org.beangle.commons.entity.metadata.impl.DefaultModelMeta;
-import org.beangle.commons.entity.metadata.impl.SimpleEntityContext;
-
 /**
- * <p>
- * Model class.
- * </p>
+ * Model meta data
  * 
  * @author chaostone
- * @version $Id: $
+ * @since 3.0.0
  */
-public final class Model {
-
-  /** Constant <code>NULL="null"</code> */
-  public static final String NULL = "null";
-
-  public static DefaultModelMeta meta = new DefaultModelMeta();
-
-  static {
-    meta.setContext(new SimpleEntityContext());
-    meta.setPopulator(new ConvertPopulatorBean());
-  }
-
-  private Model() {
-  }
+public interface ModelMeta {
 
   /**
    * <p>
@@ -43,9 +24,7 @@ public final class Model {
    * @param <T> a T object.
    * @return a T object.
    */
-  public static <T> T newInstance(final Class<T> clazz) {
-    return meta.newInstance(clazz);
-  }
+  public <T> T newInstance(final Class<T> clazz);
 
   /**
    * <p>
@@ -57,9 +36,7 @@ public final class Model {
    * @param <T> a T object.
    * @return a T object.
    */
-  public static <T> T newInstance(final Class<T> clazz, final Serializable id) {
-    return meta.newInstance(clazz, id);
-  }
+  public <T> T newInstance(final Class<T> clazz, final Serializable id);
 
   /**
    * <p>
@@ -69,9 +46,7 @@ public final class Model {
    * @param entityName a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.entity.metadata.EntityType} object.
    */
-  public static EntityType getEntityType(String entityName) {
-    return meta.getEntityType(entityName);
-  }
+  public EntityType getEntityType(String entityName);
 
   /**
    * <p>
@@ -81,9 +56,7 @@ public final class Model {
    * @param entityName a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.entity.metadata.Type} object.
    */
-  public static Type getType(String entityName) {
-    return meta.getType(entityName);
-  }
+  public Type getType(String entityName);
 
   /**
    * <p>
@@ -93,9 +66,7 @@ public final class Model {
    * @param obj a {@link java.lang.Object} object.
    * @return a {@link java.lang.String} object.
    */
-  public static String getEntityName(Object obj) {
-    return meta.getEntityName(obj);
-  }
+  public String getEntityName(Object obj);
 
   /**
    * <p>
@@ -105,9 +76,7 @@ public final class Model {
    * @param clazz a {@link java.lang.Class} object.
    * @return a {@link org.beangle.commons.entity.metadata.EntityType} object.
    */
-  public static EntityType getEntityType(Class<?> clazz) {
-    return meta.getEntityType(clazz);
-  }
+  public EntityType getEntityType(Class<?> clazz);
 
   /**
    * 将params中的属性([attr(string)->value(object)]，放入到实体类中。<br>
@@ -118,16 +87,10 @@ public final class Model {
    * @param params a {@link java.util.Map} object.
    * @param entity a {@link java.lang.Object} object.
    */
-  public static void populate(Map<String, Object> params, Object entity) {
-    meta.populate(params, entity);
-  }
+  void populate(Map<String, Object> params, Object entity);
 
-  public static Populator getPopulator() {
-    return meta.getPopulator();
-  }
-
-  public static void setMeta(DefaultModelMeta meta) {
-    Model.meta = meta;
-  }
-
+  /**
+   * Returns populator
+   */
+  Populator getPopulator();
 }

@@ -26,7 +26,6 @@ public interface MenuProfile extends LongIdEntity {
   /**
    * 资源状态
    * 
-   * @return
    */
   public boolean isEnabled();
 
@@ -34,7 +33,6 @@ public interface MenuProfile extends LongIdEntity {
    * 设置资源状态
    * 
    * @param IsActive
-   * @return
    */
   public void setEnabled(boolean isEnabled);
 }

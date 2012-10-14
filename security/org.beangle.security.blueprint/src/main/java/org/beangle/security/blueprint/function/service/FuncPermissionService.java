@@ -27,7 +27,6 @@ public interface FuncPermissionService {
    * 按照资源名称查询单独的资源
    * 
    * @param name
-   * @return
    */
   public FuncResource getResource(String name);
 
@@ -35,7 +34,6 @@ public interface FuncPermissionService {
    * 查询用户的访问资源范围
    * 
    * @param user
-   * @return
    */
   public List<FuncResource> getResources(User user);
 
@@ -43,7 +41,6 @@ public interface FuncPermissionService {
    * 按照角色查找资源
    * 
    * @param roleId
-   * @return
    */
   public Set<String> getResourceNamesByRole(Long roleId);
 
@@ -51,7 +48,6 @@ public interface FuncPermissionService {
    * 按照角色查找资源
    * 
    * @param scope
-   * @return
    */
   public Set<String> getResourceNamesByScope(FuncResource.Scope scope);
 
@@ -59,7 +55,6 @@ public interface FuncPermissionService {
    * 角色内对应的资源
    * 
    * @param role
-   * @return
    */
   public List<FuncResource> getResources(Role role);
 
@@ -75,7 +70,6 @@ public interface FuncPermissionService {
    * 依据默认深度（小于或等于）得到用户的所有权限
    * 
    * @param user
-   * @return
    */
   public List<FuncPermission> getPermissions(User user);
 
@@ -83,7 +77,6 @@ public interface FuncPermissionService {
    * 依据默认深度得到角色拥有的权限
    * 
    * @param role
-   * @return
    */
   public List<FuncPermission> getPermissions(Role role);
 
@@ -101,7 +94,6 @@ public interface FuncPermissionService {
   public void setUserService(UserService userService);
 
   /**
-   * @return
    */
   public UserService getUserService();
 
@@ -110,7 +102,6 @@ public interface FuncPermissionService {
    * 
    * @param uri
    *          with out context path
-   * @return
    */
   public String extractResource(String uri);
 }

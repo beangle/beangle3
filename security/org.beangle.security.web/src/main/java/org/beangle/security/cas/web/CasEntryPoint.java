@@ -93,7 +93,6 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
    * @param serverName
    * @param artifactParameterName
    * @param encode
-   * @return
    */
   public String constructLocalLoginServiceUrl(final HttpServletRequest request,
       final HttpServletResponse response, final String service, final String serverName,

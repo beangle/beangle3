@@ -67,7 +67,6 @@ public class SymmetricEncryptHelper {
    * 
    * @param value
    *          字节数组
-   * @return
    */
   public static String toHexString(byte[] value) {
     String newString = "";
@@ -90,7 +89,6 @@ public class SymmetricEncryptHelper {
    * 
    * @param value
    *          字节数组
-   * @return
    */
   public static byte[] fromHexString(String value) {
     byte[] rs = new byte[value.length() / 2];

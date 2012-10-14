@@ -32,12 +32,7 @@ public abstract class AbstractQuery<T> implements QueryBuilder<T> {
   protected boolean cacheable = false;
 
   /**
-   * <p>
-   * Getter for the field <code>limit</code>.
-   * </p>
-   * 
-   * @param <T> a T object.
-   * @return a {@link org.beangle.commons.collection.page.PageLimit} object.
+   * Returns limit
    */
   public PageLimit getLimit() {
     return limit;

@@ -27,7 +27,6 @@ public interface DataPermissionService {
    * @param userId 访问用户Id 不能为空
    * @param dataResource 数据资源名 不能为空
    * @param functionResource 数据资源名 不能为空
-   * @return
    */
   DataPermission getPermission(Long userId, String dataResource, String functionResource);
 
@@ -45,7 +44,6 @@ public interface DataPermissionService {
    * 
    * @param field
    * @param profile
-   * @return
    */
   Object getPropertyValue(ProfileField field, Profile profile);
 
@@ -53,7 +51,6 @@ public interface DataPermissionService {
    * 查找用户对应的数据配置
    * 
    * @param userId
-   * @return
    */
   List<UserProfile> getUserProfiles(User user);
 
@@ -61,7 +58,6 @@ public interface DataPermissionService {
    * Search Role profile
    * 
    * @param role
-   * @return
    */
   RoleProfile getRoleProfile(Role role);
 
@@ -69,7 +65,6 @@ public interface DataPermissionService {
    * Search field values
    * 
    * @param field
-   * @return
    */
   List<?> getFieldValues(ProfileField field,Object... keys);
 
@@ -77,7 +72,6 @@ public interface DataPermissionService {
    * Search field
    * 
    * @param fieldName
-   * @return
    */
   ProfileField getProfileField(String fieldName);
 
