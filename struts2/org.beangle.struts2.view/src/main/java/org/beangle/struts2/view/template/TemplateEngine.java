@@ -10,9 +10,15 @@ import org.beangle.struts2.view.component.Component;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
+/**
+ * Template engine
+ * 
+ * @author chaostone
+ * @since 2.0
+ */
 public interface TemplateEngine {
 
-  public void render(String template, ValueStack stack, Writer writer, Component component) throws Exception;
+  void render(String template, ValueStack stack, Writer writer, Component component) throws Exception;
 
-  public String getSuffix();
+  String getSuffix();
 }

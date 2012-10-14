@@ -19,66 +19,62 @@ public interface Menu extends LongIdEntity, HierarchyEntity<Menu, Long>, Compara
 
   /**
    * 同级菜单索引号
-   * 
    */
-  public String getCode();
+  String getCode();
 
   /**
    * 设置代码
    * 
    * @param code
    */
-  public void setCode(String code);
+  void setCode(String code);
 
   /**
    * 菜单的层级，从1开始
-   * 
    */
-  public int getDepth();
+  int getDepth();
 
   /**
    * 菜单名称
-   * 
    */
-  public String getName();
+  String getName();
 
   /**
    * 设置菜单名称
    * 
    * @param name
    */
-  public void setName(String name);
+  void setName(String name);
 
   /**
    * 菜单标题
-   * 
    */
-  public String getTitle();
+  String getTitle();
 
   /**
    * 设置菜单标题
    * 
    * @param title
    */
-  public void setTitle(String title);
+  void setTitle(String title);
 
-  public String getEntry();
+  String getEntry();
 
-  public void setEntry(String entry);
+  void setEntry(String entry);
 
-  public String getRemark();
+  String getRemark();
 
-  public void setRemark(String remark);
+  void setRemark(String remark);
 
-  public Set<FuncResource> getResources();
+  Set<FuncResource> getResources();
 
-  public void setResources(Set<FuncResource> resources);
+  void setResources(Set<FuncResource> resources);
 
-  public boolean isEnabled();
+  boolean isEnabled();
 
-  public void setEnabled(boolean enabled);
+  void setEnabled(boolean enabled);
 
-  public MenuProfile getProfile();
+  MenuProfile getProfile();
 
-  public void setProfile(MenuProfile profile);
+  void setProfile(MenuProfile profile);
 }

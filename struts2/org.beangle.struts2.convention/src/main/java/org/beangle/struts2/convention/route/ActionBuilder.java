@@ -11,10 +11,10 @@ public interface ActionBuilder {
    * 
    * @param className
    */
-  public Action build(String className);
+  Action build(String className);
 
-  public void setProfileService(ProfileService profileService);
+  void setProfileService(ProfileService profileService);
 
-  public ProfileService getProfileService();
+  ProfileService getProfileService();
 
 }

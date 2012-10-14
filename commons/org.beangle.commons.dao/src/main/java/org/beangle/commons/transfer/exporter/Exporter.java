@@ -22,7 +22,7 @@ public interface Exporter extends Transfer {
    * 
    * @param context a {@link org.beangle.commons.transfer.exporter.Context} object.
    */
-  public void setContext(Context context);
+  void setContext(Context context);
 
   /**
    * <p>
@@ -31,7 +31,7 @@ public interface Exporter extends Transfer {
    * 
    * @param writer a {@link org.beangle.commons.transfer.io.Writer} object.
    */
-  public void setWriter(Writer writer);
+  void setWriter(Writer writer);
 
   /**
    * <p>
@@ -40,5 +40,5 @@ public interface Exporter extends Transfer {
    * 
    * @return a {@link org.beangle.commons.transfer.io.Writer} object.
    */
-  public Writer getWriter();
+  Writer getWriter();
 }

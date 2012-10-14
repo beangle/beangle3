@@ -19,5 +19,5 @@ public interface AuthenticationManager {
    * @param auth
    * @throws AuthenticationException
    */
-  public Authentication authenticate(Authentication auth) throws AuthenticationException;
+  Authentication authenticate(Authentication auth) throws AuthenticationException;
 }

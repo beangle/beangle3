@@ -1,3 +1,7 @@
+/* Copyright c 2005-2012.
+ * Licensed under GNU  LESSER General Public License, Version 3.
+ * http://www.gnu.org/licenses
+ */
 package org.beangle.commons.context.spring;
 
 import java.util.List;
@@ -9,6 +13,10 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+/**
+ * @author chaostone
+ * @since 3.0.0
+ */
 public class SpringEventMulticaster extends DefaultEventMulticaster implements ApplicationContextAware {
 
   List<String> listenerBeans = CollectUtils.newArrayList();

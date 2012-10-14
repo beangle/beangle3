@@ -4,19 +4,18 @@
  */
 package org.beangle.notification;
 
-
 /**
  * 消息通知任务
  */
 public interface NotificationTask<T extends Message> {
 
-  public Notifier<T> getNotifier();
+  Notifier<T> getNotifier();
 
-  public void setNotifier(Notifier<T> notifier);
+  void setNotifier(Notifier<T> notifier);
 
-  public MessageQueue<T> getMessageQueue();
+  MessageQueue<T> getMessageQueue();
 
-  public void setMessageQueue(MessageQueue<T> messageQueue);
+  void setMessageQueue(MessageQueue<T> messageQueue);
 
-  public void send();
+  void send();
 }

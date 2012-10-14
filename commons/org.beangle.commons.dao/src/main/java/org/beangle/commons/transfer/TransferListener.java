@@ -17,33 +17,33 @@ public interface TransferListener {
    * 
    * @param tr a {@link org.beangle.commons.transfer.TransferResult} object.
    */
-  public void onStart(TransferResult tr);
+  void onStart(TransferResult tr);
 
   /**
    * 结束转换
    * 
    * @param tr a {@link org.beangle.commons.transfer.TransferResult} object.
    */
-  public void onFinish(TransferResult tr);
+  void onFinish(TransferResult tr);
 
   /**
    * 开始转换单个项目
    * 
    * @param tr a {@link org.beangle.commons.transfer.TransferResult} object.
    */
-  public void onItemStart(TransferResult tr);
+  void onItemStart(TransferResult tr);
 
   /**
    * 结束转换单个项目
    * 
    * @param tr a {@link org.beangle.commons.transfer.TransferResult} object.
    */
-  public void onItemFinish(TransferResult tr);
+  void onItemFinish(TransferResult tr);
 
   /**
    * 设置转换器
    * 
    * @param transfer a {@link org.beangle.commons.transfer.Transfer} object.
    */
-  public void setTransfer(Transfer transfer);
+  void setTransfer(Transfer transfer);
 }

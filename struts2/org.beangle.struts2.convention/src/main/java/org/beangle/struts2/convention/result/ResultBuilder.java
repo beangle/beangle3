@@ -15,5 +15,12 @@ import com.opensymphony.xwork2.config.entities.ActionConfig;
  */
 public interface ResultBuilder {
 
-  public Result build(String resultCode, ActionConfig actionConfig, ActionContext context);
+  /**
+   * Return build result
+   * 
+   * @param resultCode
+   * @param actionConfig
+   * @param context
+   */
+  Result build(String resultCode, ActionConfig actionConfig, ActionContext context);
 }

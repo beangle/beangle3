@@ -21,5 +21,5 @@ public interface BindModule {
    * 
    * @return a {@link org.beangle.commons.context.inject.BeanConfig} object.
    */
-  public BeanConfig getConfig();
+  BeanConfig getConfig();
 }

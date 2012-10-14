@@ -14,10 +14,9 @@ import org.beangle.security.core.Authentication;
  */
 public interface SessioninfoBuilder {
 
-  @SuppressWarnings("rawtypes")
-  public Class getSessioninfoClass();
+  Class<? extends Sessioninfo> getSessioninfoType();
 
-  public Sessioninfo build(Authentication auth, String sessionid);
+  Sessioninfo build(Authentication auth, String sessionid);
 
-  public Object buildLog(Sessioninfo info);
+  Object buildLog(Sessioninfo info);
 }

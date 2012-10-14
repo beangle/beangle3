@@ -17,7 +17,7 @@ public interface Query<T> {
   /**
    * Returns query statement.
    */
-  public String getStatement();
+  String getStatement();
 
   /**
    * <p>
@@ -26,7 +26,7 @@ public interface Query<T> {
    * 
    * @return a {@link java.util.Map} object.
    */
-  public Map<String, Object> getParams();
+  Map<String, Object> getParams();
 
   /**
    * <p>
@@ -35,7 +35,7 @@ public interface Query<T> {
    * 
    * @return a boolean.
    */
-  public boolean isCacheable();
+  boolean isCacheable();
 
   /**
    * <p>
@@ -44,5 +44,5 @@ public interface Query<T> {
    * 
    * @return a {@link org.beangle.commons.dao.query.Lang} object.
    */
-  public Lang getLang();
+  Lang getLang();
 }

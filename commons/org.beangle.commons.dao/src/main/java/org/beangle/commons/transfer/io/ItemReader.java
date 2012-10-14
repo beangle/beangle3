@@ -21,7 +21,7 @@ public interface ItemReader extends Reader {
    * 
    * @return an array of {@link java.lang.String} objects.
    */
-  public String[] readDescription();
+  String[] readDescription();
 
   /**
    * <p>
@@ -30,7 +30,7 @@ public interface ItemReader extends Reader {
    * 
    * @return an array of {@link java.lang.String} objects.
    */
-  public String[] readTitle();
+  String[] readTitle();
 
   /**
    * <p>
@@ -39,7 +39,7 @@ public interface ItemReader extends Reader {
    * 
    * @param dataIndex a int.
    */
-  public void setDataIndex(int dataIndex);
+  void setDataIndex(int dataIndex);
 
   /**
    * <p>
@@ -48,7 +48,7 @@ public interface ItemReader extends Reader {
    * 
    * @return a int.
    */
-  public int getDataIndex();
+  int getDataIndex();
 
   /**
    * <p>
@@ -57,7 +57,7 @@ public interface ItemReader extends Reader {
    * 
    * @param headIndex a int.
    */
-  public void setHeadIndex(int headIndex);
+  void setHeadIndex(int headIndex);
 
   /**
    * <p>
@@ -66,5 +66,5 @@ public interface ItemReader extends Reader {
    * 
    * @return a int.
    */
-  public int getHeadIndex();
+  int getHeadIndex();
 }

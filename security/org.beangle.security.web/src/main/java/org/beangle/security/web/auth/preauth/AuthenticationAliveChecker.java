@@ -15,5 +15,5 @@ import org.beangle.security.core.Authentication;
  */
 public interface AuthenticationAliveChecker {
 
-  public boolean check(Authentication auth, HttpServletRequest request);
+  boolean check(Authentication auth, HttpServletRequest request);
 }

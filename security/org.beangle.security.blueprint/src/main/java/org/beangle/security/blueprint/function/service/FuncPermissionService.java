@@ -27,35 +27,35 @@ public interface FuncPermissionService {
    * 
    * @param name
    */
-  public FuncResource getResource(String name);
+  FuncResource getResource(String name);
 
   /**
    * 查询用户的访问资源范围
    * 
    * @param user
    */
-  public List<FuncResource> getResources(User user);
+  List<FuncResource> getResources(User user);
 
   /**
    * 按照角色查找资源
    * 
    * @param roleId
    */
-  public Set<String> getResourceNamesByRole(Long roleId);
+  Set<String> getResourceNamesByRole(Long roleId);
 
   /**
    * 按照角色查找资源
    * 
    * @param scope
    */
-  public Set<String> getResourceNamesByScope(FuncResource.Scope scope);
+  Set<String> getResourceNamesByScope(FuncResource.Scope scope);
 
   /**
    * 角色内对应的资源
    * 
    * @param role
    */
-  public List<FuncResource> getResources(Role role);
+  List<FuncResource> getResources(Role role);
 
   /**
    * 更新资源状态
@@ -63,21 +63,21 @@ public interface FuncPermissionService {
    * @param resourceIds
    * @param isEnabled
    */
-  public void updateState(Long[] resourceIds, boolean isEnabled);
+  void updateState(Long[] resourceIds, boolean isEnabled);
 
   /**
    * 依据默认深度（小于或等于）得到用户的所有权限
    * 
    * @param user
    */
-  public List<FuncPermission> getPermissions(User user);
+  List<FuncPermission> getPermissions(User user);
 
   /**
    * 依据默认深度得到角色拥有的权限
    * 
    * @param role
    */
-  public List<FuncPermission> getPermissions(Role role);
+  List<FuncPermission> getPermissions(Role role);
 
   /**
    * 授权
@@ -85,16 +85,16 @@ public interface FuncPermissionService {
    * @param role
    * @param resources
    */
-  public void authorize(Role role, Set<FuncResource> resources);
+  void authorize(Role role, Set<FuncResource> resources);
 
   /**
    * @param userService
    */
-  public void setUserService(UserService userService);
+  void setUserService(UserService userService);
 
   /**
    */
-  public UserService getUserService();
+  UserService getUserService();
 
   /**
    * Extract Resource from uri
@@ -102,5 +102,5 @@ public interface FuncPermissionService {
    * @param uri
    *          with out context path
    */
-  public String extractResource(String uri);
+  String extractResource(String uri);
 }

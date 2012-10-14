@@ -23,7 +23,7 @@ public interface PropertyConfig {
    * @param name a {@link java.lang.String} object.
    * @return a {@link java.lang.Object} object.
    */
-  public Object get(String name);
+  Object get(String name);
 
   /**
    * <p>
@@ -33,7 +33,7 @@ public interface PropertyConfig {
    * @param name a {@link java.lang.String} object.
    * @param value a {@link java.lang.Object} object.
    */
-  public void set(String name, Object value);
+  void set(String name, Object value);
 
   /**
    * <p>
@@ -45,7 +45,7 @@ public interface PropertyConfig {
    * @param <T> a T object.
    * @return a T object.
    */
-  public <T> T get(Class<T> clazz, String name);
+  <T> T get(Class<T> clazz, String name);
 
   /**
    * <p>
@@ -54,7 +54,7 @@ public interface PropertyConfig {
    * 
    * @param properties a {@link java.util.Properties} object.
    */
-  public void add(Properties properties);
+  void add(Properties properties);
 
   /**
    * <p>
@@ -63,7 +63,7 @@ public interface PropertyConfig {
    * 
    * @return a {@link java.util.Set} object.
    */
-  public Set<String> getNames();
+  Set<String> getNames();
 
   /**
    * <p>
@@ -72,7 +72,7 @@ public interface PropertyConfig {
    * 
    * @param listener a {@link org.beangle.commons.context.property.PropertyConfigListener} object.
    */
-  public void addListener(PropertyConfigListener listener);
+  void addListener(PropertyConfigListener listener);
 
   /**
    * <p>
@@ -81,21 +81,21 @@ public interface PropertyConfig {
    * 
    * @param listener a {@link org.beangle.commons.context.property.PropertyConfigListener} object.
    */
-  public void removeListener(PropertyConfigListener listener);
+  void removeListener(PropertyConfigListener listener);
 
   /**
    * <p>
    * multicast.
    * </p>
    */
-  public void multicast();
+  void multicast();
 
   /**
    * <p>
    * reload.
    * </p>
    */
-  public void reload();
+  void reload();
 
   /**
    * <p>
@@ -104,9 +104,9 @@ public interface PropertyConfig {
    * 
    * @param provider a {@link org.beangle.commons.context.property.PropertyConfig.Provider} object.
    */
-  public void addProvider(Provider provider);
+  void addProvider(Provider provider);
 
-  public interface Provider {
-    public Properties getConfig();
+  interface Provider {
+    Properties getConfig();
   }
 }

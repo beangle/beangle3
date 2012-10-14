@@ -19,12 +19,12 @@ public interface Transfer {
    * 
    * @param tr a {@link org.beangle.commons.transfer.TransferResult} object.
    */
-  public void transfer(TransferResult tr);
+  void transfer(TransferResult tr);
 
   /**
    * 转换一个对象
    */
-  public void transferItem();
+  void transferItem();
 
   /**
    * 添加转换监听器
@@ -32,54 +32,54 @@ public interface Transfer {
    * @param listener a {@link org.beangle.commons.transfer.TransferListener} object.
    * @return a {@link org.beangle.commons.transfer.Transfer} object.
    */
-  public Transfer addListener(TransferListener listener);
+  Transfer addListener(TransferListener listener);
 
   /**
    * 转换数据的类型
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getFormat();
+  String getFormat();
 
   /**
    * 转换使用的locale
    * 
    * @return a {@link java.util.Locale} object.
    */
-  public Locale getLocale();
+  Locale getLocale();
 
   /**
    * 转换数据的名称
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getDataName();
+  String getDataName();
 
   /**
    * 得到转换过程中失败的个数
    * 
    * @return a int.
    */
-  public int getFail();
+  int getFail();
 
   /**
    * 得到转换过程中成功的个数
    * 
    * @return a int.
    */
-  public int getSuccess();
+  int getSuccess();
 
   /**
    * 查询正在转换的对象的次序号,从1开始
    * 
    * @return a int.
    */
-  public int getTranferIndex();
+  int getTranferIndex();
 
   /**
    * 返回方前正在转换成的对象
    * 
    * @return a {@link java.lang.Object} object.
    */
-  public Object getCurrent();
+  Object getCurrent();
 }

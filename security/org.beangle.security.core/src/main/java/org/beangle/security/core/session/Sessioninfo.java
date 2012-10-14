@@ -16,62 +16,54 @@ import org.beangle.commons.entity.pojo.StringIdEntity;
 public interface Sessioninfo extends StringIdEntity {
   /**
    * 用户名
-   * 
    */
-  public String getUsername();
+  String getUsername();
 
   /**
    * 用户全名
-   * 
    */
-  public String getFullname();
+  String getFullname();
 
   /**
    * 登录时间
-   * 
    */
-  public Date getLoginAt();
+  Date getLoginAt();
 
   /**
    * 是否过期
-   * 
    */
-  public boolean isExpired();
+  boolean isExpired();
 
   /**
    * 在线时间
-   * 
    */
-  public long getOnlineTime();
+  long getOnlineTime();
 
   /**
    * 备注
-   * 
    */
-  public String getRemark();
+  String getRemark();
 
   /**
    * 使之过期
    */
-  public void expireNow();
+  void expireNow();
 
   /**
    * 添加备注
    * 
    * @param added
    */
-  public void addRemark(String added);
+  void addRemark(String added);
 
   /**
    * 查询过期时间
-   * 
    */
-  public Date getExpiredAt();
+  Date getExpiredAt();
 
   /**
    * 查询最后访问时间
-   * 
    */
-  public Date getLastAccessAt();
+  Date getLastAccessAt();
 
 }

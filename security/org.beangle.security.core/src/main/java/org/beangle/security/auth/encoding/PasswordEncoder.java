@@ -6,6 +6,6 @@ package org.beangle.security.auth.encoding;
 
 public interface PasswordEncoder {
 
-  public boolean isPasswordValid(String encPass, String rawPass);
+  boolean isPasswordValid(String encPass, String rawPass);
 
 }

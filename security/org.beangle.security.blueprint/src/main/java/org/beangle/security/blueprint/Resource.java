@@ -14,10 +14,10 @@ import org.beangle.commons.entity.pojo.LongIdEntity;
 public interface Resource extends LongIdEntity {
 
   /** 资源的所有部分 */
-  public static final String AllParts = "*";
+  static final String AllParts = "*";
 
   /** 允许所有操作 */
-  public static final String AllActions = "*";
+  static final String AllActions = "*";
 
   /**
    * 资源名称

@@ -1,8 +1,7 @@
-// Decompiled by Jad v1.5.8e. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.geocities.com/kpdus/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   jsende.java
-
+/* Copyright c 2005-2012.
+ * Licensed under GNU  LESSER General Public License, Version 3.
+ * http://www.gnu.org/licenses
+ */
 package org.beangle.security.ldap.auth;
 
 import org.beangle.commons.lang.Strings;

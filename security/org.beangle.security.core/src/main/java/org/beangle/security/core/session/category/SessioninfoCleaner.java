@@ -86,11 +86,10 @@ class SessionCleanerTask extends TimerTask {
     Stopwatch watch = new Stopwatch().start();
     logger.debug("clean up expired or over maxOnlineTime session start ...");
     Calendar calendar = Calendar.getInstance();
-    @SuppressWarnings("unchecked")
-    OqlBuilder<Sessioninfo> builder = OqlBuilder.from(registry.getSessioninfoBuilder().getSessioninfoClass(),
-        "info");
+    OqlBuilder<? extends Sessioninfo> builder = OqlBuilder.from(registry.getSessioninfoBuilder()
+        .getSessioninfoType(), "info");
     builder.where("info.lastAccessAt<:givenTime", Dates.rollMinutes(calendar.getTime(), -expiredTime));
-    List<Sessioninfo> infos = entityDao.search(builder);
+    List<? extends Sessioninfo> infos = entityDao.search(builder);
     int removed = 0;
     for (Sessioninfo info : infos) {
       registry.remove(info.getId());

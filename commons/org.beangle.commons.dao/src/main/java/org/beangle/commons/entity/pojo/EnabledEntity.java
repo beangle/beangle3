@@ -17,7 +17,7 @@ public interface EnabledEntity {
    * 
    * @return 是否启用
    */
-  public boolean isEnabled();
+  boolean isEnabled();
 
   /**
    * 设置是否启用
@@ -25,6 +25,6 @@ public interface EnabledEntity {
    * @param enabled
    *          是否启用
    */
-  public void setEnabled(boolean enabled);
+  void setEnabled(boolean enabled);
 
 }

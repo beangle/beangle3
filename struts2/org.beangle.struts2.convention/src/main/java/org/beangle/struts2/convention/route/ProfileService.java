@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface ProfileService {
 
-  public Profile getProfile(String className);
+  Profile getProfile(String className);
 
-  public Profile getProfile(Class<?> clazz);
+  Profile getProfile(Class<?> clazz);
 
-  public Profile getDefaultProfile();
+  Profile getDefaultProfile();
 
-  public List<Profile> getProfiles();
+  List<Profile> getProfiles();
 
 }

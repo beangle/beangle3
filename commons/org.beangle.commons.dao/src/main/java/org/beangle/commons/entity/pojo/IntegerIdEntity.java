@@ -23,7 +23,7 @@ public interface IntegerIdEntity extends Entity<Integer> {
    * 
    * @return a {@link java.lang.Integer} object.
    */
-  public Integer getId();
+  Integer getId();
 
   /**
    * <p>
@@ -32,5 +32,5 @@ public interface IntegerIdEntity extends Entity<Integer> {
    * 
    * @param id a {@link java.lang.Integer} object.
    */
-  public void setId(Integer id);
+  void setId(Integer id);
 }

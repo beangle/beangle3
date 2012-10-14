@@ -22,7 +22,7 @@ public interface TimeEntity<T extends Serializable> extends Entity<T> {
   /**
    * Returns Created at.
    */
-  public Date getCreatedAt();
+  Date getCreatedAt();
 
   /**
    * <p>
@@ -31,7 +31,7 @@ public interface TimeEntity<T extends Serializable> extends Entity<T> {
    * 
    * @param createdAt a {@link java.util.Date} object.
    */
-  public void setCreatedAt(Date createdAt);
+  void setCreatedAt(Date createdAt);
 
   /**
    * <p>
@@ -40,7 +40,7 @@ public interface TimeEntity<T extends Serializable> extends Entity<T> {
    * 
    * @return a {@link java.util.Date} object.
    */
-  public Date getUpdatedAt();
+  Date getUpdatedAt();
 
   /**
    * <p>
@@ -49,5 +49,5 @@ public interface TimeEntity<T extends Serializable> extends Entity<T> {
    * 
    * @param updatedAt a {@link java.util.Date} object.
    */
-  public void setUpdatedAt(Date updatedAt);
+  void setUpdatedAt(Date updatedAt);
 }

@@ -18,7 +18,7 @@ import org.beangle.security.web.session.model.SessioninfoLogBean;
  */
 public class WebSessioninfoBuilder implements SessioninfoBuilder {
 
-  public Class<? extends Sessioninfo> getSessioninfoClass() {
+  public Class<? extends Sessioninfo> getSessioninfoType() {
     return SessioninfoBean.class;
   }
 

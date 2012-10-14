@@ -26,7 +26,7 @@ public interface EntityImporter extends Importer {
    * 
    * @return a {@link java.util.Set} object.
    */
-  public Set<String> getForeignerKeys();
+  Set<String> getForeignerKeys();
 
   /**
    * <p>
@@ -35,7 +35,7 @@ public interface EntityImporter extends Importer {
    * 
    * @param foreignerKey a {@link java.lang.String} object.
    */
-  public void addForeignedKeys(String foreignerKey);
+  void addForeignedKeys(String foreignerKey);
 
   /**
    * <p>
@@ -44,7 +44,7 @@ public interface EntityImporter extends Importer {
    * 
    * @param populator a {@link org.beangle.commons.entity.metadata.Populator} object.
    */
-  public void setPopulator(Populator populator);
+  void setPopulator(Populator populator);
 
   /**
    * <p>
@@ -53,6 +53,6 @@ public interface EntityImporter extends Importer {
    * 
    * @return a {@link org.beangle.commons.transfer.io.ItemReader} object.
    */
-  public ItemReader getReader();
+  ItemReader getReader();
 
 }

@@ -15,9 +15,8 @@ public interface UsernameSource {
   /**
    * Obtain username supplied in the request.
    * 
-   * @param request
-   *          with username
+   * @param request with username
    * @return username or null if not supplied
    */
-  public String obtainUsername(HttpServletRequest request);
+  String obtainUsername(HttpServletRequest request);
 }

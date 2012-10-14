@@ -16,12 +16,12 @@ import org.beangle.security.blueprint.User;
  */
 public interface UserProfile extends Profile {
 
-  public List<UserProperty> getProperties();
+  List<UserProperty> getProperties();
 
-  public UserProperty getProperty(ProfileField meta);
+  UserProperty getProperty(ProfileField meta);
 
-  public UserProperty getProperty(String name);
+  UserProperty getProperty(String name);
 
-  public User getUser();
+  User getUser();
 
 }

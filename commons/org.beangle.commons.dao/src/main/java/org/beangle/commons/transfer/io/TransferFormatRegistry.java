@@ -20,7 +20,7 @@ public interface TransferFormatRegistry {
    * @param format a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.transfer.io.Writer} object.
    */
-  public Writer getWriter(String format);
+  Writer getWriter(String format);
 
   /**
    * <p>
@@ -30,7 +30,7 @@ public interface TransferFormatRegistry {
    * @param format a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.transfer.io.Reader} object.
    */
-  public Reader getReader(String format);
+  Reader getReader(String format);
 
   /**
    * <p>
@@ -41,7 +41,7 @@ public interface TransferFormatRegistry {
    * @param writerClazz a {@link java.lang.Class} object.
    * @param <T> a T object.
    */
-  public <T extends Writer> void registerWriter(String format, Class<T> writerClazz);
+  <T extends Writer> void registerWriter(String format, Class<T> writerClazz);
 
   /**
    * <p>
@@ -52,7 +52,7 @@ public interface TransferFormatRegistry {
    * @param readerClazz a {@link java.lang.Class} object.
    * @param <T> a T object.
    */
-  public <T extends Reader> void registerReader(String format, Class<T> readerClazz);
+  <T extends Reader> void registerReader(String format, Class<T> readerClazz);
 
   /**
    * <p>
@@ -61,7 +61,7 @@ public interface TransferFormatRegistry {
    * 
    * @param format a {@link java.lang.String} object.
    */
-  public void unRegisterWriter(String format);
+  void unRegisterWriter(String format);
 
   /**
    * <p>
@@ -70,5 +70,5 @@ public interface TransferFormatRegistry {
    * 
    * @param format a {@link java.lang.String} object.
    */
-  public void unRegisterReader(String format);
+  void unRegisterReader(String format);
 }

@@ -26,7 +26,7 @@ public interface HierarchyEntity<T, ID extends Serializable> extends Entity<ID> 
    * 
    * @return a T object.
    */
-  public T getParent();
+  T getParent();
 
   /**
    * <p>
@@ -35,7 +35,7 @@ public interface HierarchyEntity<T, ID extends Serializable> extends Entity<ID> 
    * 
    * @param parent a T object.
    */
-  public void setParent(T parent);
+  void setParent(T parent);
 
   /**
    * <p>
@@ -44,7 +44,7 @@ public interface HierarchyEntity<T, ID extends Serializable> extends Entity<ID> 
    * 
    * @return a {@link java.util.List} object.
    */
-  public List<T> getChildren();
+  List<T> getChildren();
 
   /**
    * <p>
@@ -53,5 +53,5 @@ public interface HierarchyEntity<T, ID extends Serializable> extends Entity<ID> 
    * 
    * @param children a {@link java.util.List} object.
    */
-  public void setChildren(List<T> children);
+  void setChildren(List<T> children);
 }

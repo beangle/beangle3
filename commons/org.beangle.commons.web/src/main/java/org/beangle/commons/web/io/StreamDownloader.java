@@ -19,13 +19,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface StreamDownloader {
 
-  public void download(HttpServletRequest req, HttpServletResponse res, File file);
+  void download(HttpServletRequest req, HttpServletResponse res, File file);
 
-  public void download(HttpServletRequest req, HttpServletResponse res, URL url, String display);
+  void download(HttpServletRequest req, HttpServletResponse res, URL url, String display);
 
-  public void download(HttpServletRequest req, HttpServletResponse res, File file, String display);
+  void download(HttpServletRequest req, HttpServletResponse res, File file, String display);
 
-  public void download(HttpServletRequest req, HttpServletResponse res, InputStream inStream, String name,
+  void download(HttpServletRequest req, HttpServletResponse res, InputStream inStream, String name,
       String display);
 
 }

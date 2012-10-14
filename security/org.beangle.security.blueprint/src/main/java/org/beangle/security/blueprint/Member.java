@@ -14,53 +14,47 @@ public interface Member extends LongIdTimeEntity {
 
   /**
    * get role
-   * 
    */
-  public Role getRole();
+  Role getRole();
 
   /**
    * set role
    * 
    * @param role
    */
-  public void setRole(Role role);
+  void setRole(Role role);
 
   /**
    * Get User
-   * 
    */
-  public User getUser();
+  User getUser();
 
   /**
    * 是否为成员
-   * 
    */
-  public boolean isMember();
+  boolean isMember();
 
   /**
    * 是否是为管理者
-   * 
    */
-  public boolean isManager();
+  boolean isManager();
 
   /**
    * 是否能授权
-   * 
    */
-  public boolean isGranter();
+  boolean isGranter();
 
   /**
    * membership
-   * 
    */
-  public boolean is(Ship ship);
+  boolean is(Ship ship);
 
   /**
    * 成员关系
    * 
    * @author chaostone
    */
-  public enum Ship {
+  enum Ship {
     /**
      * just role member
      */

@@ -18,7 +18,7 @@ public interface Type {
    * 
    * @return a boolean.
    */
-  public boolean isCollectionType();
+  boolean isCollectionType();
 
   /**
    * Is this type a component type. If so, the implementation must be castable
@@ -27,14 +27,14 @@ public interface Type {
    * 
    * @return boolean
    */
-  public boolean isComponentType();
+  boolean isComponentType();
 
   /**
    * Is this type an entity type?
    * 
    * @return boolean
    */
-  public boolean isEntityType();
+  boolean isEntityType();
 
   /**
    * <p>
@@ -44,7 +44,7 @@ public interface Type {
    * @param property a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.entity.metadata.Type} object.
    */
-  public Type getPropertyType(String property);
+  Type getPropertyType(String property);
 
   /**
    * <p>
@@ -53,7 +53,7 @@ public interface Type {
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getName();
+  String getName();
 
   /**
    * <p>
@@ -62,7 +62,7 @@ public interface Type {
    * 
    * @return a {@link java.lang.Class} object.
    */
-  public Class<?> getReturnedClass();
+  Class<?> getReturnedClass();
 
   /**
    * <p>
@@ -71,5 +71,5 @@ public interface Type {
    * 
    * @return a {@link java.lang.Object} object.
    */
-  public Object newInstance();
+  Object newInstance();
 }

@@ -23,7 +23,7 @@ public interface LimitQuery<T> extends Query<T> {
    * 
    * @return a {@link org.beangle.commons.collection.page.PageLimit} object.
    */
-  public PageLimit getLimit();
+  PageLimit getLimit();
 
   /**
    * <p>
@@ -33,7 +33,7 @@ public interface LimitQuery<T> extends Query<T> {
    * @param limit a {@link org.beangle.commons.collection.page.PageLimit} object.
    * @return a {@link org.beangle.commons.dao.query.LimitQuery} object.
    */
-  public LimitQuery<T> limit(final PageLimit limit);
+  LimitQuery<T> limit(final PageLimit limit);
 
   /**
    * <p>
@@ -42,5 +42,5 @@ public interface LimitQuery<T> extends Query<T> {
    * 
    * @return a {@link org.beangle.commons.dao.query.Query} object.
    */
-  public Query<T> getCountQuery();
+  Query<T> getCountQuery();
 }

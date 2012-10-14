@@ -17,6 +17,6 @@ public interface AccessLogger {
    * 
    * @param sessionid
    */
-  public void log(String sessionid, String username, String resource, long beginAt, long endAt);
+  void log(String sessionid, String username, String resource, long beginAt, long endAt);
 
 }

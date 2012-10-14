@@ -8,7 +8,7 @@ import org.beangle.notification.Message;
 
 public interface SendingObserver {
 
-  public void onStart(Message msg);
+  void onStart(Message msg);
 
-  public void onFinish(Message msg);
+  void onFinish(Message msg);
 }

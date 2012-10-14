@@ -25,7 +25,7 @@ public interface QueryBuilder<T> {
    * 
    * @return a {@link org.beangle.commons.dao.query.Query} object.
    */
-  public Query<T> build();
+  Query<T> build();
 
   /**
    * <p>
@@ -35,7 +35,7 @@ public interface QueryBuilder<T> {
    * @param limit a {@link org.beangle.commons.collection.page.PageLimit} object.
    * @return a {@link org.beangle.commons.dao.query.QueryBuilder} object.
    */
-  public QueryBuilder<T> limit(PageLimit limit);
+  QueryBuilder<T> limit(PageLimit limit);
 
   /**
    * <p>
@@ -44,7 +44,7 @@ public interface QueryBuilder<T> {
    * 
    * @return a {@link java.util.Map} object.
    */
-  public Map<String, Object> getParams();
+  Map<String, Object> getParams();
 
   /**
    * <p>
@@ -54,5 +54,5 @@ public interface QueryBuilder<T> {
    * @param newParams a {@link java.util.Map} object.
    * @return a {@link org.beangle.commons.dao.query.QueryBuilder} object.
    */
-  public QueryBuilder<T> params(Map<String, Object> newParams);
+  QueryBuilder<T> params(Map<String, Object> newParams);
 }

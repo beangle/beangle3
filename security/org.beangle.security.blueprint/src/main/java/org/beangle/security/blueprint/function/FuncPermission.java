@@ -16,8 +16,7 @@ public interface FuncPermission extends Permission {
 
   /**
    * 系统资源
-   * 
    */
-  public FuncResource getResource();
+  FuncResource getResource();
 
 }

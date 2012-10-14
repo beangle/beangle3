@@ -12,26 +12,26 @@ import java.io.Serializable;
  * @author chaostone
  * @version $Id: $
  */
-public interface Entity<ID extends Serializable> extends Serializable{
+public interface Entity<ID extends Serializable> extends Serializable {
 
   /**
    * 返回实体的id
    * 
    * @return a ID object.
    */
-  public ID getIdentifier();
+  ID getIdentifier();
 
   /**
    * 是否是持久化对象
    * 
    * @return a boolean.
    */
-  public boolean isPersisted();
+  boolean isPersisted();
 
   /**
    * 是否为未持久化对象
    * 
    * @return a boolean.
    */
-  public boolean isTransient();
+  boolean isTransient();
 }

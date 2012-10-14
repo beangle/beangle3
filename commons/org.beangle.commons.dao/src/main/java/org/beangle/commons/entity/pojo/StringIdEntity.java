@@ -23,7 +23,7 @@ public interface StringIdEntity extends Entity<String> {
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getId();
+  String getId();
 
   /**
    * <p>
@@ -32,6 +32,6 @@ public interface StringIdEntity extends Entity<String> {
    * 
    * @param id a {@link java.lang.String} object.
    */
-  public void setId(String id);
+  void setId(String id);
 
 }

@@ -27,13 +27,11 @@ public interface EntityDao {
   /**
    * 查询指定id的对象
    * 
-   * @param clazz
-   *          类型
-   * @param id
-   *          唯一标识
+   * @param clazz 类型
+   * @param id 唯一标识
    * @return null
    */
-  public <T> T get(Class<T> clazz, Serializable id);
+  <T> T get(Class<T> clazz, Serializable id);
 
   /**
    * Returns model by identifier,null when not found.
@@ -41,14 +39,14 @@ public interface EntityDao {
    * @param entityName
    * @param id
    */
-  public <T> T get(String entityName, Serializable id);
+  <T> T get(String entityName, Serializable id);
 
   /**
    * Returns a list of all entity of clazz.
    * 
    * @param clazz
    */
-  public <T> List<T> getAll(Class<T> clazz);
+  <T> List<T> getAll(Class<T> clazz);
 
   /**
    * 根据属性列举实体
@@ -56,7 +54,7 @@ public interface EntityDao {
    * @param entityClass
    * @param values
    */
-  public <T> List<T> get(Class<T> entityClass, Long... values);
+  <T> List<T> get(Class<T> entityClass, Long... values);
 
   /**
    * 根据属性列举实体
@@ -64,7 +62,7 @@ public interface EntityDao {
    * @param entityClass
    * @param values
    */
-  public <T> List<T> get(Class<T> entityClass, Object... values);
+  <T> List<T> get(Class<T> entityClass, Object... values);
 
   /**
    * 根据属性列举实体
@@ -72,7 +70,7 @@ public interface EntityDao {
    * @param entityClass
    * @param values
    */
-  public <T> List<T> get(Class<T> entityClass, Collection<?> values);
+  <T> List<T> get(Class<T> entityClass, Collection<?> values);
 
   /**
    * 根据属性列举实体
@@ -81,7 +79,7 @@ public interface EntityDao {
    * @param keyName
    * @param values
    */
-  public <T> List<T> get(Class<T> entityClass, String keyName, Object... values);
+  <T> List<T> get(Class<T> entityClass, String keyName, Object... values);
 
   /**
    * 根据属性列举实体
@@ -91,7 +89,7 @@ public interface EntityDao {
    * @param keyName
    * @param values
    */
-  public <T> List<T> get(Class<T> entityClass, String keyName, Collection<?> values);
+  <T> List<T> get(Class<T> entityClass, String keyName, Collection<?> values);
 
   /**
    * @param <T>
@@ -99,14 +97,14 @@ public interface EntityDao {
    * @param attrs
    * @param values
    */
-  public <T> List<T> get(Class<T> entityClass, String[] attrs, Object... values);
+  <T> List<T> get(Class<T> entityClass, String[] attrs, Object... values);
 
   /**
    * @param <T>
    * @param entityClass
    * @param parameterMap
    */
-  public <T> List<T> get(Class<T> entityClass, Map<String, Object> parameterMap);
+  <T> List<T> get(Class<T> entityClass, Map<String, Object> parameterMap);
 
   /**
    * 根据属性列举实体
@@ -115,14 +113,14 @@ public interface EntityDao {
    * @param keyName
    * @param values
    */
-  public <T> List<T> get(String entityName, String keyName, Object... values);
+  <T> List<T> get(String entityName, String keyName, Object... values);
 
   /**
    * 执行查询
    * 
    * @param query
    */
-  public <T> List<T> search(Query<T> query);
+  <T> List<T> search(Query<T> query);
 
   /**
    * 查询hql语句
@@ -130,7 +128,7 @@ public interface EntityDao {
    * @param <T>
    * @param builder
    */
-  public <T> List<T> search(QueryBuilder<T> builder);
+  <T> List<T> search(QueryBuilder<T> builder);
 
   /**
    * 查询hql语句
@@ -138,7 +136,7 @@ public interface EntityDao {
    * @param <T>
    * @param builder
    */
-  public <T> T uniqueResult(QueryBuilder<T> builder);
+  <T> T uniqueResult(QueryBuilder<T> builder);
 
   /**
    * 命名查询
@@ -146,7 +144,7 @@ public interface EntityDao {
    * @param queryName
    * @param params
    */
-  public <T> List<T> searchNamedQuery(final String queryName, final Map<String, Object> params);
+  <T> List<T> searchNamedQuery(final String queryName, final Map<String, Object> params);
 
   /**
    * 命名查询
@@ -154,7 +152,7 @@ public interface EntityDao {
    * @param queryName
    * @param params
    */
-  public <T> List<T> searchNamedQuery(final String queryName, final Object... params);
+  <T> List<T> searchNamedQuery(final String queryName, final Object... params);
 
   /**
    * 支持缓存的命名查询
@@ -163,14 +161,14 @@ public interface EntityDao {
    * @param params
    * @param cacheable
    */
-  public <T> List<T> searchNamedQuery(String queryName, Map<String, Object> params, boolean cacheable);
+  <T> List<T> searchNamedQuery(String queryName, Map<String, Object> params, boolean cacheable);
 
   /**
    * 直接查询
    * 
    * @param hql
    */
-  public <T> List<T> searchHQLQuery(final String hql);
+  <T> List<T> searchHQLQuery(final String hql);
 
   /**
    * HQL查询
@@ -178,7 +176,7 @@ public interface EntityDao {
    * @param hql
    * @param params
    */
-  public <T> List<T> searchHQLQuery(final String hql, final Map<String, Object> params);
+  <T> List<T> searchHQLQuery(final String hql, final Map<String, Object> params);
 
   /**
    * HQL查询<br>
@@ -187,7 +185,7 @@ public interface EntityDao {
    * @param hql
    * @param params
    */
-  public <T> List<T> searchHQLQuery(final String hql, final Object... params);
+  <T> List<T> searchHQLQuery(final String hql, final Object... params);
 
   /**
    * 支持缓存的HQL查询
@@ -196,7 +194,7 @@ public interface EntityDao {
    * @param params
    * @param cacheable
    */
-  public <T> List<T> searchHQLQuery(String hql, final Map<String, Object> params, boolean cacheable);
+  <T> List<T> searchHQLQuery(String hql, final Map<String, Object> params, boolean cacheable);
 
   /**
    * 分页命名查询
@@ -205,8 +203,7 @@ public interface EntityDao {
    * @param params
    * @param limit
    */
-  public <T> Page<T> paginateNamedQuery(final String queryName, final Map<String, Object> params,
-      PageLimit limit);
+  <T> Page<T> paginateNamedQuery(final String queryName, final Map<String, Object> params, PageLimit limit);
 
   /**
    * 分页HQL查询
@@ -215,7 +212,7 @@ public interface EntityDao {
    * @param params
    * @param limit
    */
-  public <T> Page<T> paginateHQLQuery(final String hql, final Map<String, Object> params, PageLimit limit);
+  <T> Page<T> paginateHQLQuery(final String hql, final Map<String, Object> params, PageLimit limit);
 
   /**
    * 执行HQL 进行更新或者删除
@@ -223,7 +220,7 @@ public interface EntityDao {
    * @param hql
    * @param arguments
    */
-  public int executeUpdateHql(String hql, Object... arguments);
+  int executeUpdateHql(String hql, Object... arguments);
 
   /**
    * 重复执行单个hql语句
@@ -231,7 +228,7 @@ public interface EntityDao {
    * @param queryStr
    * @param arguments
    */
-  public int executeUpdateHqlRepeatly(String queryStr, List<Object[]> arguments);
+  int executeUpdateHqlRepeatly(String queryStr, List<Object[]> arguments);
 
   /**
    * 执行HQL 进行更新或者删除
@@ -239,7 +236,7 @@ public interface EntityDao {
    * @param hql
    * @param parameterMap
    */
-  public int executeUpdateHql(String hql, Map<String, Object> parameterMap);
+  int executeUpdateHql(String hql, Map<String, Object> parameterMap);
 
   /**
    * 执行命名语句进行更新或者删除
@@ -247,7 +244,7 @@ public interface EntityDao {
    * @param queryName
    * @param parameterMap
    */
-  public int executeUpdateNamedQuery(String queryName, Map<String, Object> parameterMap);
+  int executeUpdateNamedQuery(String queryName, Map<String, Object> parameterMap);
 
   /**
    * 执行命名语句进行更新或者删除
@@ -255,24 +252,24 @@ public interface EntityDao {
    * @param queryName
    * @param arguments
    */
-  public int executeUpdateNamedQuery(String queryName, Object... arguments);
+  int executeUpdateNamedQuery(String queryName, Object... arguments);
 
   /**
    * 保存或更新单个或多个实体.
    */
-  public void saveOrUpdate(Object... entities);
+  void saveOrUpdate(Object... entities);
 
   /**
    * 保存单个或多个实体.
    */
-  public void save(Object... entities);
+  void save(Object... entities);
 
   /**
    * Save Collection
    * 
    * @param entities
    */
-  public void saveOrUpdate(Collection<?> entities);
+  void saveOrUpdate(Collection<?> entities);
 
   /**
    * 按照实体名称，保存单个或多个实体.
@@ -280,7 +277,7 @@ public interface EntityDao {
    * @param entityName
    * @param entities
    */
-  public void saveOrUpdate(String entityName, Object... entities);
+  void saveOrUpdate(String entityName, Object... entities);
 
   /**
    * Save collection of given entity name.
@@ -288,7 +285,7 @@ public interface EntityDao {
    * @param entityName
    * @param entities
    */
-  public void saveOrUpdate(String entityName, Collection<?> entities);
+  void saveOrUpdate(String entityName, Collection<?> entities);
 
   /**
    * Update entity's property value describe in upateParams where attr in
@@ -299,7 +296,7 @@ public interface EntityDao {
    * @param values
    * @param updateParams
    */
-  public int update(Class<?> entityClass, String attr, Object[] values, Map<String, Object> updateParams);
+  int update(Class<?> entityClass, String attr, Object[] values, Map<String, Object> updateParams);
 
   /**
    * Update entity set argumentName=argumentValue where attr in values.
@@ -310,22 +307,21 @@ public interface EntityDao {
    * @param argumentName
    * @param argumentValue
    */
-  public int update(Class<?> entityClass, String attr, Object[] values, String[] argumentName,
-      Object[] argumentValue);
+  int update(Class<?> entityClass, String attr, Object[] values, String[] argumentName, Object[] argumentValue);
 
   /**
    * 删除单个对象
    * 
    * @param entities
    */
-  public void remove(Object... entities);
+  void remove(Object... entities);
 
   /**
    * 删除集合内的所有对象
    * 
    * @param entities
    */
-  public void remove(Collection<?> entities);
+  void remove(Collection<?> entities);
 
   /**
    * 批量删除对象
@@ -335,7 +331,7 @@ public interface EntityDao {
    * @param values 要修改的values的值集合
    * @return 是否删除成功
    */
-  public boolean remove(Class<?> entityClass, String attr, Object... values);
+  boolean remove(Class<?> entityClass, String attr, Object... values);
 
   /**
    * 批量删除对象
@@ -348,7 +344,7 @@ public interface EntityDao {
    *          (要修改的ids的值集合)
    * @return 是否删除成功
    */
-  public boolean remove(Class<?> entityClass, String attr, Collection<?> values);
+  boolean remove(Class<?> entityClass, String attr, Collection<?> values);
 
   /**
    * 批量删除对象
@@ -358,17 +354,17 @@ public interface EntityDao {
    *          (取得对象的key的name和value对应的Map)
    * @return 是否删除成功
    */
-  public boolean remove(Class<?> entityClass, Map<String, Object> parameterMap);
+  boolean remove(Class<?> entityClass, Map<String, Object> parameterMap);
 
   // Blob and Clob
-  public Blob createBlob(InputStream inputStream, int length);
+  Blob createBlob(InputStream inputStream, int length);
 
-  public Blob createBlob(InputStream inputStream);
+  Blob createBlob(InputStream inputStream);
 
-  public Clob createClob(String str);
+  Clob createClob(String str);
 
   // 容器相关
-  public void evict(Object entity);
+  void evict(Object entity);
 
   /**
    * Initialize entity whenever session close or open
@@ -376,38 +372,37 @@ public interface EntityDao {
    * @param <T>
    * @param entity
    */
-  public <T> T initialize(T entity);
+  <T> T initialize(T entity);
 
-  public void refresh(Object entity);
+  void refresh(Object entity);
 
-  public long count(String entityName, String keyName, Object value);
+  long count(String entityName, String keyName, Object value);
 
-  public long count(Class<?> entityClass, String keyName, Object value);
+  long count(Class<?> entityClass, String keyName, Object value);
 
-  public long count(Class<?> entityClass, String[] attrs, Object[] values, String countAttr);
+  long count(Class<?> entityClass, String[] attrs, Object[] values, String countAttr);
 
-  public boolean exist(Class<?> entityClass, String attr, Object value);
+  boolean exist(Class<?> entityClass, String attr, Object value);
 
-  public boolean exist(String entityName, String attr, Object value);
+  boolean exist(String entityName, String attr, Object value);
 
-  public boolean exist(Class<?> entity, String[] attrs, Object[] values);
+  boolean exist(Class<?> entity, String[] attrs, Object[] values);
 
-  public boolean duplicate(String entityName, Serializable id, Map<String, Object> params);
+  boolean duplicate(String entityName, Serializable id, Map<String, Object> params);
 
-  public boolean duplicate(Class<? extends Entity<?>> clazz, Serializable id, String codeName,
-      Object codeValue);
+  boolean duplicate(Class<? extends Entity<?>> clazz, Serializable id, String codeName, Object codeValue);
 
   /**
    * 在同一个session保存、删除
    * 
    * @param opts
    */
-  public void execute(Operation... opts);
+  void execute(Operation... opts);
 
   /**
    * 执行一个操作构建者提供的一系列操作
    * 
    * @param builder
    */
-  public void execute(Operation.Builder builder);
+  void execute(Operation.Builder builder);
 }

@@ -25,7 +25,7 @@ public interface Populator {
    * @param params a {@link java.util.Map} object.
    * @return a {@link java.lang.Object} object.
    */
-  public Object populate(Object target, Map<String, Object> params);
+  Object populate(Object target, Map<String, Object> params);
 
   /**
    * <p>
@@ -36,7 +36,7 @@ public interface Populator {
    * @param params a {@link java.util.Map} object.
    * @return a {@link java.lang.Object} object.
    */
-  public Object populate(Class<?> entityClass, Map<String, Object> params);
+  Object populate(Class<?> entityClass, Map<String, Object> params);
 
   /**
    * <p>
@@ -48,7 +48,7 @@ public interface Populator {
    * @param params a {@link java.util.Map} object.
    * @return a {@link java.lang.Object} object.
    */
-  public Object populate(Object target, String entityName, Map<String, Object> params);
+  Object populate(Object target, String entityName, Map<String, Object> params);
 
   /**
    * <p>
@@ -59,7 +59,7 @@ public interface Populator {
    * @param params a {@link java.util.Map} object.
    * @return a {@link java.lang.Object} object.
    */
-  public Object populate(String entityName, Map<String, Object> params);
+  Object populate(String entityName, Map<String, Object> params);
 
   /**
    * Set value to target's attribute.
@@ -69,7 +69,7 @@ public interface Populator {
    * @param value
    * @return true if success
    */
-  public boolean populateValue(Object target, String attr, Object value);
+  boolean populateValue(Object target, String attr, Object value);
 
   /**
    * @param target
@@ -78,7 +78,7 @@ public interface Populator {
    * @param value
    * @return true when success populate.
    */
-  public boolean populateValue(Object target, String entityName, String attr, Object value);
+  boolean populateValue(Object target, String entityName, String attr, Object value);
 
   /**
    * <p>
@@ -90,6 +90,6 @@ public interface Populator {
    * @param attr a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.entity.metadata.ObjectAndType} object.
    */
-  public ObjectAndType initProperty(Object target, String entityName, String attr);
+  ObjectAndType initProperty(Object target, String entityName, String attr);
 
 }

@@ -18,14 +18,14 @@ public interface EventMulticaster {
    * 
    * @param listener the listener to add
    */
-  public void addListener(EventListener<?> listener);
+  void addListener(EventListener<?> listener);
 
   /**
    * Remove a listener from the notification list.
    * 
    * @param listener the listener to remove
    */
-  public void removeListener(EventListener<?> listener);
+  void removeListener(EventListener<?> listener);
 
   /**
    * Remove all listeners registered with this multicaster.
@@ -33,7 +33,7 @@ public interface EventMulticaster {
    * After a remove call, the multicaster will perform no action on event notification until new
    * listeners are being registered.
    */
-  public void removeAllListeners();
+  void removeAllListeners();
 
   /**
    * <p>
@@ -42,5 +42,5 @@ public interface EventMulticaster {
    * 
    * @param e a {@link org.beangle.commons.context.event.Event} object.
    */
-  public void multicast(Event e);
+  void multicast(Event e);
 }

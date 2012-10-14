@@ -20,7 +20,7 @@ public interface Pluralizer {
    * @param word a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
    */
-  public String pluralize(String word);
+  String pluralize(String word);
 
   /**
    * <p>
@@ -31,5 +31,5 @@ public interface Pluralizer {
    * @param number a int.
    * @return a {@link java.lang.String} object.
    */
-  public String pluralize(String word, int number);
+  String pluralize(String word, int number);
 }

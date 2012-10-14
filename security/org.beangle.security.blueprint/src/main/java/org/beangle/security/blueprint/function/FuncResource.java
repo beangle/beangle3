@@ -17,7 +17,6 @@ public interface FuncResource extends Resource {
 
   /**
    * 资源范围
-   * 
    */
   Scope getScope();
 
@@ -26,7 +25,7 @@ public interface FuncResource extends Resource {
    * 
    * @author chaostone
    */
-  public static enum Scope {
+  static enum Scope {
 
     /** 不受保护的公共资源 */
     PUBLIC(0),

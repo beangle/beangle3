@@ -14,11 +14,11 @@ import org.beangle.commons.entity.pojo.LongIdEntity;
  */
 public interface Property extends LongIdEntity {
 
-  public static final String AllValue = "*";
+  static final String AllValue = "*";
 
-  public ProfileField getField();
+  ProfileField getField();
 
-  public String getValue();
+  String getValue();
 
-  public void setValue(String value);
+  void setValue(String value);
 }

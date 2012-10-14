@@ -16,32 +16,27 @@ public interface ProfileField extends LongIdEntity {
 
   /**
    * 名称
-   * 
    */
-  public String getName();
+  String getName();
 
   /**
    * 标题
-   * 
    */
-  public String getTitle();
+  String getTitle();
 
   /**
    * 值类型
-   * 
    */
-  public DataType getType();
+  DataType getType();
 
   /**
    * 数据源提供者
-   * 
    */
-  public String getSource();
+  String getSource();
 
   /**
    * 是否为集合类型
-   * 
    */
-  public boolean isMultiple();
+  boolean isMultiple();
 
 }

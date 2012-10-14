@@ -25,7 +25,7 @@ public interface Writer {
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getFormat();
+  String getFormat();
 
   /**
    * <p>
@@ -34,7 +34,7 @@ public interface Writer {
    * 
    * @param context a {@link org.beangle.commons.transfer.exporter.Context} object.
    */
-  public void setContext(Context context);
+  void setContext(Context context);
 
   /**
    * <p>
@@ -43,7 +43,7 @@ public interface Writer {
    * 
    * @return a {@link java.io.OutputStream} object.
    */
-  public OutputStream getOutputStream();
+  OutputStream getOutputStream();
 
   /**
    * <p>
@@ -52,12 +52,12 @@ public interface Writer {
    * 
    * @param outputStream a {@link java.io.OutputStream} object.
    */
-  public void setOutputStream(OutputStream outputStream);
+  void setOutputStream(OutputStream outputStream);
 
   /**
    * <p>
    * close.
    * </p>
    */
-  public void close();
+  void close();
 }

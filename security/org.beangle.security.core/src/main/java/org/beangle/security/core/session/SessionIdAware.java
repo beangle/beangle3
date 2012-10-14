@@ -6,5 +6,5 @@ package org.beangle.security.core.session;
 
 public interface SessionIdAware {
 
-  public String getSessionId();
+  String getSessionId();
 }

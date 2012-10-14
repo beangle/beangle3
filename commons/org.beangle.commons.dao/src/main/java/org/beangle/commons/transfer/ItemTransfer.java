@@ -19,12 +19,12 @@ public interface ItemTransfer extends Transfer {
    * 
    * @return an array of {@link java.lang.String} objects.
    */
-  public String[] getAttrs();
+  String[] getAttrs();
 
   /**
    * 将当前正在转换的数据转换成map[attr,value]
    * 
    * @return a {@link java.util.Map} object.
    */
-  public Map<String, Object> getCurData();
+  Map<String, Object> getCurData();
 }

@@ -14,7 +14,7 @@ import org.beangle.security.core.AuthenticationException;
  */
 public interface AuthenticationProvider {
 
-  public Authentication authenticate(Authentication auth) throws AuthenticationException;
+  Authentication authenticate(Authentication auth) throws AuthenticationException;
 
-  public boolean supports(Class<? extends Authentication> auth);
+  boolean supports(Class<? extends Authentication> auth);
 }

@@ -18,7 +18,7 @@ import org.beangle.security.core.session.category.CategorySessioninfo;
  */
 public class SimpleSessioninfoBuilder implements SessioninfoBuilder {
 
-  public Class<?> getSessioninfoClass() {
+  public Class<? extends Sessioninfo> getSessioninfoType() {
     return SimpleSessioninfo.class;
   }
 

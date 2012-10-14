@@ -13,5 +13,5 @@ import org.beangle.security.core.Authentication;
  */
 public interface AuthorityManager {
 
-  public boolean isAuthorized(Authentication auth, Object resource);
+  boolean isAuthorized(Authentication auth, Object resource);
 }

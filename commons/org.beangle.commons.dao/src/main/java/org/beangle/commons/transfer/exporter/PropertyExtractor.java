@@ -13,10 +13,10 @@ import org.beangle.commons.i18n.TextResource;
  */
 public interface PropertyExtractor {
 
-  public Object getPropertyValue(Object target, String property) throws Exception;
+  Object getPropertyValue(Object target, String property) throws Exception;
 
-  public TextResource getTextResource();
+  TextResource getTextResource();
 
-  public void setTextResource(TextResource textResource);
+  void setTextResource(TextResource textResource);
 
 }

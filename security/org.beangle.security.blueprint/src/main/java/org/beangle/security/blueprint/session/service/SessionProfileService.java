@@ -15,8 +15,8 @@ import org.beangle.security.blueprint.session.model.SessionProfileBean;
  */
 public interface SessionProfileService {
 
-  public void saveOrUpdate(List<SessionProfileBean> profiles);
+  void saveOrUpdate(List<SessionProfileBean> profiles);
 
-  public boolean hasProfile(Role role);
+  boolean hasProfile(Role role);
 
 }

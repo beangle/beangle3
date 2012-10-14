@@ -6,5 +6,5 @@ package org.beangle.security.core.userdetail;
 
 public interface UserDetailService {
 
-  public UserDetail loadDetail(String principle);
+  UserDetail loadDetail(String principle);
 }

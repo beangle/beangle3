@@ -28,7 +28,7 @@ public interface Dao<T extends Entity<ID>, ID extends Serializable> {
    * @param id a ID object.
    * @return a T object.
    */
-  public T get(ID id);
+  T get(ID id);
 
   /**
    * <p>
@@ -38,7 +38,7 @@ public interface Dao<T extends Entity<ID>, ID extends Serializable> {
    * @param ids an array of ID objects.
    * @return a {@link java.util.List} object.
    */
-  public List<T> get(ID[] ids);
+  List<T> get(ID[] ids);
 
   /**
    * <p>
@@ -47,7 +47,7 @@ public interface Dao<T extends Entity<ID>, ID extends Serializable> {
    * 
    * @param entity a T object.
    */
-  public void saveOrUpdate(T entity);
+  void saveOrUpdate(T entity);
 
   /**
    * <p>
@@ -56,7 +56,7 @@ public interface Dao<T extends Entity<ID>, ID extends Serializable> {
    * 
    * @param entitis a {@link java.util.Collection} object.
    */
-  public void saveOrUpdate(Collection<T> entitis);
+  void saveOrUpdate(Collection<T> entitis);
 
   /**
    * <p>
@@ -65,7 +65,7 @@ public interface Dao<T extends Entity<ID>, ID extends Serializable> {
    * 
    * @param entitis a {@link java.util.Collection} object.
    */
-  public void remove(Collection<T> entitis);
+  void remove(Collection<T> entitis);
 
   /**
    * <p>
@@ -74,7 +74,7 @@ public interface Dao<T extends Entity<ID>, ID extends Serializable> {
    * 
    * @param entity a T object.
    */
-  public void remove(T entity);
+  void remove(T entity);
 
   /**
    * <p>
@@ -83,7 +83,7 @@ public interface Dao<T extends Entity<ID>, ID extends Serializable> {
    * 
    * @param ids an array of ID objects.
    */
-  public void remove(ID ids[]);
+  void remove(ID ids[]);
 
   /**
    * <p>
@@ -92,7 +92,7 @@ public interface Dao<T extends Entity<ID>, ID extends Serializable> {
    * 
    * @param id a ID object.
    */
-  public void remove(ID id);
+  void remove(ID id);
 
   /**
    * <p>
@@ -101,6 +101,6 @@ public interface Dao<T extends Entity<ID>, ID extends Serializable> {
    * 
    * @return a {@link java.lang.Class} object.
    */
-  public Class<T> getEntityClass();
+  Class<T> getEntityClass();
 
 }

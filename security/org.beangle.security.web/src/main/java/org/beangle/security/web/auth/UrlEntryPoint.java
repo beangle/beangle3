@@ -13,5 +13,5 @@ import org.beangle.security.web.AuthenticationEntryPoint;
  */
 public interface UrlEntryPoint extends AuthenticationEntryPoint {
 
-  public String getLoginUrl();
+  String getLoginUrl();
 }

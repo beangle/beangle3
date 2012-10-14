@@ -22,11 +22,10 @@ public interface UserDataProvider {
    * @param source
    * @param keys
    */
-  public <T> List<T> getData(ProfileField field, String source,Object... keys);
+  <T> List<T> getData(ProfileField field, String source, Object... keys);
 
   /**
    * provider's unique name
-   * 
    */
-  public String getName();
+  String getName();
 }

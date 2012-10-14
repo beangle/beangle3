@@ -23,7 +23,7 @@ public interface LongIdEntity extends Entity<Long> {
    * 
    * @return a {@link java.lang.Long} object.
    */
-  public Long getId();
+  Long getId();
 
   /**
    * <p>
@@ -32,5 +32,5 @@ public interface LongIdEntity extends Entity<Long> {
    * 
    * @param id a {@link java.lang.Long} object.
    */
-  public void setId(Long id);
+  void setId(Long id);
 }

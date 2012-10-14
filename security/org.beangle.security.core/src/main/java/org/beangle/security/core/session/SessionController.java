@@ -21,20 +21,19 @@ public interface SessionController {
    * @param sessionId
    * @param registry
    */
-  public boolean onRegister(Authentication auth, String sessionId, SessionRegistry registry)
-      throws SessionException;
+  boolean onRegister(Authentication auth, String sessionId, SessionRegistry registry) throws SessionException;
 
   /**
    * 释放sessioninfo对应的空间
    * 
    * @param info
    */
-  public void onLogout(Sessioninfo info);
+  void onLogout(Sessioninfo info);
 
   /**
    * 统计
    */
-  public void stat();
+  void stat();
 
   /**
    * Max session number for single user
@@ -42,7 +41,7 @@ public interface SessionController {
    * @param auth
    * @return -1 or positive number
    */
-  public int getMaxSessions(Authentication auth);
+  int getMaxSessions(Authentication auth);
 
   /**
    * User online max inactive interval

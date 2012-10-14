@@ -11,14 +11,14 @@ import java.util.List;
  */
 public interface MessageQueue<T extends Message> {
 
-  public int size();
+  int size();
 
-  public T remove();
+  T remove();
 
-  public List<T> getMessages();
+  List<T> getMessages();
 
-  public void addMessages(List<T> contexts);
+  void addMessages(List<T> contexts);
 
-  public void addMessage(T message);
+  void addMessage(T message);
 
 }

@@ -24,7 +24,7 @@ public interface ModelMeta {
    * @param <T> a T object.
    * @return a T object.
    */
-  public <T> T newInstance(final Class<T> clazz);
+  <T> T newInstance(final Class<T> clazz);
 
   /**
    * <p>
@@ -36,7 +36,7 @@ public interface ModelMeta {
    * @param <T> a T object.
    * @return a T object.
    */
-  public <T> T newInstance(final Class<T> clazz, final Serializable id);
+  <T> T newInstance(final Class<T> clazz, final Serializable id);
 
   /**
    * <p>
@@ -46,7 +46,7 @@ public interface ModelMeta {
    * @param entityName a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.entity.metadata.EntityType} object.
    */
-  public EntityType getEntityType(String entityName);
+  EntityType getEntityType(String entityName);
 
   /**
    * <p>
@@ -56,7 +56,7 @@ public interface ModelMeta {
    * @param entityName a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.entity.metadata.Type} object.
    */
-  public Type getType(String entityName);
+  Type getType(String entityName);
 
   /**
    * <p>
@@ -66,7 +66,7 @@ public interface ModelMeta {
    * @param obj a {@link java.lang.Object} object.
    * @return a {@link java.lang.String} object.
    */
-  public String getEntityName(Object obj);
+  String getEntityName(Object obj);
 
   /**
    * <p>
@@ -76,7 +76,7 @@ public interface ModelMeta {
    * @param clazz a {@link java.lang.Class} object.
    * @return a {@link org.beangle.commons.entity.metadata.EntityType} object.
    */
-  public EntityType getEntityType(Class<?> clazz);
+  EntityType getEntityType(Class<?> clazz);
 
   /**
    * 将params中的属性([attr(string)->value(object)]，放入到实体类中。<br>

@@ -17,12 +17,12 @@ public interface Reader {
    * 
    * @return a {@link java.lang.Object} object.
    */
-  public Object read();
+  Object read();
 
   /**
    * 返回读取类型的格式
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getFormat();
+  String getFormat();
 }

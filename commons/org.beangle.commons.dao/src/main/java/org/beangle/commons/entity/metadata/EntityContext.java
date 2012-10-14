@@ -19,7 +19,7 @@ public interface EntityContext {
    * @param name a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.entity.metadata.Type} object.
    */
-  public Type getType(String name);
+  Type getType(String name);
 
   /**
    * 根据实体名查找实体类型
@@ -27,7 +27,7 @@ public interface EntityContext {
    * @param entityName a {@link java.lang.String} object.
    * @return null, if cannot find entityType
    */
-  public EntityType getEntityType(String entityName);
+  EntityType getEntityType(String entityName);
 
   /**
    * 根据类型,查找实体类型<br>
@@ -36,7 +36,7 @@ public interface EntityContext {
    * @param entityClass a {@link java.lang.Class} object.
    * @return a {@link org.beangle.commons.entity.metadata.EntityType} object.
    */
-  public EntityType getEntityType(Class<?> entityClass);
+  EntityType getEntityType(Class<?> entityClass);
 
   /**
    * 一个具体类所对应的实体名数组.
@@ -44,7 +44,7 @@ public interface EntityContext {
    * @param clazz a {@link java.lang.Class} object.
    * @return an array of {@link java.lang.String} objects.
    */
-  public String[] getEntityNames(Class<?> clazz);
+  String[] getEntityNames(Class<?> clazz);
 
   /**
    * 根据对象返回实体名
@@ -52,6 +52,6 @@ public interface EntityContext {
    * @param obj a {@link java.lang.Object} object.
    * @return a {@link java.lang.String} object.
    */
-  public String getEntityName(Object obj);
+  String getEntityName(Object obj);
 
 }

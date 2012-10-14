@@ -12,11 +12,11 @@ import org.beangle.security.core.session.impl.AccessLog;
 
 public interface ResourceAccessor {
 
-  public AccessLog beginAccess(HttpServletRequest request, Date date);
+  AccessLog beginAccess(HttpServletRequest request, Date date);
 
-  public void endAccess(AccessLog log, Date date);
+  void endAccess(AccessLog log, Date date);
 
-  public void start();
+  void start();
 
-  public void finish();
+  void finish();
 }

@@ -23,25 +23,26 @@ public interface ActionFinder {
    * 
    * @param test
    */
-  public Map< Class<?>,String> getActions(ActionTest test);
+  Map<Class<?>, String> getActions(ActionTest test);
+
   /**
    * Test whether the class is a action class
    * 
    * @author chaostone
    */
-  public static class ActionTest implements Predicate {
+  static class ActionTest implements Predicate {
 
     final String actionSuffix;
     final List<String> packageNames;
 
-    public ActionTest(String actionSuffix, List<String> packageNames) {
+    ActionTest(String actionSuffix, List<String> packageNames) {
       super();
       this.actionSuffix = actionSuffix;
       this.packageNames = packageNames;
     }
 
     public boolean evaluate(Object object) {
-      String name=(String)object;
+      String name = (String) object;
       boolean isAction = name.endsWith(actionSuffix);
       if (isAction) {
         boolean inPackage = false;
@@ -59,5 +60,3 @@ public interface ActionFinder {
     }
   }
 }
-
-

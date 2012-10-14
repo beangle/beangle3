@@ -12,5 +12,5 @@ import org.beangle.security.core.session.Sessioninfo;
  */
 public interface CategorySessioninfo extends Sessioninfo {
 
-  public String getCategory();
+  String getCategory();
 }

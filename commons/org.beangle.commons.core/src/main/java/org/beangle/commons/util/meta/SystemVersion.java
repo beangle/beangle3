@@ -19,7 +19,7 @@ public interface SystemVersion {
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getName();
+  String getName();
 
   /**
    * <p>
@@ -28,7 +28,7 @@ public interface SystemVersion {
    * 
    * @param name a {@link java.lang.String} object.
    */
-  public void setName(String name);
+  void setName(String name);
 
   /**
    * <p>
@@ -37,7 +37,7 @@ public interface SystemVersion {
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getVendor();
+  String getVendor();
 
   /**
    * <p>
@@ -46,7 +46,7 @@ public interface SystemVersion {
    * 
    * @param vendor a {@link java.lang.String} object.
    */
-  public void setVendor(String vendor);
+  void setVendor(String vendor);
 
   /**
    * <p>
@@ -55,7 +55,7 @@ public interface SystemVersion {
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getVersion();
+  String getVersion();
 
   /**
    * <p>
@@ -64,7 +64,7 @@ public interface SystemVersion {
    * 
    * @param version a {@link java.lang.String} object.
    */
-  public void setVersion(String version);
+  void setVersion(String version);
 
   /**
    * <p>
@@ -73,7 +73,7 @@ public interface SystemVersion {
    * 
    * @return a int.
    */
-  public int getMajorVersion();
+  int getMajorVersion();
 
   /**
    * <p>
@@ -82,7 +82,7 @@ public interface SystemVersion {
    * 
    * @param majorVersion a int.
    */
-  public void setMajorVersion(int majorVersion);
+  void setMajorVersion(int majorVersion);
 
   /**
    * <p>
@@ -91,7 +91,7 @@ public interface SystemVersion {
    * 
    * @return a int.
    */
-  public int getMinorVersion();
+  int getMinorVersion();
 
   /**
    * <p>
@@ -100,6 +100,6 @@ public interface SystemVersion {
    * 
    * @param minorVersion a int.
    */
-  public void setMinorVersion(int minorVersion);
+  void setMinorVersion(int minorVersion);
 
 }

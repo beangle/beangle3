@@ -9,23 +9,23 @@ import java.util.Properties;
 
 public interface Message {
 
-  public static final String TEXT = "text/plain; charset=UTF-8";
+  static final String TEXT = "text/plain; charset=UTF-8";
 
-  public static final String HTML = "text/html; charset=UTF-8";
+  static final String HTML = "text/html; charset=UTF-8";
 
-  public String getSubject();
+  String getSubject();
 
-  public void setSubject(String subject);
+  void setSubject(String subject);
 
-  public String getText();
+  String getText();
 
-  public void setText(String text);
+  void setText(String text);
 
-  public Properties getProperties();
+  Properties getProperties();
 
-  public List<String> getRecipients();
+  List<String> getRecipients();
 
-  public String getContentType();
+  String getContentType();
 
-  public void setContentType(String contentType);
+  void setContentType(String contentType);
 }

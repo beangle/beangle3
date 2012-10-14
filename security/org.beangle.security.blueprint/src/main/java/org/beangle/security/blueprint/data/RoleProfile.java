@@ -14,8 +14,8 @@ import java.util.List;
  */
 public interface RoleProfile extends Profile {
 
-  public List<RoleProperty> getProperties();
+  List<RoleProperty> getProperties();
 
-  public RoleProperty getProperty(ProfileField meta);
+  RoleProperty getProperty(ProfileField meta);
 
 }

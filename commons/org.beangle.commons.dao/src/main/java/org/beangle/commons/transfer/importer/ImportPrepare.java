@@ -21,5 +21,5 @@ public interface ImportPrepare {
    * 
    * @param importer a {@link org.beangle.commons.transfer.importer.Importer} object.
    */
-  public void prepare(Importer importer);
+  void prepare(Importer importer);
 }

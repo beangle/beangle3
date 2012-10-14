@@ -1,6 +1,16 @@
+/* Copyright c 2005-2012.
+ * Licensed under GNU  LESSER General Public License, Version 3.
+ * http://www.gnu.org/licenses
+ */
 package org.beangle.struts2.view.component;
 
+/**
+ * Url render
+ * 
+ * @author chaostone
+ * @since 2.4
+ */
 public interface ActionUrlRender {
 
-  public String render(String referer, String uri);
+  String render(String referer, String uri);
 }

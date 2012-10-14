@@ -8,12 +8,16 @@ import java.net.URL;
 
 import org.beangle.commons.transfer.io.Writer;
 
+/**
+ * @author chaostone
+ * @since 2.0
+ */
 public interface TemplateWriter extends Writer {
 
-  public URL getTemplate();
+  URL getTemplate();
 
-  public void setTemplate(URL template);
+  void setTemplate(URL template);
 
-  public void write();
+  void write();
 
 }

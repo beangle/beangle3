@@ -21,21 +21,21 @@ public interface SessionRegistry {
    * @param authentication
    * @param sessionid
    */
-  public void register(Authentication authentication, String sessionid) throws SessionException;
+  void register(Authentication authentication, String sessionid) throws SessionException;
 
   /**
    * 注销指定sessionid
    * 
    * @param sessionid
    */
-  public Sessioninfo remove(String sessionid);
+  Sessioninfo remove(String sessionid);
 
   /**
    * 过期指定会话
    * 
    * @param sessionid
    */
-  public void expire(String sessionid);
+  void expire(String sessionid);
 
   /**
    * 查询某帐号的在线信息
@@ -43,41 +43,40 @@ public interface SessionRegistry {
    * @param principal
    * @param includeExpiredSessions
    */
-  public List<Sessioninfo> getSessioninfos(String principal, boolean includeExpiredSessions);
+  List<Sessioninfo> getSessioninfos(String principal, boolean includeExpiredSessions);
 
   /**
    * 查询对应sessionid的信息
    * 
    * @param sessionid
    */
-  public Sessioninfo getSessioninfo(String sessionid);
+  Sessioninfo getSessioninfo(String sessionid);
 
   /**
    * 查询会话状态
    * 
    * @param sessionid
    */
-  public SessionStatus getSessionStatus(String sessionid);
+  SessionStatus getSessionStatus(String sessionid);
 
   /**
    * 查询帐号是否还有没有过期的在线记录
    * 
    * @param principal
    */
-  public boolean isRegisted(String principal);
+  boolean isRegisted(String principal);
 
   /**
    * session count
-   * 
    */
-  public int count();
+  int count();
 
   /**
    * 更新对应sessionId的最后访问时间
    * 
    * @param sessionid
    */
-  public void access(String sessionid, String resource, long accessAt);
+  void access(String sessionid, String resource, long accessAt);
 
   /**
    * 结束访问某资源
@@ -85,25 +84,23 @@ public interface SessionRegistry {
    * @param sessionid
    * @param endAt
    */
-  public void endAccess(String sessionid, String resource, long endAt);
+  void endAccess(String sessionid, String resource, long endAt);
 
   /**
    * 查询控制器
-   * 
    */
-  public SessionController getController();
+  SessionController getController();
 
   /**
    * 获取sessinoinfobuilder
-   * 
    */
-  public SessioninfoBuilder getSessioninfoBuilder();
+  SessioninfoBuilder getSessioninfoBuilder();
 
   /**
    * 获取当前session访问的资源
    * 
    * @param sessionid
    */
-  public String getResource(String sessionid);
+  String getResource(String sessionid);
 
 }

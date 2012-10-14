@@ -15,15 +15,15 @@ import java.util.Collection;
  */
 public interface Authentication extends Principal, Serializable {
 
-  public Object getPrincipal();
+  Object getPrincipal();
 
-  public Object getCredentials();
+  Object getCredentials();
 
-  public Collection<? extends GrantedAuthority> getAuthorities();
+  Collection<? extends GrantedAuthority> getAuthorities();
 
-  public Object getDetails();
+  Object getDetails();
 
-  public boolean isAuthenticated();
+  boolean isAuthenticated();
 
-  public void setAuthenticated(boolean authenticated);
+  void setAuthenticated(boolean authenticated);
 }

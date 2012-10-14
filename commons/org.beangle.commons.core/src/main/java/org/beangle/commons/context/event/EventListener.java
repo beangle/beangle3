@@ -18,7 +18,7 @@ public interface EventListener<E extends Event> extends java.util.EventListener 
    * 
    * @param event the event to respond to
    */
-  public void onEvent(E event);
+  void onEvent(E event);
 
   /**
    * Determine whether this listener actually supports the given event type.
@@ -26,7 +26,7 @@ public interface EventListener<E extends Event> extends java.util.EventListener 
    * @param eventType a {@link java.lang.Class} object.
    * @return a boolean.
    */
-  public boolean supportsEventType(Class<? extends Event> eventType);
+  boolean supportsEventType(Class<? extends Event> eventType);
 
   /**
    * Determine whether this listener actually supports the given source type.

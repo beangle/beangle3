@@ -6,6 +6,14 @@ package org.beangle.notification.service;
 
 import org.beangle.notification.Notifier;
 
+/**
+ * @author chaostone
+ */
 public interface NotifierService {
-  public Notifier<?> getNotifier(String notifierId);
+  /**
+   * Returns notifier by id
+   * 
+   * @param notifierId
+   */
+  Notifier<?> getNotifier(String notifierId);
 }

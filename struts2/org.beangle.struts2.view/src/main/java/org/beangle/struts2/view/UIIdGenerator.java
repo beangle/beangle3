@@ -1,8 +1,16 @@
+/* Copyright c 2005-2012.
+ * Licensed under GNU  LESSER General Public License, Version 3.
+ * http://www.gnu.org/licenses
+ */
 package org.beangle.struts2.view;
 
+/**
+ * @author chaostone
+ * @since 3.0.0
+ */
 public interface UIIdGenerator {
 
-  public static final String GENERATOR = "UIIdGenerator";
+  static final String GENERATOR = "UIIdGenerator";
 
-  public String generate(Class<?> clazz);
+  String generate(Class<?> clazz);
 }

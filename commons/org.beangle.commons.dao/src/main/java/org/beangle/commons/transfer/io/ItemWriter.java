@@ -21,7 +21,7 @@ public interface ItemWriter extends Writer {
    * 
    * @param obj a {@link java.lang.Object} object.
    */
-  public void write(Object obj);
+  void write(Object obj);
 
   /**
    * <p>
@@ -31,6 +31,6 @@ public interface ItemWriter extends Writer {
    * @param titleName a {@link java.lang.String} object.
    * @param data a {@link java.lang.Object} object.
    */
-  public void writeTitle(String titleName, Object data);
+  void writeTitle(String titleName, Object data);
 
 }

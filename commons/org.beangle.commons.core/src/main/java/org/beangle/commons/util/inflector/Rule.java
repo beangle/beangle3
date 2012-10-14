@@ -22,7 +22,7 @@ public interface Rule {
    *          the word that is being tested
    * @return <code>true</code> if this rule should be applied, <code>false</code> otherwise
    */
-  public boolean applies(String word);
+  boolean applies(String word);
 
   /**
    * <p>
@@ -33,5 +33,5 @@ public interface Rule {
    *          the word to apply this rule to
    * @return the transformed word
    */
-  public String apply(String word);
+  String apply(String word);
 }

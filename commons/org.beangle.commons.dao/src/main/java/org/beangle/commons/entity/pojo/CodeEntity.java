@@ -21,7 +21,7 @@ public interface CodeEntity {
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getCode();
+  String getCode();
 
   /**
    * <p>
@@ -30,5 +30,5 @@ public interface CodeEntity {
    * 
    * @param code a {@link java.lang.String} object.
    */
-  public void setCode(String code);
+  void setCode(String code);
 }

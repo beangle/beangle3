@@ -15,20 +15,20 @@ package org.beangle.commons.transfer.io;
 public interface TransferFormats {
 
   /** Constant <code>XLS="xls"</code> */
-  public static final String XLS = "xls";
+  static final String XLS = "xls";
 
   /** Constant <code>CSV="csv"</code> */
-  public static final String CSV = "csv";
+  static final String CSV = "csv";
 
   /** Constant <code>TXT="txt"</code> */
-  public static final String TXT = "txt";
+  static final String TXT = "txt";
 
   /** Constant <code>DBF="dbf"</code> */
-  public static final String DBF = "dbf";
+  static final String DBF = "dbf";
 
   /** Constant <code>PDF="pdf"</code> */
-  public static final String PDF = "pdf";
+  static final String PDF = "pdf";
 
   /** Constant <code>HTML="html"</code> */
-  public static final String HTML = "html";
+  static final String HTML = "html";
 }

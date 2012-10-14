@@ -23,6 +23,10 @@ import org.beangle.security.core.session.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author chaostone
+ * @since 2.4
+ */
 public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistry,
     EventListener<SessionDestroyedEvent>, Initializing {
 
@@ -49,32 +53,32 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public boolean isRegisted(String principal) {
-    OqlBuilder builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoClass(), "info");
+    OqlBuilder builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoType(), "info");
     builder.where("info.username=:username and info.expiredAt is null", principal).select("info.id")
         .cacheable();
     return !entityDao.search(builder).isEmpty();
   }
 
   public List<Sessioninfo> getSessioninfos(String principal, boolean includeExpiredSessions) {
-    @SuppressWarnings("unchecked")
-    OqlBuilder<Sessioninfo> builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoClass(), "info");
+    OqlBuilder<Sessioninfo> builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoType().getName(),
+        "info");
     builder.where("info.username=:username", principal);
     if (!includeExpiredSessions) builder.where("info.expiredAt is null");
     return entityDao.search(builder);
   }
 
   public Sessioninfo getSessioninfo(String sessionId) {
-    @SuppressWarnings("unchecked")
-    OqlBuilder<Sessioninfo> builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoClass(), "info");
+    OqlBuilder<? extends Sessioninfo> builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoType(),
+        "info");
     builder.where("info.id=:sessionid", sessionId);
-    List<Sessioninfo> infos = entityDao.search(builder);
+    List<? extends Sessioninfo> infos = entityDao.search(builder);
     if (infos.isEmpty()) return null;
     else return infos.get(0);
   }
 
   public SessionStatus getSessionStatus(String sessionid) {
-    @SuppressWarnings("unchecked")
-    OqlBuilder<SessionStatus> builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoClass(), "info");
+    OqlBuilder<SessionStatus> builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoType().getName(),
+        "info");
     builder.where("info.id=:sessionid", sessionid)
         .select("new org.beangle.security.core.session.SessionStatus(info.username,info.expiredAt)")
         .cacheable();
@@ -224,7 +228,7 @@ class AccessUpdaterTask implements Runnable {
     }
     if (!arguments.isEmpty()) {
       entityDao.executeUpdateHqlRepeatly("update "
-          + registry.getSessioninfoBuilder().getSessioninfoClass().getName()
+          + registry.getSessioninfoBuilder().getSessioninfoType().getName()
           + " info set info.lastAccessAt=? where info.id=?", arguments);
     }
     registry.updatedAt = System.currentTimeMillis();

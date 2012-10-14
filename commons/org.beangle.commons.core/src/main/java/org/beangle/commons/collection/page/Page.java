@@ -24,77 +24,77 @@ public interface Page<E> extends List<E> {
    * 
    * @return 1
    */
-  public int getFirstPageNo();
+  int getFirstPageNo();
 
   /**
    * 最大页码
    * 
    * @return a int.
    */
-  public int getMaxPageNo();
+  int getMaxPageNo();
 
   /**
    * 下一页页码
    * 
    * @return a int.
    */
-  public int getNextPageNo();
+  int getNextPageNo();
 
   /**
    * 上一页页码
    * 
    * @return a int.
    */
-  public int getPreviousPageNo();
+  int getPreviousPageNo();
 
   /**
    * 当前页码
    * 
    * @return a int.
    */
-  public int getPageNo();
+  int getPageNo();
 
   /**
    * 每页大小
    * 
    * @return a int.
    */
-  public int getPageSize();
+  int getPageSize();
 
   /**
    * 数据总量
    * 
    * @return a int.
    */
-  public int getTotal();
+  int getTotal();
 
   /**
    * 下一页
    * 
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
-  public Page<E> next();
+  Page<E> next();
 
   /**
    * 是否还有下一页
    * 
    * @return a boolean.
    */
-  public boolean hasNext();
+  boolean hasNext();
 
   /**
    * 上一页
    * 
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
-  public Page<E> previous();
+  Page<E> previous();
 
   /**
    * 是否还有上一页
    * 
    * @return a boolean.
    */
-  public boolean hasPrevious();
+  boolean hasPrevious();
 
   /**
    * 调转到指定页
@@ -102,7 +102,7 @@ public interface Page<E> extends List<E> {
    * @param pageNo a int.
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
-  public Page<E> moveTo(int pageNo);
+  Page<E> moveTo(int pageNo);
 
   /**
    * <p>
@@ -111,6 +111,6 @@ public interface Page<E> extends List<E> {
    * 
    * @return a {@link java.util.List} object.
    */
-  public List<E> getItems();
+  List<E> getItems();
 
 }

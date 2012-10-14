@@ -112,7 +112,7 @@ public class DbSessionController extends AbstractSessionController implements In
   public void stat() {
     entityDao.executeUpdateHql("update " + SessionStat.class.getName()
         + " stat  set stat.online=(select count(*) from "
-        + sessioninfoBuilder.getSessioninfoClass().getName()
+        + sessioninfoBuilder.getSessioninfoType().getName()
         + " info where info.expiredAt is null and info.category=stat.category)");
   }
 
