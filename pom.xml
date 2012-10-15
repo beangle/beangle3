@@ -14,9 +14,9 @@
 	</issueManagement>
 
 	<scm>
-		<connection>scm:git:git://github.com/beangle/beangle.git</connection>
-		<developerConnection>scm:git:git@github.com:beangle/beangle.git</developerConnection>
-		<url>https://github.com/beangle/beangle</url>
+		<connection>scm:git:git://github.com/beangle/library.git</connection>
+		<developerConnection>scm:git:git@github.com:beangle/library.git</developerConnection>
+		<url>https://github.com/beangle/library</url>
 	</scm>
 	
 	<modules>
