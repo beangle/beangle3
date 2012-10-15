@@ -224,7 +224,7 @@ class AccessUpdaterTask implements Runnable {
       AccessEntry accessEntry = entry.getValue();
       if (accessEntry.accessAt > updatedAt) {
         Date accessAt = new Date(entry.getValue().accessAt);
-        arguments.add(new Object[] { accessAt, accessAt, entry.getKey() });
+        arguments.add(new Object[] { accessAt, entry.getKey(), accessAt });
       }
     }
     if (!arguments.isEmpty()) {
@@ -286,7 +286,8 @@ class SessionCleanerTask extends TimerTask {
     Calendar calendar = Calendar.getInstance();
     OqlBuilder<? extends Sessioninfo> builder = OqlBuilder.from(registry.getSessioninfoBuilder()
         .getSessioninfoType(), "info");
-    builder.where("info.lastAccessAt<:givenTime", Dates.rollMinutes(calendar.getTime(), -expiredTime));
+    builder.where("info.lastAccessAt is null or info.lastAccessAt<:givenTime",
+        Dates.rollMinutes(calendar.getTime(), -expiredTime));
     List<? extends Sessioninfo> infos = entityDao.search(builder);
     int removed = 0;
     for (Sessioninfo info : infos) {
