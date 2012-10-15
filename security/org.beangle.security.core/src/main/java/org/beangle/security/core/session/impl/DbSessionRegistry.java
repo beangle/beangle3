@@ -4,9 +4,12 @@
  */
 package org.beangle.security.core.session.impl;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.collection.CollectUtils;
@@ -16,7 +19,9 @@ import org.beangle.commons.dao.EntityDao;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Assert;
+import org.beangle.commons.lang.Dates;
 import org.beangle.commons.lang.Objects;
+import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.session.*;
 import org.slf4j.Logger;
@@ -40,14 +45,18 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
   long updatedAt = System.currentTimeMillis();
 
   /**
-   * Default interval for update access log to db.
-   * 5 minutes.
+   * Default interval(5 minutes) for update access log to db and process expired session infos.
    */
-  private int updatedInterval = 5 * 60 * 1000;
+  private int updateInterval = 5 * 60 * 1000;
 
   public void init() throws Exception {
     Assert.notNull(controller, "controller must set");
     Assert.notNull(sessioninfoBuilder, "sessioninfoBuilder must set");
+    SessionCleanerTask sessionCleanerTask = new SessionCleanerTask(this);
+    sessionCleanerTask.setEntityDao(entityDao);
+    // 下一次间隔开始清理，不要浪费启动时间
+    new Timer("Beangle Session Cleaner", true).schedule(sessionCleanerTask,
+        new Date(System.currentTimeMillis() + updateInterval), updateInterval);
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -169,7 +178,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
   }
 
   public void access(String sessionid, String resource, long accessAt) {
-    if (accessAt - updatedAt > updatedInterval) {
+    if (accessAt - updatedAt > updateInterval) {
       new Thread(new AccessUpdaterTask(this)).start();
     }
     AccessEntry entry = entries.get(sessionid);
@@ -183,8 +192,21 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     else return entry.resource;
   }
 
+  public int getUpdateInterval() {
+    return updateInterval;
+  }
+
+  public void setUpdateInterval(int updateInterval) {
+    this.updateInterval = updateInterval;
+  }
+
 }
 
+/**
+ * Last AccessAt updater Task
+ * 
+ * @author chaostone
+ */
 class AccessUpdaterTask implements Runnable {
 
   DbSessionRegistry registry;
@@ -229,4 +251,56 @@ class AccessEntry {
     this.resource = resource;
     this.accessAt = accessMillis;
   }
+}
+
+/**
+ * DB session info cleaner
+ * 
+ * @author chaostone
+ */
+class SessionCleanerTask extends TimerTask {
+
+  private final Logger logger = LoggerFactory.getLogger(DbSessionRegistry.class);
+
+  private final SessionRegistry registry;
+
+  private EntityDao entityDao;
+
+  /** 默认 过期时间 30分钟 */
+  private int expiredTime = 30;
+
+  public SessionCleanerTask(SessionRegistry registry) {
+    super();
+    this.registry = registry;
+  }
+
+  public SessionCleanerTask(SessionRegistry registry, int expiredTime) {
+    this.registry = registry;
+    this.expiredTime = expiredTime;
+  }
+
+  @Override
+  public void run() {
+    Stopwatch watch = new Stopwatch().start();
+    logger.debug("clean up expired or over maxOnlineTime session start ...");
+    Calendar calendar = Calendar.getInstance();
+    OqlBuilder<? extends Sessioninfo> builder = OqlBuilder.from(registry.getSessioninfoBuilder()
+        .getSessioninfoType(), "info");
+    builder.where("info.lastAccessAt<:givenTime", Dates.rollMinutes(calendar.getTime(), -expiredTime));
+    List<? extends Sessioninfo> infos = entityDao.search(builder);
+    int removed = 0;
+    for (Sessioninfo info : infos) {
+      registry.remove(info.getId());
+      removed++;
+    }
+    if (removed > 0 || watch.elapsedMillis() > 50) {
+      logger.info("removed {} expired sessions in {}", removed, watch);
+    }
+    registry.getController().stat();
+  }
+
+  public void setEntityDao(EntityDao entityDao) {
+    this.entityDao = entityDao;
+  }
+
 }
