@@ -8,7 +8,7 @@
   <groupId>org.beangle.security</groupId>
   <artifactId>beangle-security-parent</artifactId>
   <packaging>pom<!--bundle--></packaging>
-  <version>3.0.0</version>
+  <version>3.0.0-SNAPSHOT</version>
   <name>Beangle Security Parent</name>
   
   <properties>
