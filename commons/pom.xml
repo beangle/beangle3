@@ -2,13 +2,12 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.beangle</groupId>
-    <artifactId>beangle-parent</artifactId>
-    <version>4</version>
+    <artifactId>beangle-library-parent</artifactId>
+    <version>3.0.0-SNAPSHOT</version>
   </parent>
   <groupId>org.beangle.commons</groupId>
   <artifactId>beangle-commons-parent</artifactId>
   <packaging>pom</packaging>
-  <version>3.0.0</version>
   <name>Beangle Commonss Parent</name>
   
   <modules>
