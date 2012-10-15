@@ -8,7 +8,6 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.beangle.security.core.session.impl.AccessLog;
 
 public interface ResourceAccessor {
 

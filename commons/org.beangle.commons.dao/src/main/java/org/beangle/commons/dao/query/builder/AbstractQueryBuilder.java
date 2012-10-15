@@ -163,9 +163,8 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
 
     if (!groups.isEmpty()) {
       buf.append(" group by ");
-      for (final String groupBy : groups) {
+      for (final String groupBy : groups)
         buf.append(groupBy).append(',');
-      }
       buf.deleteCharAt(buf.length() - 1);
     }
     if (hasOrder && !CollectionUtils.isEmpty(orders)) buf.append(' ').append(Order.toSortString(orders));

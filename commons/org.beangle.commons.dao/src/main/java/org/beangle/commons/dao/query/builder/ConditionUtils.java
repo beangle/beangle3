@@ -103,7 +103,7 @@ public final class ConditionUtils {
     if (!Strings.contains(condition.getContent(), "?")) {
       final List<String> paramNames = condition.getParamNames();
       if (paramNames.size() > condition.getParams().size()) { throw new RuntimeException(
-          "condition params not setted [" + condition.getContent() + "] with value:" + condition.getParams()); }
+          "condition params not set [" + condition.getContent() + "] with value:" + condition.getParams()); }
       for (int i = 0; i < paramNames.size(); i++) {
         params.put(paramNames.get(i), condition.getParams().get(i));
       }

@@ -4,6 +4,7 @@
  */
 package org.beangle.commons.entity.metadata.impl;
 
+import java.lang.reflect.Method;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -17,6 +18,7 @@ import org.beangle.commons.entity.metadata.Populator;
 import org.beangle.commons.entity.metadata.Type;
 import org.beangle.commons.entity.util.ValidEntityKeyPredicate;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.reflect.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -80,7 +82,15 @@ public class ConvertPopulatorBean implements Populator {
         }
         if (null == property) {
           property = propertyType.newInstance();
-          PropertyUtils.setProperty(propObj, attrs[index], property);
+          try {
+            PropertyUtils.setProperty(propObj, attrs[index], property);
+          } catch (NoSuchMethodException e) {
+            // Try fix jdk error for couldn't find correct setter when object's Set required type is
+            // diffent with Get's return type declared in interface.
+            Method setter = Reflections.getSetter(propObj.getClass(), attrs[index]);
+            if (null != setter) setter.invoke(propObj, property);
+            else throw e;
+          }
         }
         index++;
         propObj = property;

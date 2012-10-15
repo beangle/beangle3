@@ -475,7 +475,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
     if (Strings.contains(lowerCaseQueryStr, " group ")) { return ""; }
     if (Strings.contains(lowerCaseQueryStr, " union ")) { return ""; }
 
-    final int indexOfFrom = lowerCaseQueryStr.lastIndexOf(" from ") + 1;
+    final int indexOfFrom = findIndexOfFrom(lowerCaseQueryStr);
     final String selectWhat = lowerCaseQueryStr.substring(0, indexOfFrom);
     final int indexOfDistinct = selectWhat.indexOf("distinct");
     // select distinct a from table;
@@ -489,6 +489,34 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
     }
     countString.append(genQueryStr.substring(indexOfFrom));
     return countString.toString();
+  }
+
+  /**
+   * Find index of from
+   * 
+   * @param query
+   * @return -1 or from index
+   */
+  private int findIndexOfFrom(String query) {
+    int fromIdx = query.indexOf(" from ");
+    if (-1 == fromIdx) return -1;
+    final int first = query.substring(0, fromIdx).indexOf("(");
+    if (first > 0) {
+      int leftCnt = 1;
+      int i = first + 1;
+      while (leftCnt != 0 && i < query.length()) {
+        if (query.charAt(i) == '(') leftCnt++;
+        else if (query.charAt(i) == ')') leftCnt--;
+        i++;
+      }
+      if (leftCnt > 0) return -1;
+      else {
+        fromIdx = query.indexOf(" from ", i);
+        return (fromIdx == -1) ? -1 : fromIdx + 1;
+      }
+    } else {
+      return fromIdx + 1;
+    }
   }
 
   /**

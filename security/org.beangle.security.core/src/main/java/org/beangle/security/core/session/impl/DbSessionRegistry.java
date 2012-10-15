@@ -18,7 +18,6 @@ import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Objects;
 import org.beangle.security.core.Authentication;
-import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.security.core.session.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,13 +37,13 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 
   protected final Map<String, AccessEntry> entries = CollectUtils.newConcurrentHashMap();
 
-  private boolean enableLog;
-
-  private AccessLogger accessLogger;
-
   long updatedAt = System.currentTimeMillis();
 
-  private int updatedInterval = 5 * 60 * 1000;// 5分钟
+  /**
+   * Default interval for update access log to db.
+   * 5 minutes.
+   */
+  private int updatedInterval = 5 * 60 * 1000;
 
   public void init() throws Exception {
     Assert.notNull(controller, "controller must set");
@@ -178,27 +177,6 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     else entry.access(resource, accessAt);
   }
 
-  public void endAccess(String sessionid, String resource, long endAt) {
-    // FIXME
-    if (enableLog) {
-      AccessEntry entry = entries.get(sessionid);
-      accessLogger.log(sessionid, SecurityContextHolder.getContext().getAuthentication().getName(), resource,
-          entry.accessAt, endAt);
-    }
-  }
-
-  public void setAccessLogger(AccessLogger accessLogger) {
-    this.accessLogger = accessLogger;
-  }
-
-  public boolean isEnableLog() {
-    return enableLog;
-  }
-
-  public void setEnableLog(boolean enableLog) {
-    this.enableLog = enableLog;
-  }
-
   public String getResource(String sessionid) {
     AccessEntry entry = entries.get(sessionid);
     if (null == entry) return null;
@@ -223,13 +201,14 @@ class AccessUpdaterTask implements Runnable {
     for (Map.Entry<String, AccessEntry> entry : registry.entries.entrySet()) {
       AccessEntry accessEntry = entry.getValue();
       if (accessEntry.accessAt > updatedAt) {
-        arguments.add(new Object[] { new Date(entry.getValue().accessAt), entry.getKey() });
+        Date accessAt = new Date(entry.getValue().accessAt);
+        arguments.add(new Object[] { accessAt, accessAt, entry.getKey() });
       }
     }
     if (!arguments.isEmpty()) {
       entityDao.executeUpdateHqlRepeatly("update "
           + registry.getSessioninfoBuilder().getSessioninfoType().getName()
-          + " info set info.lastAccessAt=? where info.id=?", arguments);
+          + " info set info.lastAccessAt=? where info.id=? and info.lastAccessAt < ? ", arguments);
     }
     registry.updatedAt = System.currentTimeMillis();
   }

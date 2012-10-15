@@ -85,13 +85,13 @@ public class QueryHelper {
             conditions.add(new Condition(prefix + "." + attr + " is null"));
           } else {
             Model.getPopulator().populateValue(entity, attr, strValue);
-            Object settedValue = PropertyUtils.getProperty(entity, attr);
-            if (null == settedValue) continue;
-            if (settedValue instanceof String) {
+            Object setValue = PropertyUtils.getProperty(entity, attr);
+            if (null == setValue) continue;
+            if (setValue instanceof String) {
               conditions.add(new Condition(prefix + "." + attr + " like :" + attr.replace('.', '_'), "%"
-                  + (String) settedValue + "%"));
+                  + (String) setValue + "%"));
             } else {
-              conditions.add(new Condition(prefix + "." + attr + "=:" + attr.replace('.', '_'), settedValue));
+              conditions.add(new Condition(prefix + "." + attr + "=:" + attr.replace('.', '_'), setValue));
             }
           }
         } catch (Exception e) {
@@ -104,7 +104,6 @@ public class QueryHelper {
 
   /**
    * 从的参数或者cookie中(参数优先)取得分页信息
-   * 
    */
   public static PageLimit getPageLimit() {
     PageLimit limit = new PageLimit();
@@ -115,7 +114,6 @@ public class QueryHelper {
 
   /**
    * 获得请求中的页码
-   * 
    */
   public static int getPageNo() {
     String pageNo = Params.get(PAGENO);
@@ -129,7 +127,6 @@ public class QueryHelper {
 
   /**
    * 获得请求中的页长
-   * 
    */
   public static int getPageSize() {
     String pageSize = Params.get(PAGESIZE);

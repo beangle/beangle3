@@ -79,14 +79,6 @@ public interface SessionRegistry {
   void access(String sessionid, String resource, long accessAt);
 
   /**
-   * 结束访问某资源
-   * 
-   * @param sessionid
-   * @param endAt
-   */
-  void endAccess(String sessionid, String resource, long endAt);
-
-  /**
    * 查询控制器
    */
   SessionController getController();

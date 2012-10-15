@@ -10,7 +10,6 @@ import org.beangle.security.auth.encoding.DigestPasswordEncoder;
 import org.beangle.security.auth.encoding.PlaintextPasswordEncoder;
 import org.beangle.security.core.session.category.DbSessionController;
 import org.beangle.security.core.session.category.SessioninfoCleaner;
-import org.beangle.security.core.session.impl.DbAccessLogger;
 import org.beangle.security.core.session.impl.DbSessionRegistry;
 import org.beangle.security.core.session.impl.MemSessionRegistry;
 
@@ -27,6 +26,6 @@ public class DefaultModule extends AbstractBindModule {
     bind(MemSessionRegistry.class, DbSessionController.class, SessioninfoCleaner.class).shortName();
 
     bind(DaoAuthenticationProvider.class).shortName();
-    bind(PlaintextPasswordEncoder.class, DbAccessLogger.class);
+    bind(PlaintextPasswordEncoder.class);
   }
 }

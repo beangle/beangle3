@@ -95,16 +95,9 @@ public class ConcurrentSessionFilter extends GenericHttpFilter {
         }
       }
     }
-    String uri = null;
-    if (null != info) {
-      uri = RequestUtils.getServletPath(request);
-      sessionRegistry.access(session.getId(), uri, System.currentTimeMillis());
-    }
-    try {
-      chain.doFilter(request, response);
-    } finally {
-      if (null != info) sessionRegistry.endAccess(session.getId(), uri, System.currentTimeMillis());
-    }
+    if (null != info) sessionRegistry.access(session.getId(), RequestUtils.getServletPath(request),
+        System.currentTimeMillis());
+    chain.doFilter(request, response);
   }
 
   protected String determineExpiredUrl(HttpServletRequest request, SessionStatus info) {

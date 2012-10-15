@@ -48,10 +48,36 @@ public final class Reflections {
     return null == method ? null : method.getReturnType();
   }
 
+  /**
+   * Return setter method.
+   * 
+   * @param clazz
+   * @param property
+   * @return null when not found.
+   */
+  public static Method getSetter(Class<?> clazz, String property) {
+    String setName = "set" + Strings.capitalize(property);
+    for (Method m : clazz.getMethods()) {
+      if (m.getName().equals(setName)) {
+        if (Modifier.isPublic(m.getModifiers()) && !Modifier.isStatic(m.getModifiers())
+            && m.getParameterTypes().length == 1) {
+          return m;
+        } else {
+          return null;
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Return list of setters
+   * 
+   * @param clazz
+   */
   public static List<Method> getBeanSetters(Class<?> clazz) {
     List<Method> methods = CollectUtils.newArrayList();
     for (Method m : clazz.getMethods()) {
-      m.setAccessible(true);
       if (m.getName().startsWith("set") && m.getName().length() > 3) {
         if (Modifier.isPublic(m.getModifiers()) && !Modifier.isStatic(m.getModifiers())
             && m.getParameterTypes().length == 1) {

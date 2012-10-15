@@ -29,7 +29,9 @@ public class SessioninfoCleaner extends BaseServiceImpl implements Initializing 
 
   private SessionRegistry sessionRegistry;
 
-  // 默认5分钟清理一次
+  /**
+   * 默认5分钟清理一次
+   */
   private int cleanInterval = 1000 * 300;
 
   public void init() throws Exception {

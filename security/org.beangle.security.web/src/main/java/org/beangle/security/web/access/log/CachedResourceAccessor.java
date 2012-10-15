@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Assert;
-import org.beangle.security.core.session.impl.AccessLog;
 
 public class CachedResourceAccessor extends DefaultResourceAccessor implements Initializing {
 

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.beangle.commons.web.util.RequestUtils;
 import org.beangle.security.core.context.SecurityContextHolder;
-import org.beangle.security.core.session.impl.AccessLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,24 +21,20 @@ public class DefaultResourceAccessor implements ResourceAccessor {
     AccessLog log = new AccessLog();
     log.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
     log.setResource(RequestUtils.getServletPath(request));
-    // log.setParams(request.getQueryString());
+    //log.setParams(request.getQueryString());
     return log;
   }
 
   public AccessLog beginAccess(HttpServletRequest request, Date date) {
     AccessLog accessLog = buildLog(request);
     accessLog.setBeginAt(date);
-    if (logger.isDebugEnabled()) {
-      logger.debug(accessLog.toString());
-    }
+    if (logger.isDebugEnabled()) logger.debug(accessLog.toString());
     return accessLog;
   }
 
   public void endAccess(AccessLog accessLog, Date date) {
     accessLog.setEndAt(date);
-    if (logger.isDebugEnabled()) {
-      logger.debug(accessLog.toString());
-    }
+    if (logger.isDebugEnabled()) logger.debug(accessLog.toString());
   }
 
   public void finish() {

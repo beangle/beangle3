@@ -162,11 +162,6 @@ public class MemSessionRegistry implements SessionRegistry, EventListener<Sessio
     // DO nothing
   }
 
-  public void endAccess(String sessionid, String resource, long endAt) {
-    // TODO Auto-generated method stub
-
-  }
-
   public String getResource(String sessionid) {
     return null;
   }
