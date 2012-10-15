@@ -5,6 +5,19 @@
 	<packaging>pom</packaging>
 	<version>3.0.0-SNAPSHOT</version>
 	<name>Beangle Library Agregate</name>
+
+	<url>https://github.com/beangle/library</url>
+	
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/beangle/library/issues</url>
+	</issueManagement>
+
+	<scm>
+		<connection>scm:git:git://github.com/beangle/beangle.git</connection>
+		<developerConnection>scm:git:git@github.com:beangle/beangle.git</developerConnection>
+		<url>https://github.com/beangle/beangle</url>
+	</scm>
 	
 	<modules>
 		<module>commons</module>
