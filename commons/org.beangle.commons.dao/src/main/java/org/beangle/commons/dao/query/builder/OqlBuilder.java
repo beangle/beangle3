@@ -487,7 +487,10 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
         countString.append(genQueryStr.substring(indexOfDistinct, indexOfFrom)).append(") ");
       }
     }
-    countString.append(genQueryStr.substring(indexOfFrom));
+    
+    int orderIdx = genQueryStr.lastIndexOf(" order ");
+    if (-1 == orderIdx) orderIdx = genQueryStr.length();
+    countString.append(genQueryStr.substring(indexOfFrom, orderIdx));
     return countString.toString();
   }
 
@@ -498,6 +501,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
    * @return -1 or from index
    */
   private int findIndexOfFrom(String query) {
+    if (query.startsWith("from")) return 0;
     int fromIdx = query.indexOf(" from ");
     if (-1 == fromIdx) return -1;
     final int first = query.substring(0, fromIdx).indexOf("(");

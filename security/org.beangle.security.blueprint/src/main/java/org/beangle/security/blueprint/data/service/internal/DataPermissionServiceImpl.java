@@ -175,13 +175,12 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
       List<String> params = c.getParamNames();
       for (final String paramName : params) {
         UserProperty up = profile.getProperty(paramName);
-        ProfileField prop = up.getField();
         String value = null == up ? null : up.getValue();
         if (Strings.isNotEmpty(value)) {
           if (value.equals(Property.AllValue)) {
             content = "";
           } else {
-            paramValues.add(unmarshal(value, prop));
+            paramValues.add(unmarshal(value, up.getField()));
           }
         } else {
           throw new RuntimeException(paramName + " had not been initialized");

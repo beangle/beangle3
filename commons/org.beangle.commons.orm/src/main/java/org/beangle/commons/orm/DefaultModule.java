@@ -30,6 +30,7 @@ public class DefaultModule extends AbstractBindModule {
         props(
             // "hibernate.temp.use_jdbc_metadata_defaults=false",
             // "hibernate.dialect=org.hibernate.dialect.H2Dialect",
+            // "hibernate.hbm2ddl.auto=validate",
             "hibernate.max_fetch_depth=1", "hibernate.default_batch_fetch_size=500",
             "hibernate.jdbc.fetch_size=8", "hibernate.jdbc.batch_size=20",
             "hibernate.jdbc.batch_versioned_data=true", "hibernate.jdbc.use_streams_for_binary=true",
