@@ -23,11 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>
- * Used by the <code>SecurityEnforcementFilter</code> to commence authentication via the
- * {@link UsernamePasswordAuthenticationFilter}. This object holds the location of the login form,
- * relative to the web app context path, and is used to commence a redirect to that form.
- * <p>
  * By setting the <em>forceHttps</em> property to true, you may configure the class to force the
  * protocol used for the login form to be <code>HTTPS</code>, even if the original intercepted
  * request for a resource used the <code>HTTP</code> protocol. When this happens, after a successful

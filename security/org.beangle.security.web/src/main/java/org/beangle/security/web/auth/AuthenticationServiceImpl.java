@@ -28,7 +28,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
   private LogoutHandlerStack handlerStack;
 
-  public void login(HttpServletRequest request, Authentication auth) throws AuthenticationException {
+  public AuthenticationServiceImpl() {
+    super();
+  }
+
+  public AuthenticationServiceImpl(AuthenticationManager authenticationManager) {
+    super();
+    this.authenticationManager = authenticationManager;
+  }
+
+  public Authentication login(HttpServletRequest request, Authentication auth) throws AuthenticationException {
     if (auth instanceof AbstractAuthentication) {
       AbstractAuthentication abauth = (AbstractAuthentication) auth;
       if (null == abauth.getDetails()) abauth.setDetails(authenticationDetailsSource.buildDetails(request));
@@ -40,6 +49,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     // inactiveInterval in minutes
     if (interval.isDefined()) request.getSession(true).setMaxInactiveInterval(interval.get() * 60);
     SecurityContextHolder.getContext().setAuthentication(authRequest);
+    return authRequest;
+    
   }
 
   public boolean logout(HttpServletRequest request, HttpServletResponse response) {

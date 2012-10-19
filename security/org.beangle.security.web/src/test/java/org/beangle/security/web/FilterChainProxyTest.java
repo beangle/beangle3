@@ -14,7 +14,7 @@ import java.util.List;
 import javax.servlet.Filter;
 
 import org.beangle.commons.web.filter.MockFilter;
-import org.beangle.security.web.auth.UsernamePasswordAuthenticationFilter;
+import org.beangle.security.web.auth.UsernamePasswordAuthFilter;
 import org.beangle.security.web.context.HttpSessionContextFilter;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockFilterConfig;
@@ -77,7 +77,7 @@ public class FilterChainProxyTest extends AbstractTestNGSpringContextTests {
     filters = filterChainProxy.getFilters(request);
     assertEquals(3, filters.size());
     assertTrue(filters.get(0) instanceof HttpSessionContextFilter);
-    assertTrue(filters.get(1) instanceof UsernamePasswordAuthenticationFilter);
+    assertTrue(filters.get(1) instanceof UsernamePasswordAuthFilter);
     assertTrue(filters.get(2) instanceof MockFilter);
   }
 

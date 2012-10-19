@@ -19,11 +19,9 @@ import org.beangle.commons.lang.Assert;
 import org.beangle.commons.web.filter.GenericHttpFilter;
 import org.beangle.commons.web.util.RedirectUtils;
 import org.beangle.security.auth.AuthenticationDetailsSource;
-import org.beangle.security.auth.AuthenticationManager;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.context.SecurityContextHolder;
-import org.beangle.security.core.session.SessionRegistry;
 
 /**
  * Abstract processor of browser-based HTTP-based authentication requests.
@@ -84,7 +82,7 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilter {
 
   protected AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
 
-  private AuthenticationManager authenticationManager;
+  private AuthenticationService authenticationService;
 
   private Properties exceptionMappings = new Properties();
 
@@ -121,8 +119,6 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilter {
 
   private boolean serverSideRedirect = false;
 
-  private SessionRegistry sessionRegistry;
-
   protected void initFilterBean() throws ServletException {
     Assert.notEmpty(filterUrl, "filterUrl must be specified");
     Assert.isTrue(RedirectUtils.isValidRedirectUrl(filterUrl), filterUrl + " isn't a valid redirect URL");
@@ -131,18 +127,15 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilter {
         + " isn't a valid redirect URL");
     Assert.isTrue(RedirectUtils.isValidRedirectUrl(authenticationFailureUrl), authenticationFailureUrl
         + " isn't a valid redirect URL");
-    Assert.notNull(authenticationManager, "authenticationManager must be specified");
+    Assert.notNull(authenticationService, "authenticationService must be specified");
   }
 
   /**
    * Performs actual authentication.
    * 
-   * @param request
-   *          from which to extract parameters and perform the
-   *          authentication
+   * @param request from which to extract parameters and perform the authentication
    * @return the authenticated user
-   * @throws AuthenticationException
-   *           if authentication fails
+   * @throws AuthenticationException if authentication fails
    */
   public abstract Authentication attemptAuthentication(HttpServletRequest request)
       throws AuthenticationException;
@@ -157,17 +150,13 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilter {
       Authentication authResult;
       try {
         authResult = attemptAuthentication(request);
-        if (null == authResult) { return; }
-        sessionRegistry.register(authResult, request.getSession().getId());
       } catch (AuthenticationException failed) {
         // Authentication failed
         unsuccessfulAuthentication(request, response, failed);
         return;
       }
       // Authentication success
-      if (continueChainBeforeSuccessfulAuthentication) {
-        chain.doFilter(request, response);
-      }
+      if (continueChainBeforeSuccessfulAuthentication) chain.doFilter(request, response);
       successfulAuthentication(request, response, authResult);
       return;
     }
@@ -277,12 +266,12 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilter {
     this.authenticationFailureUrl = authenticationFailureUrl;
   }
 
-  protected AuthenticationManager getAuthenticationManager() {
-    return authenticationManager;
+  public AuthenticationService getAuthenticationService() {
+    return authenticationService;
   }
 
-  public void setAuthenticationManager(AuthenticationManager authenticationManager) {
-    this.authenticationManager = authenticationManager;
+  public void setAuthenticationService(AuthenticationService authenticationService) {
+    this.authenticationService = authenticationService;
   }
 
   /**
@@ -367,9 +356,4 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilter {
   public void setServerSideRedirect(boolean serverSideRedirect) {
     this.serverSideRedirect = serverSideRedirect;
   }
-
-  public void setSessionRegistry(SessionRegistry sessionRegistry) {
-    this.sessionRegistry = sessionRegistry;
-  }
-
 }

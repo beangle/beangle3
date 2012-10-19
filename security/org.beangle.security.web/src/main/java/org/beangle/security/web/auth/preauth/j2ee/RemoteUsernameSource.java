@@ -8,6 +8,7 @@ import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.beangle.commons.lang.Option;
 import org.beangle.commons.lang.Strings;
 import org.beangle.security.web.auth.preauth.UsernameSource;
 import org.slf4j.Logger;
@@ -26,30 +27,20 @@ public class RemoteUsernameSource implements UsernameSource {
 
   private boolean stripPrefix = true;
 
-  public String obtainUsername(HttpServletRequest request) {
+  public Option<String> obtainUsername(HttpServletRequest request) {
     String username = null;
     Principal p = request.getUserPrincipal();
-    if (null != p) {
-      username = p.getName();
-    }
-    if (Strings.isEmpty(username)) {
-      username = request.getRemoteUser();
-    }
-    if (null != username && isStripPrefix()) {
-      username = stripPrefix(username);
-    }
-    if (null != username) {
-      logger.debug("Obtained username=[{}] from remote user", username);
-    }
-    return username;
+    if (null != p) username = p.getName();
+    if (Strings.isEmpty(username)) username = request.getRemoteUser();
+    if (null != username && isStripPrefix()) username = stripPrefix(username);
+    if (null != username) logger.debug("Obtained username=[{}] from remote user", username);
+    return Option.some(username);
   }
 
   private String stripPrefix(String userName) {
     if (Strings.isNotBlank(userName)) {
       int index = userName.lastIndexOf("\\");
-      if (index != -1) {
-        userName = userName.substring(index + 1);
-      }
+      if (index != -1) userName = userName.substring(index + 1);
     }
     return userName;
   }
@@ -62,8 +53,7 @@ public class RemoteUsernameSource implements UsernameSource {
   }
 
   /**
-   * @param stripPrefix
-   *          the stripPrefix to set
+   * @param stripPrefix the stripPrefix to set
    */
   public void setStripPrefix(boolean stripPrefix) {
     this.stripPrefix = stripPrefix;

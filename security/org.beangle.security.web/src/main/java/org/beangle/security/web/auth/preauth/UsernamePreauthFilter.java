@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.beangle.commons.lang.Assert;
+import org.beangle.commons.lang.Option;
+import org.beangle.commons.lang.Strings;
 
 /**
  * Flexible pre-authenticated filter which obtains username and other values
@@ -37,8 +39,7 @@ public class UsernamePreauthFilter extends AbstractPreauthFilter {
   }
 
   /**
-   * @param usernameSource
-   *          the usernameSource to set
+   * @param usernameSource the usernameSource to set
    */
   public void setUsernameSource(UsernameSource usernameSource) {
     Assert.notNull(usernameSource, "usernameSource must be specified");
@@ -48,10 +49,10 @@ public class UsernamePreauthFilter extends AbstractPreauthFilter {
   @Override
   protected PreauthAuthentication getPreauthAuthentication(HttpServletRequest request,
       HttpServletResponse response) {
-    String username = usernameSource.obtainUsername(request);
-    if (null == username) return null;
-    else {
-      return new PreauthAuthentication(username);
-    }
+    Option<String> username = usernameSource.obtainUsername(request);
+    if (username.isDefined() && Strings.isNotBlank(username.get())) return new PreauthAuthentication(
+        username.get());
+    else return null;
+
   }
 }

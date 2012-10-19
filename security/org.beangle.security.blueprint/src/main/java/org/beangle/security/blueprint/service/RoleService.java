@@ -44,11 +44,12 @@ public interface RoleService {
   void moveRole(Role role, Role parent, int indexno);
 
   /**
-   * 过滤能编辑的角色
+   * Returns true if user has administrative permission on role
    * 
    * @param user
-   * @param roles
+   * @param role
+   * @return
    */
-  Set<Role> editable(User user, Collection<Role> roles);
+  boolean isAdmin(User user, Role role);
 
 }

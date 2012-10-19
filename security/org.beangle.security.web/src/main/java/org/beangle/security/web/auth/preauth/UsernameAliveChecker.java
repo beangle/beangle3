@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Objects;
+import org.beangle.commons.lang.Option;
 import org.beangle.security.core.Authentication;
 
 /**
@@ -27,8 +28,8 @@ public class UsernameAliveChecker implements AuthenticationAliveChecker {
   }
 
   public boolean check(Authentication auth, HttpServletRequest request) {
-    String newUsername = usernameSource.obtainUsername(request);
-    return Objects.equals(newUsername, auth.getName());
+    Option<String> newUsername = usernameSource.obtainUsername(request);
+    return Objects.equals(newUsername.orNull(), auth.getName());
   }
 
 }

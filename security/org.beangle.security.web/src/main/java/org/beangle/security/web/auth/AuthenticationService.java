@@ -17,7 +17,7 @@ import org.beangle.security.core.Authentication;
  */
 public interface AuthenticationService {
 
-  void login(HttpServletRequest request, Authentication auth);
+  Authentication login(HttpServletRequest request, Authentication auth);
 
   boolean logout(HttpServletRequest request, HttpServletResponse response);
 

@@ -6,6 +6,8 @@ package org.beangle.security.web.auth.preauth;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.beangle.commons.lang.Option;
+
 /**
  * Source of the username supplied with pre-authenticated authentication
  * request. The username can be supplied in the request: in cookie, request
@@ -16,7 +18,7 @@ public interface UsernameSource {
    * Obtain username supplied in the request.
    * 
    * @param request with username
-   * @return username or null if not supplied
+   * @return username
    */
-  String obtainUsername(HttpServletRequest request);
+  Option<String> obtainUsername(HttpServletRequest request);
 }

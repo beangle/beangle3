@@ -100,8 +100,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public List<Role> getRoles(Long userId) {
     OqlBuilder builder = OqlBuilder.from(Member.class, "gm");
-    builder.where("gm.user.id=:userId and gm.member=true", userId).select("gm.role")
-        .orderBy("gm.role.code");
+    builder.where("gm.user.id=:userId and gm.member=true", userId).select("gm.role").orderBy("gm.role.code");
     builder.cacheable();
     return entityDao.search(builder);
   }
@@ -146,7 +145,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
   }
 
   public boolean isManagedBy(User manager, User user) {
-    return (isRoot(manager) || manager.equals(user.getCreator()));
+    if (isRoot(manager)) return true;
+    for (Member m1 : manager.getMembers()) {
+      if (m1.isManager()) {
+        for (Member m2 : user.getMembers())
+          if (m2.isMember() && m2.getRole().equals(m1.getRole())) return true;
+      }
+    }
+    return false;
   }
 
 }

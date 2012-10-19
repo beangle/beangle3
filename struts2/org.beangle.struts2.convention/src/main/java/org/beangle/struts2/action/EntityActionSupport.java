@@ -93,7 +93,6 @@ public abstract class EntityActionSupport extends ActionSupport {
 
   /**
    * 主页面
-   * 
    */
   public String index() throws Exception {
     indexSetting();
@@ -101,8 +100,7 @@ public abstract class EntityActionSupport extends ActionSupport {
   }
 
   /**
-   * 查找标准
-   * 
+   * Seach Entitis
    */
   public String search() {
     put(getShortName() + "s", search(getQueryBuilder()));
@@ -114,25 +112,17 @@ public abstract class EntityActionSupport extends ActionSupport {
   }
 
   /**
-   * 修改标准
-   * 
+   * Edit by entity.id or id
    */
   public String edit() {
-    Serializable entityId = getId(Model.getEntityType(getEntityName()).getIdType(), getShortName());
-    Entity<?> entity = null;
-    if (null == entityId) {
-      entity = populateEntity();
-    } else {
-      entity = getModel(getEntityName(), entityId);
-    }
+    Entity<?> entity = getEntity();
     put(getShortName(), entity);
     editSetting(entity);
     return forward();
   }
 
   /**
-   * 删除
-   * 
+   * Remove entities by [entity.id]/entityIds
    */
   public String remove() throws Exception {
     Class<? extends Serializable> idclass = Model.getEntityType(getEntityName()).getIdType();
@@ -148,8 +138,7 @@ public abstract class EntityActionSupport extends ActionSupport {
   }
 
   /**
-   * 保存修改后的标准
-   * 
+   * Save single entity
    */
   public String save() throws Exception {
     return saveAndForward(populateEntity());
@@ -207,11 +196,8 @@ public abstract class EntityActionSupport extends ActionSupport {
     Serializable entityId = getId(type.getIdType(), name);
     Entity<?> entity = null;
     try {
-      if (null == entityId) {
-        entity = (Entity<?>) populate(type.newInstance(), type.getEntityName(), name);
-      } else {
-        entity = getModel(entityName, entityId);
-      }
+      if (null == entityId) entity = (Entity<?>) populate(type.newInstance(), type.getEntityName(), name);
+      else entity = getModel(entityName, entityId);
     } catch (Exception e) {
       throw new RuntimeException(e.getMessage());
     }
@@ -231,7 +217,6 @@ public abstract class EntityActionSupport extends ActionSupport {
 
   /**
    * 查看信息
-   * 
    */
   public String info() throws Exception {
     Serializable entityId = getId(Model.getEntityType(getEntityName()).getIdType(), getShortName());
@@ -403,7 +388,6 @@ public abstract class EntityActionSupport extends ActionSupport {
 
   /**
    * 构建实体导入者
-   * 
    */
   protected EntityImporter buildEntityImporter() {
     if (null == getEntityName()) {
@@ -463,7 +447,6 @@ public abstract class EntityActionSupport extends ActionSupport {
 
   /**
    * 导入信息
-   * 
    */
   public String importData() {
     TransferResult tr = new TransferResult();

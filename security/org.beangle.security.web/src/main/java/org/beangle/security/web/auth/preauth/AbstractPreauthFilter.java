@@ -18,13 +18,12 @@ import org.beangle.commons.web.filter.GenericHttpFilter;
 import org.beangle.security.auth.AccountStatusException;
 import org.beangle.security.auth.AnonymousAuthentication;
 import org.beangle.security.auth.AuthenticationDetailsSource;
-import org.beangle.security.auth.AuthenticationManager;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.context.SecurityContextHolder;
-import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.security.core.userdetail.UsernameNotFoundException;
 import org.beangle.security.web.auth.AbstractAuthenticationFilter;
+import org.beangle.security.web.auth.AuthenticationService;
 import org.beangle.security.web.auth.WebAuthenticationDetailsSource;
 
 /**
@@ -43,9 +42,7 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
 
   private AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
 
-  private AuthenticationManager authenticationManager = null;
-
-  private SessionRegistry sessionRegistry;
+  private AuthenticationService authenticationService = null;
 
   private AuthenticationAliveChecker authenticationAliveChecker;
 
@@ -54,8 +51,7 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
 
   /** Check whether all required properties have been set. */
   protected void initFilterBean() {
-    Assert.notNull(authenticationManager, "authenticationManager must be set");
-    Assert.notNull(sessionRegistry, "sessionRegistry must be set");
+    Assert.notNull(authenticationService, "authenticationService must be set");
   }
 
   /**
@@ -116,15 +112,13 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
     }
     try {
       auth.setDetails(authenticationDetailsSource.buildDetails(request));
-      authResult = authenticationManager.authenticate(auth);
-      sessionRegistry.register(authResult, request.getSession().getId());
+      authResult = authenticationService.login(request, auth);
       successfulAuthentication(request, response, authResult);
       return authResult;
     } catch (AuthenticationException failed) {
       unsuccessfulAuthentication(request, response, failed);
-      if (!continueOnFail) {
-        throw failed;
-      } else return null;
+      if (!continueOnFail) throw failed;
+      else return null;
     }
   }
 
@@ -139,13 +133,14 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
   }
 
   /**
-   * Ensures the authentication object in the secure context is set to null
-   * when authentication fails.
+   * Ensures the authentication object in the secure context is set to null when authentication
+   * fails.
+   * If username not found or account status exception.just let other know by throw it.
+   * It will be handled by ExceptionTranslationFilter
    */
   protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
       AuthenticationException failed) {
     SecurityContextHolder.clearContext();
-    if (null != sessionRegistry) sessionRegistry.remove(request.getSession().getId());
     if (null != failed) {
       logger.debug("Cleared security context due to exception", failed);
       request.getSession().setAttribute(AbstractAuthenticationFilter.SECURITY_LAST_EXCEPTION_KEY, failed);
@@ -162,16 +157,8 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
     this.authenticationDetailsSource = authenticationDetailsSource;
   }
 
-  /**
-   * @param authenticationManager
-   *          The AuthenticationManager to use
-   */
-  public void setAuthenticationManager(AuthenticationManager authenticationManager) {
-    this.authenticationManager = authenticationManager;
-  }
-
-  public void setSessionRegistry(SessionRegistry sessionRegistry) {
-    this.sessionRegistry = sessionRegistry;
+  public void setAuthenticationService(AuthenticationService authenticationService) {
+    this.authenticationService = authenticationService;
   }
 
   public void setContinueOnFail(boolean continueOnFail) {

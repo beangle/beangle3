@@ -4,10 +4,8 @@
  */
 package org.beangle.security.blueprint.service.internal;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.Operation;
@@ -67,15 +65,21 @@ public class RoleServiceImpl extends AbstractHierarchyService<RoleBean, Role> im
     return entityDao.search(builder);
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
-  public Set<Role> editable(User user, Collection<Role> roles) {
-    if (userService.isRoot(user)) return CollectUtils.newHashSet(roles);
+  /**
+   * Returns true if user has administrative permission on role
+   * 
+   * @param user
+   * @param role
+   */
+  public boolean isAdmin(User user, Role role) {
+    if (userService.isRoot(user)) return true;
     else {
-      OqlBuilder builder = OqlBuilder.from(Member.class, "m");
-      builder.where("m.manager=true and m.user=:user", user);
-      builder.join("m.role.children", "mc").where("mc in(:children)", roles);
-      builder.select("distinct mc");
-      return CollectUtils.newHashSet(entityDao.search(builder));
+      Role parent = role.getParent();
+      if (null != parent) return false;
+      for (Member m : user.getMembers()) {
+        if (m.is(Member.Ship.MANAGER) && m.getRole().equals(parent)) return true;
+      }
+      return false;
     }
   }
 

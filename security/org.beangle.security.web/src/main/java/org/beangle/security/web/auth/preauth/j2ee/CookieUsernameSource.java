@@ -7,21 +7,22 @@ package org.beangle.security.web.auth.preauth.j2ee;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.beangle.commons.lang.Option;
 import org.beangle.security.web.auth.preauth.UsernameSource;
 
 public class CookieUsernameSource implements UsernameSource {
 
   private String cookie;
 
-  public String obtainUsername(HttpServletRequest request) {
+  public Option<String> obtainUsername(HttpServletRequest request) {
     Cookie all_cookies[] = request.getCookies();
     if (all_cookies != null) {
       for (int i = 0; i < all_cookies.length; i++) {
         Cookie myCookie = all_cookies[i];
-        if (myCookie.getName().equals(cookie)) return myCookie.getValue();
+        if (myCookie.getName().equals(cookie)) return Option.some(myCookie.getValue());
       }
     }
-    return null;
+    return Option.none();
   }
 
   public String getCookie() {

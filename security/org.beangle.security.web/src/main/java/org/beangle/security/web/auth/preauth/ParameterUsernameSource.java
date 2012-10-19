@@ -8,6 +8,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.beangle.commons.lang.Option;
 import org.beangle.commons.web.util.RequestUtils;
 import org.beangle.security.codec.EncryptUtil;
 import org.slf4j.Logger;
@@ -30,7 +31,7 @@ public class ParameterUsernameSource implements UsernameSource {
 
   private String extra = "123456!";
 
-  public String obtainUsername(HttpServletRequest request) {
+  public Option<String> obtainUsername(HttpServletRequest request) {
     String ip = RequestUtils.getIpAddr(request);
     String cid = request.getParameter(userParam);
     String timeParamStr = request.getParameter(timeParam);
@@ -39,7 +40,7 @@ public class ParameterUsernameSource implements UsernameSource {
       t = Long.valueOf(timeParamStr);
     }
     String s = request.getParameter(digestParam);
-    if (null == t || null == s || null == cid || null == ip) return null;
+    if (null == t || null == s || null == cid || null == ip) return Option.none();
     String full = cid + "," + ip + "," + t + "," + extra;
     String digest = EncryptUtil.encode(full, "MD5");
     if (logger.isDebugEnabled()) {
@@ -53,13 +54,13 @@ public class ParameterUsernameSource implements UsernameSource {
       Date now = new Date();
       if (enableExpired && (Math.abs(now.getTime() - time) > (expiredTime * 1000))) {
         logger.debug("user " + cid + " time expired:server time:{} and given time :{}", now, new Date(time));
-        return null;
+        return Option.none();
       } else {
         logger.debug("user {} login at server time:{}", cid, now);
-        return cid;
+        return Option.some(cid);
       }
     } else {
-      return null;
+      return Option.none();
     }
   }
 

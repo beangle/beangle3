@@ -14,6 +14,7 @@ import org.beangle.security.auth.BadCredentialsException;
 import org.beangle.security.cas.CasConfig;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
+import org.beangle.security.web.auth.AuthenticationServiceImpl;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.testng.annotations.BeforeMethod;
@@ -46,11 +47,12 @@ public class CasPreauthFilterTest {
   public void testNullServiceTicketHandledGracefully() throws Exception {
     MockHttpServletRequest request = new MockHttpServletRequest("GET", "/demo/any-path");
     request.addParameter("ticket", "ST-0-ER94xMJmn6pha35CQRoZ");
-    filter.setAuthenticationManager(new AuthenticationManager() {
+    AuthenticationManager manager = new AuthenticationManager() {
       public Authentication authenticate(Authentication a) {
         throw new BadCredentialsException("Rejected");
       }
-    });
+    };
+    filter.setAuthenticationService(new AuthenticationServiceImpl(manager));
     filter.setContinueOnFail(false);
     filter.doFilter(request, new MockHttpServletResponse(), mock(FilterChain.class));
   }
