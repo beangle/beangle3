@@ -4,9 +4,7 @@
  */
 package org.beangle.security.blueprint.service;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;

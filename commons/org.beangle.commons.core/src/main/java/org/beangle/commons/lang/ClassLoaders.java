@@ -7,6 +7,10 @@ package org.beangle.commons.lang;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Enumeration;
+import java.util.List;
+
+import org.beangle.commons.collection.CollectUtils;
 
 /**
  * @author chaostone
@@ -66,6 +70,43 @@ public final class ClassLoaders {
     if (url != null) return url;
 
     return url;
+  }
+
+  /**
+   * Load list of resource(Cannot start with slash /).
+   * <p/>
+   * This method will try to load the resource using the following methods (in order):
+   * <ul>
+   * <li>From {@link Thread#getContextClassLoader() Thread.currentThread().getContextClassLoader()}
+   * <li>From {@link Class#getClassLoader() ClassLoaderUtil.class.getClassLoader()}
+   * <li>From the {@link Class#getClassLoader() callingClass.getClassLoader() }
+   * </ul>
+   * 
+   * @param resourceName
+   * @param callingClass
+   * @return List of resources url or empty list.
+   */
+  public static List<URL> getResources(String resourceName, Class<?> callingClass) {
+    Enumeration<URL> em = null;
+    try {
+      em = Thread.currentThread().getContextClassLoader().getResources(resourceName);
+      if (!em.hasMoreElements()) {
+        em = ClassLoaders.class.getClassLoader().getResources(resourceName);
+        if (!em.hasMoreElements()) {
+          ClassLoader cl = callingClass.getClassLoader();
+          if (cl != null) em = cl.getResources(resourceName);
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    
+    List<URL> urls = CollectUtils.newArrayList();
+    while (null != em && em.hasMoreElements()) {
+      urls.add(em.nextElement());
+    }
+    return urls;
+
   }
 
   /**

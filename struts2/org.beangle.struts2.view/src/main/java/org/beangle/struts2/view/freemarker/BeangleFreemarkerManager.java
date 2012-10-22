@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -17,6 +16,7 @@ import java.util.Properties;
 import javax.servlet.ServletContext;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,15 +118,15 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
   protected void loadSettings(ServletContext servletContext) {
     try {
       Properties properties = new Properties();
-      Enumeration<?> em = BeangleFreemarkerManager.class.getClassLoader().getResources(
-          "META-INF/freemarker.properties");
-      while (em.hasMoreElements()) {
-        properties.putAll(getProperties((URL) em.nextElement()));
-      }
-      em = BeangleFreemarkerManager.class.getClassLoader().getResources("freemarker.properties");
-      while (em.hasMoreElements()) {
-        properties.putAll(getProperties((URL) em.nextElement()));
-      }
+      List<URL> urls = ClassLoaders.getResources("META-INF/freemarker.properties",
+          BeangleFreemarkerManager.class);
+      for (URL url : urls)
+        properties.putAll(getProperties(url));
+
+      urls = ClassLoaders.getResources("freemarker.properties", BeangleFreemarkerManager.class);
+      for (URL url : urls)
+        properties.putAll(getProperties(url));
+
       StringBuilder sb = new StringBuilder();
       @SuppressWarnings("rawtypes")
       List keys = CollectUtils.newArrayList(properties.keySet());

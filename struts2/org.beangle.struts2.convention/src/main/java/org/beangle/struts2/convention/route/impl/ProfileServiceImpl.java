@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -18,6 +17,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.context.inject.Resources;
+import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Strings;
 import org.beangle.struts2.convention.Constants;
 import org.beangle.struts2.convention.route.Profile;
@@ -52,21 +52,15 @@ public class ProfileServiceImpl implements ProfileService {
     setResources(getDefaultResource());
   }
 
-  // FIXME
   private Resources getDefaultResource() {
-    try {
-      Resources resources = new Resources();
-      resources.setGlobal(ProfileServiceImpl.class.getClassLoader().getResource(
-          "META-INF/beangle/convention-default.properties"));
-      Enumeration<URL> em = ProfileServiceImpl.class.getClassLoader().getResources(
-          "META-INF/beangle/convention-route.properties");
-      while (em.hasMoreElements()) {
-        resources.getLocals().add(em.nextElement());
-      }
-      return resources;
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+    Resources resources = new Resources();
+    resources.setGlobal(ClassLoaders.getResource("META-INF/beangle/convention-default.properties",
+        ProfileServiceImpl.class));
+    List<URL> urls = ClassLoaders.getResources("META-INF/beangle/convention-route.properties",
+        ProfileServiceImpl.class);
+    for (URL url : urls)
+      resources.getLocals().add(url);
+    return resources;
   }
 
   public Profile getProfile(String className) {
