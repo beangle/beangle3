@@ -5,7 +5,7 @@
 
 <struts>
 	<package name="org.beangle.struts2.example.action" extends="beangle" namespace="/">
-		<action name="comp" class="org.beangle.struts2.example.action.Compare">
+		<action name="comp" class="org.beangle.struts2.example.action.CompareAction">
 		<result name="success">comp.ftl</result>
 		</action>
 	</package>

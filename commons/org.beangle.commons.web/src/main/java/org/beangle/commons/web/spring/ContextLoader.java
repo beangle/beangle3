@@ -72,8 +72,8 @@ public class ContextLoader implements ServletContextListener {
           - startTime);
 
       // lazy initializing hooks
-      for (InitializingContextAware hook : getLazyInitialHooks(servletContext))
-        hook.init(context);
+      for (LazyInitializingHook hook : getLazyInitialHooks(servletContext))
+        hook.lazyInit(context);
       servletContext.removeAttribute(LAZY_INIT_HOOKS);
 
       return context;
@@ -132,12 +132,12 @@ public class ContextLoader implements ServletContextListener {
     return null;
   }
 
-  public static List<InitializingContextAware> getLazyInitialHooks(ServletContext servletContext) {
+  public static List<LazyInitializingHook> getLazyInitialHooks(ServletContext servletContext) {
     @SuppressWarnings("unchecked")
-    List<InitializingContextAware> hooks = (List<InitializingContextAware>) servletContext
+    List<LazyInitializingHook> hooks = (List<LazyInitializingHook>) servletContext
         .getAttribute(LAZY_INIT_HOOKS);
     if (null == hooks) {
-      hooks = new ArrayList<InitializingContextAware>();
+      hooks = new ArrayList<LazyInitializingHook>();
       servletContext.setAttribute(LAZY_INIT_HOOKS, hooks);
     }
     return hooks;

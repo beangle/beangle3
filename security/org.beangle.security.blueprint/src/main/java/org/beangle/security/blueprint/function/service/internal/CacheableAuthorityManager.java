@@ -49,6 +49,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
    * 2)检查角色权限<br>
    */
   public boolean isAuthorized(Authentication auth, Object resource) {
+    if (null == auth) return false;
     loadResourceNecessary();
     String resourceName = null;
     if (resource instanceof FilterInvocation) {

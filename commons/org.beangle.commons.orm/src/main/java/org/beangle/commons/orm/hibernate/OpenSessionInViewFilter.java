@@ -14,12 +14,12 @@ import javax.servlet.ServletResponse;
 import org.beangle.commons.orm.hibernate.internal.SessionUtils;
 import org.beangle.commons.web.filter.OncePerRequestFilter;
 import org.beangle.commons.web.spring.ContextLoader;
-import org.beangle.commons.web.spring.InitializingContextAware;
+import org.beangle.commons.web.spring.LazyInitializingHook;
 import org.hibernate.FlushMode;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 
-public class OpenSessionInViewFilter extends OncePerRequestFilter implements InitializingContextAware {
+public class OpenSessionInViewFilter extends OncePerRequestFilter implements LazyInitializingHook {
 
   private SessionFactory sessionFactory;
 
@@ -34,7 +34,7 @@ public class OpenSessionInViewFilter extends OncePerRequestFilter implements Ini
     }
   }
 
-  public void init(ApplicationContext context) {
+  public void lazyInit(ApplicationContext context) {
     setSessionFactory(context.getBean(SessionFactory.class));
   }
 

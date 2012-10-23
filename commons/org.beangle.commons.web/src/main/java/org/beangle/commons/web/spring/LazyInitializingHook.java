@@ -6,7 +6,7 @@ package org.beangle.commons.web.spring;
 
 import org.springframework.context.ApplicationContext;
 
-public interface InitializingContextAware {
+public interface LazyInitializingHook {
 
-  void init(ApplicationContext context);
+  void lazyInit(ApplicationContext context);
 }

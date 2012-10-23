@@ -513,7 +513,15 @@ public class HibernateEntityDao implements EntityDao {
 
   public void remove(Object... entities) {
     for (Object entity : entities) {
-      if (null != entity) getSession().delete(entity);
+      if (null != entity) {
+        if (entity instanceof Collection<?>) {
+          for (Object innerEntity : (Collection<?>) entity) {
+            getSession().delete(innerEntity);
+          }
+        } else {
+          getSession().delete(entity);
+        }
+      }
     }
   }
 

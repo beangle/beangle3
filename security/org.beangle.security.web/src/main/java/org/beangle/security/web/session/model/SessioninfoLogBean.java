@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.beangle.commons.entity.annotation.LogEntity;
 import org.beangle.commons.entity.pojo.StringIdObject;
 
 /**
@@ -18,6 +19,7 @@ import org.beangle.commons.entity.pojo.StringIdObject;
  * @author chaostone
  */
 @Entity(name = "org.beangle.security.web.session.model.SessioninfoLogBean")
+@LogEntity
 public class SessioninfoLogBean extends StringIdObject {
 
   private static final long serialVersionUID = -3144771635148215917L;

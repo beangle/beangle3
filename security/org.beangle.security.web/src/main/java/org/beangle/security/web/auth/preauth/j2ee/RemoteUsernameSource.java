@@ -34,7 +34,7 @@ public class RemoteUsernameSource implements UsernameSource {
     if (Strings.isEmpty(username)) username = request.getRemoteUser();
     if (null != username && isStripPrefix()) username = stripPrefix(username);
     if (null != username) logger.debug("Obtained username=[{}] from remote user", username);
-    return Option.some(username);
+    return Option.from(username);
   }
 
   private String stripPrefix(String userName) {

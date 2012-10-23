@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
+import org.beangle.commons.entity.annotation.LogEntity;
 import org.beangle.commons.entity.pojo.LongIdObject;
 
 /**
@@ -20,6 +21,7 @@ import org.beangle.commons.entity.pojo.LongIdObject;
  * @author chaostone
  */
 @Entity(name = "org.beangle.security.web.access.log.AccessLog")
+@LogEntity
 public class AccessLog extends LongIdObject {
   private static final long serialVersionUID = 1L;
 
