@@ -16,6 +16,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.struts2.view.component.Component;
 import org.beangle.struts2.view.template.Theme;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.ValueStack;
 
 /**
@@ -42,9 +43,11 @@ public abstract class AbstractTagLibrary implements TagLibrary {
     this.res = res;
 
     theme = UITheme.getTheme(getUitheme(), req.getContextPath());
-    stack.getContext().put(Theme.THEME, Theme.getTheme(Theme.DEFAULT_THEME));
-    stack.getContext().put(UIIdGenerator.GENERATOR,
-        new IndexableIdGenerator(Math.abs(req.getRequestURI().hashCode())));
+    Map<String, Object> ctx = stack.getContext();
+    if (null == ctx.get(Theme.THEME)) ctx.put(Theme.THEME, Theme.getTheme(Theme.DEFAULT_THEME));
+    if (null == ctx.get(UIIdGenerator.GENERATOR)) {
+      ctx.put(UIIdGenerator.GENERATOR, new IndexableIdGenerator(Math.abs(req.getRequestURI().hashCode())));
+    }
   }
 
   protected String getUitheme() {
