@@ -16,7 +16,6 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.struts2.view.component.Component;
 import org.beangle.struts2.view.template.Theme;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.ValueStack;
 
 /**
