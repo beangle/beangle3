@@ -52,7 +52,6 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 
   /**
    * query string and form control
-   * 
    */
   public String getParamstring() {
     StringWriter sw = new StringWriter();
@@ -91,6 +90,13 @@ public class BeangleTagLibrary extends AbstractTagLibrary {
 
   public String text(String name, Object arg0, Object arg1) {
     return getText(name, name, stack, arg0, arg1);
+  }
+
+  /**
+   * Return useragent component.
+   */
+  public TagModel getAgent() {
+    return get(Agent.class);
   }
 
   public TagModel getHead() {

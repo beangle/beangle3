@@ -118,14 +118,16 @@ public abstract class UIBean extends Component {
     }
   }
 
+  protected HttpServletRequest getRequest() {
+    return (HttpServletRequest) stack.getContext().get(ServletActionContext.HTTP_REQUEST);
+  }
+
   protected String getRequestURI() {
-    HttpServletRequest req = (HttpServletRequest) stack.getContext().get(ServletActionContext.HTTP_REQUEST);
-    return req.getRequestURI();
+    return getRequest().getRequestURI();
   }
 
   protected String getRequestParameter(String name) {
-    HttpServletRequest req = (HttpServletRequest) stack.getContext().get(ServletActionContext.HTTP_REQUEST);
-    return req.getParameter(name);
+    return getRequest().getParameter(name);
   }
 
   private static final String Number_Fmt = "{0,number,#.##}";

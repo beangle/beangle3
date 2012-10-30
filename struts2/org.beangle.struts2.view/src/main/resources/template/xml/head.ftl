@@ -10,6 +10,7 @@
 	<meta http-equiv="expires" content="0"/>
 	<meta http-equiv="content-style-type" content="text/css"/>
 	<meta http-equiv="content-script-type" content="text/javascript"/>
+	[@b.agent/]
 	[#if tag.loadui]
 	[@beangle_uijs_head compressed=!(Parameters['devMode']?exists)/]
 	[#else]

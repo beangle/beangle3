@@ -5,6 +5,7 @@
 <table id="${tag.id}" class="gridtable"${tag.parameterString}>
 [#if tag.cols?size>0]
 <thead class="gridhead">
+
 [#assign filterable=(tag.filterable="true" || tag.filters?size>0)]
 [#if filterable]
 <tr>
@@ -13,24 +14,26 @@
 	<th class="gridselect-top" [#if cln.width??] width="${cln.width}"[/#if]>[@b.submit id="${tag.id}_filter_submit" class="grid-filter-submit" value=""/]</th>
   [#else]
 	[#if tag.isFilterable(cln)]
-	<th title="${cln.title}" [#if cln.width??]width="${cln.width}"[/#if] style="padding-left:3px">
-	[#if tag.filters[cln.property]??]${tag.filters[cln.property]}[#else]
-	<div style="margin-right:6px"><input type="text" name="${cln.propertyPath}"  maxlength="100" value="${(Parameters[cln.propertyPath]!)?html}" style="width:100%;"/></div>
+	<th title="${cln.title}" [#if cln.width??]width="${cln.width}"[/#if] style="padding-left:3px">[#t/]
+	[#if tag.filters[cln.property]??]${tag.filters[cln.property]}[#else][#t/]
+	<div style="margin-right:6px"><input type="text" name="${cln.propertyPath}"  maxlength="100" value="${(Parameters[cln.propertyPath]!)?html}" style="width:100%;"/></div>[#t/]
 	[/#if]
 	</th>
-	[#else]<th [#if cln.width??]width="${cln.width}"[/#if]></th>[/#if]
+	[#else]<th [#if cln.width??]width="${cln.width}"[/#if]></th>[/#if][#t/]
   [/#if]
 [/#list]
 </tr>
 [/#if]
+
 <tr>
 [#list tag.cols as cln]
-<th [#if !filterable && cln.width??] width="${cln.width}"[/#if] [#if cln.type??]class="gridselect-top"[/#if] [#if tag.isSortable(cln)]class="gridhead-sortable" id="${cln.parameters['sort']!(tag.defaultSort(cln.property))}"[/#if]>
-[#if cln.type?? && cln.type=="checkbox"]<input type="${cln.type}" name="${cln.boxname}box" onclick="bg.ui.grid.toggleAll(event)" title="${b.text('action.selectall')}"/>
-[#else]${cln.title}[/#if]
+<th [#if !filterable && cln.width??] width="${cln.width}"[/#if] [#if cln.type??]class="gridselect-top" [#elseif tag.isSortable(cln)]class="gridhead-sortable" id="${cln.parameters['sort']!(tag.defaultSort(cln.property))}"[/#if]>[#t/]
+	[#if cln.type?? && cln.type=="checkbox"]<input type="${cln.type}" name="${cln.boxname}box" onclick="bg.ui.grid.toggleAll(event)" title="${b.text('action.selectall')}"/> [#t/]
+	[#else]${cln.title}[/#if][#t/]
 </th>
 [/#list]
 </tr>
+
 </thead>
 [/#if]
 
@@ -42,6 +45,7 @@
 [/#if]
 <div id="${tag.id}_bar2"  class="gridbar"></div>
 [/#if]
+</div>
 <script type="text/javascript">
 	page_${tag.id} = bg.page("${request.requestURI}","${tag.parameters['target']!""}");
 	page_${tag.id}.target("${tag.parameters['target']!""}",'${tag.id}').action("${request.requestURI}").addParams('${b.paramstring}').orderBy("${Parameters['orderBy']!('null')}");
@@ -63,4 +67,3 @@
 	var ${tag.id}_timer=setTimeout(function(){if(document.getElementById('${tag.id}')) page_${tag.id}.goPage()},${tag.refresh}*1000);
 	[/#if]
 </script>
-</div>
