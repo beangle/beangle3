@@ -257,7 +257,6 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
    * or at the Session level, and HibernateTransactionManager. It's preferable to set it on
    * SessionFactoryBean or HibernateTransactionManager to avoid repeated configuration and guarantee
    * consistent behavior in transactions.
-   * 
    */
   public void setEntityInterceptor(Interceptor entityInterceptor) {
     this.entityInterceptor = entityInterceptor;
@@ -370,6 +369,11 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
         throw new DataAccessResourceFailureException(
             "Could not obtain Hibernate-managed Session for Spring-managed transaction", ex);
       }
+    }
+    //add by duantihua since 3.0.1
+    else {
+      if (SessionUtils.isEnableThreadBinding()) txObject.setSessionHolder(SessionUtils
+          .openSession(getSessionFactory()));
     }
 
     if (getDataSource() != null) {

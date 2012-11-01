@@ -4,6 +4,10 @@
  */
 package org.beangle.commons.orm.hibernate.internal;
 
+import static org.springframework.transaction.support.TransactionSynchronizationManager.bindResource;
+import static org.springframework.transaction.support.TransactionSynchronizationManager.getResource;
+import static org.springframework.transaction.support.TransactionSynchronizationManager.unbindResource;
+
 import javax.sql.DataSource;
 
 import org.beangle.commons.orm.hibernate.DataSourceConnectionProvider;
@@ -18,7 +22,6 @@ import org.hibernate.exception.SQLGrammarException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.*;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 /**
  * Open or Close Hibernate Session
@@ -30,6 +33,8 @@ public final class SessionUtils {
 
   private static Logger logger = LoggerFactory.getLogger(SessionUtils.class);
 
+  private static final ThreadLocal<Boolean> threadBinding = new ThreadLocal<Boolean>();
+
   public static DataSource getDataSource(SessionFactory sessionFactory) {
     if (sessionFactory instanceof SessionFactoryImplementor) {
       ConnectionProvider cp = ((SessionFactoryImplementor) sessionFactory).getConnectionProvider();
@@ -39,31 +44,44 @@ public final class SessionUtils {
     return null;
   }
 
-  public static Session openSession(SessionFactory sessionFactory) throws DataAccessResourceFailureException,
-      IllegalStateException {
+  public static void enableThreadBinding() {
+    threadBinding.set(Boolean.TRUE);
+  }
+
+  public static boolean isEnableThreadBinding() {
+    return null != threadBinding.get();
+  }
+
+  public static void disableThreadBinding() {
+    threadBinding.remove();
+  }
+
+  public static SessionHolder openSession(SessionFactory sessionFactory)
+      throws DataAccessResourceFailureException, IllegalStateException {
     try {
-      SessionHolder holder = (SessionHolder) TransactionSynchronizationManager.getResource(sessionFactory);
+      SessionHolder holder = (SessionHolder) getResource(sessionFactory);
       Session session = null;
       if (null == holder) {
         session = sessionFactory.openSession();
-        TransactionSynchronizationManager.bindResource(sessionFactory, new SessionHolder(session));
+        session.setFlushMode(FlushMode.MANUAL);
+        holder = new SessionHolder(session);
+        if (null != threadBinding.get()) bindResource(sessionFactory, holder);
       }
-      return session;
+      return holder;
     } catch (HibernateException ex) {
       throw new DataAccessResourceFailureException("Could not open Hibernate Session", ex);
     }
   }
 
-  public static Session currentSession(SessionFactory sessionFactory) {
-    SessionHolder holder = (SessionHolder) TransactionSynchronizationManager.getResource(sessionFactory);
-    return null != holder ? holder.getSession() : null;
+  public static SessionHolder currentSession(SessionFactory sessionFactory) {
+    return (SessionHolder) getResource(sessionFactory);
   }
 
   public static void closeSession(SessionFactory sessionFactory) {
     try {
-      SessionHolder holder = (SessionHolder) TransactionSynchronizationManager.getResource(sessionFactory);
+      SessionHolder holder = (SessionHolder) getResource(sessionFactory);
       if (null != holder) {
-        TransactionSynchronizationManager.unbindResource(sessionFactory);
+        unbindResource(sessionFactory);
         holder.getSession().close();
       }
     } catch (HibernateException ex) {
@@ -75,11 +93,8 @@ public final class SessionUtils {
 
   public static void closeSession(Session session) {
     try {
-      SessionHolder holder = (SessionHolder) TransactionSynchronizationManager.getResource(session
-          .getSessionFactory());
-      if (null != holder) {
-        TransactionSynchronizationManager.unbindResource(session.getSessionFactory());
-      }
+      SessionHolder holder = (SessionHolder) getResource(session.getSessionFactory());
+      if (null != holder) unbindResource(session.getSessionFactory());
       session.close();
     } catch (HibernateException ex) {
       logger.debug("Could not close Hibernate Session", ex);

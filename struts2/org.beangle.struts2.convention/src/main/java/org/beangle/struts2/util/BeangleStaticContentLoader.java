@@ -18,16 +18,13 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts2.StrutsConstants;
 import org.apache.struts2.dispatcher.StaticContentLoader;
 import org.apache.struts2.dispatcher.ng.HostConfig;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.opensymphony.xwork2.inject.Inject;
-import com.opensymphony.xwork2.util.ClassLoaderUtil;
 
 /**
  * BeangleStaticContentLoader provide serval features
@@ -56,16 +53,6 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
    * Each prefix not ended with /
    */
   protected String[] pathPrefixes;
-
-  /**
-   * Store state of StrutsConstants.STRUTS_SERVE_STATIC_CONTENT setting.
-   */
-  protected boolean serveStatic;
-
-  /**
-   * Store state of StrutsConstants.STRUTS_SERVE_STATIC_BROWSER_CACHE setting.
-   */
-  protected boolean serveStaticBrowserCache;
 
   /**
    * Provide a formatted date for setting heading information when caching static content.
@@ -162,19 +149,12 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
       String contentType = getContentType(path);
       if (contentType != null) response.setContentType(contentType);
 
-      if (serveStaticBrowserCache) {
-        // set heading information for caching static content
-        response.setDateHeader("Date", now);
-        response.setDateHeader("Expires", expires);
-        response.setDateHeader("Retry-After", expires);
-        response.setHeader("Cache-Control", "public");
-        response.setDateHeader("Last-Modified", lastModified);
-      } else {
-        response.setHeader("Cache-Control", "no-cache");
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Expires", "-1");
-      }
-
+      // set heading information for caching static content
+      response.setDateHeader("Date", now);
+      response.setDateHeader("Expires", expires);
+      response.setDateHeader("Retry-After", expires);
+      response.setHeader("Cache-Control", "public");
+      response.setDateHeader("Last-Modified", lastModified);
       for (InputStream is : iss) {
         try {
           copy(is, response.getOutputStream());
@@ -193,7 +173,7 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
    * @throws IOException If there is a problem locating the resource
    */
   protected URL findResource(String path) throws IOException {
-    return ClassLoaderUtil.getResource(path, getClass());
+    return ClassLoaders.getResource(path, getClass());
   }
 
   /**
@@ -223,7 +203,7 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
   }
 
   public boolean canHandle(String resourcePath) {
-    return serveStatic && resourcePath.startsWith("/static");
+    return resourcePath.startsWith("/static");
   }
 
   /**
@@ -232,28 +212,6 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
    */
   protected String cleanupPath(String path) {
     return path.substring("/static".length());
-  }
-
-  /**
-   * Modify state of StrutsConstants.STRUTS_SERVE_STATIC_CONTENT setting.
-   * 
-   * @param val New setting
-   */
-  @Inject(StrutsConstants.STRUTS_SERVE_STATIC_CONTENT)
-  public void setServeStaticContent(String val) {
-    serveStatic = "true".equals(val);
-  }
-
-  /**
-   * Modify state of StrutsConstants.STRUTS_SERVE_STATIC_BROWSER_CACHE
-   * setting.
-   * 
-   * @param val
-   *          New setting
-   */
-  @Inject(StrutsConstants.STRUTS_SERVE_STATIC_BROWSER_CACHE)
-  public void setServeStaticBrowserCache(String val) {
-    serveStaticBrowserCache = "true".equals(val);
   }
 
   /**
@@ -268,7 +226,6 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
 
   /**
    * Additional static resource search package
-   * 
    */
   protected String getAdditionalPackages() {
     return "static template";

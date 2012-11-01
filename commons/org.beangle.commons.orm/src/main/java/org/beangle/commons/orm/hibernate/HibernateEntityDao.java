@@ -26,6 +26,7 @@ import org.beangle.commons.entity.metadata.ModelMeta;
 import org.beangle.commons.lang.Arrays;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.orm.hibernate.internal.SessionHolder;
 import org.beangle.commons.orm.hibernate.internal.SessionUtils;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -52,7 +53,8 @@ public class HibernateEntityDao implements EntityDao {
   protected ModelMeta modelMeta;
 
   protected Session getSession() {
-    return SessionUtils.currentSession(sessionFactory);
+    SessionHolder holder= SessionUtils.currentSession(sessionFactory);
+    return null != holder ? holder.getSession() : null;
   }
 
   @SuppressWarnings({ "unchecked" })
@@ -636,7 +638,7 @@ public class HibernateEntityDao implements EntityDao {
         } else {
           for (Iterator<? extends Entity<?>> it = list.iterator(); it.hasNext();) {
             Entity<?> info = it.next();
-            if (!info.getIdentifier().equals(id)) { return true; }
+            if (!info.getIdentifier().equals(id)) return true;
           }
           return false;
         }
@@ -662,7 +664,7 @@ public class HibernateEntityDao implements EntityDao {
       } else {
         for (Iterator<?> iter = list.iterator(); iter.hasNext();) {
           Entity<?> one = (Entity<?>) iter.next();
-          if (!one.getIdentifier().equals(id)) { return false; }
+          if (!one.getIdentifier().equals(id)) return false;
         }
       }
     }
@@ -689,7 +691,6 @@ public class HibernateEntityDao implements EntityDao {
         if (Strings.contains(selectWhich, ",")) {
           queryStr = "select count("
               + query.getQueryString().substring(indexOfDistinct, query.getQueryString().indexOf(",")) + ")";
-
         } else {
           queryStr = "select count(" + query.getQueryString().substring(indexOfDistinct, indexOfFrom) + ")";
         }
@@ -709,16 +710,14 @@ public class HibernateEntityDao implements EntityDao {
     }
 
     private static Query buildHibernateQuery(org.beangle.commons.dao.query.Query<?> bquery,
-        final Session hibernateSession) {
+        final Session session) {
       Query hibernateQuery = null;
       if (bquery.getLang().equals(org.beangle.commons.dao.query.Lang.HQL)) {
-        hibernateQuery = hibernateSession.createQuery(bquery.getStatement());
+        hibernateQuery = session.createQuery(bquery.getStatement());
       } else {
-        hibernateQuery = hibernateSession.createSQLQuery(bquery.getStatement());
+        hibernateQuery = session.createSQLQuery(bquery.getStatement());
       }
-      if (bquery.isCacheable()) {
-        hibernateQuery.setCacheable(bquery.isCacheable());
-      }
+      if (bquery.isCacheable()) hibernateQuery.setCacheable(bquery.isCacheable());
       setParameter(hibernateQuery, bquery.getParams());
       return hibernateQuery;
     }
@@ -751,15 +750,14 @@ public class HibernateEntityDao implements EntityDao {
      * 查询结果集
      * 
      * @param query
-     * @param hibernateSession
+     * @param session
      * @return result list
      */
     @SuppressWarnings("unchecked")
-    public static <T> List<T> find(final org.beangle.commons.dao.query.Query<T> query,
-        final Session hibernateSession) {
+    public static <T> List<T> find(final org.beangle.commons.dao.query.Query<T> query, final Session session) {
       if (query instanceof LimitQuery<?>) {
         LimitQuery<T> limitQuery = (LimitQuery<T>) query;
-        Query hibernateQuery = buildHibernateQuery(limitQuery, hibernateSession);
+        Query hibernateQuery = buildHibernateQuery(limitQuery, session);
         if (null == limitQuery.getLimit()) {
           return hibernateQuery.list();
         } else {
@@ -769,7 +767,7 @@ public class HibernateEntityDao implements EntityDao {
           return hibernateQuery.list();
         }
       } else {
-        return buildHibernateQuery(query, hibernateSession).list();
+        return buildHibernateQuery(query, session).list();
       }
     }
 

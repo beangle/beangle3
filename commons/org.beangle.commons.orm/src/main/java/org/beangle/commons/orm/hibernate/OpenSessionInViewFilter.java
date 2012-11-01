@@ -15,7 +15,6 @@ import org.beangle.commons.orm.hibernate.internal.SessionUtils;
 import org.beangle.commons.web.filter.OncePerRequestFilter;
 import org.beangle.commons.web.spring.ContextLoader;
 import org.beangle.commons.web.spring.LazyInitializingHook;
-import org.hibernate.FlushMode;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 
@@ -40,11 +39,13 @@ public class OpenSessionInViewFilter extends OncePerRequestFilter implements Laz
 
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws ServletException, IOException {
-    if (enterFilter(request)) {
-      SessionUtils.openSession(sessionFactory).setFlushMode(FlushMode.MANUAL);
+    if (firstEnter(request)) {
+      SessionUtils.enableThreadBinding();
+      //SessionUtils.openSession(sessionFactory);
       try {
         chain.doFilter(request, response);
       } finally {
+        SessionUtils.disableThreadBinding();
         SessionUtils.closeSession(sessionFactory);
       }
     } else {
