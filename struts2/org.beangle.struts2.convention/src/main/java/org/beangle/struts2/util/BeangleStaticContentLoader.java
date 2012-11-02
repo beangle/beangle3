@@ -4,10 +4,13 @@
  */
 package org.beangle.struts2.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.JarURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -55,14 +58,9 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
   protected String[] pathPrefixes;
 
   /**
-   * Provide a formatted date for setting heading information when caching static content.
+   * Static resource expire 7 days by default
    */
-  protected final long lastModified;
-
-  /**
-   * Static resource expire 10 days by default
-   */
-  protected int expireDays = 10;
+  protected int expireDays = 7;
 
   /**
    * Servered content types
@@ -81,9 +79,6 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
     contentTypes.put("jpg", "image/jpeg");
     contentTypes.put("jpeg", "image/jpeg");
     contentTypes.put("png", "image/png");
-
-    // Round down to the nearest second since client headers are in seconds
-    lastModified = System.currentTimeMillis() / 1000 * 1000;
   }
 
   /**
@@ -92,70 +87,38 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
    */
   public void findStaticResource(String path, HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    // check for if-modified-since, prior to any other headers
-    long ifModifiedSince = 0;
-    try {
-      ifModifiedSince = request.getDateHeader("If-Modified-Since");
-    } catch (Exception e) {
-      logger.warn("Invalid If-Modified-Since header : '{}',ignoring", request.getHeader("If-Modified-Since"));
-    }
-    Calendar cal = Calendar.getInstance();
-    long now = cal.getTimeInMillis();
-    cal.add(Calendar.DAY_OF_MONTH, expireDays);
-    long expires = cal.getTimeInMillis();
+    List<URL> urls = findResources(path);
+    if (urls.isEmpty()) response.sendError(HttpServletResponse.SC_NOT_FOUND);
 
+    // Get max last modified time stamp.
+    long maxLastModified = -1;
+    for (URL url : urls) {
+      long lastModified = lastModified(url);
+      if (lastModified > maxLastModified) maxLastModified = lastModified;
+    }
+
+    String requestETag = request.getHeader("If-None-Match");
+    String newETag = String.valueOf(maxLastModified);
+    response.setHeader("ETag", newETag);
     // not modified, content is not sent - only basic headers and status SC_NOT_MODIFIED
-    if (ifModifiedSince > 0 && ifModifiedSince <= lastModified) {
-      response.setDateHeader("Expires", expires);
+    if (newETag.equals(requestETag)) {
       response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-      return;
-    }
-    String namestr = path;
-    List<InputStream> iss = CollectUtils.newArrayList();
-    String[] names = Strings.split(namestr, ",");
-    String pathDir = null;
-    for (String name : names) {
-      if (null == pathDir) {
-        name = cleanupPath(name);
-        pathDir = Strings.substringBeforeLast(name, "/");
-      } else if (!name.startsWith("/")) {
-        name = pathDir + "/" + name;
-      }
-      // name will starts with /
-      int oldsize = iss.size();
-      for (String pathPrefix : pathPrefixes) {
-        URL resourceUrl = findResource(pathPrefix + name);
-        if (resourceUrl != null) {
-          InputStream is = null;
-          try {
-            is = resourceUrl.openStream();
-          } catch (IOException ex) {
-            // just ignore it
-            continue;
-          }
-
-          // not inside the try block, as this could throw IOExceptions also
-          if (is != null) {
-            iss.add(is);
-            break;
-          }
-        }
-      }
-      if (iss.size() == oldsize) logger.info("cannot find resource {}", name);
-    }
-
-    if (iss.isEmpty()) response.sendError(HttpServletResponse.SC_NOT_FOUND);
-    else {
+    } else {
       String contentType = getContentType(path);
       if (contentType != null) response.setContentType(contentType);
 
       // set heading information for caching static content
-      response.setDateHeader("Date", now);
+      Calendar cal = Calendar.getInstance();
+      cal.add(Calendar.DAY_OF_MONTH, expireDays);
+      final long expires = cal.getTimeInMillis();
+      response.setDateHeader("Date", System.currentTimeMillis());
       response.setDateHeader("Expires", expires);
       response.setDateHeader("Retry-After", expires);
       response.setHeader("Cache-Control", "public");
-      response.setDateHeader("Last-Modified", lastModified);
-      for (InputStream is : iss) {
+      if (maxLastModified > 0) response.setDateHeader("Last-Modified", maxLastModified);
+
+      for (URL url : urls) {
+        InputStream is = url.openConnection().getInputStream();
         try {
           copy(is, response.getOutputStream());
         } finally {
@@ -166,13 +129,63 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
   }
 
   /**
+   * Return url list for given resources.
+   * 
+   * @param path resource path description /static/a.js,b.js etc.
+   */
+  private List<URL> findResources(String path) {
+    String namestr = path;
+    List<URL> urls = CollectUtils.newArrayList();
+    String[] names = Strings.split(namestr, ",");
+    String pathDir = null;
+    for (String name : names) {
+      if (null == pathDir) {
+        name = cleanupPath(name);
+        pathDir = Strings.substringBeforeLast(name, "/");
+      } else if (!name.startsWith("/")) {
+        name = pathDir + "/" + name;
+      }
+      // name will starts with /
+      URL url = null;
+      for (String pathPrefix : pathPrefixes) {
+        url = findResource(pathPrefix + name);
+        if (url != null) break;
+      }
+      if (null == url) logger.info("cannot find resource {}", name);
+      else urls.add(url);
+    }
+    return urls;
+  }
+
+  /**
+   * Return url's last modified date time.
+   * saves some opening and closing
+   */
+  private long lastModified(URL url) {
+    if (url.getProtocol().equals("file")) {
+      return new File(url.getFile()).lastModified();
+    } else {
+      try {
+        URLConnection conn = url.openConnection();
+        if (conn instanceof JarURLConnection) {
+          URL jarURL = ((JarURLConnection) conn).getJarFileURL();
+          if (jarURL.getProtocol().equals("file")) { return new File(jarURL.getFile()).lastModified(); }
+        }
+      } catch (IOException e1) {
+        return -1;
+      }
+      return -1;
+    }
+  }
+
+  /**
    * Look for a static resource in the classpath.
    * 
    * @param path The resource path
    * @return The inputstream of the resource
    * @throws IOException If there is a problem locating the resource
    */
-  protected URL findResource(String path) throws IOException {
+  protected URL findResource(String path) {
     return ClassLoaders.getResource(path, getClass());
   }
 
