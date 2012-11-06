@@ -80,9 +80,8 @@ public class DefaultResultBuilder implements ResultBuilder {
     if (!contains(resultCode, ':')) {
       String className = context.getActionInvocation().getProxy().getAction().getClass().getName();
       String methodName = context.getActionInvocation().getProxy().getMethod();
-      if (isEmpty(resultCode)) {
-        resultCode = "index";
-      }
+      if (isEmpty(resultCode)) resultCode = "index";
+
       StringBuilder buf = new StringBuilder();
       buf.append(viewMapper.getViewPath(className, methodName, resultCode));
       buf.append('.');
@@ -98,30 +97,32 @@ public class DefaultResultBuilder implements ResultBuilder {
         Action action = buildAction(substringAfter(resultCode, ":"));
         Map<String, String> params = buildResultParams(path, cfg);
         addNamespaceAction(action, params);
-        if (isNotEmpty(action.getMethod())) {
-          params.put("method", action.getMethod());
-        }
+        if (isNotEmpty(action.getMethod())) params.put("method", action.getMethod());
+
         return buildResult(resultCode, cfg, context, params);
       } else if (prefix.startsWith("redirect")) {
         String targetResource = substringAfter(resultCode, ":");
         if (contains(targetResource, ':')) { return new ServletRedirectResult(targetResource); }
         Action action = buildAction(targetResource);
+
         // add special param and ajax tag for redirect
         HttpServletRequest request = ServletActionContext.getRequest();
-        String redirectParamStr = request.getParameter("params");
-        action.params(redirectParamStr);
-        // x-requested-with->XMLHttpRequest
-        if (null != request.getHeader("x-requested-with")) {
-          action.param("x-requested-with", "1");
+        String[] redirectParamStrs = request.getParameterValues("params");
+        if (null != redirectParamStrs) {
+          for (String redirectParamStr : redirectParamStrs)
+            action.params(redirectParamStr);
         }
+
+        // x-requested-with->XMLHttpRequest
+        if (null != request.getHeader("x-requested-with")) action.param("x-requested-with", "1");
+
         Map<String, String> params = buildResultParams(path, cfg);
         if (null != action.getParams().get("method")) {
           params.put("method", (String) action.getParams().get("method"));
           action.getParams().remove("method");
         }
-        if (isNotEmpty(action.getMethod())) {
-          params.put("method", action.getMethod());
-        }
+
+        if (isNotEmpty(action.getMethod())) params.put("method", action.getMethod());
         addNamespaceAction(action, params);
 
         ServletRedirectResult result = (ServletRedirectResult) buildResult(resultCode, cfg, context, params);

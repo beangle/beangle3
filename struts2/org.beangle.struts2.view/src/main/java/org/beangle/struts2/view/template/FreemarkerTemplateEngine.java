@@ -53,6 +53,14 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
     if (null != prevTag) model.put("tag", prevTag);
   }
 
+  /**
+   * Clone configuration from FreemarkerManager,but custmize in
+   * <ul>
+   * <li>Disable freemarker localized lookup
+   * <li>Cache one hour(3600s) and Strong cache
+   * <li>Disable auto imports and includes
+   * </ul>
+   */
   @Inject
   public void setFreemarkerManager(FreemarkerManager mgr) {
     this.freemarkerManager = mgr;
@@ -60,6 +68,7 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
       config = (Configuration) freemarkerManager.getConfig().clone();
       // Disable freemarker localized lookup
       config.setLocalizedLookup(false);
+      config.setEncoding(config.getLocale(), "UTF-8");
 
       // Cache one hour(3600s) and Strong cache
       config.setTemplateUpdateDelay(3600);
@@ -70,7 +79,6 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
       config.setAutoImports(CollectUtils.newHashMap());
       config.setAutoIncludes(CollectUtils.newArrayList(0));
 
-      // Only class path class loader
       config.setTemplateLoader(new HierarchicalTemplateLoader(this, config.getTemplateLoader()));
     }
   }
@@ -83,7 +91,7 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
    */
   private Template getTemplate(String templateName) throws ParseException {
     try {
-      return config.getTemplate(templateName);
+      return config.getTemplate(templateName,"UTF-8");
     } catch (ParseException e) {
       throw e;
     } catch (IOException e) {

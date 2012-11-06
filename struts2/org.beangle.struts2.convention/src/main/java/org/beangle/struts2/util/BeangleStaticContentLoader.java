@@ -32,14 +32,14 @@ import org.slf4j.LoggerFactory;
 /**
  * BeangleStaticContentLoader provide serval features
  * <ul>
- * <li>1 Avoid load resource when get not expired content</li>
+ * <li>1 Avoid load resource when get not expired content using ETag</li>
  * <li>2 multi resource in one request</li>
+ * <li>3 realy detect resource modify datetime.</li>
  * </ul>
  * <p>
- * BUT This loader cannot find content of new version,because it didn't record content's really last
- * modify date;Some md5 or fingerprint technology may work.So use different resource path when
- * resource modified(prefer rename beagle-3.0.js to beangle-3.1.js,or using
- * beangle-3.0.js?version=m1 etc.);
+ * This loader can find content of new version using url's lastmodifed .So different resource path
+ * (rename beagle-3.0.js to beangle-3.1.js,or using beangle-3.0.js?version=m1 etc.) was not
+ * necessary;
  * </p>
  * 
  * @author chaostone
@@ -79,6 +79,7 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
     contentTypes.put("jpg", "image/jpeg");
     contentTypes.put("jpeg", "image/jpeg");
     contentTypes.put("png", "image/png");
+    contentTypes.put("htc", "text/x-component");
   }
 
   /**

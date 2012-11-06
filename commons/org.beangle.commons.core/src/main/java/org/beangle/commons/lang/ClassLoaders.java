@@ -67,8 +67,6 @@ public final class ClassLoaders {
 
     ClassLoader cl = callingClass.getClassLoader();
     if (cl != null) url = cl.getResource(resourceName);
-    if (url != null) return url;
-
     return url;
   }
 
@@ -100,7 +98,7 @@ public final class ClassLoaders {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    
+
     List<URL> urls = CollectUtils.newArrayList();
     while (null != em && em.hasMoreElements()) {
       urls.add(em.nextElement());
