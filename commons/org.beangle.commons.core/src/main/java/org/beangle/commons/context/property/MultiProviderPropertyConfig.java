@@ -7,6 +7,7 @@ package org.beangle.commons.context.property;
 import java.util.*;
 
 import org.apache.commons.beanutils.ConvertUtils;
+import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.lang.Strings;
@@ -17,13 +18,17 @@ import org.beangle.commons.lang.Strings;
  * @author chaostone
  * @version $Id: $
  */
-public class PropertyConfigBean implements PropertyConfig {
+public class MultiProviderPropertyConfig implements PropertyConfig, Initializing {
 
   private Map<String, Object> properties = new HashMap<String, Object>();
 
   private List<PropertyConfigListener> listeners = CollectUtils.newArrayList();
 
   private List<PropertyConfig.Provider> providers = new ArrayList<PropertyConfig.Provider>();
+
+  public void init() throws Exception {
+    reload();
+  }
 
   /**
    * Get value according to name

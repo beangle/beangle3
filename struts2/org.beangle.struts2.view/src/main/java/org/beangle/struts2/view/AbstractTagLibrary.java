@@ -45,7 +45,9 @@ public abstract class AbstractTagLibrary implements TagLibrary {
     Map<String, Object> ctx = stack.getContext();
     if (null == ctx.get(Theme.THEME)) ctx.put(Theme.THEME, Theme.getTheme(Theme.DEFAULT_THEME));
     if (null == ctx.get(UIIdGenerator.GENERATOR)) {
-      ctx.put(UIIdGenerator.GENERATOR, new IndexableIdGenerator(Math.abs(req.getRequestURI().hashCode())));
+      String queryString = req.getQueryString();
+      String fullpath = (null == queryString) ? req.getRequestURI() : req.getRequestURI() + queryString;
+      ctx.put(UIIdGenerator.GENERATOR, new IndexableIdGenerator(Math.abs(fullpath.hashCode())));
     }
   }
 

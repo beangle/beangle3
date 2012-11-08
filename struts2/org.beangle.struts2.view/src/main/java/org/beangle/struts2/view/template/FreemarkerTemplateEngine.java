@@ -57,7 +57,7 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
    * Clone configuration from FreemarkerManager,but custmize in
    * <ul>
    * <li>Disable freemarker localized lookup
-   * <li>Cache one hour(3600s) and Strong cache
+   * <li>Cache two hour(7200s) and Strong cache
    * <li>Disable auto imports and includes
    * </ul>
    */
@@ -70,8 +70,8 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
       config.setLocalizedLookup(false);
       config.setEncoding(config.getLocale(), "UTF-8");
 
-      // Cache one hour(3600s) and Strong cache
-      config.setTemplateUpdateDelay(3600);
+      // Cache one hour(7200s) and Strong cache
+      config.setTemplateUpdateDelay(7200);
       // config.setCacheStorage(new MruCacheStorage(100,250));
       config.setCacheStorage(new StrongCacheStorage());
 

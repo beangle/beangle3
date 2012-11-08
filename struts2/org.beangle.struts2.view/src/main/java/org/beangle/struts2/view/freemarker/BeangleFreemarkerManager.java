@@ -36,7 +36,7 @@ import freemarker.template.TemplateException;
  * <li>Better template loader sequence like classpath:,file:,webapp:</li>
  * <li>Multi freemark properties loading(META-INF/freemarker.properties,freemarker.properties)</li>
  * <li>Friendly Collection/Map/Object objectwrapper</li>
- * <li>Select Slf4j for freemarker</li>
+ * <li>Disable freemarker logger instead of slf4j</li>
  * </ul>
  * 
  * @author chaostone
@@ -48,15 +48,12 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
 
   public BeangleFreemarkerManager() {
     super();
-    selectSLF4jLogger();
+    disableFreemarkerLogger();
   }
 
-  /**
-   * Force freemarker user slf4j api
-   */
-  protected void selectSLF4jLogger() {
+  protected void disableFreemarkerLogger() {
     try {
-      freemarker.log.Logger.selectLoggerLibrary(freemarker.log.Logger.LIBRARY_SLF4J);
+      freemarker.log.Logger.selectLoggerLibrary(freemarker.log.Logger.LIBRARY_NONE);
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
     }

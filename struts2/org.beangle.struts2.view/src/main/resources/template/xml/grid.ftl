@@ -28,7 +28,7 @@
 <tr>
 [#list tag.cols as cln]
 <th [#if !filterable && cln.width??] width="${cln.width}"[/#if] [#if cln.type??]class="gridselect-top" [#elseif tag.isSortable(cln)]class="gridhead-sortable" id="${cln.parameters['sort']!(tag.defaultSort(cln.property))}"[/#if]>[#t/]
-	[#if cln.type?? && cln.type=="checkbox"]<input type="${cln.type}" name="${cln.boxname}box" onclick="bg.ui.grid.toggleAll(event)" title="${b.text('action.selectall')}"/> [#t/]
+	[#if cln.type??][#if cln.type=="checkbox"]<input type="${cln.type}" name="${cln.boxname}box" onclick="bg.ui.grid.toggleAll(event)" title="${b.text('action.selectall')}"/>[/#if] [#t/]
 	[#else]${cln.title}[/#if][#t/]
 </th>
 [/#list]
