@@ -4,6 +4,8 @@
  */
 package org.beangle.struts2.interceptor;
 
+import java.util.Map;
+
 import org.beangle.struts2.convention.Flash;
 
 import com.opensymphony.xwork2.ActionInvocation;
@@ -22,8 +24,11 @@ public class FlashInterceptor extends AbstractInterceptor {
   public String intercept(ActionInvocation invocation) throws Exception {
     String result = invocation.invoke();
     try {
-      Flash flash = (Flash) invocation.getInvocationContext().getSession().get("flash");
-      if (null != flash) flash.nextToNow();
+      Map<String, Object> session = invocation.getInvocationContext().getSession();
+      if (null != session) {
+        Flash flash = (Flash) session.get("flash");
+        if (null != flash) flash.nextToNow();
+      }
     } catch (IllegalStateException e) {
     }
     return result;
