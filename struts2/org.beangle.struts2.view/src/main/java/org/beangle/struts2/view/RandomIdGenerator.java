@@ -9,9 +9,10 @@ import java.util.Random;
 import org.beangle.commons.lang.Strings;
 
 /**
- * 随机UIId产生器
+ * 随机UI's id产生器
  * 
  * @author chaostone
+ * @since 2.4
  */
 public class RandomIdGenerator implements UIIdGenerator {
   final protected Random seed = new Random();

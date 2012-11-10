@@ -13,6 +13,12 @@ import org.beangle.struts2.view.component.Component;
 import freemarker.template.TemplateModelException;
 import freemarker.template.TransformControl;
 
+/**
+ * ResetCallbackWriter
+ * 
+ * @author chaostone
+ * @since 2.4
+ */
 public class ResetCallbackWriter extends Writer implements TransformControl {
   private Component bean;
   private Writer writer;
@@ -22,16 +28,11 @@ public class ResetCallbackWriter extends Writer implements TransformControl {
   public ResetCallbackWriter(Component bean, Writer writer) {
     this.bean = bean;
     this.writer = writer;
-
-    if (bean.usesBody()) {
-      this.body = new StringWriter();
-    }
+    if (bean.usesBody()) this.body = new StringWriter();
   }
 
   public void close() throws IOException {
-    if (bean.usesBody()) {
-      body.close();
-    }
+    if (bean.usesBody()) body.close();
   }
 
   /**
@@ -42,26 +43,18 @@ public class ResetCallbackWriter extends Writer implements TransformControl {
   }
 
   public void write(char cbuf[], int off, int len) throws IOException {
-    if (bean.usesBody() && !afterBody) {
-      body.write(cbuf, off, len);
-    } else {
-      writer.write(cbuf, off, len);
-    }
+    if (bean.usesBody() && !afterBody) body.write(cbuf, off, len);
+    else writer.write(cbuf, off, len);
   }
 
   public int onStart() throws TemplateModelException, IOException {
-    boolean result = bean.start(this);
-    if (result) {
-      return EVALUATE_BODY;
-    } else {
-      return SKIP_BODY;
-    }
+    return bean.start(this) ? EVALUATE_BODY : SKIP_BODY;
   }
 
   public int afterBody() throws TemplateModelException, IOException {
     afterBody = true;
-    boolean result = bean.end(this, bean.usesBody() ? body.toString() : "");
-    if (result) {
+    boolean repeat = bean.end(this, bean.usesBody() ? body.toString() : "");
+    if (repeat) {
       if (bean.usesBody()) {
         afterBody = false;
         body.getBuffer().delete(0, body.getBuffer().length());

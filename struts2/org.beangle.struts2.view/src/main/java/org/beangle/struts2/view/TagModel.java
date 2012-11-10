@@ -23,6 +23,11 @@ import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 import freemarker.template.TemplateTransformModel;
 
+/**
+ * 
+ * @author chaostone
+ * @since 2.0
+ */
 public class TagModel implements TemplateTransformModel {
   private static final Logger logger = LoggerFactory.getLogger(TagModel.class);
 
@@ -44,9 +49,6 @@ public class TagModel implements TemplateTransformModel {
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public Writer getWriter(Writer writer, Map params) throws TemplateModelException, IOException {
     Component bean = getBean();
-    // Container container = (Container)
-    // stack.getContext().get(ActionContext.CONTAINER);
-    // container.inject(bean);
     BeansWrapper objectWrapper = BeansWrapper.getDefaultInstance();
 
     for (Iterator iterator = params.entrySet().iterator(); iterator.hasNext();) {
@@ -66,7 +68,7 @@ public class TagModel implements TemplateTransformModel {
           try {
             m.invoke(bean, value);
           } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("invoke method " + m.getName() + " with value " + value, e);
           }
         } else {
           bean.getParameters().put(key, value);
