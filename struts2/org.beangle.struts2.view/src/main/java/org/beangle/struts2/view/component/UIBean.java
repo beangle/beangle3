@@ -25,11 +25,14 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 /**
  * @author chaostone
+ * @since 2.0
  */
 public abstract class UIBean extends Component {
   protected String id;
 
   protected Theme theme;
+
+  private static final String NumberFormat = "{0,number,#.##}";
 
   public UIBean(ValueStack stack) {
     super(stack);
@@ -106,16 +109,8 @@ public abstract class UIBean extends Component {
   protected String getText(String text, String defaultText) {
     if (Strings.isEmpty(text)) return defaultText;
     if (!Chars.isAsciiAlpha(text.charAt(0))) return defaultText;
-    if (-1 == text.indexOf('.') || -1 < text.indexOf(' ')) {
-      return defaultText;
-    } else {
-      // long start = System.currentTimeMillis();
-      String msg = TextResourceHelper.getText(text, defaultText, stack);
-      // System.out.println("I18n:" + text + "->" + msg + " use :" + (System.currentTimeMillis() -
-      // start));
-      return msg;
-
-    }
+    if (-1 == text.indexOf('.') || -1 < text.indexOf(' ')) return defaultText;
+    else return TextResourceHelper.getText(text, defaultText, stack);
   }
 
   protected HttpServletRequest getRequest() {
@@ -130,13 +125,11 @@ public abstract class UIBean extends Component {
     return getRequest().getParameter(name);
   }
 
-  private static final String Number_Fmt = "{0,number,#.##}";
-
   protected Object getValue(Object obj, String property) {
     stack.push(obj);
     try {
       Object value = stack.findValue(property);
-      if (value instanceof Number) { return MessageFormat.format(Number_Fmt, value); }
+      if (value instanceof Number) { return MessageFormat.format(NumberFormat, value); }
       return value;
     } finally {
       stack.pop();

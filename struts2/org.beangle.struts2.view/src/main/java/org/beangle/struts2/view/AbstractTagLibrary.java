@@ -22,6 +22,7 @@ import com.opensymphony.xwork2.util.ValueStack;
  * Abstract Freemarker Tag Library
  * 
  * @author chaostone
+ * @since 2.4
  */
 public abstract class AbstractTagLibrary implements TagLibrary {
   protected ValueStack stack;

@@ -29,10 +29,10 @@ public class ClosingUIBean extends UIBean {
 
   @Override
   public final boolean end(Writer writer, String body) {
-    boolean evaluatedAgain = doEnd(writer, body);
+    boolean again = doEnd(writer, body);
     if (useNewTheme) popTheme();
-    if (!evaluatedAgain) popComponentStack();
-    return evaluatedAgain;
+    if (!again) popComponentStack();
+    return again;
   }
 
   public boolean doEnd(Writer writer, String body) {
