@@ -17,7 +17,7 @@ import org.beangle.commons.lang.Strings;
  * @author chaostone
  * @version $Id: $
  */
-public class PropertyComparator<T> implements Comparator<T> {
+public class PropertyComparator implements Comparator<Object> {
 
   private String cmpWhat;
 

@@ -12,7 +12,7 @@ import org.beangle.commons.lang.Strings;
  * @author chaostone
  * @version $Id: $
  */
-public class MultiPropertyComparator<T> extends ChainComparator<T> {
+public class MultiPropertyComparator extends ChainComparator<Object> {
 
   /**
    * <p>
@@ -25,7 +25,7 @@ public class MultiPropertyComparator<T> extends ChainComparator<T> {
     super();
     final String[] properties = Strings.split(propertyStr, ',');
     for (int i = 0; i < properties.length; i++) {
-      addComparator(new PropertyComparator<T>(properties[i].trim()));
+      addComparator(new PropertyComparator(properties[i].trim()));
     }
   }
 

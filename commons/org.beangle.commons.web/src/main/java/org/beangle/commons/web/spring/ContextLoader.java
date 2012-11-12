@@ -21,6 +21,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.AbstractRefreshableConfigApplicationContext;
 import org.springframework.util.ClassUtils;
 
+/**
+ * Spring context loader
+ * @author chaostone
+ * @since 3.0
+ */
 public class ContextLoader implements ServletContextListener {
 
   private static final Logger logger = LoggerFactory.getLogger(ContextLoader.class);

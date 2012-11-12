@@ -95,8 +95,11 @@ public class ConcurrentSessionFilter extends GenericHttpFilter {
         }
       }
     }
-    if (null != info) sessionRegistry.access(session.getId(), RequestUtils.getServletPath(request),
-        System.currentTimeMillis());
+    if (null != info) {
+      sessionRegistry.access(session.getId(), RequestUtils.getServletPath(request),
+          System.currentTimeMillis());
+    }
+
     chain.doFilter(request, response);
   }
 
@@ -120,4 +123,5 @@ public class ConcurrentSessionFilter extends GenericHttpFilter {
   public void setHandlerStack(LogoutHandlerStack handlerStack) {
     this.handlerStack = handlerStack;
   }
+
 }

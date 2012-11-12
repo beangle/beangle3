@@ -5,12 +5,14 @@
 package org.beangle.security.web;
 
 import org.beangle.commons.context.inject.AbstractBindModule;
+import org.beangle.commons.web.access.AccessMonitorFilter;
+import org.beangle.commons.web.access.MemAccessMonitor;
 import org.beangle.security.auth.ProviderManager;
 import org.beangle.security.auth.dao.DaoAuthenticationProvider;
 import org.beangle.security.web.access.DefaultAccessDeniedHandler;
 import org.beangle.security.web.access.ExceptionTranslationFilter;
+import org.beangle.security.web.access.SecurityAccessRequestBuilder;
 import org.beangle.security.web.access.intercept.FilterSecurityInterceptor;
-import org.beangle.security.web.access.log.CachedResourceAccessor;
 import org.beangle.security.web.auth.AuthenticationServiceImpl;
 import org.beangle.security.web.auth.LoginUrlEntryPoint;
 import org.beangle.security.web.auth.WebAuthenticationDetailsSource;
@@ -45,8 +47,10 @@ public class DefaultModule extends AbstractBindModule {
     bind(HttpSessionContextFilter.class).shortName();
 
     // access bean
-    bind(DefaultAccessDeniedHandler.class, ExceptionTranslationFilter.class, CachedResourceAccessor.class,
-        FilterSecurityInterceptor.class).shortName();
+    bind(DefaultAccessDeniedHandler.class, ExceptionTranslationFilter.class, FilterSecurityInterceptor.class)
+        .shortName();
+    // access monitor
+    bind(AccessMonitorFilter.class,MemAccessMonitor.class, SecurityAccessRequestBuilder.class).shortName();
 
     bind(WebSessioninfoBuilder.class);
     bind(LoginUrlEntryPoint.class).property("loginUrl", "/login.action").primary();

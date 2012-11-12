@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.security.web.access.log;
+package org.beangle.commons.web.access;
 
 /**
  * 访问记录监控器
@@ -13,10 +13,8 @@ package org.beangle.security.web.access.log;
 public interface AccessLogger {
 
   /**
-   * 更新对应sessionId的最后访问时间
-   * 
-   * @param sessionid
+   * Log the request.
    */
-  void log(String sessionid, String username, String resource, long beginAt, long endAt);
+  void log(AccessRequest request);
 
 }

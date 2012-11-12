@@ -83,18 +83,13 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    */
   public final void init(FilterConfig filterConfig) throws ServletException {
     Assert.notNull(filterConfig, "FilterConfig must not be null");
-    if (logger.isDebugEnabled()) {
-      logger.debug("Initializing filter '" + filterConfig.getFilterName() + "'");
-    }
+    logger.debug("Initializing filter '{}'", filterConfig.getFilterName());
 
     this.filterConfig = filterConfig;
     initParams(filterConfig);
     // Let subclasses do whatever initialization they like.
     initFilterBean();
-
-    if (logger.isDebugEnabled()) {
-      logger.debug("Filter '" + filterConfig.getFilterName() + "' configured successfully");
-    }
+    logger.debug("Filter '{}' configured successfully", filterConfig.getFilterName());
   }
 
   protected void initParams(FilterConfig config) throws ServletException {

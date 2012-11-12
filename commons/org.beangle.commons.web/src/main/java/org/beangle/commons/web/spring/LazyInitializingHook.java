@@ -6,6 +6,12 @@ package org.beangle.commons.web.spring;
 
 import org.springframework.context.ApplicationContext;
 
+/**
+ * Spring context hook using ContextLoader
+ * 
+ * @author chaostone
+ * @since 3.0
+ */
 public interface LazyInitializingHook {
 
   void lazyInit(ApplicationContext context);
