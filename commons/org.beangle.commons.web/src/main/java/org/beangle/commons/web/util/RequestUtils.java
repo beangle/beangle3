@@ -68,8 +68,12 @@ public final class RequestUtils {
     } else {
       String uri = request.getRequestURI();
       if (uri.length() == 1) return "";
-      int start = uri.indexOf('/', 1);
-      return servletPath = uri.substring(-1 == start ? 0 : start);
+      //process context
+      String context = request.getContextPath();
+      if (context.length() == 1) context = "";
+      if ('/' == context.charAt(context.length() - 1)) context = context.substring(0, context.length() - 1);
+      
+      return servletPath = uri.substring(context.length());
     }
   }
 

@@ -10,6 +10,7 @@ import org.apache.struts2.dispatcher.mapper.ActionMapper;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import org.apache.struts2.dispatcher.mapper.DefaultActionMapper;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.web.util.RequestUtils;
 
 import com.opensymphony.xwork2.config.ConfigurationManager;
 
@@ -30,16 +31,59 @@ public class ConventionActionMapper extends DefaultActionMapper implements Actio
 
   private static final String DefaultMethod = "index";
 
+  protected void parseNameAndNamespace(String uri, ActionMapping mapping) {
+    String namespace, name;
+    int lastSlash = uri.lastIndexOf("/");
+    if (lastSlash == -1) {
+      namespace = "";
+      name = uri;
+    } else if (lastSlash == 0) {
+      namespace = "/";
+      name = uri.substring(lastSlash + 1);
+    } else {
+      // Simply select the namespace as everything before the last slash
+      namespace = uri.substring(0, lastSlash);
+      name = uri.substring(lastSlash + 1);
+    }
+    // process ! . ;
+    int i = 0;
+    int bangIdx = -1;
+    int lastIdx = name.length();
+    char[] chars = new char[name.length()];
+    name.getChars(0, name.length(), chars, 0);
+    while (i < chars.length) {
+      char c = chars[i];
+      if ('!' == c) bangIdx = i;
+      else if (';' == c) {
+        lastIdx = i;
+        break;
+      }else if ('.' == c) {
+        lastIdx = i;
+        break;
+      }
+      i++;
+    }
+
+    mapping.setNamespace(namespace);
+    if (-1 == bangIdx) {
+      mapping.setName(name.substring(0, lastIdx));
+      mapping.setMethod(DefaultMethod);
+    } else {
+      mapping.setName(name.substring(0, bangIdx));
+      mapping.setMethod(name.substring(bangIdx + 1, lastIdx));
+    }
+
+  }
+
   /**
    * reserved method parameter
    */
   public ActionMapping getMapping(HttpServletRequest request, ConfigurationManager configManager) {
-    ActionMapping mapping = super.getMapping(request, configManager);
-    if (null != mapping) {
-      String method = request.getParameter(MethodParam);
-      if (Strings.isNotEmpty(method)) mapping.setMethod(method);
-      if (null == mapping.getMethod()) mapping.setMethod(DefaultMethod);
-    }
+    ActionMapping mapping = new ActionMapping();
+    parseNameAndNamespace(RequestUtils.getServletPath(request), mapping);
+    
+    String method = request.getParameter(MethodParam);
+    if (Strings.isNotEmpty(method)) mapping.setMethod(method);
     return mapping;
   }
 
