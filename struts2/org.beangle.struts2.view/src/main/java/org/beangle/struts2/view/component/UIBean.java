@@ -11,10 +11,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
+import org.beangle.commons.i18n.TextResource;
 import org.beangle.commons.lang.Chars;
 import org.beangle.commons.lang.Strings;
-import org.beangle.struts2.util.TextResourceHelper;
-import org.beangle.struts2.view.UIIdGenerator;
+import org.beangle.struts2.view.bean.ActionUrlRender;
+import static org.beangle.struts2.view.bean.ConstantBeanNames.*;
+import org.beangle.struts2.view.bean.UIIdGenerator;
 import org.beangle.struts2.view.template.TemplateEngine;
 import org.beangle.struts2.view.template.Theme;
 import org.beangle.struts2.view.template.ThemeStack;
@@ -83,9 +85,9 @@ public abstract class UIBean extends Component {
 
   protected Theme getTheme() {
     if (null == theme) {
-      ThemeStack themestack = (ThemeStack) stack.getContext().get(Theme.THEME_STACK);
+      ThemeStack themestack = (ThemeStack) stack.getContext().get(Theme.ThemeStack);
       if (null != themestack) theme = themestack.peek();
-      if (null == theme) theme = (Theme) stack.getContext().get(Theme.THEME);
+      if (null == theme) theme = (Theme) stack.getContext().get(Theme.Theme);
       return theme;
     } else {
       return theme;
@@ -110,7 +112,9 @@ public abstract class UIBean extends Component {
     if (Strings.isEmpty(text)) return defaultText;
     if (!Chars.isAsciiAlpha(text.charAt(0))) return defaultText;
     if (-1 == text.indexOf('.') || -1 < text.indexOf(' ')) return defaultText;
-    else return TextResourceHelper.getText(text, defaultText, stack);
+    else {
+      return ((TextResource) stack.getContext().get(TextResourceName)).getText(text, defaultText);
+    }
   }
 
   protected HttpServletRequest getRequest() {
@@ -141,12 +145,12 @@ public abstract class UIBean extends Component {
   }
 
   protected String render(String uri) {
-    return getContainer().getInstance(ActionUrlRender.class).render(getRequestURI(), uri);
+    return ((ActionUrlRender) stack.getContext().get(UrlRenderName)).render(getRequestURI(), uri);
   }
 
   protected void generateIdIfEmpty() {
     if (Strings.isEmpty(id)) {
-      id = ((UIIdGenerator) stack.getContext().get(UIIdGenerator.GENERATOR)).generate(getClass());
+      id = ((UIIdGenerator) stack.getContext().get(GeneratorName)).generate(getClass());
     }
   }
 }

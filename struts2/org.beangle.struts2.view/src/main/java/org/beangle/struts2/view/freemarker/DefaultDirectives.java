@@ -4,14 +4,18 @@
  */
 package org.beangle.struts2.view.freemarker;
 
+import org.beangle.commons.lang.annotation.Beta;
 import org.beangle.struts2.view.component.Component;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
 /**
+ * Experimental new freemarker directive api.
+ * 
  * @author chaostone
  * @since 3.0.1
  */
+@Beta
 public class DefaultDirectives {
 
   public static class Toolbar extends ComponentDirective {

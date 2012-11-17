@@ -29,7 +29,6 @@ public class ExceptionTranslationFilter extends GenericHttpFilter {
   private AccessDeniedHandler accessDeniedHandler;
   private AuthenticationEntryPoint authenticationEntryPoint;
   private ThrowableAnalyzer throwableAnalyzer = new DefaultThrowableAnalyzer();
-  private boolean createSessionAllowed = true;
 
   protected void initFilerBean() throws ServletException {
     Assert.notNull(authenticationEntryPoint, "authenticationEntryPoint must be specified");
@@ -80,25 +79,6 @@ public class ExceptionTranslationFilter extends GenericHttpFilter {
     }
   }
 
-  /**
-   * If <code>true</code>, indicates that is permitted to
-   * store the target
-   * URL and exception information in the <code>HttpSession</code> (the
-   * default). In situations where you do not wish to unnecessarily create <code>HttpSession</code>s
-   * - because the user agent will know the failed
-   * URL, such as with BASIC or Digest authentication - you may wish to set
-   * this property to <code>false</code>. Remember to also set the
-   * {@link org.beangle.security.web.context.HttpSessionContextFilter#allowSessionCreation}
-   * to <code>false</code> if you set this property to <code>false</code>.
-   * 
-   * @return <code>true</code> if the <code>HttpSession</code> will be used to
-   *         store information about the failed request, <code>false</code> if
-   *         the <code>HttpSession</code> will not be used
-   */
-  public boolean isCreateSessionAllowed() {
-    return createSessionAllowed;
-  }
-
   protected void sendStartAuthentication(ServletRequest request, ServletResponse response, FilterChain chain,
       AuthenticationException reason) throws ServletException, IOException {
     HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -113,10 +93,6 @@ public class ExceptionTranslationFilter extends GenericHttpFilter {
 
   public void setAuthenticationEntryPoint(AuthenticationEntryPoint authenticationEntryPoint) {
     this.authenticationEntryPoint = authenticationEntryPoint;
-  }
-
-  public void setCreateSessionAllowed(boolean createSessionAllowed) {
-    this.createSessionAllowed = createSessionAllowed;
   }
 
   public void setThrowableAnalyzer(ThrowableAnalyzer throwableAnalyzer) {

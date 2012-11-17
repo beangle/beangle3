@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.struts2.view;
+package org.beangle.struts2.view.freemarker;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.beangle.struts2.view.ResetCallbackWriter;
 import org.beangle.struts2.view.component.Component;
 import org.beangle.struts2.view.component.ComponentHelper;
 import org.slf4j.Logger;

@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.struts2.view;
+package org.beangle.struts2.view.bean;
 
 import java.util.Random;
 

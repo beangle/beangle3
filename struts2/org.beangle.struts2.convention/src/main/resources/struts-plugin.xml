@@ -24,21 +24,22 @@
 			<interceptor name="i18n2" class="org.beangle.struts2.interceptor.I18nInterceptor"/>
 			<interceptor name="ssc" class="org.beangle.struts2.interceptor.SimpleServletConfigInterceptor"/>
 			<interceptor-stack name="beangleStack">
-				<interceptor-ref name="exception"/>
+				<!--<interceptor-ref name="exception"/>-->
 				<interceptor-ref name="i18n2"/>
 				<interceptor-ref name="fileUpload"/>
-				<interceptor-ref name="ssc"/>
+				<!--<interceptor-ref name="ssc"/>-->
 				<interceptor-ref name="flash"/>
 			</interceptor-stack>
 		</interceptors>
 		<default-interceptor-ref name="beangleStack"/>
+		<!--不推荐应用自身处理异常,否则无法让容器处理，浏览器知晓。
 		<global-results>
-			<result name="redirector" type="freemarker">/template/redirector.ftl</result>
 			<result name="error" type="freemarker">/template/error.ftl</result>
 		</global-results>
 		<global-exception-mappings>
 			<exception-mapping exception="java.lang.Exception" result="error"/>
 		</global-exception-mappings>
+		-->
 	</package>
 	
 	<bean type="org.beangle.commons.i18n.TextBundleRegistry" class="org.beangle.commons.i18n.impl.DefaultTextBundleRegistry"  scope="singleton"/>

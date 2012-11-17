@@ -2,7 +2,7 @@
  * Licensed under GNU  LESSER General Public License, Version 3.
  * http://www.gnu.org/licenses
  */
-package org.beangle.struts2.view.component;
+package org.beangle.struts2.view.bean;
 
 import org.apache.struts2.StrutsConstants;
 import org.beangle.commons.lang.Strings;

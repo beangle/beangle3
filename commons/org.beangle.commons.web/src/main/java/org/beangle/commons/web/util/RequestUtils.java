@@ -68,19 +68,21 @@ public final class RequestUtils {
     } else {
       String uri = request.getRequestURI();
       if (uri.length() == 1) return "";
-      //process context
+      // process context
       String context = request.getContextPath();
-      if (context.length() == 1) context = "";
-      if ('/' == context.charAt(context.length() - 1)) context = context.substring(0, context.length() - 1);
-      
-      return servletPath = uri.substring(context.length());
+      int length = context.length();
+      if (length > 2) {
+        if ('/' == context.charAt(length - 1)) context = context.substring(0, length - 1);
+        return servletPath = uri.substring(context.length());
+      } else {
+        return uri;
+      }
     }
   }
 
   public static String getRealPath(ServletContext servletContext, String path) {
-    if (!path.startsWith("/")) {
-      path = "/" + path;
-    }
+    if (!path.startsWith("/")) path = "/" + path;
+
     String realPath = servletContext.getRealPath(path);
     if (realPath == null) { throw new RuntimeException("ServletContext resource [" + path
         + "] cannot be resolved to absolute file path - " + "web application archive not expanded?"); }

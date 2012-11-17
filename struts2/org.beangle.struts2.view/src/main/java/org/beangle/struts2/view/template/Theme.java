@@ -17,11 +17,11 @@ import org.beangle.commons.lang.Strings;
  */
 public class Theme {
 
-  public static final String THEME = ".beangle_theme";
+  public static final String Theme = ".beangle_theme";
 
-  public static final String THEME_STACK = ".beangle_theme_stack";
+  public static final String ThemeStack = ".beangle_theme_stack";
 
-  public static final String DEFAULT_THEME = "xml";
+  public static final String DefaultTheme = "xml";
 
   /**
    * Default tagName corresponding TagClass

@@ -4,6 +4,7 @@
  */
 package org.beangle.struts2.view.component;
 
+import org.beangle.struts2.view.bean.DefaultActionUrlRender;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

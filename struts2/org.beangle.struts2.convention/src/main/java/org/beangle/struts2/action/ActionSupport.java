@@ -23,6 +23,7 @@ import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.i18n.TextBundleRegistry;
 import org.beangle.commons.i18n.TextFormater;
 import org.beangle.commons.i18n.TextResource;
+import org.beangle.commons.i18n.TextResourceProvider;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Chars;
 import org.beangle.commons.lang.ClassLoaders;
@@ -41,22 +42,16 @@ import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.inject.Container;
-import com.opensymphony.xwork2.inject.Inject;
 
 /**
  * Provides a default implementation for the most common actions. See the
  * documentation for all the interfaces this class implements for more detailed
  * information.
  * <p>
- * Not a serializable class
  */
-public class ActionSupport implements TextResource {
+public class ActionSupport implements TextResourceProvider {
 
-  protected static Logger logger = LoggerFactory.getLogger(ActionSupport.class);
-
-  private TextResource textResource;
-
-  private Container container;
+  protected Logger logger = LoggerFactory.getLogger(ActionSupport.class);
 
   /**
    * The action execution was successful. Show result
@@ -171,11 +166,19 @@ public class ActionSupport implements TextResource {
   }
 
   protected final TextResource getTextResource() {
+    return getTextResource(getLocale());
+  }
+
+  public final TextResource getTextResource(Locale locale) {
+    ActionContext context = ActionContext.getContext();
+    TextResource textResource = (TextResource) context.get("textResource");
     if (textResource == null) {
+      if (null == locale) locale = getLocale();
+      Container container = ActionContext.getContext().getContainer();
       TextFormater formater = container.getInstance(TextFormater.class);
       TextBundleRegistry registry = container.getInstance(TextBundleRegistry.class);
-      textResource = new ActionTextResource(getClass(), getLocale(), registry, formater, ActionContext
-          .getContext().getValueStack());
+      textResource = new ActionTextResource(getClass(), locale, registry, formater, context.getValueStack());
+      context.put("textResource", textResource);
     }
     return textResource;
   }
@@ -497,11 +500,6 @@ public class ActionSupport implements TextResource {
 
   protected final Map<String, Object> getSession() {
     return ActionContext.getContext().getSession();
-  }
-
-  @Inject
-  public final void setContainer(Container container) {
-    this.container = container;
   }
 
 }

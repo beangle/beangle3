@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.beangle.commons.lang.annotation.Beta;
 import org.beangle.struts2.view.component.Component;
 import org.beangle.struts2.view.component.ComponentHelper;
 import org.slf4j.Logger;
@@ -33,6 +34,7 @@ import freemarker.template.TemplateModelException;
  * @author chaostone
  * @since 3.0.1
  */
+@Beta
 public abstract class ComponentDirective implements TemplateDirectiveModel {
   private static final Logger logger = LoggerFactory.getLogger(ComponentDirective.class);
 

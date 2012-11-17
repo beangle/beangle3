@@ -24,7 +24,7 @@ import com.opensymphony.xwork2.util.ValueStack;
  * @author chaostone
  */
 public class Component {
-  public static final String COMPONENT_STACK = "b__component_stack";
+  public static final String COMPONENT_STACK = "b_component_stack";
   protected ValueStack stack;
   protected Map<String, Object> parameters;
 
@@ -400,11 +400,8 @@ public class Component {
   public void addParameter(String key, Object value) {
     if (key != null) {
       Map<String, Object> params = getParameters();
-      if (value == null) {
-        params.remove(key);
-      } else {
-        params.put(key, value);
-      }
+      if (value == null) params.remove(key);
+      else params.put(key, value);
     }
   }
 

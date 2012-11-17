@@ -291,7 +291,7 @@ public class Grid extends ClosingUIBean {
 
     @Override
     public boolean doEnd(Writer writer, String body) {
-      if (getTheme().equals(Theme.DEFAULT_THEME)) {
+      if (getTheme().equals(Theme.DefaultTheme)) {
         try {
           writer.append("<td").append(getParameterString()).append(">");
           if (Strings.isNotEmpty(body)) {
@@ -421,7 +421,7 @@ public class Grid extends ClosingUIBean {
 
     @Override
     public boolean doEnd(Writer writer, String body) {
-      if (getTheme().equals(Theme.DEFAULT_THEME)) {
+      if (getTheme().equals(Theme.DefaultTheme)) {
         try {
           writer.append("<td class=\"gridselect\"");
           if (null != id) writer.append(" id=\"").append(id).append("\"");

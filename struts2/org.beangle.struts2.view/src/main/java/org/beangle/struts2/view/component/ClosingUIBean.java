@@ -61,17 +61,17 @@ public class ClosingUIBean extends UIBean {
   }
 
   private void pushTheme(Theme theme) {
-    ThemeStack themestack = (ThemeStack) stack.getContext().get(Theme.THEME_STACK);
+    ThemeStack themestack = (ThemeStack) stack.getContext().get(Theme.ThemeStack);
     if (null == themestack) {
       themestack = new ThemeStack();
-      stack.getContext().put(Theme.THEME_STACK, themestack);
+      stack.getContext().put(Theme.ThemeStack, themestack);
     }
     themestack.push(theme);
   }
 
   private void popTheme() {
-    ThemeStack themestack = (ThemeStack) stack.getContext().get(Theme.THEME_STACK);
+    ThemeStack themestack = (ThemeStack) stack.getContext().get(Theme.ThemeStack);
     themestack.pop();
-    if (themestack.isEmpty()) stack.getContext().remove(Theme.THEME_STACK);
+    if (themestack.isEmpty()) stack.getContext().remove(Theme.ThemeStack);
   }
 }
