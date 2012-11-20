@@ -52,7 +52,7 @@ public class OverrideConfiguration extends Configuration {
   }
 
   /**
-   * Override for disable validation.
+   * Disable xml file validation.
    */
   @Override
   protected Configuration doConfigure(InputStream stream, String resourceName) throws HibernateException {
@@ -81,6 +81,9 @@ public class OverrideConfiguration extends Configuration {
     return new OverrideMappings();
   }
 
+  /**
+   * Config table's schema by TableNamingStrategy
+   */
   private void configSchema() {
     TableNamingStrategy namingStrategy = null;
     if (getNamingStrategy() instanceof RailsNamingStrategy) {
@@ -130,7 +133,11 @@ public class OverrideConfiguration extends Configuration {
   }
 
   protected class OverrideMappings extends MappingsImpl {
-    // 注册缺省的sequence生成器
+    private final Map<String, List<Collection>> tmpColls = CollectUtils.newHashMap();
+
+    /**
+     * 注册缺省的sequence生成器
+     */
     public OverrideMappings() {
       super();
       IdGenerator idGen = new IdGenerator();
@@ -141,21 +148,23 @@ public class OverrideConfiguration extends Configuration {
 
     /**
      * 1.First change jpaName to entityName
-     * 2.duplicate register persistent class
+     * 2.Duplicate register persistent class
      */
     @SuppressWarnings("unchecked")
     @Override
     public void addClass(PersistentClass pClass) throws DuplicateMappingException {
       String jpaEntityName = pClass.getJpaEntityName();
       String entityName = pClass.getEntityName();
-      String entityClassName = null;
+      String className = entityName;
+      boolean entityNameChanged = false;
+      // Set real entityname using jpaEntityname
       if (null != jpaEntityName && jpaEntityName.contains(".")) {
-        entityClassName = entityName;
-        // Set real entityname is jpa entityname
         entityName = jpaEntityName;
         pClass.setEntityName(entityName);
+        entityNameChanged = true;
       }
 
+      // register class
       PersistentClass old = (PersistentClass) classes.get(entityName);
       if (old == null) {
         classes.put(entityName, pClass);
@@ -164,15 +173,37 @@ public class OverrideConfiguration extends Configuration {
         logger.info("{} override {} for entity configuration", pClass.getClassName(), old.getClassName());
       }
       // 为了欺骗hibernate中的ToOneFkSecondPass的部分代码,例如isInPrimaryKey。这些代码会根据className查找persistentClass，而不是根据entityName
-      if (null != entityClassName) classes.put(entityClassName, pClass);
+      if (entityNameChanged) classes.put(className, pClass);
+
+      // add entitis collections
+      List<Collection> cols = tmpColls.remove(entityName);
+      if (null == cols) cols = tmpColls.remove(className);
+      if (null != cols) {
+        for (Collection col : cols) {
+          String colName = null;
+          if (col.getRole().startsWith(className)) colName = col.getRole().substring(className.length() + 1);
+          else colName = col.getRole().substring(entityName.length() + 1);
+          col.setRole(entityName + "." + colName);
+          collections.put(col.getRole(), col);
+        }
+      }
     }
 
     /**
-     * Provide override collections with same rolename.
+     * <ul>
+     * <li>Provide override collections with same rolename.
+     * <li>Delay register collection,register by addClass method
+     * </ul>
      */
     @Override
     public void addCollection(Collection collection) throws DuplicateMappingException {
-      collections.put(collection.getRole(), collection);
+      String entityName = collection.getOwnerEntityName();
+      List<Collection> cols = tmpColls.get(entityName);
+      if (null == cols) {
+        cols = CollectUtils.newArrayList();
+        tmpColls.put(entityName, cols);
+      }
+      cols.add(collection);
     }
   }
 }
