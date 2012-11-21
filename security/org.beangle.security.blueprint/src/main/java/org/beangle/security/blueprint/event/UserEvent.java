@@ -18,14 +18,14 @@ import org.beangle.security.blueprint.User;
 public class UserEvent extends Event {
   private static final long serialVersionUID = -2213942260473001852L;
 
-  public UserEvent(List<User> users) {
+  public UserEvent(List<? extends User> users) {
     super(users);
     setResource("用户管理");
   }
 
   @SuppressWarnings("unchecked")
-  public List<User> getUsers() {
-    return (List<User>) source;
+  public List<? extends User> getUsers() {
+    return (List<? extends User>) source;
   }
 
   public String getUserNames() {

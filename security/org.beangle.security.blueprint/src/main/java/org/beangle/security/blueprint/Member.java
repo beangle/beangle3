@@ -18,13 +18,6 @@ public interface Member extends LongIdTimeEntity {
   Role getRole();
 
   /**
-   * set role
-   * 
-   * @param role
-   */
-  void setRole(Role role);
-
-  /**
    * Get User
    */
   User getUser();

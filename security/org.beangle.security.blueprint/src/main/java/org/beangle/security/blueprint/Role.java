@@ -15,7 +15,7 @@ import org.beangle.commons.entity.pojo.LongIdTimeEntity;
  * 
  * @author chaostone 2005-9-26
  */
-public interface Role extends LongIdTimeEntity, HierarchyEntity<Role, Long>, Comparable<Role>,Principal {
+public interface Role extends LongIdTimeEntity, HierarchyEntity<Role, Long>, Comparable<Role>, Principal {
 
   /** 匿名角色id */
   static final long ANONYMOUS_ID = 1;
@@ -25,53 +25,42 @@ public interface Role extends LongIdTimeEntity, HierarchyEntity<Role, Long>, Com
 
   /**
    * 代码
-   * 
    */
   String getCode();
 
   /**
    * 名称
-   * 
    */
   String getName();
 
   /**
    * 关联的系统用户
-   * 
    */
   Set<Member> getMembers();
 
   /**
    * Owner
-   * 
    */
   User getOwner();
 
   /**
    * 状态
-   * 
    */
   boolean isEnabled();
 
   /**
    * 备注
-   * 
    */
   String getRemark();
 
   /**
-   * 设置备注
-   * 
-   * @param remark
-   */
-  void setRemark(String remark);
-
-  /**
    * 角色所在的层次
-   * 
    */
   int getDepth();
 
+  /**
+   * Return true is the role is dynamic
+   */
   boolean isDynamic();
 
 }

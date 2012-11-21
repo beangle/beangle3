@@ -19,25 +19,13 @@ public interface MenuProfile extends LongIdEntity {
 
   String getName();
 
-  void setName(String name);
-
   List<Menu> getMenus();
 
-  void setMenus(List<Menu> menus);
-
   Role getRole();
-
-  void setRole(Role role);
 
   /**
    * 资源状态
    */
   boolean isEnabled();
 
-  /**
-   * 设置资源状态
-   * 
-   * @param isEnabled
-   */
-  void setEnabled(boolean isEnabled);
 }

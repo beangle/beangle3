@@ -22,17 +22,25 @@ public class MemAccessMonitor implements AccessMonitor {
 
   private AccessLogger logger;
   private AccessRequestBuilder builder;
-  private Map<String, AccessRequest> requests = CollectUtils.newConcurrentHashMap();
+  private Map<String, List<AccessRequest>> requests = CollectUtils.newConcurrentHashMap();
 
   public AccessRequest begin(HttpServletRequest request) {
     AccessRequest r = builder.build(request);
-    if (null != r) requests.put(r.getSessionid(), r);
+    if (null != r) {
+      List<AccessRequest> quene = requests.get(r.getSessionid());
+      if (null == quene) {
+        quene = CollectUtils.newArrayList(1);
+        requests.put(r.getSessionid(), quene);
+      }
+      quene.add(r);
+    }
     return r;
   }
 
   public void end(AccessRequest request, HttpServletResponse response) {
     if (null == request) return;
-    requests.remove(request.getSessionid());
+    List<AccessRequest> quene = requests.get(request.getSessionid());
+    quene.remove(request);
     // need upgrade to serlvet 3.0
     // accessRequest.setStatus(response.getStatus());
     if (null != logger) {
@@ -42,7 +50,11 @@ public class MemAccessMonitor implements AccessMonitor {
   }
 
   public List<AccessRequest> getRequests() {
-    return CollectUtils.newArrayList(requests.values());
+    List<AccessRequest> result = CollectUtils.newArrayList(requests.size());
+    for (List<AccessRequest> quene : requests.values()) {
+      result.addAll(quene);
+    }
+    return result;
   }
 
   public void setLogger(AccessLogger logger) {

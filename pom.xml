@@ -1,34 +1,54 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.beangle</groupId>
     <artifactId>beangle-parent</artifactId>
     <version>4</version>
   </parent>
-	<groupId>org.beangle</groupId>
-	<artifactId>beangle-library-parent</artifactId>
-	<packaging>pom</packaging>
-	<version>3.0.2-SNAPSHOT</version>
-	<name>Beangle Library Parent</name>
+  <groupId>org.beangle</groupId>
+  <artifactId>beangle-library-parent</artifactId>
+  <packaging>pom</packaging>
+  <version>3.0.2-SNAPSHOT</version>
+  <name>Beangle Library Parent</name>
 
-	<url>https://github.com/beangle/library</url>
-	
-	<issueManagement>
-		<system>github</system>
-		<url>https://github.com/beangle/library/issues</url>
-	</issueManagement>
+  <url>https://github.com/beangle/library</url>
+  
+  <issueManagement>
+    <system>github</system>
+    <url>https://github.com/beangle/library/issues</url>
+  </issueManagement>
 
-	<scm>
-		<connection>scm:git:git://github.com/beangle/library.git</connection>
-		<developerConnection>scm:git:git@github.com:beangle/library.git</developerConnection>
-		<url>https://github.com/beangle/library</url>
-	  <tag>HEAD</tag>
+  <scm>
+    <connection>scm:git:git://github.com/beangle/library.git</connection>
+    <developerConnection>scm:git:git@github.com:beangle/library.git</developerConnection>
+    <url>https://github.com/beangle/library</url>
+    <tag>HEAD</tag>
   </scm>
-	
-	<modules>
-		<module>commons</module>
-		<module>notification</module>
-		<module>security</module>
-		<module>struts2</module>
-	</modules>
+  
+  <modules>
+    <module>commons</module>
+    <module>notification</module>
+    <module>security</module>
+    <module>struts2</module>
+  </modules>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.mycila.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <version>1.9.0</version>
+        <configuration>
+          <header>head.txt</header>
+          <strictCheck>true</strictCheck>
+          <includes>
+            <include>src/**/java/**</include>
+          </includes>
+          <mapping>
+            <java>JAVADOC_STYLE</java>
+          </mapping>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

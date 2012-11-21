@@ -26,6 +26,7 @@ import org.beangle.security.blueprint.event.UserCreationEvent;
 import org.beangle.security.blueprint.event.UserRemoveEvent;
 import org.beangle.security.blueprint.event.UserStatusEvent;
 import org.beangle.security.blueprint.model.MemberBean;
+import org.beangle.security.blueprint.model.UserBean;
 import org.beangle.security.blueprint.service.UserService;
 
 /**
@@ -128,7 +129,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     return entityDao.search(builder);
   }
 
-  public void createUser(User creator, User newUser) {
+  public void createUser(User creator, UserBean newUser) {
     newUser.setCreator(creator);
     newUser.setUpdatedAt(new Date(System.currentTimeMillis()));
     newUser.setCreatedAt(new Date(System.currentTimeMillis()));

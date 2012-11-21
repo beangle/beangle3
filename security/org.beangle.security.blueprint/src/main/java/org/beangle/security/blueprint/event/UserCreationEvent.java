@@ -17,7 +17,7 @@ public class UserCreationEvent extends UserEvent {
 
   private static final long serialVersionUID = -3314980522326237621L;
 
-  public UserCreationEvent(List<User> users) {
+  public UserCreationEvent(List<? extends User> users) {
     super(users);
     setSubject(Securities.getUsername() + " 创建了" + getUserNames() + " 用户");
   }

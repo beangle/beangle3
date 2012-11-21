@@ -30,23 +30,9 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
   String getName();
 
   /**
-   * 设置名称
-   * 
-   * @param name
-   */
-  void setName(String name);
-
-  /**
    * 用户真实姓名
    */
   String getFullname();
-
-  /**
-   * 设置用户真实姓名
-   * 
-   * @param fullname
-   */
-  void setFullname(String fullname);
 
   /**
    * 用户密码(不限制是明码还是密文)
@@ -54,21 +40,9 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
   String getPassword();
 
   /**
-   * 设置密码
-   * 
-   * @param password
-   */
-  void setPassword(String password);
-
-  /**
    * 用户邮件
    */
   String getMail();
-
-  /**
-   * 用户邮件
-   */
-  void setMail(String mail);
 
   /**
    * 对应角色成员
@@ -83,23 +57,9 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
   List<Role> getRoles();
 
   /**
-   * 设置对应角色
-   * 
-   * @param members
-   */
-  void setMembers(Set<Member> members);
-
-  /**
    * 创建者
    */
   User getCreator();
-
-  /**
-   * 设置创建者
-   * 
-   * @param creator
-   */
-  void setCreator(User creator);
 
   /**
    * 是否启用
@@ -110,13 +70,6 @@ public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEnt
    * 备注
    */
   String getRemark();
-
-  /**
-   * 设置备注
-   * 
-   * @param remark
-   */
-  void setRemark(String remark);
 
   /**
    * 账户是否过期

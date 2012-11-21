@@ -10,7 +10,6 @@ import java.util.Map;
 import org.beangle.commons.collection.page.Page;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.commons.collection.page.SinglePage;
-import org.beangle.commons.dao.EntityDao;
 import org.beangle.commons.lang.Strings;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -24,12 +23,6 @@ import org.hibernate.impl.CriteriaImpl;
  * @author chaostone
  */
 public class BaseDaoHibernate extends HibernateEntityDao {
-
-  protected EntityDao entityDao;
-
-  public void setEntityDao(EntityDao entityDao) {
-    this.entityDao = entityDao;
-  }
 
   @SuppressWarnings("unchecked")
   public <T> Page<T> paginateCriteria(Criteria criteria, PageLimit limit) {

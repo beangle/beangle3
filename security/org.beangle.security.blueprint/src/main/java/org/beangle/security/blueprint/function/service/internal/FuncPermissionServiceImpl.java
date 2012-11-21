@@ -20,6 +20,7 @@ import org.beangle.security.blueprint.event.RoleAuthorityEvent;
 import org.beangle.security.blueprint.function.FuncPermission;
 import org.beangle.security.blueprint.function.FuncResource;
 import org.beangle.security.blueprint.function.model.FuncPermissionBean;
+import org.beangle.security.blueprint.function.model.FuncResourceBean;
 import org.beangle.security.blueprint.function.service.FuncPermissionService;
 import org.beangle.security.blueprint.service.UserService;
 
@@ -94,10 +95,10 @@ public class FuncPermissionServiceImpl extends BaseServiceImpl implements FuncPe
   }
 
   public void updateState(Long[] resourceIds, boolean isEnabled) {
-    OqlBuilder<FuncResource> query = OqlBuilder.from(FuncResource.class, "resource");
+    OqlBuilder<FuncResourceBean> query = OqlBuilder.from(FuncResourceBean.class, "resource");
     query.where("resource.id in (:ids)", resourceIds);
-    List<FuncResource> resources = entityDao.search(query);
-    for (FuncResource resource : resources) {
+    List<FuncResourceBean> resources = entityDao.search(query);
+    for (FuncResourceBean resource : resources) {
       resource.setEnabled(isEnabled);
     }
     entityDao.saveOrUpdate(resources);
