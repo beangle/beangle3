@@ -16,21 +16,27 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.core.session;
+package org.beangle.commons.web.session;
+
+import javax.servlet.http.HttpSession;
 
 import org.beangle.commons.context.event.Event;
 
 /**
- * Generic session creation event which indicates that a session (potentially
- * represented by a security context) has begun.
+ * HttpSession Destroyed Event
  * 
  * @author chaostone
  */
-public abstract class SessionCreationEvent extends Event {
+public class HttpSessionDestroyedEvent extends Event {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = -1750639486944677890L;
 
-  public SessionCreationEvent(Object source) {
+  public HttpSessionDestroyedEvent(Object source) {
     super(source);
   }
+
+  public HttpSession getSession() {
+    return (HttpSession) source;
+  }
+
 }

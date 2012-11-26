@@ -38,6 +38,7 @@ import org.beangle.security.web.auth.preauth.UsernamePreauthFilter;
 import org.beangle.security.web.auth.preauth.j2ee.RemoteUsernameSource;
 import org.beangle.security.web.context.HttpSessionContextFilter;
 import org.beangle.security.web.session.ConcurrentSessionFilter;
+import org.beangle.security.web.session.LogoutSessionCleaner;
 import org.beangle.security.web.session.WebSessioninfoBuilder;
 
 /**
@@ -64,7 +65,7 @@ public class DefaultModule extends AbstractBindModule {
     bind(DefaultAccessDeniedHandler.class, ExceptionTranslationFilter.class, FilterSecurityInterceptor.class)
         .shortName();
     // access monitor
-    bind(AccessMonitorFilter.class,MemAccessMonitor.class, SecurityAccessRequestBuilder.class).shortName();
+    bind(AccessMonitorFilter.class, MemAccessMonitor.class, SecurityAccessRequestBuilder.class).shortName();
 
     bind(WebSessioninfoBuilder.class);
     bind(LoginUrlEntryPoint.class).property("loginUrl", "/login.action").primary();
@@ -75,6 +76,8 @@ public class DefaultModule extends AbstractBindModule {
         listref(PreauthUserDetailProvider.class, DaoAuthenticationProvider.class));
 
     bind(AuthenticationServiceImpl.class);
+
+    bind(LogoutSessionCleaner.class).lazy(false);
 
     bind("securityFilterChain", FilterChainProxy.class).property(
         "filters",

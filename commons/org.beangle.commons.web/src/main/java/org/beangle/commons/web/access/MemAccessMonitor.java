@@ -18,6 +18,8 @@
  */
 package org.beangle.commons.web.access;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.context.event.Event;
+import org.beangle.commons.context.event.EventListener;
+import org.beangle.commons.web.session.HttpSessionDestroyedEvent;
 
 /**
  * Memory access monitor.
@@ -32,7 +37,7 @@ import org.beangle.commons.collection.CollectUtils;
  * @author chaostone
  * @since 3.0.1
  */
-public class MemAccessMonitor implements AccessMonitor {
+public class MemAccessMonitor implements AccessMonitor, EventListener<HttpSessionDestroyedEvent> {
 
   private AccessLogger logger;
   private AccessRequestBuilder builder;
@@ -43,7 +48,7 @@ public class MemAccessMonitor implements AccessMonitor {
     if (null != r) {
       List<AccessRequest> quene = requests.get(r.getSessionid());
       if (null == quene) {
-        quene = CollectUtils.newArrayList(1);
+        quene = Collections.synchronizedList(new LinkedList<AccessRequest>());
         requests.put(r.getSessionid(), quene);
       }
       quene.add(r);
@@ -54,7 +59,7 @@ public class MemAccessMonitor implements AccessMonitor {
   public void end(AccessRequest request, HttpServletResponse response) {
     if (null == request) return;
     List<AccessRequest> quene = requests.get(request.getSessionid());
-    quene.remove(request);
+    if (null != quene) quene.remove(request);
     // need upgrade to serlvet 3.0
     // accessRequest.setStatus(response.getStatus());
     if (null != logger) {
@@ -77,6 +82,18 @@ public class MemAccessMonitor implements AccessMonitor {
 
   public void setBuilder(AccessRequestBuilder builder) {
     this.builder = builder;
+  }
+
+  public void onEvent(HttpSessionDestroyedEvent event) {
+    requests.remove(event.getSession().getId());
+  }
+
+  public boolean supportsEventType(Class<? extends Event> eventType) {
+    return HttpSessionDestroyedEvent.class.isAssignableFrom(eventType);
+  }
+
+  public boolean supportsSourceType(Class<?> sourceType) {
+    return true;
   }
 
 }

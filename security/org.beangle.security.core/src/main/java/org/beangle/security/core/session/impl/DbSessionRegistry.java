@@ -27,8 +27,6 @@ import java.util.TimerTask;
 
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.context.event.Event;
-import org.beangle.commons.context.event.EventListener;
 import org.beangle.commons.dao.EntityDao;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
@@ -37,7 +35,12 @@ import org.beangle.commons.lang.Dates;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.security.core.Authentication;
-import org.beangle.security.core.session.*;
+import org.beangle.security.core.session.SessionController;
+import org.beangle.security.core.session.SessionException;
+import org.beangle.security.core.session.SessionRegistry;
+import org.beangle.security.core.session.SessionStatus;
+import org.beangle.security.core.session.Sessioninfo;
+import org.beangle.security.core.session.SessioninfoBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,8 +48,7 @@ import org.slf4j.LoggerFactory;
  * @author chaostone
  * @since 2.4
  */
-public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistry,
-    EventListener<SessionDestroyedEvent>, Initializing {
+public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistry, Initializing {
 
   protected static final Logger logger = LoggerFactory.getLogger(DbSessionRegistry.class);
 
@@ -69,7 +71,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     SessionCleanerTask sessionCleanerTask = new SessionCleanerTask(this);
     sessionCleanerTask.setEntityDao(entityDao);
     // 下一次间隔开始清理，不要浪费启动时间
-    new Timer("Beangle Session Cleaner", true).schedule(sessionCleanerTask,
+    new Timer("beangle-session-cleaner", true).schedule(sessionCleanerTask,
         new Date(System.currentTimeMillis() + updateInterval), updateInterval);
   }
 
@@ -151,19 +153,6 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
       info.expireNow();
       entityDao.saveOrUpdate(info);
     }
-  }
-
-  // 当会话消失时，退出用户
-  public void onEvent(SessionDestroyedEvent event) {
-    remove(event.getId());
-  }
-
-  public boolean supportsEventType(Class<? extends Event> eventType) {
-    return SessionDestroyedEvent.class.isAssignableFrom(eventType);
-  }
-
-  public boolean supportsSourceType(Class<?> sourceType) {
-    return true;
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })

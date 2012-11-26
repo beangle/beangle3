@@ -16,38 +16,27 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.web.session;
+package org.beangle.commons.web.session;
 
 import javax.servlet.http.HttpSession;
 
-import org.beangle.security.core.context.SecurityContext;
-import org.beangle.security.core.session.SessionDestroyedEvent;
-import org.beangle.security.web.context.HttpSessionContextFilter;
+import org.beangle.commons.context.event.Event;
 
 /**
- * Published by the {@link HttpSessionEventPublisher} when a HttpSession is
- * created in the container
+ * HttpSession Creation Event
+ * 
+ * @author chaostone
  */
-public class HttpSessionDestroyedEvent extends SessionDestroyedEvent {
+public class HttpSessionCreationEvent extends Event {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = -193751632892690046L;
 
-  public HttpSessionDestroyedEvent(HttpSession o) {
-    super(o);
+  public HttpSessionCreationEvent(Object source) {
+    super(source);
   }
 
   public HttpSession getSession() {
-    return (HttpSession) getSource();
+    return (HttpSession) source;
   }
 
-  @Override
-  public SecurityContext getSecurityContext() {
-    return (SecurityContext) getSession().getAttribute(
-        HttpSessionContextFilter.SECURITY_CONTEXT_KEY);
-  }
-
-  @Override
-  public String getId() {
-    return getSession().getId();
-  }
 }

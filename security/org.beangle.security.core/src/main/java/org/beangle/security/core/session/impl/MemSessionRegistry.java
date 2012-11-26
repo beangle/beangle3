@@ -27,17 +27,19 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.context.event.Event;
-import org.beangle.commons.context.event.EventListener;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Objects;
 import org.beangle.security.core.Authentication;
-import org.beangle.security.core.session.*;
+import org.beangle.security.core.session.SessionController;
+import org.beangle.security.core.session.SessionException;
+import org.beangle.security.core.session.SessionRegistry;
+import org.beangle.security.core.session.SessionStatus;
+import org.beangle.security.core.session.Sessioninfo;
+import org.beangle.security.core.session.SessioninfoBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MemSessionRegistry implements SessionRegistry, EventListener<SessionDestroyedEvent>,
-    Initializing {
+public class MemSessionRegistry implements SessionRegistry, Initializing {
 
   protected static final Logger logger = LoggerFactory.getLogger(MemSessionRegistry.class);
 
@@ -126,19 +128,6 @@ public class MemSessionRegistry implements SessionRegistry, EventListener<Sessio
     }
     controller.onLogout(info);
     return info;
-  }
-
-  // 当会话消失时，退出用户
-  public void onEvent(SessionDestroyedEvent event) {
-    remove(event.getId());
-  }
-
-  public boolean supportsEventType(Class<? extends Event> eventType) {
-    return SessionDestroyedEvent.class.isAssignableFrom(eventType);
-  }
-
-  public boolean supportsSourceType(Class<?> sourceType) {
-    return true;
   }
 
   public void expire(String sessionid) {

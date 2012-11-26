@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.web.session;
+package org.beangle.commons.web.session;
 
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
@@ -30,7 +30,7 @@ import org.springframework.util.Assert;
  * 
  * <pre>
  * &lt;listener&gt;
- *     &lt;listener-class&gt;org.beangle.security.web.session.HttpSessionEventPublisher&lt;/listener-class&gt;
+ *     &lt;listener-class&gt;org.beangle.commons.web.session.HttpSessionEventPublisher&lt;/listener-class&gt;
  * &lt;/listener&gt;
  * </pre>
  * 
@@ -47,8 +47,7 @@ public class HttpSessionEventPublisher implements HttpSessionListener {
    * Handles the HttpSessionEvent by publishing a {@link HttpSessionCreationEvent} to the
    * application appContext.
    * 
-   * @param event
-   *          HttpSessionEvent passed in by the container
+   * @param event HttpSessionEvent passed in by the container
    */
   public void sessionCreated(HttpSessionEvent event) {
     if (null == eventMulticaster) {
@@ -63,8 +62,7 @@ public class HttpSessionEventPublisher implements HttpSessionListener {
    * Handles the HttpSessionEvent by publishing a {@link HttpSessionDestroyedEvent} to the
    * application appContext.
    * 
-   * @param event
-   *          The HttpSessionEvent pass in by the container
+   * @param event The HttpSessionEvent pass in by the container
    */
   public void sessionDestroyed(HttpSessionEvent event) {
     if (null != eventMulticaster) {
