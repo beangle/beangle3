@@ -21,8 +21,7 @@ package org.beangle.commons.transfer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import org.beangle.commons.lang.Objects;
 
 /**
  * 转换消息
@@ -143,8 +142,8 @@ public class TransferMessage {
    * @return a {@link java.lang.String} object.
    */
   public String toString() {
-    return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("index", this.index)
-        .append("message", this.message).append("values", this.values).toString();
+    return Objects.toStringBuilder(this).add("index", this.index).add("message", this.message)
+        .add("values", this.values).toString();
   }
 
 }

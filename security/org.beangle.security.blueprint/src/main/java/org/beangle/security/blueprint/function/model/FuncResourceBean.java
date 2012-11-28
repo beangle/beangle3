@@ -26,8 +26,8 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.beangle.commons.entity.pojo.IntegerIdObject;
+import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.function.FuncResource;
 import org.hibernate.annotations.Cache;
@@ -126,9 +126,9 @@ public class FuncResourceBean extends IntegerIdObject implements FuncResource {
   public void setScope(Scope scope) {
     this.scope = scope;
   }
-  
-  public void setScope(String scopeName){
-    this.scope=Scope.valueOf(scopeName);
+
+  public void setScope(String scopeName) {
+    this.scope = Scope.valueOf(scopeName);
   }
 
   public boolean isEntry() {
@@ -148,7 +148,7 @@ public class FuncResourceBean extends IntegerIdObject implements FuncResource {
   }
 
   public String toString() {
-    return new ToStringBuilder(this).append("name", this.name).append("id", this.id)
-        .append("remark", this.remark).toString();
+    return Objects.toStringBuilder(this).add("name", this.name).add("id", this.id).add("remark", this.remark)
+        .toString();
   }
 }

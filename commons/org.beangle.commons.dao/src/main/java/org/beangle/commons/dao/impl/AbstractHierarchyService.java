@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.entity.pojo.HierarchyEntity;
+import org.beangle.commons.entity.HierarchyEntity;
 import org.beangle.commons.entity.pojo.NumberIdHierarchyObject;
 import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.lang.Objects;

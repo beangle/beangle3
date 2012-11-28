@@ -22,10 +22,10 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
+import org.beangle.commons.entity.EnabledEntity;
 import org.beangle.commons.entity.Entity;
-import org.beangle.commons.entity.pojo.EnabledEntity;
-import org.beangle.commons.entity.pojo.TemporalEntity;
-import org.beangle.commons.entity.pojo.TimeEntity;
+import org.beangle.commons.entity.TemporalEntity;
+import org.beangle.commons.entity.TimeEntity;
 
 /**
  * 系统中所有用户的账号、权限、状态信息.

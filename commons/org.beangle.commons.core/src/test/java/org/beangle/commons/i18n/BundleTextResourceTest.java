@@ -20,6 +20,7 @@ package org.beangle.commons.i18n;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
+
 import java.util.Locale;
 
 import org.beangle.commons.i18n.impl.DefaultTextBundleRegistry;

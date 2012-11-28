@@ -22,7 +22,6 @@ import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
@@ -30,6 +29,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.transfer.exporter.Context;
 import org.beangle.commons.transfer.io.AbstractItemWriter;
 import org.beangle.commons.transfer.io.TransferFormats;
@@ -201,8 +201,8 @@ public class ExcelItemWriter extends AbstractItemWriter {
     super.setContext(context);
     if (null != context) {
       Object count = context.getDatas().get("countPerSheet");
-      if (null != count && NumberUtils.isNumber(count.toString())) {
-        int countParam = NumberUtils.toInt(count.toString());
+      if (null != count && Numbers.isDigits(count.toString())) {
+        int countParam = Numbers.toInt(count.toString());
         if (countParam > 0) this.countPerSheet = countParam;
       }
     }

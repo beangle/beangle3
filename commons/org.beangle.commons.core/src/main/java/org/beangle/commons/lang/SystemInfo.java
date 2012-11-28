@@ -18,6 +18,7 @@
  */
 package org.beangle.commons.lang;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
@@ -60,6 +61,10 @@ public final class SystemInfo {
     javaRuntime = new JavaRuntime(properties);
     origin.keySet().removeAll(properties.keySet());
     usedProperties = new HashSet<String>(origin.keySet());
+  }
+
+  public static File getJavaIoTmpDir() {
+    return new File(System.getProperty("java.io.tmpdir"));
   }
 
   public static Set<String> getUsedproperties() {

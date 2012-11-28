@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.entity.pojo;
+package org.beangle.commons.entity;
 
 import java.io.Serializable;
 import java.util.List;
 
-import org.beangle.commons.entity.Entity;
 
 /**
  * <p>

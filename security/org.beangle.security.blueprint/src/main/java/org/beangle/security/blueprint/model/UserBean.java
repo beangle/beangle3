@@ -32,10 +32,10 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.pojo.NumberIdTimeObject;
 import org.beangle.commons.entity.util.EntityUtils;
+import org.beangle.commons.lang.Objects;
 import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
@@ -235,8 +235,8 @@ public class UserBean extends NumberIdTimeObject<Long> implements User {
   }
 
   public String toString() {
-    return new ToStringBuilder(this).append("id", this.id).append("password", this.password)
-        .append("name", this.getName()).toString();
+    return Objects.toStringBuilder(this).add("id", this.id).add("password", this.password)
+        .add("name", this.getName()).toString();
   }
 
 }

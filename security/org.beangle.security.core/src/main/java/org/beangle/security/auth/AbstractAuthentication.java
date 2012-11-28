@@ -22,10 +22,9 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Assert;
+import org.beangle.commons.lang.Objects;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.userdetail.UserDetail;
@@ -70,9 +69,9 @@ public abstract class AbstractAuthentication implements Authentication {
   public boolean equals(Object obj) {
     if (obj instanceof AbstractAuthentication) {
       AbstractAuthentication test = (AbstractAuthentication) obj;
-      return new EqualsBuilder().append(getPrincipal(), test.getPrincipal())
-          .append(getCredentials(), test.getCredentials()).append(getDetails(), test.getDetails())
-          .append(isAuthenticated(), test.isAuthenticated()).append(getAuthorities(), test.getAuthorities())
+      return Objects.equalsBuilder().add(getPrincipal(), test.getPrincipal())
+          .add(getCredentials(), test.getCredentials()).add(getDetails(), test.getDetails())
+          .add(isAuthenticated(), test.isAuthenticated()).add(getAuthorities(), test.getAuthorities())
           .isEquals();
     }
     return false;
@@ -80,15 +79,12 @@ public abstract class AbstractAuthentication implements Authentication {
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder().append(getPrincipal()).append(getCredentials()).append(getDetails())
-        .append(isAuthenticated()).append(getAuthorities()).toHashCode();
+    return (null == getPrincipal()) ? 629 : getPrincipal().hashCode();
   }
 
   public String getName() {
-    if (this.getPrincipal() instanceof UserDetail) { return ((UserDetail) getPrincipal()).getUsername(); }
-
-    if (getPrincipal() instanceof Principal) { return ((Principal) getPrincipal()).getName(); }
-
+    if (this.getPrincipal() instanceof UserDetail) return ((UserDetail) getPrincipal()).getUsername();
+    if (getPrincipal() instanceof Principal) return ((Principal) getPrincipal()).getName();
     return (this.getPrincipal() == null) ? "" : this.getPrincipal().toString();
   }
 }

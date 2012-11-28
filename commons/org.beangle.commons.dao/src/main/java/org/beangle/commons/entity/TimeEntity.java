@@ -16,47 +16,49 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.entity.pojo;
+package org.beangle.commons.entity;
 
 import java.util.Date;
 
 /**
- * 有时效性的实体
+ * <p>
+ * TimeEntity interface.
  * </p>
- * 指有具体生效时间和失效时间的实体。一般生效时间不能为空，失效时间可以为空。
- * 具体时间采用时间时间格式便于比对。
  * 
  * @author chaostone
  * @version $Id: $
  */
-public interface TemporalEntity {
+public interface TimeEntity {
 
   /**
-   * 获得生效时间
-   * 
-   * @return 生效时间
+   * Returns Created at.
    */
-  Date getEffectiveAt();
+  Date getCreatedAt();
 
   /**
-   * 获得失效时间
+   * <p>
+   * setCreatedAt.
+   * </p>
    * 
-   * @return 失效时间
+   * @param createdAt a {@link java.util.Date} object.
    */
-  Date getInvalidAt();
+  void setCreatedAt(Date createdAt);
 
   /**
-   * 设置生效时间
+   * <p>
+   * getUpdatedAt.
+   * </p>
    * 
-   * @param effectiveAt
+   * @return a {@link java.util.Date} object.
    */
-  void setEffectiveAt(Date effectiveAt);
+  Date getUpdatedAt();
 
   /**
-   * 设置失效时间
+   * <p>
+   * setUpdatedAt.
+   * </p>
    * 
-   * @param invalidAt
+   * @param updatedAt a {@link java.util.Date} object.
    */
-  void setInvalidAt(Date invalidAt);
-
+  void setUpdatedAt(Date updatedAt);
 }

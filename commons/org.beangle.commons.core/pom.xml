@@ -40,6 +40,7 @@
       <artifactId>h2</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- expression dependency-->
     <dependency>
       <groupId>ognl</groupId>
       <artifactId>ognl</artifactId>
@@ -48,6 +49,7 @@
       <groupId>org.javassist</groupId>
       <artifactId>javassist</artifactId>
     </dependency>
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
@@ -76,6 +78,7 @@
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
+    
     <dependency>
       <groupId>javax.validation</groupId>
       <artifactId>validation-api</artifactId>

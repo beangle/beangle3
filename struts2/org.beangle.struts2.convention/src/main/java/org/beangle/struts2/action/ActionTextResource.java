@@ -47,7 +47,7 @@ public class ActionTextResource extends DefaultTextResource {
   }
 
   /**
-   * 1 remove index key
+   * 1 remove index key(user.roles[0].name etc.)
    * 2 change ModelDriven to EntitySupport
    * 3 remove superclass and interface lookup
    */
@@ -79,7 +79,6 @@ public class ActionTextResource extends DefaultTextResource {
       }
     }
 
-    //FIXME ???
     // see if it's a child property
     int idx = key.indexOf(".");
     if (idx > 0) {

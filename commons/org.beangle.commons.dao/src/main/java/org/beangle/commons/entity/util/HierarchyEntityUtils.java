@@ -27,7 +27,7 @@ import java.util.Set;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.entity.pojo.HierarchyEntity;
+import org.beangle.commons.entity.HierarchyEntity;
 import org.beangle.commons.lang.Objects;
 
 /**

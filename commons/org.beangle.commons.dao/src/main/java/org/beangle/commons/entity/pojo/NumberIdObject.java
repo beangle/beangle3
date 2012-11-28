@@ -22,7 +22,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.util.ValidEntityKeyPredicate;
 
@@ -68,7 +67,7 @@ public class NumberIdObject<T extends Number> implements Entity<T> {
    * @see java.lang.Object#hashCode()
    */
   public int hashCode() {
-    return new HashCodeBuilder(-64900959, -454788261).append(this.id).toHashCode();
+    return (null == id) ? 629 : this.id.hashCode();
   }
 
   /**

@@ -20,8 +20,7 @@ package org.beangle.security.core.userdetail;
 
 import java.util.Collection;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.beangle.commons.lang.Objects;
 import org.beangle.security.core.GrantedAuthority;
 
 public class DefaultUserDetailBean implements UserDetail {
@@ -83,11 +82,11 @@ public class DefaultUserDetailBean implements UserDetail {
   public boolean equals(Object rhs) {
     if (!(rhs instanceof DefaultUserDetailBean) || (rhs == null)) { return false; }
     DefaultUserDetailBean user = (DefaultUserDetailBean) rhs;
-    return new EqualsBuilder().append(getUsername(), user.getUsername())
-        .append(getPassword(), user.getPassword()).append(isAccountExpired(), user.isAccountLocked())
-        .append(isAccountLocked(), user.isAccountLocked())
-        .append(isCredentialsExpired(), user.isCredentialsExpired())
-        .append(getAuthorities(), user.getAuthorities()).append(isEnabled(), user.isEnabled()).isEquals();
+    return Objects.equalsBuilder().add(getUsername(), user.getUsername())
+        .add(getPassword(), user.getPassword()).add(isAccountExpired(), user.isAccountLocked())
+        .add(isAccountLocked(), user.isAccountLocked())
+        .add(isCredentialsExpired(), user.isCredentialsExpired()).add(isEnabled(), user.isEnabled())
+        .isEquals();
   }
 
   public Collection<GrantedAuthority> getAuthorities() {
@@ -103,9 +102,7 @@ public class DefaultUserDetailBean implements UserDetail {
   }
 
   public int hashCode() {
-    return new HashCodeBuilder().append(getAuthorities()).append(getPassword()).append(getUsername())
-        .append(isAccountExpired()).append(isAccountLocked()).append(isCredentialsExpired())
-        .append(isEnabled()).toHashCode();
+    return (null == getUsername()) ? 629 : getUsername().hashCode();
   }
 
   public boolean isAccountExpired() {

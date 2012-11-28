@@ -309,21 +309,6 @@ class BeanDefinitionParser {
       bd.setDependsOn(StringUtils.tokenizeToStringArray(dependsOn, MULTI_VALUE_ATTRIBUTE_DELIMITERS));
     }
 
-    // String autowireCandidate =
-    // ele.getAttribute(AUTOWIRE_CANDIDATE_ATTRIBUTE);
-    // if ("".equals(autowireCandidate) ||
-    // DEFAULT_VALUE.equals(autowireCandidate)) {
-    // String candidatePattern = this.defaults.getAutowireCandidates();
-    // if (candidatePattern != null) {
-    // String[] patterns =
-    // StringUtils.commaDelimitedListToStringArray(candidatePattern);
-    // bd.setAutowireCandidate(PatternMatchUtils.simpleMatch(patterns,
-    // beanName));
-    // }
-    // } else {
-    // bd.setAutowireCandidate(TRUE_VALUE.equals(autowireCandidate));
-    // }
-
     if (ele.hasAttribute(PRIMARY_ATTRIBUTE)) {
       bd.setPrimary(TRUE_VALUE.equals(ele.getAttribute(PRIMARY_ATTRIBUTE)));
     }
@@ -365,10 +350,7 @@ class BeanDefinitionParser {
    */
   protected AbstractBeanDefinition createBeanDefinition(String className, String parentName)
       throws ClassNotFoundException {
-
-    return BeanDefinitionReaderUtils.createBeanDefinition(parentName, className,
-    // this.readerContext.getBeanClassLoader()
-        null);
+    return BeanDefinitionReaderUtils.createBeanDefinition(parentName, className, null);
   }
 
   /**
@@ -405,9 +387,6 @@ class BeanDefinitionParser {
    */
   public int getAutowireMode(String attValue) {
     String att = attValue;
-    // if (DEFAULT_VALUE.equals(att)) {
-    // att = this.defaults.getAutowire();
-    // }
     int autowire = AbstractBeanDefinition.AUTOWIRE_NO;
     if (AUTOWIRE_BY_NAME_VALUE.equals(att)) {
       autowire = AbstractBeanDefinition.AUTOWIRE_BY_NAME;
@@ -1153,8 +1132,6 @@ class BeanDefinitionParser {
     }
     // FIXME
     return null;
-    // return handler.parse(ele, new ParserContext(this.readerContext, this,
-    // containingBd));
   }
 
   /**
@@ -1208,27 +1185,6 @@ class BeanDefinitionParser {
 
   private BeanDefinitionHolder decorateIfRequired(Node node, BeanDefinitionHolder originalDef,
       BeanDefinition containingBd) {
-    // String namespaceUri = getNamespaceURI(node);
-    // if (!isDefaultNamespace(namespaceUri)) {
-    // NamespaceHandler handler =
-    // namespaceHandlerResolver.resolve(namespaceUri);
-    // if (handler != null) {
-    // return handler.decorate(node, originalDef, new
-    // ParserContext(this.readerContext,
-    // this, containingBd));
-    // } else if (namespaceUri != null
-    // && namespaceUri.startsWith("http://www.springframework.org/")) {
-    // error("Unable to locate Spring NamespaceHandler for XML schema namespace ["
-    // + namespaceUri + "]", node);
-    // } else {
-    // // A custom namespace, not to be handled by Spring - maybe
-    // // "xml:...".
-    // if (logger.isDebugEnabled()) {
-    // logger.debug("No Spring NamespaceHandler found for XML schema namespace ["
-    // + namespaceUri + "]");
-    // }
-    // }
-    // }
     return originalDef;
   }
 
@@ -1253,10 +1209,6 @@ class BeanDefinitionParser {
     }
     String id = ele.getNodeName() + BeanDefinitionReaderUtils.GENERATED_BEAN_NAME_SEPARATOR
         + Objects.getIdentityHexString(innerDefinition);
-    if (logger.isDebugEnabled()) {
-      logger.debug("Using generated bean name [" + id + "] for nested custom element '" + ele.getNodeName()
-          + "'");
-    }
     return new BeanDefinitionHolder(innerDefinition, id);
   }
 

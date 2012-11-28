@@ -27,8 +27,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.beangle.commons.entity.TemporalEntity;
 import org.beangle.commons.entity.pojo.IntegerIdObject;
-import org.beangle.commons.entity.pojo.TemporalEntity;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.function.FuncPermission;
 import org.beangle.security.blueprint.function.FuncResource;

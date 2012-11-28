@@ -21,7 +21,7 @@ package org.beangle.security.blueprint;
 import java.security.Principal;
 
 import org.beangle.commons.entity.Entity;
-import org.beangle.commons.entity.pojo.TemporalEntity;
+import org.beangle.commons.entity.TemporalEntity;
 
 /**
  * 权限

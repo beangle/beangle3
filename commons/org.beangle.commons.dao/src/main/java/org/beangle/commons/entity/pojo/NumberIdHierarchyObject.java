@@ -30,6 +30,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.entity.HierarchyEntity;
 import org.beangle.commons.lang.Strings;
 
 /**

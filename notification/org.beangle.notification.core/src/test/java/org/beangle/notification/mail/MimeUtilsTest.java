@@ -24,7 +24,6 @@ import javax.mail.internet.InternetAddress;
 
 import junit.framework.Assert;
 
-import org.beangle.notification.mail.MimeUtils;
 import org.testng.annotations.Test;
 
 @Test

@@ -18,9 +18,8 @@
  */
 package org.beangle.commons.transfer.importer;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.beangle.commons.entity.Entity;
+import org.beangle.commons.lang.Objects;
 
 public class Example implements Entity<Integer> {
 
@@ -50,8 +49,7 @@ public class Example implements Entity<Integer> {
    * @see java.lang.Object#toString()
    */
   public String toString() {
-    return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("id", this.getId())
-        .append("name", this.name).toString();
+    return Objects.toStringBuilder(this).add("id", getId()).add("name", this.name).toString();
   }
 
   public boolean isPersisted() {

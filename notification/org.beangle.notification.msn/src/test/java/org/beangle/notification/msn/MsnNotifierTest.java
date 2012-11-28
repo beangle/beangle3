@@ -18,7 +18,6 @@
  */
 package org.beangle.notification.msn;
 
-import org.beangle.notification.msn.MsnNotifier;
 import org.codehaus.plexus.msn.DefaultMsnClient;
 import org.testng.annotations.Test;
 

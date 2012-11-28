@@ -22,6 +22,8 @@ import java.util.Date;
 
 import javax.persistence.MappedSuperclass;
 
+import org.beangle.commons.entity.TimeEntity;
+
 @MappedSuperclass
 public class NumberIdTimeObject<T extends Number> extends NumberIdObject<T> implements TimeEntity {
   private static final long serialVersionUID = -5395713578471562117L;

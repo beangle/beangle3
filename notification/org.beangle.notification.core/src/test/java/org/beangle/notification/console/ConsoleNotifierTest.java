@@ -21,7 +21,6 @@ package org.beangle.notification.console;
 import org.beangle.notification.Message;
 import org.beangle.notification.Notifier;
 import org.beangle.notification.SimpleMessage;
-import org.beangle.notification.console.ConsoleNotifier;
 import org.testng.annotations.Test;
 
 public class ConsoleNotifierTest {

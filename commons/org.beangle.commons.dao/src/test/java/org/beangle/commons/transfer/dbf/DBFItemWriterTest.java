@@ -24,7 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import org.apache.commons.lang3.SystemUtils;
+import org.beangle.commons.lang.SystemInfo;
 import org.testng.annotations.Test;
 
 import com.linuxense.javadbf.DBFField;
@@ -36,7 +36,7 @@ public class DBFItemWriterTest {
   public void testWriter() throws Exception {
     DBFItemWriter writer = new DBFItemWriter();
 
-    String dbfile = SystemUtils.getJavaIoTmpDir() + "/test.dbf";
+    String dbfile = SystemInfo.getJavaIoTmpDir() + "/test.dbf";
     FileOutputStream fos = new FileOutputStream(dbfile);
 
     writer.setContext(null);

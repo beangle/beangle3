@@ -21,8 +21,8 @@ package org.beangle.security.blueprint;
 import java.security.Principal;
 import java.util.Set;
 
-import org.beangle.commons.entity.pojo.HierarchyEntity;
-import org.beangle.commons.entity.pojo.TimeEntity;
+import org.beangle.commons.entity.HierarchyEntity;
+import org.beangle.commons.entity.TimeEntity;
 
 /**
  * 系统角色的基本信息

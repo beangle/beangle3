@@ -20,7 +20,7 @@ package org.beangle.security.blueprint.nav;
 
 import java.util.Set;
 
-import org.beangle.commons.entity.pojo.HierarchyEntity;
+import org.beangle.commons.entity.HierarchyEntity;
 import org.beangle.security.blueprint.function.FuncResource;
 
 /**

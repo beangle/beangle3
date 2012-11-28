@@ -20,7 +20,7 @@ package org.beangle.security.auth;
 
 import java.util.Collection;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.beangle.commons.lang.Objects;
 import org.beangle.security.core.GrantedAuthority;
 
 public class AnonymousAuthentication extends AbstractAuthentication {
@@ -44,7 +44,7 @@ public class AnonymousAuthentication extends AbstractAuthentication {
   public boolean equals(Object obj) {
     if (obj instanceof AnonymousAuthentication) {
       AbstractAuthentication test = (AbstractAuthentication) obj;
-      return new EqualsBuilder().append(getPrincipal(), test.getPrincipal()).isEquals();
+      return Objects.equals(getPrincipal(), test.getPrincipal());
     }
     return false;
   }

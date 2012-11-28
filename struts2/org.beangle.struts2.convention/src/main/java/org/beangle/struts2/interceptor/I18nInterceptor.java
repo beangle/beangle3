@@ -18,12 +18,13 @@
  */
 package org.beangle.struts2.interceptor;
 
+import static com.opensymphony.xwork2.util.LocalizedTextUtil.localeFromString;
+
 import java.util.Locale;
 import java.util.Map;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
-import static com.opensymphony.xwork2.util.LocalizedTextUtil.localeFromString;
 
 /**
  * Simplify I18nInterceptor

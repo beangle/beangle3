@@ -21,8 +21,6 @@ package org.beangle.commons.entity.pojo;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.util.ValidEntityKeyPredicate;
 
@@ -65,10 +63,10 @@ public class StringIdObject implements Entity<String> {
   }
 
   /**
-   * @see java.lang.Object#hashCode()
+   * Return 37 * 17 if id is null else id's hashCode
    */
   public int hashCode() {
-    return new HashCodeBuilder(-64900959, -454788261).append(this.id).toHashCode();
+    return (null == id) ? 629 : this.id.hashCode();
   }
 
   /**
@@ -81,7 +79,7 @@ public class StringIdObject implements Entity<String> {
     if (!(object instanceof StringIdObject)) { return false; }
     StringIdObject rhs = (StringIdObject) object;
     if (null == getId() || null == rhs.getId()) { return false; }
-    return new EqualsBuilder().append(this.getId(), rhs.getId()).isEquals();
+    return getId().equals(rhs.getId());
   }
 
 }

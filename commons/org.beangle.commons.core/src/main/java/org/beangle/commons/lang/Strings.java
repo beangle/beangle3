@@ -22,6 +22,7 @@ import static java.lang.Character.isLowerCase;
 import static java.lang.Character.isUpperCase;
 import static java.lang.Character.toLowerCase;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -29,7 +30,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.beangle.commons.collection.CollectUtils;
 
 /**
@@ -754,8 +754,22 @@ public class Strings {
    * @return the text with any replacements processed, {@code null} if null String input
    */
   public static String replace(String text, String searchString, String replacement) {
-    // return text.replace(searchString, replacement);
-    return StringUtils.replace(text, searchString, replacement);
+    if (isEmpty(text) || isEmpty(searchString) || replacement == null) { return text; }
+    int start = 0;
+    int end = text.indexOf(searchString, start);
+    if (end == -1) { return text; }
+    int replLength = searchString.length();
+    int increase = replacement.length() - replLength;
+    increase = increase < 0 ? 0 : increase;
+    increase *= 16;
+    StringBuilder buf = new StringBuilder(text.length() + increase);
+    while (end != -1) {
+      buf.append(text.substring(start, end)).append(replacement);
+      start = end + replLength;
+      end = text.indexOf(searchString, start);
+    }
+    buf.append(text.substring(start));
+    return buf.toString();
   }
 
   /**
@@ -768,11 +782,48 @@ public class Strings {
    * @return an array of {@link java.lang.String} objects.
    */
   public static String[] split(String target) {
-    return split(target, new char[] { ',', ';', '\r', '\n', ' ' });
+    return split2(target, new char[] { ',', ';', '\r', '\n', ' ' });
   }
 
+  /**
+   * <p>
+   * Splits the provided text into an array, separator specified. This is an alternative to using
+   * StringTokenizer.
+   * </p>
+   * A {@code null} input String returns {@code null}.
+   * </p>
+   * 
+   * <pre>
+   * split(null, *)         = null
+   * split("", *)           = []
+   * split("a.b.c", '.')    = ["a", "b", "c"]
+   * split("a..b.c", '.')   = ["a", "b", "c"]
+   * split("a:b:c", '.')    = ["a:b:c"]
+   * split("a b c", ' ')    = ["a", "b", "c"]
+   * </pre>
+   */
   public static String[] split(String str, char separatorChar) {
-    return StringUtils.split(str, separatorChar);
+    if (str == null) { return null; }
+    int len = str.length();
+    if (len == 0) return new String[0];
+    List<String> list = new ArrayList<String>();
+    int i = 0, start = 0;
+    boolean match = false;
+    while (i < len) {
+      if (str.charAt(i) == separatorChar) {
+        if (match) {
+          list.add(str.substring(start, i));
+          match = false;
+        }
+        start = ++i;
+        continue;
+      }
+      match = true;
+      i++;
+    }
+    if (match) list.add(str.substring(start, i));
+    return list.toArray(new String[list.size()]);
+
   }
 
   /**
@@ -786,7 +837,7 @@ public class Strings {
    *          an array of char.
    * @return an array of {@link java.lang.String} objects.
    */
-  public static String[] split(String target, char[] separatorChars) {
+  public static String[] split2(String target, char[] separatorChars) {
     if (null == target) { return new String[0]; }
     char[] sb = target.toCharArray();
     for (char separator : separatorChars) {
@@ -808,8 +859,48 @@ public class Strings {
     return rs;
   }
 
+  /**
+   * *
+   * <p>
+   * Splits the provided text into an array, separators specified. This is an alternative to using
+   * StringTokenizer.
+   * </p>
+   * <p>
+   * A {@code null} input String returns {@code null}. A {@code null} separatorChars splits on
+   * whitespace.
+   * </p>
+   * 
+   * <pre>
+   * split(null, *)         = null
+   * split("", *)           = []
+   * split("abc def", null) = ["abc", "def"]
+   * split("abc def", " ")  = ["abc", "def"]
+   * split("abc  def", " ") = ["abc", "def"]
+   * split("ab:cd:ef", ":") = ["ab", "cd", "ef"]
+   * </pre>
+   */
   public static String[] split(String str, String separatorChars) {
-    return StringUtils.split(str, separatorChars);
+    if (str == null) { return null; }
+    int len = str.length();
+    if (len == 0) return new String[0];
+    List<String> list = new ArrayList<String>();
+    int i = 0, start = 0;
+    boolean match = false;
+    if (null == separatorChars) separatorChars = " ";
+    while (i < len) {
+      if (separatorChars.indexOf(str.charAt(i)) >= 0) {
+        if (match) {
+          list.add(str.substring(start, i));
+          match = false;
+        }
+        start = ++i;
+        continue;
+      }
+      match = true;
+      i++;
+    }
+    if (match) list.add(str.substring(start, i));
+    return list.toArray(new String[list.size()]);
   }
 
   /**
@@ -1020,10 +1111,6 @@ public class Strings {
    * <p>
    * unCamel.
    * </p>
-   * 
-   * @param str
-   *          a {@link java.lang.String} object.
-   * @return a {@link java.lang.String} object.
    */
   public static String unCamel(String str) {
     return unCamel(str, '-', true);

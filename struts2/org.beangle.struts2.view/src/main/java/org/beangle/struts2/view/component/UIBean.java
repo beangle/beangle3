@@ -18,6 +18,10 @@
  */
 package org.beangle.struts2.view.component;
 
+import static org.beangle.struts2.view.bean.ConstantBeanNames.GeneratorName;
+import static org.beangle.struts2.view.bean.ConstantBeanNames.TextResourceName;
+import static org.beangle.struts2.view.bean.ConstantBeanNames.UrlRenderName;
+
 import java.io.Writer;
 import java.text.MessageFormat;
 import java.util.Map;
@@ -29,7 +33,6 @@ import org.beangle.commons.i18n.TextResource;
 import org.beangle.commons.lang.Chars;
 import org.beangle.commons.lang.Strings;
 import org.beangle.struts2.view.bean.ActionUrlRender;
-import static org.beangle.struts2.view.bean.ConstantBeanNames.*;
 import org.beangle.struts2.view.bean.UIIdGenerator;
 import org.beangle.struts2.view.template.TemplateEngine;
 import org.beangle.struts2.view.template.Theme;
