@@ -79,6 +79,7 @@ public class ActionTextResource extends DefaultTextResource {
       }
     }
 
+    //FIXME ???
     // see if it's a child property
     int idx = key.indexOf(".");
     if (idx > 0) {

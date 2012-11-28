@@ -20,10 +20,10 @@ package org.beangle.commons.orm.example;
 
 import javax.persistence.Entity;
 
-import org.beangle.commons.entity.pojo.LongIdTimeObject;
+import org.beangle.commons.entity.pojo.NumberIdTimeObject;
 
 @Entity
-public class ContractInfo extends LongIdTimeObject {
+public class ContractInfo extends NumberIdTimeObject<Integer> {
 
   private static final long serialVersionUID = 5751822654667684436L;
 

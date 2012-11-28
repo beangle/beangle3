@@ -30,7 +30,7 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.security.blueprint.data.DataField;
 import org.beangle.security.blueprint.data.DataResource;
 import org.hibernate.annotations.Cache;
@@ -45,7 +45,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity(name = "org.beangle.security.blueprint.data.DataResource")
 @Cacheable
 @Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class DataResourceBean extends LongIdObject implements DataResource {
+public class DataResourceBean extends IntegerIdObject implements DataResource {
   private static final long serialVersionUID = -8285208615351119572L;
 
   /** 类型/名称 */
@@ -79,7 +79,7 @@ public class DataResourceBean extends LongIdObject implements DataResource {
     super();
   }
 
-  public DataResourceBean(Long id) {
+  public DataResourceBean(Integer id) {
     super(id);
   }
 

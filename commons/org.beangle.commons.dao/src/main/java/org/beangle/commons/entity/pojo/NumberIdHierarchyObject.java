@@ -18,26 +18,57 @@
  */
 package org.beangle.commons.entity.pojo;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.beangle.commons.entity.pojo.HierarchyEntity;
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
 
 /**
  * @author chaostone
- * @version $Id: LongIdHierarchyObject.java Jul 29, 2011 1:18:17 AM chaostone $
+ * @version $Id: NumberIdHierarchyObject.java Jul 29, 2011 1:18:17 AM chaostone $
  */
 @MappedSuperclass
-public abstract class HierarchyLongIdObject<T> extends LongIdObject implements HierarchyEntity<T, Long>,
-    Comparable<T> {
+public abstract class NumberIdHierarchyObject<T, ID extends Number> extends NumberIdObject<ID> implements
+    HierarchyEntity<T, ID>, Comparable<T> {
   private static final long serialVersionUID = -968320812584144969L;
 
   /** 代码 */
   @Size(max = 30)
   @NotNull
   protected String code;
+
+  /** 父级菜单 */
+  @ManyToOne(fetch = FetchType.LAZY)
+  public T parent;
+
+  @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+  @OrderBy("code")
+  protected List<T> children = CollectUtils.newArrayList();
+
+  public T getParent() {
+    return parent;
+  }
+
+  public void setParent(T parent) {
+    this.parent = parent;
+  }
+
+  public List<T> getChildren() {
+    return children;
+  }
+
+  public void setChildren(List<T> children) {
+    this.children = children;
+  }
 
   public int getDepth() {
     return (null == getParent()) ? 1 : getParentNode().getDepth() + 1;
@@ -65,8 +96,8 @@ public abstract class HierarchyLongIdObject<T> extends LongIdObject implements H
     }
   }
 
-  protected HierarchyLongIdObject<?> getParentNode() {
-    return (HierarchyLongIdObject<?>) getParent();
+  protected NumberIdHierarchyObject<?, ?> getParentNode() {
+    return (NumberIdHierarchyObject<?, ?>) getParent();
   }
 
   public String getCode() {
@@ -81,7 +112,7 @@ public abstract class HierarchyLongIdObject<T> extends LongIdObject implements H
    * 不同级的菜单按照他们固有的级联顺序排序.
    */
   public int compareTo(T other) {
-    return getCode().compareTo(((HierarchyLongIdObject<?>) other).getCode());
+    return getCode().compareTo(((NumberIdHierarchyObject<?, ?>) other).getCode());
   }
 
 }

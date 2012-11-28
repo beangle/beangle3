@@ -38,7 +38,7 @@ import org.beangle.security.blueprint.service.UserService;
  * @author chaostone
  * @version $Id: RoleServiceImpl.java Jul 29, 2011 1:58:51 AM chaostone $
  */
-public class RoleServiceImpl extends AbstractHierarchyService<RoleBean, Role> implements RoleService {
+public class RoleServiceImpl extends AbstractHierarchyService<RoleBean> implements RoleService {
   private UserService userService;
 
   public void createRole(User owner, Role role) {

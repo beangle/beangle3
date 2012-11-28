@@ -20,9 +20,9 @@ package org.beangle.commons.orm.example;
 
 import java.util.Map;
 
-import org.beangle.commons.entity.pojo.LongIdEntity;
+import org.beangle.commons.entity.Entity;
 
-public interface Employer extends LongIdEntity {
+public interface Employer extends Entity<Integer> {
 
   Name getName();
 

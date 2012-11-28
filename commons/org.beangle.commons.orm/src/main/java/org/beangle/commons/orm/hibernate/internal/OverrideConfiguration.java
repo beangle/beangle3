@@ -20,7 +20,6 @@ package org.beangle.commons.orm.hibernate.internal;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +37,7 @@ import org.hibernate.MappingException;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Mappings;
 import org.hibernate.cfg.SettingsFactory;
+import org.hibernate.internal.util.xml.ErrorLogger;
 import org.hibernate.mapping.Collection;
 import org.hibernate.mapping.IdGenerator;
 import org.hibernate.mapping.PersistentClass;
@@ -66,17 +66,17 @@ public class OverrideConfiguration extends Configuration {
   }
 
   /**
-   * Disable xml file validation.
+   * Just disable xml file validation.
    */
   @Override
   protected Configuration doConfigure(InputStream stream, String resourceName) throws HibernateException {
     try {
-      @SuppressWarnings("rawtypes")
-      List errors = new ArrayList();
-      SAXReader reader = xmlHelper.createSAXReader(resourceName, errors, this.getEntityResolver());
+      ErrorLogger errorLogger = new ErrorLogger(resourceName);
+      SAXReader reader = xmlHelper.createSAXReader(errorLogger, getEntityResolver());
       reader.setValidation(false);
       Document document = reader.read(new InputSource(stream));
-      if (errors.size() != 0) { throw new MappingException("invalid configuration", (Throwable) errors.get(0)); }
+      if (errorLogger.hasErrors()) { throw new MappingException("invalid configuration", errorLogger
+          .getErrors().get(0)); }
       doConfigure(document);
     } catch (DocumentException e) {
       throw new HibernateException("Could not parse configuration: " + resourceName, e);
@@ -84,7 +84,7 @@ public class OverrideConfiguration extends Configuration {
       try {
         stream.close();
       } catch (IOException ioe) {
-        logger.warn("could not close input stream for: " + resourceName, ioe);
+        logger.error("Could not close input stream for {}", resourceName);
       }
     }
     return this;

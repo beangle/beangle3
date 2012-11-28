@@ -22,16 +22,17 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
+import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.pojo.EnabledEntity;
-import org.beangle.commons.entity.pojo.LongIdTimeEntity;
-import org.beangle.commons.entity.pojo.TemporalActiveEntity;
+import org.beangle.commons.entity.pojo.TemporalEntity;
+import org.beangle.commons.entity.pojo.TimeEntity;
 
 /**
  * 系统中所有用户的账号、权限、状态信息.
  * 
  * @author dell,chaostone 2005-9-26
  */
-public interface User extends LongIdTimeEntity, TemporalActiveEntity, EnabledEntity, Principal {
+public interface User extends Entity<Long>, TimeEntity, TemporalEntity, EnabledEntity, Principal {
 
   // 新建用户的缺省密码
   static final String DEFAULT_PASSWORD = "1";

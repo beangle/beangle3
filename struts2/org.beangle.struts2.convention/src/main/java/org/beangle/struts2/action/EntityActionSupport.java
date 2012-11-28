@@ -162,22 +162,6 @@ public abstract class EntityActionSupport extends ActionSupport {
     return populateEntity(getEntityName(), getShortName());
   }
 
-  /**
-   * @deprecated Use getId
-   * @param shortName
-   */
-  protected Long getEntityId(String shortName) {
-    return getId(Long.class, shortName);
-  }
-
-  /**
-   * @deprecated user getIds directly
-   * @param shortName
-   */
-  protected Long[] getEntityIds(String shortName) {
-    return getIds(Long.class, shortName);
-  }
-
   protected Entity<?> populateEntity(String entityName, String shortName) {
     Serializable entityId = getId(Model.getEntityType(entityName).getIdType(), shortName);
     Entity<?> entity = null;
@@ -257,11 +241,9 @@ public abstract class EntityActionSupport extends ActionSupport {
    */
   protected String saveAndForward(Entity<?> entity) {
     try {
-      if (entity instanceof TimeEntity<?>) {
-        TimeEntity<?> timeEntity = (TimeEntity<?>) entity;
-        if (!timeEntity.isPersisted()) {
-          timeEntity.setCreatedAt(new Date());
-        }
+      if (entity instanceof TimeEntity) {
+        TimeEntity timeEntity = (TimeEntity) entity;
+        if (!entity.isPersisted()) timeEntity.setCreatedAt(new Date());
         timeEntity.setUpdatedAt(new Date());
       }
       saveOrUpdate(Collections.singletonList(entity));
@@ -385,14 +367,6 @@ public abstract class EntityActionSupport extends ActionSupport {
   }
 
   protected void configExporter(Exporter exporter, Context context) {
-    configExportContext(context);
-  }
-
-  /**
-   * @deprecated use configExporter
-   * @param context
-   */
-  protected void configExportContext(Context context) {
     context.put("items", getExportDatas());
   }
 

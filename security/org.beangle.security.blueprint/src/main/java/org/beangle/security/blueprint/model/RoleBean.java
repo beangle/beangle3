@@ -19,7 +19,6 @@
 package org.beangle.security.blueprint.model;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -27,7 +26,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.entity.pojo.HierarchyLongIdObject;
+import org.beangle.commons.entity.pojo.NumberIdHierarchyObject;
 import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
@@ -43,7 +42,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity(name = "org.beangle.security.blueprint.Role")
 @Cacheable
 @Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class RoleBean extends HierarchyLongIdObject<Role> implements Role {
+public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements Role {
 
   private static final long serialVersionUID = -3404181949500894284L;
 
@@ -56,17 +55,6 @@ public class RoleBean extends HierarchyLongIdObject<Role> implements Role {
   /** 关联的用户 */
   @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
   private Set<Member> members = CollectUtils.newHashSet();
-
-  /** 父级组 */
-  @ManyToOne(fetch = FetchType.LAZY)
-  private Role parent;
-
-  /**
-   * 下级组
-   * 这里不是用orphanRemoval = true 因为会出现下级组移动到别的组，而不是删除在新加入的逻辑
-   */
-  @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-  private List<Role> children = CollectUtils.newArrayList();
 
   /** 创建人 */
   @NotNull
@@ -94,11 +82,11 @@ public class RoleBean extends HierarchyLongIdObject<Role> implements Role {
     super();
   }
 
-  public RoleBean(Long id) {
+  public RoleBean(Integer id) {
     setId(id);
   }
 
-  public RoleBean(Long id, String name) {
+  public RoleBean(Integer id, String name) {
     setId(id);
     this.name = name;
   }
@@ -125,22 +113,6 @@ public class RoleBean extends HierarchyLongIdObject<Role> implements Role {
 
   public void setEnabled(boolean enabled) {
     this.enabled = enabled;
-  }
-
-  public Role getParent() {
-    return parent;
-  }
-
-  public void setParent(Role parent) {
-    this.parent = parent;
-  }
-
-  public List<Role> getChildren() {
-    return children;
-  }
-
-  public void setChildren(List<Role> children) {
-    this.children = children;
   }
 
   public Set<Member> getMembers() {

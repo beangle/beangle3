@@ -29,7 +29,7 @@ import java.util.Date;
  * @author chaostone
  * @version $Id: $
  */
-public interface TemporalActiveEntity {
+public interface TemporalEntity {
 
   /**
    * 获得生效时间

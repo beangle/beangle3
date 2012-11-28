@@ -25,7 +25,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.security.blueprint.data.ProfileField;
 import org.beangle.security.blueprint.data.RoleProfile;
 import org.beangle.security.blueprint.data.RoleProperty;
@@ -40,7 +40,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity(name = "org.beangle.security.blueprint.data.RoleProperty")
 @Cacheable
 @Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class RolePropertyBean extends LongIdObject implements RoleProperty {
+public class RolePropertyBean extends IntegerIdObject implements RoleProperty {
   private static final long serialVersionUID = 1L;
 
   /** 值 */

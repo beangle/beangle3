@@ -27,8 +27,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.beangle.commons.entity.pojo.TemporalActiveEntity;
-import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.IntegerIdObject;
+import org.beangle.commons.entity.pojo.TemporalEntity;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.function.FuncPermission;
 import org.beangle.security.blueprint.function.FuncResource;
@@ -40,7 +40,7 @@ import org.beangle.security.blueprint.function.FuncResource;
  * @author dell,chaostone 2005-9-26
  */
 @Entity(name = "org.beangle.security.blueprint.function.model.FuncPermissionBean")
-public class FuncPermissionBean extends LongIdObject implements TemporalActiveEntity,
+public class FuncPermissionBean extends IntegerIdObject implements TemporalEntity,
     FuncPermission {
 
   private static final long serialVersionUID = -8956079356245507990L;
@@ -77,7 +77,7 @@ public class FuncPermissionBean extends LongIdObject implements TemporalActiveEn
     super();
   }
 
-  public FuncPermissionBean(Long id) {
+  public FuncPermissionBean(Integer id) {
     super(id);
   }
 

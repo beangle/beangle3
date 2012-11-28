@@ -25,7 +25,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
 import org.beangle.commons.entity.annotation.FlashEntity;
-import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.IntegerIdObject;
 
 /**
  * 分类会话计数状态
@@ -35,7 +35,7 @@ import org.beangle.commons.entity.pojo.LongIdObject;
  */
 @Entity(name = "org.beangle.security.core.session.category.SessionStat")
 @FlashEntity
-public class SessionStat extends LongIdObject {
+public class SessionStat extends IntegerIdObject {
 
   private static final long serialVersionUID = 8698006403892972254L;
 

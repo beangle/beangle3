@@ -177,7 +177,7 @@ public class ConvertPopulatorBean implements Populator {
         }
       }
       // 主键
-      if (null != type && type.isEntityType() && attr.equals(((EntityType) type).getIdPropertyName())) {
+      if (null != type && type.isEntityType() && attr.equals(((EntityType) type).getIdName())) {
         if (ValidEntityKeyPredicate.INSTANCE.evaluate(value)) {
           setValue(attr, value, entity);
         } else {
@@ -202,7 +202,7 @@ public class ConvertPopulatorBean implements Populator {
           }
           // 属性也是实体类对象
           if (ot.getType().isEntityType()) {
-            String foreignKey = ((EntityType) ot.getType()).getIdPropertyName();
+            String foreignKey = ((EntityType) ot.getType()).getIdName();
             if (attr.endsWith("." + foreignKey)) {
               if (null == value) {
                 setValue(parentAttr, null, entity);

@@ -23,7 +23,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.security.blueprint.data.DataType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -35,7 +35,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity(name = "org.beangle.security.blueprint.data.DataType")
 @Cacheable
 @Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class DataTypeBean extends LongIdObject implements DataType {
+public class DataTypeBean extends IntegerIdObject implements DataType {
 
   private static final long serialVersionUID = 1440238057448114481L;
 
@@ -60,7 +60,7 @@ public class DataTypeBean extends LongIdObject implements DataType {
     super();
   }
 
-  public DataTypeBean(Long id) {
+  public DataTypeBean(Integer id) {
     super(id);
   }
 

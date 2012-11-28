@@ -20,6 +20,7 @@ package org.beangle.security.blueprint.data;
 
 import java.util.List;
 
+import org.beangle.commons.entity.Entity;
 import org.beangle.security.blueprint.User;
 
 /**
@@ -28,7 +29,7 @@ import org.beangle.security.blueprint.User;
  * @author chaostone
  * @version $Id: UserProfile.java Oct 21, 2011 8:43:35 AM chaostone $
  */
-public interface UserProfile extends Profile {
+public interface UserProfile extends Profile, Entity<Long> {
 
   List<UserProperty> getProperties();
 

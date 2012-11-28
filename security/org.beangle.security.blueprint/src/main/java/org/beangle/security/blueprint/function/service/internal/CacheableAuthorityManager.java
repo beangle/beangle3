@@ -104,7 +104,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
   }
 
   public Set<?> refreshRolePermissions(GrantedAuthority authority) {
-    Set<?> actions = permissionService.getResourceNamesByRole((Long) authority.getAuthority());
+    Set<?> actions = permissionService.getResourceNamesByRole((Integer) authority.getAuthority());
     authorities.put(authority, actions);
     logger.debug("Refresh role:{}'s permissions:{}", authority, actions);
     return actions;

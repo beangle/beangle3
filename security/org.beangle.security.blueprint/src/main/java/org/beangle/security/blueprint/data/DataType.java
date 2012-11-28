@@ -18,13 +18,13 @@
  */
 package org.beangle.security.blueprint.data;
 
-import org.beangle.commons.entity.pojo.LongIdEntity;
+import org.beangle.commons.entity.Entity;
 
 /**
  * @author chaostone
  * @since 3.0.0
  */
-public interface DataType extends LongIdEntity{
+public interface DataType extends Entity<Integer>{
 
   String getName();
 

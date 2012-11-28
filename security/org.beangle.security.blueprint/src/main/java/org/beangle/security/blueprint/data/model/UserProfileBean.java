@@ -107,6 +107,5 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
     } else {
       if (null != property) properties.remove(property);
     }
-
   }
 }

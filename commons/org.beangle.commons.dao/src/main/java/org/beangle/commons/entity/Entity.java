@@ -33,7 +33,7 @@ public interface Entity<ID extends Serializable> extends Serializable {
    * 
    * @return a ID object.
    */
-  ID getIdentifier();
+  ID getId();
 
   /**
    * 是否是持久化对象

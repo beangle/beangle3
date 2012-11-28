@@ -68,15 +68,7 @@ public interface EntityDao {
    * @param entityClass
    * @param values
    */
-  <T> List<T> get(Class<T> entityClass, Long... values);
-
-  /**
-   * 根据属性列举实体
-   * 
-   * @param entityClass
-   * @param values
-   */
-  <T> List<T> get(Class<T> entityClass, Object... values);
+  <T> List<T> get(Class<T> entityClass, Number... values);
 
   /**
    * 根据属性列举实体

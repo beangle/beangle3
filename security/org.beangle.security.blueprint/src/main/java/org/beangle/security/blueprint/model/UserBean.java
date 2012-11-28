@@ -34,7 +34,7 @@ import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.entity.pojo.LongIdTimeObject;
+import org.beangle.commons.entity.pojo.NumberIdTimeObject;
 import org.beangle.commons.entity.util.EntityUtils;
 import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Role;
@@ -47,7 +47,7 @@ import org.beangle.security.blueprint.User;
  * @author dell,chaostone 2005-9-26
  */
 @Entity(name = "org.beangle.security.blueprint.User")
-public class UserBean extends LongIdTimeObject implements User {
+public class UserBean extends NumberIdTimeObject<Long> implements User {
   private static final long serialVersionUID = -3625902334772342380L;
 
   /** 名称 */

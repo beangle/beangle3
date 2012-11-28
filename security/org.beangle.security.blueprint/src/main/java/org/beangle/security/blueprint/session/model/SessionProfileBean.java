@@ -23,7 +23,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.model.RoleBean;
 import org.beangle.security.core.session.category.CategoryProfile;
@@ -34,7 +34,7 @@ import org.beangle.security.core.session.category.CategoryProfile;
  * @author chaostone
  */
 @Entity(name = "org.beangle.security.blueprint.session.model.SessionProfileBean")
-public class SessionProfileBean extends LongIdObject implements CategoryProfile {
+public class SessionProfileBean extends IntegerIdObject implements CategoryProfile {
 
   private static final long serialVersionUID = 1999239598984221565L;
 
@@ -68,7 +68,7 @@ public class SessionProfileBean extends LongIdObject implements CategoryProfile 
    * @param userMaxSessions
    * @param inactiveInterval
    */
-  public SessionProfileBean(Long id, String category, int capacity, int userMaxSessions, int inactiveInterval) {
+  public SessionProfileBean(Integer id, String category, int capacity, int userMaxSessions, int inactiveInterval) {
     super();
     this.id = id;
     this.role = new RoleBean(null, category);

@@ -22,14 +22,14 @@ import java.security.Principal;
 import java.util.Set;
 
 import org.beangle.commons.entity.pojo.HierarchyEntity;
-import org.beangle.commons.entity.pojo.LongIdTimeEntity;
+import org.beangle.commons.entity.pojo.TimeEntity;
 
 /**
  * 系统角色的基本信息
  * 
  * @author chaostone 2005-9-26
  */
-public interface Role extends LongIdTimeEntity, HierarchyEntity<Role, Long>, Comparable<Role>, Principal {
+public interface Role extends TimeEntity, HierarchyEntity<Role, Integer>, Comparable<Role>, Principal {
 
   /** 匿名角色id */
   static final long ANONYMOUS_ID = 1;

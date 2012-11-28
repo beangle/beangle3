@@ -18,7 +18,6 @@
  */
 package org.beangle.security.blueprint.data;
 
-import org.beangle.commons.entity.pojo.LongIdEntity;
 
 /**
  * 属性
@@ -26,9 +25,11 @@ import org.beangle.commons.entity.pojo.LongIdEntity;
  * @author chaostone
  * @version $Id: Property.java Oct 18, 2011 8:57:24 AM chaostone $
  */
-public interface Property extends LongIdEntity {
+public interface Property {
 
   static final String AllValue = "*";
+
+  Number getId();
 
   ProfileField getField();
 

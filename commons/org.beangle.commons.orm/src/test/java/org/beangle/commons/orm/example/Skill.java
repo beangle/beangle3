@@ -20,10 +20,10 @@ package org.beangle.commons.orm.example;
 
 import javax.persistence.Entity;
 
-import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.IntegerIdObject;
 
 @Entity
-public class Skill extends LongIdObject {
+public class Skill extends IntegerIdObject {
 
   private static final long serialVersionUID = 1L;
 

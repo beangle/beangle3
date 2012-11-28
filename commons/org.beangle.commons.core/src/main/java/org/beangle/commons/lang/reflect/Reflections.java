@@ -18,6 +18,10 @@
  */
 package org.beangle.commons.lang.reflect;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
@@ -40,26 +44,25 @@ public final class Reflections {
   }
 
   /**
-   * <p>
-   * getProperty.
-   * </p>
-   * 
-   * @param clazz a {@link java.lang.Class} object.
-   * @param property a {@link java.lang.String} object.
-   * @return a {@link java.lang.Class} object.
+   * Return the Java Class representing the property type of the specified
+   * property, or <code>null</code> if there is no such property for the
+   * specified bean.
+   * this method using Introspector.getBeanInfo not lying on readmethod.
+   * For generic super class read method's return type is more general.
    */
   public static Class<?> getPropertyType(Class<?> clazz, String property) {
-    // MethodUtils.getAccessibleMethod(clazz, "get" + Strings.capitalize(property),(Class[]) null);
-    Method method = null;
+    BeanInfo beanInfo = null;
     try {
-      method = clazz.getMethod("get" + Strings.capitalize(property), (Class[]) null);
-    } catch (Exception e) {
+      beanInfo = Introspector.getBeanInfo(clazz);
+    } catch (IntrospectionException e) {
+      return null;
     }
-    try {
-      if (null == method) method = clazz.getMethod("is" + Strings.capitalize(property), (Class[]) null);
-    } catch (Exception e) {
+    PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();
+    if (null == descriptors) return null;
+    for (PropertyDescriptor pd : descriptors) {
+      if (pd.getName().equals(property)) return pd.getPropertyType();
     }
-    return null == method ? null : method.getReturnType();
+    return null;
   }
 
   /**

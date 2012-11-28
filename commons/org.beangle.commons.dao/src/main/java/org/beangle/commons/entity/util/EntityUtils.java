@@ -27,7 +27,7 @@ import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.Entity;
-import org.beangle.commons.entity.pojo.TemporalActiveEntity;
+import org.beangle.commons.entity.pojo.TemporalEntity;
 import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -199,10 +199,10 @@ public final class EntityUtils {
    * isExpired.
    * </p>
    * 
-   * @param entity a {@link org.beangle.commons.entity.pojo.TemporalActiveEntity} object.
+   * @param entity a {@link org.beangle.commons.entity.pojo.TemporalEntity} object.
    * @return a boolean.
    */
-  public static boolean isExpired(TemporalActiveEntity entity) {
+  public static boolean isExpired(TemporalEntity entity) {
     Date now = new Date();
     if (null == entity.getEffectiveAt()) return true;
     return entity.getEffectiveAt().after(now)

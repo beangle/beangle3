@@ -18,33 +18,42 @@
  */
 package org.beangle.commons.entity.pojo;
 
-import org.beangle.commons.entity.Entity;
+import java.util.Date;
 
-/**
- * <p>
- * IntegerIdEntity interface.
- * </p>
- * 
- * @author chaostone
- * @version $Id: IntIdEntity.java Oct 25, 2011 8:32:11 AM chaostone $
- */
-public interface IntegerIdEntity extends Entity<Integer> {
+import javax.persistence.MappedSuperclass;
 
-  /**
-   * <p>
-   * getId.
-   * </p>
-   * 
-   * @return a {@link java.lang.Integer} object.
-   */
-  Integer getId();
+@MappedSuperclass
+public class NumberIdTimeObject<T extends Number> extends NumberIdObject<T> implements TimeEntity {
+  private static final long serialVersionUID = -5395713578471562117L;
 
-  /**
-   * <p>
-   * setId.
-   * </p>
-   * 
-   * @param id a {@link java.lang.Integer} object.
-   */
-  void setId(Integer id);
+  /** 创建时间 */
+  protected Date createdAt;
+
+  /** 最后修改时间 */
+  protected Date updatedAt;
+
+  public NumberIdTimeObject() {
+    super();
+  }
+
+  public NumberIdTimeObject(T id) {
+    super(id);
+  }
+
+  public Date getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public Date getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(Date updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
 }

@@ -21,7 +21,6 @@ package org.beangle.security.blueprint.nav;
 import java.util.Set;
 
 import org.beangle.commons.entity.pojo.HierarchyEntity;
-import org.beangle.commons.entity.pojo.LongIdEntity;
 import org.beangle.security.blueprint.function.FuncResource;
 
 /**
@@ -29,7 +28,7 @@ import org.beangle.security.blueprint.function.FuncResource;
  * 
  * @author chaostone
  */
-public interface Menu extends LongIdEntity, HierarchyEntity<Menu, Long>, Comparable<Menu> {
+public interface Menu extends HierarchyEntity<Menu, Integer>, Comparable<Menu> {
 
   /**
    * 同级菜单索引号

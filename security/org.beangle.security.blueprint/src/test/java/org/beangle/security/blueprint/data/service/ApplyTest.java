@@ -60,7 +60,7 @@ public class ApplyTest {
     type.setKeyName("id");
     type.setProperties("name");
 
-    ProfileFieldBean property = new ProfileFieldBean(1L, "roles", type, "oql:from " + Role.class);
+    ProfileFieldBean property = new ProfileFieldBean(1, "roles", type, "oql:from " + Role.class);
 
     UserProfileBean upb = new UserProfileBean();
     upb.setProperty(property, "id;name,1;role1");
@@ -74,6 +74,6 @@ public class ApplyTest {
         + "where ((exists(from user.members as m where m.role in(:roles))))");
     Assert.assertNotNull(params);
     Assert.assertEquals(params.size(), 1);
-    Assert.assertEquals(params.get("roles"), CollectUtils.newArrayList(new RoleBean(1L, "role1")));
+    Assert.assertEquals(params.get("roles"), CollectUtils.newArrayList(new RoleBean(1, "role1")));
   }
 }

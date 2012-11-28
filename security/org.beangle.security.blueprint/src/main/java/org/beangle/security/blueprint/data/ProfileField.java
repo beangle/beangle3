@@ -18,7 +18,7 @@
  */
 package org.beangle.security.blueprint.data;
 
-import org.beangle.commons.entity.pojo.LongIdEntity;
+import org.beangle.commons.entity.Entity;
 
 /**
  * 用户自定义属性
@@ -26,7 +26,7 @@ import org.beangle.commons.entity.pojo.LongIdEntity;
  * @author chaostone
  * @since 2011-09-22
  */
-public interface ProfileField extends LongIdEntity {
+public interface ProfileField extends Entity<Integer> {
 
   /**
    * 名称

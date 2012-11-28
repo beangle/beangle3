@@ -18,13 +18,13 @@
  */
 package org.beangle.security.blueprint;
 
-import org.beangle.commons.entity.pojo.LongIdTimeEntity;
+import org.beangle.commons.entity.Entity;
 
 /**
  * @author chaostone
  * @version $Id: Member.java Nov 2, 2010 6:24:48 PM chaostone $
  */
-public interface Member extends LongIdTimeEntity {
+public interface Member extends Entity<Integer> {
 
   /**
    * get role

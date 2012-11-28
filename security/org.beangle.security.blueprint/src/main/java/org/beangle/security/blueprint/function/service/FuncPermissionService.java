@@ -55,7 +55,7 @@ public interface FuncPermissionService {
    * 
    * @param roleId
    */
-  Set<String> getResourceNamesByRole(Long roleId);
+  Set<String> getResourceNamesByRole(Integer roleId);
 
   /**
    * 按照角色查找资源

@@ -18,10 +18,12 @@
  */
 package org.beangle.security.blueprint.data;
 
+import org.beangle.commons.entity.Entity;
+
 /**
  * @author chaostone
  * @version $Id: UserProperty.java Oct 18, 2011 8:58:08 AM chaostone $
  */
-public interface UserProperty extends Property {
+public interface UserProperty extends Property, Entity<Long> {
 
 }

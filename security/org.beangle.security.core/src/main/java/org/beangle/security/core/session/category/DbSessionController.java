@@ -46,7 +46,7 @@ public class DbSessionController extends AbstractSessionController implements In
 
   private SessioninfoBuilder sessioninfoBuilder;
 
-  private Map<String, Long> categoryStatIds = CollectUtils.newConcurrentHashMap();
+  private Map<String, Integer> categoryStatIds = CollectUtils.newConcurrentHashMap();
 
   @Override
   protected boolean allocate(Authentication auth, String sessionId) {
@@ -56,9 +56,9 @@ public class DbSessionController extends AbstractSessionController implements In
     } else {
       String category = principal.getCategory();
       // Check corresponding stat existence
-      Long statId = categoryStatIds.get(category);
+      Integer statId = categoryStatIds.get(category);
       if (null == statId) {
-        statId = (Long) entityDao.uniqueResult(OqlBuilder.from(SessionStat.class.getName(), "ss")
+        statId = (Integer) entityDao.uniqueResult(OqlBuilder.from(SessionStat.class.getName(), "ss")
             .where("ss.category=:category", category).select("ss.id"));
         if (null == statId) {
           CategoryProfile cp = categoryProfileProvider.getProfile(principal.getCategory());
@@ -125,8 +125,7 @@ public class DbSessionController extends AbstractSessionController implements In
 
   public void stat() {
     entityDao.executeUpdateHql("update " + SessionStat.class.getName()
-        + " stat  set stat.online=(select count(*) from "
-        + sessioninfoBuilder.getSessioninfoType().getName()
+        + " stat  set stat.online=(select count(*) from " + sessioninfoBuilder.getSessioninfoType().getName()
         + " info where info.expiredAt is null and info.category=stat.category)");
   }
 

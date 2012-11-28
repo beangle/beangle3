@@ -19,21 +19,27 @@
 package org.beangle.security.blueprint;
 
 import java.beans.Introspector;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.apache.commons.beanutils.PropertyUtils;
+import org.beangle.commons.lang.reflect.Reflections;
 import org.beangle.security.blueprint.model.RoleBean;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Test
 public class ReflectorTest {
 
-  public void testGet() {
-    Method a = getterMethod(RoleBean.class, "parent");
-    System.out.println(a.getReturnType());
+  public void testGet() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    //Method a = getterMethod(RoleBean.class, "parent");
+    Assert.assertTrue(Integer.class.equals(Reflections.getPropertyType(RoleBean.class,"id")));
+    Assert.assertTrue(Role.class.equals(Reflections.getPropertyType(RoleBean.class,"parent")));
+    PropertyUtils.setProperty(new RoleBean(), "id", 1);
   }
 
-  private static Method getterMethod(Class<?> theClass, String propertyName) {
-    Method[] methods = theClass.getDeclaredMethods();
+  public static Method getterMethod(Class<?> theClass, String propertyName) {
+    Method[] methods = theClass.getMethods();
     for (Method method : methods) {
       if ("getParent".equals(method.getName())) {
         System.out.println(method.getReturnType());

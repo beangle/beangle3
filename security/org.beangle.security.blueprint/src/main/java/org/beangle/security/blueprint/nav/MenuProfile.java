@@ -20,7 +20,7 @@ package org.beangle.security.blueprint.nav;
 
 import java.util.List;
 
-import org.beangle.commons.entity.pojo.LongIdEntity;
+import org.beangle.commons.entity.Entity;
 import org.beangle.security.blueprint.Role;
 
 /**
@@ -29,7 +29,7 @@ import org.beangle.security.blueprint.Role;
  * @author chaostone
  * @since 2.0
  */
-public interface MenuProfile extends LongIdEntity {
+public interface MenuProfile extends Entity<Integer> {
 
   String getName();
 

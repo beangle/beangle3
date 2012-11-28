@@ -114,7 +114,7 @@ public final class HierarchyEntityUtils {
     for (T de : datas) {
       String myId = null;
       if (null == property) {
-        myId = String.valueOf(de.getIdentifier());
+        myId = String.valueOf(de.getId());
       } else {
         try {
           myId = String.valueOf(PropertyUtils.getProperty(de, property));

@@ -20,14 +20,14 @@ package org.beangle.security.core.session;
 
 import java.util.Date;
 
-import org.beangle.commons.entity.pojo.StringIdEntity;
+import org.beangle.commons.entity.Entity;
 
 /**
  * 在线活动
  * 
  * @author chaostone
  */
-public interface Sessioninfo extends StringIdEntity {
+public interface Sessioninfo extends Entity<String> {
   /**
    * 用户名
    */

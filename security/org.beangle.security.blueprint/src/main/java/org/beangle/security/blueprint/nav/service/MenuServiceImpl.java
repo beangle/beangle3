@@ -37,7 +37,7 @@ import org.beangle.security.blueprint.nav.model.MenuBean;
  * @author chaostone
  * @version $Id: MenuServiceImpl.java Jun 5, 2011 9:25:49 PM chaostone $
  */
-public class MenuServiceImpl extends AbstractHierarchyService<MenuBean, Menu> implements MenuService {
+public class MenuServiceImpl extends AbstractHierarchyService<MenuBean> implements MenuService {
 
   public List<MenuProfile> getProfiles(User user) {
     List<Role> roles = user.getRoles();

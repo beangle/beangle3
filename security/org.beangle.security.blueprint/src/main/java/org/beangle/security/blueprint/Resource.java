@@ -18,14 +18,14 @@
  */
 package org.beangle.security.blueprint;
 
-import org.beangle.commons.entity.pojo.LongIdEntity;
+import org.beangle.commons.entity.Entity;
 
 /**
  * 系统资源.<br>
  * 
  * @author chaostone 2008-7-28
  */
-public interface Resource extends LongIdEntity {
+public interface Resource extends Entity<Integer> {
 
   /** 资源的所有部分 */
   static final String AllParts = "*";

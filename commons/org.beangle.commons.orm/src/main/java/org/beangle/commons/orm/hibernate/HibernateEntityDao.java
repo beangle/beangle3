@@ -47,7 +47,7 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.collection.PersistentCollection;
+import org.hibernate.collection.spi.PersistentCollection;
 import org.hibernate.engine.jdbc.StreamUtils;
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.LazyInitializer;
@@ -67,7 +67,7 @@ public class HibernateEntityDao implements EntityDao {
   protected ModelMeta modelMeta;
 
   protected Session getSession() {
-    SessionHolder holder= SessionUtils.currentSession(sessionFactory);
+    SessionHolder holder = SessionUtils.currentSession(sessionFactory);
     return null != holder ? holder.getSession() : null;
   }
 
@@ -101,12 +101,8 @@ public class HibernateEntityDao implements EntityDao {
     return query.list();
   }
 
-  public <T> List<T> get(Class<T> entityClass, Long... values) {
+  public <T> List<T> get(Class<T> entityClass, Number... values) {
     return get(entityClass, "id", (Object[]) values);
-  }
-
-  public <T> List<T> get(Class<T> entityClass, Object... values) {
-    return get(entityClass, "id", values);
   }
 
   public <T> List<T> get(Class<T> entityClass, Collection<?> values) {
@@ -652,7 +648,7 @@ public class HibernateEntityDao implements EntityDao {
         } else {
           for (Iterator<? extends Entity<?>> it = list.iterator(); it.hasNext();) {
             Entity<?> info = it.next();
-            if (!info.getIdentifier().equals(id)) return true;
+            if (!info.getId().equals(id)) return true;
           }
           return false;
         }
@@ -678,7 +674,7 @@ public class HibernateEntityDao implements EntityDao {
       } else {
         for (Iterator<?> iter = list.iterator(); iter.hasNext();) {
           Entity<?> one = (Entity<?>) iter.next();
-          if (!one.getIdentifier().equals(id)) return false;
+          if (!one.getId().equals(id)) return false;
         }
       }
     }

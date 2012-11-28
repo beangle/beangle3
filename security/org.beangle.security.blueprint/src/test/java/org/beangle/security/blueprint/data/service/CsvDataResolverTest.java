@@ -40,18 +40,18 @@ public class CsvDataResolverTest {
     DataTypeBean type = new DataTypeBean("role", RoleBean.class.getName());
     type.setKeyName("id");
     type.setProperties("name");
-    field = new ProfileFieldBean(1L, "role", type, "oql:from Role");
+    field = new ProfileFieldBean(1, "role", type, "oql:from Role");
   }
 
   public void testMarshal() {
     String text = resolver.marshal(field,
-        CollectUtils.newArrayList(new RoleBean(1L, "role1"), new RoleBean(2L, "role2")));
+        CollectUtils.newArrayList(new RoleBean(1,"role1"), new RoleBean(2, "role2")));
     assertEquals(text, "id;name,1;role1,2;role2");
   }
 
   public void testUnmarshal() throws Exception {
     List<?> rs = resolver.unmarshal(field, "id;name,1;role1,2;role2");
-    List<?> objs = CollectUtils.newArrayList(new RoleBean(1L, "role1"), new RoleBean(2L, "role2"));
+    List<?> objs = CollectUtils.newArrayList(new RoleBean(1, "role1"), new RoleBean(2, "role2"));
     assertEquals(rs, objs);
   }
 }

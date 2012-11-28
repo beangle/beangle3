@@ -20,15 +20,15 @@ package org.beangle.security.blueprint;
 
 import java.security.Principal;
 
-import org.beangle.commons.entity.pojo.LongIdEntity;
-import org.beangle.commons.entity.pojo.TemporalActiveEntity;
+import org.beangle.commons.entity.Entity;
+import org.beangle.commons.entity.pojo.TemporalEntity;
 
 /**
  * 权限
  * 
  * @author chaostone 2005-9-26
  */
-public interface Permission extends LongIdEntity, Cloneable, TemporalActiveEntity {
+public interface Permission extends Entity<Integer>, Cloneable, TemporalEntity {
   /**
    * 系统资源
    */

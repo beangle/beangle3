@@ -20,7 +20,7 @@ package org.beangle.commons.orm.example;
 
 import javax.persistence.Entity;
 
-import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.IntegerIdObject;
 
 /**
  * 曾用名
@@ -28,7 +28,7 @@ import org.beangle.commons.entity.pojo.LongIdObject;
  * @author chaostone
  */
 @Entity
-public class OldName extends LongIdObject {
+public class OldName extends IntegerIdObject {
 
   private static final long serialVersionUID = -8986611679625767768L;
 

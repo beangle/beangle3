@@ -25,7 +25,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import org.beangle.commons.entity.pojo.LongIdTimeObject;
+import org.beangle.commons.entity.pojo.NumberIdTimeObject;
 import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
@@ -37,7 +37,7 @@ import org.beangle.security.blueprint.User;
  * @version $Id: MemberBean.java Nov 2, 2010 6:45:48 PM chaostone $
  */
 @Entity(name = "org.beangle.security.blueprint.Member")
-public class MemberBean extends LongIdTimeObject implements Member {
+public class MemberBean extends NumberIdTimeObject<Integer> implements Member {
 
   private static final long serialVersionUID = -3882917413656652492L;
 

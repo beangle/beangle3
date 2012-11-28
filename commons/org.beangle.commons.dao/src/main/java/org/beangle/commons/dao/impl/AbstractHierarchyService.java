@@ -24,8 +24,7 @@ import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.pojo.HierarchyEntity;
-import org.beangle.commons.dao.impl.BaseServiceImpl;
-import org.beangle.commons.entity.pojo.HierarchyLongIdObject;
+import org.beangle.commons.entity.pojo.NumberIdHierarchyObject;
 import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
@@ -35,8 +34,8 @@ import org.beangle.commons.lang.Strings;
  * @version $Id: AbstractHierarchyService.java Jul 29, 2011 1:34:01 AM chaostone $
  */
 @SuppressWarnings({ "unchecked" })
-public abstract class AbstractHierarchyService<T extends HierarchyLongIdObject<M>, M extends HierarchyEntity<M, Long>>
-    extends BaseServiceImpl {
+public abstract class AbstractHierarchyService<T extends NumberIdHierarchyObject<? super T, ?>> extends
+    BaseServiceImpl {
 
   public void move(T node, T location, int indexno) {
     if (Objects.equals(node.getParent(), location)) {
@@ -45,9 +44,9 @@ public abstract class AbstractHierarchyService<T extends HierarchyLongIdObject<M
       }
     } else {
       if (null != node.getParent()) {
-        node.getParent().getChildren().remove(node);
+        ((HierarchyEntity<? super T, ?>) node.getParent()).getChildren().remove(node);
       }
-      node.setParent((M) location);
+      node.setParent(location);
       shiftCode(node, location, indexno);
     }
   }
@@ -55,7 +54,7 @@ public abstract class AbstractHierarchyService<T extends HierarchyLongIdObject<M
   private void shiftCode(T node, T newParent, int indexno) {
     @SuppressWarnings("rawtypes")
     List sibling = null;
-    if (null != newParent) sibling = (List<T>) newParent.getChildren();
+    if (null != newParent) sibling = newParent.getChildren();
     else {
       sibling = CollectUtils.newArrayList();
       for (T m : getTopNodes(node)) {

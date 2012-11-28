@@ -152,39 +152,21 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
     if (dataSource != null) configTimeDataSourceHolder.set(dataSource);
     configuration = newConfiguration();
 
-    // Analogous to Hibernate EntityManager's Ejb3Configuration:
-    // Hibernate doesn't allow setting the bean ClassLoader explicitly,
-    // so we need to expose it as thread context ClassLoader accordingly.
-    Thread currentThread = Thread.currentThread();
-    ClassLoader threadContextClassLoader = currentThread.getContextClassLoader();
-    boolean overrideClassLoader = (this.beanClassLoader != null && !this.beanClassLoader
-        .equals(threadContextClassLoader));
-    if (overrideClassLoader) {
-      currentThread.setContextClassLoader(this.beanClassLoader);
-    }
+    configuration.getProperties().put("hibernate.classLoader.application", beanClassLoader);
+    // Set Hibernate 4.0+ CurrentSessionContext implementation,
+    // provide the Beangle-managed Session as current Session.
+    configuration.setProperty(Environment.CURRENT_SESSION_CONTEXT_CLASS,
+        BeangleSessionContext.class.getName());
+    if (this.namingStrategy != null) configuration.setNamingStrategy(this.namingStrategy);
+    if (dataSource != null) configuration.getProperties().put(Environment.DATASOURCE, dataSource);
+    if (this.hibernateProperties != null) configuration.addProperties(this.hibernateProperties);
 
     try {
-      // Set Hibernate 3.1+ CurrentSessionContext implementation,
-      // providing the Beangle-managed Session as current Session.
-      // Can be overridden by a custom value for the corresponding Hibernate property.
-      configuration.setProperty(Environment.CURRENT_SESSION_CONTEXT_CLASS,
-          BeangleSessionContext.class.getName());
-      configuration.setProperty(Environment.TRANSACTION_STRATEGY, BeangleTransactionFactory.class.getName());
-
-      if (this.namingStrategy != null) configuration.setNamingStrategy(this.namingStrategy);
-
+      
       if (this.configLocations != null) {
         for (Resource resource : this.configLocations)
           configuration.configure(resource.getURL());
       }
-
-      if (this.hibernateProperties != null) configuration.addProperties(this.hibernateProperties);
-
-      if (dataSource != null) {
-        configuration.setProperty(Environment.CONNECTION_PROVIDER,
-            DataSourceConnectionProvider.class.getName());
-      }
-
       if (this.mappingResources != null) {
         for (String mapping : this.mappingResources) {
           Resource resource = new ClassPathResource(mapping.trim(), this.beanClassLoader);
@@ -202,10 +184,6 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
 
     finally {
       if (dataSource != null) configTimeDataSourceHolder.remove();
-      if (overrideClassLoader) {
-        // Reset original thread context ClassLoader.
-        currentThread.setContextClassLoader(threadContextClassLoader);
-      }
     }
   }
 

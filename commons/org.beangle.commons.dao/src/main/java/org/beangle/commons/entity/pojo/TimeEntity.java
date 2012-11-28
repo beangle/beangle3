@@ -18,10 +18,7 @@
  */
 package org.beangle.commons.entity.pojo;
 
-import java.io.Serializable;
 import java.util.Date;
-
-import org.beangle.commons.entity.Entity;
 
 /**
  * <p>
@@ -31,7 +28,7 @@ import org.beangle.commons.entity.Entity;
  * @author chaostone
  * @version $Id: $
  */
-public interface TimeEntity<T extends Serializable> extends Entity<T> {
+public interface TimeEntity {
 
   /**
    * Returns Created at.

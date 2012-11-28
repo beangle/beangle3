@@ -24,15 +24,14 @@ import static org.springframework.transaction.support.TransactionSynchronization
 
 import javax.sql.DataSource;
 
-import org.beangle.commons.orm.hibernate.DataSourceConnectionProvider;
 import org.hibernate.*;
-import org.hibernate.connection.ConnectionProvider;
-import org.hibernate.engine.SessionFactoryImplementor;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.DataException;
 import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.exception.LockAcquisitionException;
 import org.hibernate.exception.SQLGrammarException;
+import org.hibernate.service.jdbc.connections.spi.ConnectionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.*;
@@ -52,8 +51,7 @@ public final class SessionUtils {
   public static DataSource getDataSource(SessionFactory sessionFactory) {
     if (sessionFactory instanceof SessionFactoryImplementor) {
       ConnectionProvider cp = ((SessionFactoryImplementor) sessionFactory).getConnectionProvider();
-      if (cp instanceof DataSourceConnectionProvider) { return ((DataSourceConnectionProvider) cp)
-          .getDataSource(); }
+      return cp.unwrap(DataSource.class);
     }
     return null;
   }
@@ -143,6 +141,9 @@ public final class SessionUtils {
       DataException jdbcEx = (DataException) ex;
       return new DataIntegrityViolationException(ex.getMessage() + "; SQL [" + jdbcEx.getSQL() + "]", ex);
     }
+    if (ex instanceof NonUniqueResultException) { return new IncorrectResultSizeDataAccessException(
+        ex.getMessage(), 1, ex); }
+    if (ex instanceof NonUniqueObjectException) { return new DuplicateKeyException(ex.getMessage(), ex); }
     if (ex instanceof PropertyValueException) { return new DataIntegrityViolationException(ex.getMessage(),
         ex); }
     if (ex instanceof PersistentObjectException) { return new InvalidDataAccessApiUsageException(
@@ -154,4 +155,5 @@ public final class SessionUtils {
     return new UncategorizedDataAccessException(ex.getMessage(), ex) {
     };
   }
+
 }

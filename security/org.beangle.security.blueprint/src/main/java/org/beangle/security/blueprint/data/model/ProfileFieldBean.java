@@ -26,7 +26,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.security.blueprint.data.DataType;
 import org.beangle.security.blueprint.data.ProfileField;
 import org.hibernate.annotations.Cache;
@@ -41,7 +41,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity(name = "org.beangle.security.blueprint.data.ProfileField")
 @Cacheable
 @Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class ProfileFieldBean extends LongIdObject implements ProfileField {
+public class ProfileFieldBean extends IntegerIdObject implements ProfileField {
   private static final long serialVersionUID = 1L;
 
   /** 名称 */
@@ -75,11 +75,11 @@ public class ProfileFieldBean extends LongIdObject implements ProfileField {
     super();
   }
 
-  public ProfileFieldBean(Long id) {
+  public ProfileFieldBean(Integer id) {
     super(id);
   }
 
-  public ProfileFieldBean(Long id, String name, DataType type, String source) {
+  public ProfileFieldBean(Integer id, String name, DataType type, String source) {
     super(id);
     this.name = name;
     this.type = type;

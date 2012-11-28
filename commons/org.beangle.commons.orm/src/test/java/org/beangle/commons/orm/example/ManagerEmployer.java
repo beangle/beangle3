@@ -27,10 +27,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 
-import org.beangle.commons.entity.pojo.LongIdTimeObject;
+import org.beangle.commons.entity.pojo.NumberIdTimeObject;
 
 @Entity(name = "org.beangle.commons.dao.example.Employer")
-public class ManagerEmployer extends LongIdTimeObject implements Employer {
+public class ManagerEmployer extends NumberIdTimeObject<Integer> implements Employer {
 
   private static final long serialVersionUID = 1L;
 

@@ -42,7 +42,7 @@ public class EntityType extends AbstractType {
 
   private Map<String, Type> propertyTypes = CollectUtils.newHashMap();
 
-  private String idPropertyName;
+  private String idName;
 
   /**
    * <p>
@@ -52,17 +52,29 @@ public class EntityType extends AbstractType {
    * @param entityName a {@link java.lang.String} object.
    * @param entityClass a {@link java.lang.Class} object.
    */
-  public EntityType(String entityName, Class<?> entityClass, String idPropertyName) {
+  public EntityType(String entityName, Class<?> entityClass, String idName) {
     super();
-    Assert.notNull(idPropertyName);
+    Assert.notNull(idName);
     Assert.notNull(entityName);
     Assert.notNull(entityClass);
-    
+
     this.entityName = entityName;
     this.entityClass = entityClass;
-    this.idPropertyName = idPropertyName;
-    Class<?> clazz = Reflections.getPropertyType(entityClass, idPropertyName);
-    if (null != clazz) propertyTypes.put(idPropertyName, new IdentifierType(clazz));
+    this.idName = idName;
+    Class<?> clazz = Reflections.getPropertyType(entityClass, idName);
+    if (null != clazz) propertyTypes.put(idName, new IdentifierType(clazz));
+  }
+
+  public EntityType(String entityName, Class<?> entityClass, String idName, Type idType) {
+    super();
+    Assert.notNull(idName);
+    Assert.notNull(entityName);
+    Assert.notNull(entityClass);
+
+    this.entityName = entityName;
+    this.entityClass = entityClass;
+    this.idName = idName;
+    this.propertyTypes.put(idName, idType);
   }
 
   /**
@@ -198,26 +210,12 @@ public class EntityType extends AbstractType {
     return entityClass;
   }
 
-  /**
-   * <p>
-   * Getter for the field <code>idPropertyName</code>.
-   * </p>
-   * 
-   * @return a {@link java.lang.String} object.
-   */
-  public String getIdPropertyName() {
-    return idPropertyName;
+  public String getIdName() {
+    return idName;
   }
 
-  /**
-   * <p>
-   * Setter for the field <code>idPropertyName</code>.
-   * </p>
-   * 
-   * @param idName a {@link java.lang.String} object.
-   */
-  public void setIdPropertyName(String idName) {
-    this.idPropertyName = idName;
+  public void setIdName(String idName) {
+    this.idName = idName;
   }
 
   /**
@@ -229,7 +227,7 @@ public class EntityType extends AbstractType {
    */
   @SuppressWarnings("unchecked")
   public Class<? extends Serializable> getIdType() {
-    Type type = propertyTypes.get(idPropertyName);
+    Type type = propertyTypes.get(idName);
     return (Class<? extends Serializable>) (null != type ? type.getReturnedClass() : null);
   }
 }

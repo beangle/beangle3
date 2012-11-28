@@ -77,7 +77,7 @@ public class FuncPermissionServiceImpl extends BaseServiceImpl implements FuncPe
 
   /** 找到该组内激活的资源id */
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  public Set<String> getResourceNamesByRole(Long roleId) {
+  public Set<String> getResourceNamesByRole(Integer roleId) {
     String hql = "select a.resource.name from " + FuncPermission.class.getName()
         + " as a where a.role.id= :roleId and a.resource.enabled = true";
     OqlBuilder query = OqlBuilder.hql(hql).param("roleId", roleId).cacheable();

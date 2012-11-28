@@ -18,42 +18,42 @@
  */
 package org.beangle.commons.entity.pojo;
 
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.util.ValidEntityKeyPredicate;
 
 @MappedSuperclass
-public class StringIdObject implements Entity<String> {
-
-  private static final long serialVersionUID = -6898498932182877104L;
+public class NumberIdObject<T extends Number> implements Entity<T> {
+  private static final long serialVersionUID = -7530111699332363124L;
 
   /** 非业务主键 */
   @Id
-  protected String id;
+  @GeneratedValue(generator = "table_sequence")
+  protected T id;
 
-  public StringIdObject() {
+  public NumberIdObject() {
     super();
   }
 
-  public StringIdObject(String id) {
+  public NumberIdObject(T id) {
     super();
     this.id = id;
   }
 
-  public String getIdentifier() {
+  public T getId() {
     return id;
   }
 
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
+  public void setId(T id) {
     this.id = id;
+  }
+
+  public T getIdentifier() {
+    return id;
   }
 
   public boolean isPersisted() {
@@ -72,16 +72,19 @@ public class StringIdObject implements Entity<String> {
   }
 
   /**
+   * <p>
    * 比较id,如果任一方id是null,则不相等
+   * </p>
+   * 由于业务对象被CGlib或者javassist增强的原因，这里只提供一般的基于id的比较,不提供基于Class的比较。<br>
+   * 如果在存在继承结构， 请重置equals方法。
    * 
    * @see java.lang.Object#equals(Object)
    */
   public boolean equals(final Object object) {
     if (this == object) return true;
-    if (!(object instanceof StringIdObject)) { return false; }
-    StringIdObject rhs = (StringIdObject) object;
+    if (!(object instanceof NumberIdObject)) { return false; }
+    NumberIdObject<?> rhs = (NumberIdObject<?>) object;
     if (null == getId() || null == rhs.getId()) { return false; }
-    return new EqualsBuilder().append(this.getId(), rhs.getId()).isEquals();
+    return getId().equals(rhs.getId());
   }
-
 }

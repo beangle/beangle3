@@ -30,7 +30,7 @@ public interface CategoryProfile {
    * Distingish indentifier
    * 
    */
-  Long getId();
+  Integer getId();
 
   /**
    * User cateogory

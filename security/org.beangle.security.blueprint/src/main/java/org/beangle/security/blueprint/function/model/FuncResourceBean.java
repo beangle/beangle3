@@ -27,7 +27,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.function.FuncResource;
 import org.hibernate.annotations.Cache;
@@ -48,7 +48,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity(name = "org.beangle.security.blueprint.function.FuncResource")
 @Cacheable
 @Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class FuncResourceBean extends LongIdObject implements FuncResource {
+public class FuncResourceBean extends IntegerIdObject implements FuncResource {
   private static final long serialVersionUID = -8285208615351119572L;
 
   /** 模块名字 */

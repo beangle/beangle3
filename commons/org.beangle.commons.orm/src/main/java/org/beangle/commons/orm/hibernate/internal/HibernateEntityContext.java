@@ -24,10 +24,10 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.metadata.CollectionType;
 import org.beangle.commons.entity.metadata.ComponentType;
 import org.beangle.commons.entity.metadata.EntityType;
+import org.beangle.commons.entity.metadata.IdentifierType;
 import org.beangle.commons.entity.metadata.Type;
 import org.beangle.commons.entity.metadata.impl.AbstractEntityContext;
 import org.beangle.commons.lang.time.Stopwatch;
-import org.hibernate.EntityMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.metadata.CollectionMetadata;
@@ -100,8 +100,8 @@ public class HibernateEntityContext extends AbstractEntityContext {
         logger.error("Cannot find ClassMetadata for {}", entityName);
         return null;
       }
-      entityType = new EntityType(cm.getEntityName(), cm.getMappedClass(EntityMode.POJO),
-          cm.getIdentifierPropertyName());
+      entityType = new EntityType(cm.getEntityName(), cm.getMappedClass(), cm.getIdentifierPropertyName(),
+          new IdentifierType(cm.getIdentifierType().getReturnedClass()));
       entityTypes.put(cm.getEntityName(), entityType);
 
       Map<String, Type> propertyTypes = entityType.getPropertyTypes();
@@ -124,7 +124,7 @@ public class HibernateEntityContext extends AbstractEntityContext {
   private CollectionType buildCollectionType(SessionFactory sessionFactory, Class<?> collectionClass,
       String role) {
     CollectionMetadata cm = sessionFactory.getCollectionMetadata(role);
-    // FIXME buildCollectionType
+    // FIXME buildCollectionType in class hierarchy
     if (null == cm) return null;
     org.hibernate.type.Type type = cm.getElementType();
     EntityType elementType = null;

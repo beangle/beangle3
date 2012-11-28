@@ -30,8 +30,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.beangle.commons.entity.pojo.TemporalActiveEntity;
-import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.IntegerIdObject;
+import org.beangle.commons.entity.pojo.TemporalEntity;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.data.DataPermission;
 import org.beangle.security.blueprint.data.DataResource;
@@ -50,7 +50,7 @@ import com.google.gson.GsonBuilder;
 @Entity(name = "org.beangle.security.blueprint.data.DataPermission")
 @Cacheable
 @Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class DataPermissionBean extends LongIdObject implements TemporalActiveEntity, DataPermission {
+public class DataPermissionBean extends IntegerIdObject implements TemporalEntity, DataPermission {
 
   private static final long serialVersionUID = -8956079356245507990L;
 
@@ -97,7 +97,7 @@ public class DataPermissionBean extends LongIdObject implements TemporalActiveEn
     super();
   }
 
-  public DataPermissionBean(Long id) {
+  public DataPermissionBean(Integer id) {
     super(id);
   }
 

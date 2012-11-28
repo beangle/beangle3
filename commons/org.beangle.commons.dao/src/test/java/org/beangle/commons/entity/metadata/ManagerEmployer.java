@@ -20,9 +20,9 @@ package org.beangle.commons.entity.metadata;
 
 import java.sql.Date;
 
-import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.entity.pojo.IntegerIdObject;
 
-public class ManagerEmployer extends LongIdObject {
+public class ManagerEmployer extends IntegerIdObject {
 
   private static final long serialVersionUID = 1371741254315503984L;
 

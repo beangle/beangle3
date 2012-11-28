@@ -20,21 +20,21 @@ package org.beangle.commons.transfer.importer;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.beangle.commons.entity.pojo.LongIdEntity;
+import org.beangle.commons.entity.Entity;
 
-public class Example implements LongIdEntity {
+public class Example implements Entity<Integer> {
 
   private static final long serialVersionUID = 1467632544620523331L;
 
-  Long id;
+  Integer id;
 
   String name;
 
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
@@ -52,10 +52,6 @@ public class Example implements LongIdEntity {
   public String toString() {
     return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append("id", this.getId())
         .append("name", this.name).toString();
-  }
-
-  public Long getIdentifier() {
-    return id;
   }
 
   public boolean isPersisted() {

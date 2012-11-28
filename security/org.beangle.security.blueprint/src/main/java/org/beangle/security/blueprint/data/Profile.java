@@ -21,15 +21,15 @@ package org.beangle.security.blueprint.data;
 import java.security.Principal;
 import java.util.List;
 
-import org.beangle.commons.entity.pojo.LongIdEntity;
-
 /**
  * 属性配置
  * 
  * @author chaostone
  * @version $Id: Profile.java Oct 21, 2011 8:43:35 AM chaostone $
  */
-public interface Profile extends LongIdEntity {
+public interface Profile {
+
+  Number getId();
 
   Principal getPrincipal();
 

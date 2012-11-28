@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.beangle</groupId>
     <artifactId>beangle-library-parent</artifactId>
-    <version>3.0.3-SNAPSHOT</version>
+    <version>3.1.0-SNAPSHOT</version>
   </parent>
   <groupId>org.beangle.commons</groupId>
   <artifactId>beangle-commons-parent</artifactId>
@@ -54,9 +54,9 @@
     <commoncollections.version>3.2.1</commoncollections.version>
     <commonbeanutils.version>1.8.3</commonbeanutils.version>
     <gemini.version>1.0.0.M1</gemini.version>
-    <hibernate.version>3.6.10.Final</hibernate.version>
-    <hibernate.validator.version>4.1.0.Final</hibernate.validator.version>
-    <javassist.version>3.12.0.GA</javassist.version>
+    <hibernate.version>4.1.8.Final</hibernate.version>
+    <hibernate.validator.version>4.2.0.Final</hibernate.validator.version>
+    <javassist.version>3.15.0-GA</javassist.version>
     <ehcache.version>2.5.2</ehcache.version>
     <poi.version>3.8</poi.version>
     <javax.validation.version>1.0.0.GA</javax.validation.version>
@@ -223,7 +223,7 @@
         <version>${hibernate.validator.version}</version>
       </dependency>
       <dependency>
-        <groupId>javassist</groupId>
+        <groupId>org.javassist</groupId>
         <artifactId>javassist</artifactId>
         <version>${javassist.version}</version>
       </dependency>

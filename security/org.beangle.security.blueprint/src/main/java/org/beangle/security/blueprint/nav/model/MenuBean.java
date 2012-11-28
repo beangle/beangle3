@@ -18,15 +18,18 @@
  */
 package org.beangle.security.blueprint.nav.model;
 
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Cacheable;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.entity.pojo.HierarchyLongIdObject;
+import org.beangle.commons.entity.pojo.NumberIdHierarchyObject;
 import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.function.FuncResource;
 import org.beangle.security.blueprint.nav.Menu;
@@ -42,7 +45,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity(name = "org.beangle.security.blueprint.nav.Menu")
 @Cacheable
 @Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class MenuBean extends HierarchyLongIdObject<Menu> implements Menu{
+public class MenuBean extends NumberIdHierarchyObject<Menu, Integer> implements Menu {
 
   private static final long serialVersionUID = 3864556621041443066L;
 
@@ -75,16 +78,6 @@ public class MenuBean extends HierarchyLongIdObject<Menu> implements Menu{
   @NotNull
   @ManyToOne(fetch = FetchType.LAZY)
   private MenuProfile profile;
-
-  /** 父级菜单 */
-  @ManyToOne(fetch = FetchType.LAZY)
-  private Menu parent;
-
-  /** 直接下级菜单 */
-  @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-  @Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
-  @OrderBy("code")
-  private List<Menu> children;
 
   public String getTitle() {
     return title;
@@ -140,22 +133,6 @@ public class MenuBean extends HierarchyLongIdObject<Menu> implements Menu{
 
   public void setProfile(MenuProfile profile) {
     this.profile = profile;
-  }
-
-  public Menu getParent() {
-    return parent;
-  }
-
-  public void setParent(Menu parent) {
-    this.parent = parent;
-  }
-
-  public List<Menu> getChildren() {
-    return children;
-  }
-
-  public void setChildren(List<Menu> children) {
-    this.children = children;
   }
 
   public String getDescription() {
