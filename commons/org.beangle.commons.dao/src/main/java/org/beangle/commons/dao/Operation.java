@@ -21,7 +21,6 @@ package org.beangle.commons.dao;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Arrays;
 
@@ -107,7 +106,7 @@ public class Operation {
     private List<Operation> operations = CollectUtils.newArrayList();
 
     public Builder saveOrUpdate(Collection<?> entities) {
-      if (CollectionUtils.isEmpty(entities)) { return this; }
+      if (CollectUtils.isEmpty(entities)) { return this; }
       for (Object entity : entities) {
         if (null != entity) operations.add(new Operation(OperationType.SAVE_UPDATE, entity));
       }
@@ -123,7 +122,7 @@ public class Operation {
     }
 
     public Builder remove(Collection<?> entities) {
-      if (CollectionUtils.isEmpty(entities)) { return this; }
+      if (CollectUtils.isEmpty(entities)) { return this; }
       for (Object entity : entities) {
         if (null != entity) operations.add(new Operation(OperationType.REMOVE, entity));
       }

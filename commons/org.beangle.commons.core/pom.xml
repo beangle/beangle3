@@ -13,27 +13,15 @@
   <properties>
     <bundle.symbolicName>org.beangle.commons.core</bundle.symbolicName>
     <bundle.namespace>org.beangle.commons</bundle.namespace>
-    <commonsio.version>2.2</commonsio.version>
-    <commonscodec.version>1.5</commonscodec.version>
     <commonscompress.version>1.4</commonscompress.version>
   </properties>
   
   <dependencies>
     <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>${commonscodec.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-compress</artifactId>
       <version>${commonscompress.version}</version>
       <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>${commonsio.version}</version>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>

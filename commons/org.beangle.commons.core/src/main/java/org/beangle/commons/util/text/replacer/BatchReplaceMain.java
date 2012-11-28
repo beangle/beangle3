@@ -23,11 +23,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.io.Files;
 import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,11 +78,11 @@ public class BatchReplaceMain {
     if (!new File(properties).exists()) {
       logger.info("{} not valid file or directory", properties);
     }
-    String encoding = null;
+    Charset charset = null;
     if (args.length >= 3) {
-      encoding = args[2];
+      charset = Charset.forName(args[2]);
     }
-    List<String> lines = FileUtils.readLines(new File(properties));
+    List<String> lines = Files.readLines(new File(properties));
     Map<String, List<Replacer>> profiles = CollectUtils.newHashMap();
     List<Replacer> replacers = null;
     for (String line : lines) {
@@ -103,7 +104,7 @@ public class BatchReplaceMain {
         replacers.add(pair);
       }
     }
-    replaceFile(dir, profiles, encoding);
+    replaceFile(dir, profiles, charset);
   }
 
   /**
@@ -117,16 +118,16 @@ public class BatchReplaceMain {
    * @throws java.lang.Exception if any.
    * @throws java.io.FileNotFoundException if any.
    */
-  public static void replaceFile(String fileName, final Map<String, List<Replacer>> profiles, String encoding)
+  public static void replaceFile(String fileName, final Map<String, List<Replacer>> profiles, Charset charset)
       throws Exception, FileNotFoundException {
     File file = new File(fileName);
     if (file.isFile() && !file.isHidden()) {
       List<Replacer> replacers = profiles.get(Strings.substringAfterLast(fileName, "."));
       if (null == replacers) { return; }
       logger.info("processing {}", fileName);
-      String filecontent = FileUtils.readFileToString(file, encoding);
+      String filecontent = Files.readFileToString(file, charset);
       filecontent = Replacer.process(filecontent, replacers);
-      writeToFile(filecontent, fileName, encoding);
+      writeToFile(filecontent, fileName, charset);
     } else {
       String[] subFiles = file.list(new FilenameFilter() {
         public boolean accept(File dir, String name) {
@@ -141,7 +142,7 @@ public class BatchReplaceMain {
       });
       if (null != subFiles) {
         for (int i = 0; i < subFiles.length; i++) {
-          replaceFile(fileName + '/' + subFiles[i], profiles, encoding);
+          replaceFile(fileName + '/' + subFiles[i], profiles, charset);
         }
       }
     }
@@ -151,18 +152,13 @@ public class BatchReplaceMain {
    * <p>
    * writeToFile.
    * </p>
-   * 
-   * @param str a {@link java.lang.String} object.
-   * @param fileName a {@link java.lang.String} object.
-   * @param encoding a {@link java.lang.String} object.
-   * @throws java.lang.Exception if any.
    */
-  public static void writeToFile(String str, String fileName, String encoding) throws Exception {
+  public static void writeToFile(String str, String fileName, Charset charset) throws Exception {
     OutputStreamWriter writer = null;
-    if (null == encoding) {
+    if (null == charset) {
       writer = new OutputStreamWriter(new FileOutputStream(fileName));
     } else {
-      writer = new OutputStreamWriter(new FileOutputStream(fileName), encoding);
+      writer = new OutputStreamWriter(new FileOutputStream(fileName), charset.name());
     }
     writer.write(str);
     writer.close();

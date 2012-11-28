@@ -25,8 +25,8 @@ import java.io.OutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
 import org.beangle.commons.http.mime.MimeTypeProvider;
+import org.beangle.commons.io.IOs;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.time.Stopwatch;
 
@@ -112,7 +112,7 @@ public class SplitStreamDownloader extends DefaultStreamDownloader {
     } catch (Exception e) {
       logger.warn("download file error " + attach, e);
     } finally {
-      IOUtils.closeQuietly(input);
+      IOs.close(input);
       if (logger.isDebugEnabled()) {
         String percent = null;
         if (length == 0) {

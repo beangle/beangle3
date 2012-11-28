@@ -24,7 +24,7 @@ import static org.testng.Assert.assertNotNull;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
+import org.beangle.commons.io.Files;
 import org.beangle.security.cas.validation.Assertion;
 import org.beangle.security.cas.validation.TicketValidationException;
 import org.testng.annotations.Test;
@@ -37,7 +37,7 @@ public class NeusoftCasTicketValidatorTest {
   public void testParseSuccess() throws TicketValidationException, IOException {
     File file = new File(NeusoftCasTicketValidatorTest.class.getResource("/neusoft-auth-success.xml")
         .getFile());
-    String response = FileUtils.readFileToString(file);
+    String response = Files.readFileToString(file);
     Assertion assertion = validator.parseResponseFromServer("testticket", response);
     assertNotNull(assertion);
     assertEquals(assertion.getPrincipal(), "admin");
@@ -47,7 +47,7 @@ public class NeusoftCasTicketValidatorTest {
   public void testParseFailure() throws TicketValidationException, IOException {
     File file = new File(NeusoftCasTicketValidatorTest.class.getResource("/neusoft-auth-failure.xml")
         .getFile());
-    String response = FileUtils.readFileToString(file);
+    String response = Files.readFileToString(file);
     validator.parseResponseFromServer("ticket", response);
   }
 }

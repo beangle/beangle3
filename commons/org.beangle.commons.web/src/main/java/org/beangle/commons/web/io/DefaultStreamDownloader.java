@@ -28,9 +28,9 @@ import java.net.URL;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.http.mime.MimeTypeProvider;
+import org.beangle.commons.io.IOs;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
@@ -101,11 +101,11 @@ public class DefaultStreamDownloader implements Initializing, StreamDownloader {
     try {
       response.reset();
       addContent(request, response, attach_name);
-      IOUtils.copy(inStream, response.getOutputStream());
+      IOs.copy(inStream, response.getOutputStream());
     } catch (Exception e) {
       logger.warn("download file error " + attach_name, e);
     } finally {
-      IOUtils.closeQuietly(inStream);
+      IOs.close(inStream);
     }
   }
 

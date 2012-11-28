@@ -304,4 +304,30 @@ public final class CollectUtils {
     }
     return mappings;
   }
+
+  /**
+   * Null-safe check if the specified collection is empty.
+   * <p>
+   * Null returns true.
+   * 
+   * @param coll the collection to check, may be null
+   * @return true if empty or null
+   * @since 3.1
+   */
+  public static boolean isEmpty(Collection<?> coll) {
+    return (coll == null || coll.isEmpty());
+  }
+
+  /**
+   * Null-safe check if the specified collection is not empty.
+   * <p>
+   * Null returns false.
+   * 
+   * @param coll the collection to check, may be null
+   * @return true if non-null and non-empty
+   * @since 3.1
+   */
+  public static boolean isNotEmpty(Collection<?> coll) {
+    return null != coll && !coll.isEmpty();
+  }
 }

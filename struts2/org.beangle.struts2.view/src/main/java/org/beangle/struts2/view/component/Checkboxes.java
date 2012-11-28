@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.collections.CollectionUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
 
@@ -93,7 +92,7 @@ public class Checkboxes extends UIBean {
       checkboxes[i].setTitle(String.valueOf(((Map<?, ?>) items).get(key)));
       checkboxes[i].setValue(key);
       checkboxes[i].setId(Strings.concat(this.id + "_" + String.valueOf(i)));
-      if (CollectionUtils.isNotEmpty(values) && values.contains(key)) {
+      if (CollectUtils.isNotEmpty(values) && values.contains(key)) {
         checkboxes[i].setChecked(true);
       }
       checkboxes[i].evaluateParams();

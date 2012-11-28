@@ -22,7 +22,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
 import org.beangle.commons.collection.page.PageLimit;
@@ -327,7 +326,7 @@ public class SqlQuery extends AbstractQuery<Object> {
       }
       buf.deleteCharAt(buf.length() - 1);
     }
-    if (hasOrder && !CollectionUtils.isEmpty(orders)) {
+    if (hasOrder && !CollectUtils.isEmpty(orders)) {
       buf.append(' ').append(Order.toSortString(orders));
     }
     return buf.toString();

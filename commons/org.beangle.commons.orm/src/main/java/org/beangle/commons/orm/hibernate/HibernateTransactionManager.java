@@ -113,10 +113,6 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
    * SessionFactoryBean with a specified "dataSource", the DataSource will be auto-detected: You can
    * still explictly specify the DataSource, but you don't need to in this case.
    * <p>
-   * A transactional JDBC Connection for this DataSource will be provided to application code
-   * accessing this DataSource directly via DataSourceUtils or JdbcTemplate. The Connection will be
-   * taken from the Hibernate Session.
-   * <p>
    * The DataSource specified here should be the target DataSource to manage transactions for, not a
    * TransactionAwareDataSourceProxy. Only data access code may work with
    * TransactionAwareDataSourceProxy, while the transaction manager needs to work on the underlying

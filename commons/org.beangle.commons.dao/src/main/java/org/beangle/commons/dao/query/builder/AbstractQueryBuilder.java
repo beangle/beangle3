@@ -21,7 +21,6 @@ package org.beangle.commons.dao.query.builder;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
 import org.beangle.commons.collection.page.PageLimit;
@@ -181,7 +180,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
         buf.append(groupBy).append(',');
       buf.deleteCharAt(buf.length() - 1);
     }
-    if (hasOrder && !CollectionUtils.isEmpty(orders)) buf.append(' ').append(Order.toSortString(orders));
+    if (hasOrder && !CollectUtils.isEmpty(orders)) buf.append(' ').append(Order.toSortString(orders));
 
     if (null != having) buf.append(" having ").append(having);
     return buf.toString();
