@@ -30,8 +30,6 @@ import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.function.FuncResource;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 系统功能资源
@@ -47,7 +45,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.function.FuncResource")
 @Cacheable
-@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class FuncResourceBean extends IntegerIdObject implements FuncResource {
   private static final long serialVersionUID = -8285208615351119572L;
 

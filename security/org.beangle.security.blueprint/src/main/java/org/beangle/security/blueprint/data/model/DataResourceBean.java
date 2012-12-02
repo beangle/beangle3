@@ -33,8 +33,6 @@ import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.commons.lang.Objects;
 import org.beangle.security.blueprint.data.DataField;
 import org.beangle.security.blueprint.data.DataResource;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 系统数据资源
@@ -44,7 +42,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.data.DataResource")
 @Cacheable
-@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class DataResourceBean extends IntegerIdObject implements DataResource {
   private static final long serialVersionUID = -8285208615351119572L;
 

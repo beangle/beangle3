@@ -2,17 +2,17 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-	<bean id="BeangleSpringConfigProcessor"
-		class="org.beangle.commons.context.spring.SpringConfigProcessor">
-		<property name="reconfigResources">
-			<bean class="org.beangle.commons.context.spring.SpringResources">
-				<property name="locations" value="classpath*:spring-config-test.xml" />
-			</bean>
-		</property>
-	</bean>
+  <bean id="BeangleSpringConfigProcessor"
+    class="org.beangle.commons.context.spring.SpringConfigProcessor">
+    <property name="reconfigResources">
+      <bean class="org.beangle.commons.context.spring.SpringResources">
+        <property name="locations" value="classpath*:spring-config-test.xml" />
+      </bean>
+    </property>
+  </bean>
 
-	<import resource="classpath*:META-INF/spring/*.xml" />
-	<import resource="classpath*:META-INF/spring-test/*.xml" />
-	<import resource="classpath*:META-INF/spring-override/*.xml" />
-	<import resource="classpath*:spring-local.xml" />
+  <import resource="classpath*:META-INF/spring/*.xml" />
+  <import resource="classpath*:META-INF/spring-test/*.xml" />
+  <import resource="classpath*:META-INF/spring-override/*.xml" />
+  <import resource="classpath*:spring-local.xml" />
 </beans>

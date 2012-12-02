@@ -30,8 +30,6 @@ import org.beangle.commons.entity.pojo.NumberIdHierarchyObject;
 import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 角色信息
@@ -41,7 +39,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.Role")
 @Cacheable
-@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements Role {
 
   private static final long serialVersionUID = -3404181949500894284L;

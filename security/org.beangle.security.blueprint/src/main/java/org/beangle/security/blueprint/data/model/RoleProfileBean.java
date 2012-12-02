@@ -35,8 +35,6 @@ import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.data.ProfileField;
 import org.beangle.security.blueprint.data.RoleProfile;
 import org.beangle.security.blueprint.data.RoleProperty;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 角色属性配置
@@ -46,7 +44,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.data.RoleProfile")
 @Cacheable
-@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RoleProfileBean extends IntegerIdObject implements RoleProfile {
 
   private static final long serialVersionUID = -9047586316477373803L;
@@ -57,7 +54,6 @@ public class RoleProfileBean extends IntegerIdObject implements RoleProfile {
 
   /** 角色自定义属性 */
   @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
-  @Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
   protected List<RoleProperty> properties = CollectUtils.newArrayList();
 
   public Principal getPrincipal() {

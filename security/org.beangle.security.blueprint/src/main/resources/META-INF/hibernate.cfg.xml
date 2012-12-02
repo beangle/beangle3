@@ -27,7 +27,20 @@
     
     <mapping class="org.beangle.security.blueprint.session.model.SessionProfileBean"/>
     
-    <collection-cache collection="org.beangle.security.blueprint.nav.Menu.children" region="beangle" usage="read-write"/>
+    <class-cache class="org.beangle.security.blueprint.data.RoleProfile" region="beangle" usage="read-write"/>
+    <class-cache class="org.beangle.security.blueprint.Role" region="beangle" usage="read-write"/>
+    <class-cache class="org.beangle.security.blueprint.data.DataField" region="beangle" usage="read-write"/>
+    <class-cache class="org.beangle.security.blueprint.data.DataPermission" region="beangle" usage="read-write"/>
+    <class-cache class="org.beangle.security.blueprint.data.DataResource" region="beangle" usage="read-write"/>
+    <class-cache class="org.beangle.security.blueprint.data.DataType" region="beangle" usage="read-write"/>
+    <class-cache class="org.beangle.security.blueprint.data.ProfileField" region="beangle" usage="read-write"/>
+    <class-cache class="org.beangle.security.blueprint.data.RoleProperty" region="beangle" usage="read-write"/>
+    <class-cache class="org.beangle.security.blueprint.function.FuncResource" region="beangle" usage="read-write"/>
+    <class-cache class="org.beangle.security.blueprint.nav.Menu" region="beangle" usage="read-write"/>
+    <class-cache class="org.beangle.security.blueprint.nav.MenuProfile" region="beangle" usage="read-write"/>
     
+    <collection-cache collection="org.beangle.security.blueprint.nav.Menu.children" region="beangle" usage="read-write"/>
+    <collection-cache collection="org.beangle.security.blueprint.data.RoleProfile.properties" region="beangle" usage="read-write"/>
+    <collection-cache collection="org.beangle.security.blueprint.nav.Menu.resources" region="beangle" usage="read-write"/>
   </session-factory>
 </hibernate-configuration>

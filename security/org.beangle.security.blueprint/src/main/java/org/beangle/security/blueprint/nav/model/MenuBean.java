@@ -34,8 +34,6 @@ import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.function.FuncResource;
 import org.beangle.security.blueprint.nav.Menu;
 import org.beangle.security.blueprint.nav.MenuProfile;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 系统菜单
@@ -44,7 +42,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.nav.Menu")
 @Cacheable
-@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MenuBean extends NumberIdHierarchyObject<Menu, Integer> implements Menu {
 
   private static final long serialVersionUID = 3864556621041443066L;
@@ -67,7 +64,6 @@ public class MenuBean extends NumberIdHierarchyObject<Menu, Integer> implements 
 
   /** 引用资源集合 */
   @ManyToMany
-  @Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
   private Set<FuncResource> resources = CollectUtils.newHashSet();
 
   /** 是否启用 */

@@ -30,8 +30,6 @@ import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.security.blueprint.data.DataField;
 import org.beangle.security.blueprint.data.DataResource;
 import org.beangle.security.blueprint.data.DataType;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * @author chaostone
@@ -39,7 +37,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.data.DataField")
 @Cacheable
-@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class DataFieldBean extends IntegerIdObject implements DataField {
 
   private static final long serialVersionUID = -8782866706523521386L;

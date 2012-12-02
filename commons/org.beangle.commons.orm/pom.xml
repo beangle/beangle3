@@ -21,7 +21,7 @@
       <groupId>org.beangle.commons</groupId>
       <artifactId>beangle-commons-dao</artifactId>
     </dependency>
-	<dependency>
+  <dependency>
       <groupId>org.beangle.commons</groupId>
       <artifactId>beangle-commons-web</artifactId>
       <optional>true</optional>

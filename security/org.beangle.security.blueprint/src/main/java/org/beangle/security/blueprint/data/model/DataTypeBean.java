@@ -25,8 +25,6 @@ import javax.validation.constraints.Size;
 
 import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.security.blueprint.data.DataType;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * @author chaostone
@@ -34,7 +32,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.data.DataType")
 @Cacheable
-@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class DataTypeBean extends IntegerIdObject implements DataType {
 
   private static final long serialVersionUID = 1440238057448114481L;

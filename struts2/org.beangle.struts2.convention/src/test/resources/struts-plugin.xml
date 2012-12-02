@@ -4,9 +4,9 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
-	<package name="org.beangle.struts2.example.action" extends="beangle" namespace="/">
-		<action name="comp" class="org.beangle.struts2.example.action.CompareAction">
-		<result name="success">comp.ftl</result>
-		</action>
-	</package>
+  <package name="org.beangle.struts2.example.action" extends="beangle" namespace="/">
+    <action name="comp" class="org.beangle.struts2.example.action.CompareAction">
+    <result name="success">comp.ftl</result>
+    </action>
+  </package>
 </struts>

@@ -34,8 +34,6 @@ import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.nav.Menu;
 import org.beangle.security.blueprint.nav.MenuProfile;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 菜单配置
@@ -44,7 +42,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.nav.MenuProfile")
 @Cacheable
-@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class MenuProfileBean extends IntegerIdObject implements MenuProfile {
 
   private static final long serialVersionUID = 9147563981118270960L;

@@ -29,8 +29,6 @@ import javax.validation.constraints.Size;
 import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.security.blueprint.data.DataType;
 import org.beangle.security.blueprint.data.ProfileField;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 用户属性元信息
@@ -40,7 +38,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.data.ProfileField")
 @Cacheable
-@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ProfileFieldBean extends IntegerIdObject implements ProfileField {
   private static final long serialVersionUID = 1L;
 

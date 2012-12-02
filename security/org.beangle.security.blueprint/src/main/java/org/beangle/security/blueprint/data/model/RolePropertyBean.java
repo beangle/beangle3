@@ -29,8 +29,6 @@ import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.security.blueprint.data.ProfileField;
 import org.beangle.security.blueprint.data.RoleProfile;
 import org.beangle.security.blueprint.data.RoleProperty;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * 角色属性
@@ -39,7 +37,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity(name = "org.beangle.security.blueprint.data.RoleProperty")
 @Cacheable
-@Cache(region = "beangle", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RolePropertyBean extends IntegerIdObject implements RoleProperty {
   private static final long serialVersionUID = 1L;
 
