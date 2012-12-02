@@ -139,7 +139,6 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
   /**
    * This implementation creates a ServletContextResource, applying the given path
    * relative to the path of the underlying file of this resource descriptor.
-   * 
    */
   @Override
   public Resource createRelative(String relativePath) {
@@ -150,7 +149,6 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
   /**
    * This implementation returns the name of the file that this ServletContext
    * resource refers to.
-   * 
    */
   @Override
   public String getFilename() {

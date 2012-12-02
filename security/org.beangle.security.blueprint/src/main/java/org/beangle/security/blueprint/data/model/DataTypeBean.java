@@ -36,7 +36,7 @@ public class DataTypeBean extends IntegerIdObject implements DataType {
 
   private static final long serialVersionUID = 1440238057448114481L;
 
-  /**名称 */
+  /** 名称 */
   @Size(max = 50)
   protected String name;
 

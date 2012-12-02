@@ -42,7 +42,6 @@ import org.beangle.notification.NotificationSendException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class JavaMailSender implements MailSender {
 
   protected static final Logger logger = LoggerFactory.getLogger(JavaMailSender.class);

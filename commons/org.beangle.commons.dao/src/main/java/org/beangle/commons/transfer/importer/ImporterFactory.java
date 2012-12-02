@@ -35,7 +35,7 @@ import org.beangle.commons.transfer.io.TransferFormat;
  */
 public final class ImporterFactory {
 
-  public static final  EntityImporter getEntityImporter(TransferFormat format, InputStream is, Class<?> clazz,
+  public static final EntityImporter getEntityImporter(TransferFormat format, InputStream is, Class<?> clazz,
       Map<String, Object> params) {
     EntityImporter importer = new DefaultEntityImporter(clazz);
     if (format.equals(TransferFormat.Xls)) {

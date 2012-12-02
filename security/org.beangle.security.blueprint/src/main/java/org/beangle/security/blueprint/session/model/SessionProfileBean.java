@@ -68,7 +68,8 @@ public class SessionProfileBean extends IntegerIdObject implements CategoryProfi
    * @param userMaxSessions
    * @param inactiveInterval
    */
-  public SessionProfileBean(Integer id, String category, int capacity, int userMaxSessions, int inactiveInterval) {
+  public SessionProfileBean(Integer id, String category, int capacity, int userMaxSessions,
+      int inactiveInterval) {
     super();
     this.id = id;
     this.role = new RoleBean(null, category);

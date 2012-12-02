@@ -36,7 +36,7 @@ public class SplitStreamDownloaderTest {
   public void download() throws Exception {
     MockHttpServletRequest request = new MockHttpServletRequest();
     MockHttpServletResponse response = new MockHttpServletResponse();
-    URL testDoc = ClassLoaders.getResource("download.txt",getClass());
+    URL testDoc = ClassLoaders.getResource("download.txt", getClass());
     streamDownloader.download(request, response, testDoc, null);
     Assert.assertEquals(response.getStatus(), 200);
     Assert.assertEquals(response.getHeader("Accept-Ranges"), "bytes");

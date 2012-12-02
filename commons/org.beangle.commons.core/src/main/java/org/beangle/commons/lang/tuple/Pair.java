@@ -35,7 +35,7 @@ import org.beangle.commons.lang.Objects;
 public class Pair<L, R> implements Map.Entry<L, R>, Serializable {
 
   private static final long serialVersionUID = -7643900124010501814L;
-  
+
   /** Left object */
   public final L left;
   /** Right object */
@@ -70,7 +70,6 @@ public class Pair<L, R> implements Map.Entry<L, R>, Serializable {
     this.left = left;
     this.right = right;
   }
-
 
   public L getLeft() {
     return left;

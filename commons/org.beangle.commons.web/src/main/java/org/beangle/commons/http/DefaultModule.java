@@ -23,9 +23,7 @@ import org.beangle.commons.context.spring.SpringResources;
 import org.beangle.commons.http.mime.MimeTypeProvider;
 
 /**
- * 
  * @author chaostone
- *
  */
 public class DefaultModule extends AbstractBindModule {
 

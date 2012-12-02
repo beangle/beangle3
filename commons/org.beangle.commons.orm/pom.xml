@@ -9,13 +9,13 @@
   <artifactId>beangle-commons-orm</artifactId>
   <packaging>jar<!--bundle--></packaging>
   <name>Beangle Commons Orm</name>
-  
+
   <properties>
     <bundle.symbolicName>org.beangle.commons.orm</bundle.symbolicName>
     <bundle.namespace>org.beangle.commons.orm</bundle.namespace>
     <jta.version>1.1</jta.version>
   </properties>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.beangle.commons</groupId>
@@ -25,7 +25,7 @@
       <groupId>org.beangle.commons</groupId>
       <artifactId>beangle-commons-web</artifactId>
       <optional>true</optional>
-    </dependency>    
+    </dependency>
     <dependency>
       <groupId>javax.transaction</groupId>
       <artifactId>jta</artifactId>

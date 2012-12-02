@@ -101,8 +101,8 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
   }
 
   protected void initReloadClassLoader() {
-    if (isReloadEnabled() && reloadingClassLoader == null) reloadingClassLoader = new ReloadingClassLoader(
-        getClassLoader());
+    if (isReloadEnabled() && reloadingClassLoader == null)
+      reloadingClassLoader = new ReloadingClassLoader(getClassLoader());
   }
 
   protected ClassLoader getClassLoader() {
@@ -118,7 +118,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
       if (profile.isActionScan()) actionPackages.add(profile.getActionPattern());
     }
     if (actionPackages.isEmpty()) { return; }
-    
+
     initReloadClassLoader();
     Map<String, PackageConfig.Builder> packageConfigs = new HashMap<String, PackageConfig.Builder>();
     int newActions = 0;
@@ -145,8 +145,8 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
     else {
       ClassLoaderInterface classLoaderInterface = null;
       ActionContext ctx = ActionContext.getContext();
-      if (ctx != null) classLoaderInterface = (ClassLoaderInterface) ctx
-          .get(ClassLoaderInterface.CLASS_LOADER_INTERFACE);
+      if (ctx != null)
+        classLoaderInterface = (ClassLoaderInterface) ctx.get(ClassLoaderInterface.CLASS_LOADER_INTERFACE);
       return (ClassLoaderInterface) Objects.defaultIfNull(classLoaderInterface,
           new ClassLoaderInterfaceDelegate(getClassLoader()));
     }

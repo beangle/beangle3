@@ -29,7 +29,7 @@ import org.beangle.security.blueprint.data.service.UserDataProvider;
 public class SqlDataProvider extends BaseServiceImpl implements UserDataProvider {
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> getData(ProfileField field, String source,Object... keys) {
+  public <T> List<T> getData(ProfileField field, String source, Object... keys) {
     try {
       return (List<T>) entityDao.search(SqlBuilder.sql(source));
     } catch (Exception e) {

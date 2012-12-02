@@ -8,12 +8,12 @@
   <artifactId>beangle-security-blueprint</artifactId>
   <packaging>jar<!--bundle--></packaging>
   <name>Beangle Security Blueprint</name>
-  
+
   <properties>
     <bundle.symbolicName>org.beangle.security.blueprint</bundle.symbolicName>
     <bundle.namespace>org.beangle.security.blueprint</bundle.namespace>
   </properties>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.beangle.security</groupId>

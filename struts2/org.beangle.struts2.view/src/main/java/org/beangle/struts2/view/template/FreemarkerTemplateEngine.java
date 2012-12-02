@@ -105,7 +105,7 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
    */
   private Template getTemplate(String templateName) throws ParseException {
     try {
-      return config.getTemplate(templateName,"UTF-8");
+      return config.getTemplate(templateName, "UTF-8");
     } catch (ParseException e) {
       throw e;
     } catch (IOException e) {

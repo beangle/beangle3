@@ -8,7 +8,7 @@
   <artifactId>beangle-security-core</artifactId>
   <packaging>jar<!--bundle--></packaging>
   <name>Beangle Security Core</name>
-  
+
   <properties>
     <bundle.symbolicName>org.beangle.security</bundle.symbolicName>
     <bundle.namespace>org.beangle.security</bundle.namespace>

@@ -20,7 +20,7 @@ package org.beangle.commons.entity.metadata;
 
 import org.beangle.commons.entity.pojo.IntegerIdObject;
 
-public class ContractInfo extends IntegerIdObject{
+public class ContractInfo extends IntegerIdObject {
 
   private static final long serialVersionUID = 1107093259619325625L;
 

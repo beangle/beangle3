@@ -73,7 +73,8 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
 
   private boolean hibernateManagedSession = false;
 
-  private static final Logger logger =LoggerFactory.getLogger(HibernateTransactionManager.class);
+  private static final Logger logger = LoggerFactory.getLogger(HibernateTransactionManager.class);
+
   /**
    * Create a new HibernateTransactionManager instance.
    * A SessionFactory has to be set to be able to use it.
@@ -232,8 +233,8 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
     }
     // add by duantihua since 3.0.1
     else {
-      if (SessionUtils.isEnableThreadBinding()) txObject.setSessionHolder(SessionUtils
-          .openSession(getSessionFactory()));
+      if (SessionUtils.isEnableThreadBinding())
+        txObject.setSessionHolder(SessionUtils.openSession(getSessionFactory()));
     }
 
     if (getDataSource() != null) {

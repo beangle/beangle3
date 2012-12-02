@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <bean id="spring.common.test" class="org.beangle.commons.context.testbean.TestModule"/>
-  
+
   <bean id="baseTransactionProxy" class="org.beangle.commons.context.testbean.ProxyFactoryBean"
     abstract="true">
   </bean>

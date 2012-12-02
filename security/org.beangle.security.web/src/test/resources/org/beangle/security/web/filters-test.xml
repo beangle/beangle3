@@ -2,14 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-  
+
   <bean id="mockFilter" class="org.beangle.commons.web.filter.MockFilter"/>
-  
+
   <bean id="mockFilter2" class="org.beangle.commons.web.filter.MockFilter"/>
-  
+
   <!-- These are just here so we have filters of a specfic type to check the ordering is as expected -->
   <bean id="sif" class="org.beangle.security.web.context.HttpSessionContextFilter"/>
-  
+
   <bean id="apf" class="org.beangle.security.web.auth.UsernamePasswordAuthFilter">
     <property name="defaultTargetUrl" value="/whocares"/>
     <property name="authenticationFailureUrl" value="/whocares2"/>
@@ -19,7 +19,7 @@
     </property>
     -->
   </bean>
-  
+
   <bean id="filterChain" class="org.beangle.security.web.FilterChainProxy">
     <property name="filterChainMap">
       <map>
@@ -68,7 +68,7 @@
       </map>
     </property>
   </bean>
-  
+
   <bean id="newFilterChainProxyNoDefaultPath" class="org.beangle.security.web.FilterChainProxy">
     <property name="filterChainMap">
       <map>

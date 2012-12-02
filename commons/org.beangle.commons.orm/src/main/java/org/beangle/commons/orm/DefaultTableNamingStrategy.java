@@ -135,7 +135,6 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
 
   /**
    * is Multiple schema for entity
-   * 
    */
   public boolean isMultiSchema() {
     Set<String> schemas = CollectUtils.newHashSet();

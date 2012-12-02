@@ -18,7 +18,6 @@
  */
 package org.beangle.commons.lang;
 
-
 public final class Numbers {
 
   /**

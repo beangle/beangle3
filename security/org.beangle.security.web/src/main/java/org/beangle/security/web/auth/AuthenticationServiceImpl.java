@@ -64,7 +64,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     if (interval.isDefined()) request.getSession(true).setMaxInactiveInterval(interval.get() * 60);
     SecurityContextHolder.getContext().setAuthentication(authRequest);
     return authRequest;
-    
+
   }
 
   public boolean logout(HttpServletRequest request, HttpServletResponse response) {

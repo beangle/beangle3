@@ -38,6 +38,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Default Stream Downloader
+ * 
  * @author chaostone
  * @since 2.4
  */

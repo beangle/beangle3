@@ -8,12 +8,12 @@
   <artifactId>beangle-security-web</artifactId>
   <packaging>jar<!--bundle--></packaging>
   <name>Beangle Security Web</name>
-  
+
   <properties>
     <bundle.symbolicName>org.beangle.security.web</bundle.symbolicName>
     <bundle.namespace>org.beangle.security.web</bundle.namespace>
   </properties>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.beangle.security</groupId>

@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
  * @version $Id: FlashEntity.java Jul 1, 2011 8:39:49 AM chaostone $
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 public @interface FlashEntity {
 
 }

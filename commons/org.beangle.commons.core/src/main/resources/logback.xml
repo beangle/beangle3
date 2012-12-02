@@ -9,10 +9,10 @@
     <appender-ref ref="STDOUT" />
   </root>
   <!--
-  <logger name="org.hibernate" level="WARN">  
+  <logger name="org.hibernate" level="WARN">
     <appender-ref ref="STDOUT" />
   </logger>
-  <logger name="org.apache.struts2" level="WARN">  
+  <logger name="org.apache.struts2" level="WARN">
     <appender-ref ref="STDOUT" />
   </logger>
   -->

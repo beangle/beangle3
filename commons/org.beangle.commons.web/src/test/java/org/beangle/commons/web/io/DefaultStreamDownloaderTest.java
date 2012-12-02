@@ -37,7 +37,7 @@ public class DefaultStreamDownloaderTest {
   public void download() {
     MockHttpServletRequest request = new MockHttpServletRequest();
     MockHttpServletResponse response = new MockHttpServletResponse();
-    URL testDoc = ClassLoaders.getResource("download.txt",getClass());
+    URL testDoc = ClassLoaders.getResource("download.txt", getClass());
     streamDownloader.download(request, response, testDoc, null);
   }
 

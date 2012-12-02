@@ -50,7 +50,6 @@ public interface TableNamingStrategy {
 
   /**
    * Mapped in multischema?
-   * 
    */
   boolean isMultiSchema();
 

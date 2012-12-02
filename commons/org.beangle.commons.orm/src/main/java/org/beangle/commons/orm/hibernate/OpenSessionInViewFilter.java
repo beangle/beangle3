@@ -55,7 +55,7 @@ public class OpenSessionInViewFilter extends OncePerRequestFilter implements Laz
       throws ServletException, IOException {
     if (firstEnter(request)) {
       SessionUtils.enableThreadBinding();
-      //SessionUtils.openSession(sessionFactory);
+      // SessionUtils.openSession(sessionFactory);
       try {
         chain.doFilter(request, response);
       } finally {

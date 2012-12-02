@@ -35,15 +35,15 @@ public abstract class Event extends EventObject {
   /** System time when the event happened */
   private final long timestamp;
 
-  /**event subject*/
+  /** event subject */
   private String subject;
 
-  /**event details*/
+  /** event details */
   private String detail;
-  
-  /**resource where the event happened*/
+
+  /** resource where the event happened */
   private String resource;
-  
+
   /**
    * Create a new ApplicationEvent.
    * 

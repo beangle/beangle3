@@ -24,9 +24,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Logger Entity 
+ * Logger Entity
+ * 
  * @author chaostone
- *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE })

@@ -58,7 +58,7 @@ public class UrlPropertyConfigProvider implements PropertyConfig.Provider {
           populateConfigItems(properties, url);
         }
       }
-      
+
       if (null != resources.getUser()) populateConfigItems(properties, resources.getUser());
       return properties;
     } catch (Exception e) {

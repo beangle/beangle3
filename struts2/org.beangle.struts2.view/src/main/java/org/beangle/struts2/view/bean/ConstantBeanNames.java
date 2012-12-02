@@ -29,7 +29,7 @@ public final class ConstantBeanNames {
   public static final String GeneratorName = "UIIdGenerator";
 
   public static final String UrlRenderName = "urlRender";
-  
+
   public static final String TextResourceName = "textResource";
-  
+
 }

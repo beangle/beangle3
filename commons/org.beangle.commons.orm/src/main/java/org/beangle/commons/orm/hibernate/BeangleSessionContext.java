@@ -96,8 +96,8 @@ class SessionSynchronization implements TransactionSynchronization, Ordered {
   }
 
   public int getOrder() {
-//    return SessionFactoryUtils.SESSION_SYNCHRONIZATION_ORDER;
-    return 1000-100;
+    // return SessionFactoryUtils.SESSION_SYNCHRONIZATION_ORDER;
+    return 1000 - 100;
   }
 
   public void suspend() {

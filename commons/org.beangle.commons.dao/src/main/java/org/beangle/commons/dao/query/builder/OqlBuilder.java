@@ -501,7 +501,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
         countString.append(genQueryStr.substring(indexOfDistinct, indexOfFrom)).append(") ");
       }
     }
-    
+
     int orderIdx = genQueryStr.lastIndexOf(" order ");
     if (-1 == orderIdx) orderIdx = genQueryStr.length();
     countString.append(genQueryStr.substring(indexOfFrom, orderIdx));

@@ -130,7 +130,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
     }
   }
 
-  public <T> List<T> getData(ProfileField property, String source,Object... keys) {
+  public <T> List<T> getData(ProfileField property, String source, Object... keys) {
     return unmarshal(property, source);
   }
 

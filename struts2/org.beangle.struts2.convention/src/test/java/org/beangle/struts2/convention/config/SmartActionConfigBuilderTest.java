@@ -73,7 +73,7 @@ public class SmartActionConfigBuilderTest {
     SmartActionConfigBuilder builder = new SmartActionConfigBuilder(configuration, mockContainer, of);
     builder.setActionBuilder(actionNameBuilder);
     builder.setRegistry(new DefaultTextBundleRegistry());
-    
+
     builder.buildActionConfigs();
     Set<String> names = configuration.getPackageConfigNames();
     for (String a : names) {

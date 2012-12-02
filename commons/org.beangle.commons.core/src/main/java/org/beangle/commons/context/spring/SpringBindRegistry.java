@@ -116,7 +116,7 @@ public class SpringBindRegistry implements BindRegistry {
   }
 
   /**
-   * Get bean name list according given type 
+   * Get bean name list according given type
    */
   public List<String> getBeanNames(Class<?> type) {
     if (typeNames.containsKey(type)) { return typeNames.get(type); }

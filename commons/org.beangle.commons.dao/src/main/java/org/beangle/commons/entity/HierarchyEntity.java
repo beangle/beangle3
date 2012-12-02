@@ -21,7 +21,6 @@ package org.beangle.commons.entity;
 import java.io.Serializable;
 import java.util.List;
 
-
 /**
  * <p>
  * HierarchyEntity interface.

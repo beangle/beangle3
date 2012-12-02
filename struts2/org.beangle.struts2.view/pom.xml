@@ -9,11 +9,11 @@
   <artifactId>beangle-struts2-view</artifactId>
   <packaging>jar<!--bundle--></packaging>
   <name>Beangle Struts2 View</name>
-  
+
   <properties>
     <bundle.symbolicName>org.beangle.struts2.view</bundle.symbolicName>
   </properties>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.beangle.struts2</groupId>

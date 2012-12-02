@@ -9,13 +9,13 @@
   <artifactId>beangle-commons-web</artifactId>
   <packaging>jar<!--bundle--></packaging>
   <name>Beangle Commons Web</name>
-  
+
   <properties>
     <bundle.symbolicName>org.beangle.commons.web</bundle.symbolicName>
     <bundle.namespace>org.beangle.commons.web</bundle.namespace>
     <commonscodec.version>1.5</commonscodec.version>
   </properties>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.beangle.commons</groupId>

@@ -152,8 +152,8 @@ public class BeangleObjectFactory extends ObjectFactory {
   @Override
   public Object buildBean(Class clazz, Map<String, Object> extraContext) throws Exception {
     Object bean = clazz.newInstance();
-    if (bean instanceof ApplicationContextAware) ((ApplicationContextAware) bean)
-        .setApplicationContext(appContext);
+    if (bean instanceof ApplicationContextAware)
+      ((ApplicationContextAware) bean).setApplicationContext(appContext);
     bean = injectInternalBeans(bean);
     return bean;
   }

@@ -28,31 +28,26 @@ public interface CategoryProfile {
 
   /**
    * Distingish indentifier
-   * 
    */
   Integer getId();
 
   /**
    * User cateogory
-   * 
    */
   String getCategory();
 
   /**
    * Whole capacity for a category user
-   * 
    */
   int getCapacity();
 
   /**
    * Max session for same account
-   * 
    */
   int getUserMaxSessions();
 
   /**
    * Max inactiveInterval in minutes
-   * 
    */
   int getInactiveInterval();
 

@@ -24,7 +24,7 @@ import org.beangle.commons.entity.Entity;
  * @author chaostone
  * @since 3.0.0
  */
-public interface DataField extends Entity<Integer>{
+public interface DataField extends Entity<Integer> {
 
   String getName();
 

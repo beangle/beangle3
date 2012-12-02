@@ -85,7 +85,7 @@ public class Select extends ClosingUIBean {
         return value.equals(obj)
             || value.equals(String.valueOf(PropertyUtils.getSimpleProperty(obj, keyName)));
       } else {
-        //FIXME when obj is map
+        // FIXME when obj is map
         return value.equals(obj) || value.equals(PropertyUtils.getSimpleProperty(obj, keyName));
       }
     } catch (Exception e) {

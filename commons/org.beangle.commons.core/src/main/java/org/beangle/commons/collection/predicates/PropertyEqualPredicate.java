@@ -30,7 +30,7 @@ import org.beangle.commons.lang.Throwables;
  * @author chaostone
  * @version $Id: $
  */
-public class PropertyEqualPredicate implements Predicate{
+public class PropertyEqualPredicate implements Predicate {
   private String propertyName;
   private Object propertyValue;
 

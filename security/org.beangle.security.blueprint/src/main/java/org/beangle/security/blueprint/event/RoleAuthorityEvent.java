@@ -31,6 +31,6 @@ public class RoleAuthorityEvent extends RoleEvent {
 
   public RoleAuthorityEvent(Role role) {
     super(role);
-    setSubject(Securities.getUsername() +" 更改了" + getRole().getName() + "的权限");
+    setSubject(Securities.getUsername() + " 更改了" + getRole().getName() + "的权限");
   }
 }

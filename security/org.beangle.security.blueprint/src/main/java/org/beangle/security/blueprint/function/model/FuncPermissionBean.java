@@ -40,8 +40,7 @@ import org.beangle.security.blueprint.function.FuncResource;
  * @author dell,chaostone 2005-9-26
  */
 @Entity(name = "org.beangle.security.blueprint.function.model.FuncPermissionBean")
-public class FuncPermissionBean extends IntegerIdObject implements TemporalEntity,
-    FuncPermission {
+public class FuncPermissionBean extends IntegerIdObject implements TemporalEntity, FuncPermission {
 
   private static final long serialVersionUID = -8956079356245507990L;
 
@@ -59,7 +58,7 @@ public class FuncPermissionBean extends IntegerIdObject implements TemporalEntit
   /** 授权的操作 */
   protected String actions;
 
-  @Size(max=200)
+  @Size(max = 200)
   /** 访问检查器 */
   protected String restrictions;
 
@@ -69,10 +68,10 @@ public class FuncPermissionBean extends IntegerIdObject implements TemporalEntit
   /** 失效时间 */
   protected Date invalidAt;
 
-  /**备注*/
+  /** 备注 */
   @Size(max = 100)
   protected String remark;
-  
+
   public FuncPermissionBean() {
     super();
   }

@@ -61,7 +61,6 @@ public class DefaultPropertyExtractorTest {
     System.out.println("1000 extract using" + watch);
   }
 
-
   private void extract(PropertyExtractor extractor) throws Exception {
     List<Object> datas = CollectUtils.newArrayList();
     Float age = new Float(22);

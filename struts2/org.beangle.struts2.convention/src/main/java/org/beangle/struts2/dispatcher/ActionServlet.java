@@ -67,7 +67,7 @@ public class ActionServlet extends HttpServlet {
     try {
       prepare.createActionContext(request, response);
       prepare.assignDispatcherToThread();
-      //prepare.setEncodingAndLocale(request, response);
+      // prepare.setEncodingAndLocale(request, response);
       HttpServletRequest oldRequest = request;
       request = prepare.wrapRequest(request);
       // Dislike Struts2 optimization for jstl .It delegate request.getAttribute to ongl valuestack.

@@ -39,5 +39,4 @@ public class SimpleCategoryProfileProvider implements CategoryProfileProvider {
     return null;
   }
 
-  
 }

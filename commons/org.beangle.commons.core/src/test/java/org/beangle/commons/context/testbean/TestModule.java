@@ -27,16 +27,15 @@ public class TestModule extends AbstractBindModule {
   @Override
   protected void doBinding() {
     bind(SomeAction.class).in(Scope.PROTOTYPE);
-    bind(UserLdapProvider.class,UserDaoProvider.class).shortName();
+    bind(UserLdapProvider.class, UserDaoProvider.class).shortName();
     bind(TestService.class).shortName();
 
     bind(ProviderManager.class).property("providers", listref(UserDaoProvider.class));
-    
+
     bind(SpringResourcesConsumer.class).property(
         "resources",
-        bean(SpringResources.class)
-            .property("locations", "classpath*:META-INF/beangle/table.properties").property("users",
-                "classpath*:beangle/table.properties"));
+        bean(SpringResources.class).property("locations", "classpath*:META-INF/beangle/table.properties")
+            .property("users", "classpath*:beangle/table.properties"));
   }
 
 }

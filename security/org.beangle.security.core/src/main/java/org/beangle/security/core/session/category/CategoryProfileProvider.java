@@ -29,6 +29,6 @@ import java.util.List;
 public interface CategoryProfileProvider {
 
   List<? extends CategoryProfile> getProfiles();
-  
+
   CategoryProfile getProfile(String category);
 }

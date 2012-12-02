@@ -23,6 +23,7 @@ import static org.testng.Assert.assertEquals;
 import org.beangle.security.blueprint.function.service.FuncPermissionService;
 import org.beangle.security.blueprint.function.service.internal.FuncPermissionServiceImpl;
 import org.testng.annotations.Test;
+
 @Test
 public class PermissionServiceImplTest {
 

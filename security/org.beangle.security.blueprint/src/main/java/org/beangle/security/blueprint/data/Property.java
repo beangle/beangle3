@@ -18,7 +18,6 @@
  */
 package org.beangle.security.blueprint.data;
 
-
 /**
  * 属性
  * 

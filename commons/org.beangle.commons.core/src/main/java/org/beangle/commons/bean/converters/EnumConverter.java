@@ -26,8 +26,8 @@ import org.apache.commons.beanutils.Converter;
  */
 public class EnumConverter implements Converter {
 
-  public static EnumConverter Instance= new EnumConverter();
-  
+  public static EnumConverter Instance = new EnumConverter();
+
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object convert(Class type, Object value) {
     if (value == null) {

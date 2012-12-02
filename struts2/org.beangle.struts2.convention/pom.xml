@@ -9,7 +9,7 @@
   <artifactId>beangle-struts2-convention</artifactId>
   <packaging>jar<!--bundle--></packaging>
   <name>Beangle Struts2 Convention</name>
-  
+
   <properties>
     <bundle.symbolicName>org.beangle.struts2.convention</bundle.symbolicName>
   </properties>

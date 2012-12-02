@@ -9,13 +9,13 @@
   <artifactId>beangle-commons-dao</artifactId>
   <packaging>jar<!--bundle--></packaging>
   <name>Beangle Commons Dao</name>
-  
+
   <properties>
     <bundle.symbolicName>org.beangle.commons.dao</bundle.symbolicName>
     <bundle.namespace>org.beangle.commons.dao</bundle.namespace>
     <jxls.version>1.0</jxls.version>
   </properties>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.beangle.commons</groupId>
@@ -39,7 +39,7 @@
       <version>0.4.0</version>
       <optional>true</optional>
     </dependency>
-    
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>

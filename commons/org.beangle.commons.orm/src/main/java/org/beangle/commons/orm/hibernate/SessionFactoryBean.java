@@ -162,7 +162,7 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
     if (this.hibernateProperties != null) configuration.addProperties(this.hibernateProperties);
 
     try {
-      
+
       if (this.configLocations != null) {
         for (Resource resource : this.configLocations)
           configuration.configure(resource.getURL());

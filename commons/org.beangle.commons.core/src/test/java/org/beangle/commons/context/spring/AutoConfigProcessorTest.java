@@ -57,11 +57,12 @@ public class AutoConfigProcessorTest {
         "/org/beangle/commons/context/spring/context-auto.xml");
     // test Alias
     assertNotNull(factory.getBean(TestService.class.getName()));
-    SpringResourcesConsumer consumer=(SpringResourcesConsumer)factory.getBean(SpringResourcesConsumer.class.getName());
+    SpringResourcesConsumer consumer = (SpringResourcesConsumer) factory
+        .getBean(SpringResourcesConsumer.class.getName());
     assertNotNull(consumer);
     assertNotNull(consumer.getResources());
     System.out.println("config  advance context-auto completed using " + watch);
-    
+
   }
 
   private void testFactoryBean(ApplicationContext factory) {

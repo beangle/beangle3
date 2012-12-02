@@ -38,7 +38,8 @@ public class PropertyPredicate implements Predicate {
   }
 
   public static void main(String[] args) {
-    //List<AirPlan> plans = CollectUtils.newArrayList(new AirPlan("apache"), new AirPlan("jian10"));
-    //PropertyPredicate predicate = new PropertyPredicate("name=:name", "jian10");
+    // List<AirPlan> plans = CollectUtils.newArrayList(new AirPlan("apache"), new
+    // AirPlan("jian10"));
+    // PropertyPredicate predicate = new PropertyPredicate("name=:name", "jian10");
   }
 }

@@ -71,7 +71,7 @@ public class ConventionActionMapper extends DefaultActionMapper implements Actio
       else if (';' == c) {
         lastIdx = i;
         break;
-      }else if ('.' == c) {
+      } else if ('.' == c) {
         lastIdx = i;
         break;
       }
@@ -95,7 +95,7 @@ public class ConventionActionMapper extends DefaultActionMapper implements Actio
   public ActionMapping getMapping(HttpServletRequest request, ConfigurationManager configManager) {
     ActionMapping mapping = new ActionMapping();
     parseNameAndNamespace(RequestUtils.getServletPath(request), mapping);
-    
+
     String method = request.getParameter(MethodParam);
     if (Strings.isNotEmpty(method)) mapping.setMethod(method);
     return mapping;

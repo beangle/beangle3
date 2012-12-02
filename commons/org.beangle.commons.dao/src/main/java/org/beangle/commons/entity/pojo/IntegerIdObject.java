@@ -31,6 +31,5 @@ public class IntegerIdObject extends NumberIdObject<Integer> {
   public IntegerIdObject(Integer id) {
     super(id);
   }
-  
-  
+
 }

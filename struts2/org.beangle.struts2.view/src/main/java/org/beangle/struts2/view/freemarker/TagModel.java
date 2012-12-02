@@ -39,7 +39,6 @@ import freemarker.template.TemplateModelException;
 import freemarker.template.TemplateTransformModel;
 
 /**
- * 
  * @author chaostone
  * @since 2.0
  */

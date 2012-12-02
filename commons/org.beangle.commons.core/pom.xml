@@ -9,13 +9,13 @@
   <artifactId>beangle-commons-core</artifactId>
   <packaging>jar<!--bundle--></packaging>
   <name>Beangle Commons Core</name>
-  
+
   <properties>
     <bundle.symbolicName>org.beangle.commons.core</bundle.symbolicName>
     <bundle.namespace>org.beangle.commons</bundle.namespace>
     <commonscompress.version>1.4</commonscompress.version>
   </properties>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -61,8 +61,8 @@
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
-    
-    <dependency>
+
+      <dependency>
       <groupId>javax.validation</groupId>
       <artifactId>validation-api</artifactId>
     </dependency>

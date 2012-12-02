@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans >
-
   <bean id="hibernateConfig" >
     <property name="properties">
       <props merge="true">
@@ -9,7 +8,7 @@
       </props>
     </property>
   </bean>
-  
+
   <bean id="userService">
     <property name="someMap">
       <map>

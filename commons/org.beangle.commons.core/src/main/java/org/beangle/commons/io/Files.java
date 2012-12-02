@@ -119,8 +119,8 @@ public class Files {
     if (destFile.exists()) {
       if (destFile.isDirectory()) { throw new IOException("Destination '" + destFile
           + "' exists but is a directory"); }
-      if (!destFile.canWrite()) throw new IOException("Destination '" + destFile
-          + "' exists but is read-only");
+      if (!destFile.canWrite())
+        throw new IOException("Destination '" + destFile + "' exists but is read-only");
     }
     doCopyFile(srcFile, destFile, true);
   }
