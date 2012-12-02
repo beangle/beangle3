@@ -25,6 +25,7 @@ import org.beangle.commons.transfer.Transfer;
 import org.beangle.commons.transfer.TransferListener;
 import org.beangle.commons.transfer.TransferResult;
 import org.beangle.commons.transfer.io.Reader;
+import org.beangle.commons.transfer.io.TransferFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,7 +85,6 @@ public abstract class AbstractImporter implements Importer {
       // 预导入发生位置错误，错误信息已经记录在tr了
       return;
     }
-
     for (final TransferListener listener : listeners) {
       listener.onStart(tr);
     }
@@ -99,9 +99,7 @@ public abstract class AbstractImporter implements Importer {
         listener.onItemStart(tr);
       }
       // 如果转换前已经存在错误,则不进行转换
-      if (tr.errors() > errors) {
-        continue;
-      }
+      if (tr.errors() > errors) continue;
       // 进行转换
       transferItem();
       // 实体转换结束
@@ -109,30 +107,25 @@ public abstract class AbstractImporter implements Importer {
         listener.onItemFinish(tr);
       }
       // 如果导入过程中没有错误，将成功记录数增一
-      if (tr.errors() == errors) {
-        this.success++;
-      } else {
-        this.fail++;
-      }
+      if (tr.errors() == errors) this.success++;
+      else this.fail++;
+
       if (logger.isDebugEnabled()) {
-        logger.debug("importer item:" + getTranferIndex() + " take time:"
-            + (System.currentTimeMillis() - transferItemStart));
+        logger.debug("importer item:{} take time: {}", getTranferIndex(),
+            (System.currentTimeMillis() - transferItemStart));
       }
     }
     for (final TransferListener listener : listeners) {
       listener.onFinish(tr);
     }
-    if (logger.isDebugEnabled()) {
-      logger.debug("importer elapse:" + (System.currentTimeMillis() - transferStartAt));
-    }
+    reader.close();
+    logger.debug("importer elapse: {}", (System.currentTimeMillis() - transferStartAt));
   }
 
   /**
    * <p>
    * Getter for the field <code>fail</code>.
    * </p>
-   * 
-   * @return a int.
    */
   public int getFail() {
     return fail;
@@ -194,7 +187,7 @@ public abstract class AbstractImporter implements Importer {
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getFormat() {
+  public TransferFormat getFormat() {
     return reader.getFormat();
   }
 

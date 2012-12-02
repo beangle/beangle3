@@ -23,6 +23,7 @@ import java.util.Locale;
 import org.beangle.commons.transfer.Transfer;
 import org.beangle.commons.transfer.TransferListener;
 import org.beangle.commons.transfer.TransferResult;
+import org.beangle.commons.transfer.io.TransferFormat;
 import org.beangle.commons.transfer.io.Writer;
 
 /**
@@ -93,7 +94,7 @@ public class TemplateExporter implements Exporter {
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getFormat() {
+  public TransferFormat getFormat() {
     return writer.getFormat();
   }
 

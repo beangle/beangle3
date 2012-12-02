@@ -33,6 +33,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.engine.transaction.spi.TransactionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
@@ -71,6 +73,7 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
 
   private boolean hibernateManagedSession = false;
 
+  private static final Logger logger =LoggerFactory.getLogger(HibernateTransactionManager.class);
   /**
    * Create a new HibernateTransactionManager instance.
    * A SessionFactory has to be set to be able to use it.

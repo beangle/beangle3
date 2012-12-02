@@ -24,7 +24,7 @@ import java.io.OutputStreamWriter;
 import org.beangle.commons.csv.CsvFormat;
 import org.beangle.commons.csv.CsvWriter;
 import org.beangle.commons.transfer.io.AbstractItemWriter;
-import org.beangle.commons.transfer.io.TransferFormats;
+import org.beangle.commons.transfer.io.TransferFormat;
 
 /**
  * <p>
@@ -111,8 +111,8 @@ public class CsvItemWriter extends AbstractItemWriter {
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getFormat() {
-    return TransferFormats.CSV;
+  public TransferFormat getFormat() {
+    return TransferFormat.Csv;
   }
 
   /** {@inheritDoc} */

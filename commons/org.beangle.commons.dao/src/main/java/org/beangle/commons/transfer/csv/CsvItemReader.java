@@ -21,9 +21,10 @@ package org.beangle.commons.transfer.csv;
 import java.io.IOException;
 import java.io.LineNumberReader;
 
+import org.beangle.commons.io.IOs;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.transfer.io.ItemReader;
-import org.beangle.commons.transfer.io.TransferFormats;
+import org.beangle.commons.transfer.io.TransferFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -167,7 +168,13 @@ public class CsvItemReader implements ItemReader {
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getFormat() {
-    return TransferFormats.CSV;
+  public TransferFormat getFormat() {
+    return TransferFormat.Csv;
   }
+
+  @Override
+  public void close() {
+    IOs.close(reader);
+  }
+
 }

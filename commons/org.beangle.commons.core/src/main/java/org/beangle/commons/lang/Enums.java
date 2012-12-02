@@ -16,32 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.transfer.io;
+package org.beangle.commons.lang;
 
-/**
- * 数据读取类
- * 
- * @author chaostone
- * @version $Id: $
- */
-public interface Reader {
+public final class Enums {
 
   /**
-   * 读取数据
+   * Returns an optional enum constant for the given type, using {@link Enum#valueOf}. If the
+   * constant does not exist, {@link Option#none} is returned. A common use case is for parsing
+   * user input or falling back to a default enum constant. For example,
+   * {@code Enums.get(Country.class, countryInput).getOrElse(Country.DEFAULT);}
    * 
-   * @return a {@link java.lang.Object} object.
+   * @since 3.1
    */
-  Object read();
-
-  /**
-   * 返回读取类型的格式
-   * 
-   * @return a {@link java.lang.String} object.
-   */
-  TransferFormat getFormat();
-
-  /**
-   * 关闭
-   */
-  void close();
+  public static <T extends Enum<T>> Option<T> get(Class<T> enumClass, String value) {
+    try {
+      return Option.some(Enum.valueOf(enumClass, value));
+    } catch (IllegalArgumentException iae) {
+      return Option.none();
+    }
+  }
 }

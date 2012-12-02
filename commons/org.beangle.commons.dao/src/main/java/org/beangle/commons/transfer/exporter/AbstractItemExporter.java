@@ -27,6 +27,7 @@ import org.beangle.commons.transfer.Transfer;
 import org.beangle.commons.transfer.TransferListener;
 import org.beangle.commons.transfer.TransferResult;
 import org.beangle.commons.transfer.io.ItemWriter;
+import org.beangle.commons.transfer.io.TransferFormat;
 import org.beangle.commons.transfer.io.Writer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -219,7 +220,7 @@ public abstract class AbstractItemExporter implements Exporter {
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getFormat() {
+  public TransferFormat getFormat() {
     return writer.getFormat();
   }
 

@@ -24,11 +24,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.opensymphony.xwork2.util.ClassLoaderUtil;
 
 /**
  * @author chaostone
@@ -49,7 +48,7 @@ public abstract class AbstractTemplateEngine implements TemplateEngine {
   }
 
   private Properties loadProperties(String propName) {
-    InputStream is = ClassLoaderUtil.getResourceAsStream(propName, getClass());
+    InputStream is = ClassLoaders.getResourceAsStream(propName, getClass());
     Properties props = new Properties();
     if (is != null) {
       try {

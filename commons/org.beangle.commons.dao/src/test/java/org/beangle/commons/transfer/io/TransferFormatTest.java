@@ -18,31 +18,15 @@
  */
 package org.beangle.commons.transfer.io;
 
-/**
- * <p>
- * TransferFormats interface.
- * </p>
- * 
- * @author chaostone
- * @version $Id: $
- */
-public interface TransferFormats {
+import org.beangle.commons.lang.Enums;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
-  /** Constant <code>XLS="xls"</code> */
-  static final String XLS = "xls";
+@Test
+public class TransferFormatTest {
 
-  /** Constant <code>CSV="csv"</code> */
-  static final String CSV = "csv";
-
-  /** Constant <code>TXT="txt"</code> */
-  static final String TXT = "txt";
-
-  /** Constant <code>DBF="dbf"</code> */
-  static final String DBF = "dbf";
-
-  /** Constant <code>PDF="pdf"</code> */
-  static final String PDF = "pdf";
-
-  /** Constant <code>HTML="html"</code> */
-  static final String HTML = "html";
+  public void testValueOf() {
+    TransferFormat.valueOf("Xls").equals(TransferFormat.Xls);
+    Assert.assertFalse(Enums.get(TransferFormat.class, "Xlxs").isDefined());
+  }
 }

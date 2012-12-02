@@ -65,7 +65,7 @@ public final class ClassLoaders {
    * This method will try to load the resource using the following methods (in order):
    * <ul>
    * <li>From {@link Thread#getContextClassLoader() Thread.currentThread().getContextClassLoader()}
-   * <li>From {@link Class#getClassLoader() ClassLoaderUtil.class.getClassLoader()}
+   * <li>From {@link Class#getClassLoader() ClassLoaders.class.getClassLoader()}
    * <li>From the {@link Class#getClassLoader() callingClass.getClassLoader() }
    * </ul>
    * 
@@ -90,7 +90,7 @@ public final class ClassLoaders {
    * This method will try to load the resource using the following methods (in order):
    * <ul>
    * <li>From {@link Thread#getContextClassLoader() Thread.currentThread().getContextClassLoader()}
-   * <li>From {@link Class#getClassLoader() ClassLoaderUtil.class.getClassLoader()}
+   * <li>From {@link Class#getClassLoader() ClassLoaders.class.getClassLoader()}
    * <li>From the {@link Class#getClassLoader() callingClass.getClassLoader() }
    * </ul>
    * 

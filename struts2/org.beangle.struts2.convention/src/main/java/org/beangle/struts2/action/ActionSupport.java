@@ -352,23 +352,19 @@ public class ActionSupport implements TextResourceProvider {
   }
 
   protected final Long getId(String shortName) {
-    return getId(Long.class, shortName);
+    return getId(shortName, Long.class);
   }
 
   /**
    * Get entity's id from shortname.id,shortnameId,id
    * 
-   * @param shortName
+   * @param name
    * @param clazz
    */
-  protected final <T> T getId(Class<T> clazz, String shortName) {
-    String entityId = get(shortName + ".id");
-    if (null == entityId) {
-      entityId = get(shortName + "Id");
-    }
-    if (null == entityId) {
-      entityId = get("id");
-    }
+  protected final <T> T getId(String name, Class<T> clazz) {
+    String entityId = get(name + ".id");
+    if (null == entityId) entityId = get(name + "Id");
+    if (null == entityId) entityId = get("id");
     if (null == entityId) return null;
     else return Params.converter.convert(entityId, clazz);
   }
@@ -379,21 +375,21 @@ public class ActionSupport implements TextResourceProvider {
    * @param shortName
    */
   protected final Long[] getIds(String shortName) {
-    return getIds(Long.class, shortName);
+    return getIds(shortName, Long.class);
   }
 
   /**
    * Get entity's id array from parameters shortname.id,shortname.ids,shortnameIds
    * 
-   * @param shortName
+   * @param name
    * @param clazz
    * @return empty array if not found
    */
-  protected final <T> T[] getIds(Class<T> clazz, String shortName) {
-    T[] datas = Params.getAll(shortName + ".id", clazz);
+  protected final <T> T[] getIds(String name, Class<T> clazz) {
+    T[] datas = Params.getAll(name + ".id", clazz);
     if (null == datas) {
-      String datastring = Params.get(shortName + ".ids");
-      if (null == datastring) datastring = Params.get(shortName + "Ids");
+      String datastring = Params.get(name + ".ids");
+      if (null == datastring) datastring = Params.get(name + "Ids");
       if (null == datastring) {
         Array.newInstance(clazz, 0);
       } else {
@@ -404,7 +400,6 @@ public class ActionSupport implements TextResourceProvider {
   }
 
   // populate------------------------------------------------------------------
-
   /**
    * 将request中的参数设置到clazz对应的bean。
    * 

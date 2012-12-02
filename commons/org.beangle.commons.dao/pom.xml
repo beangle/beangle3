@@ -21,11 +21,6 @@
       <groupId>org.beangle.commons</groupId>
       <artifactId>beangle-commons-core</artifactId>
     </dependency>
-	<dependency>
-      <groupId>org.beangle.commons</groupId>
-      <artifactId>beangle-commons-web</artifactId>
-      <optional>true</optional>
-    </dependency>
     <!--transfer dependency-->
     <dependency>
       <groupId>net.sf.jxls</groupId>
@@ -36,6 +31,7 @@
     <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi</artifactId>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>com.linuxense</groupId>
@@ -49,6 +45,7 @@
       <artifactId>spring-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <!--
     <dependency>
       <groupId>com.google.collections</groupId>
       <artifactId>google-collections</artifactId>
@@ -56,6 +53,7 @@
       <optional>true</optional>
       <scope>test</scope>
     </dependency>
+    -->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>

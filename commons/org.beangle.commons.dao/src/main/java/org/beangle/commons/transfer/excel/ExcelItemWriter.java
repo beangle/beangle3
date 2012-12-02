@@ -32,7 +32,7 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.transfer.exporter.Context;
 import org.beangle.commons.transfer.io.AbstractItemWriter;
-import org.beangle.commons.transfer.io.TransferFormats;
+import org.beangle.commons.transfer.io.TransferFormat;
 
 /**
  * <p>
@@ -135,8 +135,8 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getFormat() {
-    return TransferFormats.XLS;
+  public TransferFormat getFormat() {
+    return TransferFormat.Xls;
   }
 
   /**

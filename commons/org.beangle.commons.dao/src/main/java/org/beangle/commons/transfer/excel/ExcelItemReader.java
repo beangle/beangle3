@@ -31,7 +31,7 @@ import org.apache.poi.ss.usermodel.DateUtil;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.transfer.io.ItemReader;
-import org.beangle.commons.transfer.io.TransferFormats;
+import org.beangle.commons.transfer.io.TransferFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +57,7 @@ public class ExcelItemReader implements ItemReader {
     numberFormat.setGroupingUsed(false);
   }
   /** Constant <code>sheetNum=0</code> */
-  public static final int sheetNum = 0;
+  public final int sheetNum = 0;
 
   /** 标题所在行 */
   private int headIndex;
@@ -266,8 +266,8 @@ public class ExcelItemReader implements ItemReader {
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getFormat() {
-    return TransferFormats.XLS;
+  public TransferFormat getFormat() {
+    return TransferFormat.Xls;
   }
 
   /**
@@ -306,6 +306,11 @@ public class ExcelItemReader implements ItemReader {
       this.dataIndex = dataIndex;
       this.indexInSheet = dataIndex;
     }
+  }
+
+  @Override
+  public void close() {
+    this.workbook.cloneSheet(sheetNum);
   }
 
 }

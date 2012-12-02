@@ -50,13 +50,15 @@ public class DefaultEntityImporter extends MultiEntityImporter {
    * @param entityClass a {@link java.lang.Class} object.
    */
   public DefaultEntityImporter(Class<?> entityClass) {
-    EntityType type = null;
-    if (entityClass.isInterface()) {
-      type = Model.getEntityType(entityClass.getName());
-    } else {
-      type = Model.getEntityType(entityClass);
+    if (null != entityClass) {
+      EntityType type = null;
+      if (entityClass.isInterface()) {
+        type = Model.getEntityType(entityClass.getName());
+      } else {
+        type = Model.getEntityType(entityClass);
+      }
+      entityTypes.put(alias, type);
     }
-    entityTypes.put(alias, type);
   }
 
   /** {@inheritDoc} */

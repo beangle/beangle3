@@ -20,6 +20,8 @@ package org.beangle.commons.transfer;
 
 import java.util.Locale;
 
+import org.beangle.commons.transfer.io.TransferFormat;
+
 /**
  * 导入导出数据转换器
  * 
@@ -53,7 +55,7 @@ public interface Transfer {
    * 
    * @return a {@link java.lang.String} object.
    */
-  String getFormat();
+  TransferFormat getFormat();
 
   /**
    * 转换使用的locale

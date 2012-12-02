@@ -18,60 +18,15 @@
  */
 package org.beangle.commons.transfer.io;
 
-import java.io.OutputStream;
-
-import org.beangle.commons.transfer.exporter.Context;
-
 /**
  * <p>
- * Writer interface.
+ * TransferFormats interface.
  * </p>
  * 
  * @author chaostone
  * @version $Id: $
  */
-public interface Writer {
+public enum TransferFormat {
 
-  /**
-   * <p>
-   * getFormat.
-   * </p>
-   * 
-   * @return a {@link java.lang.String} object.
-   */
-  TransferFormat getFormat();
-
-  /**
-   * <p>
-   * setContext.
-   * </p>
-   * 
-   * @param context a {@link org.beangle.commons.transfer.exporter.Context} object.
-   */
-  void setContext(Context context);
-
-  /**
-   * <p>
-   * getOutputStream.
-   * </p>
-   * 
-   * @return a {@link java.io.OutputStream} object.
-   */
-  OutputStream getOutputStream();
-
-  /**
-   * <p>
-   * setOutputStream.
-   * </p>
-   * 
-   * @param outputStream a {@link java.io.OutputStream} object.
-   */
-  void setOutputStream(OutputStream outputStream);
-
-  /**
-   * <p>
-   * close.
-   * </p>
-   */
-  void close();
+  Csv, Txt, Html, Xls, Xlsx, Pdf, Dbf;
 }

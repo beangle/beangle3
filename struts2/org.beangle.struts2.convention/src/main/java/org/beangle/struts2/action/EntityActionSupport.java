@@ -21,8 +21,6 @@ package org.beangle.struts2.action;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
@@ -43,22 +41,22 @@ import org.beangle.commons.entity.TimeEntity;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.entity.util.EntityUtils;
+import org.beangle.commons.lang.Enums;
+import org.beangle.commons.lang.Option;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.transfer.TransferListener;
 import org.beangle.commons.transfer.TransferResult;
-import org.beangle.commons.transfer.csv.CsvItemReader;
-import org.beangle.commons.transfer.excel.ExcelItemReader;
 import org.beangle.commons.transfer.exporter.Context;
 import org.beangle.commons.transfer.exporter.DefaultPropertyExtractor;
 import org.beangle.commons.transfer.exporter.Exporter;
+import org.beangle.commons.transfer.exporter.ExporterFactory;
 import org.beangle.commons.transfer.exporter.PropertyExtractor;
-import org.beangle.commons.transfer.importer.DefaultEntityImporter;
 import org.beangle.commons.transfer.importer.EntityImporter;
 import org.beangle.commons.transfer.importer.IllegalImportFormatException;
+import org.beangle.commons.transfer.importer.ImporterFactory;
 import org.beangle.commons.transfer.importer.listener.ImporterForeignerListener;
-import org.beangle.commons.transfer.io.TransferFormats;
+import org.beangle.commons.transfer.io.TransferFormat;
 import org.beangle.commons.web.util.RequestUtils;
-import org.beangle.struts2.helper.ExportHelper;
 import org.beangle.struts2.helper.Params;
 
 /**
@@ -140,10 +138,10 @@ public abstract class EntityActionSupport extends ActionSupport {
    */
   public String remove() throws Exception {
     Class<? extends Serializable> idclass = Model.getEntityType(getEntityName()).getIdType();
-    Serializable entityId = getId(idclass, getShortName());
+    Serializable entityId = getId(getShortName(), idclass);
     Collection<?> entities = null;
     if (null == entityId) {
-      entities = getModels(getEntityName(), getIds(idclass, getShortName()));
+      entities = getModels(getEntityName(), getIds(getShortName(), idclass));
     } else {
       Entity<?> entity = getModel(getEntityName(), entityId);
       entities = Collections.singletonList(entity);
@@ -163,7 +161,7 @@ public abstract class EntityActionSupport extends ActionSupport {
   }
 
   protected Entity<?> populateEntity(String entityName, String shortName) {
-    Serializable entityId = getId(Model.getEntityType(entityName).getIdType(), shortName);
+    Serializable entityId = getId(shortName, Model.getEntityType(entityName).getIdType());
     Entity<?> entity = null;
     if (null == entityId) {
       entity = (Entity<?>) populate(entityName, shortName);
@@ -191,7 +189,7 @@ public abstract class EntityActionSupport extends ActionSupport {
 
   protected Entity<?> getEntity(String entityName, String name) {
     EntityType type = Model.getEntityType(entityName);
-    Serializable entityId = getId(type.getIdType(), name);
+    Serializable entityId = getId(name, type.getIdType());
     Entity<?> entity = null;
     try {
       if (null == entityId) entity = (Entity<?>) populate(type.newInstance(), type.getEntityName(), name);
@@ -217,7 +215,7 @@ public abstract class EntityActionSupport extends ActionSupport {
    * 查看信息
    */
   public String info() throws Exception {
-    Serializable entityId = getId(Model.getEntityType(getEntityName()).getIdType(), getShortName());
+    Serializable entityId = getId(getShortName(), Model.getEntityType(getEntityName()).getIdType());
     if (null == entityId) {
       logger.warn("cannot get paremeter {}Id or {}.id", getShortName(), getShortName());
     }
@@ -302,16 +300,11 @@ public abstract class EntityActionSupport extends ActionSupport {
    * @throws Exception
    */
   public String export() throws Exception {
-    String format = get("format");
+    TransferFormat format = Enums.get(TransferFormat.class, get("format", "Csv")).getOrElse(
+        TransferFormat.Csv);
     String fileName = get("fileName");
     String template = get("template");
-    if (Strings.isBlank(format)) {
-      format = TransferFormats.XLS;
-    }
-    if (Strings.isEmpty(fileName)) {
-      fileName = "exportResult";
-    }
-
+    if (Strings.isEmpty(fileName)) fileName = "exportResult";
     // 配置导出上下文
     Context context = new Context();
     context.put("format", format);
@@ -340,10 +333,10 @@ public abstract class EntityActionSupport extends ActionSupport {
     context.put(Context.EXTRACTOR, getPropertyExtractor());
 
     HttpServletResponse response = ServletActionContext.getResponse();
-    Exporter exporter = buildExporter(context);
+    Exporter exporter = ExporterFactory.getExporter(format, context);
     exporter.getWriter().setOutputStream(response.getOutputStream());
     configExporter(exporter, context);
-    if (format.equals(TransferFormats.XLS)) {
+    if (format.equals(TransferFormat.Xls)) {
       response.setContentType("application/vnd.ms-excel;charset=GBK");
     } else {
       response.setContentType("application/x-msdownload");
@@ -362,10 +355,6 @@ public abstract class EntityActionSupport extends ActionSupport {
     return new DefaultPropertyExtractor(getTextResource());
   }
 
-  protected Exporter buildExporter(Context context) {
-    return ExportHelper.buildExporter(context);
-  }
-
   protected void configExporter(Exporter exporter, Context context) {
     context.put("items", getExportDatas());
   }
@@ -378,11 +367,9 @@ public abstract class EntityActionSupport extends ActionSupport {
    * 构建实体导入者
    */
   protected EntityImporter buildEntityImporter() {
-    if (null == getEntityName()) {
-      return buildEntityImporter("importFile", null);
-    } else {
-      return buildEntityImporter("importFile", Model.getEntityType(getEntityName()).getEntityClass());
-    }
+    if (null == getEntityName()) return buildEntityImporter("importFile", null);
+    else return buildEntityImporter("importFile", Model.getEntityType(getEntityName()).getEntityClass());
+
   }
 
   /**
@@ -409,24 +396,9 @@ public abstract class EntityActionSupport extends ActionSupport {
       }
       String fileName = get(upload + "FileName");
       InputStream is = new FileInputStream(file);
-      if (fileName.endsWith(".xls")) {
-        EntityImporter importer = (clazz == null) ? new DefaultEntityImporter() : new DefaultEntityImporter(
-            clazz);
-        importer.setReader(new ExcelItemReader(is, 1));
-        put("importer", importer);
-        return importer;
-      } else {
-        LineNumberReader reader = new LineNumberReader(new InputStreamReader(is));
-        if (null == reader.readLine()) {
-          reader.close();
-          return null;
-        }
-        reader.reset();
-        EntityImporter importer = (clazz == null) ? new DefaultEntityImporter() : new DefaultEntityImporter(
-            clazz);
-        importer.setReader(new CsvItemReader(reader));
-        return importer;
-      }
+      String formatName = Strings.capitalize(Strings.substringAfterLast(fileName, "."));
+      Option<TransferFormat> format = Enums.get(TransferFormat.class, formatName);
+      return (format.isDefined()) ? ImporterFactory.getEntityImporter(format.get(), is, clazz, null) : null;
     } catch (Exception e) {
       logger.error("error", e);
       return null;
@@ -443,6 +415,7 @@ public abstract class EntityActionSupport extends ActionSupport {
     try {
       configImporter(importer);
       importer.transfer(tr);
+      put("importer", importer);
       put("importResult", tr);
       if (tr.hasErrors()) {
         return forward("/components/importData/error");

@@ -16,28 +16,28 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.struts2.helper;
+package org.beangle.commons.transfer.exporter;
 
 import java.net.URL;
 
+import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.transfer.csv.CsvItemWriter;
 import org.beangle.commons.transfer.dbf.DBFItemWriter;
 import org.beangle.commons.transfer.excel.ExcelItemWriter;
 import org.beangle.commons.transfer.excel.ExcelTemplateWriter;
-import org.beangle.commons.transfer.exporter.Context;
-import org.beangle.commons.transfer.exporter.Exporter;
-import org.beangle.commons.transfer.exporter.SimpleEntityExporter;
-import org.beangle.commons.transfer.exporter.TemplateExporter;
-import org.beangle.commons.transfer.exporter.TemplateWriter;
-import org.beangle.commons.transfer.io.TransferFormats;
+import org.beangle.commons.transfer.io.TransferFormat;
 import org.beangle.commons.transfer.io.Writer;
 
-import com.opensymphony.xwork2.util.ClassLoaderUtil;
+/**
+ * Builder Exporter
+ * 
+ * @author chaostone
+ * @since 3.1
+ */
+public final class ExporterFactory {
 
-public class ExportHelper {
-
-  public static Exporter buildExporter(Context context) {
+  public static Exporter getExporter(TransferFormat format, Context context) {
     Exporter exporter;
     String template = context.get("template", String.class);
     if (Strings.isNotBlank(template)) {
@@ -45,19 +45,18 @@ public class ExportHelper {
     } else {
       exporter = new SimpleEntityExporter();
     }
-    exporter.setWriter(getWriter(context));
+    exporter.setWriter(getWriter(format, context));
     return exporter;
   }
 
-  public static Writer getWriter(Context context) {
-    String format = (String) context.get("format");
-    if (format.equals(TransferFormats.XLS) || format.equals("excel")) {
+  private static Writer getWriter(TransferFormat format, Context context) {
+    if (format.equals(TransferFormat.Xls) || format.equals(TransferFormat.Xlsx)) {
       String template = (String) context.get("template");
       if (Strings.isEmpty(template)) {
         return new ExcelItemWriter();
       } else {
         TemplateWriter writer = new ExcelTemplateWriter();
-        URL templateURL = ClassLoaderUtil.getResource(template, Exporter.class);
+        URL templateURL = ClassLoaders.getResource(template, Exporter.class);
         if (null == templateURL) {
           throw new RuntimeException("Empty template path!");
         } else {
@@ -65,9 +64,9 @@ public class ExportHelper {
         }
         return writer;
       }
-    } else if (format.equals(TransferFormats.CSV)) {
+    } else if (format.equals(TransferFormat.Csv)) {
       return new CsvItemWriter();
-    } else if (format.equals(TransferFormats.DBF)) {
+    } else if (format.equals(TransferFormat.Dbf)) {
       return new DBFItemWriter();
     } else {
       throw new RuntimeException(format + " is not supported(choose xls,csv,dbf)");

@@ -26,7 +26,7 @@ import net.sf.jxls.transformer.XLSTransformer;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.beangle.commons.transfer.exporter.Context;
 import org.beangle.commons.transfer.exporter.TemplateWriter;
-import org.beangle.commons.transfer.io.TransferFormats;
+import org.beangle.commons.transfer.io.TransferFormat;
 
 /**
  * <p>
@@ -76,8 +76,8 @@ public class ExcelTemplateWriter implements TemplateWriter {
    * 
    * @return a {@link java.lang.String} object.
    */
-  public String getFormat() {
-    return TransferFormats.XLS;
+  public TransferFormat getFormat() {
+    return TransferFormat.Xls;
   }
 
   /**
