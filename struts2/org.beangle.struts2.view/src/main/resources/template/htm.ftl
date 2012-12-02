@@ -30,15 +30,15 @@
 
 <!--name action-->
 <#macro actionForm entity name action extra...>
-	<form name="${name}" method="post">
-	 <#nested>
-	</form>
-	<script language="JavaScript" type="text/JavaScript" src="${base}/static/scripts/beangle/action.js"></script>
-	<script>
-	var form = document.${name};
-	action = "${action}";
-	entity ="${entity}";
-	actionQueryStr="<@queryStr/>";
-	</script>
+  <form name="${name}" method="post">
+   <#nested>
+  </form>
+  <script language="JavaScript" type="text/JavaScript" src="${base}/static/scripts/beangle/action.js"></script>
+  <script>
+  var form = document.${name};
+  action = "${action}";
+  entity ="${entity}";
+  actionQueryStr="<@queryStr/>";
+  </script>
 </#macro>
 

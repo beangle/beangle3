@@ -70,7 +70,7 @@ public class FuncResourceBean extends IntegerIdObject implements FuncResource {
   /** 资源访问范围 */
   @NotNull
   @Enumerated(value = EnumType.ORDINAL)
-  private Scope scope = Scope.PRIVATE;
+  private Scope scope = Scope.Private;
 
   /** 模块是否可用 */
   @NotNull

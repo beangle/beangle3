@@ -13,6 +13,6 @@ ${tag.body}
 </div>
 <script type="text/javascript">
 jQuery(document).ready(function () {
-	Recaptcha.create("${tag.publickey}","${tag.id}",{theme: "${(tag.buildinTheming&&tag.body?length==0)?string(tag.theming,'custom')}",callback: Recaptcha.focus_response_field});
+  Recaptcha.create("${tag.publickey}","${tag.id}",{theme: "${(tag.buildinTheming&&tag.body?length==0)?string(tag.theming,'custom')}",callback: Recaptcha.focus_response_field});
 });
 </script>

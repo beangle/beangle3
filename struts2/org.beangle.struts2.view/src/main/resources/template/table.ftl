@@ -19,25 +19,25 @@
 [/#macro]
  
 [#macro table extra...]
-	[#if extra['id']??]
-		[#assign pageId="${extra['id']}"]
-	[/#if]
-	[#if !(cssClass??)][#assign cssClass="listTable"/][/#if]
-	<table class=${cssClass} [#if (extra?size!=0)][#list extra?keys as attr]${attr}="${extra[attr]?html}" [/#list][/#if]>
-	[#nested]
-	[#if curPage?? && pageId??]
-	[@page.bar pageId=pageId curPage=curPage sortable=extra['sortable']?? headIndex=extra['headIndex']!("0") scheme=extra['pageBarScheme']!"xhtml" fixPageSize=extra['fixPageSize']!"0" target=extra['target']!"" cssClass="darkColumn"/]
-	[/#if]
-	</table>
+  [#if extra['id']??]
+    [#assign pageId="${extra['id']}"]
+  [/#if]
+  [#if !(cssClass??)][#assign cssClass="listTable"/][/#if]
+  <table class=${cssClass} [#if (extra?size!=0)][#list extra?keys as attr]${attr}="${extra[attr]?html}" [/#list][/#if]>
+  [#nested]
+  [#if curPage?? && pageId??]
+  [@page.bar pageId=pageId curPage=curPage sortable=extra['sortable']?? headIndex=extra['headIndex']!("0") scheme=extra['pageBarScheme']!"xhtml" fixPageSize=extra['fixPageSize']!"0" target=extra['target']!"" cssClass="darkColumn"/]
+  [/#if]
+  </table>
 [/#macro]
 
 [#macro tbody datas extra...]
-	<tbody>
-	[#list datas as data]
-		[#if data_index%2==1][#assign class="grayStyle"][/#if]
-		[#if data_index%2==0][#assign class="brightStyle"][/#if]
-		[@tr class="${class}"][#nested data,data_index][/@tr]
-	[/#list]
-	[#assign curPage=datas]
-	</tbody>
+  <tbody>
+  [#list datas as data]
+    [#if data_index%2==1][#assign class="grayStyle"][/#if]
+    [#if data_index%2==0][#assign class="brightStyle"][/#if]
+    [@tr class="${class}"][#nested data,data_index][/@tr]
+  [/#list]
+  [#assign curPage=datas]
+  </tbody>
 [/#macro]

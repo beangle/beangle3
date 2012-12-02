@@ -44,6 +44,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 
   // 登录入口点
   protected AuthenticationEntryPoint authenticationEntryPoint;
+
   /** 角色权限 */
   protected Map<GrantedAuthority, Set<?>> authorities = CollectUtils.newHashMap();
 
@@ -121,7 +122,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 
   /** 加载三类资源 */
   public void refreshCache() {
-    publicResources = permissionService.getResourceNamesByScope(FuncResource.Scope.PUBLIC);
+    publicResources = permissionService.getResourceNamesByScope(FuncResource.Scope.Public);
     if (null != authenticationEntryPoint && authenticationEntryPoint instanceof UrlEntryPoint) {
       UrlEntryPoint fep = (UrlEntryPoint) authenticationEntryPoint;
       String loginResource = permissionService.extractResource(fep.getLoginUrl());
@@ -129,7 +130,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
         publicResources.add(loginResource);
       }
     }
-    protectedResources = permissionService.getResourceNamesByScope(FuncResource.Scope.PROTECTED);
+    protectedResources = permissionService.getResourceNamesByScope(FuncResource.Scope.Protected);
     expired = false;
   }
 

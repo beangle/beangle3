@@ -42,11 +42,12 @@ public interface FuncResource extends Resource {
   static enum Scope {
 
     /** 不受保护的公共资源 */
-    PUBLIC(0),
+    Public(0),
     /** 受保护的公有资源 */
-    PROTECTED(1),
+    Protected(1),
     /** 受保护的私有资源 */
-    PRIVATE(2);
+    Private(2);
+
     int value;
 
     static {
