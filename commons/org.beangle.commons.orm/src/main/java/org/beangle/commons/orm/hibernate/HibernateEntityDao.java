@@ -72,7 +72,7 @@ public class HibernateEntityDao implements EntityDao {
   }
 
   @SuppressWarnings({ "unchecked" })
-  public <T> T get(Class<T> clazz, Serializable id) {
+  public <T extends Entity<ID>, ID extends Serializable> T get(Class<T> clazz, ID id) {
     return (T) get(modelMeta.getEntityType(clazz).getEntityName(), id);
   }
 
@@ -101,11 +101,11 @@ public class HibernateEntityDao implements EntityDao {
     return query.list();
   }
 
-  public <T> List<T> get(Class<T> entityClass, Number... values) {
+  public <T extends Entity<ID>, ID extends Serializable> List<T> get(Class<T> entityClass, ID[] values) {
     return get(entityClass, "id", (Object[]) values);
   }
 
-  public <T> List<T> get(Class<T> entityClass, Collection<?> values) {
+  public <T extends Entity<ID>, ID extends Serializable> List<T> get(Class<T> entityClass, Collection<ID> values) {
     return get(entityClass, "id", values.toArray());
   }
 

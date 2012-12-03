@@ -20,6 +20,7 @@ package org.beangle.struts2.action;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Collection;
@@ -263,7 +264,7 @@ public abstract class EntityActionSupport extends ActionSupport {
     return redirect("search", "info.remove.success");
   }
 
-  protected QueryBuilder<?> getQueryBuilder() {
+  protected OqlBuilder<?> getQueryBuilder() {
     OqlBuilder<?> builder = OqlBuilder.from(getEntityName(), getShortName());
     populateConditions(builder);
     builder.orderBy(get(Order.ORDER_STR)).limit(getPageLimit());
@@ -272,7 +273,6 @@ public abstract class EntityActionSupport extends ActionSupport {
 
   protected String getEntityName() {
     return null;
-    // throw new RuntimeException(this.getClass() + " should override getEntityName");
   }
 
   protected String getShortName() {
@@ -333,8 +333,7 @@ public abstract class EntityActionSupport extends ActionSupport {
     context.put(Context.EXTRACTOR, getPropertyExtractor());
 
     HttpServletResponse response = ServletActionContext.getResponse();
-    Exporter exporter = ExporterFactory.getExporter(format, context);
-    exporter.getWriter().setOutputStream(response.getOutputStream());
+    Exporter exporter = buildExporter(format, context);
     configExporter(exporter, context);
     if (format.equals(TransferFormat.Xls)) {
       response.setContentType("application/vnd.ms-excel;charset=GBK");
@@ -355,7 +354,14 @@ public abstract class EntityActionSupport extends ActionSupport {
     return new DefaultPropertyExtractor(getTextResource());
   }
 
-  protected void configExporter(Exporter exporter, Context context) {
+  protected Exporter buildExporter(TransferFormat format, Context context) throws IOException {
+    Exporter exporter = ExporterFactory.getExporter(format, context);
+    HttpServletResponse response = ServletActionContext.getResponse();
+    exporter.getWriter().setOutputStream(response.getOutputStream());
+    return exporter;
+  }
+
+  protected void configExporter(Exporter exporter, Context context) throws IOException {
     context.put("items", getExportDatas());
   }
 

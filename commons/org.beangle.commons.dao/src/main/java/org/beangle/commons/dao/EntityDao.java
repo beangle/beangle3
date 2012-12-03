@@ -45,7 +45,7 @@ public interface EntityDao {
    * @param id 唯一标识
    * @return null
    */
-  <T> T get(Class<T> clazz, Serializable id);
+  <T extends Entity<ID>, ID extends Serializable> T get(Class<T> clazz, ID id);
 
   /**
    * Returns model by identifier,null when not found.
@@ -68,7 +68,7 @@ public interface EntityDao {
    * @param entityClass
    * @param values
    */
-  <T> List<T> get(Class<T> entityClass, Number... values);
+  <T extends Entity<ID>, ID extends Serializable> List<T> get(Class<T> entityClass, ID[] values);
 
   /**
    * 根据属性列举实体
@@ -76,7 +76,7 @@ public interface EntityDao {
    * @param entityClass
    * @param values
    */
-  <T> List<T> get(Class<T> entityClass, Collection<?> values);
+  <T extends Entity<ID>, ID extends Serializable> List<T> get(Class<T> entityClass, Collection<ID> values);
 
   /**
    * 根据属性列举实体

@@ -40,11 +40,9 @@ public final class ExporterFactory {
   public static Exporter getExporter(TransferFormat format, Context context) {
     Exporter exporter;
     String template = context.get("template", String.class);
-    if (Strings.isNotBlank(template)) {
-      exporter = new TemplateExporter();
-    } else {
-      exporter = new SimpleEntityExporter();
-    }
+    if (Strings.isNotBlank(template)) exporter = new TemplateExporter();
+    else exporter = new SimpleEntityExporter();
+    
     exporter.setWriter(getWriter(format, context));
     return exporter;
   }
