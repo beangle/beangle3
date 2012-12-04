@@ -19,7 +19,7 @@
   <dependencies>
     <dependency>
       <groupId>org.beangle.commons</groupId>
-      <artifactId>beangle-commons-dao</artifactId>
+      <artifactId>beangle-commons-model</artifactId>
     </dependency>
   <dependency>
       <groupId>org.beangle.commons</groupId>

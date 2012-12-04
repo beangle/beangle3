@@ -22,9 +22,8 @@ import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
 
 /**
@@ -240,7 +239,7 @@ public class Action {
    * @see java.lang.Object#toString()
    */
   public String toString() {
-    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("namespace", namespace)
-        .append("name", name).append("method", method).append("params", params).toString();
+    return Objects.toStringBuilder(this).add("namespace", namespace).add("name", name).add("method", method)
+        .add("params", params).toString();
   }
 }

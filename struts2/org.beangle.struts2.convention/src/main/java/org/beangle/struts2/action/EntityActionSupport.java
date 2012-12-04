@@ -264,8 +264,8 @@ public abstract class EntityActionSupport extends ActionSupport {
     return redirect("search", "info.remove.success");
   }
 
-  protected OqlBuilder<?> getQueryBuilder() {
-    OqlBuilder<?> builder = OqlBuilder.from(getEntityName(), getShortName());
+  protected <T extends Entity<?>> OqlBuilder<T> getQueryBuilder() {
+    OqlBuilder<T> builder = OqlBuilder.from(getEntityName(), getShortName());
     populateConditions(builder);
     builder.orderBy(get(Order.ORDER_STR)).limit(getPageLimit());
     return builder;

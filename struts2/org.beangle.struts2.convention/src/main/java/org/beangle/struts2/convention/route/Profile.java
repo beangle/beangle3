@@ -21,9 +21,7 @@ package org.beangle.struts2.convention.route;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.lang3.builder.CompareToBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,7 +138,7 @@ public class Profile implements Comparable<Profile> {
    * 子包优先
    */
   public int compareTo(Profile other) {
-    return new CompareToBuilder().append(other.actionPattern, this.actionPattern).toComparison();
+    return other.actionPattern.compareTo(this.actionPattern);
   }
 
   /**
@@ -303,12 +301,11 @@ public class Profile implements Comparable<Profile> {
    * @see java.lang.Object#toString()
    */
   public String toString() {
-    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("name", name)
-        .append("actionPattern", actionPattern).append("actionSuffix", actionSuffix)
-        .append("actionScan", actionScan).append("viewPath", viewPath).append("viewPathStyle", viewPathStyle)
-        .append("viewExtension", viewExtension).append("uriPath", uriPath)
-        .append("uriPathStyle", uriPathStyle).append("uriExtension", uriExtension)
-        .append("defaultMethod", defaultMethod).toString();
+    return Objects.toStringBuilder(this).add("name", name).add("actionPattern", actionPattern)
+        .add("actionSuffix", actionSuffix).add("actionScan", actionScan).add("viewPath", viewPath)
+        .add("viewPathStyle", viewPathStyle).add("viewExtension", viewExtension).add("uriPath", uriPath)
+        .add("uriPathStyle", uriPathStyle).add("uriExtension", uriExtension)
+        .add("defaultMethod", defaultMethod).toString();
   }
 
 }

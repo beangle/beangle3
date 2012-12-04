@@ -21,31 +21,29 @@ package org.beangle.commons.entity;
 import java.io.Serializable;
 
 /**
- * 实体类接口
+ * Entity present a data with identifier.
  * 
  * @author chaostone
- * @version $Id: $
  */
 public interface Entity<ID extends Serializable> extends Serializable {
 
   /**
-   * 返回实体的id
-   * 
-   * @return a ID object.
+   * Return Identifier
    */
   ID getId();
 
   /**
-   * 是否是持久化对象
-   * 
-   * @return a boolean.
+   * Set new id
+   */
+  void setId(ID id);
+
+  /**
+   * Return true if persisted
    */
   boolean isPersisted();
 
   /**
-   * 是否为未持久化对象
-   * 
-   * @return a boolean.
+   * Return false if persisted
    */
   boolean isTransient();
 }

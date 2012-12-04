@@ -251,13 +251,16 @@ public class MapConverter {
    * <p>
    * getInteger.
    * </p>
-   * 
-   * @param data a {@link java.util.Map} object.
-   * @param name a {@link java.lang.String} object.
-   * @return a {@link java.lang.Integer} object.
    */
   public Integer getInteger(Map<String, Object> data, String name) {
     return get(data, name, Integer.class);
+  }
+
+  /**
+   * Get Short.
+   */
+  public Short getShort(Map<String, Object> data, String name) {
+    return get(data, name, Short.class);
   }
 
   /**

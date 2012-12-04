@@ -12,7 +12,7 @@
   
   <modules>
     <module>org.beangle.commons.core</module>
-    <module>org.beangle.commons.dao</module>
+    <module>org.beangle.commons.model</module>
     <module>org.beangle.commons.web</module>
     <module>org.beangle.commons.orm</module>
   </modules>
@@ -71,7 +71,7 @@
       </dependency>
       <dependency>
         <groupId>org.beangle.commons</groupId>
-        <artifactId>beangle-commons-dao</artifactId>
+        <artifactId>beangle-commons-model</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

@@ -108,7 +108,7 @@ public class FuncPermissionServiceImpl extends BaseServiceImpl implements FuncPe
     publish(new RoleAuthorityEvent(role));
   }
 
-  public void updateState(Long[] resourceIds, boolean isEnabled) {
+  public void updateState(Integer[] resourceIds, boolean isEnabled) {
     OqlBuilder<FuncResourceBean> query = OqlBuilder.from(FuncResourceBean.class, "resource");
     query.where("resource.id in (:ids)", resourceIds);
     List<FuncResourceBean> resources = entityDao.search(query);

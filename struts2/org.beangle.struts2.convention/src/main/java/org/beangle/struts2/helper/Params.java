@@ -38,10 +38,6 @@ public class Params {
     return converter.getString(getParams(), attr);
   }
 
-  public static Long getLong(String name) {
-    return converter.getLong(getParams(), name);
-  }
-
   public static <T> T get(String name, Class<T> clazz) {
     return converter.get(getParams(), name, clazz);
   }
@@ -74,8 +70,16 @@ public class Params {
     return converter.getFloat(getParams(), name);
   }
 
+  public static Short getShort(String name) {
+    return converter.getShort(getParams(), name);
+  }
+
   public static Integer getInteger(String name) {
     return converter.getInteger(getParams(), name);
+  }
+
+  public static Long getLong(String name) {
+    return converter.getLong(getParams(), name);
   }
 
   public static Map<String, Object> sub(String prefix) {

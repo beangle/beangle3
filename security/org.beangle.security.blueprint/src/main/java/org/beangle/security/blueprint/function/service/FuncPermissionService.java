@@ -77,7 +77,7 @@ public interface FuncPermissionService {
    * @param resourceIds
    * @param isEnabled
    */
-  void updateState(Long[] resourceIds, boolean isEnabled);
+  void updateState(Integer[] resourceIds, boolean isEnabled);
 
   /**
    * 依据默认深度（小于或等于）得到用户的所有权限

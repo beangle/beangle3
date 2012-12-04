@@ -338,21 +338,16 @@ public class ActionSupport implements TextResourceProvider {
     return Params.getFloat(name);
   }
 
-  protected final int getInt(String name) {
-    Integer rs = Params.getInteger(name);
-    return null == rs ? 0 : rs.intValue();
+  protected final Short getShort(String name) {
+    return Params.getShort(name);
   }
 
-  protected final Integer getInteger(String name) {
+  protected final Integer getInt(String name) {
     return Params.getInteger(name);
   }
 
   protected final Long getLong(String name) {
     return Params.getLong(name);
-  }
-
-  protected final Long getId(String shortName) {
-    return getId(shortName, Long.class);
   }
 
   /**
@@ -369,13 +364,30 @@ public class ActionSupport implements TextResourceProvider {
     else return Params.converter.convert(entityId, clazz);
   }
 
+  protected final Integer getIntId(String shortName) {
+    return getId(shortName, Integer.class);
+  }
+
+  protected final Long getLongId(String shortName) {
+    return getId(shortName, Long.class);
+  }
+
   /**
    * Get entity's long id array from parameters shortname.id,shortname.ids,shortnameIds
    * 
    * @param shortName
    */
-  protected final Long[] getIds(String shortName) {
+  protected final Long[] getLongIds(String shortName) {
     return getIds(shortName, Long.class);
+  }
+
+  /**
+   * Get entity's long id array from parameters shortname.id,shortname.ids,shortnameIds
+   * 
+   * @param shortName
+   */
+  protected final Integer[] getIntIds(String shortName) {
+    return getIds(shortName, Integer.class);
   }
 
   /**

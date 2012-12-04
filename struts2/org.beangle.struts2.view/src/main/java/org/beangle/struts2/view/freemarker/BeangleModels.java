@@ -24,11 +24,12 @@ import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.beangle.commons.collection.page.Page;
 import org.beangle.struts2.view.component.*;
 
 import com.opensymphony.xwork2.util.ValueStack;
+
+import freemarker.template.utility.StringUtil;
 
 /**
  * beangle tag models
@@ -68,7 +69,7 @@ public class BeangleModels extends AbstractModels {
       }
       sw.write(attr);
       sw.write('=');
-      sw.write(StringEscapeUtils.escapeEcmaScript(value));
+      sw.write(StringUtil.javaScriptStringEnc(value));
       if (em.hasMoreElements()) sw.write('&');
     }
     return sw.toString();

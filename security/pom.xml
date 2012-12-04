@@ -28,7 +28,7 @@
     </dependency>
     <dependency>
       <groupId>org.beangle.commons</groupId>
-      <artifactId>beangle-commons-dao</artifactId>
+      <artifactId>beangle-commons-model</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

@@ -6,13 +6,13 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.beangle.commons</groupId>
-  <artifactId>beangle-commons-dao</artifactId>
+  <artifactId>beangle-commons-model</artifactId>
   <packaging>jar<!--bundle--></packaging>
-  <name>Beangle Commons Dao</name>
+  <name>Beangle Commons Model</name>
 
   <properties>
-    <bundle.symbolicName>org.beangle.commons.dao</bundle.symbolicName>
-    <bundle.namespace>org.beangle.commons.dao</bundle.namespace>
+    <bundle.symbolicName>org.beangle.commons.model</bundle.symbolicName>
+    <bundle.namespace>org.beangle.commons.model</bundle.namespace>
     <jxls.version>1.0</jxls.version>
   </properties>
 
