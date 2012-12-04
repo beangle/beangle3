@@ -186,4 +186,8 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
     return buf.toString();
   }
 
+  public List<Condition> getConditions() {
+    return conditions;
+  }
+
 }
