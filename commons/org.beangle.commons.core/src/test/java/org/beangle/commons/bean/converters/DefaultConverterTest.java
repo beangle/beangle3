@@ -16,36 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.entity.metadata;
 
-import java.util.Map;
+package org.beangle.commons.bean.converters;
 
-/**
- * <p>
- * Populator interface.
- * </p>
- * 
- * @author chaostone
- * @version $Id: $
- */
-public interface Populator {
-  /**
-   * <p>
-   * populate.
-   * </p>
-   */
-  Object populate(Object target, EntityType type, Map<String, Object> params);
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
-  /**
-   * @return true when success populate.
-   */
-  boolean populateValue(Object target, EntityType type, String attr, Object value);
+@Test
+public class DefaultConverterTest {
 
-  /**
-   * <p>
-   * initProperty.
-   * </p>
-   */
-  ObjectAndType initProperty(Object target, Type type, String attr);
-
+  public void testConvertNull() {
+    Assert.assertNull(Converters.Instance.convert("", Long.class));
+    Assert.assertNull(Converters.Instance.convert((String) null, Long.class));
+    Assert.assertNull(Converters.Instance.convert("abc", Long.class));
+    Assert.assertEquals(Converters.Instance.convert("1", Long.class), 1L);
+    
+    Assert.assertEquals(Converters.Instance.convert(1L, Long.class), 1L);
+  }
 }

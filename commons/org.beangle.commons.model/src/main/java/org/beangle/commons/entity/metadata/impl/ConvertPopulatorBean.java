@@ -26,11 +26,9 @@ import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.bean.converters.Converters;
 import org.beangle.commons.entity.metadata.EntityType;
-import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.entity.metadata.ObjectAndType;
 import org.beangle.commons.entity.metadata.Populator;
 import org.beangle.commons.entity.metadata.Type;
-import org.beangle.commons.entity.util.ValidEntityKeyPredicate;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.reflect.Reflections;
 import org.slf4j.Logger;
@@ -45,6 +43,7 @@ import org.slf4j.LoggerFactory;
  * @version $Id: $
  */
 public class ConvertPopulatorBean implements Populator {
+
   /** Constant <code>logger</code> */
   protected static final Logger logger = LoggerFactory.getLogger(ConvertPopulatorBean.class);
 
@@ -59,7 +58,7 @@ public class ConvertPopulatorBean implements Populator {
    * </p>
    */
   public ConvertPopulatorBean() {
-    beanUtils = new BeanUtilsBean(Converters.Instance);
+    this(Converters.Instance);
   }
 
   /**
@@ -74,16 +73,15 @@ public class ConvertPopulatorBean implements Populator {
   }
 
   /**
-   * {@inheritDoc} 初始化对象指定路径的属性。<br>
+   * 初始化对象指定路径的属性。<br>
    * 例如给定属性a.b.c,方法会依次检查a a.b a.b.c是否已经初始化
    */
-  public ObjectAndType initProperty(final Object target, String entityName, final String attr) {
+  public ObjectAndType initProperty(final Object target, Type type, final String attr) {
     Object propObj = target;
     Object property = null;
 
     int index = 0;
     String[] attrs = Strings.split(attr, ".");
-    Type type = Model.getType(entityName);
     while (index < attrs.length) {
       try {
         property = PropertyUtils.getProperty(propObj, attrs[index]);
@@ -117,44 +115,33 @@ public class ConvertPopulatorBean implements Populator {
   }
 
   /**
-   * {@inheritDoc} 安静的拷贝属性，如果属性非法或其他错误则记录日志
+   * 安静的拷贝属性，如果属性非法或其他错误则记录日志
    */
-  public boolean populateValue(final Object target, String entityName, final String attr, final Object value) {
+  public boolean populateValue(final Object target, EntityType type, final String attr, final Object value) {
     try {
-      if (attr.indexOf('.') > -1) initProperty(target, entityName, Strings.substringBeforeLast(attr, "."));
-      beanUtils.copyProperty(target, attr, value);
+      if (attr.indexOf('.') > -1) {
+        ObjectAndType ot = initProperty(target, type, Strings.substringBeforeLast(attr, "."));
+        if (ot.getType().isEntityType()) {
+          String foreignKey = ((EntityType) ot.getType()).getIdName();
+          if (foreignKey.equals(Strings.substringAfterLast(attr, "."))) {
+            beanUtils.copyProperty(target, attr, convert(ot.getType(), foreignKey, value));
+          } else {
+            beanUtils.copyProperty(target, attr, value);
+          }
+        }
+      } else {
+        if (type.getIdName().equals(attr)) {
+          beanUtils.copyProperty(target, attr, convert(type, attr, value));
+        } else {
+          beanUtils.copyProperty(target, attr, value);
+        }
+      }
       return true;
     } catch (Exception e) {
-      logger.warn("copy property failure:[class:" + entityName + " attr:" + attr + " value:" + value + "]:",
-          e);
+      logger.warn("copy property failure:[class:" + type.getEntityName() + " attr:" + attr + " value:"
+          + value + "]:", e);
       return false;
     }
-  }
-
-  /** {@inheritDoc} */
-  public boolean populateValue(Object target, String attr, Object value) {
-    return populateValue(target, Model.getEntityType(target.getClass()).getEntityName(), attr, value);
-  }
-
-  /** {@inheritDoc} */
-  public Object populate(Object target, Map<String, Object> params) {
-    return populate(target, Model.getEntityName(target), params);
-  }
-
-  /** {@inheritDoc} */
-  public Object populate(String entityName, Map<String, Object> params) {
-    Type type = Model.getType(entityName);
-    if (null == type) {
-      throw new RuntimeException(entityName + " was not configured!");
-    } else {
-      return populate(type.newInstance(), type.getName(), params);
-    }
-  }
-
-  /** {@inheritDoc} */
-  public Object populate(Class<?> entityClass, Map<String, Object> params) {
-    EntityType entityType = Model.getEntityType(entityClass);
-    return populate(entityType.newInstance(), entityType.getEntityName(), params);
   }
 
   /**
@@ -164,38 +151,26 @@ public class ConvertPopulatorBean implements Populator {
    * 如果params中的id为null，则将该实体的置为null.<br>
    * 否则新生成一个实体，将其id设为params中指定的值。 空字符串按照null处理
    */
-  public Object populate(Object entity, String entityName, Map<String, Object> params) {
-    Type type = Model.getType(entityName);
+  public Object populate(Object entity, EntityType type, Map<String, Object> params) {
     for (final Map.Entry<String, Object> paramEntry : params.entrySet()) {
       String attr = paramEntry.getKey();
       Object value = paramEntry.getValue();
       if (value instanceof String) {
-        if (Strings.isEmpty((String) value)) {
-          value = null;
-        } else if (TRIM_STR) {
-          value = ((String) value).trim();
-        }
+        if (Strings.isEmpty((String) value)) value = null;
+        else if (TRIM_STR) value = ((String) value).trim();
       }
       // 主键
-      if (null != type && type.isEntityType() && attr.equals(((EntityType) type).getIdName())) {
-        if (ValidEntityKeyPredicate.INSTANCE.evaluate(value)) {
-          setValue(attr, value, entity);
-        } else {
-          try {
-            PropertyUtils.setProperty(entity, attr, null);
-          } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-          }
-        }
+      if (type.isEntityType() && attr.equals(((EntityType) type).getIdName())) {
+        setProperty(entity, attr, convert(type, attr, value));
         continue;
       }
       // 普通属性
       if (-1 == attr.indexOf('.')) {
-        setValue(attr, value, entity);
+        copyValue(attr, value, entity);
       } else {
         String parentAttr = Strings.substring(attr, 0, attr.lastIndexOf('.'));
         try {
-          ObjectAndType ot = initProperty(entity, entityName, parentAttr);
+          ObjectAndType ot = initProperty(entity, type, parentAttr);
           if (null == ot) {
             logger.error("error attr:[" + attr + "] value:[" + value + "]");
             continue;
@@ -205,36 +180,57 @@ public class ConvertPopulatorBean implements Populator {
             String foreignKey = ((EntityType) ot.getType()).getIdName();
             if (attr.endsWith("." + foreignKey)) {
               if (null == value) {
-                setValue(parentAttr, null, entity);
+                copyValue(parentAttr, null, entity);
               } else {
                 Object foreignValue = PropertyUtils.getProperty(entity, attr);
                 // 如果外键已经有值
                 if (null != foreignValue) {
                   if (!foreignValue.toString().equals(value.toString())) {
-                    setValue(parentAttr, null, entity);
-                    initProperty(entity, entityName, parentAttr);
-                    setValue(attr, value, entity);
+                    copyValue(parentAttr, null, entity);
+                    initProperty(entity, type, parentAttr);
+                    setProperty(entity, attr, convert(ot.getType(), foreignKey, value));
                   }
                 } else {
-                  setValue(attr, value, entity);
+                  copyValue(attr, value, entity);
                 }
               }
             } else {
-              setValue(attr, value, entity);
+              copyValue(attr, value, entity);
             }
           } else {
-            setValue(attr, value, entity);
+            copyValue(attr, value, entity);
           }
         } catch (Exception e) {
           logger.error("error attr:[" + attr + "] value:[" + value + "]", e);
         }
       }
-      if (logger.isDebugEnabled()) logger.debug("populate attr:[{}] value:[{}]", attr, value);
     }
     return entity;
   }
 
-  private void setValue(final String attr, final Object value, final Object target) {
+  private Object convert(Type type, String attr, Object value) {
+    Object attrValue = null;
+    if (null != value) {
+      Type attrType = type.getPropertyType(attr);
+      Class<?> attrClass = attrType.getReturnedClass();
+      if (attrClass.isAssignableFrom(value.getClass())) {
+        attrValue = value;
+      } else {
+        attrValue = beanUtils.getConvertUtils().convert(value, attrClass);
+      }
+    }
+    return attrValue;
+  }
+
+  private void setProperty(Object target, String attr, Object value) {
+    try {
+      PropertyUtils.setProperty(target, attr, value);
+    } catch (Exception e) {
+      throw new RuntimeException(e.getMessage());
+    }
+  }
+
+  private void copyValue(final String attr, final Object value, final Object target) {
     try {
       beanUtils.copyProperty(target, attr, value);
     } catch (Exception e) {

@@ -126,7 +126,8 @@ public class ImporterForeignerListener extends ItemImporterListener {
           }
         }
         String parentAttr = Strings.substring(attr, 0, attr.lastIndexOf("."));
-        Model.getPopulator().populateValue(entity, parentAttr, foreiger);
+        Model.getPopulator().populateValue(entity, Model.getType(entity.getClass()), parentAttr,
+            foreiger);
       } catch (Exception e) {
         throw new RuntimeException(e);
       }

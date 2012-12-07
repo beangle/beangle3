@@ -38,7 +38,7 @@ public class ModelTest {
     Map<String, Object> params = CollectUtils.newHashMap();
     params.put("contractInfo.id", "");
     ManagerEmployer employer = (ManagerEmployer) Model.getPopulator().populate(new ManagerEmployer(),
-        ManagerEmployer.class.getName(), params);
+        Model.getType(ManagerEmployer.class), params);
     Assert.assertNull(employer.getContractInfo());
   }
 }

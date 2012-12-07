@@ -69,7 +69,7 @@ public class IdentifierDataResolver implements UserDataResolver {
         e.printStackTrace();
         throw new RuntimeException(e);
       }
-      EntityType myType = Model.getEntityType(clazz);
+      EntityType myType = Model.getType(clazz);
       OqlBuilder<T> builder = OqlBuilder.from(myType.getEntityName(), "field");
 
       String[] ids = Strings.split(text, ",");

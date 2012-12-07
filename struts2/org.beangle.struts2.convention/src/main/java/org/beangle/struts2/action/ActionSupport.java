@@ -444,7 +444,7 @@ public class ActionSupport implements TextResourceProvider {
 
   protected final void populate(Map<String, Object> params, Entity<?> entity, String entityName) {
     Assert.notNull(entity, "Cannot populate to null.");
-    Model.getPopulator().populate(entity, entityName, params);
+    Model.getPopulator().populate(entity, Model.getType(entityName), params);
   }
 
   protected final void populate(Map<String, Object> params, Entity<?> entity) {

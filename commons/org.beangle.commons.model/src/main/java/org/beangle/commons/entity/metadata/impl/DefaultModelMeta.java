@@ -19,9 +19,9 @@
 package org.beangle.commons.entity.metadata.impl;
 
 import java.io.Serializable;
-import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.metadata.EntityContext;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.ModelMeta;
@@ -53,7 +53,7 @@ public class DefaultModelMeta implements ModelMeta {
    * @return a T object.
    */
   @SuppressWarnings("unchecked")
-  public <T> T newInstance(final Class<T> clazz) {
+  public <T extends Entity<?>> T newInstance(final Class<T> clazz) {
     return (T) getEntityType(clazz).newInstance();
   }
 
@@ -67,11 +67,12 @@ public class DefaultModelMeta implements ModelMeta {
    * @param <T> a T object.
    * @return a T object.
    */
-  public <T> T newInstance(final Class<T> clazz, final Serializable id) {
+  public <T extends Entity<ID>, ID extends Serializable> T newInstance(final Class<T> clazz, final ID id) {
+    EntityType type = getEntityType(clazz);
     @SuppressWarnings("unchecked")
-    T entity = (T) getEntityType(clazz).newInstance();
+    T entity = (T) type.newInstance();
     try {
-      PropertyUtils.setProperty(entity, "id", id);
+      PropertyUtils.setProperty(entity, type.getIdName(), id);
     } catch (Exception e) {
       logger.error("initialize {} with id {} error", clazz, id);
     }
@@ -128,19 +129,6 @@ public class DefaultModelMeta implements ModelMeta {
       type = new EntityType(clazz);
     }
     return type;
-  }
-
-  /**
-   * 将params中的属性([attr(string)->value(object)]，放入到实体类中。<br>
-   * 如果引用到了别的实体，那么<br>
-   * 如果params中的id为null，则将该实体的置为null.<br>
-   * 否则新生成一个实体，将其id设为params中指定的值。 空字符串按照null处理
-   * 
-   * @param params a {@link java.util.Map} object.
-   * @param entity a {@link java.lang.Object} object.
-   */
-  public void populate(Map<String, Object> params, Object entity) {
-    populator.populate(entity, params);
   }
 
   public void setContext(EntityContext context) {

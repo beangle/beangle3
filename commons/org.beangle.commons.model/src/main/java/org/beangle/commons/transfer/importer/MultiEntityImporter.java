@@ -92,6 +92,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
       Object entity = getCurrent(attrs[i]);
       String attr = processAttr(attrs[i]);
       String entityName = getEntityName(attrs[i]);
+      EntityType type = Model.getType(entityName);
       // 当有深层次属性
       if (Strings.contains(attr, '.')) {
         if (null != foreignerKeys) {
@@ -100,18 +101,18 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
           // 因此导入的是外键,只能有一个属性导入.
           if (isForeigner) {
             String parentPath = Strings.substringBeforeLast(attr, ".");
-            ObjectAndType propertyType = populator.initProperty(entity, entityName, parentPath);
+            ObjectAndType propertyType = populator.initProperty(entity, type, parentPath);
             Object property = propertyType.getObj();
             if (property instanceof Entity<?>) {
               if (((Entity<?>) property).isPersisted()) {
-                populator.populateValue(entity, parentPath, null);
-                populator.initProperty(entity, entityName, parentPath);
+                populator.populateValue(entity, type, parentPath, null);
+                populator.initProperty(entity, type, parentPath);
               }
             }
           }
         }
       }
-      if (!populator.populateValue(entity, attr, value)) {
+      if (!populator.populateValue(entity, type, attr, value)) {
         transferResult.addFailure(descriptions.get(attr) + " data format error.", value);
       }
     }
@@ -158,7 +159,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * @param entityClass a {@link java.lang.Class} object.
    */
   public void addEntity(String alias, Class<?> entityClass) {
-    EntityType entityType = Model.getEntityType(entityClass);
+    EntityType entityType = Model.getType(entityClass);
     if (null == entityType) { throw new RuntimeException("cannot find entity type for " + entityClass); }
     entityTypes.put(alias, entityType);
   }
@@ -172,7 +173,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * @param entityName a {@link java.lang.String} object.
    */
   public void addEntity(String alias, String entityName) {
-    EntityType entityType = Model.getEntityType(entityName);
+    EntityType entityType = Model.getType(entityName);
     if (null == entityType) { throw new RuntimeException("cannot find entity type for " + entityName); }
     entityTypes.put(alias, entityType);
   }
@@ -241,10 +242,9 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
       try {
         EntityType entityType = getEntityType(attrs[i]);
         Entity<?> example = (Entity<?>) entityType.newInstance();
-        String entityName = entityType.getEntityName();
         String attr = processAttr(attrs[i]);
         if (attr.indexOf('.') > -1) {
-          populator.initProperty(example, entityName, Strings.substringBeforeLast(attr, "."));
+          populator.initProperty(example, entityType, Strings.substringBeforeLast(attr, "."));
         }
         rightAttrs.add(attrs[i]);
       } catch (Exception e) {

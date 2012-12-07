@@ -98,7 +98,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
    */
   @SuppressWarnings("unchecked")
   public static <E> OqlBuilder<E> from(final String entityName, final String alias) {
-    EntityType type = Model.getEntityType(entityName);
+    EntityType type = Model.getType(entityName);
     OqlBuilder<E> query = new OqlBuilder<E>();
     if (null != type) query.entityClass = (Class<E>) type.getEntityClass();
     query.alias = alias;
@@ -117,8 +117,8 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
   public static <E> OqlBuilder<E> from(final Class<E> entityClass) {
-    EntityType type = Model.getEntityType(entityClass.getName());
-    if (null == type) type = Model.getEntityType(entityClass);
+    EntityType type = Model.getType(entityClass.getName());
+    if (null == type) type = Model.getType(entityClass);
     return from(entityClass, EntityUtils.getCommandName(type.getEntityName()));
   }
 
@@ -134,8 +134,8 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
    */
   @SuppressWarnings("unchecked")
   public static <E> OqlBuilder<E> from(final Class<E> entityClass, final String alias) {
-    EntityType type = Model.getEntityType(entityClass.getName());
-    if (null == type) type = Model.getEntityType(entityClass);
+    EntityType type = Model.getType(entityClass.getName());
+    if (null == type) type = Model.getType(entityClass);
     OqlBuilder<E> query = new OqlBuilder<E>();
     query.entityClass = (Class<E>) type.getEntityClass();
     query.alias = alias;

@@ -21,6 +21,7 @@ package org.beangle.commons.entity.metadata;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.metadata.impl.ConvertPopulatorBean;
 import org.beangle.commons.entity.metadata.impl.DefaultModelMeta;
 import org.beangle.commons.entity.metadata.impl.SimpleEntityContext;
@@ -57,7 +58,7 @@ public final class Model {
    * @param <T> a T object.
    * @return a T object.
    */
-  public static <T> T newInstance(final Class<T> clazz) {
+  public static <T extends Entity<?>> T newInstance(final Class<T> clazz) {
     return meta.newInstance(clazz);
   }
 
@@ -65,13 +66,8 @@ public final class Model {
    * <p>
    * newInstance.
    * </p>
-   * 
-   * @param clazz a {@link java.lang.Class} object.
-   * @param id a {@link java.io.Serializable} object.
-   * @param <T> a T object.
-   * @return a T object.
    */
-  public static <T> T newInstance(final Class<T> clazz, final Serializable id) {
+  public static <T extends Entity<ID>, ID extends Serializable> T newInstance(Class<T> clazz, ID id) {
     return meta.newInstance(clazz, id);
   }
 
@@ -83,20 +79,8 @@ public final class Model {
    * @param entityName a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.entity.metadata.EntityType} object.
    */
-  public static EntityType getEntityType(String entityName) {
+  public static EntityType getType(String entityName) {
     return meta.getEntityType(entityName);
-  }
-
-  /**
-   * <p>
-   * getType.
-   * </p>
-   * 
-   * @param entityName a {@link java.lang.String} object.
-   * @return a {@link org.beangle.commons.entity.metadata.Type} object.
-   */
-  public static Type getType(String entityName) {
-    return meta.getType(entityName);
   }
 
   /**
@@ -119,7 +103,7 @@ public final class Model {
    * @param clazz a {@link java.lang.Class} object.
    * @return a {@link org.beangle.commons.entity.metadata.EntityType} object.
    */
-  public static EntityType getEntityType(Class<?> clazz) {
+  public static EntityType getType(Class<?> clazz) {
     return meta.getEntityType(clazz);
   }
 
@@ -133,7 +117,7 @@ public final class Model {
    * @param entity a {@link java.lang.Object} object.
    */
   public static void populate(Map<String, Object> params, Object entity) {
-    meta.populate(params, entity);
+    meta.getPopulator().populate(entity, meta.getEntityType(entity.getClass()), params);
   }
 
   public static Populator getPopulator() {

@@ -18,15 +18,15 @@
  */
 package org.beangle.commons.entity.metadata;
 
+import org.beangle.commons.entity.pojo.NumberIdObject;
+
 /**
  * @comment 测试bean
  * @author chaostone
  * @version $Id: SimpleBean.java Jul 30, 2011 12:53:47 AM chaostone $
  */
-public class SimpleBean {
-
-  /** @comment id */
-  Long id;
+@SuppressWarnings("serial")
+public class SimpleBean extends NumberIdObject<Long> {
 
   /**
    * @comment 名称

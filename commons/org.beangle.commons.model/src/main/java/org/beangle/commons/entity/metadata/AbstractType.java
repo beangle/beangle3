@@ -67,12 +67,10 @@ public abstract class AbstractType implements Type {
     return false;
   }
 
-  /** {@inheritDoc} */
   public Type getPropertyType(String property) {
     return null;
   }
 
-  /** {@inheritDoc} */
   public boolean equals(Object obj) {
     if (!(obj instanceof Type)) { return false; }
     return getName().equals(((Type) obj).getName());

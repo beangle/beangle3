@@ -48,12 +48,10 @@ public abstract class AbstractEntityContext implements EntityContext {
   /** Constant <code>logger</code> */
   protected static final Logger logger = LoggerFactory.getLogger(AbstractEntityContext.class);
 
-  /** {@inheritDoc} */
   public String[] getEntityNames(Class<?> clazz) {
     return new String[0];
   }
 
-  /** {@inheritDoc} */
   public Type getType(String name) {
     Type type = getEntityType(name);
     if (null == type) {
@@ -68,7 +66,6 @@ public abstract class AbstractEntityContext implements EntityContext {
     }
   }
 
-  /** {@inheritDoc} */
   public String getEntityName(Object obj) {
     EntityType type = getEntityType(obj.getClass());
     if (null != type) {
@@ -113,7 +110,6 @@ public abstract class AbstractEntityContext implements EntityContext {
     return type;
   }
 
-  /** {@inheritDoc} */
   public EntityType getEntityType(String entityName) {
     EntityType type = entityTypes.get(entityName);
     if (null != type) { return type; }

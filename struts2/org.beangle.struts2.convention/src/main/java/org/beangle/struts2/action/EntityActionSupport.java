@@ -138,7 +138,7 @@ public abstract class EntityActionSupport extends ActionSupport {
    * Remove entities by [entity.id]/entityIds
    */
   public String remove() throws Exception {
-    Class<? extends Serializable> idclass = Model.getEntityType(getEntityName()).getIdType();
+    Class<? extends Serializable> idclass = Model.getType(getEntityName()).getIdType();
     Serializable entityId = getId(getShortName(), idclass);
     Collection<?> entities = null;
     if (null == entityId) {
@@ -162,7 +162,7 @@ public abstract class EntityActionSupport extends ActionSupport {
   }
 
   protected Entity<?> populateEntity(String entityName, String shortName) {
-    Serializable entityId = getId(shortName, Model.getEntityType(entityName).getIdType());
+    Serializable entityId = getId(shortName, Model.getType(entityName).getIdType());
     Entity<?> entity = null;
     if (null == entityId) {
       entity = (Entity<?>) populate(entityName, shortName);
@@ -177,9 +177,9 @@ public abstract class EntityActionSupport extends ActionSupport {
   protected <T> T populateEntity(Class<T> entityClass, String shortName) {
     EntityType type = null;
     if (entityClass.isInterface()) {
-      type = Model.getEntityType(entityClass.getName());
+      type = Model.getType(entityClass.getName());
     } else {
-      type = Model.getEntityType(entityClass);
+      type = Model.getType(entityClass);
     }
     return (T) populateEntity(type.getEntityName(), shortName);
   }
@@ -189,7 +189,7 @@ public abstract class EntityActionSupport extends ActionSupport {
   }
 
   protected Entity<?> getEntity(String entityName, String name) {
-    EntityType type = Model.getEntityType(entityName);
+    EntityType type = Model.getType(entityName);
     Serializable entityId = getId(name, type.getIdType());
     Entity<?> entity = null;
     try {
@@ -205,9 +205,9 @@ public abstract class EntityActionSupport extends ActionSupport {
   protected <T> T getEntity(Class<T> entityClass, String shortName) {
     EntityType type = null;
     if (entityClass.isInterface()) {
-      type = Model.getEntityType(entityClass.getName());
+      type = Model.getType(entityClass.getName());
     } else {
-      type = Model.getEntityType(entityClass);
+      type = Model.getType(entityClass);
     }
     return (T) getEntity(type.getEntityName(), shortName);
   }
@@ -216,7 +216,7 @@ public abstract class EntityActionSupport extends ActionSupport {
    * 查看信息
    */
   public String info() throws Exception {
-    Serializable entityId = getId(getShortName(), Model.getEntityType(getEntityName()).getIdType());
+    Serializable entityId = getId(getShortName(), Model.getType(getEntityName()).getIdType());
     if (null == entityId) {
       logger.warn("cannot get paremeter {}Id or {}.id", getShortName(), getShortName());
     }
@@ -374,7 +374,7 @@ public abstract class EntityActionSupport extends ActionSupport {
    */
   protected EntityImporter buildEntityImporter() {
     if (null == getEntityName()) return buildEntityImporter("importFile", null);
-    else return buildEntityImporter("importFile", Model.getEntityType(getEntityName()).getEntityClass());
+    else return buildEntityImporter("importFile", Model.getType(getEntityName()).getEntityClass());
 
   }
 

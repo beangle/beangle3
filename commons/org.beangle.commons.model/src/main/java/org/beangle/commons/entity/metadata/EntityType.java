@@ -166,7 +166,7 @@ public class EntityType extends AbstractType {
           type = new EntityType(propertyType);
         }
         if (propertyType.isInterface()) {
-          type = Model.getEntityType(propertyType.getName());
+          type = Model.getType(propertyType.getName());
         }
         if (null == type) {
           type = new IdentifierType(propertyType);

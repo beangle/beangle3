@@ -53,9 +53,9 @@ public class DefaultEntityImporter extends MultiEntityImporter {
     if (null != entityClass) {
       EntityType type = null;
       if (entityClass.isInterface()) {
-        type = Model.getEntityType(entityClass.getName());
+        type = Model.getType(entityClass.getName());
       } else {
-        type = Model.getEntityType(entityClass);
+        type = Model.getType(entityClass);
       }
       entityTypes.put(alias, type);
     }

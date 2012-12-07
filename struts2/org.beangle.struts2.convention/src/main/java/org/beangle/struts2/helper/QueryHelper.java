@@ -80,7 +80,7 @@ public class QueryHelper {
     Object entity = null;
     try {
       if (clazz.isInterface()) {
-        EntityType entityType = Model.getEntityType(clazz.getName());
+        EntityType entityType = Model.getType(clazz.getName());
         clazz = entityType.getEntityClass();
       }
       entity = clazz.newInstance();
@@ -98,7 +98,8 @@ public class QueryHelper {
           if (RESERVED_NULL && "null".equals(strValue)) {
             conditions.add(new Condition(prefix + "." + attr + " is null"));
           } else {
-            Model.getPopulator().populateValue(entity, attr, strValue);
+            Model.getPopulator()
+                .populateValue(entity, Model.getType(entity.getClass()), attr, strValue);
             Object setValue = PropertyUtils.getProperty(entity, attr);
             if (null == setValue) continue;
             if (setValue instanceof String) {
