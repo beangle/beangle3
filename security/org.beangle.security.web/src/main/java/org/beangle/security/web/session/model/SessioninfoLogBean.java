@@ -82,7 +82,7 @@ public class SessioninfoLogBean extends StringIdObject {
 
   public SessioninfoLogBean(SessioninfoBean info) {
     super();
-    this.id = info.getId();
+    this.id = info.getId() + "@" + System.currentTimeMillis();
     this.username = info.getUsername();
     this.fullname = info.getFullname();
     this.loginAt = info.getLoginAt();
@@ -103,7 +103,7 @@ public class SessioninfoLogBean extends StringIdObject {
     long onlineTime = System.currentTimeMillis() - loginAt.getTime();
     long minute = (onlineTime / 1000) / 60;
     long second = (onlineTime / 1000) % 60;
-    str += "OnLine time:[" + minute + " minute " + second + " second]";
+    str += "Online time:[" + minute + " minute " + second + " second]";
     return str;
   }
 
