@@ -26,7 +26,11 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-
+/**
+ * 
+ * @author chaostone
+ * @since 2.4
+ */
 public abstract class GenericCompositeFilter extends GenericHttpFilter {
   /**
    * A <code>FilterChain</code> that records whether or not

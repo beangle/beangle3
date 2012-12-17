@@ -130,9 +130,10 @@ public class MemSessionRegistry implements SessionRegistry, Initializing {
     return info;
   }
 
-  public void expire(String sessionid) {
+  public boolean expire(String sessionid) {
     Sessioninfo info = getSessioninfo(sessionid);
     if (null != info) info.expireNow();
+    return true;
   }
 
   public SessionStatus getSessionStatus(String sessionid) {

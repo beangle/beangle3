@@ -181,9 +181,7 @@ public class SessioninfoBean extends StringIdObject implements CategorySessionin
   }
 
   public void expireNow() {
-    if (null == expiredAt) {
-      this.expiredAt = new Date();
-    }
+    if (null == expiredAt) this.expiredAt = new Date();
   }
 
   public Date getExpiredAt() {

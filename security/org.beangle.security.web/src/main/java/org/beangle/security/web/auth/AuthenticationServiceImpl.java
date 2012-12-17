@@ -59,7 +59,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     Authentication authRequest = auth;
     authRequest = authenticationManager.authenticate(authRequest);
     sessionRegistry.register(authRequest, request.getSession().getId());
-    Option<Integer> interval = sessionRegistry.getController().getInactiveInterval(authRequest);
+    Option<Short> interval = sessionRegistry.getController().getInactiveInterval(authRequest);
     // inactiveInterval in minutes
     if (interval.isDefined()) request.getSession(true).setMaxInactiveInterval(interval.get() * 60);
     SecurityContextHolder.getContext().setAuthentication(authRequest);

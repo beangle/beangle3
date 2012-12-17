@@ -37,7 +37,7 @@ import org.beangle.security.core.session.SessioninfoBuilder;
  * 基于数据库的集中session控制器
  * 
  * @author chaostone
- * @version $Id: DbCategorySessionController.java Jul 8, 2011 9:08:14 AM chaostone $
+ * @version $Id: DbSessionController.java Jul 8, 2011 9:08:14 AM chaostone $
  */
 public class DbSessionController extends AbstractSessionController implements Initializing,
     EventListener<CategoryProfileUpdateEvent> {
@@ -51,26 +51,29 @@ public class DbSessionController extends AbstractSessionController implements In
   @Override
   protected boolean allocate(Authentication auth, String sessionId) {
     CategoryPrincipal principal = (CategoryPrincipal) auth.getPrincipal();
+    String category = principal.getCategory();
+    // Check corresponding stat existence
+    Integer statId = categoryStatIds.get(category);
+    if (null == statId) {
+      statId = (Integer) entityDao.uniqueResult(OqlBuilder.from(SessionStat.class.getName(), "ss")
+          .where("ss.category=:category", category).select("ss.id"));
+      if (null == statId) {
+        CategoryProfile cp = categoryProfileProvider.getProfile(principal.getCategory());
+        if (null != cp) {
+          SessionStat stat = new SessionStat(cp.getCategory(), cp.getCapacity());
+          entityDao.saveOrUpdate(stat);
+          statId = stat.getId();
+        }
+      }
+      if (null != statId) categoryStatIds.put(category, statId);
+    }
+
     if (Principals.ROOT.equals(principal.getId())) {
+      if (null != statId)
+        entityDao.executeUpdateHql("update " + SessionStat.class.getName()
+            + " stat set stat.online = stat.online + 1 where  stat.id=?", statId);
       return true;
     } else {
-      String category = principal.getCategory();
-      // Check corresponding stat existence
-      Integer statId = categoryStatIds.get(category);
-      if (null == statId) {
-        statId = (Integer) entityDao.uniqueResult(OqlBuilder.from(SessionStat.class.getName(), "ss")
-            .where("ss.category=:category", category).select("ss.id"));
-        if (null == statId) {
-          CategoryProfile cp = categoryProfileProvider.getProfile(principal.getCategory());
-          if (null != cp) {
-            SessionStat stat = new SessionStat(cp.getCategory(), cp.getCapacity());
-            entityDao.saveOrUpdate(stat);
-            statId = stat.getId();
-          }
-        }
-        if (null != statId) categoryStatIds.put(category, statId);
-      }
-
       int result = 0;
       if (null != statId) {
         result = entityDao.executeUpdateHql("update " + SessionStat.class.getName()
@@ -96,7 +99,7 @@ public class DbSessionController extends AbstractSessionController implements In
    * @param auth
    * @return -1 represent not specified
    */
-  public Option<Integer> getInactiveInterval(Authentication auth) {
+  public Option<Short> getInactiveInterval(Authentication auth) {
     CategoryPrincipal principal = (CategoryPrincipal) auth.getPrincipal();
     CategoryProfile cp = categoryProfileProvider.getProfile(principal.getCategory());
     if (null == cp) return Option.none();

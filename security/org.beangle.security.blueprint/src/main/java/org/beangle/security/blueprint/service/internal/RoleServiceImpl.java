@@ -41,6 +41,11 @@ import org.beangle.security.blueprint.service.UserService;
 public class RoleServiceImpl extends AbstractHierarchyService<RoleBean> implements RoleService {
   private UserService userService;
 
+  @Override
+  public Role get(Integer id) {
+    return entityDao.get(Role.class, id);
+  }
+
   public void createRole(User owner, Role role) {
     role.setUpdatedAt(new Date(System.currentTimeMillis()));
     role.setCreatedAt(new Date(System.currentTimeMillis()));
@@ -95,6 +100,12 @@ public class RoleServiceImpl extends AbstractHierarchyService<RoleBean> implemen
       }
       return false;
     }
+  }
+
+  @Override
+  public List<Role> getRootRoles() {
+    return entityDao.search(OqlBuilder.from(Role.class, "g").where("g.parent is null").cacheable()
+        .orderBy("g.code"));
   }
 
   public void setUserService(UserService userService) {

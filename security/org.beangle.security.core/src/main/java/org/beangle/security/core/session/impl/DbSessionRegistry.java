@@ -60,6 +60,10 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 
   long updatedAt = System.currentTimeMillis();
 
+  public void setEntityDao(EntityDao entityDao) {
+    this.entityDao = entityDao;
+  }
+
   /**
    * Default interval(5 minutes) for update access log to db and process expired session infos.
    */
@@ -70,8 +74,8 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     Assert.notNull(sessioninfoBuilder, "sessioninfoBuilder must set");
     SessionCleanerTask sessionCleanerTask = new SessionCleanerTask(this);
     sessionCleanerTask.setEntityDao(entityDao);
-    // 下一次间隔开始清理，不要浪费启动时间
-    new Timer("beangle-session-cleaner", true).schedule(sessionCleanerTask,
+    // 下一次间隔开始清理，不浪费启动时间
+    new Timer("Beangle Session Cleaner", true).schedule(sessionCleanerTask,
         new Date(System.currentTimeMillis() + updateInterval), updateInterval);
   }
 
@@ -104,8 +108,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     OqlBuilder<SessionStatus> builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoType().getName(),
         "info");
     builder.where("info.id=:sessionid", sessionid)
-        .select("new org.beangle.security.core.session.SessionStatus(info.username,info.expiredAt)")
-        .cacheable();
+        .select("new " + SessionStatus.class.getName() + "(info.username,info.expiredAt)").cacheable();
     List<SessionStatus> infos = entityDao.search(builder);
     if (infos.isEmpty()) return null;
     else return infos.get(0);
@@ -146,13 +149,17 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     }
   }
 
-  public void expire(String sessionId) {
+  public boolean expire(String sessionId) {
     Sessioninfo info = getSessioninfo(sessionId);
     if (null != info) {
-      controller.onLogout(info);
-      info.expireNow();
-      entityDao.saveOrUpdate(info);
+      if (!info.isExpired()) {
+        controller.onLogout(info);
+        info.expireNow();
+        entityDao.saveOrUpdate(info);
+        return true;
+      }
     }
+    return false;
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -287,20 +294,23 @@ class SessionCleanerTask extends TimerTask {
     Stopwatch watch = new Stopwatch().start();
     logger.debug("clean up expired or over maxOnlineTime session start ...");
     Calendar calendar = Calendar.getInstance();
-    OqlBuilder<? extends Sessioninfo> builder = OqlBuilder.from(registry.getSessioninfoBuilder()
-        .getSessioninfoType(), "info");
-    builder.where("info.lastAccessAt is null or info.lastAccessAt<:givenTime",
-        Dates.rollMinutes(calendar.getTime(), -expiredTime));
-    List<? extends Sessioninfo> infos = entityDao.search(builder);
-    int removed = 0;
-    for (Sessioninfo info : infos) {
-      registry.remove(info.getId());
-      removed++;
+    try {
+      OqlBuilder<? extends Sessioninfo> builder = OqlBuilder.from(registry.getSessioninfoBuilder()
+          .getSessioninfoType(), "info");
+      builder.where(
+          "info.lastAccessAt is null or info.lastAccessAt<:givenTime or info.expiredAt is not null",
+          Dates.rollMinutes(calendar.getTime(), -expiredTime));
+      List<? extends Sessioninfo> infos = entityDao.search(builder);
+      int removed = 0;
+      for (Sessioninfo info : infos) {
+        registry.remove(info.getId());
+        removed++;
+      }
+      if (removed > 0) logger.info("removed {} expired sessions in {}", removed, watch);
+      registry.getController().stat();
+    } catch (Exception e) {
+      logger.error("Beangle Session Cleaner Operation Failure.", e);
     }
-    if (removed > 0 || watch.elapsedMillis() > 50) {
-      logger.info("removed {} expired sessions in {}", removed, watch);
-    }
-    registry.getController().stat();
   }
 
   public void setEntityDao(EntityDao entityDao) {

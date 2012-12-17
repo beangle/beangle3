@@ -29,6 +29,7 @@ import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.ObjectAndType;
 import org.beangle.commons.entity.metadata.Populator;
 import org.beangle.commons.entity.metadata.Type;
+import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.reflect.Reflections;
 import org.slf4j.Logger;
@@ -182,16 +183,15 @@ public class ConvertPopulatorBean implements Populator {
               if (null == value) {
                 copyValue(parentAttr, null, entity);
               } else {
-                Object foreignValue = PropertyUtils.getProperty(entity, attr);
-                // 如果外键已经有值
-                if (null != foreignValue) {
-                  if (!foreignValue.toString().equals(value.toString())) {
+                Object oldValue = PropertyUtils.getProperty(entity, attr);
+                Object newValue = convert(ot.getType(), foreignKey, value);
+                if (!Objects.equals(oldValue, newValue)) {
+                  // 如果外键已经有值
+                  if (null != oldValue) {
                     copyValue(parentAttr, null, entity);
                     initProperty(entity, type, parentAttr);
-                    setProperty(entity, attr, convert(ot.getType(), foreignKey, value));
                   }
-                } else {
-                  copyValue(attr, value, entity);
+                  setProperty(entity, attr, newValue);
                 }
               }
             } else {

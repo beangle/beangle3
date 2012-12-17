@@ -32,7 +32,6 @@ import org.testng.annotations.Test;
 public class ReflectorTest {
 
   public void testGet() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-    // Method a = getterMethod(RoleBean.class, "parent");
     Assert.assertTrue(Integer.class.equals(Reflections.getPropertyType(RoleBean.class, "id")));
     Assert.assertTrue(Role.class.equals(Reflections.getPropertyType(RoleBean.class, "parent")));
     PropertyUtils.setProperty(new RoleBean(), "id", 1);

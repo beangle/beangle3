@@ -116,7 +116,7 @@ public final class Model {
    * @param params a {@link java.util.Map} object.
    * @param entity a {@link java.lang.Object} object.
    */
-  public static void populate(Map<String, Object> params, Object entity) {
+  public static void populate(Object entity, Map<String, Object> params) {
     meta.getPopulator().populate(entity, meta.getEntityType(entity.getClass()), params);
   }
 

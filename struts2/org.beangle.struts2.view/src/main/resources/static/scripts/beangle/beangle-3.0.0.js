@@ -72,58 +72,64 @@
     },
     
     Go : function(url,target){
-        jQuery.ajax({
-            url: url,cache:false,
-            type: "GET",dataType: "html",
-            complete: function( jqXHR, status ) {
-                target="#"+target;
-                if(jQuery(target).html().length>0){
-                    bg.history.snapshot();
-                    History.pushState({content:jqXHR.responseText,container:target},"",url);
-                }else{
-                    var state=History.getState();
-                    History.replaceState({content:jqXHR.responseText,container:target,updatedAt:(new Date()).getTime()},state.title,state.url);
-                    jQuery(target).html(jqXHR.responseText);
-                }
-                beangle.hideAjaxMessage();
-            },
-            beforeSend: beangle.displayAjaxMessage
-        });
+      jQuery.ajax({
+        url: url,cache:false,
+        type: "GET",dataType: "html",
+        complete: function( jqXHR, status ) {
+          target="#"+target;
+          if(jQuery(target).html().length>0){
+            bg.history.snapshot();
+            History.pushState({content:jqXHR.responseText,container:target},"",url);
+          }else{
+            var state=History.getState();
+            History.replaceState({content:jqXHR.responseText,container:target,updatedAt:(new Date()).getTime()},state.title,state.url);
+            jQuery(target).html(jqXHR.responseText);
+          }
+          beangle.hideAjaxMessage();
+        },
+        beforeSend: beangle.displayAjaxMessage
+      });
     },
     snapshot:function(){
-        var state = History.getState();
-        if(state.data.content){
-            var _t = [];
-            jQuery(state.data.container +' .box:checked').each(function(index, e) {_t[_t.length] = e.value;});
-            state.data.boxes=_t;
-            state.updatedAt=(new Date()).getTime();
-            if(_t.length>0) History.replaceState(state.data,state.title,state.url);
-        }
+      var state = History.getState();
+      if(state.data.content){
+        var _t = [];
+        jQuery(state.data.container +' .box:checked').each(function(index, e) {_t[_t.length] = e.value;});
+        state.data.boxes=_t;
+        state.updatedAt=(new Date()).getTime();
+        if(_t.length>0) History.replaceState(state.data,state.title,state.url);
+      }
     },
     applyState:function(state){
-        if(state.data.boxes){
-            jQuery(state.data.boxes).each(function(index, value) {
-                jQuery(state.data.container +' .box[value=' + value + ']').attr('checked', 'checked'); 
-            });
-        }
+      if(state.data.boxes){
+        jQuery(state.data.boxes).each(function(index, value) {
+          jQuery(state.data.container +' .box[value=' + value + ']').attr('checked', 'checked'); 
+        });
+      }
     },
     submit : function(form,action,target){
         if(jQuery.type(form)=="string" && form.indexOf("#")!=0){
-            form = "#" + form;
+          form = "#" + form;
         }
         if(jQuery.type(target)=="string" && target.indexOf("#")!=0){
-            target = "#" + target;    
+          target = "#" + target;    
         }
         bg.require("jquery.form");
         bg.displayAjaxMessage();
-        jQuery(form).ajaxForm(function(result,message,response) {
-            if(message==="success" && response.status==200 && response.readyState==4){
-                bg.history.snapshot();
-                History.pushState({content:result,container:target},"",action);
-            }
-            bg.hideAjaxMessage();
-            return false; 
-        });
+        function showResult(result,message,response)  {
+          bg.history.snapshot();
+          History.pushState({content:result,container:target},"",action);
+          bg.hideAjaxMessage();
+          return false;
+        }
+        function showError(response, statusText)  {
+          var responseText = response.responseText;
+          //if(responseText.indexOf('<body>'))
+          jQuery(target).html(responseText);
+          bg.hideAjaxMessage();
+          return false; 
+        }
+        jQuery(form).ajaxForm({success:showResult,error:showError});
     }
   };
 
@@ -206,9 +212,7 @@
   beangle.extend({
     assert:{
       notNull : function(object,message){
-        if(null==object){
-          alert(message);
-        }
+        if(null==object)  alert(message);
       }
     }
   });
@@ -243,11 +247,8 @@
   beangle.extend({
     event:{
       portable: function (e){
-        if(!e){
-          return window.event;
-        }else{
-          return e;
-        }
+        if(!e) return window.event;
+        else return e;
       },
       /**获得事件背后的元素*/
       getTarget: function (e){

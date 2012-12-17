@@ -22,12 +22,13 @@ import java.util.List;
 
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.session.model.SessionProfileBean;
+import org.beangle.security.core.session.category.CategoryProfileProvider;
 
 /**
  * @author chaostone
  * @version $Id: CategoryProfileService.java Jul 14, 2011 8:47:30 AM chaostone $
  */
-public interface SessionProfileService {
+public interface SessionProfileService extends CategoryProfileProvider {
 
   void saveOrUpdate(List<SessionProfileBean> profiles);
 

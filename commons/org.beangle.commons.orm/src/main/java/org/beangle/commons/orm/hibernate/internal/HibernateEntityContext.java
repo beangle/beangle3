@@ -34,6 +34,7 @@ import org.hibernate.metadata.CollectionMetadata;
 import org.hibernate.proxy.HibernateProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 public class HibernateEntityContext extends AbstractEntityContext {
 
@@ -50,21 +51,21 @@ public class HibernateEntityContext extends AbstractEntityContext {
     }
   }
 
+  /**
+   * Build context from session factory
+   */
   public void initFrom(SessionFactory sessionFactory) {
-    if (null != sessionFactory && entityTypes.isEmpty()) {
-      Stopwatch watch = new Stopwatch().start();
-      Map<String, ClassMetadata> classMetadatas = sessionFactory.getAllClassMetadata();
-      for (Iterator<ClassMetadata> iter = classMetadatas.values().iterator(); iter.hasNext();) {
-        ClassMetadata cm = (ClassMetadata) iter.next();
-        buildEntityType(sessionFactory, cm.getEntityName());
-      }
-      logger.info("Find {} entities,{} collections from hibernate in {}", new Object[] { entityTypes.size(),
-          collectionTypes.size(), watch });
-      if (logger.isDebugEnabled()) {
-        loggerTypeInfo();
-      }
-      collectionTypes.clear();
+    Assert.notNull(sessionFactory);
+    Stopwatch watch = new Stopwatch().start();
+    Map<String, ClassMetadata> classMetadatas = sessionFactory.getAllClassMetadata();
+    for (Iterator<ClassMetadata> iter = classMetadatas.values().iterator(); iter.hasNext();) {
+      ClassMetadata cm = (ClassMetadata) iter.next();
+      buildEntityType(sessionFactory, cm.getEntityName());
     }
+    logger.info("Find {} entities,{} collections from hibernate in {}", new Object[] { entityTypes.size(),
+        collectionTypes.size(), watch });
+    if (logger.isDebugEnabled()) loggerTypeInfo();
+    collectionTypes.clear();
   }
 
   private void loggerTypeInfo() {

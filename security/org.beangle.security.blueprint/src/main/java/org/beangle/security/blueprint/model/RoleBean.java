@@ -83,8 +83,9 @@ public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements 
     setId(id);
   }
 
-  public RoleBean(Integer id, String name) {
+  public RoleBean(Integer id, String code, String name) {
     setId(id);
+    this.code = code;
     this.name = name;
   }
 

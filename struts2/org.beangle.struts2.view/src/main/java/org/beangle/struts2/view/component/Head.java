@@ -24,8 +24,24 @@ public class Head extends ClosingUIBean {
 
   private boolean loadui = true;
 
+  private boolean compressed = true;
+
   public Head(ValueStack stack) {
     super(stack);
+  }
+
+  @Override
+  protected void evaluateParams() {
+    String devMode = getRequestParameter("devMode");
+    if (null != devMode) compressed = !("true".equals(devMode) || "on".equals(devMode));
+  }
+
+  public boolean isCompressed() {
+    return compressed;
+  }
+
+  public void setCompressed(boolean compress) {
+    this.compressed = compress;
   }
 
   public boolean isLoadui() {

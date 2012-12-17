@@ -149,7 +149,15 @@ public final class BeanConfig {
       }
       return this;
     }
-
+    public DefinitionBinder proxy(String property, Definition target) {
+      config.add(target);
+      for (Definition def : beans) {
+        def.targetClass = target.clazz;
+        def.properties.put(property, new ReferenceValue(target.beanName));
+      }
+      return this;
+    }
+    
     public DefinitionBinder primary() {
       for (Definition def : beans)
         def.primary = true;

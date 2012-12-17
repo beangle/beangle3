@@ -30,6 +30,11 @@ import org.beangle.security.blueprint.User;
 public interface RoleService {
 
   /**
+   * Return role by id
+   */
+  Role get(Integer id);
+
+  /**
    * 创建一个角色
    * 
    * @param creator
@@ -64,4 +69,10 @@ public interface RoleService {
    */
   boolean isAdmin(User user, Role role);
 
+  /**
+   * 查询根用户
+   * 
+   * @return
+   */
+  List<Role> getRootRoles();
 }

@@ -49,11 +49,11 @@ public class SessionProfileBean extends IntegerIdObject implements CategoryProfi
 
   /** 单用户的同时最大会话数 */
   @NotNull
-  protected int userMaxSessions = 1;
+  protected short userMaxSessions = 1;
 
   /** 不操作过期时间(以分为单位) */
   @NotNull
-  protected int inactiveInterval;
+  protected short inactiveInterval;
 
   public SessionProfileBean() {
     super();
@@ -61,18 +61,12 @@ public class SessionProfileBean extends IntegerIdObject implements CategoryProfi
 
   /**
    * Quick construct profile
-   * 
-   * @param id
-   * @param category
-   * @param capacity
-   * @param userMaxSessions
-   * @param inactiveInterval
    */
-  public SessionProfileBean(Integer id, String category, int capacity, int userMaxSessions,
-      int inactiveInterval) {
+  public SessionProfileBean(Integer id, Integer roleId,String roleCode,String roleName, int capacity, short userMaxSessions,
+      short inactiveInterval) {
     super();
     this.id = id;
-    this.role = new RoleBean(null, category);
+    this.role = new RoleBean(roleId,roleCode, roleName);
     this.capacity = capacity;
     this.userMaxSessions = userMaxSessions;
     this.inactiveInterval = inactiveInterval;
@@ -98,19 +92,19 @@ public class SessionProfileBean extends IntegerIdObject implements CategoryProfi
     this.capacity = max;
   }
 
-  public int getInactiveInterval() {
+  public short getInactiveInterval() {
     return inactiveInterval;
   }
 
-  public void setInactiveInterval(int inactiveInterval) {
+  public void setInactiveInterval(short inactiveInterval) {
     this.inactiveInterval = inactiveInterval;
   }
 
-  public int getUserMaxSessions() {
+  public short getUserMaxSessions() {
     return userMaxSessions;
   }
 
-  public void setUserMaxSessions(int maxSessions) {
+  public void setUserMaxSessions(short maxSessions) {
     this.userMaxSessions = maxSessions;
   }
 

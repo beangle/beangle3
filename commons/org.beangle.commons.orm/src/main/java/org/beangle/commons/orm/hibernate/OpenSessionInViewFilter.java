@@ -34,14 +34,28 @@ import org.springframework.context.ApplicationContext;
 
 public class OpenSessionInViewFilter extends OncePerRequestFilter implements LazyInitializingHook {
 
+  public static final String DEFAULT_SESSION_FACTORY_BEAN_NAME = "sessionFactory";
+
+  private String sessionFactoryBeanName = DEFAULT_SESSION_FACTORY_BEAN_NAME;
+
   private SessionFactory sessionFactory;
+
+  /**
+   * Set the bean name of the SessionFactory to fetch from Spring's
+   * root application context. Default is "sessionFactory".
+   * 
+   * @see #DEFAULT_SESSION_FACTORY_BEAN_NAME
+   */
+  public void setSessionFactoryBeanName(String sessionFactoryBeanName) {
+    this.sessionFactoryBeanName = sessionFactoryBeanName;
+  }
 
   @Override
   protected void initFilterBean() throws ServletException {
     super.initFilterBean();
     ApplicationContext context = ContextLoader.getContext(getServletContext());
     if (null != context) {
-      setSessionFactory(context.getBean(SessionFactory.class));
+      setSessionFactory(context.getBean(sessionFactoryBeanName, SessionFactory.class));
     } else {
       ContextLoader.getLazyInitialHooks(getServletContext()).add(this);
     }

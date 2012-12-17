@@ -168,7 +168,7 @@ public abstract class EntityActionSupport extends ActionSupport {
       entity = (Entity<?>) populate(entityName, shortName);
     } else {
       entity = getModel(entityName, entityId);
-      populate(Params.sub(shortName), entity, entityName);
+      populate(entity, entityName, Params.sub(shortName));
     }
     return entity;
   }

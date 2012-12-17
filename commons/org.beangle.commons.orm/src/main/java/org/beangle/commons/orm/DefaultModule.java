@@ -58,7 +58,7 @@ public class DefaultModule extends AbstractBindModule {
         .property("hibernateProperties", ref("hibernateConfig"))
         .property("configLocations", "classpath*:META-INF/hibernate.cfg.xml");
 
-    bind(HibernateTransactionManager.class);
+    bind("transactionManager",HibernateTransactionManager.class);
 
     bind("baseTransactionProxy", TransactionProxyFactoryBean.class).setAbstract().property(
         "transactionAttributes",

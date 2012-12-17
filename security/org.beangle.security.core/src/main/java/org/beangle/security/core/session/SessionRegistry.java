@@ -46,10 +46,11 @@ public interface SessionRegistry {
 
   /**
    * 过期指定会话
+   * Return true is expire success
    * 
    * @param sessionid
    */
-  void expire(String sessionid);
+  boolean expire(String sessionid);
 
   /**
    * 查询某帐号的在线信息

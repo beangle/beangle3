@@ -18,10 +18,15 @@
  */
 package org.beangle.commons.orm.hibernate.internal;
 
+import java.util.Map;
+
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.entity.metadata.impl.DefaultModelMeta;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 /**
  * Building model from Hibernate.
@@ -29,19 +34,24 @@ import org.hibernate.SessionFactory;
  * @author chaostone
  * @since 2.0
  */
-public class HibernateModelMeta extends DefaultModelMeta implements Initializing {
+public class HibernateModelMeta extends DefaultModelMeta implements ApplicationContextAware, Initializing {
 
-  private SessionFactory sessionFactory;
+  ApplicationContext context;
 
   public void init() throws Exception {
     HibernateEntityContext entityContext = new HibernateEntityContext();
-    entityContext.initFrom(sessionFactory);
+    Map<String, SessionFactory> factories = context.getBeansOfType(SessionFactory.class);
+    for (Map.Entry<String, SessionFactory> entry : factories.entrySet()) {
+      entityContext.initFrom(entry.getValue());
+    }
     setContext(entityContext);
     Model.setMeta(this);
+    context = null;
   }
 
-  public void setSessionFactory(SessionFactory sessionFactory) {
-    this.sessionFactory = sessionFactory;
+  @Override
+  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    context = applicationContext;
   }
 
 }

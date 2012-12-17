@@ -63,6 +63,6 @@ public interface SessionController {
    * @param auth
    * @return None or inactive interval
    */
-  Option<Integer> getInactiveInterval(Authentication auth);
+  Option<Short> getInactiveInterval(Authentication auth);
 
 }

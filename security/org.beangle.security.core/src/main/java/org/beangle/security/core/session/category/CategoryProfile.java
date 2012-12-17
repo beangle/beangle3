@@ -44,11 +44,11 @@ public interface CategoryProfile {
   /**
    * Max session for same account
    */
-  int getUserMaxSessions();
+  short getUserMaxSessions();
 
   /**
    * Max inactiveInterval in minutes
    */
-  int getInactiveInterval();
+  short getInactiveInterval();
 
 }

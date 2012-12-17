@@ -25,20 +25,18 @@ import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.session.model.SessionProfileBean;
 import org.beangle.security.core.session.category.CategoryProfile;
-import org.beangle.security.core.session.category.CategoryProfileProvider;
 import org.beangle.security.core.session.category.CategoryProfileUpdateEvent;
 
 /**
  * @author chaostone
  * @version $Id: CategoryProfileProviderImpl.java Jul 11, 2011 10:50:36 AM chaostone $
  */
-public class SessionProfileServiceImpl extends BaseServiceImpl implements CategoryProfileProvider,
-    SessionProfileService {
+public class SessionProfileServiceImpl extends BaseServiceImpl implements SessionProfileService {
 
   public List<? extends CategoryProfile> getProfiles() {
     return entityDao.search(OqlBuilder.from(SessionProfileBean.class, "p").select(
         "new " + SessionProfileBean.class.getName()
-            + "(p.id,p.role.name,p.capacity,p.userMaxSessions,p.inactiveInterval)"));
+            + "(p.id,p.role.id,p.role.code,p.role.name,p.capacity,p.userMaxSessions,p.inactiveInterval)"));
   }
 
   public boolean hasProfile(Role role) {
@@ -56,7 +54,7 @@ public class SessionProfileServiceImpl extends BaseServiceImpl implements Catego
   public CategoryProfile getProfile(String category) {
     OqlBuilder<SessionProfileBean> builder = OqlBuilder.from(SessionProfileBean.class, "p");
     builder.select("new " + SessionProfileBean.class.getName()
-        + "(p.id,p.role.name,p.capacity,p.userMaxSessions,p.inactiveInterval)");
+        + "(p.id,p.role.id,p.role.code,p.role.name,p.capacity,p.userMaxSessions,p.inactiveInterval)");
     builder.where("p.role.name=:category", category).cacheable();
     return entityDao.uniqueResult(builder);
   }

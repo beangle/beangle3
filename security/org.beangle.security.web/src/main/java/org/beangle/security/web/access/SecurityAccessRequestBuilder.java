@@ -38,7 +38,7 @@ public class SecurityAccessRequestBuilder extends DefaultAccessRequestBuilder {
     HttpSession session = request.getSession();
     SecurityContext context = (SecurityContext) session
         .getAttribute(HttpSessionContextFilter.SECURITY_CONTEXT_KEY);
-    if (null == context) return null;
+    if (null == context || null == context.getAuthentication()) return null;
     else return context.getAuthentication().getName();
   }
 

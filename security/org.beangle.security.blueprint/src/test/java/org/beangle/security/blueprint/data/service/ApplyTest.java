@@ -74,6 +74,6 @@ public class ApplyTest {
         + "where ((exists(from user.members as m where m.role in(:roles))))");
     Assert.assertNotNull(params);
     Assert.assertEquals(params.size(), 1);
-    Assert.assertEquals(params.get("roles"), CollectUtils.newArrayList(new RoleBean(1, "role1")));
+    Assert.assertEquals(params.get("roles"), CollectUtils.newArrayList(new RoleBean(1,"role1", "role1")));
   }
 }

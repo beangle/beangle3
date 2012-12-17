@@ -423,7 +423,7 @@ public class ActionSupport implements TextResourceProvider {
   }
 
   protected final void populate(Object obj, String shortName) {
-    Model.populate(Params.sub(shortName), obj);
+    Model.populate(obj, Params.sub(shortName));
   }
 
   protected final Object populate(String entityName) {
@@ -442,14 +442,14 @@ public class ActionSupport implements TextResourceProvider {
     return PopulateHelper.populate(obj, entityName, shortName);
   }
 
-  protected final void populate(Map<String, Object> params, Entity<?> entity, String entityName) {
+  protected final void populate(Entity<?> entity, String entityName, Map<String, Object> params) {
     Assert.notNull(entity, "Cannot populate to null.");
     Model.getPopulator().populate(entity, Model.getType(entityName), params);
   }
 
-  protected final void populate(Map<String, Object> params, Entity<?> entity) {
+  protected final void populate(Entity<?> entity, Map<String, Object> params) {
     Assert.notNull(entity, "Cannot populate to null.");
-    Model.populate(params, entity);
+    Model.populate(entity, params);
   }
 
   // query------------------------------------------------------

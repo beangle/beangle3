@@ -65,19 +65,6 @@ public class SessionStat extends IntegerIdObject {
     this.capacity = capacity;
   }
 
-  public boolean allocate(String sessionId) {
-    if (online < capacity) {
-      online++;
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public void free(String sessionId) {
-    if (online > 0) online--;
-  }
-
   public boolean hasCapacity() {
     return online < capacity;
   }
