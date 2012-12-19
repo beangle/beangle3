@@ -91,23 +91,10 @@ public interface SessionRegistry {
    * 
    * @param sessionid
    */
-  void access(String sessionid, String resource, long accessAt);
+  void access(String sessionid, long accessAt);
 
   /**
    * 查询控制器
    */
   SessionController getController();
-
-  /**
-   * 获取sessinoinfobuilder
-   */
-  SessioninfoBuilder getSessioninfoBuilder();
-
-  /**
-   * 获取当前session访问的资源
-   * 
-   * @param sessionid
-   */
-  String getResource(String sessionid);
-
 }

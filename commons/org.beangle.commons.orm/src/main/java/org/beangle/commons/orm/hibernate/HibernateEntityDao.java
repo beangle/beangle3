@@ -94,23 +94,23 @@ public class HibernateEntityDao implements EntityDao {
   }
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> getAll(Class<T> clazz) {
+  public <T extends Entity<?>> List<T> getAll(Class<T> clazz) {
     String hql = "from " + modelMeta.getEntityType(clazz).getEntityName();
     Query query = getSession().createQuery(hql);
     query.setCacheable(true);
     return query.list();
   }
 
-  public <T extends Entity<ID>, ID extends Serializable> List<T> get(Class<T> entityClass, ID[] values) {
-    return get(entityClass, "id", (Object[]) values);
+  public <T extends Entity<ID>, ID extends Serializable> List<T> get(Class<T> clazz, ID[] values) {
+    return get(clazz, "id", (Object[]) values);
   }
 
-  public <T extends Entity<ID>, ID extends Serializable> List<T> get(Class<T> entityClass, Collection<ID> values) {
-    return get(entityClass, "id", values.toArray());
+  public <T extends Entity<ID>, ID extends Serializable> List<T> get(Class<T> clazz, Collection<ID> values) {
+    return get(clazz, "id", values.toArray());
   }
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> get(Class<T> entityClass, String keyName, Object... values) {
+  public <T extends Entity<?>> List<T> get(Class<T> entityClass, String keyName, Object... values) {
     if (entityClass == null || Strings.isEmpty(keyName) || values == null || values.length == 0) { return Collections
         .emptyList(); }
     String entityName = modelMeta.getEntityType(entityClass).getEntityName();
@@ -118,10 +118,10 @@ public class HibernateEntityDao implements EntityDao {
   }
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> get(Class<T> entityClass, String keyName, Collection<?> values) {
-    if (entityClass == null || Strings.isEmpty(keyName) || values == null || values.isEmpty()) { return Collections
+  public <T extends Entity<?>> List<T> get(Class<T> clazz, String keyName, Collection<?> values) {
+    if (clazz == null || Strings.isEmpty(keyName) || values == null || values.isEmpty()) { return Collections
         .emptyList(); }
-    String entityName = modelMeta.getEntityType(entityClass).getEntityName();
+    String entityName = modelMeta.getEntityType(clazz).getEntityName();
     return (List<T>) get(entityName, keyName, values.toArray());
   }
 
@@ -140,9 +140,7 @@ public class HibernateEntityDao implements EntityDao {
       int i = 0;
       while (i < values.length) {
         int end = i + 500;
-        if (end > values.length) {
-          end = values.length;
-        }
+        if (end > values.length) end = values.length;
         parameterMap.put("keyName", Arrays.subarray(values, i, end));
         rs.addAll(search(query.params(parameterMap).build()));
         i += 500;
@@ -151,22 +149,22 @@ public class HibernateEntityDao implements EntityDao {
     }
   }
 
-  public <T> List<T> get(Class<T> entity, String[] attrs, Object... values) {
+  public <T extends Entity<?>> List<T> get(Class<T> clazz, String[] attrs, Object... values) {
     Map<String, Object> params = CollectUtils.newHashMap();
     for (int i = 0; i < attrs.length; i++) {
       params.put(attrs[i], values[i]);
     }
-    return get(entity, params);
+    return get(clazz, params);
   }
 
   /**
-   * @param entity
+   * @param clazz
    * @param parameterMap
    * @return data list
    */
-  public <T> List<T> get(Class<T> entity, final Map<String, Object> parameterMap) {
-    if (entity == null || parameterMap == null || parameterMap.isEmpty()) { return Collections.emptyList(); }
-    String entityName = entity.getName();
+  public <T extends Entity<?>> List<T> get(Class<T> clazz, final Map<String, Object> parameterMap) {
+    if (clazz == null || parameterMap == null || parameterMap.isEmpty()) { return Collections.emptyList(); }
+    String entityName = clazz.getName();
     StringBuilder hql = new StringBuilder();
     hql.append("select entity from ").append(entityName).append(" as entity ").append(" where ");
 

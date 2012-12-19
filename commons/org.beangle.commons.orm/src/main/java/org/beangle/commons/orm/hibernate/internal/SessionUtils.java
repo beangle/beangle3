@@ -22,8 +22,11 @@ import static org.springframework.transaction.support.TransactionSynchronization
 import static org.springframework.transaction.support.TransactionSynchronizationManager.getResource;
 import static org.springframework.transaction.support.TransactionSynchronizationManager.unbindResource;
 
+import java.util.Map;
+
 import javax.sql.DataSource;
 
+import org.beangle.commons.collection.CollectUtils;
 import org.hibernate.*;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.exception.ConstraintViolationException;
@@ -46,7 +49,7 @@ public final class SessionUtils {
 
   private static Logger logger = LoggerFactory.getLogger(SessionUtils.class);
 
-  private static final ThreadLocal<Boolean> threadBinding = new ThreadLocal<Boolean>();
+  private static final ThreadLocal<Map<SessionFactory, Boolean>> threadBinding = new ThreadLocal<Map<SessionFactory, Boolean>>();
 
   public static DataSource getDataSource(SessionFactory sessionFactory) {
     if (sessionFactory instanceof SessionFactoryImplementor) {
@@ -56,16 +59,24 @@ public final class SessionUtils {
     return null;
   }
 
-  public static void enableThreadBinding() {
-    threadBinding.set(Boolean.TRUE);
+  public static void enableThreadBinding(SessionFactory sessionFactory) {
+    Map<SessionFactory, Boolean> maps = threadBinding.get();
+    if (null == maps) {
+      maps = CollectUtils.newHashMap();
+      threadBinding.set(maps);
+    }
+    maps.put(sessionFactory, Boolean.TRUE);
   }
 
-  public static boolean isEnableThreadBinding() {
-    return null != threadBinding.get();
+  public static boolean isEnableThreadBinding(SessionFactory sessionFactory) {
+    Map<SessionFactory, Boolean> maps = threadBinding.get();
+    if (null == maps) return false;
+    else return null != maps.get(sessionFactory);
   }
 
-  public static void disableThreadBinding() {
-    threadBinding.remove();
+  public static void disableThreadBinding(SessionFactory sessionFactory) {
+    Map<SessionFactory, Boolean> maps = threadBinding.get();
+    if (null != maps) maps.remove(sessionFactory);
   }
 
   public static SessionHolder openSession(SessionFactory sessionFactory)
@@ -77,7 +88,7 @@ public final class SessionUtils {
         session = sessionFactory.openSession();
         session.setFlushMode(FlushMode.MANUAL);
         holder = new SessionHolder(session);
-        if (null != threadBinding.get()) bindResource(sessionFactory, holder);
+        if (isEnableThreadBinding(sessionFactory)) bindResource(sessionFactory, holder);
       }
       return holder;
     } catch (HibernateException ex) {

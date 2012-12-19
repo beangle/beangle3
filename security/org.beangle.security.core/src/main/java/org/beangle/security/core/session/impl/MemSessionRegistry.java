@@ -162,7 +162,7 @@ public class MemSessionRegistry implements SessionRegistry, Initializing {
     return sessioninfoBuilder;
   }
 
-  public void access(String sessionid, String resource, long beginAt) {
+  public void access(String sessionid, long beginAt) {
     // DO nothing
   }
 

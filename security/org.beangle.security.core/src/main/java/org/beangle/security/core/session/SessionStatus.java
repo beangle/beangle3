@@ -18,6 +18,7 @@
  */
 package org.beangle.security.core.session;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -26,12 +27,16 @@ import java.util.Date;
  * @author chaostone
  * @version $Id: SessionStatus.java Jul 14, 2011 7:11:39 PM chaostone $
  */
-public final class SessionStatus {
+public final class SessionStatus implements Serializable{
+  
+  private static final long serialVersionUID = -1110252524091983477L;
 
   final String username;
 
-  final Date expiredAt;
+  Date expiredAt;
 
+  long lastAccessedTime;
+  
   public SessionStatus(Sessioninfo info) {
     super();
     this.username = info.getUsername();
@@ -52,7 +57,20 @@ public final class SessionStatus {
     return expiredAt;
   }
 
+  public void setExpiredAt(Date expiredAt) {
+    this.expiredAt = expiredAt;
+  }
+
   public boolean isExpired() {
     return null != expiredAt;
   }
+
+  public long getLastAccessedTime() {
+    return lastAccessedTime;
+  }
+
+  public void setLastAccessedTime(long lastAccessedTime) {
+    this.lastAccessedTime = lastAccessedTime;
+  }
+  
 }

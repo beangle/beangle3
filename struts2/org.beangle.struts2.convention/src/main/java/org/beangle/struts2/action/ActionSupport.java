@@ -198,7 +198,7 @@ public class ActionSupport implements TextResourceProvider {
   }
 
   protected final String getTextInternal(String msgKey, Object... args) {
-    if (null == msgKey) return null;
+    if (Strings.isEmpty(msgKey)) return null;
     if (Chars.isAsciiAlpha(msgKey.charAt(0)) && msgKey.indexOf('.') > 0) {
       return getText(msgKey, msgKey, args);
     } else {

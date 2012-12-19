@@ -41,6 +41,7 @@ public class MemAccessMonitor implements AccessMonitor, EventListener<HttpSessio
 
   private AccessLogger logger;
   private AccessRequestBuilder builder;
+  // sessionid-->request quene
   private Map<String, List<AccessRequest>> requests = CollectUtils.newConcurrentHashMap();
 
   public AccessRequest begin(HttpServletRequest request) {

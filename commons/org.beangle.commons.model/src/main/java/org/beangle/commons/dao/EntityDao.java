@@ -60,7 +60,7 @@ public interface EntityDao {
    * 
    * @param clazz
    */
-  <T> List<T> getAll(Class<T> clazz);
+  <T extends Entity<?>> List<T> getAll(Class<T> clazz);
 
   /**
    * 根据属性列举实体
@@ -81,36 +81,36 @@ public interface EntityDao {
   /**
    * 根据属性列举实体
    * 
-   * @param entityClass
+   * @param clazz
    * @param keyName
    * @param values
    */
-  <T> List<T> get(Class<T> entityClass, String keyName, Object... values);
+  <T extends Entity<?>> List<T> get(Class<T> clazz, String keyName, Object... values);
 
   /**
    * 根据属性列举实体
    * 
    * @param <T>
-   * @param entityClass
+   * @param clazz
    * @param keyName
    * @param values
    */
-  <T> List<T> get(Class<T> entityClass, String keyName, Collection<?> values);
+  <T extends Entity<?>> List<T> get(Class<T> clazz, String keyName, Collection<?> values);
 
   /**
    * @param <T>
-   * @param entityClass
+   * @param clazz
    * @param attrs
    * @param values
    */
-  <T> List<T> get(Class<T> entityClass, String[] attrs, Object... values);
+  <T extends Entity<?>> List<T> get(Class<T> clazz, String[] attrs, Object... values);
 
   /**
    * @param <T>
-   * @param entityClass
+   * @param clazz
    * @param parameterMap
    */
-  <T> List<T> get(Class<T> entityClass, Map<String, Object> parameterMap);
+  <T extends Entity<?>> List<T> get(Class<T> clazz, Map<String, Object> parameterMap);
 
   /**
    * 根据属性列举实体

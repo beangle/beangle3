@@ -37,6 +37,7 @@ import org.beangle.security.core.Authentication;
 import org.beangle.security.core.context.SecurityContextHolder;
 import org.beangle.security.core.session.SessionRegistry;
 import org.beangle.security.core.session.SessionStatus;
+import org.beangle.security.web.auth.WebAuthenticationDetails;
 import org.beangle.security.web.auth.logout.LogoutHandlerStack;
 import org.beangle.security.web.auth.logout.SecurityContextLogoutHandler;
 
@@ -78,7 +79,14 @@ public class ConcurrentSessionFilter extends GenericHttpFilter {
    */
   protected boolean shouldCare(HttpServletRequest request) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    return null != auth && !(AnonymousAuthentication.class.isAssignableFrom(auth.getClass()));
+    boolean care = null != auth && !(AnonymousAuthentication.class.isAssignableFrom(auth.getClass()));
+    if (care) {
+      Object details = auth.getDetails();
+      if ((details instanceof WebAuthenticationDetails)) {
+        ((WebAuthenticationDetails) details).setLastAccessUri(RequestUtils.getServletPath(request));
+      }
+    }
+    return care;
   }
 
   public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
@@ -109,11 +117,7 @@ public class ConcurrentSessionFilter extends GenericHttpFilter {
         }
       }
     }
-    if (null != info) {
-      sessionRegistry.access(session.getId(), RequestUtils.getServletPath(request),
-          System.currentTimeMillis());
-    }
-
+    if (null != info) sessionRegistry.access(session.getId(), System.currentTimeMillis());
     chain.doFilter(request, response);
   }
 

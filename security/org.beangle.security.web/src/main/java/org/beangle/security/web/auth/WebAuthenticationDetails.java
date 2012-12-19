@@ -34,6 +34,8 @@ public class WebAuthenticationDetails implements SessionIdAware, Serializable {
   private String sessionId;
   private Useragent agent;
 
+  private transient String lastAccessUri;
+
   public WebAuthenticationDetails(HttpServletRequest request) {
     agent = RequestUtils.getUserAgent(request);
     HttpSession session = request.getSession(true);
@@ -72,6 +74,14 @@ public class WebAuthenticationDetails implements SessionIdAware, Serializable {
     sb.append("Operation System: ").append(agent.getOs()).append("; ");
     sb.append("Browser: ").append(agent.getBrowser());
     return sb.toString();
+  }
+
+  public String getLastAccessUri() {
+    return lastAccessUri;
+  }
+
+  public void setLastAccessUri(String lastAccessUri) {
+    this.lastAccessUri = lastAccessUri;
   }
 
 }

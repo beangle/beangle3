@@ -29,6 +29,7 @@ import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.EntityDao;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
+import org.beangle.commons.dao.query.QueryBuilder;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Dates;
@@ -56,27 +57,27 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 
   private SessioninfoBuilder sessioninfoBuilder = new SimpleSessioninfoBuilder();
 
-  protected final Map<String, AccessEntry> entries = CollectUtils.newConcurrentHashMap();
+  private Map<String, SessionStatus> statusCache = CollectUtils.newConcurrentHashMap();
 
-  long updatedAt = System.currentTimeMillis();
+  /** 默认 过期时间 30分钟 */
+  private int expiredTime = 30;
+
+  /**
+   * Default synchronize interval(30 sec) for update access time and reload expire time.
+   */
+  private int syncInterval = 30 * 1000;
 
   public void setEntityDao(EntityDao entityDao) {
     this.entityDao = entityDao;
   }
 
-  /**
-   * Default interval(5 minutes) for update access log to db and process expired session infos.
-   */
-  private int updateInterval = 5 * 60 * 1000;
-
   public void init() throws Exception {
     Assert.notNull(controller, "controller must set");
     Assert.notNull(sessioninfoBuilder, "sessioninfoBuilder must set");
-    SessionCleanerTask sessionCleanerTask = new SessionCleanerTask(this);
-    sessionCleanerTask.setEntityDao(entityDao);
+    SessionSyncTask syncTask = new SessionSyncTask(this);
     // 下一次间隔开始清理，不浪费启动时间
-    new Timer("Beangle Session Cleaner", true).schedule(sessionCleanerTask,
-        new Date(System.currentTimeMillis() + updateInterval), updateInterval);
+    new Timer("Beangle Session Synchronizer", true).schedule(syncTask, new Date(System.currentTimeMillis()
+        + syncInterval), syncInterval);
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -104,18 +105,27 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     else return infos.get(0);
   }
 
+  @Override
   public SessionStatus getSessionStatus(String sessionid) {
-    OqlBuilder<SessionStatus> builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoType().getName(),
-        "info");
-    builder.where("info.id=:sessionid", sessionid)
-        .select("new " + SessionStatus.class.getName() + "(info.username,info.expiredAt)").cacheable();
+    SessionStatus status = statusCache.get(sessionid);
+    if (null == status) {
+      status = getStatusFromDB(sessionid);
+      if (null != status) statusCache.put(sessionid, status);
+    }
+    return status;
+  }
+
+  private SessionStatus getStatusFromDB(String sessionid) {
+    OqlBuilder<SessionStatus> builder = OqlBuilder.from(getSessioninfoTypename(), "info");
+    builder.where("info.id=:sessionid", sessionid).select(
+        "new " + SessionStatus.class.getName() + "(info.username,info.expiredAt)");
     List<SessionStatus> infos = entityDao.search(builder);
     if (infos.isEmpty()) return null;
     else return infos.get(0);
   }
 
   public void register(Authentication auth, String sessionId) throws SessionException {
-    SessionStatus existed = getSessionStatus(sessionId);
+    SessionStatus existed = getStatusFromDB(sessionId);
     String principal = auth.getName();
     // 是否为重复注册
     if (null != existed && Objects.equals(existed.getUsername(), principal)) return;
@@ -134,19 +144,17 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 
   private Sessioninfo remove(String sessionId, String reason) {
     Sessioninfo info = getSessioninfo(sessionId);
-    if (null == info) {
-      return null;
-    } else {
+    if (null != info) {
       // FIXME not in a transaction
       if (null != reason) info.addRemark(reason);
       entityDao.remove(info);
       controller.onLogout(info);
-      entries.remove(info.getId());
+      statusCache.remove(info.getId());
       Object sessioninfoLog = sessioninfoBuilder.buildLog(info);
       if (null != sessioninfoLog) entityDao.save(sessioninfoLog);
       logger.debug("Remove session {} for {}", sessionId, info.getUsername());
-      return info;
     }
+    return info;
   }
 
   public boolean expire(String sessionId) {
@@ -183,138 +191,156 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     this.sessioninfoBuilder = sessioninfoBuilder;
   }
 
-  public SessioninfoBuilder getSessioninfoBuilder() {
-    return sessioninfoBuilder;
-  }
-
-  public void access(String sessionid, String resource, long accessAt) {
-    if (accessAt - updatedAt > updateInterval) {
-      new Thread(new AccessUpdaterTask(this)).start();
+  public void access(String sessionid, long accessAt) {
+    SessionStatus status = statusCache.get(sessionid);
+    if (null == status) {
+      status = getStatusFromDB(sessionid);
+      if (null != status) statusCache.put(sessionid, status);
     }
-    AccessEntry entry = entries.get(sessionid);
-    if (null == entry) entries.put(sessionid, new AccessEntry(resource, accessAt));
-    else entry.access(resource, accessAt);
+    status.setLastAccessedTime(accessAt);
   }
 
-  public String getResource(String sessionid) {
-    AccessEntry entry = entries.get(sessionid);
-    if (null == entry) return null;
-    else return entry.resource;
+  public int getSyncInterval() {
+    return syncInterval;
   }
 
-  public int getUpdateInterval() {
-    return updateInterval;
+  public void setSyncInterval(int syncInterval) {
+    this.syncInterval = syncInterval;
   }
 
-  public void setUpdateInterval(int updateInterval) {
-    this.updateInterval = updateInterval;
+  public int getExpiredTime() {
+    return expiredTime;
   }
 
-}
-
-/**
- * Last AccessAt updater Task
- * 
- * @author chaostone
- */
-class AccessUpdaterTask implements Runnable {
-
-  DbSessionRegistry registry;
-
-  public AccessUpdaterTask(DbSessionRegistry registry) {
-    super();
-    this.registry = registry;
+  public void setExpiredTime(int expiredTime) {
+    this.expiredTime = expiredTime;
   }
 
-  public void run() {
-    EntityDao entityDao = registry.getEntityDao();
-    long updatedAt = registry.updatedAt;
+  /**
+   * Reload session's expireAt time
+   */
+  public void reloadExpireAt() {
+    Stopwatch watch = new Stopwatch(true);
+    List<String> sessionIds = CollectUtils.newArrayList(statusCache.keySet());
+    if (sessionIds.isEmpty()) return;
+    Map<String, Object> parameterMap = CollectUtils.newHashMap();
+    String hql = "select id,expiredAt from " + getSessioninfoTypename() + " where id in(:ids)";
+    List<Object> results = CollectUtils.newArrayList();
+    try {
+      if (sessionIds.size() < 500) {
+        parameterMap.put("ids", sessionIds);
+        results = entityDao.search(OqlBuilder.hql(hql).params(parameterMap));
+      } else {
+        QueryBuilder<?> query = OqlBuilder.hql(hql);
+        int i = 0;
+        while (i < sessionIds.size()) {
+          int end = i + 500;
+          if (end > sessionIds.size()) end = sessionIds.size();
+          parameterMap.put("ids", sessionIds.subList(i, end));
+          results.addAll(entityDao.search(query.params(parameterMap)));
+          i += 500;
+        }
+      }
+    } catch (Exception e) {
+      logger.error("Beangle session expire time reload failure.", e);
+    }
+    for (Object result : results) {
+      Object[] data = (Object[]) result;
+      SessionStatus status = statusCache.get(data[0]);
+      if (null != status) status.setExpiredAt((Date) data[1]);
+    }
+
+    logger.debug("Reload {} session expire time in {}", results.size(), watch);
+  }
+
+  /**
+   * Synchronize last access time and expired at.
+   */
+  public void updateAccessedTime(long lastUpdateAt) {
+    Stopwatch watch = new Stopwatch(true);
     List<Object[]> arguments = CollectUtils.newArrayList();
-    for (Map.Entry<String, AccessEntry> entry : registry.entries.entrySet()) {
-      AccessEntry accessEntry = entry.getValue();
-      if (accessEntry.accessAt > updatedAt) {
-        Date accessAt = new Date(entry.getValue().accessAt);
+    for (Map.Entry<String, SessionStatus> entry : statusCache.entrySet()) {
+      SessionStatus status = entry.getValue();
+      // expired session remaind to user interaction or j2ee container.
+      if (!status.isExpired() && status.getLastAccessedTime() > lastUpdateAt) {
+        Date accessAt = new Date(status.getLastAccessedTime());
         arguments.add(new Object[] { accessAt, entry.getKey(), accessAt });
       }
     }
     if (!arguments.isEmpty()) {
-      entityDao.executeUpdateHqlRepeatly("update "
-          + registry.getSessioninfoBuilder().getSessioninfoType().getName()
-          + " info set info.lastAccessAt=? where info.id=? and info.lastAccessAt < ? ", arguments);
+      try {
+        entityDao.executeUpdateHqlRepeatly("update " + getSessioninfoTypename()
+            + " info set info.lastAccessAt=? where info.id=? and info.lastAccessAt < ? ", arguments);
+      } catch (Exception e) {
+        logger.error("Beangle session update last accessed time failure.", e);
+      }
+      logger.debug("Sync {} session last access time in {}", arguments.size(), watch);
     }
-    registry.updatedAt = System.currentTimeMillis();
   }
 
-}
-
-class AccessEntry {
-  String resource;
-  long accessAt;
-
-  public AccessEntry(String resource, long accessMillis) {
-    super();
-    this.resource = resource;
-    this.accessAt = accessMillis;
+  private String getSessioninfoTypename() {
+    return sessioninfoBuilder.getSessioninfoType().getName();
   }
 
-  public void access(String resource, long accessMillis) {
-    this.resource = resource;
-    this.accessAt = accessMillis;
-  }
-}
-
-/**
- * DB session info cleaner
- * 
- * @author chaostone
- */
-class SessionCleanerTask extends TimerTask {
-
-  private final Logger logger = LoggerFactory.getLogger(DbSessionRegistry.class);
-
-  private final SessionRegistry registry;
-
-  private EntityDao entityDao;
-
-  /** 默认 过期时间 30分钟 */
-  private int expiredTime = 30;
-
-  public SessionCleanerTask(SessionRegistry registry) {
-    super();
-    this.registry = registry;
-  }
-
-  public SessionCleanerTask(SessionRegistry registry, int expiredTime) {
-    this.registry = registry;
-    this.expiredTime = expiredTime;
-  }
-
-  @Override
-  public void run() {
+  /**
+   * Check expired or will expire session(now-lastAccessAt>=expiredTime),clean them
+   */
+  public void cleanup() {
     Stopwatch watch = new Stopwatch().start();
     logger.debug("clean up expired or over maxOnlineTime session start ...");
     Calendar calendar = Calendar.getInstance();
     try {
-      OqlBuilder<? extends Sessioninfo> builder = OqlBuilder.from(registry.getSessioninfoBuilder()
-          .getSessioninfoType(), "info");
+      OqlBuilder<? extends Sessioninfo> builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoType(),
+          "info");
       builder.where(
           "info.lastAccessAt is null or info.lastAccessAt<:givenTime or info.expiredAt is not null",
           Dates.rollMinutes(calendar.getTime(), -expiredTime));
       List<? extends Sessioninfo> infos = entityDao.search(builder);
       int removed = 0;
       for (Sessioninfo info : infos) {
-        registry.remove(info.getId());
+        remove(info.getId());
         removed++;
       }
-      if (removed > 0) logger.info("removed {} expired sessions in {}", removed, watch);
-      registry.getController().stat();
+      if (removed > 0) logger.debug("removed {} expired sessions in {}", removed, watch);
+      getController().stat();
     } catch (Exception e) {
-      logger.error("Beangle Session Cleaner Operation Failure.", e);
+      logger.error("Beangle session cleanup failure.", e);
     }
   }
+}
 
-  public void setEntityDao(EntityDao entityDao) {
-    this.entityDao = entityDao;
+/**
+ * Beangle session status synchronizer and expired session cleaner
+ * 
+ * @author chaostone
+ * @since 3.1
+ */
+class SessionSyncTask extends TimerTask {
+
+  private final DbSessionRegistry registry;
+
+  private long lastCleanupAt = System.currentTimeMillis();
+
+  private long lastUpdateAt = System.currentTimeMillis();
+  /**
+   * Default interval(5 minutes) for clean up expired session infos.
+   */
+  private final int cleanInterval = 5 * 60 * 1000;
+
+  public SessionSyncTask(DbSessionRegistry registry) {
+    super();
+    this.registry = registry;
+  }
+
+  @Override
+  public void run() {
+    registry.reloadExpireAt();
+    registry.updateAccessedTime(lastUpdateAt);
+    lastUpdateAt = System.currentTimeMillis();
+    if (cleanInterval <= System.currentTimeMillis() - lastCleanupAt) {
+      registry.cleanup();
+      lastCleanupAt = System.currentTimeMillis();
+    }
   }
 
 }
