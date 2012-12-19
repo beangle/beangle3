@@ -32,6 +32,11 @@ import java.util.List;
 public interface HierarchyEntity<T, ID extends Serializable> extends Entity<ID> {
 
   /**
+   * Return index no
+   */
+  String getIndexno();
+
+  /**
    * <p>
    * getParent.
    * </p>
@@ -66,4 +71,5 @@ public interface HierarchyEntity<T, ID extends Serializable> extends Entity<ID> 
    * @param children a {@link java.util.List} object.
    */
   void setChildren(List<T> children);
+
 }

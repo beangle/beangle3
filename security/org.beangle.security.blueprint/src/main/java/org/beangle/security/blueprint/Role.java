@@ -38,11 +38,6 @@ public interface Role extends TimeEntity, HierarchyEntity<Role, Integer>, Compar
   static final long ANYONE_ID = 2;
 
   /**
-   * 代码
-   */
-  String getCode();
-
-  /**
    * 名称
    */
   String getName();

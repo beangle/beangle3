@@ -132,7 +132,7 @@ public class MenuBean extends NumberIdHierarchyObject<Menu, Integer> implements 
   }
 
   public String getDescription() {
-    return Strings.concat("[", code, "]", title);
+    return Strings.concat("[", indexno, "]", title);
   }
 
   @Override

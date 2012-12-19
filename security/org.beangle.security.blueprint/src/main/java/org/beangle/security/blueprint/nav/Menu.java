@@ -29,12 +29,6 @@ import org.beangle.security.blueprint.function.FuncResource;
  * @author chaostone
  */
 public interface Menu extends HierarchyEntity<Menu, Integer>, Comparable<Menu> {
-
-  /**
-   * 同级菜单索引号
-   */
-  String getCode();
-
   /**
    * 菜单的层级，从1开始
    */

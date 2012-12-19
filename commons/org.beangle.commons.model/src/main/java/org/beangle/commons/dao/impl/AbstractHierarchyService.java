@@ -37,21 +37,21 @@ import org.beangle.commons.lang.Strings;
 public abstract class AbstractHierarchyService<T extends NumberIdHierarchyObject<? super T, ?>> extends
     BaseServiceImpl {
 
-  public void move(T node, T location, int indexno) {
+  public void move(T node, T location, int index) {
     if (Objects.equals(node.getParent(), location)) {
-      if (Numbers.toInt(((T) node).getIndexno()) != indexno) {
-        shiftCode(node, location, indexno);
+      if (Numbers.toInt(((T) node).getIndexno()) != index) {
+        shiftCode(node, location, index);
       }
     } else {
       if (null != node.getParent()) {
         ((HierarchyEntity<? super T, ?>) node.getParent()).getChildren().remove(node);
       }
       node.setParent(location);
-      shiftCode(node, location, indexno);
+      shiftCode(node, location, index);
     }
   }
 
-  private void shiftCode(T node, T newParent, int indexno) {
+  private void shiftCode(T node, T newParent, int index) {
     @SuppressWarnings("rawtypes")
     List sibling = null;
     if (null != newParent) sibling = newParent.getChildren();
@@ -63,11 +63,11 @@ public abstract class AbstractHierarchyService<T extends NumberIdHierarchyObject
     }
     Collections.sort(sibling);
     sibling.remove(node);
-    indexno--;
-    if (indexno > sibling.size()) {
-      indexno = sibling.size();
+    index--;
+    if (index > sibling.size()) {
+      index = sibling.size();
     }
-    sibling.add(indexno, node);
+    sibling.add(index, node);
     int nolength = String.valueOf(sibling.size()).length();
     Set<T> nodes = CollectUtils.newHashSet();
     for (int seqno = 1; seqno <= sibling.size(); seqno++) {
@@ -82,9 +82,9 @@ public abstract class AbstractHierarchyService<T extends NumberIdHierarchyObject
   private void generateCode(T node, String indexno, Set<T> nodes) {
     nodes.add(node);
     if (null != indexno) {
-      ((T) node).generateCode(indexno);
+      ((T) node).genIndexno(indexno);
     } else {
-      ((T) node).generateCode();
+      ((T) node).genIndexno();
     }
     if (null != node.getChildren()) {
       for (Object m : node.getChildren()) {

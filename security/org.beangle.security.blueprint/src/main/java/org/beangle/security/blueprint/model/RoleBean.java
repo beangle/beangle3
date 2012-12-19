@@ -83,9 +83,9 @@ public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements 
     setId(id);
   }
 
-  public RoleBean(Integer id, String code, String name) {
+  public RoleBean(Integer id, String indexno, String name) {
     setId(id);
-    this.code = code;
+    this.indexno = indexno;
     this.name = name;
   }
 
@@ -158,7 +158,7 @@ public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements 
   }
 
   public int compareTo(Role o) {
-    return getCode().compareTo(o.getCode());
+    return getIndexno().compareTo(o.getIndexno());
   }
 
 }

@@ -116,7 +116,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public List<Role> getRoles(Long userId) {
     OqlBuilder builder = OqlBuilder.from(Member.class, "gm");
-    builder.where("gm.user.id=:userId and gm.member=true", userId).select("gm.role").orderBy("gm.role.code");
+    builder.where("gm.user.id=:userId and gm.member=true", userId).select("gm.role").orderBy("gm.role.indexno");
     builder.cacheable();
     return entityDao.search(builder);
   }

@@ -42,17 +42,17 @@ public abstract class NumberIdHierarchyObject<T, ID extends Number> extends Numb
     HierarchyEntity<T, ID>, Comparable<T> {
   private static final long serialVersionUID = -968320812584144969L;
 
-  /** 代码 */
+  /** index no */
   @Size(max = 30)
   @NotNull
-  protected String code;
+  protected String indexno;
 
   /** 父级菜单 */
   @ManyToOne(fetch = FetchType.LAZY)
   public T parent;
 
   @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-  @OrderBy("code")
+  @OrderBy("indexno")
   protected List<T> children = CollectUtils.newArrayList();
 
   public T getParent() {
@@ -75,45 +75,41 @@ public abstract class NumberIdHierarchyObject<T, ID extends Number> extends Numb
     return (null == getParent()) ? 1 : getParentNode().getDepth() + 1;
   }
 
-  public String getIndexno() {
-    String indexno = Strings.substringAfterLast(code, ".");
-    if (Strings.isEmpty(indexno)) {
-      indexno = code;
-    }
-    return indexno;
+  public String getIndex() {
+    String index = Strings.substringAfterLast(indexno, ".");
+    if (Strings.isEmpty(index)) index = indexno;
+    return index;
   }
 
-  public void generateCode(String indexno) {
+  public void genIndexno(String indexno) {
     if (null == getParent()) {
-      this.code = indexno;
+      this.indexno = indexno;
     } else {
-      this.code = Strings.concat(getParentNode().getCode(), ".", indexno);
+      this.indexno = Strings.concat(getParentNode().getIndexno(), ".", indexno);
     }
   }
 
-  public void generateCode() {
-    if (null != getParent()) {
-      this.code = Strings.concat(getParentNode().getCode(), ".", getIndexno());
-    }
+  public void genIndexno() {
+    if (null != getParent()) this.indexno = Strings.concat(getParentNode().getIndexno(), ".", getIndex());
   }
 
   protected NumberIdHierarchyObject<?, ?> getParentNode() {
     return (NumberIdHierarchyObject<?, ?>) getParent();
   }
 
-  public String getCode() {
-    return code;
+  public String getIndexno() {
+    return indexno;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setIndexno(String indexno) {
+    this.indexno = indexno;
   }
 
   /**
    * 不同级的菜单按照他们固有的级联顺序排序.
    */
   public int compareTo(T other) {
-    return getCode().compareTo(((NumberIdHierarchyObject<?, ?>) other).getCode());
+    return getIndexno().compareTo(((NumberIdHierarchyObject<?, ?>) other).getIndexno());
   }
 
 }

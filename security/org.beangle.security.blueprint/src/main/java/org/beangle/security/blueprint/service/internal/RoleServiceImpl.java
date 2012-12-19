@@ -104,8 +104,8 @@ public class RoleServiceImpl extends AbstractHierarchyService<RoleBean> implemen
 
   @Override
   public List<Role> getRootRoles() {
-    return entityDao.search(OqlBuilder.from(Role.class, "g").where("g.parent is null").cacheable()
-        .orderBy("g.code"));
+    return entityDao.search(OqlBuilder.from(Role.class, "r").where("r.parent is null").cacheable()
+        .orderBy("r.indexno"));
   }
 
   public void setUserService(UserService userService) {

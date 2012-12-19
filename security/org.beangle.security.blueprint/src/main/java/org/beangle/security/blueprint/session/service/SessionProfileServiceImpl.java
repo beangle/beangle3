@@ -36,7 +36,7 @@ public class SessionProfileServiceImpl extends BaseServiceImpl implements Sessio
   public List<? extends CategoryProfile> getProfiles() {
     return entityDao.search(OqlBuilder.from(SessionProfileBean.class, "p").select(
         "new " + SessionProfileBean.class.getName()
-            + "(p.id,p.role.id,p.role.code,p.role.name,p.capacity,p.userMaxSessions,p.inactiveInterval)"));
+            + "(p.id,p.role.id,p.role.indexno,p.role.name,p.capacity,p.userMaxSessions,p.inactiveInterval)"));
   }
 
   public boolean hasProfile(Role role) {
@@ -54,7 +54,7 @@ public class SessionProfileServiceImpl extends BaseServiceImpl implements Sessio
   public CategoryProfile getProfile(String category) {
     OqlBuilder<SessionProfileBean> builder = OqlBuilder.from(SessionProfileBean.class, "p");
     builder.select("new " + SessionProfileBean.class.getName()
-        + "(p.id,p.role.id,p.role.code,p.role.name,p.capacity,p.userMaxSessions,p.inactiveInterval)");
+        + "(p.id,p.role.id,p.role.indexno,p.role.name,p.capacity,p.userMaxSessions,p.inactiveInterval)");
     builder.where("p.role.name=:category", category).cacheable();
     return entityDao.uniqueResult(builder);
   }
