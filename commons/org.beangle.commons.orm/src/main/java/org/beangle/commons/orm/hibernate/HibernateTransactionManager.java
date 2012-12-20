@@ -233,7 +233,7 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
     }
     // add by duantihua since 3.0.1
     else {
-      if (SessionUtils.isEnableThreadBinding(getSessionFactory()))
+      if (SessionUtils.isEnableBinding(getSessionFactory()))
         txObject.setSessionHolder(SessionUtils.openSession(getSessionFactory()));
     }
 

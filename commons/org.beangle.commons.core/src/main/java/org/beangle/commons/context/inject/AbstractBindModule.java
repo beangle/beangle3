@@ -65,7 +65,7 @@ public abstract class AbstractBindModule implements BindModule {
    * @param classes a {@link java.lang.Class} object.
    * @return a {@link org.beangle.commons.context.inject.BeanConfig.DefinitionBinder} object.
    */
-  protected DefinitionBinder bind(Class<?>... classes) {
+  protected final DefinitionBinder bind(Class<?>... classes) {
     return config.bind(classes);
   }
 
@@ -74,11 +74,11 @@ public abstract class AbstractBindModule implements BindModule {
    * 
    * @param name
    */
-  protected ReferenceValue ref(String name) {
+  protected final ReferenceValue ref(String name) {
     return new ReferenceValue(name);
   }
 
-  protected ReferenceValue ref(Class<?> clazz) {
+  protected final ReferenceValue ref(Class<?> clazz) {
     return new ReferenceValue(clazz.getName());
   }
 
@@ -88,7 +88,7 @@ public abstract class AbstractBindModule implements BindModule {
    * @param key
    * @param value
    */
-  protected Pair<?, ?> entry(Object key, Object value) {
+  protected final Pair<?, ?> entry(Object key, Object value) {
     return Pair.of(key, value);
   }
 
@@ -97,7 +97,7 @@ public abstract class AbstractBindModule implements BindModule {
    * 
    * @param clazz
    */
-  protected Definition bean(Class<?> clazz) {
+  protected final Definition bean(Class<?> clazz) {
     Definition def = new Definition(clazz.getName(), clazz, Scope.SINGLETON.toString());
     def.beanName = clazz.getName() + "#" + Math.abs(System.identityHashCode(def));
     return def;
@@ -111,7 +111,7 @@ public abstract class AbstractBindModule implements BindModule {
    * 
    * @param datas
    */
-  protected List<?> list(Object... datas) {
+  protected final List<?> list(Object... datas) {
     List<Object> items = CollectUtils.newArrayList(datas.length);
     for (Object obj : datas) {
       if (obj instanceof Class<?>) {
@@ -129,7 +129,7 @@ public abstract class AbstractBindModule implements BindModule {
    * 
    * @param classes
    */
-  protected List<?> listref(Class<?>... classes) {
+  protected final List<?> listref(Class<?>... classes) {
     List<Object> items = CollectUtils.newArrayList(classes.length);
     for (Class<?> clazz : classes) {
       items.add(new ReferenceValue(clazz.getName()));
@@ -145,7 +145,7 @@ public abstract class AbstractBindModule implements BindModule {
    * 
    * @param datas
    */
-  protected Set<?> set(Object... datas) {
+  protected final Set<?> set(Object... datas) {
     Set<Object> items = CollectUtils.newHashSet();
     for (Object obj : datas) {
       if (obj instanceof Class<?>) {
@@ -163,7 +163,7 @@ public abstract class AbstractBindModule implements BindModule {
     return new ReferenceValue(targetBean);
   }
 
-  protected Map<?, ?> map(Pair<?, ?>... entries) {
+  protected final Map<?, ?> map(Pair<?, ?>... entries) {
     Map<Object, Object> items = CollectUtils.newHashMap();
     for (Map.Entry<?, ?> entry : entries) {
       if (entry.getValue() instanceof Class<?>) {
@@ -175,7 +175,7 @@ public abstract class AbstractBindModule implements BindModule {
     return items;
   }
 
-  protected Properties props(String... keyValuePairs) {
+  protected final Properties props(String... keyValuePairs) {
     Properties properties = new Properties();
     for (String pair : keyValuePairs) {
       int index = pair.indexOf('=');
@@ -194,7 +194,7 @@ public abstract class AbstractBindModule implements BindModule {
    * @param clazz a {@link java.lang.Class} object.
    * @return a {@link org.beangle.commons.context.inject.BeanConfig.DefinitionBinder} object.
    */
-  protected DefinitionBinder bind(String beanName, Class<?> clazz) {
+  protected final DefinitionBinder bind(String beanName, Class<?> clazz) {
     return config.bind(beanName, clazz);
   }
 
@@ -212,7 +212,7 @@ public abstract class AbstractBindModule implements BindModule {
    * 
    * @return a {@link java.lang.Class} object.
    */
-  public Class<?> getObjectType() {
+  public final Class<?> getObjectType() {
     return BeanConfig.class;
   }
 
@@ -223,7 +223,7 @@ public abstract class AbstractBindModule implements BindModule {
    * 
    * @return a boolean.
    */
-  public boolean isSingleton() {
+  public final boolean isSingleton() {
     return true;
   }
 }

@@ -18,17 +18,22 @@
  */
 package org.beangle.security.core.session;
 
-import org.beangle.security.core.Authentication;
+import org.beangle.commons.context.event.Event;
 
 /**
- * 构建会话bean
- * 
+ * Login event
  * @author chaostone
- * @version $Id: SessioninfoBuilder.java Jul 11, 2011 6:50:01 PM chaostone $
+ * @since 3.1
  */
-public interface SessioninfoBuilder {
+public class LoginEvent extends Event {
 
-  Class<? extends Sessioninfo> getSessioninfoType();
+  private static final long serialVersionUID = -6802410177820837015L;
 
-  Sessioninfo build(Authentication auth, String sessionid);
+  public LoginEvent(Sessioninfo source) {
+    super(source);
+  }
+
+  public Sessioninfo getSessioninfo() {
+    return (Sessioninfo) source;
+  }
 }

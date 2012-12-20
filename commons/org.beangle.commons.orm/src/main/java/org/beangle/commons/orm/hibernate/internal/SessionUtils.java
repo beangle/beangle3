@@ -51,44 +51,44 @@ public final class SessionUtils {
 
   private static final ThreadLocal<Map<SessionFactory, Boolean>> threadBinding = new ThreadLocal<Map<SessionFactory, Boolean>>();
 
-  public static DataSource getDataSource(SessionFactory sessionFactory) {
-    if (sessionFactory instanceof SessionFactoryImplementor) {
-      ConnectionProvider cp = ((SessionFactoryImplementor) sessionFactory).getConnectionProvider();
+  public static DataSource getDataSource(SessionFactory factory) {
+    if (factory instanceof SessionFactoryImplementor) {
+      ConnectionProvider cp = ((SessionFactoryImplementor) factory).getConnectionProvider();
       return cp.unwrap(DataSource.class);
     }
     return null;
   }
 
-  public static void enableThreadBinding(SessionFactory sessionFactory) {
+  public static void enableBinding(SessionFactory factory) {
     Map<SessionFactory, Boolean> maps = threadBinding.get();
     if (null == maps) {
       maps = CollectUtils.newHashMap();
       threadBinding.set(maps);
     }
-    maps.put(sessionFactory, Boolean.TRUE);
+    maps.put(factory, Boolean.TRUE);
   }
 
-  public static boolean isEnableThreadBinding(SessionFactory sessionFactory) {
+  public static boolean isEnableBinding(SessionFactory factory) {
     Map<SessionFactory, Boolean> maps = threadBinding.get();
     if (null == maps) return false;
-    else return null != maps.get(sessionFactory);
+    else return null != maps.get(factory);
   }
 
-  public static void disableThreadBinding(SessionFactory sessionFactory) {
+  public static void disableBinding(SessionFactory factory) {
     Map<SessionFactory, Boolean> maps = threadBinding.get();
-    if (null != maps) maps.remove(sessionFactory);
+    if (null != maps) maps.remove(factory);
   }
 
-  public static SessionHolder openSession(SessionFactory sessionFactory)
-      throws DataAccessResourceFailureException, IllegalStateException {
+  public static SessionHolder openSession(SessionFactory factory) throws DataAccessResourceFailureException,
+      IllegalStateException {
     try {
-      SessionHolder holder = (SessionHolder) getResource(sessionFactory);
+      SessionHolder holder = (SessionHolder) getResource(factory);
       Session session = null;
       if (null == holder) {
-        session = sessionFactory.openSession();
+        session = factory.openSession();
         session.setFlushMode(FlushMode.MANUAL);
         holder = new SessionHolder(session);
-        if (isEnableThreadBinding(sessionFactory)) bindResource(sessionFactory, holder);
+        if (isEnableBinding(factory)) bindResource(factory, holder);
       }
       return holder;
     } catch (HibernateException ex) {
@@ -96,15 +96,15 @@ public final class SessionUtils {
     }
   }
 
-  public static SessionHolder currentSession(SessionFactory sessionFactory) {
-    return (SessionHolder) getResource(sessionFactory);
+  public static SessionHolder currentSession(SessionFactory factory) {
+    return (SessionHolder) getResource(factory);
   }
 
-  public static void closeSession(SessionFactory sessionFactory) {
+  public static void closeSession(SessionFactory factory) {
     try {
-      SessionHolder holder = (SessionHolder) getResource(sessionFactory);
+      SessionHolder holder = (SessionHolder) getResource(factory);
       if (null != holder) {
-        unbindResource(sessionFactory);
+        unbindResource(factory);
         holder.getSession().close();
       }
     } catch (HibernateException ex) {

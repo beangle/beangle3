@@ -36,12 +36,7 @@ import org.beangle.commons.lang.Dates;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.security.core.Authentication;
-import org.beangle.security.core.session.SessionController;
-import org.beangle.security.core.session.SessionException;
-import org.beangle.security.core.session.SessionRegistry;
-import org.beangle.security.core.session.SessionStatus;
-import org.beangle.security.core.session.Sessioninfo;
-import org.beangle.security.core.session.SessioninfoBuilder;
+import org.beangle.security.core.session.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -135,7 +130,9 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     // 注销同会话的其它账户
     if (null != existed) remove(sessionId, " expired with replacement.");
     // 新生
-    entityDao.save(sessioninfoBuilder.build(auth, sessionId));
+    Sessioninfo info = sessioninfoBuilder.build(auth, sessionId);
+    entityDao.save(info);
+    publish(new LoginEvent(info));
   }
 
   public Sessioninfo remove(String sessionId) {
@@ -150,8 +147,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
       entityDao.remove(info);
       controller.onLogout(info);
       statusCache.remove(info.getId());
-      Object sessioninfoLog = sessioninfoBuilder.buildLog(info);
-      if (null != sessioninfoLog) entityDao.save(sessioninfoLog);
+      publish(new LogoutEvent(info));
       logger.debug("Remove session {} for {}", sessionId, info.getUsername());
     }
     return info;

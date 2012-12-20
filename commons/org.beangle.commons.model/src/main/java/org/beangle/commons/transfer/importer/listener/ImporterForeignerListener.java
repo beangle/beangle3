@@ -115,7 +115,8 @@ public class ImporterForeignerListener extends ItemImporterListener {
           if (foreignerMap.size() > CACHE_SIZE) foreignerMap.clear();
           foreiger = foreignerMap.get(codeValue);
           if (foreiger == null) {
-            List<?> foreigners = entityDao.get(Class.forName(className), foreigerKeys[foreigerKeyIndex],
+            @SuppressWarnings("unchecked")
+            List<?> foreigners = entityDao.get((Class<Entity<?>>)Class.forName(className), foreigerKeys[foreigerKeyIndex],
                 new Object[] { codeValue });
             if (!foreigners.isEmpty()) {
               foreiger = foreigners.iterator().next();

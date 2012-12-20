@@ -16,19 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.core.session;
+package org.beangle.security.web.session;
 
-import org.beangle.security.core.Authentication;
+import java.util.List;
 
-/**
- * 构建会话bean
- * 
- * @author chaostone
- * @version $Id: SessioninfoBuilder.java Jul 11, 2011 6:50:01 PM chaostone $
- */
-public interface SessioninfoBuilder {
+import org.beangle.security.core.session.Sessioninfo;
+import org.beangle.security.web.session.model.SessioninfoLogBean;
 
-  Class<? extends Sessioninfo> getSessioninfoType();
+public interface SessioninfoLogService {
 
-  Sessioninfo build(Authentication auth, String sessionid);
+  public void log(Sessioninfo info);
+  
+  public List<SessioninfoLogBean> getLoggers(String username,int top);
+  
 }

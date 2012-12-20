@@ -24,7 +24,6 @@ import org.beangle.security.core.session.SessioninfoBuilder;
 import org.beangle.security.core.session.category.CategoryPrincipal;
 import org.beangle.security.web.auth.WebAuthenticationDetails;
 import org.beangle.security.web.session.model.SessioninfoBean;
-import org.beangle.security.web.session.model.SessioninfoLogBean;
 
 /**
  * @author chaostone
@@ -48,10 +47,6 @@ public class WebSessioninfoBuilder implements SessioninfoBuilder {
       info.setIp(webdetails.getAgent().getIp());
     }
     return info;
-  }
-
-  public Object buildLog(Sessioninfo info) {
-    return new SessioninfoLogBean((SessioninfoBean) info);
   }
 
 }

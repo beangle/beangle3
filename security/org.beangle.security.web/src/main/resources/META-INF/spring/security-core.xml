@@ -4,6 +4,7 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <bean class="org.beangle.security.web.DefaultModule"/>
+  <bean class="org.beangle.security.web.DatabaseModule"/>
   <bean class="org.beangle.security.cas.DefaultModule"/>
 
 </beans>

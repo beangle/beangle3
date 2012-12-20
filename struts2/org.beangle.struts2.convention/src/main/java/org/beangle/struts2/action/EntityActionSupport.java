@@ -290,7 +290,7 @@ public abstract class EntityActionSupport extends ActionSupport {
     return entityDao.get(entityName, "id", ids);
   }
 
-  protected <T> List<T> getModels(Class<T> modelClass, Object[] ids) {
+  protected <T extends Entity<?>> List<T> getModels(Class<T> modelClass, Object[] ids) {
     return entityDao.get(modelClass, "id", ids);
   }
 

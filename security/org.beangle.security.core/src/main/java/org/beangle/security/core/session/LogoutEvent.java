@@ -18,17 +18,22 @@
  */
 package org.beangle.security.core.session;
 
-import org.beangle.security.core.Authentication;
+import org.beangle.commons.context.event.Event;
 
 /**
- * 构建会话bean
+ * Logout event
  * 
  * @author chaostone
- * @version $Id: SessioninfoBuilder.java Jul 11, 2011 6:50:01 PM chaostone $
+ * @since 3.1
  */
-public interface SessioninfoBuilder {
+public class LogoutEvent extends Event {
+  private static final long serialVersionUID = 5562102005395894399L;
 
-  Class<? extends Sessioninfo> getSessioninfoType();
+  public LogoutEvent(Sessioninfo source) {
+    super(source);
+  }
 
-  Sessioninfo build(Authentication auth, String sessionid);
+  public Sessioninfo getSessioninfo() {
+    return (Sessioninfo) source;
+  }
 }

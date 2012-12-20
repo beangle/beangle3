@@ -68,12 +68,12 @@ public class OpenSessionInViewFilter extends OncePerRequestFilter implements Laz
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws ServletException, IOException {
     if (firstEnter(request)) {
-      SessionUtils.enableThreadBinding(sessionFactory);
+      SessionUtils.enableBinding(sessionFactory);
       // SessionUtils.openSession(sessionFactory);
       try {
         chain.doFilter(request, response);
       } finally {
-        SessionUtils.disableThreadBinding(sessionFactory);
+        SessionUtils.disableBinding(sessionFactory);
         SessionUtils.closeSession(sessionFactory);
       }
     } else {

@@ -41,10 +41,6 @@ public class SimpleSessioninfoBuilder implements SessioninfoBuilder {
     return info;
   }
 
-  public Object buildLog(Sessioninfo info) {
-    return null;
-  }
-
 }
 
 class SimpleSessioninfo extends StringIdObject implements CategorySessioninfo {
