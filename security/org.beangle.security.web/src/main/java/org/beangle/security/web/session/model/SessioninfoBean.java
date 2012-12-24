@@ -25,6 +25,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.entity.pojo.StringIdObject;
+import org.beangle.security.core.session.Sessioninfo;
 import org.beangle.security.core.session.category.CategorySessioninfo;
 
 /**
@@ -99,12 +100,10 @@ public class SessioninfoBean extends StringIdObject implements CategorySessionin
     return str;
   }
 
-  public void addRemark(String added) {
-    if (null == remark) {
-      remark = added;
-    } else {
-      remark += added;
-    }
+  public Sessioninfo addRemark(String added) {
+    if (null == remark) remark = added;
+    else remark += added;
+    return this;
   }
 
   public long getOnlineTime() {
@@ -180,8 +179,9 @@ public class SessioninfoBean extends StringIdObject implements CategorySessionin
     return null != expiredAt;
   }
 
-  public void expireNow() {
+  public Sessioninfo expireNow() {
     if (null == expiredAt) this.expiredAt = new Date();
+    return this;
   }
 
   public Date getExpiredAt() {

@@ -52,7 +52,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 
   private SessioninfoBuilder sessioninfoBuilder = new SimpleSessioninfoBuilder();
 
-  private Map<String, SessionStatus> statusCache = CollectUtils.newConcurrentHashMap();
+  private Map<String, SessionStatus> localCache = CollectUtils.newConcurrentHashMap();
 
   /** 默认 过期时间 30分钟 */
   private int expiredTime = 30;
@@ -102,10 +102,10 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 
   @Override
   public SessionStatus getSessionStatus(String sessionid) {
-    SessionStatus status = statusCache.get(sessionid);
+    SessionStatus status = localCache.get(sessionid);
     if (null == status) {
       status = getStatusFromDB(sessionid);
-      if (null != status) statusCache.put(sessionid, status);
+      if (null != status) localCache.put(sessionid, status);
     }
     return status;
   }
@@ -146,7 +146,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
       if (null != reason) info.addRemark(reason);
       entityDao.remove(info);
       controller.onLogout(info);
-      statusCache.remove(info.getId());
+      localCache.remove(sessionId);
       publish(new LogoutEvent(info));
       logger.debug("Remove session {} for {}", sessionId, info.getUsername());
     }
@@ -158,8 +158,9 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     if (null != info) {
       if (!info.isExpired()) {
         controller.onLogout(info);
-        info.expireNow();
-        entityDao.saveOrUpdate(info);
+        entityDao.saveOrUpdate(info.expireNow());
+        SessionStatus local = localCache.get(sessionId);
+        if (null != local) local.setExpiredAt(new Date());
         return true;
       }
     }
@@ -188,10 +189,10 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
   }
 
   public void access(String sessionid, long accessAt) {
-    SessionStatus status = statusCache.get(sessionid);
+    SessionStatus status = localCache.get(sessionid);
     if (null == status) {
       status = getStatusFromDB(sessionid);
-      if (null != status) statusCache.put(sessionid, status);
+      if (null != status) localCache.put(sessionid, status);
     }
     status.setLastAccessedTime(accessAt);
   }
@@ -217,10 +218,15 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
    */
   public void reloadExpireAt() {
     Stopwatch watch = new Stopwatch(true);
-    List<String> sessionIds = CollectUtils.newArrayList(statusCache.keySet());
+    // find valid session ids
+    List<String> sessionIds = CollectUtils.newArrayList();
+    for (Map.Entry<String, SessionStatus> entry : localCache.entrySet()) {
+      if (!entry.getValue().isExpired()) sessionIds.add(entry.getKey());
+    }
     if (sessionIds.isEmpty()) return;
     Map<String, Object> parameterMap = CollectUtils.newHashMap();
-    String hql = "select id,expiredAt from " + getSessioninfoTypename() + " where id in(:ids)";
+    String hql = "select id,expiredAt from " + getSessioninfoTypename()
+        + " where id in(:ids) and expiredAt is not null";
     List<Object> results = CollectUtils.newArrayList();
     try {
       if (sessionIds.size() < 500) {
@@ -242,7 +248,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     }
     for (Object result : results) {
       Object[] data = (Object[]) result;
-      SessionStatus status = statusCache.get(data[0]);
+      SessionStatus status = localCache.get(data[0]);
       if (null != status) status.setExpiredAt((Date) data[1]);
     }
 
@@ -255,9 +261,9 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
   public void updateAccessedTime(long lastUpdateAt) {
     Stopwatch watch = new Stopwatch(true);
     List<Object[]> arguments = CollectUtils.newArrayList();
-    for (Map.Entry<String, SessionStatus> entry : statusCache.entrySet()) {
+    for (Map.Entry<String, SessionStatus> entry : localCache.entrySet()) {
       SessionStatus status = entry.getValue();
-      // expired session remaind to user interaction or j2ee container.
+      // expired session remained to user interaction or j2ee container.
       if (!status.isExpired() && status.getLastAccessedTime() > lastUpdateAt) {
         Date accessAt = new Date(status.getLastAccessedTime());
         arguments.add(new Object[] { accessAt, entry.getKey(), accessAt });

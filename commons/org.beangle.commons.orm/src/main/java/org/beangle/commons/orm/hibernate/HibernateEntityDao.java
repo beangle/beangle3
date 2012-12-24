@@ -109,20 +109,18 @@ public class HibernateEntityDao implements EntityDao {
     return get(clazz, "id", values.toArray());
   }
 
-  @SuppressWarnings("unchecked")
   public <T extends Entity<?>> List<T> get(Class<T> entityClass, String keyName, Object... values) {
     if (entityClass == null || Strings.isEmpty(keyName) || values == null || values.length == 0) { return Collections
         .emptyList(); }
     String entityName = modelMeta.getEntityType(entityClass).getEntityName();
-    return (List<T>) get(entityName, keyName, values);
+    return get(entityName, keyName, values);
   }
 
-  @SuppressWarnings("unchecked")
   public <T extends Entity<?>> List<T> get(Class<T> clazz, String keyName, Collection<?> values) {
     if (clazz == null || Strings.isEmpty(keyName) || values == null || values.isEmpty()) { return Collections
         .emptyList(); }
     String entityName = modelMeta.getEntityType(clazz).getEntityName();
-    return (List<T>) get(entityName, keyName, values.toArray());
+    return get(entityName, keyName, values.toArray());
   }
 
   public <T> List<T> get(String entityName, String keyName, Object... values) {
@@ -187,9 +185,7 @@ public class HibernateEntityDao implements EntityDao {
       }
     }
     hql.append(" (1=1) ");
-    @SuppressWarnings("unchecked")
-    List<T> rs = (List<T>) searchHQLQuery(hql.toString(), m);
-    return rs;
+    return searchHQLQuery(hql.toString(), m);
   }
 
   /**

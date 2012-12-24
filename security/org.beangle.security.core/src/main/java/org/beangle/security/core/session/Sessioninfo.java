@@ -61,14 +61,14 @@ public interface Sessioninfo extends Entity<String> {
   /**
    * 使之过期
    */
-  void expireNow();
+  Sessioninfo expireNow();
 
   /**
    * 添加备注
    * 
    * @param added
    */
-  void addRemark(String added);
+  Sessioninfo addRemark(String added);
 
   /**
    * 查询过期时间

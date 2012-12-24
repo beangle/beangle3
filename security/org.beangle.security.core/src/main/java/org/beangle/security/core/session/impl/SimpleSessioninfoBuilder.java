@@ -88,12 +88,10 @@ class SimpleSessioninfo extends StringIdObject implements CategorySessioninfo {
     return str;
   }
 
-  public void addRemark(String added) {
-    if (null == remark) {
-      remark = added;
-    } else {
-      remark += added;
-    }
+  public Sessioninfo addRemark(String added) {
+    if (null == remark) remark = added;
+    else remark += added;
+    return this;
   }
 
   public long getOnlineTime() {
@@ -145,10 +143,9 @@ class SimpleSessioninfo extends StringIdObject implements CategorySessioninfo {
     return null != expiredAt;
   }
 
-  public void expireNow() {
-    if (null == expiredAt) {
-      this.expiredAt = new Date();
-    }
+  public Sessioninfo expireNow() {
+    if (null == expiredAt) this.expiredAt = new Date();
+    return this;
   }
 
   public Date getExpiredAt() {
