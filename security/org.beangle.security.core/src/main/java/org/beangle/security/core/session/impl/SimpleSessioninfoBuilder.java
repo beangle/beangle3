@@ -67,6 +67,8 @@ class SimpleSessioninfo extends StringIdObject implements CategorySessioninfo {
   /** 备注 */
   private String remark;
 
+  private String server;
+  
   public SimpleSessioninfo() {
     super();
   }
@@ -163,4 +165,13 @@ class SimpleSessioninfo extends StringIdObject implements CategorySessioninfo {
   public void setLastAccessAt(Date lastAccessAt) {
     this.lastAccessAt = lastAccessAt;
   }
+
+  public String getServer() {
+    return server;
+  }
+
+  public void setServer(String server) {
+    this.server = server;
+  }
+  
 }

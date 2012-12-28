@@ -80,4 +80,8 @@ public interface Sessioninfo extends Entity<String> {
    */
   Date getLastAccessAt();
 
+  /**
+   * Return the server the session hosted.  
+   */
+  String getServer();
 }

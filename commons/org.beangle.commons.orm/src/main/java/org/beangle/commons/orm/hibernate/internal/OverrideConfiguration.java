@@ -57,6 +57,8 @@ public class OverrideConfiguration extends Configuration {
 
   private static Logger logger = LoggerFactory.getLogger(OverrideConfiguration.class);
 
+  private int dynaupdateMinColumn = 7;
+
   public OverrideConfiguration() {
     super();
   }
@@ -178,6 +180,10 @@ public class OverrideConfiguration extends Configuration {
         entityNameChanged = true;
       }
 
+      // trigger dynamic update
+      if (!pClass.useDynamicUpdate() && pClass.getTable().getColumnSpan() >= dynaupdateMinColumn)
+        pClass.setDynamicUpdate(true);
+
       // register class
       PersistentClass old = (PersistentClass) classes.get(entityName);
       if (old == null) {
@@ -220,4 +226,13 @@ public class OverrideConfiguration extends Configuration {
       cols.add(collection);
     }
   }
+
+  public int getDynaupdateMinColumn() {
+    return dynaupdateMinColumn;
+  }
+
+  public void setDynaupdateMinColumn(int dynaupdateMinColumn) {
+    this.dynaupdateMinColumn = dynaupdateMinColumn;
+  }
+
 }

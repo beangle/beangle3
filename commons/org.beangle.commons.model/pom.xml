@@ -45,15 +45,6 @@
       <artifactId>spring-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <!--
-    <dependency>
-      <groupId>com.google.collections</groupId>
-      <artifactId>google-collections</artifactId>
-      <version>1.0</version>
-      <optional>true</optional>
-      <scope>test</scope>
-    </dependency>
-    -->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>

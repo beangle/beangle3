@@ -65,7 +65,7 @@ import com.opensymphony.xwork2.inject.Container;
  */
 public class ActionSupport implements TextResourceProvider {
 
-  protected Logger logger = LoggerFactory.getLogger(ActionSupport.class);
+  protected Logger logger = LoggerFactory.getLogger(getClass());
 
   /**
    * The action execution was successful. Show result

@@ -36,10 +36,13 @@ public class WebAuthenticationDetails implements SessionIdAware, Serializable {
 
   private transient String lastAccessUri;
 
+  private transient String server;
+
   public WebAuthenticationDetails(HttpServletRequest request) {
     agent = RequestUtils.getUserAgent(request);
     HttpSession session = request.getSession(true);
     sessionId = (session != null) ? session.getId() : null;
+    server = request.getLocalAddr() + ":" + request.getLocalPort();
     doPopulateAdditionalInformation(request);
   }
 
@@ -82,6 +85,10 @@ public class WebAuthenticationDetails implements SessionIdAware, Serializable {
 
   public void setLastAccessUri(String lastAccessUri) {
     this.lastAccessUri = lastAccessUri;
+  }
+
+  public String getServer() {
+    return server;
   }
 
 }

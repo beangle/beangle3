@@ -78,6 +78,10 @@ public class SessioninfoBean extends StringIdObject implements CategorySessionin
   @Size(max = 100)
   private String remark;
 
+  /**host server*/
+  @Size(max = 100)
+  private String server;
+  
   public SessioninfoBean() {
     super();
   }
@@ -198,5 +202,12 @@ public class SessioninfoBean extends StringIdObject implements CategorySessionin
 
   public void setLastAccessAt(Date lastAccessAt) {
     this.lastAccessAt = lastAccessAt;
+  }
+  public String getServer() {
+    return server;
+  }
+
+  public void setServer(String server) {
+    this.server = server;
   }
 }

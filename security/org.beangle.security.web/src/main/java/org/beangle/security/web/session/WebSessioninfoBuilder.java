@@ -45,8 +45,8 @@ public class WebSessioninfoBuilder implements SessioninfoBuilder {
       info.setAgent(webdetails.getAgent().getBrowser().toString());
       info.setOs(webdetails.getAgent().getOs().toString());
       info.setIp(webdetails.getAgent().getIp());
+      info.setServer(webdetails.getServer());
     }
     return info;
   }
-
 }

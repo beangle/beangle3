@@ -2,8 +2,8 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.beangle</groupId>
-    <artifactId>beangle-parent</artifactId>
-    <version>5</version>
+    <artifactId>beangle-java-parent</artifactId>
+    <version>6</version>
   </parent>
   <groupId>org.beangle</groupId>
   <artifactId>beangle-library-parent</artifactId>
@@ -24,7 +24,7 @@
     <url>https://github.com/beangle/library</url>
     <tag>HEAD</tag>
   </scm>
-  
+
   <modules>
     <module>commons</module>
     <module>notification</module>
@@ -32,59 +32,4 @@
     <module>struts2</module>
   </modules>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <version>99.0-does-not-exist</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>com.mycila.maven-license-plugin</groupId>
-        <artifactId>maven-license-plugin</artifactId>
-        <version>1.9.0</version>
-        <configuration>
-          <strictCheck>true</strictCheck>
-          <includes>
-            <include>src/**/java/**</include>
-          </includes>
-          <excludes>
-            <exclude>src/**/package-info.java</exclude>
-          </excludes>
-          <mapping>
-            <java>SLASHSTAR_STYLE</java>
-          </mapping>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>
