@@ -31,6 +31,7 @@ import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.HierarchyEntity;
+import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.lang.Strings;
 
 /**
@@ -75,10 +76,12 @@ public abstract class NumberIdHierarchyObject<T, ID extends Number> extends Numb
     return (null == getParent()) ? 1 : getParentNode().getDepth() + 1;
   }
 
-  public String getIndex() {
+  public int getIndex() {
     String index = Strings.substringAfterLast(indexno, ".");
     if (Strings.isEmpty(index)) index = indexno;
-    return index;
+    int idx = Numbers.toInt(index);
+    if (idx <= 0) idx = 1;
+    return idx;
   }
 
   public void genIndexno(String indexno) {
@@ -90,7 +93,8 @@ public abstract class NumberIdHierarchyObject<T, ID extends Number> extends Numb
   }
 
   public void genIndexno() {
-    if (null != getParent()) this.indexno = Strings.concat(getParentNode().getIndexno(), ".", getIndex());
+    if (null != getParent())
+      this.indexno = Strings.concat(getParentNode().getIndexno(), ".", String.valueOf(getIndex()));
   }
 
   protected NumberIdHierarchyObject<?, ?> getParentNode() {

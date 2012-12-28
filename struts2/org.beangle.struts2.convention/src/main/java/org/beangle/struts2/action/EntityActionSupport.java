@@ -300,7 +300,7 @@ public abstract class EntityActionSupport extends ActionSupport {
    * @throws Exception
    */
   public String export() throws Exception {
-    TransferFormat format = Enums.get(TransferFormat.class, get("format", "Csv")).getOrElse(
+    TransferFormat format = Enums.get(TransferFormat.class, Strings.capitalize(get("format", "Csv"))).getOrElse(
         TransferFormat.Csv);
     String fileName = get("fileName");
     String template = get("template");
@@ -310,7 +310,7 @@ public abstract class EntityActionSupport extends ActionSupport {
     context.put("format", format);
     context.put("exportFile", fileName);
     context.put("template", template);
-    String properties = get("properties");
+    String properties = get("props");
     if (null != properties) {
       String[] props = Strings.split(properties, ",");
       List<String> keys = CollectUtils.newArrayList();
@@ -343,7 +343,7 @@ public abstract class EntityActionSupport extends ActionSupport {
     response.setHeader(
         "Content-Disposition",
         "attachment;filename="
-            + RequestUtils.encodeAttachName(ServletActionContext.getRequest(), fileName + "." + format));
+            + RequestUtils.encodeAttachName(ServletActionContext.getRequest(), fileName + "." + Strings.uncapitalize(format.name())));
     // 进行输出
     exporter.setContext(context);
     exporter.transfer(new TransferResult());
