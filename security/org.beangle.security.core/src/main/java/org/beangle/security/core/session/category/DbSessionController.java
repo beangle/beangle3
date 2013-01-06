@@ -70,15 +70,15 @@ public class DbSessionController extends AbstractSessionController implements In
 
     if (Principals.ROOT.equals(principal.getId())) {
       if (null != statId)
-        entityDao.executeUpdateHql("update " + SessionStat.class.getName()
-            + " stat set stat.online = stat.online + 1 where  stat.id=?", statId);
+        entityDao.executeUpdate("update " + SessionStat.class.getName()
+            + " stat set stat.online = stat.online + 1 where  stat.id=?1", statId);
       return true;
     } else {
       int result = 0;
       if (null != statId) {
-        result = entityDao.executeUpdateHql("update " + SessionStat.class.getName()
-            + " stat set stat.online = stat.online + 1 " + "where stat.online < stat.capacity and stat.id=?",
-            statId);
+        result = entityDao.executeUpdate(
+            "update " + SessionStat.class.getName() + " stat set stat.online = stat.online + 1 "
+                + "where stat.online < stat.capacity and stat.id=?1", statId);
       }
       return result > 0;
     }
@@ -109,8 +109,8 @@ public class DbSessionController extends AbstractSessionController implements In
   public void onLogout(Sessioninfo info) {
     CategorySessioninfo categoryinfo = (CategorySessioninfo) info;
     if (!info.isExpired()) {
-      entityDao.executeUpdateHql("update " + SessionStat.class.getName()
-          + " stat set stat.online=stat.online -1 " + "where stat.online>0 and stat.category=?",
+      entityDao.executeUpdate("update " + SessionStat.class.getName()
+          + " stat set stat.online=stat.online -1 " + "where stat.online>0 and stat.category=?1",
           categoryinfo.getCategory());
     }
   }
@@ -121,13 +121,13 @@ public class DbSessionController extends AbstractSessionController implements In
 
   public void onEvent(CategoryProfileUpdateEvent event) {
     CategoryProfile profile = (CategoryProfile) event.getSource();
-    int cnt = entityDao.executeUpdateHql("update " + SessionStat.class.getName()
-        + " stat set stat.capacity=? where stat.category=?", profile.getCapacity(), profile.getCategory());
+    int cnt = entityDao.executeUpdate("update " + SessionStat.class.getName()
+        + " stat set stat.capacity=?1 where stat.category=?2", profile.getCapacity(), profile.getCategory());
     if (cnt == 0) entityDao.saveOrUpdate(new SessionStat(profile.getCategory(), profile.getCapacity()));
   }
 
   public void stat() {
-    entityDao.executeUpdateHql("update " + SessionStat.class.getName()
+    entityDao.executeUpdate("update " + SessionStat.class.getName()
         + " stat  set stat.online=(select count(*) from " + sessioninfoBuilder.getSessioninfoType().getName()
         + " info where info.expiredAt is null and info.category=stat.category)");
   }

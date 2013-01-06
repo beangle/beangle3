@@ -271,8 +271,8 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     }
     if (!arguments.isEmpty()) {
       try {
-        entityDao.executeUpdateHqlRepeatly("update " + getSessioninfoTypename()
-            + " info set info.lastAccessAt=? where info.id=? and info.lastAccessAt < ? ", arguments);
+        entityDao.executeUpdateRepeatly("update " + getSessioninfoTypename()
+            + " info set info.lastAccessAt=?1 where info.id=?2 and info.lastAccessAt < ?3 ", arguments);
       } catch (Exception e) {
         logger.error("Beangle session update last accessed time failure.", e);
       }

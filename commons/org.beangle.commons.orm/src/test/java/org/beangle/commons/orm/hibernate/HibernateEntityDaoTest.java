@@ -30,8 +30,8 @@ public class HibernateEntityDaoTest extends ConfigurationTest {
    */
   public void testQueryHqlWithParamArray() {
     EntityDao entityDao = (EntityDao) applicationContext.getBean("entityDao");
-    entityDao.searchHQLQuery("from " + Employer.class.getName()
-        + " as emp where emp.name.firstName = ? and emp.contractInfo.add1 = ?", "john", "najing street");
+    entityDao.search("from " + Employer.class.getName()
+        + " as emp where emp.name.firstName = ?1 and emp.contractInfo.add1 = ?2 ", "john", "najing street");
   }
 
   /**

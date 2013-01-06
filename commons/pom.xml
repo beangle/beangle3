@@ -36,7 +36,7 @@
   </scm>
 
   <properties>
-    <ognl.version>3.0.5</ognl.version>
+    <ognl.version>3.0.6</ognl.version>
     <commoncollections.version>3.2.1</commoncollections.version>
     <commonbeanutils.version>1.8.3</commonbeanutils.version>
     <gemini.version>1.0.0.M1</gemini.version>
@@ -44,7 +44,7 @@
     <hibernate.validator.version>4.2.0.Final</hibernate.validator.version>
     <javassist.version>3.17.1-GA</javassist.version>
     <ehcache.version>2.5.2</ehcache.version>
-    <poi.version>3.8</poi.version>
+    <poi.version>3.9</poi.version>
     <javax.validation.version>1.0.0.GA</javax.validation.version>
   </properties>
 

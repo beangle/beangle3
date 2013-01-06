@@ -184,8 +184,8 @@ public class HibernateEntityDao implements EntityDao {
         hql.append("entity.").append(keyName).append(" = :").append(name).append(" and ");
       }
     }
-    hql.append(" (1=1) ");
-    return searchHQLQuery(hql.toString(), m);
+    if (i > 0) hql.delete(hql.length() - " and ".length(), hql.length());
+    return search(hql.toString(), m);
   }
 
   /**
@@ -232,90 +232,53 @@ public class HibernateEntityDao implements EntityDao {
   }
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> searchNamedQuery(final String queryName, final Map<String, Object> params) {
-    Query query = this.getSession().getNamedQuery(queryName);
-    return QuerySupport.setParameter(query, params).list();
+  public <T> List<T> search(String query, Object... params) {
+    return (List<T>) QuerySupport.setParameter(getNamedOrCreateQuery(query), params).list();
   }
 
-  @SuppressWarnings({ "unchecked" })
-  public <T> List<T> searchNamedQuery(final String queryName, final Map<String, Object> params,
+  @SuppressWarnings("unchecked")
+  public <T> List<T> search(String queryString, Map<String, Object> params) {
+    return QuerySupport.setParameter(getNamedOrCreateQuery(queryString), params).list();
+  }
+
+  @SuppressWarnings("unchecked")
+  public <T> List<T> search(String queryString, final Map<String, Object> params, PageLimit limit,
       boolean cacheable) {
-    Query query = getSession().getNamedQuery(queryName);
+    Query query = getNamedOrCreateQuery(queryString);
     query.setCacheable(cacheable);
-    return QuerySupport.setParameter(query, params).list();
+    if (null == limit) return QuerySupport.setParameter(query, params).list();
+    else return paginateQuery(query, params, limit);
   }
 
-  @SuppressWarnings("unchecked")
-  public <T> List<T> searchNamedQuery(String queryName, Object... params) {
-    Query query = getSession().getNamedQuery(queryName);
-    return QuerySupport.setParameter(query, params).list();
-  }
-
-  @SuppressWarnings("unchecked")
-  public <T> List<T> searchHQLQuery(String hql) {
-    return getSession().createQuery(hql).list();
-  }
-
-  @SuppressWarnings("unchecked")
-  public <T> List<T> searchHQLQuery(String hql, Map<String, Object> params) {
-    Query query = getSession().createQuery(hql);
-    return QuerySupport.setParameter(query, params).list();
-  }
-
-  @SuppressWarnings("unchecked")
-  public <T> List<T> searchHQLQuery(String hql, Object... params) {
-    Query query = getSession().createQuery(hql);
-    return (List<T>) QuerySupport.setParameter(query, params).list();
-  }
-
-  @SuppressWarnings("unchecked")
-  public <T> List<T> searchHQLQuery(String hql, final Map<String, Object> params, boolean cacheable) {
-    Query query = getSession().createQuery(hql);
-    query.setCacheable(cacheable);
-    return QuerySupport.setParameter(query, params).list();
-  }
-
-  public <T> Page<T> paginateNamedQuery(String queryName, Map<String, Object> params, PageLimit limit) {
-    Query query = getSession().getNamedQuery(queryName);
-    return paginateQuery(query, params, limit);
-  }
-
-  public <T> Page<T> paginateHQLQuery(String hql, Map<String, Object> params, PageLimit limit) {
-    Query query = getSession().createQuery(hql);
-    return paginateQuery(query, params, limit);
+  /**
+   * Support "@named-query" or "from object" styles query
+   * 
+   * @param queryString
+   * @return Hibernate query
+   */
+  private Query getNamedOrCreateQuery(String queryString) {
+    if (queryString.charAt(0) == '@') return getSession().getNamedQuery(queryString.substring(1));
+    else return getSession().createQuery(queryString);
   }
 
   public void evict(Object entity) {
     getSession().evict(entity);
   }
 
-  public int executeUpdateHql(final String queryStr, final Object... argument) {
-    Query query = getSession().createQuery(queryStr);
-    return QuerySupport.setParameter(query, argument).executeUpdate();
+  public int executeUpdate(final String queryString, final Object... argument) {
+    return QuerySupport.setParameter(getNamedOrCreateQuery(queryString), argument).executeUpdate();
   }
 
-  public int executeUpdateHqlRepeatly(final String queryStr, final List<Object[]> arguments) {
-    Query query = getSession().createQuery(queryStr);
+  public int executeUpdateRepeatly(final String queryString, final Collection<Object[]> arguments) {
+    Query query = getNamedOrCreateQuery(queryString);
     int updated = 0;
-    for (Object[] params : arguments) {
+    for (Object[] params : arguments)
       updated += QuerySupport.setParameter(query, params).executeUpdate();
-    }
     return updated;
   }
 
-  public int executeUpdateHql(final String queryStr, final Map<String, Object> parameterMap) {
-    Query query = getSession().createQuery(queryStr);
-    return QuerySupport.setParameter(query, parameterMap).executeUpdate();
-  }
-
-  public int executeUpdateNamedQuery(final String queryName, final Map<String, Object> parameterMap) {
-    Query query = getSession().getNamedQuery(queryName);
-    return QuerySupport.setParameter(query, parameterMap).executeUpdate();
-  }
-
-  public int executeUpdateNamedQuery(final String queryName, final Object... arguments) {
-    Query query = getSession().getNamedQuery(queryName);
-    return QuerySupport.setParameter(query, arguments).executeUpdate();
+  public int executeUpdate(final String queryString, final Map<String, Object> parameterMap) {
+    return QuerySupport.setParameter(getNamedOrCreateQuery(queryString), parameterMap).executeUpdate();
   }
 
   public Blob createBlob(InputStream inputStream, int length) {
@@ -362,7 +325,7 @@ public class HibernateEntityDao implements EntityDao {
    * @return a page data
    */
   @SuppressWarnings("unchecked")
-  public <T> Page<T> paginateQuery(Query query, Map<String, Object> params, PageLimit limit) {
+  private <T> Page<T> paginateQuery(Query query, Map<String, Object> params, PageLimit limit) {
     QuerySupport.setParameter(query, params);
     query.setFirstResult((limit.getPageNo() - 1) * limit.getPageSize()).setMaxResults(limit.getPageSize());
     List<T> targetList = query.list();
@@ -508,7 +471,7 @@ public class HibernateEntityDao implements EntityDao {
     hql.deleteCharAt(hql.length() - 1);
     hql.append(" where ").append(attr).append(" in (:ids)");
     newParams.put("ids", values);
-    return executeUpdateHql(hql.toString(), newParams);
+    return executeUpdate(hql.toString(), newParams);
   }
 
   public void remove(Collection<?> entities) {
@@ -538,7 +501,7 @@ public class HibernateEntityDao implements EntityDao {
     hql.append("delete from ").append(entityName).append(" where ").append(attr).append(" in (:ids)");
     Map<String, Object> parameterMap = CollectUtils.newHashMap();
     parameterMap.put("ids", values);
-    return executeUpdateHql(hql.toString(), parameterMap) > 0;
+    return executeUpdate(hql.toString(), parameterMap) > 0;
   }
 
   public boolean remove(Class<?> entityClass, String attr, Collection<?> values) {
@@ -563,14 +526,14 @@ public class HibernateEntityDao implements EntityDao {
       }
     }
     hql.append(" (1=1) ");
-    return (executeUpdateHql(hql.toString(), params) > 0);
+    return (executeUpdate(hql.toString(), params) > 0);
   }
 
   public long count(String entityName, String keyName, Object value) {
     String hql = "select count(*) from " + entityName + " where " + keyName + "=:value";
     Map<String, Object> params = CollectUtils.newHashMap();
     params.put("value", value);
-    List<?> rs = searchHQLQuery(hql, params);
+    List<?> rs = search(hql, params);
     if (rs.isEmpty()) {
       return 0;
     } else {
@@ -608,7 +571,7 @@ public class HibernateEntityDao implements EntityDao {
       }
       if (i < attrs.length - 1) hql.append(" and ");
     }
-    return ((Number) searchHQLQuery(hql.toString(), params).get(0)).longValue();
+    return ((Number) search(hql.toString(), params).get(0)).longValue();
   }
 
   public boolean exist(Class<?> entityClass, String attr, Object value) {
@@ -661,7 +624,7 @@ public class HibernateEntityDao implements EntityDao {
       b.append(" and ").append(key).append('=').append(":param" + i);
       paramsMap.put("param" + i, params.get(key));
     }
-    List<?> list = searchHQLQuery(b.toString(), paramsMap);
+    List<?> list = search(b.toString(), paramsMap);
     if (!list.isEmpty()) {
       if (null == id) {
         return false;
@@ -776,16 +739,15 @@ public class HibernateEntityDao implements EntityDao {
     }
 
     /**
-     * 为query设置参数
+     * 为query设置JPA style参数
      * 
      * @param query
      * @param argument
      */
     public static Query setParameter(final Query query, final Object[] argument) {
       if (argument != null && argument.length > 0) {
-        for (int i = 0; i < argument.length; i++) {
-          query.setParameter(i, argument[i]);
-        }
+        for (int i = 0; i < argument.length; i++)
+          query.setParameter(String.valueOf(i + 1), argument[i]);
       }
       return query;
     }
@@ -842,7 +804,6 @@ public class HibernateEntityDao implements EntityDao {
           for (int i = 0; i < paramNames.size(); i++) {
             final String name = paramNames.get(i);
             final Object value = condition.getParams().get(i);
-
             if (value.getClass().isArray()) {
               query.setParameterList(name, (Object[]) value);
             } else if (value instanceof Collection<?>) {

@@ -55,7 +55,7 @@ public class OqlDataProvider extends BaseServiceImpl implements UserDataProvider
       }
       params.put("ids", newIds);
     }
-    return (List<T>) entityDao.searchHQLQuery(source, params);
+    return (List<T>) entityDao.search(source, params);
   }
 
   public String getName() {

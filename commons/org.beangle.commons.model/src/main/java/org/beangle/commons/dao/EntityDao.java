@@ -26,7 +26,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.beangle.commons.collection.page.Page;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.commons.dao.query.Query;
 import org.beangle.commons.dao.query.QueryBuilder;
@@ -145,120 +144,56 @@ public interface EntityDao {
   <T> T uniqueResult(QueryBuilder<T> builder);
 
   /**
-   * 命名查询
+   * JPQL/NamedQuery<br>
+   * query语句中使用?1表示参数.NamedQuery使用@Named-Query-Name
    * 
-   * @param queryName
+   * @param query
    * @param params
    */
-  <T> List<T> searchNamedQuery(final String queryName, final Map<String, Object> params);
+  <T> List<T> search(final String query, final Object... params);
 
   /**
-   * 命名查询
+   * JPQL/NamedQuery<br>
    * 
-   * @param queryName
+   * @param query
    * @param params
    */
-  <T> List<T> searchNamedQuery(final String queryName, final Object... params);
+  <T> List<T> search(final String query, final Map<String, Object> params);
 
   /**
-   * 支持缓存的命名查询
+   * 支持缓存的JPQL/NamedQuery<br>
+   * 查询
    * 
-   * @param queryName
-   * @param params
-   * @param cacheable
-   */
-  <T> List<T> searchNamedQuery(String queryName, Map<String, Object> params, boolean cacheable);
-
-  /**
-   * 直接查询
-   * 
-   * @param hql
-   */
-  <T> List<T> searchHQLQuery(final String hql);
-
-  /**
-   * HQL查询
-   * 
-   * @param hql
-   * @param params
-   */
-  <T> List<T> searchHQLQuery(final String hql, final Map<String, Object> params);
-
-  /**
-   * HQL查询<br>
-   * hql语句中使用?表示参数
-   * 
-   * @param hql
-   * @param params
-   */
-  <T> List<T> searchHQLQuery(final String hql, final Object... params);
-
-  /**
-   * 支持缓存的HQL查询
-   * 
-   * @param hql
-   * @param params
-   * @param cacheable
-   */
-  <T> List<T> searchHQLQuery(String hql, final Map<String, Object> params, boolean cacheable);
-
-  /**
-   * 分页命名查询
-   * 
-   * @param queryName
+   * @param query
    * @param params
    * @param limit
+   * @param cacheable
    */
-  <T> Page<T> paginateNamedQuery(final String queryName, final Map<String, Object> params, PageLimit limit);
+  <T> List<T> search(String query, final Map<String, Object> params, PageLimit limit, boolean cacheable);
 
   /**
-   * 分页HQL查询
+   * 执行JPQL/NamedQuery 进行更新或者删除
    * 
-   * @param hql
-   * @param params
-   * @param limit
-   */
-  <T> Page<T> paginateHQLQuery(final String hql, final Map<String, Object> params, PageLimit limit);
-
-  /**
-   * 执行HQL 进行更新或者删除
-   * 
-   * @param hql
+   * @param query
    * @param arguments
    */
-  int executeUpdateHql(String hql, Object... arguments);
+  int executeUpdate(String query, Object... arguments);
 
   /**
-   * 重复执行单个hql语句
+   * 重复执行单个JPQL/NamedQuery语句
    * 
-   * @param queryStr
+   * @param query
    * @param arguments
    */
-  int executeUpdateHqlRepeatly(String queryStr, List<Object[]> arguments);
+  int executeUpdateRepeatly(String query, Collection<Object[]> arguments);
 
   /**
-   * 执行HQL 进行更新或者删除
+   * 执行JPQL/NamedQuery进行更新或者删除
    * 
-   * @param hql
+   * @param query
    * @param parameterMap
    */
-  int executeUpdateHql(String hql, Map<String, Object> parameterMap);
-
-  /**
-   * 执行命名语句进行更新或者删除
-   * 
-   * @param queryName
-   * @param parameterMap
-   */
-  int executeUpdateNamedQuery(String queryName, Map<String, Object> parameterMap);
-
-  /**
-   * 执行命名语句进行更新或者删除
-   * 
-   * @param queryName
-   * @param arguments
-   */
-  int executeUpdateNamedQuery(String queryName, Object... arguments);
+  int executeUpdate(String query, Map<String, Object> parameterMap);
 
   /**
    * 保存或更新单个或多个实体.

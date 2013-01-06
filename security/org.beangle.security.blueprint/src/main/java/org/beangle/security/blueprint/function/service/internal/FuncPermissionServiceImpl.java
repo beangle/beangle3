@@ -69,7 +69,7 @@ public class FuncPermissionServiceImpl extends BaseServiceImpl implements FuncPe
     params.clear();
     for (final Role role : user.getRoles()) {
       params.put("roleId", role.getId());
-      List<FuncResource> roleResources = entityDao.searchHQLQuery(hql, params);
+      List<FuncResource> roleResources = entityDao.search(hql, params);
       resources.addAll(roleResources);
     }
     return CollectUtils.newArrayList(resources);

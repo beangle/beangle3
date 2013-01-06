@@ -18,6 +18,10 @@
  */
 package org.beangle.struts2.view.freemarker;
 
+import static org.beangle.commons.lang.Strings.leftPad;
+import static org.beangle.commons.lang.Strings.split;
+import static org.beangle.commons.lang.Strings.substringAfter;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +35,6 @@ import javax.servlet.ServletContext;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.ClassLoaders;
-import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +50,7 @@ import freemarker.template.TemplateException;
  * BeangleFreemarkerManager provide:
  * <p>
  * <ul>
- * <li>Better template loader sequence like classpath:,file:,webapp:</li>
+ * <li>Better template loader sequence like class://,file://,webapp://</li>
  * <li>Multi freemark properties loading(META-INF/freemarker.properties,freemarker.properties)</li>
  * <li>Friendly Collection/Map/Object objectwrapper</li>
  * <li>Disable freemarker logger instead of slf4j</li>
@@ -95,22 +98,22 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
   @Override
   protected TemplateLoader createTemplateLoader(ServletContext servletContext, String templatePath) {
     // construct a FileTemplateLoader for the init-param 'TemplatePath'
-    String[] paths = Strings.split(templatePath, ",");
+    String[] paths = split(templatePath, ",");
     List<TemplateLoader> loaders = CollectUtils.newArrayList();
     for (String path : paths) {
-      if (path.startsWith("classpath:")) {
-        loaders.add(new BeangleClassTemplateLoader(Strings.substringAfter(path, "classpath:")));
-      } else if (path.startsWith("file:")) {
+      if (path.startsWith("class://")) {
+        loaders.add(new BeangleClassTemplateLoader(substringAfter(path, "class://")));
+      } else if (path.startsWith("file://")) {
         try {
-          loaders.add(new FileTemplateLoader(new File(path)));
+          loaders.add(new FileTemplateLoader(new File(substringAfter(path, "file://"))));
         } catch (IOException e) {
           throw new RuntimeException("templatePath: " + path + " cannot be accessed", e);
         }
-      } else if (path.startsWith("webapp:")) {
-        loaders.add(new WebappTemplateLoader(servletContext, Strings.substringAfter(path, "webapp:")));
+      } else if (path.startsWith("webapp://")) {
+        loaders.add(new WebappTemplateLoader(servletContext, substringAfter(path, "webapp://")));
       } else {
         throw new RuntimeException("templatePath: " + path
-            + " is not well-formed. Use [classpath:|file:|webapp:] seperated with ,");
+            + " is not well-formed. Use [class://|file://|webapp://] seperated with ,");
       }
 
     }
@@ -129,12 +132,11 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
   protected void loadSettings(ServletContext servletContext) {
     try {
       Properties properties = new Properties();
-      List<URL> urls = ClassLoaders.getResources("META-INF/freemarker.properties",
-          BeangleFreemarkerManager.class);
+      List<URL> urls = ClassLoaders.getResources("META-INF/freemarker.properties", getClass());
       for (URL url : urls)
         properties.putAll(getProperties(url));
 
-      urls = ClassLoaders.getResources("freemarker.properties", BeangleFreemarkerManager.class);
+      urls = ClassLoaders.getResources("freemarker.properties", getClass());
       for (URL url : urls)
         properties.putAll(getProperties(url));
 
@@ -150,7 +152,7 @@ public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarke
         if (value == null) { throw new IOException(
             "init-param without param-value.  Maybe the freemarker.properties is not well-formed?"); }
         addSetting(key, value);
-        sb.append(Strings.leftPad(key, 21, ' ')).append(" : ").append(value);
+        sb.append(leftPad(key, 21, ' ')).append(" : ").append(value);
         if (iter.hasNext()) sb.append('\n');
       }
       logger.info("Freemarker properties: ->\n{} ", sb);

@@ -62,7 +62,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     Map<String, Object> params = CollectUtils.newHashMap();
     params.put("name", name);
     params.put("password", password);
-    List<?> userList = entityDao.searchHQLQuery(
+    List<?> userList = entityDao.search(
         "from User user where  user.name = :name and user.password = :password", params);
     if (userList.size() > 0) return (User) userList.get(0);
     else return null;
@@ -116,7 +116,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public List<Role> getRoles(Long userId) {
     OqlBuilder builder = OqlBuilder.from(Member.class, "gm");
-    builder.where("gm.user.id=:userId and gm.member=true", userId).select("gm.role").orderBy("gm.role.indexno");
+    builder.where("gm.user.id=:userId and gm.member=true", userId).select("gm.role")
+        .orderBy("gm.role.indexno");
     builder.cacheable();
     return entityDao.search(builder);
   }
