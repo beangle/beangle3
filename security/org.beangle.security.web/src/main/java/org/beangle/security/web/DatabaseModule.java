@@ -46,12 +46,12 @@ public class DatabaseModule extends AbstractBindModule {
             "hibernate.cache.region.factory_class=org.hibernate.cache.EhCacheRegionFactory",
             "hibernate.cache.use_second_level_cache=true", "hibernate.cache.use_query_cache=true",
             "hibernate.query.substitutions=true 1, false 0, yes 'Y', no 'N'", "hibernate.show_sql=false",
-            "net.sf.ehcache.configurationResourceName=/ehcache-secsession.xml"));
+            "net.sf.ehcache.configurationResourceName=/ehcache-session.xml"));
 
     bind("secsessionSessionFactory", SessionFactoryBean.class)
         .property("configurationClass", "org.beangle.commons.orm.hibernate.internal.OverrideConfiguration")
         .property("hibernateProperties", ref("secsessionHibernateConfig"))
-        .property("configLocations", "classpath*:META-INF/hibernate-secsession.cfg.xml")
+        .property("persistLocations", "classpath*:META-INF/beangle/persist-session.properties")
         .property("dataSource", ref("secsessionDataSource"));
 
     bind("secsessionTransactionManager", HibernateTransactionManager.class).property("sessionFactory",

@@ -56,9 +56,10 @@ public class DefaultModule extends AbstractBindModule {
     bind("sessionFactory", SessionFactoryBean.class)
         .property("configurationClass", "org.beangle.commons.orm.hibernate.internal.OverrideConfiguration")
         .property("hibernateProperties", ref("hibernateConfig"))
-        .property("configLocations", "classpath*:META-INF/hibernate.cfg.xml");
+        .property("configLocations", "classpath*:META-INF/hibernate.cfg.xml")
+        .property("persistLocations", "classpath*:META-INF/beangle/persist.properties");
 
-    bind("transactionManager",HibernateTransactionManager.class);
+    bind("transactionManager", HibernateTransactionManager.class);
 
     bind("baseTransactionProxy", TransactionProxyFactoryBean.class).setAbstract().property(
         "transactionAttributes",

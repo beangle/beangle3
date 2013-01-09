@@ -18,14 +18,17 @@
  */
 package org.beangle.commons.orm.hibernate;
 
-import java.util.List;
+import java.io.InputStream;
+import java.util.Enumeration;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
 import org.beangle.commons.bean.Disposable;
 import org.beangle.commons.bean.Initializing;
-import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.entity.orm.AbstractPersistModule;
+import org.beangle.commons.entity.orm.EntityPersistConfig;
+import org.beangle.commons.io.IOs;
 import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.reflect.Reflections;
 import org.beangle.commons.lang.time.Stopwatch;
@@ -38,7 +41,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.FactoryBean;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 /**
@@ -58,9 +60,7 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
 
   private Resource[] configLocations;
 
-  private String[] mappingResources;
-
-  private List<String> classNames = CollectUtils.newArrayList();
+  private Resource[] persistLocations;
 
   private NamingStrategy namingStrategy;
 
@@ -83,35 +83,10 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
    */
   public void setConfigLocations(Resource[] configLocations) {
     this.configLocations = configLocations;
-    // for (Resource res : configLocations) {
-    // try {
-    // InputStream is = res.getURL().openStream();
-    // List<String> lines = IOUtils.readLines(is);
-    // is.close();
-    // for (String line : lines) {
-    // if (line.contains("<mapping")) {
-    // classNames.add(Strings.substringBetween(line, "\"", "\"").trim());
-    // }
-    // }
-    // } catch (IOException e) {
-    // e.printStackTrace();
-    // }
-    // }
   }
 
-  /**
-   * Set Hibernate mapping resources to be found in the class path,
-   * like "example.hbm.xml" or "mypackage/example.hbm.xml".
-   * Analogous to mapping entries in a Hibernate XML config file.
-   * Alternative to the more generic setMappingLocations method.
-   * <p>
-   * Can be used to add to mappings from a Hibernate XML config file, or to specify all mappings
-   * locally.
-   * 
-   * @see org.hibernate.cfg.Configuration#addResource
-   */
-  public void setMappingResources(String[] mappingResources) {
-    this.mappingResources = mappingResources;
+  public void setPersistLocations(Resource[] persistLocations) {
+    this.persistLocations = persistLocations;
   }
 
   /**
@@ -148,6 +123,7 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
     this.namingStrategy = namingStrategy;
   }
 
+  @SuppressWarnings("unchecked")
   public void init() throws Exception {
     if (dataSource != null) configTimeDataSourceHolder.set(dataSource);
     configuration = newConfiguration();
@@ -163,20 +139,30 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
 
     try {
 
-      if (this.configLocations != null) {
-        for (Resource resource : this.configLocations)
+      if (null != configLocations) {
+        for (Resource resource : configLocations)
           configuration.configure(resource.getURL());
       }
-      if (this.mappingResources != null) {
-        for (String mapping : this.mappingResources) {
-          Resource resource = new ClassPathResource(mapping.trim(), this.beanClassLoader);
-          configuration.addInputStream(resource.getInputStream());
+      if (null != persistLocations) {
+        for (Resource resource : persistLocations) {
+          InputStream is = resource.getURL().openStream();
+          Properties props = new Properties();
+          if (null != is) props.load(is);
+          String moduleClassName = props.getProperty("module");
+          Class<? extends AbstractPersistModule> moduleClass = (Class<? extends AbstractPersistModule>) Class
+              .forName(moduleClassName);
+          addPersistInfo(moduleClass.newInstance().getConfig());
+          Enumeration<String> enumer = (Enumeration<String>) props.propertyNames();
+          while (enumer.hasMoreElements()) {
+            String propertyName = enumer.nextElement();
+            if (!"module".equals(propertyName)) {
+              configuration.setProperty(propertyName, props.getProperty(propertyName));
+            }
+          }
+          IOs.close(is);
         }
       }
-
-      for (String className : classNames) {
-        configuration.addAnnotatedClass(Class.forName(className, true, beanClassLoader));
-      }
+      // configuration.
       Stopwatch watch = new Stopwatch(true);
       this.sessionFactory = configuration.buildSessionFactory();
       logger.info("Building Hibernate SessionFactory in {}", watch);
@@ -184,6 +170,26 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
 
     finally {
       if (dataSource != null) configTimeDataSourceHolder.remove();
+    }
+  }
+
+  private void addPersistInfo(EntityPersistConfig epconfig) {
+    for (EntityPersistConfig.EntityDefinition definition : epconfig.getEntites()) {
+      configuration.addAnnotatedClass(definition.getClazz());
+      logger.debug("Add annotation {}", definition.getClazz());
+      if (null != definition.getCacheUsage()) {
+        String region = (null == definition.getCacheRegion()) ? definition.getEntityName() : definition
+            .getCacheRegion();
+        configuration.setCacheConcurrencyStrategy(definition.getEntityName(), definition.getCacheUsage(),
+            region, true);
+      }
+    }
+    for (EntityPersistConfig.CollectionDefinition definition : epconfig.getCollections()) {
+      if (null == definition.getCacheUsage()) continue;
+      String role = epconfig.getEntity(definition.getClazz()).getEntityName() + "."
+          + definition.getProperty();
+      String region = (null == definition.getCacheRegion()) ? role : definition.getCacheRegion();
+      configuration.setCollectionCacheConcurrencyStrategy(role, definition.getCacheUsage(), region);
     }
   }
 
