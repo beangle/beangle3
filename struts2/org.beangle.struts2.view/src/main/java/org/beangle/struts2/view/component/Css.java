@@ -20,6 +20,11 @@ package org.beangle.struts2.view.component;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
+/**
+ * 
+ * @author chaostone
+ * @since 2.4
+ */
 public class Css extends UIBean {
 
   private String href;

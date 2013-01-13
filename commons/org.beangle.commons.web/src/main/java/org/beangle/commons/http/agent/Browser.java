@@ -23,8 +23,6 @@ import java.util.Map;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Web browser
@@ -35,9 +33,8 @@ public class Browser implements Serializable, Comparable<Browser> {
 
   private static final long serialVersionUID = -6200607575108416928L;
 
-  private static Logger logger = LoggerFactory.getLogger(BrowserCategory.class);
   public static Map<String, Browser> browsers = CollectUtils.newHashMap();
-  public static final Browser UNKNOWN = new Browser(BrowserCategory.UNKNOWN, null);
+  public static final Browser UNKNOWN = new Browser(BrowserCategory.Unknown, null);
 
   public final BrowserCategory category;
   public final String version;
@@ -57,19 +54,23 @@ public class Browser implements Serializable, Comparable<Browser> {
    */
   public static Browser parse(final String agentString) {
     if (Strings.isEmpty(agentString)) { return Browser.UNKNOWN; }
-    for (BrowserCategory category : BrowserCategory.values()) {
-      String version = category.match(agentString);
-      if (version != null) {
-        String key = category.getName() + "/" + version;
-        Browser browser = browsers.get(key);
-        if (null == browser) {
-          browser = new Browser(category, version);
-          browsers.put(key, browser);
+    for (Engine engine : Engine.values()) {
+      String egineName = engine.name;
+      if (agentString.contains(egineName)) {
+        for (BrowserCategory category : engine.browserCategories) {
+          String version = category.match(agentString);
+          if (version != null) {
+            String key = category.getName() + "/" + version;
+            Browser browser = browsers.get(key);
+            if (null == browser) {
+              browser = new Browser(category, version);
+              browsers.put(key, browser);
+            }
+            return browser;
+          }
         }
-        return browser;
       }
     }
-    logger.debug("unknown browser: {}", agentString);
     return Browser.UNKNOWN;
   }
 

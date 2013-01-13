@@ -24,76 +24,99 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.collections.map.LinkedMap;
 import org.beangle.commons.lang.Strings;
+import static org.beangle.commons.http.agent.Engine.*;
 
 /**
  * Enum constants for most common browsers, including e-mail clients and bots.
  * 
- * @author harald
+ * @author chaostone
  */
 
 public enum BrowserCategory {
+  // Gecko series
+  Firefox("Firefox", Gecko, "Firefox/(\\S*)->$1", "Firefox"),
 
-  FIREFOX("Firefox", Engine.GECKO, "Firefox/(\\S*)->$1", "Firefox"),
+  Thunderbird("Thunderbird", Gecko, "Thunderbird/(\\S*)->$1", "Thunderbird"),
 
-  CHROME("Chrome", Engine.WEBKIT, "Chrome/(\\S*)->$1", "Chrome"),
+  Camino("Camino", Gecko, "Camino/(\\S*)->$1", "Camino"),
 
-  IE("Internet Explorer", Engine.TRIDENT, "MSIE (\\S*);->$1", "MSIE"),
+  Flock("Flock", Gecko, "Flock/(\\S*)->$1"),
 
-  OPERA("Opera", Engine.PRESTO, "Opera/9.8->10", "Opera/9->9", "Opera"),
+  FirefoxMobile("Firefox Mobile", Gecko, "Firefox/3.5 Maemo->3"), // ??? need validate
 
-  OPERA_MINI("Opera Mini", Engine.PRESTO, "Opera Mini"),
+  SeaMonkey("SeaMonkey", Gecko, "SeaMonkey"),
 
-  KONQUEROR("Konqueror", Engine.KHTML, "Konqueror"),
+  // IE series
+  Tencent("Tencent Traveler", Trident, "TencentTraveler (\\S*);->$1"),
 
-  OUTLOOK("Outlook", Engine.WORD, "MSOffice 12->2007", "MSOffice 14->2010", "MSOffice"),
+  Sogo("Sogo", Trident, "SE(.*)MetaSr"),
 
-  OUTLOOK_EXPRESS("Windows Live Mail", Engine.TRIDENT, "Outlook-Express/7.0->7.0"),
+  TheWorld("The World", Trident, "theworld"),
 
-  IEMOBILE("IE Mobile", Engine.TRIDENT, "IEMobile 7->7", "IEMobile 6->6"),
+  IE360("Internet Explorer 360", Trident, "360SE"),
 
-  OMNIWEB("Omniweb", Engine.WEBKIT, "OmniWeb"), //
+  IeMobile("IE Mobile", Trident, "IEMobile (\\S*)->$1"),
 
-  SAFARI("Safari", Engine.WEBKIT, "Version/5->5", "Version/4->4", "Safari"),
+  IE("Internet Explorer", Trident, "MSIE (\\S*);->$1", "MSIE"),
 
-  SAFARI_MOBILE("Mobile Safari", Engine.WEBKIT, "Mobile Safari", "Mobile/5A347 Safari",
-      "Mobile/3A101a Safari", "Mobile/7B367 Safari"),
+  OutlookExpress("Windows Live Mail", Trident, "Outlook-Express/7.0->7.0"),
 
-  APPLE_MAIL("Apple Mail", Engine.WEBKIT, "AppleWebKit"),
+  // WebKit
+  Maxthon("Maxthon", WebKit, "Maxthon/(\\S*)->$1", "Maxthon"),
 
-  LOTUS_NOTES("Lotus Notes", Engine.OTHER, "Lotus-Notes"),
+  Chrome("Chrome", WebKit, "Chrome/(\\S*)->$1", "Chrome"),
 
-  THUNDERBIRD("Thunderbird", Engine.GECKO, "Thunderbird/3->3", "Thunderbird/2->2", "Thunderbird"),
+  Safari("Safari", WebKit, "Version/(\\S*) Safari->$1", "Safari"),
 
-  CAMINO("Camino", Engine.GECKO, "Camino/2->2", "Camino"),
+  Omniweb("Omniweb", WebKit, "OmniWeb"),
 
-  FLOCK("Flock", Engine.GECKO, "Flock"),
+  AppleMail("Apple Mail", WebKit, "AppleWebKit"),
 
-  FIREFOX_MOBILE("Firefox Mobile", Engine.GECKO, "Firefox/3.5 Maemo->3"),
+  ChromeMobile("Chrome Mobile", WebKit, "CrMo/(\\S*)->$1"), // ??? need validate
 
-  SEAMONKEY("SeaMonkey", Engine.GECKO, "SeaMonkey"),
+  SafariMobile("Mobile Safari", WebKit, "Mobile Safari", "Mobile/5A347 Safari", "Mobile/3A101a Safari",
+      "Mobile/7B367 Safari"),
 
-  BOT("Robot/Spider", Engine.OTHER, "Googlebot", "bot", "spider", "crawler", "Feedfetcher", "Slurp",
-      "Twiceler", "Nutch", "BecomeBot"),
+  Silk("Silk", WebKit, "Silk/(\\S*)->$1"),
 
-  MOZILLA("Mozilla", Engine.OTHER, "Mozilla", "Moozilla"),
+  Dolfin("Samsung Dolphin", WebKit, "Dolfin/(\\S*)->$1"),
 
-  CFNETWORK("CFNetwork", Engine.OTHER, "CFNetwork"),
+  // Presto
+  Opera("Opera", Presto, "Opera/(.*?)Version/(\\S*)->$2", "Opera Mini->Mini", "Opera"),
 
-  EUDORA("Eudora", Engine.OTHER, "Eudora", "EUDORA"),
+  // Khtml
+  Konqueror("Konqueror", Khtml, "Konqueror"),
 
-  POCOMAIL("PocoMail", Engine.OTHER, "PocoMail"),
+  // Word
+  Outlook("Outlook", Word, "MSOffice 12->2007", "MSOffice 14->2010", "MSOffice"),
 
-  THEBAT("The Bat!", Engine.OTHER, "The Bat"),
+  // Others
+  LotusNotes("Lotus Notes", Other, "Lotus-Notes"),
 
-  NETFRONT("NetFront", Engine.OTHER, "NetFront"),
+  Bot("Robot/Spider", Other, "Googlebot", "bot", "spider", "crawler", "Feedfetcher", "Slurp", "Twiceler",
+      "Nutch", "BecomeBot"),
 
-  EVOLUTION("Evolution", Engine.OTHER, "CamelHttpStream"),
+  Mozilla("Mozilla", Other, "Mozilla", "Moozilla"),
 
-  LYNX("Lynx", Engine.OTHER, "Lynx"),
+  CFNetwork("CFNetwork", Other, "CFNetwork"),
 
-  DOWNLOAD("Downloading Tool", Engine.OTHER, "cURL", "wget"),
+  Eudora("Eudora", Other, "Eudora", "EUDORA"),
 
-  UNKNOWN("Unknown", Engine.OTHER);
+  PocoMail("PocoMail", Other, "PocoMail"),
+
+  TheBat("The Bat!", Other, "The Bat"),
+
+  NetFront("NetFront", Other, "NetFront"),
+
+  Evolution("Evolution", Other, "CamelHttpStream"),
+
+  Lynx("Lynx", Other, "Lynx"), // ??? need validate
+
+  UC("UC", Other, "UCWEB"),
+
+  Download("Downloading Tool", Other, "cURL", "wget"),
+
+  Unknown("Unknown", Other);
 
   private final String name;
   private final Engine engine;
@@ -103,11 +126,13 @@ public enum BrowserCategory {
   private BrowserCategory(String name, Engine renderEngine, String... versions) {
     this.name = name;
     this.engine = renderEngine;
+    engine.addCategory(this);
     for (String version : versions) {
       String matcheTarget = version;
       String versionNum = "";
       if (Strings.contains(version, "->")) {
-        matcheTarget = Strings.substringBefore(version, "->");
+        // regular expression match ignore case
+        matcheTarget = "(?i)" + Strings.substringBefore(version, "->");
         versionNum = Strings.substringAfter(version, "->");
       }
       versionMap.put(Pattern.compile(matcheTarget), versionNum);

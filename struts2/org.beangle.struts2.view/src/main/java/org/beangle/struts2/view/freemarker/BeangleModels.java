@@ -64,9 +64,7 @@ public class BeangleModels extends AbstractModels {
     while (em.hasMoreElements()) {
       String attr = (String) em.nextElement();
       String value = req.getParameter(attr);
-      if (attr.equals("x-requested-with")) {
-        continue;
-      }
+      if (attr.equals("x-requested-with")) continue;
       sw.write(attr);
       sw.write('=');
       sw.write(StringUtil.javaScriptStringEnc(value));

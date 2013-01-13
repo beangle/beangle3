@@ -32,42 +32,48 @@ import org.beangle.commons.lang.Strings;
  */
 public enum OsCategory {
 
-  WINDOWS("Windows", "Windows NT 6.1->7", "Windows NT 6->Vista", "Windows NT 5.0->2000", "Windows NT 5->XP",
+  Windows("Windows", "Windows NT 6.1->7", "Windows NT 6->Vista", "Windows NT 5.0->2000", "Windows NT 5->XP",
       "Win98->98", "Windows 98->98", "Windows Phone OS 7->Mobile 7", "Windows CE->Mobile", "Windows"),
 
-  // CamelHttpStream is being used by Evolution, an email client for Linux\
-  LINUX("Linux", "Fedora/(\\S*)\\.fc(\\S*)->Fedora fc$2", "Ubuntu/(\\S*)->Ubuntu $1", "Fedora", "Ubuntu",
+  Android("Android", "Android-4->4.x", "Android 4->4.x", "Xoom->4.x Tablet", "Transformer->4.x Tablet",
+      "Android 3->3.x Tablet", "Android 2->2.x", "Kindle Fire->2.x Tablet", "GT-P1000->2.x Tablet",
+      "SCH-I800->2.x Tablet", "Android 1->1.x", "GoogleTV->(Google TV)", "Android"),
+
+  Linux("Linux", "Fedora/(\\S*)\\.fc(\\S*)->Fedora fc$2", "Ubuntu/(\\S*)->Ubuntu $1", "Fedora", "Ubuntu",
       "Linux", "CamelHttpStream"),
 
-  ANDROID("Android", "Android 2->2.x", "GT-P1000->2.x Tablet", "SCH-I800->2.x Tablet", "Android 1->1.x",
-      "Android"),
+  Webos("WebOS", "webOS"),
 
-  WEBOS("WebOS", "webOS"),
+  Palm("PalmOS", "Palm"),
 
-  PALM("PalmOS", "Palm"),
+  Ios("iOS", "iPhone OS(\\S*)->$1 (iPhone)", "like Mac OS X", "iOS"),
 
-  IOS("iOS", "iPhone OS 4->4 (iPhone)", "like Mac OS X"),
+  MacOs("Mac OS", "iPad->(iPad)", "iPhone->(iPhone)", "iPod->(iPod)", "Mac OS X->X", "CFNetwork->X", "Mac"),
 
-  MAC_OS("Mac OS", "iPad->(iPad)", "iPhone->(iPhone)", "iPod->(iPod)", "Mac OS X->X", "CFNetwork->X", "Mac"),
+  Maemo("Maemo", "Maemo"),
 
-  MAEMO("Maemo", "Maemo"),
+  Bada("Bada", "Bada"),
 
-  SYMBIAN("Symbian OS", "SymbianOS/9->9.x", "Series60/3->9.x", "SymbianOS/8->8.x", "Series60/2.6->8.x",
-      "Series60/2.8->8.x", "SymbianOS/7->7.x", "SymbianOS/6->6.x", "Symbian", "Series60"),
+  Kindle("Kindle", "Kindle/(\\S*)->(Kindle $1)", "Kindle"),
 
-  SERIES40("Series 40", "Nokia6300"),
+  Symbian("Symbian OS", "SymbianOS/(\\S*)->$1", "Series60/3->9.x", "Series60/2.6->8.x", "Series60/2.8->8.x",
+      "Symbian", "Series60"),
 
-  SONY_ERICSSON("Sony Ericsson", "SonyEricsson"),
+  Series40("Series 40", "Nokia6300"),
 
-  SUN_OS("SunOS", "SunOS"),
+  SonyEricsson("Sony Ericsson", "SonyEricsson"),
 
-  PSP("Sony Playstation", "Playstation"),
+  SunOs("SunOS", "SunOS"),
 
-  WII("Nintendo Wii", "Wii"),
+  Psp("Sony Playstation", "Playstation"),
 
-  BLACKBERRY("BlackBerryOS", "BlackBerry", "Version/6->6"),
+  Wii("Nintendo Wii", "Wii"),
 
-  UNKNOWN("Unknown", new String[0]);
+  BlackBerry("BlackBerryOS", "(BB|BlackBerry|PlayBook)(.*?)Version/(\\S*)->$3", "BlackBerry"),
+
+  Roku("Roku OS", "Roku"),
+
+  Unknown("Unknown", new String[0]);
 
   private final String name;
 
@@ -80,7 +86,7 @@ public enum OsCategory {
       String matcheTarget = version;
       String versionNum = "";
       if (Strings.contains(version, "->")) {
-        matcheTarget = Strings.substringBefore(version, "->");
+        matcheTarget = "(?i)" + Strings.substringBefore(version, "->");
         versionNum = Strings.substringAfter(version, "->");
       }
       versionMap.put(Pattern.compile(matcheTarget), versionNum);

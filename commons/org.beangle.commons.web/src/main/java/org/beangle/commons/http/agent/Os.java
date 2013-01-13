@@ -23,16 +23,13 @@ import java.util.Map;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Os implements Serializable, Comparable<Os> {
 
   private static final long serialVersionUID = -7506270303767154240L;
 
-  private static Logger logger = LoggerFactory.getLogger(Os.class);
   public static Map<String, Os> osMap = CollectUtils.newHashMap();
-  public static final Os UNKNOWN = new Os(OsCategory.UNKNOWN, null);
+  public static final Os UNKNOWN = new Os(OsCategory.Unknown, null);
 
   public final OsCategory category;
   public final String version;
@@ -69,7 +66,6 @@ public class Os implements Serializable, Comparable<Os> {
         return os;
       }
     }
-    logger.debug("unknown browser: {}", agentString);
     return Os.UNKNOWN;
   }
 

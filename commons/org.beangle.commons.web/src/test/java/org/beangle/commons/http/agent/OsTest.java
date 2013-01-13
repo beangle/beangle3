@@ -34,9 +34,14 @@ public class OsTest {
 
   String[] linux = { "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.12) Gecko/20101027 Fedora/3.6.12-1.fc14 Firefox/3.6.12" };
 
+  String[] blackberry = new String[] {
+      "Mozilla/5.0 (BB10; <Device Model>) AppleWebKit/537.10+ (KHTML, like Gecko) Version/10.0.9.1675 Mobile Safari/537.10+",
+      "Mozilla/5.0 (PlayBook; U; RIM Tablet OS 2.0.0; en-US) AppleWebKit/535.8+ (KHTML, like Gecko) Version/7.2.0.0 Safari/535.8+",
+      "Mozilla/5.0 (BlackBerry; U; BlackBerry AAAA; en-US) AppleWebKit/534.11+ (KHTML, like Gecko) Version/6.0.0.141 Mobile Safari/534.11+" };
+
   public void testParse() {
     Os os = Os.parse(windows[0]);
-    assertEquals(os.category, OsCategory.WINDOWS);
+    assertEquals(os.category, OsCategory.Windows);
     assertEquals(os.version, "98");
 
     os = Os.parse(windows[2]);
@@ -44,6 +49,13 @@ public class OsTest {
 
     os = Os.parse(windows[4]);
     assertEquals(os.version, "Vista");
+
+    os = Os.parse(blackberry[0]);
+    assertEquals(os.version, "10.0.9.1675");
+    os = Os.parse(blackberry[1]);
+    assertEquals(os.version, "7.2.0.0");
+    os = Os.parse(blackberry[2]);
+    assertEquals(os.version, "6.0.0.141");
 
     os = Os.parse(linux[0]);
     assertEquals(os.version, "Fedora fc14");

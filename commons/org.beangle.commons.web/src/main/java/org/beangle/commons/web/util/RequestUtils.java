@@ -25,7 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.net.BCodec;
 import org.beangle.commons.http.agent.Browser;
+import org.beangle.commons.http.agent.BrowserCategory;
 import org.beangle.commons.http.agent.Os;
+import org.beangle.commons.http.agent.OsCategory;
 import org.beangle.commons.http.agent.Useragent;
 import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
@@ -126,6 +128,10 @@ public final class RequestUtils {
    */
   public static Useragent getUserAgent(HttpServletRequest request) {
     String head = request.getHeader("USER-AGENT");
-    return new Useragent(getIpAddr(request), Browser.parse(head), Os.parse(head));
+    Useragent agent = new Useragent(getIpAddr(request), Browser.parse(head), Os.parse(head));
+    if (agent.getOs().equals(OsCategory.Unknown) || agent.getBrowser().equals(BrowserCategory.Unknown)) {
+      logger.info("Cannot parser user agent:{}", request.getHeader("USER-AGENT"));
+    }
+    return agent;
   }
 }

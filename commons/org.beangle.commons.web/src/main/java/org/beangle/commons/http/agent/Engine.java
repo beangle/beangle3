@@ -18,50 +18,69 @@
  */
 package org.beangle.commons.http.agent;
 
+import java.util.List;
+
+import org.beangle.commons.collection.CollectUtils;
+
+/**
+ * Browser Render Engine.
+ * 
+ * @author chaostone
+ * @since 2.1
+ */
 public enum Engine {
 
   /**
    * Trident is the the Microsoft layout engine, mainly used by Internet
    * Explorer.
    */
-  TRIDENT("Trident"),
-  /**
-   * HTML parsing and rendering engine of Microsoft Office Word, used by some
-   * other products of the Office suite instead of Trident.
-   */
-  WORD("Microsoft Office Word"),
+  Trident("Trident"),
   /**
    * Open source and cross platform layout engine, used by Firefox and many
    * other browsers.
    */
-  GECKO("Gecko"),
+  Gecko("Gecko"),
   /**
    * Layout engine based on KHTML, used by Safari, Chrome and some other
    * browsers.
    */
-  WEBKIT("WebKit"),
+  WebKit("WebKit"),
   /**
    * Proprietary layout engine by Opera Software ASA
    */
-  PRESTO("Presto"),
+  Presto("Presto"),
   /**
    * Original layout engine of the Mozilla browser and related products.
    * Predecessor of Gecko.
    */
-  MOZILLA("Mozilla"),
+  Mozilla("Mozilla"),
   /**
    * Layout engine of the KDE project
    */
-  KHTML("KHTML"),
+  Khtml("KHTML"),
+  /**
+   * HTML parsing and rendering engine of Microsoft Office Word, used by some
+   * other products of the Office suite instead of Trident.
+   */
+  Word("Microsoft Office Word"),
   /**
    * Other or unknown layout engine.
    */
-  OTHER("Other");
+  Other("Other");
 
   String name;
+
+  List<BrowserCategory> browserCategories = CollectUtils.newArrayList();
 
   private Engine(String name) {
     this.name = name;
   }
 
+  public List<BrowserCategory> getBrowserCategories() {
+    return browserCategories;
+  }
+
+  void addCategory(BrowserCategory category) {
+    browserCategories.add(category);
+  }
 }

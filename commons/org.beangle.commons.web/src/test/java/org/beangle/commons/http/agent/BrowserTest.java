@@ -39,12 +39,22 @@ public class BrowserTest {
       "Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US) AppleWebKit/532.9 (KHTML, like Gecko) Chrome/5.0.310.0 Safari/532.9",
       "Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/532.9 (KHTML, like Gecko) Chrome/5.0.309.0 Safari/532.9" };
 
+  String[] opera = new String[] { "Opera/9.80 (X11; Linux x86_64; U; bg) Presto/2.8.131 Version/11.10",
+      "Opera/9.80 (Windows NT 5.2; U; zh-cn) Presto/2.6.30 Version/10.63",
+      "Opera/12.80 (Windows NT 5.1; U; en) Presto/2.10.289 Version/12.02" };
+
+  String[] sogo = new String[] { "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Trident/4.0; EasyBits GO v1.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; SE 2.X MetaSr 1.0)" };
+
+  String[] maxthon = new String[] { "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.1 (KHTML, like Gecko) Maxthon/4.0.3.1000 Chrome/22.0.1229.79 Safari/537.1" };
+
+  String[] theworld = new String[] { "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; EasyBits GO v1.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; qihu theworld)" };
+
   String[] validator = new String[] { "Total Validator" };
 
   public void testPaser() {
     Browser browser = Browser.parse(firefox3);
     assertEquals(browser.version, "3.0.14");
-    assertEquals(browser.category, BrowserCategory.FIREFOX);
+    assertEquals(browser.category, BrowserCategory.Firefox);
 
     browser = Browser.parse(firefox4[0]);
     assertEquals(browser.version, "4.0b4");
@@ -53,7 +63,7 @@ public class BrowserTest {
 
     browser = Browser.parse(firefox4[2]);
     assertEquals(browser.version, "");
-    assertEquals(browser.category, BrowserCategory.FIREFOX);
+    assertEquals(browser.category, BrowserCategory.Firefox);
 
     browser = Browser.parse(ie[0]);
     assertEquals(browser.version, "6.0");
@@ -61,10 +71,24 @@ public class BrowserTest {
 
     browser = Browser.parse(chrome[0]);
     assertEquals(browser.version, "5.0.310.0");
-    assertEquals(browser.category, BrowserCategory.CHROME);
+    assertEquals(browser.category, BrowserCategory.Chrome);
+
+    assertEquals(Browser.parse(opera[0]).version, "11.10");
+    assertEquals(Browser.parse(opera[1]).version, "10.63");
+    assertEquals(Browser.parse(opera[2]).version, "12.02");
 
     browser = Browser.parse(validator[0]);
     assertEquals(browser.version, null);
-    assertEquals(browser.category, BrowserCategory.UNKNOWN);
+    assertEquals(browser.category, BrowserCategory.Unknown);
+
+    browser = Browser.parse(maxthon[0]);
+    assertEquals(browser.category, BrowserCategory.Maxthon);
+
+    browser = Browser.parse(sogo[0]);
+    assertEquals(browser.category, BrowserCategory.Sogo);
+
+    browser = Browser.parse(theworld[0]);
+    assertEquals(browser.category, BrowserCategory.TheWorld);
+
   }
 }

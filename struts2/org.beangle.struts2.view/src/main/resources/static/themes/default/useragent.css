@@ -1,0 +1,12 @@
+.icon-browser {background: url(icons/16x16/browsers.png);display:inline-block;vertical-align:bottom;margin-top:2px;margin-right:2px;border:0px}
+
+.browser-chrome{ background-position: 0 0; width: 16px; height: 16px; } 
+.browser-firefox{ background-position: -26px 0; width: 16px; height: 16px; } 
+.browser-ie{ background-position: -52px 0; width: 16px; height: 16px; } 
+.browser-ie360{ background-position: -78px 0; width: 16px; height: 16px; } 
+.browser-maxthon{ background-position: -104px 0; width: 16px; height: 16px; } 
+.browser-opera{ background-position: -130px 0; width: 16px; height: 16px; } 
+.browser-safari{ background-position: -156px 0; width: 16px; height: 16px; } 
+.browser-sogo{ background-position: -182px 0; width: 16px; height: 16px; } 
+.browser-theworld{ background-position: -208px 0; width: 16px; height: 16px; } 
+.browser-tt{ background-position: -234px 0; width: 16px; height: 16px; } 
