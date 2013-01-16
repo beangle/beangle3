@@ -35,6 +35,7 @@ import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.exception.LockAcquisitionException;
 import org.hibernate.exception.SQLGrammarException;
 import org.hibernate.service.jdbc.connections.spi.ConnectionProvider;
+import org.hibernate.service.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.*;
@@ -52,11 +53,13 @@ public final class SessionUtils {
   private static final ThreadLocal<Map<SessionFactory, Boolean>> threadBinding = new ThreadLocal<Map<SessionFactory, Boolean>>();
 
   public static DataSource getDataSource(SessionFactory factory) {
-    if (factory instanceof SessionFactoryImplementor) {
-      ConnectionProvider cp = ((SessionFactoryImplementor) factory).getConnectionProvider();
-      return cp.unwrap(DataSource.class);
+    SessionFactoryImplementor factoryImpl = (SessionFactoryImplementor) factory;
+    if (MultiTenancyStrategy.NONE == factoryImpl.getSettings().getMultiTenancyStrategy()) {
+      return factoryImpl.getServiceRegistry().getService(ConnectionProvider.class).unwrap(DataSource.class);
+    } else {
+      return factoryImpl.getServiceRegistry().getService(MultiTenantConnectionProvider.class)
+          .unwrap(DataSource.class);
     }
-    return null;
   }
 
   public static void enableBinding(SessionFactory factory) {

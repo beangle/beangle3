@@ -34,9 +34,12 @@ import org.beangle.commons.lang.reflect.Reflections;
 import org.beangle.commons.lang.time.Stopwatch;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.hibernate.SessionFactoryObserver;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.cfg.NamingStrategy;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanClassLoaderAware;
@@ -164,7 +167,24 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
       }
       // configuration.
       Stopwatch watch = new Stopwatch(true);
-      this.sessionFactory = configuration.buildSessionFactory();
+
+      final ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(
+          configuration.getProperties()).buildServiceRegistry();
+
+      configuration.setSessionFactoryObserver(new SessionFactoryObserver() {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public void sessionFactoryCreated(SessionFactory factory) {
+        }
+
+        @Override
+        public void sessionFactoryClosed(SessionFactory factory) {
+          ServiceRegistryBuilder.destroy(serviceRegistry);
+        }
+      });
+
+      this.sessionFactory = configuration.buildSessionFactory(serviceRegistry);
       logger.info("Building Hibernate SessionFactory in {}", watch);
     }
 

@@ -28,8 +28,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 
 import org.beangle.commons.entity.pojo.NumberIdTimeObject;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity(name = "org.beangle.commons.dao.example.Employer")
+@DynamicUpdate
 public class ManagerEmployer extends NumberIdTimeObject<Integer> implements Employer {
 
   private static final long serialVersionUID = 1L;

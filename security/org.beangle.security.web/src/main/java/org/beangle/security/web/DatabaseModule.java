@@ -33,11 +33,11 @@ public class DatabaseModule extends AbstractBindModule {
 
   @Override
   protected void doBinding() {
-    bind("secsessionDataSource", DriverManagerDataSource.class).property("driverClassName", "org.h2.Driver")
+    bind("sessionDataSource", DriverManagerDataSource.class).property("driverClassName", "org.h2.Driver")
         .property("url", "jdbc:h2:./target/beangle;AUTO_SERVER=TRUE").property("username", "sa")
         .property("password", "");
 
-    bind("secsessionHibernateConfig", PropertiesFactoryBean.class).property(
+    bind("sessionHibernateConfig", PropertiesFactoryBean.class).property(
         "properties",
         props("hibernate.max_fetch_depth=1", "hibernate.default_batch_fetch_size=500",
             "hibernate.jdbc.fetch_size=8", "hibernate.jdbc.batch_size=20",
@@ -48,23 +48,23 @@ public class DatabaseModule extends AbstractBindModule {
             "hibernate.query.substitutions=true 1, false 0, yes 'Y', no 'N'", "hibernate.show_sql=false",
             "net.sf.ehcache.configurationResourceName=/ehcache-session.xml"));
 
-    bind("secsessionSessionFactory", SessionFactoryBean.class)
+    bind("sessionSessionFactory", SessionFactoryBean.class)
         .property("configurationClass", "org.beangle.commons.orm.hibernate.internal.OverrideConfiguration")
-        .property("hibernateProperties", ref("secsessionHibernateConfig"))
+        .property("hibernateProperties", ref("sessionHibernateConfig"))
         .property("persistLocations", "classpath*:META-INF/beangle/persist-session.properties")
-        .property("dataSource", ref("secsessionDataSource"));
+        .property("dataSource", ref("sessionDataSource"));
 
-    bind("secsessionTransactionManager", HibernateTransactionManager.class).property("sessionFactory",
-        ref("secsessionSessionFactory"));
+    bind("sessionTransactionManager", HibernateTransactionManager.class).property("sessionFactory",
+        ref("sessionSessionFactory"));
 
-    bind("secsessionEntityDao", TransactionProxyFactoryBean.class)
+    bind("sessionEntityDao", TransactionProxyFactoryBean.class)
         .parent("baseTransactionProxy")
-        .property("transactionManager", ref("secsessionTransactionManager"))
+        .property("transactionManager", ref("sessionTransactionManager"))
         .proxy("target",
-            bean(HibernateEntityDao.class).property("sessionFactory", ref("secsessionSessionFactory")));
+            bean(HibernateEntityDao.class).property("sessionFactory", ref("sessionSessionFactory")));
 
-    bind(DbSessionRegistry.class, DbSessionController.class,DbSessioninfoLogServiceImpl.class)
-        .property("entityDao", ref("secsessionEntityDao")).shortName().primary();
+    bind(DbSessionRegistry.class, DbSessionController.class, DbSessioninfoLogServiceImpl.class)
+        .property("entityDao", ref("sessionEntityDao")).shortName().primary();
   }
 
 }

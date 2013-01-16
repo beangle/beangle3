@@ -18,8 +18,13 @@
  */
 package org.beangle.commons.orm.hibernate;
 
+import java.util.Date;
+
 import org.beangle.commons.dao.EntityDao;
 import org.beangle.commons.orm.example.Employer;
+import org.beangle.commons.orm.example.ManagerEmployer;
+import org.beangle.commons.orm.example.Name;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Test
@@ -41,6 +46,23 @@ public class HibernateEntityDaoTest extends ConfigurationTest {
     EntityDao entityDao = (EntityDao) applicationContext.getBean("entityDao");
     entityDao.update(Employer.class, "id", new Integer[] { 1 }, new String[] { "name.firstName" },
         new Object[] { "me" });
+  }
+
+  public void testDynamicUpdate() {
+    EntityDao entityDao = (EntityDao) applicationContext.getBean("entityDao");
+    ManagerEmployer employer = new ManagerEmployer();
+    Name name = new Name();
+    name.setFirstName("jack");
+    name.setLastName("johns");
+    employer.setName(name);
+    entityDao.saveOrUpdate(employer);
+
+    Assert.assertNotNull(employer.getId());
+    entityDao.evict(employer);
+    employer= entityDao.get(ManagerEmployer.class, employer.getId());
+    //employer.getName().setFirstName("licensesili");
+    employer.setCreatedAt(new Date());
+    entityDao.saveOrUpdate(employer);
   }
 
   /**

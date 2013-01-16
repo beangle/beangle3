@@ -63,17 +63,15 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
 
   private static final long serialVersionUID = 1L;
 
+  private static final Logger logger = LoggerFactory.getLogger(HibernateTransactionManager.class);
+
   private SessionFactory sessionFactory;
 
   private DataSource dataSource;
 
-  private boolean autodetectDataSource = true;
-
   private boolean prepareConnection = true;
 
   private boolean hibernateManagedSession = false;
-
-  private static final Logger logger = LoggerFactory.getLogger(HibernateTransactionManager.class);
 
   /**
    * Create a new HibernateTransactionManager instance.
@@ -109,46 +107,10 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
   }
 
   /**
-   * Set the JDBC DataSource that this instance should manage transactions for.
-   * The DataSource should match the one used by the Hibernate SessionFactory:
-   * for example, you could specify the same JNDI DataSource for both.
-   * <p>
-   * If the SessionFactory was configured with DataSourceConnectionProvider, i.e. by Spring's
-   * SessionFactoryBean with a specified "dataSource", the DataSource will be auto-detected: You can
-   * still explictly specify the DataSource, but you don't need to in this case.
-   * <p>
-   * The DataSource specified here should be the target DataSource to manage transactions for, not a
-   * TransactionAwareDataSourceProxy. Only data access code may work with
-   * TransactionAwareDataSourceProxy, while the transaction manager needs to work on the underlying
-   * target DataSource. If there's nevertheless a TransactionAwareDataSourceProxy passed in, it will
-   * be unwrapped to extract its target DataSource.
-   * 
-   * @see #setAutodetectDataSource
-   * @see SessionFactoryBean#setDataSource
-   */
-  public void setDataSource(DataSource dataSource) {
-    this.dataSource = dataSource;
-  }
-
-  /**
    * Return the JDBC DataSource that this instance manages transactions for.
    */
-  public DataSource getDataSource() {
+  protected DataSource getDataSource() {
     return this.dataSource;
-  }
-
-  /**
-   * Set whether to autodetect a JDBC DataSource used by the Hibernate SessionFactory,
-   * if set via SessionFactoryBean's <code>setDataSource</code>. Default is "true".
-   * <p>
-   * Can be turned off to deliberately ignore an available DataSource, in order to not expose
-   * Hibernate transactions as JDBC transactions for that DataSource.
-   * 
-   * @see #setDataSource
-   * @see SessionFactoryBean#setDataSource
-   */
-  public void setAutodetectDataSource(boolean autodetectDataSource) {
-    this.autodetectDataSource = autodetectDataSource;
   }
 
   /**
@@ -202,11 +164,7 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
 
   public void afterPropertiesSet() {
     Assert.isTrue(null != getSessionFactory(), "Property 'sessionFactory' is required");
-    // Check for SessionFactory's DataSource.
-    if (this.autodetectDataSource && getDataSource() == null) {
-      DataSource sfds = SessionUtils.getDataSource(getSessionFactory());
-      if (sfds != null) setDataSource(sfds);
-    }
+    dataSource = SessionUtils.getDataSource(getSessionFactory());
   }
 
   public Object getResourceFactory() {
