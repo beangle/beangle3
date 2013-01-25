@@ -16,21 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.http;
+package org.beangle.inject.spring;
 
-import org.beangle.commons.http.mime.MimeTypeProvider;
-import org.beangle.commons.inject.bind.AbstractBindModule;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
 /**
- * @author chaostone
+ * 基础服务的测试用例
+ * 
+ * @author chaostone 2005-9-8
+ * @version $Id: $
  */
-public class DefaultModule extends AbstractBindModule {
-
-  @Override
-  protected void doBinding() {
-    bind(MimeTypeProvider.class)
-        .property("resources",
-            "classpath:org/beangle/commons/http/mime/mimetypes.properties;classpath*:META-INF/mimetypes.properties;");
-  }
+@ContextConfiguration("classpath:spring-context-test.xml")
+public class SpringTestCase extends AbstractTestNGSpringContextTests {
 
 }

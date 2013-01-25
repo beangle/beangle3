@@ -54,6 +54,7 @@ public class Browser implements Serializable, Comparable<Browser> {
    */
   public static Browser parse(final String agentString) {
     if (Strings.isEmpty(agentString)) { return Browser.UNKNOWN; }
+    // first consider engine
     for (Engine engine : Engine.values()) {
       String egineName = engine.name;
       if (agentString.contains(egineName)) {
@@ -69,6 +70,19 @@ public class Browser implements Serializable, Comparable<Browser> {
             return browser;
           }
         }
+      }
+    }
+    // for some usagent without suitable enginename;
+    for (BrowserCategory category : BrowserCategory.values()) {
+      String version = category.match(agentString);
+      if (version != null) {
+        String key = category.getName() + "/" + version;
+        Browser browser = browsers.get(key);
+        if (null == browser) {
+          browser = new Browser(category, version);
+          browsers.put(key, browser);
+        }
+        return browser;
       }
     }
     return Browser.UNKNOWN;

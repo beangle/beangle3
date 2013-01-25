@@ -18,7 +18,6 @@
  */
 package org.beangle.orm.hibernate;
 
-import org.beangle.context.spring.SpringResources;
 import org.beangle.commons.entity.metadata.impl.ConvertPopulatorBean;
 import org.beangle.commons.inject.bind.AbstractBindModule;
 import org.beangle.orm.hibernate.internal.HibernateEntityContext;
@@ -65,15 +64,14 @@ public class DefaultModule extends AbstractBindModule {
             "*=PROPAGATION_REQUIRED,readOnly"));
 
     bind(RailsNamingStrategy.class).shortName();
-    bind(DefaultTableNamingStrategy.class).property(
-        "resources",
-        bean(SpringResources.class).property("locations", "classpath*:META-INF/beangle/table.properties")
-            .property("users", "classpath*:beangle/table.properties"));
+    bind(DefaultTableNamingStrategy.class).property("resources",
+        ";classpath*:META-INF/beangle/table.properties;classpath:beangle/table.properties");
 
     bind(HibernateModelMeta.class, ConvertPopulatorBean.class, HibernateEntityContext.class);
 
     bind("entityDao", TransactionProxyFactoryBean.class).proxy("target", HibernateEntityDao.class).parent(
         "baseTransactionProxy");
+
     bind(DefaultLobHandler.class).shortName();
   }
 

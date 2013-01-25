@@ -16,21 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.http;
+package org.beangle.inject.spring.bean;
 
-import org.beangle.commons.http.mime.MimeTypeProvider;
-import org.beangle.commons.inject.bind.AbstractBindModule;
+import java.util.List;
 
-/**
- * @author chaostone
- */
-public class DefaultModule extends AbstractBindModule {
+import org.beangle.commons.collection.CollectUtils;
 
-  @Override
-  protected void doBinding() {
-    bind(MimeTypeProvider.class)
-        .property("resources",
-            "classpath:org/beangle/commons/http/mime/mimetypes.properties;classpath*:META-INF/mimetypes.properties;");
+public class ProviderManager {
+
+  private List<UserProvider> providers = CollectUtils.newArrayList();
+
+  public List<UserProvider> getProviders() {
+    return providers;
+  }
+
+  public void setProviders(List<UserProvider> providers) {
+    this.providers = providers;
   }
 
 }

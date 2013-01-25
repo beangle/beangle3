@@ -16,21 +16,36 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.http;
+package org.beangle.inject.spring.bean;
 
-import org.beangle.commons.http.mime.MimeTypeProvider;
-import org.beangle.commons.inject.bind.AbstractBindModule;
+public class SomeAction {
 
-/**
- * @author chaostone
- */
-public class DefaultModule extends AbstractBindModule {
+  UserProvider userDaoProvider;
 
-  @Override
-  protected void doBinding() {
-    bind(MimeTypeProvider.class)
-        .property("resources",
-            "classpath:org/beangle/commons/http/mime/mimetypes.properties;classpath*:META-INF/mimetypes.properties;");
+  private UserLdapProvider ldapProvider;
+
+  public boolean hasDaoProvider() {
+    return null != userDaoProvider;
+  }
+
+  public boolean hasLdapProvider() {
+    return null != ldapProvider;
+  }
+
+  public void setLdapProvider(UserLdapProvider ldapProvider) {
+    this.ldapProvider = ldapProvider;
+  }
+
+  public void setUserDaoProvider(UserProvider userDaoProvider) {
+    this.userDaoProvider = userDaoProvider;
+  }
+
+  public UserProvider getUserDaoProvider() {
+    return userDaoProvider;
+  }
+
+  public UserLdapProvider getLdapProvider() {
+    return ldapProvider;
   }
 
 }

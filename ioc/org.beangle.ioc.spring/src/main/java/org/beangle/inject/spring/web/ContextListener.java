@@ -16,21 +16,28 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.http;
+package org.beangle.inject.spring.web;
 
-import org.beangle.commons.http.mime.MimeTypeProvider;
-import org.beangle.commons.inject.bind.AbstractBindModule;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 
 /**
  * @author chaostone
+ * @since 3.0.0
  */
-public class DefaultModule extends AbstractBindModule {
+public class ContextListener implements ServletContextListener {
 
-  @Override
-  protected void doBinding() {
-    bind(MimeTypeProvider.class)
-        .property("resources",
-            "classpath:org/beangle/commons/http/mime/mimetypes.properties;classpath*:META-INF/mimetypes.properties;");
+  public static final String CONTEXT_CLASS_PARAM = "contextClass";
+
+  public static final String CONFIG_LOCATION_PARAM = "contextConfigLocation";
+
+  private ContextLoader contextLoader = new ContextLoader();
+
+  public void contextInitialized(ServletContextEvent sce) {
+    contextLoader.initApplicationContext(sce.getServletContext());
   }
 
+  public void contextDestroyed(ServletContextEvent sce) {
+    contextLoader.closeApplicationContext(sce.getServletContext());
+  }
 }

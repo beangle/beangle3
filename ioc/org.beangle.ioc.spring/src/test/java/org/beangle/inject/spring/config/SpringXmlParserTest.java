@@ -16,21 +16,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.http;
+package org.beangle.inject.spring.config;
 
-import org.beangle.commons.http.mime.MimeTypeProvider;
-import org.beangle.commons.inject.bind.AbstractBindModule;
+import java.util.List;
 
-/**
- * @author chaostone
- */
-public class DefaultModule extends AbstractBindModule {
+import org.beangle.inject.spring.config.BeanDefinitionReader;
+import org.beangle.inject.spring.config.ReconfigBeanDefinitionHolder;
+import org.springframework.core.io.ClassPathResource;
+import org.testng.annotations.Test;
 
-  @Override
-  protected void doBinding() {
-    bind(MimeTypeProvider.class)
-        .property("resources",
-            "classpath:org/beangle/commons/http/mime/mimetypes.properties;classpath*:META-INF/mimetypes.properties;");
+@Test
+public class SpringXmlParserTest {
+
+  public void test() throws Exception {
+    parser("org/beangle/inject/spring/context.xml");
   }
 
+  private void parser(String path) throws Exception {
+    List<ReconfigBeanDefinitionHolder> holders = new BeanDefinitionReader().load(new ClassPathResource(path));
+    for (ReconfigBeanDefinitionHolder holder : holders) {
+      System.out.println(holder);
+    }
+  }
 }

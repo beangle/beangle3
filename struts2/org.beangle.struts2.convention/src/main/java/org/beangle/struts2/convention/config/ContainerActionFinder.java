@@ -38,7 +38,7 @@ public class ContainerActionFinder implements ActionFinder, ContainerAware {
     Map<Class<?>, String> actions = CollectUtils.newHashMap();
     if (null != container) {
       for (Object name : container.getKeys()) {
-        Class<?> type = container.getType(name).get();
+        Class<?> type = container.getType(name).orNull();
         if (null != type && actionTest.evaluate(type.getName())) actions.put(type, name.toString());
       }
     }

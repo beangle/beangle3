@@ -4,11 +4,11 @@
         xsi:schemaLocation="http://www.hibernate.org/xsd/hibernate-configuration hibernate-configuration-4.0.xsd"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <session-factory>
-    <mapping class="org.beangle.commons.orm.example.ManagerEmployer"/>
-    <mapping class="org.beangle.commons.orm.example.ContractInfo"/>
-    <mapping class="org.beangle.commons.orm.example.OldName"/>
-    <mapping class="org.beangle.commons.orm.example.Name"/>
-    <mapping class="org.beangle.commons.orm.example.Skill"/>
-    <mapping resource="org/beangle/commons/orm/example/SkillType.hbm.xml"/>
+    <mapping class="org.beangle.orm.example.ManagerEmployer"/>
+    <mapping class="org.beangle.orm.example.ContractInfo"/>
+    <mapping class="org.beangle.orm.example.OldName"/>
+    <mapping class="org.beangle.orm.example.Name"/>
+    <mapping class="org.beangle.orm.example.Skill"/>
+    <mapping resource="org/beangle/orm/example/SkillType.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

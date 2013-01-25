@@ -3,11 +3,8 @@
 
 <beans>
   <bean id="BeangleSpringConfigProcessor"
-    class="org.beangle.commons.context.spring.SpringConfigProcessor">
-    <property name="reconfigResources">
-      <bean class="org.beangle.commons.context.spring.SpringResources">
-        <property name="locations" value="classpath*:spring-config-test.xml" />
-      </bean>
+    class="org.beangle.inject.spring.config.SpringConfigProcessor">
+    <property name="reconfigResources" value=";classpath*:spring-config-test.xml">
     </property>
   </bean>
 

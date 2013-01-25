@@ -22,6 +22,7 @@
     </property>
   </bean>
 
-  <bean id="userLdapProvider" class="org.beangle.commons.context.testbean.AdvancedUserLdapProvider" />
+  <bean id="userLdapProvider" class="org.beangle.inject.spring.bean.AdvancedUserLdapProvider" />
+  
 </beans>
 

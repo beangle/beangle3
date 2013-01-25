@@ -16,21 +16,28 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.http;
+package org.beangle.inject.spring.bean;
 
-import org.beangle.commons.http.mime.MimeTypeProvider;
-import org.beangle.commons.inject.bind.AbstractBindModule;
+import org.springframework.beans.factory.FactoryBean;
 
-/**
- * @author chaostone
- */
-public class DefaultModule extends AbstractBindModule {
+public class ProxyFactoryBean implements FactoryBean<TestDao> {
 
-  @Override
-  protected void doBinding() {
-    bind(MimeTypeProvider.class)
-        .property("resources",
-            "classpath:org/beangle/commons/http/mime/mimetypes.properties;classpath*:META-INF/mimetypes.properties;");
+  private TestDao target;
+
+  public void setTarget(TestDao target) {
+    this.target = target;
+  }
+
+  public TestDao getObject() throws Exception {
+    return target;
+  }
+
+  public Class<?> getObjectType() {
+    return TestDao.class;
+  }
+
+  public boolean isSingleton() {
+    return true;
   }
 
 }

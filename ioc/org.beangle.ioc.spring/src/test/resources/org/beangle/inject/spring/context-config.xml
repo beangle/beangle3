@@ -3,7 +3,11 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean class="org.beangle.security.web.DefaultModule"/>
-  <bean class="org.beangle.security.cas.DefaultModule"/>
+  <bean id="BeangleSpringConfigProcessor"
+    class="org.beangle.inject.spring.config.SpringConfigProcessor">
+    <property name="reconfigResources" value=";classpath*:spring-config.xml"/>
+  </bean>
+
+  <import resource="classpath:org/beangle/inject/spring/context.xml"/>
 
 </beans>
