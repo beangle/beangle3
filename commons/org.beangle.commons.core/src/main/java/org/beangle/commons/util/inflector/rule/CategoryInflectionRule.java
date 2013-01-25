@@ -18,6 +18,8 @@
  */
 package org.beangle.commons.util.inflector.rule;
 
+import java.util.regex.Pattern;
+
 /**
  * <p>
  * CategoryInflectionRule class.
@@ -28,7 +30,7 @@ package org.beangle.commons.util.inflector.rule;
  */
 public class CategoryInflectionRule extends SuffixInflectionRule {
 
-  private final String regex;
+  private final Pattern regex;
 
   /**
    * <p>
@@ -36,21 +38,17 @@ public class CategoryInflectionRule extends SuffixInflectionRule {
    * <code>pluralSuffix</code> in the plural.
    * </p>
    * 
-   * @param words
-   *          the set of words that define this category
-   * @param singularSuffix
-   *          the singular suffix, starting with a "-" character
-   * @param pluralSuffix
-   *          the plural suffix, starting with a "-" character
+   * @param words the set of words that define this category
+   * @param singularSuffix the singular suffix, starting with a "-" character
+   * @param pluralSuffix the plural suffix, starting with a "-" character
    */
   public CategoryInflectionRule(String[] words, String singularSuffix, String pluralSuffix) {
     super(singularSuffix, pluralSuffix);
-    this.regex = "(?i)" + AbstractRegexReplacementRule.disjunction(words);
+    this.regex = Pattern.compile("(?i)" + AbstractRegexReplacementRule.disjunction(words));
   }
 
-  /** {@inheritDoc} */
   @Override
   public boolean applies(String word) {
-    return word.matches(regex);
+    return regex.matcher(word).matches();
   }
 }

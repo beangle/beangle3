@@ -40,6 +40,7 @@ import org.beangle.commons.web.mock.MockFilter;
 import org.beangle.security.web.auth.UsernamePasswordAuthFilter;
 import org.beangle.security.web.context.HttpSessionContextFilter;
 import org.testng.annotations.Test;
+
 @Test
 public class FilterChainProxyTest {
 
@@ -49,7 +50,7 @@ public class FilterChainProxyTest {
   UsernamePasswordAuthFilter apf = new UsernamePasswordAuthFilter();
 
   public void normalOperation() throws Exception {
-    Map<String, List<Filter>> chainMap = CollectUtils.newHashMap();
+    Map<String, List<Filter>> chainMap = CollectUtils.newLinkedHashMap(4);
     chainMap.put("/foo/**", CollectUtils.newArrayList(mockFilter));
     chainMap.put("/some/other/path/**", CollectUtils.newArrayList(sif, mockFilter, mockFilter2));
     chainMap.put("/do/not/filter", new ArrayList<Filter>());
@@ -63,9 +64,9 @@ public class FilterChainProxyTest {
   public void noMatchFilters() throws Exception {
     Map<String, List<Filter>> chainMap = CollectUtils.newHashMap();
     chainMap.put("/foo/**", CollectUtils.newArrayList(mockFilter));
-    chainMap.put("/*.bar", CollectUtils.newArrayList(mockFilter,mockFilter2));
+    chainMap.put("/*.bar", CollectUtils.newArrayList(mockFilter, mockFilter2));
     FilterChainProxy proxy = new FilterChainProxy(chainMap);
-    
+
     HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getServletPath()).thenReturn("/nomatch");
     assertEquals(null, proxy.getFilters(request));
@@ -74,10 +75,9 @@ public class FilterChainProxyTest {
   public void urlStrippingPropertyIsRespected() throws Exception {
     Map<String, List<Filter>> chainMap = CollectUtils.newHashMap();
     chainMap.put("/foo/**", CollectUtils.newArrayList(mockFilter));
-    chainMap.put("/*.bar", CollectUtils.newArrayList(mockFilter,mockFilter2));
+    chainMap.put("/*.bar", CollectUtils.newArrayList(mockFilter, mockFilter2));
     FilterChainProxy proxy = new FilterChainProxy(chainMap);
 
-    
     HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getServletPath()).thenReturn("/blah.bar");
     when(request.getQueryString()).thenReturn("x=something");
@@ -86,7 +86,7 @@ public class FilterChainProxyTest {
   }
 
   private void checkPathAndFilterOrder(FilterChainProxy chain) throws Exception {
-    HttpServletRequest request =mock(HttpServletRequest.class);
+    HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getServletPath()).thenReturn("/foo/blah");
     List<Filter> filters = chain.getFilters(request);
     assertEquals(1, filters.size());
@@ -113,7 +113,7 @@ public class FilterChainProxyTest {
   }
 
   private void doNormalOperation(FilterChainProxy chain) throws Exception {
-    MockFilter filter = (MockFilter)mockFilter;
+    MockFilter filter = (MockFilter) mockFilter;
     assertFalse(filter.isInitialized());
     assertFalse(filter.isDoFiltered());
     assertFalse(filter.isDestroyed());
@@ -123,7 +123,7 @@ public class FilterChainProxyTest {
     assertFalse(filter.isDoFiltered());
     assertFalse(filter.isDestroyed());
 
-    HttpServletRequest request =mock(HttpServletRequest.class);
+    HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getServletPath()).thenReturn("/foo/secure/super/somefile.html");
     when(request.getContextPath()).thenReturn("/");
 
@@ -134,7 +134,9 @@ public class FilterChainProxyTest {
     assertTrue(filter.isDoFiltered());
     assertFalse(filter.isDestroyed());
 
-    when(request.getServletPath()).thenReturn("/a/path/which/doesnt/match/any/filter.html");
+    when(request.getContextPath()).thenReturn("/a");
+    when(request.getRequestURI()).thenReturn("/a/path/which/doesnt/match/any/filter.html");
+    when(request.getServletPath()).thenReturn("/path/which/doesnt/match/any/filter.html");
     chain.doFilter(request, response, mock(FilterChain.class));
 
     filter.destroy();

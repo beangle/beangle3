@@ -32,7 +32,7 @@ import org.beangle.commons.entity.pojo.StringIdObject;
  * 
  * @author chaostone
  */
-@Entity(name = "org.beangle.security.web.session.model.SessioninfoLogBean")
+@Entity(name = "org.beangle.security.blueprint.session.model.SessioninfoLogBean")
 @LogEntity
 public class SessioninfoLogBean extends StringIdObject {
 

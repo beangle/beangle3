@@ -50,6 +50,10 @@ public class RuleBasedPluralizer implements Pluralizer {
   private Locale locale;
   private Pluralizer fallbackPluralizer;
 
+  private static Pattern pattern = Pattern.compile("\\A(\\s*)(.+?)(\\s*)\\Z");
+  private static Pattern pluPattern1 = Pattern.compile("^\\p{Lu}+$");
+  private static Pattern pluPattern2 = Pattern.compile("^\\p{Lu}.*");
+
   /**
    * <p>
    * Constructs a pluralizer with an empty list of rules. Use the setters to configure.
@@ -188,8 +192,6 @@ public class RuleBasedPluralizer implements Pluralizer {
    */
   public String pluralize(String word, int number) {
     if (number == 1) { return word; }
-
-    Pattern pattern = Pattern.compile("\\A(\\s*)(.+?)(\\s*)\\Z");
     Matcher matcher = pattern.matcher(word);
     if (matcher.matches()) {
       String pre = matcher.group(1);
@@ -237,10 +239,10 @@ public class RuleBasedPluralizer implements Pluralizer {
    * @return the <code>pluralizedWord</code> after processing
    */
   protected String postProcess(String trimmedWord, String pluralizedWord) {
-    if (trimmedWord.matches("^\\p{Lu}+$")) {
+    if (pluPattern1.matcher(trimmedWord).matches()) {
       return pluralizedWord.toUpperCase(locale);
-    } else if (trimmedWord.matches("^\\p{Lu}.*")) { return pluralizedWord.substring(0, 1).toUpperCase(locale)
-        + pluralizedWord.substring(1); }
+    } else if (pluPattern2.matcher(trimmedWord).matches()) { return pluralizedWord.substring(0, 1)
+        .toUpperCase(locale) + pluralizedWord.substring(1); }
     return pluralizedWord;
   }
 

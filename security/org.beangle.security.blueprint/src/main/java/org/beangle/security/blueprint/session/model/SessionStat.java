@@ -33,7 +33,7 @@ import org.beangle.commons.entity.pojo.IntegerIdObject;
  * @author chaostone
  * @version $Id: CategorySessionStat.java Jun 18, 2011 2:56:08 PM chaostone $
  */
-@Entity(name = "org.beangle.security.core.session.category.SessionStat")
+@Entity(name = "org.beangle.security.blueprint.session.model.SessionStat")
 @FlashEntity
 public class SessionStat extends IntegerIdObject {
 

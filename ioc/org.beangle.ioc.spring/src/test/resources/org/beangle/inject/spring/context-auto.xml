@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
   
   <bean id="autoConfigProcessor" class="org.beangle.inject.spring.config.SpringConfigProcessor" >
-    <property name="reconfigResources" value=";classpath*:spring-config.xml"/>
+    <property name="reconfigResources" value=";classpath*:spring-config-test.xml"/>
   </bean>
 
   <bean id="spring.common.test" class="org.beangle.inject.spring.bean.TestModule"/>

@@ -138,7 +138,6 @@ public class OverrideConfiguration extends Configuration {
     super.secondPassCompile();
     configSchema();
     // remove duplicated persistentClass register in classes map.
-    // see addClass
     Set<String> hackedEntityNames = CollectUtils.newHashSet();
     for (Map.Entry<String, PersistentClass> entry : classes.entrySet()) {
       if (!entry.getKey().equals(entry.getValue().getEntityName())) hackedEntityNames.add(entry.getKey());
@@ -169,6 +168,10 @@ public class OverrideConfiguration extends Configuration {
     @SuppressWarnings("unchecked")
     @Override
     public void addClass(PersistentClass pClass) throws DuplicateMappingException {
+      // trigger dynamic update
+      if (!pClass.useDynamicUpdate() && pClass.getTable().getColumnSpan() >= dynaupdateMinColumn)
+        pClass.setDynamicUpdate(true);
+
       String jpaEntityName = pClass.getJpaEntityName();
       String entityName = pClass.getEntityName();
       String className = entityName;
@@ -179,11 +182,6 @@ public class OverrideConfiguration extends Configuration {
         pClass.setEntityName(entityName);
         entityNameChanged = true;
       }
-
-      // trigger dynamic update
-      if (!pClass.useDynamicUpdate() && pClass.getTable().getColumnSpan() >= dynaupdateMinColumn)
-        pClass.setDynamicUpdate(true);
-
       // register class
       PersistentClass old = (PersistentClass) classes.get(entityName);
       if (old == null) {

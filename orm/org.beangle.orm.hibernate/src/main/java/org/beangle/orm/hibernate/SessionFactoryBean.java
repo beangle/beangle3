@@ -130,7 +130,6 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
   public void init() throws Exception {
     if (dataSource != null) configTimeDataSourceHolder.set(dataSource);
     configuration = newConfiguration();
-
     configuration.getProperties().put("hibernate.classLoader.application", beanClassLoader);
     // Set Hibernate 4.0+ CurrentSessionContext implementation,
     // provide the Beangle-managed Session as current Session.
@@ -141,7 +140,6 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
     if (this.hibernateProperties != null) configuration.addProperties(this.hibernateProperties);
 
     try {
-
       if (null != configLocations) {
         for (Resource resource : configLocations)
           configuration.configure(resource.getURL());
@@ -151,16 +149,20 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
           InputStream is = resource.getURL().openStream();
           Properties props = new Properties();
           if (null != is) props.load(is);
-          String moduleClassName = props.getProperty("module");
-          Class<? extends AbstractPersistModule> moduleClass = (Class<? extends AbstractPersistModule>) Class
-              .forName(moduleClassName);
+
+          Object module = props.remove("module");
+          if (null == module) {
+            logger.warn("Cannot find module in {}", resource.getURL());
+            continue;
+          }
+
+          Class<? extends AbstractPersistModule> moduleClass = (Class<? extends AbstractPersistModule>) ClassLoaders
+              .loadClass(module.toString());
           addPersistInfo(moduleClass.newInstance().getConfig());
           Enumeration<String> enumer = (Enumeration<String>) props.propertyNames();
           while (enumer.hasMoreElements()) {
             String propertyName = enumer.nextElement();
-            if (!"module".equals(propertyName)) {
-              configuration.setProperty(propertyName, props.getProperty(propertyName));
-            }
+            configuration.setProperty(propertyName, props.getProperty(propertyName));
           }
           IOs.close(is);
         }
@@ -193,6 +195,11 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
     }
   }
 
+  /**
+   * Add annotation class from persist configuration
+   * 
+   * @param epconfig
+   */
   private void addPersistInfo(EntityPersistConfig epconfig) {
     for (EntityPersistConfig.EntityDefinition definition : epconfig.getEntites()) {
       configuration.addAnnotatedClass(definition.getClazz());

@@ -21,6 +21,7 @@ package org.beangle.commons.util.regex;
 import java.util.regex.Pattern;
 
 import org.beangle.commons.lang.Objects;
+import org.beangle.commons.lang.Strings;
 
 /**
  * AntPattern implementation for Ant-style path patterns. Examples are provided below.
@@ -115,6 +116,6 @@ public class AntPathPattern {
 
   @Override
   public String toString() {
-    return "ant:[" + antpattern + "] regex:[" + pattern.toString() + "]";
+    return Strings.concat("ant:[", antpattern, "] regex:[", pattern.toString(), "]");
   }
 }

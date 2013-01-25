@@ -21,6 +21,7 @@ package org.beangle.orm.hibernate;
 import java.util.Date;
 
 import org.beangle.commons.dao.EntityDao;
+import org.beangle.inject.spring.SpringTestCase;
 import org.beangle.orm.example.Employer;
 import org.beangle.orm.example.ManagerEmployer;
 import org.beangle.orm.example.Name;
@@ -28,7 +29,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Test
-public class HibernateEntityDaoTest extends ConfigurationTest {
+public class HibernateEntityDaoTest extends SpringTestCase {
 
   /**
    * Test Hql with parameters array;

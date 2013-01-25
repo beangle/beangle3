@@ -4,7 +4,7 @@
 <beans>
   <bean id="BeangleSpringConfigProcessor"
     class="org.beangle.inject.spring.config.SpringConfigProcessor">
-    <property name="reconfigResources" value=";classpath*:spring-config.xml"/>
+    <property name="reconfigResources" value=";classpath*:spring-config-test.xml"/>
   </bean>
   <import resource="classpath*:META-INF/spring/*.xml"/>
   <import resource="classpath*:META-INF/spring-override/*.xml"/>

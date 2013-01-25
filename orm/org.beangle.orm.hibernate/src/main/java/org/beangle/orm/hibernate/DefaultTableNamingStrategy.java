@@ -179,17 +179,14 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
   }
 
   public String classToTableName(String className) {
-    if (className.endsWith("Bean")) {
-      className = Strings.substringBeforeLast(className, "Bean");
-    }
+    if (className.endsWith("Bean")) className = Strings.substringBeforeLast(className, "Bean");
+
     String tableName = addUnderscores(unqualify(className));
-    if (null != pluralizer) {
-      tableName = pluralizer.pluralize(tableName);
-    }
+    if (null != pluralizer) tableName = pluralizer.pluralize(tableName);
+
     TableNamePattern pattern = getPattern(className);
-    if (null != pattern) {
-      tableName = pattern.prefix + tableName;
-    }
+    if (null != pattern) tableName = pattern.prefix + tableName;
+
     if (tableName.length() > entityTableMaxLength && null != pattern) {
       for (Map.Entry<String, String> pairEntry : pattern.abbreviations.entrySet()) {
         tableName = Strings.replace(tableName, pairEntry.getKey(), pairEntry.getValue());

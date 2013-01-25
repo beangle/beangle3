@@ -289,10 +289,9 @@ public class EnNounPluralizer extends RuleBasedPluralizer {
     setLocale(Locale.ENGLISH);
   }
 
-  /** {@inheritDoc} */
   @Override
   protected String postProcess(String trimmedWord, String pluralizedWord) {
-    if (trimmedWord.matches("^I$")) { return pluralizedWord; }
+    if (trimmedWord.equals("I")) { return pluralizedWord; }
     return super.postProcess(trimmedWord, pluralizedWord);
   }
 

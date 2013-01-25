@@ -34,7 +34,7 @@ import org.beangle.security.core.session.category.CategorySessioninfo;
  * @author chaostone
  * @version $Id: SessioninfoBean.java Jul 7, 2011 10:04:48 PM chaostone $
  */
-@Entity(name = "org.beangle.security.web.session.model.SessioninfoBean")
+@Entity(name = "org.beangle.security.blueprint.session.model.SessioninfoBean")
 public class SessioninfoBean extends StringIdObject implements CategorySessioninfo {
   private static final long serialVersionUID = -6144822263608415556L;
 
