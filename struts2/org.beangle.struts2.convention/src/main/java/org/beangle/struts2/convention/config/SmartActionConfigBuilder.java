@@ -37,7 +37,6 @@ import org.beangle.struts2.convention.route.ActionBuilder;
 import org.beangle.struts2.convention.route.Profile;
 import org.beangle.struts2.convention.route.ProfileService;
 import org.beangle.struts2.convention.route.ViewMapper;
-import org.beangle.struts2.spring.SpringActionFinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,7 +95,7 @@ public class SmartActionConfigBuilder implements ActionConfigBuilder {
       ObjectFactory objectFactory) throws Exception {
     this.configuration = configuration;
     this.defaultParentPackage = "beangle";
-    actionFinder = (ActionFinder) objectFactory.buildBean(SpringActionFinder.class,
+    actionFinder = (ActionFinder) objectFactory.buildBean(ContainerActionFinder.class,
         new HashMap<String, Object>(0));
   }
 

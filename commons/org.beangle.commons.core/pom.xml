@@ -23,6 +23,7 @@
       <version>${commonscompress.version}</version>
       <optional>true</optional>
     </dependency>
+
     <!-- expression dependency-->
     <dependency>
       <groupId>ognl</groupId>
@@ -32,36 +33,6 @@
       <groupId>org.javassist</groupId>
       <artifactId>javassist</artifactId>
     </dependency>
-
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-core</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-beans</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-      <scope>compile</scope>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>${testng.version}</version>
-      <scope>compile</scope>
-      <optional>true</optional>
-    </dependency>
-
     <dependency>
       <groupId>javax.validation</groupId>
       <artifactId>validation-api</artifactId>

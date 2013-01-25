@@ -18,8 +18,14 @@
  */
 package org.beangle.struts2.view;
 
+import static org.mockito.Mockito.mock;
+
 import java.io.StringWriter;
 import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.dispatcher.Dispatcher;
 import org.apache.struts2.util.StrutsTestCaseHelper;
@@ -28,9 +34,6 @@ import org.apache.struts2.views.freemarker.tags.StrutsModels;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.struts2.view.freemarker.BeangleObjectWrapper;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.MockServletContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -64,7 +67,7 @@ public class BeangleTagLibraryTest {
   }
 
   protected Dispatcher initDispatcher(Map<String, String> params) {
-    Dispatcher du = StrutsTestCaseHelper.initDispatcher(new MockServletContext(), params);
+    Dispatcher du = StrutsTestCaseHelper.initDispatcher(mock(ServletContext.class), params);
     configurationManager = du.getConfigurationManager();
     configuration = configurationManager.getConfiguration();
     container = configuration.getContainer();
@@ -95,8 +98,8 @@ public class BeangleTagLibraryTest {
   public void testText() throws Exception {
     Map<String, Object> datas = CollectUtils.newHashMap();
     datas.put("b", new BeangleTagLibrary());
-    datas.put("s", new StrutsModels(ActionContext.getContext().getValueStack(), new MockHttpServletRequest(),
-        new MockHttpServletResponse()));
+    datas.put("s", new StrutsModels(ActionContext.getContext().getValueStack(),
+        mock(HttpServletRequest.class), mock(HttpServletResponse.class)));
     datas.put("watch", new Stopwatch());
     StringWriter writer = new StringWriter();
     Template template = cfg.getTemplate("comp.ftl");

@@ -20,8 +20,8 @@ package org.beangle.commons.entity.event;
 
 import java.util.List;
 
-import org.beangle.commons.context.event.Event;
 import org.beangle.commons.entity.Entity;
+import org.beangle.commons.event.Event;
 
 /**
  * 实体操作相关事件

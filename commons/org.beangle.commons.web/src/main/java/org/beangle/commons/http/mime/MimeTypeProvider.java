@@ -23,7 +23,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 
-import org.beangle.commons.context.inject.Resources;
+import org.beangle.commons.inject.Resources;
 import org.beangle.commons.lang.time.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

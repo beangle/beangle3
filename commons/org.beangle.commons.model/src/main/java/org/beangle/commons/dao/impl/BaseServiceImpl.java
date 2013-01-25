@@ -18,9 +18,9 @@
  */
 package org.beangle.commons.dao.impl;
 
-import org.beangle.commons.context.event.Event;
-import org.beangle.commons.context.event.EventMulticaster;
 import org.beangle.commons.dao.EntityDao;
+import org.beangle.commons.event.Event;
+import org.beangle.commons.event.EventMulticaster;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,7 +67,7 @@ public abstract class BaseServiceImpl {
    * publish.
    * </p>
    * 
-   * @param e a {@link org.beangle.commons.context.event.Event} object.
+   * @param e a {@link org.beangle.commons.event.Event} object.
    */
   public void publish(Event e) {
     if (null != eventMulticaster) eventMulticaster.multicast(e);
@@ -78,7 +78,7 @@ public abstract class BaseServiceImpl {
    * Getter for the field <code>eventMulticaster</code>.
    * </p>
    * 
-   * @return a {@link org.beangle.commons.context.event.EventMulticaster} object.
+   * @return a {@link org.beangle.commons.event.EventMulticaster} object.
    */
   public EventMulticaster getEventMulticaster() {
     return eventMulticaster;
@@ -89,7 +89,7 @@ public abstract class BaseServiceImpl {
    * Setter for the field <code>eventMulticaster</code>.
    * </p>
    * 
-   * @param eventMulticaster a {@link org.beangle.commons.context.event.EventMulticaster} object.
+   * @param eventMulticaster a {@link org.beangle.commons.event.EventMulticaster} object.
    */
   public void setEventMulticaster(EventMulticaster eventMulticaster) {
     this.eventMulticaster = eventMulticaster;

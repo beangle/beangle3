@@ -30,7 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.context.inject.Resources;
+import org.beangle.commons.inject.Resources;
 import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Strings;
 import org.beangle.struts2.convention.Constants;

@@ -18,7 +18,7 @@
  */
 package org.beangle.security.web;
 
-import org.beangle.commons.context.inject.AbstractBindModule;
+import org.beangle.commons.inject.bind.AbstractBindModule;
 import org.beangle.commons.web.access.AccessMonitorFilter;
 import org.beangle.commons.web.access.MemAccessMonitor;
 import org.beangle.security.auth.ProviderManager;
@@ -39,7 +39,6 @@ import org.beangle.security.web.auth.preauth.j2ee.RemoteUsernameSource;
 import org.beangle.security.web.context.HttpSessionContextFilter;
 import org.beangle.security.web.session.ConcurrentSessionFilter;
 import org.beangle.security.web.session.LogoutSessionCleaner;
-import org.beangle.security.web.session.WebSessioninfoBuilder;
 
 /**
  * 权限系统web模块bean定义
@@ -67,7 +66,6 @@ public class DefaultModule extends AbstractBindModule {
     // access monitor
     bind(AccessMonitorFilter.class, MemAccessMonitor.class, SecurityAccessRequestBuilder.class).shortName();
 
-    bind(WebSessioninfoBuilder.class);
     bind(LoginUrlEntryPoint.class).property("loginUrl", "/login.action").primary();
     bind(LogoutHandlerStack.class).shortName().property("handlers",
         listref(SecurityContextLogoutHandler.class));

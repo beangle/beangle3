@@ -20,7 +20,7 @@ package org.beangle.security.blueprint.event;
 
 import java.util.List;
 
-import org.beangle.commons.context.event.Event;
+import org.beangle.commons.event.Event;
 import org.beangle.security.blueprint.User;
 
 /**

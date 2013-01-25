@@ -18,16 +18,21 @@
  */
 package org.beangle.security.cas.web;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.net.URLEncoder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.beangle.security.cas.CasConfig;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.testng.annotations.Test;
 
 @Test
@@ -58,46 +63,59 @@ public class CasEntryPointTest {
     CasConfig config = new CasConfig("https://cas");
     config.setRenew(false);
     CasEntryPoint ep = new CasEntryPoint(config);
-    MockHttpServletRequest request = new MockHttpServletRequest(null, "/bigWebApp/some_path");
-    request.setServerName("mycompany.com");
-    request.setScheme("https");
-    request.setServerPort(443);
-    MockHttpServletResponse response = new MockHttpServletResponse();
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getRequestURI()).thenReturn("/bigWebApp/some_path");
+    when(request.getServerName()).thenReturn("mycompany.com");
+    when(request.getScheme()).thenReturn("https");
+    when(request.getServerPort()).thenReturn(443);
+    HttpServletResponse response = mockResponse();
     ep.init();
+
     ep.commence(request, response, null);
-    assertEquals(
-        response.getRedirectedUrl(),
+    verify(response).sendRedirect(
         "https://cas/login?service="
             + URLEncoder.encode("https://mycompany.com/bigWebApp/some_path", "UTF-8"));
+  }
+
+  private HttpServletResponse mockResponse() {
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    when(response.encodeURL(any(String.class))).then(new Answer<String>() {
+      public String answer(InvocationOnMock invocation) throws Throwable {
+        return invocation.getArguments()[0].toString();
+      }
+    });
+    return response;
   }
 
   public void testNormalOperationWithRenewTrue() throws Exception {
     CasConfig config = new CasConfig("https://cas");
     config.setRenew(true);
     CasEntryPoint ep = new CasEntryPoint(config);
-    MockHttpServletRequest request = new MockHttpServletRequest(null, "/bigWebApp/some_path");
-    request.setServerName("mycompany.com");
-    request.setScheme("https");
-    request.setServerPort(443);
-
-    MockHttpServletResponse response = new MockHttpServletResponse();
     ep.init();
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getRequestURI()).thenReturn("/bigWebApp/some_path");
+    when(request.getServerName()).thenReturn("mycompany.com");
+    when(request.getScheme()).thenReturn("https");
+    when(request.getServerPort()).thenReturn(443);
+
+    HttpServletResponse response = mockResponse();
+
     ep.commence(request, response, null);
-    assertEquals(
+    verify(response).sendRedirect(
         "https://cas/login?service="
-            + URLEncoder.encode("https://mycompany.com/bigWebApp/some_path", "UTF-8") + "&renew=true",
-        response.getRedirectedUrl());
+            + URLEncoder.encode("https://mycompany.com/bigWebApp/some_path", "UTF-8") + "&renew=true");
   }
 
   public void testConstuctServiceUrl() {
     CasConfig config = new CasConfig();
     config.setCasServer("http://www.mycompany.com/cas");
-    // config.setLocalServer("localhost:8080/demo");
-    MockHttpServletRequest request = new MockHttpServletRequest();
-    request.setContextPath("/demo");
-    request.setServletPath("/home.action");
-    request.setRequestURI("/demo/home.action");
-    HttpServletResponse response = new MockHttpServletResponse();
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getRequestURI()).thenReturn("/demo/home.action");
+    when(request.getServletPath()).thenReturn("/home.action");
+    when(request.getContextPath()).thenReturn("/demo");
+    when(request.getScheme()).thenReturn("http");
+
+    HttpServletResponse response = mock(HttpServletResponse.class);
     final String urlEncodedService = CasEntryPoint.constructServiceUrl(request, response, null,
         CasConfig.getLocalServer(request), "ticket", config.isEncode());
     System.out.println(urlEncodedService);

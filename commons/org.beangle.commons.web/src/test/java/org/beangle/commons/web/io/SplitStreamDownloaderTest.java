@@ -18,14 +18,22 @@
  */
 package org.beangle.commons.web.io;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.beangle.commons.http.mime.MimeTypeProvider;
 import org.beangle.commons.lang.ClassLoaders;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Test
@@ -34,23 +42,35 @@ public class SplitStreamDownloaderTest {
   StreamDownloader streamDownloader = new SplitStreamDownloader(new MimeTypeProvider());
 
   public void download() throws Exception {
-    MockHttpServletRequest request = new MockHttpServletRequest();
-    MockHttpServletResponse response = new MockHttpServletResponse();
-    URL testDoc = ClassLoaders.getResource("download.txt", getClass());
-    streamDownloader.download(request, response, testDoc, null);
-    Assert.assertEquals(response.getStatus(), 200);
-    Assert.assertEquals(response.getHeader("Accept-Ranges"), "bytes");
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    when(response.getOutputStream()).thenReturn(new ServletOutputStream() {
+      OutputStream outputStream = new ByteArrayOutputStream();
 
-    Assert.assertEquals(response.getContentLength(), 59);
+      public void write(int b) throws IOException {
+        outputStream.write(b);
+      }
+    });
+
+    URL testDoc = ClassLoaders.getResource("download.txt", getClass());
+
+    streamDownloader.download(request, response, testDoc, null);
+    verify(response).setHeader("Accept-Ranges", "bytes");
 
     File file = new File(testDoc.toURI());
-    request = new MockHttpServletRequest();
-    response = new MockHttpServletResponse();
-    request.addHeader("Range", "bytes=5-12");
+    request = mock(HttpServletRequest.class);
+    response = mock(HttpServletResponse.class);
+    when(response.getOutputStream()).thenReturn(new ServletOutputStream() {
+      OutputStream outputStream = new ByteArrayOutputStream();
+
+      public void write(int b) throws IOException {
+        outputStream.write(b);
+      }
+
+    });
+    when(request.getHeader("Range")).thenReturn("bytes=5-12");
     streamDownloader.download(request, response, testDoc, null);
-    Assert.assertEquals(response.getStatus(), 206);
-    Assert.assertEquals(response.getHeader("Content-Range"), "bytes 5-12/" + file.length());
-    String content = response.getContentAsString();
-    Assert.assertEquals(content, "document");
+    verify(response).setStatus(206);
+    verify(response).setHeader("Content-Range", "bytes 5-12/" + file.length());
   }
 }

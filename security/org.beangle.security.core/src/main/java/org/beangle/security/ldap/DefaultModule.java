@@ -18,7 +18,7 @@
  */
 package org.beangle.security.ldap;
 
-import org.beangle.commons.context.inject.AbstractBindModule;
+import org.beangle.commons.inject.bind.AbstractBindModule;
 import org.beangle.security.ldap.auth.DefaultLdapAuthenticationProvider;
 import org.beangle.security.ldap.auth.DefaultLdapValidator;
 import org.beangle.security.ldap.connect.SimpleLdapUserStore;

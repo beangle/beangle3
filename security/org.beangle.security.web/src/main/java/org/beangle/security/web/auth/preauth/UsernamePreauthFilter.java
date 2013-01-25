@@ -39,7 +39,7 @@ import org.beangle.commons.lang.Strings;
  * is set up correctly as this filter does no authentication whatsoever. All the protection is
  * assumed to be provided externally and if this filter is included inappropriately in a
  * configuration, it would be possible to assume the identity of a user merely by setting the
- * correct header name. This also means it should not be used in combination with other Spring
+ * correct header name. This also means it should not be used in combination with other Beangle
  * Security authentication mechanisms such as form login, as this would imply there was a means of
  * bypassing the external system which would be risky.
  * <p>

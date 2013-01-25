@@ -20,7 +20,6 @@ package org.beangle.security.core.session.impl;
 
 import java.util.Date;
 
-import org.beangle.commons.entity.pojo.StringIdObject;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.session.Sessioninfo;
 import org.beangle.security.core.session.SessioninfoBuilder;
@@ -43,9 +42,9 @@ public class SimpleSessioninfoBuilder implements SessioninfoBuilder {
 
 }
 
-class SimpleSessioninfo extends StringIdObject implements CategorySessioninfo {
+class SimpleSessioninfo implements CategorySessioninfo {
 
-  private static final long serialVersionUID = 1462323011613320213L;
+  private String id;
 
   /** 系统登录用户 */
   private String username;
@@ -68,7 +67,7 @@ class SimpleSessioninfo extends StringIdObject implements CategorySessioninfo {
   private String remark;
 
   private String server;
-  
+
   public SimpleSessioninfo() {
     super();
   }
@@ -99,6 +98,14 @@ class SimpleSessioninfo extends StringIdObject implements CategorySessioninfo {
   public long getOnlineTime() {
     if (null == expiredAt) return System.currentTimeMillis() - loginAt.getTime();
     else return expiredAt.getTime() - loginAt.getTime();
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   public String getUsername() {
@@ -173,5 +180,5 @@ class SimpleSessioninfo extends StringIdObject implements CategorySessioninfo {
   public void setServer(String server) {
     this.server = server;
   }
-  
+
 }

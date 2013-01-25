@@ -18,8 +18,8 @@
  */
 package org.beangle.security.web.session;
 
-import org.beangle.commons.context.event.Event;
-import org.beangle.commons.context.event.EventListener;
+import org.beangle.commons.event.Event;
+import org.beangle.commons.event.EventListener;
 import org.beangle.commons.web.session.HttpSessionDestroyedEvent;
 import org.beangle.security.core.session.SessionRegistry;
 

@@ -18,7 +18,7 @@
  */
 package org.beangle.security.core.session.category;
 
-import org.beangle.commons.context.event.Event;
+import org.beangle.commons.event.Event;
 
 /**
  * 会话配置的调整事件

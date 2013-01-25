@@ -1,0 +1,1 @@
+package org.beangle.commons.property;

@@ -69,11 +69,8 @@ public final class RegexRequestMatcher implements RequestMatcher {
    *          set.
    */
   public RegexRequestMatcher(String pattern, String httpMethod, boolean caseInsensitive) {
-    if (caseInsensitive) {
-      this.pattern = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
-    } else {
-      this.pattern = Pattern.compile(pattern);
-    }
+    if (caseInsensitive) this.pattern = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
+    else this.pattern = Pattern.compile(pattern);
     this.httpMethod = Strings.isNotEmpty(httpMethod) ? HttpMethod.valueOf(httpMethod) : null;
   }
 
@@ -82,8 +79,7 @@ public final class RegexRequestMatcher implements RequestMatcher {
    * the compiled
    * pattern.
    * 
-   * @param request
-   *          the request to match
+   * @param request the request to match
    * @return true if the pattern matches the URL, false otherwise.
    */
   public boolean matches(HttpServletRequest request) {
@@ -94,14 +90,8 @@ public final class RegexRequestMatcher implements RequestMatcher {
 
     if (pathInfo != null || query != null) {
       StringBuilder sb = new StringBuilder(url);
-
-      if (pathInfo != null) {
-        sb.append(pathInfo);
-      }
-
-      if (query != null) {
-        sb.append(query);
-      }
+      if (pathInfo != null) sb.append(pathInfo);
+      if (query != null) sb.append(query);
       url = sb.toString();
     }
     logger.debug("Checking match of request : '{}'; against '{}'", url, pattern);

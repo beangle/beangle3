@@ -23,7 +23,8 @@ import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.util.List;
 
-import org.springframework.util.Assert;
+import org.beangle.commons.lang.Assert;
+
 
 /**
  * File Operation Utility

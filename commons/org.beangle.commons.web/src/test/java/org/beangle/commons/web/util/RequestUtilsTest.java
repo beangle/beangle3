@@ -18,23 +18,30 @@
  */
 package org.beangle.commons.web.util;
 
-import org.springframework.mock.web.MockHttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @Test
 public class RequestUtilsTest {
 
   public void testGetServletPath() {
-    MockHttpServletRequest request = new MockHttpServletRequest(null, "/");
-    request.setContextPath("/");
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getContextPath()).thenReturn("/");
+    when(request.getRequestURI()).thenReturn("/");
     Assert.assertEquals(RequestUtils.getServletPath(request), "");
-    request.setContextPath("/");
-    request.setRequestURI("/demo");
+
+    request = mock(HttpServletRequest.class);
+    when(request.getContextPath()).thenReturn("/");
+    when(request.getRequestURI()).thenReturn("/demo");
     Assert.assertEquals(RequestUtils.getServletPath(request), "/demo");
 
-    request.setContextPath("");
-    request.setRequestURI("/demo");
+    request = mock(HttpServletRequest.class);
+    when(request.getContextPath()).thenReturn("");
+    when(request.getRequestURI()).thenReturn("/demo");
     Assert.assertEquals(RequestUtils.getServletPath(request), "/demo");
   }
 }

@@ -18,9 +18,9 @@
  */
 package org.beangle.commons.http;
 
-import org.beangle.commons.context.inject.AbstractBindModule;
-import org.beangle.commons.context.spring.SpringResources;
 import org.beangle.commons.http.mime.MimeTypeProvider;
+import org.beangle.commons.inject.Resources;
+import org.beangle.commons.inject.bind.AbstractBindModule;
 
 /**
  * @author chaostone
@@ -31,7 +31,7 @@ public class DefaultModule extends AbstractBindModule {
   protected void doBinding() {
     bind(MimeTypeProvider.class).property(
         "resources",
-        bean(SpringResources.class).property("globals",
+        bean(Resources.class).property("globals",
             "classpath*:org/beangle/commons/http/mime/mimetypes.properties").property("locations",
             "classpath*:META-INF/mimetypes.properties"));
   }

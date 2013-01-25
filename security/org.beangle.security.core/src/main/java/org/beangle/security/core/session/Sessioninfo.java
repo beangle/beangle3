@@ -20,14 +20,15 @@ package org.beangle.security.core.session;
 
 import java.util.Date;
 
-import org.beangle.commons.entity.Entity;
-
 /**
  * 在线活动
  * 
  * @author chaostone
  */
-public interface Sessioninfo extends Entity<String> {
+public interface Sessioninfo {
+
+  String getId();
+
   /**
    * 用户名
    */
@@ -81,7 +82,7 @@ public interface Sessioninfo extends Entity<String> {
   Date getLastAccessAt();
 
   /**
-   * Return the server the session hosted.  
+   * Return the server the session hosted.
    */
   String getServer();
 }

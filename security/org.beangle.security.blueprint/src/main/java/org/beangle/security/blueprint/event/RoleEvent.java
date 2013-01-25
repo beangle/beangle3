@@ -18,7 +18,7 @@
  */
 package org.beangle.security.blueprint.event;
 
-import org.beangle.commons.context.event.Event;
+import org.beangle.commons.event.Event;
 import org.beangle.security.blueprint.Role;
 
 /**

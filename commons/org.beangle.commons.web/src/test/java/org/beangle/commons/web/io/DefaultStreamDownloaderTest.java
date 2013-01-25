@@ -18,14 +18,22 @@
  */
 package org.beangle.commons.web.io;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLDecoder;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.net.URLCodec;
 import org.beangle.commons.http.mime.MimeTypeProvider;
 import org.beangle.commons.lang.ClassLoaders;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -34,9 +42,17 @@ public class DefaultStreamDownloaderTest {
 
   StreamDownloader streamDownloader = new DefaultStreamDownloader(new MimeTypeProvider());
 
-  public void download() {
-    MockHttpServletRequest request = new MockHttpServletRequest();
-    MockHttpServletResponse response = new MockHttpServletResponse();
+  public void download() throws IOException {
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    when(response.getOutputStream()).thenReturn(new ServletOutputStream() {
+      OutputStream outputStream = new ByteArrayOutputStream();
+
+      public void write(int b) throws IOException {
+        outputStream.write(b);
+      }
+
+    });
     URL testDoc = ClassLoaders.getResource("download.txt", getClass());
     streamDownloader.download(request, response, testDoc, null);
   }

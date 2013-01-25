@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.beangle.commons.http.HttpMethod;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
-import org.springframework.util.AntPathMatcher;
+import org.beangle.commons.util.regex.AntPathPattern;
 
 /**
  * Matcher which compares a pre-defined ant-style pattern against the URL (
@@ -34,9 +34,8 @@ import org.springframework.util.AntPathMatcher;
  */
 public final class AntPathRequestMatcher implements RequestMatcher {
 
-  private static final AntPathMatcher antMatcher = new AntPathMatcher();
+  private final AntPathPattern pattern;
 
-  private final String pattern;
   private final HttpMethod httpMethod;
 
   /**
@@ -62,7 +61,7 @@ public final class AntPathRequestMatcher implements RequestMatcher {
    */
   public AntPathRequestMatcher(String pattern, String httpMethod) {
     Assert.notEmpty(pattern, "Pattern cannot be null or empty");
-    this.pattern = pattern.toLowerCase();
+    this.pattern = new AntPathPattern(pattern);
     this.httpMethod = Strings.isNotEmpty(httpMethod) ? HttpMethod.valueOf(httpMethod) : null;
   }
 
@@ -78,14 +77,8 @@ public final class AntPathRequestMatcher implements RequestMatcher {
   public boolean matches(HttpServletRequest request) {
     if (httpMethod != null && httpMethod != HttpMethod.valueOf(request.getMethod())) { return false; }
     String url = request.getServletPath();
-    if (request.getPathInfo() != null) url += request.getPathInfo();
-    url = url.toLowerCase();
-    // TODO: Optimise, since the pattern is fixed.
-    return antMatcher.match(pattern, url);
-  }
-
-  public String getPattern() {
-    return pattern;
+    if (null != request.getPathInfo()) url += request.getPathInfo();
+    return pattern.match(url);
   }
 
   @Override
@@ -99,13 +92,8 @@ public final class AntPathRequestMatcher implements RequestMatcher {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("Ant [pattern='").append(pattern).append("'");
-
-    if (httpMethod != null) {
-      sb.append(", " + httpMethod);
-    }
-
+    if (httpMethod != null) sb.append(", " + httpMethod);
     sb.append("]");
-
     return sb.toString();
   }
 }

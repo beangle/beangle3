@@ -27,9 +27,26 @@
 
   <modules>
     <module>commons</module>
-    <module>notification</module>
+    <module>ioc</module>
+    <module>orm</module>
     <module>security</module>
     <module>struts2</module>
   </modules>
-
+  <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>${testng.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 </project>

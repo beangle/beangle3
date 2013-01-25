@@ -18,7 +18,7 @@
  */
 package org.beangle.security.blueprint;
 
-import org.beangle.commons.context.inject.AbstractBindModule;
+import org.beangle.commons.inject.bind.AbstractBindModule;
 import org.beangle.security.blueprint.data.service.internal.CsvDataResolver;
 import org.beangle.security.blueprint.data.service.internal.DataPermissionServiceImpl;
 import org.beangle.security.blueprint.data.service.internal.IdentifierDataResolver;
@@ -30,7 +30,8 @@ import org.beangle.security.blueprint.nav.service.MenuServiceImpl;
 import org.beangle.security.blueprint.service.internal.DaoUserDetailServiceImpl;
 import org.beangle.security.blueprint.service.internal.RoleServiceImpl;
 import org.beangle.security.blueprint.service.internal.UserServiceImpl;
-import org.beangle.security.blueprint.session.service.SessionProfileServiceImpl;
+import org.beangle.security.blueprint.session.service.WebSessioninfoBuilder;
+import org.beangle.security.blueprint.session.service.internal.SessionProfileServiceImpl;
 
 /**
  * 权限缺省服务配置
@@ -49,7 +50,8 @@ public class ServiceModule extends AbstractBindModule {
     bind("userDetailService", DaoUserDetailServiceImpl.class);
     bind("authorityManager", CacheableAuthorityManager.class);
     bind(SessionProfileServiceImpl.class).shortName();
-
+    bind(WebSessioninfoBuilder.class);
+    
     bind(IdentifierDataResolver.class, CsvDataResolver.class, OqlDataProvider.class, SqlDataProvider.class)
         .shortName();
 

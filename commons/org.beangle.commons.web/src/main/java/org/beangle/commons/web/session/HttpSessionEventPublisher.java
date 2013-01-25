@@ -21,9 +21,9 @@ package org.beangle.commons.web.session;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.beangle.commons.context.event.EventMulticaster;
-import org.beangle.commons.web.spring.ContextLoader;
-import org.springframework.util.Assert;
+import org.beangle.commons.event.EventMulticaster;
+import org.beangle.commons.lang.Assert;
+import org.beangle.commons.web.context.ContainerUtils;
 
 /**
  * Declared in web.xml as
@@ -34,10 +34,10 @@ import org.springframework.util.Assert;
  * &lt;/listener&gt;
  * </pre>
  * 
- * Publishes <code>HttpSessionApplicationEvent</code>s to the Spring Root
- * WebApplicationContext. Maps
- * javax.servlet.http.HttpSessionListener.sessionCreated() to {@link HttpSessionCreationEvent}. Maps
- * javax.servlet.http.HttpSessionListener.sessionDestroyed() to {@link HttpSessionDestroyedEvent}.
+ * Publishes <code>HttpSessionApplicationEvent</code>s to the Bean Root Context.
+ * Maps javax.servlet.http.HttpSessionListener.sessionCreated() to {@link HttpSessionCreationEvent}.
+ * Maps javax.servlet.http.HttpSessionListener.sessionDestroyed() to
+ * {@link HttpSessionDestroyedEvent}.
  */
 public class HttpSessionEventPublisher implements HttpSessionListener {
 
@@ -51,8 +51,8 @@ public class HttpSessionEventPublisher implements HttpSessionListener {
    */
   public void sessionCreated(HttpSessionEvent event) {
     if (null == eventMulticaster) {
-      eventMulticaster = ContextLoader.getContext(event.getSession().getServletContext()).getBean(
-          EventMulticaster.class);
+      eventMulticaster = ContainerUtils.getContainer(event.getSession().getServletContext())
+          .getBean(EventMulticaster.class).get();
       Assert.notNull(eventMulticaster);
     }
     eventMulticaster.multicast(new HttpSessionCreationEvent(event.getSession()));

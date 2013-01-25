@@ -18,107 +18,124 @@
  */
 package org.beangle.security.web;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.beangle.commons.web.filter.MockFilter;
+import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.web.mock.MockFilter;
 import org.beangle.security.web.auth.UsernamePasswordAuthFilter;
 import org.beangle.security.web.context.HttpSessionContextFilter;
-import org.springframework.mock.web.MockFilterChain;
-import org.springframework.mock.web.MockFilterConfig;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
-
 @Test
-@ContextConfiguration("classpath:org/beangle/security/web/filters-test.xml")
-public class FilterChainProxyTest extends AbstractTestNGSpringContextTests {
+public class FilterChainProxyTest {
+
+  Filter mockFilter = new MockFilter();
+  Filter mockFilter2 = new MockFilter();
+  HttpSessionContextFilter sif = new HttpSessionContextFilter();
+  UsernamePasswordAuthFilter apf = new UsernamePasswordAuthFilter();
 
   public void normalOperation() throws Exception {
-    FilterChainProxy filterChainProxy = (FilterChainProxy) applicationContext.getBean("filterChain",
-        FilterChainProxy.class);
-    checkPathAndFilterOrder(filterChainProxy);
-    doNormalOperation(filterChainProxy);
+    Map<String, List<Filter>> chainMap = CollectUtils.newHashMap();
+    chainMap.put("/foo/**", CollectUtils.newArrayList(mockFilter));
+    chainMap.put("/some/other/path/**", CollectUtils.newArrayList(sif, mockFilter, mockFilter2));
+    chainMap.put("/do/not/filter", new ArrayList<Filter>());
+    chainMap.put("/**", CollectUtils.newArrayList(sif, apf, mockFilter));
+
+    FilterChainProxy proxy = new FilterChainProxy(chainMap);
+    checkPathAndFilterOrder(proxy);
+    doNormalOperation(proxy);
   }
 
   public void noMatchFilters() throws Exception {
-    FilterChainProxy filterChainProxy = (FilterChainProxy) applicationContext.getBean(
-        "newFilterChainProxyNoDefaultPath", FilterChainProxy.class);
-    MockHttpServletRequest request = new MockHttpServletRequest();
-    request.setServletPath("/nomatch");
-    assertEquals(null, filterChainProxy.getFilters(request));
+    Map<String, List<Filter>> chainMap = CollectUtils.newHashMap();
+    chainMap.put("/foo/**", CollectUtils.newArrayList(mockFilter));
+    chainMap.put("/*.bar", CollectUtils.newArrayList(mockFilter,mockFilter2));
+    FilterChainProxy proxy = new FilterChainProxy(chainMap);
+    
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getServletPath()).thenReturn("/nomatch");
+    assertEquals(null, proxy.getFilters(request));
   }
 
   public void urlStrippingPropertyIsRespected() throws Exception {
-    FilterChainProxy filterChainProxy = (FilterChainProxy) applicationContext.getBean(
-        "newFilterChainProxyNoDefaultPath", FilterChainProxy.class);
-    String url = "/blah.bar";
-    MockHttpServletRequest request = new MockHttpServletRequest();
-    request.setServletPath(url);
-    request.setQueryString("x=something");
-    assertNotNull(filterChainProxy.getFilters(request));
-    assertEquals(2, filterChainProxy.getFilters(request).size());
+    Map<String, List<Filter>> chainMap = CollectUtils.newHashMap();
+    chainMap.put("/foo/**", CollectUtils.newArrayList(mockFilter));
+    chainMap.put("/*.bar", CollectUtils.newArrayList(mockFilter,mockFilter2));
+    FilterChainProxy proxy = new FilterChainProxy(chainMap);
+
+    
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getServletPath()).thenReturn("/blah.bar");
+    when(request.getQueryString()).thenReturn("x=something");
+    assertNotNull(proxy.getFilters(request));
+    assertEquals(2, proxy.getFilters(request).size());
   }
 
-  private void checkPathAndFilterOrder(FilterChainProxy filterChainProxy) throws Exception {
-    MockHttpServletRequest request = new MockHttpServletRequest();
-    request.setServletPath("/foo/blah");
-    List<Filter> filters = filterChainProxy.getFilters(request);
+  private void checkPathAndFilterOrder(FilterChainProxy chain) throws Exception {
+    HttpServletRequest request =mock(HttpServletRequest.class);
+    when(request.getServletPath()).thenReturn("/foo/blah");
+    List<Filter> filters = chain.getFilters(request);
     assertEquals(1, filters.size());
     assertTrue(filters.get(0) instanceof MockFilter);
 
-    request.setServletPath("/some/other/path/blah");
-    filters = filterChainProxy.getFilters(request);
+    when(request.getServletPath()).thenReturn("/some/other/path/blah");
+    filters = chain.getFilters(request);
     assertNotNull(filters);
     assertEquals(3, filters.size());
     assertTrue(filters.get(0) instanceof HttpSessionContextFilter);
     assertTrue(filters.get(1) instanceof MockFilter);
     assertTrue(filters.get(2) instanceof MockFilter);
 
-    request.setServletPath("/do/not/filter");
-    filters = filterChainProxy.getFilters(request);
+    when(request.getServletPath()).thenReturn("/do/not/filter");
+    filters = chain.getFilters(request);
     assertEquals(0, filters.size());
 
-    request.setServletPath("/another/nonspecificmatch");
-    filters = filterChainProxy.getFilters(request);
+    when(request.getServletPath()).thenReturn("/another/nonspecificmatch");
+    filters = chain.getFilters(request);
     assertEquals(3, filters.size());
     assertTrue(filters.get(0) instanceof HttpSessionContextFilter);
     assertTrue(filters.get(1) instanceof UsernamePasswordAuthFilter);
     assertTrue(filters.get(2) instanceof MockFilter);
   }
 
-  private void doNormalOperation(FilterChainProxy filterChainProxy) throws Exception {
-    MockFilter filter = (MockFilter) applicationContext.getBean("mockFilter", MockFilter.class);
+  private void doNormalOperation(FilterChainProxy chain) throws Exception {
+    MockFilter filter = (MockFilter)mockFilter;
     assertFalse(filter.isInitialized());
     assertFalse(filter.isDoFiltered());
     assertFalse(filter.isDestroyed());
 
-    filter.init(new MockFilterConfig());
+    filter.init(mock(FilterConfig.class));
     assertTrue(filter.isInitialized());
     assertFalse(filter.isDoFiltered());
     assertFalse(filter.isDestroyed());
 
-    MockHttpServletRequest request = new MockHttpServletRequest();
-    request.setServletPath("/foo/secure/super/somefile.html");
-    request.setContextPath("/");
+    HttpServletRequest request =mock(HttpServletRequest.class);
+    when(request.getServletPath()).thenReturn("/foo/secure/super/somefile.html");
+    when(request.getContextPath()).thenReturn("/");
 
-    MockHttpServletResponse response = new MockHttpServletResponse();
+    HttpServletResponse response = mock(HttpServletResponse.class);
 
-    filterChainProxy.doFilter(request, response, new MockFilterChain());
+    chain.doFilter(request, response, mock(FilterChain.class));
     assertTrue(filter.isInitialized());
     assertTrue(filter.isDoFiltered());
     assertFalse(filter.isDestroyed());
 
-    request.setServletPath("/a/path/which/doesnt/match/any/filter.html");
-    filterChainProxy.doFilter(request, response, new MockFilterChain());
+    when(request.getServletPath()).thenReturn("/a/path/which/doesnt/match/any/filter.html");
+    chain.doFilter(request, response, mock(FilterChain.class));
 
     filter.destroy();
     assertTrue(filter.isInitialized());

@@ -20,7 +20,7 @@ package org.beangle.commons.web.session;
 
 import javax.servlet.http.HttpSession;
 
-import org.beangle.commons.context.event.Event;
+import org.beangle.commons.event.Event;
 
 /**
  * HttpSession Creation Event

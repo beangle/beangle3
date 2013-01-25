@@ -19,6 +19,7 @@
 package org.beangle.security.web;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,11 +38,20 @@ import org.beangle.commons.web.filter.RequestMatcher;
 public class FilterChainProxy extends GenericCompositeFilter {
 
   /** Compiled pattern version of the filter chain map */
-  private Map<RequestMatcher, List<Filter>> filterChainMap;
+  private Map<RequestMatcher, List<Filter>> chainMap;
 
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
     new VirtualFilterChain(chain, getFilters(request)).doFilter(request, response);
+  }
+
+  public FilterChainProxy() {
+    super();
+  }
+
+  public FilterChainProxy(Map<String, List<Filter>> chainMap) {
+    super();
+    this.setFilterChainMap(chainMap);
   }
 
   /**
@@ -53,7 +63,7 @@ public class FilterChainProxy extends GenericCompositeFilter {
   public List<Filter> getFilters(ServletRequest res) {
     HttpServletRequest request = (HttpServletRequest) res;
     // FIXME
-    for (Map.Entry<RequestMatcher, List<Filter>> entry : filterChainMap.entrySet()) {
+    for (Map.Entry<RequestMatcher, List<Filter>> entry : chainMap.entrySet()) {
       RequestMatcher matcher = entry.getKey();
       boolean matched = matcher.matches(request);
       if (matched) { return entry.getValue(); }
@@ -61,30 +71,21 @@ public class FilterChainProxy extends GenericCompositeFilter {
     return null;
   }
 
-  public void setFilterChainMap(Map<RequestMatcher, List<Filter>> filterChainMap) {
-    this.filterChainMap = CollectUtils.newLinkedHashMap(filterChainMap);
-  }
-
-  /**
-   * Returns a copy of the underlying filter chain map. Modifications to the
-   * map contents will not affect the FilterChainProxy state - to change the
-   * map call <tt>setFilterChainMap</tt>.
-   * 
-   * @return the map of path pattern Strings to filter chain arrays (with
-   *         ordering guaranteed).
-   */
-  public Map<RequestMatcher, List<Filter>> getFilterChainMap() {
-    return CollectUtils.newLinkedHashMap(filterChainMap);
+  public void setFilterChainMap(Map<String, List<Filter>> chainMap) {
+    this.chainMap = new LinkedHashMap<RequestMatcher, List<Filter>>();
+    for (Map.Entry<String, List<Filter>> entry : chainMap.entrySet()) {
+      this.chainMap.put(new AntPathRequestMatcher(entry.getKey()), entry.getValue());
+    }
   }
 
   public void setFilters(List<Filter> filters) {
-    if (null == filterChainMap) filterChainMap = CollectUtils.newHashMap();
-    filterChainMap.put(new AntPathRequestMatcher("/**"), filters);
+    if (null == chainMap) chainMap = CollectUtils.newHashMap();
+    chainMap.put(new AntPathRequestMatcher("/**"), filters);
   }
 
   public String toString() {
     StringBuffer sb = new StringBuffer();
-    sb.append("FilterChainProxy[").append("Filter Chains: ").append(filterChainMap).append(']');
+    sb.append("FilterChainProxy[").append("Filter Chains: ").append(chainMap).append(']');
     return sb.toString();
   }
 

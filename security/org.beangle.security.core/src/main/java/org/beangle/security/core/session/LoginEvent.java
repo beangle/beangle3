@@ -18,7 +18,7 @@
  */
 package org.beangle.security.core.session;
 
-import org.beangle.commons.context.event.Event;
+import org.beangle.commons.event.Event;
 
 /**
  * Login event

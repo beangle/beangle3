@@ -18,7 +18,7 @@
  */
 package org.beangle.security;
 
-import org.beangle.commons.context.inject.AbstractBindModule;
+import org.beangle.commons.inject.bind.AbstractBindModule;
 import org.beangle.security.auth.dao.DaoAuthenticationProvider;
 import org.beangle.security.auth.encoding.DigestPasswordEncoder;
 import org.beangle.security.auth.encoding.PlaintextPasswordEncoder;
