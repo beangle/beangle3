@@ -2,7 +2,7 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="ehcache.xsd"
     updateCheck="false" monitoring="off"
-    dynamicConfig="true" name="Beangle Session Cachemanager">
+    dynamicConfig="true" name="Beangle Session Ehcache Manager">
 
   <defaultCache maxElementsInMemory="1000" eternal="false" timeToIdleSeconds="120"
     timeToLiveSeconds="1000" overflowToDisk="false"/>

@@ -18,7 +18,6 @@
  */
 package org.beangle.security.blueprint.session.service;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -28,9 +27,7 @@ import org.beangle.commons.dao.EntityDao;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Assert;
-import org.beangle.commons.lang.Dates;
 import org.beangle.commons.lang.Objects;
-import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.session.*;
 import org.beangle.security.core.session.impl.LocalSessionStatusCache;
@@ -59,14 +56,6 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 
   private SessionStatusCache cache = new LocalSessionStatusCache();
 
-  /** 默认 过期时间 30分钟 */
-  private int expiredTime = 30;
-
-  /**
-   * Default synchronize interval(10 sec) for update access time.
-   */
-  private int syncInterval = 10 * 1000;
-
   public void setEntityDao(EntityDao entityDao) {
     this.entityDao = entityDao;
   }
@@ -74,10 +63,17 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
   public void init() throws Exception {
     Assert.notNull(controller, "controller must set");
     Assert.notNull(sessioninfoBuilder, "sessioninfoBuilder must set");
-    DbSessionStatusCacheSyncDaemon syncTask = new DbSessionStatusCacheSyncDaemon(this);
+
+    long now = System.currentTimeMillis();
     // 下一次间隔开始清理，不浪费启动时间
-    new Timer("Beangle Session Status Cache Synchronizer", true).schedule(syncTask,
-        new Date(System.currentTimeMillis() + syncInterval), syncInterval);
+    DbSessionCacheSyncDaemon cacheSync = new DbSessionCacheSyncDaemon(this);
+    new Timer("Beangle Session Cache Synchronizer", true).schedule(cacheSync,
+        new Date(now + cacheSync.getInterval()), cacheSync.getInterval());
+
+    DbSessionCleanupDaemon cleaner = new DbSessionCleanupDaemon(this);
+    new Timer("Beangle Session Cleaner", true).schedule(cleaner, new Date(now + cleaner.getCleanInterval()),
+        cleaner.getCleanInterval());
+
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -201,22 +197,6 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     status.setLastAccessedTime(accessAt);
   }
 
-  public int getSyncInterval() {
-    return syncInterval;
-  }
-
-  public void setSyncInterval(int syncInterval) {
-    this.syncInterval = syncInterval;
-  }
-
-  public int getExpiredTime() {
-    return expiredTime;
-  }
-
-  public void setExpiredTime(int expiredTime) {
-    this.expiredTime = expiredTime;
-  }
-
   public String getSessioninfoTypename() {
     return sessioninfoBuilder.getSessioninfoType().getName();
   }
@@ -225,29 +205,4 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
     return cache;
   }
 
-  /**
-   * Check expired or will expire session(now-lastAccessAt>=expiredTime),clean them
-   */
-  public void cleanup() {
-    Stopwatch watch = new Stopwatch().start();
-    logger.debug("clean up expired or over maxOnlineTime session start ...");
-    Calendar calendar = Calendar.getInstance();
-    try {
-      OqlBuilder<? extends Sessioninfo> builder = OqlBuilder.from(sessioninfoBuilder.getSessioninfoType(),
-          "info");
-      builder.where(
-          "info.lastAccessAt is null or info.lastAccessAt<:givenTime or info.expiredAt is not null",
-          Dates.rollMinutes(calendar.getTime(), -expiredTime));
-      List<? extends Sessioninfo> infos = entityDao.search(builder);
-      int removed = 0;
-      for (Sessioninfo info : infos) {
-        remove(info.getId());
-        removed++;
-      }
-      if (removed > 0) logger.debug("removed {} expired sessions in {}", removed, watch);
-      getController().stat();
-    } catch (Exception e) {
-      logger.error("Beangle session cleanup failure.", e);
-    }
-  }
 }
