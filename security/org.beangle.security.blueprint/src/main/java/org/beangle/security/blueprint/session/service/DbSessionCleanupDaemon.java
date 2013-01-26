@@ -96,7 +96,7 @@ public class DbSessionCleanupDaemon extends TimerTask {
         registry.remove(info.getId());
         removed++;
       }
-      if (removed > 0) logger.debug("removed {} expired sessions in {}", removed, watch);
+      if (removed > 0) logger.info("removed {} expired sessions in {}", removed, watch);
       registry.getController().stat();
     } catch (Exception e) {
       logger.error("Beangle session cleanup failure.", e);
@@ -106,5 +106,5 @@ public class DbSessionCleanupDaemon extends TimerTask {
   public void setRegistry(DbSessionRegistry registry) {
     this.registry = registry;
   }
-  
+
 }
