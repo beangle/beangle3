@@ -269,12 +269,15 @@ public class HibernateEntityDao implements EntityDao {
     return QuerySupport.setParameter(getNamedOrCreateQuery(queryString), argument).executeUpdate();
   }
 
-  public int executeUpdateRepeatly(final String queryString, final Collection<Object[]> arguments) {
+  public int[] executeUpdateRepeatly(final String queryString, final Collection<Object[]> arguments) {
     Query query = getNamedOrCreateQuery(queryString);
-    int updated = 0;
-    for (Object[] params : arguments)
-      updated += QuerySupport.setParameter(query, params).executeUpdate();
-    return updated;
+    int[] updates = new int[arguments.size()];
+    int i = 0;
+    for (Object[] params : arguments) {
+      updates[i] = QuerySupport.setParameter(query, params).executeUpdate();
+      i++;
+    }
+    return updates;
   }
 
   public int executeUpdate(final String queryString, final Map<String, Object> parameterMap) {

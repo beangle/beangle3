@@ -45,7 +45,7 @@ public class DatabaseModule extends AbstractBindModule {
             "hibernate.jdbc.use_get_generated_keys=true",
             "hibernate.cache.region.factory_class=org.hibernate.cache.EhCacheRegionFactory",
             "hibernate.cache.use_second_level_cache=true", "hibernate.cache.use_query_cache=true",
-            "hibernate.query.substitutions=true 1, false 0, yes 'Y', no 'N'", "hibernate.show_sql=false",
+            "hibernate.query.substitutions=true 1, false 0, yes 'Y', no 'N'", "hibernate.show_sql=true",
             "net.sf.ehcache.configurationResourceName=/ehcache-session.xml"));
 
     bind("sessionSessionFactory", SessionFactoryBean.class)

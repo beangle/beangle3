@@ -30,16 +30,11 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Objects;
 import org.beangle.security.core.Authentication;
-import org.beangle.security.core.session.SessionController;
-import org.beangle.security.core.session.SessionException;
-import org.beangle.security.core.session.SessionRegistry;
-import org.beangle.security.core.session.SessionStatus;
-import org.beangle.security.core.session.Sessioninfo;
-import org.beangle.security.core.session.SessioninfoBuilder;
+import org.beangle.security.core.session.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MemSessionRegistry implements SessionRegistry, Initializing {
+public class MemSessionRegistry implements SessionRegistry, Initializing, SessionStatusCache {
 
   protected static final Logger logger = LoggerFactory.getLogger(MemSessionRegistry.class);
 
@@ -163,11 +158,33 @@ public class MemSessionRegistry implements SessionRegistry, Initializing {
   }
 
   public void access(String sessionid, long beginAt) {
-    // DO nothing
+
   }
 
-  public String getResource(String sessionid) {
-    return null;
+  @Override
+  public SessionStatus get(String id) {
+    Sessioninfo info = getSessioninfo(id);
+    return (null == info) ? null : new SessionStatus(info);
   }
 
+  @Override
+  public void put(String id, SessionStatus newstatus) {
+
+  }
+
+  @Override
+  public void evict(String id) {
+    remove(id);
+  }
+
+  @Override
+  public SessionStatusCache getCache() {
+    return this;
+  }
+
+  @Override
+  public Set<String> getIds() {
+    return sessionids.keySet();
+  }
+  
 }

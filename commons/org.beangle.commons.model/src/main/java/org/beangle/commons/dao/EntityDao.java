@@ -185,7 +185,7 @@ public interface EntityDao {
    * @param query
    * @param arguments
    */
-  int executeUpdateRepeatly(String query, Collection<Object[]> arguments);
+  int[]  executeUpdateRepeatly(String query, Collection<Object[]> arguments);
 
   /**
    * 执行JPQL/NamedQuery进行更新或者删除
