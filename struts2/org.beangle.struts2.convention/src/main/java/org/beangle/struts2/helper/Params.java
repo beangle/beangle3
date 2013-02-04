@@ -21,14 +21,14 @@ package org.beangle.struts2.helper;
 import java.sql.Date;
 import java.util.Map;
 
-import org.beangle.commons.bean.converters.Converters;
 import org.beangle.commons.collection.MapConverter;
+import org.beangle.commons.lang.conversion.impl.DefaultConversion;
 
 import com.opensymphony.xwork2.ActionContext;
 
 public class Params {
 
-  public static final MapConverter converter = new MapConverter(Converters.Instance);
+  public static final MapConverter converter = new MapConverter(DefaultConversion.Instance);
 
   public static Map<String, Object> getParams() {
     return ActionContext.getContext().getParameters();

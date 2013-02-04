@@ -155,27 +155,19 @@ public class EntityType extends AbstractType {
   }
 
   /**
-   * {@inheritDoc} Get the type of a particular (named) property
+   * Get the type of a particular (named) property
    */
   public Type getPropertyType(String property) {
     Type type = (Type) propertyTypes.get(property);
     if (null == type) {
       Class<?> propertyType = Reflections.getPropertyType(entityClass, property);
       if (null != propertyType) {
-        if (Entity.class.isAssignableFrom(propertyType)) {
-          type = new EntityType(propertyType);
-        }
-        if (propertyType.isInterface()) {
-          type = Model.getType(propertyType.getName());
-        }
-        if (null == type) {
-          type = new IdentifierType(propertyType);
-        }
+        if (Entity.class.isAssignableFrom(propertyType)) type = new EntityType(propertyType);
+        if (propertyType.isInterface()) type = Model.getType(propertyType.getName());
+        if (null == type) type = new IdentifierType(propertyType);
       }
     }
-    if (null == type) {
-      logger.error("{} doesn't contains property {}", entityName, property);
-    }
+    if (null == type) logger.error("{} doesn't contains property {}", entityName, property);
     return type;
   }
 

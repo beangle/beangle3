@@ -20,8 +20,8 @@ package org.beangle.commons.entity.util;
 
 import java.io.Serializable;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.collections.Predicate;
+import org.beangle.commons.bean.PropertyUtils;
+import org.beangle.commons.lang.functor.Predicate;
 
 /**
  * 有效实体判断谓词
@@ -29,21 +29,20 @@ import org.apache.commons.collections.Predicate;
  * @author chaostone
  * @version $Id: $
  */
-public class ValidEntityPredicate implements Predicate {
+public class ValidEntityPredicate implements Predicate<Object> {
 
-  /** {@inheritDoc} */
-  public boolean evaluate(final Object value) {
+  public Boolean apply(final Object value) {
     if (null == value) { return false; }
     try {
       Serializable key = (Serializable) PropertyUtils.getProperty(value, "id");
-      return ValidEntityKeyPredicate.getInstance().evaluate(key);
+      return ValidEntityKeyPredicate.Instance.apply(key);
     } catch (Exception e) {
       return false;
     }
   }
 
   /** Constant <code>INSTANCE</code> */
-  public static final ValidEntityPredicate INSTANCE = new ValidEntityPredicate();
+  public static final ValidEntityPredicate Instance = new ValidEntityPredicate();
 
   /**
    * <p>
@@ -53,6 +52,6 @@ public class ValidEntityPredicate implements Predicate {
    * @return a {@link org.beangle.commons.entity.util.ValidEntityPredicate} object.
    */
   public static ValidEntityPredicate getInstance() {
-    return INSTANCE;
+    return Instance;
   }
 }

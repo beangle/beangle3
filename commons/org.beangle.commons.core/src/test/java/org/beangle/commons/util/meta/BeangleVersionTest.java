@@ -18,13 +18,13 @@
  */
 package org.beangle.commons.util.meta;
 
-import org.beangle.commons.BeangleVersion;
+import org.beangle.commons.lang.Version;
 import org.testng.annotations.Test;
 
 @Test
 public class BeangleVersionTest {
 
   public void testGetVersion() {
-    System.out.println(BeangleVersion.getName());
+    System.out.println(Version.getName());
   }
 }

@@ -27,7 +27,7 @@ import ognl.Ognl;
 import ognl.OgnlException;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.i18n.TextResource;
+import org.beangle.commons.text.i18n.TextResource;
 
 /**
  * 缺省和简单的属性提取类
@@ -169,7 +169,6 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
     return textResource;
   }
 
-  /** {@inheritDoc} */
   public void setTextResource(TextResource textResource) {
     this.textResource = textResource;
   }

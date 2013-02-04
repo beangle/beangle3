@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.beangle.commons.i18n.impl.DefaultTextBundleRegistry;
+import org.beangle.commons.text.i18n.impl.DefaultTextBundleRegistry;
 import org.beangle.struts2.convention.route.ActionBuilder;
 import org.beangle.struts2.convention.route.ProfileService;
 import org.beangle.struts2.convention.route.impl.DefaultActionBuilder;

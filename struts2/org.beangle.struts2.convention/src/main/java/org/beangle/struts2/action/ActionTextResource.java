@@ -22,13 +22,13 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import org.beangle.commons.i18n.TextBundle;
-import org.beangle.commons.i18n.TextBundleRegistry;
-import org.beangle.commons.i18n.TextFormater;
-import org.beangle.commons.i18n.impl.DefaultTextResource;
 import org.beangle.commons.lang.Option;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.reflect.Reflections;
+import org.beangle.commons.text.i18n.TextBundle;
+import org.beangle.commons.text.i18n.TextBundleRegistry;
+import org.beangle.commons.text.i18n.TextFormater;
+import org.beangle.commons.text.i18n.impl.DefaultTextResource;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;

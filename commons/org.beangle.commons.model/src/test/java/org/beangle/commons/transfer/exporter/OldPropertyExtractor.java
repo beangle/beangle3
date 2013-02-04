@@ -22,8 +22,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.beangle.commons.i18n.TextResource;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.text.i18n.TextResource;
 
 /**
  * 缺省和简单的属性提取类

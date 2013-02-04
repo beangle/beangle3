@@ -21,16 +21,15 @@ package org.beangle.commons.entity.metadata.impl;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtilsBean;
-import org.apache.commons.beanutils.ConvertUtilsBean;
-import org.apache.commons.beanutils.PropertyUtils;
-import org.beangle.commons.bean.converters.Converters;
+import static org.beangle.commons.bean.PropertyUtils.*;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.ObjectAndType;
 import org.beangle.commons.entity.metadata.Populator;
 import org.beangle.commons.entity.metadata.Type;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.conversion.Conversion;
+import org.beangle.commons.lang.conversion.impl.DefaultConversion;
 import org.beangle.commons.lang.reflect.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +50,7 @@ public class ConvertPopulatorBean implements Populator {
   /** Constant <code>TRIM_STR=true</code> */
   public static final boolean TRIM_STR = true;
 
-  private BeanUtilsBean beanUtils;
+  private Conversion conversion;
 
   /**
    * <p>
@@ -59,23 +58,20 @@ public class ConvertPopulatorBean implements Populator {
    * </p>
    */
   public ConvertPopulatorBean() {
-    this(Converters.Instance);
+    this(DefaultConversion.Instance);
   }
 
   /**
    * <p>
    * Constructor for ConvertPopulatorBean.
    * </p>
-   * 
-   * @param convertUtils a {@link org.apache.commons.beanutils.ConvertUtilsBean} object.
    */
-  public ConvertPopulatorBean(ConvertUtilsBean convertUtils) {
-    beanUtils = new BeanUtilsBean(convertUtils);
+  public ConvertPopulatorBean(Conversion conversion) {
+    this.conversion = conversion;
   }
 
   /**
-   * 初始化对象指定路径的属性。<br>
-   * 例如给定属性a.b.c,方法会依次检查a a.b a.b.c是否已经初始化
+   * Initialize target's attribuate path,Return the last property value and type.
    */
   public ObjectAndType initProperty(final Object target, Type type, final String attr) {
     Object propObj = target;
@@ -85,7 +81,7 @@ public class ConvertPopulatorBean implements Populator {
     String[] attrs = Strings.split(attr, ".");
     while (index < attrs.length) {
       try {
-        property = PropertyUtils.getProperty(propObj, attrs[index]);
+        property = getProperty(propObj, attrs[index]);
         Type propertyType = type.getPropertyType(attrs[index]);
         // 初始化
         if (null == propertyType) {
@@ -96,8 +92,8 @@ public class ConvertPopulatorBean implements Populator {
         if (null == property) {
           property = propertyType.newInstance();
           try {
-            PropertyUtils.setProperty(propObj, attrs[index], property);
-          } catch (NoSuchMethodException e) {
+            setProperty(propObj, attrs[index], property);
+          } catch (Exception e) {
             // Try fix jdk error for couldn't find correct setter when object's Set required type is
             // diffent with Get's return type declared in interface.
             Method setter = Reflections.getSetter(propObj.getClass(), attrs[index]);
@@ -124,18 +120,18 @@ public class ConvertPopulatorBean implements Populator {
         ObjectAndType ot = initProperty(target, type, Strings.substringBeforeLast(attr, "."));
         if (ot.getType().isEntityType()) {
           String foreignKey = ((EntityType) ot.getType()).getIdName();
-          if (foreignKey.equals(Strings.substringAfterLast(attr, "."))) {
-            beanUtils.copyProperty(target, attr, convert(ot.getType(), foreignKey, value));
-          } else {
-            beanUtils.copyProperty(target, attr, value);
-          }
+          // if (foreignKey.equals(Strings.substringAfterLast(attr, "."))) {
+          setProperty(target, attr, convert(ot.getType(), foreignKey, value));
+          // } else {
+          // beanUtils.copyProperty(target, attr, value);
+          // }
         }
       } else {
-        if (type.getIdName().equals(attr)) {
-          beanUtils.copyProperty(target, attr, convert(type, attr, value));
-        } else {
-          beanUtils.copyProperty(target, attr, value);
-        }
+        // if (type.getIdName().equals(attr)) {
+        setProperty(target, attr, convert(type, attr, value));
+        // } else {
+        // beanUtils.copyProperty(target, attr, value);
+        // }
       }
       return true;
     } catch (Exception e) {
@@ -167,7 +163,7 @@ public class ConvertPopulatorBean implements Populator {
       }
       // 普通属性
       if (-1 == attr.indexOf('.')) {
-        copyValue(attr, value, entity);
+        copyValue(entity, attr, value);
       } else {
         String parentAttr = Strings.substring(attr, 0, attr.lastIndexOf('.'));
         try {
@@ -181,24 +177,24 @@ public class ConvertPopulatorBean implements Populator {
             String foreignKey = ((EntityType) ot.getType()).getIdName();
             if (attr.endsWith("." + foreignKey)) {
               if (null == value) {
-                copyValue(parentAttr, null, entity);
+                copyValue(entity, parentAttr, null);
               } else {
-                Object oldValue = PropertyUtils.getProperty(entity, attr);
+                Object oldValue = getProperty(entity, attr);
                 Object newValue = convert(ot.getType(), foreignKey, value);
                 if (!Objects.equals(oldValue, newValue)) {
                   // 如果外键已经有值
                   if (null != oldValue) {
-                    copyValue(parentAttr, null, entity);
+                    copyValue(entity, parentAttr, null);
                     initProperty(entity, type, parentAttr);
                   }
                   setProperty(entity, attr, newValue);
                 }
               }
             } else {
-              copyValue(attr, value, entity);
+              copyValue(entity, attr, value);
             }
           } else {
-            copyValue(attr, value, entity);
+            copyValue(entity, attr, value);
           }
         } catch (Exception e) {
           logger.error("error attr:[" + attr + "] value:[" + value + "]", e);
@@ -210,29 +206,13 @@ public class ConvertPopulatorBean implements Populator {
 
   private Object convert(Type type, String attr, Object value) {
     Object attrValue = null;
-    if (null != value) {
-      Type attrType = type.getPropertyType(attr);
-      Class<?> attrClass = attrType.getReturnedClass();
-      if (attrClass.isAssignableFrom(value.getClass())) {
-        attrValue = value;
-      } else {
-        attrValue = beanUtils.getConvertUtils().convert(value, attrClass);
-      }
-    }
+    if (null != value) attrValue = conversion.convert(value, type.getPropertyType(attr).getReturnedClass());
     return attrValue;
   }
 
-  private void setProperty(Object target, String attr, Object value) {
+  private void copyValue(final Object target, final String attr, final Object value) {
     try {
-      PropertyUtils.setProperty(target, attr, value);
-    } catch (Exception e) {
-      throw new RuntimeException(e.getMessage());
-    }
-  }
-
-  private void copyValue(final String attr, final Object value, final Object target) {
-    try {
-      beanUtils.copyProperty(target, attr, value);
+      copyProperty(target, attr, value, conversion);
     } catch (Exception e) {
       logger.error("copy property failure:[class:" + target.getClass().getName() + " attr:" + attr
           + " value:" + value + "]:", e);

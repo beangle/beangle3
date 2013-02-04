@@ -18,8 +18,8 @@
  */
 package org.beangle.commons.entity.util;
 
-import org.apache.commons.collections.Predicate;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.functor.Predicate;
 
 /**
  * <p>
@@ -29,10 +29,9 @@ import org.beangle.commons.lang.Strings;
  * @author chaostone
  * @version $Id: $
  */
-public class EmptyKeyPredicate implements Predicate {
+public class EmptyKeyPredicate implements Predicate<Object> {
 
-  /** {@inheritDoc} */
-  public boolean evaluate(final Object value) {
+  public Boolean apply(final Object value) {
     boolean success = false;
     if (null != value) {
       if (value instanceof String) {

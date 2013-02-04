@@ -18,7 +18,7 @@
  */
 package org.beangle.commons.transfer.exporter;
 
-import org.beangle.commons.i18n.TextResource;
+import org.beangle.commons.text.i18n.TextResource;
 
 /**
  * 对象属性输出接口

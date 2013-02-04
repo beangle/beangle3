@@ -56,11 +56,11 @@ public class NumberIdObject<T extends Number> implements Entity<T> {
   }
 
   public boolean isPersisted() {
-    return ValidEntityKeyPredicate.INSTANCE.evaluate(id);
+    return ValidEntityKeyPredicate.Instance.apply(id);
   }
 
   public boolean isTransient() {
-    return !ValidEntityKeyPredicate.INSTANCE.evaluate(id);
+    return !ValidEntityKeyPredicate.Instance.apply(id);
   }
 
   /**

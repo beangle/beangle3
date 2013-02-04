@@ -26,8 +26,8 @@ import java.util.*;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.inject.Resources;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.util.inflector.Pluralizer;
-import org.beangle.commons.util.inflector.lang.en.EnNounPluralizer;
+import org.beangle.commons.text.inflector.Pluralizer;
+import org.beangle.commons.text.inflector.en.EnNounPluralizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

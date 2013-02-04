@@ -18,29 +18,23 @@
  */
 package org.beangle.commons.entity.util;
 
-import org.apache.commons.collections.Predicate;
-import org.beangle.commons.collection.predicates.NotEmptyStringPredicate;
-import org.beangle.commons.collection.predicates.NotZeroNumberPredicate;
+import org.beangle.commons.lang.functor.NotEmptyStringPredicate;
+import org.beangle.commons.lang.functor.NotZeroNumberPredicate;
+import org.beangle.commons.lang.functor.Predicate;
 
 /**
  * 判断实体类中的主键是否是有效主键
  * 
  * @author chaostone
  */
-public class ValidEntityKeyPredicate implements Predicate {
+public class ValidEntityKeyPredicate implements Predicate<Object> {
 
-  /**
-   * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-   */
-  public boolean evaluate(Object value) {
-    return NotEmptyStringPredicate.INSTANCE.evaluate(value)
-        || NotZeroNumberPredicate.INSTANCE.evaluate(value);
+  public Boolean apply(Object value) {
+    if (null == value) return Boolean.FALSE;
+    if (value instanceof Number) return NotZeroNumberPredicate.Instance.apply((Number) value);
+    return NotEmptyStringPredicate.Instance.apply(value.toString());
   }
 
-  public static final ValidEntityKeyPredicate INSTANCE = new ValidEntityKeyPredicate();
-
-  public static ValidEntityKeyPredicate getInstance() {
-    return INSTANCE;
-  }
+  public static final ValidEntityKeyPredicate Instance = new ValidEntityKeyPredicate();
 
 }

@@ -29,9 +29,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
-import org.beangle.commons.i18n.TextResource;
 import org.beangle.commons.lang.Chars;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.text.i18n.TextResource;
 import org.beangle.struts2.view.bean.ActionUrlRender;
 import org.beangle.struts2.view.bean.UIIdGenerator;
 import org.beangle.struts2.view.template.TemplateEngine;

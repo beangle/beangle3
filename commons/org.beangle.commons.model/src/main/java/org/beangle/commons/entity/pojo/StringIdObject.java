@@ -55,11 +55,11 @@ public class StringIdObject implements Entity<String> {
   }
 
   public boolean isPersisted() {
-    return ValidEntityKeyPredicate.INSTANCE.evaluate(id);
+    return ValidEntityKeyPredicate.Instance.apply(id);
   }
 
   public boolean isTransient() {
-    return !ValidEntityKeyPredicate.INSTANCE.evaluate(id);
+    return !ValidEntityKeyPredicate.Instance.apply(id);
   }
 
   /**

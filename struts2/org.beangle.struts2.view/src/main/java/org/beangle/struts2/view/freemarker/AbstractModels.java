@@ -29,8 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.i18n.TextResource;
-import org.beangle.commons.i18n.TextResourceProvider;
+import org.beangle.commons.text.i18n.TextResource;
+import org.beangle.commons.text.i18n.TextResourceProvider;
 import org.beangle.struts2.view.UITheme;
 import org.beangle.struts2.view.bean.ActionUrlRender;
 import org.beangle.struts2.view.bean.IndexableIdGenerator;

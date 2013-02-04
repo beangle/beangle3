@@ -27,10 +27,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.i18n.TextBundleRegistry;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.time.Stopwatch;
+import org.beangle.commons.text.i18n.TextBundleRegistry;
 import org.beangle.struts2.convention.config.ActionFinder.ActionTest;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.struts2.convention.route.ActionBuilder;

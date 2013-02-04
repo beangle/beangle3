@@ -11,6 +11,7 @@
   <name>Beangle Commons Parent</name>
   
   <modules>
+    <module>org.beangle.commons.lang</module>
     <module>org.beangle.commons.core</module>
     <module>org.beangle.commons.model</module>
     <module>org.beangle.commons.web</module>
@@ -48,6 +49,11 @@
   <dependencyManagement>
     <dependencies>
       <!--beangle-->
+      <dependency>
+        <groupId>org.beangle.commons</groupId>
+        <artifactId>beangle-commons-lang</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.beangle.commons</groupId>
         <artifactId>beangle-commons-core</artifactId>
@@ -128,15 +134,4 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <dependencies>
-    <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>commons-beanutils</groupId>
-      <artifactId>commons-beanutils</artifactId>
-    </dependency>
-  </dependencies>
 </project>

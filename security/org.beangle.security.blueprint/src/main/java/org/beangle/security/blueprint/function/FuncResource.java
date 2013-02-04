@@ -18,7 +18,6 @@
  */
 package org.beangle.security.blueprint.function;
 
-import org.beangle.commons.bean.converters.Converters;
 import org.beangle.security.blueprint.Resource;
 
 /**
@@ -49,11 +48,7 @@ public interface FuncResource extends Resource {
     Private(2);
 
     int value;
-
-    static {
-      Converters.registerEnum(Scope.class);
-    }
-
+    
     private Scope(int value) {
       this.value = value;
     }

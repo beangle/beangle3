@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.beangle.commons.http.HttpMethod;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.util.regex.AntPathPattern;
+import org.beangle.commons.text.regex.AntPathPattern;
 
 /**
  * Matcher which compares a pre-defined ant-style pattern against the URL (

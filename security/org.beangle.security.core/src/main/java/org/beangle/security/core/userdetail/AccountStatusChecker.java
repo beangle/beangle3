@@ -18,8 +18,8 @@
  */
 package org.beangle.security.core.userdetail;
 
-import org.beangle.commons.i18n.TextResource;
-import org.beangle.commons.i18n.impl.NullTextResource;
+import org.beangle.commons.text.i18n.TextResource;
+import org.beangle.commons.text.i18n.impl.NullTextResource;
 import org.beangle.security.auth.AccountExpiredException;
 import org.beangle.security.auth.CredentialsExpiredException;
 import org.beangle.security.auth.DisabledException;

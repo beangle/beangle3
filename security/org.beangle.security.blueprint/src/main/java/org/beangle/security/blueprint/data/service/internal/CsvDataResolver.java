@@ -24,11 +24,11 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.beangle.commons.bean.converters.Converters;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.conversion.Conversion;
+import org.beangle.commons.lang.conversion.impl.DefaultConversion;
 import org.beangle.security.blueprint.data.ProfileField;
 import org.beangle.security.blueprint.data.service.UserDataProvider;
 import org.beangle.security.blueprint.data.service.UserDataResolver;
@@ -101,10 +101,9 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
       type = Class.forName(property.getType().getTypeName());
       List<T> rs = CollectUtils.newArrayList();
       if (properties.isEmpty()) {
-        ConvertUtilsBean converter = Converters.Instance;
-        for (String data : datas) {
-          rs.add((T) converter.convert(data, type));
-        }
+        Conversion conversion = DefaultConversion.Instance;
+        for (String data : datas)
+          rs.add((T) conversion.convert(data, type));
         return rs;
       } else {
         properties.clear();

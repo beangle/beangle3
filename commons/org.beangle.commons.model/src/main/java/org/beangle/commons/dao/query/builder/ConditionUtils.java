@@ -146,7 +146,7 @@ public final class ConditionUtils {
       try {
         final String key = "id";
         Object property = PropertyUtils.getProperty(value, key);
-        if (ValidEntityKeyPredicate.getInstance().evaluate(property)) {
+        if (ValidEntityKeyPredicate.Instance.apply(property)) {
           StringBuilder content = new StringBuilder(name);
           content.append('.').append(key).append(" = :").append(name.replace('.', '_')).append('_')
               .append(key);

@@ -19,7 +19,7 @@
 package org.beangle.inject.spring.config;
 
 import org.beangle.commons.lang.time.Stopwatch;
-import org.beangle.commons.util.regex.AntPathPattern;
+import org.beangle.commons.text.regex.AntPathPattern;
 import org.springframework.util.AntPathMatcher;
 import org.testng.Assert;
 import org.testng.annotations.Test;
