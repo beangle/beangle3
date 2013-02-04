@@ -19,13 +19,13 @@ public final class ClassInfo {
 
   public static Map<Class<?>, ClassInfo> cache = CollectUtils.newHashMap();
 
-  private final FastHashMap<String, Integer> methodIndexs = CollectUtils.newFastMap();
+  private final FastHashMap<String, Integer> methodIndexs = CollectUtils.newFastMap(64);
 
-  private final FastHashMap<String, MethodInfo[]> methods = CollectUtils.newFastMap();
+  private final FastHashMap<String, MethodInfo[]> methods = CollectUtils.newFastMap(64);
 
-  private final FastHashMap<String, MethodInfo> propertyReadMethods = CollectUtils.newFastMap();
+  private final FastHashMap<String, MethodInfo> propertyReadMethods = CollectUtils.newFastMap(64);
 
-  private final FastHashMap<String, MethodInfo> propertyWriteMethods = CollectUtils.newFastMap();
+  private final FastHashMap<String, MethodInfo> propertyWriteMethods = CollectUtils.newFastMap(64);
 
   public ClassInfo(List<MethodInfo> methodinfos) {
     super();
