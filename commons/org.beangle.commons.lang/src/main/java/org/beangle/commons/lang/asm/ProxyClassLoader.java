@@ -6,11 +6,9 @@ import java.util.Map;
 import org.beangle.commons.collection.CollectUtils;
 
 /**
- * 
  * @author chaostone
- *
  */
-class ProxyClassLoader extends ClassLoader {
+final class ProxyClassLoader extends ClassLoader {
   static private final Map<ClassLoader, ProxyClassLoader> proxyClassLoaders = CollectUtils.newHashMap();
 
   public static ProxyClassLoader get(Class<?> type) {

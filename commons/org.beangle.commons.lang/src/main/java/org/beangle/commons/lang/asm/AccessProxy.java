@@ -2,7 +2,6 @@ package org.beangle.commons.lang.asm;
 
 import static org.objectweb.asm.Opcodes.*;
 
-import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -15,26 +14,26 @@ import org.objectweb.asm.Type;
 
 public abstract class AccessProxy {
 
-  abstract public Object invoke(Object object, int methodIndex, Object... args);
-
   private static Map<Class<?>, AccessProxy> proxies = CollectUtils.newHashMap();
+
+  abstract public Object invoke(Object object, int methodIndex, Object... args);
 
   ClassInfo classInfo;
 
   /** Invokes the method with the specified name and args. */
-  public Object invoke(Object object, String methodName, Object... args) {
-    return invoke(object, classInfo.getMethodIndex(methodName, args), args);
+  public final Object invoke(Object object, String methodName, Object... args) {
+    return invoke(object, classInfo.getIndex(methodName, args), args);
   }
 
-  public Object getProperty(Object object, String property) {
+  public final Object getProperty(Object object, String property) {
     return invoke(object, classInfo.getReadMethodIndex(property));
   }
 
-  public Object setProperty(Object object, String property, Object value) {
+  public final Object setProperty(Object object, String property, Object value) {
     return invoke(object, classInfo.getWriteMethodIndex(property), value);
   }
 
-  static public AccessProxy get(Class<?> type) {
+  public static final AccessProxy get(Class<?> type) {
     AccessProxy proxy = proxies.get(type);
     if (null != proxy) return proxy;
 
@@ -68,8 +67,9 @@ public abstract class AccessProxy {
           mv.visitMaxs(0, 0);
           mv.visitEnd();
         }
+        // invoke method
         {
-          mv = cw.visitMethod(ACC_PUBLIC + ACC_VARARGS, "invoke",
+          mv = cw.visitMethod(ACC_PUBLIC + ACC_FINAL + ACC_VARARGS, "invoke",
               "(Ljava/lang/Object;I[Ljava/lang/Object;)Ljava/lang/Object;", null, null);
           mv.visitCode();
 
@@ -205,13 +205,13 @@ public abstract class AccessProxy {
         }
         cw.visitEnd();
         byte[] data = cw.toByteArray();
-        FileOutputStream a;
-        try {
-          a = new java.io.FileOutputStream("/tmp/" + className + ".class");
-          a.write(data);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
+        // FileOutputStream a;
+        // try {
+        // a = new java.io.FileOutputStream("/tmp/" + accessClassName + ".class");
+        // a.write(data);
+        // } catch (Exception e) {
+        // e.printStackTrace();
+        // }
         accessClass = loader.defineClass(accessClassName, data);
       }
 

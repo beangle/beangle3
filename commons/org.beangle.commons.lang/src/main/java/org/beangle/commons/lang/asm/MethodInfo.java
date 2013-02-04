@@ -5,7 +5,7 @@ import static java.lang.Character.isUpperCase;
 import static org.beangle.commons.lang.Strings.*;
 import org.beangle.commons.lang.tuple.Pair;
 
-class MethodInfo implements Comparable<MethodInfo> {
+final class MethodInfo implements Comparable<MethodInfo> {
 
   final Class<?> returnType;
   final String name;

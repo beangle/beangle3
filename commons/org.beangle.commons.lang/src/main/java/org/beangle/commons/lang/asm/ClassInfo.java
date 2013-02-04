@@ -9,20 +9,23 @@ import java.util.List;
 import java.util.Map;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.collection.FastHashMap;
 import org.beangle.commons.lang.tuple.Pair;
 
 /**
  * @author chaostone
  */
-public class ClassInfo {
+public final class ClassInfo {
 
   public static Map<Class<?>, ClassInfo> cache = CollectUtils.newHashMap();
 
-  private Map<String, MethodInfo[]> methods = CollectUtils.newHashMap();
+  private final FastHashMap<String, Integer> methodIndexs = CollectUtils.newFastMap();
 
-  private Map<String, MethodInfo> propertyReadMethods = CollectUtils.newHashMap();
+  private final FastHashMap<String, MethodInfo[]> methods = CollectUtils.newFastMap();
 
-  private Map<String, MethodInfo> propertyWriteMethods = CollectUtils.newHashMap();
+  private final FastHashMap<String, MethodInfo> propertyReadMethods = CollectUtils.newFastMap();
+
+  private final FastHashMap<String, MethodInfo> propertyWriteMethods = CollectUtils.newFastMap();
 
   public ClassInfo(List<MethodInfo> methodinfos) {
     super();
@@ -42,44 +45,47 @@ public class ClassInfo {
     }
     for (Map.Entry<String, List<MethodInfo>> entry : tmpMethods.entrySet()) {
       methods.put(entry.getKey(), entry.getValue().toArray(new MethodInfo[entry.getValue().size()]));
+      if (entry.getValue().size() == 1)
+        methodIndexs.put(entry.getKey(), Integer.valueOf(entry.getValue().get(0).index));
     }
   }
 
-  public int getReadMethodIndex(String property) {
+  public final int getReadMethodIndex(String property) {
     MethodInfo method = propertyReadMethods.get(property);
     return (null == method) ? -1 : method.index;
   }
 
-  public Class<?> getPropertyType(String property) {
+  public final Class<?> getPropertyType(String property) {
     MethodInfo method = propertyWriteMethods.get(property);
     if (null == method) return null;
     else return method.getParamTypes()[0];
   }
 
-  public int getWriteMethodIndex(String property) {
+  public final int getWriteMethodIndex(String property) {
     MethodInfo method = propertyWriteMethods.get(property);
     return (null == method) ? -1 : method.index;
   }
 
-  public int getMethodIndex(String name, Object... args) {
-    MethodInfo[] exists = methods.get(name);
-    if (null == exists) throw new RuntimeException("NoSuchMethodException:" + name);
-    if (1 == exists.length) return exists[0].index;
-    for (MethodInfo info : exists)
-      if (info.matches(args)) return info.index;
-    throw new RuntimeException("NoSuchMethodException:" + name);
-    // for (int i = 0, n = methodArrays.length; i < n; i++)
-    // if (methodArrays[i].name.hashCode() == name.hashCode()) return i;
-    // throw new IllegalArgumentException("Unable to find public method: ");
+  public final int getIndex(String name, Object... args) {
+    Integer defaultIndex = methodIndexs.get(name);
+    if (null != defaultIndex) return defaultIndex.intValue();
+    else {
+      final MethodInfo[] exists = methods.get(name);
+      if (null != exists) {
+        for (MethodInfo info : exists)
+          if (info.matches(args)) return info.index;
+      }
+      return -1;
+    }
   }
 
-  List<MethodInfo> getMethods(String name) {
+  final List<MethodInfo> getMethods(String name) {
     MethodInfo[] namedMethod = methods.get(name);
     if (null == namedMethod) return Collections.emptyList();
     else return Arrays.asList(namedMethod);
   }
 
-  List<MethodInfo> getMethods() {
+  final List<MethodInfo> getMethods() {
     List<MethodInfo> methodInfos = CollectUtils.newArrayList();
     for (Map.Entry<String, MethodInfo[]> entry : methods.entrySet()) {
       for (MethodInfo info : entry.getValue())
@@ -89,7 +95,7 @@ public class ClassInfo {
     return methodInfos;
   }
 
-  public static ClassInfo get(Class<?> type) {
+  public static final ClassInfo get(Class<?> type) {
     ClassInfo exist = cache.get(type);
     if (null == exist) {
       synchronized (cache) {

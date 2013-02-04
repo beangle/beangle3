@@ -6,8 +6,19 @@ import org.beangle.commons.lang.testbean.TestBean;
 
 public class BenchmarkTest {
   public static void main(String[] args) throws Exception {
+    long begin = System.currentTimeMillis();
+    TestBean[] data = new TestBean[256];
+    int hashcode = 1984801293;
+    for (int i = 0; i < 100000000; i++) {
+      getData(data, hashcode++, 255);
+    }
+    System.out.println(System.currentTimeMillis() - begin + " ");
     testReflectAsm();
     testJdkReflect();
+  }
+
+  static TestBean getData(TestBean[] data, int hash, int mask) {
+    return data[hash & mask];
   }
 
   public static void testJdkReflect() throws Exception {
@@ -28,12 +39,13 @@ public class BenchmarkTest {
     System.out.print("testReflectAsm...");
     TestBean someObject = new TestBean();
     AccessProxy access = AccessProxy.get(TestBean.class);
-//    int methodIndex=ClassInfo.get(TestBean.class).getMethodIndex("setName",  "Unmi");
-//    String property="name".intern();
+    //final ClassInfo info = ClassInfo.get(TestBean.class);
+    //int methodIndex = info.getIndex("setName", "Unmi");
+    // String property="name".intern();
     for (int i = 0; i < 5; i++) {
       long begin = System.currentTimeMillis();
       for (int j = 0; j < 100000000; j++) {
-        access.invoke( someObject,"setName", "Unmi");
+        access.invoke(someObject, "setName", "Unmi");
       }
       System.out.print(System.currentTimeMillis() - begin + " ");
     }

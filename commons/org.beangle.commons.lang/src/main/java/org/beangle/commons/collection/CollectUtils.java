@@ -128,6 +128,10 @@ public final class CollectUtils {
   public static <K, V> Map<K, V> newHashMap() {
     return new HashMap<K, V>();
   }
+  
+  public static <K, V> FastHashMap<K, V> newFastMap() {
+    return new FastHashMap<K, V>();
+  }
 
   /**
    * <p>
