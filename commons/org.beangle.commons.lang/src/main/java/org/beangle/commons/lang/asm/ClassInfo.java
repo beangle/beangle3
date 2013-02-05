@@ -1,3 +1,21 @@
+/*
+ * Beangle, Agile Java/Scala Development Scaffold and Toolkit
+ *
+ * Copyright (c) 2005-2012, Beangle Software.
+ *
+ * Beangle is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Beangle is distributed in the hope that it will be useful.
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.beangle.commons.lang.asm;
 
 import java.lang.reflect.Method;
@@ -13,20 +31,31 @@ import org.beangle.commons.collection.FastHashMap;
 import org.beangle.commons.lang.tuple.Pair;
 
 /**
+ * Class meta information.It contains method signature,property names
+ * 
  * @author chaostone
+ * @since 3.2.0
  */
 public final class ClassInfo {
 
+  /** class info cache */
   public static Map<Class<?>, ClassInfo> cache = CollectUtils.newHashMap();
 
+  /** unqiue method indexes,without any override */
   private final FastHashMap<String, Integer> methodIndexs = CollectUtils.newFastMap(64);
 
+  /** all method indexes */
   private final FastHashMap<String, MethodInfo[]> methods = CollectUtils.newFastMap(64);
 
+  /** property read method indexes */
   private final FastHashMap<String, MethodInfo> propertyReadMethods = CollectUtils.newFastMap(64);
 
+  /** property write method indexes */
   private final FastHashMap<String, MethodInfo> propertyWriteMethods = CollectUtils.newFastMap(64);
 
+  /**
+   * Construct Classinfo by method list.
+   */
   public ClassInfo(List<MethodInfo> methodinfos) {
     super();
     Map<String, List<MethodInfo>> tmpMethods = CollectUtils.newHashMap();
@@ -50,22 +79,34 @@ public final class ClassInfo {
     }
   }
 
-  public final int getReadMethodIndex(String property) {
+  /**
+   * Return property read index,return -1 when not found.
+   */
+  public final int getReadIndex(String property) {
     MethodInfo method = propertyReadMethods.get(property);
     return (null == method) ? -1 : method.index;
   }
 
+  /**
+   * Return property type,return null when not found.
+   */
   public final Class<?> getPropertyType(String property) {
     MethodInfo method = propertyWriteMethods.get(property);
     if (null == method) return null;
     else return method.getParamTypes()[0];
   }
 
-  public final int getWriteMethodIndex(String property) {
+  /**
+   * Return property write index,return -1 if not found.
+   */
+  public final int getWriteIndex(String property) {
     MethodInfo method = propertyWriteMethods.get(property);
     return (null == method) ? -1 : method.index;
   }
 
+  /**
+   * Return method index,return -1 if not found.
+   */
   public final int getIndex(String name, Object... args) {
     Integer defaultIndex = methodIndexs.get(name);
     if (null != defaultIndex) return defaultIndex.intValue();
@@ -79,12 +120,18 @@ public final class ClassInfo {
     }
   }
 
+  /**
+   * Return public metheds according to given name
+   */
   final List<MethodInfo> getMethods(String name) {
     MethodInfo[] namedMethod = methods.get(name);
     if (null == namedMethod) return Collections.emptyList();
     else return Arrays.asList(namedMethod);
   }
 
+  /**
+   * Return all public methods.
+   */
   final List<MethodInfo> getMethods() {
     List<MethodInfo> methodInfos = CollectUtils.newArrayList();
     for (Map.Entry<String, MethodInfo[]> entry : methods.entrySet()) {
@@ -95,6 +142,10 @@ public final class ClassInfo {
     return methodInfos;
   }
 
+  /**
+   * Get ClassInfo by type.
+   * It search from cache, when failure build it and put it into cache.
+   */
   public static final ClassInfo get(Class<?> type) {
     ClassInfo exist = cache.get(type);
     if (null == exist) {

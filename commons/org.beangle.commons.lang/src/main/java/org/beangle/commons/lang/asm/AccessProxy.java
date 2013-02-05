@@ -1,3 +1,21 @@
+/*
+ * Beangle, Agile Java/Scala Development Scaffold and Toolkit
+ *
+ * Copyright (c) 2005-2012, Beangle Software.
+ *
+ * Beangle is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Beangle is distributed in the hope that it will be useful.
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.beangle.commons.lang.asm;
 
 import static org.objectweb.asm.Opcodes.*;
@@ -12,27 +30,88 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
+/**
+ * Class invocation proxy,delegate method invocation and property accessment.
+ * It employ asm framework,dynamiclly generate a access class.
+ * <p>
+ * Usage:
+ * 
+ * <pre>
+ * AccessProxy proxy = AccessProxy.get(YourBean.class);
+ * // 1. invoke any method
+ * proxy.invoke(bean, &quot;somemethod&quot;, arg1, arg2);
+ * // 2. get property
+ * proxy.getProperty(bean, &quot;attr1&quot;);
+ * // 3. set property
+ * proxy.setProperty(bean, &quot;attr1&quot;, arg2);
+ * 
+ * </pre>
+ * 
+ * @author chaostone
+ * @since 3.2.0
+ */
 public abstract class AccessProxy {
 
   private static Map<Class<?>, AccessProxy> proxies = CollectUtils.newHashMap();
 
-  abstract public Object invoke(Object object, int methodIndex, Object... args);
-
   ClassInfo classInfo;
 
-  /** Invokes the method with the specified name and args. */
-  public final Object invoke(Object object, String methodName, Object... args) {
-    return invoke(object, classInfo.getIndex(methodName, args), args);
+  /**
+   * Delegate invocation to object's method with arguments.
+   * 
+   * @see #getIndex(String, Object...)
+   */
+  abstract public Object invoke(Object object, int methodIndex, Object... args);
+
+  /**
+   * Return method index.
+   * index is 0 based,if not found ,return -1.
+   * 
+   * @see #invoke(Object, int, Object...)
+   */
+  public final int getIndex(String name, Object... args) {
+    return classInfo.getIndex(name, args);
   }
 
+  /**
+   * invoke the method with the specified name and arguments.
+   * <p>
+   * It lookup method index by name and arguments,find first method matchs given sigature. The best
+   * approach in many time invocations is get the index first and pass through to invoke.
+   * <p>
+   * In 100 000 000's benchmark test, this method is 35% slower than
+   * invoke(obj,getIndex(method),args) form.the former consume 2800ms and the later using just
+   * 1800ms. STRANGE!!!
+   * 
+   * @see #invoke(Object, int, Object...)
+   */
+  public final Object invoke(Object object, String method, Object... args) {
+    return invoke(object, classInfo.getIndex(method, args), args);
+  }
+
+  /**
+   * Return the value of given property.
+   * 
+   * @throws IlegalArgumentException when property not exists
+   */
   public final Object getProperty(Object object, String property) {
-    return invoke(object, classInfo.getReadMethodIndex(property));
+    return invoke(object, classInfo.getReadIndex(property));
   }
 
-  public final Object setProperty(Object object, String property, Object value) {
-    return invoke(object, classInfo.getWriteMethodIndex(property), value);
+  /**
+   * Update the bean's property with given value.
+   * 
+   * @throws IlegalArgumentException when property not exists
+   */
+  public final void setProperty(Object bean, String property, Object value) {
+    invoke(bean, classInfo.getWriteIndex(property), value);
   }
 
+  /**
+   * Get AccessProxy of given type.
+   * <p>
+   * First,it search from proxies cache,if not found, then generate new proxy class using asm.
+   */
   public static final AccessProxy get(Class<?> type) {
     AccessProxy proxy = proxies.get(type);
     if (null != proxy) return proxy;

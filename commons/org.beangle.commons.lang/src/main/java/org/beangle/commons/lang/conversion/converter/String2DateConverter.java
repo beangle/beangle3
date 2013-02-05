@@ -33,6 +33,7 @@ import org.beangle.commons.lang.conversion.impl.ConverterFactory;
  * </p>
  * 
  * @author chaostone
+ * @since 3.2.0
  * @version $Id: $
  */
 public class String2DateConverter extends ConverterFactory<String, Date> {
