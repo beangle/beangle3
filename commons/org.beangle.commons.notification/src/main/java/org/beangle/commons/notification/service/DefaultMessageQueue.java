@@ -29,6 +29,7 @@ import org.beangle.commons.notification.MessageQueue;
 
 public class DefaultMessageQueue<T extends Message> implements MessageQueue<T> {
 
+  //FIXME buffer
   private Buffer contextBuffer = BufferUtils.synchronizedBuffer(new UnboundedFifoBuffer());
 
   @SuppressWarnings("unchecked")

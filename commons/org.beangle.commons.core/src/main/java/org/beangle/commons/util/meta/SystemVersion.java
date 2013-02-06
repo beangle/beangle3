@@ -19,101 +19,103 @@
 package org.beangle.commons.util.meta;
 
 /**
- * System version
+ * <p>
+ * SystemVersion class.
+ * </p>
  * 
  * @author chaostone
  * @version $Id: $
+ * @since 3.2.0
  */
-public interface SystemVersion {
+public class SystemVersion {
+
+  private String name;
+
+  private String vendor;
+
+  private String version;
+
+  private int majorVersion;
+
+  private int minorVersion;
 
   /**
    * <p>
-   * getName.
+   * Getter for the field <code>name</code>.
    * </p>
    * 
    * @return a {@link java.lang.String} object.
    */
-  String getName();
+  public String getName() {
+    return name;
+  }
+
+  /** {@inheritDoc} */
+  public void setName(String name) {
+    this.name = name;
+  }
 
   /**
    * <p>
-   * setName.
-   * </p>
-   * 
-   * @param name a {@link java.lang.String} object.
-   */
-  void setName(String name);
-
-  /**
-   * <p>
-   * getVendor.
-   * </p>
-   * 
-   * @return a {@link java.lang.String} object.
-   */
-  String getVendor();
-
-  /**
-   * <p>
-   * setVendor.
-   * </p>
-   * 
-   * @param vendor a {@link java.lang.String} object.
-   */
-  void setVendor(String vendor);
-
-  /**
-   * <p>
-   * getVersion.
+   * Getter for the field <code>vendor</code>.
    * </p>
    * 
    * @return a {@link java.lang.String} object.
    */
-  String getVersion();
+  public String getVendor() {
+    return vendor;
+  }
+
+  /** {@inheritDoc} */
+  public void setVendor(String vendor) {
+    this.vendor = vendor;
+  }
 
   /**
    * <p>
-   * setVersion.
+   * Getter for the field <code>version</code>.
    * </p>
    * 
-   * @param version a {@link java.lang.String} object.
+   * @return a {@link java.lang.String} object.
    */
-  void setVersion(String version);
+  public String getVersion() {
+    return version;
+  }
+
+  /** {@inheritDoc} */
+  public void setVersion(String version) {
+    this.version = version;
+  }
 
   /**
    * <p>
-   * getMajorVersion.
+   * Getter for the field <code>majorVersion</code>.
    * </p>
    * 
    * @return a int.
    */
-  int getMajorVersion();
+  public int getMajorVersion() {
+    return majorVersion;
+  }
+
+  /** {@inheritDoc} */
+  public void setMajorVersion(int majorVersion) {
+    this.majorVersion = majorVersion;
+  }
 
   /**
    * <p>
-   * setMajorVersion.
-   * </p>
-   * 
-   * @param majorVersion a int.
-   */
-  void setMajorVersion(int majorVersion);
-
-  /**
-   * <p>
-   * getMinorVersion.
+   * Getter for the field <code>minorVersion</code>.
    * </p>
    * 
    * @return a int.
    */
-  int getMinorVersion();
+  public int getMinorVersion() {
+    return minorVersion;
+  }
 
-  /**
-   * <p>
-   * setMinorVersion.
-   * </p>
-   * 
-   * @param minorVersion a int.
-   */
-  void setMinorVersion(int minorVersion);
-
+  /** {@inheritDoc} */
+  public void setMinorVersion(int minorVersion) {
+    this.minorVersion = minorVersion;
+  }
 }

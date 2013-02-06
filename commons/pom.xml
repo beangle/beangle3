@@ -11,7 +11,6 @@
   <name>Beangle Commons Parent</name>
   
   <modules>
-    <module>org.beangle.commons.lang</module>
     <module>org.beangle.commons.core</module>
     <module>org.beangle.commons.model</module>
     <module>org.beangle.commons.web</module>
@@ -37,23 +36,14 @@
   </scm>
 
   <properties>
-    <commoncollections.version>3.2.1</commoncollections.version>
-    <commonbeanutils.version>1.8.3</commonbeanutils.version>
-    <ognl.version>3.0.6</ognl.version>
-    <javassist.version>3.17.1-GA</javassist.version>
-    <ehcache.version>2.5.2</ehcache.version>
-    <poi.version>3.9</poi.version>
+    <!--<commoncollections.version>3.2.1</commoncollections.version>
+    <commonbeanutils.version>1.8.3</commonbeanutils.version>-->
     <javax.validation.version>1.0.0.GA</javax.validation.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
       <!--beangle-->
-      <dependency>
-        <groupId>org.beangle.commons</groupId>
-        <artifactId>beangle-commons-lang</artifactId>
-        <version>${project.version}</version>
-      </dependency>
       <dependency>
         <groupId>org.beangle.commons</groupId>
         <artifactId>beangle-commons-core</artifactId>
@@ -74,7 +64,7 @@
         <artifactId>beangle-commons-web</artifactId>
         <version>${project.version}</version>
       </dependency>
-      <!--commons-->
+      <!--commons
       <dependency>
         <groupId>commons-collections</groupId>
         <artifactId>commons-collections</artifactId>
@@ -100,27 +90,13 @@
         <artifactId>ehcache-core</artifactId>
         <version>${ehcache.version}</version>
       </dependency>
-      <dependency>
-        <groupId>org.apache.poi</groupId>
-        <artifactId>poi</artifactId>
-        <version>${poi.version}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.javassist</groupId>
-        <artifactId>javassist</artifactId>
-        <version>${javassist.version}</version>
-      </dependency>
+      -->
       <dependency>
         <groupId>javax.validation</groupId>
         <artifactId>validation-api</artifactId>
         <version>${javax.validation.version}</version>
       </dependency>
+<!--
       <dependency>
         <groupId>ognl</groupId>
         <artifactId>ognl</artifactId>
@@ -132,6 +108,12 @@
           </exclusion>
         </exclusions>
       </dependency>
+      <dependency>
+        <groupId>org.javassist</groupId>
+        <artifactId>javassist</artifactId>
+        <version>${javassist.version}</version>
+      </dependency>
+-->
     </dependencies>
   </dependencyManagement>
 </project>

@@ -18,12 +18,13 @@
  */
 package org.beangle.commons.http.agent;
 
-import java.util.Map;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.collections.map.LinkedMap;
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.tuple.Pair;
 
 /**
  * Enum constants for most common operating systems.
@@ -77,8 +78,7 @@ public enum OsCategory {
 
   private final String name;
 
-  @SuppressWarnings("unchecked")
-  private final Map<Pattern, String> versionMap = new LinkedMap();
+  private final List<Pair<Pattern, String>> versionPairs = CollectUtils.newArrayList();
 
   private OsCategory(String name, String... versions) {
     this.name = name;
@@ -89,12 +89,12 @@ public enum OsCategory {
         matcheTarget = "(?i)" + Strings.substringBefore(version, "->");
         versionNum = Strings.substringAfter(version, "->");
       }
-      versionMap.put(Pattern.compile(matcheTarget), versionNum);
+      versionPairs.add(Pair.of(Pattern.compile(matcheTarget), versionNum));
     }
   }
 
   public String match(String agentString) {
-    for (Map.Entry<Pattern, String> entry : versionMap.entrySet()) {
+    for (Pair<Pattern, String> entry : versionPairs) {
       Matcher m = entry.getKey().matcher(agentString);
       if (m.find()) {
         StringBuffer sb = new StringBuffer();

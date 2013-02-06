@@ -18,13 +18,15 @@
  */
 package org.beangle.commons.http.agent;
 
-import java.util.Map;
+import static org.beangle.commons.http.agent.Engine.*;
+
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.collections.map.LinkedMap;
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
-import static org.beangle.commons.http.agent.Engine.*;
+import org.beangle.commons.lang.tuple.Pair;
 
 /**
  * Enum constants for most common browsers, including e-mail clients and bots.
@@ -120,8 +122,7 @@ public enum BrowserCategory {
 
   private final String name;
   private final Engine engine;
-  @SuppressWarnings("unchecked")
-  private final Map<Pattern, String> versionMap = new LinkedMap();
+  private final List<Pair<Pattern, String>> versionPairs = CollectUtils.newArrayList();
 
   private BrowserCategory(String name, Engine renderEngine, String... versions) {
     this.name = name;
@@ -135,7 +136,7 @@ public enum BrowserCategory {
         matcheTarget = "(?i)" + Strings.substringBefore(version, "->");
         versionNum = Strings.substringAfter(version, "->");
       }
-      versionMap.put(Pattern.compile(matcheTarget), versionNum);
+      versionPairs.add(Pair.of(Pattern.compile(matcheTarget), versionNum));
     }
   }
 
@@ -151,11 +152,11 @@ public enum BrowserCategory {
   }
 
   public String match(String agentString) {
-    for (Map.Entry<Pattern, String> entry : versionMap.entrySet()) {
-      Matcher m = entry.getKey().matcher(agentString);
+    for (Pair<Pattern, String> pair : versionPairs) {
+      Matcher m = pair.getKey().matcher(agentString);
       if (m.find()) {
         StringBuffer sb = new StringBuffer();
-        m.appendReplacement(sb, entry.getValue());
+        m.appendReplacement(sb, pair.getValue());
         sb.delete(0, m.start());
         return sb.toString();
       }

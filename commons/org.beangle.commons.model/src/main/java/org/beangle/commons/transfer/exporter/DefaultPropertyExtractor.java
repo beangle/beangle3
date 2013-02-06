@@ -20,13 +20,11 @@ package org.beangle.commons.transfer.exporter;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
-import ognl.Ognl;
-import ognl.OgnlException;
-
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.expr.EvaluationException;
+import org.beangle.commons.expr.ExpressionEvaluator;
 import org.beangle.commons.text.i18n.TextResource;
 
 /**
@@ -39,7 +37,8 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
 
   protected TextResource textResource = null;
 
-  protected Map<String, Object> expressions = CollectUtils.newHashMap();
+  //FIXME
+  protected ExpressionEvaluator expressionEvaluator = null;
 
   protected Set<String> errorProperties = CollectUtils.newHashSet();
 
@@ -75,20 +74,10 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
    */
   protected Object extract(Object target, String property) throws Exception {
     if (errorProperties.contains(property)) return null;
-    Object exp = expressions.get(property);
-    if (null == exp) {
-      try {
-        exp = Ognl.parseExpression(property);
-        expressions.put(property, exp);
-      } catch (OgnlException e) {
-        errorProperties.add(property);
-        return null;
-      }
-    }
     Object value = null;
     try {
-      value = Ognl.getValue(exp, target);
-    } catch (OgnlException e) {
+      value = expressionEvaluator.eval(property, target);
+    } catch (EvaluationException e) {
       return null;
     }
     if (value instanceof Boolean) {
@@ -103,7 +92,6 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
     }
   }
 
-  /** {@inheritDoc} */
   public Object getPropertyValue(Object target, String property) throws Exception {
     return extract(target, property);
   }
@@ -172,4 +160,13 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
   public void setTextResource(TextResource textResource) {
     this.textResource = textResource;
   }
+
+  public ExpressionEvaluator getExpressionEvaluator() {
+    return expressionEvaluator;
+  }
+
+  public void setExpressionEvaluator(ExpressionEvaluator expressionEvaluator) {
+    this.expressionEvaluator = expressionEvaluator;
+  }
+
 }

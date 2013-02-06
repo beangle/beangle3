@@ -27,9 +27,9 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.bean.Disposable;
 import org.beangle.commons.bean.Initializing;
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
