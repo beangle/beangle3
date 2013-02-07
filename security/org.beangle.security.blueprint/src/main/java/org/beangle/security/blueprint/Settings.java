@@ -19,7 +19,7 @@
 package org.beangle.security.blueprint;
 
 import org.beangle.commons.lang.Assert;
-import org.beangle.commons.property.PropertyConfig;
+import org.beangle.commons.util.property.PropertyConfig;
 
 /**
  * Security Settings

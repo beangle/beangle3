@@ -12,6 +12,7 @@
 
   <properties>
     <bundle.symbolicName>org.beangle.struts2.convention</bundle.symbolicName>
+    <bundle.namespace>org.beangle.struts2</bundle.namespace>
   </properties>
   <dependencies>
    <dependency>

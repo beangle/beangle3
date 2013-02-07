@@ -23,10 +23,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.asm.ProxyUtils;
 import org.beangle.commons.lang.conversion.Conversion;
 import org.beangle.commons.lang.conversion.impl.DefaultConversion;
 import org.beangle.security.blueprint.data.ProfileField;
@@ -68,7 +67,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
         for (String prop : properties) {
           Object value = null;
           try {
-            value = PropertyUtils.getProperty(obj, prop);
+            value = ProxyUtils.getProperty(obj, prop);
           } catch (Exception e) {
             e.printStackTrace();
           }
@@ -118,7 +117,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
           Object obj = type.newInstance();
           String[] dataItems = Strings.split(datas[i], ";");
           for (int j = 0; j < properties.size(); j++) {
-            BeanUtils.setProperty(obj, properties.get(j), dataItems[j]);
+            ProxyUtils.setProperty(obj, properties.get(j), dataItems[j]);
           }
           rs.add((T) obj);
         }

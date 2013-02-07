@@ -27,12 +27,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.inject.Resources;
 import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.asm.ProxyUtils;
 import org.beangle.struts2.convention.Constants;
 import org.beangle.struts2.convention.route.Profile;
 import org.beangle.struts2.convention.route.ProfileService;
@@ -189,10 +188,8 @@ public class ProfileServiceImpl implements ProfileService {
   private void populateAttr(Profile profile, String attr, Properties props) {
     Object value = props.getProperty(profile.getName() + "." + attr);
     try {
-      if (null == value) {
-        value = PropertyUtils.getProperty(defaultProfile, attr);
-      }
-      BeanUtils.copyProperty(profile, attr, value);
+      if (null == value) value = ProxyUtils.getProperty(defaultProfile, attr);
+      ProxyUtils.copyProperty(profile, attr, value);
     } catch (Exception e) {
       logger.error("error attr {} for profile", attr);
     }

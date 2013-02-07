@@ -18,16 +18,15 @@
  */
 package org.beangle.commons.bean;
 
-import org.beangle.commons.lang.asm.AccessProxy;
+import org.beangle.commons.lang.Throwables;
 import org.beangle.commons.lang.asm.ClassInfo;
 import org.beangle.commons.lang.conversion.Conversion;
 import org.beangle.commons.lang.conversion.impl.ConvertUtils;
 
+/**
+ * @author chaostone
+ */
 public class PropertyUtils {
-
-  public static boolean hasProperty(Object bean, String name) {
-    return null == ClassInfo.get(bean.getClass()).getPropertyType(name);
-  }
 
   /**
    * @throws NoSuchMethodException
@@ -36,20 +35,37 @@ public class PropertyUtils {
    * @param value
    */
   public static void setProperty(Object bean, String name, Object value) {
-    AccessProxy.get(bean.getClass()).setProperty(bean, name, value);
+    try {
+      ClassInfo.get(bean.getClass()).getWriteMethod(name).invoke(bean, value);
+    } catch (Exception e) {
+      Throwables.propagate(e);
+    }
   }
 
   public static Object getProperty(Object bean, String name) {
-    return AccessProxy.get(bean.getClass()).getProperty(bean, name);
+    try {
+      return ClassInfo.get(bean.getClass()).getReadMethod(name).invoke(bean);
+    } catch (Exception e) {
+      throw Throwables.propagate(e);
+    }
   }
 
   public static void copyProperty(Object bean, String name, Object value, Conversion conversion) {
-    AccessProxy.get(bean.getClass()).setProperty(bean, name,
-        conversion.convert(value, ClassInfo.get(bean.getClass()).getPropertyType(name)));
+    ClassInfo classInfo = ClassInfo.get(bean.getClass());
+    try {
+      classInfo.getWriteMethod(name).invoke(bean, conversion.convert(value, classInfo.getPropertyType(name)));
+    } catch (Exception e) {
+      Throwables.propagate(e);
+    }
   }
 
   public static void copyProperty(Object bean, String name, Object value) {
-    AccessProxy.get(bean.getClass()).setProperty(bean, name,
-        ConvertUtils.convert(value, ClassInfo.get(bean.getClass()).getPropertyType(name)));
+    ClassInfo classInfo = ClassInfo.get(bean.getClass());
+    try {
+      classInfo.getWriteMethod(name).invoke(bean,
+          ConvertUtils.convert(value, classInfo.getPropertyType(name)));
+    } catch (Exception e) {
+      Throwables.propagate(e);
+    }
   }
 }

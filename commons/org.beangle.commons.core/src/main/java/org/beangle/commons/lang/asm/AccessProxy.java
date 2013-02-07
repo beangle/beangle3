@@ -175,9 +175,9 @@ public abstract class AccessProxy {
               buffer.setLength(0);
               buffer.append('(');
 
-              MethodInfo method = methods.get(i);
+              MethodInfo info = methods.get(i);
 
-              Class<?>[] paramTypes = method.getParamTypes();
+              Class<?>[] paramTypes = info.method.getParameterTypes();
               for (int paramIndex = 0; paramIndex < paramTypes.length; paramIndex++) {
                 mv.visitVarInsn(ALOAD, 3);
                 mv.visitIntInsn(BIPUSH, paramIndex);
@@ -227,10 +227,10 @@ public abstract class AccessProxy {
               }
 
               buffer.append(')');
-              buffer.append(Type.getDescriptor(method.getReturnType()));
-              mv.visitMethodInsn(INVOKEVIRTUAL, classNameInternal, method.getName(), buffer.toString());
+              buffer.append(Type.getDescriptor(info.method.getReturnType()));
+              mv.visitMethodInsn(INVOKEVIRTUAL, classNameInternal, info.method.getName(), buffer.toString());
 
-              switch (Type.getType(method.getReturnType()).getSort()) {
+              switch (Type.getType(info.method.getReturnType()).getSort()) {
               case Type.VOID:
                 mv.visitInsn(ACONST_NULL);
                 break;

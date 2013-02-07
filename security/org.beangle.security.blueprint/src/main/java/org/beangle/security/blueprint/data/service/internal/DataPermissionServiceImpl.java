@@ -25,13 +25,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.Condition;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.functor.Predicate;
 import org.beangle.security.blueprint.Permission;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.Role;
@@ -80,9 +79,8 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
     final String roleName = role.getName();
     final String funcResourceName1 = funcResourceName;
     final Date now = new Date();
-    CollectionUtils.filter(rs, new Predicate() {
-      public boolean evaluate(Object object) {
-        DataPermissionBean dp = (DataPermissionBean) object;
+    CollectUtils.filter(rs, new Predicate<DataPermissionBean>() {
+      public Boolean apply(DataPermissionBean dp) {
         if (null != dp.getEffectiveAt() && now.before(dp.getEffectiveAt())) return false;
         if (null != dp.getInvalidAt() && now.after(dp.getInvalidAt())) return false;
         if (dp.getRole() == null || dp.getRole().getName().equals(roleName)) {

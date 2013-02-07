@@ -20,9 +20,9 @@ package org.beangle.commons.bean.comparators;
 
 import java.util.Comparator;
 
-import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.asm.ProxyUtils;
 
 /**
  * 属性比较器。<br>
@@ -106,12 +106,12 @@ public class PropertyComparator implements Comparator<Object> {
     }
     if (Strings.isNotEmpty(cmpWhat)) {
       try {
-        what0 = PropertyUtils.getProperty(arg0, cmpWhat);
+        what0 = ProxyUtils.getProperty(arg0, cmpWhat);
       } catch (Exception e) {
         throw new RuntimeException(e);
       }
       try {
-        what1 = PropertyUtils.getProperty(arg1, cmpWhat);
+        what1 = ProxyUtils.getProperty(arg1, cmpWhat);
       } catch (Exception e) {
         throw new RuntimeException(e);
       }

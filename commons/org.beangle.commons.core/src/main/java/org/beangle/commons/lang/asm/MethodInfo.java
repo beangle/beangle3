@@ -19,8 +19,11 @@
 package org.beangle.commons.lang.asm;
 
 import static java.lang.Character.isUpperCase;
+import static org.beangle.commons.lang.Strings.substringAfter;
+import static org.beangle.commons.lang.Strings.uncapitalize;
 
-import static org.beangle.commons.lang.Strings.*;
+import java.lang.reflect.Method;
+
 import org.beangle.commons.lang.tuple.Pair;
 
 /**
@@ -31,35 +34,21 @@ import org.beangle.commons.lang.tuple.Pair;
  */
 final class MethodInfo implements Comparable<MethodInfo> {
 
-  final Class<?> returnType;
-  final String name;
-  final Class<?>[] paramTypes;
   final int index;
+  final Method method;
 
-  public MethodInfo(int index, String name, Class<?> returnType, Class<?>[] paramTypes) {
+  public MethodInfo(int index, Method method) {
     super();
     this.index = index;
-    this.name = name;
-    this.returnType = returnType;
-    this.paramTypes = paramTypes;
-  }
-
-  public Class<?> getReturnType() {
-    return returnType;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public Class<?>[] getParamTypes() {
-    return paramTypes;
+    this.method = method;
   }
 
   /**
    * Return thid method is property read method (0) or write method(1) or none(-1).
    */
   public Pair<Boolean, String> property() {
+    String name = method.getName();
+    Class<?>[] paramTypes = method.getParameterTypes();
     if (name.length() > 3 && name.startsWith("get") && isUpperCase(name.charAt(3)) && paramTypes.length == 0) {
       return Pair.of(Boolean.TRUE, uncapitalize(substringAfter(name, "get")));
     } else if (name.length() > 2 && name.startsWith("is") && isUpperCase(name.charAt(2))
@@ -76,6 +65,7 @@ final class MethodInfo implements Comparable<MethodInfo> {
   }
 
   public boolean matches(Object[] args) {
+    final Class<?>[] paramTypes = method.getParameterTypes();
     if (paramTypes.length != args.length) return false;
     for (int i = 0; i < args.length; i++) {
       if (null != args[i] && !paramTypes[i].isInstance(args[i])) return false;
@@ -85,9 +75,11 @@ final class MethodInfo implements Comparable<MethodInfo> {
 
   @Override
   public String toString() {
+    final Class<?>[] paramTypes = method.getParameterTypes();
+    final Class<?> returnType = method.getReturnType();
     StringBuilder sb = new StringBuilder();
     sb.append((null == returnType) ? "void" : returnType.getSimpleName());
-    sb.append(' ').append(name);
+    sb.append(' ').append(method.getName());
     if (paramTypes.length == 0) {
       sb.append("()");
     } else {

@@ -8,6 +8,12 @@
   <artifactId>beangle-commons-notification</artifactId>
   <packaging>jar</packaging>
   <name>Beangle Commons Notification</name>
+
+  <properties>
+    <bundle.symbolicName>org.beangle.commons.notification</bundle.symbolicName>
+    <bundle.namespace>org.beangle.commons.notification</bundle.namespace>
+  </properties>
+  
   <dependencies>
     <dependency>
       <groupId>commons-collections</groupId>

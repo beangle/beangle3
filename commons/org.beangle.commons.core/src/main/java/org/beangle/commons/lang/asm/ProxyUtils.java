@@ -16,13 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.bean;
+package org.beangle.commons.lang.asm;
 
-import org.beangle.commons.lang.asm.AccessProxy;
-import org.beangle.commons.lang.asm.ClassInfo;
 import org.beangle.commons.lang.conversion.Conversion;
+import org.beangle.commons.lang.conversion.impl.ConvertUtils;
 
-public class PropertyUtils {
+public class ProxyUtils {
+
+  public static boolean hasProperty(Object bean, String name) {
+    return null == ClassInfo.get(bean.getClass()).getPropertyType(name);
+  }
 
   /**
    * @throws NoSuchMethodException
@@ -42,4 +45,10 @@ public class PropertyUtils {
     AccessProxy.get(bean.getClass()).setProperty(bean, name,
         conversion.convert(value, ClassInfo.get(bean.getClass()).getPropertyType(name)));
   }
+
+  public static void copyProperty(Object bean, String name, Object value) {
+    AccessProxy.get(bean.getClass()).setProperty(bean, name,
+        ConvertUtils.convert(value, ClassInfo.get(bean.getClass()).getPropertyType(name)));
+  }
+  
 }

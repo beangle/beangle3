@@ -18,10 +18,10 @@
  */
 package org.beangle.commons.bean.predicates;
 
-import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Throwables;
+import org.beangle.commons.lang.asm.ProxyUtils;
 import org.beangle.commons.lang.functor.Predicate;
 
 /**
@@ -32,7 +32,7 @@ import org.beangle.commons.lang.functor.Predicate;
  */
 public class PropertyEqualPredicate<T> implements Predicate<T> {
   private String propertyName;
-  private T propertyValue;
+  private Object propertyValue;
 
   /**
    * <p>
@@ -42,7 +42,7 @@ public class PropertyEqualPredicate<T> implements Predicate<T> {
    * @param propertyName a {@link java.lang.String} object.
    * @param propertyValue a {@link java.lang.Object} object.
    */
-  public PropertyEqualPredicate(String propertyName, T propertyValue) {
+  public PropertyEqualPredicate(String propertyName, Object propertyValue) {
     Assert.notEmpty(propertyName);
     this.propertyName = propertyName;
     this.propertyValue = propertyValue;
@@ -58,7 +58,7 @@ public class PropertyEqualPredicate<T> implements Predicate<T> {
    */
   public Boolean apply(T arg0) {
     try {
-      return Objects.equals(PropertyUtils.getProperty(arg0, propertyName), propertyValue);
+      return Objects.equals(ProxyUtils.getProperty(arg0, propertyName), propertyValue);
     } catch (Exception e) {
       throw Throwables.propagate(e);
     }

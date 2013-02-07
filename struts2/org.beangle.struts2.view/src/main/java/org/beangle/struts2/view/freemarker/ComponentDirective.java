@@ -21,13 +21,12 @@ package org.beangle.struts2.view.freemarker;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Map;
 
 import org.beangle.commons.lang.annotation.Beta;
+import org.beangle.commons.lang.asm.ProxyUtils;
 import org.beangle.struts2.view.component.Component;
-import org.beangle.struts2.view.component.ComponentHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,8 +67,7 @@ public abstract class ComponentDirective implements TemplateDirectiveModel {
       String key = entry.getKey();
       Object value = entry.getValue();
       if (value != null) {
-        Method m = ComponentHelper.getWriteMethod(bean, key);
-        if (null != m) {
+        if (ProxyUtils.hasProperty(bean, key)) {
           if (value instanceof TemplateModel) {
             try {
               value = objectWrapper.unwrap((TemplateModel) value);
@@ -78,9 +76,9 @@ public abstract class ComponentDirective implements TemplateDirectiveModel {
             }
           }
           try {
-            m.invoke(bean, value);
+            ProxyUtils.setProperty(bean, key, value);
           } catch (Exception e) {
-            logger.error("invoke method " + m.getName() + " with value " + value, e);
+            logger.error("invoke set property [" + key + "] with value " + value, e);
           }
         } else {
           bean.getParameters().put(key, value);

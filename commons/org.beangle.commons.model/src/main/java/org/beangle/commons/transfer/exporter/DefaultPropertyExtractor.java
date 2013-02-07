@@ -37,7 +37,7 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
 
   protected TextResource textResource = null;
 
-  //FIXME
+  //FIXME expressionEvaluator
   protected ExpressionEvaluator expressionEvaluator = null;
 
   protected Set<String> errorProperties = CollectUtils.newHashSet();

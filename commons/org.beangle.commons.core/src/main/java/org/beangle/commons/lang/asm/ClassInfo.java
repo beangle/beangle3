@@ -60,10 +60,10 @@ public final class ClassInfo {
     super();
     Map<String, List<MethodInfo>> tmpMethods = CollectUtils.newHashMap();
     for (MethodInfo info : methodinfos) {
-      List<MethodInfo> named = tmpMethods.get(info.getName());
+      List<MethodInfo> named = tmpMethods.get(info.method.getName());
       if (null == named) {
         named = CollectUtils.newArrayList();
-        tmpMethods.put(info.getName(), named);
+        tmpMethods.put(info.method.getName(), named);
       }
       named.add(info);
       Pair<Boolean, String> propertyInfo = info.property();
@@ -88,12 +88,20 @@ public final class ClassInfo {
   }
 
   /**
+   * Return property read index,return -1 when not found.
+   */
+  public final Method getReadMethod(String property) {
+    MethodInfo info = propertyReadMethods.get(property);
+    return (null == info) ? null : info.method;
+  }
+
+  /**
    * Return property type,return null when not found.
    */
   public final Class<?> getPropertyType(String property) {
-    MethodInfo method = propertyWriteMethods.get(property);
-    if (null == method) return null;
-    else return method.getParamTypes()[0];
+    MethodInfo info = propertyWriteMethods.get(property);
+    if (null == info) return null;
+    else return info.method.getParameterTypes()[0];
   }
 
   /**
@@ -102,6 +110,14 @@ public final class ClassInfo {
   public final int getWriteIndex(String property) {
     MethodInfo method = propertyWriteMethods.get(property);
     return (null == method) ? -1 : method.index;
+  }
+
+  /**
+   * Return property write method,return null if not found.
+   */
+  public final Method getWriteMethod(String property) {
+    MethodInfo info = propertyWriteMethods.get(property);
+    return (null == info) ? null : info.method;
   }
 
   /**
@@ -163,8 +179,7 @@ public final class ClassInfo {
               if (Modifier.isStatic(modifiers)) continue;
               if (Modifier.isPrivate(modifiers)) continue;
               index++;
-              methods.add(new MethodInfo(index, method.getName(), method.getReturnType(), method
-                  .getParameterTypes()));
+              methods.add(new MethodInfo(index, method));
             }
             nextClass = nextClass.getSuperclass();
           }

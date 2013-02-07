@@ -22,7 +22,7 @@ import java.beans.Introspector;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.apache.commons.beanutils.PropertyUtils;
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.lang.reflect.Reflections;
 import org.beangle.security.blueprint.model.RoleBean;
 import org.testng.Assert;

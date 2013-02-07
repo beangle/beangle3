@@ -12,6 +12,7 @@
 
   <properties>
     <bundle.symbolicName>org.beangle.struts2.view</bundle.symbolicName>
+    <bundle.namespace>org.beangle.struts2.view</bundle.namespace>
   </properties>
 
   <dependencies>

@@ -20,7 +20,7 @@ package org.beangle.commons.entity.util;
 
 import java.io.Serializable;
 
-import org.beangle.commons.bean.PropertyUtils;
+import org.beangle.commons.lang.asm.ProxyUtils;
 import org.beangle.commons.lang.functor.Predicate;
 
 /**
@@ -34,7 +34,7 @@ public class ValidEntityPredicate implements Predicate<Object> {
   public Boolean apply(final Object value) {
     if (null == value) { return false; }
     try {
-      Serializable key = (Serializable) PropertyUtils.getProperty(value, "id");
+      Serializable key = (Serializable) ProxyUtils.getProperty(value, "id");
       return ValidEntityKeyPredicate.Instance.apply(key);
     } catch (Exception e) {
       return false;

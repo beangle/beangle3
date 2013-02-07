@@ -23,13 +23,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.functor.Predicate;
 import org.beangle.security.auth.Principals;
 import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Role;
@@ -86,10 +85,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
   public int updateState(final User manager, Long[] ids, final boolean enabled) {
     assert (null == ids || ids.length < 1);
-    @SuppressWarnings("unchecked")
-    List<User> users = (List<User>) CollectionUtils.select(getUsers(ids), new Predicate() {
-      public boolean evaluate(Object object) {
-        User one = (User) object;
+    List<User> users = CollectUtils.select(getUsers(ids), new Predicate<User>() {
+      public Boolean apply(User one) {
         return isManagedBy(manager, one) && !manager.equals(one) && (one.isEnabled() != enabled);
       }
     });
