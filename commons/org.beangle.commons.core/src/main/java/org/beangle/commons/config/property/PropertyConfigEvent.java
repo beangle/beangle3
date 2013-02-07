@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.util.property;
+package org.beangle.commons.config.property;
 
 import java.util.EventObject;
 
@@ -37,7 +37,7 @@ public class PropertyConfigEvent extends EventObject {
    * Constructor for PropertyConfigEvent.
    * </p>
    * 
-   * @param config a {@link org.beangle.commons.util.property.PropertyConfig} object.
+   * @param config a {@link org.beangle.commons.config.property.PropertyConfig} object.
    */
   public PropertyConfigEvent(PropertyConfig config) {
     super(config);

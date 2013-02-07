@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
+import org.beangle.commons.config.property.PropertyConfig;
 import org.beangle.commons.dao.EntityDao;
 import org.beangle.commons.dao.query.QueryBuilder;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
@@ -56,7 +57,6 @@ import org.beangle.commons.transfer.importer.IllegalImportFormatException;
 import org.beangle.commons.transfer.importer.ImporterFactory;
 import org.beangle.commons.transfer.importer.listener.ImporterForeignerListener;
 import org.beangle.commons.transfer.io.TransferFormat;
-import org.beangle.commons.util.property.PropertyConfig;
 import org.beangle.commons.web.util.RequestUtils;
 import org.beangle.struts2.helper.Params;
 

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.util.property;
+package org.beangle.commons.config.property;
 
 import java.util.Properties;
 import java.util.Set;
@@ -84,7 +84,7 @@ public interface PropertyConfig {
    * addConfigListener.
    * </p>
    * 
-   * @param listener a {@link org.beangle.commons.util.property.PropertyConfigListener} object.
+   * @param listener a {@link org.beangle.commons.config.property.PropertyConfigListener} object.
    */
   void addListener(PropertyConfigListener listener);
 
@@ -93,7 +93,7 @@ public interface PropertyConfig {
    * removeConfigListener.
    * </p>
    * 
-   * @param listener a {@link org.beangle.commons.util.property.PropertyConfigListener} object.
+   * @param listener a {@link org.beangle.commons.config.property.PropertyConfigListener} object.
    */
   void removeListener(PropertyConfigListener listener);
 
@@ -116,7 +116,7 @@ public interface PropertyConfig {
    * addConfigProvider.
    * </p>
    * 
-   * @param provider a {@link org.beangle.commons.util.property.PropertyConfig.Provider} object.
+   * @param provider a {@link org.beangle.commons.config.property.PropertyConfig.Provider} object.
    */
   void addProvider(Provider provider);
 

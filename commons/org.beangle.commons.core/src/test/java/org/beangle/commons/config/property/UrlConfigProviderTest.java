@@ -16,17 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.util.property;
+package org.beangle.commons.config.property;
 
 import static org.testng.Assert.assertEquals;
 
 import java.util.Properties;
 
+import org.beangle.commons.config.property.MultiProviderPropertyConfig;
+import org.beangle.commons.config.property.PropertyConfig;
+import org.beangle.commons.config.property.UrlPropertyConfigProvider;
 import org.beangle.commons.inject.Resources;
 import org.beangle.commons.lang.ClassLoaders;
-import org.beangle.commons.util.property.MultiProviderPropertyConfig;
-import org.beangle.commons.util.property.PropertyConfig;
-import org.beangle.commons.util.property.UrlPropertyConfigProvider;
 import org.testng.annotations.Test;
 
 @Test
