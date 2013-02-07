@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.reflect.ClassInfo;
+import org.beangle.commons.lang.reflect.MethodInfo;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;

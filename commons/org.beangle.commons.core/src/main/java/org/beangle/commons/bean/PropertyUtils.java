@@ -18,15 +18,21 @@
  */
 package org.beangle.commons.bean;
 
+import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.Throwables;
-import org.beangle.commons.lang.asm.ClassInfo;
 import org.beangle.commons.lang.conversion.Conversion;
 import org.beangle.commons.lang.conversion.impl.ConvertUtils;
+import org.beangle.commons.lang.reflect.ClassInfo;
+import org.beangle.commons.lang.reflect.MethodInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author chaostone
  */
 public class PropertyUtils {
+
+  private static final Logger logger = LoggerFactory.getLogger(PropertyUtils.class);
 
   /**
    * @throws NoSuchMethodException
@@ -35,16 +41,26 @@ public class PropertyUtils {
    * @param value
    */
   public static void setProperty(Object bean, String name, Object value) {
+    MethodInfo info = ClassInfo.get(bean.getClass()).getWriter(name);
+    if (null == info) {
+      logger.warn("Cannot find set" + Strings.capitalize(name) + " in " + bean.getClass());
+      return;
+    }
     try {
-      ClassInfo.get(bean.getClass()).getWriteMethod(name).invoke(bean, value);
+      info.method.invoke(bean, value);
     } catch (Exception e) {
       Throwables.propagate(e);
     }
   }
 
   public static Object getProperty(Object bean, String name) {
+    MethodInfo info = ClassInfo.get(bean.getClass()).getReader(name);
+    if (null == info) {
+      logger.warn("Cannot find get" + Strings.capitalize(name) + " in " + bean.getClass());
+      return null;
+    }
     try {
-      return ClassInfo.get(bean.getClass()).getReadMethod(name).invoke(bean);
+      return info.method.invoke(bean);
     } catch (Exception e) {
       throw Throwables.propagate(e);
     }
@@ -52,8 +68,13 @@ public class PropertyUtils {
 
   public static void copyProperty(Object bean, String name, Object value, Conversion conversion) {
     ClassInfo classInfo = ClassInfo.get(bean.getClass());
+    MethodInfo info = classInfo.getWriter(name);
+    if (null == info) {
+      logger.warn("Cannot find set" + Strings.capitalize(name) + " in " + bean.getClass());
+      return;
+    }
     try {
-      classInfo.getWriteMethod(name).invoke(bean, conversion.convert(value, classInfo.getPropertyType(name)));
+      info.method.invoke(bean, conversion.convert(value, classInfo.getPropertyType(name)));
     } catch (Exception e) {
       Throwables.propagate(e);
     }
@@ -61,9 +82,13 @@ public class PropertyUtils {
 
   public static void copyProperty(Object bean, String name, Object value) {
     ClassInfo classInfo = ClassInfo.get(bean.getClass());
+    MethodInfo info = classInfo.getWriter(name);
+    if (null == info) {
+      logger.warn("Cannot find set" + Strings.capitalize(name) + " in " + bean.getClass());
+      return;
+    }
     try {
-      classInfo.getWriteMethod(name).invoke(bean,
-          ConvertUtils.convert(value, classInfo.getPropertyType(name)));
+      info.method.invoke(bean, ConvertUtils.convert(value, classInfo.getPropertyType(name)));
     } catch (Exception e) {
       Throwables.propagate(e);
     }

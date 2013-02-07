@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.lang.asm;
+package org.beangle.commons.lang.reflect;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -90,9 +90,8 @@ public final class ClassInfo {
   /**
    * Return property read index,return -1 when not found.
    */
-  public final Method getReadMethod(String property) {
-    MethodInfo info = propertyReadMethods.get(property);
-    return (null == info) ? null : info.method;
+  public final MethodInfo getReader(String property) {
+    return propertyReadMethods.get(property);
   }
 
   /**
@@ -115,9 +114,8 @@ public final class ClassInfo {
   /**
    * Return property write method,return null if not found.
    */
-  public final Method getWriteMethod(String property) {
-    MethodInfo info = propertyWriteMethods.get(property);
-    return (null == info) ? null : info.method;
+  public final MethodInfo getWriter(String property) {
+    return propertyWriteMethods.get(property);
   }
 
   /**
@@ -148,7 +146,7 @@ public final class ClassInfo {
   /**
    * Return all public methods.
    */
-  final List<MethodInfo> getMethods() {
+  public final List<MethodInfo> getMethods() {
     List<MethodInfo> methodInfos = CollectUtils.newArrayList();
     for (Map.Entry<String, MethodInfo[]> entry : methods.entrySet()) {
       for (MethodInfo info : entry.getValue())

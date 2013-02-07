@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.lang.asm;
+package org.beangle.commons.lang.reflect;
 
 import static java.lang.Character.isUpperCase;
 import static org.beangle.commons.lang.Strings.substringAfter;
@@ -32,10 +32,10 @@ import org.beangle.commons.lang.tuple.Pair;
  * @author chaostone
  * @since 3.2.0
  */
-final class MethodInfo implements Comparable<MethodInfo> {
+public final class MethodInfo implements Comparable<MethodInfo> {
 
-  final int index;
-  final Method method;
+  public final int index;
+  public final Method method;
 
   public MethodInfo(int index, Method method) {
     super();
