@@ -21,6 +21,8 @@ package org.beangle.commons.dao.query.builder;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import java.util.List;
+
 import org.testng.annotations.Test;
 
 @Test
@@ -28,9 +30,10 @@ public class ConditionTest {
 
   public void testGetNamedParams() {
     Condition condition = new Condition("std.id =:stAd_id1 and std.name like :name");
-    for (String name : condition.getParamNames()) {
-      System.out.println(name);
-    }
+    List<String> names = condition.getParamNames();
+    assertEquals(names.size(), 2);
+    assertEquals(names.get(0), "stAd_id1");
+    assertEquals(names.get(1), "name");
   }
 
   public void testVarArgs() {

@@ -28,9 +28,13 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.DataFormat;
+import org.beangle.commons.lang.SystemInfo;
+import org.testng.annotations.Test;
 
+@Test
 public class PoiTest {
-  public static void main(String[] args) throws IOException {
+
+  public void teset() throws IOException {
     HSSFWorkbook wb = new HSSFWorkbook();
     HSSFSheet sheet = wb.createSheet("new sheet");
 
@@ -54,7 +58,7 @@ public class PoiTest {
     cell.setCellValue(new Date());
     cell.setCellStyle(cellStyle);
     // Write the output to a file
-    FileOutputStream fileOut = new FileOutputStream("src/test/resources/workbook.xls");
+    FileOutputStream fileOut = new FileOutputStream(SystemInfo.getTmpDir() + "/workbook.xls");
     wb.write(fileOut);
     fileOut.close();
   }

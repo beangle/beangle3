@@ -18,6 +18,7 @@
  */
 package org.beangle.commons.lang.conversion.impl;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Collections;
@@ -151,6 +152,9 @@ public abstract class AbstractGenericConversion implements Conversion, Converter
     return getConverter(targetType, getConverters(Object.class));
   }
 
+  /**
+   * Convert to target type.
+   */
   @SuppressWarnings("unchecked")
   @Override
   public <T> T convert(Object source, Class<T> targetType) {
@@ -158,8 +162,23 @@ public abstract class AbstractGenericConversion implements Conversion, Converter
     Class<?> sourceType = source.getClass();
     if (targetType.isAssignableFrom(sourceType)) return (T) source;
 
-    GenericConverter converter = findConverter(sourceType, targetType);
-    return (null == converter) ? null : (T) converter.convert(source, sourceType, targetType);
+    if (sourceType.isArray() && targetType.isArray()) {
+      Class<?> sourceComponentType = sourceType.getComponentType();
+      Class<?> targetComponentType = targetType.getComponentType();
+      GenericConverter converter = findConverter(sourceComponentType, targetComponentType);
+      if (null == converter) return (T) Array.newInstance(targetType.getComponentType(), 0);
+      else {
+        int length = Array.getLength(source);
+        T result = (T) Array.newInstance(targetType.getComponentType(), length);
+        for (int i = 0; i < length; i++)
+          Array.set(result, i,
+              converter.convert(Array.get(source, i), sourceComponentType, targetComponentType));
+        return result;
+      }
+    } else {
+      GenericConverter converter = findConverter(sourceType, targetType);
+      return (null == converter) ? null : (T) converter.convert(source, sourceType, targetType);
+    }
   }
 
 }

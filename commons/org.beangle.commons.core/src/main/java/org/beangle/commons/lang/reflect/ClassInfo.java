@@ -20,11 +20,15 @@ package org.beangle.commons.lang.reflect;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.FastHashMap;
@@ -56,7 +60,7 @@ public final class ClassInfo {
   /**
    * Construct Classinfo by method list.
    */
-  public ClassInfo(List<MethodInfo> methodinfos) {
+  public ClassInfo(Collection<MethodInfo> methodinfos) {
     super();
     Map<String, List<MethodInfo>> tmpMethods = CollectUtils.newHashMap();
     for (MethodInfo info : methodinfos) {
@@ -100,7 +104,7 @@ public final class ClassInfo {
   public final Class<?> getPropertyType(String property) {
     MethodInfo info = propertyWriteMethods.get(property);
     if (null == info) return null;
-    else return info.method.getParameterTypes()[0];
+    else return info.parameterTypes[0];
   }
 
   /**
@@ -157,35 +161,73 @@ public final class ClassInfo {
   }
 
   /**
+   * Return true when Method is public andn not static and not volatile.
+   */
+  private static boolean goodMethod(Method method) {
+    int modifiers = method.getModifiers();
+    if (Modifier.isStatic(modifiers) || Modifier.isPrivate(modifiers)) return false;
+    // Skip volatile method for generated method by compiler
+    // For example. CompareTo(Some) and CompareTo(Object).
+    if (Modifier.isVolatile(modifiers)) return false;
+    return true;
+  }
+
+  /**
    * Get ClassInfo by type.
    * It search from cache, when failure build it and put it into cache.
    */
   public static final ClassInfo get(Class<?> type) {
     ClassInfo exist = cache.get(type);
-    if (null == exist) {
-      synchronized (cache) {
-        exist = cache.get(type);
-        if (null == exist) {
-          ArrayList<MethodInfo> methods = new ArrayList<MethodInfo>();
-          Class<?> nextClass = type;
-          int index = -1;
-          while (nextClass != Object.class) {
-            Method[] declaredMethods = nextClass.getDeclaredMethods();
-            for (int i = 0, n = declaredMethods.length; i < n; i++) {
-              Method method = declaredMethods[i];
-              int modifiers = method.getModifiers();
-              if (Modifier.isStatic(modifiers)) continue;
-              if (Modifier.isPrivate(modifiers)) continue;
-              index++;
-              methods.add(new MethodInfo(index, method));
+    if (null != exist) return exist;
+    synchronized (cache) {
+      exist = cache.get(type);
+      if (null != exist) return exist;
+
+      Set<MethodInfo> methods = CollectUtils.newHashSet();
+      Class<?> nextClass = type;
+      int index = 0;
+      Map<String, Class<?>> nextParamTypes = null;
+      while (nextClass != Object.class) {
+        Method[] declaredMethods = nextClass.getDeclaredMethods();
+        for (int i = 0, n = declaredMethods.length; i < n; i++) {
+          Method method = declaredMethods[i];
+          if (!goodMethod(method)) continue;
+          Type[] types = method.getGenericParameterTypes();
+          Class<?>[] paramsTypes = new Class<?>[types.length];
+          for (int j = 0; j < types.length; j++) {
+            Type t = types[j];
+            if (t instanceof ParameterizedType) {
+              paramsTypes[j] = (Class<?>) ((ParameterizedType) t).getRawType();
+            } else if (t instanceof TypeVariable) {
+              paramsTypes[j] = nextParamTypes.get(((TypeVariable<?>) t).getName());
+            } else {
+              paramsTypes[j] = (Class<?>) t;
             }
-            nextClass = nextClass.getSuperclass();
           }
-          exist = new ClassInfo(methods);
-          cache.put(type, exist);
+          if (!methods.add(new MethodInfo(index++, method, paramsTypes))) index--;
+        }
+
+        Type nextType = nextClass.getGenericSuperclass();
+        nextClass = nextClass.getSuperclass();
+        if (nextType instanceof ParameterizedType) {
+          Map<String, Class<?>> tmp = CollectUtils.newHashMap();
+          Type[] ps = ((ParameterizedType) nextType).getActualTypeArguments();
+          TypeVariable<?>[] tvs = nextClass.getTypeParameters();
+          for (int k = 0; k < ps.length; k++) {
+            if (ps[k] instanceof Class<?>) {
+              tmp.put(tvs[k].getName(), (Class<?>) ps[k]);
+            } else if (ps[k] instanceof TypeVariable) {
+              tmp.put(tvs[k].getName(), nextParamTypes.get(((TypeVariable<?>) ps[k]).getName()));
+            }
+          }
+          nextParamTypes = tmp;
+        } else {
+          nextParamTypes = Collections.emptyMap();
         }
       }
+      exist = new ClassInfo(methods);
+      cache.put(type, exist);
+      return exist;
     }
-    return exist;
   }
 }

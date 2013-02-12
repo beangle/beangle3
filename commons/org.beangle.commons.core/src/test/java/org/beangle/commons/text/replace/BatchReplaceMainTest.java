@@ -21,25 +21,27 @@ package org.beangle.commons.text.replace;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.beangle.commons.text.replace.Replacer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 @Test
 public class BatchReplaceMainTest {
+  Logger logger = LoggerFactory.getLogger(BatchReplaceMainTest.class);
 
   public void test() {
     String clause = "<#include \"/template/head.ftl\"/>";
     Pattern pattern = Pattern.compile("<#(.*)/>");
     Matcher m = pattern.matcher(clause);
-    System.out.println(m.find());
-    System.out.println(m.groupCount());
-    System.out.println(Pattern.matches("<#(.*)/>", clause));
-    System.out.println(m.group(1));
+    logger.debug(m.find() + "");
+    logger.debug(m.groupCount() + "");
+    logger.debug(Pattern.matches("<#(.*)/>", clause) + "");
+    logger.debug(m.group(1));
     StringBuffer sb = new StringBuffer();
     m.appendReplacement(sb, "[#$1/]");
-    System.out.println(sb);
+    logger.debug(sb.toString());
 
-    System.out.println(Pattern.matches("template", clause));
+    logger.debug(Pattern.matches("template", clause) + "");
 
     Pattern p = Pattern.compile("(cat)");
     Matcher m1 = p.matcher("one cat two cats in the yard");
@@ -48,13 +50,13 @@ public class BatchReplaceMainTest {
       m1.appendReplacement(sb1, "dog");
     }
     m1.appendTail(sb1);
-    System.out.println(sb1.toString());
-    System.out.println("one cat two cats in the yard".replaceAll("cat", "dog"));
-    System.out.println(clause.replaceAll("<#(.*)/>", "[#$1/]"));
+    logger.debug(sb1.toString());
+    logger.debug("one cat two cats in the yard".replaceAll("cat", "dog"));
+    logger.debug(clause.replaceAll("<#(.*)/>", "[#$1/]"));
 
     String test = "aaa    \nbbaad\n";
     Replacer replacer = new Replacer("( +?)\\n", "\n");
-    System.out.print(test);
-    System.out.print(replacer.process(test));
+    logger.debug(test);
+    logger.debug(replacer.process(test));
   }
 }

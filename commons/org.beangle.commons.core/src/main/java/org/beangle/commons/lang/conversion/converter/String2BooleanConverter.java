@@ -21,6 +21,7 @@ package org.beangle.commons.lang.conversion.converter;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.conversion.Converter;
 
 /**
@@ -54,6 +55,7 @@ public class String2BooleanConverter implements Converter<String, Boolean> {
 
   @Override
   public Boolean apply(String input) {
+    if(Strings.isEmpty(input))return null;
     String value = input.toLowerCase();
     if (trueValues.contains(value)) return Boolean.TRUE;
     else if (falseValues.contains(value)) return Boolean.FALSE;

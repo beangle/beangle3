@@ -48,7 +48,6 @@ import org.beangle.commons.lang.Strings;
 import org.beangle.commons.transfer.TransferListener;
 import org.beangle.commons.transfer.TransferResult;
 import org.beangle.commons.transfer.exporter.Context;
-import org.beangle.commons.transfer.exporter.DefaultPropertyExtractor;
 import org.beangle.commons.transfer.exporter.Exporter;
 import org.beangle.commons.transfer.exporter.ExporterFactory;
 import org.beangle.commons.transfer.exporter.PropertyExtractor;
@@ -59,6 +58,7 @@ import org.beangle.commons.transfer.importer.listener.ImporterForeignerListener;
 import org.beangle.commons.transfer.io.TransferFormat;
 import org.beangle.commons.web.util.RequestUtils;
 import org.beangle.struts2.helper.Params;
+import org.beangle.struts2.util.OgnlPropertyExtractor;
 
 /**
  * @author chaostone
@@ -351,7 +351,7 @@ public abstract class EntityActionSupport extends ActionSupport {
   }
 
   protected PropertyExtractor getPropertyExtractor() {
-    return new DefaultPropertyExtractor(getTextResource());
+    return new OgnlPropertyExtractor(getTextResource());
   }
 
   protected Exporter buildExporter(TransferFormat format, Context context) throws IOException {

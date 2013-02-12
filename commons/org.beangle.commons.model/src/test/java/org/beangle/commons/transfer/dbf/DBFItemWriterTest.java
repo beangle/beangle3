@@ -36,16 +36,16 @@ public class DBFItemWriterTest {
   public void testWriter() throws Exception {
     DBFItemWriter writer = new DBFItemWriter();
 
-    String dbfile = SystemInfo.getJavaIoTmpDir() + "/test.dbf";
+    String dbfile = SystemInfo.getTmpDir() + "/test.dbf";
     FileOutputStream fos = new FileOutputStream(dbfile);
 
     writer.setContext(null);
     writer.setOutputStream(fos);
     writer.writeTitle("table1", new Object[] { "code", "name" });
-    writer.write(new Object[] { "001", "apple" });
-    writer.write(new Object[] { "002", "banana" });
-    writer.write(new Object[] { "003", "香蕉香蕉香蕉" });
-    writer.write(new Object[] { "004", "long word of unknow catalog fruit" });
+    Object[] datas = new Object[] { new Object[] { "001", "apple" }, new Object[] { "002", "banana" },
+        new Object[] { "003", "香蕉香蕉香蕉" }, new Object[] { "004", "long word of unknow catalog fruit" } };
+    for (Object data : datas)
+      writer.write((Object[]) data);
     writer.close();
     fos.close();
 
@@ -60,10 +60,11 @@ public class DBFItemWriterTest {
     DBFField field1 = reader.getField(1);
     assertEquals("name", field1.getName());
     Object[] rowObjects;
+    int i = 0;
     while ((rowObjects = reader.nextRecord()) != null) {
-      for (int i = 0; i < rowObjects.length; i++) {
-        System.out.println(rowObjects[i]);
-      }
+      assertEquals(rowObjects[0].toString().trim(), ((Object[])datas[i])[0]);
+      assertEquals(rowObjects[1].toString().trim(), ((Object[])datas[i])[1]);
+      i++;
     }
     inputStream.close();
 

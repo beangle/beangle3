@@ -297,6 +297,12 @@ public final class Objects {
       return this;
     }
 
+    public EqualsBuilder add(Object[] lhs, Object[] rhs) {
+      if (!equals) return this;
+      equals &= Objects.equals(lhs, rhs);
+      return this;
+    }
+
     public EqualsBuilder add(int lhs, int rhs) {
       if (!equals) return this;
       equals &= (lhs == rhs);

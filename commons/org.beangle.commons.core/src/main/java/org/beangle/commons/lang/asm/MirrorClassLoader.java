@@ -29,17 +29,18 @@ import org.beangle.commons.collection.CollectUtils;
  * @author chaostone
  * @since 3.2.0
  */
-final class ProxyClassLoader extends ClassLoader {
-  static private final Map<ClassLoader, ProxyClassLoader> proxyClassLoaders = CollectUtils.newHashMap();
+final class MirrorClassLoader extends ClassLoader {
+  static private final Map<ClassLoader, MirrorClassLoader> proxyClassLoaders = CollectUtils.newHashMap();
 
-  public static ProxyClassLoader get(Class<?> type) {
+  public static MirrorClassLoader get(Class<?> type) {
     ClassLoader parent = type.getClassLoader();
-    ProxyClassLoader loader = proxyClassLoaders.get(parent);
+    if(null==parent) return null;
+    MirrorClassLoader loader = proxyClassLoaders.get(parent);
     if (null == loader) {
       synchronized (proxyClassLoaders) {
         loader = proxyClassLoaders.get(parent);
         if (null == loader) {
-          loader = new ProxyClassLoader(parent);
+          loader = new MirrorClassLoader(parent);
           proxyClassLoaders.put(parent, loader);
         }
       }
@@ -47,7 +48,7 @@ final class ProxyClassLoader extends ClassLoader {
     return loader;
   }
 
-  private ProxyClassLoader(ClassLoader parent) {
+  private MirrorClassLoader(ClassLoader parent) {
     super(parent);
   }
 

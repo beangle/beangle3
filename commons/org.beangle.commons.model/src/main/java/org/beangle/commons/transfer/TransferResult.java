@@ -46,12 +46,6 @@ public class TransferResult {
     return !errs.isEmpty();
   }
 
-  public void printResult() {
-    for (final TransferMessage msg : msgs) {
-      System.out.println(msg);
-    }
-  }
-
   public int errors() {
     return errs.size();
   }

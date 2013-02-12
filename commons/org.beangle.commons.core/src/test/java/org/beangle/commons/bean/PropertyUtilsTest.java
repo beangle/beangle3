@@ -26,7 +26,7 @@ import org.testng.annotations.Test;
 @Test
 public class PropertyUtilsTest {
 
-  public static void main(String[] args) {
+  public void testSet() {
     TestBean bean = new TestBean();
     PropertyUtils.setProperty(bean, "intValue", 2);
     assertEquals(bean.getIntValue(), 2);

@@ -40,9 +40,6 @@ public class ReflectorTest {
   public static Method getterMethod(Class<?> theClass, String propertyName) {
     Method[] methods = theClass.getMethods();
     for (Method method : methods) {
-      if ("getParent".equals(method.getName())) {
-        System.out.println(method.getReturnType());
-      }
       // if the method has parameters, skip it
       if (method.getParameterTypes().length != 0) {
         continue;

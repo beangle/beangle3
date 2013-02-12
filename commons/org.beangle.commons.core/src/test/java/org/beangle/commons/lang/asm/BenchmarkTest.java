@@ -22,48 +22,38 @@ import java.lang.reflect.Method;
 
 import org.beangle.commons.lang.testbean.TestBean;
 import org.beangle.commons.lang.time.Stopwatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.annotations.Test;
 
+@Test
 public class BenchmarkTest {
-  public static void main(String[] args) throws Exception {
-    long begin = System.currentTimeMillis();
-    TestBean[] data = new TestBean[256];
-    int hashcode = 1984801293;
-    for (int i = 0; i < 100000000; i++) {
-      getData(data, hashcode++, 255);
-    }
-    System.out.println(System.currentTimeMillis() - begin + " ");
-    testJdkReflect();
-    testReflectAsm();
-  }
+  private static final Logger logger = LoggerFactory.getLogger(BenchmarkTest.class);
+  int testCount = 1;// 100000000;
 
-  static TestBean getData(TestBean[] data, int hash, int mask) {
-    return data[hash & mask];
-  }
-
-  public static void testJdkReflect() throws Exception {
-    System.out.print("testJdkReflect...");
+  public void testJdkReflect() throws Exception {
+    logger.debug("testJdkReflect...");
     TestBean someObject = new TestBean();
     Method method = TestBean.class.getMethod("setName", String.class);
     for (int i = 0; i < 5; i++) {
       Stopwatch sw = new Stopwatch(true);
-      for (int j = 0; j < 100000000; j++) {
+      for (int j = 0; j < testCount; j++) {
         method.invoke(someObject, "Unmi");
       }
-      System.out.print(sw + " ");
+      logger.debug(sw + " ");
     }
-    System.out.println();
   }
 
-  public static void testReflectAsm() {
-    System.out.print("testReflectAsm...");
+  public void testReflectAsm() {
+    logger.debug("testReflectAsm...");
     TestBean someObject = new TestBean();
-    AccessProxy access = AccessProxy.get(TestBean.class);
+    Mirror access = Mirror.get(TestBean.class);
     for (int i = 0; i < 5; i++) {
       long begin = System.currentTimeMillis();
-      for (int j = 0; j < 100000000; j++) {
+      for (int j = 0; j < testCount; j++) {
         access.invoke(someObject, access.getIndex("setName"), "Unmi");
       }
-      System.out.print(System.currentTimeMillis() - begin + " ");
+      logger.debug(System.currentTimeMillis() - begin + " ");
     }
   }
 }

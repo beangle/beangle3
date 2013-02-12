@@ -16,23 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.notification.console;
+package org.beangle.commons.lang.conversion.converter;
 
-import org.beangle.commons.notification.Message;
-import org.beangle.commons.notification.NotificationException;
-import org.beangle.commons.notification.Notifier;
+import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.conversion.impl.ConverterFactory;
 
 /**
+ * String to Object
+ * 
  * @author chaostone
+ * @since 3.2.0
  */
-public class ConsoleNotifier implements Notifier<Message> {
+public class StringConverterFactory<S, R> extends ConverterFactory<S, R> {
 
-  public String getType() {
-    return "console";
-  }
-
-  public void deliver(Message context) throws NotificationException {
-    System.out.println(context.getText());
+  @Override
+  public Object convert(Object input, Class<?> sourceType, Class<?> targetType) {
+    if (Strings.isEmpty((String) input)) return null;
+    return super.convert(input, sourceType, targetType);
   }
 
 }

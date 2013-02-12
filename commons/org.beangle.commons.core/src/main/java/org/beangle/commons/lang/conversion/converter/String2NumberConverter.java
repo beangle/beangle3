@@ -18,8 +18,10 @@
  */
 package org.beangle.commons.lang.conversion.converter;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import org.beangle.commons.lang.conversion.Converter;
-import org.beangle.commons.lang.conversion.impl.ConverterFactory;
 
 /**
  * Convert string to number.
@@ -27,11 +29,93 @@ import org.beangle.commons.lang.conversion.impl.ConverterFactory;
  * @author chaostone
  * @since 3.2.0
  */
-public class String2NumberConverter extends ConverterFactory<String, Number> {
+public class String2NumberConverter extends StringConverterFactory<String, Number> {
 
-  @Override
-  public <T extends Number> Converter<String, T> getConverter(Class<T> targetType) {
-    return null;
+  public String2NumberConverter() {
+    register(Integer.class, new ShortConverter());
+    register(Integer.class, new IntConverter());
+    register(Long.class, new LongConverter());
+    register(Float.class, new FloatConverter());
+    register(Double.class, new DoubleConverter());
+    register(BigInteger.class, new BigIntegerConverter());
+    register(BigDecimal.class, new BigDecimalConverter());
+  }
+
+  private static class ShortConverter implements Converter<String, Short> {
+    @Override
+    public Short apply(String string) {
+      try {
+        return Short.valueOf(string);
+      } catch (NumberFormatException e) {
+        return null;
+      }
+    }
+  }
+
+  private static class IntConverter implements Converter<String, Integer> {
+    @Override
+    public Integer apply(String string) {
+      try {
+        return Integer.valueOf(string);
+      } catch (NumberFormatException e) {
+        return null;
+      }
+    }
+  }
+
+  private static class LongConverter implements Converter<String, Long> {
+    @Override
+    public Long apply(String string) {
+      try {
+        return Long.valueOf(string);
+      } catch (NumberFormatException e) {
+        return null;
+      }
+    }
+  }
+
+  private static class FloatConverter implements Converter<String, Float> {
+    @Override
+    public Float apply(String string) {
+      try {
+        return Float.valueOf(string);
+      } catch (NumberFormatException e) {
+        return null;
+      }
+    }
+  }
+
+  private static class DoubleConverter implements Converter<String, Double> {
+    @Override
+    public Double apply(String string) {
+      try {
+        return Double.valueOf(string);
+      } catch (NumberFormatException e) {
+        return null;
+      }
+    }
+  }
+
+  private static class BigIntegerConverter implements Converter<String, BigInteger> {
+    @Override
+    public BigInteger apply(String string) {
+      try {
+        return new BigInteger(string);
+      } catch (NumberFormatException e) {
+        return null;
+      }
+    }
+  }
+
+  private static class BigDecimalConverter implements Converter<String, BigDecimal> {
+    @Override
+    public BigDecimal apply(String string) {
+      try {
+        return new BigDecimal(string);
+      } catch (NumberFormatException e) {
+        return null;
+      }
+    }
   }
 
 }

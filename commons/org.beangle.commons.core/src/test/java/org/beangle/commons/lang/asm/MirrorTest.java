@@ -24,10 +24,10 @@ import org.beangle.commons.lang.testbean.TestBean;
 import org.testng.annotations.Test;
 
 @Test
-public class AccessProxyTest {
+public class MirrorTest {
 
-  public static void main(String[] args) {
-    AccessProxy access = AccessProxy.get(TestBean.class);
+  public void testProperty(String[] args) {
+    Mirror access = Mirror.get(TestBean.class);
     TestBean someObject = new TestBean();
     Object value;
 
@@ -41,6 +41,14 @@ public class AccessProxyTest {
     assertEquals(null, value);
     value = access.invoke(someObject, "getName");
     assertEquals(null, value);
+
+    value = access.invoke(someObject, "setId", 1);
+    assertEquals(null, value);
+    value = access.invoke(someObject, "getId");
+    assertEquals(1, value);
+
+    value = access.invoke(someObject, "getIntValue");
+    assertEquals(0, value);
 
     value = access.invoke(someObject, "getIntValue");
     assertEquals(0, value);

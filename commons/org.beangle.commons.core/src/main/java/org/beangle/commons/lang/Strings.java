@@ -1025,25 +1025,13 @@ public class Strings {
 
   /**
    * 返回一个新的逗号相隔字符串，实现其中的单词a-b的功能. 新的字符串将以,开始,结束<br>
-   * 
-   * @param first
-   *          a {@link java.lang.String} object.
-   * @param second
-   *          a {@link java.lang.String} object.
-   * @param delimiter
-   *          a {@link java.lang.String} object.
-   * @return a {@link java.lang.String} object.
    */
   public static String subtractSeq(String first, String second, String delimiter) {
     if (isEmpty(first)) { return ""; }
     if (isEmpty(second)) {
       StringBuilder builder = new StringBuilder();
-      if (!first.startsWith(delimiter)) {
-        builder.append(delimiter).append(first);
-      }
-      if (!first.endsWith(delimiter)) {
-        builder.append(first).append(delimiter);
-      }
+      if (!first.startsWith(delimiter)) builder.append(delimiter).append(first);
+      if (!first.endsWith(delimiter)) builder.append(first).append(delimiter);
       return builder.toString();
     }
     List<String> firstSeq = Arrays.asList(split(first, delimiter));

@@ -57,12 +57,7 @@ public class BatchReplaceMain {
   private static Logger logger = LoggerFactory.getLogger(BatchReplaceMain.class);
 
   /**
-   * <p>
-   * main.
-   * </p>
-   * 
-   * @param args an array of {@link java.lang.String} objects.
-   * @throws java.lang.Exception if any.
+   * Usage:BatchReplaceMain dir patternfile encoding
    */
   public static void main(String[] args) throws Exception {
     if (args.length < 2) {

@@ -21,7 +21,7 @@ package org.beangle.commons.entity.metadata.impl;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import static org.beangle.commons.lang.asm.ProxyUtils.*;
+import static org.beangle.commons.lang.asm.Mirrors.*;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.ObjectAndType;
 import org.beangle.commons.entity.metadata.Populator;

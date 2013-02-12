@@ -27,6 +27,8 @@ import org.beangle.struts2.convention.route.ActionBuilder;
 import org.beangle.struts2.convention.route.ProfileService;
 import org.beangle.struts2.convention.route.impl.DefaultActionBuilder;
 import org.beangle.struts2.convention.route.impl.ProfileServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 import com.opensymphony.xwork2.ActionChainResult;
@@ -45,6 +47,7 @@ import com.opensymphony.xwork2.util.reflection.ReflectionException;
 
 @Test
 public class SmartActionConfigBuilderTest {
+  private static final Logger logger = LoggerFactory.getLogger(SmartActionConfigBuilderTest.class);
 
   public void test21() throws Exception {
     ActionBuilder actionNameBuilder = new DefaultActionBuilder();
@@ -77,15 +80,15 @@ public class SmartActionConfigBuilderTest {
     builder.buildActionConfigs();
     Set<String> names = configuration.getPackageConfigNames();
     for (String a : names) {
-      System.out.println("pkgname:" + a);
+      logger.debug("pkgname:" + a);
       PackageConfig pkgConfig = configuration.getPackageConfig(a);
-      System.out.println("namespace:" + pkgConfig.getNamespace());
+      logger.debug("namespace:" + pkgConfig.getNamespace());
       Map<String, ActionConfig> configs = pkgConfig.getAllActionConfigs();
       for (String actionName : configs.keySet()) {
         ActionConfig config = configs.get(actionName);
-        System.out.println(config.getClassName());
-        System.out.println(config.getName());
-        System.out.println(config.getMethodName());
+        logger.debug(config.getClassName());
+        logger.debug(config.getName());
+        logger.debug(config.getMethodName());
       }
     }
   }

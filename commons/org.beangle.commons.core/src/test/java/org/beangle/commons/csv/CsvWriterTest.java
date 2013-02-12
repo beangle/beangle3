@@ -29,6 +29,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.beangle.commons.lang.SystemInfo;
 import org.testng.annotations.Test;
 
 public class CsvWriterTest {
@@ -228,7 +229,7 @@ public class CsvWriterTest {
   @Test
   public void testStreamFlushing() throws IOException {
 
-    String WRITE_FILE = "myfile.csv";
+    String WRITE_FILE = SystemInfo.getTmpDir() + "/myfile.csv";
 
     String[] nextLine = new String[] { "aaaa", "bbbb", "cccc", "dddd" };
 

@@ -18,14 +18,17 @@
  */
 package org.beangle.inject.spring.config;
 
+import java.math.BigDecimal;
+
 import org.springframework.core.convert.support.DefaultConversionService;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Test
 public class ConvertTest {
 
-  public static void main(String[] args){
+  public void testSpring() {
     DefaultConversionService conversion = new DefaultConversionService();
-    System.out.println(conversion.convert("4.5", Number.class));
+    Assert.assertEquals(conversion.convert("4.5", Number.class), new BigDecimal("4.5"));
   }
 }

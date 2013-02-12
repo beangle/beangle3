@@ -25,7 +25,6 @@ import java.util.GregorianCalendar;
 import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.conversion.Converter;
-import org.beangle.commons.lang.conversion.impl.ConverterFactory;
 
 /**
  * <p>
@@ -36,7 +35,7 @@ import org.beangle.commons.lang.conversion.impl.ConverterFactory;
  * @since 3.2.0
  * @version $Id: $
  */
-public class String2DateConverter extends ConverterFactory<String, Date> {
+public class String2DateConverter extends StringConverterFactory<String, Date> {
 
   public String2DateConverter() {
     register(Date.class, new DateConverter());

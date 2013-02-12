@@ -20,10 +20,13 @@ package org.beangle.orm;
 
 import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.orm.hibernate.DefaultModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 @Test
 public class DefaultModuleTest {
+  private static final Logger logger = LoggerFactory.getLogger(DefaultModuleTest.class);
 
   public void testSpeed() {
     Stopwatch sw = new Stopwatch().start();
@@ -31,6 +34,6 @@ public class DefaultModuleTest {
       DefaultModule module = new DefaultModule();
       module.getConfig();
     }
-    System.out.println(sw);
+    logger.debug(sw.toString());
   }
 }

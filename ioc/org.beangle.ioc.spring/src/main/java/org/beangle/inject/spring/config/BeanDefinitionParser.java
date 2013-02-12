@@ -89,9 +89,7 @@ class BeanDefinitionParser {
    * @param source a {@link org.w3c.dom.Node} object.
    */
   protected void error(String message, Node source) {
-    System.out.println(message);
-    // this.readerContext.error(message, source,
-    // this.parseState.snapshot());
+    logger.error(message);
   }
 
   /**
@@ -101,9 +99,7 @@ class BeanDefinitionParser {
    * @param source a {@link org.w3c.dom.Element} object.
    */
   protected void error(String message, Element source) {
-    System.out.println(message);
-    // this.readerContext.error(message, source,
-    // this.parseState.snapshot());
+    logger.error(message);
   }
 
   /**
@@ -114,9 +110,7 @@ class BeanDefinitionParser {
    * @param cause a {@link java.lang.Throwable} object.
    */
   protected void error(String message, Element source, Throwable cause) {
-    System.out.println(message);
-    // this.readerContext.error(message, source, this.parseState.snapshot(),
-    // cause);
+    logger.error(message);
   }
 
   /**

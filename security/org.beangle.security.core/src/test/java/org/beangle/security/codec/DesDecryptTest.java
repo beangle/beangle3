@@ -16,38 +16,28 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.orm.example;
+package org.beangle.security.codec;
 
-import static org.testng.Assert.assertNotNull;
-
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.util.List;
-
-import org.beangle.commons.collection.CollectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 @Test
-public class GenericTest {
-  private final Logger logger = LoggerFactory.getLogger(GenericTest.class);
+public class DesDecryptTest {
 
-  public void testInspect() throws Exception, NoSuchMethodException {
-    Class<?> sc = Skill.class;
-    Type gs = sc.getGenericSuperclass();
-    logger.debug(gs.toString());
-    Method a = Skill.class.getMethod("getId");
-    logger.debug(a.getReturnType().toString());
+  private static final Logger logger = LoggerFactory.getLogger(DesDecryptTest.class);
 
-    List<Skill> skills = CollectUtils.newArrayList();
-    skills.add(new Skill());
-    process(skills);
-  }
+  public void test() throws Exception {
+    String key = "ABCDEFGH";
+    String value = "AABBCCDDEE";
+    DESEncrypt desEncrypt = new DESEncrypt(key.getBytes());
+    byte encryptText[] = desEncrypt.doEncrypt(value.getBytes());
+    logger.debug("doEncrypt - " + DESDecrypt.toHexString(encryptText));
+    logger.debug("doEncrypt - " + new String(encryptText));
+    DESDecrypt desDecrypt = new DESDecrypt(key.getBytes());
+    byte decryptText[] = desDecrypt.doDecrypt(encryptText);
+    logger.debug("doDecrypt - " + new String(decryptText));
+    logger.debug("doDecrypt - " + DESDecrypt.toHexString(decryptText));
 
-  private void process(List<Skill> skills) {
-    for (Skill s : skills) {
-      assertNotNull(s);
-    }
   }
 }

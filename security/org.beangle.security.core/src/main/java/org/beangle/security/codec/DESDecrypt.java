@@ -43,19 +43,6 @@ public class DESDecrypt {
     return decryptedData;
   }
 
-  public static void main(String args[]) throws Exception {
-    String key = "ABCDEFGH";
-    String value = "AABBCCDDEE";
-    DESEncrypt desEncrypt = new DESEncrypt(key.getBytes());
-    byte encryptText[] = desEncrypt.doEncrypt(value.getBytes());
-    System.out.println("doEncrypt - " + toHexString(encryptText));
-    System.out.println("doEncrypt - " + new String(encryptText));
-    DESDecrypt desDecrypt = new DESDecrypt(key.getBytes());
-    byte decryptText[] = desDecrypt.doDecrypt(encryptText);
-    System.out.println("doDecrypt - " + new String(decryptText));
-    System.out.println("doDecrypt - " + toHexString(decryptText));
-  }
-
   public static String toHexString(byte value[]) {
     String newString = "";
     for (int i = 0; i < value.length; i++) {

@@ -52,9 +52,9 @@ import org.objectweb.asm.Type;
  * @author chaostone
  * @since 3.2.0
  */
-public abstract class AccessProxy {
+public abstract class Mirror {
 
-  private static Map<Class<?>, AccessProxy> proxies = CollectUtils.newHashMap();
+  private static Map<Class<?>, Mirror> proxies = CollectUtils.newHashMap();
 
   ClassInfo classInfo;
 
@@ -92,30 +92,12 @@ public abstract class AccessProxy {
   }
 
   /**
-   * Return the value of given property.
-   * 
-   * @throws IlegalArgumentException when property not exists
-   */
-  public final Object getProperty(Object object, String property) {
-    return invoke(object, classInfo.getReadIndex(property));
-  }
-
-  /**
-   * Update the bean's property with given value.
-   * 
-   * @throws IlegalArgumentException when property not exists
-   */
-  public final void setProperty(Object bean, String property, Object value) {
-    invoke(bean, classInfo.getWriteIndex(property), value);
-  }
-
-  /**
    * Get AccessProxy of given type.
    * <p>
    * First,it search from proxies cache,if not found, then generate new proxy class using asm.
    */
-  public static final AccessProxy get(Class<?> type) {
-    AccessProxy proxy = proxies.get(type);
+  public static final Mirror get(Class<?> type) {
+    Mirror proxy = proxies.get(type);
     if (null != proxy) return proxy;
 
     synchronized (proxies) {
@@ -124,11 +106,13 @@ public abstract class AccessProxy {
 
       ClassInfo classInfo = ClassInfo.get(type);
       String className = type.getName();
-      String accessClassName = className + "AccessProxy";
+      String accessClassName = className + "Mirror";
       if (accessClassName.startsWith("java.")) accessClassName = "beangle." + accessClassName;
       Class<?> accessClass = null;
 
-      ProxyClassLoader loader = ProxyClassLoader.get(type);
+      MirrorClassLoader loader = MirrorClassLoader.get(type);
+      if (null == loader) return Mirrors.none();
+
       try {
         accessClass = loader.loadClass(accessClassName);
       } catch (ClassNotFoundException ignored) {
@@ -138,12 +122,12 @@ public abstract class AccessProxy {
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         MethodVisitor mv;
         cw.visit(V1_1, ACC_PUBLIC + ACC_SUPER, accessClassNameInternal, null,
-            "org/beangle/commons/lang/asm/AccessProxy", null);
+            "org/beangle/commons/lang/asm/Mirror", null);
         {
           mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
           mv.visitCode();
           mv.visitVarInsn(ALOAD, 0);
-          mv.visitMethodInsn(INVOKESPECIAL, "org/beangle/commons/lang/asm/AccessProxy", "<init>", "()V");
+          mv.visitMethodInsn(INVOKESPECIAL, "org/beangle/commons/lang/asm/Mirror", "<init>", "()V");
           mv.visitInsn(RETURN);
           mv.visitMaxs(0, 0);
           mv.visitEnd();
@@ -179,6 +163,7 @@ public abstract class AccessProxy {
 
               MethodInfo info = methods.get(i);
 
+              // In runtime generic method using rawtype to invoke.
               Class<?>[] paramTypes = info.method.getParameterTypes();
               for (int paramIndex = 0; paramIndex < paramTypes.length; paramIndex++) {
                 mv.visitVarInsn(ALOAD, 3);
@@ -297,7 +282,7 @@ public abstract class AccessProxy {
       }
 
       try {
-        proxy = (AccessProxy) accessClass.newInstance();
+        proxy = (Mirror) accessClass.newInstance();
         proxy.classInfo = classInfo;
         proxies.put(type, proxy);
         return proxy;

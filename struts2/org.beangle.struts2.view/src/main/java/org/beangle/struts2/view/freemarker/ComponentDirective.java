@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.beangle.commons.lang.annotation.Beta;
-import org.beangle.commons.lang.asm.ProxyUtils;
+import org.beangle.commons.lang.asm.Mirrors;
 import org.beangle.struts2.view.component.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +67,7 @@ public abstract class ComponentDirective implements TemplateDirectiveModel {
       String key = entry.getKey();
       Object value = entry.getValue();
       if (value != null) {
-        if (ProxyUtils.hasProperty(bean, key)) {
+        if (Mirrors.hasProperty(bean, key)) {
           if (value instanceof TemplateModel) {
             try {
               value = objectWrapper.unwrap((TemplateModel) value);
@@ -76,7 +76,7 @@ public abstract class ComponentDirective implements TemplateDirectiveModel {
             }
           }
           try {
-            ProxyUtils.setProperty(bean, key, value);
+            Mirrors.setProperty(bean, key, value);
           } catch (Exception e) {
             logger.error("invoke set property [" + key + "] with value " + value, e);
           }

@@ -261,8 +261,7 @@ public final class CollectUtils {
     for (Object obj : coll) {
       Object key = null;
       try {
-        // FIXME
-        // key = PropertyUtils.getProperty(obj, keyProperty);
+        key = PropertyUtils.getProperty(obj, keyProperty);
       } catch (Exception e) {
         Throwables.propagate(e);
       }
@@ -335,23 +334,68 @@ public final class CollectUtils {
     return null != coll && !coll.isEmpty();
   }
 
-  public static <T> Collection<T> union(Collection<T> first, Collection<T> second) {
-    return null;
+  public static <T> List<T> union(List<T> first, List<T> second) {
+    Map<T, Integer> mapa = getCardinalityMap(first), mapb = getCardinalityMap(second);
+    Set<T> elts = new HashSet<T>(first);
+    elts.addAll(second);
+    List<T> list = newArrayList();
+    for (T obj : elts)
+      for (int i = 0, m = Math.max(getFreq(obj, mapa), getFreq(obj, mapb)); i < m; i++)
+        list.add(obj);
+    return list;
+
   }
 
-  public static <T> Collection<T> intersection(Collection<T> first, Collection<T> second) {
-    return null;
+  public static <T> Map<T, Integer> getCardinalityMap(final List<T> coll) {
+    Map<T, Integer> count = newHashMap();
+    for (Iterator<T> it = coll.iterator(); it.hasNext();) {
+      T obj = it.next();
+      Integer c = (count.get(obj));
+      if (c == null) count.put(obj, Integer.valueOf(1));
+      else count.put(obj, new Integer(c.intValue() + 1));
+    }
+    return count;
   }
 
-  public static <T> Collection<T> subtract(Collection<T> first, Collection<T> second) {
-    return null;
+  private static final <T> int getFreq(final T obj, final Map<T, Integer> freqMap) {
+    Integer count = freqMap.get(obj);
+    return (count != null) ? count.intValue() : 0;
   }
 
-  public static <T> void filter(List<T> datas, Predicate<T> predicate) {
+  public static <T> List<T> intersection(List<T> first, List<T> second) {
+    List<T> list = CollectUtils.newArrayList();
+    Map<T, Integer> mapa = getCardinalityMap(first), mapb = getCardinalityMap(second);
+    Set<T> elts = new HashSet<T>(first);
+    elts.addAll(second);
+    for (T obj : elts)
+      for (int i = 0, m = Math.min(getFreq(obj, mapa), getFreq(obj, mapb)); i < m; i++)
+        list.add(obj);
+    return list;
+  }
 
+  public static <T> List<T> subtract(List<T> first, List<T> second) {
+    List<T> list = newArrayList(first);
+    for (T t : second)
+      list.remove(t);
+    return list;
+  }
+
+  public static <T> void filter(Collection<T> datas, Predicate<T> predicate) {
+    for (Iterator<T> it = datas.iterator(); it.hasNext();) 
+      if (predicate.apply(it.next())) it.remove();
   }
 
   public static <T> List<T> select(List<T> datas, Predicate<T> predicate) {
-    return null;
+    List<T> rs = CollectUtils.newArrayList();
+    for (T t : datas)
+      if (predicate.apply(t)) rs.add(t);
+    return rs;
+  }
+
+  public static <T> Set<T> select(Set<T> datas, Predicate<T> predicate) {
+    Set<T> rs = CollectUtils.newHashSet();
+    for (T t : datas)
+      if (predicate.apply(t)) rs.add(t);
+    return rs;
   }
 }

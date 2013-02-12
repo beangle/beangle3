@@ -20,12 +20,15 @@ package org.beangle.inject.spring.config;
 
 import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.commons.text.regex.AntPathPattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.AntPathMatcher;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Test
 public class AntPathMatcherTest {
+  private static final Logger logger = LoggerFactory.getLogger(AntPathMatcherTest.class);
 
   public void testSpring() {
     AntPathMatcher matcher = new AntPathMatcher();
@@ -51,7 +54,7 @@ public class AntPathMatcherTest {
     for (int i = 0; i < n; i++) {
       matcher.match("org/**/servlet/bla.jsp", "org/beangle/servlet/bla.jsp");
     }
-    System.out.println("Spring AntPathMatcher " + n + "'s match using " + sw);
+    logger.debug("Spring AntPathMatcher " + n + "'s match using " + sw);
   }
 
   public void testBeanglePerf() {
@@ -61,7 +64,7 @@ public class AntPathMatcherTest {
     for (int i = 0; i < n; i++) {
       pattern.match("org/beangle/servlet/bla.jsp");
     }
-    System.out.println("Beangle AntPattern " + n + "'s match using " + sw);
+    logger.debug("Beangle AntPattern " + n + "'s match using " + sw);
   }
 
 }

@@ -22,11 +22,13 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 import org.beangle.commons.lang.time.Stopwatch;
-import org.beangle.inject.spring.bean.SomeAction;
 import org.beangle.inject.spring.bean.ResourcesConsumer;
+import org.beangle.inject.spring.bean.SomeAction;
 import org.beangle.inject.spring.bean.TestService;
 import org.beangle.inject.spring.bean.UserDaoProvider;
 import org.beangle.inject.spring.bean.UserLdapProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.testng.annotations.Test;
@@ -39,6 +41,8 @@ import org.testng.annotations.Test;
 @Test
 public class AutoConfigProcessorTest {
 
+  private static final Logger logger = LoggerFactory.getLogger(AutoConfigProcessorTest.class);
+
   /**
    * Test get normal and factory bean.
    */
@@ -48,7 +52,7 @@ public class AutoConfigProcessorTest {
         "/org/beangle/inject/spring/context-auto.xml");
     testBean(factory);
     testFactoryBean(factory);
-    System.out.println("config  context-auto completed using " + watch);
+    logger.debug("config  context-auto completed using " + watch);
   }
 
   public void testAdvance() {
@@ -57,12 +61,10 @@ public class AutoConfigProcessorTest {
         "/org/beangle/inject/spring/context-auto.xml");
     // test Alias
     assertNotNull(factory.getBean(TestService.class.getName()));
-    ResourcesConsumer consumer = (ResourcesConsumer) factory
-        .getBean(ResourcesConsumer.class.getName());
+    ResourcesConsumer consumer = (ResourcesConsumer) factory.getBean(ResourcesConsumer.class.getName());
     assertNotNull(consumer);
     assertNotNull(consumer.getResources());
-    System.out.println("config  advance context-auto completed using " + watch);
-
+    logger.debug("config  advance context-auto completed using " + watch);
   }
 
   private void testFactoryBean(ApplicationContext factory) {

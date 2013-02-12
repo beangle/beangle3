@@ -19,7 +19,6 @@
 package org.beangle.commons.lang.conversion.converter;
 
 import org.beangle.commons.lang.conversion.Converter;
-import org.beangle.commons.lang.conversion.impl.ConverterFactory;
 
 /**
  * Convert String to Enumeration.
@@ -27,7 +26,7 @@ import org.beangle.commons.lang.conversion.impl.ConverterFactory;
  * @author chaostone
  * @since 3.2.0
  */
-public class String2EnumConverter extends ConverterFactory<String, Enum<?>> {
+public class String2EnumConverter extends StringConverterFactory<String, Enum<?>> {
 
   public String2EnumConverter() {
     super();
@@ -36,7 +35,7 @@ public class String2EnumConverter extends ConverterFactory<String, Enum<?>> {
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public <T extends Enum<?>> Converter<String, T> getConverter(Class<T> targetType) {
-    Converter<String, T> converter = getConverter(targetType);
+    Converter<String, T> converter = super.getConverter(targetType);
     if (null == converter) {
       converter = new EnumConverter(targetType);
       register(targetType, converter);

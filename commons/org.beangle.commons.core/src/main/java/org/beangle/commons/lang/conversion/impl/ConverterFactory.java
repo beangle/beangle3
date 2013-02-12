@@ -45,15 +45,22 @@ public abstract class ConverterFactory<S, R> implements GenericConverter {
     return (Converter<S, T>) converters.get(targetType);
   }
 
+  private Class<?> classof(Type type) {
+    if (type instanceof Class<?>) {
+      return (Class<?>) type;
+    } else if (type instanceof ParameterizedType) { return (Class<?>) ((ParameterizedType) type).getRawType(); }
+    return null;
+  }
+
   @Override
   public Pair<Class<?>, Class<?>> getTypeinfo() {
     Type superType = getClass().getGenericSuperclass();
     if ((superType instanceof ParameterizedType)) {
       ParameterizedType ptype = (ParameterizedType) superType;
-      return Pair.<Class<?>, Class<?>> of((Class<?>) ptype.getActualTypeArguments()[0],
-          (Class<?>) ptype.getActualTypeArguments()[1]);
+      return Pair.<Class<?>, Class<?>> of(classof(ptype.getActualTypeArguments()[0]),
+          classof(ptype.getActualTypeArguments()[1]));
     } else {
-      throw new RuntimeException("Cannot identify typeif of " + getClass());
+      throw new RuntimeException("Cannot identify type of " + getClass());
     }
   }
 

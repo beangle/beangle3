@@ -18,7 +18,9 @@
  */
 package org.beangle.commons.lang.conversion.converter;
 
-import org.beangle.commons.lang.Assert;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import org.beangle.commons.lang.conversion.Converter;
 import org.beangle.commons.lang.conversion.impl.ConverterFactory;
 
@@ -31,16 +33,61 @@ import org.beangle.commons.lang.conversion.impl.ConverterFactory;
 public class Number2NumberConverter extends ConverterFactory<Number, Number> {
 
   public Number2NumberConverter() {
+    register(Integer.class, new ShortConverter());
     register(Integer.class, new IntConverter());
+    register(Long.class, new LongConverter());
+    register(Float.class, new FloatConverter());
+    register(Double.class, new DoubleConverter());
+    register(BigInteger.class, new BigIntegerConverter());
+    register(BigDecimal.class, new BigDecimalConverter());
+  }
+
+  private static class ShortConverter implements Converter<Number, Short> {
+    @Override
+    public Short apply(Number number) {
+      return Short.valueOf(number.shortValue());
+    }
   }
 
   private static class IntConverter implements Converter<Number, Integer> {
     @Override
     public Integer apply(Number number) {
-      long value = number.longValue();
-      Assert.isTrue(value >= Integer.MIN_VALUE && value <= Integer.MAX_VALUE);
-      return new Integer(number.intValue());
+      return Integer.valueOf(number.intValue());
     }
   }
 
+  private static class LongConverter implements Converter<Number, Long> {
+    @Override
+    public Long apply(Number number) {
+      return Long.valueOf(number.intValue());
+    }
+  }
+
+  private static class FloatConverter implements Converter<Number, Float> {
+    @Override
+    public Float apply(Number number) {
+      return Float.valueOf(number.floatValue());
+    }
+  }
+
+  private static class DoubleConverter implements Converter<Number, Double> {
+    @Override
+    public Double apply(Number number) {
+      return Double.valueOf(number.doubleValue());
+    }
+  }
+
+  private static class BigIntegerConverter implements Converter<Number, BigInteger> {
+    @Override
+    public BigInteger apply(Number number) {
+      return BigInteger.valueOf(number.longValue());
+    }
+  }
+
+  private static class BigDecimalConverter implements Converter<Number, BigDecimal> {
+    @Override
+    public BigDecimal apply(Number number) {
+      return new BigDecimal(number.toString());
+    }
+  }
 }

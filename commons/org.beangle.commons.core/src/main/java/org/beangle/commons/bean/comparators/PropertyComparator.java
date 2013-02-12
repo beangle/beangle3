@@ -22,7 +22,7 @@ import java.util.Comparator;
 
 import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.asm.ProxyUtils;
+import org.beangle.commons.lang.asm.Mirrors;
 
 /**
  * 属性比较器。<br>
@@ -106,12 +106,12 @@ public class PropertyComparator implements Comparator<Object> {
     }
     if (Strings.isNotEmpty(cmpWhat)) {
       try {
-        what0 = ProxyUtils.getProperty(arg0, cmpWhat);
+        what0 = Mirrors.getProperty(arg0, cmpWhat);
       } catch (Exception e) {
         throw new RuntimeException(e);
       }
       try {
-        what1 = ProxyUtils.getProperty(arg1, cmpWhat);
+        what1 = Mirrors.getProperty(arg1, cmpWhat);
       } catch (Exception e) {
         throw new RuntimeException(e);
       }

@@ -16,38 +16,45 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.expr;
+package org.beangle.commons.script;
+
+
 
 /**
- * <p>
- * EvaluationException class.
- * </p>
+ * 表达式执行器
  * 
  * @author chaostone
- * @version $Id: EvaluationException.java Mar 5, 2012 12:13:41 AM chaostone $
+ * @version $Id: ExpressionEvaluator.java Mar 5, 2012 12:13:41 AM chaostone $
+ * @since 2012-03-05
  */
-public class EvaluationException extends RuntimeException {
-
-  private static final long serialVersionUID = 7366966661039007890L;
+public interface ExpressionEvaluator {
+  /**
+   * Parse the expression
+   * @param exp
+   * @throws EvaluationException
+   */
+  void parse(String exp) throws EvaluationException;
+  /**
+   * <p>
+   * Eval a expression within context
+   * </p>
+   * 
+   * @param exp a java's expression
+   * @param root params.
+   * @return evaluate result
+   */
+  Object eval(String exp, Object root);
 
   /**
    * <p>
-   * Constructor for EvaluationException.
+   * Eval a expression within context,Return the given type
    * </p>
    * 
-   * @param cause a {@link java.lang.Throwable} object.
+   * @param exp a java's expression
+   * @param root params.
+   * @param resultType What type of the result
+   * @return evaluate result
    */
-  public EvaluationException(Throwable cause) {
-    super(cause);
-  }
+  <T> T eval(String exp, Object root, Class<T> resultType);
 
-  /**
-   * Constructs the exception using a message and cause.
-   * 
-   * @param message the message to use
-   * @param cause the underlying cause
-   */
-  public EvaluationException(String message, Throwable cause) {
-    super(message, cause);
-  }
 }

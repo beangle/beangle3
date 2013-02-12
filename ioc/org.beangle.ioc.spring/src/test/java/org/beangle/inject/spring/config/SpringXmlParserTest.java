@@ -20,13 +20,15 @@ package org.beangle.inject.spring.config;
 
 import java.util.List;
 
-import org.beangle.inject.spring.config.BeanDefinitionReader;
-import org.beangle.inject.spring.config.ReconfigBeanDefinitionHolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.testng.annotations.Test;
 
 @Test
 public class SpringXmlParserTest {
+
+  private static final Logger logger = LoggerFactory.getLogger(SpringXmlParserTest.class);
 
   public void test() throws Exception {
     parser("org/beangle/inject/spring/context.xml");
@@ -35,7 +37,7 @@ public class SpringXmlParserTest {
   private void parser(String path) throws Exception {
     List<ReconfigBeanDefinitionHolder> holders = new BeanDefinitionReader().load(new ClassPathResource(path));
     for (ReconfigBeanDefinitionHolder holder : holders) {
-      System.out.println(holder);
+      logger.debug(holder.toString());
     }
   }
 }

@@ -26,5 +26,12 @@ package org.beangle.commons.lang.conversion;
  */
 public interface Conversion {
 
+  /**
+   * Convert to target type.
+   * <ul>
+   * <li>convert null to null;
+   * <li>convert array to array ,when cannot find converter return targetType[0]
+   * </ul>
+   */
   <T> T convert(Object source, Class<T> targetType);
 }

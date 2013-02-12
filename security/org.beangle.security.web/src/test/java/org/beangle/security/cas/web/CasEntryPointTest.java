@@ -33,10 +33,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.beangle.security.cas.CasConfig;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 @Test
 public class CasEntryPointTest {
+
+  private static final Logger logger = LoggerFactory.getLogger(CasEntryPointTest.class);
 
   @Test(expectedExceptions = NullPointerException.class)
   public void testDetectsMissingUrl() throws Exception {
@@ -118,11 +122,11 @@ public class CasEntryPointTest {
     HttpServletResponse response = mock(HttpServletResponse.class);
     final String urlEncodedService = CasEntryPoint.constructServiceUrl(request, response, null,
         CasConfig.getLocalServer(request), "ticket", config.isEncode());
-    System.out.println(urlEncodedService);
+    logger.debug(urlEncodedService);
 
     final String urlEncodedService2 = CasEntryPoint.constructServiceUrl(request, response, null,
         "localhost:8080", "ticket", config.isEncode());
-    System.out.println(urlEncodedService2);
+    logger.debug(urlEncodedService2);
   }
 
 }

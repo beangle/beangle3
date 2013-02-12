@@ -20,11 +20,11 @@ package org.beangle.commons.transfer.exporter;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.expr.EvaluationException;
-import org.beangle.commons.expr.ExpressionEvaluator;
+import org.beangle.commons.lang.asm.Mirrors;
 import org.beangle.commons.text.i18n.TextResource;
 
 /**
@@ -36,9 +36,6 @@ import org.beangle.commons.text.i18n.TextResource;
 public class DefaultPropertyExtractor implements PropertyExtractor {
 
   protected TextResource textResource = null;
-
-  //FIXME expressionEvaluator
-  protected ExpressionEvaluator expressionEvaluator = null;
 
   protected Set<String> errorProperties = CollectUtils.newHashSet();
 
@@ -74,12 +71,8 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
    */
   protected Object extract(Object target, String property) throws Exception {
     if (errorProperties.contains(property)) return null;
-    Object value = null;
-    try {
-      value = expressionEvaluator.eval(property, target);
-    } catch (EvaluationException e) {
-      return null;
-    }
+    if(target instanceof Map<?,?>) return ((Map<?,?>)target).get(property);
+    Object value = Mirrors.getProperty(target, property);
     if (value instanceof Boolean) {
       if (null == textResource) {
         return value;
@@ -159,14 +152,6 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
 
   public void setTextResource(TextResource textResource) {
     this.textResource = textResource;
-  }
-
-  public ExpressionEvaluator getExpressionEvaluator() {
-    return expressionEvaluator;
-  }
-
-  public void setExpressionEvaluator(ExpressionEvaluator expressionEvaluator) {
-    this.expressionEvaluator = expressionEvaluator;
   }
 
 }

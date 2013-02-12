@@ -38,7 +38,6 @@ public class MsnNotifier implements Notifier<Message> {
     // msn.setInitialStatus(UserStatus.ONLINE);
     // // msn.addMsnListener(new MSNAdapter(msn));
     // msn.login();
-    // System.out.println("Waiting for the response....");
     // 捕捉Ctrl+C的输入以便注销MSN的登录
     // Runtime.getRuntime().addShutdownHook(new MSNDaemon());
 

@@ -16,20 +16,38 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.notification.console;
+package org.beangle.commons.script;
 
-import org.beangle.commons.notification.Message;
-import org.beangle.commons.notification.Notifier;
-import org.beangle.commons.notification.SimpleMessage;
-import org.testng.annotations.Test;
+/**
+ * <p>
+ * EvaluationException class.
+ * </p>
+ * 
+ * @author chaostone
+ * @version $Id: EvaluationException.java Mar 5, 2012 12:13:41 AM chaostone $
+ */
+public class EvaluationException extends RuntimeException {
 
-public class ConsoleNotifierTest {
+  private static final long serialVersionUID = 7366966661039007890L;
 
-  @Test
-  public void testSendMessage() throws Exception {
-    Notifier<Message> notifier = new ConsoleNotifier();
-    SimpleMessage context = new SimpleMessage();
-    context.setText("hello world");
-    notifier.deliver(context);
+  /**
+   * <p>
+   * Constructor for EvaluationException.
+   * </p>
+   * 
+   * @param cause a {@link java.lang.Throwable} object.
+   */
+  public EvaluationException(Throwable cause) {
+    super(cause);
+  }
+
+  /**
+   * Constructs the exception using a message and cause.
+   * 
+   * @param message the message to use
+   * @param cause the underlying cause
+   */
+  public EvaluationException(String message, Throwable cause) {
+    super(message, cause);
   }
 }

@@ -19,9 +19,19 @@
 package org.beangle.commons.lang.testbean;
 
 public class TestBean {
+  private Integer id;
   private String name;
   private int intValue;
   TestEnum testEnum;
+
+  
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
   public TestEnum getTestEnum() {
     return testEnum;

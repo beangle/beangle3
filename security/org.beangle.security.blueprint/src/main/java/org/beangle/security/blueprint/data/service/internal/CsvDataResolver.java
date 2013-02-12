@@ -25,7 +25,7 @@ import java.util.List;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.asm.ProxyUtils;
+import org.beangle.commons.lang.asm.Mirrors;
 import org.beangle.commons.lang.conversion.Conversion;
 import org.beangle.commons.lang.conversion.impl.DefaultConversion;
 import org.beangle.security.blueprint.data.ProfileField;
@@ -44,9 +44,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
   public String marshal(ProfileField property, Collection<?> items) {
     if (null == items) { return null; }
     List<String> properties = CollectUtils.newArrayList();
-    if (null != property.getType().getKeyName()) {
-      properties.add(property.getType().getKeyName());
-    }
+    if (null != property.getType().getKeyName()) properties.add(property.getType().getKeyName());
     if (null != property.getType().getProperties()) {
       String[] names = Strings.split(property.getType().getProperties(), ",");
       properties.addAll(Arrays.asList(names));
@@ -54,20 +52,18 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
     StringBuilder sb = new StringBuilder();
     if (properties.isEmpty()) {
       for (Object obj : items) {
-        if (null != obj) {
-          sb.append(String.valueOf(obj)).append(',');
-        }
+        if (null != obj) sb.append(String.valueOf(obj)).append(',');
       }
     } else {
-      for (String prop : properties) {
+      for (String prop : properties)
         sb.append(prop).append(';');
-      }
+
       sb.deleteCharAt(sb.length() - 1).append(',');
       for (Object obj : items) {
         for (String prop : properties) {
           Object value = null;
           try {
-            value = ProxyUtils.getProperty(obj, prop);
+            value = Mirrors.getProperty(obj, prop);
           } catch (Exception e) {
             e.printStackTrace();
           }
@@ -87,9 +83,8 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
   public <T> List<T> unmarshal(ProfileField property, String source) {
     if (Strings.isEmpty(source)) { return Collections.emptyList(); }
     List<String> properties = CollectUtils.newArrayList();
-    if (null != property.getType().getKeyName()) {
-      properties.add(property.getType().getKeyName());
-    }
+    if (null != property.getType().getKeyName()) properties.add(property.getType().getKeyName());
+
     if (null != property.getType().getProperties()) {
       String[] names = Strings.split(property.getType().getProperties(), ",");
       properties.addAll(Arrays.asList(names));
@@ -117,7 +112,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
           Object obj = type.newInstance();
           String[] dataItems = Strings.split(datas[i], ";");
           for (int j = 0; j < properties.size(); j++) {
-            ProxyUtils.setProperty(obj, properties.get(j), dataItems[j]);
+            Mirrors.copyProperty(obj, properties.get(j), dataItems[j]);
           }
           rs.add((T) obj);
         }

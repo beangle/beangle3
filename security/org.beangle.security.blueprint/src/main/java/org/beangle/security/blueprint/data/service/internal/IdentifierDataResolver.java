@@ -27,7 +27,7 @@ import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.asm.ProxyUtils;
+import org.beangle.commons.lang.asm.Mirrors;
 import org.beangle.commons.lang.conversion.impl.ConvertUtils;
 import org.beangle.commons.lang.reflect.Reflections;
 import org.beangle.security.blueprint.data.ProfileField;
@@ -43,7 +43,7 @@ public class IdentifierDataResolver implements UserDataResolver {
       try {
         Object value = obj;
         if (null != field.getType().getKeyName())
-          value = ProxyUtils.getProperty(obj, field.getType().getKeyName());
+          value = Mirrors.getProperty(obj, field.getType().getKeyName());
         sb.append(String.valueOf(value)).append(',');
       } catch (Exception e) {
         e.printStackTrace();

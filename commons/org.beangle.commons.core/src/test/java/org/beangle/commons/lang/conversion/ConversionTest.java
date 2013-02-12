@@ -19,13 +19,19 @@
 package org.beangle.commons.lang.conversion;
 
 import org.beangle.commons.lang.conversion.impl.DefaultConversion;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Test
 public class ConversionTest {
 
-  public static  void main(String[] args){
-    DefaultConversion con=new DefaultConversion();
-    System.out.println(con.convert(2.5f, Integer.class));
+  public void testConvert() {
+    DefaultConversion con = new DefaultConversion();
+    Assert.assertEquals(con.convert(2.5f, Integer.class), new Integer(2));
+  }
+
+  public void testConvertArray() {
+    DefaultConversion con = new DefaultConversion();
+    Assert.assertEquals(con.convert(new String[] { "2", "3" }, Integer[].class), new Integer[] { 2, 3 });
   }
 }

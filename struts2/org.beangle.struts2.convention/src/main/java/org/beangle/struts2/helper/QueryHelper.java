@@ -38,7 +38,7 @@ import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.asm.ProxyUtils;
+import org.beangle.commons.lang.asm.Mirrors;
 import org.beangle.commons.web.util.CookieUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,7 +100,7 @@ public class QueryHelper {
           } else {
             Model.getPopulator()
                 .populateValue(entity, Model.getType(entity.getClass()), attr, strValue);
-            Object setValue = ProxyUtils.getProperty(entity, attr);
+            Object setValue = Mirrors.getProperty(entity, attr);
             if (null == setValue) continue;
             if (setValue instanceof String) {
               conditions.add(new Condition(prefix + "." + attr + " like :" + attr.replace('.', '_'), "%"

@@ -20,10 +20,13 @@ package org.beangle.struts2.convention.route;
 
 import static org.testng.Assert.assertTrue;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 @Test
 public class ProfileTest {
+  private static final Logger logger = LoggerFactory.getLogger(ProfileTest.class);
 
   @Test
   public void testExactlyMatchIndex() throws Exception {
@@ -71,7 +74,7 @@ public class ProfileTest {
       assertTrue("org.beangle.example.ddd.aa.web.action.".length() - 1 == profile
           .getCtlMatchInfo("org.beangle.example.ddd.aa.web.action.AAAction").startIndex);
     }
-    System.out.println(System.currentTimeMillis() - start);
+    logger.debug(String.valueOf(System.currentTimeMillis() - start));
   }
 
   public void testInPackage() {
