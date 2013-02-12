@@ -191,6 +191,7 @@ public class ProfileServiceImpl implements ProfileService {
       if (null == value) value = Mirrors.getProperty(defaultProfile, attr);
       Mirrors.copyProperty(profile, attr, value);
     } catch (Exception e) {
+      e.printStackTrace();
       logger.error("error attr {} for profile", attr);
     }
   }

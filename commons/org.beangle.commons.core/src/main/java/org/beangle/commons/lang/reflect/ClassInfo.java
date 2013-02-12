@@ -187,7 +187,7 @@ public final class ClassInfo {
       Class<?> nextClass = type;
       int index = 0;
       Map<String, Class<?>> nextParamTypes = null;
-      while (nextClass != Object.class) {
+      while (null != nextClass && Object.class != nextClass) {
         Method[] declaredMethods = nextClass.getDeclaredMethods();
         for (int i = 0, n = declaredMethods.length; i < n; i++) {
           Method method = declaredMethods[i];

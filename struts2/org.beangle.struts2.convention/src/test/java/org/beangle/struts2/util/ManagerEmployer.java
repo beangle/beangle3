@@ -16,21 +16,34 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.inject.spring.config;
+package org.beangle.struts2.util;
 
-import java.math.BigDecimal;
+import java.sql.Date;
 
-import org.springframework.core.convert.support.DefaultConversionService;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.beangle.commons.entity.pojo.IntegerIdObject;
 
-@Test
-public class ConvertTest {
+public class ManagerEmployer extends IntegerIdObject {
 
-  public void testSpring() {
-    DefaultConversionService conversion = new DefaultConversionService();
-    Assert.assertEquals(conversion.convert("4.5", Number.class), new BigDecimal("4.5"));
-    
-    Assert.assertEquals((boolean)conversion.convert("true", boolean.class), true);
+  private static final long serialVersionUID = 1371741254315503984L;
+
+  ContractInfo contractInfo;
+
+  Date birthday;
+
+  public ContractInfo getContractInfo() {
+    return contractInfo;
   }
+
+  public void setContractInfo(ContractInfo contractInfo) {
+    this.contractInfo = contractInfo;
+  }
+
+  public Date getBirthday() {
+    return birthday;
+  }
+
+  public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+  }
+
 }

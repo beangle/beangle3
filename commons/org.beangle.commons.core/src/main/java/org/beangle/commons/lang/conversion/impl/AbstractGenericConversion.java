@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.Primitives;
 import org.beangle.commons.lang.conversion.Conversion;
 import org.beangle.commons.lang.conversion.Converter;
 import org.beangle.commons.lang.conversion.ConverterRegistry;
@@ -159,20 +160,22 @@ public abstract class AbstractGenericConversion implements Conversion, Converter
   @Override
   public <T> T convert(Object source, Class<T> targetType) {
     if (null == source) return null;
-    Class<?> sourceType = source.getClass();
+    
+    Class<?> sourceType = Primitives.wrap(source.getClass());
+    targetType = Primitives.wrap(targetType);
+
     if (targetType.isAssignableFrom(sourceType)) return (T) source;
 
     if (sourceType.isArray() && targetType.isArray()) {
-      Class<?> sourceComponentType = sourceType.getComponentType();
-      Class<?> targetComponentType = targetType.getComponentType();
-      GenericConverter converter = findConverter(sourceComponentType, targetComponentType);
+      Class<?> sourceObjType = Primitives.wrap(sourceType.getComponentType());
+      Class<?> targetObjType = Primitives.wrap(targetType.getComponentType());
+      GenericConverter converter = findConverter(sourceObjType, targetObjType);
       if (null == converter) return (T) Array.newInstance(targetType.getComponentType(), 0);
       else {
         int length = Array.getLength(source);
         T result = (T) Array.newInstance(targetType.getComponentType(), length);
         for (int i = 0; i < length; i++)
-          Array.set(result, i,
-              converter.convert(Array.get(source, i), sourceComponentType, targetComponentType));
+          Array.set(result, i, converter.convert(Array.get(source, i), sourceObjType, targetObjType));
         return result;
       }
     } else {

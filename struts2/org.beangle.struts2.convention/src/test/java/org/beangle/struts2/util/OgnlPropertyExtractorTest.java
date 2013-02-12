@@ -25,8 +25,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.entity.metadata.ContractInfo;
-import org.beangle.commons.entity.metadata.ManagerEmployer;
 import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.commons.transfer.exporter.PropertyExtractor;
 import org.slf4j.Logger;

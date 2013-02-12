@@ -34,4 +34,17 @@ public class ConversionTest {
     DefaultConversion con = new DefaultConversion();
     Assert.assertEquals(con.convert(new String[] { "2", "3" }, Integer[].class), new Integer[] { 2, 3 });
   }
+
+  public void testConvertPrimitive() {
+    DefaultConversion con = new DefaultConversion();
+    Assert.assertEquals((int) con.convert("2", int.class), 2);
+
+    Assert.assertEquals(con.convert(3, Integer.class), new Integer(3));
+  }
+
+  public void testConvertPrimitiveArray() {
+    DefaultConversion con = new DefaultConversion();
+    Assert.assertEquals((float[]) con.convert(new String[] { "2", "3.4" }, float[].class), new float[] { 2f,
+        3.4f });
+  }
 }

@@ -20,6 +20,7 @@ package org.beangle.commons.lang.asm;
 
 import static org.objectweb.asm.Opcodes.*;
 
+import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -271,13 +272,13 @@ public abstract class Mirror {
         }
         cw.visitEnd();
         byte[] data = cw.toByteArray();
-        // FileOutputStream a;
-        // try {
-        // a = new java.io.FileOutputStream("/tmp/" + accessClassName + ".class");
-        // a.write(data);
-        // } catch (Exception e) {
-        // e.printStackTrace();
-        // }
+         FileOutputStream a;
+         try {
+         a = new java.io.FileOutputStream("/tmp/" + accessClassName + ".class");
+         a.write(data);
+         } catch (Exception e) {
+         e.printStackTrace();
+         }
         accessClass = loader.defineClass(accessClassName, data);
       }
 
