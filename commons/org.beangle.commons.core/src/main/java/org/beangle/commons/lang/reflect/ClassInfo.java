@@ -235,4 +235,8 @@ public final class ClassInfo {
       return exist;
     }
   }
+
+  public Set<String> getWritableProperties() {
+    return CollectUtils.newHashSet(propertyWriteMethods.keySet());
+  }
 }

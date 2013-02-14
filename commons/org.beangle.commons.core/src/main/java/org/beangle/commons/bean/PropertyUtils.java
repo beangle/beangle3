@@ -18,6 +18,8 @@
  */
 package org.beangle.commons.bean;
 
+import java.util.Set;
+
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.Throwables;
 import org.beangle.commons.lang.conversion.Conversion;
@@ -93,4 +95,18 @@ public class PropertyUtils {
       Throwables.propagate(e);
     }
   }
+
+  public static boolean isWriteable(Object bean, String name) {
+    ClassInfo classInfo = ClassInfo.get(bean.getClass());
+    return null != classInfo.getWriter(name);
+  }
+
+  public static Class<?> getPropertyType(Class<?> clazz, String name) {
+    return ClassInfo.get(clazz).getPropertyType(name);
+  }
+
+  public static Set<String> getWritableProperties(Class<?> clazz) {
+    return ClassInfo.get(clazz).getWritableProperties();
+  }
+
 }

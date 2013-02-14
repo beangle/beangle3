@@ -60,8 +60,8 @@ public class DefaultNotificationTask<T extends Message> implements NotificationT
   }
 
   public void send() {
-    while (queue.size() > 0) {
-      T msg = queue.remove();
+    T msg = queue.poll();
+    while (null != msg) {
       try {
         if (null != observer) observer.onStart(msg);
         notifier.deliver(msg);
@@ -74,6 +74,7 @@ public class DefaultNotificationTask<T extends Message> implements NotificationT
         logger.error("send error", e);
       }
       if (null != observer) observer.onFinish(msg);
+      msg = queue.poll();
     }
   }
 

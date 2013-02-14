@@ -20,40 +20,34 @@ package org.beangle.commons.notification.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
-import org.apache.commons.collections.Buffer;
-import org.apache.commons.collections.BufferUtils;
-import org.apache.commons.collections.buffer.UnboundedFifoBuffer;
 import org.beangle.commons.notification.Message;
 import org.beangle.commons.notification.MessageQueue;
 
 public class DefaultMessageQueue<T extends Message> implements MessageQueue<T> {
 
-  //FIXME buffer
-  private Buffer contextBuffer = BufferUtils.synchronizedBuffer(new UnboundedFifoBuffer());
+  private Queue<T> queue = new LinkedBlockingQueue<T>();
 
-  @SuppressWarnings("unchecked")
   public List<T> getMessages() {
-    return new ArrayList<T>(contextBuffer);
+    return new ArrayList<T>(queue);
   }
 
-  @SuppressWarnings("unchecked")
   public void addMessage(T message) {
-    contextBuffer.add(message);
+    queue.add(message);
   }
 
-  @SuppressWarnings("unchecked")
   public void addMessages(List<T> contexts) {
-    contextBuffer.addAll(contexts);
+    queue.addAll(contexts);
   }
 
-  @SuppressWarnings("unchecked")
-  public T remove() {
-    return (T) contextBuffer.remove();
+  public T poll() {
+    return (T) queue.poll();
   }
 
   public int size() {
-    return contextBuffer.size();
+    return queue.size();
   }
 
 }

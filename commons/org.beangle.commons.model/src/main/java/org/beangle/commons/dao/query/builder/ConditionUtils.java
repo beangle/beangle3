@@ -20,7 +20,7 @@ package org.beangle.commons.dao.query.builder;
 
 import java.util.*;
 
-import org.apache.commons.beanutils.PropertyUtils;
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.Component;
 import org.beangle.commons.entity.Entity;
@@ -67,26 +67,15 @@ public final class ConditionUtils {
     final List<Condition> conditions = new ArrayList<Condition>();
 
     StringBuilder aliasBuilder = new StringBuilder(alias == null ? "" : alias);
-    if (aliasBuilder.length() > 0 && !alias.endsWith(".")) {
-      aliasBuilder.append(".");
-    }
+    if (aliasBuilder.length() > 0 && !alias.endsWith(".")) aliasBuilder.append(".");
     String attr = "";
     try {
-      @SuppressWarnings("unchecked")
-      final Set<String> props = PropertyUtils.describe(entity).keySet();
+      final Set<String> props = PropertyUtils.getWritableProperties(entity.getClass());
       for (final Iterator<String> iter = props.iterator(); iter.hasNext();) {
         attr = iter.next();
-        // 条件描述的应该是属性
-        if (!PropertyUtils.isWriteable(entity, attr)) {
-          continue;
-        }
         final Object value = PropertyUtils.getProperty(entity, attr);
-        if (null == value) {
-          continue;
-        }
-        if (!(value instanceof Collection<?>)) {
-          addAttrCondition(conditions, alias + attr, value);
-        }
+        if (null == value) continue;
+        if (!(value instanceof Collection<?>)) addAttrCondition(conditions, alias + attr, value);
       }
     } catch (Exception e) {
       logger.debug("error occur in extractConditions for  bean {} with attr named {}", entity, attr);
@@ -165,28 +154,18 @@ public final class ConditionUtils {
     final List<Condition> conditions = CollectUtils.newArrayList();
     String attr = "";
     try {
-      @SuppressWarnings("unchecked")
-      final Set<String> props = PropertyUtils.describe(component).keySet();
+      final Set<String> props = PropertyUtils.getWritableProperties(component.getClass());
       for (final Iterator<String> iter = props.iterator(); iter.hasNext();) {
         attr = iter.next();
-        if ("class".equals(attr)) {
-          continue;
-        }
-        if (!PropertyUtils.isWriteable(component, attr)) {
-          continue;
-        }
         final Object value = PropertyUtils.getProperty(component, attr);
         if (value == null) {
           continue;
         } else if (value instanceof Collection<?>) {
-          if (((Collection<?>) value).isEmpty()) {
-            continue;
-          }
+          if (((Collection<?>) value).isEmpty()) continue;
         } else {
           addAttrCondition(conditions, prefix + "." + attr, value);
         }
       }
-
     } catch (Exception e) {
       logger.warn("error occur in extractComponent of component:" + component + "with attr named :" + attr);
     }

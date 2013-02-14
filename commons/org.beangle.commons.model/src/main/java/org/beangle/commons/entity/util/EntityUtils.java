@@ -23,8 +23,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanMap;
-import org.apache.commons.beanutils.PropertyUtils;
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.TemporalEntity;
@@ -144,21 +143,11 @@ public final class EntityUtils {
    *          忽略数字和字符串的默认值
    * @return a boolean.
    */
-  @SuppressWarnings("unchecked")
   public static boolean isEmpty(Entity<?> entity, boolean ignoreDefault) {
-    BeanMap map = new BeanMap(entity);
-    List<String> attList = CollectUtils.newArrayList();
-    attList.addAll(map.keySet());
-    attList.remove("class");
     try {
-      for (final String attr : attList) {
-        if (!PropertyUtils.isWriteable(entity, attr)) {
-          continue;
-        }
-        Object value = map.get(attr);
-        if (null == value) {
-          continue;
-        }
+      for (final String attr : PropertyUtils.getWritableProperties(entity.getClass())) {
+        Object value = PropertyUtils.getProperty(entity, attr);
+        if (null == value) continue;
         if (ignoreDefault) {
           if (value instanceof Number) {
             if (((Number) value).intValue() != 0) { return false; }

@@ -22,9 +22,9 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 
-import org.apache.commons.collections.Predicate;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.Entity;
+import org.beangle.commons.lang.functor.Predicate;
 
 /**
  * <p>
@@ -34,9 +34,9 @@ import org.beangle.commons.entity.Entity;
  * @author chaostone
  * @version $Id: $
  */
-public class IdNotInPredicate implements Predicate {
+public class IdNotInPredicate implements Predicate<Entity<?>> {
 
-  private final Set<Serializable> idSet;
+  private final Set<Serializable> ids;
 
   /**
    * <p>
@@ -46,12 +46,10 @@ public class IdNotInPredicate implements Predicate {
    * @param ids a {@link java.util.Collection} object.
    */
   public IdNotInPredicate(Collection<Serializable> ids) {
-    idSet = CollectUtils.newHashSet(ids);
+    this.ids = CollectUtils.newHashSet(ids);
   }
 
-  /** {@inheritDoc} */
-  public boolean evaluate(Object arg0) {
-    Entity<?> entity = (Entity<?>) arg0;
-    return !idSet.contains(entity.getId());
+  public Boolean apply(Entity<?> entity) {
+    return !ids.contains(entity.getId());
   }
 }

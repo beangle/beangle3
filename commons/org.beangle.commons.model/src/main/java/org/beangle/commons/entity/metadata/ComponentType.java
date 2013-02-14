@@ -18,12 +18,10 @@
  */
 package org.beangle.commons.entity.metadata;
 
-import java.lang.reflect.Method;
 import java.util.Map;
 
-import org.apache.commons.beanutils.MethodUtils;
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.lang.Strings;
 
 /**
  * <p>
@@ -99,9 +97,8 @@ public class ComponentType extends AbstractType {
   public Type getPropertyType(String propertyName) {
     Type type = (Type) propertyTypes.get(propertyName);
     if (null == type) {
-      Method getMethod = MethodUtils.getAccessibleMethod(componentClass,
-          "get" + Strings.capitalize(propertyName), (Class[]) null);
-      if (null != getMethod) { return new IdentifierType(getMethod.getReturnType()); }
+      Class<?> propertyType = PropertyUtils.getPropertyType(componentClass, propertyName);
+      if (null != propertyType) { return new IdentifierType(propertyType); }
     }
     return type;
   }

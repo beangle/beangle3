@@ -27,7 +27,7 @@ public interface MessageQueue<T extends Message> {
 
   int size();
 
-  T remove();
+  T poll();
 
   List<T> getMessages();
 

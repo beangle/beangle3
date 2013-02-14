@@ -21,7 +21,7 @@ package org.beangle.commons.transfer.importer.listener;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.EntityDao;
 import org.beangle.commons.entity.Entity;

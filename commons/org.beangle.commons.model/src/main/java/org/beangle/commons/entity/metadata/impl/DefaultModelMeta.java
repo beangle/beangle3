@@ -20,7 +20,7 @@ package org.beangle.commons.entity.metadata.impl;
 
 import java.io.Serializable;
 
-import org.apache.commons.beanutils.PropertyUtils;
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.metadata.EntityContext;
 import org.beangle.commons.entity.metadata.EntityType;
