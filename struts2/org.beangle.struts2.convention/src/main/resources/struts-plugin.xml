@@ -32,8 +32,8 @@
     <default-interceptor-ref name="beangleStack"/>
   </package>
 
-  <bean type="org.beangle.commons.i18n.TextBundleRegistry" class="org.beangle.commons.i18n.impl.DefaultTextBundleRegistry"  scope="singleton"/>
-  <bean type="org.beangle.commons.i18n.TextFormater" class="org.beangle.commons.i18n.impl.DefaultTextFormater"  scope="singleton"/>
+  <bean type="org.beangle.commons.text.i18n.TextBundleRegistry" class="org.beangle.commons.text.i18n.impl.DefaultTextBundleRegistry"  scope="singleton"/>
+  <bean type="org.beangle.commons.text.i18n.TextFormater" class="org.beangle.commons.text.i18n.impl.DefaultTextFormater"  scope="singleton"/>
 
   <bean type="com.opensymphony.xwork2.UnknownHandler" class="org.beangle.struts2.convention.ConventionRouteHandler"/>
   <!--mapper-->

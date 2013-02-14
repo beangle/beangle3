@@ -27,11 +27,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.inject.Resources;
 import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.asm.Mirrors;
 import org.beangle.struts2.convention.Constants;
 import org.beangle.struts2.convention.route.Profile;
 import org.beangle.struts2.convention.route.ProfileService;
@@ -177,19 +177,14 @@ public class ProfileServiceImpl implements ProfileService {
     populateAttr(profile, "uriPathStyle", props);
     populateAttr(profile, "uriExtension", props);
     populateAttr(profile, "actionScan", props);
-    // 保证页面路径以/结束
-    // if (!profile.getViewPath().endsWith(Convention.separator + "")) {
-    // profile.setViewPath(profile.getViewPath() + Convention.separator);
-    // }
-    // FIXME validate attribute
     return profile;
   }
 
   private void populateAttr(Profile profile, String attr, Properties props) {
     Object value = props.getProperty(profile.getName() + "." + attr);
     try {
-      if (null == value) value = Mirrors.getProperty(defaultProfile, attr);
-      Mirrors.copyProperty(profile, attr, value);
+      if (null == value) value = PropertyUtils.getProperty(defaultProfile, attr);
+      PropertyUtils.copyProperty(profile, attr, value);
     } catch (Exception e) {
       e.printStackTrace();
       logger.error("error attr {} for profile", attr);

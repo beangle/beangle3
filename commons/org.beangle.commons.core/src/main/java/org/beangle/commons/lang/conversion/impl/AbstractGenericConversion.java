@@ -57,10 +57,11 @@ public abstract class AbstractGenericConversion implements Conversion, Converter
   @Override
   public void addConverter(Converter<?, ?> converter) {
     Pair<Class<?>, Class<?>> key = null;
+    Pair<Class<Object>, Class<Object>> defaultKey = Pair.of(Object.class, Object.class);
     for (Method m : converter.getClass().getMethods()) {
       if (m.getName().equals("apply") && Modifier.isPublic(m.getModifiers())) {
         key = Pair.<Class<?>, Class<?>> of(m.getParameterTypes()[0], m.getReturnType());
-        break;
+        if (!key.equals(defaultKey)) break;
       }
     }
     if (null == key)
@@ -160,7 +161,7 @@ public abstract class AbstractGenericConversion implements Conversion, Converter
   @Override
   public <T> T convert(Object source, Class<T> targetType) {
     if (null == source) return null;
-    
+
     Class<?> sourceType = Primitives.wrap(source.getClass());
     targetType = Primitives.wrap(targetType);
 

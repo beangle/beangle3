@@ -67,7 +67,7 @@ public abstract class ComponentDirective implements TemplateDirectiveModel {
       String key = entry.getKey();
       Object value = entry.getValue();
       if (value != null) {
-        if (Mirrors.hasProperty(bean, key)) {
+        if (Mirrors.isWriteable(bean, key)) {
           if (value instanceof TemplateModel) {
             try {
               value = objectWrapper.unwrap((TemplateModel) value);

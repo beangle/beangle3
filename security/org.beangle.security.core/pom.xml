@@ -13,11 +13,4 @@
     <bundle.symbolicName>org.beangle.security</bundle.symbolicName>
     <bundle.namespace>org.beangle.security</bundle.namespace>
   </properties>
-  <dependencies>
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>1.5</version>
-    </dependency>
-  </dependencies>
 </project>

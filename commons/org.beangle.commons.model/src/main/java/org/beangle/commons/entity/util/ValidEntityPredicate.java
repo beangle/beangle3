@@ -34,7 +34,7 @@ public class ValidEntityPredicate implements Predicate<Object> {
   public Boolean apply(final Object value) {
     if (null == value) { return false; }
     try {
-      Serializable key = (Serializable) Mirrors.getProperty(value, "id");
+      Serializable key = Mirrors.getProperty(value, "id");
       return ValidEntityKeyPredicate.Instance.apply(key);
     } catch (Exception e) {
       return false;

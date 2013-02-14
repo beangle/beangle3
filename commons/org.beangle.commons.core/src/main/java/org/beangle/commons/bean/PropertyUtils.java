@@ -18,6 +18,9 @@
  */
 package org.beangle.commons.bean;
 
+import java.lang.reflect.Array;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.beangle.commons.lang.Strings;
@@ -35,6 +38,8 @@ import org.slf4j.LoggerFactory;
 public class PropertyUtils {
 
   private static final Logger logger = LoggerFactory.getLogger(PropertyUtils.class);
+
+  private static final PropertyNameResolver resolver = new PropertyNameResolver();
 
   /**
    * @throws NoSuchMethodException
@@ -55,17 +60,36 @@ public class PropertyUtils {
     }
   }
 
-  public static Object getProperty(Object bean, String name) {
-    MethodInfo info = ClassInfo.get(bean.getClass()).getReader(name);
-    if (null == info) {
-      logger.warn("Cannot find get" + Strings.capitalize(name) + " in " + bean.getClass());
-      return null;
+  @SuppressWarnings("unchecked")
+  public static <T> T getProperty(Object bean, String name) {
+    // Resolve nested references
+    while (resolver.hasNested(name)) {
+      String next = resolver.next(name);
+      Object nestedBean = null;
+      if (bean instanceof Map) {
+        nestedBean = getPropertyOfMapBean((Map<?, ?>) bean, next);
+      } else if (resolver.isMapped(next)) {
+        nestedBean = getMappedProperty(bean, next);
+      } else if (resolver.isIndexed(next)) {
+        nestedBean = getIndexedProperty(bean, next);
+      } else {
+        nestedBean = getSimpleProperty(bean, next);
+      }
+      if (nestedBean == null) return null;
+      bean = nestedBean;
+      name = resolver.remove(name);
     }
-    try {
-      return info.method.invoke(bean);
-    } catch (Exception e) {
-      throw Throwables.propagate(e);
+
+    if (bean instanceof Map) {
+      bean = getPropertyOfMapBean((Map<?, ?>) bean, name);
+    } else if (resolver.isMapped(name)) {
+      bean = getMappedProperty(bean, name);
+    } else if (resolver.isIndexed(name)) {
+      bean = getIndexedProperty(bean, name);
+    } else {
+      bean = getSimpleProperty(bean, name);
     }
+    return (T) bean;
   }
 
   public static void copyProperty(Object bean, String name, Object value, Conversion conversion) {
@@ -86,7 +110,7 @@ public class PropertyUtils {
     ClassInfo classInfo = ClassInfo.get(bean.getClass());
     MethodInfo info = classInfo.getWriter(name);
     if (null == info) {
-      logger.warn("Cannot find set" + Strings.capitalize(name) + " in " + bean.getClass());
+      logger.warn("Cannot find {} set method in ", name, bean.getClass());
       return;
     }
     try {
@@ -109,4 +133,41 @@ public class PropertyUtils {
     return ClassInfo.get(clazz).getWritableProperties();
   }
 
+  @SuppressWarnings("unchecked")
+  public static <T> T getSimpleProperty(Object bean, String name) {
+    MethodInfo info = ClassInfo.get(bean.getClass()).getReader(name);
+    if (null == info) {
+      logger.warn("Cannot find get" + Strings.capitalize(name) + " in " + bean.getClass());
+      return null;
+    }
+    try {
+      return (T) info.method.invoke(bean);
+    } catch (Exception e) {
+      throw Throwables.propagate(e);
+    }
+  }
+
+  private static Object getPropertyOfMapBean(Map<?, ?> bean, String propertyName) {
+    String name = resolver.getProperty(propertyName);
+    if (name == null || name.length() == 0) propertyName = resolver.getKey(propertyName);
+    return bean.get(propertyName);
+  }
+
+  private static Object getMappedProperty(Object bean, String name) {
+    String key = resolver.getKey(name);
+    if (key == null) { throw new IllegalArgumentException("Invalid mapped property '" + name + "'"); }
+    Object value = getSimpleProperty(bean, resolver.getProperty(name));
+    if (null == value) return null;
+    return ((Map<?, ?>) value).get(key);
+  }
+
+  private static Object getIndexedProperty(Object bean, String name) {
+    int index = resolver.getIndex(name);
+    if (index < 0) { throw new IllegalArgumentException("Invalid indexed property '" + name + "'"); }
+    Object value = getSimpleProperty(bean, resolver.getProperty(name));
+    if (null == value) return null;
+
+    if (!value.getClass().isArray()) return (Array.get(value, index));
+    else return ((List<?>) value).get(index);
+  }
 }

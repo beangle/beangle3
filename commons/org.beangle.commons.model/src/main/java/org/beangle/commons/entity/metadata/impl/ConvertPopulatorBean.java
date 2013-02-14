@@ -118,20 +118,10 @@ public class ConvertPopulatorBean implements Populator {
     try {
       if (attr.indexOf('.') > -1) {
         ObjectAndType ot = initProperty(target, type, Strings.substringBeforeLast(attr, "."));
-        if (ot.getType().isEntityType()) {
-          String foreignKey = ((EntityType) ot.getType()).getIdName();
-          // if (foreignKey.equals(Strings.substringAfterLast(attr, "."))) {
-          setProperty(target, attr, convert(ot.getType(), foreignKey, value));
-          // } else {
-          // beanUtils.copyProperty(target, attr, value);
-          // }
-        }
+        String lastAttr = Strings.substringAfterLast(attr, ".");
+        setProperty(ot.getObj(), lastAttr, convert(ot.getType(), lastAttr, value));
       } else {
-        // if (type.getIdName().equals(attr)) {
         setProperty(target, attr, convert(type, attr, value));
-        // } else {
-        // beanUtils.copyProperty(target, attr, value);
-        // }
       }
       return true;
     } catch (Exception e) {
@@ -157,10 +147,10 @@ public class ConvertPopulatorBean implements Populator {
         else if (TRIM_STR) value = ((String) value).trim();
       }
       // 主键
-      if (type.isEntityType() && attr.equals(((EntityType) type).getIdName())) {
-        setProperty(entity, attr, convert(type, attr, value));
-        continue;
-      }
+      // if (type.isEntityType() && attr.equals(((EntityType) type).getIdName())) {
+      // setProperty(entity, attr, convert(type, attr, value));
+      // continue;
+      // }
       // 普通属性
       if (-1 == attr.indexOf('.')) {
         copyValue(entity, attr, value);
@@ -210,12 +200,12 @@ public class ConvertPopulatorBean implements Populator {
     return attrValue;
   }
 
-  private void copyValue(final Object target, final String attr, final Object value) {
-    try {
-      copyProperty(target, attr, value, conversion);
-    } catch (Exception e) {
-      logger.error("copy property failure:[class:" + target.getClass().getName() + " attr:" + attr
-          + " value:" + value + "]:", e);
-    }
+  private Object copyValue(final Object target, final String attr, final Object value) {
+    // try {
+    return copyProperty(target, attr, value, conversion);
+    // } catch (Exception e) {
+    // logger.error("copy property failure:[class:" + target.getClass().getName() + " attr:" + attr
+    // + " value:" + value + "]:", e);
+    // }
   }
 }

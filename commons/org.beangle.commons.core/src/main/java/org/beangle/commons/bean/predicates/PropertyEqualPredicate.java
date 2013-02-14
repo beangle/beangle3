@@ -18,10 +18,9 @@
  */
 package org.beangle.commons.bean.predicates;
 
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Objects;
-import org.beangle.commons.lang.Throwables;
-import org.beangle.commons.lang.asm.Mirrors;
 import org.beangle.commons.lang.functor.Predicate;
 
 /**
@@ -57,11 +56,7 @@ public class PropertyEqualPredicate<T> implements Predicate<T> {
    * @return a boolean.
    */
   public Boolean apply(T arg0) {
-    try {
-      return Objects.equals(Mirrors.getProperty(arg0, propertyName), propertyValue);
-    } catch (Exception e) {
-      throw Throwables.propagate(e);
-    }
+    return Objects.equals(PropertyUtils.getProperty(arg0, propertyName), propertyValue);
   }
 
 }

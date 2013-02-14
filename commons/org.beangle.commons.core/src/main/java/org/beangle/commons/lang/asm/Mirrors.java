@@ -24,10 +24,20 @@ import org.beangle.commons.lang.conversion.impl.ConvertUtils;
 import org.beangle.commons.lang.reflect.ClassInfo;
 import org.beangle.commons.lang.reflect.MethodInfo;
 
+/**
+ * Mirror utility methods
+ * 
+ * @author chaostone
+ * @since 3.2.0
+ */
 public class Mirrors {
 
-  public static boolean hasProperty(Object bean, String name) {
-    return null == ClassInfo.get(bean.getClass()).getPropertyType(name);
+  public static boolean isReadable(Object bean, String name) {
+    return null != ClassInfo.get(bean.getClass()).getReader(name);
+  }
+
+  public static boolean isWriteable(Object bean, String name) {
+    return null != ClassInfo.get(bean.getClass()).getWriter(name);
   }
 
   /**
@@ -41,21 +51,24 @@ public class Mirrors {
     mirror.invoke(bean, mirror.classInfo.getWriteIndex(name), value);
   }
 
-  public static Object getProperty(Object bean, String name) {
+  @SuppressWarnings("unchecked")
+  public static <T> T getProperty(Object bean, String name) {
     Mirror mirror = Mirror.get(bean.getClass());
-    return mirror.invoke(bean, mirror.classInfo.getReadIndex(name));
+    return (T) mirror.invoke(bean, mirror.classInfo.getReadIndex(name));
   }
 
-  public static void copyProperty(Object bean, String name, Object value, Conversion conversion) {
+  public static Object copyProperty(Object bean, String name, Object value, Conversion conversion) {
     ClassInfo info = ClassInfo.get(bean.getClass());
-    Mirror.get(bean.getClass()).invoke(bean, info.getWriteIndex(name),
-        conversion.convert(value, info.getPropertyType(name)));
+    Object converted = conversion.convert(value, info.getPropertyType(name));
+    Mirror.get(bean.getClass()).invoke(bean, info.getWriteIndex(name), converted);
+    return converted;
   }
 
-  public static void copyProperty(Object bean, String name, Object value) {
+  public static Object copyProperty(Object bean, String name, Object value) {
     ClassInfo info = ClassInfo.get(bean.getClass());
-    Mirror.get(bean.getClass()).invoke(bean, info.getWriteIndex(name),
-        ConvertUtils.convert(value, info.getPropertyType(name)));
+    Object converted = ConvertUtils.convert(value, info.getPropertyType(name));
+    Mirror.get(bean.getClass()).invoke(bean, info.getWriteIndex(name), converted);
+    return converted;
   }
 
   public static Mirror none() {

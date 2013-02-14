@@ -29,6 +29,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.page.Page;
 import org.beangle.commons.collection.page.PageLimit;
@@ -38,7 +39,6 @@ import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.asm.Mirrors;
 import org.beangle.commons.web.util.CookieUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,9 +98,8 @@ public class QueryHelper {
           if (RESERVED_NULL && "null".equals(strValue)) {
             conditions.add(new Condition(prefix + "." + attr + " is null"));
           } else {
-            Model.getPopulator()
-                .populateValue(entity, Model.getType(entity.getClass()), attr, strValue);
-            Object setValue = Mirrors.getProperty(entity, attr);
+            Model.getPopulator().populateValue(entity, Model.getType(entity.getClass()), attr, strValue);
+            Object setValue = PropertyUtils.getProperty(entity, attr);
             if (null == setValue) continue;
             if (setValue instanceof String) {
               conditions.add(new Condition(prefix + "." + attr + " like :" + attr.replace('.', '_'), "%"
@@ -121,10 +120,7 @@ public class QueryHelper {
    * 从的参数或者cookie中(参数优先)取得分页信息
    */
   public static PageLimit getPageLimit() {
-    PageLimit limit = new PageLimit();
-    limit.setPageNo(getPageNo());
-    limit.setPageSize(getPageSize());
-    return limit;
+    return new PageLimit(getPageNo(), getPageSize());
   }
 
   /**
@@ -133,9 +129,7 @@ public class QueryHelper {
   public static int getPageNo() {
     String pageNo = Params.get(PAGENO);
     int resultno = 1;
-    if (Strings.isNotBlank(pageNo)) {
-      resultno = Numbers.toInt(pageNo.trim());
-    }
+    if (Strings.isNotBlank(pageNo)) resultno = Numbers.toInt(pageNo.trim());
     if (resultno < 1) resultno = Page.DEFAULT_PAGE_NUM;
     return resultno;
   }
@@ -151,9 +145,7 @@ public class QueryHelper {
     } else {
       HttpServletRequest request = ServletActionContext.getRequest();
       pageSize = CookieUtils.getCookieValue(request, PAGESIZE);
-      if (Strings.isNotEmpty(pageSize)) {
-        pagesize = Numbers.toInt(pageSize);
-      }
+      if (Strings.isNotEmpty(pageSize)) pagesize = Numbers.toInt(pageSize);
     }
     if (pagesize < 1) pagesize = Page.DEFAULT_PAGE_SIZE;
     return pagesize;
