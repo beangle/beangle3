@@ -1,7 +1,7 @@
 /*
  * Beangle, Agile Java/Scala Development Scaffold and Toolkit
  *
- * Copyright (c) 2005-2012, Beangle Software.
+ * Copyright (c) 2005-2013, Beangle Software.
  *
  * Beangle is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -27,6 +27,7 @@ import org.beangle.commons.entity.metadata.EntityContext;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.IdentifierType;
 import org.beangle.commons.entity.metadata.Type;
+import org.beangle.commons.lang.ClassLoaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -117,14 +118,10 @@ public abstract class AbstractEntityContext implements EntityContext {
     // last try by it's interface
     if (null == type) {
       try {
-        // FIXME
-        Class<?> entityClass = Class.forName(entityName);
-        if (Entity.class.isAssignableFrom(entityClass)) {
-          type = new EntityType(entityClass);
-        } else {
-          logger.warn("{} 's is not entity", entityClass);
-        }
-      } catch (ClassNotFoundException e) {
+        Class<?> entityClass = ClassLoaders.loadClass(entityName);
+        if (Entity.class.isAssignableFrom(entityClass)) type = new EntityType(entityClass);
+        else logger.warn("{} 's is not entity", entityClass);
+      } catch (Exception e) {
         logger.error("system doesn't contains entity {}", entityName);
       }
     }

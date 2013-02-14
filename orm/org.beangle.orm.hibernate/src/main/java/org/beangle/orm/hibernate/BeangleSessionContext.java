@@ -1,7 +1,7 @@
 /*
  * Beangle, Agile Java/Scala Development Scaffold and Toolkit
  *
- * Copyright (c) 2005-2012, Beangle Software.
+ * Copyright (c) 2005-2013, Beangle Software.
  *
  * Beangle is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -54,7 +54,7 @@ public class BeangleSessionContext implements CurrentSessionContext {
   public Session currentSession() throws HibernateException {
     SessionHolder sessionHolder = SessionUtils.currentSession(this.sessionFactory);
     Session session = sessionHolder.getSession();
-    // FIXME what time enter into the code?
+    // TODO what time enter into the code?
     if (TransactionSynchronizationManager.isSynchronizationActive()
         && !sessionHolder.isSynchronizedWithTransaction()) {
       TransactionSynchronizationManager.registerSynchronization(new SessionSynchronization(sessionHolder,

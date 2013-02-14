@@ -1,7 +1,7 @@
 /*
  * Beangle, Agile Java/Scala Development Scaffold and Toolkit
  *
- * Copyright (c) 2005-2012, Beangle Software.
+ * Copyright (c) 2005-2013, Beangle Software.
  *
  * Beangle is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -19,6 +19,7 @@
 package org.beangle.security.web;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,15 +61,13 @@ public class FilterChainProxy extends GenericCompositeFilter {
    * @param res the request
    * @return an ordered array of Filters defining the filter chain
    */
-  public List<Filter> getFilters(ServletRequest res) {
+  protected List<Filter> getFilters(ServletRequest res) {
     HttpServletRequest request = (HttpServletRequest) res;
-    // FIXME
     for (Map.Entry<RequestMatcher, List<Filter>> entry : chainMap.entrySet()) {
       RequestMatcher matcher = entry.getKey();
-      boolean matched = matcher.matches(request);
-      if (matched) { return entry.getValue(); }
+      if (matcher.matches(request)) return entry.getValue();
     }
-    return null;
+    return Collections.emptyList();
   }
 
   public void setFilterChainMap(Map<String, List<Filter>> chainMap) {

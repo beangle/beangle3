@@ -1,7 +1,7 @@
 /*
  * Beangle, Agile Java/Scala Development Scaffold and Toolkit
  *
- * Copyright (c) 2005-2012, Beangle Software.
+ * Copyright (c) 2005-2013, Beangle Software.
  *
  * Beangle is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -69,7 +69,7 @@ public class FilterChainProxyTest {
 
     HttpServletRequest request = mock(HttpServletRequest.class);
     when(request.getServletPath()).thenReturn("/nomatch");
-    assertEquals(null, proxy.getFilters(request));
+    assertEquals(0,proxy.getFilters(request).size());
   }
 
   public void urlStrippingPropertyIsRespected() throws Exception {

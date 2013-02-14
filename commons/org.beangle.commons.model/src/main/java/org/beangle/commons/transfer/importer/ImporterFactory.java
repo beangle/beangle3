@@ -1,7 +1,7 @@
 /*
  * Beangle, Agile Java/Scala Development Scaffold and Toolkit
  *
- * Copyright (c) 2005-2012, Beangle Software.
+ * Copyright (c) 2005-2013, Beangle Software.
  *
  * Beangle is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -42,12 +42,6 @@ public final class ImporterFactory {
       importer.setReader(new ExcelItemReader(is, 1));
     } else {
       LineNumberReader reader = new LineNumberReader(new InputStreamReader(is));
-      // FIXME why read first
-      // if (null == reader.readLine()) {
-      // reader.close();
-      // return null;
-      // }
-      // reader.reset();
       importer.setReader(new CsvItemReader(reader));
     }
     return importer;
