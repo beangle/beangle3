@@ -10,10 +10,13 @@
   <packaging>pom</packaging>
   <name>Beangle Ioc Parent</name>
 
+  <properties>
+    <spring.version>3.1.1.RELEASE</spring.version>
+  </properties>
+
   <modules>
     <module>org.beangle.ioc.spring</module>
   </modules>
-
 
   <dependencyManagement>
     <dependencies>

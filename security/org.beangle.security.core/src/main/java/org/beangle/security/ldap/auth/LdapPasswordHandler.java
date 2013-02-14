@@ -21,7 +21,7 @@ package org.beangle.security.ldap.auth;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import org.beangle.security.codec.Base64;
+import org.beangle.commons.codec.binary.Base64;
 import org.beangle.security.codec.UnixCrypt;
 
 public class LdapPasswordHandler {

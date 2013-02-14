@@ -32,10 +32,10 @@ public final class Primitives {
   private Primitives() {
   }
 
-  /** A map from primitive types to their corresponding wrapper types. */
+  /** Primitive types to their corresponding wrapper types. */
   private static final Map<Class<?>, Class<?>> PrimitiveToWrappers = CollectUtils.newFastMap(16);
 
-  /** A map from wrapper types to their corresponding primitive types. */
+  /** Wrapper types to their corresponding primitive types. */
   private static final Map<Class<?>, Class<?>> WrapperToPrimitives = CollectUtils.newFastMap(16);
 
   static {

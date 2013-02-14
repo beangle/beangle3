@@ -16,12 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.codec;
+package org.beangle.commons.codec.binary;
 
-public class Base64 {
+import java.io.UnsupportedEncodingException;
 
-  public Base64() {
-  }
+/**
+ * Base64 algorithm
+ * @author chaostone
+ * @since 3.2.0
+ */
+public final class Base64 {
 
   public static char[] encode(byte data[]) {
     char out[] = new char[((data.length + 2) / 3) * 4];
@@ -49,7 +53,6 @@ public class Base64 {
       out[index + 0] = alphabet[val & 0x3f];
       i += 3;
     }
-
     return out;
   }
 
@@ -107,5 +110,10 @@ public class Base64 {
 
     codes[43] = 62;
     codes[47] = 63;
+  }
+  
+  public static void main(String[] args) throws UnsupportedEncodingException{
+//    System.out.println(new BCodec("UTF-8").encode("汉字123"));
+    System.out.println(Base64.encode("汉字123".getBytes("UTF-8")));
   }
 }

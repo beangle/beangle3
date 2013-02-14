@@ -18,8 +18,8 @@
  */
 package org.beangle.security.ldap.auth;
 
+import org.beangle.commons.codec.binary.Base64;
 import org.beangle.commons.lang.Strings;
-import org.beangle.security.codec.Base64;
 
 public class SimpleEncodec {
   public static String decode(String strCode) {

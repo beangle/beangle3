@@ -169,6 +169,11 @@ public final class ClassInfo {
     // Skip volatile method for generated method by compiler
     // For example. CompareTo(Some) and CompareTo(Object).
     if (Modifier.isVolatile(modifiers)) return false;
+    // Skip method in Object
+    String methodName = method.getName();
+    if (method.getParameterTypes().length == 0
+        && (methodName.equals("hashCode") || methodName.equals("toString"))) return false;
+    if (method.getParameterTypes().length == 1 & methodName.equals("equals")) return false;
     return true;
   }
 

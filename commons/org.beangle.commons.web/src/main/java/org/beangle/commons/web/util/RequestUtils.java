@@ -23,7 +23,7 @@ import java.net.URLEncoder;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.codec.net.BCodec;
+import org.beangle.commons.codec.net.BCoder;
 import org.beangle.commons.http.agent.Browser;
 import org.beangle.commons.http.agent.BrowserCategory;
 import org.beangle.commons.http.agent.Os;
@@ -112,7 +112,7 @@ public final class RequestUtils {
       if (null != agent && -1 != agent.indexOf("MSIE")) {
         newName = URLEncoder.encode(attach_name, "UTF-8");
       } else {
-        newName = new BCodec("UTF-8").encode(attach_name);
+        newName = new BCoder().encode(attach_name);
       }
     } catch (Exception e) {
       logger.error("cannot encode " + attach_name, e);

@@ -26,12 +26,6 @@
         <version>2.2.2</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-      <version>${spring.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.beangle.orm</groupId>
       <artifactId>beangle-orm-hibernate</artifactId>
       <version>${project.version}</version>

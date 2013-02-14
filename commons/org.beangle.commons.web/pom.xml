@@ -13,7 +13,6 @@
   <properties>
     <bundle.symbolicName>org.beangle.commons.web</bundle.symbolicName>
     <bundle.namespace>org.beangle.commons.web</bundle.namespace>
-    <commonscodec.version>1.5</commonscodec.version>
   </properties>
 
   <dependencies>
@@ -24,11 +23,6 @@
     <dependency>
       <groupId>javax.validation</groupId>
       <artifactId>validation-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>${commonscodec.version}</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>

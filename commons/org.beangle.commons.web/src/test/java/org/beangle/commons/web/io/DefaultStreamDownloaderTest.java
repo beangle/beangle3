@@ -26,12 +26,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.codec.net.URLCodec;
+import org.beangle.commons.codec.net.BCoder;
 import org.beangle.commons.http.mime.MimeTypeProvider;
 import org.beangle.commons.lang.ClassLoaders;
 import org.testng.Assert;
@@ -59,15 +60,16 @@ public class DefaultStreamDownloaderTest {
 
   public void ecode() throws Exception {
     String value = "汉字-english and .;";
-    String ecodedValue = new URLCodec().encode(value, "utf-8");
+    String ecodedValue = URLEncoder.encode(value, "utf-8");
     String orginValue = URLDecoder.decode(ecodedValue, "utf-8");
     Assert.assertEquals(orginValue, value);
   }
 
   public void ecode2() throws Exception {
     String value = "汉字-english and .;";
-    String encodedValue = new org.apache.commons.codec.net.BCodec().encode(value);
-    String orginValue = new org.apache.commons.codec.net.BCodec().decode(encodedValue);
+    String encodedValue = new BCoder().encode(value);
+    String orginValue = new BCoder().decode(encodedValue);
     Assert.assertEquals(orginValue, value);
   }
+
 }

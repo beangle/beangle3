@@ -20,7 +20,6 @@ package org.beangle.commons.lang.asm;
 
 import static org.objectweb.asm.Opcodes.*;
 
-import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -40,14 +39,9 @@ import org.objectweb.asm.Type;
  * Usage:
  * 
  * <pre>
- * AccessProxy proxy = AccessProxy.get(YourBean.class);
- * // 1. invoke any method
- * proxy.invoke(bean, &quot;somemethod&quot;, arg1, arg2);
- * // 2. get property
- * proxy.getProperty(bean, &quot;attr1&quot;);
- * // 3. set property
- * proxy.setProperty(bean, &quot;attr1&quot;, arg2);
- * 
+ * Mirror mirror = Mirror.get(YourBean.class);
+ * // invoke any method
+ * mirror.invoke(bean, &quot;somemethod&quot;, arg1, arg2);
  * </pre>
  * 
  * @author chaostone
@@ -93,7 +87,7 @@ public abstract class Mirror {
   }
 
   /**
-   * Get AccessProxy of given type.
+   * Get Mirror of given type.
    * <p>
    * First,it search from proxies cache,if not found, then generate new proxy class using asm.
    */
@@ -272,12 +266,9 @@ public abstract class Mirror {
         }
         cw.visitEnd();
         byte[] data = cw.toByteArray();
-         FileOutputStream a;
          try {
-         a = new java.io.FileOutputStream("/tmp/" + accessClassName + ".class");
-         a.write(data);
+         (new java.io.FileOutputStream("/tmp/" + accessClassName + ".class")).write(data);
          } catch (Exception e) {
-         e.printStackTrace();
          }
         accessClass = loader.defineClass(accessClassName, data);
       }
