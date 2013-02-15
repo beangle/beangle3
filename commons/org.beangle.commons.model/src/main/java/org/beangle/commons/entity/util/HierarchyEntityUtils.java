@@ -162,11 +162,8 @@ public final class HierarchyEntityUtils {
    */
   public static <T extends HierarchyEntity<T, ?>> List<T> getRoots(final List<T> nodes) {
     List<T> roots = CollectUtils.newArrayList();
-    for (T m : nodes) {
-      if (null == m.getParent() || !nodes.contains(m.getParent())) {
-        roots.add(m);
-      }
-    }
+    for (T m : nodes)
+      if (null == m.getParent() || !nodes.contains(m.getParent())) roots.add(m);
     return roots;
   }
 

@@ -77,7 +77,8 @@ public class StringIdObject implements Entity<String> {
   public boolean equals(final Object object) {
     if (this == object) return true;
     if (!(object instanceof StringIdObject)) { return false; }
-    StringIdObject rhs = (StringIdObject) object;
+    // StringIdObject rhs = (StringIdObject) object;
+    Entity<?> rhs = (Entity<?>) object;
     if (null == getId() || null == rhs.getId()) { return false; }
     return getId().equals(rhs.getId());
   }

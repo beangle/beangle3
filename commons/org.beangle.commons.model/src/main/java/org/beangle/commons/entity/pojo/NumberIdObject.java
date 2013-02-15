@@ -78,7 +78,9 @@ public class NumberIdObject<T extends Number> implements Entity<T> {
   public boolean equals(final Object object) {
     if (this == object) return true;
     if (!(object instanceof NumberIdObject)) { return false; }
-    NumberIdObject<?> rhs = (NumberIdObject<?>) object;
+    Entity<?> rhs = (Entity<?>) object;
+    // TODO NumberIdObject????
+    // NumberIdObject<?> rhs = (NumberIdObject<?>) object;
     if (null == getId() || null == rhs.getId()) { return false; }
     return getId().equals(rhs.getId());
   }
