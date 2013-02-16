@@ -42,10 +42,6 @@ public class StringIdObject implements Entity<String> {
     this.id = id;
   }
 
-  public String getIdentifier() {
-    return id;
-  }
-
   public String getId() {
     return id;
   }
