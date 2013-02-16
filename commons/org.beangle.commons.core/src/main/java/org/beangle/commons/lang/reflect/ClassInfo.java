@@ -70,10 +70,15 @@ public final class ClassInfo {
         tmpMethods.put(info.method.getName(), named);
       }
       named.add(info);
+      //true is get,false is set.
       Pair<Boolean, String> propertyInfo = info.property();
       if (null != propertyInfo) {
-        if (propertyInfo.getLeft()) propertyReadMethods.put(propertyInfo.getRight(), info);
-        else propertyWriteMethods.put(propertyInfo.getRight(), info);
+        if (propertyInfo.getLeft()) {
+          MethodInfo old = propertyReadMethods.put(propertyInfo.getRight(), info);
+          // old return type is subtype
+          if (null != old && info.method.getReturnType().isAssignableFrom(old.method.getReturnType()))
+            propertyReadMethods.put(propertyInfo.getRight(), old);
+        } else propertyWriteMethods.put(propertyInfo.getRight(), info);
       }
     }
     for (Map.Entry<String, List<MethodInfo>> entry : tmpMethods.entrySet()) {
