@@ -16,19 +16,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.struts2.example.action;
+package org.beangle.commons.cache;
 
-import org.beangle.struts2.action.EntityDrivenAction;
+import java.util.Collection;
 
-public class CompareAction extends EntityDrivenAction {
+/**
+ * Cache Manager
+ * @author chaostone
+ * @since 3.2.0
+ */
+public interface CacheManager {
 
-  public String index() {
-    return SUCCESS;
-  }
+  /**
+   * Return the cache associated with the given name.
+   */
+  Cache getCache(String name);
 
-  @Override
-  protected String getEntityName() {
-    return null;
-  }
+  /**
+   * Return a collection of the caches known by this cache manager.
+   */
+  Collection<String> getCacheNames();
 
 }

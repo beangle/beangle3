@@ -18,435 +18,146 @@
  */
 package org.beangle.struts2.action;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts2.ServletActionContext;
-import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.collection.Order;
-import org.beangle.commons.config.property.PropertyConfig;
-import org.beangle.commons.dao.EntityDao;
-import org.beangle.commons.dao.query.QueryBuilder;
+import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.Entity;
-import org.beangle.commons.entity.TimeEntity;
-import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
-import org.beangle.commons.entity.util.EntityUtils;
-import org.beangle.commons.lang.Enums;
-import org.beangle.commons.lang.Option;
+import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.transfer.TransferListener;
-import org.beangle.commons.transfer.TransferResult;
-import org.beangle.commons.transfer.exporter.Context;
-import org.beangle.commons.transfer.exporter.Exporter;
-import org.beangle.commons.transfer.exporter.ExporterFactory;
-import org.beangle.commons.transfer.exporter.PropertyExtractor;
-import org.beangle.commons.transfer.importer.EntityImporter;
-import org.beangle.commons.transfer.importer.IllegalImportFormatException;
-import org.beangle.commons.transfer.importer.ImporterFactory;
-import org.beangle.commons.transfer.importer.listener.ImporterForeignerListener;
-import org.beangle.commons.transfer.io.TransferFormat;
-import org.beangle.commons.web.util.RequestUtils;
 import org.beangle.struts2.helper.Params;
-import org.beangle.struts2.util.OgnlPropertyExtractor;
+import org.beangle.struts2.helper.PopulateHelper;
+import org.beangle.struts2.helper.QueryHelper;
 
 /**
  * @author chaostone
  * @since 3.0.0
  */
-public abstract class EntityActionSupport extends ActionSupport {
-
-  protected EntityDao entityDao;
-
-  protected PropertyConfig config;
-
-  protected PropertyConfig getConfig() {
-    return config;
-  }
-
-  // CURD----------------------------------------
-  protected void remove(Collection<?> list) {
-    entityDao.remove(list);
-  }
-
-  protected void remove(Object obj) {
-    entityDao.remove(obj);
-  }
-
-  protected void saveOrUpdate(Collection<?> list) {
-    entityDao.saveOrUpdate(list);
-  }
-
-  protected void saveOrUpdate(Object obj) {
-    entityDao.saveOrUpdate(obj);
-  }
-
-  @SuppressWarnings("rawtypes")
-  protected List search(QueryBuilder<?> query) {
-    return entityDao.search(query);
-  }
-
-  protected EntityDao getEntityDao() {
-    return entityDao;
-  }
-
-  public void setEntityDao(EntityDao entityDao) {
-    this.entityDao = entityDao;
-  }
+public class EntityActionSupport extends ActionSupport {
 
   /**
-   * 主页面
-   */
-  public String index() throws Exception {
-    indexSetting();
-    return forward();
-  }
-
-  /**
-   * Seach Entitis
-   */
-  public String search() {
-    put(getShortName() + "s", search(getQueryBuilder()));
-    return forward();
-  }
-
-  protected Collection<?> getExportDatas() {
-    return search(getQueryBuilder().limit(null));
-  }
-
-  /**
-   * Edit by entity.id or id
-   */
-  public String edit() {
-    Entity<?> entity = getEntity();
-    put(getShortName(), entity);
-    editSetting(entity);
-    return forward();
-  }
-
-  /**
-   * Remove entities by [entity.id]/entityIds
-   */
-  public String remove() throws Exception {
-    Class<? extends Serializable> idclass = Model.getType(getEntityName()).getIdType();
-    Serializable entityId = getId(getShortName(), idclass);
-    Collection<?> entities = null;
-    if (null == entityId) {
-      entities = getModels(getEntityName(), getIds(getShortName(), idclass));
-    } else {
-      Entity<?> entity = getModel(getEntityName(), entityId);
-      entities = Collections.singletonList(entity);
-    }
-    return removeAndForward(entities);
-  }
-
-  /**
-   * Save single entity
-   */
-  public String save() throws Exception {
-    return saveAndForward(populateEntity());
-  }
-
-  protected Entity<?> populateEntity() {
-    return populateEntity(getEntityName(), getShortName());
-  }
-
-  protected Entity<?> populateEntity(String entityName, String shortName) {
-    Serializable entityId = getId(shortName, Model.getType(entityName).getIdType());
-    Entity<?> entity = null;
-    if (null == entityId) {
-      entity = (Entity<?>) populate(entityName, shortName);
-    } else {
-      entity = getModel(entityName, entityId);
-      populate(entity, entityName, Params.sub(shortName));
-    }
-    return entity;
-  }
-
-  @SuppressWarnings("unchecked")
-  protected <T> T populateEntity(Class<T> entityClass, String shortName) {
-    EntityType type = null;
-    if (entityClass.isInterface()) {
-      type = Model.getType(entityClass.getName());
-    } else {
-      type = Model.getType(entityClass);
-    }
-    return (T) populateEntity(type.getEntityName(), shortName);
-  }
-
-  protected Entity<?> getEntity() {
-    return getEntity(getEntityName(), getShortName());
-  }
-
-  protected Entity<?> getEntity(String entityName, String name) {
-    EntityType type = Model.getType(entityName);
-    Serializable entityId = getId(name, type.getIdType());
-    Entity<?> entity = null;
-    try {
-      if (null == entityId) entity = (Entity<?>) populate(type.newInstance(), type.getEntityName(), name);
-      else entity = getModel(entityName, entityId);
-    } catch (Exception e) {
-      throw new RuntimeException(e.getMessage());
-    }
-    return entity;
-  }
-
-  @SuppressWarnings("unchecked")
-  protected <T> T getEntity(Class<T> entityClass, String shortName) {
-    EntityType type = null;
-    if (entityClass.isInterface()) {
-      type = Model.getType(entityClass.getName());
-    } else {
-      type = Model.getType(entityClass);
-    }
-    return (T) getEntity(type.getEntityName(), shortName);
-  }
-
-  /**
-   * 查看信息
-   */
-  public String info() throws Exception {
-    Serializable entityId = getId(getShortName(), Model.getType(getEntityName()).getIdType());
-    if (null == entityId) {
-      logger.warn("cannot get paremeter {}Id or {}.id", getShortName(), getShortName());
-    }
-    Entity<?> entity = getModel(getEntityName(), entityId);
-    put(getShortName(), entity);
-    return forward();
-  }
-
-  protected void indexSetting() {
-
-  }
-
-  protected void editSetting(Entity<?> entity) {
-
-  }
-
-  /**
-   * 保存对象
+   * Get entity's id from shortname.id,shortnameId,id
    * 
-   * @param entity
-   */
-  protected String saveAndForward(Entity<?> entity) {
-    try {
-      if (entity instanceof TimeEntity) {
-        TimeEntity timeEntity = (TimeEntity) entity;
-        if (!entity.isPersisted()) timeEntity.setCreatedAt(new Date());
-        timeEntity.setUpdatedAt(new Date());
-      }
-      saveOrUpdate(Collections.singletonList(entity));
-      return redirect("search", "info.save.success");
-    } catch (Exception e) {
-      logger.info("saveAndForwad failure", e);
-      return redirect("search", "info.save.failure");
-    }
-
-  }
-
-  protected String removeAndForward(Collection<?> entities) {
-    try {
-      remove(entities);
-    } catch (Exception e) {
-      logger.info("removeAndForwad failure", e);
-      return redirect("search", "info.delete.failure");
-    }
-    return redirect("search", "info.remove.success");
-  }
-
-  protected <T extends Entity<?>> OqlBuilder<T> getQueryBuilder() {
-    OqlBuilder<T> builder = OqlBuilder.from(getEntityName(), getShortName());
-    populateConditions(builder);
-    builder.orderBy(get(Order.ORDER_STR)).limit(getPageLimit());
-    return builder;
-  }
-
-  protected String getEntityName() {
-    return null;
-  }
-
-  protected String getShortName() {
-    String name = getEntityName();
-    if (Strings.isNotEmpty(name)) return EntityUtils.getCommandName(name);
-    else return null;
-  }
-
-  protected Entity<?> getModel(String entityName, Serializable id) {
-    return (Entity<?>) entityDao.get(entityName, id);
-  }
-
-  @SuppressWarnings("rawtypes")
-  protected List getModels(String entityName, Object[] ids) {
-    return entityDao.get(entityName, "id", ids);
-  }
-
-  protected <T extends Entity<?>> List<T> getModels(Class<T> modelClass, Object[] ids) {
-    return entityDao.get(modelClass, "id", ids);
-  }
-
-  /**
-   * 导出数据
-   * 
-   * @throws Exception
-   */
-  public String export() throws Exception {
-    TransferFormat format = Enums.get(TransferFormat.class, Strings.capitalize(get("format", "Csv"))).getOrElse(
-        TransferFormat.Csv);
-    String fileName = get("fileName");
-    String template = get("template");
-    if (Strings.isEmpty(fileName)) fileName = "exportResult";
-    // 配置导出上下文
-    Context context = new Context();
-    context.put("format", format);
-    context.put("exportFile", fileName);
-    context.put("template", template);
-    String properties = get("props");
-    if (null != properties) {
-      String[] props = Strings.split(properties, ",");
-      List<String> keys = CollectUtils.newArrayList();
-      List<String> titles = CollectUtils.newArrayList();
-      for (String prop : props) {
-        if (prop.contains(":")) {
-          keys.add(Strings.substringBefore(prop, ":"));
-          titles.add(getTextInternal(Strings.substringAfter(prop, ":")));
-        } else {
-          keys.add(prop);
-          titles.add(getTextInternal(getShortName() + "." + prop));
-        }
-      }
-      context.put(Context.KEYS, Strings.join(keys, ","));
-      context.put(Context.TITLES, Strings.join(titles, ","));
-    } else {
-      context.put(Context.KEYS, get("keys"));
-      context.put(Context.TITLES, get("titles"));
-    }
-    context.put(Context.EXTRACTOR, getPropertyExtractor());
-
-    HttpServletResponse response = ServletActionContext.getResponse();
-    Exporter exporter = buildExporter(format, context);
-    configExporter(exporter, context);
-    if (format.equals(TransferFormat.Xls)) {
-      response.setContentType("application/vnd.ms-excel;charset=GBK");
-    } else {
-      response.setContentType("application/x-msdownload");
-    }
-    response.setHeader(
-        "Content-Disposition",
-        "attachment;filename="
-            + RequestUtils.encodeAttachName(ServletActionContext.getRequest(), fileName + "." + Strings.uncapitalize(format.name())));
-    // 进行输出
-    exporter.setContext(context);
-    exporter.transfer(new TransferResult());
-    return null;
-  }
-
-  protected PropertyExtractor getPropertyExtractor() {
-    return new OgnlPropertyExtractor(getTextResource());
-  }
-
-  protected Exporter buildExporter(TransferFormat format, Context context) throws IOException {
-    Exporter exporter = ExporterFactory.getExporter(format, context);
-    HttpServletResponse response = ServletActionContext.getResponse();
-    exporter.getWriter().setOutputStream(response.getOutputStream());
-    return exporter;
-  }
-
-  protected void configExporter(Exporter exporter, Context context) throws IOException {
-    context.put("items", getExportDatas());
-  }
-
-  public String importForm() {
-    return forward("/components/importData/form");
-  }
-
-  /**
-   * 构建实体导入者
-   */
-  protected EntityImporter buildEntityImporter() {
-    if (null == getEntityName()) return buildEntityImporter("importFile", null);
-    else return buildEntityImporter("importFile", Model.getType(getEntityName()).getEntityClass());
-
-  }
-
-  /**
-   * 用于构建单个实体类的导入构造器
-   * 
+   * @param name
    * @param clazz
    */
-  protected EntityImporter buildEntityImporter(Class<?> clazz) {
-    return buildEntityImporter("importFile", clazz);
+  protected final <T> T getId(String name, Class<T> clazz) {
+    String entityId = get(name + ".id");
+    if (null == entityId) entityId = get(name + "Id");
+    if (null == entityId) entityId = get("id");
+    if (null == entityId) return null;
+    else return Params.converter.convert(entityId, clazz);
+  }
+
+  protected final Integer getIntId(String shortName) {
+    return getId(shortName, Integer.class);
+  }
+
+  protected final Long getLongId(String shortName) {
+    return getId(shortName, Long.class);
   }
 
   /**
-   * 构建实体导入者
+   * Get entity's long id array from parameters shortname.id,shortname.ids,shortnameIds
    * 
-   * @param upload
-   * @param clazz
+   * @param shortName
    */
-  protected EntityImporter buildEntityImporter(String upload, Class<?> clazz) {
-    try {
-      File file = get(upload, File.class);
-      if (null == file) {
-        logger.error("cannot get upload file {}.", upload);
-        return null;
-      }
-      String fileName = get(upload + "FileName");
-      InputStream is = new FileInputStream(file);
-      String formatName = Strings.capitalize(Strings.substringAfterLast(fileName, "."));
-      Option<TransferFormat> format = Enums.get(TransferFormat.class, formatName);
-      return (format.isDefined()) ? ImporterFactory.getEntityImporter(format.get(), is, clazz, null) : null;
-    } catch (Exception e) {
-      logger.error("error", e);
-      return null;
-    }
+  protected final Long[] getLongIds(String shortName) {
+    return getIds(shortName, Long.class);
   }
 
   /**
-   * 导入信息
+   * Get entity's long id array from parameters shortname.id,shortname.ids,shortnameIds
+   * 
+   * @param shortName
    */
-  public String importData() {
-    TransferResult tr = new TransferResult();
-    EntityImporter importer = buildEntityImporter();
-    if (null == importer) { return forward("/components/importData/error"); }
-    try {
-      configImporter(importer);
-      importer.transfer(tr);
-      put("importer", importer);
-      put("importResult", tr);
-      if (tr.hasErrors()) {
-        return forward("/components/importData/error");
-      } else {
-        return forward("/components/importData/result");
-      }
-    } catch (IllegalImportFormatException e) {
-      tr.addFailure(getText("error.importformat"), e.getMessage());
-      put("importResult", tr);
-      return forward("/components/importData/error");
+  protected final Integer[] getIntIds(String shortName) {
+    return getIds(shortName, Integer.class);
+  }
+
+  /**
+   * Get entity's id array from parameters shortname.id,shortname.ids,shortnameIds
+   * 
+   * @param name
+   * @param clazz
+   * @return empty array if not found
+   */
+  protected final <T> T[] getIds(String name, Class<T> clazz) {
+    T[] datas = Params.getAll(name + ".id", clazz);
+    if (null == datas) {
+      String datastring = Params.get(name + ".ids");
+      if (null == datastring) datastring = Params.get(name + "Ids");
+      if (null == datastring) Array.newInstance(clazz, 0);
+      else return Params.converter.convert(Strings.split(datastring, ","), clazz);
     }
+    return datas;
   }
 
-  protected void configImporter(EntityImporter importer) {
-    for (final TransferListener il : getImporterListeners()) {
-      importer.addListener(il);
-    }
+  // populate------------------------------------------------------------------
+  /**
+   * 将request中的参数设置到clazz对应的bean。
+   * 
+   * @param clazz
+   * @param shortName
+   */
+  protected final <T> T populate(Class<T> clazz, String shortName) {
+    return PopulateHelper.populate(clazz, shortName);
   }
 
-  protected List<? extends TransferListener> getImporterListeners() {
-    return Collections.singletonList(new ImporterForeignerListener(entityDao));
+  protected final void populate(Object obj, String shortName) {
+    Model.populate(obj, Params.sub(shortName));
   }
 
-  public void setConfig(PropertyConfig propertyConfig) {
-    this.config = propertyConfig;
+  protected final Object populate(Class<?> clazz) {
+    return PopulateHelper.populate(clazz);
+  }
+
+  protected final Object populate(String entityName) {
+    return PopulateHelper.populate(entityName);
+  }
+
+  protected final Object populate(String entityName, String shortName) {
+    return PopulateHelper.populate(entityName, shortName);
+  }
+
+  protected final Object populate(Object obj, String entityName, String shortName) {
+    return PopulateHelper.populate(obj, entityName, shortName);
+  }
+
+  protected final void populate(Entity<?> entity, String entityName, Map<String, Object> params) {
+    Assert.notNull(entity, "Cannot populate to null.");
+    Model.getPopulator().populate(entity, Model.getType(entityName), params);
+  }
+
+  protected final void populate(Entity<?> entity, Map<String, Object> params) {
+    Assert.notNull(entity, "Cannot populate to null.");
+    Model.populate(entity, params);
+  }
+
+  // query------------------------------------------------------
+  protected final int getPageNo() {
+    return QueryHelper.getPageNo();
+  }
+
+  protected final int getPageSize() {
+    return QueryHelper.getPageSize();
+  }
+
+  /**
+   * 从request的参数或者cookie中(参数优先)取得分页信息
+   */
+  protected final PageLimit getPageLimit() {
+    return QueryHelper.getPageLimit();
+  }
+
+  protected final void populateConditions(OqlBuilder<?> builder) {
+    QueryHelper.populateConditions(builder);
+  }
+
+  protected final void populateConditions(OqlBuilder<?> builder, String exclusiveAttrNames) {
+    QueryHelper.populateConditions(builder, exclusiveAttrNames);
   }
 
 }

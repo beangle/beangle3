@@ -79,23 +79,18 @@ public class CasAuthenticationProvider implements AuthenticationProvider, Initia
     // Ensure credentials are presented
     if (Strings.isEmpty(String.valueOf(casauth.getCredentials()))) { throw new BadCredentialsException(
         "CasAuthenticationProvider.noServiceTicket"); }
-    boolean stateless = false;
-    if (STATELESS_ID.equals(casauth.getPrincipal())) {
-      stateless = true;
-    }
+    boolean stateless = STATELESS_ID.equals(casauth.getPrincipal());
+
     CasAuthentication result = null;
     // Try to obtain from cache
-    if (stateless) {
-      result = statelessTicketCache.get(casauth.getCredentials().toString());
-    }
+    if (stateless) result = statelessTicketCache.get(casauth.getCredentials().toString());
+
     if (result == null) {
       result = authenticateNow(casauth);
       result.setDetails(casauth.getDetails());
     }
     // Add to cache
-    if (stateless) {
-      statelessTicketCache.put(result);
-    }
+    if (stateless) statelessTicketCache.put(result);
     return result;
   }
 

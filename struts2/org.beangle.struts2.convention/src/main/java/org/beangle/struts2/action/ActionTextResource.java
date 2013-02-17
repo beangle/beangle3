@@ -62,15 +62,15 @@ public class ActionTextResource extends DefaultTextResource {
     msg = getPackageMessage(actionClass.getName(), key, checked);
     if (msg != null) { return msg; }
 
-    if (EntityActionSupport.class.isAssignableFrom(actionClass)) {
+    if (EntityDrivenAction.class.isAssignableFrom(actionClass)) {
       ActionContext context = ActionContext.getContext();
       // search up model's class hierarchy
       ActionInvocation actionInvocation = context.getActionInvocation();
       // ActionInvocation may be null if we're being run from a Sitemesh filter
       if (actionInvocation != null) {
         Object action = actionInvocation.getAction();
-        if (action instanceof EntityActionSupport) {
-          String entityName = ((EntityActionSupport) action).getEntityName();
+        if (action instanceof EntityDrivenAction) {
+          String entityName = ((EntityDrivenAction) action).getEntityName();
           if (entityName != null) {
             msg = getPackageMessage(entityName, key, checked);
             if (msg != null) { return msg; }

@@ -21,7 +21,7 @@ package org.beangle.struts2.convention.config;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.Predicate;
+import org.beangle.commons.lang.functor.Predicate;
 import org.beangle.struts2.convention.route.Profile;
 
 /**
@@ -44,7 +44,7 @@ public interface ActionFinder {
    * 
    * @author chaostone
    */
-  static class ActionTest implements Predicate {
+  static class ActionTest implements Predicate<String> {
 
     final String actionSuffix;
     final List<String> packageNames;
@@ -55,8 +55,7 @@ public interface ActionFinder {
       this.packageNames = packageNames;
     }
 
-    public boolean evaluate(Object object) {
-      String name = (String) object;
+    public Boolean apply(String name) {
       boolean isAction = name.endsWith(actionSuffix);
       if (isAction) {
         boolean inPackage = false;

@@ -39,7 +39,7 @@ public class ContainerActionFinder implements ActionFinder, ContainerAware {
     if (null != container) {
       for (Object name : container.getKeys()) {
         Class<?> type = container.getType(name).orNull();
-        if (null != type && actionTest.evaluate(type.getName())) actions.put(type, name.toString());
+        if (null != type && actionTest.apply(type.getName())) actions.put(type, name.toString());
       }
     }
     return actions;

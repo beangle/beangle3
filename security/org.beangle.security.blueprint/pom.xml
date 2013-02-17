@@ -30,5 +30,15 @@
       <artifactId>beangle-orm-hibernate</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 </project>

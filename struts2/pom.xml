@@ -13,7 +13,6 @@
   <properties>
     <struts.version>2.3.8</struts.version>
     <freemarker.version>2.3.19</freemarker.version>
-    <jqueryplugin.version>3.3.1</jqueryplugin.version>
   </properties>
 
   <modules>
@@ -41,11 +40,6 @@
       <groupId>org.apache.struts</groupId>
       <artifactId>struts2-core</artifactId>
       <version>${struts.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.jgeppert.struts2.jquery</groupId>
-      <artifactId>struts2-jquery-plugin</artifactId>
-      <version>${jqueryplugin.version}</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>

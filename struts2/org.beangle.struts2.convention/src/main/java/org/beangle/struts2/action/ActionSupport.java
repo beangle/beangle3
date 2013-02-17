@@ -18,7 +18,6 @@
  */
 package org.beangle.struts2.action;
 
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Date;
@@ -30,11 +29,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
-import org.beangle.commons.collection.page.PageLimit;
-import org.beangle.commons.dao.query.builder.OqlBuilder;
-import org.beangle.commons.entity.Entity;
-import org.beangle.commons.entity.metadata.Model;
-import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Chars;
 import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Strings;
@@ -49,8 +43,6 @@ import org.beangle.struts2.convention.Flash;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.struts2.helper.ContextHelper;
 import org.beangle.struts2.helper.Params;
-import org.beangle.struts2.helper.PopulateHelper;
-import org.beangle.struts2.helper.QueryHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -348,132 +340,6 @@ public class ActionSupport implements TextResourceProvider {
 
   protected final Long getLong(String name) {
     return Params.getLong(name);
-  }
-
-  /**
-   * Get entity's id from shortname.id,shortnameId,id
-   * 
-   * @param name
-   * @param clazz
-   */
-  protected final <T> T getId(String name, Class<T> clazz) {
-    String entityId = get(name + ".id");
-    if (null == entityId) entityId = get(name + "Id");
-    if (null == entityId) entityId = get("id");
-    if (null == entityId) return null;
-    else return Params.converter.convert(entityId, clazz);
-  }
-
-  protected final Integer getIntId(String shortName) {
-    return getId(shortName, Integer.class);
-  }
-
-  protected final Long getLongId(String shortName) {
-    return getId(shortName, Long.class);
-  }
-
-  /**
-   * Get entity's long id array from parameters shortname.id,shortname.ids,shortnameIds
-   * 
-   * @param shortName
-   */
-  protected final Long[] getLongIds(String shortName) {
-    return getIds(shortName, Long.class);
-  }
-
-  /**
-   * Get entity's long id array from parameters shortname.id,shortname.ids,shortnameIds
-   * 
-   * @param shortName
-   */
-  protected final Integer[] getIntIds(String shortName) {
-    return getIds(shortName, Integer.class);
-  }
-
-  /**
-   * Get entity's id array from parameters shortname.id,shortname.ids,shortnameIds
-   * 
-   * @param name
-   * @param clazz
-   * @return empty array if not found
-   */
-  protected final <T> T[] getIds(String name, Class<T> clazz) {
-    T[] datas = Params.getAll(name + ".id", clazz);
-    if (null == datas) {
-      String datastring = Params.get(name + ".ids");
-      if (null == datastring) datastring = Params.get(name + "Ids");
-      if (null == datastring) {
-        Array.newInstance(clazz, 0);
-      } else {
-        return Params.converter.convert(Strings.split(datastring, ","), clazz);
-      }
-    }
-    return datas;
-  }
-
-  // populate------------------------------------------------------------------
-  /**
-   * 将request中的参数设置到clazz对应的bean。
-   * 
-   * @param clazz
-   * @param shortName
-   */
-  protected final <T> T populate(Class<T> clazz, String shortName) {
-    return PopulateHelper.populate(clazz, shortName);
-  }
-
-  protected final void populate(Object obj, String shortName) {
-    Model.populate(obj, Params.sub(shortName));
-  }
-
-  protected final Object populate(String entityName) {
-    return PopulateHelper.populate(entityName);
-  }
-
-  protected final Object populate(Class<?> clazz) {
-    return PopulateHelper.populate(clazz);
-  }
-
-  protected final Object populate(String entityName, String shortName) {
-    return PopulateHelper.populate(entityName, shortName);
-  }
-
-  protected final Object populate(Object obj, String entityName, String shortName) {
-    return PopulateHelper.populate(obj, entityName, shortName);
-  }
-
-  protected final void populate(Entity<?> entity, String entityName, Map<String, Object> params) {
-    Assert.notNull(entity, "Cannot populate to null.");
-    Model.getPopulator().populate(entity, Model.getType(entityName), params);
-  }
-
-  protected final void populate(Entity<?> entity, Map<String, Object> params) {
-    Assert.notNull(entity, "Cannot populate to null.");
-    Model.populate(entity, params);
-  }
-
-  // query------------------------------------------------------
-  protected final int getPageNo() {
-    return QueryHelper.getPageNo();
-  }
-
-  protected final int getPageSize() {
-    return QueryHelper.getPageSize();
-  }
-
-  /**
-   * 从request的参数或者cookie中(参数优先)取得分页信息
-   */
-  protected final PageLimit getPageLimit() {
-    return QueryHelper.getPageLimit();
-  }
-
-  protected final void populateConditions(OqlBuilder<?> builder) {
-    QueryHelper.populateConditions(builder);
-  }
-
-  protected final void populateConditions(OqlBuilder<?> builder, String exclusiveAttrNames) {
-    QueryHelper.populateConditions(builder, exclusiveAttrNames);
   }
 
   protected final String getCookieValue(String cookieName) {

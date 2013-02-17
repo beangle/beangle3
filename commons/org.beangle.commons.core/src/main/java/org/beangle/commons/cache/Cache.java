@@ -16,19 +16,40 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.struts2.example.action;
+package org.beangle.commons.cache;
 
-import org.beangle.struts2.action.EntityDrivenAction;
+import org.beangle.commons.lang.Option;
 
-public class CompareAction extends EntityDrivenAction {
+/**
+ * Common interface of Cache
+ * 
+ * @author chaostone
+ * @since 3.2.0
+ */
+public interface Cache {
 
-  public String index() {
-    return SUCCESS;
-  }
+  /**
+   * Return the cache name.
+   */
+  String getName();
 
-  @Override
-  protected String getEntityName() {
-    return null;
-  }
+  /**
+   * Get Some(T) or None
+   */
+  <T> Option<T> get(Object key);
 
+  /**
+   * Put a new Value
+   */
+  void put(Object key, Object value);
+
+  /**
+   * Evict specified key
+   */
+  void evict(Object key);
+
+  /**
+   * Remove all mappings from the cache.
+   */
+  void clear();
 }

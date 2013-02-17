@@ -453,8 +453,7 @@
           if (typeof jQuery != "undefined") {
             if(!noHistory && jQuery("input:file",myForm).length==0 && beangle.ajaxhistory){
               beangle.history.submit(myForm.id,action,submitTarget);
-              //qianjun 这个分支没有使用struts2_jquery的绑定，所以去除myForm.submit,防止两次验证onsubmit函数
-              //FIXME 不能简单的去除
+              //这个分支没有使用bind，所以去除myForm.submit,防止两次验证onsubmit函数
               myForm.onsubmit=null;
             }else{
               jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
@@ -858,9 +857,7 @@
       myForm.setAttribute("method","POST");
       for(key in this.paramMap){
         value=this.paramMap[key];
-        if(value != ""){
-          bg.form.addInput(myForm,key,value,"hidden");
-        }
+        if(value != "")bg.form.addInput(myForm,key,value,"hidden");
       }
       document.body.appendChild(myForm);
       myForm.submit();
