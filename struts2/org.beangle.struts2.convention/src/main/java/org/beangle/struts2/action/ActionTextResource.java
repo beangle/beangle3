@@ -53,14 +53,14 @@ public class ActionTextResource extends DefaultTextResource {
    */
   @Override
   protected String getText(String key, Locale locale) {
-    if (key == null) { return ""; }
+    if (key == null) return "";
     Set<String> checked = new HashSet<String>(5);
     // search up class hierarchy
     String msg = getMessage(actionClass.getName(), locale, key);
-    if (msg != null) { return msg; }
+    if (msg != null) return msg;
     // nothing still? all right, search the package hierarchy now
     msg = getPackageMessage(actionClass.getName(), key, checked);
-    if (msg != null) { return msg; }
+    if (msg != null) return msg;
 
     if (EntityDrivenAction.class.isAssignableFrom(actionClass)) {
       ActionContext context = ActionContext.getContext();
@@ -73,7 +73,7 @@ public class ActionTextResource extends DefaultTextResource {
           String entityName = ((EntityDrivenAction) action).getEntityName();
           if (entityName != null) {
             msg = getPackageMessage(entityName, key, checked);
-            if (msg != null) { return msg; }
+            if (msg != null) return msg;
           }
         }
       }
@@ -95,11 +95,8 @@ public class ActionTextResource extends DefaultTextResource {
             prop = newKey.substring(idx + 1, nextIdx);
             newKey = newKey.substring(idx + 1);
             idx = nextIdx;
-            if (Strings.isNotEmpty(prop)) {
-              aClass = Reflections.getPropertyType(aClass, prop);
-            } else {
-              aClass = null;
-            }
+            if (Strings.isNotEmpty(prop)) aClass = Reflections.getPropertyType(aClass, prop);
+            else aClass = null;
           } else {
             return msg;
           }
@@ -114,11 +111,9 @@ public class ActionTextResource extends DefaultTextResource {
     String baseName = className;
     while (baseName.lastIndexOf('.') != -1) {
       baseName = baseName.substring(0, baseName.lastIndexOf('.'));
-      if (checked.contains(baseName)) {
-        continue;
-      }
+      if (checked.contains(baseName)) continue;
       msg = getMessage(baseName + ".package", locale, key);
-      if (msg != null) { return msg; }
+      if (msg != null) return msg;
       checked.add(baseName);
     }
     return null;

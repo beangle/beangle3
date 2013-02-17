@@ -204,11 +204,8 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
   @SuppressWarnings("unchecked")
   protected <T> T getEntity(Class<T> entityClass, String shortName) {
     EntityType type = null;
-    if (entityClass.isInterface()) {
-      type = Model.getType(entityClass.getName());
-    } else {
-      type = Model.getType(entityClass);
-    }
+    if (entityClass.isInterface()) type = Model.getType(entityClass.getName());
+    else type = Model.getType(entityClass);
     return (T) getEntity(type.getEntityName(), shortName);
   }
 
@@ -217,11 +214,10 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
    */
   public String info() throws Exception {
     Serializable entityId = getId(getShortName(), Model.getType(getEntityName()).getIdType());
-    if (null == entityId) {
-      logger.warn("cannot get paremeter {}Id or {}.id", getShortName(), getShortName());
+    if (null != entityId) {
+      Entity<?> entity = getModel(getEntityName(), entityId);
+      put(getShortName(), entity);
     }
-    Entity<?> entity = getModel(getEntityName(), entityId);
-    put(getShortName(), entity);
     return forward();
   }
 
@@ -300,8 +296,8 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
    * @throws Exception
    */
   public String export() throws Exception {
-    TransferFormat format = Enums.get(TransferFormat.class, Strings.capitalize(get("format", "Csv"))).getOrElse(
-        TransferFormat.Csv);
+    TransferFormat format = Enums.get(TransferFormat.class, Strings.capitalize(get("format", "Csv")))
+        .getOrElse(TransferFormat.Csv);
     String fileName = get("fileName");
     String template = get("template");
     if (Strings.isEmpty(fileName)) fileName = "exportResult";
@@ -343,7 +339,8 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
     response.setHeader(
         "Content-Disposition",
         "attachment;filename="
-            + RequestUtils.encodeAttachName(ServletActionContext.getRequest(), fileName + "." + Strings.uncapitalize(format.name())));
+            + RequestUtils.encodeAttachName(ServletActionContext.getRequest(),
+                fileName + "." + Strings.uncapitalize(format.name())));
     // 进行输出
     exporter.setContext(context);
     exporter.transfer(new TransferResult());
@@ -436,9 +433,8 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
   }
 
   protected void configImporter(EntityImporter importer) {
-    for (final TransferListener il : getImporterListeners()) {
+    for (final TransferListener il : getImporterListeners())
       importer.addListener(il);
-    }
   }
 
   protected List<? extends TransferListener> getImporterListeners() {

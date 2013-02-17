@@ -371,9 +371,7 @@ public class ActionSupport implements TextResourceProvider {
 
   protected final URL getResource(String name) {
     URL url = ClassLoaders.getResource(name, getClass());
-    if (url == null) {
-      logger.error("Cannot load template {}", name);
-    }
+    if (url == null) logger.error("Cannot load template {}", name);
     return url;
   }
 
