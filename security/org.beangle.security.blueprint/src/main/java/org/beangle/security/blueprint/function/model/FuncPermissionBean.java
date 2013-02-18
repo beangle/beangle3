@@ -54,12 +54,12 @@ public class FuncPermissionBean extends IntegerIdObject implements TemporalEntit
   @ManyToOne(fetch = FetchType.LAZY)
   protected FuncResource resource;
 
-  @Size(max = 100)
   /** 授权的操作 */
+  @Size(max = 100)
   protected String actions;
 
-  @Size(max = 200)
   /** 访问检查器 */
+  @Size(max = 200)
   protected String restrictions;
 
   /** 生效时间 */
