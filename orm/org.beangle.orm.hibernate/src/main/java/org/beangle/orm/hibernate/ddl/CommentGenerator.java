@@ -31,10 +31,41 @@ import com.sun.javadoc.*;
 import com.sun.javadoc.AnnotationDesc.ElementValuePair;
 
 /**
- * Sql comments generator
+ * Sql comments generator,It convert field's javadoc comment to sql comment.
+ * <p>
+ * Usage:
+ * 
+ * <pre>
+ * &lt;build&gt;
+ *   &lt;plugins&gt;
+ *    &lt;plugin&gt;
+ *        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+ *        &lt;artifactId&gt;maven-javadoc-plugin&lt;/artifactId&gt;
+ *        &lt;version&gt;2.9&lt;/version&gt;
+ *        &lt;configuration&gt;
+ *          &lt;charset&gt;UTF-8&lt;/charset&gt;
+ *          &lt;doclet&gt;org.beangle.orm.hibernate.ddl.CommentGenerator&lt;/doclet&gt;
+ *          &lt;docletArtifact&gt;
+ *            &lt;groupId&gt;org.beangle.orm&lt;/groupId&gt;
+ *            &lt;artifactId&gt;beangle-orm-hibernate&lt;/artifactId&gt;
+ *            &lt;version&gt;${beangle.version}&lt;/version&gt;
+ *          &lt;/docletArtifact&gt;
+ *          &lt;additionalparam&gt;
+ *            -file /path/to/your/comment.sql
+ *            -config /path/to/your/META-INF/beangle/table.properties
+ *          &lt;/additionalparam&gt;
+ *          &lt;useStandardDocletOptions&gt;false&lt;/useStandardDocletOptions&gt;
+ *        &lt;/configuration&gt;
+ *      &lt;/plugin&gt;
+ *    &lt;/plugins&gt;
+ *  &lt;/build&gt;
+ * </pre>
  * 
  * @author chaostone
  * @since 3.2.0
+ * @see https://github.com/beangle/library/wiki/Sql-Comment-Generator
+ * @see http://docs.oracle.com/javase/1.4.2/docs/tooldocs/javadoc/overview.html
+ * @see http://docs.oracle.com/javase/7/docs/jdk/api/javadoc/doclet/index.html
  */
 public class CommentGenerator {
 
