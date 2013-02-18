@@ -30,7 +30,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Database session registry cleanup daemon
+ * Database session registry cleanup daemon.
+ * <p>
+ * The daemon clean up every cleanInterval(m)
+ * <ul>
+ * <li>removed expired session</li>
+ * <li>removed long time idle session( now - last access time>expiredTime)</li>
+ * </ul>
+ * <strong>Implementation note:</strong> Make sure only one instance run clean up when multiple
+ * deployed.
  * 
  * @author chaostone
  * @since 3.1.0

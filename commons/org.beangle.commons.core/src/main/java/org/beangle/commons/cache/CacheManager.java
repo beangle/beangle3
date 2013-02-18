@@ -22,6 +22,7 @@ import java.util.Collection;
 
 /**
  * Cache Manager
+ * 
  * @author chaostone
  * @since 3.2.0
  */
@@ -30,7 +31,7 @@ public interface CacheManager {
   /**
    * Return the cache associated with the given name.
    */
-  Cache getCache(String name);
+  <K, V> Cache<K, V> getCache(String name);
 
   /**
    * Return a collection of the caches known by this cache manager.

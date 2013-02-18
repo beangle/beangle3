@@ -16,44 +16,44 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.core.session.impl;
+package org.beangle.commons.cache.concurrent;
 
+import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
+import org.beangle.commons.cache.Cache;
+import org.beangle.commons.cache.CacheManager;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.security.core.session.SessionStatus;
-import org.beangle.security.core.session.SessionStatusCache;
 
 /**
- * Cache session status in local memory.
+ * Concurrent Map Cache Manager.
  * 
  * @author chaostone
- * @since 3.1.0
+ * @since 3.2.0
  */
-public class LocalSessionStatusCache implements SessionStatusCache {
+public class ConcurrentMapCacheManager implements CacheManager {
 
-  private Map<String, SessionStatus> datas = CollectUtils.newConcurrentHashMap();
+  private final Map<String, Cache<?, ?>> caches = CollectUtils.newConcurrentHashMap();
 
+  @SuppressWarnings("unchecked")
   @Override
-  public SessionStatus get(String id) {
-    return datas.get(id);
+  public <K, V> Cache<K, V> getCache(String name) {
+    Cache<?, ?> cache = caches.get(name);
+    if (cache == null) {
+      synchronized (caches) {
+        cache = caches.get(name);
+        if (cache == null) {
+          cache = new ConcurrentMapCache<K, V>(name);
+          caches.put(name, cache);
+        }
+      }
+    }
+    return (Cache<K, V>) cache;
   }
 
   @Override
-  public void put(String id, SessionStatus newstatus) {
-    datas.put(id, newstatus);
+  public Collection<String> getCacheNames() {
+    return null;
   }
 
-  @Override
-  public void evict(String id) {
-    datas.remove(id);
-  }
-
-  @Override
-  public Set<String> getIds() {
-    return datas.keySet();
-  }
-
-  
 }

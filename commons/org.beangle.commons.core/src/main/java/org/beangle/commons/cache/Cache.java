@@ -18,6 +18,8 @@
  */
 package org.beangle.commons.cache;
 
+import java.util.Set;
+
 import org.beangle.commons.lang.Option;
 
 /**
@@ -26,27 +28,32 @@ import org.beangle.commons.lang.Option;
  * @author chaostone
  * @since 3.2.0
  */
-public interface Cache {
+public interface Cache<K, V> {
 
   /**
    * Return the cache name.
    */
-  String getName();
+  String name();
 
   /**
    * Get Some(T) or None
    */
-  <T> Option<T> get(Object key);
+  Option<V> get(K key);
 
   /**
    * Put a new Value
    */
-  void put(Object key, Object value);
+  void put(K key, V value);
 
   /**
    * Evict specified key
    */
-  void evict(Object key);
+  void evict(K key);
+
+  /**
+   * Return cached keys
+   */
+  Set<K> keys();
 
   /**
    * Remove all mappings from the cache.

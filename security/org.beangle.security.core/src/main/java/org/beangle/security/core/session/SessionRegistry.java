@@ -97,9 +97,4 @@ public interface SessionRegistry {
    * 查询控制器
    */
   SessionController getController();
-  
-  /**
-   * Return status cache
-   */
-  SessionStatusCache getCache();
 }

@@ -22,11 +22,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
 
+import org.beangle.commons.cache.Cache;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.EntityDao;
+import org.beangle.commons.lang.Option;
 import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.security.core.session.SessionStatus;
-import org.beangle.security.core.session.SessionStatusCache;
+import org.beangle.security.core.session.Sessioninfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +42,11 @@ public class DbSessionCacheSyncDaemon extends TimerTask {
 
   protected static final Logger logger = LoggerFactory.getLogger(DbSessionCacheSyncDaemon.class);
 
-  private DbSessionRegistry registry;
+  private EntityDao entityDao;
+
+  private Cache<String, SessionStatus> cache;
+
+  private Class<? extends Sessioninfo> sessioninfoType;
 
   /**
    * Session status idle time(default 1 min).
@@ -60,9 +66,12 @@ public class DbSessionCacheSyncDaemon extends TimerTask {
     super();
   }
 
-  public DbSessionCacheSyncDaemon(DbSessionRegistry registry) {
+  public DbSessionCacheSyncDaemon(EntityDao entityDao, Cache<String, SessionStatus> cache,
+      Class<? extends Sessioninfo> sessioninfoType) {
     super();
-    this.registry = registry;
+    this.entityDao = entityDao;
+    this.cache = cache;
+    this.sessioninfoType = sessioninfoType;
   }
 
   @Override
@@ -83,11 +92,11 @@ public class DbSessionCacheSyncDaemon extends TimerTask {
     long now = System.currentTimeMillis();
 
     List<Object[]> arguments = CollectUtils.newArrayList();
-    SessionStatusCache cache = registry.getCache();
 
-    for (String id : cache.getIds()) {
-      SessionStatus status = registry.getCache().get(id);
-      if (null == status) continue;
+    for (String id : cache.keys()) {
+      Option<SessionStatus> statusOp = cache.get(id);
+      if (statusOp.isEmpty()) continue;
+      SessionStatus status = statusOp.get();
       // session status is idle toolong,then evict it.
       if (now - status.getLastAccessedTime() >= idleTime) {
         cache.evict(id);
@@ -99,11 +108,10 @@ public class DbSessionCacheSyncDaemon extends TimerTask {
     }
     if (!arguments.isEmpty()) {
       try {
-        EntityDao entityDao = registry.getEntityDao();
         int[] updates = entityDao
             .executeUpdateRepeatly(
                 "update "
-                    + registry.getSessioninfoTypename()
+                    + sessioninfoType.getName()
                     + " info set info.lastAccessAt=?2 where info.id=?1 and info.lastAccessAt < ?2 and info.expiredAt is null",
                 arguments);
 
@@ -131,8 +139,16 @@ public class DbSessionCacheSyncDaemon extends TimerTask {
     this.interval = interval;
   }
 
-  public void setRegistry(DbSessionRegistry registry) {
-    this.registry = registry;
+  public void setEntityDao(EntityDao entityDao) {
+    this.entityDao = entityDao;
+  }
+
+  public void setCache(Cache<String, SessionStatus> cache) {
+    this.cache = cache;
+  }
+
+  public void setSessioninfoType(Class<? extends Sessioninfo> sessioninfoType) {
+    this.sessioninfoType = sessioninfoType;
   }
 
 }

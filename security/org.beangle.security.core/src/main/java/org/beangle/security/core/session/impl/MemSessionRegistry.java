@@ -34,7 +34,7 @@ import org.beangle.security.core.session.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MemSessionRegistry implements SessionRegistry, Initializing, SessionStatusCache {
+public class MemSessionRegistry implements SessionRegistry, Initializing {
 
   protected static final Logger logger = LoggerFactory.getLogger(MemSessionRegistry.class);
 
@@ -161,30 +161,4 @@ public class MemSessionRegistry implements SessionRegistry, Initializing, Sessio
 
   }
 
-  @Override
-  public SessionStatus get(String id) {
-    Sessioninfo info = getSessioninfo(id);
-    return (null == info) ? null : new SessionStatus(info);
-  }
-
-  @Override
-  public void put(String id, SessionStatus newstatus) {
-
-  }
-
-  @Override
-  public void evict(String id) {
-    remove(id);
-  }
-
-  @Override
-  public SessionStatusCache getCache() {
-    return this;
-  }
-
-  @Override
-  public Set<String> getIds() {
-    return sessionids.keySet();
-  }
-  
 }

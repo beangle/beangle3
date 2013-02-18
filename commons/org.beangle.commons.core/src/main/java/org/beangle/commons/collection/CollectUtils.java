@@ -21,6 +21,7 @@ package org.beangle.commons.collection;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ConcurrentMap;
 
 import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.lang.Throwables;
@@ -147,7 +148,7 @@ public final class CollectUtils {
    * @param <V> a V object.
    * @return a {@link java.util.Map} object.
    */
-  public static <K, V> Map<K, V> newConcurrentHashMap() {
+  public static <K, V> ConcurrentMap<K, V> newConcurrentHashMap() {
     return new ConcurrentHashMap<K, V>();
   }
 

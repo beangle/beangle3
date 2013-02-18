@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Timer;
 
 import org.beangle.commons.bean.Initializing;
+import org.beangle.commons.cache.Cache;
+import org.beangle.commons.cache.concurrent.ConcurrentMapCache;
 import org.beangle.commons.dao.EntityDao;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
@@ -30,7 +32,6 @@ import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Objects;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.session.*;
-import org.beangle.security.core.session.impl.LocalSessionStatusCache;
 import org.beangle.security.core.session.impl.SimpleSessioninfoBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +55,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 
   private SessioninfoBuilder sessioninfoBuilder = new SimpleSessioninfoBuilder();
 
-  private SessionStatusCache cache = new LocalSessionStatusCache();
+  private Cache<String, SessionStatus> cache = new ConcurrentMapCache<String, SessionStatus>("session status");
 
   public void setEntityDao(EntityDao entityDao) {
     this.entityDao = entityDao;
@@ -66,7 +67,8 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 
     long now = System.currentTimeMillis();
     // 下一次间隔开始清理，不浪费启动时间
-    DbSessionCacheSyncDaemon cacheSync = new DbSessionCacheSyncDaemon(this);
+    DbSessionCacheSyncDaemon cacheSync = new DbSessionCacheSyncDaemon(entityDao, cache,
+        sessioninfoBuilder.getSessioninfoType());
     new Timer("Beangle Session Cache Synchronizer", true).schedule(cacheSync,
         new Date(now + cacheSync.getInterval()), cacheSync.getInterval());
 
@@ -103,7 +105,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 
   @Override
   public SessionStatus getSessionStatus(String sessionid) {
-    SessionStatus status = cache.get(sessionid);
+    SessionStatus status = cache.get(sessionid).orNull();
     if (null == status) {
       status = getStatusFromDB(sessionid);
       if (null != status) cache.put(sessionid, status);
@@ -189,7 +191,7 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
   }
 
   public void access(String sessionid, long accessAt) {
-    SessionStatus status = cache.get(sessionid);
+    SessionStatus status = cache.get(sessionid).orNull();
     if (null == status) {
       status = getStatusFromDB(sessionid);
       if (null != status) cache.put(sessionid, status);
@@ -199,10 +201,6 @@ public class DbSessionRegistry extends BaseServiceImpl implements SessionRegistr
 
   public String getSessioninfoTypename() {
     return sessioninfoBuilder.getSessioninfoType().getName();
-  }
-
-  public SessionStatusCache getCache() {
-    return cache;
   }
 
 }
