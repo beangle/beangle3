@@ -441,7 +441,7 @@
         var maxPageNo = onePage.maxPageNo;
         addAnchor=function(text,pageNumber){
             var pageHref=document.createElement('a');
-            pageHref.setAttribute("href","#");
+            pageHref.setAttribute("href","javascript:void(0)");
             pageHref.innerHTML=text;
             pageHref.style.padding="0px 2px 0px 2px";
             pageDiv.appendChild(pageHref);
@@ -571,9 +571,8 @@
                     if(null==ownGridTable) break;
                 }
                 var firstCell=ele.parentNode;
-                var isFireOnBoxCell=true;
+                
                 if(null==ownGridTable) return;
-
                 var selectedCount=0;
                 jQuery("#"+ownGridTable.id + " .gridselect").each(function(){
                     var inputs=jQuery(this).find("input");
@@ -589,7 +588,6 @@
                         }
                     }
                 });
-                
                 bg.ui.grid.notifyGridbar(ownGridTable.id,selectedCount);
             },
             /**通知gridbar中的按钮,更新是否显示等状态*/
@@ -728,8 +726,7 @@
                     return;
                 }
                 orderBy=onePage.orderby;
-                columnSort = function(event){
-                    // this is a td/th
+                columnSort = function(){// this is a td/th
                     bg.ui.grid.sort(onePage,this);
                 }
                 for(j=0;j<thead.rows.length;j++){
