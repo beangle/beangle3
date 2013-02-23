@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.beangle</groupId>
     <artifactId>beangle-library-parent</artifactId>
-    <version>3.1.1-SNAPSHOT</version>
+    <version>3.2.0</version>
   </parent>
   <groupId>org.beangle.commons</groupId>
   <artifactId>beangle-commons-parent</artifactId>
@@ -32,7 +32,7 @@
     <connection>scm:git:git://github.com/beangle/commons.git</connection>
     <developerConnection>scm:git:git@github.com:beangle/commons.git</developerConnection>
     <url>git@github.com:beangle/commons.git</url>
-    <tag>HEAD</tag>
+    <tag>3.2.0</tag>
   </scm>
 
   <properties>
