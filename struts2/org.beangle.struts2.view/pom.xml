@@ -13,6 +13,7 @@
   <properties>
     <bundle.symbolicName>org.beangle.struts2.view</bundle.symbolicName>
     <bundle.namespace>org.beangle.struts2.view</bundle.namespace>
+    <jqueryplugin.version>3.3.1</jqueryplugin.version>
   </properties>
 
   <dependencies>
@@ -20,6 +21,11 @@
       <groupId>org.beangle.struts2</groupId>
       <artifactId>beangle-struts2-convention</artifactId>
       <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jgeppert.struts2.jquery</groupId>
+      <artifactId>struts2-jquery-plugin</artifactId>
+      <version>${jqueryplugin.version}</version>
     </dependency>
   </dependencies>
 </project>

@@ -16,11 +16,11 @@
   </properties>
 
   <dependencies>
-   <dependency>
-     <groupId>org.beangle.commons</groupId>
-     <artifactId>beangle-commons-model</artifactId>
-     <version>${project.version}</version>
-     <optional>true</optional>
-   </dependency>
+    <dependency>
+      <groupId>org.beangle.commons</groupId>
+      <artifactId>beangle-commons-model</artifactId>
+      <version>${project.version}</version>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 </project>
