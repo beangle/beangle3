@@ -21,10 +21,10 @@ package org.beangle.inject.spring.web;
 import javax.servlet.ServletContext;
 
 import org.beangle.commons.inject.Container;
+import org.beangle.commons.inject.ContainerHook;
+import org.beangle.commons.inject.Containers;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.reflect.Reflections;
-import org.beangle.commons.web.context.ContainerUtils;
-import org.beangle.commons.web.filter.LazyInitializingHook;
 import org.beangle.inject.spring.SpringContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,16 +74,12 @@ public class ContextLoader {
       configureAndRefreshApplicationContext((ConfigurableApplicationContext) context, servletContext);
       servletContext.setAttribute(ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, context);
       Container container = new SpringContainer(context);
-      servletContext.setAttribute(ContainerUtils.RootContainer, container);
-
+      Containers.setRoot(container);
+      for (ContainerHook hook : Containers.getHooks())
+        hook.notify(container);
+      
       logger.info("Root ApplicationContext: initialization completed in {} ms", System.currentTimeMillis()
           - startTime);
-
-      // lazy initializing hooks
-      for (LazyInitializingHook hook : ContainerUtils.getLazyInitialHooks(servletContext))
-        hook.lazyInit(container);
-      servletContext.removeAttribute(ContainerUtils.LazyInitHooks);
-
       return context;
     } catch (RuntimeException ex) {
       logger.error("Context initialization failed", ex);

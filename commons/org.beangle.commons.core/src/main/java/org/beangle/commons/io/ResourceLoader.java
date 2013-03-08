@@ -16,23 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.struts2.convention.config;
+package org.beangle.commons.io;
+
+import java.net.URL;
+import java.util.List;
+
+import org.beangle.commons.lang.Option;
 
 /**
- * <p>
- * This interface defines how the action configurations for the current web application can be
- * constructed. This must find all actions that are not specifically defined in the struts XML files
- * or any plugins. Furthermore, it must make every effort to locate all action results as well.
- * </p>
+ * Resource loader
+ * 
+ * @author chaostone
+ * @since 3.3.0
  */
-public interface ActionConfigBuilder {
-  /**
-   * Builds all the action configurations and stores them into the XWork
-   * configuration instance via XWork dependency injetion.
-   */
-  void buildActionConfigs();
+public interface ResourceLoader {
 
-  boolean needsReload();
+  Option<URL> getResource(String resourceName);
 
-  void destroy();
+  List<URL> getResources(String resourceName);
 }

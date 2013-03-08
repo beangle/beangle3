@@ -16,48 +16,37 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.inject;
+package org.beangle.commons.lang.reflect;
 
-import java.util.Map;
-import java.util.Set;
+import java.lang.reflect.Method;
 
-import org.beangle.commons.lang.Option;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
-/**
- * Bean Container.
- * 
- * @author chaostone
- * @since 3.1.0
- */
-public interface Container {
+@Test
+public class BridgeMethodTest {
 
-  /**
-   * Return true if contains
-   */
-  boolean contains(Object key);
+  public void testBridgeMethods() {
 
-  /**
-   * Return type of the given key.
-   */
-  Option<Class<?>> getType(Object key);
+    for (Method m : Dog.class.getMethods()) {
+      if (m.getName().equals("getAge") && null == m.getReturnType()) {
+        if (m.getReturnType().equals(Integer.class)) Assert.assertFalse(m.isBridge());
 
-  /**
-   * Return an instance
-   */
-  <T> Option<T> getBean(Object key);
+        else if (m.getReturnType().equals(Number.class)) {
+          Assert.assertTrue(m.isBridge());
+          Assert.assertEquals(m.getDeclaringClass(), Dog.class);
+        }
+      }
+    }
+  }
+}
 
-  /**
-   * Gets an instance of the given dependency
-   */
-  <T> Option<T> getBean(Class<T> type);
+interface Animal {
+  Number getAge();
+}
 
-  /**
-   * Return beans of the given type
-   */
-  <T> Map<?, T> getBeans(Class<T> types);
-
-  /**
-   * Return bean keys
-   */
-  Set<?> keys();
+class Dog implements Animal {
+  public Integer getAge() {
+    return 0;
+  }
 }

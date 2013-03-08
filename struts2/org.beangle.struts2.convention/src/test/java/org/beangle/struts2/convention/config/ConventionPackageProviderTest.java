@@ -46,8 +46,8 @@ import com.opensymphony.xwork2.ognl.OgnlReflectionProvider;
 import com.opensymphony.xwork2.util.reflection.ReflectionException;
 
 @Test
-public class SmartActionConfigBuilderTest {
-  private static final Logger logger = LoggerFactory.getLogger(SmartActionConfigBuilderTest.class);
+public class ConventionPackageProviderTest {
+  private static final Logger logger = LoggerFactory.getLogger(ConventionPackageProviderTest.class);
 
   public void test21() throws Exception {
     ActionBuilder actionNameBuilder = new DefaultActionBuilder();
@@ -73,11 +73,11 @@ public class SmartActionConfigBuilderTest {
     // mockContainer.setResultMapBuilder(resultMapBuilder);
     // mockContainer.setConventionsService(new ConventionsServiceImpl(""));
 
-    SmartActionConfigBuilder builder = new SmartActionConfigBuilder(configuration, mockContainer, of);
+    ConventionPackageProvider builder = new ConventionPackageProvider(configuration, mockContainer, of);
     builder.setActionBuilder(actionNameBuilder);
     builder.setRegistry(new DefaultTextBundleRegistry());
 
-    builder.buildActionConfigs();
+    builder.loadPackages();
     Set<String> names = configuration.getPackageConfigNames();
     for (String a : names) {
       logger.debug("pkgname:" + a);

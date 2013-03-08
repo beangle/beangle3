@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.web.filter;
+package org.beangle.commons.inject;
 
 import org.beangle.commons.inject.Container;
 
@@ -26,7 +26,7 @@ import org.beangle.commons.inject.Container;
  * @author chaostone
  * @since 3.0
  */
-public interface LazyInitializingHook {
+public interface ContainerHook {
 
-  void lazyInit(Container context);
+  void notify(Container context);
 }

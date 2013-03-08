@@ -26,13 +26,13 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.beangle.commons.inject.Container;
-import org.beangle.commons.web.context.ContainerUtils;
-import org.beangle.commons.web.filter.LazyInitializingHook;
+import org.beangle.commons.inject.ContainerHook;
+import org.beangle.commons.inject.Containers;
 import org.beangle.commons.web.filter.OncePerRequestFilter;
 import org.beangle.orm.hibernate.internal.SessionUtils;
 import org.hibernate.SessionFactory;
 
-public class OpenSessionInViewFilter extends OncePerRequestFilter implements LazyInitializingHook {
+public class OpenSessionInViewFilter extends OncePerRequestFilter implements ContainerHook {
 
   public static final String DEFAULT_SESSION_FACTORY_BEAN_NAME = "sessionFactory";
 
@@ -53,15 +53,15 @@ public class OpenSessionInViewFilter extends OncePerRequestFilter implements Laz
   @Override
   protected void initFilterBean() throws ServletException {
     super.initFilterBean();
-    Container context = ContainerUtils.getContainer(getServletContext());
+    Container context = Containers.getRoot();
     if (null != context) {
       setSessionFactory(context.<SessionFactory> getBean(sessionFactoryBeanName).get());
     } else {
-      ContainerUtils.getLazyInitialHooks(getServletContext()).add(this);
+      Containers.getHooks().add(this);
     }
   }
 
-  public void lazyInit(Container context) {
+  public void notify(Container context) {
     setSessionFactory(context.getBean(SessionFactory.class).get());
   }
 

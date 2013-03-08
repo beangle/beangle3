@@ -20,6 +20,8 @@ package org.beangle.commons.codec.binary;
 
 import java.io.UnsupportedEncodingException;
 
+import org.beangle.commons.codec.net.BCoder;
+
 /**
  * Base64 algorithm
  * @author chaostone
@@ -113,7 +115,7 @@ public final class Base64 {
   }
   
   public static void main(String[] args) throws UnsupportedEncodingException{
-//    System.out.println(new BCodec("UTF-8").encode("汉字123"));
+    System.out.println(new BCoder().encode("汉字123"));
     System.out.println(Base64.encode("汉字123".getBytes("UTF-8")));
   }
 }

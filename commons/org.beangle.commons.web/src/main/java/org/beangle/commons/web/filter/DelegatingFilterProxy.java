@@ -27,9 +27,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.beangle.commons.inject.Container;
+import org.beangle.commons.inject.ContainerHook;
+import org.beangle.commons.inject.Containers;
 import org.beangle.commons.lang.Option;
 import org.beangle.commons.lang.Throwables;
-import org.beangle.commons.web.context.ContainerUtils;
 
 /**
  * Proxy for a standard Servlet 2.3 Filter, delegating to a managed
@@ -39,7 +40,7 @@ import org.beangle.commons.web.context.ContainerUtils;
  * 
  * @author chaostone
  */
-public class DelegatingFilterProxy extends GenericHttpFilter implements LazyInitializingHook {
+public class DelegatingFilterProxy extends GenericHttpFilter implements ContainerHook {
 
   private Filter delegate;
 
@@ -50,7 +51,7 @@ public class DelegatingFilterProxy extends GenericHttpFilter implements LazyInit
     delegate.doFilter(request, response, chain);
   }
 
-  public void lazyInit(Container container) {
+  public void notify(Container container) {
     try {
       setDelegate(initDelegate(container));
     } catch (ServletException e) {
@@ -61,9 +62,9 @@ public class DelegatingFilterProxy extends GenericHttpFilter implements LazyInit
   @Override
   protected void initFilterBean() throws ServletException {
     if (null == targetBeanName) targetBeanName = getFilterName();
-    Container wac = ContainerUtils.getContainer(getServletContext());
+    Container wac = Containers.getRoot();
     if (wac != null) delegate = initDelegate(wac);
-    else ContainerUtils.getLazyInitialHooks(getServletContext()).add(this);
+    else Containers.getHooks().add(this);
   }
 
   @Override

@@ -51,17 +51,6 @@ public class NumberIdObject<T extends Number> implements Entity<T> {
     this.id = id;
   }
 
-  /**
-   * Magic method.
-   * <p>
-   * Having this method will change two getId order in class.getDeclareMethods.
-   * javassist.util.proxy.ProxyFactory will depedency this order.
-   * </p>
-   */
-  public T getIdentifier() {
-    return id;
-  }
-
   public boolean isPersisted() {
     return ValidEntityKeyPredicate.Instance.apply(id);
   }

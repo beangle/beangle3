@@ -40,27 +40,31 @@ public interface ActionFinder {
   Map<Class<?>, String> getActions(ActionTest test);
 
   /**
-   * Test whether the class is a action class
+   * Test whether the class is a action class.
+   * <ul>
+   * <li>Ends with suffix</li>
+   * <li>In one of given packages</li>
+   * </ul>
    * 
    * @author chaostone
    */
   static class ActionTest implements Predicate<String> {
 
-    final String actionSuffix;
-    final List<String> packageNames;
+    final String suffix;
+    final List<String> packages;
 
-    ActionTest(String actionSuffix, List<String> packageNames) {
+    ActionTest(String suffix, List<String> packages) {
       super();
-      this.actionSuffix = actionSuffix;
-      this.packageNames = packageNames;
+      this.suffix = suffix;
+      this.packages = packages;
     }
 
     public Boolean apply(String name) {
-      boolean isAction = name.endsWith(actionSuffix);
+      boolean isAction = name.endsWith(suffix);
       if (isAction) {
         boolean inPackage = false;
         final String classPackageName = name.indexOf(".") > 0 ? name.substring(0, name.lastIndexOf(".")) : "";
-        for (String packageName : packageNames) {
+        for (String packageName : packages) {
           if (Profile.isInPackage(packageName, classPackageName)) {
             inPackage = true;
             break;

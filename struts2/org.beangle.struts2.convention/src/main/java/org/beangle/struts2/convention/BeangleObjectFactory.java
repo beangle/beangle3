@@ -27,7 +27,7 @@ import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.apache.struts2.views.freemarker.FreemarkerResult;
 import org.beangle.commons.inject.Container;
 import org.beangle.commons.inject.ContainerAware;
-import org.beangle.commons.web.context.ContainerUtils;
+import org.beangle.commons.inject.Containers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +66,7 @@ public class BeangleObjectFactory extends ObjectFactory {
   @Inject
   public BeangleObjectFactory(@Inject ServletContext servletContext,
       @Inject(StrutsConstants.STRUTS_DEVMODE) String devMode) {
-    context = ContainerUtils.getContainer(servletContext);
+    context = Containers.getRoot();
     if (context == null) logger.error("Cannot find beangle context from ServletContext");
   }
 

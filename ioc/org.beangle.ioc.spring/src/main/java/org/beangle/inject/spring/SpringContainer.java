@@ -35,7 +35,7 @@ import org.springframework.context.ApplicationContext;
  */
 public class SpringContainer implements Container {
 
-  ApplicationContext context;
+  final ApplicationContext context;
 
   public SpringContainer(ApplicationContext context) {
     super();
@@ -83,8 +83,13 @@ public class SpringContainer implements Container {
   }
 
   @Override
-  public Set<?> getKeys() {
+  public Set<?> keys() {
     return CollectUtils.newHashSet(context.getBeanDefinitionNames());
   }
 
+  public ApplicationContext getContext() {
+    return context;
+  }
+
+  
 }

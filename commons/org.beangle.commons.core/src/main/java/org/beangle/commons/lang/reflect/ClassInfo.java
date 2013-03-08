@@ -70,21 +70,21 @@ public final class ClassInfo {
         tmpMethods.put(info.method.getName(), named);
       }
       named.add(info);
-      //true is get,false is set.
+      // true is get,false is set.
       Pair<Boolean, String> propertyInfo = info.property();
       if (null != propertyInfo) {
         if (propertyInfo.getLeft()) {
           MethodInfo old = propertyReadMethods.put(propertyInfo.getRight(), info);
           // old return type is subtype
-          if (null != old && info.method.getReturnType().isAssignableFrom(old.method.getReturnType()))
-            propertyReadMethods.put(propertyInfo.getRight(), old);
+          if (null != old && info.method.getReturnType().isAssignableFrom(old.method.getReturnType())) propertyReadMethods
+              .put(propertyInfo.getRight(), old);
         } else propertyWriteMethods.put(propertyInfo.getRight(), info);
       }
     }
     for (Map.Entry<String, List<MethodInfo>> entry : tmpMethods.entrySet()) {
       methods.put(entry.getKey(), entry.getValue().toArray(new MethodInfo[entry.getValue().size()]));
-      if (entry.getValue().size() == 1)
-        methodIndexs.put(entry.getKey(), Integer.valueOf(entry.getValue().get(0).index));
+      if (entry.getValue().size() == 1) methodIndexs.put(entry.getKey(),
+          Integer.valueOf(entry.getValue().get(0).index));
     }
   }
 
@@ -166,14 +166,16 @@ public final class ClassInfo {
   }
 
   /**
-   * Return true when Method is public andn not static and not volatile.
+   * Return true when Method is public and not static and not volatile.
+   * <p>
+   * javassist.util.proxy.ProxyFactory.getMethods has error due to bridge method.
    */
   private static boolean goodMethod(Method method) {
     int modifiers = method.getModifiers();
     if (Modifier.isStatic(modifiers) || Modifier.isPrivate(modifiers)) return false;
-    // Skip volatile method for generated method by compiler
+    // Skip bridge methods generated method by compiler
     // For example. CompareTo(Some) and CompareTo(Object).
-    if (Modifier.isVolatile(modifiers)) return false;
+    if (method.isBridge()) return false;
     // Skip method in Object
     String methodName = method.getName();
     if (method.getParameterTypes().length == 0

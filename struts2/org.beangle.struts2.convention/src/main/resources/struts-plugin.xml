@@ -40,8 +40,7 @@
   <bean type="org.apache.struts2.dispatcher.mapper.ActionMapper" name="beangle" class="org.beangle.struts2.convention.mapper.ConventionActionMapper"/>
 
   <!--config-->
-  <bean type="com.opensymphony.xwork2.config.PackageProvider" name="beangle.packageProvider" class="org.beangle.struts2.convention.config.ConventionPackageProvider"/>
-  <bean type="org.beangle.struts2.convention.config.ActionConfigBuilder" name="beangle" class="org.beangle.struts2.convention.config.SmartActionConfigBuilder"/>
+  <bean type="com.opensymphony.xwork2.config.PackageProvider" name="beangle" class="org.beangle.struts2.convention.config.ConventionPackageProvider"/>
 
   <!--result-->
   <bean type="org.beangle.struts2.convention.result.ResultBuilder" class="org.beangle.struts2.convention.result.DefaultResultBuilder"/>

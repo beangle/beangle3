@@ -22,8 +22,8 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import org.beangle.commons.event.EventMulticaster;
+import org.beangle.commons.inject.Containers;
 import org.beangle.commons.lang.Assert;
-import org.beangle.commons.web.context.ContainerUtils;
 
 /**
  * Declared in web.xml as
@@ -51,8 +51,7 @@ public class HttpSessionEventPublisher implements HttpSessionListener {
    */
   public void sessionCreated(HttpSessionEvent event) {
     if (null == eventMulticaster) {
-      eventMulticaster = ContainerUtils.getContainer(event.getSession().getServletContext())
-          .getBean(EventMulticaster.class).get();
+      eventMulticaster = Containers.getRoot().getBean(EventMulticaster.class).get();
       Assert.notNull(eventMulticaster);
     }
     eventMulticaster.multicast(new HttpSessionCreationEvent(event.getSession()));
