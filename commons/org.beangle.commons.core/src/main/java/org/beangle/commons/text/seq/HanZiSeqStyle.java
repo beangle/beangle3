@@ -36,7 +36,6 @@ public class HanZiSeqStyle implements SeqNumStyle {
   /** Constant <code>PRIORITIES="{ 十, 百, 千, 万 }"</code> */
   public static final String[] PRIORITIES = { "十", "百", "千", "万" };
 
-  /** {@inheritDoc} */
   public String build(int seq) {
     if (seq > MAX) { throw new RuntimeException("seq greate than " + MAX); }
     return buildText(String.valueOf(seq));
@@ -80,17 +79,26 @@ public class HanZiSeqStyle implements SeqNumStyle {
    */
   public String buildText(String str1) {
     StringBuilder sb = new StringBuilder();
+    int prev = 0;
     for (int i = 0; i < str1.length(); i++) {
       char numChar = str1.charAt(i);
       String temp = basicOf(numChar - '0');
       if (numChar - '0' > 0) {
+        if (i - prev > 1) temp = CHINESE_NAMES[0] + temp;
+        prev = i;
         temp = temp + priorityOf(str1.length() - i);
+        sb.append(temp);
       }
-      sb.append(temp);
     }
     String result = sb.toString();
-    result = result.replaceAll("零一十", "零十");
-    result = result.replaceAll("零零", "零");
+    if (result.startsWith("一十")) result = result.substring(1);
     return result;
+  }
+
+  public static void main(String[] args) {
+    HanZiSeqStyle s = new HanZiSeqStyle();
+    for (int i = 1; i < 1101; i++) {
+      System.out.println(s.buildText(String.valueOf(i)));
+    }
   }
 }
