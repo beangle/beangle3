@@ -87,8 +87,8 @@ public class StringsTest {
     assertEquals(new String[] { "a", "b", "c" }, split("a.b.c.", '.'));
     assertEquals(new String[] { "a", "b", "c" }, split(".a..b.c", '.'));
     assertEquals(new String[] { "a:b:c" }, split("a:b:c", '.'));
-    assertEquals(new String[] {}, split("", null));
-    assertEquals(new String[] { "abc", "def" }, split("abc def", null));
+    assertEquals(new String[] {}, split("", (char[])null));
+    assertEquals(new String[] { "abc", "def" }, split("abc def", (char[])null));
     assertEquals(new String[] { "abc", "def" }, split("abc def", " "));
     assertEquals(new String[] { "ab", "cd", "ef" }, split("ab:cd:ef", ":"));
   }

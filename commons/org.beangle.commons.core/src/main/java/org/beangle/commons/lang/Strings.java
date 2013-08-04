@@ -776,7 +776,7 @@ public class Strings {
    * @return an array of {@link java.lang.String} objects.
    */
   public static String[] split(String target) {
-    return split2(target, new char[] { ',', ';', '\r', '\n', ' ' });
+    return split(target, new char[] { ',', ';', '\r', '\n', ' ' });
   }
 
   /**
@@ -831,7 +831,7 @@ public class Strings {
    *          an array of char.
    * @return an array of {@link java.lang.String} objects.
    */
-  public static String[] split2(String target, char[] separatorChars) {
+  public static String[] split(String target, char[] separatorChars) {
     if (null == target) { return new String[0]; }
     char[] sb = target.toCharArray();
     for (char separator : separatorChars) {
@@ -925,16 +925,16 @@ public class Strings {
 
   /**
    * <p>
-   * splitToInteger.
+   * splitToInt.
    * </p>
    * 
    * @param ids
    *          a {@link java.lang.String} object.
    * @return an array of {@link java.lang.Integer} objects.
    */
-  public static Integer[] splitToInteger(final String ids) {
+  public static Integer[] splitToInt(final String ids) {
     if (isEmpty(ids)) return new Integer[0];
-    else return transformToInteger(split(ids, ','));
+    else return transformToInt(split(ids, ','));
   }
 
   /**
@@ -1046,14 +1046,14 @@ public class Strings {
 
   /**
    * <p>
-   * transformToInteger.
+   * transformToInt.
    * </p>
    * 
    * @param ids
    *          an array of {@link java.lang.String} objects.
    * @return an array of {@link java.lang.Integer} objects.
    */
-  public static Integer[] transformToInteger(final String[] ids) {
+  public static Integer[] transformToInt(final String[] ids) {
     Integer[] idsOfInteger = new Integer[ids.length];
     for (int i = 0; i < ids.length; i++) {
       idsOfInteger[i] = new Integer(ids[i]);
