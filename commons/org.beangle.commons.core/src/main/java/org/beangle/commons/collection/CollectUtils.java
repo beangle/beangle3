@@ -18,7 +18,16 @@
  */
 package org.beangle.commons.collection;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentMap;
@@ -26,6 +35,7 @@ import java.util.concurrent.ConcurrentMap;
 import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.lang.Throwables;
 import org.beangle.commons.lang.functor.Predicate;
+import org.beangle.commons.lang.functor.Transformer;
 
 /**
  * <p>
@@ -382,7 +392,7 @@ public final class CollectUtils {
   }
 
   public static <T> void filter(Collection<T> datas, Predicate<T> predicate) {
-    for (Iterator<T> it = datas.iterator(); it.hasNext();) 
+    for (Iterator<T> it = datas.iterator(); it.hasNext();)
       if (predicate.apply(it.next())) it.remove();
   }
 
@@ -399,4 +409,14 @@ public final class CollectUtils {
       if (predicate.apply(t)) rs.add(t);
     return rs;
   }
+
+  public static <T, R> List<R> collect(Collection<T> datas, Transformer<T, R> transformer) {
+    List<R> rs = new ArrayList<R>();
+    for (T t : datas) {
+      R value = transformer.apply(t);
+      rs.add(value);
+    }
+    return rs;
+  }
+
 }
