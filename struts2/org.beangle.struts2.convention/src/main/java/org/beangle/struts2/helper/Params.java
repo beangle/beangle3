@@ -74,7 +74,7 @@ public class Params {
     return converter.getShort(getParams(), name);
   }
 
-  public static Integer getInteger(String name) {
+  public static Integer getInt(String name) {
     return converter.getInteger(getParams(), name);
   }
 

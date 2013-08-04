@@ -335,7 +335,7 @@ public class ActionSupport implements TextResourceProvider {
   }
 
   protected final Integer getInt(String name) {
-    return Params.getInteger(name);
+    return Params.getInt(name);
   }
 
   protected final Long getLong(String name) {
