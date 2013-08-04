@@ -47,8 +47,8 @@ import org.slf4j.LoggerFactory;
  * BeangleStaticContentLoader provide serval features
  * <ul>
  * <li>1 Avoid load resource when get not expired content using ETag</li>
- * <li>2 multi resource in one request</li>
- * <li>3 realy detect resource modify datetime.</li>
+ * <li>2 Multi resource in one request</li>
+ * <li>3 Realy detect resource modify datetime.</li>
  * </ul>
  * <p>
  * This loader can find content of new version using url's lastmodifed .So different resource path

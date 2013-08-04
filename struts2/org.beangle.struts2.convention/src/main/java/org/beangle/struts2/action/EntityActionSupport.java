@@ -25,6 +25,7 @@ import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.metadata.Model;
+import org.beangle.commons.lang.Arrays;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
 import org.beangle.struts2.helper.Params;
@@ -44,11 +45,11 @@ public class EntityActionSupport extends ActionSupport {
    * @param clazz
    */
   protected final <T> T getId(String name, Class<T> clazz) {
-    String entityId = get(name + ".id");
-    if (null == entityId) entityId = get(name + "Id");
-    if (null == entityId) entityId = get("id");
-    if (null == entityId) return null;
-    else return Params.converter.convert(entityId, clazz);
+    Object[] entityId = getAll(name + ".id");
+    if (Arrays.isEmpty(entityId)) entityId = getAll(name + "Id");
+    if (Arrays.isEmpty(entityId)) entityId = getAll("id");
+    if (Arrays.isEmpty(entityId)) return null;
+    else return Params.converter.convert(entityId[0], clazz);
   }
 
   protected final Integer getIntId(String shortName) {
