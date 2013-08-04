@@ -45,11 +45,16 @@ public class EntityActionSupport extends ActionSupport {
    * @param clazz
    */
   protected final <T> T getId(String name, Class<T> clazz) {
-    Object[] entityId = getAll(name + ".id");
-    if (Arrays.isEmpty(entityId)) entityId = getAll(name + "Id");
-    if (Arrays.isEmpty(entityId)) entityId = getAll("id");
-    if (Arrays.isEmpty(entityId)) return null;
-    else return Params.converter.convert(entityId[0], clazz);
+    Object[] entityIds = getAll(name + ".id");
+    if (Arrays.isEmpty(entityIds)) entityIds = getAll(name + "Id");
+    if (Arrays.isEmpty(entityIds)) entityIds = getAll("id");
+    if (Arrays.isEmpty(entityIds)) return null;
+    else {
+      String entityId = entityIds[0].toString();
+      int commaIndex = entityId.indexOf(',');
+      if (commaIndex != -1) entityId = entityId.substring(0, commaIndex);
+      return Params.converter.convert(entityId, clazz);
+    }
   }
 
   protected final Integer getIntId(String shortName) {
