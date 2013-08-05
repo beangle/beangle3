@@ -92,7 +92,7 @@ public class HanZiSeqStyle implements SeqNumStyle {
     }
     String result = sb.toString();
     if (result.startsWith("一十")) result = result.substring(1);
-    return result;
+    return result.replaceAll("零一十", "零十");
   }
 
   public static void main(String[] args) {

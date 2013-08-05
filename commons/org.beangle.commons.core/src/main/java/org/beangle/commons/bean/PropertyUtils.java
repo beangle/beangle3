@@ -25,8 +25,8 @@ import java.util.Set;
 
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.Throwables;
-import org.beangle.commons.lang.conversion.Conversion;
-import org.beangle.commons.lang.conversion.impl.ConvertUtils;
+import org.beangle.commons.conversion.Conversion;
+import org.beangle.commons.conversion.impl.ConvertUtils;
 import org.beangle.commons.lang.reflect.ClassInfo;
 import org.beangle.commons.lang.reflect.MethodInfo;
 import org.slf4j.Logger;
@@ -92,32 +92,34 @@ public class PropertyUtils {
     return (T) bean;
   }
 
-  public static void copyProperty(Object bean, String name, Object value, Conversion conversion) {
+  public static Object copyProperty(Object bean, String name, Object value, Conversion conversion) {
     ClassInfo classInfo = ClassInfo.get(bean.getClass());
     MethodInfo info = classInfo.getWriter(name);
     if (null == info) {
       logger.warn("Cannot find set" + Strings.capitalize(name) + " in " + bean.getClass());
-      return;
+      return null;
     }
     try {
-      info.method.invoke(bean, conversion.convert(value, classInfo.getPropertyType(name)));
+      return info.method.invoke(bean, conversion.convert(value, classInfo.getPropertyType(name)));
     } catch (Exception e) {
       Throwables.propagate(e);
     }
+    return null;
   }
 
-  public static void copyProperty(Object bean, String name, Object value) {
+  public static Object copyProperty(Object bean, String name, Object value) {
     ClassInfo classInfo = ClassInfo.get(bean.getClass());
     MethodInfo info = classInfo.getWriter(name);
     if (null == info) {
       logger.warn("Cannot find {} set method in ", name, bean.getClass());
-      return;
+      return null;
     }
     try {
-      info.method.invoke(bean, ConvertUtils.convert(value, classInfo.getPropertyType(name)));
+      return info.method.invoke(bean, ConvertUtils.convert(value, classInfo.getPropertyType(name)));
     } catch (Exception e) {
       Throwables.propagate(e);
     }
+    return null;
   }
 
   public static boolean isWriteable(Object bean, String name) {

@@ -24,8 +24,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.conversion.Conversion;
-import org.beangle.commons.lang.conversion.impl.DefaultConversion;
+import org.beangle.commons.conversion.Conversion;
+import org.beangle.commons.conversion.impl.DefaultConversion;
 
 /**
  * <p>

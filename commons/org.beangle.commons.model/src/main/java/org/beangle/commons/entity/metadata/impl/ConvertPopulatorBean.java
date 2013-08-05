@@ -21,15 +21,15 @@ package org.beangle.commons.entity.metadata.impl;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import static org.beangle.commons.lang.asm.Mirrors.*;
+import static org.beangle.commons.bean.PropertyUtils.*;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.ObjectAndType;
 import org.beangle.commons.entity.metadata.Populator;
 import org.beangle.commons.entity.metadata.Type;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.conversion.Conversion;
-import org.beangle.commons.lang.conversion.impl.DefaultConversion;
+import org.beangle.commons.conversion.Conversion;
+import org.beangle.commons.conversion.impl.DefaultConversion;
 import org.beangle.commons.lang.reflect.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

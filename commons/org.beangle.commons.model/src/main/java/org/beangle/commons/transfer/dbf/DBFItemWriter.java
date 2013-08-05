@@ -68,7 +68,7 @@ public class DBFItemWriter extends AbstractItemWriter {
         fields[i].setName((String) attrs[i]);
         fields[i].setDataType(DBFField.FIELD_TYPE_C);
         // FIXME
-        fields[i].setFieldLength(255);
+        fields[i].setFieldLength(500);
       }
       writer.setFields(fields);
     } catch (DBFException e) {

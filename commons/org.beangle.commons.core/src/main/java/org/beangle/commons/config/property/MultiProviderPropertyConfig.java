@@ -24,7 +24,7 @@ import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.conversion.impl.DefaultConversion;
+import org.beangle.commons.conversion.impl.DefaultConversion;
 
 /**
  * 系统配置

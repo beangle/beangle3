@@ -22,6 +22,7 @@
       <version>${project.version}</version>
       <optional>true</optional>
     </dependency>
+    <!--
     <dependency>
         <groupId>org.apache.felix</groupId>
         <artifactId>org.apache.felix.main</artifactId>
@@ -38,5 +39,6 @@
       <version>2.3.8</version>
       <optional>true</optional>
     </dependency>
+    -->
   </dependencies>
 </project>

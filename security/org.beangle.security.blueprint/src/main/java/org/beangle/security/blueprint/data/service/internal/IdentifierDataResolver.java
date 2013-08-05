@@ -21,14 +21,14 @@ package org.beangle.security.blueprint.data.service.internal;
 import java.util.Collection;
 import java.util.List;
 
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.conversion.impl.ConvertUtils;
 import org.beangle.commons.dao.EntityDao;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.asm.Mirrors;
-import org.beangle.commons.lang.conversion.impl.ConvertUtils;
 import org.beangle.commons.lang.reflect.Reflections;
 import org.beangle.security.blueprint.data.ProfileField;
 import org.beangle.security.blueprint.data.service.UserDataResolver;
@@ -43,7 +43,7 @@ public class IdentifierDataResolver implements UserDataResolver {
       try {
         Object value = obj;
         if (null != field.getType().getKeyName())
-          value = Mirrors.getProperty(obj, field.getType().getKeyName());
+          value = PropertyUtils.getProperty(obj, field.getType().getKeyName());
         sb.append(String.valueOf(value)).append(',');
       } catch (Exception e) {
         e.printStackTrace();

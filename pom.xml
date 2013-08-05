@@ -35,5 +35,6 @@
     <module>orm</module>
     <module>security</module>
     <module>struts2</module>
+    <module>test</module>
   </modules>
 </project>

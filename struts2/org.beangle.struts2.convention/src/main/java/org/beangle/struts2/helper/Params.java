@@ -22,7 +22,7 @@ import java.sql.Date;
 import java.util.Map;
 
 import org.beangle.commons.collection.MapConverter;
-import org.beangle.commons.lang.conversion.impl.DefaultConversion;
+import org.beangle.commons.conversion.impl.DefaultConversion;
 
 import com.opensymphony.xwork2.ActionContext;
 

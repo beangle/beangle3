@@ -24,7 +24,7 @@ import java.lang.reflect.Constructor;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.beangle.commons.lang.asm.Mirrors;
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.struts2.view.ResetCallbackWriter;
 import org.beangle.struts2.view.component.Component;
 import org.slf4j.Logger;
@@ -69,7 +69,7 @@ public class TagModel implements TemplateTransformModel {
       String key = entry.getKey();
       Object value = entry.getValue();
       if (value != null) {
-        if (Mirrors.isWriteable(bean, key)) {
+        if (PropertyUtils.isWriteable(bean, key)) {
           if (value instanceof TemplateModel) {
             try {
               value = objectWrapper.unwrap((TemplateModel) value);
@@ -78,7 +78,7 @@ public class TagModel implements TemplateTransformModel {
             }
           }
           try {
-            Mirrors.setProperty(bean, key, value);
+            PropertyUtils.setProperty(bean, key, value);
           } catch (Exception e) {
             logger.error("invoke set property [" + key + "] with value " + value, e);
           }

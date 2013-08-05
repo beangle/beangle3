@@ -25,7 +25,7 @@ import java.util.Set;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.lang.ClassLoaders;
-import org.beangle.commons.lang.conversion.impl.DefaultConversion;
+import org.beangle.commons.conversion.impl.DefaultConversion;
 import org.beangle.commons.lang.reflect.Reflections;
 import org.beangle.security.blueprint.data.ProfileField;
 import org.beangle.security.blueprint.data.service.UserDataProvider;

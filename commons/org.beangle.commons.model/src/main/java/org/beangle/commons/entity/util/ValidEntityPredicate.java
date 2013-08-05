@@ -20,7 +20,7 @@ package org.beangle.commons.entity.util;
 
 import java.io.Serializable;
 
-import org.beangle.commons.lang.asm.Mirrors;
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.lang.functor.Predicate;
 
 /**
@@ -34,7 +34,7 @@ public class ValidEntityPredicate implements Predicate<Object> {
   public Boolean apply(final Object value) {
     if (null == value) { return false; }
     try {
-      Serializable key = Mirrors.getProperty(value, "id");
+      Serializable key = PropertyUtils.getProperty(value, "id");
       return ValidEntityKeyPredicate.Instance.apply(key);
     } catch (Exception e) {
       return false;

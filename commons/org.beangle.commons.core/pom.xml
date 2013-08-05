@@ -14,12 +14,4 @@
     <bundle.symbolicName>org.beangle.commons.core</bundle.symbolicName>
     <bundle.namespace>org.beangle.commons</bundle.namespace>
   </properties>
-  
-  <dependencies>
-    <dependency>
-      <groupId>asm</groupId>
-      <artifactId>asm</artifactId>
-      <version>3.3</version>
-    </dependency>
-  </dependencies>
 </project>

@@ -59,8 +59,9 @@ public class HibernateEntityDaoTest extends SpringTestCase {
     entityDao.saveOrUpdate(employer);
 
     Assert.assertNotNull(employer.getId());
-    entityDao.evict(employer);
     employer= entityDao.get(ManagerEmployer.class, employer.getId());
+    //FIXME
+//    entityDao.evict(employer);
     //employer.getName().setFirstName("licensesili");
     employer.setCreatedAt(new Date());
     entityDao.saveOrUpdate(employer);

@@ -23,8 +23,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.lang.asm.Mirrors;
 import org.beangle.commons.text.i18n.TextResource;
 
 /**
@@ -72,7 +72,7 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
   protected Object extract(Object target, String property) throws Exception {
     if (errorProperties.contains(property)) return null;
     if(target instanceof Map<?,?>) return ((Map<?,?>)target).get(property);
-    Object value = Mirrors.getProperty(target, property);
+    Object value = PropertyUtils.getProperty(target, property);
     if (value instanceof Boolean) {
       if (null == textResource) {
         return value;

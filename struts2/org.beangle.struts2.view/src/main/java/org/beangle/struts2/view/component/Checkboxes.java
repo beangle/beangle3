@@ -23,9 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.asm.Mirrors;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
@@ -122,8 +122,8 @@ public class Checkboxes extends UIBean {
     } else if (items instanceof List) {
       for (Object object : (List<?>) items) {
         try {
-          Object value = Mirrors.getProperty(object, "id");
-          Object title = Mirrors.getProperty(object, valueName);
+          Object value = PropertyUtils.getProperty(object, "id");
+          Object title = PropertyUtils.getProperty(object, valueName);
           keys.add(value);
           itemMap.put(value, title);
         } catch (Exception e) {
@@ -149,7 +149,7 @@ public class Checkboxes extends UIBean {
     if (value instanceof List) {
       try {
         for (Object object : (List<Object>) value) {
-          values.add(Mirrors.getProperty(object, "id"));
+          values.add(PropertyUtils.getProperty(object, "id"));
         }
         return values;
       } catch (Exception e) {

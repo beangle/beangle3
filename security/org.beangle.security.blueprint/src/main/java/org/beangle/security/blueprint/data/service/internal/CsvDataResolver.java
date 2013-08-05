@@ -23,11 +23,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.conversion.Conversion;
+import org.beangle.commons.conversion.impl.DefaultConversion;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.asm.Mirrors;
-import org.beangle.commons.lang.conversion.Conversion;
-import org.beangle.commons.lang.conversion.impl.DefaultConversion;
 import org.beangle.security.blueprint.data.ProfileField;
 import org.beangle.security.blueprint.data.service.UserDataProvider;
 import org.beangle.security.blueprint.data.service.UserDataResolver;
@@ -63,7 +63,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
         for (String prop : properties) {
           Object value = null;
           try {
-            value = Mirrors.getProperty(obj, prop);
+            value = PropertyUtils.getProperty(obj, prop);
           } catch (Exception e) {
             e.printStackTrace();
           }
@@ -112,7 +112,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
           Object obj = type.newInstance();
           String[] dataItems = Strings.split(datas[i], ";");
           for (int j = 0; j < properties.size(); j++) {
-            Mirrors.copyProperty(obj, properties.get(j), dataItems[j]);
+            PropertyUtils.copyProperty(obj, properties.get(j), dataItems[j]);
           }
           rs.add((T) obj);
         }

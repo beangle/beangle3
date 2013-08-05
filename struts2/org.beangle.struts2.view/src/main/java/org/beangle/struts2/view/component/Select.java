@@ -21,8 +21,8 @@ package org.beangle.struts2.view.component;
 import java.util.Collections;
 import java.util.Map;
 
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.asm.Mirrors;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
@@ -83,10 +83,10 @@ public class Select extends ClosingUIBean {
     else try {
       if (value instanceof String) {
         return value.equals(obj)
-            || value.equals(String.valueOf(Mirrors.getProperty(obj, keyName)));
+            || value.equals(String.valueOf(PropertyUtils.getProperty(obj, keyName)));
       } else {
         // FIXME when obj is map
-        return value.equals(obj) || value.equals(Mirrors.getProperty(obj, keyName));
+        return value.equals(obj) || value.equals(PropertyUtils.getProperty(obj, keyName));
       }
     } catch (Exception e) {
       e.printStackTrace();
