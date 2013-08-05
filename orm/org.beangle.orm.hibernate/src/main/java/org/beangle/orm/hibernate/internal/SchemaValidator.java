@@ -68,7 +68,7 @@ public class SchemaValidator {
       logger.info("fetching database metadata");
       Configuration config = sessionFactoryBean.getConfiguration();
       Dialect dialect = Dialect.getDialect(sessionFactoryBean.getHibernateProperties());
-      meta = new DatabaseMetadata(connection, dialect, false);
+      meta = new DatabaseMetadata(connection, dialect,config, false);
       return validateSchema(config, dialect, meta);
     } catch (SQLException sqle) {
       logger.error("could not get database metadata", sqle);
