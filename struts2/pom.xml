@@ -11,7 +11,7 @@
   <name>Beangle Struts2 Parent</name>
   
   <properties>
-    <struts.version>2.3.8</struts.version>
+    <struts.version>2.3.15.1</struts.version>
     <freemarker.version>2.3.19</freemarker.version>
   </properties>
 
