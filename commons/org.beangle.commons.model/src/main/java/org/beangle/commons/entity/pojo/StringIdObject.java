@@ -25,7 +25,7 @@ import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.util.ValidEntityKeyPredicate;
 
 @MappedSuperclass
-public class StringIdObject implements Entity<String> {
+public abstract class StringIdObject implements Entity<String> {
 
   private static final long serialVersionUID = -6898498932182877104L;
 

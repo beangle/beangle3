@@ -164,15 +164,15 @@ public class ConventionPackageProviderTest {
         T obj = type.newInstance();
         if (obj instanceof ObjectFactory) {
           ((ObjectFactory) obj).setReflectionProvider(new OgnlReflectionProvider() {
-
             @Override
-            public void setProperties(Map<String, String> properties, Object o) {
+            public void setProperties(Map<String, ?> properties, Object o) {
             }
 
-            public void setProperties(Map<String, String> properties, Object o, Map<String, Object> context,
+            @Override
+            public void setProperties(Map<String, ?> properties, Object o, Map<String, Object> context,
                 boolean throwPropertyExceptions) throws ReflectionException {
               if (o instanceof ActionChainResult) {
-                ((ActionChainResult) o).setActionName(properties.get("actionName"));
+                ((ActionChainResult) o).setActionName(String.valueOf(properties.get("actionName")));
               }
             }
 

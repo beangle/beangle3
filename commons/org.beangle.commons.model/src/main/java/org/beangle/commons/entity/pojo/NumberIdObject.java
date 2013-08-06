@@ -26,7 +26,7 @@ import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.util.ValidEntityKeyPredicate;
 
 @MappedSuperclass
-public class NumberIdObject<T extends Number> implements Entity<T> {
+public abstract class NumberIdObject<T extends Number> implements Entity<T> {
   private static final long serialVersionUID = -7530111699332363124L;
 
   /** 非业务主键 */

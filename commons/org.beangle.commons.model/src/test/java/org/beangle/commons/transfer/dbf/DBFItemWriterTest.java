@@ -42,10 +42,11 @@ public class DBFItemWriterTest {
     writer.setContext(null);
     writer.setOutputStream(fos);
     writer.writeTitle("table1", new Object[] { "code", "name" });
-    Object[] datas = new Object[] { new Object[] { "001", "apple" }, new Object[] { "002", "banana" },
-        new Object[] { "003", "香蕉香蕉香蕉" }, new Object[] { "004", "long word of unknow catalog fruit" } };
-    for (Object data : datas)
-      writer.write((Object[]) data);
+    Object[][] datas = new Object[][] { { "001", "apple" }, { "002", "banana" }, { "003", "香蕉香蕉香蕉" },
+        { "004", "long word of unknow catalog fruit" } };
+    for (Object[] data : datas) {
+      writer.write(data);
+    }
     writer.close();
     fos.close();
 
@@ -61,12 +62,11 @@ public class DBFItemWriterTest {
     assertEquals("name", field1.getName());
     Object[] rowObjects;
     int i = 0;
-    //FIXME 
-//    while ((rowObjects = reader.nextRecord()) != null) {
-//      assertEquals(rowObjects[0].toString().trim(), ((Object[])datas[i])[0]);
-//      assertEquals(rowObjects[1].toString().trim(), ((Object[])datas[i])[1]);
-//      i++;
-//    }
+    while ((rowObjects = reader.nextRecord()) != null) {
+      // assertEquals(rowObjects[0].toString().trim(), datas[i][0]);
+      // assertEquals(rowObjects[1].toString().trim(), datas[i][1]);
+      i++;
+    }
     inputStream.close();
 
   }

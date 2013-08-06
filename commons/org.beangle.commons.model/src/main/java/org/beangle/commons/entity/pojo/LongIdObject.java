@@ -21,7 +21,7 @@ package org.beangle.commons.entity.pojo;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class LongIdObject extends NumberIdObject<Long> {
+public abstract class LongIdObject extends NumberIdObject<Long> {
   private static final long serialVersionUID = -7530111699332363124L;
 
   public LongIdObject() {

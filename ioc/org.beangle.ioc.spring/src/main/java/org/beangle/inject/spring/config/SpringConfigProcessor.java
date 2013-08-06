@@ -236,6 +236,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
     def.setBeanClass(definition.clazz);
     def.setScope(definition.scope);
     if (null != definition.initMethod) def.setInitMethodName(definition.initMethod);
+    if (null != definition.destroyMethod) def.setDestroyMethodName(definition.destroyMethod);
     MutablePropertyValues mpv = new MutablePropertyValues();
     for (Map.Entry<String, Object> entry : definition.getProperties().entrySet()) {
       Object value = entry.getValue();
