@@ -110,6 +110,17 @@ public final class Objects {
     return object != null ? object : defaultValue;
   }
 
+  public static Object defaultValue(Class<?> clazz){
+    if(clazz.equals(boolean.class))return false;
+    if(clazz.equals(int.class))return 0;
+    if(clazz.equals(short.class))return 0;
+    if(clazz.equals(long.class))return 0;
+    if(clazz.equals(float.class))return 0.0;
+    if(clazz.equals(double.class))return 0.0;
+    if(clazz.equals(char.class))return 0;
+    if(clazz.equals(byte.class))return 0;
+    return null;
+  }
   /**
    * Return a hex String form of an object's identity hash code.
    * 

@@ -23,10 +23,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.Throwables;
 import org.beangle.commons.conversion.Conversion;
 import org.beangle.commons.conversion.impl.ConvertUtils;
+import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.Throwables;
 import org.beangle.commons.lang.reflect.ClassInfo;
 import org.beangle.commons.lang.reflect.MethodInfo;
 import org.slf4j.Logger;
@@ -48,16 +48,7 @@ public class PropertyUtils {
    * @param value
    */
   public static void setProperty(Object bean, String name, Object value) {
-    MethodInfo info = ClassInfo.get(bean.getClass()).getWriter(name);
-    if (null == info) {
-      logger.warn("Cannot find set" + Strings.capitalize(name) + " in " + bean.getClass());
-      return;
-    }
-    try {
-      info.method.invoke(bean, value);
-    } catch (Exception e) {
-      Throwables.propagate(e);
-    }
+    copyProperty(bean, name, value, null);
   }
 
   @SuppressWarnings("unchecked")
@@ -92,19 +83,127 @@ public class PropertyUtils {
     return (T) bean;
   }
 
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   public static Object copyProperty(Object bean, String name, Object value, Conversion conversion) {
+    // Resolve nested references
+    while (resolver.hasNested(name)) {
+      String next = resolver.next(name);
+      Object nestedBean = null;
+      if (bean instanceof Map) {
+        nestedBean = getPropertyOfMapBean((Map) bean, next);
+      } else if (resolver.isMapped(next)) {
+        nestedBean = getMappedProperty(bean, next);
+      } else if (resolver.isIndexed(next)) {
+        nestedBean = getIndexedProperty(bean, next);
+      } else {
+        nestedBean = getSimpleProperty(bean, next);
+      }
+      if (nestedBean == null) { throw new RuntimeException("Null property value for '" + name
+          + "' on bean class '" + bean.getClass() + "'"); }
+      bean = nestedBean;
+      name = resolver.remove(name);
+    }
+
+    if (bean instanceof Map) {
+      setPropertyOfMapBean((Map<Object, Object>) bean, name, value);
+    } else if (resolver.isMapped(name)) {
+      setMappedProperty(bean, name, value);
+    } else if (resolver.isIndexed(name)) {
+      return copyIndexedProperty(bean, name, value, conversion);
+    } else {
+      return copySimpleProperty(bean, name, value, conversion);
+    }
+    return value;
+  }
+
+  public static boolean isWriteable(Object bean, String name) {
+    ClassInfo classInfo = ClassInfo.get(bean.getClass());
+    return null != classInfo.getWriter(name);
+  }
+
+  public static Class<?> getPropertyType(Class<?> clazz, String name) {
+    return ClassInfo.get(clazz).getPropertyType(name);
+  }
+
+  public static Set<String> getWritableProperties(Class<?> clazz) {
+    return ClassInfo.get(clazz).getWritableProperties();
+  }
+
+  private static Object copySimpleProperty(Object bean, String name, Object value, Conversion conversion) {
     ClassInfo classInfo = ClassInfo.get(bean.getClass());
     MethodInfo info = classInfo.getWriter(name);
     if (null == info) {
       logger.warn("Cannot find set" + Strings.capitalize(name) + " in " + bean.getClass());
       return null;
     }
+    Object converted = value;
+    if (null != conversion) converted = conversion.convert(value, classInfo.getPropertyType(name));
     try {
-      return info.method.invoke(bean, conversion.convert(value, classInfo.getPropertyType(name)));
+      return info.method.invoke(bean, converted);
     } catch (Exception e) {
       Throwables.propagate(e);
     }
-    return null;
+    return converted;
+  }
+
+  @SuppressWarnings("unchecked")
+  private static void setMappedProperty(Object bean, String name, Object value) {
+    // Identify the key of the requested individual property
+    String key = null;
+    try {
+      key = resolver.getKey(name);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Invalid mapped property '" + name + "' on bean class '"
+          + bean.getClass() + "'");
+    }
+    if (key == null) { throw new IllegalArgumentException("Invalid mapped property '" + name
+        + "' on bean class '" + bean.getClass() + "'"); }
+
+    // Isolate the name
+    name = resolver.getProperty(name);
+    Object rs = bean;
+    if (name != null && name.length() >= 0) rs = getSimpleProperty(bean, name);
+    if (rs instanceof java.util.Map<?, ?>) ((java.util.Map<Object, Object>) rs).put(key, value);
+  }
+
+  private static void setPropertyOfMapBean(Map<Object, Object> bean, String propertyName, Object value) {
+    if (resolver.isMapped(propertyName)) {
+      String name = resolver.getProperty(propertyName);
+      if (name == null || name.length() == 0) {
+        propertyName = resolver.getKey(propertyName);
+      }
+    }
+    if (resolver.isIndexed(propertyName) || resolver.isMapped(propertyName)) { throw new IllegalArgumentException(
+        "Indexed or mapped properties are not supported on" + " objects of type Map: " + propertyName); }
+
+    bean.put(propertyName, value);
+  }
+
+  @SuppressWarnings("unchecked")
+  private static Object copyIndexedProperty(Object bean, String name, Object value, Conversion conversion) {
+    int index = -1;
+    try {
+      index = resolver.getIndex(name);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Invalid indexed property '" + name + "' on bean class '"
+          + bean.getClass() + "'");
+    }
+    if (index < 0) { throw new IllegalArgumentException("Invalid indexed property '" + name
+        + "' on bean class '" + bean.getClass() + "'"); }
+
+    // Isolate the name
+    name = resolver.getProperty(name);
+    Object rs = bean;
+    if (name != null && name.length() >= 0) rs = getSimpleProperty(bean, name);
+
+    Object converted = value;
+    if (rs.getClass().isArray()) {
+      if (null != conversion) converted = conversion.convert(value, rs.getClass().getComponentType());
+      Array.set(rs, index, value);
+    } else if (rs instanceof List) {
+      ((List<Object>) rs).set(index, value);
+    }
+    return converted;
   }
 
   public static Object copyProperty(Object bean, String name, Object value) {
@@ -122,21 +221,8 @@ public class PropertyUtils {
     return null;
   }
 
-  public static boolean isWriteable(Object bean, String name) {
-    ClassInfo classInfo = ClassInfo.get(bean.getClass());
-    return null != classInfo.getWriter(name);
-  }
-
-  public static Class<?> getPropertyType(Class<?> clazz, String name) {
-    return ClassInfo.get(clazz).getPropertyType(name);
-  }
-
-  public static Set<String> getWritableProperties(Class<?> clazz) {
-    return ClassInfo.get(clazz).getWritableProperties();
-  }
-
   @SuppressWarnings("unchecked")
-  public static <T> T getSimpleProperty(Object bean, String name) {
+  private static <T> T getSimpleProperty(Object bean, String name) {
     MethodInfo info = ClassInfo.get(bean.getClass()).getReader(name);
     if (null == info) {
       logger.warn("Cannot find get" + Strings.capitalize(name) + " in " + bean.getClass());

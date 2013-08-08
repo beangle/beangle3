@@ -30,5 +30,21 @@ public class PropertyUtilsTest {
     TestBean bean = new TestBean();
     PropertyUtils.setProperty(bean, "intValue", 2);
     assertEquals(bean.getIntValue(), 2);
+    
+    
+    PropertyUtils.setProperty(bean, "nested.datas(key)", "value");
+    assertEquals(PropertyUtils.getProperty(bean, "nested.datas(key)"),"value");
+    
+    PropertyUtils.setProperty(bean, "nested.id", 4L);
+    assertEquals(PropertyUtils.getProperty(bean, "nested.id"),4L);
+  }
+  
+  public static void main(String[] args){
+    TestBean bean = new TestBean();
+    PropertyUtils.setProperty(bean, "nested.datas(key)", "value");
+    System.out.println(PropertyUtils.getProperty(bean, "nested.datas(key)"));
+    
+    PropertyUtils.setProperty(bean, "nested.id", 4L);
+    System.out.println(PropertyUtils.getProperty(bean, "nested.id"));
   }
 }

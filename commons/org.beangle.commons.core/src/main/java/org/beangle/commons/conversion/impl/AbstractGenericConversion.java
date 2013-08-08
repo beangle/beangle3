@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Primitives;
 import org.beangle.commons.conversion.Conversion;
 import org.beangle.commons.conversion.Converter;
@@ -64,8 +65,8 @@ public abstract class AbstractGenericConversion implements Conversion, Converter
         if (!key.equals(defaultKey)) break;
       }
     }
-    if (null == key)
-      throw new IllegalArgumentException("Cannot find convert type pair " + converter.getClass());
+    if (null == key) throw new IllegalArgumentException("Cannot find convert type pair "
+        + converter.getClass());
 
     getOrCreateConverters((Class<?>) key.getLeft()).put((Class<?>) key.getRight(),
         new ConverterAdapter(converter, key));
@@ -160,28 +161,31 @@ public abstract class AbstractGenericConversion implements Conversion, Converter
   @SuppressWarnings("unchecked")
   @Override
   public <T> T convert(Object source, Class<T> targetType) {
-    if (null == source) return null;
+    if (null == source) return (T) Objects.defaultValue(targetType);
 
     Class<?> sourceType = Primitives.wrap(source.getClass());
-    targetType = Primitives.wrap(targetType);
+    Class<?> targetClazz = Primitives.wrap(targetType);
 
-    if (targetType.isAssignableFrom(sourceType)) return (T) source;
+    if (targetClazz.isAssignableFrom(sourceType)) return (T) source;
 
-    if (sourceType.isArray() && targetType.isArray()) {
+    if (sourceType.isArray() && targetClazz.isArray()) {
       Class<?> sourceObjType = Primitives.wrap(sourceType.getComponentType());
-      Class<?> targetObjType = Primitives.wrap(targetType.getComponentType());
+      Class<?> targetObjType = Primitives.wrap(targetClazz.getComponentType());
       GenericConverter converter = findConverter(sourceObjType, targetObjType);
-      if (null == converter) return (T) Array.newInstance(targetType.getComponentType(), 0);
+      if (null == converter) return (T) Array.newInstance(targetClazz.getComponentType(), 0);
       else {
         int length = Array.getLength(source);
-        T result = (T) Array.newInstance(targetType.getComponentType(), length);
+        T result = (T) Array.newInstance(targetClazz.getComponentType(), length);
         for (int i = 0; i < length; i++)
           Array.set(result, i, converter.convert(Array.get(source, i), sourceObjType, targetObjType));
         return result;
       }
     } else {
-      GenericConverter converter = findConverter(sourceType, targetType);
-      return (null == converter) ? null : (T) converter.convert(source, sourceType, targetType);
+      Object rs = null;
+      GenericConverter converter = findConverter(sourceType, targetClazz);
+      if (null != converter) rs = converter.convert(source, sourceType, targetClazz);
+      if (null == rs && targetType.isPrimitive()) rs = Objects.defaultValue(targetType);
+      return (T) rs;
     }
   }
 

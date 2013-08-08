@@ -201,11 +201,6 @@ public class ConvertPopulatorBean implements Populator {
   }
 
   private Object copyValue(final Object target, final String attr, final Object value) {
-    // try {
     return copyProperty(target, attr, value, conversion);
-    // } catch (Exception e) {
-    // logger.error("copy property failure:[class:" + target.getClass().getName() + " attr:" + attr
-    // + " value:" + value + "]:", e);
-    // }
   }
 }

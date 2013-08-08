@@ -24,6 +24,7 @@ public class TestBean {
   private int intValue;
   TestEnum testEnum;
 
+  private NestedBean nested= new NestedBean();
   
   public Integer getId() {
     return id;
@@ -49,10 +50,6 @@ public class TestBean {
     this.name = name;
   }
 
-//  public void setName(Integer name) {
-//    this.name = (null == name) ? null : name.toString();
-//  }
-
   public int getIntValue() {
     return intValue;
   }
@@ -65,4 +62,13 @@ public class TestBean {
       TestBean c2) {
     return "test";
   }
+
+  public NestedBean getNested() {
+    return nested;
+  }
+
+  public void setNested(NestedBean nested) {
+    this.nested = nested;
+  }
+  
 }
