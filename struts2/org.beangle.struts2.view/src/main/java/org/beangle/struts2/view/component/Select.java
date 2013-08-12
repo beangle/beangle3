@@ -81,12 +81,12 @@ public class Select extends ClosingUIBean {
   public boolean isSelected(Object obj) {
     if (null == value) return false;
     else try {
+      Object nobj = obj;
+      if (obj instanceof Map.Entry<?, ?>) nobj = ((Map.Entry<?, ?>) obj).getKey();
       if (value instanceof String) {
-        return value.equals(obj)
-            || value.equals(String.valueOf(PropertyUtils.getProperty(obj, keyName)));
+        return value.equals(nobj) || value.equals(String.valueOf(PropertyUtils.getProperty(nobj, keyName)));
       } else {
-        // FIXME when obj is map
-        return value.equals(obj) || value.equals(PropertyUtils.getProperty(obj, keyName));
+        return value.equals(nobj) || value.equals(PropertyUtils.getProperty(nobj, keyName));
       }
     } catch (Exception e) {
       e.printStackTrace();
