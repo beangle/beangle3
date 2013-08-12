@@ -393,7 +393,7 @@ public final class CollectUtils {
 
   public static <T> void filter(Collection<T> datas, Predicate<T> predicate) {
     for (Iterator<T> it = datas.iterator(); it.hasNext();)
-      if (predicate.apply(it.next())) it.remove();
+      if (!predicate.apply(it.next())) it.remove();
   }
 
   public static <T> List<T> select(List<T> datas, Predicate<T> predicate) {
