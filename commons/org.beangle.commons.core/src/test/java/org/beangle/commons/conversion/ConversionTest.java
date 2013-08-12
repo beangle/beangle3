@@ -28,7 +28,7 @@ public class ConversionTest {
   public void testConvert() {
     DefaultConversion con = new DefaultConversion();
     Assert.assertEquals(con.convert(2.5f, Integer.class), new Integer(2));
-    Assert.assertEquals(con.convert("", Boolean.class), Boolean.FALSE);
+    Assert.assertEquals(con.convert("", Boolean.class),null);
     Assert.assertEquals((boolean)con.convert(null, boolean.class),false);
   }
   
