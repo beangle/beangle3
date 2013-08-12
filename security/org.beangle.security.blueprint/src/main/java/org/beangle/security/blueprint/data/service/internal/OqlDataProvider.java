@@ -22,11 +22,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.conversion.impl.DefaultConversion;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.lang.ClassLoaders;
-import org.beangle.commons.conversion.impl.DefaultConversion;
-import org.beangle.commons.lang.reflect.Reflections;
 import org.beangle.security.blueprint.data.ProfileField;
 import org.beangle.security.blueprint.data.service.UserDataProvider;
 
@@ -44,7 +44,7 @@ public class OqlDataProvider extends BaseServiceImpl implements UserDataProvider
           + field.getType().getKeyName() + " in (:ids)";
       Set<Object> newIds = CollectUtils.newHashSet(keys);
       if (null != field.getType().getKeyName()) {
-        Class<?> keyType = Reflections.getPropertyType(ClassLoaders.loadClass(field.getType().getTypeName()),
+        Class<?> keyType = PropertyUtils.getPropertyType(ClassLoaders.loadClass(field.getType().getTypeName()),
             field.getType().getKeyName());
         if (!keys[0].getClass().equals(keyType)) {
           newIds = CollectUtils.newHashSet();

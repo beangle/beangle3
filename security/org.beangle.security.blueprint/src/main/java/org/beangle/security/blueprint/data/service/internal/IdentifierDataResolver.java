@@ -29,7 +29,6 @@ import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.reflect.Reflections;
 import org.beangle.security.blueprint.data.ProfileField;
 import org.beangle.security.blueprint.data.service.UserDataResolver;
 
@@ -71,7 +70,7 @@ public class IdentifierDataResolver implements UserDataResolver {
       OqlBuilder<T> builder = OqlBuilder.from(myType.getEntityName(), "field");
 
       String[] ids = Strings.split(text, ",");
-      Class<?> propertyType = Reflections.getPropertyType(clazz, field.getType().getKeyName());
+      Class<?> propertyType = PropertyUtils.getPropertyType(clazz, field.getType().getKeyName());
       List<Object> realIds = CollectUtils.newArrayList(ids.length);
       for (String id : ids) {
         Object realId = ConvertUtils.convert(id, propertyType);

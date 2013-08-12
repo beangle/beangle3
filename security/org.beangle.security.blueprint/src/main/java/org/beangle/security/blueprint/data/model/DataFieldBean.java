@@ -19,7 +19,6 @@
 package org.beangle.security.blueprint.data.model;
 
 import javax.persistence.Cacheable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -44,7 +43,6 @@ public class DataFieldBean extends IntegerIdObject implements DataField {
   /** 名称 */
   @NotNull
   @Size(max = 50)
-  @Column(unique = true)
   protected String name;
 
   /** 标题 */

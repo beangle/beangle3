@@ -21,10 +21,10 @@ package org.beangle.commons.entity.metadata;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.Entity;
 import org.beangle.commons.lang.Assert;
-import org.beangle.commons.lang.reflect.Reflections;
 
 /**
  * <p>
@@ -61,7 +61,7 @@ public class EntityType extends AbstractType {
     this.entityName = entityName;
     this.entityClass = entityClass;
     this.idName = idName;
-    Class<?> clazz = Reflections.getPropertyType(entityClass, idName);
+    Class<?> clazz = PropertyUtils.getPropertyType(entityClass, idName);
     if (null != clazz) propertyTypes.put(idName, new IdentifierType(clazz));
   }
 
@@ -160,7 +160,7 @@ public class EntityType extends AbstractType {
   public Type getPropertyType(String property) {
     Type type = (Type) propertyTypes.get(property);
     if (null == type) {
-      Class<?> propertyType = Reflections.getPropertyType(entityClass, property);
+      Class<?> propertyType = PropertyUtils.getPropertyType(entityClass, property);
       if (null != propertyType) {
         if (Entity.class.isAssignableFrom(propertyType)) type = new EntityType(propertyType);
         if (propertyType.isInterface()) type = Model.getType(propertyType.getName());

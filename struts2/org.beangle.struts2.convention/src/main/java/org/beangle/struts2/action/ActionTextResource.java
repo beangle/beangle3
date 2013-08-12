@@ -22,9 +22,9 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.lang.Option;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.reflect.Reflections;
 import org.beangle.commons.text.i18n.TextBundle;
 import org.beangle.commons.text.i18n.TextBundleRegistry;
 import org.beangle.commons.text.i18n.TextFormater;
@@ -95,7 +95,7 @@ public class ActionTextResource extends DefaultTextResource {
             prop = newKey.substring(idx + 1, nextIdx);
             newKey = newKey.substring(idx + 1);
             idx = nextIdx;
-            if (Strings.isNotEmpty(prop)) aClass = Reflections.getPropertyType(aClass, prop);
+            if (Strings.isNotEmpty(prop)) aClass = PropertyUtils.getPropertyType(aClass, prop);
             else aClass = null;
           } else {
             return msg;

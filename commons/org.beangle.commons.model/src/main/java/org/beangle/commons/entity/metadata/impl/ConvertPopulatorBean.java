@@ -18,19 +18,20 @@
  */
 package org.beangle.commons.entity.metadata.impl;
 
-import java.lang.reflect.Method;
+import static org.beangle.commons.bean.PropertyUtils.copyProperty;
+import static org.beangle.commons.bean.PropertyUtils.getProperty;
+import static org.beangle.commons.bean.PropertyUtils.setProperty;
+
 import java.util.Map;
 
-import static org.beangle.commons.bean.PropertyUtils.*;
+import org.beangle.commons.conversion.Conversion;
+import org.beangle.commons.conversion.impl.DefaultConversion;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.ObjectAndType;
 import org.beangle.commons.entity.metadata.Populator;
 import org.beangle.commons.entity.metadata.Type;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.conversion.Conversion;
-import org.beangle.commons.conversion.impl.DefaultConversion;
-import org.beangle.commons.lang.reflect.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,15 +92,7 @@ public class ConvertPopulatorBean implements Populator {
         }
         if (null == property) {
           property = propertyType.newInstance();
-          try {
-            setProperty(propObj, attrs[index], property);
-          } catch (Exception e) {
-            // Try fix jdk error for couldn't find correct setter when object's Set required type is
-            // diffent with Get's return type declared in interface.
-            Method setter = Reflections.getSetter(propObj.getClass(), attrs[index]);
-            if (null != setter) setter.invoke(propObj, property);
-            else throw e;
-          }
+          setProperty(propObj, attrs[index], property);
         }
         index++;
         propObj = property;

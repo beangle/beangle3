@@ -18,16 +18,11 @@
  */
 package org.beangle.commons.lang.reflect;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.Throwables;
 
 /**
@@ -41,50 +36,6 @@ import org.beangle.commons.lang.Throwables;
 public final class Reflections {
 
   private Reflections() {
-  }
-
-  /**
-   * Return the Java Class representing the property type of the specified
-   * property, or <code>null</code> if there is no such property for the
-   * specified bean.
-   * this method using Introspector.getBeanInfo not lying on readmethod.
-   * For generic super class read method's return type is more general.
-   */
-  public static Class<?> getPropertyType(Class<?> clazz, String property) {
-    BeanInfo beanInfo = null;
-    try {
-      beanInfo = Introspector.getBeanInfo(clazz);
-    } catch (IntrospectionException e) {
-      return null;
-    }
-    PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();
-    if (null == descriptors) return null;
-    for (PropertyDescriptor pd : descriptors) {
-      if (pd.getName().equals(property)) return pd.getPropertyType();
-    }
-    return null;
-  }
-
-  /**
-   * Return setter method.
-   * 
-   * @param clazz
-   * @param property
-   * @return null when not found.
-   */
-  public static Method getSetter(Class<?> clazz, String property) {
-    String setName = "set" + Strings.capitalize(property);
-    for (Method m : clazz.getMethods()) {
-      if (m.getName().equals(setName)) {
-        if (Modifier.isPublic(m.getModifiers()) && !Modifier.isStatic(m.getModifiers())
-            && m.getParameterTypes().length == 1) {
-          return m;
-        } else {
-          return null;
-        }
-      }
-    }
-    return null;
   }
 
   /**

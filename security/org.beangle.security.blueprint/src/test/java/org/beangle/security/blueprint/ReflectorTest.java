@@ -23,7 +23,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.beangle.commons.bean.PropertyUtils;
-import org.beangle.commons.lang.reflect.Reflections;
 import org.beangle.security.blueprint.model.RoleBean;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -32,8 +31,8 @@ import org.testng.annotations.Test;
 public class ReflectorTest {
 
   public void testGet() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-    Assert.assertTrue(Integer.class.equals(Reflections.getPropertyType(RoleBean.class, "id")));
-    Assert.assertTrue(Role.class.equals(Reflections.getPropertyType(RoleBean.class, "parent")));
+    Assert.assertTrue(Integer.class.equals(PropertyUtils.getPropertyType(RoleBean.class, "id")));
+    Assert.assertTrue(Role.class.equals(PropertyUtils.getPropertyType(RoleBean.class, "parent")));
     PropertyUtils.setProperty(new RoleBean(), "id", 1);
   }
 
