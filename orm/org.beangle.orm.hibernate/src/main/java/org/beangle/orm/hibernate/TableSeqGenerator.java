@@ -66,7 +66,7 @@ public class TableSeqGenerator extends SequenceStyleGenerator {
         String seqName = Strings.replace(sequencePattern, "{table}", tableName);
         seqName = Strings.replace(seqName, "{pk}", pk);
         if (seqName.length() > MaxLength) {
-          logger.error("{}'s length >=30, wouldn't be supported in some db!", seqName);
+          logger.warn("{}'s length >=30, wouldn't be supported in some db!", seqName);
         }
         String entityName = params.getProperty(IdentifierGenerator.ENTITY_NAME);
         if (null != entityName && null != namingStrategy) {

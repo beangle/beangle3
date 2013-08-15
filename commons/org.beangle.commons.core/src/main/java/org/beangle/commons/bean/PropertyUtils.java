@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.beangle.commons.conversion.Conversion;
-import org.beangle.commons.conversion.impl.ConvertUtils;
+import org.beangle.commons.conversion.impl.DefaultConversion;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.Throwables;
 import org.beangle.commons.lang.reflect.ClassInfo;
@@ -207,18 +207,7 @@ public class PropertyUtils {
   }
 
   public static Object copyProperty(Object bean, String name, Object value) {
-    ClassInfo classInfo = ClassInfo.get(bean.getClass());
-    MethodInfo info = classInfo.getWriter(name);
-    if (null == info) {
-      logger.warn("Cannot find {} set method in ", name, bean.getClass());
-      return null;
-    }
-    try {
-      return info.method.invoke(bean, ConvertUtils.convert(value, classInfo.getPropertyType(name)));
-    } catch (Exception e) {
-      Throwables.propagate(e);
-    }
-    return null;
+    return copyProperty(bean,name,value,DefaultConversion.Instance);
   }
 
   @SuppressWarnings("unchecked")
@@ -255,7 +244,7 @@ public class PropertyUtils {
     Object value = getSimpleProperty(bean, resolver.getProperty(name));
     if (null == value) return null;
 
-    if (!value.getClass().isArray()) return (Array.get(value, index));
+    if (value.getClass().isArray()) return (Array.get(value, index));
     else return ((List<?>) value).get(index);
   }
 }

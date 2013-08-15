@@ -28,7 +28,7 @@ import org.beangle.commons.lang.functor.Transformer;
  * @author chaostone
  * @version $Id: $
  */
-public class PropertyTransformer<I, R> implements Transformer<I, R> {
+public class PropertyTransformer<R> implements Transformer<Object, R> {
 
   private String property;
 
@@ -54,7 +54,7 @@ public class PropertyTransformer<I, R> implements Transformer<I, R> {
   }
 
   @SuppressWarnings("unchecked")
-  public R apply(final I arg0) {
+  public R apply(final Object arg0) {
     return (R) PropertyUtils.getProperty(arg0, property);
   }
 

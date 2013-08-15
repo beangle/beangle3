@@ -78,8 +78,7 @@ public abstract class NumberIdObject<T extends Number> implements Entity<T> {
   public boolean equals(final Object object) {
     if (this == object) return true;
     if (!(object instanceof NumberIdObject)) { return false; }
-    //Just for use bridge method,for hibernate will delegate this method
-    Entity<?> rhs = (Entity<?>) object;
+    NumberIdObject<?> rhs = (NumberIdObject<?>) object;
     if (null == getId() || null == rhs.getId()) { return false; }
     return getId().equals(rhs.getId());
   }
