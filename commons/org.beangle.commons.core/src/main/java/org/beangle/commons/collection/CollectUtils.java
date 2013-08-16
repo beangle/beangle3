@@ -410,10 +410,12 @@ public final class CollectUtils {
     return rs;
   }
 
-  public static <T, R> List<R> collect(Collection<T> datas, Transformer<T, R> transformer) {
+  public static <R> List<R> collect(Collection<?> datas, Transformer<?, ?> transformer) {
+    @SuppressWarnings("unchecked")
+    Transformer<Object, R> objTransformer = (Transformer<Object, R>) transformer;
     List<R> rs = new ArrayList<R>();
-    for (T t : datas) {
-      R value = transformer.apply(t);
+    for (Object t : datas) {
+      R value = objTransformer.apply(t);
       rs.add(value);
     }
     return rs;
