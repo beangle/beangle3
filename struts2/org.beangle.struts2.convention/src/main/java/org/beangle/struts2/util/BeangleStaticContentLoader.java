@@ -131,11 +131,13 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
       response.setDateHeader("Retry-After", expires);
       response.setHeader("Cache-Control", "public");
       if (maxLastModified > 0) response.setDateHeader("Last-Modified", maxLastModified);
-
+      OutputStream out = response.getOutputStream();
       for (URL url : urls) {
         InputStream is = url.openConnection().getInputStream();
         try {
-          copy(is, response.getOutputStream());
+          copy(is,out);
+          out.write(';');
+          out.write('\n');
         } finally {
           is.close();
         }
