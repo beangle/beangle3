@@ -19,6 +19,8 @@
 package org.beangle.orm.example;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 
 import org.beangle.commons.entity.pojo.IntegerIdObject;
 
@@ -34,6 +36,7 @@ public class OldName extends IntegerIdObject {
 
   String name;
 
+  @ManyToOne(fetch = FetchType.LAZY)
   Employer employer;
 
   public String getName() {

@@ -20,11 +20,13 @@ package org.beangle.orm.hibernate;
 
 import java.util.Date;
 
+import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.dao.EntityDao;
 import org.beangle.inject.spring.SpringTestCase;
 import org.beangle.orm.example.Employer;
 import org.beangle.orm.example.ManagerEmployer;
 import org.beangle.orm.example.Name;
+import org.beangle.orm.example.SkillType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -35,6 +37,7 @@ public class HibernateEntityDaoTest extends SpringTestCase {
    * Test Hql with parameters array;
    */
   public void testQueryHqlWithParamArray() {
+    System.out.println(PropertyUtils.getPropertyType(SkillType.class, "id"));
     EntityDao entityDao = (EntityDao) applicationContext.getBean("entityDao");
     entityDao.search("from " + Employer.class.getName()
         + " as emp where emp.name.firstName = ?1 and emp.contractInfo.add1 = ?2 ", "john", "najing street");

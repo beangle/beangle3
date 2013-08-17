@@ -306,7 +306,7 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
     context.put("format", format);
     context.put("exportFile", fileName);
     context.put("template", template);
-    String properties = get("props");
+    String properties = get("properties");
     if (null != properties) {
       String[] props = Strings.split(properties, ",");
       List<String> keys = CollectUtils.newArrayList();

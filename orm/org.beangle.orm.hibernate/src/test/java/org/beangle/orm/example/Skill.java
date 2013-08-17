@@ -19,6 +19,8 @@
 package org.beangle.orm.example;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 
 import org.beangle.commons.entity.pojo.IntegerIdObject;
 
@@ -29,6 +31,7 @@ public class Skill extends IntegerIdObject {
 
   String name;
 
+  @ManyToOne(fetch=FetchType.LAZY)
   SkillType skillType;
 
   public SkillType getSkillType() {

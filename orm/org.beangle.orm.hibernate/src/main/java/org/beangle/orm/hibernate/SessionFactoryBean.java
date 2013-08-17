@@ -53,8 +53,6 @@ import org.springframework.core.io.Resource;
 public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initializing, Disposable,
     BeanClassLoaderAware {
 
-  private static final ThreadLocal<DataSource> configTimeDataSourceHolder = new ThreadLocal<DataSource>();
-
   protected Logger logger = LoggerFactory.getLogger(getClass());
 
   private Class<? extends Configuration> configurationClass = Configuration.class;
@@ -128,7 +126,6 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
 
   @SuppressWarnings("unchecked")
   public void init() throws Exception {
-    if (dataSource != null) configTimeDataSourceHolder.set(dataSource);
     configuration = newConfiguration();
     configuration.getProperties().put("hibernate.classLoader.application", beanClassLoader);
     // Set Hibernate 4.0+ CurrentSessionContext implementation,
@@ -185,13 +182,9 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
           ServiceRegistryBuilder.destroy(serviceRegistry);
         }
       });
-
       this.sessionFactory = configuration.buildSessionFactory(serviceRegistry);
       logger.info("Building Hibernate SessionFactory in {}", watch);
-    }
-
-    finally {
-      if (dataSource != null) configTimeDataSourceHolder.remove();
+    } finally {
     }
   }
 
@@ -256,10 +249,6 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
 
   public boolean isSingleton() {
     return true;
-  }
-
-  public static DataSource getConfigTimeDataSource() {
-    return configTimeDataSourceHolder.get();
   }
 
   public DataSource getDataSource() {
