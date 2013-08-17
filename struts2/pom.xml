@@ -16,8 +16,8 @@
   </properties>
 
   <modules>
-    <module>org.beangle.struts2.convention</module>
-    <module>org.beangle.struts2.view</module>
+    <module>convention</module>
+    <module>view</module>
   </modules>
 
   <dependencies>

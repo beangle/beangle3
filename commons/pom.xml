@@ -11,10 +11,10 @@
   <name>Beangle Commons Parent</name>
   
   <modules>
-    <module>org.beangle.commons.core</module>
-    <module>org.beangle.commons.model</module>
-    <module>org.beangle.commons.web</module>
-    <module>org.beangle.commons.notification</module>
+    <module>core</module>
+    <module>model</module>
+    <module>web</module>
+    <module>notification</module>
   </modules>
 
   <description>

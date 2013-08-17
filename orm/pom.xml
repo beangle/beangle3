@@ -11,7 +11,7 @@
   <name>Beangle Orm Parent</name>
 
   <modules>
-    <module>org.beangle.orm.hibernate</module>
+    <module>hibernate</module>
   </modules>
 
   <properties>

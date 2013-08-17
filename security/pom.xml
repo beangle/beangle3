@@ -15,9 +15,9 @@
   </properties>
 
   <modules>
-    <module>org.beangle.security.core</module>
-    <module>org.beangle.security.web</module>
-    <module>org.beangle.security.blueprint</module>
+    <module>core</module>
+    <module>web</module>
+    <module>blueprint</module>
   </modules>
 
   <dependencies>

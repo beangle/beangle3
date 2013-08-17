@@ -11,7 +11,7 @@
   <name>Beangle Test Parent</name>
   
   <modules>
-    <module>org.beangle.test.selenium</module>
+    <module>selenium</module>
   </modules>
 
 </project>
