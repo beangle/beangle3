@@ -66,7 +66,7 @@ public class I18nInterceptor extends AbstractInterceptor {
 
   private String findLocaleParameter(Map<String, Object> params, String parameterName) {
     Object localParam = params.remove(parameterName);
-    if (localParam != null && localParam.getClass().isArray() && ((Object[]) localParam).length == 1) {
+    if (localParam != null && localParam.getClass().isArray()) {
       localParam = ((Object[]) localParam)[0];
     }
     return null == localParam ? null : localParam.toString();

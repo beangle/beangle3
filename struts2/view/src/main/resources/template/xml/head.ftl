@@ -23,18 +23,18 @@ ${tag.body}
 
 [#macro beangle_uijs_head]
 [#if tag.compressed]
+  <script type="text/javascript" src="${base}/static/scripts/jquery/jquery-1.10.2.min.js,jquery.ui.core-1.10.3.min.js,jquery-history-1.8.0.min.js,jquery-colorbox-1.4.27.min.js,jquery-chosen-1.0.0.min.js"></script>
+  <script type="text/javascript" src="${base}/static/js/plugins/jquery.subscribe.min.js,/js/struts2/jquery.struts2.min.js,/js/struts2/jquery.ui.struts2.min.js"></script>
+  <script type="text/javascript" src="${base}/static/scripts/beangle/beangle-3.3.3.min.js,beangle-ui-3.3.3.min.js"></script>
+[#else]
   <script type="text/javascript" src="${base}/static/scripts/jquery/jquery-1.10.2.js"></script>
   <script type="text/javascript" src="${base}/static/scripts/jquery/jquery.ui.core-1.10.3.js"></script>
-  <!--<script type="text/javascript" src="${base}/static/scripts/jquery/jquery-history-1.8.0.js"></script>-->
+  <script type="text/javascript" src="${base}/static/scripts/jquery/jquery-history-1.8.0.js"></script>
   <script type="text/javascript" src="${base}/static/scripts/jquery/jquery-colorbox-1.4.27.js"></script>
   <script type="text/javascript" src="${base}/static/scripts/jquery/jquery-chosen-1.0.0.js"></script>
   <script type="text/javascript" src="${base}/static/js/plugins/jquery.subscribe.js,/js/struts2/jquery.struts2.js,/js/struts2/jquery.ui.struts2.js"></script>
   <script type="text/javascript" src="${base}/static/scripts/beangle/beangle-3.3.3.js"></script>
   <script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui-3.3.3.js"></script>
-[#else]
-  <script type="text/javascript" src="${base}/static/scripts/jquery/jquery-1.10.2.min.js,jquery.ui.core-1.10.3.min.js,jquery-history-1.8.0.min.js,jquery-colorbox-1.4.27.min.js,jquery-chosen-1.0.0.min.js"></script>
-  <script type="text/javascript" src="${base}/static/js/plugins/jquery.subscribe.min.js,/js/struts2/jquery.struts2.min.js,/js/struts2/jquery.ui.struts2.min.js"></script>
-  <script type="text/javascript" src="${base}/static/scripts/beangle/beangle-3.3.3.min.js,beangle-ui-3.3.3.min.js"></script>
 [/#if]
   <script type="text/javascript" src="${base}/static/scripts/my97/WdatePicker-4.72.js"></script>
   <script type="text/javascript">jQuery(document).ready(function () {jQuery.struts2_jquery.version="3.6.1";jQuery.scriptPath = "${base}/static/";jQuery.struts2_jquery.minSuffix = "";jQuery.ajaxSettings.traditional = true;jQuery.ajaxSetup ({cache: false});});</script>
