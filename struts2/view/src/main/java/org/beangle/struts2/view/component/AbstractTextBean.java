@@ -18,8 +18,6 @@
  */
 package org.beangle.struts2.view.component;
 
-import org.beangle.commons.lang.Strings;
-
 import com.opensymphony.xwork2.util.ValueStack;
 
 /**
@@ -44,10 +42,7 @@ public abstract class AbstractTextBean extends UIBean {
   protected void evaluateParams() {
     generateIdIfEmpty();
 
-    if (null != label) {
-      if (Strings.isEmpty(label)) label = null;
-      else label = getText(label);
-    } else label = getText(name);
+    label = processLabel(label, name);
 
     if (null != title) {
       title = getText(title);

@@ -57,14 +57,11 @@ public class Date extends UIBean {
   @Override
   protected void evaluateParams() {
     if (null == this.id) generateIdIfEmpty();
-    if (null != label) label = getText(label);
-    else label = getText(name);
+    label = processLabel(label, name);
 
-    if (null != title) {
-      title = getText(title);
-    } else {
-      title = label;
-    }
+    if (null != title) title = getText(title);
+    else title = label;
+
     Form myform = findAncestor(Form.class);
     if (null != myform) {
       if ("true".equals(required)) myform.addRequire(id);

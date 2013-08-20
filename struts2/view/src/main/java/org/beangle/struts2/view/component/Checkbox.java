@@ -36,12 +36,11 @@ public class Checkbox extends UIBean {
   @Override
   protected void evaluateParams() {
     if (null == this.id) generateIdIfEmpty();
-    if (null != label) label = getText(label);
-    if (null != title) {
-      title = getText(title);
-    } else {
-      title = label;
-    }
+    label = processLabel(label, name);
+    
+    if (null != title) title = getText(title);
+    else title = label;
+
     Form myform = findAncestor(Form.class);
     if (null != myform) {
       if ("true".equals(required)) {

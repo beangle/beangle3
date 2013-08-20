@@ -48,12 +48,9 @@ public class Radio extends UIBean {
   @Override
   protected void evaluateParams() {
     if (null == this.id) generateIdIfEmpty();
-    if (null != label) label = getText(label);
-    if (null != title) {
-      title = getText(title);
-    } else {
-      title = label;
-    }
+    label = processLabel(label, name);
+    if (null != title) title = getText(title);
+    else title = label;
     this.value = booleanize(value);
   }
 

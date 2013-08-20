@@ -312,7 +312,7 @@ public class Grid extends ClosingUIBean {
             writer.append(body);
           } else if (null != property) {
             Object val = getValue();
-            if (null != val) writer.append(StringUtil.HTMLEnc(val.toString()));
+            if (null != val) writer.append(StringUtil.XMLEncNA(val.toString()));
           }
           writer.append("</td>");
         } catch (Exception e) {

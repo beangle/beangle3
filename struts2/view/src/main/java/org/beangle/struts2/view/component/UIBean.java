@@ -170,4 +170,17 @@ public abstract class UIBean extends Component {
       id = ((UIIdGenerator) stack.getContext().get(GeneratorName)).generate(getClass());
     }
   }
+
+  /**
+   * Process label,convert empty to null
+   * @param label
+   * @param name
+   * @return
+   */
+  protected String processLabel(String label, String name) {
+    if (null != label) {
+      if (Strings.isEmpty(label)) return null;
+      else return getText(label);
+    } else return getText(name);
+  }
 }

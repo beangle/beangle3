@@ -136,7 +136,6 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
         InputStream is = url.openConnection().getInputStream();
         try {
           copy(is,out);
-          out.write(';');
           out.write('\n');
         } finally {
           is.close();

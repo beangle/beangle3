@@ -20,8 +20,8 @@
 
   <package name="beangle" extends="struts-default">
     <interceptors>
-      <interceptor name="flash" class="org.beangle.struts2.interceptor.FlashInterceptor"/>
       <interceptor name="i18n2" class="org.beangle.struts2.interceptor.I18nInterceptor"/>
+      <interceptor name="flash" class="org.beangle.struts2.interceptor.FlashInterceptor"/>
       <interceptor name="ssc" class="org.beangle.struts2.interceptor.SimpleServletConfigInterceptor"/>
       <interceptor-stack name="beangleStack">
         <interceptor-ref name="i18n2"/>
