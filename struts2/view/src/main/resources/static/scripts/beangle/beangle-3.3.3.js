@@ -450,8 +450,7 @@
         }
       },
       ajaxSubmit : function(formId,action,target){
-        var myForm = document.getElementById(myForm);
-        if(!action) action=myForm.action;
+        if(!action) action=document.getElementById(formId).action;
         jQuery('#'+formId).ajaxForm({
           success:function(result) {try{jQuery('#'+target).html(result);}catch(e){alert(e)}},
           error:function (response) {try{jQuery('#'+target).html(response.responseText);}catch(e){alert(e)}},
