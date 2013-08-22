@@ -124,10 +124,6 @@ public class FuncResourceBean extends IntegerIdObject implements FuncResource {
     this.scope = scope;
   }
 
-  public void setScope(String scopeName) {
-    this.scope = Scope.valueOf(scopeName);
-  }
-
   public boolean isEntry() {
     return entry;
   }

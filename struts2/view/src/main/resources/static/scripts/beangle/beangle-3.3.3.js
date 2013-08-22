@@ -83,7 +83,7 @@
                     }
                     //jQuery(currState.data.container).empty();
                     try{
-                    	jQuery(currState.data.container).html(currState.data.content);
+                      jQuery(currState.data.container).html(currState.data.content);
                     }catch(e){alert(e)}
                     bg.history.applyState(currState);
                 }
@@ -104,7 +104,7 @@
             var state=History.getState();
             History.replaceState({content:jqXHR.responseText,container:target,updatedAt:(new Date()).getTime()},state.title,state.url);
             try{
-            	jQuery(target).html(jqXHR.responseText);
+              jQuery(target).html(jqXHR.responseText);
             }catch(e){alert(e)}
           }
           beangle.hideAjaxMessage();
@@ -136,23 +136,21 @@
         if(jQuery.type(target)=="string" && target.indexOf("#")!=0){
           target = "#" + target;    
         }
-        bg.require("jquery.form");
         bg.displayAjaxMessage();
-        function showResult(result)  {
-          bg.history.snapshot();
-          History.pushState({content:result,container:target},"",action);
-          bg.hideAjaxMessage();
-          return false;
-        }
-        function showError(response)  {
-          var responseText = response.responseText;
-          try{
-          	jQuery(target).html(responseText);
-          }catch(e){alert(e)}
-          bg.hideAjaxMessage();
-          return false; 
-        }
-        jQuery(form).ajaxForm({success:showResult,error:showError});
+        
+        jQuery(form).ajaxForm({
+          success:function(result)  {
+            bg.history.snapshot();
+            History.pushState({content:result,container:target},"",action);
+            bg.hideAjaxMessage();
+            return false;},
+          error:function (response)  {
+            try{jQuery(target).html(response.responseText);}catch(e){alert(e)}
+            bg.hideAjaxMessage();
+            return false;},
+          url:action
+       });
+       jQuery(form).submit();
     }
   };
 
@@ -397,7 +395,7 @@
   beangle.extend({
     form:{
       submit : function (myForm,action,target,onsubmit,ajax,noHistory){
-        var submitTarget, rs, sumbitBtnId, submitx,origin_target, origin_action,options_submit;
+        var submitTarget, rs,origin_target, origin_action;
         if((typeof myForm)=='string') myForm = document.getElementById(myForm);
         //First native onsubmit will benefit to user's onsubmit hook on data validation.
         //1.native onsubmit
@@ -422,62 +420,45 @@
         }
         //3. check target and action
         submitTarget = (null!=target)?target:myForm.target;
-        if(!submitTarget){
-          submitTarget=bg.findTarget(myForm);
-        }
-        if(action==null){
-          action=myForm.action;
-        }
-        if(action.indexOf("http://")==0){
-          action=action.substring(action.indexOf("/",7));
-        }
-        if(null==ajax || ajax){
-          ajax=bg.isAjaxTarget(submitTarget)
-        }
-        origin_target=myForm.target;
-        origin_action=myForm.action;
+
+        if(!submitTarget) submitTarget=bg.findTarget(myForm);
+
+        if(action==null) action=myForm.action;
+
+        if(action.indexOf("http://")==0) action=action.substring(action.indexOf("/",7));
         
+        if(null==ajax || ajax) ajax=bg.isAjaxTarget(submitTarget);
+
         // 4. fire
-        myForm.action=action;
         if(ajax){
-          //fix myForm without id
           if(null==myForm.id||''==myForm.id){
             myForm.setAttribute("id",myForm.name);
           }
-          sumbitBtnId=myForm.id+"_submit";
-          submitx=document.getElementById(sumbitBtnId);
-          if(null==submitx){
-            submitx = document.createElement('input');
-            submitx.setAttribute("id",sumbitBtnId);
-            submitx.setAttribute("type",'submit');
-            submitx.style.display="none";
-            myForm.appendChild(submitx);
+          if(!noHistory && !jQuery("input:file",myForm).length && beangle.ajaxhistory){
+            beangle.history.submit(myForm.id,action,submitTarget);
+          }else{
+            beangle.form.ajaxSubmit(myForm.id,action,submitTarget);
           }
-          options_submit = {id:sumbitBtnId,jqueryaction:"button",targets:submitTarget,href:'#',formids:myForm.id};
-          origin_onsubmit=myForm.onsubmit;
-          if (typeof jQuery != "undefined") {
-            if(!noHistory && jQuery("input:file",myForm).length==0 && beangle.ajaxhistory){
-              beangle.history.submit(myForm.id,action,submitTarget);
-              //这个分支没有使用bind，所以去除myForm.submit,防止两次验证onsubmit函数
-              myForm.onsubmit=null;
-            }else{
-              jQuery.struts2_jquery.bind(jQuery('#'+sumbitBtnId), options_submit);
-            }
-          }
-          submitx.click();
-          myForm.onsubmit=origin_onsubmit;
-          jQuery("#"+sumbitBtnId).unbind();
         }else{
+          origin_target=myForm.target;
+          origin_action=myForm.action;
+          myForm.action=action;
           myForm.target = bg.normalTarget(submitTarget);
           myForm.submit();
           myForm.target = origin_target;
-        }
-        // 5. cleanup
-        if(myForm){
           myForm.action = origin_action;
         }
       },
-
+      ajaxSubmit : function(formId,action,target){
+        var myForm = document.getElementById(myForm);
+        if(!action) action=myForm.action;
+        jQuery('#'+formId).ajaxForm({
+          success:function(result) {try{jQuery('#'+target).html(result);}catch(e){alert(e)}},
+          error:function (response) {try{jQuery('#'+target).html(response.responseText);}catch(e){alert(e)}},
+          url:action
+        });
+        jQuery('#'+formId).submit();
+      },
       /**
        * 提交要求含有id的表单
        * @param form 带提交的表单
@@ -855,51 +836,17 @@
       }
       return true;
     }
-    // jump to page using form submit
-    this.goPageNormal = function (){
-      var myForm=document.createElement("form"), key, value;
-      myForm.setAttribute("action",this.actionurl);
-      myForm.setAttribute("method","POST");
-      for(key in this.paramMap){
-        value=this.paramMap[key];
-        if(value != "")bg.form.addInput(myForm,key,value,"hidden");
-      }
-      document.body.appendChild(myForm);
-      myForm.submit();
-    }
-    // jump to page using ajax
-    this.goPageAjax = function (){
-      var myForm=this.getForm(), key, value, submitBtnId, submitx, options_submit;
-      for(key in this.paramMap){
-        value=this.paramMap[key];
-        if(value!=""){
-          bg.form.addInput(myForm,key,value,"hidden");
-        }
-      }
-      submitBtnId=this.formid + "_submitx";
-      submitx=document.getElementById(submitBtnId);
-      if(null==submitx){
-        submitx = document.createElement('button');
-        submitx.setAttribute("id",submitBtnId);
-        submitx.setAttribute("type",'submit');
-        submitx.style.display='none';
-        myForm.appendChild(submitx);
-      }
-      options_submit = {};
-      options_submit.jqueryaction = "button";
-      options_submit.id = submitBtnId;
-      options_submit.targets = this.target;
-      options_submit.href = this.actionurl;
-      options_submit.formids = this.formid;
-      jQuery.struts2_jquery.bind(jQuery('#' + submitBtnId),options_submit);
-      submitx.click();
-    }
     this.goPage = function (pageNo,pageSize,orderBy){
+      var myForm=this.getForm(), key, value;
       if(this.checkPageParams(pageNo,pageSize,orderBy)){
+        for(key in this.paramMap){
+          value=this.paramMap[key];
+          if(value!="")  bg.form.addInput(myForm,key,value,"hidden");
+        }
         if(this.target && document.getElementById(this.target)){
-          this.goPageAjax();
+          bg.form.ajaxSubmit(this.formid,this.actionurl,this.target);
         }else{
-          this.goPageNormal();
+          myForm.submit();
         }
       }
     }
@@ -918,15 +865,7 @@
     }
   };
   
-  bg.extend({'require':
-    function (module,callback){
-        var base=bg.getContextPath();
-        if(module=="jquery.form"){
-            jQuery.struts2_jquery.require("/static/scripts/jquery/jquery-form-3.38.0.js",callback,base);
-        }
-    }
-  });
-
   beangle.ready(beangle.iframe.adaptSelf);
   if(beangle.ajaxhistory)beangle.history.init();
 })(window);
+

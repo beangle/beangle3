@@ -54,8 +54,7 @@ public class Radios extends UIBean {
   @Override
   protected void evaluateParams() {
     if (null == this.id) generateIdIfEmpty();
-    if (null != label) label = getText(label);
-    else label = getText(name);
+    label=processLabel(label,name);
 
     List<?> keys = convertItems();
     radios = new Radio[keys.size()];
