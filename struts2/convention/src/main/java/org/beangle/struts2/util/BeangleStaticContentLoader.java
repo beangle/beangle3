@@ -88,11 +88,13 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
     contentTypes.put("js", "text/javascript");
     contentTypes.put("css", "text/css");
     contentTypes.put("html", "text/html");
+    contentTypes.put("htm", "text/html");
     contentTypes.put("txt", "text/plain");
     contentTypes.put("gif", "image/gif");
     contentTypes.put("jpg", "image/jpeg");
     contentTypes.put("jpeg", "image/jpeg");
     contentTypes.put("png", "image/png");
+    contentTypes.put("json", "application/json");
     contentTypes.put("htc", "text/x-component");
   }
 
@@ -135,8 +137,8 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
       for (URL url : urls) {
         InputStream is = url.openConnection().getInputStream();
         try {
-          copy(is,out);
-          out.write('\n');
+          copy(is, out);
+          if (null != contentType && contentType.startsWith("text")) out.write('\n');
         } finally {
           is.close();
         }
