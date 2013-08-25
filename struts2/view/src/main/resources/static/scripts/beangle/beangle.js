@@ -16,6 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
+ /**
+  * Version 3.3.4
+  */
 (function( window, undefined ) {
   if(beangle) return;
   var beangle=function (){
@@ -67,6 +70,8 @@
   
   //History--------------------------
   beangle.history = {
+    //最多存储20个状态
+  	maxStates:20,
     init : function(){
         if ( document.location.protocol === 'file:' ) {
             alert('The HTML5 History API (and thus History.js) do not work on files, please upload it to a server.');
@@ -86,6 +91,7 @@
                       jQuery(currState.data.container).html(currState.data.content);
                     }catch(e){alert(e)}
                     bg.history.applyState(currState);
+                    if(History.savedStates.length>bg.history.maxStates)History.reset();
                 }
             });
         });

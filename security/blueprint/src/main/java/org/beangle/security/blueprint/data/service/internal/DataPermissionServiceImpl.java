@@ -148,7 +148,11 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
   public Object getPropertyValue(ProfileField field, Profile profile) {
     Property property = profile.getProperty(field);
     if (null == property) return null;
-    return unmarshal(property.getValue(), field);
+    if ("*".equals(property.getValue())) {
+      return getFieldValues(property.getField());
+    } else {
+      return unmarshal(property.getValue(), field);
+    }
   }
 
   /**

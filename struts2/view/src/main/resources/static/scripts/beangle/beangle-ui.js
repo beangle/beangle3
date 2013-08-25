@@ -941,17 +941,17 @@
             var base=bg.getContextPath();
             if(module=="validity"){
                 jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/jquery.validity.css",base);
-                jQuery.struts2_jquery.require("/static/scripts/plugins/jquery-validity-1.3.1.js",null,base);
+                jQuery.struts2_jquery.require("/static/scripts/plugins/jquery-validity.js",null,base);
                 jQuery.struts2_jquery.require("/static/scripts/i18n/zh_CN/jquery.validity.js",callback,base);
             }else if(module=="tabletree"){
                 jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/beangle-ui-tabletree.css",base);
-                jQuery.struts2_jquery.require("/static/scripts/beangle/beangle-ui-tabletree-3.3.3.js",callback,base);
+                jQuery.struts2_jquery.require("/static/scripts/beangle/beangle-ui-tabletree.js",callback,base);
             }else if(module=="colorbox"){
                 jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/colorbox.css",base);
-                jQuery.struts2_jquery.require("/static/scripts/plugins/jquery-colorbox-1.4.27.min.js",callback,base);
+                jQuery.struts2_jquery.require("/static/scripts/plugins/jquery-colorbox.min.js",callback,base);
             }else if(module=="jquery.pstrength"){
                 jQuery.struts2_jquery.requireCss("/static/themes/" + bg.uitheme + "/jquery-pstrength.css",base);
-                jQuery.struts2_jquery.require("/static/scripts/plugins/jquery-pstrength-2.1.js",callback,base);
+                jQuery.struts2_jquery.require("/static/scripts/plugins/jquery-pstrength.js",callback,base);
                 jQuery.struts2_jquery.require("/static/scripts/i18n/zh_CN/jquery-pstrength.js",callback,base);
             }
         }

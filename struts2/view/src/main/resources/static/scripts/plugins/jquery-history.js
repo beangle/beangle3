@@ -3228,20 +3228,23 @@ if (typeof JSON !== 'object') {
 						} else {
 							// Otherwise, we're probably private browsing in Safari, so we'll ignore the exception.
 						}
-					} else {
+					}
+					else {
 						throw e;
 					}
 				}
 			};
 
+			//duantihua disable setinterval and unload 2013-08-25,
+			//because it caurse session store size unstable
+			/*
 			// For Internet Explorer
 			History.intervalList.push(setInterval(History.onUnload,History.options.storeInterval));
-
 			// For Other Browsers
 			History.Adapter.bind(window,'beforeunload',History.onUnload);
 			History.Adapter.bind(window,'unload',History.onUnload);
-
 			// Both are enabled for consistency
+			*/
 		}
 
 		// Non-Native pushState Implementation
@@ -3288,4 +3291,14 @@ if (typeof JSON !== 'object') {
 		History.init();
 	}
 
+	//duantihua 2013-08-25 reset all history interval states
+	History.reset = function (){
+		History.store={};
+		History.normalizeStore();
+		History.savedHashes=[];
+		History.savedStates=[];
+		History.idToState={};
+		History.urlToId={};
+		History.stateToId={};
+	}	
 })(window);

@@ -152,24 +152,22 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
    * @param path resource path description /static/a.js,b.js etc.
    */
   private List<URL> findResources(String path) {
-    String namestr = path;
+    String lastPostfix = "." + Strings.substringAfterLast(path, ".");
+    String namestr = cleanupPath(path);
     List<URL> urls = CollectUtils.newArrayList();
     String[] names = Strings.split(namestr, ",");
     String pathDir = null;
     for (String name : names) {
-      if (null == pathDir) {
-        name = cleanupPath(name);
-        pathDir = Strings.substringBeforeLast(name, "/");
-      } else if (!name.startsWith("/")) {
-        name = pathDir + "/" + name;
-      }
+      if (name.startsWith("/")) pathDir = Strings.substringBeforeLast(name, "/");
+      else name = pathDir + "/" + name;
+      if (!name.endsWith(lastPostfix)) name += lastPostfix;
       // name will starts with /
       URL url = null;
       for (String pathPrefix : pathPrefixes) {
         url = findResource(pathPrefix + name);
         if (url != null) break;
       }
-      if (null == url) logger.info("cannot find resource {}", name);
+      if (null == url) logger.warn("cannot find resource {}", name);
       else urls.add(url);
     }
     return urls;

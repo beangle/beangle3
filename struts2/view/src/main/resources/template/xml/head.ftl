@@ -23,33 +23,33 @@ ${tag.body}
 
 [#macro beangle_uijs_head]
 [#if tag.compressed]
-  <script type="text/javascript" src="${base}/static/scripts/jquery/jquery-1.10.2.min.js,jquery.ui.core-1.10.3.min.js"></script>
-  <script type="text/javascript" src="${base}/static/scripts/plugins/jquery-form-3.38.0.min.js,jquery-history-1.8.0.min.js,jquery-colorbox-1.4.27.min.js,jquery-chosen-1.0.0.min.js"></script>
-  <script type="text/javascript" src="${base}/static/js/plugins/jquery.subscribe.min.js,/js/struts2/jquery.struts2.min.js,/js/struts2/jquery.ui.struts2.min.js"></script>
-  <script type="text/javascript" src="${base}/static/scripts/beangle/beangle-3.3.3.min.js,beangle-ui-3.3.3.min.js"></script>
+  <script type="text/javascript" src="${base}/static/scripts/jquery/jquery.min,jquery.ui.core.min.js?bj=3.3.4"></script>
+  <script type="text/javascript" src="${base}/static/scripts/plugins/jquery-form.min,jquery-history.min,jquery-colorbox.min,jquery-chosen.min.js?bj=3.3.4"></script>
+  <script type="text/javascript" src="${base}/static/js/plugins/jquery.subscribe.min,/js/struts2/jquery.struts2.min,jquery.ui.struts2.min.js?bj=3.3.4"></script>
+  <script type="text/javascript" src="${base}/static/scripts/beangle/beangle.min,beangle-ui.min.js?bj=3.3.4"></script>
 [#else]
-  <script type="text/javascript" src="${base}/static/scripts/jquery/jquery-1.10.2.js"></script>
-  <script type="text/javascript" src="${base}/static/scripts/jquery/jquery.ui.core-1.10.3.js"></script>
-  <script type="text/javascript" src="${base}/static/scripts/plugins/jquery-form-3.38.0.js"></script>
-  <script type="text/javascript" src="${base}/static/scripts/plugins/jquery-history-1.8.0.js"></script>
-  <script type="text/javascript" src="${base}/static/scripts/plugins/jquery-colorbox-1.4.27.js"></script>
-  <script type="text/javascript" src="${base}/static/scripts/plugins/jquery-chosen-1.0.0.js"></script>
-  <script type="text/javascript" src="${base}/static/js/plugins/jquery.subscribe.js,/js/struts2/jquery.struts2.js,/js/struts2/jquery.ui.struts2.js"></script>
-  <script type="text/javascript" src="${base}/static/scripts/beangle/beangle-3.3.3.js"></script>
-  <script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui-3.3.3.js"></script>
+  <script type="text/javascript" src="${base}/static/scripts/jquery/jquery.js?bj=3.3.4"></script>
+  <script type="text/javascript" src="${base}/static/scripts/jquery/jquery.ui.core.js?bj=3.3.4"></script>
+  <script type="text/javascript" src="${base}/static/scripts/plugins/jquery-form.js?bj=3.3.4"></script>
+  <script type="text/javascript" src="${base}/static/scripts/plugins/jquery-history.js?bj=3.3.4"></script>
+  <script type="text/javascript" src="${base}/static/scripts/plugins/jquery-colorbox.js?bj=3.3.4"></script>
+  <script type="text/javascript" src="${base}/static/scripts/plugins/jquery-chosen.js?bj=3.3.4"></script>
+  <script type="text/javascript" src="${base}/static/js/plugins/jquery.subscribe,/js/struts2/jquery.struts2,jquery.ui.struts2.js?bj=3.3.4"></script>
+  <script type="text/javascript" src="${base}/static/scripts/beangle/beangle.js?bj=3.3.4"></script>
+  <script type="text/javascript" src="${base}/static/scripts/beangle/beangle-ui.js?bj=3.3.4"></script>
 [/#if]
   <script type="text/javascript" src="${base}/static/scripts/my97/WdatePicker-4.72.js"></script>
   <script type="text/javascript">jQuery(document).ready(function () {jQuery.struts2_jquery.version="3.6.1";jQuery.scriptPath = "${base}/static/";jQuery.struts2_jquery.minSuffix = "";jQuery.ajaxSettings.traditional = true;jQuery.ajaxSetup ({cache: false});});</script>
   <link id="jquery_theme_link" rel="stylesheet" href="${base}/static/themes/smoothness/jquery-ui.css?s2j=3.6.1" type="text/css"/>
-  <link id="beangle_theme_link" href="${base}/static/themes/${b.theme.name}/beangle-ui.css,colorbox.css,chosen.css" rel="stylesheet" type="text/css" />
+  <link id="beangle_theme_link" href="${base}/static/themes/${b.theme.name}/beangle-ui,colorbox,chosen.css" rel="stylesheet" type="text/css" />
 [/#macro]
 
 [#macro beangle_js_head]
 [#if tag.compressed]
-  <script type="text/javascript" src="${base}/static/scripts/jquery/jquery-1.10.2.min.js,/scripts/beangle/beangle-3.3.3.min.js"></script>
+  <script type="text/javascript" src="${base}/static/scripts/jquery/jquery.min,/scripts/beangle/beangle.min.js"></script>
   <link id="beangle_theme_link" rel="stylesheet" href="${base}/static/themes/${b.theme.name}/beangle-ui.css" type="text/css"/>
 [#else]
-  <script type="text/javascript" src="${base}/static/scripts/jquery/jquery-1.10.2.js,/scripts/beangle/beangle-3.3.3.js"></script>
+  <script type="text/javascript" src="${base}/static/scripts/jquery/jquery,/scripts/beangle/beangle.js"></script>
   <link id="beangle_theme_link" href="${base}/static/themes/${b.theme.name}/beangle-ui.css" rel="stylesheet" type="text/css" />
 [/#if]
 [/#macro]
