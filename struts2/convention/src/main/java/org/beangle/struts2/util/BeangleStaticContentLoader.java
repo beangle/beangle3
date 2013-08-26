@@ -105,7 +105,8 @@ public class BeangleStaticContentLoader implements StaticContentLoader {
   public void findStaticResource(String path, HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     List<URL> urls = findResources(path);
-    if (urls.isEmpty()) response.sendError(HttpServletResponse.SC_NOT_FOUND);
+    String[] names = Strings.split(path, ",");
+    if (urls.size() != names.length) response.sendError(HttpServletResponse.SC_NOT_FOUND);
 
     // Get max last modified time stamp.
     long maxLastModified = -1;

@@ -32,7 +32,7 @@ import org.beangle.commons.conversion.Converter;
 public class String2NumberConverter extends StringConverterFactory<String, Number> {
 
   public String2NumberConverter() {
-    register(Integer.class, new ShortConverter());
+    register(Short.class, new ShortConverter());
     register(Integer.class, new IntConverter());
     register(Long.class, new LongConverter());
     register(Float.class, new FloatConverter());
