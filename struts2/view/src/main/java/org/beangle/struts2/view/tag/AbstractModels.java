@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.struts2.view.freemarker;
+package org.beangle.struts2.view.tag;
 
 import static org.beangle.struts2.view.bean.ConstantBeanNames.GeneratorName;
 import static org.beangle.struts2.view.bean.ConstantBeanNames.TextResourceName;

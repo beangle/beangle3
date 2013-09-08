@@ -19,6 +19,7 @@
 package org.beangle.struts2.dispatcher;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.Dispatcher;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
@@ -33,6 +35,8 @@ import org.apache.struts2.dispatcher.ng.ExecuteOperations;
 import org.apache.struts2.dispatcher.ng.InitOperations;
 import org.apache.struts2.dispatcher.ng.PrepareOperations;
 import org.apache.struts2.dispatcher.ng.servlet.ServletHostConfig;
+
+import com.opensymphony.xwork2.ActionContext;
 
 /**
  * Server Struts2 Action Only.
@@ -51,13 +55,17 @@ public class ActionServlet extends HttpServlet {
     try {
       ServletHostConfig config = new ServletHostConfig(filterConfig);
       init.initLogging(config);
+      ActionContext.setContext(new ActionContext(new HashMap<String,Object>()));
+      ServletActionContext.setServletContext(config.getServletContext());
       Dispatcher dispatcher = init.initDispatcher(config);
       init.initStaticContentLoader(config, dispatcher);
-
+      ActionContext.setContext(null);
       prepare = new PrepareOperations(filterConfig.getServletContext(), dispatcher);
       execute = new ExecuteOperations(filterConfig.getServletContext(), dispatcher);
+      
     } finally {
       init.cleanup();
+      
     }
   }
 

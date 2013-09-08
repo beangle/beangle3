@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.struts2.view.freemarker;
+package org.beangle.struts2.freemarker;
 
 import static org.beangle.commons.lang.Strings.leftPad;
 import static org.beangle.commons.lang.Strings.split;
@@ -33,6 +33,7 @@ import java.util.Properties;
 
 import javax.servlet.ServletContext;
 
+import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.ClassLoaders;
 import org.slf4j.Logger;
@@ -59,7 +60,7 @@ import freemarker.template.TemplateException;
  * @author chaostone
  * @since 2.1
  */
-public class BeangleFreemarkerManager extends org.apache.struts2.views.freemarker.FreemarkerManager {
+public class BeangleFreemarkerManager extends FreemarkerManager {
 
   private final Logger logger = LoggerFactory.getLogger(BeangleFreemarkerManager.class);
 

@@ -26,6 +26,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
@@ -37,6 +41,7 @@ import org.beangle.struts2.convention.route.ActionBuilder;
 import org.beangle.struts2.convention.route.Profile;
 import org.beangle.struts2.convention.route.ProfileService;
 import org.beangle.struts2.convention.route.ViewMapper;
+import org.beangle.struts2.freemarker.TemplateFinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,11 +54,12 @@ import com.opensymphony.xwork2.config.entities.ActionConfig;
 import com.opensymphony.xwork2.config.entities.PackageConfig;
 import com.opensymphony.xwork2.config.entities.ResultConfig;
 import com.opensymphony.xwork2.config.entities.ResultTypeConfig;
-import com.opensymphony.xwork2.inject.Container;
 import com.opensymphony.xwork2.inject.Inject;
 import com.opensymphony.xwork2.util.classloader.ReloadingClassLoader;
 import com.opensymphony.xwork2.util.finder.ClassLoaderInterface;
 import com.opensymphony.xwork2.util.finder.ClassLoaderInterfaceDelegate;
+
+import freemarker.cache.TemplateLoader;
 
 /**
  * <p>
@@ -63,9 +69,24 @@ import com.opensymphony.xwork2.util.finder.ClassLoaderInterfaceDelegate;
  */
 public class ConventionPackageProvider implements PackageProvider {
   private static final Logger logger = LoggerFactory.getLogger(ConventionPackageProvider.class);
+
   private boolean devMode = false;
 
   private final Configuration configuration;
+
+  private final FreemarkerManager freemarkerManager;
+
+  private final ViewMapper viewMapper;
+
+  private final ProfileService profileService;
+
+  private final ActionBuilder actionBuilder;
+
+  private final TextBundleRegistry registry;
+
+  private ReloadingClassLoader reloadingClassLoader;
+
+  private ActionFinder actionFinder;
 
   private List<String> actionPackages = CollectUtils.newArrayList();
 
@@ -75,43 +96,29 @@ public class ConventionPackageProvider implements PackageProvider {
   @Inject("beangle.convention.action.suffix")
   private String actionSuffix;
 
-  private ReloadingClassLoader reloadingClassLoader;
-
-  private ActionFinder actionFinder;
-
-  @Inject
-  protected ViewMapper viewMapper;
-
-  @Inject
-  protected ProfileService profileService;
-
-  @Inject
-  protected ActionBuilder actionBuilder;
-
-  @Inject
-  protected TextBundleRegistry registry;
-
   @Inject("beangle.i18n.resources")
-  protected String defaultBundleNames;
+  private String defaultBundleNames;
 
   @Inject("beangle.i18n.reload")
   private String reloadBundles = "false";
 
+  // Temperary use
+  private TemplateFinder templateFinder;
+
+  private ResultTypeConfig defaultResultTypeConfig;
+
   @Inject
-  public ConventionPackageProvider(Configuration configuration, Container container,
-      ObjectFactory objectFactory) throws Exception {
+  public ConventionPackageProvider(Configuration configuration, ObjectFactory objectFactory,
+      FreemarkerManager freemarkerManager, ProfileService profileService, ActionBuilder actionBuilder,
+      TextBundleRegistry registry, ViewMapper viewMapper) throws Exception {
     this.configuration = configuration;
     actionFinder = (ActionFinder) objectFactory.buildBean(ContainerActionFinder.class,
         new HashMap<String, Object>(0));
-  }
-
-  protected void initReloadClassLoader() {
-    if (isReloadEnabled() && reloadingClassLoader == null) reloadingClassLoader = new ReloadingClassLoader(
-        getClassLoader());
-  }
-
-  protected ClassLoader getClassLoader() {
-    return Thread.currentThread().getContextClassLoader();
+    this.freemarkerManager = freemarkerManager;
+    this.profileService = profileService;
+    this.actionBuilder = actionBuilder;
+    this.registry = registry;
+    this.viewMapper = viewMapper;
   }
 
   public void init(Configuration configuration) throws ConfigurationException {
@@ -121,6 +128,7 @@ public class ConventionPackageProvider implements PackageProvider {
     registry.addDefaults(Strings.split(defaultBundleNames));
     registry.setReloadBundles(Boolean.valueOf(reloadBundles));
 
+    templateFinder = buildTemplateFinder();
     Stopwatch watch = new Stopwatch(true);
     for (Profile profile : actionBuilder.getProfileService().getProfiles()) {
       if (profile.isActionScan()) actionPackages.add(profile.getActionPattern());
@@ -145,7 +153,18 @@ public class ConventionPackageProvider implements PackageProvider {
       configuration.removePackageConfig(packageName);
       configuration.addPackageConfig(packageName, packageConfigs.get(packageName).build());
     }
+    templateFinder = null;
+    defaultResultTypeConfig = null;
     logger.info("Action scan completed,create {} action in {}.", newActions, watch);
+  }
+
+  protected void initReloadClassLoader() {
+    if (isReloadEnabled() && reloadingClassLoader == null) reloadingClassLoader = new ReloadingClassLoader(
+        getClassLoader());
+  }
+
+  protected ClassLoader getClassLoader() {
+    return Thread.currentThread().getContextClassLoader();
   }
 
   protected ClassLoaderInterface getClassLoaderInterface() {
@@ -196,24 +215,23 @@ public class ConventionPackageProvider implements PackageProvider {
     return false;
   }
 
+  /**
+   * generator default results by method name
+   * 
+   * @param clazz
+   * @return
+   */
   protected List<ResultConfig> buildResultConfigs(Class<?> clazz) {
     List<ResultConfig> configs = CollectUtils.newArrayList();
     if (null == profileService) return configs;
     String extention = profileService.getProfile(clazz.getName()).getViewExtension();
-    if (!extention.endsWith("ftl")) return configs;
-    ResultTypeConfig resultTypeConfig = configuration.getPackageConfig("struts-default")
-        .getAllResultTypeConfigs().get("freemarker");
+    if (!extention.equals("ftl")) return configs;
     for (Method m : clazz.getMethods()) {
-      if (String.class.equals(m.getReturnType()) && m.getParameterTypes().length == 0
-          && Modifier.isPublic(m.getModifiers()) && !Modifier.isStatic(m.getModifiers())) {
-        String name = m.getName();
-        if (shouldGenerateResult(m)) {
-          StringBuilder buf = new StringBuilder();
-          buf.append(viewMapper.getViewPath(clazz.getName(), name, name));
-          buf.append('.');
-          buf.append(extention);
-          configs.add(new ResultConfig.Builder(name, resultTypeConfig.getClassName()).addParam(
-              resultTypeConfig.getDefaultResultParam(), buf.toString()).build());
+      if (shouldGenerateResult(m)) {
+        String path = templateFinder.find(clazz, m.getName(), m.getName(), extention);
+        if (null != path) {
+          configs.add(new ResultConfig.Builder(m.getName(), defaultResultTypeConfig.getClassName()).addParam(
+              defaultResultTypeConfig.getDefaultResultParam(), path).build());
         }
       }
     }
@@ -297,28 +315,12 @@ public class ConventionPackageProvider implements PackageProvider {
     return devMode;
   }
 
-  public ActionBuilder getActionBuilder() {
-    return actionBuilder;
-  }
-
-  public void setActionBuilder(ActionBuilder actionNameBuilder) {
-    this.actionBuilder = actionNameBuilder;
-  }
-
-  public void setViewMapper(ViewMapper viewMapper) {
-    this.viewMapper = viewMapper;
-  }
-
-  public void setProfileService(ProfileService profileService) {
-    this.profileService = profileService;
-  }
-
-  public void setRegistry(TextBundleRegistry registry) {
-    this.registry = registry;
-  }
-
-  public void setDefaultBundleNames(String defaultBundleNames) {
-    this.defaultBundleNames = defaultBundleNames;
+  private TemplateFinder buildTemplateFinder() {
+    this.defaultResultTypeConfig = configuration.getPackageConfig("struts-default").getAllResultTypeConfigs()
+        .get("freemarker");
+    ServletContext sc = ServletActionContext.getServletContext();
+    TemplateLoader loader = freemarkerManager.getConfiguration(sc).getTemplateLoader();
+    return new TemplateFinder(loader, viewMapper);
   }
 
 }

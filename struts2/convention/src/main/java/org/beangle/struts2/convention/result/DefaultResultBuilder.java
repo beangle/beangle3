@@ -33,10 +33,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.ServletRedirectResult;
+import org.apache.struts2.views.freemarker.FreemarkerManager;
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.struts2.convention.route.ActionBuilder;
 import org.beangle.struts2.convention.route.ProfileService;
 import org.beangle.struts2.convention.route.ViewMapper;
+import org.beangle.struts2.freemarker.TemplateFinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,44 +67,64 @@ public class DefaultResultBuilder implements ResultBuilder {
 
   private static final Logger logger = LoggerFactory.getLogger(DefaultResultBuilder.class);
 
-  protected Map<String, ResultTypeConfig> resultTypeConfigs;
+  /** [ftl->freemarker,vm->velocity] */
+  private final Map<String, ResultTypeConfig> resultTypeConfigs = CollectUtils.newHashMap();
+
+  private final ObjectFactory objectFactory;
+
+  private final ViewMapper viewMapper;
+
+  private final ProfileService profileService;
+
+  private final ActionBuilder actionBuilder;
+
+  private final TemplateFinder templateFinder;
 
   @Inject
-  protected ObjectFactory objectFactory;
-
-  @Inject
-  protected Configuration configuration;
-
-  @Inject
-  protected ViewMapper viewMapper;
-
-  @Inject
-  protected ProfileService profileService;
-
-  @Inject
-  protected ActionBuilder actionNameBuilder;
+  public DefaultResultBuilder(Configuration configuration, ObjectFactory objectFactory,
+      FreemarkerManager freemarkerManager, ProfileService profileService, ActionBuilder actionBuilder,
+      ViewMapper viewMapper) {
+    super();
+    this.objectFactory = objectFactory;
+    this.profileService = profileService;
+    this.actionBuilder = actionBuilder;
+    this.viewMapper = viewMapper;
+    this.templateFinder = new TemplateFinder(freemarkerManager.getConfig(), viewMapper);
+    Map<String, String> typeExtensions = CollectUtils.toMap(new String[][] { { "freemarker", "ftl" },
+        { "velocity", "vm" }, { "dispatcher", "jsp" } });
+    PackageConfig pc = configuration.getPackageConfig("struts-default");
+    for (String name : pc.getAllResultTypeConfigs().keySet()) {
+      String key = typeExtensions.get(name);
+      if (null != key) resultTypeConfigs.put(key, pc.getAllResultTypeConfigs().get(name));
+    }
+  }
 
   public Result build(String resultCode, ActionConfig actionConfig, ActionContext context) {
     String path = null;
     ResultTypeConfig cfg = null;
-
     logger.debug("result code:{} for actionConfig:{}", resultCode, actionConfig);
-    if (null == resultTypeConfigs) {
-      PackageConfig pc = configuration.getPackageConfig(actionConfig.getPackageName());
-      this.resultTypeConfigs = pc.getAllResultTypeConfigs();
-    }
     // first route by common result
     if (!contains(resultCode, ':')) {
-      String className = context.getActionInvocation().getProxy().getAction().getClass().getName();
+      Class<?> actionClass = context.getActionInvocation().getProxy().getAction().getClass();
+      String className = actionClass.getName();
       String methodName = context.getActionInvocation().getProxy().getMethod();
       if (isEmpty(resultCode)) resultCode = "index";
-
-      StringBuilder buf = new StringBuilder();
-      buf.append(viewMapper.getViewPath(className, methodName, resultCode));
-      buf.append('.');
-      buf.append(profileService.getProfile(className).getViewExtension());
-      path = buf.toString();
-      cfg = resultTypeConfigs.get("freemarker");
+      String extention = profileService.getProfile(className).getViewExtension();
+      if (extention.equals("ftl")) {
+        path = templateFinder.find(actionClass, methodName, resultCode, extention);
+        if (null == path) {
+          StringBuilder buf = new StringBuilder();
+          buf.append(viewMapper.getViewPath(className, methodName, resultCode));
+          buf.append('.').append(extention);
+          path = buf.toString();
+        }
+      } else {
+        StringBuilder buf = new StringBuilder();
+        buf.append(viewMapper.getViewPath(className, methodName, resultCode));
+        buf.append('.').append(extention);
+        path = buf.toString();
+      }
+      cfg = resultTypeConfigs.get(extention);
       return buildResult(resultCode, cfg, context, buildResultParams(path, cfg));
     } else {
       // by prefix
@@ -172,7 +195,7 @@ public class DefaultResultBuilder implements ResultBuilder {
       action.path(newPath);
     } else {
       if (null != action.getClazz()) {
-        Action newAction = actionNameBuilder.build(action.getClazz());
+        Action newAction = actionBuilder.build(action.getClazz());
         action.name(newAction.getName()).namespace(newAction.getNamespace());
       }
       if (isBlank(action.getName())) {
@@ -214,33 +237,4 @@ public class DefaultResultBuilder implements ResultBuilder {
       throw new XWorkException("Unable to build convention result", e, resultConfig);
     }
   }
-
-  public ObjectFactory getObjectFactory() {
-    return objectFactory;
-  }
-
-  public void setObjectFactory(ObjectFactory objectFactory) {
-    this.objectFactory = objectFactory;
-  }
-
-  public Configuration getConfiguration() {
-    return configuration;
-  }
-
-  public void setConfiguration(Configuration configuration) {
-    this.configuration = configuration;
-  }
-
-  public void setViewMapper(ViewMapper viewMapper) {
-    this.viewMapper = viewMapper;
-  }
-
-  public void setProfileService(ProfileService profileService) {
-    this.profileService = profileService;
-  }
-
-  public void setActionNameBuilder(ActionBuilder actionNameBuilder) {
-    this.actionNameBuilder = actionNameBuilder;
-  }
-
 }

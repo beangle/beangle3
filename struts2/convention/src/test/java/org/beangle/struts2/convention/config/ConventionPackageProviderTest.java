@@ -73,9 +73,8 @@ public class ConventionPackageProviderTest {
     // mockContainer.setResultMapBuilder(resultMapBuilder);
     // mockContainer.setConventionsService(new ConventionsServiceImpl(""));
 
-    ConventionPackageProvider builder = new ConventionPackageProvider(configuration, mockContainer, of);
-    builder.setActionBuilder(actionNameBuilder);
-    builder.setRegistry(new DefaultTextBundleRegistry());
+    ConventionPackageProvider builder = new ConventionPackageProvider(configuration, of, null, null,
+        actionNameBuilder, new DefaultTextBundleRegistry(), null);
 
     builder.loadPackages();
     Set<String> names = configuration.getPackageConfigNames();

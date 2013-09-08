@@ -16,52 +16,53 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.struts2.view.freemarker;
+package org.beangle.struts2.view.tag;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
+import java.lang.reflect.Constructor;
 import java.util.Iterator;
 import java.util.Map;
 
 import org.beangle.commons.bean.PropertyUtils;
-import org.beangle.commons.lang.annotation.Beta;
 import org.beangle.struts2.view.component.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
-import freemarker.core.Environment;
 import freemarker.ext.beans.BeansWrapper;
-import freemarker.template.TemplateDirectiveBody;
-import freemarker.template.TemplateDirectiveModel;
-import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
+import freemarker.template.TemplateTransformModel;
 
 /**
- * Adpater new freemarker directive api.
- * but performance is not good.
- * 
  * @author chaostone
- * @since 3.0.1
+ * @since 2.0
  */
-@Beta
-public abstract class ComponentDirective implements TemplateDirectiveModel {
-  private static final Logger logger = LoggerFactory.getLogger(ComponentDirective.class);
+public class TagModel implements TemplateTransformModel {
+  private static final Logger logger = LoggerFactory.getLogger(TagModel.class);
 
-  protected ValueStack stack;
+  private Constructor<? extends Component> componentCon;
+  private ValueStack stack;
 
-  public ComponentDirective(ValueStack stack) {
+  public TagModel(ValueStack stack) {
+  }
+
+  public TagModel(ValueStack stack, Class<? extends Component> clazz) {
     this.stack = stack;
+    try {
+      componentCon = clazz.getConstructor(ValueStack.class);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public void execute(Environment env, Map params, TemplateModel[] loopVars, TemplateDirectiveBody body)
-      throws TemplateException, IOException {
-    Component bean = getComponent();
+  public Writer getWriter(Writer writer, Map params) throws TemplateModelException, IOException {
+    Component bean = getBean();
     BeansWrapper objectWrapper = BeansWrapper.getDefaultInstance();
+
     for (Iterator iterator = params.entrySet().iterator(); iterator.hasNext();) {
       Map.Entry<String, Object> entry = (Map.Entry<String, Object>) iterator.next();
       String key = entry.getKey();
@@ -85,22 +86,14 @@ public abstract class ComponentDirective implements TemplateDirectiveModel {
         }
       }
     }
-
-    Writer out = env.getOut();
-    boolean evaluate = bean.start(out);
-    if (evaluate) {
-      if (bean.usesBody() && null != body) {
-        StringWriter sw = new StringWriter();
-        body.render(sw);
-        while (bean.end(out, sw.toString())) {
-          sw.getBuffer().delete(0, sw.getBuffer().length());
-          body.render(sw);
-        }
-      } else {
-        if (evaluate) bean.end(out, "");
-      }
-    }
+    return new ResetCallbackWriter(bean, writer);
   }
 
-  abstract protected Component getComponent();
+  protected Component getBean() {
+    try {
+      return componentCon.newInstance(stack);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
 }

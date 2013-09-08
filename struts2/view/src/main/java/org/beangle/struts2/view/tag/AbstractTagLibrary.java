@@ -16,25 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.struts2.view;
+package org.beangle.struts2.view.tag;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
-import org.beangle.struts2.view.freemarker.BeangleModels;
-
-import com.opensymphony.xwork2.util.ValueStack;
+import org.apache.struts2.views.TagLibrary;
 
 /**
- * Beangle tag Library
- * 
  * @author chaostone
- * @since 2.0
+ * @since 2.4
  */
-public class BeangleTagLibrary extends AbstractTagLibrary {
+public abstract class AbstractTagLibrary implements TagLibrary {
 
-  public Object getFreemarkerModels(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
-    return new BeangleModels(stack, req, res);
+  @SuppressWarnings("rawtypes")
+  public List<Class> getVelocityDirectiveClasses() {
+    return null;
   }
-
 }
