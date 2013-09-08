@@ -122,13 +122,12 @@ public class ConventionPackageProvider implements PackageProvider {
   }
 
   public void init(Configuration configuration) throws ConfigurationException {
+    registry.addDefaults(Strings.split(defaultBundleNames));
+    registry.setReloadBundles(Boolean.valueOf(reloadBundles));
+    templateFinder = buildTemplateFinder();
   }
 
   public void loadPackages() throws ConfigurationException {
-    registry.addDefaults(Strings.split(defaultBundleNames));
-    registry.setReloadBundles(Boolean.valueOf(reloadBundles));
-
-    templateFinder = buildTemplateFinder();
     Stopwatch watch = new Stopwatch(true);
     for (Profile profile : actionBuilder.getProfileService().getProfiles()) {
       if (profile.isActionScan()) actionPackages.add(profile.getActionPattern());
