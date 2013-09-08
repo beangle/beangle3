@@ -63,12 +63,17 @@ import com.opensymphony.xwork2.util.finder.ClassLoaderInterfaceDelegate;
  */
 public class ConventionPackageProvider implements PackageProvider {
   private static final Logger logger = LoggerFactory.getLogger(ConventionPackageProvider.class);
+  private boolean devMode = false;
+
   private final Configuration configuration;
-  private final String defaultParentPackage;
 
   private List<String> actionPackages = CollectUtils.newArrayList();
-  private String actionSuffix = "Action";
-  private boolean devMode = false;
+
+  @Inject("beangle.convention.default.parent.package")
+  private String defaultParentPackage;
+
+  @Inject("beangle.convention.action.suffix")
+  private String actionSuffix;
 
   private ReloadingClassLoader reloadingClassLoader;
 
@@ -96,14 +101,13 @@ public class ConventionPackageProvider implements PackageProvider {
   public ConventionPackageProvider(Configuration configuration, Container container,
       ObjectFactory objectFactory) throws Exception {
     this.configuration = configuration;
-    this.defaultParentPackage = "beangle";
     actionFinder = (ActionFinder) objectFactory.buildBean(ContainerActionFinder.class,
         new HashMap<String, Object>(0));
   }
 
   protected void initReloadClassLoader() {
-    if (isReloadEnabled() && reloadingClassLoader == null)
-      reloadingClassLoader = new ReloadingClassLoader(getClassLoader());
+    if (isReloadEnabled() && reloadingClassLoader == null) reloadingClassLoader = new ReloadingClassLoader(
+        getClassLoader());
   }
 
   protected ClassLoader getClassLoader() {
@@ -149,8 +153,8 @@ public class ConventionPackageProvider implements PackageProvider {
     else {
       ClassLoaderInterface classLoaderInterface = null;
       ActionContext ctx = ActionContext.getContext();
-      if (ctx != null)
-        classLoaderInterface = (ClassLoaderInterface) ctx.get(ClassLoaderInterface.CLASS_LOADER_INTERFACE);
+      if (ctx != null) classLoaderInterface = (ClassLoaderInterface) ctx
+          .get(ClassLoaderInterface.CLASS_LOADER_INTERFACE);
       return Objects.defaultIfNull(classLoaderInterface, new ClassLoaderInterfaceDelegate(getClassLoader()));
     }
   }
