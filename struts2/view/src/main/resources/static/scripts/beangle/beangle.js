@@ -131,7 +131,7 @@
     applyState:function(state){
       if(state.data.boxes){
         jQuery(state.data.boxes).each(function(index, value) {
-          jQuery(state.data.container +' .box[value=' + value + ']').attr('checked', 'checked'); 
+          jQuery(state.data.container +' .box[value=' + value + ']').prop('checked', true);
         });
       }
     },
@@ -874,3 +874,15 @@
   if(beangle.ajaxhistory)beangle.history.init();
 })(window);
 
+(function(){
+    var jqReady = jQuery.prototype.ready;
+    jQuery.prototype.ready = function( fn ) {
+        return jqReady(function(){
+            try{
+                fn();
+            }catch(e){
+                alert(e);
+            }
+        });
+    }
+})();

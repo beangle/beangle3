@@ -578,12 +578,12 @@
                     var inputs=jQuery(this).find("input");
                     if(inputs.length==0)return;
                     if(ele.checked){
-                        inputs.attr("checked","checked");
+                        inputs.prop("checked",true);
                         jQuery(this).parent("tr").addClass("griddata-selected");
                         selectedCount++;
                     }else{
                         if(inputs.is(":checked")){
-                            inputs.removeAttr("checked");
+                            inputs.prop("checked",false);
                             jQuery(this).parent("tr").removeClass("griddata-selected");
                         }
                     }
@@ -665,7 +665,7 @@
                     jQuery("#"+ownGridTable.id + " .gridselect").each(function(){
                         if(jQuery(this).find("input").is(":checked")){
                             if(firstCell != this && !isReserveOtherSelect){
-                                jQuery(this).find("input").removeAttr("checked");
+                                jQuery(this).find("input").prop("checked",false);
                                 jQuery(this).parent("tr").removeClass("griddata-selected");
                             }else{
                                 selectedCount++;
@@ -674,7 +674,7 @@
                     });
                     if(!isReserveOtherSelect){
                         jQuery("#"+ownGridTable.id + " .gridselect-top").each(function(){
-                            jQuery(this).find("input").removeAttr("checked");
+                            jQuery(this).find("input").prop("checked",false);
                         });
                     }
                 }

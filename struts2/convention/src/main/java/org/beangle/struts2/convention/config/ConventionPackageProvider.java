@@ -300,12 +300,12 @@ public class ConventionPackageProvider implements PackageProvider {
     if (null == profileService) return configs;
     String extention = profileService.getProfile(clazz.getName()).getViewExtension();
     if (!extention.equals("ftl")) return configs;
+    ResultTypeConfig rtc = pcb.getResultType("freemarker");
     for (Method m : clazz.getMethods()) {
       String methodName = m.getName();
       if (!annotationResults.contains(methodName) && shouldGenerateResult(m)) {
         String path = templateFinder.find(clazz, methodName, methodName, extention);
         if (null != path) {
-          ResultTypeConfig rtc = pcb.getResultType("freemarker");
           configs.add(new ResultConfig.Builder(m.getName(), rtc.getClassName()).addParam(
               rtc.getDefaultResultParam(), path).build());
         }
