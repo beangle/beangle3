@@ -89,8 +89,8 @@ public class BeangleObjectFactory extends ObjectFactory {
               reflectionProvider.setProperty(paramEntry.getKey(), paramEntry.getValue(), result,
                   extraContext, true);
             } catch (ReflectionException ex) {
-              if (result instanceof ReflectionExceptionHandler)
-                ((ReflectionExceptionHandler) result).handle(ex);
+              if (result instanceof ReflectionExceptionHandler) ((ReflectionExceptionHandler) result)
+                  .handle(ex);
             }
           }
         }
@@ -115,7 +115,6 @@ public class BeangleObjectFactory extends ObjectFactory {
     Object bean = null;
     if (context.contains(beanName)) {
       bean = context.getBean(beanName).get();
-      if (injectInternal) injectInternalBeans(bean);
     } else {
       bean = buildBean(getClassInstance(beanName), extraContext);
     }

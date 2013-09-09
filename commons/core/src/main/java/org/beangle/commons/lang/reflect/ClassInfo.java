@@ -23,7 +23,6 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -49,7 +48,7 @@ public final class ClassInfo {
   private final FastHashMap<String, Integer> methodIndexs = CollectUtils.newFastMap(64);
 
   /** all method indexes */
-  private final FastHashMap<String, MethodInfo[]> methods = CollectUtils.newFastMap(64);
+  private final FastHashMap<String, List<MethodInfo>> methods = CollectUtils.newFastMap(64);
 
   /** property read method indexes */
   private final FastHashMap<String, MethodInfo> propertyReadMethods = CollectUtils.newFastMap(64);
@@ -62,12 +61,11 @@ public final class ClassInfo {
    */
   public ClassInfo(Collection<MethodInfo> methodinfos) {
     super();
-    Map<String, List<MethodInfo>> tmpMethods = CollectUtils.newHashMap();
     for (MethodInfo info : methodinfos) {
-      List<MethodInfo> named = tmpMethods.get(info.method.getName());
+      List<MethodInfo> named = methods.get(info.method.getName());
       if (null == named) {
         named = CollectUtils.newArrayList();
-        tmpMethods.put(info.method.getName(), named);
+        methods.put(info.method.getName(), named);
       }
       named.add(info);
       // true is get,false is set.
@@ -81,8 +79,7 @@ public final class ClassInfo {
         } else propertyWriteMethods.put(propertyInfo.getRight(), info);
       }
     }
-    for (Map.Entry<String, List<MethodInfo>> entry : tmpMethods.entrySet()) {
-      methods.put(entry.getKey(), entry.getValue().toArray(new MethodInfo[entry.getValue().size()]));
+    for (Map.Entry<String, List<MethodInfo>> entry : methods.entrySet()) {
       if (entry.getValue().size() == 1) methodIndexs.put(entry.getKey(),
           Integer.valueOf(entry.getValue().get(0).index));
     }
@@ -134,7 +131,7 @@ public final class ClassInfo {
     Integer defaultIndex = methodIndexs.get(name);
     if (null != defaultIndex) return defaultIndex.intValue();
     else {
-      final MethodInfo[] exists = methods.get(name);
+      final List<MethodInfo> exists = methods.get(name);
       if (null != exists) {
         for (MethodInfo info : exists)
           if (info.matches(args)) return info.index;
@@ -146,10 +143,10 @@ public final class ClassInfo {
   /**
    * Return public metheds according to given name
    */
-  final List<MethodInfo> getMethods(String name) {
-    MethodInfo[] namedMethod = methods.get(name);
+  public final List<MethodInfo> getMethods(String name) {
+    List<MethodInfo> namedMethod = methods.get(name);
     if (null == namedMethod) return Collections.emptyList();
-    else return Arrays.asList(namedMethod);
+    else return namedMethod;
   }
 
   /**
@@ -157,7 +154,7 @@ public final class ClassInfo {
    */
   public final List<MethodInfo> getMethods() {
     List<MethodInfo> methodInfos = CollectUtils.newArrayList();
-    for (Map.Entry<String, MethodInfo[]> entry : methods.entrySet()) {
+    for (Map.Entry<String, List<MethodInfo>> entry : methods.entrySet()) {
       for (MethodInfo info : entry.getValue())
         methodInfos.add(info);
     }
@@ -215,6 +212,7 @@ public final class ClassInfo {
             } else {
               paramsTypes[j] = (Class<?>) t;
             }
+            if (null == paramsTypes[j]) paramsTypes[j] = Object.class;
           }
           if (!methods.add(new MethodInfo(index++, method, paramsTypes))) index--;
         }
