@@ -196,10 +196,13 @@ public abstract class AbstractBindModule implements BindModule {
    * @return a {@link org.beangle.commons.inject.bind.BeanConfig.DefinitionBinder} object.
    */
   protected final DefinitionBinder bind(String beanName, Class<?> clazz) {
+    Assert.notNull(beanName);
+    Assert.notNull(clazz);
     return config.bind(beanName, clazz);
   }
 
   public DefinitionBinder template(String beanName) {
+    Assert.notNull(beanName);
     return config.bind(beanName, null).setAbstract();
   }
 
