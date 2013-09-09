@@ -35,6 +35,8 @@ import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.commons.text.i18n.TextBundleRegistry;
+import org.beangle.struts2.annotation.Result;
+import org.beangle.struts2.annotation.Results;
 import org.beangle.struts2.convention.config.ActionFinder.ActionTest;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.struts2.convention.route.ActionBuilder;
@@ -105,8 +107,6 @@ public class ConventionPackageProvider implements PackageProvider {
   // Temperary use
   private TemplateFinder templateFinder;
 
-  private ResultTypeConfig defaultResultTypeConfig;
-
   @Inject
   public ConventionPackageProvider(Configuration configuration, ObjectFactory objectFactory,
       FreemarkerManager freemarkerManager, ProfileService profileService, ActionBuilder actionBuilder,
@@ -137,13 +137,43 @@ public class ConventionPackageProvider implements PackageProvider {
     initReloadClassLoader();
     Map<String, PackageConfig.Builder> packageConfigs = new HashMap<String, PackageConfig.Builder>();
     int newActions = 0;
-    Map<Class<?>, String> actionTypes = actionFinder.getActions(new ActionTest(actionSuffix, actionPackages));
-    for (Map.Entry<Class<?>, String> entry : actionTypes.entrySet()) {
+    int overrideActions = 0;
+    Map<Class<?>, String> actionNames = actionFinder.getActions(new ActionTest(actionSuffix, actionPackages));
+    Map<String, Class<?>> name2Actions = CollectUtils.newHashMap();
+    Map<String, PackageConfig.Builder> name2Packages = CollectUtils.newHashMap();
+    for (Map.Entry<Class<?>, String> entry : actionNames.entrySet()) {
       Class<?> actionClass = entry.getKey();
+      String beanName = entry.getValue();
       Profile profile = actionBuilder.getProfileService().getProfile(actionClass.getName());
-      Action action = actionBuilder.build(actionClass.getName());
-      PackageConfig.Builder packageConfig = getPackageConfig(profile, packageConfigs, action, actionClass);
-      if (createActionConfig(packageConfig, action, actionClass, entry.getValue())) newActions++;
+      Action action = actionBuilder.build(actionClass);
+      String key = action.getNamespace() + "/" + action.getName();
+      Class<?> existAction = name2Actions.get(key);
+
+      PackageConfig.Builder pcb = null;
+      if (null == existAction) {
+        pcb = getPackageConfig(profile, packageConfigs, action, actionClass);
+      } else {
+        pcb = name2Packages.get(key);
+      }
+
+      if (null == existAction) {
+        if (createActionConfig(pcb, action, actionClass, beanName)) {
+          newActions++;
+          name2Actions.put(key, actionClass);
+          name2Packages.put(key, pcb);
+        }
+      } else {
+        if (!actionClass.isAssignableFrom(existAction)) {
+          String actionName = action.getName();
+          ActionConfig.Builder actionConfig = new ActionConfig.Builder(pcb.getName(), actionName, beanName);
+          actionConfig.methodName(action.getMethod());
+          actionConfig.addResultConfigs(buildResultConfigs(actionClass, pcb));
+          pcb.addActionConfig(actionName, actionConfig.build());
+          name2Actions.put(key, actionClass);
+          name2Packages.put(key, pcb);
+          overrideActions++;
+        }
+      }
     }
     newActions += buildIndexActions(packageConfigs);
     // Add the new actions to the configuration
@@ -153,8 +183,8 @@ public class ConventionPackageProvider implements PackageProvider {
       configuration.addPackageConfig(packageName, packageConfigs.get(packageName).build());
     }
     templateFinder = null;
-    defaultResultTypeConfig = null;
-    logger.info("Action scan completed,create {} action in {}.", newActions, watch);
+    logger.info("Action scan completed,create {} new action(override {}) in {}.", new Object[] { newActions,
+        overrideActions, watch });
   }
 
   protected void initReloadClassLoader() {
@@ -194,7 +224,7 @@ public class ConventionPackageProvider implements PackageProvider {
       create = (null == existed);
     }
     if (create) {
-      actionConfig.addResultConfigs(buildResultConfigs(actionClass));
+      actionConfig.addResultConfigs(buildResultConfigs(actionClass, pkgCfg));
       pkgCfg.addActionConfig(actionName, actionConfig.build());
       logger.debug("Add {}/{} for {} in {}",
           new Object[] { pkgCfg.getNamespace(), actionName, actionClass.getName(), pkgCfg.getName() });
@@ -220,17 +250,41 @@ public class ConventionPackageProvider implements PackageProvider {
    * @param clazz
    * @return
    */
-  protected List<ResultConfig> buildResultConfigs(Class<?> clazz) {
+  protected List<ResultConfig> buildResultConfigs(Class<?> clazz, PackageConfig.Builder pcb) {
     List<ResultConfig> configs = CollectUtils.newArrayList();
+    // load annotation results
+    Result[] results = new Result[0];
+    Results rs = clazz.getAnnotation(Results.class);
+    if (null == rs) {
+      org.beangle.struts2.annotation.Action an = clazz
+          .getAnnotation(org.beangle.struts2.annotation.Action.class);
+      if (null != an) results = an.results();
+    } else {
+      results = rs.value();
+    }
+    Set<String> annotationResults = CollectUtils.newHashSet();
+    if (null != results) {
+      for (Result result : results) {
+        String resultType = result.type();
+        if (Strings.isEmpty(resultType)) resultType = "dispatcher";
+        ResultTypeConfig rtc = pcb.getResultType(resultType);
+        configs.add(new ResultConfig.Builder(result.name(), rtc.getClassName()).addParam(
+            rtc.getDefaultResultParam(), result.location()).build());
+        annotationResults.add(result.name());
+      }
+    }
+    // load ftl convension results
     if (null == profileService) return configs;
     String extention = profileService.getProfile(clazz.getName()).getViewExtension();
     if (!extention.equals("ftl")) return configs;
     for (Method m : clazz.getMethods()) {
-      if (shouldGenerateResult(m)) {
-        String path = templateFinder.find(clazz, m.getName(), m.getName(), extention);
+      String methodName = m.getName();
+      if (!annotationResults.contains(methodName) && shouldGenerateResult(m)) {
+        String path = templateFinder.find(clazz, methodName, methodName, extention);
         if (null != path) {
-          configs.add(new ResultConfig.Builder(m.getName(), defaultResultTypeConfig.getClassName()).addParam(
-              defaultResultTypeConfig.getDefaultResultParam(), path).build());
+          ResultTypeConfig rtc = pcb.getResultType("freemarker");
+          configs.add(new ResultConfig.Builder(m.getName(), rtc.getClassName()).addParam(
+              rtc.getDefaultResultParam(), path).build());
         }
       }
     }
@@ -256,6 +310,7 @@ public class ConventionPackageProvider implements PackageProvider {
     }
     if (parentPkg == null) { throw new ConfigurationException("Unable to locate parent package ["
         + actionClass.getPackage().getName() + "]"); }
+
     String actionPackage = actionClass.getPackage().getName();
     PackageConfig.Builder pkgConfig = packageConfigs.get(actionPackage);
     if (pkgConfig == null) {
@@ -275,12 +330,14 @@ public class ConventionPackageProvider implements PackageProvider {
 
   /**
    * Determine all the index handling actions and results based on this logic:
-   * 1. Loop over all the namespaces such as /foo and see if it has an action
-   * named index 2. If an action doesn't exists in the parent namespace of the
-   * same name, create an action in the parent namespace of the same name as
-   * the namespace that points to the index action in the namespace. e.g. /foo
-   * -> /foo/index 3. Create the action in the namespace for empty string if
-   * it doesn't exist. e.g. /foo/ the action is "" and the namespace is /foo
+   * <p>
+   * 1. Loop over all the namespaces such as /foo and see if it has an action named index<br>
+   * 2. If an action doesn't exists in the parent namespace of the same name, create an action in
+   * the parent namespace of the same name as the namespace that points to the index action in the
+   * namespace. e.g. /foo -> /foo/index<br>
+   * 3. Create the action in the namespace for empty string if it doesn't exist. e.g. /foo/ the
+   * action is "" and the namespace is /foo
+   * </p>
    * 
    * @param packageConfigs
    *          Used to store the actions.
@@ -315,8 +372,6 @@ public class ConventionPackageProvider implements PackageProvider {
   }
 
   private TemplateFinder buildTemplateFinder() {
-    this.defaultResultTypeConfig = configuration.getPackageConfig("struts-default").getAllResultTypeConfigs()
-        .get("freemarker");
     ServletContext sc = ServletActionContext.getServletContext();
     TemplateLoader loader = freemarkerManager.getConfiguration(sc).getTemplateLoader();
     return new TemplateFinder(loader, viewMapper);

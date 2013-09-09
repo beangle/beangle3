@@ -43,9 +43,9 @@ public class ConventionsTest {
 
   @Test
   public void testGetActionName() throws Exception {
-    assertEquals(actionNameBuilder.build(FirstAction.class.getName()).getUri(), "/first!index.html");
-    assertEquals(actionNameBuilder.build(SecondAction.class.getName()).getUri(), "/second!index.action");
-    assertEquals(actionNameBuilder.build(ThirdAction.class.getName()).getUri(),
+    assertEquals(actionNameBuilder.build(FirstAction.class).getUri(), "/first!index.html");
+    assertEquals(actionNameBuilder.build(SecondAction.class).getUri(), "/second!index.action");
+    assertEquals(actionNameBuilder.build(ThirdAction.class).getUri(),
         "/another-nested/third!index.action");
   }
 

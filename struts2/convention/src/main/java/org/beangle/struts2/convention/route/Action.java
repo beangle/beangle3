@@ -39,7 +39,7 @@ public class Action {
 
   private String method;
 
-  private String clazz;
+  private Class<?> clazz;
 
   private String extention;
 
@@ -64,9 +64,7 @@ public class Action {
   }
 
   public Action(Class<?> clazz, String method, String params) {
-    if (null != clazz) {
-      this.clazz = clazz.getName();
-    }
+    this.clazz = clazz;
     this.method = method;
     params(params);
   }
@@ -82,7 +80,7 @@ public class Action {
     method(method).params(params);
   }
 
-  // convienence methods
+  // Convenience methods
   public static Action to(Class<?> clazz) {
     return new Action(clazz, null);
   }
@@ -227,7 +225,7 @@ public class Action {
     return params;
   }
 
-  public String getClazz() {
+  public Class<?> getClazz() {
     return clazz;
   }
 

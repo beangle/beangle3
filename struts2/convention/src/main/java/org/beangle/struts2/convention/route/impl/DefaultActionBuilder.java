@@ -18,7 +18,10 @@
  */
 package org.beangle.struts2.convention.route.impl;
 
-import org.beangle.commons.lang.Strings;
+import static org.beangle.commons.lang.Strings.substringAfterLast;
+import static org.beangle.commons.lang.Strings.unCamel;
+import static org.beangle.commons.lang.Strings.uncapitalize;
+
 import org.beangle.struts2.convention.Constants;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.struts2.convention.route.ActionBuilder;
@@ -39,24 +42,41 @@ public class DefaultActionBuilder implements ActionBuilder {
    * 
    * @param className
    */
-  public Action build(String className) {
-    Profile profile = profileService.getProfile(className);
+  public Action build(Class<?> clazz) {
     Action action = new Action();
+    String className = clazz.getName();
+    Profile profile = profileService.getProfile(className);
+    org.beangle.struts2.annotation.Action an = clazz
+        .getAnnotation(org.beangle.struts2.annotation.Action.class);
     StringBuilder sb = new StringBuilder();
     // namespace
     sb.append(profile.getUriPath());
-    if (Constants.SHORT_URI.equals(profile.getUriPathStyle())) {
-      String simpleName = className.substring(className.lastIndexOf('.') + 1);
-      sb.append(Strings.uncapitalize(simpleName.substring(0, simpleName.length()
-          - profile.getActionSuffix().length())));
-    } else if (Constants.SIMPLE_URI.equals(profile.getUriPathStyle())) {
-      sb.append(profile.getInfix(className));
-    } else if (Constants.SEO_URI.equals(profile.getUriPathStyle())) {
-      sb.append(Strings.unCamel(profile.getInfix(className)));
+    if (null != an) {
+      String name = an.value();
+      if (!name.startsWith("/")) {
+        if (Constants.SEO_URI.equals(profile.getUriPathStyle())) {
+          sb.append(unCamel(substringAfterLast(profile.getInfix(className), "/") + name));
+        } else {
+          sb.append(name);
+        }
+      } else {
+        sb.append(name.substring(1));
+      }
     } else {
-      throw new RuntimeException("unsupported uri style " + profile.getUriPathStyle());
+      if (Constants.SHORT_URI.equals(profile.getUriPathStyle())) {
+        String simpleName = className.substring(className.lastIndexOf('.') + 1);
+        sb.append(uncapitalize(simpleName.substring(0, simpleName.length()
+            - profile.getActionSuffix().length())));
+      } else if (Constants.SIMPLE_URI.equals(profile.getUriPathStyle())) {
+        sb.append(profile.getInfix(className));
+      } else if (Constants.SEO_URI.equals(profile.getUriPathStyle())) {
+        sb.append(unCamel(profile.getInfix(className)));
+      } else {
+        throw new RuntimeException("unsupported uri style " + profile.getUriPathStyle());
+      }
     }
-    action.path(sb.toString()).method(profile.getDefaultMethod()).extention(profile.getUriExtension());
+    action.path(sb.toString());
+    action.method(profile.getDefaultMethod()).extention(profile.getUriExtension());
     return action;
   }
 

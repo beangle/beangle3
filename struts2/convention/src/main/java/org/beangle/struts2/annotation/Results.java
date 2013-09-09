@@ -16,19 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.struts2.convention.route;
 
-public interface ActionBuilder {
+package org.beangle.struts2.annotation;
 
-  /**
-   * 默认类名对应的控制器名称(含有扩展名)
-   * 
-   * @param className
-   */
-  Action build(Class<?> clazz);
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-  void setProfileService(ProfileService profileService);
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE})
+public @interface Results {
 
-  ProfileService getProfileService();
-
+  Result[] value();
 }
