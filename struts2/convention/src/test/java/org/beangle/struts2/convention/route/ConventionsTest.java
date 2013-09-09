@@ -21,6 +21,7 @@ package org.beangle.struts2.convention.route;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
+import org.beangle.struts2.convention.example.action.ExampleAction;
 import org.beangle.struts2.convention.example.action.FirstAction;
 import org.beangle.struts2.convention.example.action.anotherNested.ThirdAction;
 import org.beangle.struts2.convention.example.action.nested.SecondAction;
@@ -31,22 +32,22 @@ import org.testng.annotations.Test;
 
 public class ConventionsTest {
 
-  ActionBuilder actionNameBuilder;
+  ActionBuilder actionBuilder;
   ProfileService profileService;
 
   @BeforeClass
   public void init() {
-    actionNameBuilder = new DefaultActionBuilder();
+    actionBuilder = new DefaultActionBuilder();
     profileService = new ProfileServiceImpl();
-    actionNameBuilder.setProfileService(profileService);
+    actionBuilder.setProfileService(profileService);
   }
 
   @Test
   public void testGetActionName() throws Exception {
-    assertEquals(actionNameBuilder.build(FirstAction.class).getUri(), "/first!index.html");
-    assertEquals(actionNameBuilder.build(SecondAction.class).getUri(), "/second!index.action");
-    assertEquals(actionNameBuilder.build(ThirdAction.class).getUri(),
-        "/another-nested/third!index.action");
+    assertEquals(actionBuilder.build(FirstAction.class).getUri(), "/first!index.html");
+    assertEquals(actionBuilder.build(SecondAction.class).getUri(), "/second!index.action");
+    assertEquals(actionBuilder.build(ThirdAction.class).getUri(), "/another-nested/third!index.action");
+    assertEquals(actionBuilder.build(ExampleAction.class).getUri(), "/annotation/define/url!index.html");
   }
 
   @Test

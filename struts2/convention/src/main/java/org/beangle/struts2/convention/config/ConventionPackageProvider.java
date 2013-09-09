@@ -20,7 +20,6 @@ package org.beangle.struts2.convention.config;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,6 +135,9 @@ public class ConventionPackageProvider implements PackageProvider {
 
     initReloadClassLoader();
     Map<String, PackageConfig.Builder> packageConfigs = new HashMap<String, PackageConfig.Builder>();
+    PackageConfig.Builder defaultPackageBuilder = new PackageConfig.Builder(
+        configuration.getPackageConfig(defaultParentPackage));
+    packageConfigs.put(defaultPackageBuilder.getName(), defaultPackageBuilder);
     int newActions = 0;
     int overrideActions = 0;
     Map<Class<?>, String> actionNames = actionFinder.getActions(new ActionTest(actionSuffix, actionPackages));
@@ -144,14 +146,13 @@ public class ConventionPackageProvider implements PackageProvider {
     for (Map.Entry<Class<?>, String> entry : actionNames.entrySet()) {
       Class<?> actionClass = entry.getKey();
       String beanName = entry.getValue();
-      Profile profile = actionBuilder.getProfileService().getProfile(actionClass.getName());
       Action action = actionBuilder.build(actionClass);
       String key = action.getNamespace() + "/" + action.getName();
       Class<?> existAction = name2Actions.get(key);
 
       PackageConfig.Builder pcb = null;
       if (null == existAction) {
-        pcb = getPackageConfig(profile, packageConfigs, action, actionClass);
+        pcb = buildPackageConfig(actionClass, action, packageConfigs);
       } else {
         pcb = name2Packages.get(key);
       }
@@ -175,12 +176,15 @@ public class ConventionPackageProvider implements PackageProvider {
         }
       }
     }
-    newActions += buildIndexActions(packageConfigs);
+    Set<String> processedPackages = CollectUtils.newHashSet();
     // Add the new actions to the configuration
-    Set<String> packageNames = packageConfigs.keySet();
-    for (String packageName : packageNames) {
-      configuration.removePackageConfig(packageName);
-      configuration.addPackageConfig(packageName, packageConfigs.get(packageName).build());
+    for (PackageConfig.Builder builder : packageConfigs.values()) {
+      String packageName = builder.getName();
+      if (!processedPackages.contains(packageName)) {
+        configuration.removePackageConfig(packageName);
+        configuration.addPackageConfig(packageName, builder.build());
+        processedPackages.add(packageName);
+      }
     }
     templateFinder = null;
     logger.info("Action scan completed,create {} new action(override {}) in {}.", new Object[] { newActions,
@@ -291,80 +295,44 @@ public class ConventionPackageProvider implements PackageProvider {
     return configs;
   }
 
-  protected PackageConfig.Builder getPackageConfig(Profile profile,
-      final Map<String, PackageConfig.Builder> packageConfigs, Action action, final Class<?> actionClass) {
-    // 循环查找父包
-    String actionPkg = actionClass.getPackage().getName();
-    PackageConfig parentPkg = null;
-    while (Strings.contains(actionPkg, '.')) {
-      parentPkg = configuration.getPackageConfig(actionPkg);
-      if (null != parentPkg) {
-        break;
-      } else {
-        actionPkg = Strings.substringBeforeLast(actionPkg, ".");
-      }
-    }
-    if (null == parentPkg) {
-      actionPkg = defaultParentPackage;
-      parentPkg = configuration.getPackageConfig(actionPkg);
-    }
-    if (parentPkg == null) { throw new ConfigurationException("Unable to locate parent package ["
-        + actionClass.getPackage().getName() + "]"); }
-
+  protected PackageConfig.Builder buildPackageConfig(final Class<?> actionClass, Action action,
+      final Map<String, PackageConfig.Builder> packageConfigs) {
     String actionPackage = actionClass.getPackage().getName();
-    PackageConfig.Builder pkgConfig = packageConfigs.get(actionPackage);
-    if (pkgConfig == null) {
-      PackageConfig myPkg = configuration.getPackageConfig(actionPackage);
-      if (null != myPkg) {
-        pkgConfig = new PackageConfig.Builder(myPkg);
-      } else {
-        pkgConfig = new PackageConfig.Builder(actionPackage).namespace(action.getNamespace()).addParent(
-            parentPkg);
-        logger.debug("Created package config named {} with a namespace {}", actionPackage,
-            action.getNamespace());
+    PackageConfig.Builder pcb = null;
+    PackageConfig parent = null;
+    // find my package config builder and parent
+    while (null == pcb && null == parent && Strings.contains(actionPackage, '.')) {
+      pcb = packageConfigs.get(actionPackage);
+      if (null != pcb && !pcb.getNamespace().equals(action.getNamespace())) {
+        pcb = null;
       }
-      packageConfigs.put(actionPackage, pkgConfig);
+      parent = configuration.getPackageConfig(actionPackage);
+      actionPackage = Strings.substringBeforeLast(actionPackage, ".");
     }
-    return pkgConfig;
-  }
+    // try default
+    if (null == pcb) pcb = packageConfigs.get(defaultParentPackage);
+    if (null == parent) parent = configuration.getPackageConfig(defaultParentPackage);
+    if (!pcb.getNamespace().equals(action.getNamespace())) pcb = null;
 
-  /**
-   * Determine all the index handling actions and results based on this logic:
-   * <p>
-   * 1. Loop over all the namespaces such as /foo and see if it has an action named index<br>
-   * 2. If an action doesn't exists in the parent namespace of the same name, create an action in
-   * the parent namespace of the same name as the namespace that points to the index action in the
-   * namespace. e.g. /foo -> /foo/index<br>
-   * 3. Create the action in the namespace for empty string if it doesn't exist. e.g. /foo/ the
-   * action is "" and the namespace is /foo
-   * </p>
-   * 
-   * @param packageConfigs
-   *          Used to store the actions.
-   */
-  protected int buildIndexActions(Map<String, PackageConfig.Builder> packageConfigs) {
-    int createCount = 0;
-    Map<String, PackageConfig.Builder> byNamespace = new HashMap<String, PackageConfig.Builder>();
-    Collection<PackageConfig.Builder> values = packageConfigs.values();
-    for (PackageConfig.Builder packageConfig : values) {
-      byNamespace.put(packageConfig.getNamespace(), packageConfig);
-    }
-    Set<String> namespaces = byNamespace.keySet();
-    for (String namespace : namespaces) {
-      // First see if the namespace has an index action
-      PackageConfig.Builder pkgConfig = byNamespace.get(namespace);
-      ActionConfig indexActionConfig = pkgConfig.build().getAllActionConfigs().get("index");
-      if (indexActionConfig == null) {
-        continue;
+    if (null != pcb) {
+      packageConfigs.put(actionClass.getPackage().getName(), pcb);
+    } else {
+      // own package
+      String myPackageName = actionClass.getPackage().getName();
+      if (parent.getName().equals(myPackageName)) {
+        if (parent.getNamespace().equals(action.getNamespace())) {
+          pcb = new PackageConfig.Builder(parent);
+        } else {
+          myPackageName = actionClass.getName();
+        }
       }
-      if (pkgConfig.build().getAllActionConfigs().get("") == null) {
-        logger.debug("Creating index ActionConfig with an action name of [] for the action class {}",
-            indexActionConfig.getClassName());
-        pkgConfig.addActionConfig("", indexActionConfig);
-        createCount++;
+      if (null == pcb) {
+        pcb = new PackageConfig.Builder(myPackageName).namespace(action.getNamespace()).addParent(parent);
+        logger.debug("Created package config {} under {}", actionPackage, action.getNamespace());
       }
+      packageConfigs.put(myPackageName, pcb);
     }
-    return createCount;
+    return pcb;
   }
 
   public boolean needsReload() {
