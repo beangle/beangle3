@@ -18,11 +18,14 @@
  */
 package org.beangle.struts2.convention.config;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -30,6 +33,7 @@ import javax.servlet.ServletContext;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.time.Stopwatch;
@@ -91,6 +95,9 @@ public class ConventionPackageProvider implements PackageProvider {
 
   private List<String> actionPackages = CollectUtils.newArrayList();
 
+  /** [url- > classname] */
+  private Map<String, String> primaryMappings = CollectUtils.newHashMap();
+
   @Inject("beangle.convention.default.parent.package")
   private String defaultParentPackage;
 
@@ -124,6 +131,21 @@ public class ConventionPackageProvider implements PackageProvider {
     registry.addDefaults(Strings.split(defaultBundleNames));
     registry.setReloadBundles(Boolean.valueOf(reloadBundles));
     templateFinder = buildTemplateFinder();
+    Properties properties = new Properties();
+    URL url = ClassLoaders.getResource("struts.properties", getClass());
+    if (null != url) {
+      try {
+        properties.load(url.openStream());
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+    for (Object key : properties.keySet()) {
+      if (key.toString().startsWith("url.")) {
+        primaryMappings.put(Strings.substringAfter(key.toString(), "url."),
+            properties.getProperty(key.toString()));
+      }
+    }
   }
 
   public void loadPackages() throws ConfigurationException {
@@ -145,35 +167,36 @@ public class ConventionPackageProvider implements PackageProvider {
     Map<String, PackageConfig.Builder> name2Packages = CollectUtils.newHashMap();
     for (Map.Entry<Class<?>, String> entry : actionNames.entrySet()) {
       Class<?> actionClass = entry.getKey();
-      String beanName = entry.getValue();
       Action action = actionBuilder.build(actionClass);
-      String key = action.getNamespace() + "/" + action.getName();
-      Class<?> existAction = name2Actions.get(key);
+      // build key
+      String key = null;
+      if (action.getNamespace().equals("/")) key = action.getNamespace() + action.getName();
+      else key = action.getNamespace() + "/" + action.getName();
 
+      // check primary action class
+      String primaryClassName = primaryMappings.get(key);
+      if (null != primaryClassName && !primaryClassName.equals(actionClass.getName())) continue;
+
+      // check action override relation
       PackageConfig.Builder pcb = null;
-      if (null == existAction) {
-        pcb = buildPackageConfig(actionClass, action, packageConfigs);
-      } else {
-        pcb = name2Packages.get(key);
-      }
+      Class<?> existAction = name2Actions.get(key);
+      if (null == existAction) pcb = buildPackageConfig(actionClass, action, packageConfigs);
+      else pcb = name2Packages.get(key);
 
+      ActionConfig.Builder acb = null;
+      String beanName = entry.getValue();
       if (null == existAction) {
-        if (createActionConfig(pcb, action, actionClass, beanName)) {
-          newActions++;
-          name2Actions.put(key, actionClass);
-          name2Packages.put(key, pcb);
-        }
+        acb = createActionConfig(pcb, action, actionClass, beanName);
+        if (null != acb) newActions++;
       } else {
         if (!actionClass.isAssignableFrom(existAction)) {
-          String actionName = action.getName();
-          ActionConfig.Builder actionConfig = new ActionConfig.Builder(pcb.getName(), actionName, beanName);
-          actionConfig.methodName(action.getMethod());
-          actionConfig.addResultConfigs(buildResultConfigs(actionClass, pcb));
-          pcb.addActionConfig(actionName, actionConfig.build());
-          name2Actions.put(key, actionClass);
-          name2Packages.put(key, pcb);
-          overrideActions++;
+          acb = createActionConfig(pcb, action, actionClass, beanName);
+          if (null != acb) overrideActions++;
         }
+      }
+      if (null != acb) {
+        name2Actions.put(key, actionClass);
+        name2Packages.put(key, pcb);
       }
     }
     Set<String> processedPackages = CollectUtils.newHashSet();
@@ -215,25 +238,21 @@ public class ConventionPackageProvider implements PackageProvider {
     return devMode;
   }
 
-  protected boolean createActionConfig(PackageConfig.Builder pkgCfg, Action action, Class<?> actionClass,
-      String beanName) {
-    ActionConfig.Builder actionConfig = new ActionConfig.Builder(pkgCfg.getName(), action.getName(), beanName);
-    actionConfig.methodName(action.getMethod());
+  protected ActionConfig.Builder createActionConfig(PackageConfig.Builder pkgCfg, Action action,
+      Class<?> actionClass, String beanName) {
+    ActionConfig.Builder acb = null;
     String actionName = action.getName();
     // check action exists on that package (from XML config probably)
     PackageConfig existedPkg = configuration.getPackageConfig(pkgCfg.getName());
-    boolean create = true;
-    if (existedPkg != null) {
-      ActionConfig existed = existedPkg.getActionConfigs().get(actionName);
-      create = (null == existed);
-    }
-    if (create) {
-      actionConfig.addResultConfigs(buildResultConfigs(actionClass, pkgCfg));
-      pkgCfg.addActionConfig(actionName, actionConfig.build());
+    if (null == existedPkg || null == existedPkg.getActionConfigs().get(actionName)) {
+      acb = new ActionConfig.Builder(pkgCfg.getName(), action.getName(), beanName);
+      acb.methodName(action.getMethod());
+      acb.addResultConfigs(buildResultConfigs(actionClass, pkgCfg));
+      pkgCfg.addActionConfig(actionName, acb.build());
       logger.debug("Add {}/{} for {} in {}",
           new Object[] { pkgCfg.getNamespace(), actionName, actionClass.getName(), pkgCfg.getName() });
     }
-    return create;
+    return acb;
   }
 
   protected boolean shouldGenerateResult(Method m) {
@@ -318,19 +337,20 @@ public class ConventionPackageProvider implements PackageProvider {
       packageConfigs.put(actionClass.getPackage().getName(), pcb);
     } else {
       // own package
-      String myPackageName = actionClass.getPackage().getName();
-      if (parent.getName().equals(myPackageName)) {
-        if (parent.getNamespace().equals(action.getNamespace())) {
-          pcb = new PackageConfig.Builder(parent);
-        } else {
-          myPackageName = actionClass.getName();
-        }
+      String newPkg = actionClass.getPackage().getName();
+      if (parent.getName().equals(newPkg)) {
+        if (parent.getNamespace().equals(action.getNamespace())) pcb = new PackageConfig.Builder(parent);
+        else newPkg = actionClass.getName();
+      } else {
+        PackageConfig.Builder newly = packageConfigs.get(newPkg);
+        if (null != newly && !newly.getNamespace().equals(action.getNamespace())) newPkg = actionClass
+            .getName();
       }
       if (null == pcb) {
-        pcb = new PackageConfig.Builder(myPackageName).namespace(action.getNamespace()).addParent(parent);
+        pcb = new PackageConfig.Builder(newPkg).namespace(action.getNamespace()).addParent(parent);
         logger.debug("Created package config {} under {}", actionPackage, action.getNamespace());
       }
-      packageConfigs.put(myPackageName, pcb);
+      packageConfigs.put(newPkg, pcb);
     }
     return pcb;
   }
