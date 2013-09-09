@@ -874,6 +874,7 @@
   if(beangle.ajaxhistory)beangle.history.init();
 })(window);
 
+// fix jquery ready bug
 (function(){
     var jqReady = jQuery.prototype.ready;
     jQuery.prototype.ready = function( fn ) {
