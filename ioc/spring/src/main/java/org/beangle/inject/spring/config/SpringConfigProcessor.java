@@ -302,11 +302,11 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    */
   protected BeanDefinition registerBean(Definition def, BindRegistry registry) {
     BeanDefinition bd = convert(def);
-    if (FactoryBean.class.isAssignableFrom(def.clazz)) {
+    if ((def.isAbstract() && def.clazz==null) || FactoryBean.class.isAssignableFrom(def.clazz)) {
       try {
         Class<?> target = def.targetClass;
 
-        if (null == target) target = ((FactoryBean<?>) def.clazz.newInstance()).getObjectType();
+        if (null == target && def.clazz != null) target = ((FactoryBean<?>) def.clazz.newInstance()).getObjectType();
         Assert.isTrue(null != target || def.isAbstract(), "Concrete bean [%1$s] should has class.",
             def.beanName);
 
@@ -397,8 +397,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    */
   private Map<String, Class<?>> unsatisfiedNonSimpleProperties(BeanDefinition mbd) {
     Map<String, Class<?>> properties = CollectUtils.newHashMap();
-    Class<?> clazz = (Class<?>) ((GenericBeanDefinition) mbd).getBeanClass();
     if (mbd.isAbstract()) return properties;
+    Class<?> clazz = (Class<?>) ((GenericBeanDefinition) mbd).getBeanClass();
     PropertyValues pvs = mbd.getPropertyValues();
     for (Method m : Reflections.getBeanSetters(clazz)) {
       String propertyName = Strings.uncapitalize(m.getName().substring(3));

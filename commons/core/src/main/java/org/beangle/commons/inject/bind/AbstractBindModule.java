@@ -199,6 +199,10 @@ public abstract class AbstractBindModule implements BindModule {
     return config.bind(beanName, clazz);
   }
 
+  public DefinitionBinder template(String beanName) {
+    return config.bind(beanName, null).setAbstract();
+  }
+
   /**
    * <p>
    * doBinding.
