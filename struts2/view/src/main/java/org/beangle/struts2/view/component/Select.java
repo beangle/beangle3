@@ -83,11 +83,9 @@ public class Select extends ClosingUIBean {
     else try {
       Object nobj = obj;
       if (obj instanceof Map.Entry<?, ?>) nobj = ((Map.Entry<?, ?>) obj).getKey();
-      if (value instanceof String) {
-        return value.equals(nobj) || value.equals(String.valueOf(PropertyUtils.getProperty(nobj, keyName)));
-      } else {
-        return value.equals(nobj) || value.equals(PropertyUtils.getProperty(nobj, keyName));
-      }
+      boolean rs = value.equals(nobj) || value.equals(PropertyUtils.getProperty(nobj, keyName));
+      return rs || value.toString().equals(nobj.toString())
+          || value.toString().equals(String.valueOf(PropertyUtils.getProperty(nobj, keyName)));
     } catch (Exception e) {
       e.printStackTrace();
       return false;
