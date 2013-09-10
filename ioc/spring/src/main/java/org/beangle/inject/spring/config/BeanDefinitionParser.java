@@ -158,6 +158,8 @@ class BeanDefinitionParser {
           aliasesArray);
       String override = ele.getAttribute("override");
       if (null != override && override.equals("remove")) bdh.setConfigType(ReconfigType.REMOVE);
+      String primary = ele.getAttribute("primary");
+      if (null != primary && primary.equals("true")) bdh.setConfigType(ReconfigType.PRIMARY);
       return bdh;
     }
 
@@ -256,8 +258,7 @@ class BeanDefinitionParser {
     if (ele.hasAttribute(SCOPE_ATTRIBUTE)) {
       // Spring 2.x "scope" attribute
       bd.setScope(ele.getAttribute(SCOPE_ATTRIBUTE));
-      if (ele.hasAttribute(SINGLETON_ATTRIBUTE))
-        error("Specify either 'scope' or 'singleton', not both", ele);
+      if (ele.hasAttribute(SINGLETON_ATTRIBUTE)) error("Specify either 'scope' or 'singleton', not both", ele);
 
     } else if (ele.hasAttribute(SINGLETON_ATTRIBUTE)) {
       // Spring 1.x "singleton" attribute
@@ -269,8 +270,8 @@ class BeanDefinitionParser {
       bd.setScope(containingBean.getScope());
     }
 
-    if (ele.hasAttribute(ABSTRACT_ATTRIBUTE))
-      bd.setAbstract(TRUE_VALUE.equals(ele.getAttribute(ABSTRACT_ATTRIBUTE)));
+    if (ele.hasAttribute(ABSTRACT_ATTRIBUTE)) bd.setAbstract(TRUE_VALUE.equals(ele
+        .getAttribute(ABSTRACT_ATTRIBUTE)));
 
     String lazyInit = ele.getAttribute(LAZY_INIT_ATTRIBUTE);
     bd.setLazyInit(TRUE_VALUE.equals(lazyInit));
@@ -283,8 +284,8 @@ class BeanDefinitionParser {
       bd.setDependsOn(StringUtils.tokenizeToStringArray(dependsOn, MULTI_VALUE_ATTRIBUTE_DELIMITERS));
     }
 
-    if (ele.hasAttribute(PRIMARY_ATTRIBUTE))
-      bd.setPrimary(TRUE_VALUE.equals(ele.getAttribute(PRIMARY_ATTRIBUTE)));
+    if (ele.hasAttribute(PRIMARY_ATTRIBUTE)) bd.setPrimary(TRUE_VALUE.equals(ele
+        .getAttribute(PRIMARY_ATTRIBUTE)));
 
     if (ele.hasAttribute(INIT_METHOD_ATTRIBUTE)) {
       String initMethodName = ele.getAttribute(INIT_METHOD_ATTRIBUTE);
@@ -296,10 +297,10 @@ class BeanDefinitionParser {
       if (!"".equals(destroyMethodName)) bd.setDestroyMethodName(destroyMethodName);
     }
 
-    if (ele.hasAttribute(FACTORY_METHOD_ATTRIBUTE))
-      bd.setFactoryMethodName(ele.getAttribute(FACTORY_METHOD_ATTRIBUTE));
-    if (ele.hasAttribute(FACTORY_BEAN_ATTRIBUTE))
-      bd.setFactoryBeanName(ele.getAttribute(FACTORY_BEAN_ATTRIBUTE));
+    if (ele.hasAttribute(FACTORY_METHOD_ATTRIBUTE)) bd.setFactoryMethodName(ele
+        .getAttribute(FACTORY_METHOD_ATTRIBUTE));
+    if (ele.hasAttribute(FACTORY_BEAN_ATTRIBUTE)) bd.setFactoryBeanName(ele
+        .getAttribute(FACTORY_BEAN_ATTRIBUTE));
 
     return bd;
   }
@@ -374,8 +375,8 @@ class BeanDefinitionParser {
     NodeList nl = beanEle.getChildNodes();
     for (int i = 0; i < nl.getLength(); i++) {
       Node node = nl.item(i);
-      if (node instanceof Element && nodeNameEquals(node, CONSTRUCTOR_ARG_ELEMENT))
-        parseConstructorArgElement((Element) node, bd);
+      if (node instanceof Element && nodeNameEquals(node, CONSTRUCTOR_ARG_ELEMENT)) parseConstructorArgElement(
+          (Element) node, bd);
     }
   }
 
@@ -389,8 +390,8 @@ class BeanDefinitionParser {
     NodeList nl = beanEle.getChildNodes();
     for (int i = 0; i < nl.getLength(); i++) {
       Node node = nl.item(i);
-      if (node instanceof Element && nodeNameEquals(node, PROPERTY_ELEMENT))
-        parsePropertyElement((Element) node, bd);
+      if (node instanceof Element && nodeNameEquals(node, PROPERTY_ELEMENT)) parsePropertyElement(
+          (Element) node, bd);
     }
   }
 
@@ -404,8 +405,8 @@ class BeanDefinitionParser {
     NodeList nl = beanEle.getChildNodes();
     for (int i = 0; i < nl.getLength(); i++) {
       Node node = nl.item(i);
-      if (node instanceof Element && nodeNameEquals(node, QUALIFIER_ELEMENT))
-        parseQualifierElement((Element) node, bd);
+      if (node instanceof Element && nodeNameEquals(node, QUALIFIER_ELEMENT)) parseQualifierElement(
+          (Element) node, bd);
     }
   }
 
@@ -849,8 +850,8 @@ class BeanDefinitionParser {
       String defaultElementType) {
     for (int i = 0; i < elementNodes.getLength(); i++) {
       Node node = elementNodes.item(i);
-      if (node instanceof Element && !nodeNameEquals(node, DESCRIPTION_ELEMENT))
-        target.add(parsePropertySubElement((Element) node, bd, defaultElementType));
+      if (node instanceof Element && !nodeNameEquals(node, DESCRIPTION_ELEMENT)) target
+          .add(parsePropertySubElement((Element) node, bd, defaultElementType));
     }
   }
 
@@ -908,8 +909,8 @@ class BeanDefinitionParser {
         key = buildTypedStringValueForMap(entryEle.getAttribute(KEY_ATTRIBUTE), defaultKeyType, entryEle);
       } else if (hasKeyRefAttribute) {
         String refName = entryEle.getAttribute(KEY_REF_ATTRIBUTE);
-        if (!StringUtils.hasText(refName))
-          error("<entry> element contains empty 'key-ref' attribute", entryEle);
+        if (!StringUtils.hasText(refName)) error("<entry> element contains empty 'key-ref' attribute",
+            entryEle);
 
         RuntimeBeanReference ref = new RuntimeBeanReference(refName);
         ref.setSource(extractSource(entryEle));
@@ -1076,8 +1077,8 @@ class BeanDefinitionParser {
     NodeList children = ele.getChildNodes();
     for (int i = 0; i < children.getLength(); i++) {
       Node node = children.item(i);
-      if (node.getNodeType() == Node.ELEMENT_NODE)
-        finalDefinition = decorateIfRequired(node, finalDefinition, containingBd);
+      if (node.getNodeType() == Node.ELEMENT_NODE) finalDefinition = decorateIfRequired(node,
+          finalDefinition, containingBd);
     }
     return finalDefinition;
   }

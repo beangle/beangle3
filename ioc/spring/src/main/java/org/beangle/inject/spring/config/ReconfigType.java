@@ -27,5 +27,5 @@ package org.beangle.inject.spring.config;
  * @version $Id: $
  */
 public enum ReconfigType {
-  UPDATE, REMOVE;
+  UPDATE, REMOVE,PRIMARY;
 }

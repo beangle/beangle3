@@ -39,6 +39,7 @@ import org.beangle.commons.inject.bind.BeanConfig.ReferenceValue;
 import org.beangle.commons.inject.bind.BindModule;
 import org.beangle.commons.inject.bind.BindRegistry;
 import org.beangle.commons.lang.Assert;
+import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.reflect.Reflections;
 import org.beangle.commons.lang.time.Stopwatch;
@@ -55,7 +56,14 @@ import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.config.TypedStringValue;
-import org.springframework.beans.factory.support.*;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
+import org.springframework.beans.factory.support.ManagedList;
+import org.springframework.beans.factory.support.ManagedMap;
+import org.springframework.beans.factory.support.ManagedProperties;
+import org.springframework.beans.factory.support.ManagedSet;
 import org.springframework.core.io.UrlResource;
 
 /**
@@ -74,18 +82,24 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * Automate register and wire bean<br/>
    * Reconfig beans
    */
-  public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+  public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry definitionRegistry)
+      throws BeansException {
     // 自动注册
-    autoconfig(registry);
+    BindRegistry registry = new SpringBindRegistry(definitionRegistry);
+    Map<String, BeanDefinition> newDefinitions = registerModules(registry);
+    // should register after all beans
+    registerBuildins(registry);
     // 再配置
-    reconfig(registry);
+    reconfig(definitionRegistry, registry);
+    lifecycle(registry, definitionRegistry);
+    autowire(newDefinitions, registry);
   }
 
   public void postProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException {
     factory.registerCustomEditor(Resources.class, ResourcesEditor.class);
   }
 
-  private void reconfig(BeanDefinitionRegistry registry) {
+  private void reconfig(BeanDefinitionRegistry registry, BindRegistry bindRegistry) {
     Stopwatch watch = new Stopwatch(true);
     if (null == reconfigResources || reconfigResources.isEmpty()) return;
     Set<String> beanNames = CollectUtils.newHashSet();
@@ -93,8 +107,20 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
     for (URL url : reconfigResources.getAllPaths()) {
       List<ReconfigBeanDefinitionHolder> holders = reader.load(new UrlResource(url));
       for (ReconfigBeanDefinitionHolder holder : holders) {
-        if (holder.getConfigType().equals(ReconfigType.REMOVE)) {
-        } else {
+        // choose primary key
+        if (holder.getConfigType().equals(ReconfigType.PRIMARY)) {
+          Class<?> clazz = ClassLoaders.loadClass(holder.getBeanDefinition().getBeanClassName());
+          if (clazz.isInterface()) {
+            List<String> names = bindRegistry.getBeanNames(clazz);
+            boolean finded = names.contains(holder.getBeanName());
+            if (finded) {
+              for (String name : names) {
+                BeanDefinition bd = registry.getBeanDefinition(name);
+                bd.setPrimary(name.equals(holder.getBeanName()));
+              }
+            }
+          }
+        } else if (holder.getConfigType().equals(ReconfigType.UPDATE)) {
           if (registry.containsBeanDefinition(holder.getBeanName())) {
             BeanDefinition definition = registry.getBeanDefinition(holder.getBeanName());
             String successName = mergeDefinition(definition, holder);
@@ -107,17 +133,6 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
       }
     }
     if (!beanNames.isEmpty()) logger.info("Reconfig bean : {} in {}", beanNames, watch);
-  }
-
-  private void autoconfig(BeanDefinitionRegistry definitionRegistry) {
-    Stopwatch watch = new Stopwatch().start();
-    BindRegistry registry = new SpringBindRegistry(definitionRegistry);
-    Map<String, BeanDefinition> newDefinitions = findRegistedModules(registry);
-    // should register after all beans
-    registerBuildins(registry);
-    autowire(newDefinitions, registry);
-    lifecycle(registry, definitionRegistry);
-    logger.info("Auto register and wire {} beans in {}", newDefinitions.size(), watch);
   }
 
   /**
@@ -205,7 +220,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    * @return a {@link java.util.Map} object.
    */
-  protected Map<String, BeanDefinition> findRegistedModules(BindRegistry registry) {
+  protected Map<String, BeanDefinition> registerModules(BindRegistry registry) {
+    Stopwatch watch = new Stopwatch(true);
     List<String> modules = registry.getBeanNames(BindModule.class);
     Map<String, BeanDefinition> newBeanDefinitions = CollectUtils.newHashMap();
     for (String name : modules) {
@@ -228,6 +244,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
         }
       }
     }
+    logger.info("Auto register {} beans in {}", newBeanDefinitions.size(), watch);
     return newBeanDefinitions;
   }
 
@@ -302,11 +319,12 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    */
   protected BeanDefinition registerBean(Definition def, BindRegistry registry) {
     BeanDefinition bd = convert(def);
-    if ((def.isAbstract() && def.clazz==null) || FactoryBean.class.isAssignableFrom(def.clazz)) {
+    if ((def.isAbstract() && def.clazz == null) || FactoryBean.class.isAssignableFrom(def.clazz)) {
       try {
         Class<?> target = def.targetClass;
 
-        if (null == target && def.clazz != null) target = ((FactoryBean<?>) def.clazz.newInstance()).getObjectType();
+        if (null == target && def.clazz != null) target = ((FactoryBean<?>) def.clazz.newInstance())
+            .getObjectType();
         Assert.isTrue(null != target || def.isAbstract(), "Concrete bean [%1$s] should has class.",
             def.beanName);
 
@@ -332,9 +350,11 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    */
   protected void autowire(Map<String, BeanDefinition> newBeanDefinitions, BindRegistry registry) {
+    Stopwatch watch = new Stopwatch(true);
     for (Map.Entry<String, BeanDefinition> entry : newBeanDefinitions.entrySet()) {
       autowireBean(entry.getKey(), entry.getValue(), registry);
     }
+    logger.info("Auto wire {} beans in {}", newBeanDefinitions.size(), watch);
   }
 
   /**
@@ -357,18 +377,18 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
         mbd.getPropertyValues().add(propertyName, new RuntimeBeanReference(beanNames.get(0)));
         binded = true;
       } else if (beanNames.size() > 1) {
-        // first autowire by name
+        // first autowire by primary
         for (String name : beanNames) {
-          if (name.equals(propertyName)) {
+          if (registry.isPrimary(name)) {
             mbd.getPropertyValues().add(propertyName, new RuntimeBeanReference(name));
             binded = true;
             break;
           }
         }
-        // second autowire by primary
+        // second autowire by name
         if (!binded) {
           for (String name : beanNames) {
-            if (registry.isPrimary(name)) {
+            if (name.equals(propertyName)) {
               mbd.getPropertyValues().add(propertyName, new RuntimeBeanReference(name));
               binded = true;
               break;
@@ -378,10 +398,10 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
       }
       if (!binded) {
         if (beanNames.isEmpty()) {
-          logger.debug(beanName + "'s " + propertyName + " cannot found candidate beans.");
+          logger.debug("{}'s {} cannot found candidate beans.", beanName, propertyName);
         } else {
-          logger.warn(beanName + "'s " + propertyName + " expected single bean but found {} : {}",
-              beanNames.size(), beanNames);
+          logger.warn("{}'s {} expected single bean but found {} : {}", new Object[] { beanName,
+              propertyName, beanNames.size(), beanNames });
         }
       }
     }
@@ -398,7 +418,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
   private Map<String, Class<?>> unsatisfiedNonSimpleProperties(BeanDefinition mbd) {
     Map<String, Class<?>> properties = CollectUtils.newHashMap();
     if (mbd.isAbstract()) return properties;
-    Class<?> clazz = (Class<?>) ((GenericBeanDefinition) mbd).getBeanClass();
+    Class<?> clazz = ClassLoaders.loadClass(((GenericBeanDefinition) mbd).getBeanClassName());
+
     PropertyValues pvs = mbd.getPropertyValues();
     for (Method m : Reflections.getBeanSetters(clazz)) {
       String propertyName = Strings.uncapitalize(m.getName().substring(3));

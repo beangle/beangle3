@@ -59,6 +59,9 @@ public class ContextLoader {
             + ConfigurableApplicationContext.class.getName() + "]"); }
     ConfigurableApplicationContext wac = (ConfigurableApplicationContext) Reflections
         .newInstance(contextClass);
+    if (wac instanceof XmlWebApplicationContext) {
+      ((XmlWebApplicationContext) wac).setAllowBeanDefinitionOverriding(false);
+    }
     return wac;
   }
 
@@ -77,7 +80,7 @@ public class ContextLoader {
       Containers.setRoot(container);
       for (ContainerHook hook : Containers.getHooks())
         hook.notify(container);
-      
+
       logger.info("Root ApplicationContext: initialization completed in {} ms", System.currentTimeMillis()
           - startTime);
       return context;

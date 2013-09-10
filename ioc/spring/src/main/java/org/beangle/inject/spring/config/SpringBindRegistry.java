@@ -158,8 +158,9 @@ public class SpringBindRegistry implements BindRegistry {
       BeanDefinition bd = (BeanDefinition) args[0];
       definitionRegistry.registerBeanDefinition(name, bd);
       // for list(a.class,b.class) binding usage
-      if (bd.isSingleton() && !name.equals(bd.getBeanClassName())) {
-        definitionRegistry.registerAlias(name, bd.getBeanClassName());
+      String alias = bd.getBeanClassName();
+      if (bd.isSingleton() && !name.equals(alias) && !definitionRegistry.isBeanNameInUse(alias)) {
+        definitionRegistry.registerAlias(name, alias);
       }
       if (null == type) {
         if (!bd.isAbstract()) throw new RuntimeException("Concrete bean should has class.");

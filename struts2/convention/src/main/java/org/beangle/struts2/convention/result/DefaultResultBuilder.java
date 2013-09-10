@@ -94,8 +94,10 @@ public class DefaultResultBuilder implements ResultBuilder {
         { "velocity", "vm" }, { "dispatcher", "jsp" } });
     PackageConfig pc = configuration.getPackageConfig("struts-default");
     for (String name : pc.getAllResultTypeConfigs().keySet()) {
-      String key = typeExtensions.get(name);
-      if (null != key) resultTypeConfigs.put(key, pc.getAllResultTypeConfigs().get(name));
+      String extension = typeExtensions.get(name);
+      ResultTypeConfig rtc = pc.getAllResultTypeConfigs().get(name);
+      if (null != extension) resultTypeConfigs.put(extension, rtc);
+      resultTypeConfigs.put(name, rtc);
     }
   }
 
