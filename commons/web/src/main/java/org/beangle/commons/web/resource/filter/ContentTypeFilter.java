@@ -37,7 +37,6 @@ public class ContentTypeFilter implements ResourceFilter {
       ProcessChain chain) {
     String contentType = contentTypes.get(Strings.substringAfterLast(context.uri, "."));
     if (contentType != null) response.setContentType(contentType);
-    context.contentType = contentType;
     chain.process(context, request, response);
   }
 

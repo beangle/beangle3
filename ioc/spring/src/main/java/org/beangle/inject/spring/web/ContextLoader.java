@@ -96,10 +96,9 @@ public class ContextLoader {
   protected void configureAndRefreshApplicationContext(ConfigurableApplicationContext wac, ServletContext sc) {
     wac.setId(APPLICATION_CONTEXT_ID_PREFIX + Objects.toString(sc.getServletContextName()));
     String initParameter = sc.getInitParameter(CONFIG_LOCATION_PARAM);
-    if (initParameter != null) {
-      if (wac instanceof AbstractRefreshableConfigApplicationContext) {
-        ((AbstractRefreshableConfigApplicationContext) wac).setConfigLocation(initParameter);
-      }
+    if (null == initParameter) initParameter = "classpath:spring-context.xml";
+    if (wac instanceof AbstractRefreshableConfigApplicationContext) {
+      ((AbstractRefreshableConfigApplicationContext) wac).setConfigLocation(initParameter);
     }
     customizeContext(sc, wac);
     wac.refresh();

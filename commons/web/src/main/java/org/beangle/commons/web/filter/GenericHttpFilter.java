@@ -110,7 +110,6 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
     Set<String> missingProps = (requiredProperties != null && !requiredProperties.isEmpty()) ? new HashSet<String>(
         requiredProperties) : null;
 
-    @SuppressWarnings("unchecked")
     Enumeration<String> en = config.getInitParameterNames();
     while (en.hasMoreElements()) {
       String property = en.nextElement();

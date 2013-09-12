@@ -7,10 +7,6 @@ import org.beangle.commons.collection.CollectUtils;
 
 public class ProcessContext {
 
-  public int status=200;
-
-  public String contentType;
-
   public final String uri;
 
   public final List<URL> urls;

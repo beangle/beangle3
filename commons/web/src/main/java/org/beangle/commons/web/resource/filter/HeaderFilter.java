@@ -32,6 +32,8 @@ public class HeaderFilter implements ResourceFilter {
     }
     String requestETag = request.getHeader("If-None-Match");
     String newETag = String.valueOf(maxLastModified);
+    response.setHeader("ETag", newETag);
+    // not modified, content is not sent - only basic headers and status SC_NOT_MODIFIED
     if (newETag.equals(requestETag)) {
       response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
       return;

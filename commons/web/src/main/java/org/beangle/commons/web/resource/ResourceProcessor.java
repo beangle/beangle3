@@ -29,7 +29,7 @@ public class ResourceProcessor {
     ProcessContext pc = new ProcessContext(uri, names, resources);
     ProcessChain chain = new ProcessChain(filters.iterator());
     chain.process(pc, request, response);
-    if (pc.status == HttpServletResponse.SC_OK) {
+    if (response.getStatus() == HttpServletResponse.SC_OK) {
       if (pc.datas.isEmpty()) {
         for (URL url : pc.urls) {
           List<byte[]> rs = CollectUtils.newArrayList();
@@ -47,10 +47,10 @@ public class ResourceProcessor {
           pc.datas.add(Arrays.join(rs));
         }
       }
+      boolean isText = null != response.getContentType() && response.getContentType().startsWith("text/");
       for (byte[] data : pc.datas) {
         response.getOutputStream().write(data);
-        if (null != pc.contentType && pc.contentType.startsWith("text")) response.getOutputStream().write(
-            '\n');
+        if (isText) response.getOutputStream().write('\n');
       }
     }
   }

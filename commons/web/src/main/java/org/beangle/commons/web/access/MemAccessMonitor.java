@@ -61,8 +61,7 @@ public class MemAccessMonitor implements AccessMonitor, EventListener<HttpSessio
     if (null == request) return;
     List<AccessRequest> quene = requests.get(request.getSessionid());
     if (null != quene) quene.remove(request);
-    // need upgrade to serlvet 3.0
-    // accessRequest.setStatus(response.getStatus());
+    request.setStatus(response.getStatus());
     if (null != logger) {
       request.setEndAt(System.currentTimeMillis());
       logger.log(request);

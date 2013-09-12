@@ -29,6 +29,7 @@ import java.io.OutputStream;
 import java.net.URL;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -50,6 +51,17 @@ public class SplitStreamDownloaderTest {
       public void write(int b) throws IOException {
         outputStream.write(b);
       }
+
+      @Override
+      public boolean isReady() {
+        return false;
+      }
+
+      @Override
+      public void setWriteListener(WriteListener writeListener) {
+
+      }
+
     });
 
     URL testDoc = ClassLoaders.getResource("download.txt", getClass());
@@ -65,6 +77,16 @@ public class SplitStreamDownloaderTest {
 
       public void write(int b) throws IOException {
         outputStream.write(b);
+      }
+
+      @Override
+      public boolean isReady() {
+        return false;
+      }
+
+      @Override
+      public void setWriteListener(WriteListener writeListener) {
+
       }
 
     });
