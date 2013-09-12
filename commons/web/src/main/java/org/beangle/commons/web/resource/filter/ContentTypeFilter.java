@@ -1,5 +1,6 @@
 package org.beangle.commons.web.resource.filter;
 
+import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +35,7 @@ public class ContentTypeFilter implements ResourceFilter {
 
   @Override
   public void filter(ProcessContext context, HttpServletRequest request, HttpServletResponse response,
-      ProcessChain chain) {
+      ProcessChain chain) throws IOException {
     String contentType = contentTypes.get(Strings.substringAfterLast(context.uri, "."));
     if (contentType != null) response.setContentType(contentType);
     chain.process(context, request, response);

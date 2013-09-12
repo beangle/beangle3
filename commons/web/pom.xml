@@ -27,8 +27,12 @@
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
-      <version>3.1.0</version>
       <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>com.yahoo.platform.yui</groupId>
+      <artifactId>yuicompressor</artifactId>
+      <version>2.4.7</version>
     </dependency>
   </dependencies>
 </project>

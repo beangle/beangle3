@@ -23,11 +23,11 @@ public class HeaderFilter implements ResourceFilter {
 
   @Override
   public void filter(ProcessContext context, HttpServletRequest request, HttpServletResponse response,
-      ProcessChain chain) {
+      ProcessChain chain) throws IOException{
     // Get max last modified time stamp.
     long maxLastModified = -1;
-    for (URL url : context.urls) {
-      long lastModified = lastModified(url);
+    for (ProcessContext.Resource res : context.resources) {
+      long lastModified = lastModified(res.url);
       if (lastModified > maxLastModified) maxLastModified = lastModified;
     }
     String requestETag = request.getHeader("If-None-Match");
