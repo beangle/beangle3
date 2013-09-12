@@ -75,7 +75,6 @@ public class ConventionPackageProviderTest {
 
     ConventionPackageProvider builder = new ConventionPackageProvider(configuration, of, null, null,
         actionNameBuilder, new DefaultTextBundleRegistry(), null);
-
     builder.loadPackages();
     Set<String> names = configuration.getPackageConfigNames();
     for (String a : names) {

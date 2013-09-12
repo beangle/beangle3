@@ -31,7 +31,9 @@ import org.beangle.commons.lang.Option;
  */
 public interface ResourceLoader {
 
-  Option<URL> getResource(String resourceName);
+  Option<URL> load(String resourceName);
 
-  List<URL> getResources(String resourceName);
+  List<URL> loadAll(String resourceName);
+
+  List<URL> load(List<String> resourceName);
 }

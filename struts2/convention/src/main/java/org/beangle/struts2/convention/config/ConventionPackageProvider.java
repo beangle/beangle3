@@ -99,10 +99,10 @@ public class ConventionPackageProvider implements PackageProvider {
   private Map<String, String> primaryMappings = CollectUtils.newHashMap();
 
   @Inject("beangle.convention.default.parent.package")
-  private String defaultParentPackage;
+  private String defaultParentPackage="beangle";
 
   @Inject("beangle.convention.action.suffix")
-  private String actionSuffix;
+  private String actionSuffix="Action";
 
   @Inject("beangle.i18n.resources")
   private String defaultBundleNames;

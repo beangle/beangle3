@@ -4,5 +4,5 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <bean class="org.beangle.commons.http.DefaultModule" />
-
+  <bean class="org.beangle.commons.web.DefaultModule" />
 </beans>

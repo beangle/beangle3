@@ -19,6 +19,7 @@
 package org.beangle.commons.lang;
 
 import java.lang.reflect.Array;
+import java.util.List;
 
 /**
  * <p>
@@ -96,5 +97,46 @@ public final class Arrays {
     T[] subarray = (T[]) Array.newInstance(type, newSize);
     System.arraycopy(array, startIndexInclusive, subarray, 0, newSize);
     return subarray;
+  }
+
+  /**
+   * join multi array
+   * 
+   * @param arrays
+   * @return
+   */
+  public static byte[] join(List<byte[]> arrays) {
+    int maxlength = 0;
+    for (byte[] array : arrays) {
+      maxlength += array.length;
+    }
+    byte[] rs = new byte[maxlength];
+    int pos = 0;
+    for (byte[] array : arrays) {
+      System.arraycopy(array, 0, rs, pos, array.length);
+      pos += array.length;
+    }
+    return rs;
+  }
+
+  /**
+   * join two array
+   * 
+   * @param array1
+   * @param array2
+   * @return
+   */
+  public static byte[] join(byte[] array1, byte[] array2) {
+    if (array1 == null) return clone(array2);
+    else if (array2 == null) return clone(array1);
+    byte[] joinedArray = new byte[array1.length + array2.length];
+    System.arraycopy(array1, 0, joinedArray, 0, array1.length);
+    System.arraycopy(array2, 0, joinedArray, array1.length, array2.length);
+    return joinedArray;
+  }
+
+  private static byte[] clone(byte[] array) {
+    if (array == null) return null;
+    return (byte[]) array.clone();
   }
 }
