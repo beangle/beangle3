@@ -384,6 +384,13 @@ public final class CollectUtils {
     return list;
   }
 
+  public static <T> Set<T> intersection(Set<T> first, Set<T> second) {
+    Set<T> elts = CollectUtils.newHashSet();
+    for (T obj : first)
+      if (second.contains(second)) elts.add(obj);
+    return elts;
+  }
+
   public static <T> List<T> subtract(List<T> first, List<T> second) {
     List<T> list = newArrayList(first);
     for (T t : second)

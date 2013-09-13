@@ -18,13 +18,18 @@
  */
 package org.beangle.commons.io;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.util.List;
 
 import org.beangle.commons.lang.Assert;
-
 
 /**
  * File Operation Utility
@@ -120,8 +125,8 @@ public class Files {
     if (destFile.exists()) {
       if (destFile.isDirectory()) { throw new IOException("Destination '" + destFile
           + "' exists but is a directory"); }
-      if (!destFile.canWrite())
-        throw new IOException("Destination '" + destFile + "' exists but is read-only");
+      if (!destFile.canWrite()) throw new IOException("Destination '" + destFile
+          + "' exists but is read-only");
     }
     doCopyFile(srcFile, destFile, true);
   }
@@ -157,4 +162,57 @@ public class Files {
     }
   }
 
+  public static void deleteDirectory(File directory) throws IOException {
+    if (!directory.exists()) return;
+    if (!isSymlink(directory)) cleanDirectory(directory);
+    if (!directory.delete()) throw new IOException("Unable to delete directory " + directory + ".");
+  }
+
+  public static void cleanDirectory(File directory) throws IOException {
+    if (!directory.exists()) throw new IllegalArgumentException(directory + " does not exist");
+    if (!directory.isDirectory()) throw new IllegalArgumentException(directory + " is not a directory");
+
+    File[] files = directory.listFiles();
+    if (files == null) { // null if security restricted
+      throw new IOException("Failed to list contents of " + directory);
+    }
+    IOException exception = null;
+    for (File file : files) {
+      try {
+        forceDelete(file);
+      } catch (IOException ioe) {
+        exception = ioe;
+      }
+    }
+    if (null != exception) throw exception;
+  }
+
+  public static void forceDelete(File file) throws IOException {
+    if (file.isDirectory()) {
+      deleteDirectory(file);
+    } else {
+      if (file.exists()) {
+        if (!file.delete()) throw new IOException("Unable to delete file: " + file);
+      }
+    }
+  }
+
+  public static boolean isSymlink(File file) throws IOException {
+    if (file == null) throw new NullPointerException("File must not be null");
+    // windows
+    if (File.separatorChar == '\\') { return false; }
+    File fileInCanonicalDir = null;
+    if (file.getParent() == null) {
+      fileInCanonicalDir = file;
+    } else {
+      File canonicalDir = file.getParentFile().getCanonicalFile();
+      fileInCanonicalDir = new File(canonicalDir, file.getName());
+    }
+
+    if (fileInCanonicalDir.getCanonicalFile().equals(fileInCanonicalDir.getAbsoluteFile())) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }
