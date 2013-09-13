@@ -26,10 +26,10 @@ public class YUICompressFilter implements ResourceFilter {
     if ("no".equals(request.getParameter("compress"))) return;
     if (response.getContentType().equals("text/javascript")) {
       for (ProcessContext.Resource res : context.resources) {
-        if (null != res.data) {
+        if (null != res.data && !res.path.endsWith("min.js")) {
           StringReader sr = new StringReader(new String(res.data, Charsets.UTF_8));
           JavaScriptCompressor compressor = new JavaScriptCompressor(sr, null);
-          StringWriter writer = new StringWriter();
+          StringWriter writer = new StringWriter(res.data.length);
           compressor.compress(writer, lineBreak, false, false, true, true);
           res.data = writer.getBuffer().toString().getBytes();
         }
@@ -39,7 +39,7 @@ public class YUICompressFilter implements ResourceFilter {
         if (null != res.data) {
           StringReader sr = new StringReader(new String(res.data, Charsets.UTF_8));
           CssCompressor compressor = new CssCompressor(sr);
-          StringWriter writer = new StringWriter();
+          StringWriter writer = new StringWriter(res.data.length);
           compressor.compress(writer, lineBreak);
           res.data = writer.getBuffer().toString().getBytes();
         }
