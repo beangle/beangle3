@@ -32,7 +32,7 @@ import org.beangle.commons.transfer.exporter.DefaultPropertyExtractor;
  */
 public class OgnlPropertyExtractor extends DefaultPropertyExtractor {
 
-  protected ExpressionEvaluator expressionEvaluator = new OgnlExpressionEvaluator();
+  protected ExpressionEvaluator expressionEvaluator = new OgnlEvaluator();
 
   public OgnlPropertyExtractor() {
     super();

@@ -90,7 +90,7 @@ public class Strings {
    * @return a {@link java.lang.String} object.
    */
   public static String concat(final String... seq) {
-    return join(seq, null);
+    return join(seq, "");
   }
 
   /**
@@ -441,6 +441,16 @@ public class Strings {
     return join(seq, DELIMITER);
   }
 
+  public static String join(final Object[] seq, final char delimiter) {
+    if (null == seq || seq.length < 1) return "";
+    StringBuilder aim = new StringBuilder();
+    for (int i = 0; i < seq.length; i++) {
+      if (aim.length() > 0) aim.append(delimiter);
+      aim.append(seq[i]);
+    }
+    return aim.toString();
+  }
+
   /**
    * 将数组中的字符串，用delimiter串接起来.<br>
    * 首尾不加delimiter
@@ -450,18 +460,14 @@ public class Strings {
    * @return a {@link java.lang.String} object.
    */
   public static String join(final String[] seq, final String delimiter) {
-    if (null == seq || seq.length < 1) {
-      return "";
-    } else {
-      StringBuilder aim = new StringBuilder();
-      for (int i = 0; i < seq.length; i++) {
-        if (null != delimiter && aim.length() > 0) {
-          aim.append(delimiter);
-        }
-        aim.append(seq[i]);
-      }
-      return aim.toString();
+    if (null == seq || seq.length < 1) return "";
+    Assert.notNull(delimiter);
+    StringBuilder aim = new StringBuilder();
+    for (int i = 0; i < seq.length; i++) {
+      if (aim.length() > 0) aim.append(delimiter);
+      aim.append(seq[i]);
     }
+    return aim.toString();
   }
 
   /**
@@ -1402,5 +1408,54 @@ public class Strings {
    */
   public static <T extends CharSequence> T defaultIfBlank(T str, T defaultStr) {
     return isBlank(str) ? defaultStr : str;
+  }
+
+  public static String abbreviate(String str, int maxWidth) {
+    return abbreviate(str, 0, maxWidth);
+  }
+
+  public static String abbreviate(String str, int offset, int maxWidth) {
+    if (str == null) return null;
+    if (maxWidth < 4) throw new IllegalArgumentException("Minimum abbreviation width is 4");
+    if (str.length() <= maxWidth) return str;
+    if (offset > str.length()) offset = str.length();
+
+    if (str.length() - offset < maxWidth - 3) offset = str.length() - (maxWidth - 3);
+    final String abrevMarker = "...";
+    if (offset <= 4) return str.substring(0, maxWidth - 3) + abrevMarker;
+    if (maxWidth < 7) throw new IllegalArgumentException("Minimum abbreviation width with offset is 7");
+    if (offset + maxWidth - 3 < str.length()) { return abrevMarker
+        + abbreviate(str.substring(offset), maxWidth - 3); }
+    return abrevMarker + str.substring(str.length() - (maxWidth - 3));
+  }
+
+  /**
+   * <p>
+   * Removes all occurrences of a character from within the source string.
+   * </p>
+   * <p>
+   * A {@code null} source string will return {@code null}. An empty ("") source string will return
+   * the empty string.
+   * </p>
+   * 
+   * <pre>
+   * StringUtils.remove(null, *)       = null
+   * StringUtils.remove("", *)         = ""
+   * StringUtils.remove("queued", 'u') = "qeed"
+   * StringUtils.remove("queued", 'z') = "queued"
+   * </pre>
+   * 
+   * @param str the source String to search, may be null
+   * @param remove the char to search for and remove, may be null
+   * @return the substring with the char removed if found, {@code null} if null String input
+   */
+  public static String remove(String str, char remove) {
+    if (isEmpty(str) || str.indexOf(remove) == -1) { return str; }
+    char[] chars = str.toCharArray();
+    int pos = 0;
+    for (int i = 0; i < chars.length; i++) {
+      if (chars[i] != remove) chars[pos++] = chars[i];
+    }
+    return new String(chars, 0, pos);
   }
 }

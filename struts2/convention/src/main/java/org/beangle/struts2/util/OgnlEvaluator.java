@@ -32,7 +32,7 @@ import org.beangle.commons.script.ExpressionEvaluator;
  * @author chaostone
  * @version $Id: OgnlExpressionEvaluator.java Mar 5, 2012 12:13:41 AM chaostone $
  */
-public class OgnlExpressionEvaluator implements ExpressionEvaluator {
+public class OgnlEvaluator implements ExpressionEvaluator {
 
   private Map<String, Object> trees = new java.util.WeakHashMap<String, Object>();
 

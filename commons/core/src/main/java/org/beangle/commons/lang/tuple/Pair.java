@@ -37,9 +37,9 @@ public class Pair<L, R> implements Map.Entry<L, R>, Serializable {
   private static final long serialVersionUID = -7643900124010501814L;
 
   /** Left object */
-  public final L left;
+  public final L _1;
   /** Right object */
-  public final R right;
+  public final R _2;
 
   /**
    * <p>
@@ -67,16 +67,16 @@ public class Pair<L, R> implements Map.Entry<L, R>, Serializable {
    */
   public Pair(L left, R right) {
     super();
-    this.left = left;
-    this.right = right;
+    this._1 = left;
+    this._2 = right;
   }
 
   public L getLeft() {
-    return left;
+    return _1;
   }
 
   public R getRight() {
-    return right;
+    return _2;
   }
 
   /**
@@ -95,6 +95,14 @@ public class Pair<L, R> implements Map.Entry<L, R>, Serializable {
     throw new UnsupportedOperationException();
   }
 
+  public L get_1() {
+    return _1;
+  }
+
+  public R get_2() {
+    return _2;
+  }
+
   /**
    * <p>
    * Gets the key from this pair.
@@ -106,7 +114,7 @@ public class Pair<L, R> implements Map.Entry<L, R>, Serializable {
    * @return the left element as the key, may be null
    */
   public final L getKey() {
-    return left;
+    return _1;
   }
 
   /**
@@ -121,7 +129,7 @@ public class Pair<L, R> implements Map.Entry<L, R>, Serializable {
    * @return the right element as the value, may be null
    */
   public R getValue() {
-    return right;
+    return _2;
   }
 
   /**

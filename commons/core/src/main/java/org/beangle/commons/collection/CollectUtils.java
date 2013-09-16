@@ -398,6 +398,12 @@ public final class CollectUtils {
     return list;
   }
 
+  public static <T> Set<T> subtract(final Set<T> a, final Set<T> b) {
+    Set<T> set = CollectUtils.newHashSet(a);
+    set.removeAll(b);
+    return set;
+  }
+
   public static <T> void filter(Collection<T> datas, Predicate<T> predicate) {
     for (Iterator<T> it = datas.iterator(); it.hasNext();)
       if (!predicate.apply(it.next())) it.remove();

@@ -18,6 +18,7 @@
  */
 package org.beangle.commons.lang;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -110,17 +111,18 @@ public final class Objects {
     return object != null ? object : defaultValue;
   }
 
-  public static Object defaultValue(Class<?> clazz){
-    if(clazz.equals(boolean.class))return false;
-    if(clazz.equals(int.class))return 0;
-    if(clazz.equals(short.class))return (short)0;
-    if(clazz.equals(long.class))return 0L;
-    if(clazz.equals(float.class))return 0.0f;
-    if(clazz.equals(double.class))return 0.0d;
-    if(clazz.equals(char.class))return (char)0;
-    if(clazz.equals(byte.class))return (byte)0;
+  public static Object defaultValue(Class<?> clazz) {
+    if (clazz.equals(boolean.class)) return false;
+    if (clazz.equals(int.class)) return 0;
+    if (clazz.equals(short.class)) return (short) 0;
+    if (clazz.equals(long.class)) return 0L;
+    if (clazz.equals(float.class)) return 0.0f;
+    if (clazz.equals(double.class)) return 0.0d;
+    if (clazz.equals(char.class)) return (char) 0;
+    if (clazz.equals(byte.class)) return (byte) 0;
     return null;
   }
+
   /**
    * Return a hex String form of an object's identity hash code.
    * 
@@ -129,6 +131,10 @@ public final class Objects {
    */
   public static String getIdentityHexString(Object obj) {
     return Integer.toHexString(System.identityHashCode(obj));
+  }
+
+  public static CompareBuilder compareBuilder() {
+    return new CompareBuilder();
   }
 
   public static EqualsBuilder equalsBuilder() {
@@ -293,6 +299,313 @@ public final class Objects {
     }
   }
 
+  public static final class CompareBuilder {
+    private int comparison = 0;
+
+    public CompareBuilder add(Object lhs, Object rhs) {
+      return add(lhs, rhs, null);
+
+    }
+
+    public CompareBuilder add(Object lhs, Object rhs, Comparator<?> comparator) {
+      if (comparison != 0) return this;
+      if (lhs == rhs) return this;
+      if (lhs == null) {
+        comparison = -1;
+        return this;
+      }
+      if (rhs == null) {
+        comparison = +1;
+        return this;
+      }
+      if (lhs.getClass().isArray()) {
+        // switch on type of array, to dispatch to the correct handler
+        // handles multi dimensional arrays
+        // throws a ClassCastException if rhs is not the correct array type
+        if (lhs instanceof long[]) {
+          add((long[]) lhs, (long[]) rhs);
+        } else if (lhs instanceof int[]) {
+          add((int[]) lhs, (int[]) rhs);
+        } else if (lhs instanceof short[]) {
+          add((short[]) lhs, (short[]) rhs);
+        } else if (lhs instanceof char[]) {
+          add((char[]) lhs, (char[]) rhs);
+        } else if (lhs instanceof byte[]) {
+          add((byte[]) lhs, (byte[]) rhs);
+        } else if (lhs instanceof double[]) {
+          add((double[]) lhs, (double[]) rhs);
+        } else if (lhs instanceof float[]) {
+          add((float[]) lhs, (float[]) rhs);
+        } else if (lhs instanceof boolean[]) {
+          add((boolean[]) lhs, (boolean[]) rhs);
+        } else {
+          // not an array of primitives
+          // throws a ClassCastException if rhs is not an array
+          add((Object[]) lhs, (Object[]) rhs, comparator);
+        }
+      } else {
+        // the simple case, not an array, just test the element
+        if (comparator == null) {
+          @SuppressWarnings("unchecked")
+          final Comparable<Object> comparable = (Comparable<Object>) lhs;
+          comparison = comparable.compareTo(rhs);
+        } else {
+          @SuppressWarnings("unchecked")
+          final Comparator<Object> comparator2 = (Comparator<Object>) comparator;
+          comparison = comparator2.compare(lhs, rhs);
+        }
+      }
+      return this;
+    }
+
+    public CompareBuilder add(long lhs, long rhs) {
+      if (comparison != 0) return this;
+      comparison = ((lhs < rhs) ? -1 : ((lhs > rhs) ? 1 : 0));
+      return this;
+    }
+
+    public CompareBuilder add(int lhs, int rhs) {
+      if (comparison != 0) return this;
+      comparison = ((lhs < rhs) ? -1 : ((lhs > rhs) ? 1 : 0));
+      return this;
+    }
+
+    public CompareBuilder add(short lhs, short rhs) {
+      if (comparison != 0) return this;
+      comparison = ((lhs < rhs) ? -1 : ((lhs > rhs) ? 1 : 0));
+      return this;
+    }
+
+    public CompareBuilder add(char lhs, char rhs) {
+      if (comparison != 0) return this;
+      comparison = ((lhs < rhs) ? -1 : ((lhs > rhs) ? 1 : 0));
+      return this;
+    }
+
+    public CompareBuilder add(byte lhs, byte rhs) {
+      if (comparison != 0) return this;
+      comparison = ((lhs < rhs) ? -1 : ((lhs > rhs) ? 1 : 0));
+      return this;
+    }
+
+    public CompareBuilder add(double lhs, double rhs) {
+      if (comparison != 0) return this;
+      comparison = Double.compare(lhs, rhs);
+      return this;
+    }
+
+    public CompareBuilder add(float lhs, float rhs) {
+      if (comparison != 0) return this;
+      comparison = Float.compare(lhs, rhs);
+      return this;
+    }
+
+    public CompareBuilder add(boolean lhs, boolean rhs) {
+      if (comparison != 0) return this;
+      if (lhs == rhs) return this;
+      if (lhs == false) comparison = -1;
+      else comparison = +1;
+      return this;
+    }
+
+    public CompareBuilder add(Object[] lhs, Object[] rhs) {
+      return add(lhs, rhs, null);
+    }
+
+    public CompareBuilder add(Object[] lhs, Object[] rhs, Comparator<?> comparator) {
+      if (comparison != 0) return this;
+      if (lhs == rhs) return this;
+      if (lhs == null) {
+        comparison = -1;
+        return this;
+      }
+      if (rhs == null) {
+        comparison = +1;
+        return this;
+      }
+      if (lhs.length != rhs.length) {
+        comparison = (lhs.length < rhs.length) ? -1 : +1;
+        return this;
+      }
+      for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        add(lhs[i], rhs[i], comparator);
+      }
+      return this;
+    }
+
+    public CompareBuilder add(long[] lhs, long[] rhs) {
+      if (comparison != 0) return this;
+      if (lhs == rhs) return this;
+      if (lhs == null) {
+        comparison = -1;
+        return this;
+      }
+      if (rhs == null) {
+        comparison = +1;
+        return this;
+      }
+      if (lhs.length != rhs.length) {
+        comparison = (lhs.length < rhs.length) ? -1 : +1;
+        return this;
+      }
+      for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        add(lhs[i], rhs[i]);
+      }
+      return this;
+    }
+
+    public CompareBuilder add(int[] lhs, int[] rhs) {
+      if (comparison != 0) return this;
+      if (lhs == rhs) return this;
+      if (lhs == null) {
+        comparison = -1;
+        return this;
+      }
+      if (rhs == null) {
+        comparison = +1;
+        return this;
+      }
+      if (lhs.length != rhs.length) {
+        comparison = (lhs.length < rhs.length) ? -1 : +1;
+        return this;
+      }
+      for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        add(lhs[i], rhs[i]);
+      }
+      return this;
+    }
+
+    public CompareBuilder add(short[] lhs, short[] rhs) {
+      if (comparison != 0) return this;
+      if (lhs == rhs) return this;
+      if (lhs == null) {
+        comparison = -1;
+        return this;
+      }
+      if (rhs == null) {
+        comparison = +1;
+        return this;
+      }
+      if (lhs.length != rhs.length) {
+        comparison = (lhs.length < rhs.length) ? -1 : +1;
+        return this;
+      }
+      for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        add(lhs[i], rhs[i]);
+      }
+      return this;
+    }
+
+    public CompareBuilder add(char[] lhs, char[] rhs) {
+      if (comparison != 0) return this;
+      if (lhs == rhs) return this;
+      if (lhs == null) {
+        comparison = -1;
+        return this;
+      }
+      if (rhs == null) {
+        comparison = +1;
+        return this;
+      }
+      if (lhs.length != rhs.length) {
+        comparison = (lhs.length < rhs.length) ? -1 : +1;
+        return this;
+      }
+      for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        add(lhs[i], rhs[i]);
+      }
+      return this;
+    }
+
+    public CompareBuilder add(byte[] lhs, byte[] rhs) {
+      if (comparison != 0) return this;
+      if (lhs == rhs) return this;
+      if (lhs == null) {
+        comparison = -1;
+        return this;
+      }
+      if (rhs == null) {
+        comparison = +1;
+        return this;
+      }
+      if (lhs.length != rhs.length) {
+        comparison = (lhs.length < rhs.length) ? -1 : +1;
+        return this;
+      }
+      for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        add(lhs[i], rhs[i]);
+      }
+      return this;
+    }
+
+    public CompareBuilder add(double[] lhs, double[] rhs) {
+      if (comparison != 0) return this;
+      if (lhs == rhs) return this;
+      if (lhs == null) {
+        comparison = -1;
+        return this;
+      }
+      if (rhs == null) {
+        comparison = +1;
+        return this;
+      }
+      if (lhs.length != rhs.length) {
+        comparison = (lhs.length < rhs.length) ? -1 : +1;
+        return this;
+      }
+      for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        add(lhs[i], rhs[i]);
+      }
+      return this;
+    }
+
+    public CompareBuilder add(float[] lhs, float[] rhs) {
+      if (comparison != 0) return this;
+      if (lhs == rhs) return this;
+      if (lhs == null) {
+        comparison = -1;
+        return this;
+      }
+      if (rhs == null) {
+        comparison = +1;
+        return this;
+      }
+      if (lhs.length != rhs.length) {
+        comparison = (lhs.length < rhs.length) ? -1 : +1;
+        return this;
+      }
+      for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        add(lhs[i], rhs[i]);
+      }
+      return this;
+    }
+
+    public CompareBuilder add(boolean[] lhs, boolean[] rhs) {
+      if (comparison != 0) return this;
+      if (lhs == rhs) return this;
+      if (lhs == null) {
+        comparison = -1;
+        return this;
+      }
+      if (rhs == null) {
+        comparison = +1;
+        return this;
+      }
+      if (lhs.length != rhs.length) {
+        comparison = (lhs.length < rhs.length) ? -1 : +1;
+        return this;
+      }
+      for (int i = 0; i < lhs.length && comparison == 0; i++) {
+        add(lhs[i], rhs[i]);
+      }
+      return this;
+    }
+
+    public int toComparison() {
+      return comparison;
+    }
+  }
+
   /**
    * Equals Builder
    * 
@@ -341,6 +654,10 @@ public final class Objects {
     public boolean isEquals() {
       return equals;
     }
+  }
 
+  public static boolean isArray(Object obj) {
+    if (null == obj) return false;
+    return obj.getClass().isArray();
   }
 }

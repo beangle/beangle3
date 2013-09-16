@@ -18,6 +18,8 @@
  */
 package org.beangle.commons.lang;
 
+import java.math.BigDecimal;
+
 public final class Numbers {
 
   /**
@@ -73,6 +75,19 @@ public final class Numbers {
     }
   }
 
+  public static float toFloat(String str) {
+    return toFloat(str);
+  }
+
+  public static float toFloat(String str, float defaultValue) {
+    if (str == null) return defaultValue;
+    try {
+      return Float.parseFloat(str);
+    } catch (NumberFormatException nfe) {
+      return defaultValue;
+    }
+  }
+
   /**
    * <p>
    * Checks whether the <code>String</code> contains only digit characters.
@@ -85,9 +100,19 @@ public final class Numbers {
    * @return <code>true</code> if str contains only Unicode numeric
    */
   public static boolean isDigits(String str) {
-    if (Strings.isEmpty(str)) { return false; }
+    if (Strings.isEmpty(str)) return false;
     for (int i = 0; i < str.length(); i++) {
-      if (!Character.isDigit(str.charAt(i))) { return false; }
+      if (!Character.isDigit(str.charAt(i))) return false;
+    }
+    return true;
+  }
+
+  public static boolean isNumber(String str) {
+    if (Strings.isEmpty(str)) return false;
+    try {
+      new BigDecimal(str);
+    } catch (NumberFormatException e) {
+      return false;
     }
     return true;
   }
