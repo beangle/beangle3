@@ -23,6 +23,7 @@ import java.io.OutputStreamWriter;
 
 import org.beangle.commons.csv.CsvFormat;
 import org.beangle.commons.csv.CsvWriter;
+import org.beangle.commons.lang.Charsets;
 import org.beangle.commons.transfer.io.AbstractItemWriter;
 import org.beangle.commons.transfer.io.TransferFormat;
 
@@ -60,13 +61,12 @@ public class CsvItemWriter extends AbstractItemWriter {
     setOutputStream(outputStream);
   }
 
-  /** {@inheritDoc} */
   public void write(Object obj) {
     if (null == csvr) {
       if (null == csvFormat) {
-        this.csvr = new CsvWriter(new OutputStreamWriter(outputStream));
+        this.csvr = new CsvWriter(new OutputStreamWriter(outputStream, Charsets.UTF_8));
       } else {
-        this.csvr = new CsvWriter(new OutputStreamWriter(outputStream), csvFormat);
+        this.csvr = new CsvWriter(new OutputStreamWriter(outputStream, Charsets.UTF_8), csvFormat);
       }
     }
     if (null == obj) return;
