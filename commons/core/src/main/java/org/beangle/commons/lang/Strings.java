@@ -679,6 +679,7 @@ public class Strings {
    * @see #repeat(String, int)
    */
   public static String repeat(char ch, int repeat) {
+    if (repeat <= 0) return Empty;
     char[] buf = new char[repeat];
     for (int i = repeat - 1; i >= 0; i--) {
       buf[i] = ch;
@@ -708,10 +709,8 @@ public class Strings {
    */
   public static String repeat(String str, int repeat) {
     if (str == null) return null;
-    if (repeat <= 1) {
-      Assert.isTrue(repeat >= 0, "invalid count: %s", repeat);
-      return (repeat == 0) ? "" : str;
-    }
+    if (repeat <= 0) return Empty;
+    if (repeat == 1) return str;
     final int len = str.length();
     final long longSize = (long) len * (long) repeat;
     final int size = (int) longSize;
