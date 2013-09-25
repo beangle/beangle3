@@ -22,13 +22,13 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.beangle.commons.io.ResourceLoader;
 import org.beangle.commons.lang.Charsets;
+import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Option;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.web.resource.ProcessChain;
