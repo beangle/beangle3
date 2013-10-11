@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.orm.hibernate.RailsNamingStrategy;
 import org.beangle.orm.hibernate.TableNamingStrategy;
 import org.beangle.orm.hibernate.TableSeqGenerator;
@@ -68,7 +69,8 @@ public class OverrideConfiguration extends Configuration {
   }
 
   /**
-   * Just disable xml file validation.
+   * Just disable xml file validation.<br>
+   * Speed up boostrap
    */
   @Override
   protected Configuration doConfigure(InputStream stream, String resourceName) throws HibernateException {
@@ -98,7 +100,9 @@ public class OverrideConfiguration extends Configuration {
   }
 
   /**
-   * Config table's schema by TableNamingStrategy
+   * Config table's schema by TableNamingStrategy.<br>
+   * 
+   * @see org.beangle.orm.hibernate.RailsNamingStrategy
    */
   private void configSchema() {
     TableNamingStrategy namingStrategy = null;
@@ -129,7 +133,8 @@ public class OverrideConfiguration extends Configuration {
   }
 
   /**
-   * Update persistentclass and collection's schema.
+   * Update persistentclass and collection's schema.<br>
+   * Remove duplicated persistentClass register in classes map.
    * 
    * @see #addClass(Class)
    */
@@ -137,14 +142,12 @@ public class OverrideConfiguration extends Configuration {
   protected void secondPassCompile() throws MappingException {
     super.secondPassCompile();
     configSchema();
-    // remove duplicated persistentClass register in classes map.
     Set<String> hackedEntityNames = CollectUtils.newHashSet();
     for (Map.Entry<String, PersistentClass> entry : classes.entrySet()) {
       if (!entry.getKey().equals(entry.getValue().getEntityName())) hackedEntityNames.add(entry.getKey());
     }
-    for (String entityName : hackedEntityNames) {
+    for (String entityName : hackedEntityNames)
       classes.remove(entityName);
-    }
   }
 
   protected class OverrideMappings extends MappingsImpl {
@@ -162,15 +165,17 @@ public class OverrideConfiguration extends Configuration {
     }
 
     /**
-     * 1.First change jpaName to entityName
-     * 2.Duplicate register persistent class
+     * <ul>
+     * <li>First change jpaName to entityName</li>
+     * <li>Duplicate register persistent class,hack hibernate(ToOneFkSecondPass.isInPrimaryKey)</li>
+     * </ul>
      */
     @SuppressWarnings("unchecked")
     @Override
     public void addClass(PersistentClass pClass) throws DuplicateMappingException {
       // trigger dynamic update
-      if (!pClass.useDynamicUpdate() && pClass.getTable().getColumnSpan() >= dynaupdateMinColumn)
-        pClass.setDynamicUpdate(true);
+      if (!pClass.useDynamicUpdate() && pClass.getTable().getColumnSpan() >= dynaupdateMinColumn) pClass
+          .setDynamicUpdate(true);
 
       String jpaEntityName = pClass.getJpaEntityName();
       String entityName = pClass.getEntityName();
@@ -206,20 +211,27 @@ public class OverrideConfiguration extends Configuration {
         }
       }
     }
-    @Override
-	  public void addImport(String entityName, String rename)
-			throws DuplicateMappingException {
-    	String existing =imports.get(rename);
-    	if(null==existing){
-    		imports.put(rename, entityName );
-    	}else{
-        if(ClassLoaders.loadClass(existing).isAssignableFrom(ClassLoaders.loadClass(entityName))){
-    			imports.put(rename, entityName);
-    		} else throw new DuplicateMappingException("duplicate import: " + rename + " refers to both " + entityName + " and "
-                    + existing + " (try using auto-import=\"false\")", "import", rename);
-		  }
-	  }
+
     /**
+     * Duplicated entity name in sup/subclass situation will rise a
+     * <code>DuplicateMappingException</code>
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public void addImport(String entityName, String rename) throws DuplicateMappingException {
+      String existing = imports.get(rename);
+      if (null == existing) {
+        imports.put(rename, entityName);
+      } else {
+        if (ClassLoaders.loadClass(existing).isAssignableFrom(ClassLoaders.loadClass(entityName))) imports
+            .put(rename, entityName);
+        else throw new DuplicateMappingException("duplicate import: " + rename + " refers to both "
+            + entityName + " and " + existing + " (try using auto-import=\"false\")", "import", rename);
+      }
+    }
+
+    /**
+     * Delay register collection,let class descide which owner will be winner.
      * <ul>
      * <li>Provide override collections with same rolename.
      * <li>Delay register collection,register by addClass method
