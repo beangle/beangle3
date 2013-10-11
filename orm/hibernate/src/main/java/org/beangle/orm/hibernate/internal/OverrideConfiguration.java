@@ -206,7 +206,19 @@ public class OverrideConfiguration extends Configuration {
         }
       }
     }
-
+    @Override
+	  public void addImport(String entityName, String rename)
+			throws DuplicateMappingException {
+    	String existing =imports.get(rename);
+    	if(null==existing){
+    		imports.put(rename, entityName );
+    	}else{
+        if(ClassLoaders.loadClass(existing).isAssignableFrom(ClassLoaders.loadClass(entityName))){
+    			imports.put(rename, entityName);
+    		} else throw new DuplicateMappingException("duplicate import: " + rename + " refers to both " + entityName + " and "
+                    + existing + " (try using auto-import=\"false\")", "import", rename);
+		  }
+	  }
     /**
      * <ul>
      * <li>Provide override collections with same rolename.
