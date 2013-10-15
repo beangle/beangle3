@@ -31,6 +31,8 @@ import org.beangle.security.blueprint.data.DataResource;
 import org.beangle.security.blueprint.data.DataType;
 
 /**
+ * 系统数据属性
+ * 
  * @author chaostone
  * @since 3.0.0
  */

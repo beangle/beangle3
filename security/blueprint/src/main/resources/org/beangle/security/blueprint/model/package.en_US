@@ -1,0 +1,60 @@
+
+MemberBean=Member
+MemberBean.role=Role
+MemberBean.user=User
+MemberBean.member=Member
+MemberBean.granter=Granter
+MemberBean.manager=Manager
+
+RoleBean=Role
+RoleBean.name=Name
+RoleBean.members=Members
+RoleBean.owner=Owner
+RoleBean.remark=Remark
+RoleBean.enabled=Enabled
+RoleBean.dynamic=Dynamic
+RoleBean.createdAt=Created At
+RoleBean.updatedAt=Updated At
+
+UserBean=User
+UserBean.name=Name
+UserBean.fullname=Fullname
+UserBean.password=Password
+UserBean.mail=Mail
+UserBean.members=Members
+UserBean.creator=Creator
+UserBean.effectiveAt=Effective At
+UserBean.invalidAt=Invalid At
+UserBean.passwordExpiredAt=Password Expired At
+UserBean.enabled=Enabled
+UserBean.remark=Remark
+
+MemberBean=Member
+MemberBean.role=Role
+MemberBean.user=User
+MemberBean.member=Member
+MemberBean.granter=Granter
+MemberBean.manager=Manager
+
+RoleBean=Role
+RoleBean.name=Name
+RoleBean.members=Members
+RoleBean.owner=Owner
+RoleBean.remark=Remark
+RoleBean.enabled=Enabled
+RoleBean.dynamic=Dynamic
+RoleBean.createdAt=Created At
+RoleBean.updatedAt=Updated At
+
+UserBean=User
+UserBean.name=Name
+UserBean.fullname=Fullname
+UserBean.password=Password
+UserBean.mail=Mail
+UserBean.members=Members
+UserBean.creator=Creator
+UserBean.effectiveAt=Effective At
+UserBean.invalidAt=Invalid At
+UserBean.passwordExpiredAt=Password Expired At
+UserBean.enabled=Enabled
+UserBean.remark=Remark

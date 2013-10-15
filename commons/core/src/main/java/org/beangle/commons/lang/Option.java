@@ -31,7 +31,7 @@ import org.beangle.commons.collection.CollectUtils;
  * @author chaostone
  * @since 3.0.0
  */
-public abstract class Option<T> {
+public abstract class Option<T>{
 
   private static final None None = new None();
 

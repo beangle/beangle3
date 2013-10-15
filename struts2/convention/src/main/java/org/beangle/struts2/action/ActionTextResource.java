@@ -23,46 +23,54 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.beangle.commons.bean.PropertyUtils;
-import org.beangle.commons.lang.Option;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.text.i18n.TextBundle;
 import org.beangle.commons.text.i18n.TextBundleRegistry;
+import org.beangle.commons.text.i18n.TextCache;
 import org.beangle.commons.text.i18n.TextFormater;
-import org.beangle.commons.text.i18n.impl.DefaultTextResource;
+import org.beangle.commons.text.i18n.impl.HierarchicalTextResource;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.util.ValueStack;
 
-public class ActionTextResource extends DefaultTextResource {
+public class ActionTextResource extends HierarchicalTextResource {
 
-  private final Class<?> actionClass;
   private final ValueStack valueStack;
 
+  private TextCache cache;
+
   public ActionTextResource(Class<?> actionClass, Locale locale, TextBundleRegistry registry,
-      TextFormater formater, ValueStack valueStack) {
-    super(locale, registry, formater);
-    this.actionClass = actionClass;
+      TextFormater formater, ValueStack valueStack, TextCache cache) {
+    super(actionClass, locale, registry, formater);
     this.valueStack = valueStack;
+    this.cache = cache;
+  }
+
+  protected String doGetText(String key) {
+    if (null != cache) {
+      String msg = cache.get(locale, clazz, key);
+      if (null == msg) {
+        msg = innerGetText(key);
+        if (null != msg) cache.put(locale, clazz, key, msg);
+      }
+      return msg;
+    } else {
+      return innerGetText(key);
+    }
   }
 
   /**
    * 1 remove index key(user.roles[0].name etc.)
    * 2 change ModelDriven to EntitySupport
-   * 3 remove superclass and interface lookup
    */
-  @Override
-  protected String getText(String key, Locale locale) {
+  protected String innerGetText(String key) {
     if (key == null) return "";
     Set<String> checked = new HashSet<String>(5);
     // search up class hierarchy
-    String msg = getMessage(actionClass.getName(), locale, key);
-    if (msg != null) return msg;
-    // nothing still? all right, search the package hierarchy now
-    msg = getPackageMessage(actionClass.getName(), key, checked);
+    String msg = findMessage(clazz, key, checked);
     if (msg != null) return msg;
 
-    if (EntityDrivenAction.class.isAssignableFrom(actionClass)) {
+    if (EntityDrivenAction.class.isAssignableFrom(clazz)) {
       ActionContext context = ActionContext.getContext();
       // search up model's class hierarchy
       ActionInvocation actionInvocation = context.getActionInvocation();
@@ -72,7 +80,7 @@ public class ActionTextResource extends DefaultTextResource {
         if (action instanceof EntityDrivenAction) {
           String entityName = ((EntityDrivenAction) action).getEntityName();
           if (entityName != null) {
-            msg = getPackageMessage(entityName, key, checked);
+            msg = findPackageMessage(entityName, key, checked);
             if (msg != null) return msg;
           }
         }
@@ -88,7 +96,7 @@ public class ActionTextResource extends DefaultTextResource {
         Class<?> aClass = obj.getClass();
         String newKey = key;
         while (null != aClass) {
-          msg = getPackageMessage(aClass.getName(), newKey, checked);
+          msg = findMessage(aClass, newKey, new HashSet<String>());
           if (null == msg) {
             int nextIdx = newKey.indexOf(".", idx + 1);
             if (nextIdx == -1) break;
@@ -104,26 +112,5 @@ public class ActionTextResource extends DefaultTextResource {
       }
     }
     return registry.getDefaultText(key, locale);
-  }
-
-  private String getPackageMessage(String className, String key, Set<String> checked) {
-    String msg = null;
-    String baseName = className;
-    while (baseName.lastIndexOf('.') != -1) {
-      baseName = baseName.substring(0, baseName.lastIndexOf('.'));
-      if (checked.contains(baseName)) continue;
-      msg = getMessage(baseName + ".package", locale, key);
-      if (msg != null) return msg;
-      checked.add(baseName);
-    }
-    return null;
-  }
-
-  /**
-   * Gets the message from the named resource bundle.
-   */
-  private String getMessage(String bundleName, Locale locale, String key) {
-    Option<TextBundle> bundle = registry.load(locale, bundleName);
-    return bundle.isDefined() ? bundle.get().getText(key) : null;
   }
 }

@@ -18,10 +18,11 @@
  */
 package org.beangle.struts2.interceptor;
 
-import static com.opensymphony.xwork2.util.LocalizedTextUtil.localeFromString;
 
 import java.util.Locale;
 import java.util.Map;
+
+import org.beangle.commons.lang.Locales;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
@@ -51,14 +52,14 @@ public class I18nInterceptor extends AbstractInterceptor {
       if (null == session_locale) {
         locale = (Locale) session.get(SessionAttribute);
       } else {
-        locale = localeFromString(session_locale, null);
+        locale = Locales.toLocale(session_locale);
         // save it in session
         session.put(SessionAttribute, locale);
       }
     }
     // get request locale
     String request_locale = findLocaleParameter(params, RequestParameter);
-    if (null != request_locale) locale = localeFromString(request_locale, null);
+    if (null != request_locale) locale = Locales.toLocale(request_locale);
 
     if (null != locale) invocation.getInvocationContext().setLocale(locale);
     return invocation.invoke();

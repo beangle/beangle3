@@ -27,6 +27,7 @@ import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.security.blueprint.data.DataType;
 
 /**
+ * 系统数据类型
  * @author chaostone
  * @since 3.0.0
  */

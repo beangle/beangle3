@@ -1,0 +1,30 @@
+
+MenuProfileBean=Menu Profile
+MenuProfileBean.name=Name
+MenuProfileBean.menus=Menus
+MenuProfileBean.role=Role
+MenuProfileBean.enabled=Enabled
+
+MenuBean=Menu
+MenuBean.name=Name
+MenuBean.title=Title
+MenuBean.entry=Entry
+MenuBean.remark=Remark
+MenuBean.resources=Resources
+MenuBean.enabled=Enabled
+MenuBean.profile=Profile
+
+MenuProfileBean=Menu Profile
+MenuProfileBean.name=Name
+MenuProfileBean.menus=Menus
+MenuProfileBean.role=Role
+MenuProfileBean.enabled=Enabled
+
+MenuBean=Menu
+MenuBean.name=Name
+MenuBean.title=Title
+MenuBean.entry=Entry
+MenuBean.remark=Remark
+MenuBean.resources=Resources
+MenuBean.enabled=Enabled
+MenuBean.profile=Profile

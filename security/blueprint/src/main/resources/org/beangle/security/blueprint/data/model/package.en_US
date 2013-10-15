@@ -1,0 +1,116 @@
+
+RolePropertyBean=Role Property
+RolePropertyBean.value=Value
+RolePropertyBean.field=Field
+RolePropertyBean.profile=Profile
+
+DataTypeBean=Data Type
+DataTypeBean.name=Name
+DataTypeBean.keyName=Key Name
+DataTypeBean.properties=Properties
+DataTypeBean.typeName=Type Name
+
+DataFieldBean=Data Field
+DataFieldBean.name=Name
+DataFieldBean.title=Title
+DataFieldBean.type=Type
+DataFieldBean.resource=Resource
+
+DataPermissionBean=Data Permission
+DataPermissionBean.role=Role
+DataPermissionBean.resource=Resource
+DataPermissionBean.funcResource=Func Resource
+DataPermissionBean.actions=Actions
+DataPermissionBean.filters=Filters
+DataPermissionBean.restrictions=Restrictions
+DataPermissionBean.attrs=Attrs
+DataPermissionBean.effectiveAt=Effective At
+DataPermissionBean.invalidAt=Invalid At
+DataPermissionBean.remark=Remark
+
+UserProfileBean=User Profile
+UserProfileBean.user=User
+UserProfileBean.properties=Properties
+
+RoleProfileBean=Role Profile
+RoleProfileBean.role=Role
+RoleProfileBean.properties=Properties
+
+UserPropertyBean=User Property
+UserPropertyBean.value=Value
+UserPropertyBean.field=Field
+UserPropertyBean.profile=Profile
+
+ProfileFieldBean=Profile Field
+ProfileFieldBean.name=Name
+ProfileFieldBean.title=Title
+ProfileFieldBean.type=Type
+ProfileFieldBean.source=Source
+ProfileFieldBean.multiple=Multiple
+ProfileFieldBean.required=Required
+
+DataResourceBean=Data Resource
+DataResourceBean.name=Name
+DataResourceBean.title=Title
+DataResourceBean.remark=Remark
+DataResourceBean.actions=Actions
+DataResourceBean.fields=Fields
+DataResourceBean.enabled=Enabled
+
+RolePropertyBean=Role Property
+RolePropertyBean.value=Value
+RolePropertyBean.field=Field
+RolePropertyBean.profile=Profile
+
+DataTypeBean=Data Type
+DataTypeBean.name=Name
+DataTypeBean.keyName=Key Name
+DataTypeBean.properties=Properties
+DataTypeBean.typeName=Type Name
+
+DataFieldBean=Data Field
+DataFieldBean.name=Name
+DataFieldBean.title=Title
+DataFieldBean.type=Type
+DataFieldBean.resource=Resource
+
+DataPermissionBean=Data Permission
+DataPermissionBean.role=Role
+DataPermissionBean.resource=Resource
+DataPermissionBean.funcResource=Func Resource
+DataPermissionBean.actions=Actions
+DataPermissionBean.filters=Filters
+DataPermissionBean.restrictions=Restrictions
+DataPermissionBean.attrs=Attrs
+DataPermissionBean.effectiveAt=Effective At
+DataPermissionBean.invalidAt=Invalid At
+DataPermissionBean.remark=Remark
+
+UserProfileBean=User Profile
+UserProfileBean.user=User
+UserProfileBean.properties=Properties
+
+RoleProfileBean=Role Profile
+RoleProfileBean.role=Role
+RoleProfileBean.properties=Properties
+
+UserPropertyBean=User Property
+UserPropertyBean.value=Value
+UserPropertyBean.field=Field
+UserPropertyBean.profile=Profile
+
+ProfileFieldBean=Profile Field
+ProfileFieldBean.name=Name
+ProfileFieldBean.title=Title
+ProfileFieldBean.type=Type
+ProfileFieldBean.source=Source
+ProfileFieldBean.multiple=Multiple
+ProfileFieldBean.required=Required
+
+DataResourceBean=Data Resource
+DataResourceBean.name=Name
+DataResourceBean.title=Title
+DataResourceBean.remark=Remark
+DataResourceBean.actions=Actions
+DataResourceBean.fields=Fields
+DataResourceBean.enabled=Enabled

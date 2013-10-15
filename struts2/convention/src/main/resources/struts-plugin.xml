@@ -57,5 +57,6 @@
   
   <constant name="struts.freemarker.manager.classname" value="org.beangle.struts2.freemarker.BeangleFreemarkerManager"/>
   <bean name="beangle" class="org.beangle.struts2.freemarker.BeangleFreemarkerManager"/>
-  
+  <bean name="flat" type="org.beangle.commons.text.i18n.TextCache" class="org.beangle.commons.text.i18n.impl.FlatTextCache"/>
+  <bean name="empty" type="org.beangle.commons.text.i18n.TextCache" class="org.beangle.commons.text.i18n.impl.NullTextCache"/>
 </struts>

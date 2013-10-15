@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +34,7 @@ import org.beangle.commons.lang.Chars;
 import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.text.i18n.TextBundleRegistry;
+import org.beangle.commons.text.i18n.TextCache;
 import org.beangle.commons.text.i18n.TextFormater;
 import org.beangle.commons.text.i18n.TextResource;
 import org.beangle.commons.text.i18n.TextResourceProvider;
@@ -177,16 +179,22 @@ public class ActionSupport implements TextResourceProvider {
 
   public final TextResource getTextResource(Locale locale) {
     ActionContext context = ActionContext.getContext();
-    TextResource textResource = (TextResource) context.get("textResource");
-    if (textResource == null) {
+    TextResource resource = (TextResource) context.get("textResource");
+    if (resource == null) {
       if (null == locale) locale = getLocale();
       Container container = ActionContext.getContext().getContainer();
       TextFormater formater = container.getInstance(TextFormater.class);
       TextBundleRegistry registry = container.getInstance(TextBundleRegistry.class);
-      textResource = new ActionTextResource(getClass(), locale, registry, formater, context.getValueStack());
-      context.put("textResource", textResource);
+      TextCache cache = null;
+      String reload = container.getInstance(String.class, "beangle.i18n.reload");
+      if (Objects.equals(reload, "false")) {
+        cache = container.getInstance(TextCache.class, "flat");
+      }
+      resource = new ActionTextResource(getClass(), locale, registry, formater, context.getValueStack(),
+          cache);
+      context.put("textResource", resource);
     }
-    return textResource;
+    return resource;
   }
 
   protected final String getTextInternal(String msgKey, Object... args) {

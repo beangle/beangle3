@@ -27,6 +27,7 @@ import java.util.*;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Option;
+import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.time.Stopwatch;
 import org.beangle.commons.text.i18n.TextBundle;
 import org.beangle.commons.text.i18n.TextBundleRegistry;
@@ -53,7 +54,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
 
   public Option<TextBundle> load(Locale locale, String bundleName) {
     if (reloadBundles) caches.clear();
-
+    
     Map<String, Option<TextBundle>> localeBundles = caches.get(locale);
     if (null == localeBundles) {
       localeBundles = CollectUtils.newConcurrentHashMap();
@@ -62,35 +63,62 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
     Option<TextBundle> bundle = localeBundles.get(bundleName);
     if (null == bundle) {
       bundle = loadJavaBundle(bundleName, locale);
-      if (bundle.isEmpty()) bundle = loadNewBundle(bundleName, locale);
-      localeBundles.put(bundleName, bundle);
+      if (bundle.isEmpty()) {
+        Map<String, Option<TextBundle>> bundleMap = loadNewBundle(bundleName, locale);
+        localeBundles.putAll(bundleMap);
+        bundle = bundleMap.get(bundleName);
+      } else {
+        localeBundles.put(bundleName, bundle);
+      }
     }
     return bundle;
   }
 
-  protected Option<TextBundle> loadNewBundle(String bundleName, Locale locale) {
+  protected Map<String, Option<TextBundle>> loadNewBundle(String bundleName, Locale locale) {
     Stopwatch watch = new Stopwatch(true);
     Map<String, String> texts = CollectUtils.newHashMap();
     String resource = toDefaultResourceName(bundleName, locale);
+    Map<String, Map<String, String>> nestedBundles = CollectUtils.newHashMap();
     try {
       InputStream is = ClassLoaders.getResourceAsStream(resource, getClass());
-      if (null == is) return Option.none();
+      if (null == is) return Collections.singletonMap(bundleName, Option.<TextBundle> none());
       LineNumberReader reader = new LineNumberReader(new InputStreamReader(is, "UTF-8"));
       String line;
       while (null != (line = reader.readLine())) {
         int index = line.indexOf('=');
         if (index > 0) {
-          texts.put(line.substring(0, index).trim(), line.substring(index + 1).trim());
+          String key = line.substring(0, index).trim();
+          String value = line.substring(index + 1).trim();
+          if (Character.isUpperCase(key.charAt(0)) && key.contains(".")) {
+            String nestedName = Strings.substringBefore(key, ".");
+            Map<String, String> nestedBundle = nestedBundles.get(nestedName);
+            if (null == nestedBundle) {
+              nestedBundle = CollectUtils.newHashMap();
+              nestedBundles.put(nestedName, nestedBundle);
+            }
+            nestedBundle.put(Strings.substringAfter(key, "."), value);
+          } else {
+            texts.put(key, value);
+          }
         }
       }
       is.close();
     } catch (IOException e) {
-      return Option.none();
+      return Collections.singletonMap(bundleName, Option.<TextBundle> none());
     } finally {
+    }
+    Map<String, Option<TextBundle>> bundles = CollectUtils.newHashMap();
+    if (!nestedBundles.isEmpty()) {
+      String prefix = Strings.substringBeforeLast(bundleName, ".");
+      for (String nestName : nestedBundles.keySet()) {
+        bundles.put(prefix + "." + nestName,
+            Option.<TextBundle> from(new DefaultTextBundle(locale, resource, nestedBundles.get(nestName))));
+      }
     }
     DefaultTextBundle bundle = new DefaultTextBundle(locale, resource, texts);
     logger.info("Load bundle {} in {}", bundleName, watch);
-    return Option.<TextBundle> from(bundle);
+    bundles.put(bundleName, Option.<TextBundle> from(bundle));
+    return bundles;
   }
 
   /**

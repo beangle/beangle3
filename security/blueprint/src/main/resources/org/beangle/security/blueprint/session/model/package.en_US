@@ -1,0 +1,72 @@
+
+SessionStat=Session Stat
+SessionStat.statAt=Stat At
+SessionStat.category=Category
+SessionStat.capacity=Capacity
+SessionStat.online=Online
+
+SessioninfoLogBean=Sessioninfo Log
+SessioninfoLogBean.username=Username
+SessioninfoLogBean.fullname=Fullname
+SessioninfoLogBean.ip=Ip
+SessioninfoLogBean.os=Os
+SessioninfoLogBean.agent=Agent
+SessioninfoLogBean.loginAt=Login At
+SessioninfoLogBean.onlineTime=Online Time
+SessioninfoLogBean.logoutAt=Logout At
+SessioninfoLogBean.remark=Remark
+
+SessionProfileBean=Session Profile
+SessionProfileBean.role=Role
+SessionProfileBean.capacity=Capacity
+SessionProfileBean.userMaxSessions=User Max Sessions
+SessionProfileBean.inactiveInterval=Inactive Interval
+
+SessioninfoBean=Sessioninfo
+SessioninfoBean.username=Username
+SessioninfoBean.fullname=Fullname
+SessioninfoBean.category=Category
+SessioninfoBean.ip=Ip
+SessioninfoBean.os=Os
+SessioninfoBean.agent=Agent
+SessioninfoBean.loginAt=Login At
+SessioninfoBean.expiredAt=Expired At
+SessioninfoBean.lastAccessAt=Last Access At
+SessioninfoBean.remark=Remark
+SessioninfoBean.server=Server
+
+SessionStat=Session Stat
+SessionStat.statAt=Stat At
+SessionStat.category=Category
+SessionStat.capacity=Capacity
+SessionStat.online=Online
+
+SessioninfoLogBean=Sessioninfo Log
+SessioninfoLogBean.username=Username
+SessioninfoLogBean.fullname=Fullname
+SessioninfoLogBean.ip=Ip
+SessioninfoLogBean.os=Os
+SessioninfoLogBean.agent=Agent
+SessioninfoLogBean.loginAt=Login At
+SessioninfoLogBean.onlineTime=Online Time
+SessioninfoLogBean.logoutAt=Logout At
+SessioninfoLogBean.remark=Remark
+
+SessionProfileBean=Session Profile
+SessionProfileBean.role=Role
+SessionProfileBean.capacity=Capacity
+SessionProfileBean.userMaxSessions=User Max Sessions
+SessionProfileBean.inactiveInterval=Inactive Interval
+
+SessioninfoBean=Sessioninfo
+SessioninfoBean.username=Username
+SessioninfoBean.fullname=Fullname
+SessioninfoBean.category=Category
+SessioninfoBean.ip=Ip
+SessioninfoBean.os=Os
+SessioninfoBean.agent=Agent
+SessioninfoBean.loginAt=Login At
+SessioninfoBean.expiredAt=Expired At
+SessioninfoBean.lastAccessAt=Last Access At
+SessioninfoBean.remark=Remark
+SessioninfoBean.server=Server

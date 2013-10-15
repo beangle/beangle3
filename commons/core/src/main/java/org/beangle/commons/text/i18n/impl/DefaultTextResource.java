@@ -61,18 +61,18 @@ public class DefaultTextResource implements TextResource {
    * @return a {@link java.lang.String} object.
    */
   public String getText(String key, String defaultValue, Object... args) {
-    String text = getText(key, locale);
+    String text = doGetText(key);
     if (null == text) text = (null == defaultValue && keyAsDefault) ? key : defaultValue;
     if (null != text && args.length > 0) return formater.format(text, locale, args);
     return text;
   }
 
   public String getText(String key) {
-    String msg = getText(key, locale);
+    String msg = doGetText(key);
     return (null == msg && keyAsDefault) ? key : msg;
   }
 
-  protected String getText(String key, Locale locale) {
+  protected String doGetText(String key) {
     for (TextBundle bundle : registry.getBundles(locale)) {
       String msg = bundle.getText(key);
       if (null != msg) return msg;
