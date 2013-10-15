@@ -610,7 +610,7 @@
                     jQuery('#'+gridId+'_bar2_items .toolbar-item').each(changeToolbarItem);
                 }
                 if(bg.ui.grid.enableSelectTip){
-                    if(selectedCount>1) bg.ui.grid.setGridMessage(gridId,"已选择 <b>"+selectedCount+"</b> 条");
+                    if(selectedCount>1) bg.ui.grid.setGridMessage(gridId,"已选 <b>"+selectedCount+"</b> 条");
                     else  bg.ui.grid.setGridMessage(gridId,"");
                 }
             },
