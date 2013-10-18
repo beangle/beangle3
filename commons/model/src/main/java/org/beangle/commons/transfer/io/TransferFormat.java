@@ -29,4 +29,5 @@ package org.beangle.commons.transfer.io;
 public enum TransferFormat {
 
   Csv, Txt, Html, Xls, Xlsx, Pdf, Dbf;
+
 }

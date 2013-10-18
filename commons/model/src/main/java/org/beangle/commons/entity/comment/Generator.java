@@ -24,10 +24,11 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Locale;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.lang.SystemInfo;
 
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.ClassDoc;
@@ -59,9 +60,6 @@ import com.sun.javadoc.RootDoc;
  *          &lt;locale&gt;
  *          zh_CN
  *          &lt;/locale&gt;
- *          &lt;additionalparam&gt;
- *            -dir /path/to/your/comment/
- *          &lt;/additionalparam&gt;
  *          &lt;useStandardDocletOptions&gt;false&lt;/useStandardDocletOptions&gt;
  *        &lt;/configuration&gt;
  *      &lt;/plugin&gt;
@@ -82,10 +80,12 @@ public class Generator {
   private static OutputStreamWriter localeWriter;
 
   public static boolean start(RootDoc root) throws Exception {
-    dir = dir + "/comment/";
+    String userdir = System.getProperty("user.dir");
+    dir = Strings.substringBefore(userdir, "/site/apidocs") + "/comment/";
+    System.out.println("Entity comments will be generated in " + dir);
     Locale locale = Locale.getDefault();
     for (ClassDoc classDoc : root.classes()) {
-      if (isAnnotationPresent(classDoc, Entity.class)) {
+      if (isAnnotationPresent(classDoc, Entity.class, MappedSuperclass.class, Embeddable.class)) {
         String className = classDoc.qualifiedTypeName();
         String packageName = Strings.substringBeforeLast(className, ".") + ".package";
         String shortName = Strings.substringAfterLast(className, ".");
@@ -145,13 +145,15 @@ public class Generator {
   }
 
   private static void comment(String shortName, String comment) throws IOException {
+    String newComment = Strings.replace(comment, "<br>", "");
     writer.append("\n" + shortName + "=" + uncamel(Strings.replace(shortName, "Bean", "")) + "\n");
-    if (null != localeWriter) localeWriter.append("\n" + shortName + "=" + comment + "\n");
+    if (null != localeWriter) localeWriter.append("\n" + shortName + "=" + newComment + "\n");
   }
 
   private static void comment(String shortName, String columnName, String comment) throws IOException {
+    String newComment = Strings.replace(comment, "<br>", "");
     writer.append(shortName + "." + columnName + "=" + uncamel(columnName) + "\n");
-    if (null != localeWriter) localeWriter.append(shortName + "." + columnName + "=" + comment + "\n");
+    if (null != localeWriter) localeWriter.append(shortName + "." + columnName + "=" + newComment + "\n");
   }
 
   private static void missingComment(String shortName) throws IOException {
@@ -165,16 +167,7 @@ public class Generator {
    * It will be invoke by javadoc
    */
   public static int optionLength(String option) {
-    if (option.equals("-dir")) return 2;
-    else return 0;
-  }
-
-  private static void readOptions(String[][] options) {
-    for (int i = 0; i < options.length; i++) {
-      String[] opt = options[i];
-      if (opt[0].equals("-dir")) dir = opt[1];
-    }
-    if (null == dir) dir = SystemInfo.getTmpDir();
+    return 0;
   }
 
   /**
@@ -183,12 +176,6 @@ public class Generator {
    * It will be invoke by javadoc
    */
   public static boolean validOptions(String options[][], DocErrorReporter reporter) {
-    readOptions(options);
-    if (null == dir) {
-      reporter.printError("Usage: javadoc -dir your dir -doclet CommentGenerator ...");
-      return false;
-    }
-    reporter.printNotice("All comments will generate in " + dir + "/comment/");
     return true;
   }
 

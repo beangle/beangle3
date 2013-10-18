@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public class HierarchicalTextResource extends DefaultTextResource {
   private static final Logger logger = LoggerFactory.getLogger(HierarchicalTextResource.class);
   protected Class<?> clazz;
- 
+
   public HierarchicalTextResource(Class<?> clazz, Locale locale, TextBundleRegistry registry,
       TextFormater formater) {
     super(locale, registry, formater);
@@ -44,7 +44,7 @@ public class HierarchicalTextResource extends DefaultTextResource {
 
   @Override
   protected String doGetText(String key) {
-    return findMessage(key);
+    return findMessage(clazz, key, new HashSet<String>());
   }
 
   protected final String findMessage(String key) {

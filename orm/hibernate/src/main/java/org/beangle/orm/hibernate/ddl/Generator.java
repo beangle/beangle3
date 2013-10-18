@@ -18,12 +18,19 @@
  */
 package org.beangle.orm.hibernate.ddl;
 
+import static org.beangle.commons.lang.Strings.isNotBlank;
+import static org.beangle.commons.lang.Strings.split;
+import static org.beangle.commons.lang.Strings.substringAfter;
+import static org.beangle.commons.lang.Strings.substringAfterLast;
+import static org.beangle.commons.lang.Strings.substringBeforeLast;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -39,7 +46,6 @@ import org.beangle.commons.entity.orm.EntityPersistConfig;
 import org.beangle.commons.io.IOs;
 import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Locales;
-import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.SystemInfo;
 import org.beangle.orm.hibernate.DefaultTableNamingStrategy;
 import org.beangle.orm.hibernate.RailsNamingStrategy;
@@ -52,15 +58,19 @@ import org.hibernate.id.IdentifierGenerator;
 import org.hibernate.id.PersistentIdentifierGenerator;
 import org.hibernate.mapping.Collection;
 import org.hibernate.mapping.Column;
+import org.hibernate.mapping.Component;
 import org.hibernate.mapping.ForeignKey;
 import org.hibernate.mapping.IdentifierCollection;
 import org.hibernate.mapping.Index;
+import org.hibernate.mapping.IndexedCollection;
 import org.hibernate.mapping.ManyToOne;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.Property;
 import org.hibernate.mapping.RootClass;
 import org.hibernate.mapping.Table;
+import org.hibernate.mapping.ToOne;
 import org.hibernate.mapping.UniqueKey;
+import org.hibernate.mapping.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
@@ -159,29 +169,20 @@ public class Generator {
     while (iterpc.hasNext()) {
       PersistentClass pc = iterpc.next();
       Class<?> clazz = pc.getMappedClass();
-      if (Strings.isNotBlank(packageName) && !clazz.getPackage().getName().startsWith(packageName)) continue;
+      if (isNotBlank(packageName) && !clazz.getPackage().getName().startsWith(packageName)) continue;
       // add comment to table and column
       pc.getTable().setComment(messages.get(clazz, clazz.getSimpleName()));
-      Table table = pc.getTable();
-      Iterator<Property> ip = pc.getPropertyIterator();
-      while (ip.hasNext()) {
-        Property p = ip.next();
-        if (p.getColumnSpan() == 1) {
-          Column column = ((Column) p.getColumnIterator().next());
-          if (isForeignColumn(table, column)) {
-            column.setComment(messages.get(clazz, p.getName()) + " ID");
-          } else {
-            column.setComment(messages.get(clazz, p.getName()));
-          }
-        }
-      }
+      commentProperty(clazz, pc.getTable(), pc.getIdentifierProperty());
+      commentProperties(clazz, pc.getTable(), pc.getPropertyIterator());
       // generator sequence sql
-      IdentifierGenerator ig = pc.getIdentifier().createIdentifierGenerator(
-          configuration.getIdentifierGeneratorFactory(), dialect, defaultCatalog, defaultSchema,
-          (RootClass) pc);
-      if (ig instanceof PersistentIdentifierGenerator) {
-        String[] lines = ((PersistentIdentifierGenerator) ig).sqlCreateStrings(dialect);
-        sequences.addAll(Arrays.asList(lines));
+      if (pc instanceof RootClass) {
+        IdentifierGenerator ig = pc.getIdentifier().createIdentifierGenerator(
+            configuration.getIdentifierGeneratorFactory(), dialect, defaultCatalog, defaultSchema,
+            (RootClass) pc);
+        if (ig instanceof PersistentIdentifierGenerator) {
+          String[] lines = ((PersistentIdentifierGenerator) ig).sqlCreateStrings(dialect);
+          sequences.addAll(Arrays.asList(lines));
+        }
       }
       // generater table sql
       generateTableSql(pc.getTable());
@@ -190,13 +191,12 @@ public class Generator {
     // 2. process collection mapping
     Iterator<Collection> itercm = configuration.getCollectionMappings();
     while (itercm.hasNext()) {
-      Collection collection = itercm.next();
-      if (Strings.isNotBlank(packageName) && !collection.getRole().startsWith(packageName)) continue;
+      Collection col = itercm.next();
+      if (isNotBlank(packageName) && !col.getRole().startsWith(packageName)) continue;
       // collection sequences
-      if (collection.isIdentified()) {
-        IdentifierGenerator ig = ((IdentifierCollection) collection).getIdentifier()
-            .createIdentifierGenerator(configuration.getIdentifierGeneratorFactory(), dialect,
-                defaultCatalog, defaultSchema, null);
+      if (col.isIdentified()) {
+        IdentifierGenerator ig = ((IdentifierCollection) col).getIdentifier().createIdentifierGenerator(
+            configuration.getIdentifierGeneratorFactory(), dialect, defaultCatalog, defaultSchema, null);
 
         if (ig instanceof PersistentIdentifierGenerator) {
           String[] lines = ((PersistentIdentifierGenerator) ig).sqlCreateStrings(dialect);
@@ -204,48 +204,108 @@ public class Generator {
         }
       }
       // collection table
-      if (!collection.isOneToMany()) {
-        Table table = collection.getCollectionTable();
-        String owner = collection.getTable().getComment();
-        table.setComment(owner
-            + "-"
-            + messages.get(collection.getOwner().getMappedClass(),
-                Strings.substringAfterLast(collection.getRole(), ".")));
-        Column keyColumn = table.getColumn((Column) collection.getKey().getColumnIterator().next());
+      if (!col.isOneToMany()) {
+        Table table = col.getCollectionTable();
+        String owner = col.getTable().getComment();
+        Class<?> ownerClass = col.getOwner().getMappedClass();
+        // resolved nested compoent name in collection's role
+        String colName = substringAfter(col.getRole(), col.getOwnerEntityName() + ".");
+        if (colName.contains(".")) ownerClass = getPropertyType(col.getOwner(),
+            substringBeforeLast(colName, "."));
+        table.setComment(owner + "-" + messages.get(ownerClass, substringAfterLast(col.getRole(), ".")));
+
+        Column keyColumn = table.getColumn((Column) col.getKey().getColumnIterator().next());
         if (null != keyColumn) keyColumn.setComment(owner + " ID");
-        if (collection.getElement() instanceof ManyToOne) {
-          Column valueColumn = (Column) collection.getElement().getColumnIterator().next();
-          String entityName = ((ManyToOne) collection.getElement()).getReferencedEntityName();
-          PersistentClass referClass = configuration.getClassMapping(entityName);
-          if (null != referClass) {
-            valueColumn.setComment(referClass.getTable().getComment() + " ID");
-          }
+
+        if (col instanceof IndexedCollection) {
+          IndexedCollection idxCol = (IndexedCollection) col;
+          Value idx = idxCol.getIndex();
+          if (idx instanceof ToOne) commentToOne((ToOne) idx, (Column) idx.getColumnIterator().next());
         }
-        generateTableSql(collection.getCollectionTable());
+        if (col.getElement() instanceof ManyToOne) {
+          Column valueColumn = (Column) col.getElement().getColumnIterator().next();
+          commentToOne((ManyToOne) col.getElement(), valueColumn);
+        } else if (col.getElement() instanceof Component) {
+          Component cp = (Component) col.getElement();
+          commentProperties(cp.getComponentClass(), table, cp.getPropertyIterator());
+        }
+
+        generateTableSql(col.getCollectionTable());
       }
     }
+    Set<String> commentSet = CollectUtils.newHashSet(comments);
+    comments.clear();
+    comments.addAll(commentSet);
     // 3. export to files
     for (String key : files.keySet()) {
       List<List<String>> sqls = files.get(key);
-      FileWriter writer = new FileWriter(fileName + "/" + key);
+      FileWriter writer = new FileWriter(fileName + "/" + key, false);
       writes(writer, sqls);
       writer.flush();
       writer.close();
     }
   }
 
+  /**
+   * get component class by component property string
+   * 
+   * @param pc
+   * @param propertyString
+   * @return
+   */
+  private Class<?> getPropertyType(PersistentClass pc, String propertyString) {
+    String[] properties = split(propertyString, '.');
+    Property p = pc.getProperty(properties[0]);
+    Component cp = ((Component) p.getValue());
+    int i = 1;
+    for (; i < properties.length; i++) {
+      p = cp.getProperty(properties[i]);
+      cp = ((Component) p.getValue());
+    }
+    return cp.getComponentClass();
+  }
+
+  private void commentToOne(ToOne toOne, Column column) {
+    String entityName = toOne.getReferencedEntityName();
+    PersistentClass referClass = configuration.getClassMapping(entityName);
+    if (null != referClass) {
+      column.setComment(referClass.getTable().getComment() + " ID");
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  private void commentProperty(Class<?> clazz, Table table, Property p) {
+    if (null == p) return;
+    if (p.getColumnSpan() == 1) {
+      Column column = (Column) p.getColumnIterator().next();
+      if (isForeignColumn(table, column)) {
+        column.setComment(messages.get(clazz, p.getName()) + " ID");
+      } else {
+        column.setComment(messages.get(clazz, p.getName()));
+      }
+    } else if (p.getColumnSpan() > 1) {
+      Component pc = ((Component) p.getValue());
+      Class<?> columnOwnerClass = pc.getComponentClass();
+      commentProperties(columnOwnerClass, table, pc.getPropertyIterator());
+    }
+  }
+
+  private void commentProperties(Class<?> clazz, Table table, Iterator<Property> ip) {
+    while (ip.hasNext())
+      commentProperty(clazz, table, ip.next());
+  }
+
   @SuppressWarnings("unchecked")
   private void generateTableSql(Table table) {
+    if (!table.isPhysicalTable()) return;
+    Iterator<String> commentIter = table.sqlCommentStrings(dialect, defaultCatalog, defaultSchema);
+    while (commentIter.hasNext()) {
+      comments.add(commentIter.next());
+    }
+
     if (processed.contains(table)) return;
     processed.add(table);
-    if (table.isPhysicalTable()) {
-      tables.add(table.sqlCreateString(dialect, mapping, defaultCatalog, defaultSchema));
-
-      Iterator<String> commentIter = table.sqlCommentStrings(dialect, defaultCatalog, defaultSchema);
-      while (commentIter.hasNext()) {
-        comments.add(commentIter.next());
-      }
-    }
+    tables.add(table.sqlCreateString(dialect, mapping, defaultCatalog, defaultSchema));
 
     Iterator<UniqueKey> subIter = table.getUniqueKeyIterator();
     while (subIter.hasNext()) {
@@ -285,6 +345,7 @@ public class Generator {
 
   private void writes(Writer writer, List<List<String>> contentList) throws IOException {
     for (List<String> contents : contentList) {
+      Collections.sort(contents);
       for (String script : contents) {
         writer.write(script);
         writer.write(";\n");

@@ -296,8 +296,8 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
    * @throws Exception
    */
   public String export() throws Exception {
-    TransferFormat format = Enums.get(TransferFormat.class, Strings.capitalize(get("format", "Csv")))
-        .getOrElse(TransferFormat.Csv);
+    TransferFormat format = Enums.get(TransferFormat.class, Strings.capitalize(get("format", "Xls")))
+        .getOrElse(TransferFormat.Xls);
     String fileName = get("fileName");
     String template = get("template");
     if (Strings.isEmpty(fileName)) fileName = "exportResult";

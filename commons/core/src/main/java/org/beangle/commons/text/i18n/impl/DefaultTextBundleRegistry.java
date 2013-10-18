@@ -22,7 +22,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
-import java.util.*;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Properties;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.ClassLoaders;
@@ -54,7 +61,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
 
   public Option<TextBundle> load(Locale locale, String bundleName) {
     if (reloadBundles) caches.clear();
-    
+
     Map<String, Option<TextBundle>> localeBundles = caches.get(locale);
     if (null == localeBundles) {
       localeBundles = CollectUtils.newConcurrentHashMap();
@@ -62,12 +69,19 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
     }
     Option<TextBundle> bundle = localeBundles.get(bundleName);
     if (null == bundle) {
-      bundle = loadJavaBundle(bundleName, locale);
-      if (bundle.isEmpty()) {
-        Map<String, Option<TextBundle>> bundleMap = loadNewBundle(bundleName, locale);
+      Map<String, Option<TextBundle>> bundleMap = loadNewBundle(bundleName, locale);
+      boolean finded = false;
+      for (Option<TextBundle> one : bundleMap.values()) {
+        if (!one.isEmpty()) {
+          finded = true;
+          break;
+        }
+      }
+      if (finded) {
         localeBundles.putAll(bundleMap);
         bundle = bundleMap.get(bundleName);
       } else {
+        bundle = loadJavaBundle(bundleName, locale);
         localeBundles.put(bundleName, bundle);
       }
     }
@@ -80,29 +94,34 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
     String resource = toDefaultResourceName(bundleName, locale);
     Map<String, Map<String, String>> nestedBundles = CollectUtils.newHashMap();
     try {
-      InputStream is = ClassLoaders.getResourceAsStream(resource, getClass());
-      if (null == is) return Collections.singletonMap(bundleName, Option.<TextBundle> none());
-      LineNumberReader reader = new LineNumberReader(new InputStreamReader(is, "UTF-8"));
-      String line;
-      while (null != (line = reader.readLine())) {
-        int index = line.indexOf('=');
-        if (index > 0) {
-          String key = line.substring(0, index).trim();
-          String value = line.substring(index + 1).trim();
-          if (Character.isUpperCase(key.charAt(0)) && key.contains(".")) {
-            String nestedName = Strings.substringBefore(key, ".");
-            Map<String, String> nestedBundle = nestedBundles.get(nestedName);
-            if (null == nestedBundle) {
-              nestedBundle = CollectUtils.newHashMap();
-              nestedBundles.put(nestedName, nestedBundle);
+      List<URL> urls = ClassLoaders.getResources(resource, getClass());
+      if (urls.isEmpty()) return Collections.singletonMap(bundleName, Option.<TextBundle> none());
+      for (URL url : urls) {
+        InputStream is = url.openStream();
+        LineNumberReader reader = new LineNumberReader(new InputStreamReader(is, "UTF-8"));
+        String line;
+        while (null != (line = reader.readLine())) {
+          if (line.length() <= 0) continue;
+          if (line.charAt(0) == '#') continue;
+          int index = line.indexOf('=');
+          if (index > 0) {
+            String key = line.substring(0, index).trim();
+            String value = line.substring(index + 1).trim();
+            if (Character.isUpperCase(key.charAt(0)) && key.contains(".")) {
+              String nestedName = Strings.substringBefore(key, ".");
+              Map<String, String> nestedBundle = nestedBundles.get(nestedName);
+              if (null == nestedBundle) {
+                nestedBundle = CollectUtils.newHashMap();
+                nestedBundles.put(nestedName, nestedBundle);
+              }
+              nestedBundle.put(Strings.substringAfter(key, "."), value);
+            } else {
+              texts.put(key, value);
             }
-            nestedBundle.put(Strings.substringAfter(key, "."), value);
-          } else {
-            texts.put(key, value);
           }
         }
+        is.close();
       }
-      is.close();
     } catch (IOException e) {
       return Collections.singletonMap(bundleName, Option.<TextBundle> none());
     } finally {
@@ -116,7 +135,12 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
       }
     }
     DefaultTextBundle bundle = new DefaultTextBundle(locale, resource, texts);
-    logger.info("Load bundle {} in {}", bundleName, watch);
+    if (!nestedBundles.isEmpty()) {
+      logger.info("Load bundle {} in {}", bundleName + "{" + Strings.join(nestedBundles.keySet(), ",") + "}",
+          watch);
+    } else {
+      logger.info("Load bundle {} in {}", bundleName, watch);
+    }
     bundles.put(bundleName, Option.<TextBundle> from(bundle));
     return bundles;
   }
