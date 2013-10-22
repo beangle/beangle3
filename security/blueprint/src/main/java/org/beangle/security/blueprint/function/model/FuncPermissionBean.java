@@ -39,7 +39,7 @@ import org.beangle.security.blueprint.function.FuncResource;
  * 
  * @author dell,chaostone 2005-9-26
  */
-@Entity(name = "org.beangle.security.blueprint.function.model.FuncPermissionBean")
+@Entity(name = "org.beangle.security.blueprint.function.FuncPermission")
 public class FuncPermissionBean extends IntegerIdObject implements TemporalEntity, FuncPermission {
 
   private static final long serialVersionUID = -8956079356245507990L;

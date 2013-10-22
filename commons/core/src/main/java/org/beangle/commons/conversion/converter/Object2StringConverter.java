@@ -19,6 +19,7 @@
 package org.beangle.commons.conversion.converter;
 
 import org.beangle.commons.conversion.Converter;
+import org.beangle.commons.lang.Strings;
 
 /**
  * Convert Object to String
@@ -30,7 +31,10 @@ public class Object2StringConverter implements Converter<Object, String> {
 
   @Override
   public String apply(Object input) {
-    return (input == null) ? null : input.toString();
+    if (input == null) return null;
+    if (input.getClass().isArray()) {
+      return Strings.join((Object[]) input,',');
+    } else return input.toString();
   }
 
 }

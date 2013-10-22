@@ -18,7 +18,14 @@
  */
 package org.beangle.commons.conversion.impl;
 
-import org.beangle.commons.conversion.converter.*;
+import org.beangle.commons.conversion.Converter;
+import org.beangle.commons.conversion.converter.Number2NumberConverter;
+import org.beangle.commons.conversion.converter.Object2StringConverter;
+import org.beangle.commons.conversion.converter.String2BooleanConverter;
+import org.beangle.commons.conversion.converter.String2DateConverter;
+import org.beangle.commons.conversion.converter.String2EnumConverter;
+import org.beangle.commons.conversion.converter.String2LocaleConverter;
+import org.beangle.commons.conversion.converter.String2NumberConverter;
 
 /**
  * Default Conversion implementation.
@@ -34,7 +41,6 @@ public class DefaultConversion extends AbstractGenericConversion {
   static final public DefaultConversion Instance = new DefaultConversion();
 
   public DefaultConversion() {
-    super();
     addConverter(new String2BooleanConverter());
     addConverter(new String2NumberConverter());
     addConverter(new String2DateConverter());
@@ -44,4 +50,8 @@ public class DefaultConversion extends AbstractGenericConversion {
     addConverter(new Object2StringConverter());
   }
 
+  public DefaultConversion(Converter<?, ?>... converters) {
+    for (Converter<?, ?> converter : converters)
+      addConverter(converter);
+  }
 }
