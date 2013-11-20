@@ -16,14 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.data;
+package org.beangle.security.blueprint;
 
-import org.beangle.commons.entity.Entity;
+import java.util.List;
 
 /**
+ * 属性配置
+ * 
  * @author chaostone
- * @version $Id: UserProperty.java Oct 18, 2011 8:58:08 AM chaostone $
+ * @version $Id: Profile.java Oct 21, 2011 8:43:35 AM chaostone $
  */
-public interface UserProperty extends Property, Entity<Long> {
+public interface Profile {
 
+  List<? extends Property> getProperties();
+
+  Property getProperty(Field field);
+
+  void setProperty(Field field, String value);
+
+  Property getProperty(String name);
 }

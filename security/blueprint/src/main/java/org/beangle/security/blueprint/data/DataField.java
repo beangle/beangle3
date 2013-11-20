@@ -30,8 +30,8 @@ public interface DataField extends Entity<Integer> {
 
   String getTitle();
 
-  DataType getType();
-
   DataResource getResource();
+
+  String getTypeName();
 
 }

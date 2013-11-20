@@ -24,14 +24,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 import org.beangle.commons.lang.Chars;
 import org.beangle.commons.lang.ClassLoaders;
+import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.text.i18n.TextBundleRegistry;
 import org.beangle.commons.text.i18n.TextCache;
@@ -187,9 +186,7 @@ public class ActionSupport implements TextResourceProvider {
       TextBundleRegistry registry = container.getInstance(TextBundleRegistry.class);
       TextCache cache = null;
       String reload = container.getInstance(String.class, "beangle.i18n.reload");
-      if (Objects.equals(reload, "false")) {
-        cache = container.getInstance(TextCache.class, "flat");
-      }
+      if (Objects.equals(reload, "false")) cache = container.getInstance(TextCache.class, "flat");
       resource = new ActionTextResource(getClass(), locale, registry, formater, context.getValueStack(),
           cache);
       context.put("textResource", resource);

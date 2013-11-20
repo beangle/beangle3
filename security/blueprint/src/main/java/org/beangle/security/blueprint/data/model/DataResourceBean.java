@@ -45,7 +45,7 @@ import org.beangle.security.blueprint.data.DataResource;
 public class DataResourceBean extends IntegerIdObject implements DataResource {
   private static final long serialVersionUID = -8285208615351119572L;
 
-  /** 类型/名称 */
+  /** 名称(类型) */
   @Size(max = 100)
   @NotNull
   @Column(unique = true)
@@ -68,7 +68,7 @@ public class DataResourceBean extends IntegerIdObject implements DataResource {
   @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL, orphanRemoval = true)
   protected Set<DataField> fields = CollectUtils.newHashSet();
 
-  /** 模块是否可用 */
+  /** 是否可用 */
   @NotNull
   private boolean enabled = true;
 

@@ -27,29 +27,25 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.conversion.impl.DefaultConversion;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.lang.ClassLoaders;
-import org.beangle.security.blueprint.data.DataType;
-import org.beangle.security.blueprint.data.ProfileField;
+import org.beangle.security.blueprint.Field;
 import org.beangle.security.blueprint.data.service.UserDataProvider;
 
 public class OqlDataProvider extends BaseServiceImpl implements UserDataProvider {
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> getData(ProfileField field, String source, Object... keys) {
+  public <T> List<T> getData(Field field, String source, Object... keys) {
     Map<String, Object> params = CollectUtils.newHashMap();
     if (keys.length > 0) {
       String lowerSourse = source.toLowerCase();
       int index = lowerSourse.indexOf("order ");
       if (-1 == index) index = source.length();
-      
-      DataType dt = field.getType();
-      if (null == dt.getKeyName() && null != dt.getId()) dt = entityDao.get(DataType.class, dt.getId());
-      
+
       boolean hasCondition = lowerSourse.contains(" where ");
-      source = source.substring(0, index) + (hasCondition ? " and " : " where ") + dt.getKeyName()
+      source = source.substring(0, index) + (hasCondition ? " and " : " where ") + field.getKeyName()
           + " in (:ids)";
       Set<Object> newIds = CollectUtils.newHashSet(keys);
-      Class<?> keyType = PropertyUtils.getPropertyType(ClassLoaders.loadClass(dt.getTypeName()),
-          dt.getKeyName());
+      Class<?> keyType = PropertyUtils.getPropertyType(ClassLoaders.loadClass(field.getTypeName()),
+          field.getKeyName());
       if (!keys[0].getClass().equals(keyType)) {
         newIds = CollectUtils.newHashSet();
         for (Object key : keys)

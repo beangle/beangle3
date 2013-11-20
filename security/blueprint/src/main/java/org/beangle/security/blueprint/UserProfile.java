@@ -16,22 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.data;
-
-import java.util.List;
+package org.beangle.security.blueprint;
 
 import org.beangle.commons.entity.Entity;
 
+
 /**
- * 角色配置
+ * 用户配置
  * 
  * @author chaostone
  * @version $Id: UserProfile.java Oct 21, 2011 8:43:35 AM chaostone $
  */
-public interface RoleProfile extends Profile, Entity<Integer> {
-
-  List<RoleProperty> getProperties();
-
-  RoleProperty getProperty(ProfileField meta);
+public interface UserProfile extends Profile,Entity<Long> {
+  User getUser();
 
 }

@@ -77,7 +77,6 @@ public interface Member extends Entity<Integer> {
      * <ul>
      * <li>建立下级组
      * <li>移动下级组顺序
-     * <li>动态属性
      * <li>功能权限
      * <li>直接成员
      * </ul>

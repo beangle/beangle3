@@ -19,6 +19,7 @@
 package org.beangle.security.blueprint;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
 
 import org.beangle.commons.entity.HierarchyEntity;
@@ -29,7 +30,8 @@ import org.beangle.commons.entity.TimeEntity;
  * 
  * @author chaostone 2005-9-26
  */
-public interface Role extends TimeEntity, HierarchyEntity<Role, Integer>, Comparable<Role>, Principal {
+public interface Role extends TimeEntity, HierarchyEntity<Role, Integer>, Comparable<Role>, Principal,
+    Profile {
 
   /** 匿名角色id */
   static final long ANONYMOUS_ID = 1;
@@ -67,9 +69,8 @@ public interface Role extends TimeEntity, HierarchyEntity<Role, Integer>, Compar
    */
   int getDepth();
 
-  /**
-   * Return true is the role is dynamic
-   */
-  boolean isDynamic();
+  List<Property> getProperties();
+
+  Property getProperty(Field meta);
 
 }

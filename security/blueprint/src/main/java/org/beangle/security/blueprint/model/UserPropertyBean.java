@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.data.model;
+package org.beangle.security.blueprint.model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,17 +25,17 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.entity.pojo.LongIdObject;
-import org.beangle.security.blueprint.data.ProfileField;
-import org.beangle.security.blueprint.data.UserProfile;
-import org.beangle.security.blueprint.data.UserProperty;
+import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Property;
+import org.beangle.security.blueprint.UserProfile;
 
 /**
  * 数据限制域
  * 
  * @author chaostone
  */
-@Entity(name = "org.beangle.security.blueprint.data.UserProperty")
-public class UserPropertyBean extends LongIdObject implements UserProperty {
+@Entity(name = "org.beangle.security.blueprint.model.UserPropertyBean")
+public class UserPropertyBean extends LongIdObject implements Property {
   private static final long serialVersionUID = 1L;
 
   /** 值 */
@@ -45,7 +45,7 @@ public class UserPropertyBean extends LongIdObject implements UserProperty {
   /** 属性元 */
   @NotNull
   @ManyToOne(fetch = FetchType.LAZY)
-  private ProfileField field;
+  private Field field;
 
   /** 用户属性配置 */
   @NotNull
@@ -56,7 +56,7 @@ public class UserPropertyBean extends LongIdObject implements UserProperty {
     super();
   }
 
-  public UserPropertyBean(UserProfileBean profile, ProfileField field, String value) {
+  public UserPropertyBean(UserProfileBean profile, Field field, String value) {
     super();
     this.profile = profile;
     this.field = field;
@@ -71,11 +71,11 @@ public class UserPropertyBean extends LongIdObject implements UserProperty {
     this.value = value;
   }
 
-  public ProfileField getField() {
+  public Field getField() {
     return field;
   }
 
-  public void setField(ProfileField field) {
+  public void setField(Field field) {
     this.field = field;
   }
 

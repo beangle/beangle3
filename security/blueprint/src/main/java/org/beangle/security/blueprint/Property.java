@@ -16,26 +16,24 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.data;
+package org.beangle.security.blueprint;
 
-import java.security.Principal;
-import java.util.List;
 
 /**
- * 属性配置
+ * 属性
  * 
  * @author chaostone
- * @version $Id: Profile.java Oct 21, 2011 8:43:35 AM chaostone $
+ * @version $Id: Property.java Oct 18, 2011 8:57:24 AM chaostone $
  */
-public interface Profile {
+public interface Property {
+
+  static final String AllValue = "*";
 
   Number getId();
 
-  Principal getPrincipal();
+  Field getField();
 
-  List<? extends Property> getProperties();
+  String getValue();
 
-  Property getProperty(ProfileField field);
-
-  void setProperty(ProfileField field, String value);
+  void setValue(String value);
 }

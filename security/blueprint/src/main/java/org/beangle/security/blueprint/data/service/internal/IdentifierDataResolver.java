@@ -29,20 +29,19 @@ import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.lang.Strings;
-import org.beangle.security.blueprint.data.ProfileField;
+import org.beangle.security.blueprint.Field;
 import org.beangle.security.blueprint.data.service.UserDataResolver;
 
 public class IdentifierDataResolver implements UserDataResolver {
 
   protected EntityDao entityDao;
 
-  public String marshal(ProfileField field, Collection<?> items) {
+  public String marshal(Field field, Collection<?> items) {
     StringBuilder sb = new StringBuilder();
     for (Object obj : items) {
       try {
         Object value = obj;
-        if (null != field.getType().getKeyName())
-          value = PropertyUtils.getProperty(obj, field.getType().getKeyName());
+        if (null != field.getKeyName()) value = PropertyUtils.getProperty(obj, field.getKeyName());
         sb.append(String.valueOf(value)).append(',');
       } catch (Exception e) {
         e.printStackTrace();
@@ -55,13 +54,13 @@ public class IdentifierDataResolver implements UserDataResolver {
   }
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> unmarshal(ProfileField field, String text) {
-    if (null == field.getType().getTypeName()) {
+  public <T> List<T> unmarshal(Field field, String text) {
+    if (null == field.getTypeName()) {
       return (List<T>) CollectUtils.newArrayList(Strings.split(text, ","));
     } else {
       Class<?> clazz = null;
       try {
-        clazz = Class.forName(field.getType().getTypeName());
+        clazz = Class.forName(field.getTypeName());
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
         throw new RuntimeException(e);
@@ -70,13 +69,13 @@ public class IdentifierDataResolver implements UserDataResolver {
       OqlBuilder<T> builder = OqlBuilder.from(myType.getEntityName(), "field");
 
       String[] ids = Strings.split(text, ",");
-      Class<?> propertyType = PropertyUtils.getPropertyType(clazz, field.getType().getKeyName());
+      Class<?> propertyType = PropertyUtils.getPropertyType(clazz, field.getKeyName());
       List<Object> realIds = CollectUtils.newArrayList(ids.length);
       for (String id : ids) {
         Object realId = ConvertUtils.convert(id, propertyType);
         realIds.add(realId);
       }
-      builder.where("field." + field.getType().getKeyName() + " in (:ids)", realIds).cacheable();
+      builder.where("field." + field.getKeyName() + " in (:ids)", realIds).cacheable();
       return entityDao.search(builder);
     }
   }

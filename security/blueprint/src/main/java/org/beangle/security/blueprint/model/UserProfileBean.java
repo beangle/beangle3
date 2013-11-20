@@ -16,12 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.data.model;
+package org.beangle.security.blueprint.model;
 
-import java.security.Principal;
 import java.util.List;
 
-import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,74 +27,80 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.entity.pojo.IntegerIdObject;
+import org.beangle.commons.entity.pojo.LongIdObject;
 import org.beangle.commons.lang.Strings;
-import org.beangle.security.blueprint.Role;
-import org.beangle.security.blueprint.data.ProfileField;
-import org.beangle.security.blueprint.data.RoleProfile;
-import org.beangle.security.blueprint.data.RoleProperty;
+import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Property;
+import org.beangle.security.blueprint.User;
+import org.beangle.security.blueprint.UserProfile;
 
 /**
- * 角色属性配置
+ * 用户配置
  * 
  * @author chaostone
- * @version $Id: RoleProfileBean.java Oct 21, 2011 8:39:05 AM chaostone $
+ * @version $Id: UserProfileBean.java Oct 21, 2011 8:39:05 AM chaostone $
  */
-@Entity(name = "org.beangle.security.blueprint.data.RoleProfile")
-@Cacheable
-public class RoleProfileBean extends IntegerIdObject implements RoleProfile {
+@Entity(name = "org.beangle.security.blueprint.UserProfile")
+public class UserProfileBean extends LongIdObject implements UserProfile {
 
   private static final long serialVersionUID = -9047586316477373803L;
 
-  /** 角色 */
+  /** 用户 */
   @ManyToOne(fetch = FetchType.LAZY)
-  private Role role;
+  private User user;
+  /**
+   * 用户自定义属性
+   */
+  @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true,targetEntity=UserPropertyBean.class)
+  protected List<Property> properties = CollectUtils.newArrayList();
 
-  /** 角色自定义属性 */
-  @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
-  protected List<RoleProperty> properties = CollectUtils.newArrayList();
-
-  public Principal getPrincipal() {
-    return role;
+  public User getUser() {
+    return user;
   }
 
-  public Role getRole() {
-    return role;
+  public void setUser(User user) {
+    this.user = user;
   }
 
-  public void setRole(Role role) {
-    this.role = role;
-  }
-
-  public List<RoleProperty> getProperties() {
+  public List<Property> getProperties() {
     return properties;
   }
 
-  public void setProperties(List<RoleProperty> properties) {
+  public void setProperties(List<Property> properties) {
     this.properties = properties;
   }
 
-  public RoleProperty getProperty(ProfileField meta) {
+  public Property getProperty(Field meta) {
     if (null == properties || properties.isEmpty()) {
       return null;
     } else {
-      for (RoleProperty p : properties) {
+      for (Property p : properties) {
         if (p.getField().equals(meta)) return p;
       }
     }
     return null;
   }
 
-  public void setProperty(ProfileField meta, String text) {
-    RoleProperty property = getProperty(meta);
+  public Property getProperty(String name) {
+    if (null == properties || properties.isEmpty()) {
+      return null;
+    } else {
+      for (Property p : properties) {
+        if (p.getField().getName().equals(name)) return p;
+      }
+    }
+    return null;
+  }
+
+  public void setProperty(Field meta, String text) {
+    Property property = getProperty(meta);
     if (Strings.isNotBlank(text)) {
       if (null == property) {
-        property = new RolePropertyBean(this, meta, text);
+        property = new UserPropertyBean(this, meta, text);
         properties.add(property);
       } else property.setValue(text);
     } else {
       if (null != property) properties.remove(property);
     }
   }
-
 }

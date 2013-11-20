@@ -33,7 +33,7 @@ import org.beangle.security.auth.Principals;
 import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.data.UserProfile;
+import org.beangle.security.blueprint.UserProfile;
 import org.beangle.security.blueprint.event.UserAlterationEvent;
 import org.beangle.security.blueprint.event.UserCreationEvent;
 import org.beangle.security.blueprint.event.UserRemoveEvent;

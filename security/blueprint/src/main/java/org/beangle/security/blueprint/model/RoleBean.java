@@ -19,15 +19,25 @@
 package org.beangle.security.blueprint.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.pojo.NumberIdHierarchyObject;
+import org.beangle.commons.lang.Strings;
+import org.beangle.security.blueprint.Field;
 import org.beangle.security.blueprint.Member;
+import org.beangle.security.blueprint.Property;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
 
@@ -58,6 +68,10 @@ public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements 
   @ManyToOne(fetch = FetchType.LAZY)
   private User owner;
 
+  /** 角色属性 */
+  @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = RolePropertyBean.class)
+  protected List<Property> properties = CollectUtils.newArrayList();
+
   /** 备注 */
   @Size(max = 100)
   protected String remark;
@@ -65,9 +79,6 @@ public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements 
   /** 是否启用 */
   @NotNull
   protected boolean enabled = true;
-
-  /** 动态组 */
-  protected boolean dynamic = false;
 
   /** 创建时间 */
   protected Date createdAt;
@@ -149,12 +160,45 @@ public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements 
     this.updatedAt = updatedAt;
   }
 
-  public boolean isDynamic() {
-    return dynamic;
+  public List<Property> getProperties() {
+    return properties;
   }
 
-  public void setDynamic(boolean dynamic) {
-    this.dynamic = dynamic;
+  public void setProperties(List<Property> properties) {
+    this.properties = properties;
+  }
+
+  public Property getProperty(Field meta) {
+    if (null == properties || properties.isEmpty()) {
+      return null;
+    } else {
+      for (Property p : properties)
+        if (p.getField().equals(meta)) return p;
+    }
+    return null;
+  }
+
+  public Property getProperty(String name) {
+    if (null == properties || properties.isEmpty()) {
+      return null;
+    } else {
+      for (Property p : properties) {
+        if (p.getField().getName().equals(name)) return p;
+      }
+    }
+    return null;
+  }
+
+  public void setProperty(Field meta, String text) {
+    Property property = getProperty(meta);
+    if (Strings.isNotBlank(text)) {
+      if (null == property) {
+        property = new RolePropertyBean(this, meta, text);
+        properties.add(property);
+      } else property.setValue(text);
+    } else {
+      if (null != property) properties.remove(property);
+    }
   }
 
   public int compareTo(Role o) {

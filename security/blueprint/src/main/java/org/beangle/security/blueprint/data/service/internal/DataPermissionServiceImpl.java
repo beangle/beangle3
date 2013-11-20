@@ -28,14 +28,19 @@ import java.util.Map;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.Condition;
+import org.beangle.commons.dao.query.builder.Conditions;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.functor.Predicate;
+import org.beangle.security.blueprint.Field;
 import org.beangle.security.blueprint.Permission;
+import org.beangle.security.blueprint.Profile;
+import org.beangle.security.blueprint.Property;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.data.*;
+import org.beangle.security.blueprint.UserProfile;
+import org.beangle.security.blueprint.data.DataPermission;
 import org.beangle.security.blueprint.data.model.DataPermissionBean;
 import org.beangle.security.blueprint.data.service.DataPermissionService;
 import org.beangle.security.blueprint.data.service.UserDataProvider;
@@ -53,13 +58,10 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
 
   protected FuncPermissionService permissionService;
 
-  public List<UserProfile> getUserProfiles(User user) {
-    return entityDao.search(OqlBuilder.from(UserProfile.class, "up").where("up.user=:user", user));
-  }
-
-  public RoleProfile getRoleProfile(Role role) {
-    return entityDao.uniqueResult(OqlBuilder.from(RoleProfile.class, "rp").where("rp.role=:role", role)
-        .cacheable());
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public List<Profile> getUserProfiles(User user) {
+    List profiles = entityDao.search(OqlBuilder.from(UserProfile.class, "up").where("up.user=:user", user));
+    return profiles;
   }
 
   /**
@@ -123,16 +125,15 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public Collection<RoleProfile> getProfiles(Collection<Role> roles, Resource resource) {
+  public Collection<Profile> getProfiles(Collection<Role> roles, Resource resource) {
     if (roles.isEmpty()) return Collections.EMPTY_LIST;
-    OqlBuilder builder = OqlBuilder.from("from " + Permission.class.getName() + " au,"
-        + RoleProfile.class.getName() + " gp");
-    builder.where("au.role in (:roles) and au.resource = :resource and au.role=gp.role", roles, resource);
-    builder.select("gp");
+    OqlBuilder builder = OqlBuilder.from("from " + Permission.class.getName() + " au");
+    builder.where("au.role in (:roles) and au.resource = :resource", roles, resource);
+    builder.select("au.role");
     return entityDao.search(builder);
   }
 
-  public List<?> getFieldValues(ProfileField field, Object... keys) {
+  public List<?> getFieldValues(Field field, Object... keys) {
     if (null == field.getSource()) return Collections.emptyList();
     String source = field.getSource();
     String prefix = Strings.substringBefore(source, ":");
@@ -145,7 +146,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
     }
   }
 
-  public Object getPropertyValue(ProfileField field, Profile profile) {
+  public Object getProperty(Profile profile, Field field) {
     Property property = profile.getProperty(field);
     if (null == property) return null;
     if ("*".equals(property.getValue())) {
@@ -161,7 +162,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
    * @param property
    * @param restriction
    */
-  private Object unmarshal(String value, ProfileField property) {
+  private Object unmarshal(String value, Field property) {
     try {
       List<Object> returned = dataResolver.unmarshal(property, value);
       if (property.isMultiple()) {
@@ -170,12 +171,12 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
         return (1 != returned.size()) ? null : returned.get(0);
       }
     } catch (Exception e) {
-      logger.error("exception with param type:" + property.getType().getTypeName() + " value:" + value, e);
+      logger.error("exception with param type:" + property.getTypeName() + " value:" + value, e);
       return null;
     }
   }
 
-  public void apply(OqlBuilder<?> query, DataPermission permission, UserProfile profile) {
+  public void apply(OqlBuilder<?> query, DataPermission permission, UserProfile... profiles) {
     List<Object> paramValues = CollectUtils.newArrayList();
     // 处理限制对应的模式
     if (Strings.isEmpty(permission.getFilters())) return;
@@ -184,38 +185,43 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
     patternContent = Strings.replace(patternContent, "{alias}", query.getAlias());
     String[] contents = Strings.split(Strings.replace(patternContent, " and ", "$"), "$");
 
-    StringBuilder conBuilder = new StringBuilder("(");
-    for (int i = 0; i < contents.length; i++) {
-      String content = contents[i];
-      Condition c = new Condition(content);
-      List<String> params = c.getParamNames();
-      for (final String paramName : params) {
-        UserProperty up = profile.getProperty(paramName);
-        String value = null == up ? null : up.getValue();
-        if (Strings.isNotEmpty(value)) {
-          if (value.equals(Property.AllValue)) {
-            content = "";
-          } else {
-            paramValues.add(unmarshal(value, up.getField()));
-          }
-        } else {
-          throw new RuntimeException(paramName + " had not been initialized");
-        }
-      }
-      if (conBuilder.length() > 1 && content.length() > 0) conBuilder.append(" and ");
-      conBuilder.append(content);
-    }
+    List<Condition> conditions = CollectUtils.newArrayList();
+    for (Profile profile : profiles) {
+      StringBuilder conBuilder = new StringBuilder("(");
+      for (int i = 0; i < contents.length; i++) {
+        String content = contents[i];
+        Condition c = new Condition(content);
+        List<String> params = c.getParamNames();
+        for (final String paramName : params) {
 
-    if (conBuilder.length() > 1) {
-      conBuilder.append(')');
-      Condition con = new Condition(conBuilder.toString());
-      con.params(paramValues);
-      query.where(con);
+          Property up = profile.getProperty(paramName);
+          String value = null == up ? null : up.getValue();
+          if (Strings.isNotEmpty(value)) {
+            if (value.equals(Property.AllValue)) {
+              content = "";
+            } else {
+              paramValues.add(unmarshal(value, up.getField()));
+            }
+          } else {
+            throw new RuntimeException(paramName + " had not been initialized");
+          }
+        }
+        if (conBuilder.length() > 1 && content.length() > 0) conBuilder.append(" and ");
+        conBuilder.append(content);
+      }
+
+      if (conBuilder.length() > 1) {
+        conBuilder.append(')');
+        Condition con = new Condition(conBuilder.toString());
+        con.params(paramValues);
+        conditions.add(con);
+      }
     }
+    query.where(Conditions.or(conditions));
   }
 
-  public ProfileField getProfileField(String fieldName) {
-    List<ProfileField> fields = entityDao.get(ProfileField.class, "name", fieldName);
+  public Field getField(String fieldName) {
+    List<Field> fields = entityDao.get(Field.class, "name", fieldName);
     if (1 != fields.size()) { throw new RuntimeException("bad pattern parameter named :" + fieldName); }
     return fields.get(0);
   }

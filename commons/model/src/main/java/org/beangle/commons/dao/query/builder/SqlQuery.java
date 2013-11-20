@@ -317,7 +317,7 @@ public class SqlQuery extends AbstractQuery<Object> {
     final StringBuilder buf = new StringBuilder(50);
     buf.append((select == null) ? "" : select).append(' ').append(from);
     if (!conditions.isEmpty()) {
-      buf.append(" where ").append(ConditionUtils.toQueryString(conditions));
+      buf.append(" where ").append(Conditions.toQueryString(conditions));
     }
     if (!groups.isEmpty()) {
       buf.append(" group by ");
@@ -340,7 +340,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * @return a {@link java.util.Map} object.
    */
   public Map<String, Object> getParams() {
-    return (null == params) ? ConditionUtils.getParamMap(conditions) : CollectUtils.newHashMap(params);
+    return (null == params) ? Conditions.getParamMap(conditions) : CollectUtils.newHashMap(params);
   }
 
   /**

@@ -16,29 +16,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.data.model;
+package org.beangle.security.blueprint.model;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.entity.pojo.IntegerIdObject;
-import org.beangle.security.blueprint.data.DataType;
-import org.beangle.security.blueprint.data.ProfileField;
+import org.beangle.security.blueprint.Field;
 
 /**
- * 用户属性元信息
+ * 属性元信息
  * 
  * @author chaostone
  * @since 3.0.0
  */
-@Entity(name = "org.beangle.security.blueprint.data.ProfileField")
+@Entity(name = "org.beangle.security.blueprint.Field")
 @Cacheable
-public class ProfileFieldBean extends IntegerIdObject implements ProfileField {
+public class FieldBean extends IntegerIdObject implements Field {
   private static final long serialVersionUID = 1L;
 
   /** 名称 */
@@ -52,10 +49,18 @@ public class ProfileFieldBean extends IntegerIdObject implements ProfileField {
   @Size(max = 50)
   protected String title;
 
-  /** 数据类型 */
+  /** 关键字名称 */
+  @Size(max = 20)
+  protected String keyName;
+
+  /** 其它属性名(逗号隔开) */
+  @Size(max = 100)
+  protected String properties;
+
+  /** 类型 */
   @NotNull
-  @ManyToOne(fetch = FetchType.LAZY)
-  protected DataType type;
+  @Size(max = 100)
+  protected String typeName;
 
   /** 数据提供描述 */
   @Size(max = 200)
@@ -68,18 +73,18 @@ public class ProfileFieldBean extends IntegerIdObject implements ProfileField {
   /** 是否必填项 */
   protected boolean required;
 
-  public ProfileFieldBean() {
+  public FieldBean() {
     super();
   }
 
-  public ProfileFieldBean(Integer id) {
+  public FieldBean(Integer id) {
     super(id);
   }
 
-  public ProfileFieldBean(Integer id, String name, DataType type, String source) {
+  public FieldBean(Integer id, String name, String typeName, String source) {
     super(id);
     this.name = name;
-    this.type = type;
+    this.typeName = typeName;
     this.source = source;
     this.multiple = true;
   }
@@ -124,12 +129,29 @@ public class ProfileFieldBean extends IntegerIdObject implements ProfileField {
     this.required = required;
   }
 
-  public DataType getType() {
-    return type;
+  public String getTypeName() {
+    return typeName;
   }
 
-  public void setType(DataType type) {
-    this.type = type;
+  public void setTypeName(String typeName) {
+    this.typeName = typeName;
   }
 
+  public String getKeyName() {
+    return keyName;
+  }
+
+  public void setKeyName(String keyName) {
+    this.keyName = keyName;
+  }
+
+  public String getProperties() {
+    return properties;
+  }
+
+  public void setProperties(String properties) {
+    this.properties = properties;
+  }
+
+  
 }

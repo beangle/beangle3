@@ -16,23 +16,64 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.data;
+package org.beangle.security.blueprint;
+
+import org.beangle.commons.entity.Entity;
 
 /**
- * 属性
+ * 自定义属性
  * 
  * @author chaostone
- * @version $Id: Property.java Oct 18, 2011 8:57:24 AM chaostone $
+ * @since 2011-09-22
  */
-public interface Property {
+public interface Field extends Entity<Integer> {
 
-  static final String AllValue = "*";
+  /**
+   * 名称
+   */
+  String getName();
 
-  Number getId();
+  /**
+   * 标题
+   */
+  String getTitle();
 
-  ProfileField getField();
+  /**
+   * 数据源提供者
+   */
+  String getSource();
 
-  String getValue();
+  /**
+   * 是否为集合类型
+   */
+  boolean isMultiple();
 
-  void setValue(String value);
+  /**
+   * 是否必填
+   * 
+   * @return
+   */
+  boolean isRequired();
+
+  /**
+   * 类型
+   * 
+   * @return
+   */
+  String getTypeName();
+
+  /**
+   * 主键
+   * 
+   * @return
+   */
+  String getKeyName();
+
+  /**
+   * 其他属性
+   * 
+   * @return
+   */
+  String getProperties();
+
 }

@@ -82,7 +82,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * Returns params.
    */
   public Map<String, Object> getParams() {
-    return (null == params) ? ConditionUtils.getParamMap(conditions) : CollectUtils.newHashMap(params);
+    return (null == params) ? Conditions.getParamMap(conditions) : CollectUtils.newHashMap(params);
   }
 
   /**
@@ -172,7 +172,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
     if (null == from) return statement;
     final StringBuilder buf = new StringBuilder(50);
     buf.append((select == null) ? "" : (select + " ")).append(from);
-    if (!conditions.isEmpty()) buf.append(" where ").append(ConditionUtils.toQueryString(conditions));
+    if (!conditions.isEmpty()) buf.append(" where ").append(Conditions.toQueryString(conditions));
 
     if (!groups.isEmpty()) {
       buf.append(" group by ");

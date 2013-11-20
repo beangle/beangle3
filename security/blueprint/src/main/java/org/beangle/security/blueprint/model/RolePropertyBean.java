@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.data.model;
+package org.beangle.security.blueprint.model;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
@@ -26,41 +26,42 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.entity.pojo.IntegerIdObject;
-import org.beangle.security.blueprint.data.ProfileField;
-import org.beangle.security.blueprint.data.RoleProfile;
-import org.beangle.security.blueprint.data.RoleProperty;
+import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Property;
+import org.beangle.security.blueprint.Role;
 
 /**
  * 角色属性
  * 
  * @author chaostone
  */
-@Entity(name = "org.beangle.security.blueprint.data.RoleProperty")
+@Entity(name = "org.beangle.security.blueprint.model.RolePropertyBean")
 @Cacheable
-public class RolePropertyBean extends IntegerIdObject implements RoleProperty {
+public class RolePropertyBean extends IntegerIdObject implements Property {
   private static final long serialVersionUID = 1L;
 
   /** 值 */
   @Size(max = 1000)
+  @NotNull
   private String value;
 
   /** 属性元 */
   @NotNull
   @ManyToOne(fetch = FetchType.LAZY)
-  private ProfileField field;
+  private Field field;
 
-  /** 角色属性配置 */
+  /** 角色 */
   @NotNull
   @ManyToOne(fetch = FetchType.LAZY)
-  private RoleProfile profile;
+  private Role role;
 
   public RolePropertyBean() {
     super();
   }
 
-  public RolePropertyBean(RoleProfileBean profile, ProfileField field, String value) {
+  public RolePropertyBean(Role role, Field field, String value) {
     super();
-    this.profile = profile;
+    this.role = role;
     this.field = field;
     this.value = value;
   }
@@ -73,20 +74,20 @@ public class RolePropertyBean extends IntegerIdObject implements RoleProperty {
     this.value = value;
   }
 
-  public ProfileField getField() {
+  public Field getField() {
     return field;
   }
 
-  public void setField(ProfileField field) {
+  public void setField(Field field) {
     this.field = field;
   }
 
-  public RoleProfile getProfile() {
-    return profile;
+  public Role getRole() {
+    return role;
   }
 
-  public void setProfile(RoleProfile profile) {
-    this.profile = profile;
+  public void setRole(Role role) {
+    this.role = role;
   }
 
 }

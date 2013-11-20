@@ -28,7 +28,6 @@ import javax.validation.constraints.Size;
 import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.security.blueprint.data.DataField;
 import org.beangle.security.blueprint.data.DataResource;
-import org.beangle.security.blueprint.data.DataType;
 
 /**
  * 系统数据属性
@@ -47,15 +46,15 @@ public class DataFieldBean extends IntegerIdObject implements DataField {
   @Size(max = 50)
   protected String name;
 
+  /** 类型 */
+  @NotNull
+  @Size(max = 100)
+  protected String typeName;
+  
   /** 标题 */
   @NotNull
   @Size(max = 50)
   protected String title;
-
-  /** 数据类型 */
-  @NotNull
-  @ManyToOne(fetch = FetchType.LAZY)
-  protected DataType type;
 
   /** 数据资源 */
   @NotNull
@@ -78,20 +77,20 @@ public class DataFieldBean extends IntegerIdObject implements DataField {
     this.title = title;
   }
 
-  public DataType getType() {
-    return type;
-  }
-
-  public void setType(DataType type) {
-    this.type = type;
-  }
-
   public DataResource getResource() {
     return resource;
   }
 
   public void setResource(DataResource resource) {
     this.resource = resource;
+  }
+
+  public String getTypeName() {
+    return typeName;
+  }
+
+  public void setTypeName(String typeName) {
+    this.typeName = typeName;
   }
 
 }

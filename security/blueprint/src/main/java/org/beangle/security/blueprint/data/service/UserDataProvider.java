@@ -20,7 +20,7 @@ package org.beangle.security.blueprint.data.service;
 
 import java.util.List;
 
-import org.beangle.security.blueprint.data.ProfileField;
+import org.beangle.security.blueprint.Field;
 
 /**
  * @author chaostone
@@ -36,7 +36,7 @@ public interface UserDataProvider {
    * @param source
    * @param keys
    */
-  <T> List<T> getData(ProfileField field, String source, Object... keys);
+  <T> List<T> getData(Field field, String source, Object... keys);
 
   /**
    * provider's unique name

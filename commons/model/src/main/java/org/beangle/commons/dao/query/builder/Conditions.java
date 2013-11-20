@@ -34,11 +34,43 @@ import org.slf4j.LoggerFactory;
  * 
  * @author chaostone
  */
-public final class ConditionUtils {
-  private static final Logger logger = LoggerFactory.getLogger(ConditionUtils.class);
+public final class Conditions {
+  private static final Logger logger = LoggerFactory.getLogger(Conditions.class);
 
-  private ConditionUtils() {
+  private Conditions() {
     super();
+  }
+
+  public static Condition and(Condition... conditions) {
+    return concat(Arrays.asList(conditions), "and");
+  }
+
+  public static Condition and(List<Condition> conditions) {
+    return concat(conditions, "and");
+  }
+
+  public static Condition or(Condition... conditions) {
+    return concat(Arrays.asList(conditions), "or");
+  }
+
+  public static Condition or(List<Condition> conditions) {
+    return concat(conditions, "or");
+  }
+
+  static Condition concat(List<Condition> conditions, String concat) {
+    if (conditions.size() == 1) return conditions.get(0);
+    StringBuffer sb = new StringBuffer();
+    List<Object> params = CollectUtils.newArrayList();
+    sb.append("(");
+    for (Condition con : conditions) {
+      sb.append("( or (");
+      sb.append(con.getContent());
+      sb.append(')');
+      params.addAll(con.getParams());
+    }
+    sb.append(")");
+    sb.replace(0, "( or ".length() + 1, "(");
+    return new Condition(sb.toString()).params(params);
   }
 
   public static String toQueryString(final List<Condition> conditions) {

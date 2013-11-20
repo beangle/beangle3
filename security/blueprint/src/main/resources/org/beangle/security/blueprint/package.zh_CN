@@ -4,8 +4,7 @@ entity.funcResource=功能资源
 entity.user=用户
 entity.dataResource=业务对象
 entity.dataPermission=数据限制策略
-entity.profileField=数据权限维度
-entity.dataType=业务对象属性元信息
+entity.field=数据权限维度
 
 user.creator.fullname=创建者
 user.creator.name=创建者
