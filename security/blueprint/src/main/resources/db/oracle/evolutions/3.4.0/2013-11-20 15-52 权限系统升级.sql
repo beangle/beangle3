@@ -3,6 +3,7 @@ alter table se_roles drop column dynamic;
 
 --重新命名属性元信息
 rename se_profile_fields to se_fields;
+rename seq_se_profile_fields to seq_se_fields;
 
 --复制se_data_types的子段到se_fields
 alter table se_fields add type_name varchar2(100);
@@ -21,6 +22,7 @@ alter table se_data_fields modify type_name not null;
 
 alter table se_data_fields drop column type_id;
 drop table se_data_types;
+drop sequence seq_se_data_types;
 
 --合并se_roles和se_role_profiles
 alter table se_role_properties modify value not null;
@@ -30,4 +32,4 @@ update se_role_properties a set a.role_id=(select b.role_id from se_role_profile
 alter table se_role_properties modify role_id not null;
 alter table se_role_properties drop column profile_id;
 drop table se_role_profiles;
-
+drop sequence seq_se_role_profiles;
