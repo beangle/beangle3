@@ -16,25 +16,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint;
+package org.beangle.security.blueprint.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
-/**
- * 属性配置
- * 
- * @author chaostone
- * @version $Id: Profile.java Oct 21, 2011 8:43:35 AM chaostone $
- */
-public interface Profile {
+import org.beangle.commons.dao.impl.BaseServiceImpl;
+import org.beangle.commons.dao.query.builder.SqlBuilder;
+import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.service.UserDataProvider;
 
-  List<? extends Property> getProperties();
+public class SqlDataProvider extends BaseServiceImpl implements UserDataProvider {
 
-  Property getProperty(Field field);
+  @SuppressWarnings("unchecked")
+  public <T> List<T> getData(Field field, String source, Object... keys) {
+    try {
+      return (List<T>) entityDao.search(SqlBuilder.sql(source));
+    } catch (Exception e) {
+      logger.error("Get data error", e);
+    }
+    return Collections.emptyList();
+  }
 
-  void setProperty(Field field, String value);
+  public String getName() {
+    return "oql";
+  }
 
-  Property getProperty(String name);
-  
-  boolean matches(Profile other);
 }

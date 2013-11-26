@@ -37,6 +37,7 @@ import org.beangle.commons.entity.pojo.NumberIdHierarchyObject;
 import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.Field;
 import org.beangle.security.blueprint.Member;
+import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.Property;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
@@ -182,9 +183,8 @@ public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements 
     if (null == properties || properties.isEmpty()) {
       return null;
     } else {
-      for (Property p : properties) {
+      for (Property p : properties)
         if (p.getField().getName().equals(name)) return p;
-      }
     }
     return null;
   }
@@ -199,6 +199,27 @@ public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements 
     } else {
       if (null != property) properties.remove(property);
     }
+  }
+
+  @Override
+  public boolean matches(Profile other) {
+    boolean matched = true;
+    if (!properties.isEmpty()) {
+      for (Property property : properties) {
+        String me = property.getValue();
+        Property op = other.getProperty(property.getField());
+        String otherv = "";
+        if (null != op) otherv = op.getValue();
+        if (me.equals(Property.AllValue)) {
+          matched = otherv.equals(Property.AllValue);
+        } else {
+          matched = CollectUtils.newHashSet(Strings.split(otherv, ",")).contains(
+              CollectUtils.newHashSet(Strings.split(me, ",")));
+        }
+        if (!matched) break;
+      }
+    }
+    return matched;
   }
 
   public int compareTo(Role o) {

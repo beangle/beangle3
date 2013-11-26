@@ -20,6 +20,7 @@ package org.beangle.security.blueprint.nav.service;
 
 import java.util.List;
 
+import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.nav.Menu;
@@ -67,7 +68,7 @@ public interface MenuService {
    * @param profile
    * @param user
    */
-  List<Menu> getMenus(MenuProfile profile, User user);
+  List<Menu> getMenus(MenuProfile profile, User user, List<Profile> userProfiles);
 
   /**
    * 查询角色对应的菜单

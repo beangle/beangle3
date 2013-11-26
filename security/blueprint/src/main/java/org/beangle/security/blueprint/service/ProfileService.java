@@ -16,30 +16,51 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.data.service;
+package org.beangle.security.blueprint.service;
 
 import java.util.List;
 
 import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Profile;
+import org.beangle.security.blueprint.User;
+import org.beangle.security.blueprint.function.FuncResource;
 
-/**
- * @author chaostone
- * @version $Id: UserDataProvider.java Nov 9, 2010 7:18:38 PM chaostone $
- */
-public interface UserDataProvider {
+public interface ProfileService {
+  /**
+   * Get field enumerated values.
+   * 
+   * @param field
+   * @param profile
+   */
+  Object getProperty(Profile profile, Field field);
 
   /**
-   * extract data from source
+   * 查找用户对应的数据配置
    * 
-   * @param <T>
+   * @param user
+   */
+  List<Profile> getUserProfiles(User user);
+
+  /**
+   * 查找用户在指定资源上对应的数据配置
+   * 
+   * @param user
+   */
+  List<Profile> getUserProfiles(User user, FuncResource resource);
+
+  /**
+   * Search field values
+   * 
    * @param field
-   * @param source
    * @param keys
    */
-  <T> List<T> getData(Field field, String source, Object... keys);
+  List<?> getFieldValues(Field field, Object... keys);
 
   /**
-   * provider's unique name
+   * Search field
+   * 
+   * @param fieldName
    */
-  String getName();
+  Field getField(String fieldName);
+
 }

@@ -21,7 +21,6 @@ package org.beangle.security.blueprint.service;
 import java.util.List;
 
 import org.beangle.security.blueprint.Member;
-import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.model.UserBean;
 
@@ -67,13 +66,6 @@ public interface UserService {
    * @param userIds
    */
   List<User> getUsers(Long userIds[]);
-
-  /**
-   * 查询用户关联的member角色
-   * 
-   * @param userId
-   */
-  List<Role> getRoles(Long userId);
 
   /**
    * 查找关联组关系

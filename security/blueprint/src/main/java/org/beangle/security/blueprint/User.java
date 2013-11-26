@@ -72,6 +72,20 @@ public interface User extends Entity<Long>, TimeEntity, TemporalEntity, EnabledE
   List<Role> getRoles();
 
   /**
+   * 查找符合相应profiles的角色
+   * @param profiles
+   * @return
+   */
+  List<Role> getRoles(List<Profile> profiles);
+  
+  /**
+   * 用户对应的配置
+   * 
+   * @return
+   */
+  List<Profile> getProfiles();
+
+  /**
    * 创建者
    */
   User getCreator();

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.data.service.internal;
+package org.beangle.security.blueprint.service.impl;
 
 import java.util.Collection;
 import java.util.List;
@@ -30,7 +30,7 @@ import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.Field;
-import org.beangle.security.blueprint.data.service.UserDataResolver;
+import org.beangle.security.blueprint.service.UserDataResolver;
 
 public class IdentifierDataResolver implements UserDataResolver {
 

@@ -109,16 +109,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     publish(new UserAlterationEvent(Collections.singletonList(user)));
   }
 
-  // workground for no session
-  @SuppressWarnings({ "rawtypes", "unchecked" })
-  public List<Role> getRoles(Long userId) {
-    OqlBuilder builder = OqlBuilder.from(Member.class, "gm");
-    builder.where("gm.user.id=:userId and gm.member=true", userId).select("gm.role")
-        .orderBy("gm.role.indexno");
-    builder.cacheable();
-    return entityDao.search(builder);
-  }
-
   public List<Member> getMembers(User user, Member.Ship ship) {
     if (isRoot(user) && !Objects.equals(ship, Member.Ship.MEMBER)) {
       List<Member> members = CollectUtils.newArrayList();

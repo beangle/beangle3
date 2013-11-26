@@ -21,8 +21,6 @@ package org.beangle.security.blueprint.data.service;
 import java.util.List;
 
 import org.beangle.commons.dao.query.builder.OqlBuilder;
-import org.beangle.security.blueprint.Field;
-import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.UserProfile;
 import org.beangle.security.blueprint.data.DataPermission;
@@ -40,7 +38,7 @@ public interface DataPermissionService {
    * @param dataResource 数据资源名 不能为空
    * @param functionResource 数据资源名 不能为空
    */
-  DataPermission getPermission(Long userId, String dataResource, String functionResource);
+  DataPermission getPermission(User user, String dataResource, String functionResource);
 
   /**
    * 应用数据权限
@@ -52,33 +50,12 @@ public interface DataPermissionService {
   void apply(OqlBuilder<?> builder, DataPermission permission, UserProfile... profiles);
 
   /**
-   * Get field enumerated values.
+   * 应用数据权限
    * 
-   * @param field
-   * @param profile
+   * @param builder
+   * @param permission
+   * @param profiles
    */
-  Object getProperty(Profile profile, Field field);
-
-  /**
-   * 查找用户对应的数据配置
-   * 
-   * @param user
-   */
-  List<Profile> getUserProfiles(User user);
-
-  /**
-   * Search field values
-   * 
-   * @param field
-   * @param keys
-   */
-  List<?> getFieldValues(Field field, Object... keys);
-
-  /**
-   * Search field
-   * 
-   * @param fieldName
-   */
-  Field getField(String fieldName);
+  void apply(OqlBuilder<?> builder, DataPermission permission, List<UserProfile> profiles);
 
 }

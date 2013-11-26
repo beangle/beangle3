@@ -26,6 +26,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.impl.AbstractHierarchyService;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.util.HierarchyEntityUtils;
+import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.function.FuncPermission;
@@ -93,10 +94,10 @@ public class MenuServiceImpl extends AbstractHierarchyService<MenuBean> implemen
     return entityDao.search(query);
   }
 
-  public List<Menu> getMenus(MenuProfile profile, User user) {
+  public List<Menu> getMenus(MenuProfile profile, User user, List<Profile> userProfiles) {
     Set<Menu> menus = CollectUtils.newHashSet();
-    for (final Role role : user.getRoles()) {
-      if (role.isEnabled()) menus.addAll(getMenus(profile, role, Boolean.TRUE));
+    for (final Role role : user.getRoles(userProfiles)) {
+      menus.addAll(getMenus(profile, role, Boolean.TRUE));
     }
     return addParentMenus(menus);
   }
@@ -144,4 +145,5 @@ public class MenuServiceImpl extends AbstractHierarchyService<MenuBean> implemen
   public void move(Menu menu, Menu location, int indexno) {
     this.move((MenuBean) menu, (MenuBean) location, indexno);
   }
+
 }

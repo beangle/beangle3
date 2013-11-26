@@ -37,6 +37,7 @@ import org.beangle.commons.entity.pojo.NumberIdTimeObject;
 import org.beangle.commons.entity.util.EntityUtils;
 import org.beangle.commons.lang.Objects;
 import org.beangle.security.blueprint.Member;
+import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
 
@@ -74,6 +75,10 @@ public class UserBean extends NumberIdTimeObject<Long> implements User {
   /** 对应角色 */
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
   private Set<Member> members = CollectUtils.newHashSet();
+
+  /** 菜单列表 */
+  @OneToMany(mappedBy = "user", targetEntity = UserProfileBean.class)
+  private List<Profile> profiles = CollectUtils.newArrayList();
 
   /** 创建人 */
   @ManyToOne(fetch = FetchType.LAZY)
@@ -166,11 +171,24 @@ public class UserBean extends NumberIdTimeObject<Long> implements User {
     return members;
   }
 
-  public List<Role> getRoles() {
+  public List<Role> getRoles(List<Profile> profiles) {
     List<Role> roles = CollectUtils.newArrayList();
     for (Member member : members) {
-      if (member.isMember()) roles.add(member.getRole());
+      if (member.getRole().isEnabled() && member.isMember()) {
+        boolean matched = false;
+        if (member.getRole().getProperties().isEmpty()) matched = true;
+        else {
+          for (Profile profile : profiles) {
+            if (profile.matches(member.getRole())) {
+              matched = true;
+              break;
+            }
+          }
+        }
+        if (matched) roles.add(member.getRole());
+      }
     }
+
     Set<Role> allRoles = CollectUtils.newHashSet();
     for (Role g : roles) {
       while (null != g && !allRoles.contains(g)) {
@@ -182,6 +200,19 @@ public class UserBean extends NumberIdTimeObject<Long> implements User {
     roles.addAll(allRoles);
     Collections.sort(roles);
     return roles;
+  }
+
+  @Override
+  public List<Role> getRoles() {
+    return getRoles(this.getProfiles());
+  }
+
+  public List<Profile> getProfiles() {
+    return profiles;
+  }
+
+  public void setProfiles(List<Profile> profiles) {
+    this.profiles = profiles;
   }
 
   public void setMembers(Set<Member> members) {

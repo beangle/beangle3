@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.data.service.internal;
+package org.beangle.security.blueprint.service.impl;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -29,8 +29,8 @@ import org.beangle.commons.conversion.Conversion;
 import org.beangle.commons.conversion.impl.DefaultConversion;
 import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.Field;
-import org.beangle.security.blueprint.data.service.UserDataProvider;
-import org.beangle.security.blueprint.data.service.UserDataResolver;
+import org.beangle.security.blueprint.service.UserDataProvider;
+import org.beangle.security.blueprint.service.UserDataResolver;
 
 /**
  * Store list of objects using comma.

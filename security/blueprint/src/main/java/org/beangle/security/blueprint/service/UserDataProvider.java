@@ -16,30 +16,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.data.service.internal;
+package org.beangle.security.blueprint.service;
 
-import java.util.Collections;
 import java.util.List;
 
-import org.beangle.commons.dao.impl.BaseServiceImpl;
-import org.beangle.commons.dao.query.builder.SqlBuilder;
 import org.beangle.security.blueprint.Field;
-import org.beangle.security.blueprint.data.service.UserDataProvider;
 
-public class SqlDataProvider extends BaseServiceImpl implements UserDataProvider {
+/**
+ * @author chaostone
+ * @version $Id: UserDataProvider.java Nov 9, 2010 7:18:38 PM chaostone $
+ */
+public interface UserDataProvider {
 
-  @SuppressWarnings("unchecked")
-  public <T> List<T> getData(Field field, String source, Object... keys) {
-    try {
-      return (List<T>) entityDao.search(SqlBuilder.sql(source));
-    } catch (Exception e) {
-      logger.error("Get data error", e);
-    }
-    return Collections.emptyList();
-  }
+  /**
+   * extract data from source
+   * 
+   * @param <T>
+   * @param field
+   * @param source
+   * @param keys
+   */
+  <T> List<T> getData(Field field, String source, Object... keys);
 
-  public String getName() {
-    return "oql";
-  }
-
+  /**
+   * provider's unique name
+   */
+  String getName();
 }

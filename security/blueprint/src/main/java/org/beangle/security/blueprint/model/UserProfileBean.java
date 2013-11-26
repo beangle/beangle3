@@ -30,6 +30,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.pojo.LongIdObject;
 import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.Property;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.UserProfile;
@@ -51,7 +52,7 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
   /**
    * 用户自定义属性
    */
-  @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true,targetEntity=UserPropertyBean.class)
+  @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = UserPropertyBean.class)
   protected List<Property> properties = CollectUtils.newArrayList();
 
   public User getUser() {
@@ -90,6 +91,27 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
       }
     }
     return null;
+  }
+
+  @Override
+  public boolean matches(Profile other) {
+    boolean matched = true;
+    if (!properties.isEmpty()) {
+      for (Property property : properties) {
+        String me = property.getValue();
+        Property op = other.getProperty(property.getField());
+        String otherv = "";
+        if (null != op) otherv = op.getValue();
+        if (me.equals(Property.AllValue)) {
+          matched = otherv.equals(Property.AllValue);
+        } else {
+          matched = CollectUtils.newHashSet(Strings.split(otherv, ",")).contains(
+              CollectUtils.newHashSet(Strings.split(me, ",")));
+        }
+        if (!matched) break;
+      }
+    }
+    return matched;
   }
 
   public void setProperty(Field meta, String text) {

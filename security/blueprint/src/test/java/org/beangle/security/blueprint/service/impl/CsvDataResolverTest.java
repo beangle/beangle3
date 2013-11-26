@@ -16,40 +16,41 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.dao.query.builder;
+package org.beangle.security.blueprint.service.impl;
 
 import static org.testng.Assert.assertEquals;
 
 import java.util.List;
-import java.util.Map;
 
 import org.beangle.commons.collection.CollectUtils;
+import org.beangle.security.blueprint.model.FieldBean;
+import org.beangle.security.blueprint.model.RoleBean;
+import org.beangle.security.blueprint.service.impl.CsvDataResolver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 @Test
-public class ConditionUtilsTest {
+public class CsvDataResolverTest {
+  CsvDataResolver resolver = new CsvDataResolver();
+  FieldBean field = null;
 
   @BeforeClass
-  protected void setUp() throws Exception {
-
+  public void setUp() {
+    field = new FieldBean(1, "role", RoleBean.class.getName(), "oql:from Role");
+    field.setKeyName("id");
+    field.setProperties("name");
   }
 
-  @Test
-  public void testGetParamMap() throws Exception {
-    List<Condition> conditions = CollectUtils.newArrayList();
-    conditions.add(new Condition("std.id=:std_id", 1L));
-    Map<String, Object> params = Conditions.getParamMap(conditions);
-    assertEquals(params.size(), 1);
-    assertEquals(params.get("std_id"), 1L);
+  public void testMarshal() {
+    String text = resolver.marshal(field,
+        CollectUtils.newArrayList(new RoleBean(1, "role1", "role1"), new RoleBean(2, "role2", "role2")));
+    assertEquals(text, "id;name,1;role1,2;role2");
   }
 
-  @Test
-  public void testToQueryString() {
-    List<Condition> conditions = CollectUtils.newArrayList();
-    conditions.add(new Condition("user.id=:user_id", 1L));
-    conditions.add(new Condition("user.name=:std_name", "name"));
-    assertEquals("(user.id=:user_id) and (user.name=:std_name)", Conditions.toQueryString(conditions));
+  public void testUnmarshal() throws Exception {
+    List<?> rs = resolver.unmarshal(field, "id;name,1;role1,2;role2");
+    List<?> objs = CollectUtils.newArrayList(new RoleBean(1, "role1", "role1"), new RoleBean(2, "role2",
+        "role2"));
+    assertEquals(rs, objs);
   }
-
 }

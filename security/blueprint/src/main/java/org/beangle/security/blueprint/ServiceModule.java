@@ -19,15 +19,16 @@
 package org.beangle.security.blueprint;
 
 import org.beangle.commons.inject.bind.AbstractBindModule;
-import org.beangle.security.blueprint.data.service.internal.CsvDataResolver;
 import org.beangle.security.blueprint.data.service.internal.DataPermissionServiceImpl;
-import org.beangle.security.blueprint.data.service.internal.IdentifierDataResolver;
-import org.beangle.security.blueprint.data.service.internal.OqlDataProvider;
-import org.beangle.security.blueprint.data.service.internal.SqlDataProvider;
 import org.beangle.security.blueprint.function.service.internal.CacheableAuthorityManager;
 import org.beangle.security.blueprint.function.service.internal.FuncPermissionServiceImpl;
 import org.beangle.security.blueprint.nav.service.MenuServiceImpl;
+import org.beangle.security.blueprint.service.impl.CsvDataResolver;
+import org.beangle.security.blueprint.service.impl.IdentifierDataResolver;
+import org.beangle.security.blueprint.service.impl.OqlDataProvider;
+import org.beangle.security.blueprint.service.impl.SqlDataProvider;
 import org.beangle.security.blueprint.service.internal.DaoUserDetailServiceImpl;
+import org.beangle.security.blueprint.service.internal.ProfileServiceImpl;
 import org.beangle.security.blueprint.service.internal.RoleServiceImpl;
 import org.beangle.security.blueprint.service.internal.UserServiceImpl;
 import org.beangle.security.blueprint.session.service.WebSessioninfoBuilder;
@@ -51,11 +52,14 @@ public class ServiceModule extends AbstractBindModule {
     bind("authorityManager", CacheableAuthorityManager.class);
     bind(SessionProfileServiceImpl.class).shortName();
     bind(WebSessioninfoBuilder.class);
-    
+
     bind(IdentifierDataResolver.class, CsvDataResolver.class, OqlDataProvider.class, SqlDataProvider.class)
         .shortName();
 
-    bind("restrictionService", DataPermissionServiceImpl.class).property(
+    bind("restrictionService", DataPermissionServiceImpl.class).property("dataResolver",
+        ref(IdentifierDataResolver.class));
+
+    bind("userProfileService", ProfileServiceImpl.class).property(
         "providers",
         map(entry("csv", ref(CsvDataResolver.class)), entry("oql", ref(OqlDataProvider.class)),
             entry("sql", ref(SqlDataProvider.class)))).property("dataResolver",

@@ -18,12 +18,11 @@
  */
 package org.beangle.security.blueprint.data.service.internal;
 
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
@@ -33,36 +32,25 @@ import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.functor.Predicate;
 import org.beangle.security.blueprint.Field;
-import org.beangle.security.blueprint.Permission;
 import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.Property;
-import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.UserProfile;
 import org.beangle.security.blueprint.data.DataPermission;
 import org.beangle.security.blueprint.data.model.DataPermissionBean;
 import org.beangle.security.blueprint.data.service.DataPermissionService;
-import org.beangle.security.blueprint.data.service.UserDataProvider;
-import org.beangle.security.blueprint.data.service.UserDataResolver;
 import org.beangle.security.blueprint.function.service.FuncPermissionService;
+import org.beangle.security.blueprint.service.UserDataResolver;
 import org.beangle.security.blueprint.service.UserService;
 
 public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPermissionService {
 
   protected UserService userService;
 
-  protected Map<String, UserDataProvider> providers = CollectUtils.newHashMap();
-
   protected UserDataResolver dataResolver;
 
   protected FuncPermissionService permissionService;
-
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  public List<Profile> getUserProfiles(User user) {
-    List profiles = entityDao.search(OqlBuilder.from(UserProfile.class, "up").where("up.user=:user", user));
-    return profiles;
-  }
 
   /**
    * 查找数据资源和功能资源对应的数据权限。
@@ -115,45 +103,12 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
   /**
    * 查询用户在指定模块的数据权限
    */
-  public DataPermission getPermission(Long userId, String dataResourceName, String funcResourceName) {
-    List<Role> roles = userService.getRoles(userId);
-    for (Role role : roles) {
+  public DataPermission getPermission(User user, String dataResourceName, String funcResourceName) {
+    for (Role role : user.getRoles()) {
       List<? extends DataPermission> permissions = getPermissions(role, dataResourceName, funcResourceName);
-      if (!permissions.isEmpty()) { return permissions.get(0); }
+      if (!permissions.isEmpty()) return permissions.get(0);
     }
     return null;
-  }
-
-  @SuppressWarnings({ "rawtypes", "unchecked" })
-  public Collection<Profile> getProfiles(Collection<Role> roles, Resource resource) {
-    if (roles.isEmpty()) return Collections.EMPTY_LIST;
-    OqlBuilder builder = OqlBuilder.from("from " + Permission.class.getName() + " au");
-    builder.where("au.role in (:roles) and au.resource = :resource", roles, resource);
-    builder.select("au.role");
-    return entityDao.search(builder);
-  }
-
-  public List<?> getFieldValues(Field field, Object... keys) {
-    if (null == field.getSource()) return Collections.emptyList();
-    String source = field.getSource();
-    String prefix = Strings.substringBefore(source, ":");
-    source = Strings.substringAfter(source, ":");
-    UserDataProvider provider = providers.get(prefix);
-    if (null != provider) {
-      return provider.getData(field, source, keys);
-    } else {
-      throw new RuntimeException("not support data provider:" + prefix);
-    }
-  }
-
-  public Object getProperty(Profile profile, Field field) {
-    Property property = profile.getProperty(field);
-    if (null == property) return null;
-    if ("*".equals(property.getValue())) {
-      return getFieldValues(property.getField());
-    } else {
-      return unmarshal(property.getValue(), field);
-    }
   }
 
   /**
@@ -165,18 +120,20 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
   private Object unmarshal(String value, Field property) {
     try {
       List<Object> returned = dataResolver.unmarshal(property, value);
-      if (property.isMultiple()) {
-        return returned;
-      } else {
-        return (1 != returned.size()) ? null : returned.get(0);
-      }
+      if (property.isMultiple()) return returned;
+      else return (1 != returned.size()) ? null : returned.get(0);
     } catch (Exception e) {
       logger.error("exception with param type:" + property.getTypeName() + " value:" + value, e);
       return null;
     }
   }
 
-  public void apply(OqlBuilder<?> query, DataPermission permission, UserProfile... profiles) {
+  @Override
+  public void apply(OqlBuilder<?> builder, DataPermission permission, UserProfile... profiles) {
+    apply(builder, permission, Arrays.asList(profiles));
+  }
+
+  public void apply(OqlBuilder<?> query, DataPermission permission, List<UserProfile> profiles) {
     List<Object> paramValues = CollectUtils.newArrayList();
     // 处理限制对应的模式
     if (Strings.isEmpty(permission.getFilters())) return;
@@ -220,26 +177,12 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
     query.where(Conditions.or(conditions));
   }
 
-  public Field getField(String fieldName) {
-    List<Field> fields = entityDao.get(Field.class, "name", fieldName);
-    if (1 != fields.size()) { throw new RuntimeException("bad pattern parameter named :" + fieldName); }
-    return fields.get(0);
-  }
-
   public void setUserService(UserService userService) {
     this.userService = userService;
   }
 
   public void setPermissionService(FuncPermissionService permissionService) {
     this.permissionService = permissionService;
-  }
-
-  public Map<String, UserDataProvider> getProviders() {
-    return providers;
-  }
-
-  public void setProviders(Map<String, UserDataProvider> providers) {
-    this.providers = providers;
   }
 
   public void setDataResolver(UserDataResolver dataResolver) {

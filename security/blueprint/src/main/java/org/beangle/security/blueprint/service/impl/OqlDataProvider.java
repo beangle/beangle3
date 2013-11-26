@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.data.service.internal;
+package org.beangle.security.blueprint.service.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -28,7 +28,7 @@ import org.beangle.commons.conversion.impl.DefaultConversion;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.security.blueprint.Field;
-import org.beangle.security.blueprint.data.service.UserDataProvider;
+import org.beangle.security.blueprint.service.UserDataProvider;
 
 public class OqlDataProvider extends BaseServiceImpl implements UserDataProvider {
 

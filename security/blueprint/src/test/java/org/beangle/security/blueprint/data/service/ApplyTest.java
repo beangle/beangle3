@@ -29,11 +29,11 @@ import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.data.DataResource;
 import org.beangle.security.blueprint.data.model.DataPermissionBean;
 import org.beangle.security.blueprint.data.model.DataResourceBean;
-import org.beangle.security.blueprint.data.service.internal.CsvDataResolver;
 import org.beangle.security.blueprint.data.service.internal.DataPermissionServiceImpl;
 import org.beangle.security.blueprint.model.FieldBean;
 import org.beangle.security.blueprint.model.RoleBean;
 import org.beangle.security.blueprint.model.UserProfileBean;
+import org.beangle.security.blueprint.service.impl.CsvDataResolver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -47,7 +47,7 @@ public class ApplyTest {
   public void setUp() {
     CsvDataResolver resolver = new CsvDataResolver();
     dataPermissionService.setDataResolver(resolver);
-    dataPermissionService.getProviders().put(resolver.getName(), resolver);
+    //dataPermissionService.getProviders().put(resolver.getName(), resolver);
   }
 
   public void testApply() {

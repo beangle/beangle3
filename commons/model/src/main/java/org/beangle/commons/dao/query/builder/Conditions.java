@@ -57,19 +57,19 @@ public final class Conditions {
     return concat(conditions, "or");
   }
 
-  static Condition concat(List<Condition> conditions, String concat) {
+  static Condition concat(List<Condition> conditions, String andor) {
     if (conditions.size() == 1) return conditions.get(0);
     StringBuffer sb = new StringBuffer();
     List<Object> params = CollectUtils.newArrayList();
     sb.append("(");
     for (Condition con : conditions) {
-      sb.append("( or (");
+      sb.append(" " + andor + " (");
       sb.append(con.getContent());
       sb.append(')');
       params.addAll(con.getParams());
     }
     sb.append(")");
-    sb.replace(0, "( or ".length() + 1, "(");
+    sb.replace(0, (" " + andor + " ").length() + 1, "(");
     return new Condition(sb.toString()).params(params);
   }
 
