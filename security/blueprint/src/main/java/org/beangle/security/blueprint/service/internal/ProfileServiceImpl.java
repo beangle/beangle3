@@ -90,7 +90,8 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 
   @Override
   public List<Profile> getProfiles(User user, FuncResource resource) {
-    if (null == resource) return user.getProfiles();
+    if (null == resource || !resource.getScope().equals(FuncResource.Scope.Private)) return user
+        .getProfiles();
     List<Role> roles = CollectUtils.newArrayList();
     for (Member member : user.getMembers()) {
       if (member.getRole().isEnabled() && member.isMember()) roles.add(member.getRole());
