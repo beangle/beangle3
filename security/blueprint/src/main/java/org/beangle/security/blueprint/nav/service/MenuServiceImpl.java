@@ -45,7 +45,7 @@ public class MenuServiceImpl extends AbstractHierarchyService<MenuBean> implemen
     return getProfilesInternal(roles.toArray(new Role[roles.size()]));
   }
 
-  public MenuProfile getProfile(User user, Long profileId) {
+  public MenuProfile getProfile(User user, Integer profileId) {
     List<MenuProfile> profiles = getProfiles(user);
     if (profiles.isEmpty()) return null;
     MenuProfile profile = profiles.get(0);
@@ -60,7 +60,7 @@ public class MenuServiceImpl extends AbstractHierarchyService<MenuBean> implemen
     return profile;
   }
 
-  public MenuProfile getProfile(Role role, Long profileId) {
+  public MenuProfile getProfile(Role role, Integer profileId) {
     List<Role> path = HierarchyEntityUtils.getPath(role);
     List<MenuProfile> profiles = getProfilesInternal(path.toArray(new Role[path.size()]));
     if (profiles.isEmpty()) return null;

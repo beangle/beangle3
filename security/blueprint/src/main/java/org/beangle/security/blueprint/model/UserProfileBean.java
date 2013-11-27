@@ -102,11 +102,12 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
         Property op = this.getProperty(property.getField());
         String source = "";
         if (null != op) source = op.getValue();
-        if (target.equals(Property.AllValue)) {
-          matched = source.equals(Property.AllValue);
-        } else {
-          matched = CollectUtils.newHashSet(Strings.split(source, ",")).contains(
-              CollectUtils.newHashSet(Strings.split(target, ",")));
+        matched = source.equals(Property.AllValue);
+        if (!matched) {
+          if (!target.equals(Property.AllValue)) {
+            matched = CollectUtils.newHashSet(Strings.split(source, ",")).containsAll(
+                CollectUtils.newHashSet(Strings.split(target, ",")));
+          }
         }
         if (!matched) break;
       }

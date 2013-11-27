@@ -40,6 +40,7 @@ import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
+import org.beangle.security.blueprint.UserProfile;
 
 /**
  * 系统用户
@@ -77,7 +78,7 @@ public class UserBean extends NumberIdTimeObject<Long> implements User {
   private Set<Member> members = CollectUtils.newHashSet();
 
   /** 菜单列表 */
-  @OneToMany(mappedBy = "user", targetEntity = UserProfileBean.class)
+  @OneToMany(mappedBy = "user", targetEntity = UserProfile.class)
   private List<Profile> profiles = CollectUtils.newArrayList();
 
   /** 创建人 */

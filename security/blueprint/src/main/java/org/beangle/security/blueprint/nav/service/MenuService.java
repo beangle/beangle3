@@ -52,7 +52,7 @@ public interface MenuService {
    * @param user
    * @return profiles的第一个如果profileId is null
    */
-  MenuProfile getProfile(User user, Long profileId);
+  MenuProfile getProfile(User user, Integer profileId);
 
   /**
    * 查询角色能够适用的单个菜单配置
@@ -60,7 +60,7 @@ public interface MenuService {
    * @param role
    * @param profileId
    */
-  MenuProfile getProfile(Role role, Long profileId);
+  MenuProfile getProfile(Role role, Integer profileId);
 
   /**
    * 获取用户的直接权限范围内的资源和所具有角色的资源.
