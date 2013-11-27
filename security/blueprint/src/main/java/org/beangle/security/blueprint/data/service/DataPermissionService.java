@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.UserProfile;
+import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.data.DataPermission;
 
 /**
@@ -47,7 +47,7 @@ public interface DataPermissionService {
    * @param permission
    * @param profiles
    */
-  void apply(OqlBuilder<?> builder, DataPermission permission, UserProfile... profiles);
+  void apply(OqlBuilder<?> builder, DataPermission permission, Profile... profiles);
 
   /**
    * 应用数据权限
@@ -56,6 +56,6 @@ public interface DataPermissionService {
    * @param permission
    * @param profiles
    */
-  void apply(OqlBuilder<?> builder, DataPermission permission, List<UserProfile> profiles);
+  void apply(OqlBuilder<?> builder, DataPermission permission, List<Profile> profiles);
 
 }

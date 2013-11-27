@@ -36,7 +36,6 @@ import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.Property;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.UserProfile;
 import org.beangle.security.blueprint.data.DataPermission;
 import org.beangle.security.blueprint.data.model.DataPermissionBean;
 import org.beangle.security.blueprint.data.service.DataPermissionService;
@@ -129,11 +128,11 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
   }
 
   @Override
-  public void apply(OqlBuilder<?> builder, DataPermission permission, UserProfile... profiles) {
+  public void apply(OqlBuilder<?> builder, DataPermission permission, Profile... profiles) {
     apply(builder, permission, Arrays.asList(profiles));
   }
 
-  public void apply(OqlBuilder<?> query, DataPermission permission, List<UserProfile> profiles) {
+  public void apply(OqlBuilder<?> query, DataPermission permission, List<Profile> profiles) {
     List<Object> paramValues = CollectUtils.newArrayList();
     // 处理限制对应的模式
     if (Strings.isEmpty(permission.getFilters())) return;

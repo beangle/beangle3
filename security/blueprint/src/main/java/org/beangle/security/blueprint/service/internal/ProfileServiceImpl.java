@@ -22,19 +22,21 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Permission;
 import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.Property;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.UserProfile;
+import org.beangle.security.blueprint.function.FuncPermission;
 import org.beangle.security.blueprint.function.FuncResource;
 import org.beangle.security.blueprint.service.ProfileService;
 import org.beangle.security.blueprint.service.UserDataProvider;
@@ -52,12 +54,6 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 
   public void setProviders(Map<String, UserDataProvider> providers) {
     this.providers = providers;
-  }
-
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  public List<Profile> getUserProfiles(User user) {
-    List profiles = entityDao.search(OqlBuilder.from(UserProfile.class, "up").where("up.user=:user", user));
-    return profiles;
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -93,9 +89,31 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
   }
 
   @Override
-  public List<Profile> getUserProfiles(User user, FuncResource resource) {
-    // TODO Auto-generated method stub
-    return null;
+  public List<Profile> getProfiles(User user, FuncResource resource) {
+    if (null == resource) return user.getProfiles();
+    List<Role> roles = CollectUtils.newArrayList();
+    for (Member member : user.getMembers()) {
+      if (member.getRole().isEnabled() && member.isMember()) roles.add(member.getRole());
+    }
+    Set<Role> allRoles = CollectUtils.newHashSet();
+    for (Role g : roles) {
+      while (null != g && !allRoles.contains(g)) {
+        allRoles.add(g);
+        g = g.getParent();
+      }
+    }
+    List<FuncPermission> permissions = entityDao.search(OqlBuilder.from(FuncPermission.class, "fp").where(
+        "fp.role in(:roles) and fp.resource=:resource", allRoles, resource));
+    List<Profile> profiles = CollectUtils.newArrayList();
+    Set<Profile> allProfiles = CollectUtils.newHashSet(user.getProfiles());
+    for (FuncPermission permission : permissions) {
+      Role role = (Role) permission.getPrincipal();
+      for (Profile p : allProfiles) {
+        if (p.matches(role)) profiles.add(p);
+      }
+      allProfiles.removeAll(profiles);
+    }
+    return profiles;
   }
 
   /**

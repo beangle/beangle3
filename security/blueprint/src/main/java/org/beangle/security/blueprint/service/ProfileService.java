@@ -35,18 +35,11 @@ public interface ProfileService {
   Object getProperty(Profile profile, Field field);
 
   /**
-   * 查找用户对应的数据配置
-   * 
-   * @param user
-   */
-  List<Profile> getUserProfiles(User user);
-
-  /**
    * 查找用户在指定资源上对应的数据配置
    * 
    * @param user
    */
-  List<Profile> getUserProfiles(User user, FuncResource resource);
+  List<Profile> getProfiles(User user, FuncResource resource);
 
   /**
    * Search field values

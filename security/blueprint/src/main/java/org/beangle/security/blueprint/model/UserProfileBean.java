@@ -96,17 +96,17 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
   @Override
   public boolean matches(Profile other) {
     boolean matched = true;
-    if (!properties.isEmpty()) {
-      for (Property property : properties) {
-        String me = property.getValue();
-        Property op = other.getProperty(property.getField());
-        String otherv = "";
-        if (null != op) otherv = op.getValue();
-        if (me.equals(Property.AllValue)) {
-          matched = otherv.equals(Property.AllValue);
+    if (!other.getProperties().isEmpty()) {
+      for (Property property : other.getProperties()) {
+        String target = property.getValue();
+        Property op = this.getProperty(property.getField());
+        String source = "";
+        if (null != op) source = op.getValue();
+        if (target.equals(Property.AllValue)) {
+          matched = source.equals(Property.AllValue);
         } else {
-          matched = CollectUtils.newHashSet(Strings.split(otherv, ",")).contains(
-              CollectUtils.newHashSet(Strings.split(me, ",")));
+          matched = CollectUtils.newHashSet(Strings.split(source, ",")).contains(
+              CollectUtils.newHashSet(Strings.split(target, ",")));
         }
         if (!matched) break;
       }
