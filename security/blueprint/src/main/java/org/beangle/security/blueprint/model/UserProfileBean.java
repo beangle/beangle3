@@ -28,6 +28,7 @@ import javax.persistence.OneToMany;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
 import org.beangle.security.blueprint.Field;
 import org.beangle.security.blueprint.Profile;
@@ -126,4 +127,10 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
       if (null != property) properties.remove(property);
     }
   }
+
+  @Override
+  public String toString() {
+    return Objects.toStringBuilder(this).add("user", user).add("properties", properties).toString();
+  }
+  
 }

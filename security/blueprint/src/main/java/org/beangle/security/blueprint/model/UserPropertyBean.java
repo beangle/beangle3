@@ -25,6 +25,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.entity.pojo.LongIdObject;
+import org.beangle.commons.lang.Objects;
 import org.beangle.security.blueprint.Field;
 import org.beangle.security.blueprint.Property;
 import org.beangle.security.blueprint.UserProfile;
@@ -85,6 +86,11 @@ public class UserPropertyBean extends LongIdObject implements Property {
 
   public void setProfile(UserProfile profile) {
     this.profile = profile;
+  }
+
+  @Override
+  public String toString() {
+    return Objects.toStringBuilder(this).add("field", field.getName()).add("value", value).toString();
   }
 
 }
