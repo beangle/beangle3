@@ -47,7 +47,7 @@ public class BeangleVersion {
    * @return a {@link java.lang.String} object.
    */
   public static final String getVersion() {
-    return "3.2.0";
+    return "3.4.0";
   }
 
   /**
@@ -69,6 +69,6 @@ public class BeangleVersion {
    * @return a int.
    */
   public static final int getMinorVersion() {
-    return 2;
+    return 4;
   }
 }
