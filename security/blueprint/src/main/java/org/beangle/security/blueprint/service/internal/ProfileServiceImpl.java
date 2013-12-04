@@ -38,6 +38,7 @@ import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.function.FuncPermission;
 import org.beangle.security.blueprint.function.FuncResource;
+import org.beangle.security.blueprint.model.UserProfileBean;
 import org.beangle.security.blueprint.service.ProfileService;
 import org.beangle.security.blueprint.service.UserDataProvider;
 import org.beangle.security.blueprint.service.UserDataResolver;
@@ -47,6 +48,10 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
   protected UserDataResolver dataResolver;
 
   protected Map<String, UserDataProvider> providers = CollectUtils.newHashMap();
+
+  public Profile get(Long id) {
+    return entityDao.get(UserProfileBean.class, id);
+  }
 
   public Map<String, UserDataProvider> getProviders() {
     return providers;

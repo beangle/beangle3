@@ -83,11 +83,4 @@ public class RomanSeqStyle implements SeqNumStyle {
     }
     return true;
   }
-
-  public static void main(String[] args) {
-    RomanSeqStyle roman = new RomanSeqStyle();
-    for (int i = 0; i < 1000; i++) {
-      System.out.println(roman.buildText(String.valueOf(i + 1)));
-    }
-  }
 }

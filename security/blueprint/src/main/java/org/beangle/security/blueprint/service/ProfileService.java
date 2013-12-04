@@ -56,4 +56,12 @@ public interface ProfileService {
    */
   Field getField(String fieldName);
 
+  /**
+   * find profile
+   * 
+   * @param id
+   * @return
+   */
+  Profile get(Long id);
+
 }

@@ -94,11 +94,4 @@ public class HanZiSeqStyle implements SeqNumStyle {
     if (result.startsWith("一十")) result = result.substring(1);
     return result.replaceAll("零一十", "零十");
   }
-
-  public static void main(String[] args) {
-    HanZiSeqStyle s = new HanZiSeqStyle();
-    for (int i = 1; i < 1101; i++) {
-      System.out.println(s.buildText(String.valueOf(i)));
-    }
-  }
 }

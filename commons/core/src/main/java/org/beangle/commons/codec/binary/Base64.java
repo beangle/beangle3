@@ -21,9 +21,11 @@ package org.beangle.commons.codec.binary;
 import java.io.UnsupportedEncodingException;
 
 import org.beangle.commons.codec.net.BCoder;
+import org.beangle.commons.lang.Assert;
 
 /**
  * Base64 algorithm
+ * 
  * @author chaostone
  * @since 3.2.0
  */
@@ -113,9 +115,9 @@ public final class Base64 {
     codes[43] = 62;
     codes[47] = 63;
   }
-  
-  public static void main(String[] args) throws UnsupportedEncodingException{
-    System.out.println(new BCoder().encode("汉字123"));
-    System.out.println(Base64.encode("汉字123".getBytes("UTF-8")));
+
+  public static void main(String[] args) throws UnsupportedEncodingException {
+    String encoded = new BCoder().encode("汉字123");
+    Assert.isTrue(encoded.contains(new String(Base64.encode("汉字123".getBytes("UTF-8")))));
   }
 }
