@@ -49,6 +49,11 @@ public interface Container {
   /**
    * Gets an instance of the given dependency
    */
+  <T> Option<T> getBean(Object key,Class<T> type);
+
+  /**
+   * Gets an instance of the given dependency
+   */
   <T> Option<T> getBean(Class<T> type);
 
   /**

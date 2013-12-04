@@ -24,7 +24,7 @@ import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
+import org.beangle.commons.lang.Strings;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
@@ -565,7 +565,7 @@ public class SeleniumTestBase extends SeleniumTestBootstrap {
     protected void submitForm(String formName) throws Exception {
         // TODO HTML5 compatible
         String locator = "css=input[type=submit]";
-        if (StringUtils.isNotBlank(formName)) {
+        if (Strings.isNotBlank(formName)) {
             locator = "css=form[name=" + formName + "] input[type=submit]";
         }
         selenium.click(locator);
@@ -587,7 +587,7 @@ public class SeleniumTestBase extends SeleniumTestBootstrap {
      */
     protected void resetForm(String formName) throws Exception {
         String locator = "css=input[type=reset]";
-        if (StringUtils.isNotBlank(formName)) {
+        if (Strings.isNotBlank(formName)) {
             locator = "css=form[name=" + formName + "] input[type=reset]";
         }
         selenium.click(locator);

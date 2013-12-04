@@ -35,10 +35,9 @@ public abstract class EmsSeleniumTestBase extends BeangleSeleniumTestBase {
     @BeforeTest
     @Parameters({"username", "password"})
     public void login(String username, String password) {
-        selenium.open("/login.action");
+        selenium.open("login.action");
         selenium.type("id=username", username);
         selenium.type("id=password", password);
-        selenium.click("id=local_zh");
         selenium.click("name=submitBtn");
         selenium.waitForPageToLoad(PAGE_LOAD_TIMEOUT);
     }
@@ -74,7 +73,7 @@ public abstract class EmsSeleniumTestBase extends BeangleSeleniumTestBase {
      * @throws Exception
      */
     protected void e_clickNavBanner(String text) throws Exception {
-        String locator = "xpath=//ul[@id='nav_box']//a//span[contains(text(), '" + text + "')]";
+        String locator = "xpath=//ul[@id='nav_box']//a//span[contains(text(), '" + text + "')]/parent::a";
         selenium.click(locator);
         selenium.waitForPageToLoad(PAGE_LOAD_TIMEOUT);
     }

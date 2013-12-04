@@ -24,6 +24,7 @@ import java.util.Set;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.inject.Container;
 import org.beangle.commons.lang.Option;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 
@@ -78,6 +79,15 @@ public class SpringContainer implements Container {
   }
 
   @Override
+  public <T> Option<T> getBean(Object key, Class<T> type) {
+    try {
+      return Option.some((T) context.getBean(key.toString(), type));
+    } catch (BeansException e) {
+      return Option.none();
+    }
+  }
+
+  @Override
   public <T> Map<?, T> getBeans(Class<T> type) {
     return context.getBeansOfType(type);
   }
@@ -91,5 +101,4 @@ public class SpringContainer implements Container {
     return context;
   }
 
-  
 }

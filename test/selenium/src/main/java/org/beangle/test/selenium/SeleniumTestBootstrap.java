@@ -20,7 +20,7 @@ package org.beangle.test.selenium;
 
 import java.io.File;
 
-import org.apache.commons.lang.StringUtils;
+import org.beangle.commons.lang.Strings;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
@@ -57,11 +57,11 @@ public class SeleniumTestBootstrap  {
             @Optional("*firefox") String browserString, 
             @Optional("30000") String maxTimeout) throws Exception {
         seleniumDriver = null;
-        if (StringUtils.contains(browserString, "firefox")) {
+        if (Strings.contains(browserString, "firefox")) {
             seleniumDriver = new FirefoxDriver();
-        } else if (StringUtils.contains(browserString, "chrome")) {
+        } else if (Strings.contains(browserString, "chrome")) {
             seleniumDriver = new ChromeDriver();
-        } else if (StringUtils.contains(browserString, "ie")) {
+        } else if (Strings.contains(browserString, "ie")) {
             seleniumDriver = new InternetExplorerDriver();
         } else {
             seleniumDriver = new HtmlUnitDriver(true);

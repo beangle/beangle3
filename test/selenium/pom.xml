@@ -16,9 +16,13 @@
   
   <dependencies>
     <dependency>
+      <groupId>org.beangle.commons</groupId>
+      <artifactId>beangle-commons-core</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
-      <version>2.19.0</version>
+      <version>2.35.0</version>
     </dependency>
     <dependency>
       <groupId>org.testng</groupId>
