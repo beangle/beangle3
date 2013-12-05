@@ -149,7 +149,6 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
         Condition c = new Condition(content);
         List<String> params = c.getParamNames();
         for (final String paramName : params) {
-
           Property up = profile.getProperty(paramName);
           String value = null == up ? null : up.getValue();
           if (Strings.isNotEmpty(value)) {
@@ -173,7 +172,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
         conditions.add(con);
       }
     }
-    query.where(Conditions.or(conditions));
+    if (!conditions.isEmpty()) query.where(Conditions.or(conditions));
   }
 
   public void setUserService(UserService userService) {

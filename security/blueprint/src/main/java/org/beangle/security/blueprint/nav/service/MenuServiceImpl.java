@@ -94,10 +94,25 @@ public class MenuServiceImpl extends AbstractHierarchyService<MenuBean> implemen
     return entityDao.search(query);
   }
 
+  private boolean isDescendantOrMe(Role parent, Role me) {
+    if (null == parent) return true;
+    boolean finded = false;
+    Set<Role> checked = CollectUtils.newHashSet();
+    Role cur = me;
+    while (null != cur && !finded && !checked.contains(cur)) {
+      finded = cur.equals(parent);
+      checked.add(cur);
+      cur = cur.getParent();
+    }
+    return finded;
+  }
+
   public List<Menu> getMenus(MenuProfile profile, User user, List<Profile> userProfiles) {
     Set<Menu> menus = CollectUtils.newHashSet();
     for (final Role role : user.getRoles(userProfiles)) {
-      menus.addAll(getMenus(profile, role, Boolean.TRUE));
+      if (isDescendantOrMe(profile.getRole(), role)) {
+        menus.addAll(getMenus(profile, role, Boolean.TRUE));
+      }
     }
     return addParentMenus(menus);
   }

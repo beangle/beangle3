@@ -25,6 +25,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.Component;
 import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.util.ValidEntityKeyPredicate;
+import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +59,7 @@ public final class Conditions {
   }
 
   static Condition concat(List<Condition> conditions, String andor) {
+    Assert.isTrue(!conditions.isEmpty(), "conditions shouldn't be empty!");
     if (conditions.size() == 1) return conditions.get(0);
     StringBuffer sb = new StringBuffer();
     List<Object> params = CollectUtils.newArrayList();
