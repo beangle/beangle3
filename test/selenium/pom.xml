@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.beangle.test</groupId>
     <artifactId>beangle-test-parent</artifactId>
-    <version>3.4.2-SNAPSHOT</version>    
+    <version>3.4.2</version>    
   </parent>
   <artifactId>beangle-test-selenium</artifactId>
   <packaging>jar</packaging>
