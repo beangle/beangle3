@@ -28,6 +28,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Strings;
+import org.beangle.security.auth.Principals;
 import org.beangle.security.blueprint.Field;
 import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Permission;
@@ -95,8 +96,8 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 
   @Override
   public List<Profile> getProfiles(User user, FuncResource resource) {
-    if (null == resource || !resource.getScope().equals(FuncResource.Scope.Private)) return user
-        .getProfiles();
+    if (null == resource || !resource.getScope().equals(FuncResource.Scope.Private)
+        || Principals.ROOT.equals(user.getId())) return user.getProfiles();
     List<Role> roles = CollectUtils.newArrayList();
     for (Member member : user.getMembers()) {
       if (member.getRole().isEnabled() && member.isMember()) roles.add(member.getRole());
