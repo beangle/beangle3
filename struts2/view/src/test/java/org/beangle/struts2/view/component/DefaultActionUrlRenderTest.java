@@ -18,7 +18,7 @@
  */
 package org.beangle.struts2.view.component;
 
-import org.beangle.struts2.view.bean.DefaultActionUrlRender;
+import org.beangle.struts2.view.bean.DefaultActionUriRender;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -26,7 +26,7 @@ import org.testng.annotations.Test;
 public class DefaultActionUrlRenderTest {
 
   public void testRender() {
-    DefaultActionUrlRender render = new DefaultActionUrlRender();
+    DefaultActionUriRender render = new DefaultActionUriRender();
     render.setSuffix("action,,");
     Assert.assertEquals(render.render("/", "login"), "/login.action");
   }

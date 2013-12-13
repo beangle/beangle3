@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
 public class UrlRenderTest {
 
   public void testRender() {
-    UrlRender render = new UrlRender(".html");
+    UriRender render = new UriRender("/demo", ".html");
     String uri = "/demo/security/user!list.html";
     String result = render.render(uri, "user");
     Assert.assertEquals(result, "/demo/security/user.html");
@@ -45,10 +45,10 @@ public class UrlRenderTest {
   }
 
   public void testRenderEmptyContext() {
-    UrlRender render = new UrlRender();
+    UriRender render = new UriRender(null,null);
     String uri = "/user!list";
-    String result = render.render(uri, "user");
-    Assert.assertEquals(result, "/user");
+    String result = render.render("/security/user", "/security/role");
+    Assert.assertEquals(result, "/security/role");
 
     result = render.render(uri, "user!search");
     Assert.assertEquals(result, "/user!search");

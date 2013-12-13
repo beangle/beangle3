@@ -25,24 +25,30 @@ import java.util.Map;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
 
-public class UrlRender {
+public class UriRender {
 
-  private String suffix;
+  private final String context;
+
+  private final String suffix;
   // encode
   private boolean escapeAmp;
 
-  public UrlRender() {
-    super();
-  }
-
-  public UrlRender(String suffix) {
-    super();
+  public UriRender(String context, String suffix) {
     if (null != suffix) {
       if (suffix.charAt(0) != '.') {
         this.suffix = "." + suffix;
       } else {
         this.suffix = suffix;
       }
+    } else {
+      this.suffix = "";
+    }
+    if (null == context || context.equals("/")) {
+      this.context = "";
+    } else {
+      if (context.endsWith("/")) context = context.substring(0, context.length() - 1);
+      if (!context.startsWith("/")) context = "/" + context;
+      this.context = context;
     }
   }
 
@@ -106,8 +112,6 @@ public class UrlRender {
     }
     // uri
     if (uri.startsWith("/")) {
-      int rirstslash = referer.indexOf("/", 1);
-      String context = (-1 == rirstslash) ? "" : referer.substring(0, rirstslash);
       sb.append(context);
       sb.append(uri.substring(0, questIndex));
     } else {
@@ -137,10 +141,6 @@ public class UrlRender {
 
   public String getSuffix() {
     return suffix;
-  }
-
-  public void setSuffix(String prefix) {
-    this.suffix = prefix;
   }
 
   public boolean isEscapeAmp() {

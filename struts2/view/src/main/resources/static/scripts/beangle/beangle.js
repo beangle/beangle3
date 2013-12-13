@@ -24,7 +24,7 @@
   var beangle=function (){
     return true;
   };
-  
+
   /** extend function */
   beangle.extend= function(map){
     for(attr in map){
@@ -39,8 +39,10 @@
   window.beangle=beangle;
   window.bg=beangle;
 
+  beangle.contextPath=null;
+
   beangle.ajaxhistory=(typeof History!="undefined" && typeof History.Adapter !="undefined");
-  
+
   beangle.displayAjaxMessage=function() {
     var loadingMessage = "Loading...";
     var mz = document.getElementById('messageZone');
@@ -67,7 +69,7 @@
       var mz = document.getElementById('messageZone');
       if(mz)mz.style.visibility='hidden';
   };
-  
+
   //History--------------------------
   beangle.history = {
     //最多存储20个状态
@@ -96,7 +98,7 @@
             });
         });
     },
-    
+
     Go : function(url,target){
       jQuery.ajax({
         url: url,cache:false,
@@ -140,10 +142,10 @@
           form = "#" + form;
         }
         if(jQuery.type(target)=="string" && target.indexOf("#")!=0){
-          target = "#" + target;    
+          target = "#" + target;
         }
         bg.displayAjaxMessage();
-        
+
         jQuery(form).ajaxForm({
           success:function(result)  {
             bg.history.snapshot();
@@ -192,7 +194,11 @@
       return false;
     },
     getContextPath : function (){
-      return self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)
+      if(null===beangle.contextPath){
+        return self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1);
+      }else{
+        return beangle.contextPath;
+      }
     },
     ready:function (fn){
         jQuery(document).ready(fn);
@@ -234,7 +240,7 @@
       return finalTarget;
     }
   });
-  
+
   // Assert------------------------
   beangle.extend({
     assert:{
@@ -269,7 +275,7 @@
       }
     }
   });
-  
+
   // Event--------------------------------------------------
   beangle.extend({
     event:{
@@ -284,7 +290,7 @@
       }
     }
   });
-  
+
   // Input----------------------------------------------------
   beangle.extend({
     input:{
@@ -298,10 +304,10 @@
       getRadioValue : function (radioName){
         return bg.input.boxAction(document.getElementsByName(radioName), "value");
       },
-      
+
       /**
        * 返回多选列表中选择的值
-       * @return 多个值以,相隔.没有选中时,返回"" 
+       * @return 多个值以,相隔.没有选中时,返回""
        */
       getCheckBoxValues : function (chkname){
         var tmpIds= bg.input.boxAction(document.getElementsByName(chkname), "value");
@@ -339,7 +345,7 @@
                     val = box[i].value;
                   } else if (box[i].type == "checkbox"){
                     if (val != "")
-                      val = val + ",";  
+                      val = val + ",";
                     val = val + box[i].value;
                   }
                 }
@@ -369,7 +375,7 @@
       },
       /** iframe 页面自适应大小
        * @targObj    iframe
-       * @extraHight 
+       * @extraHight
        */
       adapt: function (targObj,extraHight){
         var frames, targWin, totalHeight, myHeight;
@@ -432,7 +438,7 @@
         if(action==null) action=myForm.action;
 
         if(action.indexOf("http://")==0) action=action.substring(action.indexOf("/",7));
-        
+
         if(null==ajax || ajax) ajax=bg.isAjaxTarget(submitTarget);
 
         // 4. fire
@@ -474,7 +480,7 @@
       submitId : function (form,id,isMulti,action,promptMsg,ajax){
         var selectId = bg.input.getCheckBoxValues(id);
         if(null==isMulti) isMulti=false;
-        
+
         if(""==selectId){
           alert(isMulti?"请选择一个或多个进行操作":"请选择一个进行操作");
           return;
@@ -552,7 +558,7 @@
           }
         }
       },
-      
+
       addParamsInput : function (form,value){
         bg.form.addInput(form,"params",value,"hidden");
       },
@@ -564,14 +570,14 @@
       },
 
       /**
-       * 收集给定form中的input||select参数（不论input的类型）.<b> 
+       * 收集给定form中的input||select参数（不论input的类型）.<b>
        * 但不收集params的input,这个作为保留名称
-       * @param form  
-       * @param prefix 指明所有input||select的前缀，如果没有前缀可以忽略 
+       * @param form
+       * @param prefix 指明所有input||select的前缀，如果没有前缀可以忽略
        * @param getEmpty 是否收集值为空的属性
-       * @return 返回参数列表串形如：&input1=...&input2=... 
-       * @author chaostone 2006-4-7 
-       * 
+       * @return 返回参数列表串形如：&input1=...&input2=...
+       * @author chaostone 2006-4-7
+       *
        */
       getInputParams : function (form,prefix,getEmpty){
         var elems = form.elements, params = "", i;
@@ -640,7 +646,7 @@
       }
     }
   });
-  
+
   //select---------------------
   beangle.extend({
     select:{
@@ -655,37 +661,37 @@
       },
       getSelectedValues : function (select){
         var val = "", i, options = select.options;
-        for (i = 0; i < options.length; i++){   
+        for (i = 0; i < options.length; i++){
           if (options[i].selected){
             if (val != "")
-              val = val + ",";  
+              val = val + ",";
             val = val + options[i].value;
           }
         }
         return val;
       },
-      hasOption : function (select, op){ 
+      hasOption : function (select, op){
         for (var i = 0; i< select.length; i++ ){
           if (select.options[i].value == op.value)
             return true;
         }
         return false;
       },
-      
+
       moveSelected : function (srcSelect, destSelect){
         var i, op;
         for (i = 0; i < srcSelect.length; i++){
-          if (srcSelect.options[i].selected){ 
+          if (srcSelect.options[i].selected){
             op = srcSelect.options[i];
             if (!bg.select.hasOption(destSelect, op)){
                destSelect.options[destSelect.length]= new Option(op.text, op.value);
             }
            }
         }
-        bg.select.removeSelected(srcSelect);   
+        bg.select.removeSelected(srcSelect);
         bg.select.clearStatus(srcSelect);
       },
-      
+
       clearStatus : function (select){
         for (var i=0; i<select.options.length; i++)
           select.options[i].selected = false;
@@ -697,8 +703,8 @@
       },
       removeSelected : function (select){
         var options = select.options, i;
-        for (i = options.length-1; i >= 0; i--){   
-          if (options[i].selected){  
+        for (i = options.length-1; i >= 0; i--){
+          if (options[i].selected){
             options[i] = null;
           }
         }
@@ -744,7 +750,7 @@
       }
     }
   });
-  
+
   // Page---------------------------------------------------------------------
   function Page(action,target,pageNo,pageSize,total){
     this.formid = "form_" + bg.randomInt();
@@ -752,7 +758,7 @@
     this.target=target;
     this.paramMap={};
     this.params = function(){ return this.paramMap;}
-    
+
     this.pageInfo = function(pageNo,pageSize,total){
       this.pageNo=pageNo;
       this.pageSize=pageSize;
@@ -766,9 +772,9 @@
         this.maxPageNo=1;
       }
     }
-    
+
     this.pageInfo(pageNo,pageSize,total);
-    
+
     this.action=function(actionurl){
       this.actionurl=actionurl;
       return this;
@@ -785,7 +791,7 @@
       }
       return this;
     }
-    
+
     this.getForm = function(){
       myForm=document.getElementById(this.formid);
       if(null==myForm){
@@ -860,7 +866,7 @@
   bg.extend({
     page:function (action,target){return new Page(action,target);}
   });
-  
+
   bg.onReturn = function(event, action) {
     if (!event) {
       event = window.event;
@@ -869,7 +875,7 @@
       action();
     }
   };
-  
+
   beangle.ready(beangle.iframe.adaptSelf);
   if(beangle.ajaxhistory)beangle.history.init();
 })(window);

@@ -24,7 +24,7 @@ package org.beangle.struts2.view.bean;
  * @author chaostone
  * @since 2.4
  */
-public interface ActionUrlRender {
+public interface ActionUriRender {
 
   String render(String referer, String uri);
 }

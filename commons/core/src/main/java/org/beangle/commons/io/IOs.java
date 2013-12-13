@@ -18,7 +18,15 @@
  */
 package org.beangle.commons.io;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.Closeable;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,6 +105,16 @@ public class IOs {
 
   public static List<String> readLines(InputStream input) throws IOException {
     return readLines(new InputStreamReader(input));
+  }
+
+  public static void write(String data, OutputStream output, Charset encoding) throws IOException {
+    if (data != null) {
+      if (encoding == null) {
+        output.write(data.getBytes());
+      } else {
+        output.write(data.getBytes(encoding));
+      }
+    }
   }
 
   public static void close(Closeable closeable) {

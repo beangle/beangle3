@@ -18,7 +18,7 @@
  */
 package org.beangle.struts2.convention.route.impl;
 
-import static org.beangle.commons.lang.Strings.substringAfterLast;
+import static org.beangle.commons.lang.Strings.substringBeforeLast;
 import static org.beangle.commons.lang.Strings.unCamel;
 import static org.beangle.commons.lang.Strings.uncapitalize;
 
@@ -55,7 +55,7 @@ public class DefaultActionBuilder implements ActionBuilder {
       String name = an.value();
       if (!name.startsWith("/")) {
         if (Constants.SEO_URI.equals(profile.getUriPathStyle())) {
-          sb.append(unCamel(substringAfterLast(profile.getInfix(className), "/") + name));
+          sb.append(unCamel(substringBeforeLast(profile.getInfix(className), "/")) + "/" + name);
         } else {
           sb.append(name);
         }

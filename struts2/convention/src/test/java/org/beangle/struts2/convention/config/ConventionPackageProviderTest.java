@@ -66,12 +66,7 @@ public class ConventionPackageProviderTest {
     };
     PackageConfig strutsDefault = makePackageConfig("beangle", null, null, "dispatcher", null, null, null);
     configuration.addPackageConfig("beangle", strutsDefault);
-    // ResultMapBuilder resultMapBuilder =
-    // createStrictMock(ResultMapBuilder.class);
-    // set beans on mock container
     mockContainer.setActionNameBuilder(actionNameBuilder);
-    // mockContainer.setResultMapBuilder(resultMapBuilder);
-    // mockContainer.setConventionsService(new ConventionsServiceImpl(""));
 
     ConventionPackageProvider builder = new ConventionPackageProvider(configuration, of, null, null,
         actionNameBuilder, new DefaultTextBundleRegistry(), null);
@@ -90,16 +85,6 @@ public class ConventionPackageProviderTest {
       }
     }
   }
-
-  // private void verifyActionConfig(PackageConfig pkgConfig, String
-  // actionName,
-  // Class<?> actionClass, String methodName, String packageName) {
-  // ActionConfig ac = pkgConfig.getAllActionConfigs().get(actionName);
-  // assertNotNull(ac);
-  // assertEquals(actionClass.getName(), ac.getClassName());
-  // assertEquals(methodName, ac.getMethodName());
-  // assertEquals(packageName, ac.getPackageName());
-  // }
 
   public class MyPackageConfig extends PackageConfig {
     private static final long serialVersionUID = 1L;

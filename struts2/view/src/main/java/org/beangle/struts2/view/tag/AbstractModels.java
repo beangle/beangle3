@@ -32,7 +32,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.text.i18n.TextResource;
 import org.beangle.commons.text.i18n.TextResourceProvider;
 import org.beangle.struts2.view.UITheme;
-import org.beangle.struts2.view.bean.ActionUrlRender;
+import org.beangle.struts2.view.bean.ActionUriRender;
 import org.beangle.struts2.view.bean.IndexableIdGenerator;
 import org.beangle.struts2.view.component.Component;
 import org.beangle.struts2.view.template.Theme;
@@ -57,7 +57,7 @@ public abstract class AbstractModels {
 
   protected final UITheme theme;
 
-  protected final ActionUrlRender render;
+  protected final ActionUriRender render;
 
   protected final TextResource textResource;
 
@@ -82,10 +82,10 @@ public abstract class AbstractModels {
       ctx.put(GeneratorName, new IndexableIdGenerator(Math.abs(fullpath.hashCode())));
     }
 
-    ActionUrlRender urlRender = (ActionUrlRender) ctx.get(UrlRenderName);
+    ActionUriRender urlRender = (ActionUriRender) ctx.get(UrlRenderName);
     if (null == urlRender) {
       Container container = (Container) stack.getContext().get(ActionContext.CONTAINER);
-      urlRender = container.getInstance(ActionUrlRender.class);
+      urlRender = container.getInstance(ActionUriRender.class);
       ctx.put(UrlRenderName, urlRender);
     }
     this.render = urlRender;

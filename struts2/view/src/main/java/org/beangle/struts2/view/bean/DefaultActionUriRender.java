@@ -18,15 +18,16 @@
  */
 package org.beangle.struts2.view.bean;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.StrutsConstants;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.web.url.UrlRender;
+import org.beangle.commons.web.url.UriRender;
 
 import com.opensymphony.xwork2.inject.Inject;
 
-public class DefaultActionUrlRender implements ActionUrlRender {
+public class DefaultActionUriRender implements ActionUriRender {
 
-  private UrlRender render;
+  private UriRender render;
 
   public String render(String referer, String uri) {
     return render.render(referer, uri);
@@ -40,7 +41,7 @@ public class DefaultActionUrlRender implements ActionUrlRender {
       if (-1 == commaIndex) firstSuffix = suffix;
       else firstSuffix = suffix.substring(0, commaIndex);
     }
-    render = new UrlRender(firstSuffix);
+    render = new UriRender(ServletActionContext.getServletContext().getContextPath(), firstSuffix);
   }
 
 }

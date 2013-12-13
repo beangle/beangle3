@@ -25,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.util.List;
@@ -215,4 +216,21 @@ public class Files {
       return true;
     }
   }
+
+  public static void writeStringToFile(File file, String data, Charset charset) throws IOException {
+    writeStringToFile(file, data, charset, false);
+  }
+
+  public static void writeStringToFile(File file, String data, Charset charset, boolean append)
+      throws IOException {
+    OutputStream out = null;
+    try {
+      out = new FileOutputStream(file, append);
+      IOs.write(data, out, charset);
+      out.close();
+    } finally {
+      IOs.close(out);
+    }
+  }
+
 }

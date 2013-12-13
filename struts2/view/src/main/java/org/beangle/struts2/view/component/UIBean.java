@@ -32,7 +32,7 @@ import org.apache.struts2.ServletActionContext;
 import org.beangle.commons.lang.Chars;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.text.i18n.TextResource;
-import org.beangle.struts2.view.bean.ActionUrlRender;
+import org.beangle.struts2.view.bean.ActionUriRender;
 import org.beangle.struts2.view.bean.UIIdGenerator;
 import org.beangle.struts2.view.template.TemplateEngine;
 import org.beangle.struts2.view.template.Theme;
@@ -162,7 +162,7 @@ public abstract class UIBean extends Component {
   }
 
   protected String render(String uri) {
-    return ((ActionUrlRender) stack.getContext().get(UrlRenderName)).render(getRequestURI(), uri);
+    return ((ActionUriRender) stack.getContext().get(UrlRenderName)).render(getRequestURI(), uri);
   }
 
   protected void generateIdIfEmpty() {

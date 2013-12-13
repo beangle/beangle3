@@ -20,7 +20,6 @@ package org.beangle.orm.hibernate;
 
 import org.beangle.commons.entity.metadata.impl.ConvertPopulatorBean;
 import org.beangle.commons.inject.bind.AbstractBindModule;
-import org.beangle.orm.hibernate.internal.HibernateEntityContext;
 import org.beangle.orm.hibernate.internal.HibernateModelMeta;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -67,7 +66,7 @@ public class DefaultModule extends AbstractBindModule {
     bind(DefaultTableNamingStrategy.class).property("resources",
         ";classpath*:META-INF/beangle/table.properties;classpath:beangle/table.properties");
 
-    bind(HibernateModelMeta.class, ConvertPopulatorBean.class, HibernateEntityContext.class);
+    bind(HibernateModelMeta.class, ConvertPopulatorBean.class);
 
     bind("entityDao", TransactionProxyFactoryBean.class).proxy("target", HibernateEntityDao.class).parent(
         "baseTransactionProxy");
