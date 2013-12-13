@@ -25,6 +25,7 @@ import org.apache.struts2.StrutsConstants;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.web.url.UriRender;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.inject.Inject;
 
 public class DefaultActionUriRender implements ActionUriRender {
@@ -43,10 +44,10 @@ public class DefaultActionUriRender implements ActionUriRender {
       if (-1 == commaIndex) firstSuffix = suffix;
       else firstSuffix = suffix.substring(0, commaIndex);
     }
-    ServletContext sc = ServletActionContext.getServletContext();
     String context = null;
-    if (null != sc) {
-      context = sc.getContextPath();
+    if (null != ActionContext.getContext()) {
+      ServletContext sc = ServletActionContext.getServletContext();
+      if (null != sc) context = sc.getContextPath();
     }
     render = new UriRender(context, firstSuffix);
   }
