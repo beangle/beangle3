@@ -18,6 +18,8 @@
  */
 package org.beangle.struts2.view.bean;
 
+import javax.servlet.ServletContext;
+
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.StrutsConstants;
 import org.beangle.commons.lang.Strings;
@@ -41,7 +43,12 @@ public class DefaultActionUriRender implements ActionUriRender {
       if (-1 == commaIndex) firstSuffix = suffix;
       else firstSuffix = suffix.substring(0, commaIndex);
     }
-    render = new UriRender(ServletActionContext.getServletContext().getContextPath(), firstSuffix);
+    ServletContext sc = ServletActionContext.getServletContext();
+    String context = null;
+    if (null != sc) {
+      context = sc.getContextPath();
+    }
+    render = new UriRender(context, firstSuffix);
   }
 
 }
