@@ -40,7 +40,7 @@ public class UserPropertyBean extends LongIdObject implements Property {
   private static final long serialVersionUID = 1L;
 
   /** 值 */
-  @Size(max = 1000)
+  @Size(max = 4000)
   private String value;
 
   /** 属性元 */

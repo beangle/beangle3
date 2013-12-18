@@ -43,7 +43,7 @@ public class UriRender {
     } else {
       this.suffix = "";
     }
-    if (null == context || context.equals("/")) {
+    if (Strings.isEmpty(context) || context.equals("/")) {
       this.context = "";
     } else {
       if (context.endsWith("/")) context = context.substring(0, context.length() - 1);
