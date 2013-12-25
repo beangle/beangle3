@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>org.beangle.struts2</groupId>
+    <artifactId>beangle-struts2-parent</artifactId>
+    <version>3.4.5-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.beangle.struts2</groupId>
+  <artifactId>beangle-struts2-captcha</artifactId>
+  <packaging>jar<!--bundle--></packaging>
+  <name>Beangle Struts2 Captcha</name>
+
+  <properties>
+    <bundle.symbolicName>org.beangle.struts2.captcha</bundle.symbolicName>
+    <bundle.namespace>org.beangle.struts2.captcha</bundle.namespace>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.beangle.struts2</groupId>
+      <artifactId>beangle-struts2-view</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+</project>

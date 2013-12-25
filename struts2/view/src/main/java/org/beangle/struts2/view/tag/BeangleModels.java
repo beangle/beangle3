@@ -50,7 +50,6 @@ import org.beangle.struts2.view.component.Pagebar;
 import org.beangle.struts2.view.component.Password;
 import org.beangle.struts2.view.component.Radio;
 import org.beangle.struts2.view.component.Radios;
-import org.beangle.struts2.view.component.Recaptcha;
 import org.beangle.struts2.view.component.Reset;
 import org.beangle.struts2.view.component.Select;
 import org.beangle.struts2.view.component.Select2;
@@ -299,10 +298,6 @@ public class BeangleModels extends AbstractModels {
 
   public TagModel getRadios() {
     return get(Radios.class);
-  }
-
-  public TagModel getRecaptcha() {
-    return get(Recaptcha.class);
   }
 
   public TagModel getStartend() {

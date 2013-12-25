@@ -16,51 +16,34 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.struts2.view.component;
+package org.beangle.struts2.captcha.component;
 
-import java.util.Set;
-
-import org.beangle.commons.collection.CollectUtils;
+import org.beangle.struts2.captcha.service.CaptchaProvider;
+import org.beangle.struts2.view.component.ClosingUIBean;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
 /**
- * Google support online captcha
+ * Recaptcha tag
  * 
  * @author chaostone
  * @since 3.0.0
  */
 public class Recaptcha extends ClosingUIBean {
 
-  private String theming = "red";
-
-  private String publickey;
-
-  private static Set<String> buildins = CollectUtils.newHashSet("red", "clean", "white", "blackglass");
+  private CaptchaProvider provider;
 
   public Recaptcha(ValueStack stack) {
     super(stack);
     generateIdIfEmpty();
   }
 
-  public void setTheming(String theming) {
-    this.theming = theming;
+  public void setProvider(CaptchaProvider provider) {
+    this.provider = provider;
   }
 
-  public String getTheming() {
-    return theming;
-  }
-
-  public String getPublickey() {
-    return publickey;
-  }
-
-  public void setPublickey(String publickey) {
-    this.publickey = publickey;
-  }
-
-  public boolean isBuildinTheming() {
-    return buildins.contains(theming);
+  public CaptchaProvider getProvider() {
+    return provider;
   }
 
 }

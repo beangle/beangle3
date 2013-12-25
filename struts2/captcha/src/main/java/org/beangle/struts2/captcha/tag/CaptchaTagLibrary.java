@@ -16,24 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.struts2.view.util;
+package org.beangle.struts2.captcha.tag;
 
-import org.beangle.commons.lang.Strings;
-import org.beangle.commons.web.util.HttpUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.beangle.struts2.view.tag.AbstractTagLibrary;
+
+import com.opensymphony.xwork2.util.ValueStack;
 
 /**
- * Recapcha Utility
- * 
  * @author chaostone
- * @since 3.0.0
+ * @since 2.4
  */
-public final class RecaptchaUtils {
+public class CaptchaTagLibrary extends AbstractTagLibrary {
 
-  public static boolean isValid(String remoteip, String privatekey, String challenge, String response) {
-    if (Strings.isEmpty(response)) { return false; }
-    String result = HttpUtils.getResponseText("http://www.google.com/recaptcha/api/verify?remoteip="
-        + remoteip + "&privatekey=" + privatekey + "&challenge=" + challenge + "&response=" + response);
-    if (!result.contains("true")) { return false; }
-    return true;
+  public Object getFreemarkerModels(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
+    return new CaptchaModels(stack, req, res);
   }
+
 }

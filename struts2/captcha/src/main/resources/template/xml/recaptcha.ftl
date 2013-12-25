@@ -1,7 +1,8 @@
 [#ftl/]
 <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+[#assign theming = (tag.parameters['theming']!"red")]
 <div id="${tag.id}">
-[#if tag.theming=='onlyimage']
+[#if theming=='onlyimage']
 <div id="recaptcha_image"></div>
 <input type="text" name="recaptcha_response_field" id="recaptcha_response_field" size="30" />
 <a href="javascript:Recaptcha.reload()" title="Refresh">
@@ -13,6 +14,6 @@ ${tag.body}
 </div>
 <script type="text/javascript">
 jQuery(document).ready(function () {
-  Recaptcha.create("${tag.publickey}","${tag.id}",{theme: "${(tag.buildinTheming&&tag.body?length==0)?string(tag.theming,'custom')}",callback: Recaptcha.focus_response_field});
+  Recaptcha.create("${tag.provider.publickey}","${tag.id}",{theme: "${(tag.provider.isBuildinTheming(theming)&&tag.body?length==0)?string(theming,'custom')}",callback: Recaptcha.focus_response_field});
 });
 </script>

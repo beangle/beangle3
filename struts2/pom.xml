@@ -18,6 +18,7 @@
   <modules>
     <module>convention</module>
     <module>view</module>
+    <module>captcha</module>
   </modules>
 
   <dependencies>
