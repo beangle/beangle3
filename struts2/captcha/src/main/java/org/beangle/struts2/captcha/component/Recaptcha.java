@@ -18,9 +18,6 @@
  */
 package org.beangle.struts2.captcha.component;
 
-import org.beangle.struts2.captcha.service.CaptchaProvider;
-import org.beangle.struts2.view.component.ClosingUIBean;
-
 import com.opensymphony.xwork2.util.ValueStack;
 
 /**
@@ -29,21 +26,11 @@ import com.opensymphony.xwork2.util.ValueStack;
  * @author chaostone
  * @since 3.0.0
  */
-public class Recaptcha extends ClosingUIBean {
-
-  private CaptchaProvider provider;
+public class Recaptcha extends AbstractCaptcha {
 
   public Recaptcha(ValueStack stack) {
     super(stack);
     generateIdIfEmpty();
-  }
-
-  public void setProvider(CaptchaProvider provider) {
-    this.provider = provider;
-  }
-
-  public CaptchaProvider getProvider() {
-    return provider;
   }
 
 }

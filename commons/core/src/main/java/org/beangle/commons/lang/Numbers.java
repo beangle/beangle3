@@ -76,7 +76,7 @@ public final class Numbers {
   }
 
   public static float toFloat(String str) {
-    return toFloat(str);
+    return toFloat(str, 0.0f);
   }
 
   public static float toFloat(String str, float defaultValue) {

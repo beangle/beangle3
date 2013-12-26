@@ -21,6 +21,7 @@ package org.beangle.struts2.captcha.tag;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.beangle.struts2.captcha.component.Jcaptcha;
 import org.beangle.struts2.captcha.component.Recaptcha;
 import org.beangle.struts2.view.tag.AbstractModels;
 import org.beangle.struts2.view.tag.TagModel;
@@ -36,8 +37,13 @@ public class CaptchaModels extends AbstractModels {
   public CaptchaModels(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
     super(stack, req, res);
   }
+  
   public TagModel getRecaptcha() {
     return get(Recaptcha.class);
   }
+  
+  public TagModel getJcaptcha() {
+    return get(Jcaptcha.class);
+  } 
 
 }

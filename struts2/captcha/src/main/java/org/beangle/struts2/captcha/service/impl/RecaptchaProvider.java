@@ -1,5 +1,6 @@
 package org.beangle.struts2.captcha.service.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +19,9 @@ import org.beangle.struts2.captcha.service.CaptchaProvider;
 public class RecaptchaProvider implements CaptchaProvider {
   private static Set<String> buildins = CollectUtils.newHashSet("red", "clean", "white", "blackglass");
 
-   String privatekey;
-   String publickey;
-   String apibase="http://www.google.com/recaptcha/api";
+  String privatekey;
+  String publickey;
+  String apibase = "http://www.google.com/recaptcha/api";
 
   public boolean isBuildinTheming(String theming) {
     return buildins.contains(theming);
@@ -29,7 +30,6 @@ public class RecaptchaProvider implements CaptchaProvider {
   public RecaptchaProvider() {
     super();
   }
-
 
   public RecaptchaProvider(String publickey, String privatekey) {
     super();
@@ -46,15 +46,20 @@ public class RecaptchaProvider implements CaptchaProvider {
   }
 
   @Override
-  public boolean verify(HttpServletRequest request) {
+  public boolean verify(HttpServletRequest request, String response) {
     String remoteip = RequestUtils.getIpAddr(request);
     String challenge = request.getParameter("recaptcha_challenge_field");
-    String response = request.getParameter("recaptcha_response_field");
     if (Strings.isEmpty(response)) { return false; }
     String result = HttpUtils.getResponseText(apibase + "/verify?remoteip=" + remoteip + "&privatekey="
         + privatekey + "&challenge=" + challenge + "&response=" + response);
     if (!result.contains("true")) { return false; }
     return true;
+  }
+
+  @Override
+  public ByteArrayOutputStream generater(HttpServletRequest request) {
+    // do not to impl,because it will generate from google website
+    return null;
   }
 
   public String getPrivatekey() {

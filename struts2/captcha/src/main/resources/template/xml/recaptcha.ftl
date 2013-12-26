@@ -4,7 +4,7 @@
 <div id="${tag.id}">
 [#if theming=='onlyimage']
 <div id="recaptcha_image"></div>
-<input type="text" name="recaptcha_response_field" id="recaptcha_response_field" size="30" />
+<input type="text" name="${tag.name}" id="recaptcha_response_field"  size="30" />
 <a href="javascript:Recaptcha.reload()" title="Refresh">
 <img width="25" height="17" id="recaptcha_reload" src="http://www.google.com/recaptcha/api/img/red/refresh.gif" alt="Get a new challenge">
 </a>

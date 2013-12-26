@@ -5,4 +5,9 @@
 
 <struts>
   <bean type="org.apache.struts2.views.TagLibrary" name="captcha" class="org.beangle.struts2.captcha.tag.CaptchaTagLibrary" />
+  <package name="org.beangle.struts2.captcha.action" extends="beangle">
+    <result-types>
+      <result-type name="captchaImage" class="org.beangle.struts2.captcha.action.support.CaptchaImageResult" />
+    </result-types>
+  </package>
 </struts>

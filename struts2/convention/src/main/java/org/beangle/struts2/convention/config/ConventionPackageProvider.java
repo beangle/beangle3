@@ -99,10 +99,10 @@ public class ConventionPackageProvider implements PackageProvider {
   private Map<String, String> primaryMappings = CollectUtils.newHashMap();
 
   @Inject("beangle.convention.default.parent.package")
-  private String defaultParentPackage="beangle";
+  private String defaultParentPackage = "beangle";
 
   @Inject("beangle.convention.action.suffix")
-  private String actionSuffix="Action";
+  private String actionSuffix = "Action";
 
   @Inject("beangle.i18n.resources")
   private String defaultBundleNames;
@@ -291,8 +291,9 @@ public class ConventionPackageProvider implements PackageProvider {
         String resultType = result.type();
         if (Strings.isEmpty(resultType)) resultType = "dispatcher";
         ResultTypeConfig rtc = pcb.getResultType(resultType);
-        configs.add(new ResultConfig.Builder(result.name(), rtc.getClassName()).addParam(
-            rtc.getDefaultResultParam(), result.location()).build());
+        ResultConfig.Builder rcb = new ResultConfig.Builder(result.name(), rtc.getClassName());
+        if (null != rtc.getDefaultResultParam()) rcb.addParam(rtc.getDefaultResultParam(), result.location());
+        configs.add(rcb.build());
         annotationResults.add(result.name());
       }
     }
