@@ -2,13 +2,13 @@ package org.beangle.struts2.captcha.component;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
-public class Jcaptcha extends AbstractCaptcha {
+public class Image extends AbstractCaptcha {
 
   private String imageStyle="width:70px; height:22px;cursor: pointer;vertical-align:top;";
   
   private String inputStyle="width:45px;height:16px";
 
-  public Jcaptcha(ValueStack stack) {
+  public Image(ValueStack stack) {
     super(stack);
   }
 

@@ -11,7 +11,7 @@ import org.beangle.struts2.captcha.service.CaptchaProvider;
  * @author chaostone
  */
 @Results({ @Result(name = "index", type = "captchaImage") })
-public class JcaptchaImageAction extends ActionSupport {
+public class ImageAction extends ActionSupport {
 
   private CaptchaProvider captchaProvider;
 
