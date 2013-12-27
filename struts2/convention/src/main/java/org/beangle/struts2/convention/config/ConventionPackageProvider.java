@@ -31,6 +31,7 @@ import java.util.Set;
 import javax.servlet.ServletContext;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.StrutsConstants;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.ClassLoaders;
@@ -107,8 +108,9 @@ public class ConventionPackageProvider implements PackageProvider {
   @Inject("beangle.i18n.resources")
   private String defaultBundleNames;
 
-  @Inject("beangle.i18n.reload")
-  private String reloadBundles = "false";
+  private boolean reloadBundles = false;
+
+  private boolean preloadftl = true;
 
   // Temperary use
   private TemplateFinder templateFinder;
@@ -117,6 +119,7 @@ public class ConventionPackageProvider implements PackageProvider {
   public ConventionPackageProvider(Configuration configuration, ObjectFactory objectFactory,
       FreemarkerManager freemarkerManager, ProfileService profileService, ActionBuilder actionBuilder,
       TextBundleRegistry registry, ViewMapper viewMapper) throws Exception {
+
     this.configuration = configuration;
     actionFinder = (ActionFinder) objectFactory.buildBean(ContainerActionFinder.class,
         new HashMap<String, Object>(0));
@@ -129,7 +132,7 @@ public class ConventionPackageProvider implements PackageProvider {
 
   public void init(Configuration configuration) throws ConfigurationException {
     registry.addDefaults(Strings.split(defaultBundleNames));
-    registry.setReloadBundles(Boolean.valueOf(reloadBundles));
+    registry.setReloadBundles(reloadBundles);
     templateFinder = buildTemplateFinder();
     Properties properties = new Properties();
     URL url = ClassLoaders.getResource("struts.properties", getClass());
@@ -297,8 +300,9 @@ public class ConventionPackageProvider implements PackageProvider {
         annotationResults.add(result.name());
       }
     }
+
     // load ftl convension results
-    if (null == profileService) return configs;
+    if (!preloadftl || null == profileService) return configs;
     String extention = profileService.getProfile(clazz.getName()).getViewExtension();
     if (!extention.equals("ftl")) return configs;
     ResultTypeConfig rtc = pcb.getResultType("freemarker");
@@ -354,6 +358,21 @@ public class ConventionPackageProvider implements PackageProvider {
       packageConfigs.put(newPkg, pcb);
     }
     return pcb;
+  }
+
+  @Inject(StrutsConstants.STRUTS_DEVMODE)
+  public void setDevMode(String mode) {
+    devMode = "true".equals(mode);
+  }
+
+  @Inject("beangle.i18n.reload")
+  public void setReloadBundles(String mode) {
+    reloadBundles = "true".equals(mode);
+  }
+
+  @Inject("beangle.convention.preloadftl")
+  public void setPreloadftl(String mode) {
+    preloadftl = "true".equals(mode);
   }
 
   public boolean needsReload() {

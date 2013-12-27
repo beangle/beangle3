@@ -14,6 +14,7 @@
   <constant name="beangle.i18n.resources" value="beangle,application"/>
   <constant name="beangle.convention.action.suffix" value="Action"/>
   <constant name="beangle.convention.default.parent.package" value="beangle"/>
+  <constant name="beangle.convention.preloadftl" value="true"/>
   <!-- max 50M -->
   <constant name="struts.multipart.maxSize" value="52428800"/>
   <constant name="struts.mapper.class" value="beangle"/>

@@ -50,18 +50,18 @@ public class ActionServlet extends HttpServlet {
   private ExecuteOperations execute;
 
   @Override
-  public void init(ServletConfig filterConfig) throws ServletException {
+  public void init(ServletConfig sc) throws ServletException {
     InitOperations init = new InitOperations();
     try {
-      ServletHostConfig config = new ServletHostConfig(filterConfig);
+      ServletHostConfig config = new ServletHostConfig(sc);
       init.initLogging(config);
       ActionContext.setContext(new ActionContext(new HashMap<String,Object>()));
       ServletActionContext.setServletContext(config.getServletContext());
       Dispatcher dispatcher = init.initDispatcher(config);
       init.initStaticContentLoader(config, dispatcher);
       ActionContext.setContext(null);
-      prepare = new PrepareOperations(filterConfig.getServletContext(), dispatcher);
-      execute = new ExecuteOperations(filterConfig.getServletContext(), dispatcher);
+      prepare = new PrepareOperations(sc.getServletContext(), dispatcher);
+      execute = new ExecuteOperations(sc.getServletContext(), dispatcher);
       
     } finally {
       init.cleanup();
