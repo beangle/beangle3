@@ -120,7 +120,12 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
               }
             }
           }
-        } else if (holder.getConfigType().equals(ReconfigType.UPDATE)) {
+          //lets do property update and merge.
+          holder.setConfigType(ReconfigType.UPDATE);
+          holder.getBeanDefinition().setBeanClassName(null);
+        }
+        
+        if (holder.getConfigType().equals(ReconfigType.UPDATE)) {
           if (registry.containsBeanDefinition(holder.getBeanName())) {
             BeanDefinition definition = registry.getBeanDefinition(holder.getBeanName());
             String successName = mergeDefinition(definition, holder);
