@@ -39,7 +39,7 @@ public abstract class AbstractItemImporter extends AbstractImporter implements I
   protected Map<String, String> descriptions = new HashMap<String, String>();
 
   /** 导入属性 */
-  protected String[] attrs;
+  private String[] attrs;
 
   /** 当前导入值[attr,value] */
   protected Map<String, Object> values = CollectUtils.newHashMap();
@@ -54,14 +54,14 @@ public abstract class AbstractItemImporter extends AbstractImporter implements I
     this.prepare = new DescriptionAttrPrepare();
   }
 
-  /** {@inheritDoc} */
+  /**  */
   @Override
   public ItemReader getReader() {
     return (ItemReader) super.getReader();
   }
 
   /**
-   * {@inheritDoc} 设置数据读取对象
+   * 设置数据读取对象
    */
   public void setReader(Reader reader) {
     if (reader instanceof ItemReader) {
@@ -88,7 +88,7 @@ public abstract class AbstractItemImporter extends AbstractImporter implements I
    * 
    * @return a boolean.
    */
-  public boolean read() {
+  public final boolean read() {
     Object[] curData = (Object[]) reader.read();
     if (null == curData) {
       setCurrent(null);
@@ -139,7 +139,6 @@ public abstract class AbstractItemImporter extends AbstractImporter implements I
     return values;
   }
 
-  /** {@inheritDoc} */
   public void setCurData(Map<String, Object> curData) {
     this.values = curData;
   }
@@ -162,7 +161,10 @@ public abstract class AbstractItemImporter extends AbstractImporter implements I
    * 
    * @param attrs an array of {@link java.lang.String} objects.
    */
-  public void setAttrs(String[] attrs) {
+  public void setAttrs(String[] attrs, String[] descs) {
+    for (int i = 0; i < attrs.length && i < descs.length; i++) {
+      descriptions.put(attrs[i], descs[i]);
+    }
     this.attrs = attrs;
   }
 
@@ -175,17 +177,6 @@ public abstract class AbstractItemImporter extends AbstractImporter implements I
    */
   public Map<String, String> getDescriptions() {
     return descriptions;
-  }
-
-  /**
-   * <p>
-   * Setter for the field <code>descriptions</code>.
-   * </p>
-   * 
-   * @param descriptions a {@link java.util.Map} object.
-   */
-  public void setDescriptions(Map<String, String> descriptions) {
-    this.descriptions = descriptions;
   }
 
   /**

@@ -19,7 +19,6 @@
 package org.beangle.commons.transfer.importer;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,7 +29,6 @@ import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.entity.metadata.ObjectAndType;
 import org.beangle.commons.entity.metadata.Populator;
 import org.beangle.commons.lang.Strings;
-import org.beangle.commons.transfer.TransferMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,10 +71,8 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
   public void transferItem() {
     if (logger.isDebugEnabled()) logger.debug("tranfer index:{} : {}", getTranferIndex(), values);
     // 在给定的值的范围内
-    for (int i = 0; i < attrs.length; i++) {
-      Object value = values.get(attrs[i]);
-      // 过滤空列
-      if (Strings.isBlank(attrs[i])) continue;
+    for (Map.Entry<String, Object> entry : values.entrySet()) {
+      Object value = entry.getValue();
       // 处理空字符串并对所有的字符串进行trim
       if (value instanceof String) {
         String strValue = (String) value;
@@ -89,36 +85,48 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
       } else {
         if (value.equals(Model.NULL)) value = null;
       }
-      Object entity = getCurrent(attrs[i]);
-      String attr = processAttr(attrs[i]);
-      String entityName = getEntityName(attrs[i]);
+      String key = entry.getKey();
+      Object entity = getCurrent(key);
+      String attr = processAttr(key);
+      String entityName = getEntityName(key);
       EntityType type = Model.getType(entityName);
-      // 当有深层次属性
-      if (Strings.contains(attr, '.')) {
-        if (null != foreignerKeys) {
-          boolean isForeigner = isForeigner(attr);
-          // 如果是个外键,先根据parentPath生成新的外键实体。
-          // 因此导入的是外键,只能有一个属性导入.
-          if (isForeigner) {
-            String parentPath = Strings.substringBeforeLast(attr, ".");
-            ObjectAndType propertyType = populator.initProperty(entity, type, parentPath);
-            Object property = propertyType.getObj();
-            if (property instanceof Entity<?>) {
-              if (((Entity<?>) property).isPersisted()) {
-                populator.populateValue(entity, type, parentPath, null);
-                populator.initProperty(entity, type, parentPath);
-              }
+      populateValue(entity, type, attr, value);
+    }
+  }
+
+  /**
+   * Populate single attribute
+   * 
+   * @param entity
+   * @param type
+   * @param attr
+   * @param value
+   */
+  protected void populateValue(Object entity, EntityType type, String attr, Object value) {
+    // 当有深层次属性
+    if (Strings.contains(attr, '.')) {
+      if (null != foreignerKeys) {
+        boolean isForeigner = isForeigner(attr);
+        // 如果是个外键,先根据parentPath生成新的外键实体。
+        // 因此导入的是外键,只能有一个属性导入.
+        if (isForeigner) {
+          String parentPath = Strings.substringBeforeLast(attr, ".");
+          ObjectAndType propertyType = populator.initProperty(entity, type, parentPath);
+          Object property = propertyType.getObj();
+          if (property instanceof Entity<?>) {
+            if (((Entity<?>) property).isPersisted()) {
+              populator.populateValue(entity, type, parentPath, null);
+              populator.initProperty(entity, type, parentPath);
             }
           }
         }
       }
-      if (!populator.populateValue(entity, type, attr, value)) {
-        transferResult.addFailure(descriptions.get(attr) + " data format error.", value);
-      }
+    }
+    if (!populator.populateValue(entity, type, attr, value)) {
+      transferResult.addFailure(descriptions.get(attr) + " data format error.", value);
     }
   }
 
-  /** {@inheritDoc} */
   public String processAttr(String attr) {
     return Strings.substringAfter(attr, ".");
   }
@@ -216,48 +224,6 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
   }
 
   /**
-   * FIXME
-   */
-  public void beforeImport() {
-    // 读取标题
-    // super.beforeImport();
-    // 检查标题生命的属性是否在对象里面
-    List<String> errorAttrs = checkAttrs();
-    if (!errorAttrs.isEmpty()) {
-      transferResult.addFailure(TransferMessage.ERROR_ATTRS, errorAttrs.toString());
-      throw new RuntimeException("error attrs:" + errorAttrs);
-    }
-  }
-
-  /**
-   * 检查是否含有错误的属性描述 TODO 没有对实体的简单属性进行检查，例如name
-   * 
-   * @return a {@link java.util.List} object.
-   */
-  protected List<String> checkAttrs() {
-    List<String> errorAttrs = CollectUtils.newArrayList();
-    List<String> rightAttrs = CollectUtils.newArrayList();
-    for (int i = 0; i < attrs.length; i++) {
-      if (Strings.isBlank(attrs[i])) continue;
-      try {
-        EntityType entityType = getEntityType(attrs[i]);
-        Entity<?> example = (Entity<?>) entityType.newInstance();
-        String attr = processAttr(attrs[i]);
-        if (attr.indexOf('.') > -1) {
-          populator.initProperty(example, entityType, Strings.substringBeforeLast(attr, "."));
-        }
-        rightAttrs.add(attrs[i]);
-      } catch (Exception e) {
-        errorAttrs.add(attrs[i]);
-      }
-    }
-
-    attrs = new String[rightAttrs.size()];
-    rightAttrs.toArray(attrs);
-    return errorAttrs;
-  }
-
-  /**
    * <p>
    * Getter for the field <code>current</code>.
    * </p>
@@ -268,7 +234,6 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
     return current;
   }
 
-  /** {@inheritDoc} */
   @SuppressWarnings("unchecked")
   public void setCurrent(Object object) {
     this.current = (Map<String, Object>) object;
@@ -321,12 +286,10 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
     this.foreignerKeys = foreignerKeys;
   }
 
-  /** {@inheritDoc} */
   public void addForeignedKeys(String foreignerKey) {
     foreignerKeys.add(foreignerKey);
   }
 
-  /** {@inheritDoc} */
   public void setPopulator(Populator populator) {
     this.populator = populator;
   }

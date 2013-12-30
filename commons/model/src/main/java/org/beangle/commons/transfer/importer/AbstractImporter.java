@@ -153,7 +153,6 @@ public abstract class AbstractImporter implements Importer {
     return reader;
   }
 
-  /** {@inheritDoc} */
   public void setReader(Reader reader) {
     this.reader = reader;
   }
@@ -202,7 +201,6 @@ public abstract class AbstractImporter implements Importer {
     return index;
   }
 
-  /** {@inheritDoc} */
   public Transfer addListener(TransferListener listener) {
     listeners.add(listener);
     listener.setTransfer(this);
@@ -220,7 +218,6 @@ public abstract class AbstractImporter implements Importer {
     return prepare;
   }
 
-  /** {@inheritDoc} */
   public void setPrepare(ImportPrepare prepare) {
     this.prepare = prepare;
   }

@@ -61,7 +61,6 @@ public class DefaultEntityImporter extends MultiEntityImporter {
     }
   }
 
-  /** {@inheritDoc} */
   protected EntityType getEntityType(String attr) {
     return (EntityType) entityTypes.get(alias);
   }
@@ -99,7 +98,6 @@ public class DefaultEntityImporter extends MultiEntityImporter {
     ((EntityType) entityTypes.get(alias)).setEntityClass(entityClass);
   }
 
-  /** {@inheritDoc} */
   public Object getCurrent(String attr) {
     return getCurrent();
   }
@@ -115,17 +113,14 @@ public class DefaultEntityImporter extends MultiEntityImporter {
     return super.getCurrent(alias);
   }
 
-  /** {@inheritDoc} */
   protected String getEntityName(String attr) {
     return getEntityName();
   }
 
-  /** {@inheritDoc} */
   public String processAttr(String attr) {
     return attr;
   }
 
-  /** {@inheritDoc} */
   public void setCurrent(Object object) {
     current.put(alias, object);
   }

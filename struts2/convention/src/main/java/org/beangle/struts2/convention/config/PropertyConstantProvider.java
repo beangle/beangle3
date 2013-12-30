@@ -21,7 +21,8 @@ package org.beangle.struts2.convention.config;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import org.beangle.commons.lang.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.config.Configuration;
 import com.opensymphony.xwork2.config.ConfigurationException;
@@ -31,12 +32,13 @@ import com.opensymphony.xwork2.util.location.LocatableProperties;
 
 /**
  * Convert System properties to struts2 constants,for those start with struts2
+ * Using -Dany.struts.constant.name=your value.
  * 
  * @author chaostone
  */
 public class PropertyConstantProvider implements ConfigurationProvider {
 
-  private static final String prefix = "struts.";
+  private Logger logger = LoggerFactory.getLogger(getClass());
 
   @Override
   public void destroy() {
@@ -58,8 +60,10 @@ public class PropertyConstantProvider implements ConfigurationProvider {
     Enumeration<?> keys = properties.propertyNames();
     while (keys.hasMoreElements()) {
       String key = (String) keys.nextElement();
-      if (key.startsWith(prefix)) {
-        props.setProperty(Strings.substringAfter(key, prefix), properties.getProperty(key), null);
+      if (null != props.getProperty(key)) {
+        String value = properties.getProperty(key);
+        props.setProperty(key, value, null);
+        logger.info("Override struts property {}={}", key, value);
       }
     }
   }
