@@ -10,7 +10,6 @@ import org.beangle.commons.io.IOs;
 import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.orm.hibernate.DefaultTableNamingStrategy;
 import org.beangle.orm.hibernate.RailsNamingStrategy;
-import org.beangle.orm.hibernate.internal.OverrideConfiguration;
 import org.hibernate.cfg.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -23,8 +22,7 @@ class ConfigBuilder {
    * @throws Exception
    */
   @SuppressWarnings("unchecked")
-  public static Configuration build() throws Exception {
-    Configuration cfg = new OverrideConfiguration();
+  public static Configuration build(Configuration cfg) throws Exception {
     PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(
         DdlGenerator.class.getClassLoader());
 

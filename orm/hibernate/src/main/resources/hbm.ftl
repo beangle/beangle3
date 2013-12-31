@@ -37,8 +37,21 @@
     <property name="${pi.name}" [#list piv.columnIterator as ci]column="${ci.name}"[#rt/]
     [#if ci.length!=255] length="${ci.length}"[/#if][#t/]
     [#if ci.unique] unique="true"[/#if][#if !ci.nullable] not-null="true"[/#if] [/#list][#t/]
+    [#if !generator.isCustomType(piv.type)] type="${piv.typeName}"[/#if][#t/]
     [#if pi.metaAttributes??][#list pi.metaAttributes?keys as mak]${mak}="${pi.metaAttributes[mak]}" [/#list][/#if][#t/]
-    />[#lt/]
+    >
+	[#if generator.isCustomType(piv.type)]
+	[#if generator.isEnumType(piv.type)]
+		<type name="org.hibernate.type.EnumType">
+			<param name="enumClass">${piv.type.returnedClass.name}</param>
+		</type>
+	[#else]
+		<type name="${piv.type.class.name}">
+		</type>
+    [/#if]
+    [/#if]
+    </property>
+    [#lt/]
     [/#if]
     [/#list]
 </class>

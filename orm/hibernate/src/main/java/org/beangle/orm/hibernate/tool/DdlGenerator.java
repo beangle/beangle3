@@ -41,6 +41,7 @@ import org.beangle.commons.entity.comment.Messages;
 import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Locales;
 import org.beangle.commons.lang.SystemInfo;
+import org.beangle.orm.hibernate.internal.OverrideConfiguration;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.dialect.Dialect;
@@ -104,7 +105,7 @@ public class DdlGenerator {
    */
   @SuppressWarnings("unchecked")
   public void gen(String fileName, String packageName) throws Exception {
-    configuration = ConfigBuilder.build();
+    configuration = ConfigBuilder.build(new OverrideConfiguration());
     mapping = configuration.buildMapping();
     defaultCatalog = configuration.getProperties().getProperty(Environment.DEFAULT_CATALOG);
     defaultSchema = configuration.getProperties().getProperty(Environment.DEFAULT_SCHEMA);
