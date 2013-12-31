@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.orm.hibernate.ddl;
+package org.beangle.orm.hibernate.tool;
 
 import static org.beangle.commons.lang.Strings.isNotBlank;
 import static org.beangle.commons.lang.Strings.split;
@@ -26,30 +26,21 @@ import static org.beangle.commons.lang.Strings.substringBeforeLast;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.comment.Messages;
-import org.beangle.commons.entity.orm.AbstractPersistModule;
-import org.beangle.commons.entity.orm.EntityPersistConfig;
-import org.beangle.commons.io.IOs;
 import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Locales;
 import org.beangle.commons.lang.SystemInfo;
-import org.beangle.orm.hibernate.DefaultTableNamingStrategy;
-import org.beangle.orm.hibernate.RailsNamingStrategy;
-import org.beangle.orm.hibernate.internal.OverrideConfiguration;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.dialect.Dialect;
@@ -71,14 +62,12 @@ import org.hibernate.mapping.Table;
 import org.hibernate.mapping.ToOne;
 import org.hibernate.mapping.UniqueKey;
 import org.hibernate.mapping.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 /**
  * @author chaostone
  * @version $Id: DdlGenerator.java Mar 22, 2012 9:45:57 AM chaostone $
  */
-public class Generator {
+public class DdlGenerator {
   private Configuration configuration = null;
   private Dialect dialect;
   private List<String> tables = new ArrayList<String>(50);
@@ -97,61 +86,13 @@ public class Generator {
   private Map<String, List<List<String>>> files = CollectUtils.newHashMap();
 
   @SuppressWarnings("unchecked")
-  public Generator(Dialect dialect, Locale locale) {
+  public DdlGenerator(Dialect dialect, Locale locale) {
     super();
     this.dialect = dialect;
     this.messages = Messages.build(locale);
     files.put("1-tables.sql", Arrays.asList(tables, constraints, indexes));
     files.put("2-sequences.sql", Arrays.asList(sequences));
     files.put("3-comments.sql", Arrays.asList(comments));
-  }
-
-  /**
-   * build configration
-   * 
-   * @throws Exception
-   */
-  @SuppressWarnings("unchecked")
-  private void buildConfiguration() throws Exception {
-    configuration = new OverrideConfiguration();
-    configuration.getProperties().put(Environment.DIALECT, dialect);
-
-    PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(
-        Generator.class.getClassLoader());
-
-    // config naming strategy
-    DefaultTableNamingStrategy tableNamingStrategy = new DefaultTableNamingStrategy();
-    for (Resource resource : resolver.getResources("classpath*:META-INF/beangle/table.properties"))
-      tableNamingStrategy.addConfig(resource.getURL());
-    RailsNamingStrategy namingStrategy = new RailsNamingStrategy();
-    namingStrategy.setTableNamingStrategy(tableNamingStrategy);
-    configuration.setNamingStrategy(namingStrategy);
-
-    for (Resource resource : resolver.getResources("classpath*:META-INF/hibernate.cfg.xml"))
-      configuration.configure(resource.getURL());
-
-    for (Resource resource : resolver.getResources("classpath*:META-INF/beangle/persist*.properties")) {
-      InputStream is = resource.getURL().openStream();
-      Properties props = new Properties();
-      if (null != is) props.load(is);
-
-      Object module = props.remove("module");
-      if (null == module) continue;
-
-      Class<? extends AbstractPersistModule> moduleClass = (Class<? extends AbstractPersistModule>) ClassLoaders
-          .loadClass(module.toString());
-      addPersistInfo(moduleClass.newInstance().getConfig());
-      Enumeration<String> enumer = (Enumeration<String>) props.propertyNames();
-      while (enumer.hasMoreElements()) {
-        String propertyName = enumer.nextElement();
-        configuration.setProperty(propertyName, props.getProperty(propertyName));
-      }
-      IOs.close(is);
-    }
-    defaultCatalog = configuration.getProperties().getProperty(Environment.DEFAULT_CATALOG);
-    defaultSchema = configuration.getProperties().getProperty(Environment.DEFAULT_SCHEMA);
-    configuration.buildMappings();
-    mapping = configuration.buildMapping();
   }
 
   /**
@@ -163,7 +104,11 @@ public class Generator {
    */
   @SuppressWarnings("unchecked")
   public void gen(String fileName, String packageName) throws Exception {
-    buildConfiguration();
+    configuration = ConfigBuilder.build();
+    mapping = configuration.buildMapping();
+    defaultCatalog = configuration.getProperties().getProperty(Environment.DEFAULT_CATALOG);
+    defaultSchema = configuration.getProperties().getProperty(Environment.DEFAULT_SCHEMA);
+    configuration.getProperties().put(Environment.DIALECT, dialect);
     // 1. first process class mapping
     Iterator<PersistentClass> iterpc = configuration.getClassMappings();
     while (iterpc.hasNext()) {
@@ -229,7 +174,6 @@ public class Generator {
           Component cp = (Component) col.getElement();
           commentProperties(cp.getComponentClass(), table, cp.getPropertyIterator());
         }
-
         generateTableSql(col.getCollectionTable());
       }
     }
@@ -353,28 +297,10 @@ public class Generator {
     }
   }
 
-  private void addPersistInfo(EntityPersistConfig epconfig) {
-    for (EntityPersistConfig.EntityDefinition definition : epconfig.getEntites()) {
-      configuration.addAnnotatedClass(definition.getClazz());
-      if (null != definition.getCacheUsage()) {
-        String region = (null == definition.getCacheRegion()) ? definition.getEntityName() : definition
-            .getCacheRegion();
-        configuration.setCacheConcurrencyStrategy(definition.getEntityName(), definition.getCacheUsage(),
-            region, true);
-      }
-    }
-    for (EntityPersistConfig.CollectionDefinition definition : epconfig.getCollections()) {
-      if (null == definition.getCacheUsage()) continue;
-      String role = epconfig.getEntity(definition.getClazz()).getEntityName() + "."
-          + definition.getProperty();
-      String region = (null == definition.getCacheRegion()) ? role : definition.getCacheRegion();
-      configuration.setCollectionCacheConcurrencyStrategy(role, definition.getCacheUsage(), region);
-    }
-  }
-
   public static void main(String[] args) throws Exception {
     if (args.length < 3) {
-      System.out.println("Usage: Generator org.hibernate.dialect.Oracle10gDialect /tmp zh_CN");
+      System.out.println("Usage: DdlGenerator org.hibernate.dialect.Oracle10gDialect /tmp zh_CN");
+      return;
     }
     String dir = SystemInfo.getTmpDir();
     if (args.length > 2) dir = args[2];
@@ -382,7 +308,6 @@ public class Generator {
     if (args.length > 3) locale = Locales.toLocale(args[3]);
     String pattern = null;
     if (args.length > 4) pattern = args[4];
-    Generator generator = new Generator((Dialect) ClassLoaders.loadClass(args[1]).newInstance(), locale);
-    generator.gen(dir, pattern);
+    new DdlGenerator((Dialect) ClassLoaders.loadClass(args[1]).newInstance(), locale).gen(dir, pattern);
   }
 }

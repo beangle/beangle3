@@ -52,7 +52,8 @@ public class DatabaseModule extends AbstractBindModule {
         .property("configurationClass", "org.beangle.orm.hibernate.internal.OverrideConfiguration")
         .property("hibernateProperties", ref("sessionHibernateConfig"))
         .property("persistLocations", "classpath*:META-INF/beangle/persist-session.properties")
-        .property("dataSource", ref("sessionDataSource"));
+        .property("dataSource", ref("sessionDataSource"))
+        .property("staticHbm", "classpath:hibernate-session.hbm.xml");
 
     bind("sessionTransactionManager", HibernateTransactionManager.class).property("sessionFactory",
         ref("sessionSessionFactory"));

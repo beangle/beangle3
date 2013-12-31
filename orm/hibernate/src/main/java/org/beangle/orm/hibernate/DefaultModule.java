@@ -51,7 +51,11 @@ public class DefaultModule extends AbstractBindModule {
         .property("configurationClass", "org.beangle.orm.hibernate.internal.OverrideConfiguration")
         .property("hibernateProperties", ref("hibernateConfig"))
         .property("configLocations", "classpath*:META-INF/hibernate.cfg.xml")
-        .property("persistLocations", "classpath*:META-INF/beangle/persist.properties");
+        .property("persistLocations", "classpath*:META-INF/beangle/persist.properties")
+        .property("staticHbm", "classpath:hibernate.hbm.xml");
+
+    // bind("sessionFactory", StaticSessionFactoryBean.class).property("hibernateProperties",
+    // ref("hibernateConfig"));
 
     bind("transactionManager", HibernateTransactionManager.class);
 

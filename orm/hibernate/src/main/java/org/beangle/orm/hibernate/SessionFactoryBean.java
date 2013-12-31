@@ -18,6 +18,7 @@
  */
 package org.beangle.orm.hibernate;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -58,6 +59,9 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
   private Class<? extends Configuration> configurationClass = Configuration.class;
 
   private DataSource dataSource;
+
+  /** static and global hbm mapping without namingstrategy */
+  private Resource staticHbm;
 
   private Resource[] configLocations;
 
@@ -124,18 +128,13 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
     this.namingStrategy = namingStrategy;
   }
 
-  @SuppressWarnings("unchecked")
-  public void init() throws Exception {
-    configuration = newConfiguration();
-    configuration.getProperties().put("hibernate.classLoader.application", beanClassLoader);
-    // Set Hibernate 4.0+ CurrentSessionContext implementation,
-    // provide the Beangle-managed Session as current Session.
-    configuration.setProperty(Environment.CURRENT_SESSION_CONTEXT_CLASS,
-        BeangleSessionContext.class.getName());
-    if (this.namingStrategy != null) configuration.setNamingStrategy(this.namingStrategy);
-    if (dataSource != null) configuration.getProperties().put(Environment.DATASOURCE, dataSource);
-    if (this.hibernateProperties != null) configuration.addProperties(this.hibernateProperties);
+  private void staticInit() throws Exception {
+    configuration.addCacheableFile(staticHbm.getFile());
+  }
 
+  @SuppressWarnings("unchecked")
+  private void dynamicInit() throws Exception {
+    if (this.namingStrategy != null) configuration.setNamingStrategy(this.namingStrategy);
     try {
       if (null != configLocations) {
         for (Resource resource : configLocations)
@@ -164,28 +163,53 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
           IOs.close(is);
         }
       }
-      // configuration.
-      Stopwatch watch = new Stopwatch(true);
-
-      final ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(
-          configuration.getProperties()).buildServiceRegistry();
-
-      configuration.setSessionFactoryObserver(new SessionFactoryObserver() {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void sessionFactoryCreated(SessionFactory factory) {
-        }
-
-        @Override
-        public void sessionFactoryClosed(SessionFactory factory) {
-          ServiceRegistryBuilder.destroy(serviceRegistry);
-        }
-      });
-      this.sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-      logger.info("Building Hibernate SessionFactory in {}", watch);
     } finally {
     }
+  }
+
+  public void init() throws Exception {
+    boolean staticInit = (null != staticHbm);
+    try {
+      staticHbm.getFile();
+    } catch (IOException e) {
+      staticInit = false;
+    }
+
+    if (staticInit) configuration = new Configuration();
+    else configuration = newConfiguration();
+
+    configuration.getProperties().put("hibernate.classLoader.application", beanClassLoader);
+    // Set Hibernate 4.0+ CurrentSessionContext implementation,
+    // provide the Beangle-managed Session as current Session.
+    configuration.setProperty(Environment.CURRENT_SESSION_CONTEXT_CLASS,
+        BeangleSessionContext.class.getName());
+    if (dataSource != null) configuration.getProperties().put(Environment.DATASOURCE, dataSource);
+    if (this.hibernateProperties != null) configuration.addProperties(this.hibernateProperties);
+
+    if (staticInit) staticInit();
+    else dynamicInit();
+
+    // do session factory build.
+    Stopwatch watch = new Stopwatch(true);
+
+    final ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(
+        configuration.getProperties()).buildServiceRegistry();
+
+    configuration.setSessionFactoryObserver(new SessionFactoryObserver() {
+      private static final long serialVersionUID = 1L;
+
+      @Override
+      public void sessionFactoryCreated(SessionFactory factory) {
+      }
+
+      @Override
+      public void sessionFactoryClosed(SessionFactory factory) {
+        ServiceRegistryBuilder.destroy(serviceRegistry);
+      }
+    });
+    this.sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+    logger.info("Building Hibernate SessionFactory in {}", watch);
+
   }
 
   /**
@@ -271,4 +295,7 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
     return configuration;
   }
 
+  public void setStaticHbm(Resource staticHbm) {
+    this.staticHbm = staticHbm;
+  }
 }
