@@ -54,9 +54,6 @@ public class DefaultModule extends AbstractBindModule {
         .property("persistLocations", "classpath*:META-INF/beangle/persist.properties")
         .property("staticHbm", "classpath:hibernate.hbm.xml");
 
-    // bind("sessionFactory", StaticSessionFactoryBean.class).property("hibernateProperties",
-    // ref("hibernateConfig"));
-
     bind("transactionManager", HibernateTransactionManager.class);
 
     bind("baseTransactionProxy", TransactionProxyFactoryBean.class).setAbstract().property(

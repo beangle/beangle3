@@ -4,5 +4,5 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <bean class="org.beangle.security.blueprint.ServiceModule"/>
-  <bean class="org.beangle.security.blueprint.DatabaseModule"/>
+  <bean class="org.beangle.security.blueprint.SessionModule"/>
 </beans>

@@ -29,7 +29,7 @@ import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.interceptor.TransactionProxyFactoryBean;
 
-public class DatabaseModule extends AbstractBindModule {
+public class SessionModule extends AbstractBindModule {
 
   @Override
   protected void doBinding() {
