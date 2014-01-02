@@ -14,7 +14,7 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-class ConfigBuilder {
+public class ConfigBuilder {
 
   /**
    * build configration

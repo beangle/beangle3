@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.orm.hibernate.internal;
+package org.beangle.orm.hibernate.tool;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;

@@ -35,7 +35,7 @@
 [#t/]
     [#if piv.columnSpan==1 && !generator.isToOne(piv)]
     <property name="${pi.name}" [#list piv.columnIterator as ci]column="${ci.name}"[#rt/]
-    [#if ci.length!=255] length="${ci.length}"[/#if][#t/]
+    [#if ci.length!=255] length="${ci.length?c}"[/#if][#t/]
     [#if ci.unique] unique="true"[/#if][#if !ci.nullable] not-null="true"[/#if] [/#list][#t/]
     [#if !generator.isCustomType(piv.type)] type="${piv.typeName}"[/#if][#t/]
     [#if pi.metaAttributes??][#list pi.metaAttributes?keys as mak]${mak}="${pi.metaAttributes[mak]}" [/#list][/#if][#t/]

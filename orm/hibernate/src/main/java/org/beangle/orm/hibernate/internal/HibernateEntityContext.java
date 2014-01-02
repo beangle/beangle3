@@ -58,12 +58,14 @@ public class HibernateEntityContext extends AbstractEntityContext {
     Assert.notNull(sessionFactory);
     Stopwatch watch = new Stopwatch().start();
     Map<String, ClassMetadata> classMetadatas = sessionFactory.getAllClassMetadata();
+    int entityCount = entityTypes.size();
+    int collectionCount = collectionTypes.size();
     for (Iterator<ClassMetadata> iter = classMetadatas.values().iterator(); iter.hasNext();) {
       ClassMetadata cm = (ClassMetadata) iter.next();
       buildEntityType(sessionFactory, cm.getEntityName());
     }
-    logger.info("Find {} entities,{} collections from hibernate in {}", new Object[] { entityTypes.size(),
-        collectionTypes.size(), watch });
+    logger.info("Find {} entities,{} collections from hibernate in {}", new Object[] {
+        entityTypes.size() - entityCount, collectionTypes.size() - collectionCount, watch });
     if (logger.isDebugEnabled()) loggerTypeInfo();
     collectionTypes.clear();
   }

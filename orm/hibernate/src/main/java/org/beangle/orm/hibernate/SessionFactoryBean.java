@@ -167,6 +167,40 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
     }
   }
 
+  protected void processProperties() {
+    if (hibernateProperties == null) hibernateProperties = new Properties();
+
+    // populate system properties
+    Properties sysProps = System.getProperties();
+    Enumeration<?> keys = sysProps.propertyNames();
+    while (keys.hasMoreElements()) {
+      String key = (String) keys.nextElement();
+      if (key.startsWith("hibernate.")) {
+        String value = sysProps.getProperty(key);
+        boolean override = hibernateProperties.containsKey(key);
+        hibernateProperties.put(key, value);
+        if (override) logger.info("Override hibernate property {}={}", key, value);
+      }
+    }
+
+    configuration.getProperties().put("hibernate.classLoader.application", beanClassLoader);
+    // Set Hibernate 4.0+ CurrentSessionContext implementation,
+    // provide the Beangle-managed Session as current Session.
+    configuration.setProperty(Environment.CURRENT_SESSION_CONTEXT_CLASS,
+        BeangleSessionContext.class.getName());
+    if (dataSource != null) configuration.getProperties().put(Environment.DATASOURCE, dataSource);
+
+    // Disable JdbcServicesImpl magic behaviour except declare explicitly.
+    // for it will slow startup performance. and just consult medata's ddl semantic, which is
+    // seldom used.
+    final String useJdbcMetaName = "hibernate.temp.use_jdbc_metadata_defaults";
+    if (hibernateProperties.containsKey(Environment.DIALECT)
+        && !hibernateProperties.containsKey(useJdbcMetaName)) {
+      hibernateProperties.put(useJdbcMetaName, "false");
+    }
+    configuration.addProperties(this.hibernateProperties);
+  }
+
   public void init() throws Exception {
     boolean staticInit = (null != staticHbm);
     try {
@@ -178,13 +212,7 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
     if (staticInit) configuration = new Configuration();
     else configuration = newConfiguration();
 
-    configuration.getProperties().put("hibernate.classLoader.application", beanClassLoader);
-    // Set Hibernate 4.0+ CurrentSessionContext implementation,
-    // provide the Beangle-managed Session as current Session.
-    configuration.setProperty(Environment.CURRENT_SESSION_CONTEXT_CLASS,
-        BeangleSessionContext.class.getName());
-    if (dataSource != null) configuration.getProperties().put(Environment.DATASOURCE, dataSource);
-    if (this.hibernateProperties != null) configuration.addProperties(this.hibernateProperties);
+    processProperties();
 
     if (staticInit) staticInit();
     else dynamicInit();

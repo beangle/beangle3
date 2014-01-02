@@ -39,10 +39,10 @@ public class SessionModule extends AbstractBindModule {
 
     bind("sessionHibernateConfig", PropertiesFactoryBean.class).property(
         "properties",
-        props("hibernate.max_fetch_depth=1", "hibernate.default_batch_fetch_size=500",
-            "hibernate.jdbc.fetch_size=8", "hibernate.jdbc.batch_size=20",
-            "hibernate.jdbc.batch_versioned_data=true", "hibernate.jdbc.use_streams_for_binary=true",
-            "hibernate.jdbc.use_get_generated_keys=true",
+        props("hibernate.max_fetch_depth=1", "hibernate.default_batch_fetch_size=64",
+            "hibernate.batch_fetch_style=dynamic", "hibernate.jdbc.fetch_size=8",
+            "hibernate.jdbc.batch_size=20", "hibernate.jdbc.batch_versioned_data=true",
+            "hibernate.jdbc.use_streams_for_binary=true", "hibernate.jdbc.use_get_generated_keys=true",
             "hibernate.cache.region.factory_class=org.hibernate.cache.EhCacheRegionFactory",
             "hibernate.cache.use_second_level_cache=true", "hibernate.cache.use_query_cache=true",
             "hibernate.query.substitutions=true 1, false 0, yes 'Y', no 'N'", "hibernate.show_sql=false",
@@ -67,5 +67,4 @@ public class SessionModule extends AbstractBindModule {
     bind(DbSessionRegistry.class, DbSessionController.class, DbSessioninfoLogServiceImpl.class)
         .property("entityDao", ref("sessionEntityDao")).shortName().primary();
   }
-
 }
