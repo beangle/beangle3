@@ -70,7 +70,7 @@ public final class BeanConfig {
     public String initMethod;
     public String destroyMethod;
     public Map<String, Object> properties = CollectUtils.newHashMap();
-
+    public Object[] constructorArgs = null;
     public boolean lazyInit = true;
     public boolean abstractFlag = false;
 
@@ -151,6 +151,7 @@ public final class BeanConfig {
       }
       return this;
     }
+
     public DefinitionBinder proxy(String property, Definition target) {
       config.add(target);
       for (Definition def : beans) {
@@ -159,7 +160,7 @@ public final class BeanConfig {
       }
       return this;
     }
-    
+
     public DefinitionBinder primary() {
       for (Definition def : beans)
         def.primary = true;
@@ -184,6 +185,12 @@ public final class BeanConfig {
       return this;
     }
 
+    public DefinitionBinder constructor(Object... args) {
+      for (Definition def : beans)
+        def.constructorArgs = args;
+      return this;
+    }
+
     /**
      * Assign init method
      * 
@@ -194,7 +201,7 @@ public final class BeanConfig {
         def.initMethod = method;
       return this;
     }
-    
+
     /**
      * Assign init method
      * 
@@ -205,6 +212,7 @@ public final class BeanConfig {
         def.destroyMethod = method;
       return this;
     }
+
     private DefinitionBinder bind(Class<?>... classes) {
       for (Class<?> clazz : classes) {
         Definition def = new Definition(getBeanName(clazz, false), clazz, Scope.SINGLETON.toString());

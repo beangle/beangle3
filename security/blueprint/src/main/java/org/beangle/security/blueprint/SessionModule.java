@@ -33,9 +33,8 @@ public class SessionModule extends AbstractBindModule {
 
   @Override
   protected void doBinding() {
-    bind("sessionDataSource", DriverManagerDataSource.class).property("driverClassName", "org.h2.Driver")
-        .property("url", "jdbc:h2:./target/beangle;AUTO_SERVER=TRUE").property("username", "sa")
-        .property("password", "");
+    bind("sessionDataSource", DriverManagerDataSource.class).constructor(
+        "jdbc:h2:./target/beangle;AUTO_SERVER=TRUE", "sa", "");
 
     bind("sessionHibernateConfig", PropertiesFactoryBean.class).property(
         "properties",

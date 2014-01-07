@@ -29,16 +29,12 @@ import org.springframework.transaction.interceptor.TransactionProxyFactoryBean;
 public class DefaultModule extends AbstractBindModule {
   @Override
   protected void doBinding() {
-    bind("dataSource", DriverManagerDataSource.class).property("driverClassName", "org.h2.Driver")
-        .property("url", "jdbc:h2:./target/beangle;AUTO_SERVER=TRUE").property("username", "sa")
-        .property("password", "");
+    bind("dataSource", DriverManagerDataSource.class).constructor(
+        "jdbc:h2:./target/beangle;AUTO_SERVER=TRUE", "sa", "");
 
     bind("hibernateConfig", PropertiesFactoryBean.class).property(
         "properties",
-        props(
-            // "hibernate.temp.use_jdbc_metadata_defaults=false",
-            // "hibernate.dialect=org.hibernate.dialect.H2Dialect",
-            "hibernate.max_fetch_depth=1", "hibernate.default_batch_fetch_size=64",
+        props("hibernate.max_fetch_depth=1", "hibernate.default_batch_fetch_size=64",
             "hibernate.batch_fetch_style=dynamic", "hibernate.jdbc.fetch_size=8",
             "hibernate.jdbc.batch_size=20", "hibernate.jdbc.batch_versioned_data=true",
             "hibernate.jdbc.use_streams_for_binary=true", "hibernate.jdbc.use_get_generated_keys=true",

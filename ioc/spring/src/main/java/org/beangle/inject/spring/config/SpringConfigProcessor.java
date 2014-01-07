@@ -54,6 +54,7 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -120,11 +121,11 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
               }
             }
           }
-          //lets do property update and merge.
+          // lets do property update and merge.
           holder.setConfigType(ReconfigType.UPDATE);
           holder.getBeanDefinition().setBeanClassName(null);
         }
-        
+
         if (holder.getConfigType().equals(ReconfigType.UPDATE)) {
           if (registry.containsBeanDefinition(holder.getBeanName())) {
             BeanDefinition definition = registry.getBeanDefinition(holder.getBeanName());
@@ -206,6 +207,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
       for (PropertyValue pv : target.getPropertyValues().getPropertyValues()) {
         target.getPropertyValues().removePropertyValue(pv);
       }
+      target.getConstructorArgumentValues().clear();
     }
     MutablePropertyValues pvs = source.getBeanDefinition().getPropertyValues();
     for (PropertyValue pv : pvs.getPropertyValueList()) {
@@ -309,6 +311,12 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
     def.setAbstract(definition.isAbstract());
     def.setParentName(definition.parent);
     def.setPrimary(definition.primary);
+    if (null != definition.constructorArgs) {
+      ConstructorArgumentValues cav = new ConstructorArgumentValues();
+      for (Object arg : definition.constructorArgs)
+        cav.addGenericArgumentValue(arg);
+      def.setConstructorArgumentValues(cav);
+    }
     def.setPropertyValues(mpv);
     return def;
   }
