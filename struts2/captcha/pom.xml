@@ -15,6 +15,21 @@
     <bundle.namespace>org.beangle.struts2.captcha</bundle.namespace>
   </properties>
 
+  <repositories>
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>atlassian</id>
+      <name>Atlassian</name>
+      <url>http://repository.atlassian.com/maven2</url>
+      <layout>default</layout>
+    </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
       <groupId>org.beangle.struts2</groupId>
