@@ -137,7 +137,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
         }
       }
     }
-    if (!beanNames.isEmpty()) logger.info("Reconfig bean : {} in {}", beanNames, watch);
+    if (!beanNames.isEmpty()) logger.info("Reconfig {} in {}", beanNames, watch);
   }
 
   /**

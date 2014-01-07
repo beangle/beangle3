@@ -115,7 +115,7 @@ public class SpringBindRegistry implements BindRegistry {
         continue;
       }
     }
-    logger.info("Init spring registry with {} in {}", nameTypes.size(), watch);
+    logger.info("Init registry ({} beans) in {}", nameTypes.size(), watch);
   }
 
   /**
