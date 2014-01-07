@@ -25,6 +25,7 @@ import java.util.Set;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.inject.bind.BindRegistry;
 import org.beangle.commons.lang.Assert;
+import org.beangle.commons.lang.time.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.PropertyValue;
@@ -72,6 +73,7 @@ public class SpringBindRegistry implements BindRegistry {
    *          object.
    */
   public SpringBindRegistry(BeanDefinitionRegistry registry) {
+    Stopwatch watch = new Stopwatch(true);
     definitionRegistry = registry;
     for (String name : registry.getBeanDefinitionNames()) {
       BeanDefinition bd = registry.getBeanDefinition(name);
@@ -113,6 +115,7 @@ public class SpringBindRegistry implements BindRegistry {
         continue;
       }
     }
+    logger.info("Init spring registry with {} in {}", nameTypes.size(), watch);
   }
 
   /**

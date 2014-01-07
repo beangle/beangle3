@@ -39,7 +39,7 @@ import org.beangle.struts2.convention.route.Action;
 import org.beangle.struts2.convention.route.ActionBuilder;
 import org.beangle.struts2.convention.route.ProfileService;
 import org.beangle.struts2.convention.route.ViewMapper;
-import org.beangle.struts2.freemarker.TemplateFinder;
+import org.beangle.struts2.freemarker.TemplateFinderByConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +78,7 @@ public class DefaultResultBuilder implements ResultBuilder {
 
   private final ActionBuilder actionBuilder;
 
-  private final TemplateFinder templateFinder;
+  private final TemplateFinderByConfig templateFinder;
 
   @Inject
   public DefaultResultBuilder(Configuration configuration, ObjectFactory objectFactory,
@@ -89,7 +89,7 @@ public class DefaultResultBuilder implements ResultBuilder {
     this.profileService = profileService;
     this.actionBuilder = actionBuilder;
     this.viewMapper = viewMapper;
-    this.templateFinder = new TemplateFinder(freemarkerManager.getConfig(), viewMapper);
+    this.templateFinder = new TemplateFinderByConfig(freemarkerManager.getConfig(), viewMapper);
     Map<String, String> typeExtensions = CollectUtils.toMap(new String[][] { { "freemarker", "ftl" },
         { "velocity", "vm" }, { "dispatcher", "jsp" } });
     PackageConfig pc = configuration.getPackageConfig("struts-default");

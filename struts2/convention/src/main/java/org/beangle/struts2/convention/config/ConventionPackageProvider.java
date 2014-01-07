@@ -47,7 +47,7 @@ import org.beangle.struts2.convention.route.ActionBuilder;
 import org.beangle.struts2.convention.route.Profile;
 import org.beangle.struts2.convention.route.ProfileService;
 import org.beangle.struts2.convention.route.ViewMapper;
-import org.beangle.struts2.freemarker.TemplateFinder;
+import org.beangle.struts2.freemarker.TemplateFinderByLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -113,7 +113,7 @@ public class ConventionPackageProvider implements PackageProvider {
   private boolean preloadftl = true;
 
   // Temperary use
-  private TemplateFinder templateFinder;
+  private TemplateFinderByLoader templateFinder;
 
   @Inject
   public ConventionPackageProvider(Configuration configuration, ObjectFactory objectFactory,
@@ -379,10 +379,10 @@ public class ConventionPackageProvider implements PackageProvider {
     return devMode;
   }
 
-  private TemplateFinder buildTemplateFinder() {
+  private TemplateFinderByLoader buildTemplateFinder() {
     ServletContext sc = ServletActionContext.getServletContext();
     TemplateLoader loader = freemarkerManager.getConfiguration(sc).getTemplateLoader();
-    return new TemplateFinder(loader, viewMapper);
+    return new TemplateFinderByLoader(loader, viewMapper);
   }
 
 }
