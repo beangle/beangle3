@@ -24,6 +24,7 @@
     <dependency>
       <groupId>org.beangle.commons</groupId>
       <artifactId>beangle-commons-web</artifactId>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.beangle.ioc</groupId>
