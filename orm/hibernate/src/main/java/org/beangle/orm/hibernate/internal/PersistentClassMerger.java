@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.mapping.MappedSuperclass;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.Property;
+import org.hibernate.mapping.RootClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,26 +21,28 @@ class PersistentClassMerger {
 
   private static Logger logger = LoggerFactory.getLogger(OverrideConfiguration.class);
 
-  private static Field subPropertyField = null;
-  private static Field declarePropertyField = null;
-  private static Field subclassField = null;
-  static {
+  // PersistentClass private list field
+  private static Field subPropertyField = getField("subclassProperties");
+  private static Field declarePropertyField = getField("declaredProperties");
+  private static Field subclassField = getField("subclasses");;
+
+  private static final boolean mergeSupport = (null != subPropertyField) && (null != declarePropertyField)
+      && (null != subclassField);
+
+  private static Field getField(String name) {
     try {
-      subPropertyField = PersistentClass.class.getDeclaredField("subclassProperties");
-      declarePropertyField = PersistentClass.class.getDeclaredField("declaredProperties");
-      subclassField = PersistentClass.class.getDeclaredField("subclasses");
-      declarePropertyField.setAccessible(true);
-      subPropertyField.setAccessible(true);
-      subclassField.setAccessible(true);
+      Field field = PersistentClass.class.getDeclaredField(name);
+      field.setAccessible(true);
+      return field;
     } catch (Exception e) {
-      logger.error("Cannot get PersistentClass private field,Override Mapping will be disabled", e);
-      subPropertyField = null;
-      declarePropertyField = null;
-      subclassField = null;
+      logger.error("Cannot access PersistentClass " + name + " field ,Override Mapping will be disabled", e);
     }
+    return null;
   }
 
-  public static void mergeInto(PersistentClass sub, PersistentClass parent) {
+  public static void merge(PersistentClass sub, PersistentClass parent) {
+    if (!mergeSupport) throw new RuntimeException("Merge not supported!");
+
     String className = sub.getClassName();
     // 1. convert old to mappedsuperclass
     MappedSuperclass msc = new MappedSuperclass(parent.getSuperMappedSuperclass(), null);
@@ -49,14 +52,11 @@ class PersistentClassMerger {
     parent.setSuperMappedSuperclass(msc);
     parent.setClassName(className);
     parent.setProxyInterfaceName(className);
-
+    if (parent instanceof RootClass) {
+      ((RootClass) parent).setDiscriminator(null);
+      ((RootClass) parent).setPolymorphic(false);
+    }
     try {
-      Field subPropertyField = PersistentClass.class.getDeclaredField("subclassProperties");
-      Field declarePropertyField = PersistentClass.class.getDeclaredField("declaredProperties");
-      Field subclassField = PersistentClass.class.getDeclaredField("subclasses");
-      declarePropertyField.setAccessible(true);
-      subPropertyField.setAccessible(true);
-      subclassField.setAccessible(true);
       @SuppressWarnings("unchecked")
       List<Property> declareProperties = (List<Property>) declarePropertyField.get(parent);
       for (Property p : declareProperties)
@@ -77,4 +77,9 @@ class PersistentClassMerger {
     }
     logger.info("{} replace {}.", sub.getClassName(), parent.getClassName());
   }
+
+  public static boolean isMergesupport() {
+    return mergeSupport;
+  }
+
 }

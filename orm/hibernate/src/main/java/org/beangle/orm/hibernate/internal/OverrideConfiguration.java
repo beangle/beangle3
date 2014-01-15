@@ -192,7 +192,7 @@ public class OverrideConfiguration extends Configuration {
       if (old == null) {
         classes.put(entityName, pClass);
       } else if (old.getMappedClass().isAssignableFrom(pClass.getMappedClass())) {
-        PersistentClassMerger.mergeInto(pClass, old);
+        PersistentClassMerger.merge(pClass, old);
       }
       // 为了欺骗hibernate中的ToOneFkSecondPass的部分代码,例如isInPrimaryKey。这些代码会根据className查找persistentClass，而不是根据entityName
       if (entityNameChanged) classes.put(className, pClass);
