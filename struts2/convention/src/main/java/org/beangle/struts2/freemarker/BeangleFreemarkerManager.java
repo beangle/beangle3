@@ -18,7 +18,6 @@
  */
 package org.beangle.struts2.freemarker;
 
-import static org.beangle.commons.lang.Strings.leftPad;
 import static org.beangle.commons.lang.Strings.split;
 import static org.beangle.commons.lang.Strings.substringAfter;
 
@@ -27,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -36,6 +36,7 @@ import javax.servlet.ServletContext;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.ClassLoaders;
+import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +53,8 @@ import freemarker.template.TemplateException;
  * <p>
  * <ul>
  * <li>Better template loader sequence like class://,file://,webapp://</li>
- * <li>Multi freemark properties loading(META-INF/freemarker.properties,freemarker.properties)</li>
+ * <li>Multi freemark properties
+ * loading(META-INF/freemarker.properties,freemarker.properties,System.properties)</li>
  * <li>Friendly Collection/Map/Object objectwrapper</li>
  * <li>Disable freemarker logger instead of slf4j</li>
  * </ul>
@@ -133,14 +135,28 @@ public class BeangleFreemarkerManager extends FreemarkerManager {
   protected void loadSettings(ServletContext servletContext) {
     try {
       Properties properties = new Properties();
+      // 1. first META-INF/freemarker.properties
       List<URL> urls = ClassLoaders.getResources("META-INF/freemarker.properties", getClass());
       for (URL url : urls)
         properties.putAll(getProperties(url));
 
+      // 2. second global freemarker.properties
       urls = ClassLoaders.getResources("freemarker.properties", getClass());
       for (URL url : urls)
         properties.putAll(getProperties(url));
 
+      // 3. system properties
+      Properties sysProps = System.getProperties();
+      Enumeration<?> sysKeys = sysProps.propertyNames();
+      while (sysKeys.hasMoreElements()) {
+        String key = (String) sysKeys.nextElement();
+        String value = sysProps.getProperty(key);
+        if (key.startsWith("freemarker.")) {
+          properties.put(Strings.substringAfter(key, "freemarker."), value);
+        }
+      }
+
+      // 4 add setting and log info
       StringBuilder sb = new StringBuilder();
       @SuppressWarnings("rawtypes")
       List keys = CollectUtils.newArrayList(properties.keySet());
@@ -148,17 +164,13 @@ public class BeangleFreemarkerManager extends FreemarkerManager {
       for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
         String key = iter.next();
         String value = (String) properties.get(key);
-        if (key == null) { throw new IOException(
-            "init-param without param-name.  Maybe the freemarker.properties is not well-formed?"); }
-        if (value == null) { throw new IOException(
-            "init-param without param-value.  Maybe the freemarker.properties is not well-formed?"); }
-        addSetting(key, value);
-        sb.append(leftPad(key, 21, ' ')).append(" : ").append(value);
-        if (iter.hasNext()) sb.append('\n');
+        if (null != key && null != value) {
+          addSetting(key, value);
+          sb.append(key).append("->").append(value);
+          if (iter.hasNext()) sb.append(',');
+        }
       }
-      logger.info("Freemarker properties: ->\n{} ", sb);
-    } catch (IOException e) {
-      logger.error("Error while loading freemarker.properties", e);
+      logger.info("Freemarker properties:{} ", sb);
     } catch (TemplateException e) {
       logger.error("Error while setting freemarker.properties", e);
     }
