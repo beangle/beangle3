@@ -176,11 +176,11 @@ public class OverrideConfiguration extends Configuration {
       // trigger dynamic update
       if (!pClass.useDynamicUpdate() && pClass.getTable().getColumnSpan() >= dynaupdateMinColumn) pClass
           .setDynamicUpdate(true);
-
-      String jpaEntityName = pClass.getJpaEntityName();
+      final String className = pClass.getClassName();
       String entityName = pClass.getEntityName();
-      String className = entityName;
+
       boolean entityNameChanged = false;
+      final String jpaEntityName = pClass.getJpaEntityName();
       // Set real entityname using jpaEntityname
       if (null != jpaEntityName && jpaEntityName.contains(".")) {
         entityName = jpaEntityName;
@@ -192,8 +192,7 @@ public class OverrideConfiguration extends Configuration {
       if (old == null) {
         classes.put(entityName, pClass);
       } else if (old.getMappedClass().isAssignableFrom(pClass.getMappedClass())) {
-        classes.put(entityName, pClass);
-        logger.info("{} override {} for entity configuration", pClass.getClassName(), old.getClassName());
+        PersistentClassMerger.mergeInto(pClass, old);
       }
       // 为了欺骗hibernate中的ToOneFkSecondPass的部分代码,例如isInPrimaryKey。这些代码会根据className查找persistentClass，而不是根据entityName
       if (entityNameChanged) classes.put(className, pClass);
