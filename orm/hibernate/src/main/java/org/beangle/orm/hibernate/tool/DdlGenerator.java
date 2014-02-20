@@ -304,11 +304,11 @@ public class DdlGenerator {
       return;
     }
     String dir = SystemInfo.getTmpDir();
-    if (args.length > 2) dir = args[2];
+    if (args.length > 1) dir = args[1];
     Locale locale = Locale.getDefault();
-    if (args.length > 3) locale = Locales.toLocale(args[3]);
+    if (args.length > 2) locale = Locales.toLocale(args[2]);
     String pattern = null;
-    if (args.length > 4) pattern = args[4];
-    new DdlGenerator((Dialect) ClassLoaders.loadClass(args[1]).newInstance(), locale).gen(dir, pattern);
+    if (args.length > 3) pattern = args[3];
+    new DdlGenerator((Dialect) ClassLoaders.loadClass(args[0]).newInstance(), locale).gen(dir, pattern);
   }
 }

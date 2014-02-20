@@ -4,6 +4,9 @@ import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.Entity;
+
+import org.hibernate.mapping.Column;
 import org.hibernate.mapping.MappedSuperclass;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.Property;
@@ -44,18 +47,30 @@ class PersistentClassMerger {
     if (!mergeSupport) throw new RuntimeException("Merge not supported!");
 
     String className = sub.getClassName();
-    // 1. convert old to mappedsuperclass
+    // 1. convert old to mapped superclass
     MappedSuperclass msc = new MappedSuperclass(parent.getSuperMappedSuperclass(), null);
-    msc.setMappedClass(parent.getMappedClass());
+    final Class<?> parentClass = parent.getMappedClass();
+    msc.setMappedClass(parentClass);
 
     // 2.clear old subclass property
     parent.setSuperMappedSuperclass(msc);
     parent.setClassName(className);
     parent.setProxyInterfaceName(className);
     if (parent instanceof RootClass) {
-      ((RootClass) parent).setDiscriminator(null);
-      ((RootClass) parent).setPolymorphic(false);
+      if (!parentClass.getSuperclass().isAnnotationPresent(Entity.class)) {
+        ((RootClass) parent).setDiscriminator(null);
+        ((RootClass) parent).setPolymorphic(false);
+        @SuppressWarnings("unchecked")
+        Iterator<Column> iter = parent.getTable().getColumnIterator();
+        while (iter.hasNext()) {
+          if (iter.next().getName().equalsIgnoreCase("dtype")) {
+            iter.remove();
+            break;
+          }
+        }
+      }
     }
+
     try {
       @SuppressWarnings("unchecked")
       List<Property> declareProperties = (List<Property>) declarePropertyField.get(parent);
