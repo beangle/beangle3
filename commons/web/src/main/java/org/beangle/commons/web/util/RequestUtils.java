@@ -109,7 +109,7 @@ public final class RequestUtils {
     String agent = request.getHeader("USER-AGENT");
     String newName = attach_name;
     try {
-      if (null != agent && -1 != agent.indexOf("MSIE")) {
+      if (null != agent && (agent.contains("MSIE") || agent.contains("Trident"))) {
         newName = URLEncoder.encode(attach_name, "UTF-8");
       } else {
         newName = new BCoder().encode(attach_name);
