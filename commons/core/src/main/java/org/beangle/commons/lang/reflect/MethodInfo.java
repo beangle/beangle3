@@ -18,11 +18,15 @@
  */
 package org.beangle.commons.lang.reflect;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static java.lang.Character.isUpperCase;
+import static java.lang.Character.toLowerCase;
 import static org.beangle.commons.lang.Strings.substringAfter;
-import static org.beangle.commons.lang.Strings.uncapitalize;
+import static org.beangle.commons.lang.tuple.Pair.of;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.tuple.Pair;
@@ -51,16 +55,36 @@ public final class MethodInfo implements Comparable<MethodInfo> {
    */
   public Pair<Boolean, String> property() {
     String name = method.getName();
-    if (name.length() > 3 && name.startsWith("get") && isUpperCase(name.charAt(3))
-        && parameterTypes.length == 0) {
-      return Pair.of(Boolean.TRUE, uncapitalize(substringAfter(name, "get")));
-    } else if (name.length() > 2 && name.startsWith("is") && isUpperCase(name.charAt(2))
-        && parameterTypes.length == 0) {
-      return Pair.of(Boolean.TRUE, uncapitalize(substringAfter(name, "is")));
-    } else if (name.length() > 3 && name.startsWith("set") && isUpperCase(name.charAt(3))
-        && parameterTypes.length == 1) { return Pair.of(Boolean.FALSE,
-        uncapitalize(substringAfter(name, "set"))); }
+    if (Modifier.isStatic(method.getModifiers())) return null;
+    if (0 == parameterTypes.length) {
+      if (name.startsWith("get")) {
+        if (name.length() > 3) return of(TRUE, uncapitalize(substringAfter(name, "get")));
+      } else if (name.startsWith("is")) {
+        if (name.length() > 2) return of(TRUE, uncapitalize(substringAfter(name, "is")));
+      }
+    } else if (1 == parameterTypes.length) {
+      if (name.startsWith("set") && name.length() > 3) return of(FALSE,
+          uncapitalize(substringAfter(name, "set")));
+    }
     return null;
+  }
+
+  /**
+   * Change Ux. to ux format
+   * <ul>
+   * Do not change such formats
+   * <li>URL</li>
+   * <li>WWw</li>
+   * </ul>
+   * 
+   * @param name
+   * @return
+   */
+  private final String uncapitalize(String name) {
+    if (name.length() > 1 && isUpperCase(name.charAt(1)) && isUpperCase(name.charAt(0))) return name;
+    char chars[] = name.toCharArray();
+    chars[0] = toLowerCase(chars[0]);
+    return new String(chars);
   }
 
   @Override
