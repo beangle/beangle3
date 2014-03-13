@@ -24,10 +24,12 @@ import org.testng.annotations.Test;
 @Test
 public class ClassInfoTest {
 
-  public void testReaders() {
+  public void testReaders() throws Exception {
     assert (null == ClassInfo.get(TestBean.class).getReader("foo"));
     assert (null != ClassInfo.get(TestBean.class).getReader("intProperty"));
     assert (null != ClassInfo.get(TestBean.class).getReader("AAA"));
+    assert (null != ClassInfo.get(TestBean.class).getReader("b"));
+    assert (null == ClassInfo.get(TestBean.class).getReader("B"));
   }
 
 }

@@ -24,6 +24,7 @@ public class TestBean {
   private int intValue;
   TestEnum testEnum;
 
+  private String B;
   private NestedBean nested = new NestedBean();
 
   public Integer getId() {
@@ -92,4 +93,13 @@ public class TestBean {
   public void setAAA(Boolean aAA) {
     AAA = aAA;
   }
+
+  public String getB() {
+    return B;
+  }
+
+  public void setB(String b) {
+    B = b;
+  }
+  
 }
