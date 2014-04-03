@@ -19,14 +19,16 @@
 package org.beangle.commons.dao.query.builder;
 
 import static org.beangle.commons.lang.Strings.concat;
+import static org.beangle.commons.lang.Strings.contains;
+import static org.beangle.commons.lang.Strings.isEmpty;
+import static org.beangle.commons.lang.Strings.isNotEmpty;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.commons.dao.query.Lang;
@@ -48,18 +50,14 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   protected Class<T> entityClass;
 
   /**
-   * <p>
    * Constructor for OqlBuilder.
-   * </p>
    */
   protected OqlBuilder() {
     super();
   }
 
   /**
-   * <p>
    * hql.
-   * </p>
    * 
    * @param hql a {@link java.lang.String} object.
    * @param <E> a E object.
@@ -72,9 +70,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * <p>
    * from.
-   * </p>
    * 
    * @param from a {@link java.lang.String} object.
    * @param <E> a E object.
@@ -87,9 +83,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * <p>
    * from.
-   * </p>
    * 
    * @param entityName a {@link java.lang.String} object.
    * @param alias a {@link java.lang.String} object.
@@ -108,9 +102,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * <p>
    * from.
-   * </p>
    * 
    * @param entityClass a {@link java.lang.Class} object.
    * @param <E> a E object.
@@ -123,9 +115,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * <p>
    * from.
-   * </p>
    * 
    * @param entityClass a {@link java.lang.Class} object.
    * @param alias a {@link java.lang.String} object.
@@ -145,9 +135,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * <p>
    * alias.
-   * </p>
    * 
    * @param alias a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
@@ -158,9 +146,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * <p>
    * join.
-   * </p>
    * 
    * @param path a {@link java.lang.String} object.
    * @param alias a {@link java.lang.String} object.
@@ -172,9 +158,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * <p>
    * join.
-   * </p>
    * 
    * @param joinMode a {@link java.lang.String} object.
    * @param path a {@link java.lang.String} object.
@@ -186,39 +170,30 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
     return this;
   }
 
-  /** {@inheritDoc} */
   public OqlBuilder<T> params(final Map<String, Object> params) {
-    this.params = CollectUtils.newHashMap(params);
+    this.params.putAll(params);
     return this;
   }
 
   /**
-   * <p>
    * param.
-   * </p>
    * 
    * @param name a {@link java.lang.String} object.
    * @param value a {@link java.lang.Object} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
   public OqlBuilder<T> param(String name, Object value) {
-    if (null == this.params) {
-      params = new HashMap<String, Object>();
-    }
     params.put(name, value);
     return this;
   }
 
-  /** {@inheritDoc} */
   public OqlBuilder<T> limit(final PageLimit limit) {
     this.limit = limit;
     return this;
   }
 
   /**
-   * <p>
    * limit.
-   * </p>
    * 
    * @param pageNo a int.
    * @param pageSize a int.
@@ -230,9 +205,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * <p>
    * cacheable.
-   * </p>
    * 
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
@@ -242,9 +215,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * <p>
    * cacheable.
-   * </p>
    * 
    * @param cacheable a boolean.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
@@ -255,72 +226,27 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * <p>
    * where.
-   * </p>
    * 
    * @param condition a {@link org.beangle.commons.dao.query.builder.Condition} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
-  public OqlBuilder<T> where(final Condition condition) {
-    if (Strings.isNotEmpty(statement)) { throw new RuntimeException(
-        "cannot add condition to a exists statement"); }
-    conditions.add(condition);
-    return this;
+  public OqlBuilder<T> where(final Condition... conditions) {
+    if (isNotEmpty(statement)) throw new RuntimeException("cannot add condition to a exists statement");
+    return where(Arrays.asList(conditions));
   }
 
   /**
-   * <p>
    * where.
-   * </p>
-   * 
-   * @param content a {@link java.lang.String} object.
-   * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
-   */
-  public OqlBuilder<T> where(final String content) {
-    return where(new Condition(content));
-  }
-
-  /**
-   * <p>
-   * where.
-   * </p>
    * 
    * @param content a {@link java.lang.String} object.
    * @param param1 a {@link java.lang.Object} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
-  public OqlBuilder<T> where(final String content, Object param1) {
-    return where(new Condition(content, param1));
-  }
-
-  /**
-   * <p>
-   * where.
-   * </p>
-   * 
-   * @param content a {@link java.lang.String} object.
-   * @param param1 a {@link java.lang.Object} object.
-   * @param param2 a {@link java.lang.Object} object.
-   * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
-   */
-  public OqlBuilder<T> where(final String content, Object param1, Object param2) {
-    return where(new Condition(content, param1, param2, null));
-  }
-
-  /**
-   * <p>
-   * where.
-   * </p>
-   * 
-   * @param content a {@link java.lang.String} object.
-   * @param param1 a {@link java.lang.Object} object.
-   * @param param2 a {@link java.lang.Object} object.
-   * @param param3 a {@link java.lang.Object} object.
-   * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
-   */
-  public OqlBuilder<T> where(final String content, Object param1, Object param2, Object param3) {
-    return where(new Condition(content, param1, param2, param3));
+  public OqlBuilder<T> where(final String content, Object... varparams) {
+    Condition con = new Condition(content);
+    con.params(Arrays.asList(varparams));
+    return where(con);
   }
 
   /**
@@ -332,7 +258,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
    */
   public OqlBuilder<T> where(final Collection<Condition> cons) {
     conditions.addAll(cons);
-    return this;
+    return params(Conditions.getParamMap(cons));
   }
 
   /**
@@ -354,17 +280,14 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
    */
   public OqlBuilder<T> orderBy(final int index, final String orderBy) {
     if (null != orders) {
-      if (Strings.isNotEmpty(statement)) { throw new RuntimeException(
-          "cannot add order by to a exists statement."); }
+      if (isNotEmpty(statement)) { throw new RuntimeException("cannot add order by to a exists statement."); }
       this.orders.addAll(index, Order.parse(orderBy));
     }
     return this;
   }
 
   /**
-   * <p>
    * orderBy.
-   * </p>
    * 
    * @param order a {@link org.beangle.commons.collection.Order} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
@@ -375,9 +298,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * <p>
    * cleanOrders.
-   * </p>
    * 
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
@@ -387,17 +308,14 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * <p>
    * orderBy.
-   * </p>
    * 
    * @param orders a {@link java.util.List} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
   public OqlBuilder<T> orderBy(final List<Order> orders) {
     if (null != orders) {
-      if (Strings.isNotEmpty(statement)) { throw new RuntimeException(
-          "cannot add order by to a exists statement."); }
+      if (isNotEmpty(statement)) { throw new RuntimeException("cannot add order by to a exists statement."); }
       this.orders.addAll(orders);
     }
     return this;
@@ -425,9 +343,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * <p>
    * newFrom.
-   * </p>
    * 
    * @param from a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
@@ -446,9 +362,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * <p>
    * groupBy.
-   * </p>
    * 
    * @param what a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
@@ -483,18 +397,18 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
     StringBuilder countString = new StringBuilder("select count(*) ");
     // 原始查询语句
     final String genQueryStr = genQueryStatement(false);
-    if (Strings.isEmpty(genQueryStr)) { return ""; }
+    if (isEmpty(genQueryStr)) { return ""; }
     final String lowerCaseQueryStr = genQueryStr.toLowerCase();
 
-    if (Strings.contains(lowerCaseQueryStr, " group ")) { return ""; }
-    if (Strings.contains(lowerCaseQueryStr, " union ")) { return ""; }
+    if (contains(lowerCaseQueryStr, " group ")) { return ""; }
+    if (contains(lowerCaseQueryStr, " union ")) { return ""; }
 
     final int indexOfFrom = findIndexOfFrom(lowerCaseQueryStr);
     final String selectWhat = lowerCaseQueryStr.substring(0, indexOfFrom);
     final int indexOfDistinct = selectWhat.indexOf("distinct");
     // select distinct a from table;
     if (-1 != indexOfDistinct) {
-      if (Strings.contains(selectWhat, ",")) {
+      if (contains(selectWhat, ",")) {
         return "";
       } else {
         countString = new StringBuilder("select count(");
@@ -538,9 +452,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * <p>
    * forEntity.
-   * </p>
    * 
    * @param entityClass a {@link java.lang.Class} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
@@ -550,16 +462,13 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
     return this;
   }
 
-  /** {@inheritDoc} */
   @Override
   protected Lang getLang() {
     return Lang.HQL;
   }
 
   /**
-   * <p>
    * Getter for the field <code>entityClass</code>.
-   * </p>
    * 
    * @return a {@link java.lang.Class} object.
    */

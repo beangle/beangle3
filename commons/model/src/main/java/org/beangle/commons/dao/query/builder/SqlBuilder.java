@@ -18,12 +18,13 @@
  */
 package org.beangle.commons.dao.query.builder;
 
+import static org.beangle.commons.lang.Strings.isNotEmpty;
+
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.commons.dao.query.Lang;
@@ -110,10 +111,8 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
     return this;
   }
 
-  /** {@inheritDoc} */
   public SqlBuilder params(final Map<String, Object> params) {
-    this.params = CollectUtils.newHashMap(params);
-    ;
+    this.params.putAll(params);
     return this;
   }
 
@@ -127,9 +126,6 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
   public SqlBuilder param(String name, Object value) {
-    if (null == this.params) {
-      params = new HashMap<String, Object>();
-    }
     params.put(name, value);
     return this;
   }
@@ -180,61 +176,18 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
   }
 
   /**
-   * <p>
    * where.
-   * </p>
    * 
    * @param condition a {@link org.beangle.commons.dao.query.builder.Condition} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
-  public SqlBuilder where(final Condition condition) {
-    conditions.add(condition);
-    return this;
+  public SqlBuilder where(final Condition... cons) {
+    if (isNotEmpty(statement)) throw new RuntimeException("cannot add condition to a exists statement");
+    return where(Arrays.asList(cons));
   }
 
   /**
-   * <p>
    * where.
-   * </p>
-   * 
-   * @param content a {@link java.lang.String} object.
-   * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
-   */
-  public SqlBuilder where(final String content) {
-    return where(new Condition(content));
-  }
-
-  /**
-   * <p>
-   * where.
-   * </p>
-   * 
-   * @param content a {@link java.lang.String} object.
-   * @param param1 a {@link java.lang.Object} object.
-   * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
-   */
-  public SqlBuilder where(final String content, Object param1) {
-    return where(new Condition(content, param1));
-  }
-
-  /**
-   * <p>
-   * where.
-   * </p>
-   * 
-   * @param content a {@link java.lang.String} object.
-   * @param param1 a {@link java.lang.Object} object.
-   * @param param2 a {@link java.lang.Object} object.
-   * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
-   */
-  public SqlBuilder where(final String content, Object param1, Object param2) {
-    return where(new Condition(content, param1, param2, null));
-  }
-
-  /**
-   * <p>
-   * where.
-   * </p>
    * 
    * @param content a {@link java.lang.String} object.
    * @param param1 a {@link java.lang.Object} object.
@@ -242,8 +195,10 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * @param param3 a {@link java.lang.Object} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
-  public SqlBuilder where(final String content, Object param1, Object param2, Object param3) {
-    return where(new Condition(content, param1, param2, param3));
+  public SqlBuilder where(final String content, Object... varparams) {
+    Condition con = new Condition(content);
+    con.params(Arrays.asList(varparams));
+    return where(con);
   }
 
   /**
@@ -255,7 +210,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    */
   public SqlBuilder where(final Collection<Condition> cons) {
     conditions.addAll(cons);
-    return this;
+    return params(Conditions.getParamMap(cons));
   }
 
   /**

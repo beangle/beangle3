@@ -18,7 +18,15 @@
  */
 package org.beangle.commons.dao.query.builder;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
@@ -122,7 +130,7 @@ public final class Conditions {
    * 
    * @param conditions
    */
-  public static Map<String, Object> getParamMap(final List<Condition> conditions) {
+  public static Map<String, Object> getParamMap(final Collection<Condition> conditions) {
     final Map<String, Object> params = new HashMap<String, Object>();
     for (final Condition con : conditions) {
       params.putAll(getParamMap(con));
