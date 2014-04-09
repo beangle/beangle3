@@ -45,6 +45,7 @@ import org.beangle.commons.entity.util.EntityUtils;
 import org.beangle.commons.lang.Enums;
 import org.beangle.commons.lang.Option;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.lang.reflect.ClassInfo;
 import org.beangle.commons.transfer.TransferListener;
 import org.beangle.commons.transfer.TransferResult;
 import org.beangle.commons.transfer.exporter.Context;
@@ -121,6 +122,17 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
   }
 
   protected Collection<?> getExportDatas() {
+    // 自动会考虑页面是否传入id
+    if (Strings.isNotBlank(getEntityName())) {
+      @SuppressWarnings("unchecked")
+      Class<Entity<Serializable>> entityClass = (Class<Entity<Serializable>>) Model.getType(getEntityName())
+          .getEntityClass();
+      if (entityClass != null) {
+        ClassInfo clazzInfo = ClassInfo.get(entityClass);
+        Serializable[] ids = (Serializable[]) getIds(getShortName(), clazzInfo.getPropertyType("id"));
+        if (ids != null && ids.length > 0) return entityDao.get(entityClass, ids);
+      }
+    }
     return search(getQueryBuilder().limit(null));
   }
 

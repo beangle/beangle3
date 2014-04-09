@@ -30,6 +30,7 @@ public class ClassInfoTest {
     assert (null != ClassInfo.get(TestBean.class).getReader("AAA"));
     assert (null != ClassInfo.get(TestBean.class).getReader("b"));
     assert (null == ClassInfo.get(TestBean.class).getReader("B"));
+    assert ClassInfo.get(TestBean.class).getPropertyType("id").equals(Integer.class);
+    assert ClassInfo.get(TestBean.class).getPropertyType("intValue").equals(int.class);
   }
-
 }

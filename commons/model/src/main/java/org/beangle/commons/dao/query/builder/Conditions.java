@@ -147,9 +147,14 @@ public final class Conditions {
     final Map<String, Object> params = new HashMap<String, Object>();
     if (!Strings.contains(condition.getContent(), "?")) {
       final List<String> paramNames = condition.getParamNames();
-      if (paramNames.size() > condition.getParams().size()) { throw new RuntimeException(
-          "condition params not set [" + condition.getContent() + "] with value:" + condition.getParams()); }
+      /*
+       * Abort check param and names for it will updated by params invocation
+       * if (paramNames.size() > condition.getParams().size()) { throw new RuntimeException(
+       * "condition params not set [" + condition.getContent() + "] with value:" +
+       * condition.getParams()); }
+       */
       for (int i = 0; i < paramNames.size(); i++) {
+        if (i >= condition.getParams().size()) break;
         params.put(paramNames.get(i), condition.getParams().get(i));
       }
     }
