@@ -8,7 +8,7 @@
   <groupId>org.beangle</groupId>
   <artifactId>beangle-library-parent</artifactId>
   <packaging>pom</packaging>
-  <version>3.4.13</version>
+  <version>3.4.x</version>
   <name>Beangle Library Parent</name>
 
   <url>https://github.com/beangle/library</url>
