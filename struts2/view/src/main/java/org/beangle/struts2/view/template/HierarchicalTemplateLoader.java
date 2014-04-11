@@ -20,6 +20,7 @@ package org.beangle.struts2.view.template;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.HashSet;
 
 import freemarker.cache.TemplateLoader;
 
@@ -40,12 +41,16 @@ public class HierarchicalTemplateLoader implements TemplateLoader {
   }
 
   public Object findTemplateSource(String name) throws IOException {
-    Object source = loader.findTemplateSource(name);
+    String resource = name;
+    Object source = loader.findTemplateSource(resource);
     if (null == source) {
+      HashSet<String> searched = new HashSet<String>(3);
+      searched.add(resource);
       do {
-        String parent = templateEngine.getParentTemplate(name);
-        if (null == parent) break;
-        source = loader.findTemplateSource(parent);
+        resource = templateEngine.getParentTemplate(resource);
+        if (null == resource ||searched.contains(resource)) break;
+        source = loader.findTemplateSource(resource);
+        searched.add(resource);
       } while (null == source);
     }
     return source;

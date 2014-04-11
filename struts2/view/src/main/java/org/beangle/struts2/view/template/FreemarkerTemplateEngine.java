@@ -30,6 +30,7 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Throwables;
+import org.beangle.struts2.freemarker.BeangleClassTemplateLoader;
 import org.beangle.struts2.view.component.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +80,14 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
   public void setFreemarkerManager(FreemarkerManager mgr) {
     this.freemarkerManager = mgr;
     if (null != freemarkerManager) {
-      config = (Configuration) freemarkerManager.getConfig().clone();
+      Configuration old = freemarkerManager.getConfig();
+      if (null != old) {
+        config = (Configuration) freemarkerManager.getConfig().clone();
+        config.setTemplateLoader(new HierarchicalTemplateLoader(this, config.getTemplateLoader()));
+      } else {
+        config = new Configuration();
+        config.setTemplateLoader(new HierarchicalTemplateLoader(this, new BeangleClassTemplateLoader(null)));
+      }
       // Disable freemarker localized lookup
       config.setLocalizedLookup(false);
       config.setEncoding(config.getLocale(), "UTF-8");
@@ -92,8 +100,6 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
       // Disable auto imports and includes
       config.setAutoImports(CollectUtils.newHashMap());
       config.setAutoIncludes(CollectUtils.newArrayList(0));
-
-      config.setTemplateLoader(new HierarchicalTemplateLoader(this, config.getTemplateLoader()));
     }
   }
 

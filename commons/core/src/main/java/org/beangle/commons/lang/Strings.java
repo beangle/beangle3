@@ -1050,15 +1050,13 @@ public class Strings {
   }
 
   /**
-   * <p>
    * transformToInt.
-   * </p>
    * 
-   * @param ids
-   *          an array of {@link java.lang.String} objects.
-   * @return an array of {@link java.lang.Integer} objects.
+   * @param ids an array of {@link java.lang.String} objects.
+   * @return an array of {@link java.lang.Integer} objects. If ids is null, return Integer[0]
    */
   public static Integer[] transformToInt(final String[] ids) {
+    if (ids == null) return new Integer[0];
     Integer[] idsOfInteger = new Integer[ids.length];
     for (int i = 0; i < ids.length; i++) {
       idsOfInteger[i] = new Integer(ids[i]);
@@ -1067,16 +1065,13 @@ public class Strings {
   }
 
   /**
-   * <p>
    * transformToLong.
-   * </p>
    * 
-   * @param ids
-   *          an array of {@link java.lang.String} objects.
-   * @return an array of {@link java.lang.Long} objects.
+   * @param ids an array of {@link java.lang.String} objects.
+   * @return an array of {@link java.lang.Long} objects. If ids is null, return Long[0]
    */
   public static Long[] transformToLong(final String[] ids) {
-    if (null == ids) { return null; }
+    if (null == ids) return new Long[0];
     Long[] idsOfLong = new Long[ids.length];
     for (int i = 0; i < ids.length; i++) {
       idsOfLong[i] = new Long(ids[i]);

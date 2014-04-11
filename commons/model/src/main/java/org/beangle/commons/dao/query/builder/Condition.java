@@ -97,15 +97,9 @@ public class Condition {
    */
   public Condition(final String content, Object param1, Object param2, Object param3) {
     this.content = content;
-    if (null != param1) {
-      params.add(param1);
-    }
-    if (null != param2) {
-      params.add(param2);
-    }
-    if (null != param3) {
-      params.add(param3);
-    }
+    if (null != param1) params.add(param1);
+    if (null != param2) params.add(param2);
+    if (null != param3) params.add(param3);
   }
 
   /**

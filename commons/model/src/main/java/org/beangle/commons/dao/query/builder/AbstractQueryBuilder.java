@@ -58,7 +58,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
   protected PageLimit limit;
 
   /** 参数 */
-  protected Map<String, Object> params;
+  protected Map<String, Object> params = CollectUtils.newHashMap();
 
   protected String select;
 
@@ -82,7 +82,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * Returns params.
    */
   public Map<String, Object> getParams() {
-    return (null == params) ? Conditions.getParamMap(conditions) : CollectUtils.newHashMap(params);
+    return CollectUtils.newHashMap(params);
   }
 
   /**
