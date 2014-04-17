@@ -260,7 +260,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
     con.param(param2);
     con.param(param3);
     if(varparams != null && varparams.length > 0) {
-      con.params(Arrays.asList(varparams));
+      con.getParams().addAll(Arrays.asList(varparams));
     }
     return where(con);
   }

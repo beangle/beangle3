@@ -22,6 +22,10 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 
+import java.util.List;
+import java.util.Map;
+
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.query.LimitQuery;
 import org.beangle.commons.dao.query.TestModel;
 import org.testng.Assert;
@@ -82,6 +86,35 @@ public class OqlBuilderTest {
         "from SomeClass a  group by a.name having sum(a.id)>0");
   }
 
+  public void testVariousCondition() throws Exception {
+    Map<String, Object> expectedParams = CollectUtils.newHashMap();
+    expectedParams.put("id", 1);
+    expectedParams.put("id2", 2);
+    expectedParams.put("id3", 3);
+    expectedParams.put("id4", 4);
+    expectedParams.put("id5", 6);
+    expectedParams.put("id6", 7);
+    
+    Map<String, Object> params1 = CollectUtils.newHashMap();
+    params1.put("id4", 4);
+    
+    Map<String, Object> params2 = CollectUtils.newHashMap();
+    params2.put("id6", 7);
+    
+    OqlBuilder query = OqlBuilder
+      .from("SomeClass a")
+      .where("a.id=:id", 1)
+      .where("a.id=:id2", 2)
+      .where("a.id=:id3").param("id3", 3)
+      .where("a.id=:id4").params(params1)
+      .where("a.id=:id5", 5).param("id5", 6)
+      .where("a.id=:id6", 6).params(params2)
+      ;
+    
+    Assert.assertEquals(query.build().getParams(), expectedParams);
+    Assert.assertEquals(query.getParams(), expectedParams);
+  }
+  
   public void testArrayCondition() throws Exception {
     Integer[] ids = new Integer[]{1,2,3};
     OqlBuilder query = OqlBuilder
@@ -89,5 +122,20 @@ public class OqlBuilderTest {
         .where("a.id in (:ids)", ids);
     Assert.assertTrue(query.build().getParams().get("ids").getClass().equals(Integer[].class));
   }
-  
+
+  public void testVariousParams() throws Exception {
+    List<Integer> expectedValues = CollectUtils.newArrayList();
+    expectedValues.add(1);
+    expectedValues.add(2);
+    expectedValues.add(3);
+    expectedValues.add(4);
+    expectedValues.add(5);
+    expectedValues.add(6);
+    OqlBuilder query = OqlBuilder
+        .from("SomeClass a")
+        .where("a.id in (:ids)", 1,2,3,4,5,6);
+    List<Condition> conditions = query.getConditions();
+    Assert.assertTrue(expectedValues.size() == conditions.get(0).getParams().size());
+    Assert.assertTrue(expectedValues.containsAll(conditions.get(0).getParams()));
+  }
 }
