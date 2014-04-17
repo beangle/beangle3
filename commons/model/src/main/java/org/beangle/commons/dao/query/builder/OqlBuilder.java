@@ -236,18 +236,46 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
     return where(Arrays.asList(conditions));
   }
 
+  public OqlBuilder<T> where(final String content) {
+    Condition con = new Condition(content);
+    return where(con);
+  }
+  
+  public OqlBuilder<T> where(final String content, Object param1) {
+    Condition con = new Condition(content);
+    con.param(param1);
+    return where(con);
+  }
+  
+  public OqlBuilder<T> where(final String content, Object param1, Object param2) {
+    Condition con = new Condition(content);
+    con.param(param1);
+    con.param(param2);
+    return where(con);
+  }
+  
+  public OqlBuilder<T> where(final String content, Object param1, Object param2, Object param3, Object... varparams) {
+    Condition con = new Condition(content);
+    con.param(param1);
+    con.param(param2);
+    con.param(param3);
+    if(varparams != null && varparams.length > 0) {
+      con.params(Arrays.asList(varparams));
+    }
+    return where(con);
+  }
   /**
    * where.
    * 
    * @param content a {@link java.lang.String} object.
    * @param param1 a {@link java.lang.Object} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
-   */
   public OqlBuilder<T> where(final String content, Object... varparams) {
     Condition con = new Condition(content);
     con.params(Arrays.asList(varparams));
     return where(con);
   }
+   */
 
   /**
    * 添加一组条件<br>

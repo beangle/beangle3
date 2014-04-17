@@ -82,4 +82,12 @@ public class OqlBuilderTest {
         "from SomeClass a  group by a.name having sum(a.id)>0");
   }
 
+  public void testArrayCondition() throws Exception {
+    Integer[] ids = new Integer[]{1,2,3};
+    OqlBuilder query = OqlBuilder
+        .from("SomeClass a")
+        .where("a.id in (:ids)", ids);
+    Assert.assertTrue(query.build().getParams().get("ids").getClass().equals(Integer[].class));
+  }
+  
 }
