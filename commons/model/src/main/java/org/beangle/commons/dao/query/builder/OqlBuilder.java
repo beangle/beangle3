@@ -237,15 +237,47 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * where.
-   * 
-   * @param content a {@link java.lang.String} object.
-   * @param param1 a {@link java.lang.Object} object.
-   * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
+   * @param content
+   * @return
    */
-  public OqlBuilder<T> where(final String content, Object... varparams) {
+  public OqlBuilder<T> where(final String content) {
     Condition con = new Condition(content);
-    con.params(Arrays.asList(varparams));
+    return where(con);
+  }
+
+  public OqlBuilder<T> where(final String content, Object param1) {
+    Condition con = new Condition(content);
+    con.param(param1);
+    return where(con);
+  }
+
+  public OqlBuilder<T> where(final String content, Object param1, Object param2) {
+    Condition con = new Condition(content);
+    con.param(param1);
+    con.param(param2);
+    return where(con);
+  }
+
+  /**
+   * 为了接受数组作为参数，防止java将数组展开为可变参数特定一下几个重致where函数，
+   * 
+   * @param content
+   * @param param1
+   * @param param2
+   * @param param3
+   * @param varparams
+   * @see https://github.com/beangle/library/issues/231
+   * @return
+   */
+  public OqlBuilder<T> where(final String content, Object param1, Object param2, Object param3,
+      Object... varparams) {
+    Condition con = new Condition(content);
+    con.param(param1);
+    con.param(param2);
+    con.param(param3);
+    if (varparams != null && varparams.length > 0) {
+      con.params(Arrays.asList(varparams));
+    }
     return where(con);
   }
 
