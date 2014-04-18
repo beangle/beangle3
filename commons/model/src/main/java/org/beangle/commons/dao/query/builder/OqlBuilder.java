@@ -240,18 +240,18 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
    * @param content
    * @return
    */
-  public OqlBuilder<T> where(final String content) {
+  public OqlBuilder<T> where(String content) {
     Condition con = new Condition(content);
     return where(con);
   }
 
-  public OqlBuilder<T> where(final String content, Object param1) {
+  public OqlBuilder<T> where(String content, Object param1) {
     Condition con = new Condition(content);
     con.param(param1);
     return where(con);
   }
 
-  public OqlBuilder<T> where(final String content, Object param1, Object param2) {
+  public OqlBuilder<T> where(String content, Object param1, Object param2) {
     Condition con = new Condition(content);
     con.param(param1);
     con.param(param2);
@@ -269,12 +269,15 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
    * @see https://github.com/beangle/library/issues/231
    * @return
    */
-  public OqlBuilder<T> where(final String content, Object param1, Object param2, Object param3,Object... varparams) {
+  public OqlBuilder<T> where(String content, Object param1, Object param2, Object param3, Object... varparams) {
     Condition con = new Condition(content);
     con.param(param1);
     con.param(param2);
     con.param(param3);
-    if (varparams != null && varparams.length > 0) con.params(Arrays.asList(varparams));
+    if (varparams != null && varparams.length > 0) {
+      for (Object p : varparams)
+        con.param(p);
+    }
     return where(con);
   }
 
