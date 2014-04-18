@@ -259,7 +259,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   }
 
   /**
-   * 为了接受数组作为参数，防止java将数组展开为可变参数特定一下几个重致where函数，
+   * 为了接受数组作为参数，防止java将数组展开为可变参数特定以下几个重致where函数，
    * 
    * @param content
    * @param param1
@@ -269,15 +269,12 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
    * @see https://github.com/beangle/library/issues/231
    * @return
    */
-  public OqlBuilder<T> where(final String content, Object param1, Object param2, Object param3,
-      Object... varparams) {
+  public OqlBuilder<T> where(final String content, Object param1, Object param2, Object param3,Object... varparams) {
     Condition con = new Condition(content);
     con.param(param1);
     con.param(param2);
     con.param(param3);
-    if (varparams != null && varparams.length > 0) {
-      con.params(Arrays.asList(varparams));
-    }
+    if (varparams != null && varparams.length > 0) con.params(Arrays.asList(varparams));
     return where(con);
   }
 
