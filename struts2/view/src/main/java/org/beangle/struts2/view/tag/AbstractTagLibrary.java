@@ -20,16 +20,17 @@ package org.beangle.struts2.view.tag;
 
 import java.util.List;
 
-import org.apache.struts2.views.TagLibrary;
+import org.apache.struts2.views.TagLibraryDirectiveProvider;
+import org.apache.struts2.views.TagLibraryModelProvider;
 
 /**
  * @author chaostone
  * @since 2.4
  */
-public abstract class AbstractTagLibrary implements TagLibrary {
+public abstract class AbstractTagLibrary implements TagLibraryDirectiveProvider, TagLibraryModelProvider {
 
   @SuppressWarnings("rawtypes")
-  public List<Class> getVelocityDirectiveClasses() {
+  public List<Class> getDirectiveClasses() {
     return null;
   }
 }

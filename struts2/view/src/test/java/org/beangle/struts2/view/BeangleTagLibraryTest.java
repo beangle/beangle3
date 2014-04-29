@@ -36,7 +36,8 @@ import org.apache.struts2.StrutsConstants;
 import org.apache.struts2.StrutsStatics;
 import org.apache.struts2.dispatcher.Dispatcher;
 import org.apache.struts2.util.StrutsTestCaseHelper;
-import org.apache.struts2.views.TagLibrary;
+import org.apache.struts2.views.TagLibraryDirectiveProvider;
+import org.apache.struts2.views.TagLibraryModelProvider;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.apache.struts2.views.freemarker.StrutsClassTemplateLoader;
 import org.apache.struts2.views.freemarker.tags.StrutsModels;
@@ -172,7 +173,7 @@ public class BeangleTagLibraryTest {
     context.setSession(new HashMap<String, Object>());
     FreemarkerManager freemarker = container.getInstance(FreemarkerManager.class);
     freemarker.getConfiguration(servletContext);
-    datas.put("b", new BeangleTagLibrary().getFreemarkerModels(stack, request, response));
+    datas.put("b", new BeangleTagLibrary().getModels(stack, request, response));
     datas.put("s", new StrutsModels(stack, request, response));
     datas.put("watch", new Stopwatch());
     StringWriter writer = new StringWriter();
@@ -203,7 +204,8 @@ public class BeangleTagLibraryTest {
     builder.factory(TypeConverterHolder.class, DefaultTypeConverterHolder.class, Scope.SINGLETON);
     builder.factory(TextProvider.class, "system", DefaultTextProvider.class, Scope.SINGLETON);
     builder.factory(ActionUriRender.class, DefaultActionUriRender.class, Scope.SINGLETON);
-    builder.factory(TagLibrary.class, "b", BeangleTagLibrary.class, Scope.SINGLETON);
+    builder.factory(TagLibraryModelProvider.class, "b", BeangleTagLibrary.class, Scope.SINGLETON);
+    builder.factory(TagLibraryDirectiveProvider.class, "b", BeangleTagLibrary.class, Scope.SINGLETON);
     builder.factory(FreemarkerManager.class, BeangleFreemarkerManager.class, Scope.SINGLETON);
     builder.factory(TemplateEngine.class, FreemarkerTemplateEngine.class, Scope.SINGLETON);
     builder.constant(XWorkConstants.DEV_MODE, "false");
