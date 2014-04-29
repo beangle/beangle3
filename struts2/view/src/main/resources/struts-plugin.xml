@@ -5,6 +5,6 @@
 
 <struts>
   <bean type="org.beangle.struts2.view.bean.ActionUriRender" class="org.beangle.struts2.view.bean.DefaultActionUriRender"/>
-  <bean type="org.apache.struts2.views.TagLibrary" name="b" class="org.beangle.struts2.view.tag.BeangleTagLibrary" />
+  <bean type="org.apache.struts2.views.TagLibraryModelProvider" name="b" class="org.beangle.struts2.view.tag.BeangleTagLibrary" />
   <bean type="org.beangle.struts2.view.template.TemplateEngine" name="default" class="org.beangle.struts2.view.template.FreemarkerTemplateEngine" />
 </struts>

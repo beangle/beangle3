@@ -23,8 +23,6 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 
 import org.apache.struts2.StrutsConstants;
-import org.apache.struts2.views.freemarker.FreemarkerManager;
-import org.apache.struts2.views.freemarker.FreemarkerResult;
 import org.beangle.commons.inject.Container;
 import org.beangle.commons.inject.ContainerAware;
 import org.beangle.commons.inject.Containers;
@@ -32,16 +30,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ObjectFactory;
-import com.opensymphony.xwork2.Result;
-import com.opensymphony.xwork2.config.entities.ResultConfig;
+import com.opensymphony.xwork2.factory.ResultFactory;
 import com.opensymphony.xwork2.inject.Inject;
-import com.opensymphony.xwork2.util.reflection.ReflectionException;
-import com.opensymphony.xwork2.util.reflection.ReflectionExceptionHandler;
 
 /**
  * <pre>
- * 1 Specialize for freemarker result creation.
- * 2 Dropped autowire feature for without any bean needed(action?struts2?)
+ * 1 Dropped autowire feature
  * </pre>
  * 
  * @author chaostone
@@ -54,9 +48,6 @@ public class BeangleObjectFactory extends ObjectFactory {
 
   protected Container context;
 
-  @Inject
-  private FreemarkerManager freemarkerManager;
-
   /**
    * Constructs the object factory
    * 
@@ -68,35 +59,6 @@ public class BeangleObjectFactory extends ObjectFactory {
       @Inject(StrutsConstants.STRUTS_DEVMODE) String devMode) {
     context = Containers.getRoot();
     if (context == null) logger.error("Cannot find beangle context from ServletContext");
-  }
-
-  /**
-   * 为freemaker做优化
-   */
-  public Result buildResult(ResultConfig resultConfig, Map<String, Object> extraContext) throws Exception {
-    String resultClassName = resultConfig.getClassName();
-    Result result = null;
-    if (resultClassName != null) {
-      if (resultClassName.equals("org.apache.struts2.views.freemarker.FreemarkerResult")) {
-        result = new FreemarkerResult(resultConfig.getParams().get("location"));
-        ((FreemarkerResult) result).setFreemarkerManager(freemarkerManager);
-      } else {
-        result = (Result) buildBean(resultClassName, extraContext);
-        Map<String, String> params = resultConfig.getParams();
-        if (params != null) {
-          for (Map.Entry<String, String> paramEntry : params.entrySet()) {
-            try {
-              reflectionProvider.setProperty(paramEntry.getKey(), paramEntry.getValue(), result,
-                  extraContext, true);
-            } catch (ReflectionException ex) {
-              if (result instanceof ReflectionExceptionHandler) ((ReflectionExceptionHandler) result)
-                  .handle(ex);
-            }
-          }
-        }
-      }
-    }
-    return result;
   }
 
   /**
@@ -113,18 +75,13 @@ public class BeangleObjectFactory extends ObjectFactory {
   public Object buildBean(String beanName, Map<String, Object> extraContext, boolean injectInternal)
       throws Exception {
     Object bean = null;
-    if (context.contains(beanName)) {
-      bean = context.getBean(beanName).get();
-    } else {
-      bean = buildBean(getClassInstance(beanName), extraContext);
-    }
+    if (context.contains(beanName)) bean = context.getBean(beanName).get();
+    else bean = buildBean(getClassInstance(beanName), extraContext);
     return bean;
   }
 
   /**
-   * @param clazz
-   * @param extraContext
-   * @throws Exception
+   * @see org.beangle.struts2.convention.config.ActionFinder
    */
   @SuppressWarnings("rawtypes")
   @Override
@@ -136,15 +93,16 @@ public class BeangleObjectFactory extends ObjectFactory {
     return bean;
   }
 
-  public void setFreemarkerManager(FreemarkerManager freemarkerManager) {
-    this.freemarkerManager = freemarkerManager;
-  }
-
   @Override
   public Class<?> getClassInstance(String className) throws ClassNotFoundException {
     Class<?> clazz = null;
     if (context.contains(className)) clazz = context.getType(className).get();
     else clazz = super.getClassInstance(className);
     return clazz;
+  }
+
+  @Inject("beangle")
+  public void setResultFactory(ResultFactory resultFactory) {
+    super.setResultFactory(resultFactory);
   }
 }
