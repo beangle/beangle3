@@ -21,8 +21,10 @@ package org.beangle.security.cas;
 import org.beangle.commons.inject.bind.AbstractBindModule;
 import org.beangle.security.cas.auth.CasAuthenticationProvider;
 import org.beangle.security.cas.auth.vendor.NeusoftCasAliveChecker;
+import org.beangle.security.cas.auth.vendor.NeusoftCasTicketValidator;
 import org.beangle.security.cas.validation.Cas20ServiceTicketValidator;
 import org.beangle.security.cas.web.CasEntryPoint;
+import org.beangle.security.cas.web.CasPreauthFilter;
 
 /**
  * CAS Default Module
@@ -34,7 +36,8 @@ public class DefaultModule extends AbstractBindModule {
   @Override
   protected void doBinding() {
     bind(CasConfig.class, CasEntryPoint.class, NeusoftCasAliveChecker.class,
-        Cas20ServiceTicketValidator.class, CasAuthenticationProvider.class).shortName();
+        Cas20ServiceTicketValidator.class, CasAuthenticationProvider.class, CasPreauthFilter.class,
+        NeusoftCasTicketValidator.class).shortName();
   }
 
 }

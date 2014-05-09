@@ -60,6 +60,8 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
 
   private AuthenticationAliveChecker authenticationAliveChecker;
 
+  private boolean enableAliveCheck = false;
+
   /** fail for invalid cookie/ticket etc. */
   private boolean continueOnFail = true;
 
@@ -78,7 +80,8 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth == null) return true;
     if (!(auth instanceof PreauthAuthentication)) return false;
-    if (null != authenticationAliveChecker && !authenticationAliveChecker.check(auth, request)) {
+    if (enableAliveCheck && null != authenticationAliveChecker
+        && !authenticationAliveChecker.check(auth, request)) {
       unsuccessfulAuthentication(request, response, null);
       return true;
     } else {
@@ -181,6 +184,14 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
 
   public void setAuthenticationAliveChecker(AuthenticationAliveChecker authenticationAliveChecker) {
     this.authenticationAliveChecker = authenticationAliveChecker;
+  }
+
+  public boolean isEnableAliveCheck() {
+    return enableAliveCheck;
+  }
+
+  public void setEnableAliveCheck(boolean enableAliveCheck) {
+    this.enableAliveCheck = enableAliveCheck;
   }
 
   /** Override to extract the principal information from the current request */

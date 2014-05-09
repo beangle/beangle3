@@ -81,7 +81,7 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
     if (null != localLogin) {
       // 防止在localLogin也不是公开资源的错误配置情况下，出现CasEntryPoint和CasServer之间的死循环
       if (request.getServletPath().endsWith(localLogin)) {
-        response.sendRedirect(request.getContextPath() + localLogin);
+        throw ae;
       } else {
         final String encodedServiceUrl = constructLocalLoginServiceUrl(request, response, null,
             CasConfig.getLocalServer(request), config.getArtifactName(), config.isEncode());
