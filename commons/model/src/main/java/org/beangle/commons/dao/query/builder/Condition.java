@@ -261,7 +261,14 @@ public class Condition {
    * @return a {@link org.beangle.commons.dao.query.builder.Condition} object.
    */
   public static Condition eq(final String content, final String value) {
-    return new Condition(content + " = '" + value + "'");
+    int attrIndex = content.lastIndexOf('.');
+    String paramName = ":" + (
+          attrIndex == -1 ? 
+              content + System.currentTimeMillis() 
+              : content.substring(attrIndex + 1) + System.currentTimeMillis()
+          );
+    return new Condition(content + " = " + paramName, value);
+    
   }
 
   /**
@@ -313,6 +320,13 @@ public class Condition {
    * @return a {@link org.beangle.commons.dao.query.builder.Condition} object.
    */
   public static Condition like(final String content, final String value) {
-    return new Condition(content + " like '%" + value + "%'");
+    int attrIndex = content.lastIndexOf('.');
+    String paramName = ":" + (
+          attrIndex == -1 ? 
+              content + System.currentTimeMillis() 
+              : content.substring(attrIndex + 1) + System.currentTimeMillis()
+          );
+    return new Condition(content + " like " + paramName, "%" + value + "%");
   }
+  
 }
