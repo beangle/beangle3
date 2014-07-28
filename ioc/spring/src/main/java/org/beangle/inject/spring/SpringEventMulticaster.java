@@ -37,7 +37,7 @@ public class SpringEventMulticaster extends DefaultEventMulticaster implements A
 
   ApplicationContext appContext;
 
-  public void initListeners() {
+  public synchronized void initListeners() {
     if (listeners.isEmpty()) {
       for (String beanName : listenerBeans) {
         if (appContext.containsBean(beanName))
