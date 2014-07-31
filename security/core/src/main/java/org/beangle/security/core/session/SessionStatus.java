@@ -34,10 +34,13 @@ public final class SessionStatus implements Serializable {
 
   long lastAccessedTime;
 
+  boolean expired;
+  
   public SessionStatus(Sessioninfo info) {
     super();
     this.username = info.getUsername();
     this.lastAccessedTime = (null == info.getLastAccessAt()) ? -1 : info.getLastAccessAt().getTime();
+    this.expired = info.isExpired();
   }
 
   public SessionStatus(String username) {
@@ -57,4 +60,8 @@ public final class SessionStatus implements Serializable {
     this.lastAccessedTime = lastAccessedTime;
   }
 
+  public boolean isExpired() {
+	  return expired;
+  }
+  
 }

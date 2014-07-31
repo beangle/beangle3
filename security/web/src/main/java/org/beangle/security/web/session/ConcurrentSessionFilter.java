@@ -99,7 +99,7 @@ public class ConcurrentSessionFilter extends GenericHttpFilter {
     if (session != null && shouldCare(request)) {
       info = sessionRegistry.getSessionStatus(session.getId());
       // Expired - abort processing
-      if (null == info) {
+      if (null == info || info.isExpired()) {
         doLogout(request, response);
         sessionRegistry.remove(session.getId());
         String targetUrl = determineExpiredUrl(request, info);
