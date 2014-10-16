@@ -10,6 +10,7 @@
   <!--默认i18n和配置文件不重复加载-->
   <constant name="struts.devMode" value="false"/>
   <constant name="struts.configuration.xml.reload" value="false"/>
+  <constant name="struts.ui.theme.expansion.token" value="" />
   <constant name="beangle.i18n.reload" value="false"/>
   <constant name="beangle.i18n.resources" value="beangle,application"/>
   <constant name="beangle.convention.action.suffix" value="Action"/>
