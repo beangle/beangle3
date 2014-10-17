@@ -91,9 +91,9 @@ public class BeangleFreemarkerManager extends FreemarkerManager {
    * disable configuration using theme temploader
    * because only tag based on theme ,common pages don't based on theme
    */
-  protected void configureTemplateLoader(TemplateLoader templateLoader) {
-    config.setTemplateLoader(templateLoader);
-  }
+//  protected void configureTemplateLoader(TemplateLoader templateLoader) {
+//    config.setTemplateLoader(templateLoader);
+//  }
 
   /**
    * The default template loader is a MultiTemplateLoader which includes
