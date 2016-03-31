@@ -30,7 +30,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.beangle.commons.entity.TemporalEntity;
+import org.beangle.commons.entity.TemporalAt;
 import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.data.DataPermission;
@@ -47,7 +47,7 @@ import com.google.gson.GsonBuilder;
  */
 @Entity(name = "org.beangle.security.blueprint.data.DataPermission")
 @Cacheable
-public class DataPermissionBean extends IntegerIdObject implements TemporalEntity, DataPermission {
+public class DataPermissionBean extends IntegerIdObject implements TemporalAt, DataPermission {
 
   private static final long serialVersionUID = -8956079356245507990L;
 
@@ -81,10 +81,10 @@ public class DataPermissionBean extends IntegerIdObject implements TemporalEntit
   protected String attrs;
 
   /** 生效时间 */
-  protected Date effectiveAt;
+  protected Date beginAt;
 
   /** 失效时间 */
-  protected Date invalidAt;
+  protected Date endAt;
 
   /** 备注 */
   @Size(max = 100)
@@ -125,20 +125,20 @@ public class DataPermissionBean extends IntegerIdObject implements TemporalEntit
     this.actions = actions;
   }
 
-  public Date getEffectiveAt() {
-    return effectiveAt;
+  public Date getBeginAt() {
+    return beginAt;
   }
 
-  public void setEffectiveAt(Date effectiveAt) {
-    this.effectiveAt = effectiveAt;
+  public void setBeginAt(Date beginAt) {
+    this.beginAt = beginAt;
   }
 
-  public Date getInvalidAt() {
-    return invalidAt;
+  public Date getEndAt() {
+    return endAt;
   }
 
-  public void setInvalidAt(Date invalidAt) {
-    this.invalidAt = invalidAt;
+  public void setEndAt(Date endAt) {
+    this.endAt = endAt;
   }
 
   public DataResource getResource() {

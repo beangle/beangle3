@@ -25,12 +25,12 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.Operation;
 import org.beangle.commons.dao.impl.AbstractHierarchyService;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
-import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Role;
+import org.beangle.security.blueprint.RoleMember;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.event.RoleCreationEvent;
-import org.beangle.security.blueprint.model.MemberBean;
 import org.beangle.security.blueprint.model.RoleBean;
+import org.beangle.security.blueprint.model.RoleMemberBean;
 import org.beangle.security.blueprint.service.RoleService;
 import org.beangle.security.blueprint.service.UserService;
 
@@ -48,8 +48,7 @@ public class RoleServiceImpl extends AbstractHierarchyService<RoleBean> implemen
 
   public void createRole(User owner, Role role) {
     role.setUpdatedAt(new Date(System.currentTimeMillis()));
-    role.setCreatedAt(new Date(System.currentTimeMillis()));
-    role.getMembers().add(new MemberBean(role, owner, Member.Ship.MANAGER));
+    role.getMembers().add(new RoleMemberBean(role, owner, RoleMember.Ship.MANAGER));
     entityDao.saveOrUpdate(role);
     publish(new RoleCreationEvent(role));
   }
@@ -62,7 +61,7 @@ public class RoleServiceImpl extends AbstractHierarchyService<RoleBean> implemen
     List<Object> removed = CollectUtils.newArrayList();
 
     for (final Role role : roles) {
-      if (role.getOwner().equals(manager) || userService.isRoot(manager)) {
+      if (role.getCreator().equals(manager) || userService.isRoot(manager)) {
         if (null != role.getParent()) {
           role.getParent().getChildren().remove(role);
           saved.add(role.getParent());
@@ -95,8 +94,8 @@ public class RoleServiceImpl extends AbstractHierarchyService<RoleBean> implemen
     else {
       Role parent = role.getParent();
       if (null != parent) return false;
-      for (Member m : user.getMembers()) {
-        if (m.is(Member.Ship.MANAGER) && m.getRole().equals(parent)) return true;
+      for (RoleMember m : user.getMembers()) {
+        if (m.is(RoleMember.Ship.MANAGER) && m.getRole().equals(parent)) return true;
       }
       return false;
     }
@@ -104,8 +103,8 @@ public class RoleServiceImpl extends AbstractHierarchyService<RoleBean> implemen
 
   @Override
   public List<Role> getRootRoles() {
-    return entityDao.search(OqlBuilder.from(Role.class, "r").where("r.parent is null").cacheable()
-        .orderBy("r.indexno"));
+    return entityDao
+        .search(OqlBuilder.from(Role.class, "r").where("r.parent is null").cacheable().orderBy("r.indexno"));
   }
 
   public void setUserService(UserService userService) {

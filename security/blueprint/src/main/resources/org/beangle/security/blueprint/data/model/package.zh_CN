@@ -12,8 +12,8 @@ DataPermissionBean.actions=授权的操作
 DataPermissionBean.filters=资源过滤器
 DataPermissionBean.restrictions=访问满足的检查(入口\人员等)
 DataPermissionBean.attrs=能够访问哪些属性
-DataPermissionBean.effectiveAt=生效时间
-DataPermissionBean.invalidAt=失效时间
+DataPermissionBean.beginAt=生效时间
+DataPermissionBean.endAt=失效时间
 DataPermissionBean.remark=备注
 
 DataResourceBean=系统数据资源

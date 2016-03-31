@@ -49,11 +49,6 @@ public interface Resource extends Entity<Integer> {
   String getActions();
 
   /**
-   * 资源状态
-   */
-  boolean isEnabled();
-
-  /**
    * 返回资源描述
    */
   String getRemark();

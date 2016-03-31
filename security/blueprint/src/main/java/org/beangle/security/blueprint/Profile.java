@@ -30,9 +30,9 @@ public interface Profile {
 
   List<? extends Property> getProperties();
 
-  Property getProperty(Field field);
+  Property getProperty(Dimension field);
 
-  void setProperty(Field field, String value);
+  void setProperty(Dimension field, String value);
 
   Property getProperty(String name);
   

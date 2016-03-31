@@ -30,7 +30,7 @@ import org.beangle.security.blueprint.data.DataResource;
 import org.beangle.security.blueprint.data.model.DataPermissionBean;
 import org.beangle.security.blueprint.data.model.DataResourceBean;
 import org.beangle.security.blueprint.data.service.internal.DataPermissionServiceImpl;
-import org.beangle.security.blueprint.model.FieldBean;
+import org.beangle.security.blueprint.model.DimensionBean;
 import org.beangle.security.blueprint.model.RoleBean;
 import org.beangle.security.blueprint.model.UserProfileBean;
 import org.beangle.security.blueprint.service.impl.CsvDataResolver;
@@ -55,7 +55,7 @@ public class ApplyTest {
     DataPermissionBean permission = new DataPermissionBean(new RoleBean(), resource, Resource.AllActions);
     permission.setFilters("exists(from {alias}.members as m where m.role in(:roles))");
 
-    FieldBean property = new FieldBean(1, "roles", RoleBean.class.getName(), "oql:from " + Role.class);
+    DimensionBean property = new DimensionBean(1, "roles", RoleBean.class.getName(), "oql:from " + Role.class);
     property.setKeyName("id");
     property.setProperties("name");
 

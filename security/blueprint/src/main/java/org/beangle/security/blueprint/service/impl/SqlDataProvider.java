@@ -23,13 +23,13 @@ import java.util.List;
 
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.SqlBuilder;
-import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Dimension;
 import org.beangle.security.blueprint.service.UserDataProvider;
 
 public class SqlDataProvider extends BaseServiceImpl implements UserDataProvider {
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> getData(Field field, String source, Object... keys) {
+  public <T> List<T> getData(Dimension field, String source, Object... keys) {
     try {
       return (List<T>) entityDao.search(SqlBuilder.sql(source));
     } catch (Exception e) {

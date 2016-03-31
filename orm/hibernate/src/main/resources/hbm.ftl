@@ -10,7 +10,7 @@
     <cache usage="${cls.cacheConcurrencyStrategy}" region="${cls.cacheRegionName}"/>
     [/#if]
     <id name="id" unsaved-value="null">
-      <generator class="org.beangle.orm.hibernate.TableSeqGenerator"/>
+      <generator class="org.beangle.orm.hibernate.id.TableSeqGenerator"/>
     </id>
     [#list cls.propertyIterator as pi]
     [#assign piv = pi.value/]

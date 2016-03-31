@@ -22,12 +22,13 @@ import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.commons.lang.Objects;
-import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Dimension;
 import org.beangle.security.blueprint.Property;
 import org.beangle.security.blueprint.Role;
 
@@ -38,6 +39,7 @@ import org.beangle.security.blueprint.Role;
  */
 @Entity(name = "org.beangle.security.blueprint.model.RolePropertyBean")
 @Cacheable
+@Table(name = "roles_properties")
 public class RolePropertyBean extends IntegerIdObject implements Property {
   private static final long serialVersionUID = 1L;
 
@@ -49,7 +51,7 @@ public class RolePropertyBean extends IntegerIdObject implements Property {
   /** 属性元 */
   @NotNull
   @ManyToOne(fetch = FetchType.LAZY)
-  private Field field;
+  private Dimension dimension;
 
   /** 角色 */
   @NotNull
@@ -60,10 +62,10 @@ public class RolePropertyBean extends IntegerIdObject implements Property {
     super();
   }
 
-  public RolePropertyBean(Role role, Field field, String value) {
+  public RolePropertyBean(Role role, Dimension field, String value) {
     super();
     this.role = role;
-    this.field = field;
+    this.dimension = field;
     this.value = value;
   }
 
@@ -75,12 +77,12 @@ public class RolePropertyBean extends IntegerIdObject implements Property {
     this.value = value;
   }
 
-  public Field getField() {
-    return field;
+  public Dimension getDimension() {
+    return dimension;
   }
 
-  public void setField(Field field) {
-    this.field = field;
+  public void setDimension(Dimension dimension) {
+    this.dimension = dimension;
   }
 
   public Role getRole() {
@@ -93,6 +95,6 @@ public class RolePropertyBean extends IntegerIdObject implements Property {
 
   @Override
   public String toString() {
-    return Objects.toStringBuilder(this).add("field", field.getName()).add("value", value).toString();
+    return Objects.toStringBuilder(this).add("field", dimension.getName()).add("value", value).toString();
   }
 }

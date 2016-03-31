@@ -31,7 +31,7 @@ public abstract class NumberIdObject<T extends Number> implements Entity<T> {
 
   /** 非业务主键 */
   @Id
-  @GeneratedValue(generator = "table_sequence")
+  @GeneratedValue(generator = "auto_increment")
   protected T id;
 
   public NumberIdObject() {

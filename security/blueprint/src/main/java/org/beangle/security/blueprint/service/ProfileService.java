@@ -20,7 +20,7 @@ package org.beangle.security.blueprint.service;
 
 import java.util.List;
 
-import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Dimension;
 import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.function.FuncResource;
@@ -32,7 +32,7 @@ public interface ProfileService {
    * @param field
    * @param profile
    */
-  Object getProperty(Profile profile, Field field);
+  Object getProperty(Profile profile, Dimension field);
 
   /**
    * 查找用户在指定资源上对应的数据配置
@@ -47,14 +47,14 @@ public interface ProfileService {
    * @param field
    * @param keys
    */
-  List<?> getFieldValues(Field field, Object... keys);
+  List<?> getDimensionValues(Dimension field, Object... keys);
 
   /**
    * Search field
    * 
    * @param fieldName
    */
-  Field getField(String fieldName);
+  Dimension getDimension(String fieldName);
 
   /**
    * find profile

@@ -28,7 +28,8 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.orm.hibernate.RailsNamingStrategy;
 import org.beangle.orm.hibernate.TableNamingStrategy;
-import org.beangle.orm.hibernate.TableSeqGenerator;
+import org.beangle.orm.hibernate.id.AutoIncrementGenerator;
+import org.beangle.orm.hibernate.id.TableSeqGenerator;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
@@ -79,8 +80,8 @@ public class OverrideConfiguration extends Configuration {
       SAXReader reader = xmlHelper.createSAXReader(errorLogger, getEntityResolver());
       reader.setValidation(false);
       Document document = reader.read(new InputSource(stream));
-      if (errorLogger.hasErrors()) { throw new MappingException("invalid configuration", errorLogger
-          .getErrors().get(0)); }
+      if (errorLogger.hasErrors()) { throw new MappingException("invalid configuration",
+          errorLogger.getErrors().get(0)); }
       doConfigure(document);
     } catch (DocumentException e) {
       throw new HibernateException("Could not parse configuration: " + resourceName, e);
@@ -158,9 +159,14 @@ public class OverrideConfiguration extends Configuration {
      */
     public OverrideMappings() {
       super();
+      IdGenerator tableSeqGen = new IdGenerator();
+      tableSeqGen.setName("table_sequence");
+      tableSeqGen.setIdentifierGeneratorStrategy(TableSeqGenerator.class.getName());
+      this.addDefaultGenerator(tableSeqGen);
+
       IdGenerator idGen = new IdGenerator();
-      idGen.setName("table_sequence");
-      idGen.setIdentifierGeneratorStrategy(TableSeqGenerator.class.getName());
+      idGen.setName("auto_increment");
+      idGen.setIdentifierGeneratorStrategy(AutoIncrementGenerator.class.getName());
       this.addDefaultGenerator(idGen);
     }
 
@@ -174,8 +180,8 @@ public class OverrideConfiguration extends Configuration {
     @Override
     public void addClass(PersistentClass pClass) throws DuplicateMappingException {
       // trigger dynamic update
-      if (!pClass.useDynamicUpdate() && pClass.getTable().getColumnSpan() >= dynaupdateMinColumn) pClass
-          .setDynamicUpdate(true);
+      if (!pClass.useDynamicUpdate() && pClass.getTable().getColumnSpan() >= dynaupdateMinColumn)
+        pClass.setDynamicUpdate(true);
       final String className = pClass.getClassName();
       String entityName = pClass.getEntityName();
 
@@ -222,8 +228,8 @@ public class OverrideConfiguration extends Configuration {
       if (null == existing) {
         imports.put(rename, entityName);
       } else {
-        if (ClassLoaders.loadClass(existing).isAssignableFrom(ClassLoaders.loadClass(entityName))) imports
-            .put(rename, entityName);
+        if (ClassLoaders.loadClass(existing).isAssignableFrom(ClassLoaders.loadClass(entityName)))
+          imports.put(rename, entityName);
         else throw new DuplicateMappingException("duplicate import: " + rename + " refers to both "
             + entityName + " and " + existing + " (try using auto-import=\"false\")", "import", rename);
       }

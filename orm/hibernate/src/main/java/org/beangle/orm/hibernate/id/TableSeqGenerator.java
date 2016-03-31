@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.orm.hibernate;
+package org.beangle.orm.hibernate.id;
 
 import java.util.Properties;
 
 import org.beangle.commons.lang.Strings;
+import org.beangle.orm.hibernate.TableNamingStrategy;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.id.IdentifierGenerator;
 import org.hibernate.id.PersistentIdentifierGenerator;

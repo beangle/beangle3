@@ -4,7 +4,6 @@ HierarchyEntity.indexno=Index No
 HierarchyEntity.parent=Parent
 HierarchyEntity.children=Children
 
-TimeEntity.createdAt=Created At
 TimeEntity.updatedAt=Updated At
 
 EnabledEntity.enabled=Enabled
@@ -12,7 +11,7 @@ EnabledEntity.enabled=Enabled
 JournalEntity.beginOn=Begin On
 JournalEntity.endOn=End On
 
-TemporalEntity.effectiveAt=Effective At
-TemporalEntity.invalidAt=Invalid At
+TemporalEntity.beginAt=Effective At
+TemporalEntity.endAt=Invalid At
 
 CodeEntity.code=Code

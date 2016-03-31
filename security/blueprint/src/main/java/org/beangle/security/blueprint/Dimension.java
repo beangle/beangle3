@@ -16,47 +16,64 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.entity;
+package org.beangle.security.blueprint;
 
-import java.util.Date;
+import org.beangle.commons.entity.Entity;
 
 /**
- * 有时效性的实体
- * </p>
- * 指有具体生效时间和失效时间的实体。一般生效时间不能为空，失效时间可以为空。
- * 具体时间采用时间时间格式便于比对。
+ * 自定义属性
  * 
  * @author chaostone
- * @version $Id: $
+ * @since 2011-09-22
  */
-public interface TemporalEntity {
+public interface Dimension extends Entity<Integer> {
 
   /**
-   * 获得生效时间
-   * 
-   * @return 生效时间
+   * 名称
    */
-  Date getEffectiveAt();
+  String getName();
 
   /**
-   * 获得失效时间
-   * 
-   * @return 失效时间
+   * 标题
    */
-  Date getInvalidAt();
+  String getTitle();
 
   /**
-   * 设置生效时间
-   * 
-   * @param effectiveAt
+   * 数据源提供者
    */
-  void setEffectiveAt(Date effectiveAt);
+  String getSource();
 
   /**
-   * 设置失效时间
-   * 
-   * @param invalidAt
+   * 是否为集合类型
    */
-  void setInvalidAt(Date invalidAt);
+  boolean isMultiple();
+
+  /**
+   * 是否必填
+   * 
+   * @return
+   */
+  boolean isRequired();
+
+  /**
+   * 类型
+   * 
+   * @return
+   */
+  String getTypeName();
+
+  /**
+   * 主键
+   * 
+   * @return
+   */
+  String getKeyName();
+
+  /**
+   * 其他属性
+   * 
+   * @return
+   */
+  String getProperties();
 
 }

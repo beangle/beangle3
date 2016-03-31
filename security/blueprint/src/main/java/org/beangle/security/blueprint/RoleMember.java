@@ -24,7 +24,7 @@ import org.beangle.commons.entity.Entity;
  * @author chaostone
  * @version $Id: Member.java Nov 2, 2010 6:24:48 PM chaostone $
  */
-public interface Member extends Entity<Integer> {
+public interface RoleMember extends Entity<Integer> {
 
   /**
    * get role

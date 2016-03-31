@@ -16,22 +16,44 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.data;
+package org.beangle.commons.entity;
 
-import org.beangle.commons.entity.Entity;
+import java.sql.Date;
 
 /**
+ * Jounal Entity
+ * 
  * @author chaostone
- * @since 3.0.0
+ * @since 3.1.0
  */
-public interface DataField extends Entity<Integer> {
+public interface TemporalOn {
+  /**
+   * 获得起始时间
+   * 
+   * @return 起始日期
+   */
+  Date getBeginOn();
 
-  String getName();
+  /**
+   * 设置起始日期
+   * 
+   * @param beginAt
+   *          起始日期
+   */
+  void setBeginOn(Date beginOn);
 
-  String getTitle();
+  /**
+   * 获得结束日期
+   * 
+   * @return 结束日期
+   */
+  Date getEndOn();
 
-  DataResource getResource();
-
-  String getTypeName();
-
+  /**
+   * 设置结束日期
+   * 
+   * @param endAt
+   *          结束日期
+   */
+  void setEndOn(Date endOn);
 }

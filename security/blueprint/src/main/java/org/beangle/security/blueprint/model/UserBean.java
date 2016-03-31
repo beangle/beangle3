@@ -26,8 +26,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,9 +34,9 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.pojo.NumberIdTimeObject;
 import org.beangle.commons.entity.util.EntityUtils;
 import org.beangle.commons.lang.Objects;
-import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.Role;
+import org.beangle.security.blueprint.RoleMember;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.UserProfile;
 
@@ -56,50 +54,41 @@ public class UserBean extends NumberIdTimeObject<Long> implements User {
   @Size(max = 40)
   @NotNull
   @Column(unique = true)
-  protected String name;
+  protected String code;
 
   /** 用户姓名 */
   @NotNull
   @Size(max = 50)
-  private String fullname;
+  private String name;
 
   /** 用户密文 */
   @Size(max = 100)
   @NotNull
   private String password;
 
-  /** 用户联系email */
-  @NotNull
-  @Size(max = 100)
-  private String mail;
-
   /** 对应角色 */
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-  private Set<Member> members = CollectUtils.newHashSet();
+  private Set<RoleMember> members = CollectUtils.newHashSet();
 
   /** 菜单列表 */
   @OneToMany(mappedBy = "user", targetEntity = UserProfile.class)
   private List<Profile> profiles = CollectUtils.newArrayList();
 
-  /** 创建人 */
-  @ManyToOne(fetch = FetchType.LAZY)
-  private User creator;
-
   /**
    * 账户生效日期
    */
   @NotNull
-  protected Date effectiveAt;
+  protected java.sql.Date beginOn;
 
   /**
    * 账户失效日期
    */
-  protected Date invalidAt;
+  protected java.sql.Date endOn;
 
   /**
    * 密码失效日期
    */
-  protected Date passwordExpiredAt;
+  protected java.sql.Date passwordExpiredOn;
 
   /** 是否启用 */
   @NotNull
@@ -117,31 +106,12 @@ public class UserBean extends NumberIdTimeObject<Long> implements User {
     setId(id);
   }
 
-  /**
-   * @return user's name
-   */
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public String getRemark() {
     return remark;
   }
 
   public void setRemark(String remark) {
     this.remark = remark;
-  }
-
-  public String getMail() {
-    return mail;
-  }
-
-  public void setMail(String mail) {
-    this.mail = mail;
   }
 
   public String getPassword() {
@@ -152,29 +122,13 @@ public class UserBean extends NumberIdTimeObject<Long> implements User {
     this.password = password;
   }
 
-  public String getFullname() {
-    return fullname;
-  }
-
-  public void setFullname(String fullname) {
-    this.fullname = fullname;
-  }
-
-  public User getCreator() {
-    return creator;
-  }
-
-  public void setCreator(User creator) {
-    this.creator = creator;
-  }
-
-  public Set<Member> getMembers() {
+  public Set<RoleMember> getMembers() {
     return members;
   }
 
   public List<Role> getRoles(List<Profile> profiles) {
     List<Role> roles = CollectUtils.newArrayList();
-    for (Member member : members) {
+    for (RoleMember member : members) {
       if (member.getRole().isEnabled() && member.isMember()) {
         boolean matched = false;
         if (member.getRole().getProperties().isEmpty()) matched = true;
@@ -216,7 +170,7 @@ public class UserBean extends NumberIdTimeObject<Long> implements User {
     this.profiles = profiles;
   }
 
-  public void setMembers(Set<Member> members) {
+  public void setMembers(Set<RoleMember> members) {
     this.members = members;
   }
 
@@ -231,7 +185,7 @@ public class UserBean extends NumberIdTimeObject<Long> implements User {
    * 是否密码过期
    */
   public boolean isPasswordExpired() {
-    return (null != passwordExpiredAt && new Date(System.currentTimeMillis()).after(passwordExpiredAt));
+    return (null != passwordExpiredOn && new Date(System.currentTimeMillis()).after(passwordExpiredOn));
   }
 
   public boolean isEnabled() {
@@ -242,33 +196,49 @@ public class UserBean extends NumberIdTimeObject<Long> implements User {
     this.enabled = enabled;
   }
 
-  public Date getEffectiveAt() {
-    return effectiveAt;
+  public java.sql.Date getBeginOn() {
+    return beginOn;
   }
 
-  public void setEffectiveAt(Date effectAt) {
-    this.effectiveAt = effectAt;
+  public void setBeginOn(java.sql.Date beginOn) {
+    this.beginOn = beginOn;
   }
 
-  public Date getInvalidAt() {
-    return invalidAt;
+  public java.sql.Date getEndOn() {
+    return endOn;
   }
 
-  public void setInvalidAt(Date invalidAt) {
-    this.invalidAt = invalidAt;
+  public void setEndOn(java.sql.Date endOn) {
+    this.endOn = endOn;
   }
 
-  public Date getPasswordExpiredAt() {
-    return passwordExpiredAt;
+  public java.sql.Date getPasswordExpiredOn() {
+    return passwordExpiredOn;
   }
 
-  public void setPasswordExpiredAt(Date passwordExpiredAt) {
-    this.passwordExpiredAt = passwordExpiredAt;
+  public void setPasswordExpiredOn(java.sql.Date passwordExpiredOn) {
+    this.passwordExpiredOn = passwordExpiredOn;
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public String toString() {
     return Objects.toStringBuilder(this).add("id", this.id).add("password", this.password)
-        .add("name", this.getName()).toString();
+        .add("name", this.getCode()).toString();
   }
 
 }

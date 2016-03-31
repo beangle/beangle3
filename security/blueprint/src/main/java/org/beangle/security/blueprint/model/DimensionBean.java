@@ -25,7 +25,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.entity.pojo.IntegerIdObject;
-import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Dimension;
 
 /**
  * 属性元信息
@@ -33,9 +33,9 @@ import org.beangle.security.blueprint.Field;
  * @author chaostone
  * @since 3.0.0
  */
-@Entity(name = "org.beangle.security.blueprint.Field")
+@Entity(name = "org.beangle.security.blueprint.Dimension")
 @Cacheable
-public class FieldBean extends IntegerIdObject implements Field {
+public class DimensionBean extends IntegerIdObject implements Dimension {
   private static final long serialVersionUID = 1L;
 
   /** 名称 */
@@ -73,15 +73,15 @@ public class FieldBean extends IntegerIdObject implements Field {
   /** 是否必填项 */
   protected boolean required;
 
-  public FieldBean() {
+  public DimensionBean() {
     super();
   }
 
-  public FieldBean(Integer id) {
+  public DimensionBean(Integer id) {
     super(id);
   }
 
-  public FieldBean(Integer id, String name, String typeName, String source) {
+  public DimensionBean(Integer id, String name, String typeName, String source) {
     super(id);
     this.name = name;
     this.typeName = typeName;
@@ -153,5 +153,4 @@ public class FieldBean extends IntegerIdObject implements Field {
     this.properties = properties;
   }
 
-  
 }

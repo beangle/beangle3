@@ -6,8 +6,8 @@ DataPermissionBean.actions=Actions
 DataPermissionBean.filters=Filters
 DataPermissionBean.restrictions=Restrictions
 DataPermissionBean.attrs=Attrs
-DataPermissionBean.effectiveAt=Effective At
-DataPermissionBean.invalidAt=Invalid At
+DataPermissionBean.beginAt=Effective At
+DataPermissionBean.endAt=Invalid At
 DataPermissionBean.remark=Remark
 
 

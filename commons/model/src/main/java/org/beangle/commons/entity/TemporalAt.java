@@ -16,64 +16,36 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint;
+package org.beangle.commons.entity;
 
-import org.beangle.commons.entity.Entity;
+import java.util.Date;
 
 /**
- * 自定义属性
- * 
- * @author chaostone
- * @since 2011-09-22
+ * 有时效性的实体
+ * </p>
+ * 指有具体生效时间和失效时间的实体。一般生效时间不能为空，失效时间可以为空。
+ * 具体时间采用时间时间格式便于比对。
  */
-public interface Field extends Entity<Integer> {
+public interface TemporalAt {
 
   /**
-   * 名称
+   * 获得生效时间
    */
-  String getName();
+  Date getBeginAt();
 
   /**
-   * 标题
+   * 获得失效时间
    */
-  String getTitle();
+  Date getEndAt();
 
   /**
-   * 数据源提供者
+   * 设置生效时间
    */
-  String getSource();
+  void setBeginAt(Date beginAt);
 
   /**
-   * 是否为集合类型
+   * 设置失效时间
    */
-  boolean isMultiple();
-
-  /**
-   * 是否必填
-   * 
-   * @return
-   */
-  boolean isRequired();
-
-  /**
-   * 类型
-   * 
-   * @return
-   */
-  String getTypeName();
-
-  /**
-   * 主键
-   * 
-   * @return
-   */
-  String getKeyName();
-
-  /**
-   * 其他属性
-   * 
-   * @return
-   */
-  String getProperties();
+  void setEndAt(Date endAt);
 
 }

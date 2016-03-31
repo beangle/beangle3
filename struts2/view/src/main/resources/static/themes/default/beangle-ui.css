@@ -25,6 +25,18 @@ body {font-size: 13px;margin:0;font-family: Verdana, Arial, sans-serif;}
 
 select,input,textarea {font-size: 13px;}
 
+input[type="text"]  {
+    border: 1px solid #CCC;
+}
+select {
+    border: 1px solid #CCC;
+}
+
+input[type="text"]:focus,select:focus{
+     outline: 1px solid #3399ff;
+     outline-radius: 3px;
+}
+
 form {
     padding:0px;
     margin:0px;

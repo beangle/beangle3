@@ -30,15 +30,15 @@ import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.functor.Predicate;
 import org.beangle.security.auth.Principals;
-import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Role;
+import org.beangle.security.blueprint.RoleMember;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.UserProfile;
 import org.beangle.security.blueprint.event.UserAlterationEvent;
 import org.beangle.security.blueprint.event.UserCreationEvent;
 import org.beangle.security.blueprint.event.UserRemoveEvent;
 import org.beangle.security.blueprint.event.UserStatusEvent;
-import org.beangle.security.blueprint.model.MemberBean;
+import org.beangle.security.blueprint.model.RoleMemberBean;
 import org.beangle.security.blueprint.model.UserBean;
 import org.beangle.security.blueprint.service.UserService;
 
@@ -61,8 +61,8 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     Map<String, Object> params = CollectUtils.newHashMap();
     params.put("name", name);
     params.put("password", password);
-    List<?> userList = entityDao.search(
-        "from User user where  user.name = :name and user.password = :password", params);
+    List<?> userList = entityDao
+        .search("from User user where  user.name = :name and user.password = :password", params);
     if (userList.size() > 0) return (User) userList.get(0);
     else return null;
   }
@@ -104,37 +104,34 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
   public void saveOrUpdate(User user) {
     user.setUpdatedAt(new Date(System.currentTimeMillis()));
-    if (!user.isPersisted()) user.setCreatedAt(new Date(System.currentTimeMillis()));
     entityDao.saveOrUpdate(user);
     publish(new UserAlterationEvent(Collections.singletonList(user)));
   }
 
-  public List<Member> getMembers(User user, Member.Ship ship) {
-    if (isRoot(user) && !Objects.equals(ship, Member.Ship.MEMBER)) {
-      List<Member> members = CollectUtils.newArrayList();
+  public List<RoleMember> getMembers(User user, RoleMember.Ship ship) {
+    if (isRoot(user) && !Objects.equals(ship, RoleMember.Ship.MEMBER)) {
+      List<RoleMember> members = CollectUtils.newArrayList();
       List<Role> roles = entityDao.getAll(Role.class);
       for (Role role : roles) {
-        MemberBean gmb = new MemberBean(role, user, Member.Ship.MEMBER);
+        RoleMemberBean gmb = new RoleMemberBean(role, user, RoleMember.Ship.MEMBER);
         gmb.setGranter(true);
         gmb.setManager(true);
         members.add(gmb);
       }
       return members;
     }
-    OqlBuilder<Member> builder = OqlBuilder.from(Member.class, "gm");
+    OqlBuilder<RoleMember> builder = OqlBuilder.from(RoleMember.class, "gm");
     builder.where("gm.user=:user", user);
     if (null != ship) {
-      if (ship.equals(Member.Ship.MEMBER)) builder.where("gm.member=true");
-      if (ship.equals(Member.Ship.MANAGER)) builder.where("gm.manager=true");
-      if (ship.equals(Member.Ship.GRANTER)) builder.where("gm.granter=true");
+      if (ship.equals(RoleMember.Ship.MEMBER)) builder.where("gm.member=true");
+      if (ship.equals(RoleMember.Ship.MANAGER)) builder.where("gm.manager=true");
+      if (ship.equals(RoleMember.Ship.GRANTER)) builder.where("gm.granter=true");
     }
     return entityDao.search(builder);
   }
 
   public void createUser(User creator, UserBean newUser) {
-    newUser.setCreator(creator);
     newUser.setUpdatedAt(new Date(System.currentTimeMillis()));
-    newUser.setCreatedAt(new Date(System.currentTimeMillis()));
     entityDao.saveOrUpdate(newUser);
     publish(new UserCreationEvent(Collections.singletonList(newUser)));
   }
@@ -150,9 +147,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
   public boolean isManagedBy(User manager, User user) {
     if (isRoot(manager)) return true;
-    for (Member m1 : manager.getMembers()) {
+    for (RoleMember m1 : manager.getMembers()) {
       if (m1.isManager()) {
-        for (Member m2 : user.getMembers())
+        for (RoleMember m2 : user.getMembers())
           if (m2.isMember() && m2.getRole().equals(m1.getRole())) return true;
       }
     }

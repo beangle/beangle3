@@ -21,12 +21,13 @@ package org.beangle.security.blueprint.model;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.beangle.commons.entity.pojo.LongIdObject;
 import org.beangle.commons.lang.Objects;
-import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Dimension;
 import org.beangle.security.blueprint.Property;
 import org.beangle.security.blueprint.UserProfile;
 
@@ -36,6 +37,7 @@ import org.beangle.security.blueprint.UserProfile;
  * @author chaostone
  */
 @Entity(name = "org.beangle.security.blueprint.model.UserPropertyBean")
+@Table(name = "user_profiles_properties")
 public class UserPropertyBean extends LongIdObject implements Property {
   private static final long serialVersionUID = 1L;
 
@@ -46,7 +48,7 @@ public class UserPropertyBean extends LongIdObject implements Property {
   /** 属性元 */
   @NotNull
   @ManyToOne(fetch = FetchType.LAZY)
-  private Field field;
+  private Dimension dimension;
 
   /** 用户属性配置 */
   @NotNull
@@ -57,10 +59,10 @@ public class UserPropertyBean extends LongIdObject implements Property {
     super();
   }
 
-  public UserPropertyBean(UserProfileBean profile, Field field, String value) {
+  public UserPropertyBean(UserProfileBean profile, Dimension field, String value) {
     super();
     this.profile = profile;
-    this.field = field;
+    this.dimension = field;
     this.value = value;
   }
 
@@ -72,12 +74,12 @@ public class UserPropertyBean extends LongIdObject implements Property {
     this.value = value;
   }
 
-  public Field getField() {
-    return field;
+  public Dimension getDimension() {
+    return dimension;
   }
 
-  public void setField(Field field) {
-    this.field = field;
+  public void setField(Dimension field) {
+    this.dimension = field;
   }
 
   public UserProfile getProfile() {
@@ -90,7 +92,7 @@ public class UserPropertyBean extends LongIdObject implements Property {
 
   @Override
   public String toString() {
-    return Objects.toStringBuilder(this).add("field", field.getName()).add("value", value).toString();
+    return Objects.toStringBuilder(this).add("field", dimension.getName()).add("value", value).toString();
   }
 
 }

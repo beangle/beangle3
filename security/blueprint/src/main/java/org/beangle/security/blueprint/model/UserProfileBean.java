@@ -30,7 +30,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.pojo.LongIdObject;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
-import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Dimension;
 import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.Property;
 import org.beangle.security.blueprint.User;
@@ -72,12 +72,12 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
     this.properties = properties;
   }
 
-  public Property getProperty(Field meta) {
+  public Property getProperty(Dimension meta) {
     if (null == properties || properties.isEmpty()) {
       return null;
     } else {
       for (Property p : properties) {
-        if (p.getField().equals(meta)) return p;
+        if (p.getDimension().equals(meta)) return p;
       }
     }
     return null;
@@ -88,7 +88,7 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
       return null;
     } else {
       for (Property p : properties) {
-        if (p.getField().getName().equals(name)) return p;
+        if (p.getDimension().getName().equals(name)) return p;
       }
     }
     return null;
@@ -100,7 +100,7 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
     if (!other.getProperties().isEmpty()) {
       for (Property property : other.getProperties()) {
         String target = property.getValue();
-        Property op = this.getProperty(property.getField());
+        Property op = this.getProperty(property.getDimension());
         String source = "";
         if (null != op) source = op.getValue();
         matched = source.equals(Property.AllValue);
@@ -116,7 +116,7 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
     return matched;
   }
 
-  public void setProperty(Field meta, String text) {
+  public void setProperty(Dimension meta, String text) {
     Property property = getProperty(meta);
     if (Strings.isNotBlank(text)) {
       if (null == property) {

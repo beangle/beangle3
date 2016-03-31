@@ -28,7 +28,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.conversion.Conversion;
 import org.beangle.commons.conversion.impl.DefaultConversion;
 import org.beangle.commons.lang.Strings;
-import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Dimension;
 import org.beangle.security.blueprint.service.UserDataProvider;
 import org.beangle.security.blueprint.service.UserDataResolver;
 
@@ -41,7 +41,7 @@ import org.beangle.security.blueprint.service.UserDataResolver;
  */
 public class CsvDataResolver implements UserDataResolver, UserDataProvider {
 
-  public String marshal(Field property, Collection<?> items) {
+  public String marshal(Dimension property, Collection<?> items) {
     if (null == items) { return null; }
     List<String> properties = CollectUtils.newArrayList();
     if (null != property.getKeyName()) properties.add(property.getKeyName());
@@ -80,7 +80,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
   }
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> unmarshal(Field property, String source) {
+  public <T> List<T> unmarshal(Dimension property, String source) {
     if (Strings.isEmpty(source)) { return Collections.emptyList(); }
     List<String> properties = CollectUtils.newArrayList();
     if (null != property.getKeyName()) properties.add(property.getKeyName());
@@ -123,7 +123,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
     }
   }
 
-  public <T> List<T> getData(Field property, String source, Object... keys) {
+  public <T> List<T> getData(Dimension property, String source, Object... keys) {
     return unmarshal(property, source);
   }
 

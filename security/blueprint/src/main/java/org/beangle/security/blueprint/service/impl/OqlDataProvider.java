@@ -27,13 +27,13 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.conversion.impl.DefaultConversion;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.lang.ClassLoaders;
-import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Dimension;
 import org.beangle.security.blueprint.service.UserDataProvider;
 
 public class OqlDataProvider extends BaseServiceImpl implements UserDataProvider {
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> getData(Field field, String source, Object... keys) {
+  public <T> List<T> getData(Dimension field, String source, Object... keys) {
     Map<String, Object> params = CollectUtils.newHashMap();
     if (keys.length > 0) {
       String lowerSourse = source.toLowerCase();

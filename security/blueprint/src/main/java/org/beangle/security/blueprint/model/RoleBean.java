@@ -35,11 +35,11 @@ import javax.validation.constraints.Size;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.pojo.NumberIdHierarchyObject;
 import org.beangle.commons.lang.Strings;
-import org.beangle.security.blueprint.Field;
-import org.beangle.security.blueprint.Member;
+import org.beangle.security.blueprint.Dimension;
 import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.Property;
 import org.beangle.security.blueprint.Role;
+import org.beangle.security.blueprint.RoleMember;
 import org.beangle.security.blueprint.User;
 
 /**
@@ -62,12 +62,12 @@ public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements 
 
   /** 关联的用户 */
   @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-  private Set<Member> members = CollectUtils.newHashSet();
+  private Set<RoleMember> members = CollectUtils.newHashSet();
 
   /** 创建人 */
   @NotNull
   @ManyToOne(fetch = FetchType.LAZY)
-  private User owner;
+  private User creator;
 
   /** 角色属性 */
   @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = RolePropertyBean.class)
@@ -80,9 +80,6 @@ public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements 
   /** 是否启用 */
   @NotNull
   protected boolean enabled = true;
-
-  /** 创建时间 */
-  protected Date createdAt;
 
   /** 最后修改时间 */
   protected Date updatedAt;
@@ -125,32 +122,24 @@ public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements 
     this.enabled = enabled;
   }
 
-  public Set<Member> getMembers() {
+  public Set<RoleMember> getMembers() {
     return members;
   }
 
-  public void setMembers(Set<Member> members) {
+  public void setMembers(Set<RoleMember> members) {
     this.members = members;
   }
 
-  public User getOwner() {
-    return owner;
+  public User getCreator() {
+    return creator;
   }
 
-  public void setOwner(User owner) {
-    this.owner = owner;
+  public void setCreator(User creator) {
+    this.creator = creator;
   }
 
   public String toString() {
     return name;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
   }
 
   public Date getUpdatedAt() {
@@ -169,12 +158,12 @@ public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements 
     this.properties = properties;
   }
 
-  public Property getProperty(Field meta) {
+  public Property getProperty(Dimension meta) {
     if (null == properties || properties.isEmpty()) {
       return null;
     } else {
       for (Property p : properties)
-        if (p.getField().equals(meta)) return p;
+        if (p.getDimension().equals(meta)) return p;
     }
     return null;
   }
@@ -184,12 +173,12 @@ public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements 
       return null;
     } else {
       for (Property p : properties)
-        if (p.getField().getName().equals(name)) return p;
+        if (p.getDimension().getName().equals(name)) return p;
     }
     return null;
   }
 
-  public void setProperty(Field meta, String text) {
+  public void setProperty(Dimension meta, String text) {
     Property property = getProperty(meta);
     if (Strings.isNotBlank(text)) {
       if (null == property) {
@@ -207,14 +196,14 @@ public class RoleBean extends NumberIdHierarchyObject<Role, Integer> implements 
     if (!other.getProperties().isEmpty()) {
       for (Property property : other.getProperties()) {
         String target = property.getValue();
-        Property op = this.getProperty(property.getField());
+        Property op = this.getProperty(property.getDimension());
         String source = "";
         if (null != op) source = op.getValue();
         if (target.equals(Property.AllValue)) {
           matched = source.equals(Property.AllValue);
         } else {
-          matched = CollectUtils.newHashSet(Strings.split(source, ",")).contains(
-              CollectUtils.newHashSet(Strings.split(target, ",")));
+          matched = CollectUtils.newHashSet(Strings.split(source, ","))
+              .contains(CollectUtils.newHashSet(Strings.split(target, ",")));
         }
         if (!matched) break;
       }

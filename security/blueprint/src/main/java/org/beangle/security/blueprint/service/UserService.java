@@ -20,7 +20,7 @@ package org.beangle.security.blueprint.service;
 
 import java.util.List;
 
-import org.beangle.security.blueprint.Member;
+import org.beangle.security.blueprint.RoleMember;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.model.UserBean;
 
@@ -73,7 +73,7 @@ public interface UserService {
    * @param user
    * @param ship
    */
-  List<Member> getMembers(User user, Member.Ship ship);
+  List<RoleMember> getMembers(User user, RoleMember.Ship ship);
 
   /**
    * 设置用户状态

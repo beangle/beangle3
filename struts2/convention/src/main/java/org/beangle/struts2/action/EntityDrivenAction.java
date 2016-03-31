@@ -250,7 +250,6 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
     try {
       if (entity instanceof TimeEntity) {
         TimeEntity timeEntity = (TimeEntity) entity;
-        if (!entity.isPersisted()) timeEntity.setCreatedAt(new Date());
         timeEntity.setUpdatedAt(new Date());
       }
       saveOrUpdate(Collections.singletonList(entity));
@@ -348,11 +347,9 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
     } else {
       response.setContentType("application/x-msdownload");
     }
-    response.setHeader(
-        "Content-Disposition",
-        "attachment;filename="
-            + RequestUtils.encodeAttachName(ServletActionContext.getRequest(),
-                fileName + "." + Strings.uncapitalize(format.name())));
+    response.setHeader("Content-Disposition",
+        "attachment;filename=" + RequestUtils.encodeAttachName(ServletActionContext.getRequest(),
+            fileName + "." + Strings.uncapitalize(format.name())));
     // 进行输出
     exporter.setContext(context);
     exporter.transfer(new TransferResult());

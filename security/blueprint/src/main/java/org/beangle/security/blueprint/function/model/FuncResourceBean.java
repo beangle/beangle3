@@ -76,10 +76,6 @@ public class FuncResourceBean extends IntegerIdObject implements FuncResource {
   @NotNull
   private boolean enabled = true;
 
-  /** 是否为入口 */
-  @NotNull
-  private boolean entry = true;
-
   public String getRemark() {
     return remark;
   }
@@ -122,14 +118,6 @@ public class FuncResourceBean extends IntegerIdObject implements FuncResource {
 
   public void setScope(Scope scope) {
     this.scope = scope;
-  }
-
-  public boolean isEntry() {
-    return entry;
-  }
-
-  public void setEntry(boolean entry) {
-    this.entry = entry;
   }
 
   public String getActions() {

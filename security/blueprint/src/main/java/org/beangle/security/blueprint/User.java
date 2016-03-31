@@ -24,7 +24,7 @@ import java.util.Set;
 
 import org.beangle.commons.entity.EnabledEntity;
 import org.beangle.commons.entity.Entity;
-import org.beangle.commons.entity.TemporalEntity;
+import org.beangle.commons.entity.TemporalOn;
 import org.beangle.commons.entity.TimeEntity;
 
 /**
@@ -32,7 +32,7 @@ import org.beangle.commons.entity.TimeEntity;
  * 
  * @author dell,chaostone 2005-9-26
  */
-public interface User extends Entity<Long>, TimeEntity, TemporalEntity, EnabledEntity, Principal {
+public interface User extends Entity<Long>, TimeEntity, TemporalOn, EnabledEntity, Principal {
 
   // 新建用户的缺省密码
   static final String DEFAULT_PASSWORD = "1";
@@ -42,12 +42,12 @@ public interface User extends Entity<Long>, TimeEntity, TemporalEntity, EnabledE
    * 
    * @return user's name
    */
-  String getName();
+  String getCode();
 
   /**
    * 用户真实姓名
    */
-  String getFullname();
+  String getName();
 
   /**
    * 用户密码(不限制是明码还是密文)
@@ -55,14 +55,9 @@ public interface User extends Entity<Long>, TimeEntity, TemporalEntity, EnabledE
   String getPassword();
 
   /**
-   * 用户邮件
-   */
-  String getMail();
-
-  /**
    * 对应角色成员
    */
-  Set<Member> getMembers();
+  Set<RoleMember> getMembers();
 
   /**
    * 对应角色
@@ -73,22 +68,18 @@ public interface User extends Entity<Long>, TimeEntity, TemporalEntity, EnabledE
 
   /**
    * 查找符合相应profiles的角色
+   * 
    * @param profiles
    * @return
    */
   List<Role> getRoles(List<Profile> profiles);
-  
+
   /**
    * 用户对应的配置
    * 
    * @return
    */
   List<Profile> getProfiles();
-
-  /**
-   * 创建者
-   */
-  User getCreator();
 
   /**
    * 是否启用

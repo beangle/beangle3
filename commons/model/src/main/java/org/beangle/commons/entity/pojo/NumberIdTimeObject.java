@@ -28,9 +28,6 @@ import org.beangle.commons.entity.TimeEntity;
 public abstract class NumberIdTimeObject<T extends Number> extends NumberIdObject<T> implements TimeEntity {
   private static final long serialVersionUID = -5395713578471562117L;
 
-  /** 创建时间 */
-  protected Date createdAt;
-
   /** 最后修改时间 */
   protected Date updatedAt;
 
@@ -40,14 +37,6 @@ public abstract class NumberIdTimeObject<T extends Number> extends NumberIdObjec
 
   public NumberIdTimeObject(T id) {
     super(id);
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
   }
 
   public Date getUpdatedAt() {

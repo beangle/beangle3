@@ -29,14 +29,14 @@ import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.lang.Strings;
-import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Dimension;
 import org.beangle.security.blueprint.service.UserDataResolver;
 
 public class IdentifierDataResolver implements UserDataResolver {
 
   protected EntityDao entityDao;
 
-  public String marshal(Field field, Collection<?> items) {
+  public String marshal(Dimension field, Collection<?> items) {
     StringBuilder sb = new StringBuilder();
     for (Object obj : items) {
       try {
@@ -54,7 +54,7 @@ public class IdentifierDataResolver implements UserDataResolver {
   }
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> unmarshal(Field field, String text) {
+  public <T> List<T> unmarshal(Dimension field, String text) {
     if (null == field.getTypeName()) {
       return (List<T>) CollectUtils.newArrayList(Strings.split(text, ","));
     } else {

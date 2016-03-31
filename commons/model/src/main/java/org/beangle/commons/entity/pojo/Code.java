@@ -28,7 +28,7 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.beangle.commons.entity.TemporalEntity;
+import org.beangle.commons.entity.TemporalOn;
 import org.beangle.commons.lang.Objects;
 
 /**
@@ -42,8 +42,8 @@ import org.beangle.commons.lang.Objects;
  */
 @MappedSuperclass
 @Cacheable
-public abstract class BaseCode<T extends Number> extends NumberIdObject<T> implements Comparable<Object>,
-    TemporalEntity {
+public abstract class Code<T extends Number> extends NumberIdObject<T>
+    implements Comparable<Object>, TemporalOn {
 
   private static final long serialVersionUID = 5728157880502841506L;
 
@@ -66,38 +66,27 @@ public abstract class BaseCode<T extends Number> extends NumberIdObject<T> imple
    * 代码英文名称
    */
   @Size(max = 100)
-  protected String engName;
+  protected String enName;
 
   /**
    * 生效时间
    */
   @NotNull
-  protected Date effectiveAt;
+  protected java.sql.Date beginOn;
 
   /**
    * 失效时间
    */
-  protected Date invalidAt;
-
-  /** 创建时间 */
-  protected Date createdAt;
+  protected java.sql.Date endOn;
 
   /** 最后修改时间 */
   protected Date updatedAt;
 
-  public BaseCode() {
+  public Code() {
   }
 
-  public BaseCode(T id) {
+  public Code(T id) {
     this.id = id;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
   }
 
   public Date getUpdatedAt() {
@@ -114,7 +103,8 @@ public abstract class BaseCode<T extends Number> extends NumberIdObject<T> imple
   public boolean hasExtPros() {
     Field[] fields = getClass().getDeclaredFields();
     for (int i = 0; i < fields.length; i++) {
-      if (!(Modifier.isFinal(fields[i].getModifiers()) || Modifier.isStatic(fields[i].getModifiers()))) { return true; }
+      if (!(Modifier.isFinal(fields[i].getModifiers())
+          || Modifier.isStatic(fields[i].getModifiers()))) { return true; }
     }
     return false;
   }
@@ -155,67 +145,37 @@ public abstract class BaseCode<T extends Number> extends NumberIdObject<T> imple
     this.name = name;
   }
 
-  /**
-   * 获得英文名
-   * 
-   * @return 英文名
-   */
-  public String getEngName() {
-    return engName;
+  public String getEnName() {
+    return enName;
   }
 
-  /**
-   * 设置英文名
-   * 
-   * @param engName 英文名
-   */
-  public void setEngName(String engName) {
-    this.engName = engName;
+  public void setEnName(String enName) {
+    this.enName = enName;
   }
 
-  /**
-   * 获得生效时间
-   * 
-   * @return 生效时间
-   */
-  public Date getEffectiveAt() {
-    return effectiveAt;
+  public java.sql.Date getBeginOn() {
+    return beginOn;
   }
 
-  /**
-   * 设置生效时间
-   * 
-   * @param effectiveAt 生效时间
-   */
-  public void setEffectiveAt(Date effectiveAt) {
-    this.effectiveAt = effectiveAt;
+  public void setBeginOn(java.sql.Date beginOn) {
+    this.beginOn = beginOn;
   }
 
-  /**
-   * 获得失效时间
-   * 
-   * @return 失效时间
-   */
-  public Date getInvalidAt() {
-    return invalidAt;
+  public java.sql.Date getEndOn() {
+    return endOn;
   }
 
-  /**
-   * 设置失效时间
-   * 
-   * @param invalidAt 失效时间
-   */
-  public void setInvalidAt(Date invalidAt) {
-    this.invalidAt = invalidAt;
+  public void setEndOn(java.sql.Date endOn) {
+    this.endOn = endOn;
   }
 
   public int compareTo(Object arg0) {
-    BaseCode<?> other = (BaseCode<?>) arg0;
+    Code<?> other = (Code<?>) arg0;
     return this.getCode().compareTo(other.getCode());
   }
 
   public String toString() {
     return Objects.toStringBuilder(this).add("name", this.name).add("id", this.id).add("code", this.code)
-        .add("engName", this.engName).toString();
+        .add("enName", this.enName).toString();
   }
 }

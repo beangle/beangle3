@@ -42,7 +42,6 @@ public class PropertyUtils {
   private static final PropertyNameResolver resolver = new PropertyNameResolver();
 
   /**
-   * @throws NoSuchMethodException
    * @param bean
    * @param name
    * @param value
@@ -98,8 +97,8 @@ public class PropertyUtils {
       } else {
         nestedBean = getSimpleProperty(bean, next);
       }
-      if (nestedBean == null) { throw new RuntimeException("Null property value for '" + name
-          + "' on bean class '" + bean.getClass() + "'"); }
+      if (nestedBean == null) { throw new RuntimeException(
+          "Null property value for '" + name + "' on bean class '" + bean.getClass() + "'"); }
       bean = nestedBean;
       name = resolver.remove(name);
     }
@@ -153,11 +152,11 @@ public class PropertyUtils {
     try {
       key = resolver.getKey(name);
     } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("Invalid mapped property '" + name + "' on bean class '"
-          + bean.getClass() + "'");
+      throw new IllegalArgumentException(
+          "Invalid mapped property '" + name + "' on bean class '" + bean.getClass() + "'");
     }
-    if (key == null) { throw new IllegalArgumentException("Invalid mapped property '" + name
-        + "' on bean class '" + bean.getClass() + "'"); }
+    if (key == null) { throw new IllegalArgumentException(
+        "Invalid mapped property '" + name + "' on bean class '" + bean.getClass() + "'"); }
 
     // Isolate the name
     name = resolver.getProperty(name);
@@ -173,8 +172,9 @@ public class PropertyUtils {
         propertyName = resolver.getKey(propertyName);
       }
     }
-    if (resolver.isIndexed(propertyName) || resolver.isMapped(propertyName)) { throw new IllegalArgumentException(
-        "Indexed or mapped properties are not supported on" + " objects of type Map: " + propertyName); }
+    if (resolver.isIndexed(propertyName)
+        || resolver.isMapped(propertyName)) { throw new IllegalArgumentException(
+            "Indexed or mapped properties are not supported on" + " objects of type Map: " + propertyName); }
 
     bean.put(propertyName, value);
   }
@@ -185,11 +185,11 @@ public class PropertyUtils {
     try {
       index = resolver.getIndex(name);
     } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("Invalid indexed property '" + name + "' on bean class '"
-          + bean.getClass() + "'");
+      throw new IllegalArgumentException(
+          "Invalid indexed property '" + name + "' on bean class '" + bean.getClass() + "'");
     }
-    if (index < 0) { throw new IllegalArgumentException("Invalid indexed property '" + name
-        + "' on bean class '" + bean.getClass() + "'"); }
+    if (index < 0) { throw new IllegalArgumentException(
+        "Invalid indexed property '" + name + "' on bean class '" + bean.getClass() + "'"); }
 
     // Isolate the name
     name = resolver.getProperty(name);
@@ -207,7 +207,7 @@ public class PropertyUtils {
   }
 
   public static Object copyProperty(Object bean, String name, Object value) {
-    return copyProperty(bean,name,value,DefaultConversion.Instance);
+    return copyProperty(bean, name, value, DefaultConversion.Instance);
   }
 
   @SuppressWarnings("unchecked")

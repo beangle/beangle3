@@ -4,7 +4,6 @@ HierarchyEntity.indexno=顺序号
 HierarchyEntity.parent=上级
 HierarchyEntity.children=下级列表
 
-TimeEntity.createdAt=创建时间
 TimeEntity.updatedAt=更新时间
 
 EnabledEntity.enabled=是否启用
@@ -12,7 +11,7 @@ EnabledEntity.enabled=是否启用
 JournalEntity.beginOn=起始日期
 JournalEntity.endOn=结束日期
 
-TemporalEntity.effectiveAt=生效时间
-TemporalEntity.invalidAt=失效时间
+TemporalEntity.beginAt=生效时间
+TemporalEntity.endAt=失效时间
 
 CodeEntity.code=代码

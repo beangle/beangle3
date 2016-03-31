@@ -21,7 +21,7 @@ package org.beangle.security.blueprint.service;
 import java.util.Collection;
 import java.util.List;
 
-import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Dimension;
 
 public interface UserDataResolver {
 
@@ -31,7 +31,7 @@ public interface UserDataResolver {
    * @param field
    * @param items
    */
-  String marshal(Field field, Collection<?> items);
+  String marshal(Dimension field, Collection<?> items);
 
   /**
    * Convert text to list of objects
@@ -40,5 +40,5 @@ public interface UserDataResolver {
    * @param field
    * @param text
    */
-  <T> List<T> unmarshal(Field field, String text);
+  <T> List<T> unmarshal(Dimension field, String text);
 }

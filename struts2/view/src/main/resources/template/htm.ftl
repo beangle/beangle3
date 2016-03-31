@@ -1,6 +1,6 @@
 <#assign language= locale.language>
 
-<#macro i18nName(entity)><#if language?index_of("en")!=-1><#if entity.engName!?trim=="">${entity.name!}<#else>${entity.engName!}</#if><#else><#if entity.name!?trim!="">${entity.name!}<#else>${entity.engName!}</#if></#if></#macro>
+<#macro i18nName(entity)><#if language?index_of("en")!=-1><#if entity.enName!?trim=="">${entity.name!}<#else>${entity.enName!}</#if><#else><#if entity.name!?trim!="">${entity.name!}<#else>${entity.enName!}</#if></#if></#macro>
 
 <#macro i18nSelect datas selected  extra...>
   <select <#list extra?keys as attr>${attr}="${extra[attr]?html}" </#list>>

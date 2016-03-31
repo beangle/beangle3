@@ -195,10 +195,13 @@
     },
     getContextPath : function (){
       if(null===beangle.contextPath){
-        return self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1);
-      }else{
-        return beangle.contextPath;
+        if(App.contextPath){
+          beangle.contextPath = App.contextPath;
+        }else{
+          beangle.contextPath = self.location.pathname.substring(0,self.location.pathname.substring(1).indexOf('/')+1)
+        }
       }
+      return beangle.contextPath;
     },
     ready:function (fn){
         jQuery(document).ready(fn);

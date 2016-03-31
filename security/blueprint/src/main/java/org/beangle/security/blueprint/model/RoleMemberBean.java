@@ -26,8 +26,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.beangle.commons.entity.pojo.NumberIdTimeObject;
-import org.beangle.security.blueprint.Member;
 import org.beangle.security.blueprint.Role;
+import org.beangle.security.blueprint.RoleMember;
 import org.beangle.security.blueprint.User;
 
 /**
@@ -36,8 +36,8 @@ import org.beangle.security.blueprint.User;
  * @author chaostone
  * @version $Id: MemberBean.java Nov 2, 2010 6:45:48 PM chaostone $
  */
-@Entity(name = "org.beangle.security.blueprint.Member")
-public class MemberBean extends NumberIdTimeObject<Integer> implements Member {
+@Entity(name = "org.beangle.security.blueprint.RoleMember")
+public class RoleMemberBean extends NumberIdTimeObject<Integer> implements RoleMember {
 
   private static final long serialVersionUID = -3882917413656652492L;
 
@@ -63,20 +63,19 @@ public class MemberBean extends NumberIdTimeObject<Integer> implements Member {
   @NotNull
   private boolean manager;
 
-  public MemberBean() {
+  public RoleMemberBean() {
     super();
   }
 
-  public MemberBean(Role role, User user, Member.Ship ship) {
+  public RoleMemberBean(Role role, User user, RoleMember.Ship ship) {
     super();
     this.role = role;
     this.user = user;
-    this.createdAt = new Date();
     this.updatedAt = new Date();
     if (null != ship) {
-      if (ship.equals(Member.Ship.MEMBER)) {
+      if (ship.equals(RoleMember.Ship.MEMBER)) {
         member = true;
-      } else if (ship.equals(Member.Ship.MANAGER)) {
+      } else if (ship.equals(RoleMember.Ship.MANAGER)) {
         manager = true;
       } else {
         granter = true;
@@ -124,10 +123,10 @@ public class MemberBean extends NumberIdTimeObject<Integer> implements Member {
     this.granter = granter;
   }
 
-  public boolean is(Member.Ship ship) {
-    if (ship.equals(Member.Ship.MEMBER)) { return member; }
-    if (ship.equals(Member.Ship.MANAGER)) { return manager; }
-    if (ship.equals(Member.Ship.GRANTER)) { return granter; }
+  public boolean is(RoleMember.Ship ship) {
+    if (ship.equals(RoleMember.Ship.MEMBER)) { return member; }
+    if (ship.equals(RoleMember.Ship.MANAGER)) { return manager; }
+    if (ship.equals(RoleMember.Ship.GRANTER)) { return granter; }
     return false;
   }
 

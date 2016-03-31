@@ -29,8 +29,8 @@ import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Strings;
 import org.beangle.security.auth.Principals;
-import org.beangle.security.blueprint.Field;
-import org.beangle.security.blueprint.Member;
+import org.beangle.security.blueprint.Dimension;
+import org.beangle.security.blueprint.RoleMember;
 import org.beangle.security.blueprint.Permission;
 import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.Property;
@@ -71,7 +71,7 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
     return entityDao.search(builder);
   }
 
-  public List<?> getFieldValues(Field field, Object... keys) {
+  public List<?> getDimensionValues(Dimension field, Object... keys) {
     if (null == field.getSource()) return Collections.emptyList();
     String source = field.getSource();
     String prefix = Strings.substringBefore(source, ":");
@@ -84,11 +84,11 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
     }
   }
 
-  public Object getProperty(Profile profile, Field field) {
+  public Object getProperty(Profile profile, Dimension field) {
     Property property = profile.getProperty(field);
     if (null == property) return null;
     if ("*".equals(property.getValue())) {
-      return getFieldValues(property.getField());
+      return getDimensionValues(property.getDimension());
     } else {
       return unmarshal(property.getValue(), field);
     }
@@ -99,7 +99,7 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
     if (null == resource || !resource.getScope().equals(FuncResource.Scope.Private)
         || Principals.ROOT.equals(user.getId())) return user.getProfiles();
     List<Role> roles = CollectUtils.newArrayList();
-    for (Member member : user.getMembers()) {
+    for (RoleMember member : user.getMembers()) {
       if (member.getRole().isEnabled() && member.isMember()) roles.add(member.getRole());
     }
     Set<Role> allRoles = CollectUtils.newHashSet();
@@ -129,7 +129,7 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
    * @param property
    * @param restriction
    */
-  private Object unmarshal(String value, Field property) {
+  private Object unmarshal(String value, Dimension property) {
     try {
       List<Object> returned = dataResolver.unmarshal(property, value);
       if (property.isMultiple()) return returned;
@@ -140,8 +140,8 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
     }
   }
 
-  public Field getField(String fieldName) {
-    List<Field> fields = entityDao.get(Field.class, "name", fieldName);
+  public Dimension getDimension(String fieldName) {
+    List<Dimension> fields = entityDao.get(Dimension.class, "name", fieldName);
     if (1 != fields.size()) { throw new RuntimeException("bad pattern parameter named :" + fieldName); }
     return fields.get(0);
   }

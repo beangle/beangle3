@@ -23,7 +23,7 @@ import static org.testng.Assert.assertEquals;
 import java.util.List;
 
 import org.beangle.commons.collection.CollectUtils;
-import org.beangle.security.blueprint.model.FieldBean;
+import org.beangle.security.blueprint.model.DimensionBean;
 import org.beangle.security.blueprint.model.RoleBean;
 import org.beangle.security.blueprint.service.impl.CsvDataResolver;
 import org.testng.annotations.BeforeClass;
@@ -32,11 +32,11 @@ import org.testng.annotations.Test;
 @Test
 public class CsvDataResolverTest {
   CsvDataResolver resolver = new CsvDataResolver();
-  FieldBean field = null;
+  DimensionBean field = null;
 
   @BeforeClass
   public void setUp() {
-    field = new FieldBean(1, "role", RoleBean.class.getName(), "oql:from Role");
+    field = new DimensionBean(1, "role", RoleBean.class.getName(), "oql:from Role");
     field.setKeyName("id");
     field.setProperties("name");
   }

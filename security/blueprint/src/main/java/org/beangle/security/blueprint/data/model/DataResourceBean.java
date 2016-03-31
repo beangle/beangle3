@@ -18,20 +18,14 @@
  */
 package org.beangle.security.blueprint.data.model;
 
-import java.util.Set;
-
 import javax.persistence.Cacheable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.pojo.IntegerIdObject;
 import org.beangle.commons.lang.Objects;
-import org.beangle.security.blueprint.data.DataField;
 import org.beangle.security.blueprint.data.DataResource;
 
 /**
@@ -64,14 +58,6 @@ public class DataResourceBean extends IntegerIdObject implements DataResource {
   @Size(max = 100)
   private String actions;
 
-  /** 能够访问哪些属性 */
-  @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL, orphanRemoval = true)
-  protected Set<DataField> fields = CollectUtils.newHashSet();
-
-  /** 是否可用 */
-  @NotNull
-  private boolean enabled = true;
-
   public DataResourceBean() {
     super();
   }
@@ -101,14 +87,6 @@ public class DataResourceBean extends IntegerIdObject implements DataResource {
     this.name = name;
   }
 
-  public boolean isEnabled() {
-    return enabled;
-  }
-
-  public void setEnabled(boolean enabled) {
-    this.enabled = enabled;
-  }
-
   public String getTitle() {
     return title;
   }
@@ -123,14 +101,6 @@ public class DataResourceBean extends IntegerIdObject implements DataResource {
 
   public void setActions(String actions) {
     this.actions = actions;
-  }
-
-  public Set<DataField> getFields() {
-    return fields;
-  }
-
-  public void setFields(Set<DataField> fields) {
-    this.fields = fields;
   }
 
   public String toString() {

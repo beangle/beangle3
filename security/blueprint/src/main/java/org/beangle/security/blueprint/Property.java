@@ -31,7 +31,7 @@ public interface Property {
 
   Number getId();
 
-  Field getField();
+  Dimension getDimension();
 
   String getValue();
 

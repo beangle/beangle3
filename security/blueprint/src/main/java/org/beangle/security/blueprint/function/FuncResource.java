@@ -34,6 +34,11 @@ public interface FuncResource extends Resource {
   Scope getScope();
 
   /**
+   * 资源状态
+   */
+  boolean isEnabled();
+
+  /**
    * 资源可见范围
    * 
    * @author chaostone
@@ -48,7 +53,7 @@ public interface FuncResource extends Resource {
     Private(2);
 
     int value;
-    
+
     private Scope(int value) {
       this.value = value;
     }

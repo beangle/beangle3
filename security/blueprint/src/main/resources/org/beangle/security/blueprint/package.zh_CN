@@ -6,9 +6,7 @@ entity.dataResource=业务对象
 entity.dataPermission=数据限制策略
 entity.field=数据权限维度
 
-user.creator.fullname=创建者
-user.creator.name=创建者
-user.effectiveAt=生效时间
+user.beginAt=生效时间
 user.effective-invalid=生效时间
 user.enabled=状态
 user.fullname=姓名

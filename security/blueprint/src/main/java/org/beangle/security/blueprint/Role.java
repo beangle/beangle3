@@ -30,8 +30,8 @@ import org.beangle.commons.entity.TimeEntity;
  * 
  * @author chaostone 2005-9-26
  */
-public interface Role extends TimeEntity, HierarchyEntity<Role, Integer>, Comparable<Role>, Principal,
-    Profile {
+public interface Role
+    extends TimeEntity, HierarchyEntity<Role, Integer>, Comparable<Role>, Principal, Profile {
 
   /** 匿名角色id */
   static final long ANONYMOUS_ID = 1;
@@ -47,12 +47,12 @@ public interface Role extends TimeEntity, HierarchyEntity<Role, Integer>, Compar
   /**
    * 关联的系统用户
    */
-  Set<Member> getMembers();
+  Set<RoleMember> getMembers();
 
   /**
    * Owner
    */
-  User getOwner();
+  User getCreator();
 
   /**
    * 状态
@@ -71,6 +71,6 @@ public interface Role extends TimeEntity, HierarchyEntity<Role, Integer>, Compar
 
   List<Property> getProperties();
 
-  Property getProperty(Field meta);
+  Property getProperty(Dimension meta);
 
 }

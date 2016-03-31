@@ -21,14 +21,14 @@ package org.beangle.security.blueprint;
 import java.security.Principal;
 
 import org.beangle.commons.entity.Entity;
-import org.beangle.commons.entity.TemporalEntity;
+import org.beangle.commons.entity.TemporalAt;
 
 /**
  * 权限
  * 
  * @author chaostone 2005-9-26
  */
-public interface Permission extends Entity<Integer>, Cloneable, TemporalEntity {
+public interface Permission extends Entity<Integer>, Cloneable, TemporalAt {
   /**
    * 系统资源
    */

@@ -144,7 +144,7 @@ public class MenuServiceImpl extends AbstractHierarchyService<MenuBean> implemen
     builder.join("menu.resources", "mr");
     builder.where("exists(from " + FuncPermission.class.getName()
         + " a where a.role=:role and a.resource=mr)", role);
-    builder.where("mr.name=substr(menu.entry,1,length(mr.name))");
+    builder.where("mr=menu.entry");
     if (null != profile) builder.where("menu.profile=:profile", profile);
     return builder;
   }

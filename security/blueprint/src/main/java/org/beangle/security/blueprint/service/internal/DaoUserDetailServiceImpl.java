@@ -38,7 +38,7 @@ public class DaoUserDetailServiceImpl extends BaseServiceImpl implements UserDet
   protected SessionProfileService sessionProfileService;
 
   public UserDetail loadDetail(String principle) {
-    List<User> users = entityDao.get(User.class, "name", principle);
+    List<User> users = entityDao.get(User.class, "code", principle);
     if (users.isEmpty()) {
       return null;
     } else {
@@ -53,9 +53,8 @@ public class DaoUserDetailServiceImpl extends BaseServiceImpl implements UserDet
         }
       }
       String categoryName = (null == defaultRole) ? "default" : defaultRole.getName();
-      return new UserToken(user.getId(), user.getName(), user.getFullname(), user.getPassword(),
-          categoryName, user.isEnabled(), user.isAccountExpired(), user.isPasswordExpired(), false,
-          authorities);
+      return new UserToken(user.getId(), user.getCode(), user.getName(), user.getPassword(), categoryName,
+          user.isEnabled(), user.isAccountExpired(), user.isPasswordExpired(), false, authorities);
     }
   }
 

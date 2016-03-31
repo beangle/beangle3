@@ -18,17 +18,13 @@
  */
 package org.beangle.orm.hibernate;
 
-import java.util.Date;
-
 import org.beangle.commons.dao.EntityDao;
 import org.beangle.inject.spring.SpringTestCase;
 import org.beangle.orm.example.Employer;
 import org.beangle.orm.example.ManagerEmployer;
 import org.beangle.orm.example.Name;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 
-@Test
 public class HibernateEntityDaoTest extends SpringTestCase {
 
   /**
@@ -36,8 +32,10 @@ public class HibernateEntityDaoTest extends SpringTestCase {
    */
   public void testQueryHqlWithParamArray() {
     EntityDao entityDao = (EntityDao) applicationContext.getBean("entityDao");
-    entityDao.search("from " + Employer.class.getName()
-        + " as emp where emp.name.firstName = ?1 and emp.contractInfo.add1 = ?2 ", "john", "najing street");
+    entityDao.search(
+        "from " + Employer.class.getName()
+            + " as emp where emp.name.firstName = ?1 and emp.contractInfo.add1 = ?2 ",
+        "john", "najing street");
   }
 
   /**
@@ -59,11 +57,10 @@ public class HibernateEntityDaoTest extends SpringTestCase {
     entityDao.saveOrUpdate(employer);
 
     Assert.assertNotNull(employer.getId());
-    employer= entityDao.get(ManagerEmployer.class, employer.getId());
-    //FIXME
-//    entityDao.evict(employer);
-    //employer.getName().setFirstName("licensesili");
-    employer.setCreatedAt(new Date());
+    employer = entityDao.get(ManagerEmployer.class, employer.getId());
+    // FIXME
+    // entityDao.evict(employer);
+    // employer.getName().setFirstName("licensesili");
     entityDao.saveOrUpdate(employer);
   }
 
@@ -72,8 +69,8 @@ public class HibernateEntityDaoTest extends SpringTestCase {
    */
   public void testCount() {
     EntityDao entityDao = (EntityDao) applicationContext.getBean("entityDao");
-    entityDao.count(Employer.class, new String[] { "name.firstName" }, new Object[] { new String[] { "make",
-        "john" } }, null);
+    entityDao.count(Employer.class, new String[] { "name.firstName" },
+        new Object[] { new String[] { "make", "john" } }, null);
   }
 
 }

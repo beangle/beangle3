@@ -31,7 +31,7 @@ import org.beangle.commons.dao.query.builder.Conditions;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.functor.Predicate;
-import org.beangle.security.blueprint.Field;
+import org.beangle.security.blueprint.Dimension;
 import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.Property;
 import org.beangle.security.blueprint.Role;
@@ -70,8 +70,8 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
     final Date now = new Date();
     CollectUtils.filter(rs, new Predicate<DataPermissionBean>() {
       public Boolean apply(DataPermissionBean dp) {
-        if (null != dp.getEffectiveAt() && now.before(dp.getEffectiveAt())) return false;
-        if (null != dp.getInvalidAt() && now.after(dp.getInvalidAt())) return false;
+        if (null != dp.getBeginAt() && now.before(dp.getBeginAt())) return false;
+        if (null != dp.getEndAt() && now.after(dp.getEndAt())) return false;
         if (dp.getRole() == null || dp.getRole().getName().equals(roleName)) {
           if (dp.getFuncResource() == null || dp.getFuncResource().getName().equals(funcResourceName1)) { return true; }
         }
@@ -116,7 +116,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
    * @param property
    * @param restriction
    */
-  private Object unmarshal(String value, Field property) {
+  private Object unmarshal(String value, Dimension property) {
     try {
       List<Object> returned = dataResolver.unmarshal(property, value);
       if (property.isMultiple()) return returned;
@@ -155,7 +155,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
             if (value.equals(Property.AllValue)) {
               content = "";
             } else {
-              paramValues.add(unmarshal(value, up.getField()));
+              paramValues.add(unmarshal(value, up.getDimension()));
             }
           } else {
             throw new RuntimeException(paramName + " had not been initialized");

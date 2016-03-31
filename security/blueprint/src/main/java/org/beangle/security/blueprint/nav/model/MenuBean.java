@@ -57,7 +57,8 @@ public class MenuBean extends NumberIdHierarchyObject<Menu, Integer> implements 
   private String title;
 
   /** 菜单入口 */
-  private String entry;
+  @ManyToOne(fetch = FetchType.LAZY)
+  private FuncResource entry;
 
   /** 菜单备注 */
   private String remark;
@@ -91,11 +92,11 @@ public class MenuBean extends NumberIdHierarchyObject<Menu, Integer> implements 
     this.name = name;
   }
 
-  public String getEntry() {
+  public FuncResource getEntry() {
     return entry;
   }
 
-  public void setEntry(String entry) {
+  public void setEntry(FuncResource entry) {
     this.entry = entry;
   }
 

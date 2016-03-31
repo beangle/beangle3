@@ -19,14 +19,13 @@
 package org.beangle.security.blueprint;
 
 import org.beangle.commons.entity.orm.AbstractPersistModule;
-import org.beangle.security.blueprint.data.model.DataFieldBean;
 import org.beangle.security.blueprint.data.model.DataPermissionBean;
 import org.beangle.security.blueprint.data.model.DataResourceBean;
 import org.beangle.security.blueprint.function.model.FuncPermissionBean;
 import org.beangle.security.blueprint.function.model.FuncResourceBean;
-import org.beangle.security.blueprint.model.FieldBean;
-import org.beangle.security.blueprint.model.MemberBean;
+import org.beangle.security.blueprint.model.DimensionBean;
 import org.beangle.security.blueprint.model.RoleBean;
+import org.beangle.security.blueprint.model.RoleMemberBean;
 import org.beangle.security.blueprint.model.RolePropertyBean;
 import org.beangle.security.blueprint.model.UserBean;
 import org.beangle.security.blueprint.model.UserProfileBean;
@@ -42,15 +41,14 @@ public class PersistModule extends AbstractPersistModule {
 
     defaultCache("beangle", "read-write");
 
-    add(FuncPermissionBean.class, MemberBean.class, UserBean.class, UserProfileBean.class,
+    add(FuncPermissionBean.class, RoleMemberBean.class, UserBean.class, UserProfileBean.class,
         UserPropertyBean.class, SessionProfileBean.class);
 
     add(RoleBean.class, FuncResourceBean.class, DataPermissionBean.class, DataResourceBean.class,
-        DataFieldBean.class, RolePropertyBean.class, FieldBean.class, MenuBean.class, MenuProfileBean.class)
-        .cacheable();
+        RolePropertyBean.class, DimensionBean.class, MenuBean.class, MenuProfileBean.class).cacheable();
 
-    cache()
-        .add(collection(MenuBean.class, "children", "resources"), collection(RoleBean.class, "properties"));
+    cache().add(collection(MenuBean.class, "children", "resources"),
+        collection(RoleBean.class, "properties"));
 
   }
 

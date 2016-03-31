@@ -31,20 +31,6 @@ import java.util.Date;
 public interface TimeEntity {
 
   /**
-   * Returns Created at.
-   */
-  Date getCreatedAt();
-
-  /**
-   * <p>
-   * setCreatedAt.
-   * </p>
-   * 
-   * @param createdAt a {@link java.util.Date} object.
-   */
-  void setCreatedAt(Date createdAt);
-
-  /**
    * <p>
    * getUpdatedAt.
    * </p>

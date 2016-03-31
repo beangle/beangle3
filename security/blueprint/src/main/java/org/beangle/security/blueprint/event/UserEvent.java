@@ -45,7 +45,7 @@ public class UserEvent extends Event {
   public String getUserNames() {
     StringBuilder sb = new StringBuilder();
     for (User user : getUsers()) {
-      sb.append(user.getName()).append('(').append(user.getFullname()).append("),");
+      sb.append(user.getCode()).append('(').append(user.getName()).append("),");
     }
     sb.deleteCharAt(sb.length() - 1);
     return sb.toString();

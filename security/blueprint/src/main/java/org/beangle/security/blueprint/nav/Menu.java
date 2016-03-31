@@ -44,7 +44,7 @@ public interface Menu extends HierarchyEntity<Menu, Integer>, Comparable<Menu> {
    */
   String getTitle();
 
-  String getEntry();
+  FuncResource getEntry();
 
   String getRemark();
 

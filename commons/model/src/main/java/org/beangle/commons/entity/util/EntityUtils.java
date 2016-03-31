@@ -26,7 +26,8 @@ import java.util.List;
 import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.entity.Entity;
-import org.beangle.commons.entity.TemporalEntity;
+import org.beangle.commons.entity.TemporalAt;
+import org.beangle.commons.entity.TemporalOn;
 import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,7 +103,7 @@ public final class EntityUtils {
    */
   public static String getCommandName(Object obj) {
     String name = obj.getClass().getName();
-    int dollar = name.indexOf('$');
+    int dollar = name.indexOf("_$$_");
     if (-1 == dollar) {
       name = name.substring(name.lastIndexOf('.') + 1);
     } else {
@@ -175,7 +176,7 @@ public final class EntityUtils {
    */
   public static String getEntityClassName(Class<?> clazz) {
     String name = clazz.getName();
-    int dollar = name.indexOf('$');
+    int dollar = name.indexOf("_$$_");
     if (-1 == dollar) {
       return name;
     } else {
@@ -188,14 +189,18 @@ public final class EntityUtils {
    * isExpired.
    * </p>
    * 
-   * @param entity a {@link org.beangle.commons.entity.TemporalEntity} object.
+   * @param entity a {@link org.beangle.commons.entity.TemporalAt} object.
    * @return a boolean.
    */
-  public static boolean isExpired(TemporalEntity entity) {
+  public static boolean isExpired(TemporalAt entity) {
     Date now = new Date();
-    if (null == entity.getEffectiveAt()) return true;
-    return entity.getEffectiveAt().after(now)
-        || (null != entity.getInvalidAt() && !now.before(entity.getInvalidAt()));
+    if (null == entity.getBeginAt()) return true;
+    return entity.getBeginAt().after(now) || (null != entity.getEndAt() && !now.before(entity.getEndAt()));
   }
 
+  public static boolean isExpired(TemporalOn entity) {
+    Date now = new Date();
+    if (null == entity.getBeginOn()) return true;
+    return entity.getBeginOn().after(now) || (null != entity.getEndOn() && !now.before(entity.getEndOn()));
+  }
 }
