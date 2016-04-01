@@ -36,8 +36,9 @@ import org.apache.struts2.StrutsConstants;
 import org.apache.struts2.StrutsStatics;
 import org.apache.struts2.dispatcher.Dispatcher;
 import org.apache.struts2.util.StrutsTestCaseHelper;
-import org.apache.struts2.views.TagLibrary;
+import org.apache.struts2.views.TagLibraryModelProvider;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
+import org.apache.struts2.views.freemarker.FreemarkerThemeTemplateLoader;
 import org.apache.struts2.views.freemarker.StrutsClassTemplateLoader;
 import org.apache.struts2.views.freemarker.tags.StrutsModels;
 import org.beangle.commons.collection.CollectUtils;
@@ -75,6 +76,14 @@ import com.opensymphony.xwork2.conversion.impl.DefaultTypeConverterCreator;
 import com.opensymphony.xwork2.conversion.impl.DefaultTypeConverterHolder;
 import com.opensymphony.xwork2.conversion.impl.XWorkBasicConverter;
 import com.opensymphony.xwork2.conversion.impl.XWorkConverter;
+import com.opensymphony.xwork2.factory.ActionFactory;
+import com.opensymphony.xwork2.factory.ConverterFactory;
+import com.opensymphony.xwork2.factory.DefaultActionFactory;
+import com.opensymphony.xwork2.factory.DefaultConverterFactory;
+import com.opensymphony.xwork2.factory.DefaultInterceptorFactory;
+import com.opensymphony.xwork2.factory.DefaultResultFactory;
+import com.opensymphony.xwork2.factory.InterceptorFactory;
+import com.opensymphony.xwork2.factory.ResultFactory;
 import com.opensymphony.xwork2.inject.Container;
 import com.opensymphony.xwork2.inject.ContainerBuilder;
 import com.opensymphony.xwork2.inject.Scope;
@@ -172,7 +181,7 @@ public class BeangleTagLibraryTest {
     context.setSession(new HashMap<String, Object>());
     FreemarkerManager freemarker = container.getInstance(FreemarkerManager.class);
     freemarker.getConfiguration(servletContext);
-    datas.put("b", new BeangleTagLibrary().getFreemarkerModels(stack, request, response));
+    datas.put("b", new BeangleTagLibrary().getModels(stack, request, response));
     datas.put("s", new StrutsModels(stack, request, response));
     datas.put("watch", new Stopwatch());
     StringWriter writer = new StringWriter();
@@ -181,6 +190,11 @@ public class BeangleTagLibraryTest {
     assert null != writer.toString();
   }
 
+  /**
+   * borrow from com.opensymphony.xwork2.config.impl.DefaultConfiguration.createBootstrapContainer
+   * 
+   * @return
+   */
   private Container buildContainer() {
     // build container
     ContainerBuilder builder = new ContainerBuilder();
@@ -203,12 +217,23 @@ public class BeangleTagLibraryTest {
     builder.factory(TypeConverterHolder.class, DefaultTypeConverterHolder.class, Scope.SINGLETON);
     builder.factory(TextProvider.class, "system", DefaultTextProvider.class, Scope.SINGLETON);
     builder.factory(ActionUriRender.class, DefaultActionUriRender.class, Scope.SINGLETON);
-    builder.factory(TagLibrary.class, "b", BeangleTagLibrary.class, Scope.SINGLETON);
+    builder.factory(TagLibraryModelProvider.class, "b", BeangleTagLibrary.class, Scope.SINGLETON);
+    builder.factory(ActionFactory.class, DefaultActionFactory.class, Scope.SINGLETON);
+    builder.factory(ResultFactory.class, DefaultResultFactory.class, Scope.SINGLETON);
+    builder.factory(InterceptorFactory.class, DefaultInterceptorFactory.class, Scope.SINGLETON);
+    builder.factory(com.opensymphony.xwork2.factory.ValidatorFactory.class,
+        com.opensymphony.xwork2.factory.DefaultValidatorFactory.class, Scope.SINGLETON);
+    builder.factory(ConverterFactory.class, DefaultConverterFactory.class, Scope.SINGLETON);
     builder.factory(FreemarkerManager.class, BeangleFreemarkerManager.class, Scope.SINGLETON);
+    builder.factory(FreemarkerThemeTemplateLoader.class, Scope.SINGLETON);
+    builder.factory(org.apache.struts2.components.template.TemplateEngine.class, "ftl",
+        org.apache.struts2.components.template.FreemarkerTemplateEngine.class, Scope.SINGLETON);
     builder.factory(TemplateEngine.class, FreemarkerTemplateEngine.class, Scope.SINGLETON);
     builder.constant(XWorkConstants.DEV_MODE, "false");
     builder.constant(XWorkConstants.LOG_MISSING_PROPERTIES, "false");
     builder.constant(XWorkConstants.ENABLE_OGNL_EVAL_EXPRESSION, "false");
+    builder.constant(XWorkConstants.ENABLE_OGNL_EXPRESSION_CACHE, "true");
+    builder.constant("struts.ui.theme.expansion.token", "~~~");
     builder.constant(XWorkConstants.RELOAD_XML_CONFIGURATION, "false");
     builder.constant(StrutsConstants.STRUTS_I18N_ENCODING, "utf-8");
     builder.constant(StrutsConstants.STRUTS_ACTION_EXTENSION, "action");

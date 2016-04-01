@@ -13,7 +13,7 @@
     <bundle.symbolicName>org.beangle.commons.notification</bundle.symbolicName>
     <bundle.namespace>org.beangle.commons.notification</bundle.namespace>
   </properties>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.beangle.commons</groupId>

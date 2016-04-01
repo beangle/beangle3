@@ -120,6 +120,11 @@ public class DdlGenerator {
       pc.getTable().setComment(messages.get(clazz, clazz.getSimpleName()));
       commentProperty(clazz, pc.getTable(), pc.getIdentifierProperty());
       commentProperties(clazz, pc.getTable(), pc.getPropertyIterator());
+      PersistentClass mySuper = pc.getSuperclass();
+      while(null!=mySuper){
+        commentProperties(clazz, pc.getTable(), mySuper.getPropertyIterator());
+        mySuper=mySuper.getSuperclass();
+      }
       // generator sequence sql
       if (pc instanceof RootClass) {
         IdentifierGenerator ig = pc.getIdentifier().createIdentifierGenerator(

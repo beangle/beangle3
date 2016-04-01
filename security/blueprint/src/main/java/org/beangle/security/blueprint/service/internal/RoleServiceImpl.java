@@ -93,7 +93,7 @@ public class RoleServiceImpl extends AbstractHierarchyService<RoleBean> implemen
     if (userService.isRoot(user)) return true;
     else {
       Role parent = role.getParent();
-      if (null != parent) return false;
+      if (null == parent) return false;
       for (RoleMember m : user.getMembers()) {
         if (m.is(RoleMember.Ship.MANAGER) && m.getRole().equals(parent)) return true;
       }

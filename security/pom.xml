@@ -9,7 +9,7 @@
   <artifactId>beangle-security-parent</artifactId>
   <packaging>pom<!--bundle--></packaging>
   <name>Beangle Security Parent</name>
-  
+
   <properties>
     <ehcache.version>2.5.2</ehcache.version>
   </properties>

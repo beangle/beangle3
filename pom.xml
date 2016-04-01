@@ -12,7 +12,7 @@
   <name>Beangle Library Parent</name>
 
   <url>https://github.com/beangle/library</url>
-  
+
   <issueManagement>
     <system>github</system>
     <url>https://github.com/beangle/library/issues</url>
@@ -27,7 +27,7 @@
   <properties>
     <spring.version>3.1.1.RELEASE</spring.version>
   </properties>
-  
+
   <modules>
     <module>commons</module>
     <module>ioc</module>

@@ -31,7 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
-import com.opensymphony.xwork2.ActionChainResult;
 import com.opensymphony.xwork2.ObjectFactory;
 import com.opensymphony.xwork2.config.Configuration;
 import com.opensymphony.xwork2.config.entities.ActionConfig;
@@ -42,8 +41,6 @@ import com.opensymphony.xwork2.config.entities.ResultTypeConfig;
 import com.opensymphony.xwork2.config.impl.DefaultConfiguration;
 import com.opensymphony.xwork2.inject.Container;
 import com.opensymphony.xwork2.inject.Scope.Strategy;
-import com.opensymphony.xwork2.ognl.OgnlReflectionProvider;
-import com.opensymphony.xwork2.util.reflection.ReflectionException;
 
 @Test
 public class ConventionPackageProviderTest {
@@ -145,29 +142,6 @@ public class ConventionPackageProviderTest {
     public <T> T getInstance(Class<T> type) {
       try {
         T obj = type.newInstance();
-        if (obj instanceof ObjectFactory) {
-          ((ObjectFactory) obj).setReflectionProvider(new OgnlReflectionProvider() {
-            @Override
-            public void setProperties(Map<String, ?> properties, Object o) {
-            }
-
-            @Override
-            public void setProperties(Map<String, ?> properties, Object o, Map<String, Object> context,
-                boolean throwPropertyExceptions) throws ReflectionException {
-              if (o instanceof ActionChainResult) {
-                ((ActionChainResult) o).setActionName(String.valueOf(properties.get("actionName")));
-              }
-            }
-
-            @Override
-            public void setProperty(String name, Object value, Object o, Map<String, Object> context,
-                boolean throwPropertyExceptions) {
-              if (o instanceof ActionChainResult) {
-                ((ActionChainResult) o).setActionName((String) value);
-              }
-            }
-          });
-        }
         return obj;
       } catch (Exception e) {
         throw new RuntimeException(e);

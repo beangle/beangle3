@@ -63,7 +63,7 @@
       <version>1.0.1.Final</version>
     </dependency>
   </dependencies>
-  
+
   <profiles>
     <profile>
       <id>default-tools.jar</id>
@@ -84,5 +84,5 @@
       </dependencies>
     </profile>
   </profiles>
-  
+
 </project>

@@ -9,7 +9,7 @@
   <artifactId>beangle-test-parent</artifactId>
   <packaging>pom</packaging>
   <name>Beangle Test Parent</name>
-  
+
   <modules>
     <module>selenium</module>
   </modules>

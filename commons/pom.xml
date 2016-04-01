@@ -9,7 +9,7 @@
   <artifactId>beangle-commons-parent</artifactId>
   <packaging>pom</packaging>
   <name>Beangle Commons Parent</name>
-  
+
   <modules>
     <module>core</module>
     <module>model</module>
@@ -32,12 +32,10 @@
     <connection>scm:git:git://github.com/beangle/commons.git</connection>
     <developerConnection>scm:git:git@github.com:beangle/commons.git</developerConnection>
     <url>git@github.com:beangle/commons.git</url>
-    <tag>3.4.11</tag>
+    <tag>3.5.0</tag>
   </scm>
 
   <properties>
-    <!--<commoncollections.version>3.2.1</commoncollections.version>
-    <commonbeanutils.version>1.8.3</commonbeanutils.version>-->
     <javax.validation.version>1.0.0.GA</javax.validation.version>
   </properties>
 
@@ -64,56 +62,11 @@
         <artifactId>beangle-commons-web</artifactId>
         <version>${project.version}</version>
       </dependency>
-      <!--commons
-      <dependency>
-        <groupId>commons-collections</groupId>
-        <artifactId>commons-collections</artifactId>
-        <version>${commoncollections.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>commons-beanutils</groupId>
-        <artifactId>commons-beanutils</artifactId>
-        <version>${commonbeanutils.version}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>net.sf.ehcache</groupId>
-        <artifactId>ehcache-core</artifactId>
-        <version>${ehcache.version}</version>
-      </dependency>
-      -->
       <dependency>
         <groupId>javax.validation</groupId>
         <artifactId>validation-api</artifactId>
         <version>${javax.validation.version}</version>
       </dependency>
-<!--
-      <dependency>
-        <groupId>ognl</groupId>
-        <artifactId>ognl</artifactId>
-        <version>${ognl.version}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>javassist</groupId>
-            <artifactId>javassist</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.javassist</groupId>
-        <artifactId>javassist</artifactId>
-        <version>${javassist.version}</version>
-      </dependency>
--->
     </dependencies>
   </dependencyManagement>
 </project>
