@@ -20,6 +20,9 @@ package org.beangle.orm.hibernate;
 
 import org.beangle.commons.inject.Resources;
 import org.beangle.commons.lang.ClassLoaders;
+import org.beangle.commons.lang.Strings;
+import org.beangle.security.model.AccessLog;
+import org.beangle.security.model.TestUser;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -31,8 +34,13 @@ public class DefaultTableNamingStrategyTest {
     Resources resources = new Resources();
     resources.setGlobal(ClassLoaders.getResource("META-INF/beangle/table.properties", getClass()));
     config.setResources(resources);
-    Assert.assertEquals("security_online", config.getSchema("org.beangle.security.online.model"));
-    Assert.assertEquals("sys_", config.getPrefix("org.beangle.security"));
+    Assert.assertTrue(Strings.isEmpty(config.getSchema(TestUser.class.getName())));
+    Assert.assertEquals("sys_", config.getPattern(TestUser.class).prefix);
+
+    TableNamePattern p = config.getPattern(AccessLog.class);
+    Assert.assertTrue(p != null);
+    Assert.assertEquals(p.prefix, "l_");
+    Assert.assertEquals(p.schema, "log");
   }
 
 }

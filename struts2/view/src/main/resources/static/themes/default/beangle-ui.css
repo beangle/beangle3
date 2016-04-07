@@ -25,7 +25,7 @@ body {font-size: 13px;margin:0;font-family: Verdana, Arial, sans-serif;}
 
 select,input,textarea {font-size: 13px;}
 
-input[type="text"]  {
+input[type="text"],input[type="reset"],input[type="submit"]  {
     border: 1px solid #CCC;
 }
 select {

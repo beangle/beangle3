@@ -20,16 +20,18 @@ package org.beangle.security.blueprint.service.internal;
 
 import java.sql.Date;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.functor.Predicate;
-import org.beangle.security.auth.Principals;
 import org.beangle.security.blueprint.Role;
 import org.beangle.security.blueprint.RoleMember;
 import org.beangle.security.blueprint.User;
@@ -47,14 +49,25 @@ import org.beangle.security.blueprint.service.UserService;
  * 
  * @author dell,chaostone 2005-9-26
  */
-public class UserServiceImpl extends BaseServiceImpl implements UserService {
+public class UserServiceImpl extends BaseServiceImpl implements UserService, Initializing {
 
-  public boolean isRoot(User user) {
-    return Principals.ROOT.equals(user.getId());
+  protected final Set<String> roots = new HashSet<String>();
+
+  @Override
+  public void init() throws Exception {
+    initRoots();
   }
 
-  public boolean isRoot(Long userId) {
-    return Principals.ROOT.equals(userId);
+  protected void initRoots() {
+
+  }
+
+  public boolean isRoot(User user) {
+    return roots.contains(user.getCode());
+  }
+
+  public boolean isRoot(String userCode) {
+    return roots.contains(userCode);
   }
 
   public User get(String name, String password) {

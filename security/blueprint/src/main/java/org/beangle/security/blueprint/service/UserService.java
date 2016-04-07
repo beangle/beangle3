@@ -121,6 +121,6 @@ public interface UserService {
    * 
    * @param userId
    */
-  boolean isRoot(Long userId);
+  boolean isRoot(String userCode);
 
 }

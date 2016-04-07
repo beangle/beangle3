@@ -48,7 +48,12 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
    * @param className
    */
   public String classToTableName(String className) {
-    String tableName = tableNamingStrategy.classToTableName(className);
+    String tableName = null;
+    try {
+      tableName = tableNamingStrategy.classToTableName(Class.forName(className));
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
     if (tableName.length() > MaxLength) logger.warn("{}'s length greate than 30!", tableName);
     logger.debug("Mapping entity[{}] to {}", className, tableName);
     return tableName;
@@ -103,8 +108,8 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
   }
 
   /** Return the property name or propertyTableName */
-  public String foreignKeyColumnName(String propertyName, String propertyEntityName,
-      String propertyTableName, String referencedColumnName) {
+  public String foreignKeyColumnName(String propertyName, String propertyEntityName, String propertyTableName,
+      String referencedColumnName) {
     String header = null == propertyName ? propertyTableName : unqualify(propertyName);
     if (header == null) { throw new AssertionFailure("NamingStrategy not properly filled"); }
     if (isManyToOne()) {
@@ -120,14 +125,19 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
   public String collectionTableName(String ownerEntity, String ownerEntityTable, String associatedEntity,
       String associatedEntityTable, String propertyName) {
     String ownerTable = null;
+    Class<?> entityClass = null;
+    try {
+      entityClass = Class.forName(ownerEntity);
+    } catch (ClassNotFoundException e) {
+    }
     // Just for annotation configuration,it's ownerEntity is classname(not entityName), and
     // ownerEntityTable is class shortname
     if (Character.isUpperCase(ownerEntityTable.charAt(0))) {
-      ownerTable = tableNamingStrategy.classToTableName(ownerEntity);
+      ownerTable = tableNamingStrategy.classToTableName(entityClass);
     } else {
       ownerTable = tableName(ownerEntityTable);
     }
-    String tblName = tableNamingStrategy.collectionToTableName(ownerEntity, ownerTable, propertyName);
+    String tblName = tableNamingStrategy.collectionToTableName(entityClass, ownerTable, propertyName);
     if (tblName.length() > MaxLength) logger.warn("{}'s length greate than 30!", tblName);
     return tblName;
   }
