@@ -27,7 +27,7 @@ import org.beangle.commons.event.Event;
 import org.beangle.commons.event.EventListener;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Option;
-import org.beangle.security.auth.Principals;
+import org.beangle.security.blueprint.service.UserService;
 import org.beangle.security.blueprint.session.model.SessionStat;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.session.Sessioninfo;
@@ -45,12 +45,14 @@ import org.beangle.security.core.session.category.SimpleCategoryProfileProvider;
  * @author chaostone
  * @version $Id: DbSessionController.java Jul 8, 2011 9:08:14 AM chaostone $
  */
-public class DbSessionController extends AbstractSessionController implements Initializing,
-    EventListener<CategoryProfileUpdateEvent> {
+public class DbSessionController extends AbstractSessionController
+    implements Initializing, EventListener<CategoryProfileUpdateEvent> {
 
   private CategoryProfileProvider categoryProfileProvider = new SimpleCategoryProfileProvider();
 
   private SessioninfoBuilder sessioninfoBuilder;
+
+  private UserService userSerivce;
 
   private Map<String, Integer> categoryStatIds = CollectUtils.newConcurrentHashMap();
 
@@ -74,17 +76,16 @@ public class DbSessionController extends AbstractSessionController implements In
       if (null != statId) categoryStatIds.put(category, statId);
     }
 
-    if (Principals.ROOT.equals(principal.getId())) {
-      if (null != statId)
-        entityDao.executeUpdate("update " + SessionStat.class.getName()
-            + " stat set stat.online = stat.online + 1 where  stat.id=?1", statId);
+    if (userSerivce.isRoot(auth.getName())) {
+      if (null != statId) entityDao.executeUpdate("update " + SessionStat.class.getName()
+          + " stat set stat.online = stat.online + 1 where  stat.id=?1", statId);
       return true;
     } else {
       int result = 0;
       if (null != statId) {
-        result = entityDao.executeUpdate(
-            "update " + SessionStat.class.getName() + " stat set stat.online = stat.online + 1 "
-                + "where stat.online < stat.capacity and stat.id=?1", statId);
+        result = entityDao.executeUpdate("update " + SessionStat.class.getName()
+            + " stat set stat.online = stat.online + 1 " + "where stat.online < stat.capacity and stat.id=?1",
+            statId);
       }
       return result > 0;
     }
@@ -92,7 +93,7 @@ public class DbSessionController extends AbstractSessionController implements In
 
   public int getMaxSessions(Authentication auth) {
     CategoryPrincipal principal = (CategoryPrincipal) auth.getPrincipal();
-    if (Principals.ROOT.equals(principal.getId())) {
+    if (userSerivce.isRoot(auth.getName())) {
       return -1;
     } else {
       CategoryProfile cp = categoryProfileProvider.getProfile(principal.getCategory());
@@ -127,8 +128,9 @@ public class DbSessionController extends AbstractSessionController implements In
 
   public void onEvent(CategoryProfileUpdateEvent event) {
     CategoryProfile profile = (CategoryProfile) event.getSource();
-    int cnt = entityDao.executeUpdate("update " + SessionStat.class.getName()
-        + " stat set stat.capacity=?1 where stat.category=?2", profile.getCapacity(), profile.getCategory());
+    int cnt = entityDao.executeUpdate(
+        "update " + SessionStat.class.getName() + " stat set stat.capacity=?1 where stat.category=?2",
+        profile.getCapacity(), profile.getCategory());
     if (cnt == 0) entityDao.saveOrUpdate(new SessionStat(profile.getCategory(), profile.getCapacity()));
   }
 
@@ -156,6 +158,10 @@ public class DbSessionController extends AbstractSessionController implements In
 
   public boolean supportsSourceType(Class<?> sourceType) {
     return true;
+  }
+
+  public void setUserSerivce(UserService userSerivce) {
+    this.userSerivce = userSerivce;
   }
 
 }

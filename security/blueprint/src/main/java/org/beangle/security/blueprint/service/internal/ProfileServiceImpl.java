@@ -28,14 +28,13 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.lang.Strings;
-import org.beangle.security.auth.Principals;
 import org.beangle.security.blueprint.Dimension;
-import org.beangle.security.blueprint.RoleMember;
 import org.beangle.security.blueprint.Permission;
 import org.beangle.security.blueprint.Profile;
 import org.beangle.security.blueprint.Property;
 import org.beangle.security.blueprint.Resource;
 import org.beangle.security.blueprint.Role;
+import org.beangle.security.blueprint.RoleMember;
 import org.beangle.security.blueprint.User;
 import org.beangle.security.blueprint.function.FuncPermission;
 import org.beangle.security.blueprint.function.FuncResource;
@@ -96,8 +95,8 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 
   @Override
   public List<Profile> getProfiles(User user, FuncResource resource) {
-    if (null == resource || !resource.getScope().equals(FuncResource.Scope.Private)
-        || Principals.ROOT.equals(user.getId())) return user.getProfiles();
+    if (null == resource || !resource.getScope().equals(FuncResource.Scope.Private))
+      return user.getProfiles();
     List<Role> roles = CollectUtils.newArrayList();
     for (RoleMember member : user.getMembers()) {
       if (member.getRole().isEnabled() && member.isMember()) roles.add(member.getRole());
@@ -109,8 +108,8 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
         g = g.getParent();
       }
     }
-    List<FuncPermission> permissions = entityDao.search(OqlBuilder.from(FuncPermission.class, "fp").where(
-        "fp.role in(:roles) and fp.resource=:resource", allRoles, resource));
+    List<FuncPermission> permissions = entityDao.search(OqlBuilder.from(FuncPermission.class, "fp")
+        .where("fp.role in(:roles) and fp.resource=:resource", allRoles, resource));
     List<Profile> profiles = CollectUtils.newArrayList();
     Set<Profile> allProfiles = CollectUtils.newHashSet(user.getProfiles());
     for (FuncPermission permission : permissions) {

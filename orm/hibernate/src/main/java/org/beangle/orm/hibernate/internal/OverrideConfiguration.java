@@ -127,7 +127,7 @@ public class OverrideConfiguration extends Configuration {
       for (Collection collection : collections.values()) {
         final Table table = collection.getCollectionTable();
         if (null == table) continue;
-        String schema = namingStrategy.getSchema(collection.getRole());
+        String schema = namingStrategy.getSchema(collection.getOwnerEntityName());
         if (null != schema) table.setSchema(schema);
       }
     }

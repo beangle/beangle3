@@ -29,13 +29,14 @@ import org.beangle.commons.lang.Assert;
 import org.beangle.commons.web.util.RequestUtils;
 import org.beangle.security.access.AuthorityManager;
 import org.beangle.security.auth.AnonymousAuthentication;
-import org.beangle.security.auth.Principals;
 import org.beangle.security.blueprint.SecurityUtils;
 import org.beangle.security.blueprint.function.FuncResource;
 import org.beangle.security.blueprint.function.service.FuncPermissionService;
+import org.beangle.security.blueprint.service.UserService;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.session.category.CategoryPrincipal;
+import org.beangle.security.core.userdetail.UserDetail;
 import org.beangle.security.web.AuthenticationEntryPoint;
 import org.beangle.security.web.FilterInvocation;
 import org.beangle.security.web.auth.UrlEntryPoint;
@@ -56,7 +57,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 
   protected FuncPermissionService permissionService;
 
-  private boolean expired = true;
+  private UserService userService;
 
   /**
    * 资源是否被授权<br>
@@ -65,7 +66,6 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
    */
   public boolean isAuthorized(Authentication auth, Object resource) {
     if (null == auth) return false;
-    loadResourceNecessary();
     String resourceName = null;
     if (resource instanceof FilterInvocation) {
       FilterInvocation fi = (FilterInvocation) resource;
@@ -85,7 +85,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
     // final check root user
     Object principal = auth.getPrincipal();
     if (principal instanceof CategoryPrincipal) {
-      if (Principals.ROOT.equals(((CategoryPrincipal) principal).getId())) { return true; }
+      if (userService.isRoot(((UserDetail) principal).getUsername())) { return true; }
     }
     return false;
   }
@@ -111,15 +111,6 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
     return actions;
   }
 
-  private void loadResourceNecessary() {
-    if (expired) {
-      synchronized (this) {
-        if (!expired) return;
-        refreshCache();
-      }
-    }
-  }
-
   /** 加载三类资源 */
   public void refreshCache() {
     publicResources = permissionService.getResourceNamesByScope(FuncResource.Scope.Public);
@@ -131,11 +122,11 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
       }
     }
     protectedResources = permissionService.getResourceNamesByScope(FuncResource.Scope.Protected);
-    expired = false;
   }
 
   public void init() throws Exception {
     Assert.notNull(permissionService, "authorityService cannot be null");
+    refreshCache();
   }
 
   public void setPermissionService(FuncPermissionService funcPermissionService) {
@@ -144,6 +135,10 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 
   public void setAuthenticationEntryPoint(AuthenticationEntryPoint authenticationEntryPoint) {
     this.authenticationEntryPoint = authenticationEntryPoint;
+  }
+
+  public void setUserService(UserService userService) {
+    this.userService = userService;
   }
 
 }

@@ -20,8 +20,15 @@ package org.beangle.orm.hibernate;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.annotation.Annotation;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.inject.Resources;
@@ -72,6 +79,7 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
         String schema = null;
         String prefix = null;
         String abbreviationStr = null;
+        String annotation = null;
         int commaIndex = schemaPrefix.indexOf(',');
         if (commaIndex < 0 || (commaIndex + 1 == schemaPrefix.length())) {
           schema = schemaPrefix;
@@ -85,10 +93,16 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
           abbreviationStr = Strings.substringAfter(prefix, ",").toLowerCase();
           prefix = Strings.substringBefore(prefix, ",");
         }
-        TableNamePattern pattern = (TableNamePattern) packagePatterns.get(packageName);
+        if (packageName.contains("@")) {
+          annotation = Strings.substringAfter(packageName, "@");
+          packageName = Strings.substringBefore(packageName, "@");
+        }
+        String patternKey = packageName;
+        if (null != annotation) patternKey += ("@" + Strings.substringAfterLast(annotation, "."));
+        TableNamePattern pattern = (TableNamePattern) packagePatterns.get(patternKey);
         if (null == pattern) {
           pattern = new TableNamePattern(packageName, schema, prefix);
-          packagePatterns.put(packageName, pattern);
+          packagePatterns.put(patternKey, pattern);
           patterns.add(pattern);
         } else {
           pattern.setSchema(schema);
@@ -102,6 +116,13 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
             pattern.abbreviations.put(longName, shortName);
           }
         }
+        if (null != annotation) {
+          try {
+            pattern.annotation = (Class<? extends Annotation>) Class.forName(annotation);
+          } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+          }
+        }
       }
       is.close();
     } catch (IOException e) {
@@ -109,28 +130,31 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
     }
   }
 
-  public String getSchema(String packageName) {
-    String schemaName = null;
-    for (TableNamePattern pattern : patterns) {
-      if (packageName.indexOf(pattern.getPackageName()) == 0) schemaName = pattern.getSchema();
+  public String getSchema(String clazzName) {
+    try {
+      TableNamePattern pattern = getPattern(Class.forName(clazzName));
+      return (null == pattern) ? null : pattern.schema;
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
     }
-    return schemaName;
+    return null;
   }
 
-  public TableNamePattern getPattern(String packageName) {
+  public TableNamePattern getPattern(Class<?> clazz) {
     TableNamePattern last = null;
+    String className = clazz.getName();
     for (TableNamePattern pattern : patterns) {
-      if (packageName.indexOf(pattern.getPackageName()) == 0) last = pattern;
+      if (className.indexOf(pattern.getPackageName()) == 0) {
+        if (null != pattern.annotation) {
+          if (clazz.isAnnotationPresent(pattern.annotation)) {
+            last = pattern;
+          }
+        } else {
+          last = pattern;
+        }
+      }
     }
     return last;
-  }
-
-  public String getPrefix(String packageName) {
-    String prefix = null;
-    for (TableNamePattern pattern : patterns) {
-      if (packageName.indexOf(pattern.getPackageName()) == 0) prefix = pattern.getPrefix();
-    }
-    return prefix;
   }
 
   /**
@@ -166,8 +190,9 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < patterns.size(); i++) {
       TableNamePattern pattern = patterns.get(i);
-      sb.append(Strings.rightPad(pattern.getPackageName(), maxlength, ' ')).append(" : [")
-          .append(pattern.getSchema());
+      String packageName = pattern.getPackageName();
+      if (null != pattern.annotation) packageName += ("@" + pattern.annotation.getSimpleName());
+      sb.append(Strings.rightPad(packageName, maxlength, ' ')).append(" : [").append(pattern.getSchema());
       sb.append(" , ").append(pattern.getPrefix());
       if (!pattern.abbreviations.isEmpty()) {
         sb.append(" , ").append(pattern.abbreviations);
@@ -178,13 +203,14 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
     return sb.toString();
   }
 
-  public String classToTableName(String className) {
+  public String classToTableName(Class<?> clazz) {
+    String className = clazz.getName();
     if (className.endsWith("Bean")) className = Strings.substringBeforeLast(className, "Bean");
 
     String tableName = addUnderscores(unqualify(className));
     if (null != pluralizer) tableName = pluralizer.pluralize(tableName);
 
-    TableNamePattern pattern = getPattern(className);
+    TableNamePattern pattern = getPattern(clazz);
     if (null != pattern) tableName = pattern.prefix + tableName;
 
     if (tableName.length() > entityTableMaxLength && null != pattern) {
@@ -195,8 +221,8 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
     return tableName;
   }
 
-  public String collectionToTableName(String className, String tableName, String collectionName) {
-    TableNamePattern pattern = getPattern(className);
+  public String collectionToTableName(Class<?> entityClass, String tableName, String collectionName) {
+    TableNamePattern pattern = getPattern(entityClass);
     String collectionTableName = tableName + "_" + addUnderscores(unqualify(collectionName));
     if ((collectionTableName.length() > relationTableMaxLength) && null != pattern) {
       for (Map.Entry<String, String> pairEntry : pattern.abbreviations.entrySet()) {
@@ -241,6 +267,8 @@ class TableNamePattern implements Comparable<TableNamePattern> {
   // 前缀名
   String prefix;
 
+  Class<? extends Annotation> annotation;
+
   Map<String, String> abbreviations = CollectUtils.newHashMap();
 
   public TableNamePattern(String packageName, String schemaName, String prefix) {
@@ -251,7 +279,15 @@ class TableNamePattern implements Comparable<TableNamePattern> {
   }
 
   public int compareTo(TableNamePattern other) {
-    return this.packageName.compareTo(other.packageName);
+    int rs = this.packageName.compareTo(other.packageName);
+    if (rs == 0) {
+      if (null != this.annotation && null == other.annotation) return 1;
+      if (null == this.annotation && null != other.annotation) return -1;
+      return 0;
+    } else {
+      return rs;
+    }
+
   }
 
   public String getPackageName() {

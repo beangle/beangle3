@@ -30,7 +30,7 @@ public interface TableNamingStrategy {
    * 
    * @param className
    */
-  String classToTableName(String className);
+  String classToTableName(Class<?> clazz);
 
   /**
    * Convert collection to table name
@@ -39,7 +39,7 @@ public interface TableNamingStrategy {
    * @param tableName
    * @param collectionName
    */
-  String collectionToTableName(String className, String tableName, String collectionName);
+  String collectionToTableName(Class<?> entityClass, String tableName, String collectionName);
 
   /**
    * Return schema for package
