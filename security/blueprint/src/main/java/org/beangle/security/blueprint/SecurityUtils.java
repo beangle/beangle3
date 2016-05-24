@@ -28,7 +28,7 @@ public final class SecurityUtils {
 
   private static ThreadLocal<String> resource = new ThreadLocal<String>();
 
-  public static UserToken getPrincipal() {
+  private static UserToken getPrincipal() {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (!Securities.isValid(auth)) throw new AuthenticationException();
     UserToken user = (UserToken) auth.getPrincipal();
@@ -36,16 +36,8 @@ public final class SecurityUtils {
     return user;
   }
 
-  public static Long getUserId() {
-    return getPrincipal().getId();
-  }
-
   public static String getUsername() {
     return getPrincipal().getUsername();
-  }
-
-  public static String getFullname() {
-    return getPrincipal().getFullname();
   }
 
   public static String getResource() {
