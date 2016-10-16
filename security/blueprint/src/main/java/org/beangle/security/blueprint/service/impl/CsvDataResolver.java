@@ -38,6 +38,7 @@ import org.beangle.security.blueprint.service.UserDataResolver;
 /**
  * Store list of objects using comma.
  * <p>
+ * 
  * <pre>
  *    id,name
  *    1,role1
@@ -48,8 +49,11 @@ import org.beangle.security.blueprint.service.UserDataResolver;
  */
 public class CsvDataResolver implements UserDataResolver, UserDataProvider {
 
+  private static char lineSeperator = '\n';
+
   public String marshal(Dimension property, Collection<?> items) {
     if (null == items) { return null; }
+
     List<String> properties = CollectUtils.newArrayList();
     if (null != property.getKeyName()) properties.add(property.getKeyName());
     if (null != property.getProperties()) {
@@ -63,9 +67,9 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
       }
     } else {
       for (String prop : properties)
-        sb.append(prop).append(';');
+        sb.append(prop).append(',');
 
-      sb.deleteCharAt(sb.length() - 1).append(',');
+      sb.deleteCharAt(sb.length() - 1).append(lineSeperator);
       for (Object obj : items) {
         for (String prop : properties) {
           Object value = null;
@@ -74,10 +78,10 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
           } catch (Exception e) {
             e.printStackTrace();
           }
-          sb.append(String.valueOf(value)).append(';');
+          sb.append(String.valueOf(value)).append(',');
         }
         sb.deleteCharAt(sb.length() - 1);
-        sb.append(',');
+        sb.append(lineSeperator);
       }
     }
     if (sb.length() > 0) {
@@ -97,7 +101,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
       String[] names = Strings.split(property.getProperties(), ",");
       properties.addAll(Arrays.asList(names));
     }
-    String[] datas = Strings.split(source, "\n");
+    String[] datas = Strings.split(source, lineSeperator);
     try {
       Class<?> type = null;
       type = Class.forName(property.getTypeName());
