@@ -387,7 +387,7 @@ public final class CollectUtils {
   public static <T> Set<T> intersection(Set<T> first, Set<T> second) {
     Set<T> elts = CollectUtils.newHashSet();
     for (T obj : first)
-      if (second.contains(second)) elts.add(obj);
+      if (second.contains(obj)) elts.add(obj);
     return elts;
   }
 
