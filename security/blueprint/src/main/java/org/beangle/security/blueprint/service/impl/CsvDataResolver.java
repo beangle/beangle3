@@ -18,10 +18,13 @@
  */
 package org.beangle.security.blueprint.service.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.beangle.commons.bean.PropertyUtils;
 import org.beangle.commons.collection.CollectUtils;
@@ -35,7 +38,11 @@ import org.beangle.security.blueprint.service.UserDataResolver;
 /**
  * Store list of objects using comma.
  * <p>
- * object's property seperated by ; like this: id;name,1;role1,2;role2
+ * <pre>
+ *    id,name
+ *    1,role1
+ *    2,role2
+ * </pre>
  * 
  * @author chaostone
  */
@@ -80,7 +87,8 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
   }
 
   @SuppressWarnings("unchecked")
-  public <T> List<T> unmarshal(Dimension property, String source) {
+  public <T> List<T> unmarshal(Dimension property, String src) {
+    String source = src.trim();
     if (Strings.isEmpty(source)) { return Collections.emptyList(); }
     List<String> properties = CollectUtils.newArrayList();
     if (null != property.getKeyName()) properties.add(property.getKeyName());
@@ -89,7 +97,7 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
       String[] names = Strings.split(property.getProperties(), ",");
       properties.addAll(Arrays.asList(names));
     }
-    String[] datas = Strings.split(source, ",");
+    String[] datas = Strings.split(source, "\n");
     try {
       Class<?> type = null;
       type = Class.forName(property.getTypeName());
@@ -103,14 +111,14 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
         properties.clear();
         int startIndex = 0;
         String[] names = new String[] { property.getKeyName() };
-        if (-1 != datas[0].indexOf(';')) {
-          names = Strings.split(datas[0], ";");
+        if (-1 != datas[0].indexOf(',')) {
+          names = Strings.split(datas[0], ",");
           startIndex = 1;
         }
         properties.addAll(Arrays.asList(names));
         for (int i = startIndex; i < datas.length; i++) {
           Object obj = type.newInstance();
-          String[] dataItems = Strings.split(datas[i], ";");
+          String[] dataItems = Strings.split(datas[i], ",");
           for (int j = 0; j < properties.size(); j++) {
             PropertyUtils.copyProperty(obj, properties.get(j), dataItems[j]);
           }
@@ -124,7 +132,20 @@ public class CsvDataResolver implements UserDataResolver, UserDataProvider {
   }
 
   public <T> List<T> getData(Dimension property, String source, Object... keys) {
-    return unmarshal(property, source);
+    List<T> values = unmarshal(property, source);
+    if (keys.length > 0) {
+      List<T> rs = new ArrayList<T>();
+      Set<Object> keySet = new HashSet(Arrays.asList(keys));
+      for (T t : values) {
+        String k = PropertyUtils.getProperty(t, property.getKeyName()).toString();
+        if (keySet.contains(k)) {
+          rs.add(t);
+        }
+      }
+      return rs;
+    } else {
+      return values;
+    }
   }
 
   public String getName() {
