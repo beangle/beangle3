@@ -82,10 +82,20 @@ public class Select extends ClosingUIBean {
     if (null == value) return false;
     else try {
       Object nobj = obj;
-      if (obj instanceof Map.Entry<?, ?>) nobj = ((Map.Entry<?, ?>) obj).getKey();
-      boolean rs = value.equals(nobj) || value.equals(PropertyUtils.getProperty(nobj, keyName));
-      return rs || value.toString().equals(nobj.toString())
-          || value.toString().equals(String.valueOf(PropertyUtils.getProperty(nobj, keyName)));
+      if (obj instanceof Map.Entry<?, ?>) {
+        nobj = ((Map.Entry<?, ?>) obj).getKey();
+        if (keyName.equals("key")) {
+          return value.equals(nobj)||value.toString().equals(nobj.toString());
+        } else {
+          boolean rs = value.equals(nobj) || value.equals(PropertyUtils.getProperty(nobj, keyName));
+          return rs || value.toString().equals(nobj.toString())
+              || value.toString().equals(String.valueOf(PropertyUtils.getProperty(nobj, keyName)));
+        }
+      } else {
+        boolean rs = value.equals(nobj) || value.equals(PropertyUtils.getProperty(nobj, keyName));
+        return rs || value.toString().equals(nobj.toString())
+            || value.toString().equals(String.valueOf(PropertyUtils.getProperty(nobj, keyName)));
+      }
     } catch (Exception e) {
       e.printStackTrace();
       return false;
