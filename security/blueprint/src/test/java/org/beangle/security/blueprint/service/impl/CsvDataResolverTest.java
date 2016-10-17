@@ -44,11 +44,11 @@ public class CsvDataResolverTest {
   public void testMarshal() {
     String text = resolver.marshal(field,
         CollectUtils.newArrayList(new RoleBean(1, "role1", "role1"), new RoleBean(2, "role2", "role2")));
-    assertEquals(text, "id;name,1;role1,2;role2");
+    assertEquals(text, "id,name\n1,role1\n2,role2");
   }
 
   public void testUnmarshal() throws Exception {
-    List<?> rs = resolver.unmarshal(field, "id;name,1;role1,2;role2");
+    List<?> rs = resolver.unmarshal(field, "id,name\n1,role1\n2,role2");
     List<?> objs = CollectUtils.newArrayList(new RoleBean(1, "role1", "role1"), new RoleBean(2, "role2",
         "role2"));
     assertEquals(rs, objs);

@@ -60,7 +60,7 @@ public class ApplyTest {
     property.setProperties("name");
 
     UserProfileBean upb = new UserProfileBean();
-    upb.setProperty(property, "id;name,1;role1");
+    upb.setProperty(property, "id,name\n1,role1");
 
     OqlBuilder<User> builder = OqlBuilder.from(User.class);
     dataPermissionService.apply(builder, permission, upb);
