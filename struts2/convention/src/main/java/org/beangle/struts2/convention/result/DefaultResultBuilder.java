@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.ServletRedirectResult;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
+import org.apache.struts2.views.util.UrlHelper;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.struts2.convention.route.Action;
 import org.beangle.struts2.convention.route.ActionBuilder;
@@ -60,7 +61,7 @@ import com.opensymphony.xwork2.inject.Inject;
  * 2)redirectAction:/yyy!method.action?param1=value1&param2=value2<br>
  * 2)redirect:/yyy!methodd?param1=value1&param2=value2<br>
  * 3)path/to/page/page.ftl<br>
- * 
+ *
  * @author chaostone
  */
 public class DefaultResultBuilder implements ResultBuilder {
@@ -80,15 +81,17 @@ public class DefaultResultBuilder implements ResultBuilder {
 
   private final TemplateFinderByConfig templateFinder;
 
+  private final UrlHelper urlHelper;
   @Inject
   public DefaultResultBuilder(Configuration configuration, ObjectFactory objectFactory,
       FreemarkerManager freemarkerManager, ProfileService profileService, ActionBuilder actionBuilder,
-      ViewMapper viewMapper) {
+      ViewMapper viewMapper,UrlHelper urlHelper) {
     super();
     this.objectFactory = objectFactory;
     this.profileService = profileService;
     this.actionBuilder = actionBuilder;
     this.viewMapper = viewMapper;
+    this.urlHelper = urlHelper;
     this.templateFinder = new TemplateFinderByConfig(freemarkerManager.getConfig(), viewMapper);
     Map<String, String> typeExtensions = CollectUtils.toMap(new String[][] { { "freemarker", "ftl" },
         { "velocity", "vm" }, { "dispatcher", "jsp" } });
@@ -141,7 +144,11 @@ public class DefaultResultBuilder implements ResultBuilder {
         return buildResult(resultCode, cfg, context, params);
       } else if (prefix.startsWith("redirect")) {
         String targetResource = substringAfter(resultCode, ":");
-        if (contains(targetResource, ':')) { return new ServletRedirectResult(targetResource); }
+        if (contains(targetResource, ':')) {
+          ServletRedirectResult srr = new ServletRedirectResult(targetResource);
+          srr.setUrlHelper(urlHelper);
+          return srr;
+        }
         Action action = buildAction(targetResource);
 
         // add special param and ajax tag for redirect
@@ -181,7 +188,7 @@ public class DefaultResultBuilder implements ResultBuilder {
 
   /**
    * 依据跳转路径进行构建
-   * 
+   *
    * @param path
    * @param param
    * @param redirectParamStr
@@ -223,7 +230,7 @@ public class DefaultResultBuilder implements ResultBuilder {
 
   /**
    * 构建结果
-   * 
+   *
    * @param resultCode
    * @param resultTypeConfig
    * @param context

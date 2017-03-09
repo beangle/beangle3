@@ -10,6 +10,7 @@ target
 .settings
 .metadata
 .tomcatplugin
+.DS_Store
 test-output
 RemoteSystemsTempFiles
 Servers
