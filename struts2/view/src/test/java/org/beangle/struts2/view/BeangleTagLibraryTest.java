@@ -82,8 +82,10 @@ import com.opensymphony.xwork2.factory.DefaultActionFactory;
 import com.opensymphony.xwork2.factory.DefaultConverterFactory;
 import com.opensymphony.xwork2.factory.DefaultInterceptorFactory;
 import com.opensymphony.xwork2.factory.DefaultResultFactory;
+import com.opensymphony.xwork2.factory.DefaultUnknownHandlerFactory;
 import com.opensymphony.xwork2.factory.InterceptorFactory;
 import com.opensymphony.xwork2.factory.ResultFactory;
+import com.opensymphony.xwork2.factory.UnknownHandlerFactory;
 import com.opensymphony.xwork2.inject.Container;
 import com.opensymphony.xwork2.inject.ContainerBuilder;
 import com.opensymphony.xwork2.inject.Scope;
@@ -215,6 +217,7 @@ public class BeangleTagLibraryTest {
         Scope.SINGLETON);
     builder.factory(TypeConverterCreator.class, DefaultTypeConverterCreator.class, Scope.SINGLETON);
     builder.factory(TypeConverterHolder.class, DefaultTypeConverterHolder.class, Scope.SINGLETON);
+    builder.factory(UnknownHandlerFactory.class, DefaultUnknownHandlerFactory.class, Scope.SINGLETON);
     builder.factory(TextProvider.class, "system", DefaultTextProvider.class, Scope.SINGLETON);
     builder.factory(ActionUriRender.class, DefaultActionUriRender.class, Scope.SINGLETON);
     builder.factory(TagLibraryModelProvider.class, "b", BeangleTagLibrary.class, Scope.SINGLETON);
