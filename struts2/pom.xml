@@ -2,12 +2,12 @@
   <parent>
     <groupId>org.beangle</groupId>
     <artifactId>beangle-library-parent</artifactId>
-    <version>3.5.2-SNAPSHOT</version>
+    <version>3.5.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.beangle.struts2</groupId>
   <artifactId>beangle-struts2-parent</artifactId>
-  <packaging>pom<!--bundle--></packaging>
+  <packaging>pom<!--bundle--></packaging>   
   <name>Beangle Struts2 Parent</name>
 
   <properties>
