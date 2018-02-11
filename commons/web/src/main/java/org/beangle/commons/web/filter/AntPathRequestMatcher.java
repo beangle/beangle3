@@ -29,7 +29,7 @@ import org.beangle.commons.text.regex.AntPathPattern;
  * Matcher which compares a pre-defined ant-style pattern against the URL (
  * {@code servletPath + pathInfo}) of an {@code HttpServletRequest}. The query
  * string of the URL is ignored and matching is case-insensitive.
- * 
+ *
  * @see AntPathMatcher
  */
 public final class AntPathRequestMatcher implements RequestMatcher {
@@ -41,7 +41,7 @@ public final class AntPathRequestMatcher implements RequestMatcher {
   /**
    * Creates a matcher with the specific pattern which will match all HTTP
    * methods.
-   * 
+   *
    * @param pattern
    *          the ant pattern to use for matching
    */
@@ -52,7 +52,7 @@ public final class AntPathRequestMatcher implements RequestMatcher {
   /**
    * Creates a matcher with the supplied pattern which will match all HTTP
    * methods.
-   * 
+   *
    * @param pattern
    *          the ant pattern to use for matching
    * @param httpMethod
@@ -68,7 +68,7 @@ public final class AntPathRequestMatcher implements RequestMatcher {
   /**
    * Returns true if the configured pattern (and HTTP-Method) match those of
    * the supplied request.
-   * 
+   *
    * @param request
    *          the request to match against. The ant pattern will be matched
    *          against the {@code servletPath} + {@code pathInfo} of the

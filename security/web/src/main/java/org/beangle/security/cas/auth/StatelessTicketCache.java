@@ -48,7 +48,7 @@ package org.beangle.security.cas.auth;
  * Implementations should provide a reasonable timeout on stored entries, such that the stateless
  * caller are not required to unnecessarily acquire fresh CAS service tickets or proxy tickets.
  * </p>
- * 
+ *
  * @author chaostone
  */
 public interface StatelessTicketCache {
@@ -59,7 +59,7 @@ public interface StatelessTicketCache {
    * <P>
    * If not found, returns a <code>null</code><code>CasAuthentication</code>.
    * </p>
-   * 
+   *
    * @return the fully populated authentication token
    */
   CasAuthentication get(String serviceTicket);
@@ -70,7 +70,7 @@ public interface StatelessTicketCache {
    * The {@link CasAuthentication#getCredentials()} method is used to retrieve the service ticket
    * number.
    * </p>
-   * 
+   *
    * @param token
    *          to be added to the cache
    */
@@ -82,7 +82,7 @@ public interface StatelessTicketCache {
    * Implementations should use {@link CasAuthentication#getCredentials()} to obtain the ticket and
    * then delegate to to the {@link #remove(String)} method.
    * </p>
-   * 
+   *
    * @param token
    *          to be removed
    */
@@ -95,7 +95,7 @@ public interface StatelessTicketCache {
    * This is in case applications wish to provide a session termination capability for their
    * stateless clients.
    * </p>
-   * 
+   *
    * @param serviceTicket
    *          to be removed
    */

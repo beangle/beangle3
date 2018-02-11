@@ -33,7 +33,7 @@ import com.opensymphony.xwork2.util.location.LocatableProperties;
 /**
  * Convert System properties to struts2 constants,for those start with struts2
  * Using -Dany.struts.constant.name=your value.
- * 
+ *
  * @author chaostone
  */
 public class PropertyConstantProvider implements ConfigurationProvider {

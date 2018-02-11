@@ -28,7 +28,7 @@ import org.beangle.security.blueprint.function.FuncResource;
 public interface ProfileService {
   /**
    * Get field enumerated values.
-   * 
+   *
    * @param field
    * @param profile
    */
@@ -36,14 +36,14 @@ public interface ProfileService {
 
   /**
    * 查找用户在指定资源上对应的数据配置
-   * 
+   *
    * @param user
    */
   List<Profile> getProfiles(User user, FuncResource resource);
 
   /**
    * Search field values
-   * 
+   *
    * @param field
    * @param keys
    */
@@ -51,14 +51,14 @@ public interface ProfileService {
 
   /**
    * Search field
-   * 
+   *
    * @param fieldName
    */
   Dimension getDimension(String fieldName);
 
   /**
    * find profile
-   * 
+   *
    * @param id
    * @return
    */

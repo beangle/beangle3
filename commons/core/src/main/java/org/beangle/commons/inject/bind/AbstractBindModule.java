@@ -35,7 +35,7 @@ import org.beangle.commons.lang.tuple.Pair;
  * <p>
  * Abstract AbstractBindModule class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -47,7 +47,7 @@ public abstract class AbstractBindModule implements BindModule {
    * <p>
    * Getter for the field <code>config</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.inject.bind.BeanConfig} object.
    */
   public final BeanConfig getConfig() {
@@ -62,7 +62,7 @@ public abstract class AbstractBindModule implements BindModule {
    * <p>
    * bind.
    * </p>
-   * 
+   *
    * @param classes a {@link java.lang.Class} object.
    * @return a {@link org.beangle.commons.inject.bind.BeanConfig.DefinitionBinder} object.
    */
@@ -72,7 +72,7 @@ public abstract class AbstractBindModule implements BindModule {
 
   /**
    * Returns a reference definition based on Name;
-   * 
+   *
    * @param name
    */
   protected final ReferenceValue ref(String name) {
@@ -85,7 +85,7 @@ public abstract class AbstractBindModule implements BindModule {
 
   /**
    * Return new map entry
-   * 
+   *
    * @param key
    * @param value
    */
@@ -95,7 +95,7 @@ public abstract class AbstractBindModule implements BindModule {
 
   /**
    * Generate a inner bean definition
-   * 
+   *
    * @param clazz
    */
   protected final Definition bean(Class<?> clazz) {
@@ -109,7 +109,7 @@ public abstract class AbstractBindModule implements BindModule {
    * <p>
    * List singleton bean references with list(A.class,B.class) or list(ref("someBeanId"),C.class).<br>
    * List simple values with list("strValue1","strValue2")
-   * 
+   *
    * @param datas
    */
   protected final List<?> list(Object... datas) {
@@ -127,7 +127,7 @@ public abstract class AbstractBindModule implements BindModule {
   /**
    * Generate a list reference property
    * <p>
-   * 
+   *
    * @param classes
    */
   protected final List<?> listref(Class<?>... classes) {
@@ -143,7 +143,7 @@ public abstract class AbstractBindModule implements BindModule {
    * <p>
    * List singleton bean references with set(A.class,B.class) or set(ref("someBeanId"),C.class).<br>
    * List simple values with set("strValue1","strValue2")
-   * 
+   *
    * @param datas
    */
   protected final Set<?> set(Object... datas) {
@@ -190,7 +190,7 @@ public abstract class AbstractBindModule implements BindModule {
    * <p>
    * bind.
    * </p>
-   * 
+   *
    * @param beanName a {@link java.lang.String} object.
    * @param clazz a {@link java.lang.Class} object.
    * @return a {@link org.beangle.commons.inject.bind.BeanConfig.DefinitionBinder} object.
@@ -217,7 +217,7 @@ public abstract class AbstractBindModule implements BindModule {
    * <p>
    * getObjectType.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Class} object.
    */
   public final Class<?> getObjectType() {
@@ -228,7 +228,7 @@ public abstract class AbstractBindModule implements BindModule {
    * <p>
    * isSingleton.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public final boolean isSingleton() {

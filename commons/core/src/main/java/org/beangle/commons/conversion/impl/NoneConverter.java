@@ -22,7 +22,7 @@ import org.beangle.commons.lang.tuple.Pair;
 
 /**
  * Convert anything to null.
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

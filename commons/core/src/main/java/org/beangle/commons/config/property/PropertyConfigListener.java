@@ -24,7 +24,7 @@ import java.util.EventListener;
  * <p>
  * PropertyConfigListener interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -32,7 +32,7 @@ public interface PropertyConfigListener extends EventListener {
 
   /**
    * Handle an config event.
-   * 
+   *
    * @param event
    *          the event to respond to
    */

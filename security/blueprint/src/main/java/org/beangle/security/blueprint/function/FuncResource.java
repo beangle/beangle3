@@ -22,7 +22,7 @@ import org.beangle.security.blueprint.Resource;
 
 /**
  * 系统功能资源
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */
@@ -40,7 +40,7 @@ public interface FuncResource extends Resource {
 
   /**
    * 资源可见范围
-   * 
+   *
    * @author chaostone
    */
   static enum Scope {

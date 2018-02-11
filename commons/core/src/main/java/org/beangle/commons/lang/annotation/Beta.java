@@ -29,7 +29,7 @@ import java.lang.annotation.RetentionPolicy;
  * containing library. Note that the presence of this annotation implies nothing
  * about the quality or performance of the API in question, only the fact that
  * it is not "API-frozen."
- * 
+ *
  * @author chaostone
  * @since 3.0.2
  */

@@ -27,7 +27,7 @@ import org.beangle.commons.entity.TimeEntity;
 
 /**
  * 系统角色的基本信息
- * 
+ *
  * @author chaostone 2005-9-26
  */
 public interface Role

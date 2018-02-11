@@ -37,7 +37,7 @@ public interface GrantedAuthority extends Serializable, Comparable<GrantedAuthor
    * <code>GrantedAuthority</code> implementation, so returning <code>null</code> should be avoided
    * unless actually required.
    * </p>
-   * 
+   *
    * @return a representation of the granted authority (or <code>null</code> if the granted
    *         authority cannot be expressed as a <code>String</code> with sufficient precision).
    */

@@ -24,7 +24,7 @@ import org.beangle.commons.collection.CollectUtils;
 
 /**
  * UITheme represent css or images resource bundle name.
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

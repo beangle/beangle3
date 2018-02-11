@@ -22,7 +22,7 @@ import org.beangle.commons.text.i18n.TextResource;
 
 /**
  * 对象属性输出接口
- * 
+ *
  * @author chaostone
  */
 public interface PropertyExtractor {

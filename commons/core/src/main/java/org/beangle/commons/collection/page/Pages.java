@@ -26,7 +26,7 @@ import java.util.List;
  * <p>
  * Pages class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -38,7 +38,7 @@ public class Pages {
    * <p>
    * emptyPage.
    * </p>
-   * 
+   *
    * @param <T> a T object.
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */

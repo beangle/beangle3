@@ -33,7 +33,7 @@ import org.beangle.security.core.AuthenticationException;
  * parameter names to use are contained in the static fields {@link #SECURITY_FORM_USERNAME_KEY} and
  * {@link #SECURITY_FORM_PASSWORD_KEY}. The parameter names can also be changed by setting the
  * <tt>usernameParameter</tt> and <tt>passwordParameter</tt> properties.
- * 
+ *
  * @author chaostone
  */
 public class UsernamePasswordAuthFilter extends AbstractAuthenticationFilter {
@@ -71,7 +71,7 @@ public class UsernamePasswordAuthFilter extends AbstractAuthenticationFilter {
 
   /**
    * This filter by default responds to <code>/j_security_check</code>.
-   * 
+   *
    * @return the default
    */
   public String getDefaultFilterProcessesUrl() {
@@ -87,7 +87,7 @@ public class UsernamePasswordAuthFilter extends AbstractAuthenticationFilter {
    * The <code>AuthenticationDao</code> will need to generate the expected password in a
    * corresponding manner.
    * </p>
-   * 
+   *
    * @param request
    *          so that request attributes can be retrieved
    * @return the password that will be presented in the <code>Authentication</code> request token
@@ -100,7 +100,7 @@ public class UsernamePasswordAuthFilter extends AbstractAuthenticationFilter {
   /**
    * Enables subclasses to override the composition of the username, such as
    * by including additional values and a separator.
-   * 
+   *
    * @param request
    *          so that request attributes can be retrieved
    * @return the username that will be presented in the <code>Authentication</code> request token
@@ -113,7 +113,7 @@ public class UsernamePasswordAuthFilter extends AbstractAuthenticationFilter {
   /**
    * Provided so that subclasses may configure what is put into the
    * authentication request's details property.
-   * 
+   *
    * @param request
    *          that an authentication request is being created for
    * @param authRequest
@@ -127,7 +127,7 @@ public class UsernamePasswordAuthFilter extends AbstractAuthenticationFilter {
   /**
    * Sets the parameter name which will be used to obtain the username from
    * the login request.
-   * 
+   *
    * @param usernameParameter
    *          the parameter name. Defaults to "j_username".
    */
@@ -139,7 +139,7 @@ public class UsernamePasswordAuthFilter extends AbstractAuthenticationFilter {
   /**
    * Sets the parameter name which will be used to obtain the password from
    * the login request..
-   * 
+   *
    * @param passwordParameter
    *          the parameter name. Defaults to "j_password".
    */

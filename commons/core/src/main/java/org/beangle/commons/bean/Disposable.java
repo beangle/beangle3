@@ -22,7 +22,7 @@ package org.beangle.commons.bean;
  * <p>
  * Disposable interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

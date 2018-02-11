@@ -22,7 +22,7 @@ package org.beangle.commons.script;
  * <p>
  * EvaluationException class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: EvaluationException.java Mar 5, 2012 12:13:41 AM chaostone $
  */
@@ -34,7 +34,7 @@ public class EvaluationException extends RuntimeException {
    * <p>
    * Constructor for EvaluationException.
    * </p>
-   * 
+   *
    * @param cause a {@link java.lang.Throwable} object.
    */
   public EvaluationException(Throwable cause) {
@@ -43,7 +43,7 @@ public class EvaluationException extends RuntimeException {
 
   /**
    * Constructs the exception using a message and cause.
-   * 
+   *
    * @param message the message to use
    * @param cause the underlying cause
    */

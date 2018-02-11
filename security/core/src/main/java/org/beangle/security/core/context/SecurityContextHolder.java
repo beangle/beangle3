@@ -46,7 +46,7 @@ import org.beangle.commons.lang.Throwables;
  * incompatibilities and is appropriate on servers (whereas {@link #MODE_GLOBAL} is definitely
  * inappropriate for server use).
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: SecurityContextHolder.java 2217 2007-10-27 00:45:30Z $
  */
@@ -73,7 +73,7 @@ public class SecurityContextHolder {
 
   /**
    * Obtain the current <code>SecurityContext</code>.
-   * 
+   *
    * @return the security context (never <code>null</code>)
    */
   public static SecurityContext getContext() {
@@ -83,7 +83,7 @@ public class SecurityContextHolder {
   /**
    * Primarily for troubleshooting purposes, this method shows how many times
    * the class has reinitialized its <code>SecurityContextHolderStrategy</code>.
-   * 
+   *
    * @return the count (should be one unless you've called {@link #setStrategyName(String)} to
    *         switch to an alternate
    *         strategy.
@@ -122,7 +122,7 @@ public class SecurityContextHolder {
   /**
    * Associates a new <code>SecurityContext</code> with the current thread of
    * execution.
-   * 
+   *
    * @param context
    *          the new <code>SecurityContext</code> (may not be <code>null</code>)
    */
@@ -134,7 +134,7 @@ public class SecurityContextHolder {
    * Changes the preferred strategy. Do <em>NOT</em> call this method more
    * than once for a given JVM, as it will reinitialize the strategy and
    * adversely affect any existing threads using the old strategy.
-   * 
+   *
    * @param strategyName
    *          the fully qualified classname of the strategy that should be
    *          used.

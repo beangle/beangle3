@@ -33,7 +33,7 @@ import org.beangle.commons.lang.Charsets;
  * encoding of non-ASCII text in various portions of a RFC 822 [2] message header, in a manner which
  * is unlikely to confuse existing message handling software.
  * </p>
- * 
+ *
  * @see <a href="http://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose Internet Mail Extensions)
  *      Part Two: Message Header Extensions for Non-ASCII Text</a>
  * @author chaostone
@@ -69,7 +69,7 @@ public final class BCoder {
 
   /**
    * Constructor which allows for the selection of a default charset
-   * 
+   *
    * @param charset the default charset to use.
    * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard
    *      charsets</a>
@@ -85,7 +85,7 @@ public final class BCoder {
 
   /**
    * Encodes a string into its Base64 form using the default charset. Unsafe characters are escaped.
-   * 
+   *
    * @param value string to convert to Base64 form
    * @return Base64 string
    */
@@ -106,7 +106,7 @@ public final class BCoder {
    * Decodes a Base64 string into its original form. Escaped characters are converted back to their
    * original
    * representation.
-   * 
+   *
    * @param value Base64 string to convert into its original form
    * @return original string
    */

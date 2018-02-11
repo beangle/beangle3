@@ -272,7 +272,7 @@ public class ConventionPackageProvider implements PackageProvider {
 
   /**
    * generator default results by method name
-   * 
+   *
    * @param clazz
    * @return
    */

@@ -25,7 +25,7 @@ import org.beangle.commons.lang.Strings;
 
 /**
  * 排序
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -53,7 +53,7 @@ public class Order {
    * <p>
    * Constructor for Order.
    * </p>
-   * 
+   *
    * @param property a {@link java.lang.String} object.
    * @param ascending a boolean.
    */
@@ -66,7 +66,7 @@ public class Order {
    * <p>
    * Constructor for Order.
    * </p>
-   * 
+   *
    * @param property a {@link java.lang.String} object.
    */
   public Order(String property) {
@@ -89,7 +89,7 @@ public class Order {
    * <p>
    * Getter for the field <code>property</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getProperty() {
@@ -100,7 +100,7 @@ public class Order {
    * <p>
    * Setter for the field <code>property</code>.
    * </p>
-   * 
+   *
    * @param property a {@link java.lang.String} object.
    */
   public void setProperty(final String property) {
@@ -111,7 +111,7 @@ public class Order {
    * <p>
    * isAscending.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isAscending() {
@@ -122,7 +122,7 @@ public class Order {
    * <p>
    * Setter for the field <code>ascending</code>.
    * </p>
-   * 
+   *
    * @param ascending a boolean.
    */
   public void setAscending(boolean ascending) {
@@ -133,7 +133,7 @@ public class Order {
    * <p>
    * ignoreCase.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.collection.Order} object.
    */
   public Order ignoreCase() {
@@ -145,7 +145,7 @@ public class Order {
    * <p>
    * asc.
    * </p>
-   * 
+   *
    * @param property a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.collection.Order} object.
    */
@@ -157,7 +157,7 @@ public class Order {
    * <p>
    * desc.
    * </p>
-   * 
+   *
    * @param property a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.collection.Order} object.
    */
@@ -169,7 +169,7 @@ public class Order {
    * <p>
    * toSortString.
    * </p>
-   * 
+   *
    * @param orders a {@link java.util.List} object.
    * @return a {@link java.lang.String} object.
    */
@@ -190,7 +190,7 @@ public class Order {
    * <p>
    * parse.
    * </p>
-   * 
+   *
    * @param orderString a {@link java.lang.String} object.
    * @return a {@link java.util.List} object.
    */
@@ -222,7 +222,7 @@ public class Order {
    * <p>
    * toString.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String toString() {

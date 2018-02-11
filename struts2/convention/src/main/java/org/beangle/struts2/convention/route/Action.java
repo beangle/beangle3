@@ -28,7 +28,7 @@ import org.beangle.commons.lang.Strings;
 
 /**
  * web路由的系统结点
- * 
+ *
  * @author chaostone
  */
 public class Action {

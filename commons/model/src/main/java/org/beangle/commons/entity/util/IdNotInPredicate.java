@@ -30,7 +30,7 @@ import org.beangle.commons.lang.functor.Predicate;
  * <p>
  * IdNotInPredicate class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -42,7 +42,7 @@ public class IdNotInPredicate implements Predicate<Entity<?>> {
    * <p>
    * Constructor for IdNotInPredicate.
    * </p>
-   * 
+   *
    * @param ids a {@link java.util.Collection} object.
    */
   public IdNotInPredicate(Collection<Serializable> ids) {

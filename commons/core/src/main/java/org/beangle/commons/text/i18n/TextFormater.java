@@ -22,7 +22,7 @@ import java.util.Locale;
 
 /**
  * Text formater
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

@@ -24,7 +24,7 @@ import org.beangle.commons.event.Event;
 
 /**
  * HttpSession Destroyed Event
- * 
+ *
  * @author chaostone
  */
 public class HttpSessionDestroyedEvent extends Event {

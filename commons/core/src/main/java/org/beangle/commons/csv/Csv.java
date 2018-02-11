@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * csv document object.
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -46,7 +46,7 @@ public class Csv {
    * <p>
    * Constructor for Csv.
    * </p>
-   * 
+   *
    * @param format a {@link org.beangle.commons.csv.CsvFormat} object.
    */
   public Csv(CsvFormat format) {
@@ -57,7 +57,7 @@ public class Csv {
    * <p>
    * Getter for the field <code>format</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.csv.CsvFormat} object.
    */
   public CsvFormat getFormat() {
@@ -68,7 +68,7 @@ public class Csv {
    * <p>
    * Getter for the field <code>contents</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   public List<String[]> getContents() {

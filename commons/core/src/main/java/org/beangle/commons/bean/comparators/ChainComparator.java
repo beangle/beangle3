@@ -25,7 +25,7 @@ import org.beangle.commons.collection.CollectUtils;
 
 /**
  * 组合比较器
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -37,7 +37,7 @@ public class ChainComparator<T> implements Comparator<T> {
    * <p>
    * compare.
    * </p>
-   * 
+   *
    * @param first a T object.
    * @param second a T object.
    * @return 0 is equals,-1 first &lt; second ,1 first &gt; second
@@ -68,7 +68,7 @@ public class ChainComparator<T> implements Comparator<T> {
    * <p>
    * Constructor for ChainComparator.
    * </p>
-   * 
+   *
    * @param comparators a {@link java.util.List} object.
    */
   public ChainComparator(final List<Comparator<T>> comparators) {
@@ -80,7 +80,7 @@ public class ChainComparator<T> implements Comparator<T> {
    * <p>
    * addComparator.
    * </p>
-   * 
+   *
    * @param com a {@link java.util.Comparator} object.
    */
   public void addComparator(final Comparator<T> com) {
@@ -91,7 +91,7 @@ public class ChainComparator<T> implements Comparator<T> {
    * <p>
    * Getter for the field <code>comparators</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   public List<Comparator<T>> getComparators() {
@@ -102,7 +102,7 @@ public class ChainComparator<T> implements Comparator<T> {
    * <p>
    * Setter for the field <code>comparators</code>.
    * </p>
-   * 
+   *
    * @param comparators a {@link java.util.List} object.
    */
   public void setComparators(final List<Comparator<T>> comparators) {

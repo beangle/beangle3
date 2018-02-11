@@ -22,7 +22,7 @@ import java.util.Set;
 
 /**
  * Session status cache interface
- * 
+ *
  * @author chaostone
  * @since 3.1.0
  */

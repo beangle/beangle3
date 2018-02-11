@@ -37,7 +37,7 @@ import org.beangle.security.blueprint.nav.MenuProfile;
 
 /**
  * 系统菜单
- * 
+ *
  * @author chaostone
  */
 @Entity(name = "org.beangle.security.blueprint.nav.Menu")

@@ -22,7 +22,7 @@ package org.beangle.commons.bean;
  * <p>
  * Initializing interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -31,7 +31,7 @@ public interface Initializing {
    * <p>
    * init.
    * </p>
-   * 
+   *
    * @throws java.lang.Exception if any.
    */
   void init() throws Exception;

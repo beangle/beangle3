@@ -27,7 +27,7 @@ import org.beangle.security.web.context.HttpSessionContextFilter;
 
 /**
  * Security access request
- * 
+ *
  * @author chaostone
  * @since 3.0.1
  */

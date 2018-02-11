@@ -20,7 +20,7 @@ package org.beangle.struts2.view.bean;
 
 /**
  * Url render
- * 
+ *
  * @author chaostone
  * @since 2.4
  */

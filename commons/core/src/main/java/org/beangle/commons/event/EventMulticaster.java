@@ -22,21 +22,21 @@ package org.beangle.commons.event;
  * <p>
  * EventMulticaster interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
 public interface EventMulticaster {
   /**
    * Add a listener to be notified of all events.
-   * 
+   *
    * @param listener the listener to add
    */
   void addListener(EventListener<?> listener);
 
   /**
    * Remove a listener from the notification list.
-   * 
+   *
    * @param listener the listener to remove
    */
   void removeListener(EventListener<?> listener);
@@ -53,7 +53,7 @@ public interface EventMulticaster {
    * <p>
    * multicast.
    * </p>
-   * 
+   *
    * @param e a {@link org.beangle.commons.event.Event} object.
    */
   void multicast(Event e);

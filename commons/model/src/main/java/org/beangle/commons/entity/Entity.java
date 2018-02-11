@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 /**
  * Entity present a data with identifier.
- * 
+ *
  * @author chaostone
  */
 public interface Entity<ID extends Serializable> extends Serializable {

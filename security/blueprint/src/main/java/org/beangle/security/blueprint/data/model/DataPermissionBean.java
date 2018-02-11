@@ -41,7 +41,7 @@ import com.google.gson.GsonBuilder;
 
 /**
  * 数据授权实体
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

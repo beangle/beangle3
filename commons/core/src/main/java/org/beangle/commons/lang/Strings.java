@@ -35,7 +35,7 @@ import org.beangle.commons.collection.CollectUtils;
  * <p>
  * Operations on {@link java.lang.String} that are {@code null} safe.
  * </p>
- * 
+ *
  * @author chaostone 2005-11-15
  * @version $Id: $
  * @since 3.0
@@ -60,14 +60,14 @@ public class Strings {
    * <p>
    * For a word based algorithm, see returns {@code null}.
    * </p>
-   * 
+   *
    * <pre>
    * capitalize(null)  = null
    * capitalize("")    = ""
    * capitalize("cat") = "Cat"
    * capitalize("cAt") = "CAt"
    * </pre>
-   * 
+   *
    * @param str the String to capitalize, may be null
    * @return the capitalized String, {@code null} if null String input
    * @see #uncapitalize(String)
@@ -84,7 +84,7 @@ public class Strings {
    * <p>
    * concat.
    * </p>
-   * 
+   *
    * @param seq
    *          a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
@@ -101,7 +101,7 @@ public class Strings {
    * <p>
    * A {@code null} CharSequence will return {@code false}.
    * </p>
-   * 
+   *
    * <pre>
    * contains(null, *)     = false
    * contains(*, null)     = false
@@ -110,7 +110,7 @@ public class Strings {
    * contains("abc", "a")  = true
    * contains("abc", "z")  = false
    * </pre>
-   * 
+   *
    * @param seq the CharSequence to check, may be null
    * @param searchSeq the CharSequence to find, may be null
    * @return true if the CharSequence contains the search CharSequence,
@@ -129,14 +129,14 @@ public class Strings {
    * <p>
    * A {@code null} or empty ("") CharSequence will return {@code false}.
    * </p>
-   * 
+   *
    * <pre>
    * contains(null, *)    = false
    * contains("", *)      = false
    * contains("abc", 'a') = true
    * contains("abc", 'z') = false
    * </pre>
-   * 
+   *
    * @param seq
    *          the CharSequence to check, may be null
    * @param searchChar
@@ -153,7 +153,7 @@ public class Strings {
 
   /**
    * count char in host string
-   * 
+   *
    * @param host
    *          a {@link java.lang.String} object.
    * @param charactor
@@ -172,7 +172,7 @@ public class Strings {
 
   /**
    * count inner string in host string
-   * 
+   *
    * @param host
    *          a {@link java.lang.String} object.
    * @param searchStr
@@ -195,7 +195,7 @@ public class Strings {
 
   /**
    * Returns index of searchChar in cs with begin index {@code start}
-   * 
+   *
    * @param searchChar
    * @param start
    */
@@ -207,7 +207,7 @@ public class Strings {
    * <p>
    * Finds the first index in the {@code CharSequence} that matches the specified character.
    * </p>
-   * 
+   *
    * @param cs the {@code CharSequence} to be processed, not null
    * @param searchChar the char to be searched for
    * @param start the start index, negative starts at the string start
@@ -232,7 +232,7 @@ public class Strings {
    * <p>
    * insert.
    * </p>
-   * 
+   *
    * @param str a {@link java.lang.String} object.
    * @param c a {@link java.lang.String} object.
    * @param pos a int.
@@ -246,7 +246,7 @@ public class Strings {
   /**
    * replace [bigen,end] [1...end] with givenStr
    * 可以使用StringBuilder的replace方法替换该方法
-   * 
+   *
    * @param str a {@link java.lang.String} object.
    * @param begin a int.
    * @param end a int.
@@ -262,7 +262,7 @@ public class Strings {
    * <p>
    * intersectSeq.
    * </p>
-   * 
+   *
    * @param first
    *          a {@link java.lang.String} object.
    * @param second
@@ -275,7 +275,7 @@ public class Strings {
 
   /**
    * 返回一个新的逗号相隔字符串，实现其中的单词a-b的功能
-   * 
+   *
    * @param first a {@link java.lang.String} object.
    * @param second a {@link java.lang.String} object.
    * @param delimiter a {@link java.lang.String} object.
@@ -300,7 +300,7 @@ public class Strings {
    * <p>
    * Checks if a CharSequence is whitespace, empty ("") or null.
    * </p>
-   * 
+   *
    * <pre>
    * isBlank(null)      = true
    * isBlank("")        = true
@@ -308,7 +308,7 @@ public class Strings {
    * isBlank("bob")     = false
    * isBlank("  bob  ") = false
    * </pre>
-   * 
+   *
    * @param cs
    *          the CharSequence to check, may be null
    * @return {@code true} if the CharSequence is null, empty or whitespace
@@ -334,7 +334,7 @@ public class Strings {
    * <p>
    * isEqualSeq.
    * </p>
-   * 
+   *
    * @param first not null
    * @param second not null
    * @return a boolean.
@@ -345,7 +345,7 @@ public class Strings {
 
   /**
    * 判断两个","逗号相隔的字符串中的单词是否完全等同.
-   * 
+   *
    * @param first
    *          a {@link java.lang.String} object.
    * @param second
@@ -376,7 +376,7 @@ public class Strings {
    * <p>
    * Checks if a CharSequence is not empty (""), not null and not whitespace only.
    * </p>
-   * 
+   *
    * <pre>
    * isNotBlank(null)      = false
    * isNotBlank("")        = false
@@ -384,7 +384,7 @@ public class Strings {
    * isNotBlank("bob")     = true
    * isNotBlank("  bob  ") = true
    * </pre>
-   * 
+   *
    * @param cs
    *          the CharSequence to check, may be null
    * @return {@code true} if the CharSequence is
@@ -406,7 +406,7 @@ public class Strings {
    * <p>
    * join.
    * </p>
-   * 
+   *
    * @param seq
    *          a {@link java.util.Collection} object.
    * @param delimiter
@@ -432,7 +432,7 @@ public class Strings {
    * <p>
    * join.
    * </p>
-   * 
+   *
    * @param seq
    *          a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
@@ -454,7 +454,7 @@ public class Strings {
   /**
    * 将数组中的字符串，用delimiter串接起来.<br>
    * 首尾不加delimiter
-   * 
+   *
    * @param seq an array of {@link java.lang.String} objects.
    * @param delimiter a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
@@ -472,7 +472,7 @@ public class Strings {
 
   /**
    * 保持逗号分隔的各个单词都是唯一的。并且按照原来的顺序存放。
-   * 
+   *
    * @param keys
    *          a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
@@ -502,7 +502,7 @@ public class Strings {
    * <p>
    * Pad to a size of {@code size}.
    * </p>
-   * 
+   *
    * <pre>
    * leftPad(null, *, *)     = null
    * leftPad("", 3, 'z')     = "zzz"
@@ -511,7 +511,7 @@ public class Strings {
    * leftPad("bat", 1, 'z')  = "bat"
    * leftPad("bat", -1, 'z') = "bat"
    * </pre>
-   * 
+   *
    * @param str the String to pad out, may be null
    * @param size the size to pad to
    * @param padChar the character to pad with
@@ -534,7 +534,7 @@ public class Strings {
    * <p>
    * The String is padded to the size of {@code size}.
    * </p>
-   * 
+   *
    * <pre>
    * rightPad(null, *, *)     = null
    * rightPad("", 3, 'z')     = "zzz"
@@ -543,7 +543,7 @@ public class Strings {
    * rightPad("bat", 1, 'z')  = "bat"
    * rightPad("bat", -1, 'z') = "bat"
    * </pre>
-   * 
+   *
    * @param str the String to pad out, may be null
    * @param size the size to pad to
    * @param padChar the character to pad with
@@ -563,7 +563,7 @@ public class Strings {
    * <p>
    * mergeSeq.
    * </p>
-   * 
+   *
    * @param first
    *          a {@link java.lang.String} object.
    * @param second
@@ -580,7 +580,7 @@ public class Strings {
    * 合并后的字符串仍以delimiter开头和结尾.<br>
    * <p>
    * <blockquote>
-   * 
+   *
    * <pre>
    * mergeSeq(&quot;,1,2,&quot;, &quot;&quot;) = &quot;,1,2,&quot;;
    * mergeSeq(&quot;,1,2,&quot;, null) = &quot;,1,2,&quot;;
@@ -589,10 +589,10 @@ public class Strings {
    * mergeSeq(&quot;,1,2&quot;, &quot;3,&quot;) = &quot;,1,2,3,&quot;;
    * mergeSeq(&quot;,1,2,&quot;, &quot;,3,&quot;) = &quot;,1,2,3,&quot;;
    * </pre>
-   * 
+   *
    * </blockquote>
    * <p>
-   * 
+   *
    * @param first
    *          a {@link java.lang.String} object.
    * @param second
@@ -620,7 +620,7 @@ public class Strings {
    * <p>
    * removeWord.
    * </p>
-   * 
+   *
    * @param host
    *          a {@link java.lang.String} object.
    * @param word
@@ -636,7 +636,7 @@ public class Strings {
    * <p>
    * removeWord.
    * </p>
-   * 
+   *
    * @param host
    *          a {@link java.lang.String} object.
    * @param word
@@ -666,13 +666,13 @@ public class Strings {
    * <p>
    * Returns padding using the specified delimiter repeated to a given length.
    * </p>
-   * 
+   *
    * <pre>
    * repeat(0, 'e')  = ""
    * repeat(3, 'e')  = "eee"
    * repeat(-2, 'e') = ""
    * </pre>
-   * 
+   *
    * @param ch character to repeat
    * @param repeat number of times to repeat char, negative treated as zero
    * @return String with repeated character
@@ -691,7 +691,7 @@ public class Strings {
    * <p>
    * Repeat a String {@code repeat} times to form a new String.
    * </p>
-   * 
+   *
    * <pre>
    * repeat(null, 2) = null
    * repeat("", 0)   = ""
@@ -700,7 +700,7 @@ public class Strings {
    * repeat("ab", 2) = "abab"
    * repeat("a", -2) = ""
    * </pre>
-   * 
+   *
    * @param str the String to repeat, may be null
    * @param repeat number of times to repeat str, negative treated as zero
    * @return a new String consisting of the original String repeated, {@code null} if null String
@@ -735,7 +735,7 @@ public class Strings {
    * <p>
    * A {@code null} reference passed to this method is a no-op.
    * </p>
-   * 
+   *
    * <pre>
    * replace(null, *, *)        = null
    * replace("", *, *)          = ""
@@ -746,7 +746,7 @@ public class Strings {
    * replace("aba", "a", "")    = "b"
    * replace("aba", "a", "z")   = "zbz"
    * </pre>
-   * 
+   *
    * @param text text to search and replace in, may be null
    * @param searchString the String to search for, may be null
    * @param replacement the String to replace it with, may be null
@@ -775,7 +775,7 @@ public class Strings {
    * <p>
    * split.
    * </p>
-   * 
+   *
    * @param target
    *          a {@link java.lang.String} object.
    * @return an array of {@link java.lang.String} objects.
@@ -791,7 +791,7 @@ public class Strings {
    * </p>
    * A {@code null} input String returns {@code null}.
    * </p>
-   * 
+   *
    * <pre>
    * split(null, *)         = null
    * split("", *)           = []
@@ -829,7 +829,7 @@ public class Strings {
    * <p>
    * split.
    * </p>
-   * 
+   *
    * @param target
    *          a {@link java.lang.String} object.
    * @param separatorChars
@@ -865,7 +865,7 @@ public class Strings {
    * A {@code null} input String returns {@code null}. A {@code null} separatorChars splits on
    * whitespace.
    * </p>
-   * 
+   *
    * <pre>
    * split(null, *)         = null
    * split("", *)           = []
@@ -901,7 +901,7 @@ public class Strings {
 
   /**
    * 将1-2,3,4-9之类的序列拆分成数组
-   * 
+   *
    * @param numSeq
    *          a {@link java.lang.String} object.
    * @return an array of {@link java.lang.Integer} objects.
@@ -932,7 +932,7 @@ public class Strings {
    * <p>
    * splitToInt.
    * </p>
-   * 
+   *
    * @param ids
    *          a {@link java.lang.String} object.
    * @return an array of {@link java.lang.Integer} objects.
@@ -946,7 +946,7 @@ public class Strings {
    * <p>
    * splitToLong.
    * </p>
-   * 
+   *
    * @param ids
    *          a {@link java.lang.String} object.
    * @return an array of {@link java.lang.Long} objects.
@@ -976,7 +976,7 @@ public class Strings {
    * <p>
    * If {@code start} is not strictly to the left of {@code end}, "" is returned.
    * </p>
-   * 
+   *
    * <pre>
    * substring(null, *, *)    = null
    * substring("", * ,  *)    = "";
@@ -988,7 +988,7 @@ public class Strings {
    * substring("abc", -2, -1) = "b"
    * substring("abc", -4, 2)  = "ab"
    * </pre>
-   * 
+   *
    * @param str
    *          the String to get the substring from, may be null
    * @param start
@@ -1017,7 +1017,7 @@ public class Strings {
    * <p>
    * subtractSeq.
    * </p>
-   * 
+   *
    * @param first
    *          a {@link java.lang.String} object.
    * @param second
@@ -1051,7 +1051,7 @@ public class Strings {
 
   /**
    * transformToInt.
-   * 
+   *
    * @param ids an array of {@link java.lang.String} objects.
    * @return an array of {@link java.lang.Integer} objects. If ids is null, return Integer[0]
    */
@@ -1066,7 +1066,7 @@ public class Strings {
 
   /**
    * transformToLong.
-   * 
+   *
    * @param ids an array of {@link java.lang.String} objects.
    * @return an array of {@link java.lang.Long} objects. If ids is null, return Long[0]
    */
@@ -1092,7 +1092,7 @@ public class Strings {
    * <p>
    * unCamel.
    * </p>
-   * 
+   *
    * @param str
    *          a {@link java.lang.String} object.
    * @param seperator
@@ -1105,7 +1105,7 @@ public class Strings {
 
   /**
    * 将驼峰表示法转换为下划线小写表示
-   * 
+   *
    * @param str
    *          a {@link java.lang.String} object.
    * @param seperator
@@ -1160,7 +1160,7 @@ public class Strings {
    * <p>
    * If nothing is found, the string input is returned.
    * </p>
-   * 
+   *
    * <pre>
    * substringBefore(null, *)      = null
    * substringBefore("", *)        = ""
@@ -1171,7 +1171,7 @@ public class Strings {
    * substringBefore("abc", "")    = ""
    * substringBefore("abc", null)  = "abc"
    * </pre>
-   * 
+   *
    * @param str the String to get a substring from, may be null
    * @param separator the String to search for, may be null
    * @return the substring before the first occurrence of the separator, {@code null} if null String
@@ -1198,7 +1198,7 @@ public class Strings {
    * <p>
    * If nothing is found, the empty string is returned.
    * </p>
-   * 
+   *
    * <pre>
    * substringAfter(null, *)      = null
    * substringAfter("", *)        = ""
@@ -1209,7 +1209,7 @@ public class Strings {
    * substringAfter("abc", "d")   = ""
    * substringAfter("abc", "")    = "abc"
    * </pre>
-   * 
+   *
    * @param str the String to get a substring from, may be null
    * @param separator the String to search for, may be null
    * @return the substring after the first occurrence of the separator, {@code null} if null String
@@ -1232,7 +1232,7 @@ public class Strings {
    * A {@code null} input String returns {@code null}. A {@code null} open/close returns
    * {@code null} (no match). An empty ("") open and close returns an empty string.
    * </p>
-   * 
+   *
    * <pre>
    * substringBetween("wx[b]yz", "[", "]") = "b"
    * substringBetween(null, *, *)          = null
@@ -1245,7 +1245,7 @@ public class Strings {
    * substringBetween("yabcz", "y", "z")   = "abc"
    * substringBetween("yabczyabcz", "y", "z")   = "abc"
    * </pre>
-   * 
+   *
    * @param str the String containing the substring, may be null
    * @param open the String before the substring, may be null
    * @param close the String after the substring, may be null
@@ -1273,7 +1273,7 @@ public class Strings {
    * <p>
    * If nothing is found, the string input is returned.
    * </p>
-   * 
+   *
    * <pre>
    * substringBeforeLast(null, *)      = null
    * substringBeforeLast("", *)        = ""
@@ -1284,7 +1284,7 @@ public class Strings {
    * substringBeforeLast("a", null)    = "a"
    * substringBeforeLast("a", "")      = "a"
    * </pre>
-   * 
+   *
    * @param str the String to get a substring from, may be null
    * @param separator the String to search for, may be null
    * @return the substring before the last occurrence of the separator, {@code null} if null String
@@ -1310,7 +1310,7 @@ public class Strings {
    * <p>
    * If nothing is found, the empty string is returned.
    * </p>
-   * 
+   *
    * <pre>
    * substringAfterLast(null, *)      = null
    * substringAfterLast("", *)        = ""
@@ -1322,7 +1322,7 @@ public class Strings {
    * substringAfterLast("a", "a")     = ""
    * substringAfterLast("a", "z")     = ""
    * </pre>
-   * 
+   *
    * @param str the String to get a substring from, may be null
    * @param separator the String to search for, may be null
    * @return the substring after the last occurrence of the separator, {@code null} if null String
@@ -1346,7 +1346,7 @@ public class Strings {
    * The String is trimmed using {@link String#trim()}. Trim removes start and end characters &lt;=
    * 32.
    * </p>
-   * 
+   *
    * <pre>
    * trim(null)          = null
    * trim("")            = ""
@@ -1354,7 +1354,7 @@ public class Strings {
    * trim("abc")         = "abc"
    * trim("    abc    ") = "abc"
    * </pre>
-   * 
+   *
    * @param str the String to be trimmed, may be null
    * @return the trimmed string, {@code null} if null String input
    * @since 3.0
@@ -1371,14 +1371,14 @@ public class Strings {
    * <p>
    * For a word based algorithm, see String returns {@code null}.
    * </p>
-   * 
+   *
    * <pre>
    * uncapitalize(null)  = null
    * uncapitalize("")    = ""
    * uncapitalize("Cat") = "cat"
    * uncapitalize("CAT") = "cAT"
    * </pre>
-   * 
+   *
    * @param str the String to uncapitalize, may be null
    * @return the uncapitalized String, {@code null} if null String input
    * @see #capitalize(String)
@@ -1396,7 +1396,7 @@ public class Strings {
    * Returns either the passed in CharSequence, or if the CharSequence is whitespace, empty ("") or
    * {@code null}, the value of {@code defaultStr}.
    * </p>
-   * 
+   *
    * @param str
    * @param defaultStr
    */
@@ -1431,14 +1431,14 @@ public class Strings {
    * A {@code null} source string will return {@code null}. An empty ("") source string will return
    * the empty string.
    * </p>
-   * 
+   *
    * <pre>
    * StringUtils.remove(null, *)       = null
    * StringUtils.remove("", *)         = ""
    * StringUtils.remove("queued", 'u') = "qeed"
    * StringUtils.remove("queued", 'z') = "queued"
    * </pre>
-   * 
+   *
    * @param str the source String to search, may be null
    * @param remove the char to search for and remove, may be null
    * @return the substring with the char removed if found, {@code null} if null String input

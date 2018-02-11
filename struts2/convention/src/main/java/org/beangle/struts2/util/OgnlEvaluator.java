@@ -28,7 +28,7 @@ import ognl.OgnlException;
 
 /**
  * 基于OGNL的表达式执行器
- * 
+ *
  * @author chaostone
  * @version $Id: OgnlExpressionEvaluator.java Mar 5, 2012 12:13:41 AM chaostone $
  */
@@ -49,7 +49,7 @@ public class OgnlEvaluator implements ExpressionEvaluator {
    * <p>
    * Eval a expression within context
    * </p>
-   * 
+   *
    * @param exp a java's expression
    * @param root params.
    * @return evaluate result

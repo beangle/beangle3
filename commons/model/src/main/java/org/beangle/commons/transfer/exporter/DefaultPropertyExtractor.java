@@ -29,7 +29,7 @@ import org.beangle.commons.text.i18n.TextResource;
 
 /**
  * 缺省和简单的属性提取类
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -52,7 +52,7 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
    * <p>
    * Constructor for DefaultPropertyExtractor.
    * </p>
-   * 
+   *
    * @param textResource a {@link org.beangle.commons.i18n.TextResource} object.
    */
   public DefaultPropertyExtractor(TextResource textResource) {
@@ -63,7 +63,7 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
    * <p>
    * extract.
    * </p>
-   * 
+   *
    * @param target a {@link java.lang.Object} object.
    * @param property a {@link java.lang.String} object.
    * @return a {@link java.lang.Object} object.
@@ -93,7 +93,7 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
    * <p>
    * getPropertyIn.
    * </p>
-   * 
+   *
    * @param collection a {@link java.util.Collection} object.
    * @param property a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
@@ -118,7 +118,7 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
    * <p>
    * getText.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
    */
@@ -130,7 +130,7 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
    * <p>
    * getText.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    * @param defaultVal a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
@@ -143,7 +143,7 @@ public class DefaultPropertyExtractor implements PropertyExtractor {
    * <p>
    * Getter for the field <code>textResource</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.i18n.TextResource} object.
    */
   public TextResource getTextResource() {

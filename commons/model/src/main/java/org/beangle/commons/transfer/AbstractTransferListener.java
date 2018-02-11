@@ -22,7 +22,7 @@ package org.beangle.commons.transfer;
  * <p>
  * AbstractTransferListener class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

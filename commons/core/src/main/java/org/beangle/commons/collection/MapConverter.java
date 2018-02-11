@@ -31,7 +31,7 @@ import org.beangle.commons.conversion.impl.DefaultConversion;
  * <p>
  * MapConverter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -62,7 +62,7 @@ public class MapConverter {
    * <p>
    * getAll.
    * </p>
-   * 
+   *
    * @param data a {@link java.util.Map} object.
    * @param attr a {@link java.lang.String} object.
    * @return an array of {@link java.lang.Object} objects.
@@ -75,7 +75,7 @@ public class MapConverter {
    * <p>
    * getAll.
    * </p>
-   * 
+   *
    * @param data a {@link java.util.Map} object.
    * @param attr a {@link java.lang.String} object.
    * @param clazz a {@link java.lang.Class} object.
@@ -88,7 +88,7 @@ public class MapConverter {
 
   /**
    * get parameter named attr
-   * 
+   *
    * @param attr a {@link java.lang.String} object.
    * @return single value or multivalue joined with comma
    * @param data a {@link java.util.Map} object.
@@ -107,7 +107,7 @@ public class MapConverter {
 
   /**
    * get parameter named attr
-   * 
+   *
    * @param data a {@link java.util.Map} object.
    * @param name a {@link java.lang.String} object.
    * @return a {@link java.lang.Object} object.
@@ -126,7 +126,7 @@ public class MapConverter {
    * <p>
    * convert.
    * </p>
-   * 
+   *
    * @param value a {@link java.lang.Object} object.
    * @param clazz a {@link java.lang.Class} object.
    * @param <T> a T object.
@@ -148,7 +148,7 @@ public class MapConverter {
    * <p>
    * convert.
    * </p>
-   * 
+   *
    * @param datas an array of {@link java.lang.Object} objects.
    * @param clazz a {@link java.lang.Class} object.
    * @param <T> a T object.
@@ -168,7 +168,7 @@ public class MapConverter {
    * <p>
    * get.
    * </p>
-   * 
+   *
    * @param data a {@link java.util.Map} object.
    * @param name a {@link java.lang.String} object.
    * @param clazz a {@link java.lang.Class} object.
@@ -183,7 +183,7 @@ public class MapConverter {
    * <p>
    * getBoolean.
    * </p>
-   * 
+   *
    * @param data a {@link java.util.Map} object.
    * @param name a {@link java.lang.String} object.
    * @return a {@link java.lang.Boolean} object.
@@ -196,7 +196,7 @@ public class MapConverter {
    * <p>
    * getBool.
    * </p>
-   * 
+   *
    * @param data a {@link java.util.Map} object.
    * @param name a {@link java.lang.String} object.
    * @return a boolean.
@@ -210,7 +210,7 @@ public class MapConverter {
    * <p>
    * getDate.
    * </p>
-   * 
+   *
    * @param data a {@link java.util.Map} object.
    * @param name a {@link java.lang.String} object.
    * @return a {@link java.sql.Date} object.
@@ -223,7 +223,7 @@ public class MapConverter {
    * <p>
    * getDateTime.
    * </p>
-   * 
+   *
    * @param data a {@link java.util.Map} object.
    * @param name a {@link java.lang.String} object.
    * @return a {@link java.util.Date} object.
@@ -236,7 +236,7 @@ public class MapConverter {
    * <p>
    * getFloat.
    * </p>
-   * 
+   *
    * @param data a {@link java.util.Map} object.
    * @param name a {@link java.lang.String} object.
    * @return a {@link java.lang.Float} object.
@@ -265,7 +265,7 @@ public class MapConverter {
    * <p>
    * getLong.
    * </p>
-   * 
+   *
    * @param data a {@link java.util.Map} object.
    * @param name a {@link java.lang.String} object.
    * @return a {@link java.lang.Long} object.
@@ -276,7 +276,7 @@ public class MapConverter {
 
   /**
    * 返回request中以prefix.开头的参数
-   * 
+   *
    * @param prefix a {@link java.lang.String} object.
    * @param exclusiveAttrNames
    *          要排除的属性串
@@ -291,7 +291,7 @@ public class MapConverter {
    * <p>
    * sub.
    * </p>
-   * 
+   *
    * @param data a {@link java.util.Map} object.
    * @param prefix a {@link java.lang.String} object.
    * @return a {@link java.util.Map} object.
@@ -304,7 +304,7 @@ public class MapConverter {
    * <p>
    * sub.
    * </p>
-   * 
+   *
    * @param data a {@link java.util.Map} object.
    * @param prefix a {@link java.lang.String} object.
    * @param exclusiveAttrNames a {@link java.lang.String} object.

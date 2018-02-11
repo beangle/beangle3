@@ -22,7 +22,7 @@ import org.beangle.commons.event.Event;
 
 /**
  * Logout event
- * 
+ *
  * @author chaostone
  * @since 3.1
  */

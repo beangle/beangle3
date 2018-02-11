@@ -22,7 +22,7 @@ package org.beangle.commons.transfer.io;
  * <p>
  * ItemWriter interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -32,7 +32,7 @@ public interface ItemWriter extends Writer {
    * <p>
    * write.
    * </p>
-   * 
+   *
    * @param obj a {@link java.lang.Object} object.
    */
   void write(Object obj);
@@ -41,7 +41,7 @@ public interface ItemWriter extends Writer {
    * <p>
    * writeTitle.
    * </p>
-   * 
+   *
    * @param titleName a {@link java.lang.String} object.
    * @param data a {@link java.lang.Object} object.
    */

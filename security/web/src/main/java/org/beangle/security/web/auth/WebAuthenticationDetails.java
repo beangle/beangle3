@@ -48,7 +48,7 @@ public class WebAuthenticationDetails implements SessionIdAware, Serializable {
 
   /**
    * Provided so that subclasses can populate additional information.
-   * 
+   *
    * @param request
    *          that the authentication request was received from
    */
@@ -58,7 +58,7 @@ public class WebAuthenticationDetails implements SessionIdAware, Serializable {
   /**
    * Indicates the <code>HttpSession</code> id the authentication request was
    * received from.
-   * 
+   *
    * @return the session ID
    */
   public String getSessionId() {

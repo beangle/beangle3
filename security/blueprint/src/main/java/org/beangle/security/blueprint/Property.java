@@ -18,10 +18,9 @@
  */
 package org.beangle.security.blueprint;
 
-
 /**
  * 属性
- * 
+ *
  * @author chaostone
  * @version $Id: Property.java Oct 18, 2011 8:57:24 AM chaostone $
  */

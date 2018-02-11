@@ -124,7 +124,7 @@ public class ProfileServiceImpl extends BaseServiceImpl implements ProfileServic
 
   /**
    * 获取数据限制的某个属性的值
-   * 
+   *
    * @param property
    * @param restriction
    */

@@ -22,7 +22,7 @@ import java.util.Iterator;
 
 /**
  * Assertion tool class
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */
@@ -37,7 +37,7 @@ public class Assert {
    * method is useful when validating according to an arbitrary boolean expression, such as
    * validating a primitive number or using your own custom validation expression.
    * </p>
-   * 
+   *
    * <pre>
    * Assert.isTrue(i &gt; 0);
    * Assert.isTrue(myObject.isOk());
@@ -45,7 +45,7 @@ public class Assert {
    * <p>
    * The message of the exception is &quot;The validated expression is false&quot;.
    * </p>
-   * 
+   *
    * @param expression the boolean expression to check
    * @throws IllegalArgumentException if expression is {@code false}
    * @see #isTrue(boolean, String, Object...)
@@ -61,12 +61,12 @@ public class Assert {
    * expression, such as validating a primitive number or using your own custom validation
    * expression.
    * </p>
-   * 
+   *
    * <pre>
    * Assert.isTrue(i &gt;= min &amp;&amp; i &lt;= max, &quot;The value must be between %d and %d&quot;, min, max);
    * Assert.isTrue(myObject.isOk(), &quot;The object is not okay&quot;);
    * </pre>
-   * 
+   *
    * @param expression the boolean expression to check
    * @param message the {@link String#format(String, Object...)} exception message if invalid, not
    *          null
@@ -82,14 +82,14 @@ public class Assert {
   /**
    * <p>
    * Validate that the specified argument is not {@code null}; otherwise throwing an exception.
-   * 
+   *
    * <pre>
    * Assert.notNull(myObject, &quot;The object must not be null&quot;);
    * </pre>
    * <p>
    * The message of the exception is &quot;The validated object is null&quot;.
    * </p>
-   * 
+   *
    * @param <T> the object type
    * @param object the object to check
    * @return the validated object (never {@code null} for method chaining)
@@ -104,11 +104,11 @@ public class Assert {
    * <p>
    * Validate that the specified argument is not {@code null}; otherwise throwing an exception with
    * the specified message.
-   * 
+   *
    * <pre>
    * Assert.notNull(myObject, &quot;The object must not be null&quot;);
    * </pre>
-   * 
+   *
    * @param <T> the object type
    * @param object the object to check
    * @param message the {@link String#format(String, Object...)} exception message if invalid, not
@@ -127,13 +127,13 @@ public class Assert {
    * <p>
    * Validate that the specified argument array is neither {@code null} nor a length of zero (no
    * elements); otherwise throwing an exception.
-   * 
+   *
    * <pre>
    * Assert.notEmpty(myArray);
    * </pre>
    * <p>
    * The message in the exception is &quot;The validated array is empty&quot;.
-   * 
+   *
    * @param <T> the array type
    * @return the validated array (never {@code null} method for chaining)
    * @throws NullPointerException if the array is {@code null}
@@ -149,14 +149,14 @@ public class Assert {
    * <p>
    * Validate that the specified argument character sequence is neither {@code null} nor a length of
    * zero (no characters); otherwise throwing an exception with the specified message.
-   * 
+   *
    * <pre>
    * Assert.notEmpty(myString);
    * </pre>
    * <p>
    * The message in the exception is &quot;The validated character sequence is empty&quot;.
    * </p>
-   * 
+   *
    * @param <T> the character sequence type
    * @param chars the character sequence to check, validated not null by this method
    * @return the validated character sequence (never {@code null} method for chaining)
@@ -173,7 +173,7 @@ public class Assert {
    * <p>
    * Validate that the specified argument iterable is neither {@code null} nor contains any elements
    * that are {@code null}; otherwise throwing an exception with the specified message.
-   * 
+   *
    * <pre>
    * Assert.noNullElements(myCollection, &quot;The collection contains null at position %d&quot;);
    * </pre>
@@ -185,7 +185,7 @@ public class Assert {
    * If the iterable has a {@code null} element, then the iteration index of the invalid element is
    * appended to the {@code values} argument.
    * </p>
-   * 
+   *
    * @param <T> the iterable type
    * @param iterable the iterable to check, validated not null by this method
    * @param message the {@link String#format(String, Object...)} exception message if invalid, not

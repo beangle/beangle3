@@ -24,7 +24,7 @@ import org.beangle.commons.lang.functor.Transformer;
 /**
  * bean属性提取器<br>
  * CollectionUtils.transform(collections,new PropertyTransformer('myAttr'))
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -36,7 +36,7 @@ public class PropertyTransformer implements Transformer<Object, Object> {
    * <p>
    * Constructor for PropertyTransformer.
    * </p>
-   * 
+   *
    * @param property a {@link java.lang.String} object.
    */
   public PropertyTransformer(final String property) {
@@ -61,7 +61,7 @@ public class PropertyTransformer implements Transformer<Object, Object> {
    * <p>
    * Getter for the field <code>property</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getProperty() {
@@ -72,7 +72,7 @@ public class PropertyTransformer implements Transformer<Object, Object> {
    * <p>
    * Setter for the field <code>property</code>.
    * </p>
-   * 
+   *
    * @param property a {@link java.lang.String} object.
    */
   public void setProperty(final String property) {

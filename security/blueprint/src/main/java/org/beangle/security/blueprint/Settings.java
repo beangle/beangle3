@@ -23,7 +23,7 @@ import org.beangle.commons.lang.Assert;
 
 /**
  * Security Settings
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

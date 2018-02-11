@@ -42,7 +42,7 @@ import org.springframework.dao.*;
 
 /**
  * Open or Close Hibernate Session
- * 
+ *
  * @author chaostone
  * @version $Id: SessionFactoryUtils.java Feb 27, 2012 10:34:08 PM chaostone $
  */

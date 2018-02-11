@@ -36,7 +36,7 @@ import org.xml.sax.InputSource;
  * <p>
  * BeanDefinitionReader class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -46,7 +46,7 @@ class BeanDefinitionReader {
    * <p>
    * load.
    * </p>
-   * 
+   *
    * @param resource a {@link org.springframework.core.io.Resource} object.
    * @return a {@link java.util.List} object.
    */

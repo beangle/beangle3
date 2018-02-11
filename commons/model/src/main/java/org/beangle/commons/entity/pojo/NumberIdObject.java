@@ -72,7 +72,7 @@ public abstract class NumberIdObject<T extends Number> implements Entity<T> {
    * </p>
    * 由于业务对象被CGlib或者javassist增强的原因，这里只提供一般的基于id的比较,不提供基于Class的比较。<br>
    * 如果在存在继承结构， 请重置equals方法。
-   * 
+   *
    * @see java.lang.Object#equals(Object)
    */
   public boolean equals(final Object object) {

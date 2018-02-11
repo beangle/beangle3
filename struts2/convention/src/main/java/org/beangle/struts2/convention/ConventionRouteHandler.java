@@ -30,7 +30,7 @@ import com.opensymphony.xwork2.inject.Inject;
 /**
  * 实现action到result之间的路由和处理<br>
  * 默认按照方法进行路由
- * 
+ *
  * @author chaostone
  */
 public class ConventionRouteHandler implements UnknownHandler {

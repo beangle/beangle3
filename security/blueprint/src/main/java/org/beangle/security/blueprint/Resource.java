@@ -22,7 +22,7 @@ import org.beangle.commons.entity.Entity;
 
 /**
  * 系统资源.<br>
- * 
+ *
  * @author chaostone 2008-7-28
  */
 public interface Resource extends Entity<Integer> {

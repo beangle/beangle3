@@ -24,7 +24,7 @@ import java.util.Collection;
  * <p>
  * ContainsPredicate class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -36,7 +36,7 @@ public class ContainsPredicate<T> implements Predicate<T> {
    * <p>
    * Constructor for ContainsPredicate.
    * </p>
-   * 
+   *
    * @param objs a {@link java.util.Collection} object.
    */
   public ContainsPredicate(Collection<? extends T> objs) {

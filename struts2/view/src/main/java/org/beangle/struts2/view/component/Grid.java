@@ -40,7 +40,7 @@ import freemarker.template.utility.StringUtil;
 
 /**
  * Data table
- * 
+ *
  * @author chaostone
  */
 public class Grid extends ClosingUIBean {

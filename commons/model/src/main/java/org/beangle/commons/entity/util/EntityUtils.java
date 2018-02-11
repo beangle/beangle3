@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 实体类辅助工具箱
- * 
+ *
  * @author chaostone 2005-10-31
  * @version $Id: $
  */
@@ -49,7 +49,7 @@ public final class EntityUtils {
    * <p>
    * extractIds.
    * </p>
-   * 
+   *
    * @param entities a {@link java.util.Collection} object.
    * @param <T> a T object.
    * @return a {@link java.util.List} object.
@@ -72,7 +72,7 @@ public final class EntityUtils {
    * <p>
    * getCommandName.
    * </p>
-   * 
+   *
    * @param clazz a {@link java.lang.Class} object.
    * @return a {@link java.lang.String} object.
    */
@@ -85,7 +85,7 @@ public final class EntityUtils {
    * <p>
    * getCommandName.
    * </p>
-   * 
+   *
    * @param entityName a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
    */
@@ -97,7 +97,7 @@ public final class EntityUtils {
    * <p>
    * getCommandName.
    * </p>
-   * 
+   *
    * @param obj a {@link java.lang.Object} object.
    * @return a {@link java.lang.String} object.
    */
@@ -116,7 +116,7 @@ public final class EntityUtils {
    * <p>
    * extractIdSeq.
    * </p>
-   * 
+   *
    * @param entities a {@link java.util.Collection} object.
    * @param <T> a T object.
    * @return a {@link java.lang.String} object.
@@ -138,7 +138,7 @@ public final class EntityUtils {
 
   /**
    * 判断实体类中的属性是否全部为空
-   * 
+   *
    * @param entity a {@link org.beangle.commons.entity.Entity} object.
    * @param ignoreDefault
    *          忽略数字和字符串的默认值
@@ -170,7 +170,7 @@ public final class EntityUtils {
 
   /**
    * 为了取出CGLIB代来的代理命名
-   * 
+   *
    * @param clazz a {@link java.lang.Class} object.
    * @return a {@link java.lang.String} object.
    */
@@ -188,7 +188,7 @@ public final class EntityUtils {
    * <p>
    * isExpired.
    * </p>
-   * 
+   *
    * @param entity a {@link org.beangle.commons.entity.TemporalAt} object.
    * @return a boolean.
    */

@@ -62,7 +62,7 @@ public class CsvWriterTest {
 
   /**
    * Tests parsing individual lines.
-   * 
+   *
    * @throws IOException
    *           if the reader fails.
    */
@@ -106,7 +106,7 @@ public class CsvWriterTest {
 
   /**
    * Tests parsing individual lines.
-   * 
+   *
    * @throws IOException
    *           if the reader fails.
    */
@@ -144,7 +144,7 @@ public class CsvWriterTest {
 
   /**
    * Test parsing from to a list.
-   * 
+   *
    * @throws IOException
    *           if the reader fails.
    */
@@ -172,7 +172,7 @@ public class CsvWriterTest {
 
   /**
    * Tests the option of having omitting quotes in the output stream.
-   * 
+   *
    * @throws IOException
    *           if bad things happen
    */
@@ -190,7 +190,7 @@ public class CsvWriterTest {
 
   /**
    * Tests the option of having omitting quotes in the output stream.
-   * 
+   *
    * @throws IOException
    *           if bad things happen
    */
@@ -209,7 +209,7 @@ public class CsvWriterTest {
 
   /**
    * Test null values.
-   * 
+   *
    * @throws IOException
    *           if bad things happen
    */

@@ -51,7 +51,7 @@ import org.w3c.dom.NodeList;
  * <p>
  * BeanDefinitionParser class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -73,7 +73,7 @@ class BeanDefinitionParser {
    * <p>
    * extractSource.
    * </p>
-   * 
+   *
    * @param ele a {@link org.w3c.dom.Element} object.
    * @return a {@link java.lang.Object} object.
    */
@@ -83,7 +83,7 @@ class BeanDefinitionParser {
 
   /**
    * Report an error with the given message for the given source element.
-   * 
+   *
    * @param message a {@link java.lang.String} object.
    * @param source a {@link org.w3c.dom.Node} object.
    */
@@ -93,7 +93,7 @@ class BeanDefinitionParser {
 
   /**
    * Report an error with the given message for the given source element.
-   * 
+   *
    * @param message a {@link java.lang.String} object.
    * @param source a {@link org.w3c.dom.Element} object.
    */
@@ -103,7 +103,7 @@ class BeanDefinitionParser {
 
   /**
    * Report an error with the given message for the given source element.
-   * 
+   *
    * @param message a {@link java.lang.String} object.
    * @param source a {@link org.w3c.dom.Element} object.
    * @param cause a {@link java.lang.Throwable} object.
@@ -116,7 +116,7 @@ class BeanDefinitionParser {
    * Parses the supplied <code>&lt;bean&gt;</code> element. May return <code>null</code> if there
    * were errors during parse. Errors are reported
    * to the {@link org.springframework.beans.factory.parsing.ProblemReporter}.
-   * 
+   *
    * @param ele a {@link org.w3c.dom.Element} object.
    * @return a {@link org.beangle.inject.spring.config.context.spring.ReconfigBeanDefinitionHolder}
    *         object.
@@ -129,7 +129,7 @@ class BeanDefinitionParser {
    * Parses the supplied <code>&lt;bean&gt;</code> element. May return <code>null</code> if there
    * were errors during parse. Errors are reported
    * to the {@link org.springframework.beans.factory.parsing.ProblemReporter}.
-   * 
+   *
    * @param ele a {@link org.w3c.dom.Element} object.
    * @param containingBean a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @return a {@link org.beangle.inject.spring.config.context.spring.ReconfigBeanDefinitionHolder}
@@ -171,7 +171,7 @@ class BeanDefinitionParser {
   /**
    * Validate that the specified bean name and aliases have not been used
    * already.
-   * 
+   *
    * @param beanName a {@link java.lang.String} object.
    * @param aliases a {@link java.util.List} object.
    * @param beanElement a {@link org.w3c.dom.Element} object.
@@ -193,7 +193,7 @@ class BeanDefinitionParser {
    * Parse the bean definition itself, without regard to name or aliases. May
    * return <code>null</code> if problems occured during the parse of the bean
    * definition.
-   * 
+   *
    * @param ele a {@link org.w3c.dom.Element} object.
    * @param beanName a {@link java.lang.String} object.
    * @param containingBean a {@link org.springframework.beans.factory.config.BeanDefinition} object.
@@ -247,7 +247,7 @@ class BeanDefinitionParser {
   /**
    * Apply the attributes of the given bean element to the given bean *
    * definition.
-   * 
+   *
    * @param ele bean declaration element
    * @param beanName bean name
    * @param containingBean containing bean definition
@@ -310,7 +310,7 @@ class BeanDefinitionParser {
 
   /**
    * Create a bean definition for the given class name and parent name.
-   * 
+   *
    * @param className the name of the bean class
    * @param parentName the name of the bean's parent bean
    * @return the newly created bean definition
@@ -326,7 +326,7 @@ class BeanDefinitionParser {
    * <p>
    * parseMetaElements.
    * </p>
-   * 
+   *
    * @param ele a {@link org.w3c.dom.Element} object.
    * @param attributeAccessor a {@link org.springframework.beans.BeanMetadataAttributeAccessor}
    *          object.
@@ -350,7 +350,7 @@ class BeanDefinitionParser {
    * <p>
    * getAutowireMode.
    * </p>
-   * 
+   *
    * @param attValue a {@link java.lang.String} object.
    * @return a int.
    */
@@ -370,7 +370,7 @@ class BeanDefinitionParser {
 
   /**
    * Parse constructor-arg sub-elements of the given bean element.
-   * 
+   *
    * @param beanEle a {@link org.w3c.dom.Element} object.
    * @param bd a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    */
@@ -385,7 +385,7 @@ class BeanDefinitionParser {
 
   /**
    * Parse property sub-elements of the given bean element.
-   * 
+   *
    * @param beanEle a {@link org.w3c.dom.Element} object.
    * @param bd a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    */
@@ -400,7 +400,7 @@ class BeanDefinitionParser {
 
   /**
    * Parse qualifier sub-elements of the given bean element.
-   * 
+   *
    * @param beanEle a {@link org.w3c.dom.Element} object.
    * @param bd a {@link org.springframework.beans.factory.support.AbstractBeanDefinition} object.
    */
@@ -415,7 +415,7 @@ class BeanDefinitionParser {
 
   /**
    * Parse lookup-override sub-elements of the given bean element.
-   * 
+   *
    * @param beanEle a {@link org.w3c.dom.Element} object.
    * @param overrides a {@link org.springframework.beans.factory.support.MethodOverrides} object.
    */
@@ -436,7 +436,7 @@ class BeanDefinitionParser {
 
   /**
    * Parse replaced-method sub-elements of the given bean element.
-   * 
+   *
    * @param beanEle a {@link org.w3c.dom.Element} object.
    * @param overrides a {@link org.springframework.beans.factory.support.MethodOverrides} object.
    */
@@ -462,7 +462,7 @@ class BeanDefinitionParser {
 
   /**
    * Parse a constructor-arg element.
-   * 
+   *
    * @param ele a {@link org.w3c.dom.Element} object.
    * @param bd a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    */
@@ -513,7 +513,7 @@ class BeanDefinitionParser {
 
   /**
    * Parse a property element.
-   * 
+   *
    * @param ele a {@link org.w3c.dom.Element} object.
    * @param bd a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    */
@@ -541,7 +541,7 @@ class BeanDefinitionParser {
 
   /**
    * Parse a qualifier element.
-   * 
+   *
    * @param ele a {@link org.w3c.dom.Element} object.
    * @param bd a {@link org.springframework.beans.factory.support.AbstractBeanDefinition} object.
    */
@@ -585,7 +585,7 @@ class BeanDefinitionParser {
   /**
    * Get the value of a property element. May be a list etc. Also used for
    * constructor arguments, "propertyName" being null in this case.
-   * 
+   *
    * @param ele a {@link org.w3c.dom.Element} object.
    * @param bd a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @param propertyName a {@link java.lang.String} object.
@@ -642,7 +642,7 @@ class BeanDefinitionParser {
    * <p>
    * parsePropertySubElement.
    * </p>
-   * 
+   *
    * @param ele a {@link org.w3c.dom.Element} object.
    * @param bd a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @return a {@link java.lang.Object} object.
@@ -654,7 +654,7 @@ class BeanDefinitionParser {
   /**
    * Parse a value, ref or collection sub-element of a property or
    * constructor-arg element.
-   * 
+   *
    * @param ele subelement of property element; we don't know which yet
    * @param defaultValueType the default type (class name) for any <code>&lt;value&gt;</code> tag
    *          that might be created
@@ -722,7 +722,7 @@ class BeanDefinitionParser {
 
   /**
    * Return a typed String value Object for the given 'idref' element.
-   * 
+   *
    * @param ele a {@link org.w3c.dom.Element} object.
    * @return a {@link java.lang.Object} object.
    */
@@ -748,7 +748,7 @@ class BeanDefinitionParser {
 
   /**
    * Return a typed String value Object for the given value element.
-   * 
+   *
    * @param ele a {@link org.w3c.dom.Element} object.
    * @param defaultTypeName a {@link java.lang.String} object.
    * @return a {@link java.lang.Object} object.
@@ -772,7 +772,7 @@ class BeanDefinitionParser {
 
   /**
    * Build a typed String value Object for the given raw value.
-   * 
+   *
    * @see org.springframework.beans.factory.config.TypedStringValue
    * @param value a {@link java.lang.String} object.
    * @param targetTypeName a {@link java.lang.String} object.
@@ -789,7 +789,7 @@ class BeanDefinitionParser {
 
   /**
    * Parse an array element.
-   * 
+   *
    * @param arrayEle a {@link org.w3c.dom.Element} object.
    * @param bd a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @return a {@link java.lang.Object} object.
@@ -807,7 +807,7 @@ class BeanDefinitionParser {
 
   /**
    * Parse a list element.
-   * 
+   *
    * @param collectionEle a {@link org.w3c.dom.Element} object.
    * @param bd a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @return a {@link java.util.List} object.
@@ -825,7 +825,7 @@ class BeanDefinitionParser {
 
   /**
    * Parse a set element.
-   * 
+   *
    * @param collectionEle a {@link org.w3c.dom.Element} object.
    * @param bd a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @return a {@link java.util.Set} object.
@@ -845,7 +845,7 @@ class BeanDefinitionParser {
    * <p>
    * parseCollectionElements.
    * </p>
-   * 
+   *
    * @param elementNodes a {@link org.w3c.dom.NodeList} object.
    * @param target a {@link java.util.Collection} object.
    * @param bd a {@link org.springframework.beans.factory.config.BeanDefinition} object.
@@ -862,7 +862,7 @@ class BeanDefinitionParser {
 
   /**
    * Parse a map element.
-   * 
+   *
    * @param mapEle a {@link org.w3c.dom.Element} object.
    * @param bd a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @return a {@link java.util.Map} object.
@@ -961,7 +961,7 @@ class BeanDefinitionParser {
 
   /**
    * Build a typed String value Object for the given raw value.
-   * 
+   *
    * @see org.springframework.beans.factory.config.TypedStringValue
    * @param value a {@link java.lang.String} object.
    * @param defaultTypeName a {@link java.lang.String} object.
@@ -981,7 +981,7 @@ class BeanDefinitionParser {
 
   /**
    * Parse a key sub-element of a map element.
-   * 
+   *
    * @param keyEle a {@link org.w3c.dom.Element} object.
    * @param bd a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @param defaultKeyTypeName a {@link java.lang.String} object.
@@ -1004,7 +1004,7 @@ class BeanDefinitionParser {
 
   /**
    * Parse a props element.
-   * 
+   *
    * @param propsEle a {@link org.w3c.dom.Element} object.
    * @return a {@link java.util.Properties} object.
    */
@@ -1031,7 +1031,7 @@ class BeanDefinitionParser {
 
   /**
    * Parse the merge attribute of a collection element, if any.
-   * 
+   *
    * @param collectionElement a {@link org.w3c.dom.Element} object.
    * @return a boolean.
    */
@@ -1044,7 +1044,7 @@ class BeanDefinitionParser {
    * <p>
    * decorateBeanDefinitionIfRequired.
    * </p>
-   * 
+   *
    * @param ele a {@link org.w3c.dom.Element} object.
    * @param definitionHolder a {@link org.springframework.beans.factory.config.BeanDefinitionHolder}
    *          object.
@@ -1059,7 +1059,7 @@ class BeanDefinitionParser {
    * <p>
    * decorateBeanDefinitionIfRequired.
    * </p>
-   * 
+   *
    * @param ele a {@link org.w3c.dom.Element} object.
    * @param definitionHolder a {@link org.springframework.beans.factory.config.BeanDefinitionHolder}
    *          object.

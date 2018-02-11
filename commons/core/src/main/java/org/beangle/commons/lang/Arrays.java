@@ -30,7 +30,7 @@ import java.util.List;
  * This class tries to handle {@code null} input gracefully. An exception will not be thrown for a
  * {@code null} array input.
  * </p>
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */
@@ -40,7 +40,7 @@ public final class Arrays {
    * <p>
    * Checks if an array of Objects is empty or {@code null}.
    * </p>
-   * 
+   *
    * @param array the array to test
    * @return {@code true} if the array is empty or {@code null}
    */
@@ -59,11 +59,11 @@ public final class Arrays {
    * The component type of the subarray is always the same as that of the input array. Thus, if the
    * input is an array of type {@code Date}, the following usage is envisaged:
    * </p>
-   * 
+   *
    * <pre>
    * Date[] someDates = (Date[]) Arrays.subarray(allDates, 2, 5);
    * </pre>
-   * 
+   *
    * @param <T> the component type of the array
    * @param array the array
    * @param startIndexInclusive the starting index. Undervalue (&lt;0)
@@ -101,7 +101,7 @@ public final class Arrays {
 
   /**
    * join multi array
-   * 
+   *
    * @param arrays
    * @return
    */
@@ -121,7 +121,7 @@ public final class Arrays {
 
   /**
    * join two array
-   * 
+   *
    * @param array1
    * @param array2
    * @return

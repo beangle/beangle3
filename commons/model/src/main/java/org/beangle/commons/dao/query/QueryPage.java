@@ -28,7 +28,7 @@ import org.beangle.commons.dao.query.limit.AbstractQueryPage;
  * <p>
  * QueryPage class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -40,7 +40,7 @@ public class QueryPage<T> extends AbstractQueryPage<T> {
    * <p>
    * Constructor for QueryPage.
    * </p>
-   * 
+   *
    * @param query a {@link org.beangle.commons.dao.query.LimitQuery} object.
    * @param entityDao a {@link org.beangle.commons.dao.EntityDao} object.
    */
@@ -54,7 +54,7 @@ public class QueryPage<T> extends AbstractQueryPage<T> {
    * <p>
    * Constructor for QueryPage.
    * </p>
-   * 
+   *
    * @param builder a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    * @param entityDao a {@link org.beangle.commons.dao.EntityDao} object.
    */
@@ -68,7 +68,7 @@ public class QueryPage<T> extends AbstractQueryPage<T> {
    * <p>
    * Setter for the field <code>entityDao</code>.
    * </p>
-   * 
+   *
    * @param entityDao a {@link org.beangle.commons.dao.EntityDao} object.
    */
   public void setEntityDao(EntityDao entityDao) {

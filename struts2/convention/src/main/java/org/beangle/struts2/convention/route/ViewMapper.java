@@ -20,7 +20,7 @@ package org.beangle.struts2.convention.route;
 
 /**
  * viewname -> 页面路径的映射
- * 
+ *
  * @author chaostone
  */
 public interface ViewMapper {

@@ -30,7 +30,7 @@ import org.beangle.commons.lang.Option;
 public interface UsernameSource {
   /**
    * Obtain username supplied in the request.
-   * 
+   *
    * @param request with username
    * @return username
    */

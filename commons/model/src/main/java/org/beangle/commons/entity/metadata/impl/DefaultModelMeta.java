@@ -47,7 +47,7 @@ public class DefaultModelMeta implements ModelMeta {
    * <p>
    * newInstance.
    * </p>
-   * 
+   *
    * @param clazz
    * @param <T> a T object.
    * @return a T object.
@@ -61,7 +61,7 @@ public class DefaultModelMeta implements ModelMeta {
    * <p>
    * newInstance.
    * </p>
-   * 
+   *
    * @param clazz a {@link java.lang.Class} object.
    * @param id a {@link java.io.Serializable} object.
    * @param <T> a T object.
@@ -83,7 +83,7 @@ public class DefaultModelMeta implements ModelMeta {
    * <p>
    * getEntityType.
    * </p>
-   * 
+   *
    * @param entityName a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.entity.metadata.EntityType} object.
    */
@@ -95,7 +95,7 @@ public class DefaultModelMeta implements ModelMeta {
    * <p>
    * getType.
    * </p>
-   * 
+   *
    * @param entityName a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.entity.metadata.Type} object.
    */
@@ -107,7 +107,7 @@ public class DefaultModelMeta implements ModelMeta {
    * <p>
    * getEntityName.
    * </p>
-   * 
+   *
    * @param obj a {@link java.lang.Object} object.
    * @return a {@link java.lang.String} object.
    */
@@ -119,7 +119,7 @@ public class DefaultModelMeta implements ModelMeta {
    * <p>
    * getEntityType.
    * </p>
-   * 
+   *
    * @param clazz a {@link java.lang.Class} object.
    * @return a {@link org.beangle.commons.entity.metadata.EntityType} object.
    */

@@ -27,7 +27,7 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 /**
  * ROR's flash
- * 
+ *
  * @author chaostone
  */
 public class FlashInterceptor extends AbstractInterceptor {

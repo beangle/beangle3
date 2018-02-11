@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  * <p>
  * CategoryInflectionRule class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -37,7 +37,7 @@ public class CategoryInflectionRule extends SuffixInflectionRule {
    * Construct a rule for <code>words</code> with suffix <code>singularSuffix</code> which becomes
    * <code>pluralSuffix</code> in the plural.
    * </p>
-   * 
+   *
    * @param words the set of words that define this category
    * @param singularSuffix the singular suffix, starting with a "-" character
    * @param pluralSuffix the plural suffix, starting with a "-" character

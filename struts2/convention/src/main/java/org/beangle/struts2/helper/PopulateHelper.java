@@ -28,7 +28,7 @@ public class PopulateHelper {
 
   /**
    * 将request中的参数设置到clazz对应的bean。
-   * 
+   *
    * @param clazz
    * @param name
    */

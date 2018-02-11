@@ -43,7 +43,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 /**
  * Abstract Freemarker tag models
- * 
+ *
  * @author chaostone
  * @since 3.0.2
  */

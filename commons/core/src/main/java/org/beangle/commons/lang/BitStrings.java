@@ -22,7 +22,7 @@ package org.beangle.commons.lang;
  * <p>
  * BitStrings class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -33,7 +33,7 @@ public class BitStrings {
 
   /**
    * 比较两个等长字符串的每一位，若都大于0，则返回结果的相应位为1，否则为0;
-   * 
+   *
    * @param first a {@link java.lang.String} object.
    * @param second a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
@@ -53,7 +53,7 @@ public class BitStrings {
   /**
    * 比较两个等长字符串的每一位，相或<br>
    * 适用于仅含有1和0的字符串.
-   * 
+   *
    * @param first a {@link java.lang.String} object.
    * @param second a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
@@ -72,7 +72,7 @@ public class BitStrings {
 
   /**
    * 将一个字符串，按照boolString的形式进行变化. 如果boolString[i]!=0则保留str[i],否则置0
-   * 
+   *
    * @param str a {@link java.lang.String} object.
    * @param boolString a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
@@ -92,7 +92,7 @@ public class BitStrings {
 
   /**
    * 将"314213421340asdf"转换成"1111111111101111"
-   * 
+   *
    * @param first a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
    */
@@ -111,7 +111,7 @@ public class BitStrings {
 
   /**
    * 返回零一串的整型值
-   * 
+   *
    * @param binaryStr a {@link java.lang.String} object.
    * @return a long.
    */
@@ -133,7 +133,7 @@ public class BitStrings {
    * <p>
    * reverse.
    * </p>
-   * 
+   *
    * @param binaryStr a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
    */

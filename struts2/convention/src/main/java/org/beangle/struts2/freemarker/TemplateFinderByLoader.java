@@ -28,7 +28,7 @@ import freemarker.cache.TemplateLoader;
 
 /**
  * Find template by tempalte loader.
- * 
+ *
  * @author chaostone
  * @since 3.4.8
  */

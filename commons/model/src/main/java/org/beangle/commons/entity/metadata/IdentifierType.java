@@ -22,7 +22,7 @@ package org.beangle.commons.entity.metadata;
  * <p>
  * IdentifierType class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -43,7 +43,7 @@ public class IdentifierType extends AbstractType {
    * <p>
    * Constructor for IdentifierType.
    * </p>
-   * 
+   *
    * @param clazz a {@link java.lang.Class} object.
    */
   public IdentifierType(Class<?> clazz) {
@@ -55,7 +55,7 @@ public class IdentifierType extends AbstractType {
    * <p>
    * getName.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getName() {
@@ -66,7 +66,7 @@ public class IdentifierType extends AbstractType {
    * <p>
    * getReturnedClass.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Class} object.
    */
   public Class<?> getReturnedClass() {
@@ -77,7 +77,7 @@ public class IdentifierType extends AbstractType {
    * <p>
    * isCollectionType.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isCollectionType() {
@@ -88,7 +88,7 @@ public class IdentifierType extends AbstractType {
    * <p>
    * isComponentType.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isComponentType() {
@@ -99,7 +99,7 @@ public class IdentifierType extends AbstractType {
    * <p>
    * isEntityType.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isEntityType() {

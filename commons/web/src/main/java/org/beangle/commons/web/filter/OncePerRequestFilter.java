@@ -23,7 +23,7 @@ import javax.servlet.ServletRequest;
 
 /**
  * Once per request filter.
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

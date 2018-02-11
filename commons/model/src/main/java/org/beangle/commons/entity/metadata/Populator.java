@@ -24,7 +24,7 @@ import java.util.Map;
  * <p>
  * Populator interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

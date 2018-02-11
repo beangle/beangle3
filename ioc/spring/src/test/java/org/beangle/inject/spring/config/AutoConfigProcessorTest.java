@@ -35,7 +35,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test Bean definition in Java config
- * 
+ *
  * @author chaostone
  */
 @Test

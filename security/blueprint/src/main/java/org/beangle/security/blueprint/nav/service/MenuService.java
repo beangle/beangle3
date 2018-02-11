@@ -34,21 +34,21 @@ public interface MenuService {
 
   /**
    * 查询用户能够适用的菜单配置
-   * 
+   *
    * @param user
    */
   List<MenuProfile> getProfiles(User user);
 
   /**
    * 查询角色能够适用的菜单配置
-   * 
+   *
    * @param roles
    */
   List<MenuProfile> getProfiles(Role... roles);
 
   /**
    * 查询用户能够适用的单个菜单配置
-   * 
+   *
    * @param user
    * @return profiles的第一个如果profileId is null
    */
@@ -56,7 +56,7 @@ public interface MenuService {
 
   /**
    * 查询角色能够适用的单个菜单配置
-   * 
+   *
    * @param role
    * @param profileId
    */
@@ -64,7 +64,7 @@ public interface MenuService {
 
   /**
    * 获取用户的直接权限范围内的资源和所具有角色的资源.
-   * 
+   *
    * @param profile
    * @param user
    */
@@ -72,7 +72,7 @@ public interface MenuService {
 
   /**
    * 查询角色对应的菜单
-   * 
+   *
    * @param profile
    * @param role
    * @param enabled
@@ -81,7 +81,7 @@ public interface MenuService {
 
   /**
    * 移动菜单到指定的位置
-   * 
+   *
    * @param menu
    * @param location
    *          新的位置

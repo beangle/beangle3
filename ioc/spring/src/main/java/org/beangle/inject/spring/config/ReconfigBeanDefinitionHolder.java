@@ -27,7 +27,7 @@ import org.springframework.util.StringUtils;
  * <p>
  * ReconfigBeanDefinitionHolder class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -39,7 +39,7 @@ public class ReconfigBeanDefinitionHolder extends BeanDefinitionHolder {
    * <p>
    * Constructor for ReconfigBeanDefinitionHolder.
    * </p>
-   * 
+   *
    * @param beanDefinition a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @param beanName a {@link java.lang.String} object.
    * @param aliases an array of {@link java.lang.String} objects.
@@ -52,7 +52,7 @@ public class ReconfigBeanDefinitionHolder extends BeanDefinitionHolder {
    * <p>
    * Constructor for ReconfigBeanDefinitionHolder.
    * </p>
-   * 
+   *
    * @param beanDefinition a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @param beanName a {@link java.lang.String} object.
    */
@@ -64,7 +64,7 @@ public class ReconfigBeanDefinitionHolder extends BeanDefinitionHolder {
    * <p>
    * Constructor for ReconfigBeanDefinitionHolder.
    * </p>
-   * 
+   *
    * @param beanDefinitionHolder a
    *          {@link org.springframework.beans.factory.config.BeanDefinitionHolder} object.
    */
@@ -76,7 +76,7 @@ public class ReconfigBeanDefinitionHolder extends BeanDefinitionHolder {
    * <p>
    * Getter for the field <code>configType</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.inject.spring.config.context.spring.ReconfigType} object.
    */
   public ReconfigType getConfigType() {
@@ -87,7 +87,7 @@ public class ReconfigBeanDefinitionHolder extends BeanDefinitionHolder {
    * <p>
    * Setter for the field <code>configType</code>.
    * </p>
-   * 
+   *
    * @param configType a {@link org.beangle.inject.spring.config.context.spring.ReconfigType} object.
    */
   public void setConfigType(ReconfigType configType) {

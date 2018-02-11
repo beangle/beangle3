@@ -22,7 +22,7 @@ import java.util.Locale;
 
 /**
  * TextResource provider
- * 
+ *
  * @author chaostone
  * @since 3.0.2
  */
@@ -30,7 +30,7 @@ public interface TextResourceProvider {
 
   /**
    * Return text resource;
-   * 
+   *
    * @param locale default could be null.
    */
   TextResource getTextResource(Locale locale);

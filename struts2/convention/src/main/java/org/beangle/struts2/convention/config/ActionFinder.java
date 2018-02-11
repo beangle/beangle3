@@ -26,7 +26,7 @@ import org.beangle.struts2.convention.route.Profile;
 
 /**
  * Find Action from ObjectFactory
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */
@@ -34,7 +34,7 @@ public interface ActionFinder {
 
   /**
    * Find action's name and class
-   * 
+   *
    * @param test
    */
   Map<Class<?>, String> getActions(ActionTest test);
@@ -45,7 +45,7 @@ public interface ActionFinder {
    * <li>Ends with suffix</li>
    * <li>In one of given packages</li>
    * </ul>
-   * 
+   *
    * @author chaostone
    */
   static class ActionTest implements Predicate<String> {

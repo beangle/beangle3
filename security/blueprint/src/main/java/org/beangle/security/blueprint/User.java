@@ -29,7 +29,7 @@ import org.beangle.commons.entity.TimeEntity;
 
 /**
  * 系统中所有用户的账号、权限、状态信息.
- * 
+ *
  * @author dell,chaostone 2005-9-26
  */
 public interface User extends Entity<Long>, TimeEntity, TemporalOn, EnabledEntity, Principal {
@@ -39,7 +39,7 @@ public interface User extends Entity<Long>, TimeEntity, TemporalOn, EnabledEntit
 
   /**
    * 名称
-   * 
+   *
    * @return user's name
    */
   String getCode();
@@ -61,14 +61,14 @@ public interface User extends Entity<Long>, TimeEntity, TemporalOn, EnabledEntit
 
   /**
    * 对应角色
-   * 
+   *
    * @return 按照角色代码排序的role列表
    */
   List<Role> getRoles();
 
   /**
    * 查找符合相应profiles的角色
-   * 
+   *
    * @param profiles
    * @return
    */
@@ -76,7 +76,7 @@ public interface User extends Entity<Long>, TimeEntity, TemporalOn, EnabledEntit
 
   /**
    * 用户对应的配置
-   * 
+   *
    * @return
    */
   List<Profile> getProfiles();

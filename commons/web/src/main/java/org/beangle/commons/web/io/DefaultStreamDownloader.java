@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Default Stream Downloader
- * 
+ *
  * @author chaostone
  * @since 2.4
  */
@@ -126,7 +126,7 @@ public class DefaultStreamDownloader implements Initializing, StreamDownloader {
 
   /**
    * Returns the file name by path.
-   * 
+   *
    * @param file_name
    */
   protected static String getFileName(String file_name) {

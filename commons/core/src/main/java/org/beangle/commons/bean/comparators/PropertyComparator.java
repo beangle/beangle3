@@ -26,7 +26,7 @@ import org.beangle.commons.lang.Strings;
 
 /**
  * 属性比较器。<br>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -50,7 +50,7 @@ public class PropertyComparator implements Comparator<Object> {
    * new OrderedBeanComparator("id") or<br>
    * new OrderedBeanComparator("name desc"); new
    * OrderedBeanComparator("[0].name desc");
-   * 
+   *
    * @param cmpStr a {@link java.lang.String} object.
    */
   public PropertyComparator(final String cmpStr) {
@@ -82,7 +82,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * Constructor for PropertyComparator.
    * </p>
-   * 
+   *
    * @param cmpWhat a {@link java.lang.String} object.
    * @param asc a boolean.
    */
@@ -136,7 +136,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * Getter for the field <code>comparator</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Comparator} object.
    */
   @SuppressWarnings("rawtypes")
@@ -148,7 +148,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * Setter for the field <code>comparator</code>.
    * </p>
-   * 
+   *
    * @param comparator a {@link java.util.Comparator} object.
    */
   @SuppressWarnings("rawtypes")
@@ -160,7 +160,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * Getter for the field <code>stringComparator</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.bean.comparators.StringComparator} object.
    */
   public StringComparator getStringComparator() {
@@ -171,7 +171,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * Setter for the field <code>stringComparator</code>.
    * </p>
-   * 
+   *
    * @param stringComparator a {@link org.beangle.commons.bean.comparators.StringComparator} object.
    */
   public void setStringComparator(final StringComparator stringComparator) {
@@ -182,7 +182,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * Getter for the field <code>cmpWhat</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getCmpWhat() {
@@ -193,7 +193,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * isAsc.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isAsc() {
@@ -204,7 +204,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * isNullFirst.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isNullFirst() {
@@ -215,7 +215,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * Setter for the field <code>nullFirst</code>.
    * </p>
-   * 
+   *
    * @param nullFirst a boolean.
    */
   public void setNullFirst(boolean nullFirst) {

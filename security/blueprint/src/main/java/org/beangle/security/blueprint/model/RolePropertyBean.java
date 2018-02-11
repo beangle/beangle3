@@ -34,7 +34,7 @@ import org.beangle.security.blueprint.Role;
 
 /**
  * 角色属性
- * 
+ *
  * @author chaostone
  */
 @Entity(name = "org.beangle.security.blueprint.model.RolePropertyBean")

@@ -42,7 +42,7 @@ public class DefaultUserDetailBean implements UserDetail {
   /**
    * Construct the <code>User</code> with the details required by
    * {@link org.beangle.security.auth.dao.DaoAuthenticationProvider} .
-   * 
+   *
    * @param username
    *          the username presented to the <code>DaoAuthenticationProvider</code>
    * @param password

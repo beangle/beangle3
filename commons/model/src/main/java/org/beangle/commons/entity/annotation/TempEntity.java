@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 
 /**
  * Temporal Entity
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

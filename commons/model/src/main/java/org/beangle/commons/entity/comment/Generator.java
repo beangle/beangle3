@@ -41,7 +41,7 @@ import com.sun.javadoc.RootDoc;
  * Sql comments generator,It convert field's javadoc comment to sql comment.
  * <p>
  * Usage:
- * 
+ *
  * <pre>
  * &lt;build&gt;
  *   &lt;plugins&gt;
@@ -66,7 +66,7 @@ import com.sun.javadoc.RootDoc;
  *    &lt;/plugins&gt;
  *  &lt;/build&gt;
  * </pre>
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  * @see https://github.com/beangle/library/wiki/Entity-Comment-Generator

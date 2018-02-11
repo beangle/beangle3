@@ -7,7 +7,7 @@
   if(pages["${pageId}"]==null){
     pages["${pageId}"]=new Object();
   }
-  
+
   pages["${pageId}"].id="${pageId}";
   pages["${pageId}"].action="${request.requestURI}";
   pages["${pageId}"].target="${extra['target']!""}";

@@ -51,7 +51,7 @@ import freemarker.template.Template;
  * <li>Load hierarchical templates</li>
  * <li>Disabled freemarker localized lookup in template loading</li>
  * </ul>
- * 
+ *
  * @author chaostone
  */
 public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
@@ -105,7 +105,7 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
 
   /**
    * Load template in hierarchical path
-   * 
+   *
    * @param templateName
    * @throws Exception
    */
@@ -123,7 +123,7 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
 
   /**
    * componentless model(one per request)
-   * 
+   *
    * @param stack
    * @param component
    */

@@ -22,7 +22,7 @@ import org.beangle.commons.event.Event;
 
 /**
  * 会话配置的调整事件
- * 
+ *
  * @author chaostone
  * @version $Id: CategoryProfileModifyEvent.java Jul 14, 2011 7:52:50 AM chaostone $
  */

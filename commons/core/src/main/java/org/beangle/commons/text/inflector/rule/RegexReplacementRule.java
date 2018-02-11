@@ -24,7 +24,7 @@ import java.util.regex.Matcher;
  * <p>
  * RegexReplacementRule class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -35,7 +35,7 @@ public class RegexReplacementRule extends AbstractRegexReplacementRule {
   /**
    * Construct a rule using the given regular expression and replacement
    * string.
-   * 
+   *
    * @param regex
    *          the regular expression used to match words
    * @param replacement

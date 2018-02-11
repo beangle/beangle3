@@ -20,7 +20,7 @@ package org.beangle.commons.collection.page;
 
 /**
  * 查询分页限制
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -43,7 +43,7 @@ public class PageLimit implements Limit {
    * <p>
    * Constructor for PageLimit.
    * </p>
-   * 
+   *
    * @param pageNo
    *          a int.
    * @param pageSize
@@ -58,7 +58,7 @@ public class PageLimit implements Limit {
    * <p>
    * Getter for the field <code>pageSize</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getPageSize() {
@@ -69,7 +69,7 @@ public class PageLimit implements Limit {
    * <p>
    * Setter for the field <code>pageSize</code>.
    * </p>
-   * 
+   *
    * @param pageSize
    *          a int.
    */
@@ -81,7 +81,7 @@ public class PageLimit implements Limit {
    * <p>
    * Getter for the field <code>pageNo</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getPageNo() {
@@ -92,7 +92,7 @@ public class PageLimit implements Limit {
    * <p>
    * Setter for the field <code>pageNo</code>.
    * </p>
-   * 
+   *
    * @param pageNo
    *          a int.
    */
@@ -104,7 +104,7 @@ public class PageLimit implements Limit {
    * <p>
    * isValid.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isValid() {
@@ -115,7 +115,7 @@ public class PageLimit implements Limit {
    * <p>
    * toString.
    * </p>
-   * 
+   *
    * @see java.lang.Object#toString()
    * @return a {@link java.lang.String} object.
    */

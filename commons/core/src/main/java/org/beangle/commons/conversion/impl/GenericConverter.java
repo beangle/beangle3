@@ -24,7 +24,7 @@ import org.beangle.commons.lang.tuple.Pair;
  * Generic Converter using in DefaultConversion
  * <p>
  * It's a SPI interface.
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

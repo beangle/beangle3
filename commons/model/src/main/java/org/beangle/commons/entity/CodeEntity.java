@@ -22,7 +22,7 @@ package org.beangle.commons.entity;
  * <p>
  * CodeEntity interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -32,7 +32,7 @@ public interface CodeEntity {
    * <p>
    * getCode.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   String getCode();
@@ -41,7 +41,7 @@ public interface CodeEntity {
    * <p>
    * setCode.
    * </p>
-   * 
+   *
    * @param code a {@link java.lang.String} object.
    */
   void setCode(String code);

@@ -58,7 +58,7 @@ public interface RoleMember extends Entity<Integer> {
 
   /**
    * 成员关系
-   * 
+   *
    * @author chaostone
    */
   enum Ship {

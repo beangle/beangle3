@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * </ul>
  * <strong>Implementation note:</strong> Make sure only one instance run clean up when multiple
  * deployed.
- * 
+ *
  * @author chaostone
  * @since 3.1.0
  */

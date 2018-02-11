@@ -28,7 +28,7 @@ import org.beangle.commons.conversion.impl.DefaultConversion;
 
 /**
  * 系统配置
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -71,7 +71,7 @@ public class MultiProviderPropertyConfig implements PropertyConfig, Initializing
    * <p>
    * getInt.
    * </p>
-   * 
+   *
    * @param name a {@link java.lang.String} object.
    * @return a int.
    */
@@ -83,7 +83,7 @@ public class MultiProviderPropertyConfig implements PropertyConfig, Initializing
    * <p>
    * getBool.
    * </p>
-   * 
+   *
    * @param name a {@link java.lang.String} object.
    * @return a boolean.
    */
@@ -124,7 +124,7 @@ public class MultiProviderPropertyConfig implements PropertyConfig, Initializing
    * <p>
    * toString.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String toString() {
@@ -150,7 +150,7 @@ public class MultiProviderPropertyConfig implements PropertyConfig, Initializing
    * <p>
    * getNames.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Set} object.
    */
   public Set<String> getNames() {
@@ -176,7 +176,7 @@ public class MultiProviderPropertyConfig implements PropertyConfig, Initializing
    * <p>
    * Setter for the field <code>providers</code>.
    * </p>
-   * 
+   *
    * @param providers a {@link java.util.List} object.
    */
   public void setProviders(List<PropertyConfig.Provider> providers) {

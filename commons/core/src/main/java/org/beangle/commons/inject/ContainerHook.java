@@ -22,7 +22,7 @@ import org.beangle.commons.inject.Container;
 
 /**
  * Bean context hook using ContextLoader
- * 
+ *
  * @author chaostone
  * @since 3.0
  */

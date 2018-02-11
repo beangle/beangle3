@@ -25,7 +25,7 @@ import org.beangle.commons.conversion.Converter;
 
 /**
  * Convert string to number.
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

@@ -26,7 +26,7 @@ import org.beangle.commons.notification.Notifier;
 public interface NotifierService {
   /**
    * Returns notifier by id
-   * 
+   *
    * @param notifierId
    */
   Notifier<?> getNotifier(String notifierId);

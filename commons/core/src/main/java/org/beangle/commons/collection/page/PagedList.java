@@ -24,7 +24,7 @@ import java.util.List;
  * <p>
  * PagedList class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -42,7 +42,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * Constructor for PagedList.
    * </p>
-   * 
+   *
    * @param datas a {@link java.util.List} object.
    * @param pageSize a int.
    */
@@ -54,7 +54,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * Constructor for PagedList.
    * </p>
-   * 
+   *
    * @param datas a {@link java.util.List} object.
    * @param limit a {@link org.beangle.commons.collection.page.PageLimit} object.
    */
@@ -77,7 +77,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * Getter for the field <code>maxPageNo</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getMaxPageNo() {
@@ -88,7 +88,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * Getter for the field <code>pageNo</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getPageNo() {
@@ -99,7 +99,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * Getter for the field <code>pageSize</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getPageSize() {
@@ -110,7 +110,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * getTotal.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getTotal() {
@@ -121,7 +121,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * getNextPageNo.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public final int getNextPageNo() {
@@ -132,7 +132,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * getPreviousPageNo.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public final int getPreviousPageNo() {
@@ -143,7 +143,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * hasNext.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean hasNext() {
@@ -154,7 +154,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * hasPrevious.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean hasPrevious() {
@@ -165,7 +165,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * next.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
   public Page<E> next() {
@@ -176,7 +176,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * previous.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
   public Page<E> previous() {

@@ -22,7 +22,7 @@ package org.beangle.commons.event;
  * <p>
  * EventPublisher interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -32,7 +32,7 @@ public interface EventPublisher {
    * <p>
    * publishEvent.
    * </p>
-   * 
+   *
    * @param event a {@link org.beangle.commons.event.Event} object.
    */
   void publishEvent(Event event);

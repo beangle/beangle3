@@ -20,7 +20,7 @@ package org.beangle.security.core.session;
 
 /**
  * Over max session limit Exception
- * 
+ *
  * @author chaostone
  */
 public class OvermaxSessionException extends SessionException {

@@ -22,7 +22,7 @@ package org.beangle.commons.transfer.io;
  * <p>
  * ItemReader interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -32,7 +32,7 @@ public interface ItemReader extends Reader {
    * <p>
    * readDescription.
    * </p>
-   * 
+   *
    * @return an array of {@link java.lang.String} objects.
    */
   String[] readDescription();
@@ -41,7 +41,7 @@ public interface ItemReader extends Reader {
    * <p>
    * readTitle.
    * </p>
-   * 
+   *
    * @return an array of {@link java.lang.String} objects.
    */
   String[] readTitle();
@@ -50,7 +50,7 @@ public interface ItemReader extends Reader {
    * <p>
    * setDataIndex.
    * </p>
-   * 
+   *
    * @param dataIndex a int.
    */
   void setDataIndex(int dataIndex);
@@ -59,7 +59,7 @@ public interface ItemReader extends Reader {
    * <p>
    * getDataIndex.
    * </p>
-   * 
+   *
    * @return a int.
    */
   int getDataIndex();
@@ -68,7 +68,7 @@ public interface ItemReader extends Reader {
    * <p>
    * setHeadIndex.
    * </p>
-   * 
+   *
    * @param headIndex a int.
    */
   void setHeadIndex(int headIndex);
@@ -77,7 +77,7 @@ public interface ItemReader extends Reader {
    * <p>
    * getHeadIndex.
    * </p>
-   * 
+   *
    * @return a int.
    */
   int getHeadIndex();

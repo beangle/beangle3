@@ -91,7 +91,7 @@ public abstract class AbstractSecurityInterceptor implements Initializing {
   /**
    * Completes the work of the <tt>AbstractSecurityInterceptor</tt> after the
    * secure object invocation has been completed.
-   * 
+   *
    * @param token as returned by the {@link #beforeInvocation(Object)} method
    * @param returnedObject any object returned from the secure object invocation (may be
    *          <tt>null</tt>)
@@ -156,7 +156,7 @@ public abstract class AbstractSecurityInterceptor implements Initializing {
    * AuthenticationManager if {@link org.beangle.security.core.Authentication#isAuthenticated()}
    * returns false or the property <tt>alwaysReauthenticate</tt> has been set
    * to true.
-   * 
+   *
    * @return an authenticated <tt>Authentication</tt> object.
    */
   private Authentication authenticateIfRequired() {
@@ -184,7 +184,7 @@ public abstract class AbstractSecurityInterceptor implements Initializing {
    * the abstract parent for processing. This is used to ensure collaborators
    * wired to the <code>AbstractSecurityInterceptor</code> all support the
    * indicated secure object class.
-   * 
+   *
    * @return the type of secure object the subclass provides services for
    */
   public abstract Class<?> getSecureObjectClass();
@@ -211,7 +211,7 @@ public abstract class AbstractSecurityInterceptor implements Initializing {
    * meaning by default the <code>Authentication.isAuthenticated()</code> property is trusted and
    * re-authentication will not occur if the principal has already been
    * authenticated.
-   * 
+   *
    * @param alwaysReauthenticate
    *          <code>true</code> to force <code>AbstractSecurityInterceptor</code> to disregard
    *          the
@@ -236,7 +236,7 @@ public abstract class AbstractSecurityInterceptor implements Initializing {
    * thrown by the <tt>AbstractSecurityInterceptor</tt> if you set this
    * property to <tt>true</tt> and an attempt is made to invoke a secure
    * object that has no configuration attributes.
-   * 
+   *
    * @param rejectPublicInvocations
    *          set to <code>true</code> to reject invocations of secure
    *          objects that have no configuration attributes (by default it

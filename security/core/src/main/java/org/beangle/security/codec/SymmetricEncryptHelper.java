@@ -78,7 +78,7 @@ public class SymmetricEncryptHelper {
 
   /**
    * 16进制显示数据
-   * 
+   *
    * @param value
    *          字节数组
    */
@@ -100,7 +100,7 @@ public class SymmetricEncryptHelper {
 
   /**
    * 16进制显示数据
-   * 
+   *
    * @param value
    *          字节数组
    */

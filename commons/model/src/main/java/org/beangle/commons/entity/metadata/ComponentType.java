@@ -27,7 +27,7 @@ import org.beangle.commons.collection.CollectUtils;
  * <p>
  * ComponentType class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -41,7 +41,7 @@ public class ComponentType extends AbstractType {
    * <p>
    * isComponentType.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isComponentType() {
@@ -52,7 +52,7 @@ public class ComponentType extends AbstractType {
    * <p>
    * getName.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getName() {
@@ -63,7 +63,7 @@ public class ComponentType extends AbstractType {
    * <p>
    * getReturnedClass.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Class} object.
    */
   public Class<?> getReturnedClass() {
@@ -83,7 +83,7 @@ public class ComponentType extends AbstractType {
    * <p>
    * Constructor for ComponentType.
    * </p>
-   * 
+   *
    * @param componentClass a {@link java.lang.Class} object.
    */
   public ComponentType(Class<?> componentClass) {
@@ -107,7 +107,7 @@ public class ComponentType extends AbstractType {
    * <p>
    * Getter for the field <code>propertyTypes</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Map} object.
    */
   public Map<String, Type> getPropertyTypes() {

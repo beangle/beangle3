@@ -26,7 +26,7 @@ import org.beangle.commons.lang.Strings;
 
 /**
  * Web browser
- * 
+ *
  * @author chaostone
  */
 public class Browser implements Serializable, Comparable<Browser> {
@@ -48,7 +48,7 @@ public class Browser implements Serializable, Comparable<Browser> {
   /**
    * Iterates over all Browsers to compare the browser signature with the user
    * agent string. If no match can be found Browser.UNKNOWN will be returned.
-   * 
+   *
    * @param agentString
    * @return Browser
    */

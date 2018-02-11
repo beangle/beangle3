@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Session status cache Synchronizer
- * 
+ *
  * @author chaostone
  * @since 3.1.0
  */

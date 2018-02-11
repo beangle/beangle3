@@ -28,7 +28,7 @@ import org.beangle.security.core.Authentication;
  * <p>
  * The security context is stored in a {@link SecurityContextHolder}.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: SecurityContext.java 2217 2007-10-27 00:45:30Z $
  */
@@ -37,7 +37,7 @@ public interface SecurityContext extends Serializable {
   /**
    * Obtains the currently authenticated principal, or an authentication
    * request token.
-   * 
+   *
    * @return the <code>Authentication</code> or <code>null</code> if no
    *         authentication information is available
    */
@@ -46,7 +46,7 @@ public interface SecurityContext extends Serializable {
   /**
    * Changes the currently authenticated principal, or removes the
    * authentication information.
-   * 
+   *
    * @param authentication
    *          the new <code>Authentication</code> token, or <code>null</code> if no further
    *          authentication information

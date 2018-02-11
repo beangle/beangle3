@@ -22,7 +22,7 @@ package org.beangle.commons.lang.functor;
  * <p>
  * InStrPredicate class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -34,7 +34,7 @@ public class InStrPredicate implements Predicate<String> {
    * <p>
    * Constructor for InStrPredicate.
    * </p>
-   * 
+   *
    * @param str a {@link java.lang.String} object.
    */
   public InStrPredicate(final String str) {

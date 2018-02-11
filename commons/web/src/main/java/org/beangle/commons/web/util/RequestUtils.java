@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Request Utility
- * 
+ *
  * @author chaostone
  * @since 2.0
  */
@@ -52,7 +52,7 @@ public final class RequestUtils {
    * <li>First,it lookup request header("x-forwarded-for"->"Proxy-Client-IP"->"WL-Proxy-Client-IP")
    * <li>Second,invoke request.getRemoteAddr()
    * </ul>
-   * 
+   *
    * @param request
    */
   public static String getIpAddr(HttpServletRequest request) {
@@ -123,7 +123,7 @@ public final class RequestUtils {
 
   /**
    * Return {@code Useragent} of request.
-   * 
+   *
    * @param request
    */
   public static Useragent getUserAgent(HttpServletRequest request) {

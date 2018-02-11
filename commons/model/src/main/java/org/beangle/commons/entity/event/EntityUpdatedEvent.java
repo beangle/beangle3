@@ -24,7 +24,7 @@ import org.beangle.commons.entity.Entity;
 
 /**
  * 实体更新事件
- * 
+ *
  * @author chaostone
  * @version $Id: EntityUpdatedEvent.java Mar 3, 2012 9:05:03 PM chaostone $
  */

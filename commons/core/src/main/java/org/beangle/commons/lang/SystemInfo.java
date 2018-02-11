@@ -32,7 +32,7 @@ import org.beangle.commons.collection.CollectUtils;
 
 /**
  * System information
- * 
+ *
  * @author chaostone
  * @since 3.0.2
  */

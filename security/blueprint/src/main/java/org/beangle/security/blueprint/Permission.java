@@ -25,7 +25,7 @@ import org.beangle.commons.entity.TemporalAt;
 
 /**
  * 权限
- * 
+ *
  * @author chaostone 2005-9-26
  */
 public interface Permission extends Entity<Integer>, Cloneable, TemporalAt {

@@ -22,7 +22,7 @@ import org.beangle.security.blueprint.Resource;
 
 /**
  * 数据资源
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

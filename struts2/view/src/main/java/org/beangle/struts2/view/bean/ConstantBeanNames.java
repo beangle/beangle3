@@ -20,7 +20,7 @@ package org.beangle.struts2.view.bean;
 
 /**
  * Record urlrender,uigenerator attribute name in action context.
- * 
+ *
  * @author chaostone
  * @since 3.0.2
  */

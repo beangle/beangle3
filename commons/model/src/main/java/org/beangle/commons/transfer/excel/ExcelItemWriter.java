@@ -38,7 +38,7 @@ import org.beangle.commons.transfer.io.TransferFormat;
  * <p>
  * ExcelItemWriter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -71,7 +71,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * Constructor for ExcelItemWriter.
    * </p>
-   * 
+   *
    * @param outputStream a {@link java.io.OutputStream} object.
    */
   public ExcelItemWriter(OutputStream outputStream) {
@@ -83,7 +83,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * Getter for the field <code>countPerSheet</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getCountPerSheet() {
@@ -94,7 +94,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * Setter for the field <code>countPerSheet</code>.
    * </p>
-   * 
+   *
    * @param dataNumPerSheet a int.
    */
   public void setCountPerSheet(int dataNumPerSheet) {
@@ -132,7 +132,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * getFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public TransferFormat getFormat() {
@@ -143,7 +143,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * writeItem.
    * </p>
-   * 
+   *
    * @param datas a {@link java.lang.Object} object.
    */
   protected void writeItem(Object datas) {
@@ -228,7 +228,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * getDateFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   protected String getDateFormat() {
@@ -239,7 +239,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * getDateTimeFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   protected String getDateTimeFormat() {
@@ -250,7 +250,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * getTitleStyle.
    * </p>
-   * 
+   *
    * @return a {@link org.apache.poi.hssf.usermodel.HSSFCellStyle} object.
    */
   protected HSSFCellStyle getTitleStyle() {

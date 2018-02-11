@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * UrlPropertyConfigProvider class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -45,7 +45,7 @@ public class UrlPropertyConfigProvider implements PropertyConfig.Provider {
    * <p>
    * getConfig.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Properties} object.
    */
   public Properties getConfig() {
@@ -82,7 +82,7 @@ public class UrlPropertyConfigProvider implements PropertyConfig.Provider {
    * <p>
    * Getter for the field <code>resource</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.inject.Resources} object.
    */
   public Resources getResources() {
@@ -93,7 +93,7 @@ public class UrlPropertyConfigProvider implements PropertyConfig.Provider {
    * <p>
    * Setter for the field <code>resource</code>.
    * </p>
-   * 
+   *
    * @param resources a {@link org.beangle.commons.inject.Resources} object.
    */
   public void setResources(Resources resources) {

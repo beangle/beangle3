@@ -27,7 +27,7 @@ import org.beangle.commons.collection.CollectUtils;
  * <p>
  * DefaultEventMulticaster class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

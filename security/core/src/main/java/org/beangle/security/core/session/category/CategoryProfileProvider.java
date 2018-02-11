@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * 分类配置提供者
- * 
+ *
  * @author chaostone
  * @version $Id: CategoryProfileProvider.java Jul 11, 2011 10:14:02 AM chaostone $
  */

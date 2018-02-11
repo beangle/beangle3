@@ -36,7 +36,7 @@ import org.beangle.security.blueprint.function.FuncResource;
 /**
  * 系统授权实体
  * 角色和资源以及数据范围规定
- * 
+ *
  * @author dell,chaostone 2005-9-26
  */
 @Entity(name = "org.beangle.security.blueprint.function.FuncPermission")

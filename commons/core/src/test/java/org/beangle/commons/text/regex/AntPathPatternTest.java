@@ -38,7 +38,7 @@ public class AntPathPatternTest {
     Assert.assertTrue(match("org/**/servlet/bla.jsp", "org/servlet/bla.jsp"));
 
     Assert.assertFalse(match("org/**/servlet/bla.jsp", "org/anyservlet/bla.jsp"));
-    
+
     Assert.assertTrue(match("org/**", "org/anyservlet/bla.jsp"));
   }
 }

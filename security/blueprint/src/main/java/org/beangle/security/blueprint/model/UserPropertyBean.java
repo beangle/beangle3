@@ -33,7 +33,7 @@ import org.beangle.security.blueprint.UserProfile;
 
 /**
  * 数据限制域
- * 
+ *
  * @author chaostone
  */
 @Entity(name = "org.beangle.security.blueprint.model.UserPropertyBean")

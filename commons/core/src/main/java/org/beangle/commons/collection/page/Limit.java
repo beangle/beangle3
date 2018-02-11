@@ -20,7 +20,7 @@ package org.beangle.commons.collection.page;
 
 /**
  * 查询中的数目限制
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

@@ -66,7 +66,7 @@ public abstract class AbstractSessionController extends BaseServiceImpl implemen
 
   /**
    * 试图为该用户保留一个登录空间
-   * 
+   *
    * @param auth
    * @param sessionId
    * @return 如果成功返回true,否则false

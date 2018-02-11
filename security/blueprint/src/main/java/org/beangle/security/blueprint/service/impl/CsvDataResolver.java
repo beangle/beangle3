@@ -38,13 +38,13 @@ import org.beangle.security.blueprint.service.UserDataResolver;
 /**
  * Store list of objects using comma.
  * <p>
- * 
+ *
  * <pre>
  *    id,name
  *    1,role1
  *    2,role2
  * </pre>
- * 
+ *
  * @author chaostone
  */
 public class CsvDataResolver implements UserDataResolver, UserDataProvider {

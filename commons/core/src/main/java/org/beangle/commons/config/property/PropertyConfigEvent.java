@@ -24,7 +24,7 @@ import java.util.EventObject;
  * <p>
  * PropertyConfigEvent class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -36,7 +36,7 @@ public class PropertyConfigEvent extends EventObject {
    * <p>
    * Constructor for PropertyConfigEvent.
    * </p>
-   * 
+   *
    * @param config a {@link org.beangle.commons.config.property.PropertyConfig} object.
    */
   public PropertyConfigEvent(PropertyConfig config) {

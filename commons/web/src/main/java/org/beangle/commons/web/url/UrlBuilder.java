@@ -114,7 +114,7 @@ public class UrlBuilder {
 
   /**
    * ContextPath should start with / but not ended with /
-   * 
+   *
    * @param contextPath
    */
   public UrlBuilder contextPath(String contextPath) {
@@ -124,7 +124,7 @@ public class UrlBuilder {
 
   /**
    * Set servletPath ,start with /
-   * 
+   *
    * @param servletPath
    */
   public UrlBuilder servletPath(String servletPath) {
@@ -134,7 +134,7 @@ public class UrlBuilder {
 
   /**
    * Set requestURI ,it should start with /
-   * 
+   *
    * @param requestURI
    */
   public UrlBuilder requestURI(String requestURI) {

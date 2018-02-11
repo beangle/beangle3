@@ -27,13 +27,13 @@ import org.beangle.commons.lang.Assert;
 
 /**
  * Declared in web.xml as
- * 
+ *
  * <pre>
  * &lt;listener&gt;
  *     &lt;listener-class&gt;org.beangle.commons.web.session.HttpSessionEventPublisher&lt;/listener-class&gt;
  * &lt;/listener&gt;
  * </pre>
- * 
+ *
  * Publishes <code>HttpSessionApplicationEvent</code>s to the Bean Root Context.
  * Maps javax.servlet.http.HttpSessionListener.sessionCreated() to {@link HttpSessionCreationEvent}.
  * Maps javax.servlet.http.HttpSessionListener.sessionDestroyed() to
@@ -46,7 +46,7 @@ public class HttpSessionEventPublisher implements HttpSessionListener {
   /**
    * Handles the HttpSessionEvent by publishing a {@link HttpSessionCreationEvent} to the
    * application appContext.
-   * 
+   *
    * @param event HttpSessionEvent passed in by the container
    */
   public void sessionCreated(HttpSessionEvent event) {
@@ -60,7 +60,7 @@ public class HttpSessionEventPublisher implements HttpSessionListener {
   /**
    * Handles the HttpSessionEvent by publishing a {@link HttpSessionDestroyedEvent} to the
    * application appContext.
-   * 
+   *
    * @param event The HttpSessionEvent pass in by the container
    */
   public void sessionDestroyed(HttpSessionEvent event) {

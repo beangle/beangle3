@@ -38,7 +38,7 @@ package org.beangle.commons.bean;
  * <li><strong>Nested (<code>name1.name2[index].name3(key)</code>)</strong> - Combining mapped,
  * nested, and indexed references is also supported.</li>
  * </ul>
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */
@@ -52,7 +52,7 @@ public class PropertyNameResolver {
 
   /**
    * Return the index value from the property expression or -1.
-   * 
+   *
    * @param expression The property expression
    * @return The index value or -1 if the property is not indexed
    * @throws IllegalArgumentException If the indexed property is illegally
@@ -83,7 +83,7 @@ public class PropertyNameResolver {
 
   /**
    * Return the map key from the property expression or <code>null</code>.
-   * 
+   *
    * @param expression The property expression
    * @return The index value
    * @throws IllegalArgumentException If the mapped property is illegally formed.
@@ -105,7 +105,7 @@ public class PropertyNameResolver {
 
   /**
    * Return the property name from the property expression.
-   * 
+   *
    * @param expression The property expression
    * @return The property name
    */
@@ -122,7 +122,7 @@ public class PropertyNameResolver {
 
   /**
    * Indicates whether or not the expression contains nested property expressions or not.
-   * 
+   *
    * @param expression The property expression
    * @return The next property expression
    */
@@ -134,7 +134,7 @@ public class PropertyNameResolver {
 
   /**
    * Indicate whether the expression is for an indexed property or not.
-   * 
+   *
    * @param expression The property expression
    * @return <code>true</code> if the expresion is indexed,
    *         otherwise <code>false</code>
@@ -152,7 +152,7 @@ public class PropertyNameResolver {
 
   /**
    * Indicate whether the expression is for a mapped property or not.
-   * 
+   *
    * @param expression The property expression
    * @return <code>true</code> if the expresion is mapped,
    *         otherwise <code>false</code>
@@ -170,7 +170,7 @@ public class PropertyNameResolver {
 
   /**
    * Extract the next property expression from the current expression.
-   * 
+   *
    * @param expression The property expression
    * @return The next property expression
    */
@@ -199,7 +199,7 @@ public class PropertyNameResolver {
 
   /**
    * Remove the last property expresson from the current expression.
-   * 
+   *
    * @param expression The property expression
    * @return The new expression value, with first property
    *         expression removed - null if there are no more expressions

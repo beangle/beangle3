@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * request and is
  * case-sensitive by default. Case-insensitive matching can be used by using the
  * constructor which takes the {@code caseInsentitive} argument.
- * 
+ *
  * @author chaostone
  */
 public final class RegexRequestMatcher implements RequestMatcher {
@@ -46,7 +46,7 @@ public final class RegexRequestMatcher implements RequestMatcher {
   /**
    * Creates a case-sensitive {@code Pattern} instance to match against the
    * request.
-   * 
+   *
    * @param pattern
    *          the regular expression to compile into a pattern.
    * @param httpMethod
@@ -59,7 +59,7 @@ public final class RegexRequestMatcher implements RequestMatcher {
   /**
    * As above, but allows setting of whether case-insensitive matching should
    * be used.
-   * 
+   *
    * @param pattern
    *          the regular expression to compile into a pattern.
    * @param httpMethod
@@ -78,7 +78,7 @@ public final class RegexRequestMatcher implements RequestMatcher {
    * Performs the match of the request URL ( {@code servletPath + pathInfo + queryString}) against
    * the compiled
    * pattern.
-   * 
+   *
    * @param request the request to match
    * @return true if the pattern matches the URL, false otherwise.
    */

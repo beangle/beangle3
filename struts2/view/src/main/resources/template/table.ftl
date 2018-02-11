@@ -17,7 +17,7 @@
 [#macro selectTd id value extra...]
   <td class="select"><input class="box" name="${id}" value="${value}" [#if (extra?size!=0)][#list extra?keys as attr][#if attr != "type"] ${attr}="${extra[attr]}"[/#if][/#list][/#if] type="${extra['type']!("checkbox")}">[#nested]</td>
 [/#macro]
- 
+
 [#macro table extra...]
   [#if extra['id']??]
     [#assign pageId="${extra['id']}"]

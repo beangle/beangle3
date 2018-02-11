@@ -26,7 +26,7 @@ package org.beangle.security.cas.auth;
  * This is the default StatelessTicketCache of the @link {@link CasAuthenticationProvider} to
  * eliminate the unnecessary dependency on EhCache that applications have even if they are not using
  * the stateless session management.
- * 
+ *
  * @author chaostone
  * @see CasAuthenticationProvider
  */

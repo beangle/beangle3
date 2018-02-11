@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 条件提取辅助类
- * 
+ *
  * @author chaostone
  */
 public final class Conditions {
@@ -100,7 +100,7 @@ public final class Conditions {
    * 提取对象中的条件<br>
    * 提取的属性仅限"平面"属性(允许包括component)<br>
    * 过滤掉属性:null,或者空Collection
-   * 
+   *
    * @param alias
    * @param entity
    */
@@ -127,7 +127,7 @@ public final class Conditions {
 
   /**
    * 获得条件的绑定参数映射
-   * 
+   *
    * @param conditions
    */
   public static Map<String, Object> getParamMap(final Collection<Condition> conditions) {
@@ -140,7 +140,7 @@ public final class Conditions {
 
   /**
    * 获得条件的绑定参数映射
-   * 
+   *
    * @param condition
    */
   public static Map<String, Object> getParamMap(final Condition condition) {
@@ -163,7 +163,7 @@ public final class Conditions {
 
   /**
    * 为extractConditions使用的私有方法<br>
-   * 
+   *
    * @param conditions
    * @param name
    * @param value

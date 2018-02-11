@@ -22,7 +22,7 @@ package org.beangle.commons.transfer.importer;
  * <p>
  * ImportPrepare interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -32,7 +32,7 @@ public interface ImportPrepare {
    * <p>
    * prepare.
    * </p>
-   * 
+   *
    * @param importer a {@link org.beangle.commons.transfer.importer.Importer} object.
    */
   void prepare(Importer importer);

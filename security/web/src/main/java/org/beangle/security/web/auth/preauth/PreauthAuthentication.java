@@ -26,7 +26,7 @@ import org.beangle.security.core.GrantedAuthority;
 /**
  * Preauth authentication token
  * Different from UsernamePasswordAuthentication,it cannot be authenticate by dao provider.
- * 
+ *
  * @author chaostone
  */
 public class PreauthAuthentication extends AbstractAuthentication {

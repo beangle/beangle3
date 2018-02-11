@@ -20,7 +20,7 @@ package org.beangle.commons.transfer;
 
 /**
  * 转换调试监听器
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

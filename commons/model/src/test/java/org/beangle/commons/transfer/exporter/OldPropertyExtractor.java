@@ -27,7 +27,7 @@ import org.beangle.commons.text.i18n.TextResource;
 
 /**
  * 缺省和简单的属性提取类
- * 
+ *
  * @author chaostone
  */
 public class OldPropertyExtractor implements PropertyExtractor {

@@ -22,7 +22,7 @@ package org.beangle.commons;
  * <p>
  * BeangleVersion class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -32,7 +32,7 @@ public class BeangleVersion {
    * <p>
    * getName.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public static final String getName() {
@@ -43,7 +43,7 @@ public class BeangleVersion {
    * <p>
    * getVersion.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public static final String getVersion() {
@@ -54,7 +54,7 @@ public class BeangleVersion {
    * <p>
    * getMajorVersion.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public static final int getMajorVersion() {
@@ -65,7 +65,7 @@ public class BeangleVersion {
    * <p>
    * getMinorVersion.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public static final int getMinorVersion() {

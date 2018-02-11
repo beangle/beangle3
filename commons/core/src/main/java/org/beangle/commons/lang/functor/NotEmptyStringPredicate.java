@@ -24,7 +24,7 @@ import org.beangle.commons.lang.Strings;
  * <p>
  * NotEmptyStringPredicate class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

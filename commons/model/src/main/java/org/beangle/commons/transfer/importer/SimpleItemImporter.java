@@ -22,7 +22,7 @@ package org.beangle.commons.transfer.importer;
  * <p>
  * SimpleItemImporter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -37,7 +37,7 @@ public class SimpleItemImporter extends AbstractItemImporter {
    * <p>
    * getCurrent.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Object} object.
    */
   public Object getCurrent() {
@@ -48,7 +48,7 @@ public class SimpleItemImporter extends AbstractItemImporter {
    * <p>
    * getDataName.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getDataName() {

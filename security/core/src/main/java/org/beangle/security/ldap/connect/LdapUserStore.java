@@ -24,7 +24,7 @@ import javax.naming.directory.Attribute;
 
 /**
  * ldap user store
- * 
+ *
  * @author chaostone
  */
 public interface LdapUserStore {

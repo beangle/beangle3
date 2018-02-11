@@ -24,7 +24,7 @@ import org.beangle.commons.lang.Strings;
  * <p>
  * SingleWordStringPredicate class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

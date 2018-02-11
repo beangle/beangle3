@@ -30,7 +30,7 @@ import org.beangle.security.core.session.category.CategoryProfile;
 
 /**
  * 角色会话配置
- * 
+ *
  * @author chaostone
  */
 @Entity(name = "org.beangle.security.blueprint.session.model.SessionProfileBean")

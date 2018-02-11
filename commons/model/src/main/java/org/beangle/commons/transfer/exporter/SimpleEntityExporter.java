@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * SimpleEntityExporter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -86,7 +86,7 @@ public class SimpleEntityExporter extends SimpleItemExporter {
    * <p>
    * Getter for the field <code>propertyExtractor</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.transfer.exporter.PropertyExtractor} object.
    */
   public PropertyExtractor getPropertyExtractor() {
@@ -97,7 +97,7 @@ public class SimpleEntityExporter extends SimpleItemExporter {
    * <p>
    * Setter for the field <code>propertyExtractor</code>.
    * </p>
-   * 
+   *
    * @param propertyExporter a {@link org.beangle.commons.transfer.exporter.PropertyExtractor}
    *          object.
    */
@@ -109,7 +109,7 @@ public class SimpleEntityExporter extends SimpleItemExporter {
    * <p>
    * Getter for the field <code>attrs</code>.
    * </p>
-   * 
+   *
    * @return an array of {@link java.lang.String} objects.
    */
   public String[] getAttrs() {
@@ -120,7 +120,7 @@ public class SimpleEntityExporter extends SimpleItemExporter {
    * <p>
    * Setter for the field <code>attrs</code>.
    * </p>
-   * 
+   *
    * @param attrs an array of {@link java.lang.String} objects.
    */
   public void setAttrs(String[] attrs) {

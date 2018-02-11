@@ -26,7 +26,7 @@ import org.beangle.commons.collection.page.PageLimit;
  * <p>
  * QueryBuilder interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -36,7 +36,7 @@ public interface QueryBuilder<T> {
    * <p>
    * build.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.dao.query.Query} object.
    */
   Query<T> build();
@@ -45,7 +45,7 @@ public interface QueryBuilder<T> {
    * <p>
    * limit.
    * </p>
-   * 
+   *
    * @param limit a {@link org.beangle.commons.collection.page.PageLimit} object.
    * @return a {@link org.beangle.commons.dao.query.QueryBuilder} object.
    */
@@ -55,7 +55,7 @@ public interface QueryBuilder<T> {
    * <p>
    * getParams.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Map} object.
    */
   Map<String, Object> getParams();
@@ -64,7 +64,7 @@ public interface QueryBuilder<T> {
    * <p>
    * params.
    * </p>
-   * 
+   *
    * @param newParams a {@link java.util.Map} object.
    * @return a {@link org.beangle.commons.dao.query.QueryBuilder} object.
    */

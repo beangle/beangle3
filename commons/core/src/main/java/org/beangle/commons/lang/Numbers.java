@@ -30,13 +30,13 @@ public final class Numbers {
    * <p>
    * If the string is <code>null</code>, <code>zero</code> is returned.
    * </p>
-   * 
+   *
    * <pre>
    * toInt(null) = 0
    * toInt("")   = 0
    * toInt("1")  = 1
    * </pre>
-   * 
+   *
    * @param str the string to convert, may be null
    * @return the int represented by the string, or <code>zero</code> if
    *         conversion fails
@@ -54,13 +54,13 @@ public final class Numbers {
    * <p>
    * If the string is <code>null</code>, the default value is returned.
    * </p>
-   * 
+   *
    * <pre>
    * toInt(null, 1) = 1
    * toInt("", 1)   = 1
    * toInt("1", 0)  = 1
    * </pre>
-   * 
+   *
    * @param str the string to convert, may be null
    * @param defaultValue the default value
    * @return the int represented by the string, or the default if conversion fails
@@ -95,7 +95,7 @@ public final class Numbers {
    * <p>
    * <code>Null</code> and empty String will return <code>false</code>.
    * </p>
-   * 
+   *
    * @param str the <code>String</code> to check
    * @return <code>true</code> if str contains only Unicode numeric
    */

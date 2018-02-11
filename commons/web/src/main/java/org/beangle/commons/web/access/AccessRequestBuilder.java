@@ -28,7 +28,7 @@ public interface AccessRequestBuilder {
 
   /**
    * Build a access request
-   * 
+   *
    * @param request servlet request
    */
   public AccessRequest build(HttpServletRequest request);

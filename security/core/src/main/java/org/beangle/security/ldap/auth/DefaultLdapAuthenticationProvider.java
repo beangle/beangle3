@@ -27,7 +27,7 @@ import org.beangle.security.core.userdetail.UserDetailService;
 
 /**
  * 读取ldap的用户信息<br>
- * 
+ *
  * @author chaostone
  */
 public class DefaultLdapAuthenticationProvider extends AbstractUserDetailAuthenticationProvider {

@@ -36,7 +36,7 @@ public class ConfigBuilder {
 
   /**
    * build configration
-   * 
+   *
    * @throws Exception
    */
   @SuppressWarnings("unchecked")

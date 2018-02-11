@@ -30,7 +30,7 @@ import org.springframework.context.ApplicationContextAware;
 
 /**
  * Building model from Hibernate.
- * 
+ *
  * @author chaostone
  * @since 2.0
  */

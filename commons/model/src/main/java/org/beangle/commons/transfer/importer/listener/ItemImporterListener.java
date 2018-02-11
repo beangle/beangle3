@@ -27,7 +27,7 @@ import org.beangle.commons.transfer.importer.AbstractItemImporter;
  * <p>
  * ItemImporterListener class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

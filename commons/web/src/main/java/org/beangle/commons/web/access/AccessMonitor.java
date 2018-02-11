@@ -31,7 +31,7 @@ public interface AccessMonitor {
 
   /**
    * Return access request content;
-   * 
+   *
    * @param request the servlet request
    */
   AccessRequest begin(HttpServletRequest request);

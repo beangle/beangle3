@@ -45,7 +45,7 @@ public class FilterSecurityInterceptor extends AbstractSecurityInterceptor imple
 
   /**
    * Not used (we rely on IoC container lifecycle services instead)
-   * 
+   *
    * @param arg0 ignored
    * @throws ServletException never thrown
    */
@@ -61,7 +61,7 @@ public class FilterSecurityInterceptor extends AbstractSecurityInterceptor imple
   /**
    * Method that is actually called by the filter chain. Simply delegates to
    * the {@link #invoke(FilterInvocation)} method.
-   * 
+   *
    * @param request the servlet request
    * @param response the servlet response
    * @param chain the filter chain
@@ -106,7 +106,7 @@ public class FilterSecurityInterceptor extends AbstractSecurityInterceptor imple
    * once-per-request. Sometimes users may wish it to execute more than once
    * per request, such as when JSP forwards are being used and filter security
    * is desired on each included fragment of the HTTP request.
-   * 
+   *
    * @return <code>true</code> (the default) if once-per-request is honoured,
    *         otherwise <code>false</code> if <code>FilterSecurityInterceptor</code> will enforce
    *         authorizations for each and every fragment of the HTTP request.

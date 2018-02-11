@@ -26,7 +26,7 @@ import org.beangle.security.core.session.Sessioninfo;
 public interface SessioninfoLogService {
 
   public void log(Sessioninfo info);
-  
+
   public List<SessioninfoLogBean> getLoggers(String username,int top);
-  
+
 }

@@ -22,7 +22,7 @@ import org.beangle.security.blueprint.Permission;
 
 /**
  * 功能权限
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

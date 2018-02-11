@@ -20,7 +20,7 @@ package org.beangle.commons.transfer.io;
 
 /**
  * 数据读取类
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -28,14 +28,14 @@ public interface Reader {
 
   /**
    * 读取数据
-   * 
+   *
    * @return a {@link java.lang.Object} object.
    */
   Object read();
 
   /**
    * 返回读取类型的格式
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   TransferFormat getFormat();

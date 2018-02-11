@@ -22,7 +22,7 @@ package org.beangle.inject.spring.config;
  * <p>
  * ReconfigType class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

@@ -22,7 +22,7 @@ package org.beangle.commons.text.seq;
  * <p>
  * SeqNumStyle interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -37,7 +37,7 @@ public interface SeqNumStyle {
    * <p>
    * build.
    * </p>
-   * 
+   *
    * @param seq a int.
    * @return a {@link java.lang.String} object.
    */

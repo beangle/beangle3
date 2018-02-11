@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 加密工具
- * 
+ *
  * @author chaostone
  */
 public class EncryptUtil {
@@ -39,7 +39,7 @@ public class EncryptUtil {
    * Encode a string using algorithm specified in web.xml and return the
    * resulting encrypted password. If exception, the plain credentials string
    * is returned
-   * 
+   *
    * @param password passord string
    * @param algorithm Algorithm used to do the digest
    * @return encypted password based on the algorithm.

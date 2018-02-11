@@ -28,7 +28,7 @@ import org.beangle.commons.lang.Arrays;
  * <p>
  * Operation class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: Operation.java Jul 25, 2011 2:21:27 PM chaostone $
  */
@@ -44,7 +44,7 @@ public class Operation {
    * <p>
    * Constructor for Operation.
    * </p>
-   * 
+   *
    * @param type a {@link org.beangle.commons.dao.Operation.OperationType} object.
    * @param data a {@link java.lang.Object} object.
    */
@@ -58,7 +58,7 @@ public class Operation {
    * <p>
    * saveOrUpdate.
    * </p>
-   * 
+   *
    * @param entities a {@link java.util.Collection} object.
    * @return a {@link org.beangle.commons.dao.Operation.Builder} object.
    */
@@ -70,7 +70,7 @@ public class Operation {
    * <p>
    * saveOrUpdate.
    * </p>
-   * 
+   *
    * @param entities a {@link java.lang.Object} object.
    * @return a {@link org.beangle.commons.dao.Operation.Builder} object.
    */
@@ -82,7 +82,7 @@ public class Operation {
    * <p>
    * remove.
    * </p>
-   * 
+   *
    * @param entities a {@link java.util.Collection} object.
    * @return a {@link org.beangle.commons.dao.Operation.Builder} object.
    */
@@ -94,7 +94,7 @@ public class Operation {
    * <p>
    * remove.
    * </p>
-   * 
+   *
    * @param entities a {@link java.lang.Object} object.
    * @return a {@link org.beangle.commons.dao.Operation.Builder} object.
    */

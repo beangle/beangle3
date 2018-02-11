@@ -20,7 +20,7 @@ package org.beangle.struts2.freemarker;
 
 /**
  * Try to find template
- * 
+ *
  * @author chaostone
  */
 public interface TemplateFinder {

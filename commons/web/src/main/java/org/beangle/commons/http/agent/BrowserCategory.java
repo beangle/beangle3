@@ -30,7 +30,7 @@ import org.beangle.commons.lang.tuple.Pair;
 
 /**
  * Enum constants for most common browsers, including e-mail clients and bots.
- * 
+ *
  * @author chaostone
  */
 

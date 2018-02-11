@@ -22,7 +22,7 @@ package org.beangle.commons.transfer.io;
  * <p>
  * TransferFormats interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

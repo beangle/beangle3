@@ -20,7 +20,7 @@ package org.beangle.commons.text.inflector;
 
 /**
  * <code>Pluralizer</code> converts singular word forms to their plural forms.
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -30,7 +30,7 @@ public interface Pluralizer {
    * <p>
    * pluralize.
    * </p>
-   * 
+   *
    * @param word a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
    */
@@ -40,7 +40,7 @@ public interface Pluralizer {
    * <p>
    * pluralize.
    * </p>
-   * 
+   *
    * @param word a {@link java.lang.String} object.
    * @param number a int.
    * @return a {@link java.lang.String} object.

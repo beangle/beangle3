@@ -42,7 +42,7 @@ import org.beangle.security.web.session.LogoutSessionCleaner;
 
 /**
  * 权限系统web模块bean定义
- * 
+ *
  * @author chaostone
  * @version $Id: DefaultModule.java Jun 17, 2011 8:01:41 PM chaostone $
  */

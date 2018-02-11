@@ -20,7 +20,7 @@ package org.beangle.commons.transfer.importer;
 
 /**
  * IllegalImportFormat
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

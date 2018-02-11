@@ -32,7 +32,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * Neusoft custom cas implemention.
- * 
+ *
  * @author chaostone
  */
 public class NeusoftCasTicketValidator extends AbstractTicketValidator {

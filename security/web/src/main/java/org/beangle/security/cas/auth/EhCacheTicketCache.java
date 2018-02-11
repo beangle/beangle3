@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Caches tickets using a Ehcache defined <A
  * HREF="http://ehcache.sourceforge.net">EHCACHE</a>.
- * 
+ *
  * @author chaostone
  */
 public class EhCacheTicketCache implements StatelessTicketCache, Initializing {

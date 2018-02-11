@@ -24,7 +24,7 @@ import org.beangle.commons.transfer.io.ItemReader;
  * <p>
  * DescriptionAttrPrepare class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

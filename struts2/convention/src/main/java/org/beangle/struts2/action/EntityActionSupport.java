@@ -40,7 +40,7 @@ public class EntityActionSupport extends ActionSupport {
 
   /**
    * Get entity's id from shortname.id,shortnameId,id
-   * 
+   *
    * @param name
    * @param clazz
    */
@@ -67,7 +67,7 @@ public class EntityActionSupport extends ActionSupport {
 
   /**
    * Get entity's long id array from parameters shortname.id,shortname.ids,shortnameIds
-   * 
+   *
    * @param shortName
    */
   protected final Long[] getLongIds(String shortName) {
@@ -76,7 +76,7 @@ public class EntityActionSupport extends ActionSupport {
 
   /**
    * Get entity's long id array from parameters shortname.id,shortname.ids,shortnameIds
-   * 
+   *
    * @param shortName
    */
   protected final Integer[] getIntIds(String shortName) {
@@ -85,7 +85,7 @@ public class EntityActionSupport extends ActionSupport {
 
   /**
    * Get entity's id array from parameters shortname.id,shortname.ids,shortnameIds
-   * 
+   *
    * @param name
    * @param clazz
    * @return empty array if not found
@@ -104,7 +104,7 @@ public class EntityActionSupport extends ActionSupport {
   // populate------------------------------------------------------------------
   /**
    * 将request中的参数设置到clazz对应的bean。
-   * 
+   *
    * @param clazz
    * @param shortName
    */

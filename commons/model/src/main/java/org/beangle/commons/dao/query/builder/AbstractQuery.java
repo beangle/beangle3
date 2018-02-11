@@ -25,7 +25,7 @@ import org.beangle.commons.dao.query.QueryBuilder;
 
 /**
  * 抽象查询
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -56,7 +56,7 @@ public abstract class AbstractQuery<T> implements QueryBuilder<T> {
    * <p>
    * Setter for the field <code>limit</code>.
    * </p>
-   * 
+   *
    * @param limit a {@link org.beangle.commons.collection.page.PageLimit} object.
    */
   public void setLimit(final PageLimit limit) {
@@ -67,7 +67,7 @@ public abstract class AbstractQuery<T> implements QueryBuilder<T> {
    * <p>
    * Getter for the field <code>params</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Map} object.
    */
   public Map<String, Object> getParams() {
@@ -78,7 +78,7 @@ public abstract class AbstractQuery<T> implements QueryBuilder<T> {
    * <p>
    * Getter for the field <code>countStr</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getCountStr() {
@@ -89,7 +89,7 @@ public abstract class AbstractQuery<T> implements QueryBuilder<T> {
    * <p>
    * Setter for the field <code>countStr</code>.
    * </p>
-   * 
+   *
    * @param countStr a {@link java.lang.String} object.
    */
   public void setCountStr(final String countStr) {
@@ -100,7 +100,7 @@ public abstract class AbstractQuery<T> implements QueryBuilder<T> {
    * <p>
    * Getter for the field <code>queryStr</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getQueryStr() {
@@ -111,7 +111,7 @@ public abstract class AbstractQuery<T> implements QueryBuilder<T> {
    * <p>
    * Setter for the field <code>queryStr</code>.
    * </p>
-   * 
+   *
    * @param queryStr a {@link java.lang.String} object.
    */
   public void setQueryStr(final String queryStr) {
@@ -122,7 +122,7 @@ public abstract class AbstractQuery<T> implements QueryBuilder<T> {
    * <p>
    * Setter for the field <code>params</code>.
    * </p>
-   * 
+   *
    * @param params a {@link java.util.Map} object.
    */
   public void setParams(final Map<String, Object> params) {
@@ -133,7 +133,7 @@ public abstract class AbstractQuery<T> implements QueryBuilder<T> {
    * <p>
    * toQueryString.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public abstract String toQueryString();
@@ -142,7 +142,7 @@ public abstract class AbstractQuery<T> implements QueryBuilder<T> {
    * <p>
    * toCountString.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String toCountString() {
@@ -153,7 +153,7 @@ public abstract class AbstractQuery<T> implements QueryBuilder<T> {
    * <p>
    * isCacheable.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isCacheable() {
@@ -164,7 +164,7 @@ public abstract class AbstractQuery<T> implements QueryBuilder<T> {
    * <p>
    * Setter for the field <code>cacheable</code>.
    * </p>
-   * 
+   *
    * @param cacheable a boolean.
    */
   public void setCacheable(final boolean cacheable) {

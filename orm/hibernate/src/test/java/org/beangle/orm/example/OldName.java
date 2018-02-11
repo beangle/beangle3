@@ -26,7 +26,7 @@ import org.beangle.commons.entity.pojo.IntegerIdObject;
 
 /**
  * 曾用名
- * 
+ *
  * @author chaostone
  */
 @Entity

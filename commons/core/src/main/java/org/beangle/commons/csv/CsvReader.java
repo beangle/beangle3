@@ -28,7 +28,7 @@ import org.beangle.commons.csv.internal.CsvParser;
  * <p>
  * CsvReader class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -48,7 +48,7 @@ public class CsvReader {
    * <p>
    * Constructor for CsvReader.
    * </p>
-   * 
+   *
    * @param reader a {@link java.io.Reader} object.
    */
   public CsvReader(Reader reader) {
@@ -59,7 +59,7 @@ public class CsvReader {
    * <p>
    * Constructor for CsvReader.
    * </p>
-   * 
+   *
    * @param reader a {@link java.io.Reader} object.
    * @param format a {@link org.beangle.commons.csv.CsvFormat} object.
    */
@@ -71,7 +71,7 @@ public class CsvReader {
 
   /**
    * Reads the next line from the file.
-   * 
+   *
    * @return the next line from the file without trailing newline
    * @throws IOException
    *           if bad things happen during the read
@@ -99,7 +99,7 @@ public class CsvReader {
    * <p>
    * readNext.
    * </p>
-   * 
+   *
    * @return an array of {@link java.lang.String} objects.
    */
   public String[] readNext() {

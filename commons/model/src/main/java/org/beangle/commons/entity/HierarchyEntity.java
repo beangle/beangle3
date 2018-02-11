@@ -25,7 +25,7 @@ import java.util.List;
  * <p>
  * HierarchyEntity interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -40,7 +40,7 @@ public interface HierarchyEntity<T, ID extends Serializable> extends Entity<ID> 
    * <p>
    * getParent.
    * </p>
-   * 
+   *
    * @return a T object.
    */
   T getParent();
@@ -49,7 +49,7 @@ public interface HierarchyEntity<T, ID extends Serializable> extends Entity<ID> 
    * <p>
    * setParent.
    * </p>
-   * 
+   *
    * @param parent a T object.
    */
   void setParent(T parent);
@@ -58,7 +58,7 @@ public interface HierarchyEntity<T, ID extends Serializable> extends Entity<ID> 
    * <p>
    * getChildren.
    * </p>
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   List<T> getChildren();
@@ -67,7 +67,7 @@ public interface HierarchyEntity<T, ID extends Serializable> extends Entity<ID> 
    * <p>
    * setChildren.
    * </p>
-   * 
+   *
    * @param children a {@link java.util.List} object.
    */
   void setChildren(List<T> children);

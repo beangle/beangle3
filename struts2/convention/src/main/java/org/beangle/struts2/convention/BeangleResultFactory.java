@@ -35,7 +35,7 @@ import com.opensymphony.xwork2.util.reflection.ReflectionProvider;
 /**
  * Build Result
  * 1 Specialize for freemarker result creation.
- * 
+ *
  * @author chaostone
  */
 public class BeangleResultFactory implements ResultFactory {

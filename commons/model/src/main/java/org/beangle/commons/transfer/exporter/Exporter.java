@@ -23,7 +23,7 @@ import org.beangle.commons.transfer.io.Writer;
 
 /**
  * 数据导出转换器
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -33,7 +33,7 @@ public interface Exporter extends Transfer {
    * <p>
    * setContext.
    * </p>
-   * 
+   *
    * @param context a {@link org.beangle.commons.transfer.exporter.Context} object.
    */
   void setContext(Context context);
@@ -42,7 +42,7 @@ public interface Exporter extends Transfer {
    * <p>
    * setWriter.
    * </p>
-   * 
+   *
    * @param writer a {@link org.beangle.commons.transfer.io.Writer} object.
    */
   void setWriter(Writer writer);
@@ -51,7 +51,7 @@ public interface Exporter extends Transfer {
    * <p>
    * getWriter.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.transfer.io.Writer} object.
    */
   Writer getWriter();

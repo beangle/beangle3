@@ -27,7 +27,7 @@ import org.beangle.commons.collection.CollectUtils;
 /**
  * Represents optional values. Instances of Option are either an instance of Some or the object
  * None.
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */
@@ -65,7 +65,7 @@ public abstract class Option<T>{
   /**
    * Returns the contained instance, which must be present. If the instance might be
    * absent, use {@link #getOrElse(Object)} or {@link #orNull} instead.
-   * 
+   *
    * @throws IllegalStateException if the instance is absent
    */
   public abstract T get();
@@ -74,7 +74,7 @@ public abstract class Option<T>{
    * Returns the contained instance if it is present; {@code defaultValue} otherwise. If
    * no default value should be required because the instance is known to be present, use
    * {@link #get()} instead.
-   * 
+   *
    * @param defaultValue
    */
   public abstract T getOrElse(T defaultValue);
@@ -112,7 +112,7 @@ public abstract class Option<T>{
 
   /**
    * Return all value from Option Collection
-   * 
+   *
    * @param values
    */
   public static <T> List<T> getAll(Collection<Option<T>> values) {
@@ -126,7 +126,7 @@ public abstract class Option<T>{
 
 /**
  * Represents existing values of type T.
- * 
+ *
  * @author chaostone
  * @param <T>
  * @since 3.0.0

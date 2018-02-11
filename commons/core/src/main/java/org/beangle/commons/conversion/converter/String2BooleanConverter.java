@@ -30,7 +30,7 @@ import org.beangle.commons.conversion.Converter;
  * Convert true,on,yes,Y,1 to Boolean.TRUE.<br>
  * Convert false,off,no,N,0 to Boolean.FALSE. <br>
  * Otherwise null.
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

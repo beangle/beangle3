@@ -39,7 +39,7 @@ public interface AuthenticationEntryPoint {
    * Implementations should modify the headers on the <code>ServletResponse</code> as necessary to
    * commence the authentication process.
    * </p>
-   * 
+   *
    * @param request
    *          that resulted in an <code>AuthenticationException</code>
    * @param response

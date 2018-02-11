@@ -30,7 +30,7 @@ import org.beangle.commons.lang.Throwables;
  * <p>
  * CsvWriter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -60,7 +60,7 @@ public class CsvWriter implements Closeable {
    * <p>
    * Constructor for CsvWriter.
    * </p>
-   * 
+   *
    * @param writer a {@link java.io.Writer} object.
    */
   public CsvWriter(Writer writer) {
@@ -73,7 +73,7 @@ public class CsvWriter implements Closeable {
    * <p>
    * Constructor for CsvWriter.
    * </p>
-   * 
+   *
    * @param writer a {@link java.io.Writer} object.
    * @param format a {@link org.beangle.commons.csv.CsvFormat} object.
    */
@@ -87,7 +87,7 @@ public class CsvWriter implements Closeable {
    * <p>
    * write.
    * </p>
-   * 
+   *
    * @param allLines a {@link java.util.List} object.
    */
   public void write(List<String[]> allLines) {
@@ -100,7 +100,7 @@ public class CsvWriter implements Closeable {
    * <p>
    * write.
    * </p>
-   * 
+   *
    * @param nextLine an array of {@link java.lang.String} objects.
    */
   public void write(String[] nextLine) {
@@ -132,7 +132,7 @@ public class CsvWriter implements Closeable {
    * <p>
    * processLine.
    * </p>
-   * 
+   *
    * @param nextElement a {@link java.lang.String} object.
    * @return a {@link java.lang.StringBuilder} object.
    */
@@ -155,7 +155,7 @@ public class CsvWriter implements Closeable {
    * <p>
    * flush.
    * </p>
-   * 
+   *
    * @throws java.io.IOException if any.
    */
   public void flush() throws IOException {
@@ -167,7 +167,7 @@ public class CsvWriter implements Closeable {
    * <p>
    * close.
    * </p>
-   * 
+   *
    * @throws java.io.IOException if any.
    */
   public void close() {
@@ -184,7 +184,7 @@ public class CsvWriter implements Closeable {
    * <p>
    * checkError.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean checkError() {

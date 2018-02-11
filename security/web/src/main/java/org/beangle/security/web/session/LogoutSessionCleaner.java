@@ -25,7 +25,7 @@ import org.beangle.security.core.session.SessionRegistry;
 
 /**
  * LogoutSessionCleaner
- * 
+ *
  * @author chaostone
  * @since 3.0.1
  */

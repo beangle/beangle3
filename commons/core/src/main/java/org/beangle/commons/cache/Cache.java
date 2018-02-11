@@ -24,7 +24,7 @@ import org.beangle.commons.lang.Option;
 
 /**
  * Common interface of Cache
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

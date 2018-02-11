@@ -28,7 +28,7 @@ import org.beangle.commons.lang.tuple.Pair;
 
 /**
  * A converter factory that can convert objects from S to subtypes of R.
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  * @param <S>

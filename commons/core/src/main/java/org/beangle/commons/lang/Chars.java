@@ -24,7 +24,7 @@ public final class Chars {
    * <p>
    * Checks whether the character is ASCII 7 bit alphabetic.
    * </p>
-   * 
+   *
    * <pre>
    *   isAsciiAlpha('a')  = true
    *   isAsciiAlpha('A')  = true
@@ -33,7 +33,7 @@ public final class Chars {
    *   isAsciiAlpha('\n') = false
    *   isAsciiAlpha('&copy;') = false
    * </pre>
-   * 
+   *
    * @param ch the character to check
    * @return true if between 65 and 90 or 97 and 122 inclusive
    * @since 3.0

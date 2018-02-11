@@ -26,7 +26,7 @@ import org.beangle.commons.transfer.exporter.Context;
  * <p>
  * Writer interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -36,7 +36,7 @@ public interface Writer {
    * <p>
    * getFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   TransferFormat getFormat();
@@ -45,7 +45,7 @@ public interface Writer {
    * <p>
    * setContext.
    * </p>
-   * 
+   *
    * @param context a {@link org.beangle.commons.transfer.exporter.Context} object.
    */
   void setContext(Context context);
@@ -54,7 +54,7 @@ public interface Writer {
    * <p>
    * getOutputStream.
    * </p>
-   * 
+   *
    * @return a {@link java.io.OutputStream} object.
    */
   OutputStream getOutputStream();
@@ -63,7 +63,7 @@ public interface Writer {
    * <p>
    * setOutputStream.
    * </p>
-   * 
+   *
    * @param outputStream a {@link java.io.OutputStream} object.
    */
   void setOutputStream(OutputStream outputStream);

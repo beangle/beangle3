@@ -46,7 +46,7 @@ import org.beangle.security.web.AuthenticationEntryPoint;
  * redirect to the page indicated by the <code>service</code> property. The <code>service</code> is
  * a HTTP URL belonging to the current application. The <code>service</code> URL is monitored by the
  * {@link CasPreauthFilter}, which will validate the CAS login was successful.
- * 
+ *
  * @author chaostone
  * @version $Id: CasProcessingFilterEntryPoint.java $
  */
@@ -100,7 +100,7 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
 
   /**
    * Construct local login Service Url
-   * 
+   *
    * @param request
    * @param response
    * @param service
@@ -128,7 +128,7 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
    * Constructs a service url from the HttpServletRequest or from the given
    * serviceUrl. Prefers the serviceUrl provided if both a serviceUrl and a
    * serviceName.
-   * 
+   *
    * @param request the HttpServletRequest
    * @param response the HttpServletResponse
    * @param service the configured service url (this will be used if not null)
@@ -173,7 +173,7 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
 
   /**
    * Constructs the URL to use to redirect to the CAS server.
-   * 
+   *
    * @param casServerLoginUrl the CAS Server login url.
    * @param serviceParameterName the name of the parameter that defines the service.
    * @param serviceUrl the actual service's url.

@@ -45,7 +45,7 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 
   /**
    * 从token中找出用户名
-   * 
+   *
    * @param authentication
    */
   protected String determinePrincipal(Authentication authentication) {
@@ -117,7 +117,7 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
    * performing it in {@link #additionalAuthenticationChecks(UserDetail, Authentication)} so that
    * code related to credentials validation need not be duplicated across two methods.
    * </p>
-   * 
+   *
    * @param username
    *          The username to retrieve
    * @param authentication
@@ -149,7 +149,7 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
    * Sets the policy will be used to verify the status of the loaded <tt>UserDetails</tt>
    * <em>before</em> validation of the credentials takes
    * place.
-   * 
+   *
    * @param preAuthenticationChecks
    *          strategy to be invoked prior to authentication.
    */

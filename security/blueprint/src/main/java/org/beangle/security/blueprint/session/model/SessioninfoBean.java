@@ -30,7 +30,7 @@ import org.beangle.security.core.session.category.CategorySessioninfo;
 
 /**
  * 活动会话信息
- * 
+ *
  * @author chaostone
  * @version $Id: SessioninfoBean.java Jul 7, 2011 10:04:48 PM chaostone $
  */
@@ -81,7 +81,7 @@ public class SessioninfoBean extends StringIdObject implements CategorySessionin
   /**host server*/
   @Size(max = 100)
   private String server;
-  
+
   public SessioninfoBean() {
     super();
   }

@@ -27,7 +27,7 @@ import freemarker.template.Configuration;
 
 /**
  * Find template by configuration
- * 
+ *
  * @author chaostone
  * @since 3.4.8
  */

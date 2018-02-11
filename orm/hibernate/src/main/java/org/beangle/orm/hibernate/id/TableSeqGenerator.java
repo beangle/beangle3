@@ -35,13 +35,13 @@ import org.slf4j.LoggerFactory;
  * 按照表明进行命名序列<br>
  * 依据命名模式进行，默认模式{table}_seq<br>
  * 该生成器可以
- * 
+ *
  * <pre>
  * 1)具有较好的数据库移植性，支持没有sequence的数据库。
  * 2)可以通过设置优化起进行优化
  * 3)可以按照表名进行自动命名序列名，模式{table}_seq
  * </pre>
- * 
+ *
  * @author chaostone
  */
 public class TableSeqGenerator extends SequenceStyleGenerator {

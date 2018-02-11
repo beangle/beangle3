@@ -25,7 +25,7 @@ import org.beangle.commons.lang.Strings;
 
 /**
  * 基于每种ui一个序列的id产生器
- * 
+ *
  * @author chaostone
  * @since 3.0
  */

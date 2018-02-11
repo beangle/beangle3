@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * 属性配置
- * 
+ *
  * @author chaostone
  * @version $Id: Profile.java Oct 21, 2011 8:43:35 AM chaostone $
  */
@@ -35,6 +35,6 @@ public interface Profile {
   void setProperty(Dimension field, String value);
 
   Property getProperty(String name);
-  
+
   boolean matches(Profile other);
 }

@@ -29,7 +29,7 @@ import com.linuxense.javadbf.DBFWriter;
  * <p>
  * DBFItemWriter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -93,7 +93,7 @@ public class DBFItemWriter extends AbstractItemWriter {
    * <p>
    * getFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public TransferFormat getFormat() {

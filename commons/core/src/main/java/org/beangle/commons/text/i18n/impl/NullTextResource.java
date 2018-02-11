@@ -26,7 +26,7 @@ import org.beangle.commons.text.i18n.TextResource;
  * <p>
  * NullTextResource class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

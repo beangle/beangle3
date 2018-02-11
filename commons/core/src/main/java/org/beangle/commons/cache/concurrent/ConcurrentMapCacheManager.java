@@ -27,7 +27,7 @@ import org.beangle.commons.collection.CollectUtils;
 
 /**
  * Concurrent Map Cache Manager.
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

@@ -67,7 +67,7 @@ public abstract class StringIdObject implements Entity<String> {
 
   /**
    * 比较id,如果任一方id是null,则不相等
-   * 
+   *
    * @see java.lang.Object#equals(Object)
    */
   public boolean equals(final Object object) {

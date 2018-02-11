@@ -24,7 +24,7 @@ import java.util.Date;
  * <p>
  * Dates class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: DateUtils.java Jul 26, 2011 4:22:37 PM chaostone $
  */
@@ -34,7 +34,7 @@ public final class Dates {
    * <p>
    * rollMinutes.
    * </p>
-   * 
+   *
    * @param date a {@link java.util.Date} object.
    * @param mount a int.
    * @return a {@link java.util.Date} object.

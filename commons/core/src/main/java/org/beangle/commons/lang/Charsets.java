@@ -23,7 +23,7 @@ import java.nio.charset.Charset;
 /**
  * Contains constant definitions for the six standard {@link Charset} instances, which are
  * guaranteed to be supported by all Java platform implementations.
- * 
+ *
  * @author chaostone
  * @since 3.1
  */

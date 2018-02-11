@@ -25,7 +25,7 @@ import org.beangle.commons.transfer.exporter.DefaultPropertyExtractor;
 
 /**
  * Property Extractor by Ognl.
- * 
+ *
  * @author chaostone
  * @version $Id: $
  * @since 3.2.0
@@ -51,7 +51,7 @@ public class OgnlPropertyExtractor extends DefaultPropertyExtractor {
    * <p>
    * extract.
    * </p>
-   * 
+   *
    * @param target a {@link java.lang.Object} object.
    * @param property a {@link java.lang.String} object.
    * @return a {@link java.lang.Object} object.

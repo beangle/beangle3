@@ -25,7 +25,7 @@ import org.beangle.commons.lang.Option;
 
 /**
  * Resource loader
- * 
+ *
  * @author chaostone
  * @since 3.3.0
  */

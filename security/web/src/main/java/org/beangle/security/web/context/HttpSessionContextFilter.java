@@ -59,7 +59,7 @@ import org.beangle.security.core.context.SecurityContextHolder;
  * processing mechanisms (eg BASIC, CAS processing filters etc) expect the
  * <code>SecurityContextHolder</code> to contain a valid <code>SecurityContext</code> by the time
  * they execute.
- * 
+ *
  * @author chaostone
  */
 

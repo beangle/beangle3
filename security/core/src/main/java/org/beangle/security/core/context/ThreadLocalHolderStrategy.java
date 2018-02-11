@@ -23,7 +23,7 @@ import org.beangle.commons.lang.Assert;
 /**
  * A <code>ThreadLocal</code>-based implementation of
  * {@link org.beangle.security.core.context.SecurityContextHolderStrategy}.
- * 
+ *
  * @author chaostone
  * @see java.lang.ThreadLocal
  */

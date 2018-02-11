@@ -27,7 +27,7 @@ public interface UserDataResolver {
 
   /**
    * Marshal list of objects to text format
-   * 
+   *
    * @param field
    * @param items
    */
@@ -35,7 +35,7 @@ public interface UserDataResolver {
 
   /**
    * Convert text to list of objects
-   * 
+   *
    * @param <T>
    * @param field
    * @param text

@@ -25,7 +25,7 @@ import java.util.List;
  * <p>
  * Message class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -39,7 +39,7 @@ public class Message {
    * <p>
    * Constructor for Message.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    * @param params a {@link java.util.List} object.
    */
@@ -53,7 +53,7 @@ public class Message {
    * <p>
    * Constructor for Message.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    * @param objs an array of {@link java.lang.Object} objects.
    */
@@ -72,7 +72,7 @@ public class Message {
    * <p>
    * Constructor for Message.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    */
   public Message(String key) {
@@ -84,7 +84,7 @@ public class Message {
    * <p>
    * Getter for the field <code>key</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getKey() {
@@ -95,7 +95,7 @@ public class Message {
    * <p>
    * Getter for the field <code>params</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   public List<Object> getParams() {
@@ -106,7 +106,7 @@ public class Message {
    * <p>
    * Setter for the field <code>key</code>.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    */
   public void setKey(String key) {
@@ -117,7 +117,7 @@ public class Message {
    * <p>
    * Setter for the field <code>params</code>.
    * </p>
-   * 
+   *
    * @param params a {@link java.util.List} object.
    */
   public void setParams(List<Object> params) {

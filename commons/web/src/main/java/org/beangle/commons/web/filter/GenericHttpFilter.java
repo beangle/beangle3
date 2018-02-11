@@ -60,7 +60,7 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    * <p>
    * Only relevant in case of initialization as bean, where the standard
    * <code>init(FilterConfig)</code> method won't be called.
-   * 
+   *
    * @see #initFilterBean()
    * @see #init(javax.servlet.FilterConfig)
    */
@@ -76,7 +76,7 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    * <p>
    * This method is only relevant in case of traditional initialization driven by a FilterConfig
    * instance.
-   * 
+   *
    * @param property
    *          name of the required property
    */
@@ -87,7 +87,7 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
   /**
    * Standard way of initializing this filter. Map config parameters onto bean
    * properties of this filter, and invoke subclass initialization.
-   * 
+   *
    * @param filterConfig
    *          the configuration for this filter
    * @throws ServletException
@@ -137,7 +137,7 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    * <p>
    * Public to resemble the <code>getFilterConfig()</code> method of the Servlet Filter version that
    * shipped with WebLogic 6.1.
-   * 
+   *
    * @return the FilterConfig instance, or <code>null</code> if none available
    * @see javax.servlet.GenericServlet#getServletConfig()
    */
@@ -151,7 +151,7 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    * <p>
    * Takes the FilterConfig's filter name by default. If initialized as bean in application context,
    * it falls back to the bean name as defined in the bean factory.
-   * 
+   *
    * @return the filter name, or <code>null</code> if none available
    * @see javax.servlet.GenericServlet#getServletName()
    * @see javax.servlet.FilterConfig#getFilterName()
@@ -166,7 +166,7 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    * <p>
    * Takes the FilterConfig's ServletContext by default. If initialized as bean in application
    * context, it falls back to the ServletContext that the bean factory runs in.
-   * 
+   *
    * @return the ServletContext instance, or <code>null</code> if none
    *         available
    * @see javax.servlet.GenericServlet#getServletContext()
@@ -186,7 +186,7 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    * both cases.
    * <p>
    * This default implementation is empty.
-   * 
+   *
    * @throws ServletException
    *           if subclass initialization fails
    * @see #getFilterName()

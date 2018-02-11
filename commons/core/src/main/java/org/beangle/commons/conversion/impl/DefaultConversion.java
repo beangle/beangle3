@@ -32,7 +32,7 @@ import org.beangle.commons.conversion.converter.String2NumberConverter;
  * <p>
  * It register String to Boolean/Number/Date/Locale, Number to Number and Object to String buildin
  * converters.
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

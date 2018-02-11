@@ -194,7 +194,7 @@ public class BeangleTagLibraryTest {
 
   /**
    * borrow from com.opensymphony.xwork2.config.impl.DefaultConfiguration.createBootstrapContainer
-   * 
+   *
    * @return
    */
   private Container buildContainer() {

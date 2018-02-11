@@ -20,7 +20,7 @@ package org.beangle.security.web.util;
 
 /**
  * Interface for handlers extracting the cause out of a specific {@link Throwable} type.
- * 
+ *
  * @author Andreas Senft
  * @since 2.0
  * @version $Id: ThrowableCauseExtractor.java 2559 2008-01-30 16:15:02Z $
@@ -30,7 +30,7 @@ public interface ThrowableCauseExtractor {
 
   /**
    * Extracts the cause from the provided <code>Throwable</code>.
-   * 
+   *
    * @param throwable
    *          the <code>Throwable</code>
    * @return the extracted cause (maybe <code>null</code>)

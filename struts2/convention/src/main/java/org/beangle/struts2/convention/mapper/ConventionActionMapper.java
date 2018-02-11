@@ -35,7 +35,7 @@ import com.opensymphony.xwork2.config.ConfigurationManager;
  * <li>可以接受method=的形式重新指定方法<br>
  * <li>默认使用action!method的方式进行uri生成
  * </ul>
- * 
+ *
  * @author chaostone
  * @since 2.0
  */

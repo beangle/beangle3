@@ -25,7 +25,7 @@ import org.beangle.security.blueprint.Role;
 
 /**
  * Menu profile.
- * 
+ *
  * @author chaostone
  * @since 2.0
  */

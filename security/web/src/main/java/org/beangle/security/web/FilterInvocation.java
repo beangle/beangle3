@@ -53,7 +53,7 @@ public class FilterInvocation {
 
   /**
    * Indicates the URL that the user agent used for this request.
-   * 
+   *
    * @return the full URL of this request
    */
   public String getFullRequestUrl() {
@@ -79,7 +79,7 @@ public class FilterInvocation {
 
   /**
    * Obtains the web application-specific fragment of the URL.
-   * 
+   *
    * @return the URL, excluding any server name, context path or servlet path
    */
   public String getRequestUrl() {

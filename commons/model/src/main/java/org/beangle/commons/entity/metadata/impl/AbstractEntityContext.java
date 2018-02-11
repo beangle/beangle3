@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Abstract AbstractEntityContext class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -80,7 +80,7 @@ public abstract class AbstractEntityContext implements EntityContext {
    * <p>
    * getEntityType.
    * </p>
-   * 
+   *
    * @param entityClass a {@link java.lang.Class} object.
    * @return a {@link org.beangle.commons.entity.metadata.EntityType} object.
    */

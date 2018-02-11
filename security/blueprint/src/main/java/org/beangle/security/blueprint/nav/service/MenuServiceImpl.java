@@ -119,7 +119,7 @@ public class MenuServiceImpl extends AbstractHierarchyService<MenuBean> implemen
 
   /**
    * 添加父菜单并且排序
-   * 
+   *
    * @param menus
    */
   private List<Menu> addParentMenus(Set<Menu> menus) {

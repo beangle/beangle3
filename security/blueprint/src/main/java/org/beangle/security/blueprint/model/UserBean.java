@@ -43,7 +43,7 @@ import org.beangle.security.blueprint.UserProfile;
 /**
  * 系统用户
  * 记录账号、权限、状态信息.
- * 
+ *
  * @author dell,chaostone 2005-9-26
  */
 @Entity(name = "org.beangle.security.blueprint.User")

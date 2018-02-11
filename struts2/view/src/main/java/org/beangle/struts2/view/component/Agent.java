@@ -24,7 +24,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 /**
  * Useragent specific javascript
- * 
+ *
  * @author chaostone
  * @since 3.0.1
  */

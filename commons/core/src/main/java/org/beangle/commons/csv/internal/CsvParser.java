@@ -27,7 +27,7 @@ import org.beangle.commons.csv.CsvFormat;
 /**
  * A very simple CSV parser released under a commercial-friendly license. This
  * just implements splitting a single line into fields.
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -48,7 +48,7 @@ public class CsvParser {
    * <p>
    * Constructor for CsvParser.
    * </p>
-   * 
+   *
    * @param format a {@link org.beangle.commons.csv.CsvFormat} object.
    */
   public CsvParser(CsvFormat format) {
@@ -59,7 +59,7 @@ public class CsvParser {
    * <p>
    * isPending.
    * </p>
-   * 
+   *
    * @return true if something was left over from last call(s)
    */
   public boolean isPending() {
@@ -70,7 +70,7 @@ public class CsvParser {
    * <p>
    * parseLineMulti.
    * </p>
-   * 
+   *
    * @param nextLine a {@link java.lang.String} object.
    * @return an array of {@link java.lang.String} objects.
    */
@@ -82,7 +82,7 @@ public class CsvParser {
    * <p>
    * parseLine.
    * </p>
-   * 
+   *
    * @param nextLine a {@link java.lang.String} object.
    * @return an array of {@link java.lang.String} objects.
    */
@@ -92,7 +92,7 @@ public class CsvParser {
 
   /**
    * Parses an incoming String and returns an array of elements.
-   * 
+   *
    * @param nextLine
    *          the string to parse
    * @param multi
@@ -193,7 +193,7 @@ public class CsvParser {
 
   /**
    * precondition: the current character is a quote or an escape
-   * 
+   *
    * @param nextLine the current line
    * @param inQuotes true if the current context is quoted
    * @param i current index in line
@@ -209,7 +209,7 @@ public class CsvParser {
 
   /**
    * precondition: the current character is an escape
-   * 
+   *
    * @param nextLine the current line
    * @param inQuotes true if the current context is quoted
    * @param i current index in line
@@ -225,7 +225,7 @@ public class CsvParser {
 
   /**
    * precondition: sb.length() > 0
-   * 
+   *
    * @param sb A sequence of characters to examine
    * @return true if every character in the sequence is whitespace
    */

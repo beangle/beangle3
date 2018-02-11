@@ -39,7 +39,7 @@ import org.beangle.commons.text.inflector.rule.SuffixInflectionRule;
  * <p>
  * EnNounPluralizer class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

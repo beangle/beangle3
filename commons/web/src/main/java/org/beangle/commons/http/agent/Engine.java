@@ -24,7 +24,7 @@ import org.beangle.commons.collection.CollectUtils;
 
 /**
  * Browser Render Engine.
- * 
+ *
  * @author chaostone
  * @since 2.1
  */

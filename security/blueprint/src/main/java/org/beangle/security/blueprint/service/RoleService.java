@@ -36,7 +36,7 @@ public interface RoleService {
 
   /**
    * 创建一个角色
-   * 
+   *
    * @param creator
    * @param role
    */
@@ -45,7 +45,7 @@ public interface RoleService {
   /**
    * 删除管理者与角色的管理关系，如果该角色为其所创建则彻底删除. 1)超级管理员不能被删除.<br>
    * 2)如果删除人有超级管理员角色，则可以删除不是自己创建的角色
-   * 
+   *
    * @param manager
    * @param roles
    */
@@ -53,7 +53,7 @@ public interface RoleService {
 
   /**
    * 移动组
-   * 
+   *
    * @param role
    * @param parent
    * @param indexno
@@ -62,7 +62,7 @@ public interface RoleService {
 
   /**
    * Returns true if user has administrative permission on role
-   * 
+   *
    * @param user
    * @param role
    * @return
@@ -71,7 +71,7 @@ public interface RoleService {
 
   /**
    * 查询根用户
-   * 
+   *
    * @return
    */
   List<Role> getRootRoles();

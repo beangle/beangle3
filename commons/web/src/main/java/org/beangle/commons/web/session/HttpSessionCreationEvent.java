@@ -24,7 +24,7 @@ import org.beangle.commons.event.Event;
 
 /**
  * HttpSession Creation Event
- * 
+ *
  * @author chaostone
  */
 public class HttpSessionCreationEvent extends Event {

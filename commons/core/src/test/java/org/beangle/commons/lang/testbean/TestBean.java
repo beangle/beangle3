@@ -101,5 +101,5 @@ public class TestBean {
   public void setB(String b) {
     B = b;
   }
-  
+
 }

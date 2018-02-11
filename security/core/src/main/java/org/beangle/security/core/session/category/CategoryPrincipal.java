@@ -20,7 +20,7 @@ package org.beangle.security.core.session.category;
 
 /**
  * 分类帐户
- * 
+ *
  * @author chaostone
  */
 public interface CategoryPrincipal {

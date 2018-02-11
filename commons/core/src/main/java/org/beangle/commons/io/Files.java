@@ -34,7 +34,7 @@ import org.beangle.commons.lang.Assert;
 
 /**
  * File Operation Utility
- * 
+ *
  * @author chaostone
  * @since 3.1
  */
@@ -102,7 +102,7 @@ public class Files {
    * <strong>Note:</strong> This method tries to preserve the file's last modified date/times using
    * {@link File#setLastModified(long)}, however it is not guaranteed that the operation will
    * succeed. If the modification operation fails, no indication is provided.
-   * 
+   *
    * @param srcFile an existing file to copy, must not be <code>null</code>
    * @param destFile the new file, must not be <code>null</code>
    * @throws NullPointerException if source or destination is <code>null</code>

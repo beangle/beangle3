@@ -235,14 +235,14 @@ div.message img.icon {
 }
 
 .formTable .thead {
-    color: #000000; 
-    text-decoration: none; 
+    color: #000000;
+    text-decoration: none;
     letter-spacing:0;
     background-color: #c7dbff;
     font-weight:bolder;
 }
 .formTable .tfoot{
-    color: #000000; 
+    color: #000000;
     text-decoration: none;
     text-align:center;
     letter-spacing:0;
@@ -256,8 +256,8 @@ div.message img.icon {
     border-right-width:1px;
     border-bottom-width:1px;
     border-color:#006CB2;
-    color: #000000; 
-    text-decoration: none; 
+    color: #000000;
+    text-decoration: none;
     letter-spacing:0;
 }
 
@@ -319,14 +319,14 @@ table.infoTable th {
     border-width:0px;
     border-right-width:1px;
     border-color:#006CB2;
-    vertical-align: top; 
+    vertical-align: top;
     background-color: #E1ECFF;
     width:170px;
 }
 
 .index_content{
     vertical-align: top;
-    padding:0; 
+    padding:0;
 }
 
 .index_title{
@@ -354,14 +354,14 @@ table.settingTable td{
 
 /** 验证框架使用的两个class */
 .tfvHighlight {
-    font-weight: bold; 
-    color: red; 
+    font-weight: bold;
+    color: red;
     background-color: #EBEBEB;
     /*text-align: right;*/
 }
 .tfvNormal {
     font-weight: normal;
-    color: black; 
+    color: black;
 }
 
 /*
@@ -493,18 +493,17 @@ form.listform li.foot {
     padding-left: 110px;
 }
 
-
 /*
  * Module UI Style
  */
 .module{margin:0px 3px 5px;line-height:1.3em;float:left;width:49%;}
-.modulebody{display:block;padding:4px 8px;background:#e0ecff;} 
+.modulebody{display:block;padding:4px 8px;background:#e0ecff;}
 .collapsed .modulebody,.collapsed .collapsed{display:none}
 .header{background:#94aef3;margin:0;padding:0;font-size:100%;line-height:1.2em}
 .expanded .header,.collapsed .header{
     background-image:url("images/arrow_down.gif");
     background-repeat:no-repeat;background-position:4px 45%
-} 
+}
 .collapsed .header{background-image:url("images/arrow_right.gif")}
 .header .toggle,.header .toggle:visited{
     display:block;padding:4px;text-decoration:none;color:#000
@@ -516,45 +515,45 @@ form.listform li.foot {
 .module h3{margin:0;padding:2px 0;font-size:100%}
 .module h3 a,.module h3 em{font-weight:normal;font-style:normal}
 .subtitle {margin:0;padding:3px 4px 2px;font-size:100%}
-.subtitle em{font-style:normal;font-weight:normal} .data .subtitle{padding-left:0}  
-.header{background-image:none} 
-.field{margin-top:2px;padding-top:2px} 
+.subtitle em{font-style:normal;font-weight:normal} .data .subtitle{padding-left:0}
+.header{background-image:none}
+.field{margin-top:2px;padding-top:2px}
 
 .icon-action{background-image: url(icons/16x16/actions.png);display:inline-block;vertical-align:bottom;margin-top:2px;margin-right:2px;border:0px}
-.action-activate{ background-position: 0 0; width: 16px; height: 16px; } 
-.action-backward{ background-position: -66px 0; width: 16px; height: 16px; } 
-.action-close{ background-position: -132px 0; width: 16px; height: 16px; } 
-.action-config{ background-position: -198px 0; width: 16px; height: 16px; } 
-.action-default{ background-position: -264px 0; width: 16px; height: 16px; } 
-.action-downarrow{ background-position: -330px 0; width: 8px; height: 8px; } 
-.action-download{ background-position: -388px 0; width: 16px; height: 16px; } 
-.action-edit-copy{ background-position: -454px 0; width: 16px; height: 16px; } 
-.action-edit-cut{ background-position: -520px 0; width: 16px; height: 16px; } 
-.action-edit-delete{ background-position: -586px 0; width: 16px; height: 16px; } 
-.action-edit-find{ background-position: -652px 0; width: 16px; height: 16px; } 
-.action-excel{ background-position: -718px 0; width: 16px; height: 16px; } 
-.action-freeze{ background-position: -784px 0; width: 16px; height: 16px; } 
-.action-go-first{ background-position: -850px 0; width: 16px; height: 16px; } 
-.action-go-home{ background-position: -916px 0; width: 16px; height: 16px; } 
-.action-go-jump{ background-position: -982px 0; width: 16px; height: 16px; } 
-.action-go-last{ background-position: -1048px 0; width: 16px; height: 16px; } 
-.action-go-next{ background-position: -1114px 0; width: 16px; height: 16px; } 
-.action-go-previous{ background-position: -1180px 0; width: 16px; height: 16px; } 
-.action-help-contents{ background-position: -1246px 0; width: 16px; height: 16px; } 
-.action-inbox{ background-position: -1312px 0; width: 16px; height: 16px; } 
-.action-info{ background-position: -1378px 0; width: 16px; height: 16px; } 
-.action-list{ background-position: -1506px 0; width: 16px; height: 16px; } 
-.action-mail-reply{ background-position: -1572px 0; width: 16px; height: 16px; } 
-.action-new{ background-position: -1638px 0; width: 16px; height: 16px; } 
-.action-office-chart-area{ background-position: -1704px 0; width: 16px; height: 16px; } 
-.action-office-chart-line{ background-position: -1770px 0; width: 16px; height: 16px; } 
-.action-office-chart-pie{ background-position: -1836px 0; width: 16px; height: 16px; } 
-.action-paperclip{ background-position: -1902px 0; width: 15px; height: 15px; } 
-.action-print{ background-position: 0 -66px; width: 16px; height: 16px; } 
-.action-refresh{ background-position: -66px -66px; width: 16px; height: 16px; } 
-.action-save{ background-position: -132px -66px; width: 16px; height: 16px; } 
-.action-sort-asc{ background-position: -198px -66px; width: 10px; height: 5px; } 
-.action-sort-desc{ background-position: -258px -66px; width: 10px; height: 5px; } 
-.action-update{ background-position: -318px -66px; width: 16px; height: 16px; } 
-.action-user-logout{ background-position: -384px -66px; width: 16px; height: 16px; } 
-.action-user-trash{ background-position: -450px -66px; width: 16px; height: 16px; } 
+.action-activate{ background-position: 0 0; width: 16px; height: 16px; }
+.action-backward{ background-position: -66px 0; width: 16px; height: 16px; }
+.action-close{ background-position: -132px 0; width: 16px; height: 16px; }
+.action-config{ background-position: -198px 0; width: 16px; height: 16px; }
+.action-default{ background-position: -264px 0; width: 16px; height: 16px; }
+.action-downarrow{ background-position: -330px 0; width: 8px; height: 8px; }
+.action-download{ background-position: -388px 0; width: 16px; height: 16px; }
+.action-edit-copy{ background-position: -454px 0; width: 16px; height: 16px; }
+.action-edit-cut{ background-position: -520px 0; width: 16px; height: 16px; }
+.action-edit-delete{ background-position: -586px 0; width: 16px; height: 16px; }
+.action-edit-find{ background-position: -652px 0; width: 16px; height: 16px; }
+.action-excel{ background-position: -718px 0; width: 16px; height: 16px; }
+.action-freeze{ background-position: -784px 0; width: 16px; height: 16px; }
+.action-go-first{ background-position: -850px 0; width: 16px; height: 16px; }
+.action-go-home{ background-position: -916px 0; width: 16px; height: 16px; }
+.action-go-jump{ background-position: -982px 0; width: 16px; height: 16px; }
+.action-go-last{ background-position: -1048px 0; width: 16px; height: 16px; }
+.action-go-next{ background-position: -1114px 0; width: 16px; height: 16px; }
+.action-go-previous{ background-position: -1180px 0; width: 16px; height: 16px; }
+.action-help-contents{ background-position: -1246px 0; width: 16px; height: 16px; }
+.action-inbox{ background-position: -1312px 0; width: 16px; height: 16px; }
+.action-info{ background-position: -1378px 0; width: 16px; height: 16px; }
+.action-list{ background-position: -1506px 0; width: 16px; height: 16px; }
+.action-mail-reply{ background-position: -1572px 0; width: 16px; height: 16px; }
+.action-new{ background-position: -1638px 0; width: 16px; height: 16px; }
+.action-office-chart-area{ background-position: -1704px 0; width: 16px; height: 16px; }
+.action-office-chart-line{ background-position: -1770px 0; width: 16px; height: 16px; }
+.action-office-chart-pie{ background-position: -1836px 0; width: 16px; height: 16px; }
+.action-paperclip{ background-position: -1902px 0; width: 15px; height: 15px; }
+.action-print{ background-position: 0 -66px; width: 16px; height: 16px; }
+.action-refresh{ background-position: -66px -66px; width: 16px; height: 16px; }
+.action-save{ background-position: -132px -66px; width: 16px; height: 16px; }
+.action-sort-asc{ background-position: -198px -66px; width: 10px; height: 5px; }
+.action-sort-desc{ background-position: -258px -66px; width: 10px; height: 5px; }
+.action-update{ background-position: -318px -66px; width: 16px; height: 16px; }
+.action-user-logout{ background-position: -384px -66px; width: 16px; height: 16px; }
+.action-user-trash{ background-position: -450px -66px; width: 16px; height: 16px; }

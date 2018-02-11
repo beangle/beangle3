@@ -24,14 +24,14 @@ import org.beangle.security.core.Authentication;
 
 /**
  * 记录session信息的注册表
- * 
+ *
  * @author chaostone
  */
 public interface SessionRegistry {
 
   /**
    * 注册
-   * 
+   *
    * @param authentication
    * @param sessionid
    */
@@ -39,7 +39,7 @@ public interface SessionRegistry {
 
   /**
    * 注销指定sessionid
-   * 
+   *
    * @param sessionid
    */
   Sessioninfo remove(String sessionid);
@@ -47,14 +47,14 @@ public interface SessionRegistry {
   /**
    * 过期指定会话
    * Return true is expire success
-   * 
+   *
    * @param sessionid
    */
   boolean expire(String sessionid);
 
   /**
    * 查询某帐号的在线信息
-   * 
+   *
    * @param principal
    * @param includeExpiredSessions
    */
@@ -62,21 +62,21 @@ public interface SessionRegistry {
 
   /**
    * 查询对应sessionid的信息
-   * 
+   *
    * @param sessionid
    */
   Sessioninfo getSessioninfo(String sessionid);
 
   /**
    * 查询会话状态
-   * 
+   *
    * @param sessionid
    */
   SessionStatus getSessionStatus(String sessionid);
 
   /**
    * 查询帐号是否还有没有过期的在线记录
-   * 
+   *
    * @param principal
    */
   boolean isRegisted(String principal);
@@ -88,7 +88,7 @@ public interface SessionRegistry {
 
   /**
    * 更新对应sessionId的最后访问时间
-   * 
+   *
    * @param sessionid
    */
   void access(String sessionid, long accessAt);

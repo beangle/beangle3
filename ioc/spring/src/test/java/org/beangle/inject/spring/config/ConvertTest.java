@@ -30,7 +30,7 @@ public class ConvertTest {
   public void testSpring() {
     DefaultConversionService conversion = new DefaultConversionService();
     Assert.assertEquals(conversion.convert("4.5", Number.class), new BigDecimal("4.5"));
-    
+
     Assert.assertEquals((boolean)conversion.convert("true", boolean.class), true);
   }
 }

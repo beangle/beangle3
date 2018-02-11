@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Excel的每行一条数据的读取器
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -92,7 +92,7 @@ public class ExcelItemReader implements ItemReader {
    * <p>
    * Constructor for ExcelItemReader.
    * </p>
-   * 
+   *
    * @param is a {@link java.io.InputStream} object.
    */
   public ExcelItemReader(InputStream is) {
@@ -103,7 +103,7 @@ public class ExcelItemReader implements ItemReader {
    * <p>
    * Constructor for ExcelItemReader.
    * </p>
-   * 
+   *
    * @param is a {@link java.io.InputStream} object.
    * @param headIndex a int.
    */
@@ -119,7 +119,7 @@ public class ExcelItemReader implements ItemReader {
    * <p>
    * Constructor for ExcelItemReader.
    * </p>
-   * 
+   *
    * @param workbook a {@link org.apache.poi.hssf.usermodel.HSSFWorkbook} object.
    * @param headIndex a int.
    */
@@ -139,7 +139,7 @@ public class ExcelItemReader implements ItemReader {
    * <p>
    * Setter for the field <code>workbook</code>.
    * </p>
-   * 
+   *
    * @param wb a {@link org.apache.poi.hssf.usermodel.HSSFWorkbook} object.
    */
   public void setWorkbook(HSSFWorkbook wb) {
@@ -148,7 +148,7 @@ public class ExcelItemReader implements ItemReader {
 
   /**
    * 描述放在第一行
-   * 
+   *
    * @return an array of {@link java.lang.String} objects.
    */
   public String[] readDescription() {
@@ -164,7 +164,7 @@ public class ExcelItemReader implements ItemReader {
    * <p>
    * readTitle.
    * </p>
-   * 
+   *
    * @return an array of {@link java.lang.String} objects.
    */
   public String[] readTitle() {
@@ -180,7 +180,7 @@ public class ExcelItemReader implements ItemReader {
 
   /**
    * 遇到空白单元格停止的读行操作
-   * 
+   *
    * @param sheet a {@link org.apache.poi.hssf.usermodel.HSSFSheet} object.
    * @param rowIndex a int.
    * @return an array of {@link java.lang.String} objects.
@@ -212,7 +212,7 @@ public class ExcelItemReader implements ItemReader {
    * <p>
    * read.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Object} object.
    */
   public Object read() {
@@ -234,7 +234,7 @@ public class ExcelItemReader implements ItemReader {
 
   /**
    * 取cell单元格中的数据
-   * 
+   *
    * @param cell a {@link org.apache.poi.hssf.usermodel.HSSFCell} object.
    * @return a {@link java.lang.Object} object.
    */
@@ -263,7 +263,7 @@ public class ExcelItemReader implements ItemReader {
    * <p>
    * getFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public TransferFormat getFormat() {
@@ -274,7 +274,7 @@ public class ExcelItemReader implements ItemReader {
    * <p>
    * Getter for the field <code>headIndex</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getHeadIndex() {
@@ -293,7 +293,7 @@ public class ExcelItemReader implements ItemReader {
    * <p>
    * Getter for the field <code>dataIndex</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getDataIndex() {

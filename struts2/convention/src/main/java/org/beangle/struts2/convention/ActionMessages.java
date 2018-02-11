@@ -25,7 +25,7 @@ import org.beangle.commons.collection.CollectUtils;
 
 /**
  * Store action message and error
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

@@ -32,7 +32,7 @@ import org.beangle.security.blueprint.User;
 
 /**
  * 角色成员关系
- * 
+ *
  * @author chaostone
  * @version $Id: MemberBean.java Nov 2, 2010 6:45:48 PM chaostone $
  */

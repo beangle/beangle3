@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * 转换结果
- * 
+ *
  * @author chaostone
  */
 public class TransferResult {

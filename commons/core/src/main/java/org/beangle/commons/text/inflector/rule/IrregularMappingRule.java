@@ -25,7 +25,7 @@ import java.util.regex.Matcher;
  * <p>
  * IrregularMappingRule class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -37,7 +37,7 @@ public class IrregularMappingRule extends AbstractRegexReplacementRule {
    * <p>
    * Construct a rule using the given regular expression and irregular forms map.
    * </p>
-   * 
+   *
    * @param wordMappings
    *          the map of singular to plural forms
    * @param regex

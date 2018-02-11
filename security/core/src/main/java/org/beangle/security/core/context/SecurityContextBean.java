@@ -25,7 +25,7 @@ import org.beangle.security.core.Authentication;
  * <p>
  * Used by default by {@link SecurityContextHolder}.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: SecurityContextImpl.java 2217 2007-10-27 00:45:30Z $
  */

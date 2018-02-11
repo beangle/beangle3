@@ -28,17 +28,17 @@ import org.beangle.commons.lang.Strings;
  * 查询条件 使用例子如下
  * <p>
  * <blockquote>
- * 
+ *
  * <pre>
  *      new Condition(&quot;std.id=?&quot;,new Long(2));
  *      或者 Condition(&quot;std.id=:std_id&quot;,new Long(2));
  *      ?绑定单值.命名参数允许绑定多值.但是只能由字母,数组和下划线组成
  *      一组condition只能采取上面一种形式
  * </pre>
- * 
+ *
  * </blockquote>
  * <p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -52,7 +52,7 @@ public class Condition {
    * <p>
    * Constructor for Condition.
    * </p>
-   * 
+   *
    * @param content a {@link java.lang.String} object.
    */
   public Condition(final String content) {
@@ -63,7 +63,7 @@ public class Condition {
    * <p>
    * Constructor for Condition.
    * </p>
-   * 
+   *
    * @param content a {@link java.lang.String} object.
    * @param param1 a {@link java.lang.Object} object.
    */
@@ -76,7 +76,7 @@ public class Condition {
    * <p>
    * Constructor for Condition.
    * </p>
-   * 
+   *
    * @param content a {@link java.lang.String} object.
    * @param param1 a {@link java.lang.Object} object.
    * @param param2 a {@link java.lang.Object} object.
@@ -89,7 +89,7 @@ public class Condition {
    * <p>
    * Constructor for Condition.
    * </p>
-   * 
+   *
    * @param content a {@link java.lang.String} object.
    * @param param1 a {@link java.lang.Object} object.
    * @param param2 a {@link java.lang.Object} object.
@@ -106,7 +106,7 @@ public class Condition {
    * <p>
    * Getter for the field <code>content</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getContent() {
@@ -117,7 +117,7 @@ public class Condition {
    * <p>
    * Getter for the field <code>params</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   public List<Object> getParams() {
@@ -128,7 +128,7 @@ public class Condition {
    * <p>
    * isNamed.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isNamed() {
@@ -137,7 +137,7 @@ public class Condition {
 
   /**
    * 得到查询条件中所有的命名参数.
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   public List<String> getParamNames() {
@@ -174,7 +174,7 @@ public class Condition {
    * <p>
    * param.
    * </p>
-   * 
+   *
    * @param value a {@link java.lang.Object} object.
    * @return a {@link org.beangle.commons.dao.query.builder.Condition} object.
    */
@@ -187,7 +187,7 @@ public class Condition {
    * <p>
    * params.
    * </p>
-   * 
+   *
    * @param values a {@link java.util.List} object.
    * @return a {@link org.beangle.commons.dao.query.builder.Condition} object.
    */
@@ -201,7 +201,7 @@ public class Condition {
    * <p>
    * toString.
    * </p>
-   * 
+   *
    * @see java.lang.Object#toString()
    * @return a {@link java.lang.String} object.
    */
@@ -226,7 +226,7 @@ public class Condition {
    * <p>
    * hashCode.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int hashCode() {
@@ -242,7 +242,7 @@ public class Condition {
    * <p>
    * eq.
    * </p>
-   * 
+   *
    * @param content a {@link java.lang.String} object.
    * @param value a {@link java.lang.Number} object.
    * @return a {@link org.beangle.commons.dao.query.builder.Condition} object.
@@ -255,7 +255,7 @@ public class Condition {
    * <p>
    * eq.
    * </p>
-   * 
+   *
    * @param content a {@link java.lang.String} object.
    * @param value a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.Condition} object.
@@ -263,19 +263,19 @@ public class Condition {
   public static Condition eq(final String content, final String value) {
     int attrIndex = content.lastIndexOf('.');
     String paramName = ":" + (
-          attrIndex == -1 ? 
-              content + System.currentTimeMillis() 
+          attrIndex == -1 ?
+              content + System.currentTimeMillis()
               : content.substring(attrIndex + 1) + System.currentTimeMillis()
           );
     return new Condition(content + " = " + paramName, value);
-    
+
   }
 
   /**
    * <p>
    * le.
    * </p>
-   * 
+   *
    * @param content a {@link java.lang.String} object.
    * @param value a {@link java.lang.Number} object.
    * @return a {@link org.beangle.commons.dao.query.builder.Condition} object.
@@ -288,7 +288,7 @@ public class Condition {
    * <p>
    * ge.
    * </p>
-   * 
+   *
    * @param content a {@link java.lang.String} object.
    * @param value a {@link java.lang.Number} object.
    * @return a {@link org.beangle.commons.dao.query.builder.Condition} object.
@@ -301,7 +301,7 @@ public class Condition {
    * <p>
    * ne.
    * </p>
-   * 
+   *
    * @param content a {@link java.lang.String} object.
    * @param value a {@link java.lang.Number} object.
    * @return a {@link org.beangle.commons.dao.query.builder.Condition} object.
@@ -314,7 +314,7 @@ public class Condition {
    * <p>
    * like.
    * </p>
-   * 
+   *
    * @param content a {@link java.lang.String} object.
    * @param value a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.Condition} object.
@@ -322,11 +322,11 @@ public class Condition {
   public static Condition like(final String content, final String value) {
     int attrIndex = content.lastIndexOf('.');
     String paramName = ":" + (
-          attrIndex == -1 ? 
-              content + System.currentTimeMillis() 
+          attrIndex == -1 ?
+              content + System.currentTimeMillis()
               : content.substring(attrIndex + 1) + System.currentTimeMillis()
           );
     return new Condition(content + " like " + paramName, "%" + value + "%");
   }
-  
+
 }

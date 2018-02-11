@@ -48,7 +48,7 @@ public class Os implements Serializable, Comparable<Os> {
   /**
    * Parses user agent string and returns the best match. Returns Os.UNKNOWN
    * if there is no match.
-   * 
+   *
    * @param agentString
    * @return Os
    */

@@ -26,7 +26,7 @@ import org.beangle.commons.collection.CollectUtils;
  * <p>
  * MultiLevelSeqGenerator class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -38,7 +38,7 @@ public class MultiLevelSeqGenerator {
    * <p>
    * getSytle.
    * </p>
-   * 
+   *
    * @param level a int.
    * @return a {@link org.beangle.commons.text.seq.SeqPattern} object.
    */
@@ -50,7 +50,7 @@ public class MultiLevelSeqGenerator {
    * <p>
    * next.
    * </p>
-   * 
+   *
    * @param level a int.
    * @return a {@link java.lang.String} object.
    */
@@ -62,7 +62,7 @@ public class MultiLevelSeqGenerator {
    * <p>
    * add.
    * </p>
-   * 
+   *
    * @param style a {@link org.beangle.commons.text.seq.SeqPattern} object.
    */
   public void add(SeqPattern style) {
@@ -74,7 +74,7 @@ public class MultiLevelSeqGenerator {
    * <p>
    * reset.
    * </p>
-   * 
+   *
    * @param level a int.
    */
   public void reset(int level) {

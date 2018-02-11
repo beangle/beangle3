@@ -20,7 +20,7 @@ package org.beangle.commons.conversion;
 
 /**
  * convert a source to target type.
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

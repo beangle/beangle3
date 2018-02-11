@@ -25,7 +25,7 @@ import org.beangle.commons.lang.Strings;
 import org.beangle.commons.web.resource.PathResolver;
 
 public class PathResolverImpl implements PathResolver {
-  
+
   public List<String> resolve(String path) {
     String lastPostfix = "." + Strings.substringAfterLast(path, ".");
     String[] names = Strings.split(path, ",");

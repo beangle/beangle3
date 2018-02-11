@@ -27,7 +27,7 @@ import org.beangle.commons.collection.CollectUtils;
  * <p>
  * ConfigResource class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

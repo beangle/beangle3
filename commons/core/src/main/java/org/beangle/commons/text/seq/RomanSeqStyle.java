@@ -20,7 +20,7 @@ package org.beangle.commons.text.seq;
 
 /**
  * Roman sequence style
- * 
+ *
  * @author chaostone
  */
 public class RomanSeqStyle implements SeqNumStyle {

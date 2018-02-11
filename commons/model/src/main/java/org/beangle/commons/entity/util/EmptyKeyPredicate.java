@@ -25,7 +25,7 @@ import org.beangle.commons.lang.functor.Predicate;
  * <p>
  * EmptyKeyPredicate class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

@@ -22,21 +22,21 @@ package org.beangle.commons.event;
  * <p>
  * EventListener interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
 public interface EventListener<E extends Event> extends java.util.EventListener {
   /**
    * Handle an application event.
-   * 
+   *
    * @param event the event to respond to
    */
   void onEvent(E event);
 
   /**
    * Determine whether this listener actually supports the given event type.
-   * 
+   *
    * @param eventType a {@link java.lang.Class} object.
    * @return a boolean.
    */
@@ -44,7 +44,7 @@ public interface EventListener<E extends Event> extends java.util.EventListener 
 
   /**
    * Determine whether this listener actually supports the given source type.
-   * 
+   *
    * @param sourceType a {@link java.lang.Class} object.
    * @return a boolean.
    */

@@ -22,7 +22,7 @@ package org.beangle.commons.inject.bind;
  * <p>
  * BindModule interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -32,7 +32,7 @@ public interface BindModule {
    * <p>
    * getConfig.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.inject.bind.BeanConfig} object.
    */
   BeanConfig getConfig();

@@ -29,7 +29,7 @@ import org.beangle.commons.lang.Throwables;
  * <p>
  * ReflectHelper class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -40,7 +40,7 @@ public final class Reflections {
 
   /**
    * Return list of setters
-   * 
+   *
    * @param clazz
    */
   public static List<Method> getBeanSetters(Class<?> clazz) {

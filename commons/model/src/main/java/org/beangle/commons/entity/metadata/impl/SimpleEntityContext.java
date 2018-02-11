@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * SimpleEntityContext class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

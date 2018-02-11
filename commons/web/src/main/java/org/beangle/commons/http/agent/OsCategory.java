@@ -28,7 +28,7 @@ import org.beangle.commons.lang.tuple.Pair;
 
 /**
  * Enum constants for most common operating systems.
- * 
+ *
  * @author chaostone
  */
 public enum OsCategory {

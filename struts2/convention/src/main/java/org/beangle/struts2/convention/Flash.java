@@ -49,7 +49,7 @@ public class Flash implements Map<Object, Object>, Serializable {
 
   /**
    * return now and session saved value
-   * 
+   *
    * @param key
    */
   public Object get(Object key) {
@@ -58,7 +58,7 @@ public class Flash implements Map<Object, Object>, Serializable {
 
   /**
    * put value to next
-   * 
+   *
    * @param key
    * @param value
    */
@@ -118,7 +118,7 @@ public class Flash implements Map<Object, Object>, Serializable {
 
   /**
    * 添加消息到下一次请求
-   * 
+   *
    * @param message
    */
   public void addMessage(String message) {
@@ -132,7 +132,7 @@ public class Flash implements Map<Object, Object>, Serializable {
 
   /**
    * 添加错误消息到下一次请求
-   * 
+   *
    * @param error
    */
   public void addError(String error) {
@@ -146,7 +146,7 @@ public class Flash implements Map<Object, Object>, Serializable {
 
   /**
    * 添加消息到本次请求
-   * 
+   *
    * @param message
    */
   public void addMessageNow(String message) {
@@ -160,7 +160,7 @@ public class Flash implements Map<Object, Object>, Serializable {
 
   /**
    * 添加错误到本次请求
-   * 
+   *
    * @param message
    */
   public void addErrorNow(String message) {

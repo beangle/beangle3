@@ -36,7 +36,7 @@ import org.beangle.commons.lang.Objects;
  * </p>
  * 很对基础代码数据成员结构相似，仅在数据库中表名和列名 不一样，带都含有这些基类中规定的数据类型，所以把这种结构相似性抽出来，
  * 节省代码的编制量.每个子类代码仍要有自己的类型定义和数据库映射定义. 基类和数据库表没有映射关系，仅仅是数据抽象.
- * 
+ *
  * @author chaostone
  * @version $Id: BaseCode.java May 4, 2011 7:28:27 PM chaostone $
  */
@@ -111,7 +111,7 @@ public abstract class Code<T extends Number> extends NumberIdObject<T>
 
   /**
    * 获得代码
-   * 
+   *
    * @return 代码
    */
   public String getCode() {
@@ -120,7 +120,7 @@ public abstract class Code<T extends Number> extends NumberIdObject<T>
 
   /**
    * 设置代码
-   * 
+   *
    * @param code 代码
    */
   public void setCode(String code) {
@@ -129,7 +129,7 @@ public abstract class Code<T extends Number> extends NumberIdObject<T>
 
   /**
    * 获得名称
-   * 
+   *
    * @return 名称
    */
   public String getName() {
@@ -138,7 +138,7 @@ public abstract class Code<T extends Number> extends NumberIdObject<T>
 
   /**
    * 设置名称
-   * 
+   *
    * @param name 名称
    */
   public void setName(String name) {

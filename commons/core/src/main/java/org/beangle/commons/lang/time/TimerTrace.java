@@ -66,7 +66,7 @@ public final class TimerTrace {
   /**
    * Create and start a performance profiling with the <code>name</code> given. Deal with
    * profile hierarchy automatically, so caller don't have to be concern about it.
-   * 
+   *
    * @param name profile name
    */
   public static void start(String name) {
@@ -109,7 +109,7 @@ public final class TimerTrace {
 
   /**
    * Do a log (at INFO level) of the time taken for this particular profiling.
-   * 
+   *
    * @param currentTimer profiling timer bean
    */
   private static void printTimes(TimerNode currentTimer) {
@@ -120,7 +120,7 @@ public final class TimerTrace {
   /**
    * Get the min time for this profiling, it searches for a System property
    * 'beangle.profile.mintime' and default to 0.
-   * 
+   *
    * @return long
    */
   public static int getMinTime() {
@@ -129,7 +129,7 @@ public final class TimerTrace {
 
   /**
    * Change mintime
-   * 
+   *
    * @param mintime
    */
   public static void setMinTime(int mintime) {
@@ -140,7 +140,7 @@ public final class TimerTrace {
   /**
    * Determine if profiling is being activated, by searching for a system property
    * 'beangle.profile.activate', default to false (profiling is off).
-   * 
+   *
    * @return <tt>true</tt>, if active, <tt>false</tt> otherwise.
    */
   public static boolean isActive() {
@@ -149,7 +149,7 @@ public final class TimerTrace {
 
   /**
    * Turn profiling on or off.
-   * 
+   *
    * @param active
    */
   public static void setActive(boolean active) {

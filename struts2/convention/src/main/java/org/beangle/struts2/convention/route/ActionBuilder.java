@@ -22,7 +22,7 @@ public interface ActionBuilder {
 
   /**
    * 默认类名对应的控制器名称(含有扩展名)
-   * 
+   *
    * @param className
    */
   Action build(Class<?> clazz);

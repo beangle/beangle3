@@ -22,7 +22,7 @@ package org.beangle.commons.text.seq;
  * <p>
  * ArabicSeqStyle class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

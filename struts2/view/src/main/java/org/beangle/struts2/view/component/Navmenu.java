@@ -54,7 +54,7 @@ public class Navmenu extends ClosingUIBean {
 
   /**
    * 去除后缀比较是否是同一个resource(action!method)
-   * 
+   *
    * @param first
    * @param second
    */

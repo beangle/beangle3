@@ -31,7 +31,7 @@ public final class Locales {
    * Builds a {@link java.util.Locale} from a String of the form en_US_foo into a Locale
    * with language "en", country "US" and variant "foo". This will parse the output of
    * {@link java.util.Locale#toString()}.
-   * 
+   *
    * @param localeStr The locale String to parse.
    * @param defaultLocale The locale to use if localeStr is <tt>null</tt>.
    */

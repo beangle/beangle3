@@ -59,7 +59,7 @@ public class QueryHelper {
 
   /**
    * 把entity alias的别名的参数转换成条件.<br>
-   * 
+   *
    * @param entityQuery
    * @param exclusiveAttrNames
    *          以entityQuery中alias开头的属性串
@@ -71,7 +71,7 @@ public class QueryHelper {
 
   /**
    * 提取中的条件
-   * 
+   *
    * @param clazz
    * @param prefix
    * @param exclusiveAttrNames
@@ -157,7 +157,7 @@ public class QueryHelper {
 
   /**
    * 增加日期区间查询条件
-   * 
+   *
    * @param query
    * @param alias
    * @param attr 时间限制属性

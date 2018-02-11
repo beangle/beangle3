@@ -40,7 +40,7 @@ import org.beangle.security.blueprint.service.UserService;
 
 /**
  * 授权信息的服务实现类
- * 
+ *
  * @author dell,chaostone 2005-9-26
  */
 public class FuncPermissionServiceImpl extends BaseServiceImpl implements FuncPermissionService {

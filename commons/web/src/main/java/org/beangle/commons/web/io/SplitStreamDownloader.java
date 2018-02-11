@@ -35,25 +35,25 @@ import org.beangle.commons.lang.time.Stopwatch;
  * <p>
  * Split download senario like this:
  * <li>Server first response:200</li>
- * 
+ *
  * <pre>
  * Content-Length=106786028
  * Accept-Ranges=bytes
  * </pre>
- * 
+ *
  * <li>Client send request :</li>
- * 
+ *
  * <pre>
  * Range: bytes=2000070-106786027
  * </pre>
- * 
+ *
  * <li>Server send next response:206</li>
- * 
+ *
  * <pre>
  * Content-Length=106786028
  * Content-Range=bytes 2000070-106786027/106786028
  * </pre>
- * 
+ *
  * @author chaostone
  * @since 2.4
  */

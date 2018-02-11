@@ -51,7 +51,7 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
    * The Servlet spec requires that resource paths start with a slash, even if many containers
    * accept paths without leading slash too. Consequently, the given path will be prepended with a
    * slash if it doesn't already start with one.
-   * 
+   *
    * @param servletContext the ServletContext to load from
    * @param path the path of the resource
    */
@@ -85,7 +85,7 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
 
   /**
    * This implementation checks <code>ServletContext.getResource</code>.
-   * 
+   *
    * @see javax.servlet.ServletContext#getResource(String)
    */
   @Override
@@ -101,7 +101,7 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
   /**
    * This implementation delegates to <code>ServletContext.getResourceAsStream</code>,
    * but throws a FileNotFoundException if no resource found.
-   * 
+   *
    * @see javax.servlet.ServletContext#getResourceAsStream(String)
    */
   public InputStream getInputStream() throws IOException {
@@ -113,7 +113,7 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
   /**
    * This implementation delegates to <code>ServletContext.getResource</code>,
    * but throws a FileNotFoundException if no resource found.
-   * 
+   *
    * @see javax.servlet.ServletContext#getResource(String)
    */
   @Override
@@ -127,7 +127,7 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
   /**
    * This implementation delegates to <code>ServletContext.getRealPath</code>,
    * but throws a FileNotFoundException if not found or not resolvable.
-   * 
+   *
    * @see javax.servlet.ServletContext#getRealPath(String)
    */
   @Override

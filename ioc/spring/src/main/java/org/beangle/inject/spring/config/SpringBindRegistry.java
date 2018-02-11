@@ -39,7 +39,7 @@ import org.springframework.util.ClassUtils;
  * <p>
  * SpringBindRegistry class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -57,7 +57,7 @@ public class SpringBindRegistry implements BindRegistry {
    * <p>
    * getBeanNames.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Set} object.
    */
   public Set<String> getBeanNames() {
@@ -68,7 +68,7 @@ public class SpringBindRegistry implements BindRegistry {
    * <p>
    * Constructor for SpringBindRegistry.
    * </p>
-   * 
+   *
    * @param registry a {@link org.springframework.beans.factory.support.BeanDefinitionRegistry}
    *          object.
    */
@@ -147,7 +147,7 @@ public class SpringBindRegistry implements BindRegistry {
    * <p>
    * register.
    * </p>
-   * 
+   *
    * @param type a {@link java.lang.Class} object.
    * @param name a {@link java.lang.String} object.
    * @param args a {@link java.lang.Object} object.

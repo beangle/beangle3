@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 /**
  * Record timer nodes
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

@@ -22,7 +22,7 @@ import org.beangle.commons.conversion.Converter;
 
 /**
  * Convert String to Enumeration.
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

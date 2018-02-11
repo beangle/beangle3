@@ -26,7 +26,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Access Request
- * 
+ *
  * @author chaostone
  * @since 3.0.1
  */

@@ -72,7 +72,7 @@ public abstract class AbstractPreauthFilter extends GenericHttpFilter {
 
   /**
    * 是否应该尝试进行认证
-   * 
+   *
    * @param request
    * @param response
    */

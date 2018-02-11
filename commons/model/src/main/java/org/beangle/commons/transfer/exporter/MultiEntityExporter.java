@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * 多个实体集合导出器。
  * <p>
  * 每个实体的数据List组成一个新的List，作为导出的items.
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -58,7 +58,7 @@ public class MultiEntityExporter extends AbstractItemExporter {
    * <p>
    * beforeExport.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   @SuppressWarnings("unchecked")
@@ -103,7 +103,7 @@ public class MultiEntityExporter extends AbstractItemExporter {
    * <p>
    * Getter for the field <code>propertyExtractor</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.transfer.exporter.PropertyExtractor} object.
    */
   public PropertyExtractor getPropertyExtractor() {
@@ -114,7 +114,7 @@ public class MultiEntityExporter extends AbstractItemExporter {
    * <p>
    * Setter for the field <code>propertyExtractor</code>.
    * </p>
-   * 
+   *
    * @param propertyExporter a {@link org.beangle.commons.transfer.exporter.PropertyExtractor}
    *          object.
    */

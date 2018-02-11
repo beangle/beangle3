@@ -24,7 +24,7 @@ import java.util.Collection;
 
 /**
  * 认证信息
- * 
+ *
  * @author chaostone
  */
 public interface Authentication extends Principal, Serializable {

@@ -85,7 +85,7 @@ public class RoleServiceImpl extends AbstractHierarchyService<RoleBean> implemen
 
   /**
    * Returns true if user has administrative permission on role
-   * 
+   *
    * @param user
    * @param role
    */

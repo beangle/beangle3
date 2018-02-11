@@ -22,7 +22,7 @@ import java.util.Date;
 
 /**
  * 在线活动
- * 
+ *
  * @author chaostone
  */
 public interface Sessioninfo {
@@ -66,7 +66,7 @@ public interface Sessioninfo {
 
   /**
    * 添加备注
-   * 
+   *
    * @param added
    */
   Sessioninfo addRemark(String added);

@@ -30,7 +30,7 @@ import org.beangle.commons.transfer.io.Writer;
  * <p>
  * TemplateExporter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -58,7 +58,7 @@ public class TemplateExporter implements Exporter {
    * <p>
    * getCurrent.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Object} object.
    */
   public Object getCurrent() {
@@ -69,7 +69,7 @@ public class TemplateExporter implements Exporter {
    * <p>
    * getDataName.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getDataName() {
@@ -80,7 +80,7 @@ public class TemplateExporter implements Exporter {
    * <p>
    * getFail.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getFail() {
@@ -91,7 +91,7 @@ public class TemplateExporter implements Exporter {
    * <p>
    * getFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public TransferFormat getFormat() {
@@ -102,7 +102,7 @@ public class TemplateExporter implements Exporter {
    * <p>
    * getLocale.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Locale} object.
    */
   public Locale getLocale() {
@@ -113,7 +113,7 @@ public class TemplateExporter implements Exporter {
    * <p>
    * getSuccess.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getSuccess() {
@@ -124,7 +124,7 @@ public class TemplateExporter implements Exporter {
    * <p>
    * getTranferIndex.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getTranferIndex() {
@@ -157,7 +157,7 @@ public class TemplateExporter implements Exporter {
    * <p>
    * Getter for the field <code>writer</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.transfer.exporter.TemplateWriter} object.
    */
   public TemplateWriter getWriter() {

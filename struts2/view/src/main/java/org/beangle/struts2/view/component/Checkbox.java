@@ -37,7 +37,7 @@ public class Checkbox extends UIBean {
   protected void evaluateParams() {
     if (null == this.id) generateIdIfEmpty();
     label = processLabel(label, name);
-    
+
     if (null != title) title = getText(title);
     else title = label;
 

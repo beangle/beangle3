@@ -20,7 +20,7 @@ package org.beangle.security.auth;
 
 /**
  * 账户禁用异常
- * 
+ *
  * @author chaostone
  */
 public class DisabledException extends AccountStatusException {

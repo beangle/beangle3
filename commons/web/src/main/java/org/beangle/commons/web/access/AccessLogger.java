@@ -20,7 +20,7 @@ package org.beangle.commons.web.access;
 
 /**
  * 访问记录监控器
- * 
+ *
  * @author chaostone
  * @version $Id: AccessMonitor.java Jul 8, 2011 7:53:04 PM chaostone $
  */

@@ -20,7 +20,7 @@ package org.beangle.struts2.convention.route;
 
 /**
  * action匹配信息
- * 
+ *
  * @author chaostone
  */
 public class MatchInfo {

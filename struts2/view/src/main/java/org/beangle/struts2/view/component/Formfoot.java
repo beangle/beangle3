@@ -22,7 +22,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 /**
  * 表单尾部控制
- * 
+ *
  * @author chaostone
  * @version $Id: Formfooter.java May 3, 2011 12:25:12 PM chaostone $
  */

@@ -22,21 +22,21 @@ import java.sql.Date;
 
 /**
  * Jounal Entity
- * 
+ *
  * @author chaostone
  * @since 3.1.0
  */
 public interface TemporalOn {
   /**
    * 获得起始时间
-   * 
+   *
    * @return 起始日期
    */
   Date getBeginOn();
 
   /**
    * 设置起始日期
-   * 
+   *
    * @param beginAt
    *          起始日期
    */
@@ -44,14 +44,14 @@ public interface TemporalOn {
 
   /**
    * 获得结束日期
-   * 
+   *
    * @return 结束日期
    */
   Date getEndOn();
 
   /**
    * 设置结束日期
-   * 
+   *
    * @param endAt
    *          结束日期
    */

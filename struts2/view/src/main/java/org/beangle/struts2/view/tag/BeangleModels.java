@@ -69,7 +69,7 @@ import freemarker.template.utility.StringUtil;
 
 /**
  * beangle tag models
- * 
+ *
  * @author chaostone
  * @since 3.0.2
  */

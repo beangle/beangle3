@@ -36,7 +36,7 @@ import org.beangle.security.blueprint.session.service.internal.SessionProfileSer
 
 /**
  * 权限缺省服务配置
- * 
+ *
  * @author chaostone
  * @version $Id: DefaultModule.java Jun 18, 2011 10:21:05 AM chaostone $
  */

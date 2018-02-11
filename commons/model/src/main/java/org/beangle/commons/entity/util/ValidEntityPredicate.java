@@ -25,7 +25,7 @@ import org.beangle.commons.lang.functor.Predicate;
 
 /**
  * 有效实体判断谓词
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -48,7 +48,7 @@ public class ValidEntityPredicate implements Predicate<Object> {
    * <p>
    * getInstance.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.entity.util.ValidEntityPredicate} object.
    */
   public static ValidEntityPredicate getInstance() {

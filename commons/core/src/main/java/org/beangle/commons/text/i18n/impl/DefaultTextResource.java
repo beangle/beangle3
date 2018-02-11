@@ -29,7 +29,7 @@ import org.beangle.commons.text.i18n.TextResource;
  * <p>
  * Abstract BundleTextResource class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -54,7 +54,7 @@ public class DefaultTextResource implements TextResource {
    * <p>
    * getText.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    * @param defaultValue a {@link java.lang.String} object.
    * @param args an array of {@link java.lang.Object} objects.

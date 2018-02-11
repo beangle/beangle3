@@ -23,7 +23,7 @@ import java.util.Comparator;
 
 /**
  * 比较两个集合，元素多的大
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -33,7 +33,7 @@ public class CollectionSizeComparator<T extends Collection<?>> implements Compar
    * <p>
    * compare.
    * </p>
-   * 
+   *
    * @param first a T object.
    * @param second a T object.
    * @return equals : 0,first less then second : -1 or small , first greate then second : 1 or big

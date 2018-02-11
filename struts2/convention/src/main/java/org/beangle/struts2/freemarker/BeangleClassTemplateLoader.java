@@ -27,7 +27,7 @@ import freemarker.cache.URLTemplateLoader;
 
 /**
  * 搜索带有固定前缀下的资源，排除/org/和/com/
- * 
+ *
  * @author chaostone
  */
 public class BeangleClassTemplateLoader extends URLTemplateLoader {

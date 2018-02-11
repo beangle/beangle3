@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * Timer Node in stack
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

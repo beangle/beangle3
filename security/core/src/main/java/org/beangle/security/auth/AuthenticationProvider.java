@@ -23,7 +23,7 @@ import org.beangle.security.core.AuthenticationException;
 
 /**
  * 被监视者服务
- * 
+ *
  * @author chaostone
  */
 public interface AuthenticationProvider {

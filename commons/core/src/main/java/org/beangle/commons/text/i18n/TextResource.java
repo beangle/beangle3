@@ -24,7 +24,7 @@ import java.util.Locale;
  * <p>
  * TextResource interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -32,7 +32,7 @@ public interface TextResource {
 
   /**
    * Gets a message based on a message key, or null if no message is found.
-   * 
+   *
    * @param key
    *          the resource bundle key that is to be searched for
    * @return the message as found in the resource bundle, or null if none is
@@ -44,7 +44,7 @@ public interface TextResource {
    * Gets a message based on a key using the supplied obj, as defined in
    * {@link java.text.MessageFormat}, or, if the message is not found, a
    * supplied default value is returned.
-   * 
+   *
    * @param key
    *          the resource bundle key that is to be searched for
    * @param defaultValue

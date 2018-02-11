@@ -32,7 +32,7 @@ import org.beangle.commons.transfer.io.TransferFormat;
  * <p>
  * ExcelTemplateWriter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -61,7 +61,7 @@ public class ExcelTemplateWriter implements TemplateWriter {
    * <p>
    * Constructor for ExcelTemplateWriter.
    * </p>
-   * 
+   *
    * @param outputStream a {@link java.io.OutputStream} object.
    */
   public ExcelTemplateWriter(OutputStream outputStream) {
@@ -73,7 +73,7 @@ public class ExcelTemplateWriter implements TemplateWriter {
    * <p>
    * getFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public TransferFormat getFormat() {
@@ -84,7 +84,7 @@ public class ExcelTemplateWriter implements TemplateWriter {
    * <p>
    * Getter for the field <code>template</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.net.URL} object.
    */
   public URL getTemplate() {
@@ -132,7 +132,7 @@ public class ExcelTemplateWriter implements TemplateWriter {
    * <p>
    * Getter for the field <code>outputStream</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.io.OutputStream} object.
    */
   public OutputStream getOutputStream() {

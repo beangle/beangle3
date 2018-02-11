@@ -24,7 +24,7 @@ import org.beangle.commons.entity.Entity;
 
 /**
  * 实体删除事件
- * 
+ *
  * @author chaostone
  * @version $Id: EntityRemoveEvent.java Mar 3, 2012 9:01:44 PM chaostone $
  */

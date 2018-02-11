@@ -22,7 +22,7 @@ package org.beangle.commons.dao.query;
  * <p>
  * Lang class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -38,7 +38,7 @@ public enum Lang {
    * <p>
    * Getter for the field <code>lang</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getLang() {

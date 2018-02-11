@@ -92,7 +92,7 @@ public class CacheableAuthorityManager extends BaseServiceImpl implements Author
 
   /**
    * 判断组内是否含有该资源
-   * 
+   *
    * @param authority
    * @param resource
    */

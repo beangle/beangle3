@@ -59,7 +59,7 @@ public class HierarchicalTextResource extends DefaultTextResource {
    * <li>If not found, traverse up the Class' hierarchy and repeat from the first sub-step</li>
    * </ol>
    * </li>
-   * 
+   *
    * @param clazz
    * @param key
    * @param checked

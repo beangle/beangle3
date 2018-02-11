@@ -1,6 +1,6 @@
 /**
  * Commons bean interfaces .Some comparator and converters.
- * It offers 
+ * It offers
  * <ul>
  *     <li>Bean lifecyle interface(Initializing,Disposable),it could be integrated with IOC container.
  *     <li>Comparators,PropertyComparator,ChainComparator etc.

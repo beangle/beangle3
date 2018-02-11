@@ -29,7 +29,7 @@ import org.beangle.commons.lang.Assert;
  * Each web application capable of processing CAS tickets is known as a service. This class stores
  * the properties that are relevant to the local CAS service, being the application that is being
  * secured by Beangle Security.
- * 
+ *
  * @author chaostone
  * @version $Id: ServiceProperties.java $
  */
@@ -96,7 +96,7 @@ public class CasConfig implements Initializing {
   /**
    * The enterprise-wide CAS login URL. Usually something like
    * <code>https://www.mycompany.com/cas/login</code>.
-   * 
+   *
    * @return the enterprise-wide CAS login URL
    */
   public String getLoginUrl() {
@@ -111,7 +111,7 @@ public class CasConfig implements Initializing {
    * previously authenticated). During ticket validation it will require the ticket was generated as
    * a consequence of an explicit login. High security applications would probably set this to
    * <code>true</code>. Defaults to <code>false</code>, providing automated single sign on.
-   * 
+   *
    * @return whether to send the <code>renew</code> parameter to CAS
    */
   public boolean isRenew() {

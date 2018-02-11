@@ -23,7 +23,7 @@ import org.beangle.commons.lang.Strings;
 
 /**
  * Convert Object to String
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

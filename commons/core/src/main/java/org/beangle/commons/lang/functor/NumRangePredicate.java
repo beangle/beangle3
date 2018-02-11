@@ -20,7 +20,7 @@ package org.beangle.commons.lang.functor;
 
 /**
  * 有效整型判断谓词
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -32,7 +32,7 @@ public class NumRangePredicate implements Predicate<Number> {
    * <p>
    * Constructor for NumRangePredicate.
    * </p>
-   * 
+   *
    * @param floor a int.
    * @param upper a int.
    */

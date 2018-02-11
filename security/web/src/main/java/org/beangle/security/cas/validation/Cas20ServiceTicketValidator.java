@@ -61,7 +61,7 @@ public class Cas20ServiceTicketValidator extends AbstractTicketValidator {
    * <p>
    * This code is here merely for sample/demonstration purposes for those wishing to modify the CAS2
    * protocol. You'll probably want a more robust implementation or to use SAML 1.1
-   * 
+   *
    * @param xml
    *          the XML to parse.
    * @return the map of attributes.
@@ -108,7 +108,7 @@ public class Cas20ServiceTicketValidator extends AbstractTicketValidator {
 
   /**
    * Template method if additional custom parsing (such as Proxying) needs to be done.
-   * 
+   *
    * @param response
    *          the original response from the CAS server.
    * @param assertion

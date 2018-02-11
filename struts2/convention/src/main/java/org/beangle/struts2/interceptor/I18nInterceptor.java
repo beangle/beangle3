@@ -30,7 +30,7 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 /**
  * Simplify I18nInterceptor
- * 
+ *
  * @author chaostone
  * @since 2.4
  */

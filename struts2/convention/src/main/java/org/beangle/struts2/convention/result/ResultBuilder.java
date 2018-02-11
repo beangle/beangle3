@@ -24,14 +24,14 @@ import com.opensymphony.xwork2.config.entities.ActionConfig;
 
 /**
  * 为构建自定义的结果，抽象出的一个接口
- * 
+ *
  * @author chaostone
  */
 public interface ResultBuilder {
 
   /**
    * Return build result
-   * 
+   *
    * @param resultCode
    * @param actionConfig
    * @param context

@@ -26,7 +26,7 @@ import org.beangle.security.core.userdetail.UserDetailService;
 
 /**
  * Provider preauthed authentication detail.
- * 
+ *
  * @author chaostone
  * @version $Id: PreauthUserDetailProvider.java Oct 29, 2010 8:24:15 AM
  *          chaostone $

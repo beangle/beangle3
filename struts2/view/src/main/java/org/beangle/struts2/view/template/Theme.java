@@ -25,7 +25,7 @@ import org.beangle.commons.lang.Strings;
 
 /**
  * Template Theme
- * 
+ *
  * @author chaostone
  * @since 2.4
  */
@@ -39,7 +39,7 @@ public class Theme {
 
   /**
    * Default tagName corresponding TagClass
-   * 
+   *
    * @see getTemplateName
    */
   private final static Map<Class<?>, String> defaultNames = CollectUtils.newHashMap();

@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * syncInterval(30s).</li>
  * <li>Support expire session clean task in every 5 mins.
  * </ul>
- * 
+ *
  * @author chaostone
  * @since 2.4
  */

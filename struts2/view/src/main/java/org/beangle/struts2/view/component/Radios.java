@@ -29,7 +29,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 /**
  * Radio group
- * 
+ *
  * @author chaostone
  * @since 2.4
  */

@@ -58,7 +58,7 @@ import freemarker.template.TemplateException;
  * <li>Friendly Collection/Map/Object objectwrapper</li>
  * <li>Disable freemarker logger instead of slf4j</li>
  * </ul>
- * 
+ *
  * @author chaostone
  * @since 2.1
  */
@@ -134,7 +134,7 @@ public class BeangleFreemarkerManager extends FreemarkerManager {
   /**
    * Load the multi settings from the /META-INF/freemarker.properties and
    * /freemarker.properties file on the classpath
-   * 
+   *
    * @see freemarker.template.Configuration#setSettings for the definition of
    *      valid settings
    */

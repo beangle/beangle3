@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 根据报名动态设置schema,prefix名字
- * 
+ *
  * @author chaostone
  */
 public class DefaultTableNamingStrategy implements TableNamingStrategy {
@@ -256,7 +256,7 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
 
 /**
  * 表命名模式
- * 
+ *
  * @author chaostone
  */
 class TableNamePattern implements Comparable<TableNamePattern> {

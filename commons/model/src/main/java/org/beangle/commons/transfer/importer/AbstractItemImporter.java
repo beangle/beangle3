@@ -29,7 +29,7 @@ import org.beangle.commons.transfer.io.Reader;
 
 /**
  * 线性导入实现
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -73,7 +73,7 @@ public abstract class AbstractItemImporter extends AbstractImporter implements I
 
   /**
    * 改变现有某个属性的值
-   * 
+   *
    * @param attr a {@link java.lang.String} object.
    * @param value a {@link java.lang.Object} object.
    */
@@ -85,7 +85,7 @@ public abstract class AbstractItemImporter extends AbstractImporter implements I
    * <p>
    * read.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public final boolean read() {
@@ -106,7 +106,7 @@ public abstract class AbstractItemImporter extends AbstractImporter implements I
    * <p>
    * isDataValid.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isDataValid() {
@@ -132,7 +132,7 @@ public abstract class AbstractItemImporter extends AbstractImporter implements I
    * <p>
    * getCurData.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Map} object.
    */
   public Map<String, Object> getCurData() {
@@ -147,7 +147,7 @@ public abstract class AbstractItemImporter extends AbstractImporter implements I
    * <p>
    * Getter for the field <code>attrs</code>.
    * </p>
-   * 
+   *
    * @return an array of {@link java.lang.String} objects.
    */
   public String[] getAttrs() {
@@ -158,7 +158,7 @@ public abstract class AbstractItemImporter extends AbstractImporter implements I
    * <p>
    * Setter for the field <code>attrs</code>.
    * </p>
-   * 
+   *
    * @param attrs an array of {@link java.lang.String} objects.
    */
   public void setAttrs(String[] attrs, String[] descs) {
@@ -172,7 +172,7 @@ public abstract class AbstractItemImporter extends AbstractImporter implements I
    * <p>
    * Getter for the field <code>descriptions</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Map} object.
    */
   public Map<String, String> getDescriptions() {
@@ -183,7 +183,7 @@ public abstract class AbstractItemImporter extends AbstractImporter implements I
    * <p>
    * processAttr.
    * </p>
-   * 
+   *
    * @param attr a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
    */

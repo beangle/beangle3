@@ -25,7 +25,7 @@ import org.beangle.commons.collection.CollectUtils;
 public class NestedBean {
 
   Long id;
-  
+
   Map<Object,Object> datas=CollectUtils.newHashMap();
 
   public Long getId() {
@@ -43,6 +43,6 @@ public class NestedBean {
   public void setDatas(Map<Object, Object> datas) {
     this.datas = datas;
   }
-  
-  
+
+
 }

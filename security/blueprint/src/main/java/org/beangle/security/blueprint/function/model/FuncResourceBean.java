@@ -39,7 +39,7 @@ import org.beangle.security.blueprint.function.FuncResource;
  * 上下级关系是通过模块代码的包含关系体现的。<br>
  * 系统模块作为权限分配的基本单位.
  * <p>
- * 
+ *
  * @author dell,chaostone 2005-9-26
  * @since 3.0.0
  */

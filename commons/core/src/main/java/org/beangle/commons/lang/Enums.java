@@ -25,7 +25,7 @@ public final class Enums {
    * constant does not exist, {@link Option#none} is returned. A common use case is for parsing
    * user input or falling back to a default enum constant. For example,
    * {@code Enums.get(Country.class, countryInput).getOrElse(Country.DEFAULT);}
-   * 
+   *
    * @since 3.1
    */
   public static <T extends Enum<T>> Option<T> get(Class<T> enumClass, String value) {

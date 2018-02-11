@@ -22,7 +22,7 @@ import org.beangle.commons.entity.Entity;
 
 /**
  * 自定义属性
- * 
+ *
  * @author chaostone
  * @since 2011-09-22
  */
@@ -50,28 +50,28 @@ public interface Dimension extends Entity<Integer> {
 
   /**
    * 是否必填
-   * 
+   *
    * @return
    */
   boolean isRequired();
 
   /**
    * 类型
-   * 
+   *
    * @return
    */
   String getTypeName();
 
   /**
    * 主键
-   * 
+   *
    * @return
    */
   String getKeyName();
 
   /**
    * 其他属性
-   * 
+   *
    * @return
    */
   String getProperties();

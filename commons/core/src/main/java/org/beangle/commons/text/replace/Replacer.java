@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 
 /**
  * Replace target with value on any input.
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -39,7 +39,7 @@ public class Replacer {
    * <p>
    * Constructor for Replacer.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    * @param value a {@link java.lang.String} object.
    */
@@ -54,7 +54,7 @@ public class Replacer {
    * <p>
    * process.
    * </p>
-   * 
+   *
    * @param input a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
    */
@@ -66,7 +66,7 @@ public class Replacer {
    * <p>
    * process.
    * </p>
-   * 
+   *
    * @param input a {@link java.lang.String} object.
    * @param replacers a {@link java.util.List} object.
    * @return a {@link java.lang.String} object.
@@ -83,7 +83,7 @@ public class Replacer {
    * <p>
    * toString.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String toString() {

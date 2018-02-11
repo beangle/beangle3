@@ -22,7 +22,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 /**
  * 页面模块(豆腐块)
- * 
+ *
  * @author chaostone
  * @version $Id: Module.java May 1, 2011 6:27:46 PM chaostone $
  */

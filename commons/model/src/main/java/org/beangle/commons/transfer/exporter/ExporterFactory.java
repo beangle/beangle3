@@ -31,7 +31,7 @@ import org.beangle.commons.transfer.io.Writer;
 
 /**
  * Builder Exporter
- * 
+ *
  * @author chaostone
  * @since 3.1
  */
@@ -42,7 +42,7 @@ public final class ExporterFactory {
     String template = context.get("template", String.class);
     if (Strings.isNotBlank(template)) exporter = new TemplateExporter();
     else exporter = new SimpleEntityExporter();
-    
+
     exporter.setWriter(getWriter(format, context));
     return exporter;
   }

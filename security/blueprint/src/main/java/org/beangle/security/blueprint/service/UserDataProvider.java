@@ -30,7 +30,7 @@ public interface UserDataProvider {
 
   /**
    * extract data from source
-   * 
+   *
    * @param <T>
    * @param field
    * @param source

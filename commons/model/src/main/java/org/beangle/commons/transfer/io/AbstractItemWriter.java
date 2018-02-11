@@ -26,7 +26,7 @@ import org.beangle.commons.transfer.exporter.Context;
  * <p>
  * Abstract AbstractItemWriter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -44,7 +44,7 @@ public abstract class AbstractItemWriter implements ItemWriter {
    * <p>
    * Getter for the field <code>outputStream</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.io.OutputStream} object.
    */
   public OutputStream getOutputStream() {

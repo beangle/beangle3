@@ -25,7 +25,7 @@ import org.beangle.security.ldap.connect.SimpleLdapUserStore;
 
 /**
  * Ldap default module
- * 
+ *
  * @author chaostone
  */
 public class DefaultModule extends AbstractBindModule {

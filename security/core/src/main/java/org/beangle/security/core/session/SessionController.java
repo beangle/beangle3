@@ -23,14 +23,14 @@ import org.beangle.security.core.Authentication;
 
 /**
  * Session limit controller
- * 
+ *
  * @author chaostone
  */
 public interface SessionController {
 
   /**
    * reserve space for given sessionid
-   * 
+   *
    * @param auth
    * @param sessionId
    * @param registry
@@ -39,7 +39,7 @@ public interface SessionController {
 
   /**
    * 释放sessioninfo对应的空间
-   * 
+   *
    * @param info
    */
   void onLogout(Sessioninfo info);
@@ -51,7 +51,7 @@ public interface SessionController {
 
   /**
    * Max session number for single user
-   * 
+   *
    * @param auth
    * @return -1 or positive number
    */
@@ -59,7 +59,7 @@ public interface SessionController {
 
   /**
    * User online max inactive interval
-   * 
+   *
    * @param auth
    * @return None or inactive interval
    */

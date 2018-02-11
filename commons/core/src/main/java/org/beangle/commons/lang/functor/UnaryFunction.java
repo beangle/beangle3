@@ -22,7 +22,7 @@ import org.beangle.commons.lang.Objects;
 
 /**
  * Unary Function Object
- * 
+ *
  * @param <I> input type
  * @param <R> returned output type
  * @author chaostone
@@ -39,7 +39,7 @@ public interface UnaryFunction<I, R> {
    * Objects.equal}{@code (a, b)} implies that {@code Objects.equal(function.apply(a),
    * function.apply(b))}.
    * </ul>
-   * 
+   *
    * @throws NullPointerException if {@code input} is null
    */
   R apply(I input);

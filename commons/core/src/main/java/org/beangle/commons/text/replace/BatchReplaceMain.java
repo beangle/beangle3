@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * [encoding]</B>
  * <p>
  * Pattern file like this.
- * 
+ *
  * <pre>
  * ftl
  * &lt;#(.*?)&gt;=[#$1]
@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  * &lt;@(.*?)&gt;=[@$1]
  * &lt;/@(.*?)&gt;=[/@]
  * </pre>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -106,7 +106,7 @@ public class BatchReplaceMain {
    * <p>
    * replaceFile.
    * </p>
-   * 
+   *
    * @param fileName a {@link java.lang.String} object.
    * @param profiles a {@link java.util.Map} object.
    * @param encoding a {@link java.lang.String} object.

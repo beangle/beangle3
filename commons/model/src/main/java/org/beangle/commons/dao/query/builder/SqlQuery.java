@@ -31,7 +31,7 @@ import org.beangle.commons.lang.Strings;
 
 /**
  * sql查询
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -72,7 +72,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * Constructor for SqlQuery.
    * </p>
-   * 
+   *
    * @param queryStr a {@link java.lang.String} object.
    */
   public SqlQuery(final String queryStr) {
@@ -84,7 +84,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * add.
    * </p>
-   * 
+   *
    * @param condition a {@link org.beangle.commons.dao.query.builder.Condition} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlQuery} object.
    */
@@ -96,7 +96,7 @@ public class SqlQuery extends AbstractQuery<Object> {
   /**
    * 添加一组条件<br>
    * query中不能添加条件集合作为一个条件,因此这里命名没有采用有区别性的addAll
-   * 
+   *
    * @param cons a {@link java.util.Collection} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlQuery} object.
    */
@@ -109,7 +109,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * addOrder.
    * </p>
-   * 
+   *
    * @param order a {@link org.beangle.commons.collection.Order} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlQuery} object.
    */
@@ -124,7 +124,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * addOrder.
    * </p>
-   * 
+   *
    * @param orders a {@link java.util.List} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlQuery} object.
    */
@@ -139,7 +139,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * Getter for the field <code>select</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getSelect() {
@@ -150,7 +150,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * Setter for the field <code>select</code>.
    * </p>
-   * 
+   *
    * @param select a {@link java.lang.String} object.
    */
   public void setSelect(final String select) {
@@ -169,7 +169,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * Getter for the field <code>conditions</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   public List<Condition> getConditions() {
@@ -180,7 +180,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * Setter for the field <code>conditions</code>.
    * </p>
-   * 
+   *
    * @param conditions a {@link java.util.List} object.
    */
   public void setConditions(final List<Condition> conditions) {
@@ -191,7 +191,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * Getter for the field <code>from</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getFrom() {
@@ -202,7 +202,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * Setter for the field <code>from</code>.
    * </p>
-   * 
+   *
    * @param from a {@link java.lang.String} object.
    */
   public void setFrom(final String from) {
@@ -221,7 +221,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * Getter for the field <code>orders</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   public List<Order> getOrders() {
@@ -232,7 +232,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * Setter for the field <code>orders</code>.
    * </p>
-   * 
+   *
    * @param orders a {@link java.util.List} object.
    */
   public void setOrders(final List<Order> orders) {
@@ -243,7 +243,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * Getter for the field <code>groups</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   public List<String> getGroups() {
@@ -254,7 +254,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * Setter for the field <code>groups</code>.
    * </p>
-   * 
+   *
    * @param groups a {@link java.util.List} object.
    */
   public void setGroups(final List<String> groups) {
@@ -265,7 +265,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * groupBy.
    * </p>
-   * 
+   *
    * @param what a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlQuery} object.
    */
@@ -278,7 +278,7 @@ public class SqlQuery extends AbstractQuery<Object> {
 
   /**
    * 生成查询语句（如果查询语句已经存在则不进行生成）
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String toQueryString() {
@@ -293,7 +293,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * toCountString.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String toCountString() {
@@ -308,7 +308,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * genQueryString.
    * </p>
-   * 
+   *
    * @param hasOrder a boolean.
    * @return a {@link java.lang.String} object.
    */
@@ -336,7 +336,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * getParams.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Map} object.
    */
   public Map<String, Object> getParams() {
@@ -347,7 +347,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * build.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.dao.query.Query} object.
    */
   public Query<Object> build() {
@@ -367,7 +367,7 @@ public class SqlQuery extends AbstractQuery<Object> {
    * <p>
    * getLang.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.dao.query.Lang} object.
    */
   protected Lang getLang() {

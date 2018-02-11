@@ -35,7 +35,7 @@ import org.testng.annotations.Test;
 public class OgnlPropertyExtractorTest {
 
   private static final Logger logger = LoggerFactory.getLogger(OgnlPropertyExtractorTest.class);
-  
+
   public void testGet() throws Exception {
     OgnlPropertyExtractor extractor = new OgnlPropertyExtractor();
     Map<String, String> datas = CollectUtils.newHashMap();

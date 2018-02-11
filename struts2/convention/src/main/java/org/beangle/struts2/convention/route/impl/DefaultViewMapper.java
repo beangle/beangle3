@@ -47,7 +47,7 @@ public class DefaultViewMapper implements ViewMapper {
 
   /**
    * 查询control对应的view的名字(没有后缀)
-   * 
+   *
    * @param className
    * @param methodName
    * @param viewName

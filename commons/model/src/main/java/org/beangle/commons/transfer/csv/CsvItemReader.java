@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * CsvItemReader class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -55,7 +55,7 @@ public class CsvItemReader implements ItemReader {
    * <p>
    * Constructor for CsvItemReader.
    * </p>
-   * 
+   *
    * @param reader a {@link java.io.LineNumberReader} object.
    */
   public CsvItemReader(LineNumberReader reader) {
@@ -66,7 +66,7 @@ public class CsvItemReader implements ItemReader {
    * <p>
    * readDescription.
    * </p>
-   * 
+   *
    * @return an array of {@link java.lang.String} objects.
    */
   public String[] readDescription() {
@@ -77,7 +77,7 @@ public class CsvItemReader implements ItemReader {
    * <p>
    * readTitle.
    * </p>
-   * 
+   *
    * @return an array of {@link java.lang.String} objects.
    */
   public String[] readTitle() {
@@ -104,7 +104,7 @@ public class CsvItemReader implements ItemReader {
    * <p>
    * read.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Object} object.
    */
   public Object read() {
@@ -127,7 +127,7 @@ public class CsvItemReader implements ItemReader {
    * <p>
    * Getter for the field <code>headIndex</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getHeadIndex() {
@@ -146,7 +146,7 @@ public class CsvItemReader implements ItemReader {
    * <p>
    * Getter for the field <code>dataIndex</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getDataIndex() {
@@ -165,7 +165,7 @@ public class CsvItemReader implements ItemReader {
    * <p>
    * getFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public TransferFormat getFormat() {

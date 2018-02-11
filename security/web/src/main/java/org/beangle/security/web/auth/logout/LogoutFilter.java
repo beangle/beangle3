@@ -77,7 +77,7 @@ public class LogoutFilter extends GenericHttpFilter {
 
   /**
    * Allow subclasses to modify when a logout should take place.
-   * 
+   *
    * @param request
    *          the request
    * @param response

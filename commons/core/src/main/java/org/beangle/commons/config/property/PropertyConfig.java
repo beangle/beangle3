@@ -23,7 +23,7 @@ import java.util.Set;
 
 /**
  * 系统属性
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -33,7 +33,7 @@ public interface PropertyConfig {
    * <p>
    * get.
    * </p>
-   * 
+   *
    * @param name a {@link java.lang.String} object.
    * @return a {@link java.lang.Object} object.
    */
@@ -43,7 +43,7 @@ public interface PropertyConfig {
    * <p>
    * set.
    * </p>
-   * 
+   *
    * @param name a {@link java.lang.String} object.
    * @param value a {@link java.lang.Object} object.
    */
@@ -53,7 +53,7 @@ public interface PropertyConfig {
    * <p>
    * get.
    * </p>
-   * 
+   *
    * @param clazz a {@link java.lang.Class} object.
    * @param name a {@link java.lang.String} object.
    * @param <T> a T object.
@@ -65,7 +65,7 @@ public interface PropertyConfig {
    * <p>
    * add.
    * </p>
-   * 
+   *
    * @param properties a {@link java.util.Properties} object.
    */
   void add(Properties properties);
@@ -74,7 +74,7 @@ public interface PropertyConfig {
    * <p>
    * getNames.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Set} object.
    */
   Set<String> getNames();
@@ -83,7 +83,7 @@ public interface PropertyConfig {
    * <p>
    * addConfigListener.
    * </p>
-   * 
+   *
    * @param listener a {@link org.beangle.commons.config.property.PropertyConfigListener} object.
    */
   void addListener(PropertyConfigListener listener);
@@ -92,7 +92,7 @@ public interface PropertyConfig {
    * <p>
    * removeConfigListener.
    * </p>
-   * 
+   *
    * @param listener a {@link org.beangle.commons.config.property.PropertyConfigListener} object.
    */
   void removeListener(PropertyConfigListener listener);
@@ -115,7 +115,7 @@ public interface PropertyConfig {
    * <p>
    * addConfigProvider.
    * </p>
-   * 
+   *
    * @param provider a {@link org.beangle.commons.config.property.PropertyConfig.Provider} object.
    */
   void addProvider(Provider provider);

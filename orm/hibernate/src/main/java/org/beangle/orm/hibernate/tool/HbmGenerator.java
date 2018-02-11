@@ -49,7 +49,7 @@ import freemarker.template.Template;
 
 /**
  * 产生hbm文件
- * 
+ *
  * @author chaostone
  */
 public class HbmGenerator {
@@ -97,7 +97,7 @@ public class HbmGenerator {
 
   /**
    * find annotation on specified member
-   * 
+   *
    * @param cls
    * @param annotationClass
    * @param name

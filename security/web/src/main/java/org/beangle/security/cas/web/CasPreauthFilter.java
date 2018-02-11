@@ -47,7 +47,7 @@ import org.beangle.security.web.auth.preauth.PreauthAuthentication;
  * name, and process them accordingly by validation with the CAS server.
  * </p>
  * <p>
- * 
+ *
  * @author chaostone
  * @version $Id: CasPreauthFilter.java$
  */

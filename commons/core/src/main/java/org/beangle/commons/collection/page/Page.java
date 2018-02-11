@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * 分页对象
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -35,84 +35,84 @@ public interface Page<E> extends List<E> {
 
   /**
    * 第一页.
-   * 
+   *
    * @return 1
    */
   int getFirstPageNo();
 
   /**
    * 最大页码
-   * 
+   *
    * @return a int.
    */
   int getMaxPageNo();
 
   /**
    * 下一页页码
-   * 
+   *
    * @return a int.
    */
   int getNextPageNo();
 
   /**
    * 上一页页码
-   * 
+   *
    * @return a int.
    */
   int getPreviousPageNo();
 
   /**
    * 当前页码
-   * 
+   *
    * @return a int.
    */
   int getPageNo();
 
   /**
    * 每页大小
-   * 
+   *
    * @return a int.
    */
   int getPageSize();
 
   /**
    * 数据总量
-   * 
+   *
    * @return a int.
    */
   int getTotal();
 
   /**
    * 下一页
-   * 
+   *
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
   Page<E> next();
 
   /**
    * 是否还有下一页
-   * 
+   *
    * @return a boolean.
    */
   boolean hasNext();
 
   /**
    * 上一页
-   * 
+   *
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
   Page<E> previous();
 
   /**
    * 是否还有上一页
-   * 
+   *
    * @return a boolean.
    */
   boolean hasPrevious();
 
   /**
    * 调转到指定页
-   * 
+   *
    * @param pageNo a int.
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
@@ -122,7 +122,7 @@ public interface Page<E> extends List<E> {
    * <p>
    * getItems.
    * </p>
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   List<E> getItems();

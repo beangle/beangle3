@@ -20,21 +20,21 @@ package org.beangle.orm.hibernate;
 
 /**
  * Entity table and Collection Table Naming Strategy.
- * 
+ *
  * @author chaostone
  */
 public interface TableNamingStrategy {
 
   /**
    * Convert class to table name
-   * 
+   *
    * @param className
    */
   String classToTableName(Class<?> clazz);
 
   /**
    * Convert collection to table name
-   * 
+   *
    * @param className
    * @param tableName
    * @param collectionName
@@ -43,7 +43,7 @@ public interface TableNamingStrategy {
 
   /**
    * Return schema for package
-   * 
+   *
    * @param packageName
    */
   String getSchema(String packageName);

@@ -22,7 +22,7 @@ import org.beangle.security.core.Authentication;
 
 /**
  * 构建会话bean
- * 
+ *
  * @author chaostone
  * @version $Id: SessioninfoBuilder.java Jul 11, 2011 6:50:01 PM chaostone $
  */

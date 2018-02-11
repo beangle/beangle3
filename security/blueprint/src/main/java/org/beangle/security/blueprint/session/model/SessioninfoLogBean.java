@@ -29,7 +29,7 @@ import org.beangle.commons.entity.pojo.StringIdObject;
 
 /**
  * 登录和退出日志
- * 
+ *
  * @author chaostone
  */
 @Entity(name = "org.beangle.security.blueprint.session.model.SessioninfoLogBean")

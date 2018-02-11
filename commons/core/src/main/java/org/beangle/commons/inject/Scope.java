@@ -22,7 +22,7 @@ package org.beangle.commons.inject;
  * <p>
  * Scope class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -40,7 +40,7 @@ public enum Scope {
    * <p>
    * toString.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String toString() {

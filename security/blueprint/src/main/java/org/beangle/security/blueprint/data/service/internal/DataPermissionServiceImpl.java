@@ -55,7 +55,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
    * 查找数据资源和功能资源对应的数据权限。
    * <p>
    * 默认按照声明资源的数据权限为先。
-   * 
+   *
    * @param role
    * @param dataResource
    */
@@ -112,7 +112,7 @@ public class DataPermissionServiceImpl extends BaseServiceImpl implements DataPe
 
   /**
    * 获取数据限制的某个属性的值
-   * 
+   *
    * @param property
    * @param restriction
    */

@@ -24,7 +24,7 @@ import java.util.Collection;
  * <p>
  * CollectionHasUpto1ElementPredicate class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

@@ -62,7 +62,7 @@ public abstract class AbstractTicketValidator implements TicketValidator {
   /**
    * Template method for ticket validators that need to provide additional parameters to the
    * validation url.
-   * 
+   *
    * @param urlParameters
    *          the map containing the parameters.
    */
@@ -72,7 +72,7 @@ public abstract class AbstractTicketValidator implements TicketValidator {
 
   /**
    * Constructs the URL to send the validation request to.
-   * 
+   *
    * @param ticket
    *          the ticket to be validated.
    * @param serviceUrl
@@ -111,7 +111,7 @@ public abstract class AbstractTicketValidator implements TicketValidator {
 
   /**
    * Encodes a URL using the URLEncoder format.
-   * 
+   *
    * @param url the url to encode.
    * @return the encoded url, or the original url if "UTF-8" character encoding could not be
    *         found.
@@ -128,7 +128,7 @@ public abstract class AbstractTicketValidator implements TicketValidator {
 
   /**
    * Parses the response from the server into a CAS Assertion.
-   * 
+   *
    * @param response
    *          the response from the server, in any format.
    * @return the CAS assertion if one could be parsed from the response.
@@ -140,7 +140,7 @@ public abstract class AbstractTicketValidator implements TicketValidator {
 
   /**
    * Contacts the CAS Server to retrieve the response for the ticket validation.
-   * 
+   *
    * @param validationUrl
    *          the url to send the validation request to.
    * @param ticket
@@ -170,7 +170,7 @@ public abstract class AbstractTicketValidator implements TicketValidator {
 
   /**
    * Get an instance of an XML reader from the XMLReaderFactory.
-   * 
+   *
    * @return the XMLReader.
    */
   public static XMLReader getXmlReader() {
@@ -186,7 +186,7 @@ public abstract class AbstractTicketValidator implements TicketValidator {
    * in a list.
    * <p>
    * This method is currently optimized for the use case of two elements in a list.
-   * 
+   *
    * @param xmlAsString
    *          the xml response
    * @param element
@@ -242,7 +242,7 @@ public abstract class AbstractTicketValidator implements TicketValidator {
   /**
    * Retrieve the text for a specific element (when we know there is only
    * one).
-   * 
+   *
    * @param xmlAsString
    *          the xml response
    * @param element

@@ -31,7 +31,7 @@ import org.beangle.commons.transfer.io.TransferFormat;
  * <p>
  * CsvItemWriter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -54,7 +54,7 @@ public class CsvItemWriter extends AbstractItemWriter {
    * <p>
    * Constructor for CsvItemWriter.
    * </p>
-   * 
+   *
    * @param outputStream a {@link java.io.OutputStream} object.
    */
   public CsvItemWriter(OutputStream outputStream) {
@@ -108,7 +108,7 @@ public class CsvItemWriter extends AbstractItemWriter {
    * <p>
    * getFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public TransferFormat getFormat() {
@@ -124,7 +124,7 @@ public class CsvItemWriter extends AbstractItemWriter {
    * <p>
    * Getter for the field <code>csvFormat</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.csv.CsvFormat} object.
    */
   public CsvFormat getCsvFormat() {
@@ -135,7 +135,7 @@ public class CsvItemWriter extends AbstractItemWriter {
    * <p>
    * Setter for the field <code>csvFormat</code>.
    * </p>
-   * 
+   *
    * @param csvFormat a {@link org.beangle.commons.csv.CsvFormat} object.
    */
   public void setCsvFormat(CsvFormat csvFormat) {

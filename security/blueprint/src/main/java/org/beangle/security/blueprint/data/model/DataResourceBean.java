@@ -30,7 +30,7 @@ import org.beangle.security.blueprint.data.DataResource;
 
 /**
  * 系统数据资源
- * 
+ *
  * @author chaostone
  * @since 2012-07-24
  */

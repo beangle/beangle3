@@ -33,7 +33,7 @@ import org.beangle.commons.lang.Strings;
  * <p>
  * Abstract AbstractQueryBuilder class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -96,7 +96,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * <p>
    * isCacheable.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isCacheable() {
@@ -107,7 +107,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * <p>
    * Getter for the field <code>limit</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.collection.page.PageLimit} object.
    */
   public PageLimit getLimit() {
@@ -118,7 +118,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * <p>
    * build.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.dao.query.Query} object.
    */
   public Query<T> build() {
@@ -138,7 +138,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * <p>
    * getLang.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.dao.query.Lang} object.
    */
   abstract protected Lang getLang();
@@ -155,7 +155,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * <p>
    * genCountStatement.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   abstract protected String genCountStatement();
@@ -164,7 +164,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * <p>
    * genQueryStatement.
    * </p>
-   * 
+   *
    * @param hasOrder a boolean.
    * @return a {@link java.lang.String} object.
    */

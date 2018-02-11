@@ -24,7 +24,7 @@ import org.beangle.commons.lang.Strings;
  * <p>
  * SimpleItemExporter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -36,7 +36,7 @@ public class SimpleItemExporter extends AbstractItemExporter {
    * <p>
    * Getter for the field <code>titles</code>.
    * </p>
-   * 
+   *
    * @return an array of {@link java.lang.String} objects.
    */
   public String[] getTitles() {
@@ -47,7 +47,7 @@ public class SimpleItemExporter extends AbstractItemExporter {
    * <p>
    * Setter for the field <code>titles</code>.
    * </p>
-   * 
+   *
    * @param titles an array of {@link java.lang.String} objects.
    */
   public void setTitles(String[] titles) {

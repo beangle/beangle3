@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 /**
  * 会话状态
- * 
+ *
  * @author chaostone
  * @version $Id: SessionStatus.java Jul 14, 2011 7:11:39 PM chaostone $
  */

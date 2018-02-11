@@ -5,7 +5,7 @@
 ${tag.body}
 </div>
 <script>
-jQuery(document).ready(function () { 
+jQuery(document).ready(function () {
   var tabs = [];
   [#list tag.tabs as tab]
   tabs.push({id:"${tab.id}",label:"${tab.label}",href:"[#if tab.target??]#${tab.target}[#elseif tab.href??]${tab.href}[/#if]"});

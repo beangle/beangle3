@@ -42,7 +42,7 @@ public class Triple<X, Y, Z> {
     return result;
   }
 
-  
+
   public X get_1() {
     return _1;
   }

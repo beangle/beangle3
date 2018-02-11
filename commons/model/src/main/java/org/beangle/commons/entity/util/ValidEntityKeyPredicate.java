@@ -24,7 +24,7 @@ import org.beangle.commons.lang.functor.Predicate;
 
 /**
  * 判断实体类中的主键是否是有效主键
- * 
+ *
  * @author chaostone
  */
 public class ValidEntityKeyPredicate implements Predicate<Object> {

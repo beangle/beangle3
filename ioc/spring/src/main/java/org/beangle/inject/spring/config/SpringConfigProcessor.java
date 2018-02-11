@@ -69,7 +69,7 @@ import org.springframework.core.io.UrlResource;
 
 /**
  * 完成springbean的自动注册和再配置
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -145,7 +145,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * <p>
    * lifecycle.
    * </p>
-   * 
+   *
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    * @param definitionRegistry a
    *          {@link org.springframework.beans.factory.support.BeanDefinitionRegistry} object.
@@ -174,7 +174,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * <p>
    * registerBuildins.
    * </p>
-   * 
+   *
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    */
   protected void registerBuildins(BindRegistry registry) {
@@ -188,7 +188,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
 
   /**
    * 合并bean定义
-   * 
+   *
    * @param target a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @param source a
    *          {@link org.beangle.inject.spring.config.context.spring.ReconfigBeanDefinitionHolder}
@@ -223,7 +223,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * <p>
    * findRegistedModules.
    * </p>
-   * 
+   *
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    * @return a {@link java.util.Map} object.
    */
@@ -325,7 +325,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * <p>
    * registerBean.
    * </p>
-   * 
+   *
    * @param def bean definition.
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    * @return a {@link org.springframework.beans.factory.config.BeanDefinition} object.
@@ -358,7 +358,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * <p>
    * autowire.
    * </p>
-   * 
+   *
    * @param newBeanDefinitions a {@link java.util.Map} object.
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    */
@@ -374,7 +374,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * <p>
    * autowireBean.
    * </p>
-   * 
+   *
    * @param beanName a {@link java.lang.String} object.
    * @param mbd a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
@@ -425,7 +425,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * Find unsatisfied properties
    * </p>
    * Unsatisfied property is empty value and not primary type and not starts with java.
-   * 
+   *
    * @param mbd
    */
   private Map<String, Class<?>> unsatisfiedNonSimpleProperties(BeanDefinition mbd) {

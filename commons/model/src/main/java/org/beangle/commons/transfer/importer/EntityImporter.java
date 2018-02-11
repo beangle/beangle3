@@ -27,7 +27,7 @@ import org.beangle.commons.transfer.io.ItemReader;
  * <p>
  * EntityImporter interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -37,7 +37,7 @@ public interface EntityImporter extends Importer {
    * <p>
    * getForeignerKeys.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Set} object.
    */
   Set<String> getForeignerKeys();
@@ -46,7 +46,7 @@ public interface EntityImporter extends Importer {
    * <p>
    * addForeignedKeys.
    * </p>
-   * 
+   *
    * @param foreignerKey a {@link java.lang.String} object.
    */
   void addForeignedKeys(String foreignerKey);
@@ -55,7 +55,7 @@ public interface EntityImporter extends Importer {
    * <p>
    * setPopulator.
    * </p>
-   * 
+   *
    * @param populator a {@link org.beangle.commons.entity.metadata.Populator} object.
    */
   void setPopulator(Populator populator);
@@ -64,7 +64,7 @@ public interface EntityImporter extends Importer {
    * <p>
    * getReader.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.transfer.io.ItemReader} object.
    */
   ItemReader getReader();

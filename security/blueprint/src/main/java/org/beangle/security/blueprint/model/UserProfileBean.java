@@ -38,7 +38,7 @@ import org.beangle.security.blueprint.UserProfile;
 
 /**
  * 用户配置
- * 
+ *
  * @author chaostone
  * @version $Id: UserProfileBean.java Oct 21, 2011 8:39:05 AM chaostone $
  */
@@ -132,5 +132,5 @@ public class UserProfileBean extends LongIdObject implements UserProfile {
   public String toString() {
     return Objects.toStringBuilder(this).add("user", user).add("properties", properties).toString();
   }
-  
+
 }

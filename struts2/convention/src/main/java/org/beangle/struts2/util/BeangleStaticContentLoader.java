@@ -40,7 +40,7 @@ import org.beangle.commons.web.resource.ResourceProcessor;
  * (rename beagle-3.0.js to beangle-3.1.js,or using beangle-3.0.js?version=m1 etc.) was not
  * necessary;
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: BeangleStaticContentLoader.java Dec 25, 2011 9:19:06 PM chaostone $
  */

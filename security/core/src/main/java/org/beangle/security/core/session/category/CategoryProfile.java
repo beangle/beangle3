@@ -20,7 +20,7 @@ package org.beangle.security.core.session.category;
 
 /**
  * Session Profile for category User
- * 
+ *
  * @author chaostone
  * @since 2.4
  */

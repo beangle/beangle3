@@ -27,13 +27,13 @@ import org.beangle.security.blueprint.data.DataPermission;
 
 /**
  * 资源访问约束服务
- * 
+ *
  * @author chaostone
  */
 public interface DataPermissionService {
   /**
    * 获得该权限范围适用的数据权限
-   * 
+   *
    * @param userId 访问用户Id 不能为空
    * @param dataResource 数据资源名 不能为空
    * @param functionResource 数据资源名 不能为空
@@ -42,7 +42,7 @@ public interface DataPermissionService {
 
   /**
    * 应用数据权限
-   * 
+   *
    * @param builder
    * @param permission
    * @param profiles
@@ -51,7 +51,7 @@ public interface DataPermissionService {
 
   /**
    * 应用数据权限
-   * 
+   *
    * @param builder
    * @param permission
    * @param profiles

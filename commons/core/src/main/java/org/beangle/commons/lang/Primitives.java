@@ -24,7 +24,7 @@ import org.beangle.commons.collection.CollectUtils;
 
 /**
  * Wrap or Unwrap primitive
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */
@@ -58,7 +58,7 @@ public final class Primitives {
   /**
    * Returns {@code true} if {@code type} is one of the nine
    * primitive-wrapper types, such as {@link Integer}.
-   * 
+   *
    * @see Class#isPrimitive
    */
   public static boolean isWrapperType(Class<?> type) {
@@ -68,7 +68,7 @@ public final class Primitives {
   /**
    * Returns the corresponding wrapper type of {@code type} if it is a primitive
    * type; otherwise returns {@code type} itself. Idempotent.
-   * 
+   *
    * <pre>
    *     wrap(int.class) == Integer.class
    *     wrap(Integer.class) == Integer.class
@@ -83,7 +83,7 @@ public final class Primitives {
   /**
    * Returns the corresponding primitive type of {@code type} if it is a
    * wrapper type; otherwise returns {@code type} itself. Idempotent.
-   * 
+   *
    * <pre>
    *     unwrap(Integer.class) == int.class
    *     unwrap(int.class) == int.class

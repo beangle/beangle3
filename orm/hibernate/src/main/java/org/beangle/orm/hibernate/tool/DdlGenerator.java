@@ -98,7 +98,7 @@ public class DdlGenerator {
 
   /**
    * Generate sql scripts
-   * 
+   *
    * @param fileName
    * @param packageName
    * @throws Exception
@@ -198,7 +198,7 @@ public class DdlGenerator {
 
   /**
    * get component class by component property string
-   * 
+   *
    * @param pc
    * @param propertyString
    * @return

@@ -32,7 +32,7 @@ import java.util.List;
 
 /**
  * Simple IO Utility
- * 
+ *
  * @author chaostone
  * @since 3.1
  */
@@ -42,7 +42,7 @@ public class IOs {
 
   /**
    * Copy bytes from a <code>InputStream</code> to an <code>OutputStream</code>.
-   * 
+   *
    * @param input the <code>InputStream</code> to read from
    * @param output the <code>OutputStream</code> to write to
    * @return the number of bytes copied
@@ -63,7 +63,7 @@ public class IOs {
 
   /**
    * Copy chars from a <code>Reader</code> to a <code>Writer</code>.
-   * 
+   *
    * @param input the <code>Reader</code> to read from
    * @param output the <code>Writer</code> to write to
    * @return the number of characters copied
@@ -86,7 +86,7 @@ public class IOs {
    * Get the contents of a <code>Reader</code> as a list of Strings,
    * one entry per line.
    * <p>
-   * 
+   *
    * @param input the <code>Reader</code> to read from, not null
    * @return the list of Strings, never null
    * @throws IOException if an I/O error occurs

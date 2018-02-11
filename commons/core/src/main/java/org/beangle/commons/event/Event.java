@@ -24,7 +24,7 @@ import java.util.EventObject;
  * <p>
  * Abstract Event class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -46,7 +46,7 @@ public abstract class Event extends EventObject {
 
   /**
    * Create a new Event.
-   * 
+   *
    * @param source the component that published the event (never <code>null</code>)
    */
   public Event(Object source) {
@@ -56,7 +56,7 @@ public abstract class Event extends EventObject {
 
   /**
    * Return the system time in milliseconds when the event happened.
-   * 
+   *
    * @return a long.
    */
   public final long getTimestamp() {

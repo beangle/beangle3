@@ -28,7 +28,7 @@ import org.beangle.security.cas.web.CasPreauthFilter;
 
 /**
  * CAS Default Module
- * 
+ *
  * @author chaostone
  */
 public class DefaultModule extends AbstractBindModule {

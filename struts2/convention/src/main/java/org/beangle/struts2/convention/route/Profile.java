@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 路由调转配置
- * 
+ *
  * @author chaostone <br>
  *         /:controller:ext =>:method=index||get("method")
  *         /:controller/:method:ext
@@ -76,7 +76,7 @@ public class Profile implements Comparable<Profile> {
 
   /**
    * 得到控制器的起始位置
-   * 
+   *
    * @param className
    */
   public MatchInfo getCtlMatchInfo(final String className) {
@@ -92,7 +92,7 @@ public class Profile implements Comparable<Profile> {
 
   /**
    * 给定action是否符合该配置文件
-   * 
+   *
    * @param className
    */
   public boolean isMatch(final String className) {
@@ -143,7 +143,7 @@ public class Profile implements Comparable<Profile> {
 
   /**
    * 取得类名称对应的全路经，仅仅把类名第一个字母小写。
-   * 
+   *
    * @param className
    */
   public String getFullPath(String className) {
@@ -172,7 +172,7 @@ public class Profile implements Comparable<Profile> {
   /**
    * 将前后缀去除后，中间的.替换为/<br>
    * 不以/开始。
-   * 
+   *
    * @param className
    */
   public String getInfix(String className) {

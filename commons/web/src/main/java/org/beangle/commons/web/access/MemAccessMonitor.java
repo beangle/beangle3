@@ -33,7 +33,7 @@ import org.beangle.commons.web.session.HttpSessionDestroyedEvent;
 
 /**
  * Memory access monitor.
- * 
+ *
  * @author chaostone
  * @since 3.0.1
  */

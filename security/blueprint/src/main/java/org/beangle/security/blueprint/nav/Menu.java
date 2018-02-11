@@ -25,7 +25,7 @@ import org.beangle.security.blueprint.function.FuncResource;
 
 /**
  * 系统菜单
- * 
+ *
  * @author chaostone
  */
 public interface Menu extends HierarchyEntity<Menu, Integer>, Comparable<Menu> {

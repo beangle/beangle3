@@ -23,7 +23,7 @@ import java.io.StringWriter;
 
 /**
  * Static utility methods pertaining to instances of {@link Throwable}.
- * 
+ *
  * @author chaostone
  * @since 3.0
  */
@@ -34,7 +34,7 @@ public final class Throwables {
   /**
    * Propagates {@code throwable} exactly as-is, if and only if it is an
    * instance of {@code declaredType}. Example usage:
-   * 
+   *
    * <pre>
    * try {
    *   someMethodThatCouldThrowAnything();
@@ -61,7 +61,7 @@ public final class Throwables {
    * This method always throws an exception. The {@code RuntimeException} return type is only for
    * client code to make Java type system happy in case a return value is required by the enclosing
    * method. Example usage:
-   * 
+   *
    * <pre>
    * T doSomething() {
    *   try {
@@ -73,7 +73,7 @@ public final class Throwables {
    *   }
    * }
    * </pre>
-   * 
+   *
    * @param throwable the Throwable to propagate
    * @return nothing will ever be returned; this return type is only for your
    *         convenience, as illustrated in the example above

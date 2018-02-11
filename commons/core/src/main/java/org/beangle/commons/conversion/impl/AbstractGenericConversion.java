@@ -39,7 +39,7 @@ import org.beangle.commons.lang.tuple.Pair;
 /**
  * Generic Conversion Super class
  * It provider converter registry and converter search machanism.
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

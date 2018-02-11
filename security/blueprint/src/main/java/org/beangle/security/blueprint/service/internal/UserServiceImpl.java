@@ -46,7 +46,7 @@ import org.beangle.security.blueprint.service.UserService;
 
 /**
  * 用户信息服务的实现类
- * 
+ *
  * @author dell,chaostone 2005-9-26
  */
 public class UserServiceImpl extends BaseServiceImpl implements UserService, Initializing {

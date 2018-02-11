@@ -29,7 +29,7 @@ import org.beangle.commons.transfer.io.TransferFormat;
 
 /**
  * Importer Factory
- * 
+ *
  * @author chaostone
  * @since 3.1
  */

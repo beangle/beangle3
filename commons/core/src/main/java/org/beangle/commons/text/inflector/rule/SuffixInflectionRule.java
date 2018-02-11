@@ -26,7 +26,7 @@ import org.beangle.commons.text.inflector.Rule;
  * <p>
  * SuffixInflectionRule class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -41,7 +41,7 @@ public class SuffixInflectionRule implements Rule {
    * Construct a rule for words with suffix <code>singularSuffix</code> which becomes
    * <code>pluralSuffix</code> in the plural.
    * </p>
-   * 
+   *
    * @param singularSuffix
    *          the singular suffix, starting with a "-" character
    * @param pluralSuffix
@@ -55,7 +55,7 @@ public class SuffixInflectionRule implements Rule {
    * <p>
    * Construct a rule for words with suffix <code>suffix</code>, where <code>singularSuffix</code>
    * becomes <code>pluralSuffix</code> in the plural.
-   * 
+   *
    * @param suffix the suffix, starting with a "-" character, which the end of
    *          the word must match. Note that regular expression patterns may
    *          be used.

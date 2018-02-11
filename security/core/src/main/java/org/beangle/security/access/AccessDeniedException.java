@@ -22,7 +22,7 @@ import org.beangle.security.BeangleSecurityException;
 
 /**
  * 授权异常
- * 
+ *
  * @author chaostone
  */
 public class AccessDeniedException extends BeangleSecurityException {

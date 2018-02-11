@@ -27,7 +27,7 @@ import org.beangle.security.web.auth.preauth.PreauthAuthentication;
 
 /**
  * Represents a successful CAS <code>Authentication</code>.
- * 
+ *
  * @author chaostone
  */
 public class CasAuthentication extends PreauthAuthentication {
@@ -55,7 +55,7 @@ public class CasAuthentication extends PreauthAuthentication {
 
   /**
    * Constructor.
-   * 
+   *
    * @param key to identify if this object made by a given {@link CasAuthenticationProvider}
    * @param principal typically the UserDetails object (cannot be <code>null</code>)
    * @param credentials the service/proxy ticket ID from CAS (cannot be <code>null</code>)

@@ -26,7 +26,7 @@ import org.beangle.commons.collection.CollectUtils;
  * <p>
  * Context class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -45,7 +45,7 @@ public class Context {
    * <p>
    * Getter for the field <code>datas</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Map} object.
    */
   public Map<String, Object> getDatas() {
@@ -56,7 +56,7 @@ public class Context {
    * <p>
    * Setter for the field <code>datas</code>.
    * </p>
-   * 
+   *
    * @param datas a {@link java.util.Map} object.
    */
   public void setDatas(Map<String, Object> datas) {
@@ -67,7 +67,7 @@ public class Context {
    * <p>
    * put.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    * @param obj a {@link java.lang.Object} object.
    */
@@ -79,7 +79,7 @@ public class Context {
    * <p>
    * get.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    * @return a {@link java.lang.Object} object.
    */
@@ -91,7 +91,7 @@ public class Context {
    * <p>
    * get.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    * @param clazz a {@link java.lang.Class} object.
    * @param <T> a T object.

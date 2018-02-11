@@ -34,7 +34,7 @@ import org.beangle.commons.lang.Objects;
  * <p>
  * HierarchyEntityUtils class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -42,7 +42,7 @@ public final class HierarchyEntityUtils {
 
   /**
    * 得到给定节点的所有家族结点，包括自身
-   * 
+   *
    * @param root 指定根节点
    * @return 包含自身的家族节点集合
    * @param <T> a T object.
@@ -56,7 +56,7 @@ public final class HierarchyEntityUtils {
 
   /**
    * 加载字节点
-   * 
+   *
    * @param node
    * @param children
    */
@@ -70,7 +70,7 @@ public final class HierarchyEntityUtils {
 
   /**
    * 按照上下关系排序
-   * 
+   *
    * @param datas a {@link java.util.List} object.
    * @param <T> a T object.
    * @return a {@link java.util.Map} object.
@@ -81,7 +81,7 @@ public final class HierarchyEntityUtils {
 
   /**
    * 按照上下关系和指定属性排序
-   * 
+   *
    * @param datas a {@link java.util.List} object.
    * @param property a {@link java.lang.String} object.
    * @param <T> a T object.
@@ -103,7 +103,7 @@ public final class HierarchyEntityUtils {
    * <p>
    * tag.
    * </p>
-   * 
+   *
    * @param datas a {@link java.util.List} object.
    * @param property a {@link java.lang.String} object.
    * @param <T> a T object.
@@ -155,7 +155,7 @@ public final class HierarchyEntityUtils {
    * <p>
    * getRoots.
    * </p>
-   * 
+   *
    * @param nodes a {@link java.util.List} object.
    * @param <T> a T object.
    * @return a {@link java.util.List} object.
@@ -171,7 +171,7 @@ public final class HierarchyEntityUtils {
    * <p>
    * Get the path from current node to root. First element is current and last is root.
    * </p>
-   * 
+   *
    * @param node current node
    * @return a {@link java.util.List} object.
    */
@@ -189,7 +189,7 @@ public final class HierarchyEntityUtils {
    * <p>
    * addParent.
    * </p>
-   * 
+   *
    * @param nodes a {@link java.util.Collection} object.
    * @param <T> a T object.
    */
@@ -201,7 +201,7 @@ public final class HierarchyEntityUtils {
    * <p>
    * addParent.
    * </p>
-   * 
+   *
    * @param nodes a {@link java.util.Collection} object.
    * @param toRoot a T object.
    * @param <T> a T object.

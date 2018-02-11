@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * <code>SecurityContextHolder</code>. The request scope will also be populated with the exception
  * itself, available from the key {@link #ACCESS_DENIED_EXCEPTION_KEY}.
  * </p>
- * 
+ *
  * @author chaostone
  */
 public class DefaultAccessDeniedHandler implements AccessDeniedHandler {
@@ -75,7 +75,7 @@ public class DefaultAccessDeniedHandler implements AccessDeniedHandler {
   /**
    * The error page to use. Must begin with a "/" and is interpreted relative
    * to the current context root.
-   * 
+   *
    * @param errorPage the dispatcher path to display
    * @throws IllegalArgumentException if the argument doesn't comply with the above limitations
    */

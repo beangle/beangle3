@@ -28,7 +28,7 @@ import java.io.Writer;
  * <code>java.io.StringWriter</code>, provides an <i>un-synchronized</i> (i.e. for use in a single
  * thread) implementation for better performance. For safe usage with multiple {@link Thread}s then
  * <code>java.io.StringWriter</code> should be used.
- * 
+ *
  * @author chaostone
  * @since 3.1
  */
@@ -47,7 +47,7 @@ public class StringBuilderWriter extends Writer implements Serializable {
 
   /**
    * Construct a new {@link StringBuilder} instance with the specified capacity.
-   * 
+   *
    * @param capacity The initial capacity of the underlying {@link StringBuilder}
    */
   public StringBuilderWriter(int capacity) {
@@ -56,7 +56,7 @@ public class StringBuilderWriter extends Writer implements Serializable {
 
   /**
    * Construct a new instance with the specified {@link StringBuilder}.
-   * 
+   *
    * @param builder The String builder
    */
   public StringBuilderWriter(StringBuilder builder) {
@@ -106,7 +106,7 @@ public class StringBuilderWriter extends Writer implements Serializable {
 
   /**
    * Write a String to the {@link StringBuilder}.
-   * 
+   *
    * @param value The value to write
    */
   @Override

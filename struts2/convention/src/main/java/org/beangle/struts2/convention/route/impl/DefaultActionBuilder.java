@@ -39,7 +39,7 @@ public class DefaultActionBuilder implements ActionBuilder {
    * 如果对应profile中是uriStyle,那么类中只保留简单类名，去掉后缀，并且小写第一个字母。<br>
    * 否则加上包名，其中的.编成URI路径分割符。包名不做其他处理。<br>
    * 复杂URL,以/开始
-   * 
+   *
    * @param className
    */
   public Action build(Class<?> clazz) {

@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Stream Downloader
- * 
+ *
  * @author chaostone
  * @since 2.1
  */

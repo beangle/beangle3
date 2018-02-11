@@ -22,7 +22,7 @@ import org.beangle.security.core.Authentication;
 
 /**
  * 授权判断服务
- * 
+ *
  * @author chaostone
  */
 public interface AuthorityManager {

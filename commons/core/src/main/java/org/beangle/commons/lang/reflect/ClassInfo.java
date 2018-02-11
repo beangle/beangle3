@@ -35,7 +35,7 @@ import org.beangle.commons.lang.tuple.Pair;
 
 /**
  * Class meta information.It contains method signature,property names
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

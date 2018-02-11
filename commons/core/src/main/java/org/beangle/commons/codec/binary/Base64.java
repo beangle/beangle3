@@ -25,7 +25,7 @@ import org.beangle.commons.lang.Assert;
 
 /**
  * Base64 algorithm
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

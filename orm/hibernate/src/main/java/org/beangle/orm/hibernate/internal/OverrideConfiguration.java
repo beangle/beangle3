@@ -50,7 +50,7 @@ import org.xml.sax.InputSource;
 
 /**
  * Provide schema reconfig and overriderable class mapping in sessionFactory
- * 
+ *
  * @author chaostone
  * @since 2.1
  */
@@ -102,7 +102,7 @@ public class OverrideConfiguration extends Configuration {
 
   /**
    * Config table's schema by TableNamingStrategy.<br>
-   * 
+   *
    * @see org.beangle.orm.hibernate.RailsNamingStrategy
    */
   private void configSchema() {
@@ -136,7 +136,7 @@ public class OverrideConfiguration extends Configuration {
   /**
    * Update persistentclass and collection's schema.<br>
    * Remove duplicated persistentClass register in classes map.
-   * 
+   *
    * @see #addClass(Class)
    */
   @Override

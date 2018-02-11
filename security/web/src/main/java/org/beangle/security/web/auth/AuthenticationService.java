@@ -25,7 +25,7 @@ import org.beangle.security.core.Authentication;
 
 /**
  * Login/Logout Service
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  * requests which contain a <code>principal</code> name equal to either
  * {@link CasAuthentication#STATEFUL_ID} or {@link CasAuthentication#STATELESS_ID} . It can also
  * validate a previously created {@link CasAuthentication}.
- * 
+ *
  * @author chaostone
  */
 public class CasAuthenticationProvider implements AuthenticationProvider, Initializing {

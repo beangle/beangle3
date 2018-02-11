@@ -50,7 +50,7 @@ import org.beangle.commons.lang.Strings;
  * <code>org/beangle/servlet/bla.jsp</code> but also
  * <code>org/beangle/testing/servlet/bla.jsp</code> and <code>org/servlet/bla.jsp</code></li>
  * </ul>
- * 
+ *
  * @author chaostone
  * @since 3.1.0
  */

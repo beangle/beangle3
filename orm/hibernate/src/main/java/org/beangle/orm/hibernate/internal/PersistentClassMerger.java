@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 将子类的persistent class 合并到父类中。
- * 
+ *
  * @author chaostone
  * @since 3.4.9
  */

@@ -34,7 +34,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 
 /**
  * <li>remove actionMapper\determineActionURL\determineNamespace</li> <li>remove copy parameter</li>
- * 
+ *
  * @author chaostone
  */
 public class Component {
@@ -44,7 +44,7 @@ public class Component {
 
   /**
    * Constructor.
-   * 
+   *
    * @param stack
    *          OGNL value stack.
    */
@@ -56,7 +56,7 @@ public class Component {
 
   /**
    * Gets the name of this component.
-   * 
+   *
    * @return the name of this component.
    */
   private String getComponentName() {
@@ -68,7 +68,7 @@ public class Component {
 
   /**
    * Gets the component stack of this component.
-   * 
+   *
    * @return the component stack of this component, never <tt>null</tt>.
    */
   protected Stack<Component> getComponentStack() {
@@ -84,7 +84,7 @@ public class Component {
   /**
    * Callback for the start tag of this component. Should the body be
    * evaluated?
-   * 
+   *
    * @param writer
    *          the output writer.
    * @return true if the body should be evaluated
@@ -98,7 +98,7 @@ public class Component {
    * again?
    * <p/>
    * <b>NOTE:</b> will pop component stack.
-   * 
+   *
    * @param writer the output writer.
    * @param body the rendered body.
    * @return true if the body should be evaluated again
@@ -112,7 +112,7 @@ public class Component {
    * evaluated again?
    * <p/>
    * <b>NOTE:</b> has a parameter to determine to pop the component stack.
-   * 
+   *
    * @param writer the output writer.
    * @param body the rendered body.
    * @param popComponentStack
@@ -139,7 +139,7 @@ public class Component {
 
   /**
    * Finds the nearest ancestor of this component stack.
-   * 
+   *
    * @param clazz
    *          the class to look for, or if assignable from.
    * @return the component if found, <tt>null</tt> if not.
@@ -156,7 +156,7 @@ public class Component {
 
   /**
    * Evaluates the OGNL stack to find a String value.
-   * 
+   *
    * @param expr
    *          OGNL expression.
    * @return the String value found.
@@ -170,7 +170,7 @@ public class Component {
    * <p/>
    * If the given expression is <tt>null</tt/> a error is logged and a <code>RuntimeException</code>
    * is thrown constructed with a messaged based on the given field and errorMsg paramter.
-   * 
+   *
    * @param expr
    *          OGNL expression.
    * @param field
@@ -195,7 +195,7 @@ public class Component {
    * <p/>
    * A message is constructed and logged at ERROR level before being returned as a
    * <code>RuntimeException</code>.
-   * 
+   *
    * @param field
    *          field name used when throwing <code>RuntimeException</code>.
    * @param errorMsg
@@ -216,7 +216,7 @@ public class Component {
    * always evaluate <code>expr</code> against stack except when <code>expr</code> is null. If
    * altsyntax (%{...}) is applied, simply strip
    * it off.
-   * 
+   *
    * @param expr
    *          the expression. Returns <tt>null</tt> if expr is null.
    * @return the value, <tt>null</tt> if not found.
@@ -229,7 +229,7 @@ public class Component {
 
   /**
    * If altsyntax (%{...}) is applied, simply strip the "%{" and "}" off.
-   * 
+   *
    * @param expr
    *          the expression (must be not null)
    * @return the stripped expression if altSyntax is enabled. Otherwise the
@@ -241,7 +241,7 @@ public class Component {
 
   /**
    * If altsyntax (%{...}) is applied, simply strip the "%{" and "}" off.
-   * 
+   *
    * @param stack
    *          the ValueStack where the context value is searched for.
    * @param expr
@@ -261,7 +261,7 @@ public class Component {
   /**
    * Is the altSyntax enabled? [TRUE]
    * <p/>
-   * 
+   *
    * @param stack
    *          the ValueStack where the context value is searched for.
    * @return true if altSyntax is activated. False otherwise. See <code>struts.properties</code>
@@ -283,7 +283,7 @@ public class Component {
 
   /**
    * Adds the sorrounding %{ } to the expression for proper processing.
-   * 
+   *
    * @param expr
    *          the expression.
    * @return the modified expression if altSyntax is enabled, or the parameter
@@ -296,7 +296,7 @@ public class Component {
 
   /**
    * This check is needed for backwards compatibility with 2.1.x
-   * 
+   *
    * @param expr
    *          the expression.
    * @return the found string if altSyntax is enabled. The parameter
@@ -313,7 +313,7 @@ public class Component {
    * Function just like <code>findValue(String)</code> except that if the given expression is
    * <tt>null</tt/> a error is logged and a <code>RuntimeException</code> is thrown constructed with
    * a messaged based on the given field and errorMsg paramter.
-   * 
+   *
    * @param expr
    *          OGNL expression.
    * @param field
@@ -350,7 +350,7 @@ public class Component {
    * evaluated against the stack.
    * <p/>
    * This method only supports the altSyntax. So this should be set to true.
-   * 
+   *
    * @param expr
    *          OGNL expression.
    * @param toType
@@ -368,7 +368,7 @@ public class Component {
 
   /**
    * Constructs a string representation of the given exception.
-   * 
+   *
    * @param t
    *          the exception
    * @return the exception as a string.
@@ -383,7 +383,7 @@ public class Component {
 
   /**
    * Gets the parameters.
-   * 
+   *
    * @return the parameters. Is never <tt>null</tt>.
    */
   public Map<String, Object> getParameters() {
@@ -392,7 +392,7 @@ public class Component {
 
   /**
    * Adds all the given parameters to this component's own parameters.
-   * 
+   *
    * @param params
    *          the parameters to add.
    */
@@ -405,7 +405,7 @@ public class Component {
    * <p/>
    * If the provided key is <tt>null</tt> nothing happens. If the provided value is <tt>null</tt>
    * any existing parameter with the given key name is removed.
-   * 
+   *
    * @param key
    *          the key of the new parameter to add.
    * @param value
@@ -421,7 +421,7 @@ public class Component {
 
   /**
    * Overwrite to set if body shold be used.
-   * 
+   *
    * @return always false for this component.
    */
   public boolean usesBody() {

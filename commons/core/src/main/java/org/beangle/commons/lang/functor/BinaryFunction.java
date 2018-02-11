@@ -22,7 +22,7 @@ import org.beangle.commons.lang.Objects;
 
 /**
  * Binary Function Object
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  * @param <I1> first input type
@@ -39,7 +39,7 @@ public interface BinaryFunction<I1, I2, R> {
    * Objects.equal}{@code (a, b)} implies that {@code Objects.equal(function.apply(a),
    * function.apply(b))}.
    * </ul>
-   * 
+   *
    * @throws NullPointerException if {@code input} is null
    */
   R apply(I1 arg1, I2 arg2);

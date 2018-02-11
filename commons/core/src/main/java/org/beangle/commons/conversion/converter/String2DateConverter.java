@@ -30,7 +30,7 @@ import org.beangle.commons.conversion.Converter;
  * <p>
  * DateConverter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  * @version $Id: $
@@ -87,7 +87,7 @@ public class String2DateConverter extends StringConverterFactory<String, Date> {
    * <p>
    * normalize.
    * </p>
-   * 
+   *
    * @param dateStr a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
    */

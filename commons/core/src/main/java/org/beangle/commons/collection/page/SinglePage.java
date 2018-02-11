@@ -25,7 +25,7 @@ import java.util.ListIterator;
 
 /**
  * 分页对象
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -52,7 +52,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * Constructor for SinglePage.
    * </p>
-   * 
+   *
    * @param pageNo a int.
    * @param pageSize a int.
    * @param total a int.
@@ -77,7 +77,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * getFirstPageNo.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public final int getFirstPageNo() {
@@ -88,7 +88,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * getMaxPageNo.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public final int getMaxPageNo() {
@@ -105,7 +105,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * getNextPageNo.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public final int getNextPageNo() {
@@ -120,7 +120,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * getPreviousPageNo.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public final int getPreviousPageNo() {
@@ -135,7 +135,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * Getter for the field <code>pageNo</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public final int getPageNo() {
@@ -146,7 +146,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * Getter for the field <code>pageSize</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public final int getPageSize() {
@@ -157,7 +157,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * Getter for the field <code>items</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   public final List<E> getItems() {
@@ -168,7 +168,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * Getter for the field <code>total</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public final int getTotal() {
@@ -208,7 +208,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * isEmpty.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isEmpty() {
@@ -219,7 +219,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * iterator.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Iterator} object.
    */
   public Iterator<E> iterator() {
@@ -245,7 +245,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * size.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int size() {
@@ -256,7 +256,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * toArray.
    * </p>
-   * 
+   *
    * @return an array of {@link java.lang.Object} objects.
    */
   public Object[] toArray() {
@@ -267,7 +267,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * toArray.
    * </p>
-   * 
+   *
    * @param datas an array of T objects.
    * @param <T> a T object.
    * @return an array of T objects.
@@ -280,7 +280,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * Setter for the field <code>pageNo</code>.
    * </p>
-   * 
+   *
    * @param pageNo a int.
    */
   public void setPageNo(final int pageNo) {
@@ -291,7 +291,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * Setter for the field <code>pageSize</code>.
    * </p>
-   * 
+   *
    * @param pageSize a int.
    */
   public void setPageSize(final int pageSize) {
@@ -302,7 +302,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * Setter for the field <code>total</code>.
    * </p>
-   * 
+   *
    * @param total a int.
    */
   public void setTotal(final int total) {
@@ -313,7 +313,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * Setter for the field <code>items</code>.
    * </p>
-   * 
+   *
    * @param dataItems a {@link java.util.List} object.
    */
   public void setItems(final List<E> dataItems) {
@@ -325,7 +325,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * hasNext.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean hasNext() {
@@ -336,7 +336,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * hasPrevious.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean hasPrevious() {
@@ -347,7 +347,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * next.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
   public Page<E> next() {
@@ -358,7 +358,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * previous.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
   public Page<E> previous() {
@@ -374,7 +374,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * add.
    * </p>
-   * 
+   *
    * @param arg0 a int.
    * @param arg1 a E object.
    */
@@ -401,7 +401,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * listIterator.
    * </p>
-   * 
+   *
    * @return a {@link java.util.ListIterator} object.
    */
   public ListIterator<E> listIterator() {
@@ -417,7 +417,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * remove.
    * </p>
-   * 
+   *
    * @param index a int.
    * @return a E object.
    */
@@ -434,7 +434,7 @@ public class SinglePage<E> implements Page<E> {
    * <p>
    * set.
    * </p>
-   * 
+   *
    * @param arg0 a int.
    * @param arg1 a E object.
    * @return a E object.

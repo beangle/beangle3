@@ -20,7 +20,7 @@ package org.beangle.commons.entity.metadata;
 
 /**
  * 对象和类型
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -33,7 +33,7 @@ public class ObjectAndType {
    * <p>
    * Constructor for ObjectAndType.
    * </p>
-   * 
+   *
    * @param obj a {@link java.lang.Object} object.
    * @param type a {@link org.beangle.commons.entity.metadata.Type} object.
    */
@@ -47,7 +47,7 @@ public class ObjectAndType {
    * <p>
    * Getter for the field <code>obj</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Object} object.
    */
   public Object getObj() {
@@ -58,7 +58,7 @@ public class ObjectAndType {
    * <p>
    * Setter for the field <code>obj</code>.
    * </p>
-   * 
+   *
    * @param obj a {@link java.lang.Object} object.
    */
   public void setObj(Object obj) {
@@ -69,7 +69,7 @@ public class ObjectAndType {
    * <p>
    * Getter for the field <code>type</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.entity.metadata.Type} object.
    */
   public Type getType() {
@@ -80,7 +80,7 @@ public class ObjectAndType {
    * <p>
    * Setter for the field <code>type</code>.
    * </p>
-   * 
+   *
    * @param type a {@link org.beangle.commons.entity.metadata.Type} object.
    */
   public void setType(Type type) {

@@ -40,7 +40,7 @@ import java.io.Serializable;
  * <a href="http://www.pgts.com.au/cgi-bin/psql?agent_main">List of User Agent Strings</a><br>
  * <a href="http://blogs.msdn.com/iemobile/archive/2006/08/03/Detecting_IE_Mobile.aspx">Detecting
  * Internet Explorer Mobile's User-Agent on the server</a>
- * 
+ *
  * @author chaostone
  * @since 2.4
  * @version $Id: Useragent.java Nov 15, 2010 7:39:29 AM chaostone $

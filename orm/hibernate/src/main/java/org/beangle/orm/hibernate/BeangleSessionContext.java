@@ -41,7 +41,7 @@ public class BeangleSessionContext implements CurrentSessionContext {
 
   /**
    * Create a new SpringSessionContext for the given Hibernate SessionFactory.
-   * 
+   *
    * @param sessionFactory the SessionFactory to provide current Sessions for
    */
   public BeangleSessionContext(SessionFactoryImplementor sessionFactory) {
@@ -75,7 +75,7 @@ public class BeangleSessionContext implements CurrentSessionContext {
 
 /**
  * Borrow from Spring Session Synchronization
- * 
+ *
  * @author chaostone
  */
 class SessionSynchronization implements TransactionSynchronization, Ordered {

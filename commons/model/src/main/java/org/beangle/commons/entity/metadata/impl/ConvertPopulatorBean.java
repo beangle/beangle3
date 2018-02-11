@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * ConvertPopulatorBean class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

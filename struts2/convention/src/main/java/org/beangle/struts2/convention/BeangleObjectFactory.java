@@ -37,7 +37,7 @@ import com.opensymphony.xwork2.inject.Inject;
  * <pre>
  * 1 Dropped autowire feature
  * </pre>
- * 
+ *
  * @author chaostone
  * @version $Id: BeangleObjectFactory.java Dec 25, 2011 5:54:57 PM chaostone $
  */
@@ -50,7 +50,7 @@ public class BeangleObjectFactory extends ObjectFactory {
 
   /**
    * Constructs the object factory
-   * 
+   *
    * @param servletContext The servlet context
    * @since 2.1.3
    */
@@ -64,7 +64,7 @@ public class BeangleObjectFactory extends ObjectFactory {
   /**
    * Looks up beans using application context before falling back to the method defined
    * in the {@link ObjectFactory}.
-   * 
+   *
    * @param beanName The name of the bean to look up in the application context
    * @param extraContext
    * @return A bean from context or the result of calling the overridden

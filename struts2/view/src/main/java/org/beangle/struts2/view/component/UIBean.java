@@ -79,7 +79,7 @@ public abstract class UIBean extends Component {
 
   /**
    * 将所有额外参数链接起来
-   * 
+   *
    * @return 空格开始 空格相隔的参数字符串
    */
   public String getParameterString() {
@@ -117,7 +117,7 @@ public abstract class UIBean extends Component {
 
   /**
    * 获得对应的国际化信息
-   * 
+   *
    * @param text
    * @return 当第一个字符不是字母或者不包含.或者包含空格的均返回原有字符串
    */

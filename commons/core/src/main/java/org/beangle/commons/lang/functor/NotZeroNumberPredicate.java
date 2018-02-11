@@ -18,12 +18,11 @@
  */
 package org.beangle.commons.lang.functor;
 
-
 /**
  * <p>
  * NotZeroNumberPredicate class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -40,7 +39,7 @@ public class NotZeroNumberPredicate implements Predicate<Number> {
    * <p>
    * getInstance.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.lang.functor.NotZeroNumberPredicate} object.
    */
   public static NotZeroNumberPredicate getInstance() {

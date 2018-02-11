@@ -90,7 +90,7 @@ public class ActionSupport implements TextResourceProvider {
    * Subclasses should override this method to provide their business logic.
    * <p/>
    * See also {@link com.opensymphony.xwork2.Action#execute()}.
-   * 
+   *
    * @return returns {@link #SUCCESS}
    * @throws Exception
    *           can be thrown by subclasses.
@@ -206,7 +206,7 @@ public class ActionSupport implements TextResourceProvider {
 
   /**
    * Add action message.
-   * 
+   *
    * @param msgKey
    * @param args
    */
@@ -216,7 +216,7 @@ public class ActionSupport implements TextResourceProvider {
 
   /**
    * Add action error.
-   * 
+   *
    * @param msgKey
    * @param args
    */
@@ -226,7 +226,7 @@ public class ActionSupport implements TextResourceProvider {
 
   /**
    * Add error to next action.
-   * 
+   *
    * @param msgKey
    * @param args
    */
@@ -236,7 +236,7 @@ public class ActionSupport implements TextResourceProvider {
 
   /**
    * Add message to next action.
-   * 
+   *
    * @param msgKey
    * @param args
    */

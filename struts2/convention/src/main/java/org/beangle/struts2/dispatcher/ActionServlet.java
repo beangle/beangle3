@@ -40,7 +40,7 @@ import com.opensymphony.xwork2.ActionContext;
 
 /**
  * Server Struts2 Action Only.
- * 
+ *
  * @author chaostone
  */
 public class ActionServlet extends HttpServlet {

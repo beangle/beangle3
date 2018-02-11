@@ -29,7 +29,7 @@ import org.beangle.commons.entity.pojo.IntegerIdObject;
 
 /**
  * 分类会话计数状态
- * 
+ *
  * @author chaostone
  * @version $Id: CategorySessionStat.java Jun 18, 2011 2:56:08 PM chaostone $
  */

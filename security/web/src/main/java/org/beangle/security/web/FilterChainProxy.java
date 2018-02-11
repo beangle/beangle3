@@ -57,7 +57,7 @@ public class FilterChainProxy extends GenericCompositeFilter {
 
   /**
    * Returns the first filter chain matching the supplied URL.
-   * 
+   *
    * @param res the request
    * @return an ordered array of Filters defining the filter chain
    */

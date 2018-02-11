@@ -20,7 +20,7 @@ package org.beangle.commons.lang.time;
 
 /**
  * Time source generator
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

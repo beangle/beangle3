@@ -20,7 +20,7 @@ package org.beangle.commons.csv;
 
 /**
  * csv separator constant
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */

@@ -24,7 +24,7 @@ import java.util.Date;
  * <p>
  * TimeEntity interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -34,7 +34,7 @@ public interface TimeEntity {
    * <p>
    * getUpdatedAt.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Date} object.
    */
   Date getUpdatedAt();
@@ -43,7 +43,7 @@ public interface TimeEntity {
    * <p>
    * setUpdatedAt.
    * </p>
-   * 
+   *
    * @param updatedAt a {@link java.util.Date} object.
    */
   void setUpdatedAt(Date updatedAt);

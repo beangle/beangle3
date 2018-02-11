@@ -24,7 +24,7 @@ import java.util.Set;
 
 /**
  * csv format definition
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -54,7 +54,7 @@ public class CsvFormat {
    * <p>
    * isStrictQuotes.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isStrictQuotes() {
@@ -65,7 +65,7 @@ public class CsvFormat {
    * <p>
    * isSeparator.
    * </p>
-   * 
+   *
    * @param a a char.
    * @return a boolean.
    */
@@ -77,7 +77,7 @@ public class CsvFormat {
    * <p>
    * isDelimiter.
    * </p>
-   * 
+   *
    * @param a a char.
    * @return a boolean.
    */
@@ -89,7 +89,7 @@ public class CsvFormat {
    * <p>
    * isEscape.
    * </p>
-   * 
+   *
    * @param a a char.
    * @return a boolean.
    */
@@ -101,7 +101,7 @@ public class CsvFormat {
    * <p>
    * Getter for the field <code>separators</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Set} object.
    */
   public Set<Character> getSeparators() {
@@ -112,7 +112,7 @@ public class CsvFormat {
    * <p>
    * Getter for the field <code>delimiter</code>.
    * </p>
-   * 
+   *
    * @return a char.
    */
   public char getDelimiter() {
@@ -123,7 +123,7 @@ public class CsvFormat {
    * <p>
    * Getter for the field <code>escape</code>.
    * </p>
-   * 
+   *
    * @return a char.
    */
   public char getEscape() {
@@ -134,7 +134,7 @@ public class CsvFormat {
    * <p>
    * defaultSeparator.
    * </p>
-   * 
+   *
    * @return a char.
    */
   public char defaultSeparator() {

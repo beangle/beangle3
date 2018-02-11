@@ -25,7 +25,7 @@ import org.beangle.commons.lang.functor.Predicate;
 
 /**
  * Property Equals Predicate
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -37,7 +37,7 @@ public class PropertyEqualPredicate<T> implements Predicate<T> {
    * <p>
    * Constructor for PropertyEqualPredicate.
    * </p>
-   * 
+   *
    * @param propertyName a {@link java.lang.String} object.
    * @param propertyValue a {@link java.lang.Object} object.
    */
@@ -51,7 +51,7 @@ public class PropertyEqualPredicate<T> implements Predicate<T> {
    * <p>
    * evaluate.
    * </p>
-   * 
+   *
    * @param arg0 a {@link java.lang.Object} object.
    * @return a boolean.
    */

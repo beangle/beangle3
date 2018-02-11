@@ -20,7 +20,7 @@ package org.beangle.commons.event;
 
 /**
  * BusinessEvent
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

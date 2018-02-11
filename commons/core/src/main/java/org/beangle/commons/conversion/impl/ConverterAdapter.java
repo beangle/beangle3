@@ -23,7 +23,7 @@ import org.beangle.commons.lang.tuple.Pair;
 
 /**
  * Adapte a Converter to GenericConverter
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

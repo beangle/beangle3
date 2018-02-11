@@ -41,7 +41,7 @@ import org.beangle.security.core.session.category.SimpleCategoryProfileProvider;
 
 /**
  * 基于数据库的集中session控制器
- * 
+ *
  * @author chaostone
  * @version $Id: DbSessionController.java Jul 8, 2011 9:08:14 AM chaostone $
  */

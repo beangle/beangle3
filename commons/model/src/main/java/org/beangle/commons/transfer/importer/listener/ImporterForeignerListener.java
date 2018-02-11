@@ -37,7 +37,7 @@ import org.beangle.commons.transfer.importer.MultiEntityImporter;
  * 从而造成有些外键是空对象的错误<br>
  * 如果外键不存在，则目标中的外键会置成null；<br>
  * 如果外键是空的，那么目标的外键取决于importer.isIgnoreNull取值
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -57,7 +57,7 @@ public class ImporterForeignerListener extends ItemImporterListener {
    * <p>
    * Constructor for ImporterForeignerListener.
    * </p>
-   * 
+   *
    * @param entityDao a {@link org.beangle.commons.dao.EntityDao} object.
    */
   public ImporterForeignerListener(EntityDao entityDao) {
@@ -139,7 +139,7 @@ public class ImporterForeignerListener extends ItemImporterListener {
    * <p>
    * addForeigerKey.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    */
   public void addForeigerKey(String key) {

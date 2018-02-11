@@ -18,11 +18,9 @@
  */
 package org.beangle.commons.script;
 
-
-
 /**
  * 表达式执行器
- * 
+ *
  * @author chaostone
  * @version $Id: ExpressionEvaluator.java Mar 5, 2012 12:13:41 AM chaostone $
  * @since 2012-03-05
@@ -38,7 +36,7 @@ public interface ExpressionEvaluator {
    * <p>
    * Eval a expression within context
    * </p>
-   * 
+   *
    * @param exp a java's expression
    * @param root params.
    * @return evaluate result
@@ -49,7 +47,7 @@ public interface ExpressionEvaluator {
    * <p>
    * Eval a expression within context,Return the given type
    * </p>
-   * 
+   *
    * @param exp a java's expression
    * @param root params.
    * @param resultType What type of the result

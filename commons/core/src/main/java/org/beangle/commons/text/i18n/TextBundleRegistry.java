@@ -25,7 +25,7 @@ import org.beangle.commons.lang.Option;
 
 /**
  * TextBundleRegistry
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */
@@ -33,7 +33,7 @@ public interface TextBundleRegistry {
 
   /**
    * Load and cache bundle
-   * 
+   *
    * @param locale
    * @param bundleName
    * @return Option.None when not found
@@ -42,21 +42,21 @@ public interface TextBundleRegistry {
 
   /**
    * List locale bundles
-   * 
+   *
    * @return empty list when not found
    */
   List<TextBundle> getBundles(Locale locale);
 
   /**
    * Load and cache default bundles
-   * 
+   *
    * @param bundleNames
    */
   void addDefaults(String... bundleNames);
 
   /**
    * Get default locale message
-   * 
+   *
    * @param key
    * @param locale
    * @return null when not found
@@ -65,7 +65,7 @@ public interface TextBundleRegistry {
 
   /**
    * Whether cache bundles
-   * 
+   *
    * @param reloadBundles
    */
   void setReloadBundles(boolean reloadBundles);

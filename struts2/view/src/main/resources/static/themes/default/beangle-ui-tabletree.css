@@ -17,34 +17,34 @@
  * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
  */
 .tree-folder {
-	background: url(icons/16x16/trees.png)  no-repeat  top left;
-	background-position: -264px 0; width: 16px; height: 16px;
-	float: left;
-	padding-right: 3px 
+  background: url(icons/16x16/trees.png)  no-repeat  top left;
+  background-position: -264px 0; width: 16px; height: 16px;
+  float: left;
+  padding-right: 3px
 }
 
 .tree-folder-open {
-	background: url(icons/16x16/trees.png)  no-repeat  top left;
-	background-position: -140px 0; width: 16px; height: 16px; 
-	float: left;
-	padding-right: 3px 
+  background: url(icons/16x16/trees.png)  no-repeat  top left;
+  background-position: -140px 0; width: 16px; height: 16px;
+  float: left;
+  padding-right: 3px
 }
 .tree-item {
-	background: url(icons/16x16/trees.png) no-repeat  top left;
-	background-position: 0 0; width: 16px; height: 16px;  
-	float: left;
-	padding-right: 1px;
-	margin-left: 5px;
+  background: url(icons/16x16/trees.png) no-repeat  top left;
+  background-position: 0 0; width: 16px; height: 16px;
+  float: left;
+  padding-right: 1px;
+  margin-left: 5px;
 }
 
 .tree-line {
-	background: url(icons/16x16/trees.png) no-repeat  top left;
-	background-position: -66px 0; width: 24px; height: 22px; 
+  background: url(icons/16x16/trees.png) no-repeat  top left;
+  background-position: -66px 0; width: 24px; height: 22px;
 }
 
 .tree-nav {
-	background-position: -206px 0; width: 8px; height: 9px;
-	background: url(icons/16x16/trees.png) no-repeat  top left;
+  background-position: -206px 0; width: 8px; height: 9px;
+  background: url(icons/16x16/trees.png) no-repeat  top left;
 }
 
 .tree-tier1 { margin-left: 0; }

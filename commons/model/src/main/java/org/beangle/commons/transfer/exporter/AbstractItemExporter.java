@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Abstract AbstractItemExporter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -84,7 +84,7 @@ public abstract class AbstractItemExporter implements Exporter {
    * <p>
    * Getter for the field <code>current</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Object} object.
    */
   public Object getCurrent() {
@@ -95,7 +95,7 @@ public abstract class AbstractItemExporter implements Exporter {
    * <p>
    * Getter for the field <code>fail</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getFail() {
@@ -106,7 +106,7 @@ public abstract class AbstractItemExporter implements Exporter {
    * <p>
    * getLocale.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Locale} object.
    */
   public Locale getLocale() {
@@ -117,7 +117,7 @@ public abstract class AbstractItemExporter implements Exporter {
    * <p>
    * Getter for the field <code>success</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getSuccess() {
@@ -128,7 +128,7 @@ public abstract class AbstractItemExporter implements Exporter {
    * <p>
    * getTranferIndex.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getTranferIndex() {
@@ -175,7 +175,7 @@ public abstract class AbstractItemExporter implements Exporter {
 
   /**
    * 导出准备和检查。
-   * 
+   *
    * @return false 不能开始导出
    */
   protected boolean beforeExport() {
@@ -206,7 +206,7 @@ public abstract class AbstractItemExporter implements Exporter {
    * <p>
    * hasNext.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean hasNext() {
@@ -217,7 +217,7 @@ public abstract class AbstractItemExporter implements Exporter {
    * <p>
    * getFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public TransferFormat getFormat() {
@@ -238,7 +238,7 @@ public abstract class AbstractItemExporter implements Exporter {
    * <p>
    * getDataName.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getDataName() {
@@ -256,7 +256,7 @@ public abstract class AbstractItemExporter implements Exporter {
    * <p>
    * Getter for the field <code>writer</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.transfer.io.ItemWriter} object.
    */
   public ItemWriter getWriter() {

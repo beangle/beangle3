@@ -22,7 +22,7 @@ import org.beangle.commons.lang.Strings;
 
 /**
  * 多个属性的比较
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -32,7 +32,7 @@ public class MultiPropertyComparator extends ChainComparator<Object> {
    * <p>
    * Constructor for MultiPropertyComparator.
    * </p>
-   * 
+   *
    * @param propertyStr a {@link java.lang.String} object.
    */
   public MultiPropertyComparator(final String propertyStr) {

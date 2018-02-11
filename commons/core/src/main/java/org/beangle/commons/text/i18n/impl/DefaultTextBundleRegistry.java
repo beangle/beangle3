@@ -147,7 +147,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
 
   /**
    * Load java properties bundle with iso-8859-1
-   * 
+   *
    * @param bundleName
    * @param locale
    * @return None or bundle corresponding bindleName.locale.properties
@@ -169,7 +169,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
 
   /**
    * java properties bundle name
-   * 
+   *
    * @param bundleName
    * @param locale
    * @return convented properties ended file path.
@@ -186,7 +186,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
 
   /**
    * Generater resource name like bundleName.zh_CN
-   * 
+   *
    * @param bundleName
    * @param locale
    * @return resource name end with locale
@@ -203,7 +203,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
 
   /**
    * Convert locale to string with language_country[_variant]
-   * 
+   *
    * @param locale
    * @return locale string
    */

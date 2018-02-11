@@ -25,7 +25,7 @@ import java.util.Set;
  * <p>
  * BindRegistry interface.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -35,7 +35,7 @@ public interface BindRegistry {
    * <p>
    * getBeanNames.
    * </p>
-   * 
+   *
    * @param type a {@link java.lang.Class} object.
    * @return a {@link java.util.List} object.
    */
@@ -45,7 +45,7 @@ public interface BindRegistry {
    * <p>
    * getBeanType.
    * </p>
-   * 
+   *
    * @param beanName a {@link java.lang.String} object.
    * @return a {@link java.lang.Class} object.
    */
@@ -55,7 +55,7 @@ public interface BindRegistry {
    * <p>
    * register.
    * </p>
-   * 
+   *
    * @param type a {@link java.lang.Class} object.
    * @param name a {@link java.lang.String} object.
    * @param args a {@link java.lang.Object} object.
@@ -66,7 +66,7 @@ public interface BindRegistry {
    * <p>
    * contains.
    * </p>
-   * 
+   *
    * @param beanName a {@link java.lang.String} object.
    * @return true if contains
    */
@@ -76,7 +76,7 @@ public interface BindRegistry {
    * <p>
    * getBeanNames.
    * </p>
-   * 
+   *
    * @return bean name set
    */
   Set<String> getBeanNames();
@@ -85,7 +85,7 @@ public interface BindRegistry {
    * <p>
    * Whether the bean is primary
    * </p>
-   * 
+   *
    * @param name
    * @return true if the bean is primary
    */

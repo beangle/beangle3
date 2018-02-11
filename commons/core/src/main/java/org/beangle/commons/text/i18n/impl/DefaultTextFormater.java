@@ -27,7 +27,7 @@ import org.beangle.commons.text.i18n.TextFormater;
 
 /**
  * DefaultTextFormater with cache
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

@@ -24,7 +24,7 @@ package org.beangle.security.core.context;
  * The preferred strategy is loaded by
  * {@link org.beangle.security.core.context.SecurityContextHolder}.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: SecurityContextHolderStrategy.java 2142 2007-09-21 18:18:21Z $
  */
@@ -36,7 +36,7 @@ public interface SecurityContextHolderStrategy {
 
   /**
    * Obtains the current context.
-   * 
+   *
    * @return a context (never <code>null</code> - create a default
    *         implementation if necessary)
    */
@@ -44,7 +44,7 @@ public interface SecurityContextHolderStrategy {
 
   /**
    * Sets the current context.
-   * 
+   *
    * @param context
    *          to the new argument (should never be <code>null</code>,
    *          although implementations must check if <code>null</code> has

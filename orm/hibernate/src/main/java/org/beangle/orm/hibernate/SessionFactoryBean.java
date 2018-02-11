@@ -83,7 +83,7 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
    * <p>
    * Note: Can be omitted when all necessary properties and mapping resources are specified locally
    * via this bean.
-   * 
+   *
    * @see org.hibernate.cfg.Configuration#configure(java.net.URL)
    */
   public void setConfigLocations(Resource[] configLocations) {
@@ -102,7 +102,7 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
    * <p>
    * Note: Do not specify a transaction provider here when using Spring-driven transactions. It is
    * also advisable to omit connection provider settings and use a Spring-set DataSource instead.
-   * 
+   *
    * @see #setDataSource
    */
   public void setHibernateProperties(Properties hibernateProperties) {
@@ -121,7 +121,7 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
   /**
    * Set a Hibernate NamingStrategy for the SessionFactory, determining the
    * physical column and table names given the info in the mapping document.
-   * 
+   *
    * @see org.hibernate.cfg.Configuration#setNamingStrategy
    */
   public void setNamingStrategy(NamingStrategy namingStrategy) {
@@ -242,7 +242,7 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
 
   /**
    * Add annotation class from persist configuration
-   * 
+   *
    * @param epconfig
    */
   private void addPersistInfo(EntityPersistConfig epconfig) {
@@ -273,7 +273,7 @@ public class SessionFactoryBean implements FactoryBean<SessionFactory>, Initiali
    * <p>
    * The default implementation creates a new Configuration instance. A custom implementation could
    * prepare the instance in a specific way, or use a custom Configuration subclass.
-   * 
+   *
    * @return the Configuration instance
    * @throws HibernateException in case of Hibernate initialization errors
    * @see org.hibernate.cfg.Configuration#Configuration()

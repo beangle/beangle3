@@ -39,7 +39,7 @@ public class SecurityContextLogoutHandler implements LogoutHandler {
 
   /**
    * Requires the request to be passed in.
-   * 
+   *
    * @param request from which to obtain a HTTP session (cannot be null)
    * @param response not used (can be <code>null</code>)
    * @param authentication not used (can be <code>null</code>)
@@ -60,7 +60,7 @@ public class SecurityContextLogoutHandler implements LogoutHandler {
   /**
    * Causes the {@link HttpSession} to be invalidated when this {@link LogoutHandler} is invoked.
    * Defaults to true.
-   * 
+   *
    * @param invalidateHttpSession
    *          true if you wish the session to be invalidated (default) or
    *          false if it should not be.

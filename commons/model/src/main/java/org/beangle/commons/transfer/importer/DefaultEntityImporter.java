@@ -25,7 +25,7 @@ import org.beangle.commons.entity.metadata.Model;
  * <p>
  * DefaultEntityImporter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -46,7 +46,7 @@ public class DefaultEntityImporter extends MultiEntityImporter {
    * <p>
    * Constructor for DefaultEntityImporter.
    * </p>
-   * 
+   *
    * @param entityClass a {@link java.lang.Class} object.
    */
   public DefaultEntityImporter(Class<?> entityClass) {
@@ -69,7 +69,7 @@ public class DefaultEntityImporter extends MultiEntityImporter {
    * <p>
    * getEntityClass.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Class} object.
    */
   public Class<?> getEntityClass() {
@@ -80,7 +80,7 @@ public class DefaultEntityImporter extends MultiEntityImporter {
    * <p>
    * getEntityName.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getEntityName() {
@@ -91,7 +91,7 @@ public class DefaultEntityImporter extends MultiEntityImporter {
    * <p>
    * setEntityClass.
    * </p>
-   * 
+   *
    * @param entityClass a {@link java.lang.Class} object.
    */
   public void setEntityClass(Class<?> entityClass) {
@@ -106,7 +106,7 @@ public class DefaultEntityImporter extends MultiEntityImporter {
    * <p>
    * getCurrent.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Object} object.
    */
   public Object getCurrent() {

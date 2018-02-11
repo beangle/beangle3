@@ -24,7 +24,7 @@ import org.beangle.security.BeangleSecurityException;
 
 /**
  * 认证异常
- * 
+ *
  * @author chaostone
  */
 public class AuthenticationException extends BeangleSecurityException {

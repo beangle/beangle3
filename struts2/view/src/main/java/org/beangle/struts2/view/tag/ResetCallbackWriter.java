@@ -29,7 +29,7 @@ import freemarker.template.TransformControl;
 
 /**
  * ResetCallbackWriter
- * 
+ *
  * @author chaostone
  * @since 2.4
  */

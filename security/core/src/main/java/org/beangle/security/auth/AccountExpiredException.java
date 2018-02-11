@@ -20,7 +20,7 @@ package org.beangle.security.auth;
 
 /**
  * 账户过期异常
- * 
+ *
  * @author chaostone
  */
 public class AccountExpiredException extends AccountStatusException {

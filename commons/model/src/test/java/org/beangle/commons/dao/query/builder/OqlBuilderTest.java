@@ -94,13 +94,13 @@ public class OqlBuilderTest {
     expectedParams.put("id4", 4);
     expectedParams.put("id5", 6);
     expectedParams.put("id6", 7);
-    
+
     Map<String, Object> params1 = CollectUtils.newHashMap();
     params1.put("id4", 4);
-    
+
     Map<String, Object> params2 = CollectUtils.newHashMap();
     params2.put("id6", 7);
-    
+
     OqlBuilder query = OqlBuilder
       .from("SomeClass a")
       .where("a.id=:id", 1)
@@ -110,11 +110,11 @@ public class OqlBuilderTest {
       .where("a.id=:id5", 5).param("id5", 6)
       .where("a.id=:id6", 6).params(params2)
       ;
-    
+
     Assert.assertEquals(query.build().getParams(), expectedParams);
     Assert.assertEquals(query.getParams(), expectedParams);
   }
-  
+
   public void testArrayCondition() throws Exception {
     Integer[] ids = new Integer[]{1,2,3};
     OqlBuilder query = OqlBuilder

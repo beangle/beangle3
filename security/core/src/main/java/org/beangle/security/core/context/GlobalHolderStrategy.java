@@ -27,7 +27,7 @@ import org.beangle.commons.lang.Assert;
  * This means that all instances in the JVM share the same <code>SecurityContext</code>. This is
  * generally useful with rich clients, such as Swing.
  * </p>
- * 
+ *
  * @author chaostone
  */
 public class GlobalHolderStrategy implements SecurityContextHolderStrategy {

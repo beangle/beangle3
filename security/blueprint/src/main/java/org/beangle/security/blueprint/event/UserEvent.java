@@ -25,7 +25,7 @@ import org.beangle.security.blueprint.User;
 
 /**
  * 用户变动事件
- * 
+ *
  * @author chaostone
  * @version $Id: UserEvent.java Jul 27, 2011 10:11:20 AM chaostone $
  */

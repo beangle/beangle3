@@ -29,7 +29,7 @@ import org.beangle.commons.lang.Strings;
  * <p>
  * BeanConfig class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -59,7 +59,7 @@ public final class BeanConfig {
 
   /**
    * Bean Definition
-   * 
+   *
    * @author chaostone
    * @since 3.0.0
    */
@@ -193,7 +193,7 @@ public final class BeanConfig {
 
     /**
      * Assign init method
-     * 
+     *
      * @param method
      */
     public DefinitionBinder init(String method) {
@@ -204,7 +204,7 @@ public final class BeanConfig {
 
     /**
      * Assign init method
-     * 
+     *
      * @param method
      */
     public DefinitionBinder destroy(String method) {
@@ -240,7 +240,7 @@ public final class BeanConfig {
    * <p>
    * bind.
    * </p>
-   * 
+   *
    * @param beanName a {@link java.lang.String} object.
    * @param clazz a {@link java.lang.Class} object.
    * @return a {@link org.beangle.commons.inject.bind.BeanConfig.DefinitionBinder} object.
@@ -253,7 +253,7 @@ public final class BeanConfig {
    * <p>
    * bind.
    * </p>
-   * 
+   *
    * @param classes a {@link java.lang.Class} object.
    * @return a {@link org.beangle.commons.inject.bind.BeanConfig.DefinitionBinder} object.
    */
@@ -265,7 +265,7 @@ public final class BeanConfig {
    * <p>
    * add.
    * </p>
-   * 
+   *
    * @param def a {@link org.beangle.commons.inject.bind.BeanConfig.Definition} object.
    */
   protected void add(Definition def) {
@@ -276,7 +276,7 @@ public final class BeanConfig {
    * <p>
    * Getter for the field <code>definitions</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   public List<Definition> getDefinitions() {

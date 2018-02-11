@@ -25,7 +25,7 @@ import org.beangle.commons.lang.Objects;
 
 /**
  * 转换消息
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -56,7 +56,7 @@ public class TransferMessage {
    * <p>
    * Constructor for TransferMessage.
    * </p>
-   * 
+   *
    * @param index a int.
    * @param message a {@link java.lang.String} object.
    * @param value a {@link java.lang.Object} object.
@@ -71,7 +71,7 @@ public class TransferMessage {
    * <p>
    * Getter for the field <code>index</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getIndex() {
@@ -82,7 +82,7 @@ public class TransferMessage {
    * <p>
    * Setter for the field <code>index</code>.
    * </p>
-   * 
+   *
    * @param index a int.
    */
   public void setIndex(int index) {
@@ -93,7 +93,7 @@ public class TransferMessage {
    * <p>
    * Getter for the field <code>message</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getMessage() {
@@ -104,7 +104,7 @@ public class TransferMessage {
    * <p>
    * Setter for the field <code>message</code>.
    * </p>
-   * 
+   *
    * @param message a {@link java.lang.String} object.
    */
   public void setMessage(String message) {
@@ -115,7 +115,7 @@ public class TransferMessage {
    * <p>
    * Getter for the field <code>values</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   public List<Object> getValues() {
@@ -126,7 +126,7 @@ public class TransferMessage {
    * <p>
    * Setter for the field <code>values</code>.
    * </p>
-   * 
+   *
    * @param values a {@link java.util.List} object.
    */
   public void setValues(List<Object> values) {
@@ -137,7 +137,7 @@ public class TransferMessage {
    * <p>
    * toString.
    * </p>
-   * 
+   *
    * @see java.lang.Object#toString()
    * @return a {@link java.lang.String} object.
    */

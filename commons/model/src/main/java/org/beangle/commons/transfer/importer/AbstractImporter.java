@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 导入的抽象和缺省实现
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -135,7 +135,7 @@ public abstract class AbstractImporter implements Importer {
    * <p>
    * Getter for the field <code>success</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getSuccess() {
@@ -146,7 +146,7 @@ public abstract class AbstractImporter implements Importer {
    * <p>
    * Getter for the field <code>reader</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.transfer.io.Reader} object.
    */
   public Reader getReader() {
@@ -161,7 +161,7 @@ public abstract class AbstractImporter implements Importer {
    * <p>
    * ignoreNull.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean ignoreNull() {
@@ -172,7 +172,7 @@ public abstract class AbstractImporter implements Importer {
    * <p>
    * getLocale.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Locale} object.
    */
   public Locale getLocale() {
@@ -183,7 +183,7 @@ public abstract class AbstractImporter implements Importer {
    * <p>
    * getFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public TransferFormat getFormat() {
@@ -194,7 +194,7 @@ public abstract class AbstractImporter implements Importer {
    * <p>
    * getTranferIndex.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getTranferIndex() {
@@ -211,7 +211,7 @@ public abstract class AbstractImporter implements Importer {
    * <p>
    * Getter for the field <code>prepare</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.transfer.importer.ImportPrepare} object.
    */
   public ImportPrepare getPrepare() {

@@ -45,7 +45,7 @@ import org.beangle.security.blueprint.User;
 /**
  * 角色信息
  * 系统中角色的基本信息和账号信息.
- * 
+ *
  * @author dell,chaostone 2005-9-26
  */
 @Entity(name = "org.beangle.security.blueprint.Role")

@@ -41,7 +41,7 @@ public final class ClassLoaders {
    * absolutely need a non-null ClassLoader reference: for example, for class path resource loading
    * (but not necessarily for <code>Class.forName</code>, which accepts a <code>null</code>
    * ClassLoader reference as well).
-   * 
+   *
    * @return the default ClassLoader (never <code>null</code>)
    * @see java.lang.Thread#getContextClassLoader()
    */
@@ -68,7 +68,7 @@ public final class ClassLoaders {
    * <li>From {@link Class#getClassLoader() ClassLoaders.class.getClassLoader()}
    * <li>From the {@link Class#getClassLoader() callingClass.getClassLoader() }
    * </ul>
-   * 
+   *
    * @param resourceName The name of the resource to load
    * @param callingClass The Class object of the calling object
    */
@@ -93,7 +93,7 @@ public final class ClassLoaders {
    * <li>From {@link Class#getClassLoader() ClassLoaders.class.getClassLoader()}
    * <li>From the {@link Class#getClassLoader() callingClass.getClassLoader() }
    * </ul>
-   * 
+   *
    * @param resourceName
    * @param callingClass
    * @return List of resources url or empty list.
@@ -124,7 +124,7 @@ public final class ClassLoaders {
   /**
    * This is a convenience method to load a resource as a stream.
    * The algorithm used to find the resource is given in getResource()
-   * 
+   *
    * @param resourceName The name of the resource to load
    * @param callingClass The Class object of the calling object
    */

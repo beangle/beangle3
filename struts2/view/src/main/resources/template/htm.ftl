@@ -41,4 +41,3 @@
   actionQueryStr="<@queryStr/>";
   </script>
 </#macro>
-

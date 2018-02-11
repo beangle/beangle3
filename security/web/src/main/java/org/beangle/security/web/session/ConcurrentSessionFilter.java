@@ -56,7 +56,7 @@ import org.beangle.security.web.auth.logout.SecurityContextLogoutHandler;
  * be published via the {@link org.beangle.security.web.session.HttpSessionEventPublisher}
  * registered in <code>web.xml</code>.
  * </p>
- * 
+ *
  * @author chaostone
  */
 public class ConcurrentSessionFilter extends GenericHttpFilter {
@@ -74,7 +74,7 @@ public class ConcurrentSessionFilter extends GenericHttpFilter {
 
   /**
    * 没有登录或匿名账户不进行session处理
-   * 
+   *
    * @param request
    */
   protected boolean shouldCare(HttpServletRequest request) {

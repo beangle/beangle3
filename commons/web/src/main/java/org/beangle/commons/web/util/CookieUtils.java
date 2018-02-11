@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Cookie manipulate utility
- * 
+ *
  * @author chaostone
  * @since 2.0
  */
@@ -53,7 +53,7 @@ public final class CookieUtils {
   /**
    * 获取cookie中的value<br>
    * 自动负责解码<br>
-   * 
+   *
    * @param request
    * @param cookieName
    * @return null when cannot find the cookie
@@ -73,7 +73,7 @@ public final class CookieUtils {
 
   /**
    * Convenience method to get a cookie by name
-   * 
+   *
    * @param request
    *          the current request
    * @param name
@@ -98,7 +98,7 @@ public final class CookieUtils {
   /**
    * Convenience method to set a cookie <br>
    * 刚方法自动将value进行编码存储<br>
-   * 
+   *
    * @param response
    * @param name
    * @param value
@@ -122,7 +122,7 @@ public final class CookieUtils {
 
   /**
    * 默认按照应用上下文进行设置
-   * 
+   *
    * @param request
    * @param response
    * @param name
@@ -145,7 +145,7 @@ public final class CookieUtils {
 
   /**
    * Convenience method for deleting a cookie by name
-   * 
+   *
    * @param response
    *          the current web response
    * @param cookie

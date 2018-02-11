@@ -37,7 +37,7 @@ import org.beangle.commons.lang.Throwables;
  * bean that implements the Filter interface. Supports a "targetBeanName"
  * filter init-param in {@code web.xml}, specifying the name of the
  * target bean in the application context.
- * 
+ *
  * @author chaostone
  */
 public class DelegatingFilterProxy extends GenericHttpFilter implements ContainerHook {

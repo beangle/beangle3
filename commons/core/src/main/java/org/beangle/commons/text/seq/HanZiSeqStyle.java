@@ -20,7 +20,7 @@ package org.beangle.commons.text.seq;
 
 /**
  * 汉字序列产生器
- * 
+ *
  * @author chaostone,zhufengbin
  * @version $Id: $
  */
@@ -45,7 +45,7 @@ public class HanZiSeqStyle implements SeqNumStyle {
    * <p>
    * basicOf.
    * </p>
-   * 
+   *
    * @param num a int.
    * @return a {@link java.lang.String} object.
    */
@@ -57,7 +57,7 @@ public class HanZiSeqStyle implements SeqNumStyle {
    * <p>
    * priorityOf.
    * </p>
-   * 
+   *
    * @param index a int.
    * @return a {@link java.lang.String} object.
    */
@@ -73,7 +73,7 @@ public class HanZiSeqStyle implements SeqNumStyle {
    * <p>
    * buildText.
    * </p>
-   * 
+   *
    * @param str1 a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
    */

@@ -23,13 +23,13 @@ import org.beangle.security.core.AuthenticationException;
 
 /**
  * 认证服务
- * 
+ *
  * @author chaostone
  */
 public interface AuthenticationManager {
   /**
    * 认证
-   * 
+   *
    * @param auth
    * @throws AuthenticationException
    */

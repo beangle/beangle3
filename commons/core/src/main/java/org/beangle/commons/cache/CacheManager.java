@@ -22,7 +22,7 @@ import java.util.Collection;
 
 /**
  * Cache Manager
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */

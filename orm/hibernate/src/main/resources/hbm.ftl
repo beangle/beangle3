@@ -21,17 +21,17 @@
     />[#lt/]
     [/#if]
 [#t/]
-	[#if generator.isSet(piv)]
-	<set name="${pi.name}"[#if piv.inverse] inverse="true"[/#if] table="${piv.collectionTable.name}" [#if pi.cascade??]cascade="${pi.cascade}"[/#if]>
-		<key [#list piv.key.columnIterator as pki]column="${pki.name}"[#if pki.nullable] not-null="true"[/#if][/#list]/>
-	[#if generator.isOneToMany(piv.element)]
-		<one-to-many class="${piv.element.referencedEntityName}"/>
-	[/#if]
-	[#if generator.isManyToMany(piv.element)]
-		<many-to-many class="${piv.element.referencedEntityName}" [#list piv.element.columnIterator as ci] column="${ci.name}"[/#list]/>
-	[/#if]
-	</set>
-	[/#if]
+  [#if generator.isSet(piv)]
+  <set name="${pi.name}"[#if piv.inverse] inverse="true"[/#if] table="${piv.collectionTable.name}" [#if pi.cascade??]cascade="${pi.cascade}"[/#if]>
+    <key [#list piv.key.columnIterator as pki]column="${pki.name}"[#if pki.nullable] not-null="true"[/#if][/#list]/>
+  [#if generator.isOneToMany(piv.element)]
+    <one-to-many class="${piv.element.referencedEntityName}"/>
+  [/#if]
+  [#if generator.isManyToMany(piv.element)]
+    <many-to-many class="${piv.element.referencedEntityName}" [#list piv.element.columnIterator as ci] column="${ci.name}"[/#list]/>
+  [/#if]
+  </set>
+  [/#if]
 [#t/]
     [#if piv.columnSpan==1 && !generator.isToOne(piv)]
     <property name="${pi.name}" [#list piv.columnIterator as ci]column="${ci.name}"[#rt/]
@@ -40,14 +40,14 @@
     [#if !generator.isCustomType(piv.type)] type="${piv.typeName}"[/#if][#t/]
     [#if pi.metaAttributes??][#list pi.metaAttributes?keys as mak]${mak}="${pi.metaAttributes[mak]}" [/#list][/#if][#t/]
     >
-	[#if generator.isCustomType(piv.type)]
-	[#if generator.isEnumType(piv.type)]
-		<type name="org.hibernate.type.EnumType">
-			<param name="enumClass">${piv.type.returnedClass.name}</param>
-		</type>
-	[#else]
-		<type name="${piv.type.class.name}">
-		</type>
+  [#if generator.isCustomType(piv.type)]
+  [#if generator.isEnumType(piv.type)]
+    <type name="org.hibernate.type.EnumType">
+      <param name="enumClass">${piv.type.returnedClass.name}</param>
+    </type>
+  [#else]
+    <type name="${piv.type.class.name}">
+    </type>
     [/#if]
     [/#if]
     </property>

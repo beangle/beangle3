@@ -29,7 +29,7 @@ import org.beangle.security.blueprint.Dimension;
 
 /**
  * 属性元信息
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */

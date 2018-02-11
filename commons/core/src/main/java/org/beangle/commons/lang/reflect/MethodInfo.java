@@ -33,7 +33,7 @@ import org.beangle.commons.lang.tuple.Pair;
 
 /**
  * Method name and return type and parameters type
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */
@@ -76,7 +76,7 @@ public final class MethodInfo implements Comparable<MethodInfo> {
    * <li>URL</li>
    * <li>WWw</li>
    * </ul>
-   * 
+   *
    * @param name
    * @return
    */
