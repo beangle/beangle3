@@ -36,7 +36,7 @@ public class PropertyUtilsTest {
     assertEquals(PropertyUtils.getProperty(bean, "nested.datas(key)"), "value");
 
     PropertyUtils.setProperty(bean, "nested.id", 4L);
-    assertEquals(PropertyUtils.getProperty(bean, "nested.id"), 4L);
+    assertEquals(PropertyUtils.getProperty(bean, "nested.id"), Long.valueOf(4));
   }
 
   public static void main(String[] args) {

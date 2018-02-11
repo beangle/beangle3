@@ -2,8 +2,8 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.beangle</groupId>
-    <artifactId>beangle-java-parent</artifactId>
-    <version>10</version>
+    <artifactId>beangle-java</artifactId>
+    <version>24.7</version>
   </parent>
   <groupId>org.beangle</groupId>
   <artifactId>beangle-library-parent</artifactId>
@@ -25,7 +25,8 @@
   </scm>
 
   <properties>
-    <spring.version>3.1.1.RELEASE</spring.version>
+    <spring.version>4.3.14.RELEASE</spring.version>
+    <freemarker.version>2.3.27-incubating</freemarker.version>
   </properties>
 
   <modules>
@@ -34,6 +35,28 @@
     <module>orm</module>
     <module>security</module>
     <module>struts2</module>
-    <module>test</module>
   </modules>
+
+  <dependencies>
+    <dependency>
+	  <groupId>org.slf4j</groupId>
+	  <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+	  <groupId>ch.qos.logback</groupId>
+	  <artifactId>logback-core</artifactId>
+    </dependency>
+    <dependency>
+	  <groupId>ch.qos.logback</groupId>
+	  <artifactId>logback-classic</artifactId>
+    </dependency>
+    <dependency>
+	  <groupId>org.testng</groupId>
+	  <artifactId>testng</artifactId>
+    </dependency>
+    <dependency>
+	  <groupId>org.mockito</groupId>
+	  <artifactId>mockito-core</artifactId>
+    </dependency>
+  </dependencies>
 </project>

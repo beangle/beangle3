@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.inject.spring.config;
 
@@ -56,6 +56,8 @@ import org.w3c.dom.NodeList;
  * @version $Id: $
  */
 class BeanDefinitionParser {
+
+  private static final String SINGLETON_ATTRIBUTE = "singleton";
 
   protected final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -258,7 +260,8 @@ class BeanDefinitionParser {
     if (ele.hasAttribute(SCOPE_ATTRIBUTE)) {
       // Spring 2.x "scope" attribute
       bd.setScope(ele.getAttribute(SCOPE_ATTRIBUTE));
-      if (ele.hasAttribute(SINGLETON_ATTRIBUTE)) error("Specify either 'scope' or 'singleton', not both", ele);
+      if (ele.hasAttribute(SINGLETON_ATTRIBUTE))
+        error("Specify either 'scope' or 'singleton', not both", ele);
 
     } else if (ele.hasAttribute(SINGLETON_ATTRIBUTE)) {
       // Spring 1.x "singleton" attribute
@@ -270,8 +273,8 @@ class BeanDefinitionParser {
       bd.setScope(containingBean.getScope());
     }
 
-    if (ele.hasAttribute(ABSTRACT_ATTRIBUTE)) bd.setAbstract(TRUE_VALUE.equals(ele
-        .getAttribute(ABSTRACT_ATTRIBUTE)));
+    if (ele.hasAttribute(ABSTRACT_ATTRIBUTE))
+      bd.setAbstract(TRUE_VALUE.equals(ele.getAttribute(ABSTRACT_ATTRIBUTE)));
 
     String lazyInit = ele.getAttribute(LAZY_INIT_ATTRIBUTE);
     bd.setLazyInit(TRUE_VALUE.equals(lazyInit));
@@ -284,8 +287,8 @@ class BeanDefinitionParser {
       bd.setDependsOn(StringUtils.tokenizeToStringArray(dependsOn, MULTI_VALUE_ATTRIBUTE_DELIMITERS));
     }
 
-    if (ele.hasAttribute(PRIMARY_ATTRIBUTE)) bd.setPrimary(TRUE_VALUE.equals(ele
-        .getAttribute(PRIMARY_ATTRIBUTE)));
+    if (ele.hasAttribute(PRIMARY_ATTRIBUTE))
+      bd.setPrimary(TRUE_VALUE.equals(ele.getAttribute(PRIMARY_ATTRIBUTE)));
 
     if (ele.hasAttribute(INIT_METHOD_ATTRIBUTE)) {
       String initMethodName = ele.getAttribute(INIT_METHOD_ATTRIBUTE);
@@ -297,10 +300,10 @@ class BeanDefinitionParser {
       if (!"".equals(destroyMethodName)) bd.setDestroyMethodName(destroyMethodName);
     }
 
-    if (ele.hasAttribute(FACTORY_METHOD_ATTRIBUTE)) bd.setFactoryMethodName(ele
-        .getAttribute(FACTORY_METHOD_ATTRIBUTE));
-    if (ele.hasAttribute(FACTORY_BEAN_ATTRIBUTE)) bd.setFactoryBeanName(ele
-        .getAttribute(FACTORY_BEAN_ATTRIBUTE));
+    if (ele.hasAttribute(FACTORY_METHOD_ATTRIBUTE))
+      bd.setFactoryMethodName(ele.getAttribute(FACTORY_METHOD_ATTRIBUTE));
+    if (ele.hasAttribute(FACTORY_BEAN_ATTRIBUTE))
+      bd.setFactoryBeanName(ele.getAttribute(FACTORY_BEAN_ATTRIBUTE));
 
     return bd;
   }
@@ -375,8 +378,8 @@ class BeanDefinitionParser {
     NodeList nl = beanEle.getChildNodes();
     for (int i = 0; i < nl.getLength(); i++) {
       Node node = nl.item(i);
-      if (node instanceof Element && nodeNameEquals(node, CONSTRUCTOR_ARG_ELEMENT)) parseConstructorArgElement(
-          (Element) node, bd);
+      if (node instanceof Element && nodeNameEquals(node, CONSTRUCTOR_ARG_ELEMENT))
+        parseConstructorArgElement((Element) node, bd);
     }
   }
 
@@ -390,8 +393,8 @@ class BeanDefinitionParser {
     NodeList nl = beanEle.getChildNodes();
     for (int i = 0; i < nl.getLength(); i++) {
       Node node = nl.item(i);
-      if (node instanceof Element && nodeNameEquals(node, PROPERTY_ELEMENT)) parsePropertyElement(
-          (Element) node, bd);
+      if (node instanceof Element && nodeNameEquals(node, PROPERTY_ELEMENT))
+        parsePropertyElement((Element) node, bd);
     }
   }
 
@@ -405,8 +408,8 @@ class BeanDefinitionParser {
     NodeList nl = beanEle.getChildNodes();
     for (int i = 0; i < nl.getLength(); i++) {
       Node node = nl.item(i);
-      if (node instanceof Element && nodeNameEquals(node, QUALIFIER_ELEMENT)) parseQualifierElement(
-          (Element) node, bd);
+      if (node instanceof Element && nodeNameEquals(node, QUALIFIER_ELEMENT))
+        parseQualifierElement((Element) node, bd);
     }
   }
 
@@ -609,8 +612,10 @@ class BeanDefinitionParser {
     boolean hasValueAttribute = ele.hasAttribute(VALUE_ATTRIBUTE);
     if ((hasRefAttribute && hasValueAttribute)
         || ((hasRefAttribute || hasValueAttribute) && subElement != null)) {
-      error(elementName
-          + " is only allowed to contain either 'ref' attribute OR 'value' attribute OR sub-element", ele);
+      error(
+          elementName
+              + " is only allowed to contain either 'ref' attribute OR 'value' attribute OR sub-element",
+          ele);
     }
 
     if (hasRefAttribute) {
@@ -850,8 +855,8 @@ class BeanDefinitionParser {
       String defaultElementType) {
     for (int i = 0; i < elementNodes.getLength(); i++) {
       Node node = elementNodes.item(i);
-      if (node instanceof Element && !nodeNameEquals(node, DESCRIPTION_ELEMENT)) target
-          .add(parsePropertySubElement((Element) node, bd, defaultElementType));
+      if (node instanceof Element && !nodeNameEquals(node, DESCRIPTION_ELEMENT))
+        target.add(parsePropertySubElement((Element) node, bd, defaultElementType));
     }
   }
 
@@ -884,13 +889,13 @@ class BeanDefinitionParser {
         if (node instanceof Element) {
           Element candidateEle = (Element) node;
           if (nodeNameEquals(candidateEle, KEY_ELEMENT)) {
-            if (keyEle != null) error("<entry> element is only allowed to contain one <key> sub-element",
-                entryEle);
+            if (keyEle != null)
+              error("<entry> element is only allowed to contain one <key> sub-element", entryEle);
             else keyEle = candidateEle;
           } else {
             // Child element is what we're looking for.
-            if (valueEle != null) error("<entry> element must not contain more than one value sub-element",
-                entryEle);
+            if (valueEle != null)
+              error("<entry> element must not contain more than one value sub-element", entryEle);
             else valueEle = candidateEle;
           }
         }
@@ -900,8 +905,8 @@ class BeanDefinitionParser {
       Object key = null;
       boolean hasKeyAttribute = entryEle.hasAttribute(KEY_ATTRIBUTE);
       boolean hasKeyRefAttribute = entryEle.hasAttribute(KEY_REF_ATTRIBUTE);
-      if ((hasKeyAttribute && hasKeyRefAttribute) || ((hasKeyAttribute || hasKeyRefAttribute))
-          && keyEle != null) {
+      if ((hasKeyAttribute && hasKeyRefAttribute)
+          || ((hasKeyAttribute || hasKeyRefAttribute)) && keyEle != null) {
         error("<entry> element is only allowed to contain either "
             + "a 'key' attribute OR a 'key-ref' attribute OR a <key> sub-element", entryEle);
       }
@@ -909,8 +914,8 @@ class BeanDefinitionParser {
         key = buildTypedStringValueForMap(entryEle.getAttribute(KEY_ATTRIBUTE), defaultKeyType, entryEle);
       } else if (hasKeyRefAttribute) {
         String refName = entryEle.getAttribute(KEY_REF_ATTRIBUTE);
-        if (!StringUtils.hasText(refName)) error("<entry> element contains empty 'key-ref' attribute",
-            entryEle);
+        if (!StringUtils.hasText(refName))
+          error("<entry> element contains empty 'key-ref' attribute", entryEle);
 
         RuntimeBeanReference ref = new RuntimeBeanReference(refName);
         ref.setSource(extractSource(entryEle));
@@ -925,8 +930,8 @@ class BeanDefinitionParser {
       Object value = null;
       boolean hasValueAttribute = entryEle.hasAttribute(VALUE_ATTRIBUTE);
       boolean hasValueRefAttribute = entryEle.hasAttribute(VALUE_REF_ATTRIBUTE);
-      if ((hasValueAttribute && hasValueRefAttribute) || ((hasValueAttribute || hasValueRefAttribute))
-          && valueEle != null) {
+      if ((hasValueAttribute && hasValueRefAttribute)
+          || ((hasValueAttribute || hasValueRefAttribute)) && valueEle != null) {
         error("<entry> element is only allowed to contain either "
             + "'value' attribute OR 'value-ref' attribute OR <value> sub-element", entryEle);
       }
@@ -989,8 +994,8 @@ class BeanDefinitionParser {
       Node node = nl.item(i);
       if (node instanceof Element) {
         // Child element is what we're looking for.
-        if (subElement != null) error("<key> element must not contain more than one value sub-element",
-            keyEle);
+        if (subElement != null)
+          error("<key> element must not contain more than one value sub-element", keyEle);
         else subElement = (Element) node;
       }
     }
@@ -1077,8 +1082,8 @@ class BeanDefinitionParser {
     NodeList children = ele.getChildNodes();
     for (int i = 0; i < children.getLength(); i++) {
       Node node = children.item(i);
-      if (node.getNodeType() == Node.ELEMENT_NODE) finalDefinition = decorateIfRequired(node,
-          finalDefinition, containingBd);
+      if (node.getNodeType() == Node.ELEMENT_NODE)
+        finalDefinition = decorateIfRequired(node, finalDefinition, containingBd);
     }
     return finalDefinition;
   }

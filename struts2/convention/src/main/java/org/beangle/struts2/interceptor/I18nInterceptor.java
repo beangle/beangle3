@@ -1,27 +1,28 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.struts2.interceptor;
-
 
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.struts2.dispatcher.HttpParameters;
+import org.apache.struts2.dispatcher.Parameter;
 import org.beangle.commons.lang.Locales;
 
 import com.opensymphony.xwork2.ActionInvocation;
@@ -43,7 +44,7 @@ public class I18nInterceptor extends AbstractInterceptor {
 
   @Override
   public String intercept(ActionInvocation invocation) throws Exception {
-    Map<String, Object> params = invocation.getInvocationContext().getParameters();
+    HttpParameters params = invocation.getInvocationContext().getParameters();
     Locale locale = null;
     // get session locale
     Map<String, Object> session = invocation.getInvocationContext().getSession();
@@ -65,11 +66,17 @@ public class I18nInterceptor extends AbstractInterceptor {
     return invocation.invoke();
   }
 
-  private String findLocaleParameter(Map<String, Object> params, String parameterName) {
-    Object localParam = params.remove(parameterName);
-    if (localParam != null && localParam.getClass().isArray()) {
-      localParam = ((Object[]) localParam)[0];
+  private String findLocaleParameter(HttpParameters params, String parameterName) {
+    Parameter localParam = params.get(parameterName);
+    params.remove(parameterName);
+    String localValue = null;
+    if (localParam != null) {
+      if (localParam.isMultiple()) {
+        localValue = localParam.getMultipleValues()[0];
+      } else {
+        localValue = localParam.getValue();
+      }
     }
-    return null == localParam ? null : localParam.toString();
+    return localValue;
   }
 }

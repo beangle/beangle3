@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.struts2.action;
 
@@ -23,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -130,7 +131,7 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
       if (entityClass != null) {
         ClassInfo clazzInfo = ClassInfo.get(entityClass);
         Serializable[] ids = (Serializable[]) getIds(getShortName(), clazzInfo.getPropertyType("id"));
-        if (ids != null && ids.length > 0) return entityDao.get(entityClass, ids);
+        if (ids != null && ids.length > 0) return entityDao.get(entityClass, Arrays.asList(ids));
       }
     }
     return search(getQueryBuilder().limit(null));

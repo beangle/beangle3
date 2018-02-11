@@ -15,13 +15,13 @@
   </modules>
 
   <properties>
-    <ognl.version>3.0.6</ognl.version>
-    <hibernate.version>4.2.4.Final</hibernate.version>
+    <ognl.version>3.1.15</ognl.version>
+    <hibernate.version>4.2.21.Final</hibernate.version>
     <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
-    <javassist.version>3.15.0-GA</javassist.version>
+    <javassist.version>3.20.0-GA</javassist.version>
     <ehcache.version>2.5.2</ehcache.version>
     <javax.validation.version>1.0.0.GA</javax.validation.version>
-    <spring.version>3.1.1.RELEASE</spring.version>
+    <spring.version>4.3.14.RELEASE</spring.version>
   </properties>
 
   <dependencyManagement>
@@ -83,12 +83,6 @@
         <groupId>ognl</groupId>
         <artifactId>ognl</artifactId>
         <version>${ognl.version}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>javassist</groupId>
-            <artifactId>javassist</artifactId>
-          </exclusion>
-        </exclusions>
       </dependency>
     </dependencies>
   </dependencyManagement>

@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.struts2.dispatcher;
 
@@ -29,12 +29,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.Dispatcher;
+import org.apache.struts2.dispatcher.ExecuteOperations;
+import org.apache.struts2.dispatcher.InitOperations;
+import org.apache.struts2.dispatcher.PrepareOperations;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
-import org.apache.struts2.dispatcher.ng.ExecuteOperations;
-import org.apache.struts2.dispatcher.ng.InitOperations;
-import org.apache.struts2.dispatcher.ng.PrepareOperations;
-import org.apache.struts2.dispatcher.ng.servlet.ServletHostConfig;
+import org.apache.struts2.dispatcher.servlet.ServletHostConfig;
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -55,23 +55,21 @@ public class ActionServlet extends HttpServlet {
     try {
       ServletHostConfig config = new ServletHostConfig(sc);
       init.initLogging(config);
-      ActionContext.setContext(new ActionContext(new HashMap<String,Object>()));
+      ActionContext.setContext(new ActionContext(new HashMap<String, Object>()));
       ServletActionContext.setServletContext(config.getServletContext());
       Dispatcher dispatcher = init.initDispatcher(config);
       init.initStaticContentLoader(config, dispatcher);
       ActionContext.setContext(null);
-      prepare = new PrepareOperations(sc.getServletContext(), dispatcher);
-      execute = new ExecuteOperations(sc.getServletContext(), dispatcher);
-      
+      prepare = new PrepareOperations(dispatcher);
+      execute = new ExecuteOperations(dispatcher);
     } finally {
       init.cleanup();
-      
     }
   }
 
   @Override
-  protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException,
-      ServletException {
+  protected void service(HttpServletRequest request, HttpServletResponse response)
+      throws IOException, ServletException {
     try {
       prepare.createActionContext(request, response);
       prepare.assignDispatcherToThread();
