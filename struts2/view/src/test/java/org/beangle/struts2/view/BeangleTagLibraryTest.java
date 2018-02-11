@@ -29,8 +29,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ognl.PropertyAccessor;
-
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.StrutsConstants;
 import org.apache.struts2.StrutsStatics;
@@ -59,6 +57,7 @@ import com.opensymphony.xwork2.ActionProxyFactory;
 import com.opensymphony.xwork2.DefaultTextProvider;
 import com.opensymphony.xwork2.FileManager;
 import com.opensymphony.xwork2.FileManagerFactory;
+import com.opensymphony.xwork2.LocalizedTextProvider;
 import com.opensymphony.xwork2.ObjectFactory;
 import com.opensymphony.xwork2.TextProvider;
 import com.opensymphony.xwork2.XWorkConstants;
@@ -94,6 +93,7 @@ import com.opensymphony.xwork2.ognl.OgnlUtil;
 import com.opensymphony.xwork2.ognl.OgnlValueStackFactory;
 import com.opensymphony.xwork2.ognl.accessor.CompoundRootAccessor;
 import com.opensymphony.xwork2.util.CompoundRoot;
+import com.opensymphony.xwork2.util.StrutsLocalizedTextProvider;
 import com.opensymphony.xwork2.util.ValueStack;
 import com.opensymphony.xwork2.util.ValueStackFactory;
 import com.opensymphony.xwork2.util.XWorkTestCaseHelper;
@@ -103,6 +103,7 @@ import com.opensymphony.xwork2.util.reflection.ReflectionProvider;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
+import ognl.PropertyAccessor;
 
 @Test
 public class BeangleTagLibraryTest {
@@ -232,6 +233,7 @@ public class BeangleTagLibraryTest {
     builder.factory(org.apache.struts2.components.template.TemplateEngine.class, "ftl",
         org.apache.struts2.components.template.FreemarkerTemplateEngine.class, Scope.SINGLETON);
     builder.factory(TemplateEngine.class, FreemarkerTemplateEngine.class, Scope.SINGLETON);
+    builder.factory(LocalizedTextProvider.class, StrutsLocalizedTextProvider.class, Scope.SINGLETON);
     builder.constant(XWorkConstants.DEV_MODE, "false");
     builder.constant(XWorkConstants.LOG_MISSING_PROPERTIES, "false");
     builder.constant(XWorkConstants.ENABLE_OGNL_EVAL_EXPRESSION, "false");

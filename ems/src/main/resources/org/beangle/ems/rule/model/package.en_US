@@ -1,0 +1,25 @@
+
+RuleConfigParam=Rule Config Param
+RuleConfigParam.config=Config
+RuleConfigParam.param=Param
+RuleConfigParam.value=Value
+
+RuleConfig=Rule Config
+RuleConfig.rule=Rule
+RuleConfig.enabled=Enabled
+
+RuleParameterBean=Rule Parameter
+RuleParameterBean.rule=Rule
+RuleParameterBean.name=Name
+RuleParameterBean.type=Type
+RuleParameterBean.title=Title
+RuleParameterBean.description=Description
+RuleParameterBean.parent=Parent
+
+RuleBean=Rule
+RuleBean.name=Name
+RuleBean.business=Business
+RuleBean.description=Description
+RuleBean.factory=Factory
+RuleBean.serviceName=Service Name
+RuleBean.enabled=Enabled

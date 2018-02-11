@@ -1,0 +1,6 @@
+
+PropertyConfigItemBean=Property Config Item
+PropertyConfigItemBean.name=Name
+PropertyConfigItemBean.value=Value
+PropertyConfigItemBean.description=Description
+PropertyConfigItemBean.type=Type

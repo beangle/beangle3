@@ -1,0 +1,12 @@
+
+EntityMetaBean=Entity Meta
+EntityMetaBean.name=Name
+EntityMetaBean.comments=Comments
+EntityMetaBean.remark=Remark
+
+PropertyMetaBean=Property Meta
+PropertyMetaBean.meta=Meta
+PropertyMetaBean.name=Name
+PropertyMetaBean.type=Type
+PropertyMetaBean.comments=Comments
+PropertyMetaBean.remark=Remark

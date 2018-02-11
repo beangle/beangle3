@@ -10,10 +10,6 @@
   <packaging>pom<!--bundle--></packaging>   
   <name>Beangle Struts2 Parent</name>
 
-  <properties>
-    <struts.version>2.5.14.1</struts.version>
-  </properties>
-
   <modules>
     <module>convention</module>
     <module>view</module>

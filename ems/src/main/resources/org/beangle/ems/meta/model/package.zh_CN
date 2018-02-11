@@ -1,0 +1,12 @@
+
+EntityMetaBean=实体元信息
+EntityMetaBean.name=实体名称
+EntityMetaBean.comments=实体别名
+EntityMetaBean.remark=实体备注
+
+PropertyMetaBean=属性元数据实现
+PropertyMetaBean.meta=所属元数据
+PropertyMetaBean.name=属性名称
+PropertyMetaBean.type=类型
+PropertyMetaBean.comments=属性说明
+PropertyMetaBean.remark=备注
