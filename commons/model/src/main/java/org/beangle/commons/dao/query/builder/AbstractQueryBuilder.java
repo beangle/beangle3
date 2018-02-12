@@ -190,4 +190,8 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
     return conditions;
   }
 
+  public String getFrom() {
+    return from;
+  }
+
 }

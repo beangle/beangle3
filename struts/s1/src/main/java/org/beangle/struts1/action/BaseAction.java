@@ -18,8 +18,11 @@
  */
 package org.beangle.struts1.action;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,10 +42,10 @@ import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.entity.util.EntityUtils;
 import org.beangle.commons.lang.Strings;
+import org.beangle.commons.text.i18n.TextResource;
 import org.beangle.commons.transfer.TransferResult;
 import org.beangle.commons.transfer.excel.ExcelItemWriter;
 import org.beangle.commons.transfer.excel.ExcelTemplateWriter;
-import org.beangle.commons.transfer.exporter.AbstractItemExporter;
 import org.beangle.commons.transfer.exporter.Context;
 import org.beangle.commons.transfer.exporter.DefaultPropertyExtractor;
 import org.beangle.commons.transfer.exporter.Exporter;
@@ -51,6 +54,7 @@ import org.beangle.commons.transfer.exporter.PropertyExtractor;
 import org.beangle.commons.transfer.exporter.SimpleItemExporter;
 import org.beangle.commons.transfer.exporter.TemplateExporter;
 import org.beangle.commons.web.util.RequestUtils;
+import org.beangle.struts1.dispatch.Conventions;
 import org.beangle.struts1.support.QueryRequestSupport;
 import org.beangle.struts1.support.StrutsMessageResource;
 
@@ -103,11 +107,11 @@ public class BaseAction extends DispatchAction {
     return RequestUtils.getBoolean(request, name);
   }
 
-  public static void populate(Map params, Entity entity, String entityName) {
+  public static void populate(Map params, Entity entity) {
     if (null == entity) {
       throw new RuntimeException("Cannot populate to null.");
     } else {
-      EntityType type = Model.getType(entityName);
+      EntityType type = Model.getType(entity.getClass());
       Model.getPopulator().populate(entity, type, params);
     }
   }
@@ -123,18 +127,76 @@ public class BaseAction extends DispatchAction {
     return populate(request, type.newInstance(), type, name);
   }
 
-  public static Object populate(HttpServletRequest request, String entityName) {
-    EntityType type = Model.getType(entityName);
-    return populate(request, type.newInstance(), type, EntityUtils.getCommandName(entityName));
+  public static Object populate(HttpServletRequest request, Object entity, String name) {
+    return populate(request, entity, Model.getType(entity.getClass()), name);
   }
 
-  public static Object populate(HttpServletRequest request, String entityName, String name) {
-    EntityType type = Model.getType(entityName);
-    return populate(request, type.newInstance(), type, name);
-  }
-
-  protected static Object populate(HttpServletRequest request, Object obj, EntityType type, String name) {
+  public static Object populate(HttpServletRequest request, Object obj, EntityType type, String name) {
     return Model.getPopulator().populate(obj, type, RequestUtils.getParams(request, name));
+  }
+
+  protected Entity populateEntity(HttpServletRequest request, Class entityClass, String shortName) {
+    Map params = getParams(request, shortName);
+    Long entityId = getLong(request, shortName + ".id");
+    Entity entity = null;
+    try {
+      if (null == entityId) {
+        entity = (Entity) populate(request, entityClass, shortName);
+        populate(params, entity);
+        EntityUtils.evictEmptyProperty(entity);
+      } else {
+        entity = (Entity) entityDao.get(entityClass, entityId);
+        populate(params, entity);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new RuntimeException(e);
+    }
+    return entity;
+  }
+
+  protected Entity getEntity(HttpServletRequest request, Class entityClass, String name) {
+    Long entityId = getLong(request, name + ".id");
+    if (null == entityId) {
+      entityId = getLong(request, name + "Id");
+    }
+    Entity entity = null;
+    try {
+      EntityType type = Model.getType(entityClass);
+      if (null == entityId) {
+        entity = (Entity) populate(request, type.newInstance(), type, name);
+      } else {
+        entity = (Entity) entityDao.get(type.getEntityName(), entityId);
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(e.getMessage());
+    }
+    return entity;
+  }
+
+  protected String getMethodName(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+      HttpServletResponse response, String parameter) throws Exception {
+    String method = request.getParameter(parameter);
+    if (Strings.isNotEmpty(method)) return method;
+    else return Conventions.getProfile(getClass()).getDefaultMethod();
+  }
+
+  protected Long getEntityId(HttpServletRequest request, String shortName) {
+    Long entityId = getLong(request, shortName + ".id");
+    if (null == entityId) entityId = getLong(request, shortName + "Id");
+    return entityId;
+  }
+
+  protected Entity getModel(Class modelClass, Serializable id) {
+    return entityDao.get(modelClass, id);
+  }
+
+  protected List getModels(Class modelClass, Long ids[]) {
+    return entityDao.get(modelClass, "id", ids);
+  }
+
+  protected List getModels(Class modelClass, Object ids[]) {
+    return entityDao.get(modelClass, "id", ids);
   }
 
   public static int getPageNo(HttpServletRequest request) {
@@ -154,11 +216,11 @@ public class BaseAction extends DispatchAction {
     request.setAttribute(name, objs);
   }
 
-  public static void populateConditions(HttpServletRequest request, OqlBuilder entityQuery) {
+  protected static void populateConditions(HttpServletRequest request, OqlBuilder entityQuery) {
     QueryRequestSupport.populateConditions(request, entityQuery);
   }
 
-  public static void populateConditions(HttpServletRequest request, OqlBuilder entityQuery,
+  protected static void populateConditions(HttpServletRequest request, OqlBuilder entityQuery,
       String exclusiveAttrNames) {
     QueryRequestSupport.populateConditions(request, entityQuery, exclusiveAttrNames);
   }
@@ -173,9 +235,38 @@ public class BaseAction extends DispatchAction {
     Context context = new Context();
     context.getDatas().put("format", format);
     context.getDatas().put("exportFile", fileName);
-    if (Strings.isNotBlank(template)) template = resolveTemplatePath(template);
+    if (Strings.isNotBlank(template)) template = resolveTemplatePath(request, template);
     context.getDatas().put("templatePath", template);
     configExportContext(request, context);
+    Exporter exporter = getExporter(request, response, context);
+    if (format.equals("excel")) {
+      response.setContentType("application/vnd.ms-excel;charset=GBK");
+      response.setHeader("Content-Disposition", "attachment;filename="
+          + RequestUtils.encodeAttachName(request, context.getDatas().get("exportFile").toString()) + ".xls");
+    } else if (format.equals("txt")) {
+      response.setContentType("application/vnd.text;charset=GBK");
+      response.setHeader("Content-Disposition", "attachment;filename="
+          + RequestUtils.encodeAttachName(request, context.getDatas().get("exportFile").toString()) + ".txt");
+    } else {
+      throw new RuntimeException("Exporter is not supported for other format:" + exporter.getFormat());
+    }
+    exporter.setContext(context);
+    exporter.transfer(new TransferResult());
+    return null;
+  }
+
+  public ActionForward importForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+      HttpServletResponse response) throws Exception {
+    request.setAttribute("importAction", request.getRequestURI());
+    return forward(request, "/pages/components/importData/form");
+  }
+
+  protected String resolveTemplatePath(HttpServletRequest request, String template) {
+    return template;
+  }
+
+  protected Exporter getExporter(HttpServletRequest request, HttpServletResponse response, Context context)
+      throws IOException {
     Collection datas = (Collection) context.getDatas().get("items");
     boolean isArray = false;
     if (!CollectionUtils.isEmpty(datas)) {
@@ -183,6 +274,7 @@ public class BaseAction extends DispatchAction {
       if (first.getClass().isArray()) isArray = true;
     }
     Exporter exporter;
+    String template = (String) context.getDatas().get("templatePath");
     if (isArray) {
       exporter = new SimpleItemExporter();
     } else if (Strings.isNotBlank(template)) {
@@ -200,20 +292,7 @@ public class BaseAction extends DispatchAction {
     } else {
       exporter.setWriter(new ExcelTemplateWriter(response.getOutputStream()));
     }
-    if (format.equals("excel")) {
-      response.setContentType("application/vnd.ms-excel;charset=GBK");
-      response.setHeader("Content-Disposition", "attachment;filename="
-          + RequestUtils.encodeAttachName(request, context.getDatas().get("exportFile").toString()) + ".xls");
-    } else {
-      throw new RuntimeException("Exporter is not supported for other format:" + exporter.getFormat());
-    }
-    exporter.setContext(context);
-    exporter.transfer(new TransferResult());
-    return null;
-  }
-
-  protected String resolveTemplatePath(String template) {
-    return template;
+    return exporter;
   }
 
   protected void configExportContext(HttpServletRequest request, Context context) {
@@ -222,7 +301,11 @@ public class BaseAction extends DispatchAction {
   }
 
   protected PropertyExtractor getPropertyExtractor(HttpServletRequest request) {
-    return new DefaultPropertyExtractor(new StrutsMessageResource(getLocale(request), getResources(request)));
+    return new DefaultPropertyExtractor(getTextResource(request));
+  }
+
+  protected TextResource getTextResource(HttpServletRequest request) {
+    return new StrutsMessageResource(getLocale(request), getResources(request));
   }
 
   protected Collection getExportDatas(HttpServletRequest request) {

@@ -42,9 +42,9 @@ public class MultiEntityExporter extends AbstractItemExporter {
   protected List<Metadata> metadatas = null;
 
   public static class Metadata {
-    String dataName;
-    String[] attrs;
-    String[] titles;
+    public final String dataName;
+    public final String[] attrs;
+    public final String[] titles;
 
     public Metadata(String dataName, String[] attrs, String[] titles) {
       super();
@@ -91,8 +91,8 @@ public class MultiEntityExporter extends AbstractItemExporter {
         try {
           propValues[i] = propertyExtractor.getPropertyValue(item, metadata.attrs[i]);
         } catch (Exception e) {
-          transferResult.addFailure(TransferMessage.ERROR_ATTRS_EXPORT, "occur in get property :"
-              + metadata.attrs[i] + " and exception:" + e.getMessage());
+          transferResult.addFailure(TransferMessage.ERROR_ATTRS_EXPORT,
+              "occur in get property :" + metadata.attrs[i] + " and exception:" + e.getMessage());
         }
       }
       writer.write(propValues);

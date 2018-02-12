@@ -714,8 +714,8 @@ public class Strings {
     final int len = str.length();
     final long longSize = (long) len * (long) repeat;
     final int size = (int) longSize;
-    if (size != longSize) { throw new ArrayIndexOutOfBoundsException("Required array size too large: "
-        + String.valueOf(longSize)); }
+    if (size != longSize) { throw new ArrayIndexOutOfBoundsException(
+        "Required array size too large: " + String.valueOf(longSize)); }
 
     final char[] array = new char[size];
     str.getChars(0, len, array, 0);
@@ -1064,6 +1064,11 @@ public class Strings {
     return idsOfInteger;
   }
 
+  public static Integer[] transformToInt(String Ids) {
+    if (isEmpty(Ids)) return null;
+    else return transformToInt(split(Ids, ","));
+  }
+
   /**
    * transformToLong.
    *
@@ -1077,6 +1082,26 @@ public class Strings {
       idsOfLong[i] = new Long(ids[i]);
     }
     return idsOfLong;
+  }
+
+  public static Long[] transformToLong(String Ids) {
+    if (isEmpty(Ids)) return null;
+    else return transformToLong(split(Ids, ","));
+  }
+
+  public static String transformToSeq(Object seq[], String delimiter) {
+    if (null == seq || seq.length < 1) return "";
+    StringBuffer aim = new StringBuffer();
+    for (int i = 0; i < seq.length; i++) {
+      if (isNotEmpty(aim.toString())) aim.append(delimiter);
+      aim.append(seq[i]);
+    }
+
+    return aim.toString();
+  }
+
+  public static String transformToSeq(String seq[]) {
+    return transformToSeq(((Object[]) (seq)), DELIMITER);
   }
 
   /**
@@ -1418,8 +1443,8 @@ public class Strings {
     final String abrevMarker = "...";
     if (offset <= 4) return str.substring(0, maxWidth - 3) + abrevMarker;
     if (maxWidth < 7) throw new IllegalArgumentException("Minimum abbreviation width with offset is 7");
-    if (offset + maxWidth - 3 < str.length()) { return abrevMarker
-        + abbreviate(str.substring(offset), maxWidth - 3); }
+    if (offset + maxWidth - 3 < str
+        .length()) { return abrevMarker + abbreviate(str.substring(offset), maxWidth - 3); }
     return abrevMarker + str.substring(str.length() - (maxWidth - 3));
   }
 
