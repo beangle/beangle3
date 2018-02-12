@@ -42,13 +42,13 @@ public class MultiEntityExporter extends AbstractItemExporter {
   protected List<Metadata> metadatas = null;
 
   public static class Metadata {
-    String dateName;
+    String dataName;
     String[] attrs;
     String[] titles;
 
-    public Metadata(String dateName, String[] attrs, String[] titles) {
+    public Metadata(String dataName, String[] attrs, String[] titles) {
       super();
-      this.dateName = dateName;
+      this.dataName = dataName;
       this.attrs = attrs;
       this.titles = titles;
     }
@@ -84,7 +84,7 @@ public class MultiEntityExporter extends AbstractItemExporter {
   public void transferItem() {
     Metadata metadata = metadatas.get(index);
     List<?> values = (List<?>) ((List<?>) context.get("items")).get(index);
-    getWriter().writeTitle(metadata.dateName, metadata.titles);
+    getWriter().writeTitle(metadata.dataName, metadata.titles);
     Object[] propValues = new Object[metadata.attrs.length];
     for (Object item : values) {
       for (int i = 0; i < propValues.length; i++) {

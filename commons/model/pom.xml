@@ -13,8 +13,6 @@
   <properties>
     <bundle.symbolicName>org.beangle.commons.model</bundle.symbolicName>
     <bundle.namespace>org.beangle.commons.model</bundle.namespace>
-    <jxls.version>1.0.3</jxls.version>
-    <poi.version>3.9</poi.version>
   </properties>
 
   <dependencies>
@@ -37,7 +35,6 @@
       <groupId>org.apache.poi</groupId>
       <artifactId>poi</artifactId>
       <version>${poi.version}</version>
-      <optional>true</optional>
       <exclusions>
         <exclusion>
           <groupId>log4j</groupId>

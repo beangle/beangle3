@@ -34,6 +34,9 @@
     <javassist.version>3.20.0-GA</javassist.version>
     <ehcache.version>2.5.2</ehcache.version>
     <javax.validation.version>1.0.0.GA</javax.validation.version>
+    <jxls.version>1.0.3</jxls.version>
+    <poi.version>3.9</poi.version>
+    <fileupload.version>1.3.3</fileupload.version>
   </properties>
 
   <modules>
@@ -41,7 +44,7 @@
     <module>ioc</module>
     <module>orm</module>
     <module>security</module>
-    <module>struts2</module>
+    <module>struts</module>
 	<module>ems</module>
   </modules>
 

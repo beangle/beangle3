@@ -18,7 +18,11 @@
  */
 package org.beangle.commons.web.util;
 
+import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -133,5 +137,80 @@ public final class RequestUtils {
       logger.info("Cannot parser user agent:{}", request.getHeader("USER-AGENT"));
     }
     return agent;
+  }
+
+  public static Map getParams(HttpServletRequest request, String prefix) {
+    return getParamsMap(request, prefix, null, true);
+  }
+
+  public static Map getParams(HttpServletRequest request, String prefix, String exclusiveAttrNames) {
+    return getParamsMap(request, prefix, exclusiveAttrNames, true);
+  }
+
+  public static Map getParamsMap(HttpServletRequest request, String prefix, String exclusiveAttrNames) {
+    return getParamsMap(request, prefix, exclusiveAttrNames, false);
+  }
+
+  public static Map getParamsMap(HttpServletRequest request, String prefix, String exclusiveAttrNames,
+      boolean stripPrefix) {
+    Map params = new HashMap();
+    if (Strings.isNotEmpty(exclusiveAttrNames)) exclusiveAttrNames = "," + exclusiveAttrNames + ",";
+    else exclusiveAttrNames = null;
+    Enumeration names = request.getParameterNames();
+    do {
+      if (!names.hasMoreElements()) break;
+      String attr = (String) names.nextElement();
+      if (attr.indexOf(prefix + ".") == 0
+          && (null == exclusiveAttrNames || !Strings.contains(exclusiveAttrNames, "," + attr + ",")))
+        params.put(stripPrefix ? ((Object) (attr.substring(prefix.length() + 1))) : ((Object) (attr)),
+            request.getParameter(attr));
+    } while (true);
+    String queryString = request.getQueryString();
+    if (Strings.isNotEmpty(queryString)) {
+      String paramPairs[] = Strings.split(queryString, "&");
+      for (int i = 0; i < paramPairs.length; i++) {
+        String paramPair = paramPairs[i];
+        if (paramPair.indexOf(prefix + ".") != 0) continue;
+        int equalIndex = paramPair.indexOf("=");
+        if (-1 == equalIndex) continue;
+        String param = paramPair.substring(0, equalIndex);
+        if (Strings.contains(exclusiveAttrNames, "," + param + ",")) continue;
+        try {
+          params.put(stripPrefix ? ((Object) (param.substring(prefix.length() + 1))) : ((Object) (param)),
+              URLDecoder.decode(paramPair.substring(equalIndex + 1), "UTF-8"));
+        } catch (Exception e) {
+        }
+      }
+
+    }
+    return params;
+  }
+
+  public static Float getFloat(HttpServletRequest request, String name) {
+    String v = request.getParameter(name);
+    return (v == null) ? null : Float.valueOf(v);
+  }
+
+  public static Integer getInteger(HttpServletRequest request, String name) {
+    String v = request.getParameter(name);
+    return (v == null) ? null : Integer.valueOf(v);
+  }
+
+  public static Long getLong(HttpServletRequest request, String name) {
+    String v = request.getParameter(name);
+    return (v == null) ? null : Long.valueOf(v);
+  }
+
+  public static Boolean getBoolean(HttpServletRequest request, String name) {
+    String v = request.getParameter(name);
+    if (v == null) {
+      return null;
+    } else {
+      if (v.equals("1") || v.equals("true") || v.equals("yes") || v.equals("on")) {
+        return Boolean.TRUE;
+      } else {
+        return Boolean.FALSE;
+      }
+    }
   }
 }

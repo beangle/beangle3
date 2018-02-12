@@ -32,7 +32,6 @@
     <connection>scm:git:git://github.com/beangle/commons.git</connection>
     <developerConnection>scm:git:git@github.com:beangle/commons.git</developerConnection>
     <url>git@github.com:beangle/commons.git</url>
-    <tag>3.5.0</tag>
   </scm>
 
   <properties>

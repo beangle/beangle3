@@ -48,7 +48,7 @@ public class ZipUtilsTest {
   }
 
   private String getZipTarget() {
-    return Strings.substringBeforeLast(getSource(), "/") + "/" + testFilename + ".zip";
+    return Strings.substringBeforeLast(getSource(), File.separator) + File.separator + testFilename + ".zip";
   }
 
   @Test(dependsOnMethods = "testZip")

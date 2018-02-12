@@ -21,7 +21,6 @@ package org.beangle.commons.transfer.excel;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -32,7 +31,7 @@ import org.testng.annotations.Test;
 @Test
 public class ExcelItemWriterTest {
 
-  public void testWrite() throws IOException {
+  public void testWrite() throws Exception {
     File file = new File("src/test/resources/tmp.xls");
     if (!file.exists()) {
       file.createNewFile();
@@ -41,10 +40,11 @@ public class ExcelItemWriterTest {
     writer.writeTitle("人员信息", new String[] { "姓名", "性别", "身份证号", "政治面貌" });
     writer.write(new String[] { "张三", "男", "xxxx", "无党派人士" });
     writer.close();
+    read();
+    file.delete();
   }
 
-  @Test(dependsOnMethods = { "testWrite" })
-  public void testRead() throws Exception {
+  private void read() throws Exception {
     File file = new File("src/test/resources/tmp.xls");
     FileInputStream in = new FileInputStream(file);
     HSSFWorkbook wb = new HSSFWorkbook(in);
@@ -53,6 +53,5 @@ public class ExcelItemWriterTest {
     // Assert.assertEquals(f.getBoldweight(), HSSFFont.BOLDWEIGHT_BOLD);
     Assert.assertEquals(cell.getCellStyle().getAlignment(), HSSFCellStyle.ALIGN_CENTER);
     in.close();
-    file.delete();
   }
 }
