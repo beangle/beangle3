@@ -43,6 +43,11 @@ public abstract class AbstractBindModule implements BindModule {
 
   protected BeanConfig config;
 
+  protected boolean devEnabled() {
+    String profiles = System.getProperty("beangle.cdi.profiles");
+    return (null != profiles && profiles.contains("dev"));
+  }
+
   /**
    * <p>
    * Getter for the field <code>config</code>.
@@ -107,7 +112,8 @@ public abstract class AbstractBindModule implements BindModule {
   /**
    * Generate a list property
    * <p>
-   * List singleton bean references with list(A.class,B.class) or list(ref("someBeanId"),C.class).<br>
+   * List singleton bean references with list(A.class,B.class) or
+   * list(ref("someBeanId"),C.class).<br>
    * List simple values with list("strValue1","strValue2")
    *
    * @param datas
