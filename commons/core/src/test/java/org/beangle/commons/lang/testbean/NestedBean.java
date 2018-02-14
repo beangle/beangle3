@@ -44,5 +44,4 @@ public class NestedBean {
     this.datas = datas;
   }
 
-
 }

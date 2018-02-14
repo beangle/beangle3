@@ -42,13 +42,13 @@ public class MultiEntityExporter extends AbstractItemExporter {
   protected List<Metadata> metadatas = null;
 
   public static class Metadata {
-    String dateName;
-    String[] attrs;
-    String[] titles;
+    public final String dataName;
+    public final String[] attrs;
+    public final String[] titles;
 
-    public Metadata(String dateName, String[] attrs, String[] titles) {
+    public Metadata(String dataName, String[] attrs, String[] titles) {
       super();
-      this.dateName = dateName;
+      this.dataName = dataName;
       this.attrs = attrs;
       this.titles = titles;
     }
@@ -84,15 +84,15 @@ public class MultiEntityExporter extends AbstractItemExporter {
   public void transferItem() {
     Metadata metadata = metadatas.get(index);
     List<?> values = (List<?>) ((List<?>) context.get("items")).get(index);
-    getWriter().writeTitle(metadata.dateName, metadata.titles);
+    getWriter().writeTitle(metadata.dataName, metadata.titles);
     Object[] propValues = new Object[metadata.attrs.length];
     for (Object item : values) {
       for (int i = 0; i < propValues.length; i++) {
         try {
           propValues[i] = propertyExtractor.getPropertyValue(item, metadata.attrs[i]);
         } catch (Exception e) {
-          transferResult.addFailure(TransferMessage.ERROR_ATTRS_EXPORT, "occur in get property :"
-              + metadata.attrs[i] + " and exception:" + e.getMessage());
+          transferResult.addFailure(TransferMessage.ERROR_ATTRS_EXPORT,
+              "occur in get property :" + metadata.attrs[i] + " and exception:" + e.getMessage());
         }
       }
       writer.write(propValues);

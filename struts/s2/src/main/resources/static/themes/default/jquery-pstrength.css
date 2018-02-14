@@ -1,0 +1,9 @@
+#password-strength{
+  width:150px;
+    margin-left: 10px;
+    display:inline-block;
+}
+
+.password-strength-bar{
+  display:inline-block;
+}

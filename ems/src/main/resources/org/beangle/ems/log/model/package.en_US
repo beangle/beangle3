@@ -1,0 +1,14 @@
+
+BusinessLogDetailBean=Business Log Detail
+BusinessLogDetailBean.content=Content
+BusinessLogDetailBean.log=Log
+
+BusinessLogBean=Business Log
+BusinessLogBean.operator=Operator
+BusinessLogBean.operation=Operation
+BusinessLogBean.resource=Resource
+BusinessLogBean.entry=Entry
+BusinessLogBean.operateAt=Operate At
+BusinessLogBean.ip=Ip
+BusinessLogBean.agent=Agent
+BusinessLogBean.detail=Detail

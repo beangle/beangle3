@@ -268,8 +268,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
         if (value instanceof List<?>) {
           List<Object> list = new ManagedList<Object>();
           for (Object item : ((List<?>) value)) {
-            if (item instanceof ReferenceValue) list
-                .add(new RuntimeBeanReference(((ReferenceValue) item).ref));
+            if (item instanceof ReferenceValue)
+              list.add(new RuntimeBeanReference(((ReferenceValue) item).ref));
             else list.add(item);
           }
           value = list;
@@ -277,8 +277,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
         if (value instanceof Set<?>) {
           Set<Object> set = new ManagedSet<Object>();
           for (Object item : (Set<?>) value) {
-            if (item instanceof ReferenceValue) set
-                .add(new RuntimeBeanReference(((ReferenceValue) item).ref));
+            if (item instanceof ReferenceValue)
+              set.add(new RuntimeBeanReference(((ReferenceValue) item).ref));
             else set.add(item);
           }
           value = set;
@@ -294,8 +294,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
       } else if (value instanceof Map<?, ?>) {
         Map<Object, Object> maps = new ManagedMap<Object, Object>();
         for (Map.Entry<?, ?> item : ((Map<?, ?>) value).entrySet()) {
-          if (item.getValue() instanceof ReferenceValue) maps.put(item.getKey(), new RuntimeBeanReference(
-              ((ReferenceValue) item.getValue()).ref));
+          if (item.getValue() instanceof ReferenceValue)
+            maps.put(item.getKey(), new RuntimeBeanReference(((ReferenceValue) item.getValue()).ref));
           else maps.put(item.getKey(), item.getValue());
         }
         value = maps;
@@ -336,8 +336,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
       try {
         Class<?> target = def.targetClass;
 
-        if (null == target && def.clazz != null) target = ((FactoryBean<?>) def.clazz.newInstance())
-            .getObjectType();
+        if (null == target && def.clazz != null)
+          target = ((FactoryBean<?>) def.clazz.newInstance()).getObjectType();
         Assert.isTrue(null != target || def.isAbstract(), "Concrete bean [%1$s] should has class.",
             def.beanName);
 
@@ -385,6 +385,11 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
       String propertyName = entry.getKey();
       Class<?> propertyType = entry.getValue();
       List<String> beanNames = registry.getBeanNames(propertyType);
+      List<String> innerNames = CollectUtils.newArrayList();
+      for (String n : beanNames) {
+        if (n.contains("#")) innerNames.add(n);
+      }
+      beanNames.removeAll(innerNames);
       boolean binded = false;
       if (beanNames.size() == 1) {
         mbd.getPropertyValues().add(propertyName, new RuntimeBeanReference(beanNames.get(0)));
@@ -413,8 +418,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
         if (beanNames.isEmpty()) {
           logger.debug("{}'s {} cannot found candidate beans.", beanName, propertyName);
         } else {
-          logger.warn("{}'s {} expected single bean but found {} : {}", new Object[] { beanName,
-              propertyName, beanNames.size(), beanNames });
+          logger.warn("{}'s {} expected single bean but found {} : {}",
+              new Object[] { beanName, propertyName, beanNames.size(), beanNames });
         }
       }
     }

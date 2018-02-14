@@ -29,18 +29,18 @@ import org.springframework.transaction.interceptor.TransactionProxyFactoryBean;
 public class DefaultModule extends AbstractBindModule {
   @Override
   protected void doBinding() {
-    bind("dataSource", DriverManagerDataSource.class).constructor(
-        "jdbc:h2:./target/beangle;AUTO_SERVER=TRUE", "sa", "");
+    bind("dataSource", DriverManagerDataSource.class).constructor("jdbc:h2:./target/beangle;AUTO_SERVER=TRUE",
+        "sa", "");
 
-    bind("hibernateConfig", PropertiesFactoryBean.class).property(
-        "properties",
+    bind("hibernateConfig", PropertiesFactoryBean.class).property("properties",
         props("hibernate.max_fetch_depth=1", "hibernate.default_batch_fetch_size=64",
             "hibernate.batch_fetch_style=dynamic", "hibernate.jdbc.fetch_size=8",
             "hibernate.jdbc.batch_size=20", "hibernate.jdbc.batch_versioned_data=true",
             "hibernate.jdbc.use_streams_for_binary=true", "hibernate.jdbc.use_get_generated_keys=true",
             "hibernate.cache.region.factory_class=org.hibernate.cache.EhCacheRegionFactory",
             "hibernate.cache.use_second_level_cache=true", "hibernate.cache.use_query_cache=true",
-            "hibernate.query.substitutions=true 1, false 0, yes 'Y', no 'N'", "hibernate.show_sql=false"));
+            "hibernate.query.substitutions=true 1, false 0, yes 'Y', no 'N'",
+            "hibernate.show_sql=" + devEnabled()));
 
     bind("sessionFactory", SessionFactoryBean.class)
         .property("configurationClass", "org.beangle.orm.hibernate.internal.OverrideConfiguration")
@@ -51,12 +51,11 @@ public class DefaultModule extends AbstractBindModule {
 
     bind("transactionManager", HibernateTransactionManager.class);
 
-    bind("baseTransactionProxy", TransactionProxyFactoryBean.class).setAbstract().property(
-        "transactionAttributes",
-        props("save*=PROPAGATION_REQUIRED", "update*=PROPAGATION_REQUIRED", "delete*=PROPAGATION_REQUIRED",
-            "batch*=PROPAGATION_REQUIRED", "execute*=PROPAGATION_REQUIRED", "remove*=PROPAGATION_REQUIRED",
-            "create*=PROPAGATION_REQUIRED", "init*=PROPAGATION_REQUIRED", "authorize*=PROPAGATION_REQUIRED",
-            "*=PROPAGATION_REQUIRED,readOnly"));
+    bind("baseTransactionProxy", TransactionProxyFactoryBean.class).setAbstract()
+        .property("transactionAttributes", props("save*=PROPAGATION_REQUIRED", "update*=PROPAGATION_REQUIRED",
+            "delete*=PROPAGATION_REQUIRED", "batch*=PROPAGATION_REQUIRED", "execute*=PROPAGATION_REQUIRED",
+            "remove*=PROPAGATION_REQUIRED", "create*=PROPAGATION_REQUIRED", "init*=PROPAGATION_REQUIRED",
+            "authorize*=PROPAGATION_REQUIRED", "*=PROPAGATION_REQUIRED,readOnly"));
 
     bind(RailsNamingStrategy.class).shortName();
     bind(DefaultTableNamingStrategy.class).property("resources",
@@ -64,8 +63,8 @@ public class DefaultModule extends AbstractBindModule {
 
     bind(HibernateModelMeta.class, ConvertPopulatorBean.class);
 
-    bind("entityDao", TransactionProxyFactoryBean.class).proxy("target", HibernateEntityDao.class).parent(
-        "baseTransactionProxy");
+    bind("entityDao", TransactionProxyFactoryBean.class).proxy("target", HibernateEntityDao.class)
+        .parent("baseTransactionProxy");
 
     bind(DefaultLobHandler.class).shortName();
   }

@@ -1,0 +1,16 @@
+
+CodeMeta=登记系统使用的基础代码
+CodeMeta.name=代码名称
+CodeMeta.title=中文名称
+CodeMeta.className=类名
+CodeMeta.category=所在分类
+
+CodeCategory=代码分类
+CodeCategory.name=类别名称
+
+CodeScript=系统编码规则
+CodeScript.codeName=编码对象
+CodeScript.attr=编码属性
+CodeScript.codeClassName=编码对象的类名
+CodeScript.script=编码脚本
+CodeScript.description=编码简要描述
