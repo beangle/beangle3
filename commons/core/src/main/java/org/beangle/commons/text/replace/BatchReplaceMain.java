@@ -58,6 +58,9 @@ public class BatchReplaceMain {
 
   /**
    * Usage:BatchReplaceMain dir patternfile encoding
+   * @param args args
+   * @throws Exception
+   *   when read files
    */
   public static void main(String[] args) throws Exception {
     if (args.length < 2) {
@@ -109,7 +112,7 @@ public class BatchReplaceMain {
    *
    * @param fileName a {@link java.lang.String} object.
    * @param profiles a {@link java.util.Map} object.
-   * @param encoding a {@link java.lang.String} object.
+   * @param charset a {@link java.lang.String} object.
    * @throws java.lang.Exception if any.
    * @throws java.io.FileNotFoundException if any.
    */

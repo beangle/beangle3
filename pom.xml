@@ -3,25 +3,25 @@
   <parent>
     <groupId>org.beangle</groupId>
     <artifactId>beangle-java</artifactId>
-    <version>24.7</version>
+    <version>24.8</version>
   </parent>
   <groupId>org.beangle</groupId>
   <artifactId>beangle-library-parent</artifactId>
   <packaging>pom</packaging>
-  <version>3.6.0.M1</version>
-  <name>Beangle Library Parent</name>
+  <version>3.6.0.M2</version>
+  <name>Beangle Library V3 Parent</name>
 
-  <url>https://github.com/beangle/library</url>
+  <url>https://github.com/beangle/beangle3</url>
 
   <issueManagement>
     <system>github</system>
-    <url>https://github.com/beangle/library/issues</url>
+    <url>https://github.com/beangle/beangle3/issues</url>
   </issueManagement>
 
   <scm>
-    <connection>scm:git:git://github.com/beangle/library.git</connection>
-    <developerConnection>scm:git:git@github.com:beangle/library.git</developerConnection>
-    <url>https://github.com/beangle/library</url>
+    <connection>scm:git:git://github.com/beangle/beangle3.git</connection>
+    <developerConnection>scm:git:git@github.com:beangle/beangle3.git</developerConnection>
+    <url>https://github.com/beangle/beangle3</url>
   </scm>
 
   <properties>
@@ -45,29 +45,29 @@
     <module>orm</module>
     <module>security</module>
     <module>struts</module>
-	<module>ems</module>
+    <module>ems</module>
   </modules>
 
   <dependencies>
     <dependency>
-	  <groupId>org.slf4j</groupId>
-	  <artifactId>slf4j-api</artifactId>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
     </dependency>
     <dependency>
-	  <groupId>ch.qos.logback</groupId>
-	  <artifactId>logback-core</artifactId>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
     </dependency>
     <dependency>
-	  <groupId>ch.qos.logback</groupId>
-	  <artifactId>logback-classic</artifactId>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
     </dependency>
     <dependency>
-	  <groupId>org.testng</groupId>
-	  <artifactId>testng</artifactId>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
     </dependency>
     <dependency>
-	  <groupId>org.mockito</groupId>
-	  <artifactId>mockito-core</artifactId>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
     </dependency>
   </dependencies>
 </project>
