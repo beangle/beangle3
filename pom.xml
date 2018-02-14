@@ -9,19 +9,19 @@
   <artifactId>beangle-library-parent</artifactId>
   <packaging>pom</packaging>
   <version>3.6.0.M2-SNAPSHOT</version>
-  <name>Beangle Library Parent</name>
+  <name>Beangle Library V3 Parent</name>
 
-  <url>https://github.com/beangle/library</url>
+  <url>https://github.com/beangle/beangle3</url>
 
   <issueManagement>
     <system>github</system>
-    <url>https://github.com/beangle/library/issues</url>
+    <url>https://github.com/beangle/beangle3/issues</url>
   </issueManagement>
 
   <scm>
-    <connection>scm:git:git://github.com/beangle/library.git</connection>
-    <developerConnection>scm:git:git@github.com:beangle/library.git</developerConnection>
-    <url>https://github.com/beangle/library</url>
+    <connection>scm:git:git://github.com/beangle/beangle3.git</connection>
+    <developerConnection>scm:git:git@github.com:beangle/beangle3.git</developerConnection>
+    <url>https://github.com/beangle/beangle3</url>
   </scm>
 
   <properties>
