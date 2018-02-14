@@ -18,10 +18,8 @@
  */
 package org.beangle.struts1.action;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,7 +32,6 @@ import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.util.EntityUtils;
 import org.beangle.commons.lang.Strings;
-import org.beangle.struts1.dispatch.Conventions;
 
 public abstract class ExampleAction extends BaseAction {
 

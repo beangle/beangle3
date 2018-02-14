@@ -30,10 +30,9 @@ import org.apache.struts.action.ActionMessages;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
 import org.beangle.struts1.dispatch.Action;
-import org.beangle.struts1.support.DispatchActionSupport;
 import org.beangle.struts1.support.ForwardSupport;
 
-public class DispatchAction extends DispatchActionSupport {
+public class DispatchAction extends org.apache.struts.actions.DispatchAction {
 
     public DispatchAction() {
     }

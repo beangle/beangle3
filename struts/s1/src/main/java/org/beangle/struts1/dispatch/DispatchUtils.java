@@ -20,9 +20,6 @@ package org.beangle.struts1.dispatch;
 
 import org.beangle.commons.lang.Strings;
 
-// Referenced classes of package com.ekingstar.commons.web.dispatch:
-//            Conventions, Profile, MatchInfo
-
 public class DispatchUtils {
 
   public DispatchUtils() {
@@ -48,12 +45,20 @@ public class DispatchUtils {
     else simpleName = Strings.uncapitalize(simpleName);
     MatchInfo match = profile.getCtlMatchInfo(className);
     StringBuffer infix = new StringBuffer(match.reserved.toString());
-    infix.append(clazz.getPackage().getName().substring(match.startIndex + 1));
+    infix.append(substring(clazz.getPackage().getName(), match.startIndex + 1));
     if (infix.length() == 0) return simpleName;
     infix.append("/").append(simpleName);
     for (int i = 0; i < infix.length(); i++)
       if (infix.charAt(i) == '.') infix.setCharAt(i, '/');
 
     return infix.toString();
+  }
+
+  private static String substring(String a, int idx) {
+    if (idx < 0 || idx >= a.length()) {
+      return "";
+    } else {
+      return a.substring(idx);
+    }
   }
 }
