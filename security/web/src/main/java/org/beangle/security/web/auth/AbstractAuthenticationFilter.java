@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.security.web.auth;
 
@@ -72,7 +72,7 @@ import org.beangle.security.core.context.SecurityContextHolder;
  * <code>exceptionMappings</code> property in your application xml. This property is a
  * java.util.Properties object that maps a fully-qualified exception class name to a redirection url
  * target. For example:
- * 
+ *
  * <pre>
  *  &lt;property name=&quot;exceptionMappings&quot;&gt;
  *    &lt;props&gt;
@@ -80,11 +80,11 @@ import org.beangle.security.core.context.SecurityContextHolder;
  *    &lt;/props&gt;
  *  &lt;/property&gt;
  * </pre>
- * 
+ *
  * The example above would redirect all {@link org.beangle.security.auth.BadCredentialsException}s
  * thrown, to a page in the web-application called /bad_credentials.jsp.
  * <p>
- * 
+ *
  * @author chaostone
  * @version $Id: AbstractAuthenticationFilter.java 3280 2008-09-12 14:57:21Z $
  */
@@ -146,7 +146,7 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilter {
 
   /**
    * Performs actual authentication.
-   * 
+   *
    * @param request from which to extract parameters and perform the authentication
    * @return the authenticated user
    * @throws AuthenticationException if authentication fails
@@ -199,7 +199,7 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilter {
    * <p>
    * Subclasses may override for special requirements, such as Tapestry integration.
    * </p>
-   * 
+   *
    * @param request
    *          as received from the filter chain
    * @param response
@@ -289,7 +289,7 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilter {
   /**
    * Specifies the default <code>filterProcessesUrl</code> for the
    * implementation.
-   * 
+   *
    * @return the default <code>filterProcessesUrl</code>
    */
   public abstract String getDefaultFilterProcessesUrl();
@@ -300,7 +300,7 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilter {
    * Override this method of you want to provide a customized default Url (for
    * example if you want different Urls depending on the authorities of the
    * user who has just logged in).
-   * 
+   *
    * @return the defaultTargetUrl property
    */
   public String getDefaultTargetUrl() {
@@ -362,7 +362,7 @@ public abstract class AbstractAuthenticationFilter extends GenericHttpFilter {
   /**
    * Tells if we are to do a server side include of the error URL instead of a
    * 302 redirect.
-   * 
+   *
    * @param serverSideRedirect
    */
   public void setServerSideRedirect(boolean serverSideRedirect) {

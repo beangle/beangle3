@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.security.cas.validation;
 
@@ -61,7 +61,7 @@ public class Cas20ServiceTicketValidator extends AbstractTicketValidator {
    * <p>
    * This code is here merely for sample/demonstration purposes for those wishing to modify the CAS2
    * protocol. You'll probably want a more robust implementation or to use SAML 1.1
-   * 
+   *
    * @param xml
    *          the XML to parse.
    * @return the map of attributes.
@@ -108,7 +108,7 @@ public class Cas20ServiceTicketValidator extends AbstractTicketValidator {
 
   /**
    * Template method if additional custom parsing (such as Proxying) needs to be done.
-   * 
+   *
    * @param response
    *          the original response from the CAS server.
    * @param assertion

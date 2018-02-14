@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.io;
 
@@ -28,7 +28,7 @@ import java.io.Writer;
  * <code>java.io.StringWriter</code>, provides an <i>un-synchronized</i> (i.e. for use in a single
  * thread) implementation for better performance. For safe usage with multiple {@link Thread}s then
  * <code>java.io.StringWriter</code> should be used.
- * 
+ *
  * @author chaostone
  * @since 3.1
  */
@@ -47,7 +47,7 @@ public class StringBuilderWriter extends Writer implements Serializable {
 
   /**
    * Construct a new {@link StringBuilder} instance with the specified capacity.
-   * 
+   *
    * @param capacity The initial capacity of the underlying {@link StringBuilder}
    */
   public StringBuilderWriter(int capacity) {
@@ -56,7 +56,7 @@ public class StringBuilderWriter extends Writer implements Serializable {
 
   /**
    * Construct a new instance with the specified {@link StringBuilder}.
-   * 
+   *
    * @param builder The String builder
    */
   public StringBuilderWriter(StringBuilder builder) {
@@ -106,7 +106,7 @@ public class StringBuilderWriter extends Writer implements Serializable {
 
   /**
    * Write a String to the {@link StringBuilder}.
-   * 
+   *
    * @param value The value to write
    */
   @Override

@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.transfer.excel;
 
@@ -34,7 +34,7 @@ import org.beangle.commons.transfer.exporter.PropertyExtractor;
 
 /**
  * 写到excel中的工具
- * 
+ *
  * @author songshuquan,chaostone
  * @version $Id: $
  */
@@ -53,7 +53,7 @@ public class ExcelTools {
    * <p>
    * toExcel.
    * </p>
-   * 
+   *
    * @param datas a {@link java.util.Collection} object.
    * @param propertyShowKeys a {@link java.lang.String} object.
    * @return a {@link org.apache.poi.hssf.usermodel.HSSFWorkbook} object.
@@ -67,7 +67,7 @@ public class ExcelTools {
 
   /**
    * 将一个对象数组的集合导出成excel
-   * 
+   *
    * @param datas a {@link java.util.Collection} object.
    * @param propertyShowKeys a {@link java.lang.String} object.
    * @throws java.lang.Exception if any.
@@ -108,7 +108,7 @@ public class ExcelTools {
 
   /**
    * List数据集导出生成Excel文件
-   * 
+   *
    * @param list 对象数据列表
    * @param propertyKeys 对象属字符串，中间以","间隔
    * @param propertyShowKeys 显示字段的名字字符串，中间以","间隔
@@ -126,7 +126,7 @@ public class ExcelTools {
 
   /**
    * 将数据导出excel指定名称的数据页�?.
-   * 
+   *
    * @param wb a {@link org.apache.poi.hssf.usermodel.HSSFWorkbook} object.
    * @param sheetName a {@link java.lang.String} object.
    * @param list a {@link java.util.Collection} object.
@@ -183,7 +183,7 @@ public class ExcelTools {
    * <p>
    * object2Excel.
    * </p>
-   * 
+   *
    * @param list a {@link java.util.List} object.
    * @param propertyKeys a {@link java.lang.String} object.
    * @param propertyShowKeys a {@link java.lang.String} object.
@@ -199,7 +199,7 @@ public class ExcelTools {
 
   /**
    * 将StringTokenizer类型数据转化生成字符串数�?
-   * 
+   *
    * @param sourceStr 解析","间隔的字符串，变成字符串数组
    * @param strDot
    */

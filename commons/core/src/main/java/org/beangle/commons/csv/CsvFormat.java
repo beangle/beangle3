@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.csv;
 
@@ -24,7 +24,7 @@ import java.util.Set;
 
 /**
  * csv format definition
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -54,7 +54,7 @@ public class CsvFormat {
    * <p>
    * isStrictQuotes.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isStrictQuotes() {
@@ -65,7 +65,7 @@ public class CsvFormat {
    * <p>
    * isSeparator.
    * </p>
-   * 
+   *
    * @param a a char.
    * @return a boolean.
    */
@@ -77,7 +77,7 @@ public class CsvFormat {
    * <p>
    * isDelimiter.
    * </p>
-   * 
+   *
    * @param a a char.
    * @return a boolean.
    */
@@ -89,7 +89,7 @@ public class CsvFormat {
    * <p>
    * isEscape.
    * </p>
-   * 
+   *
    * @param a a char.
    * @return a boolean.
    */
@@ -101,7 +101,7 @@ public class CsvFormat {
    * <p>
    * Getter for the field <code>separators</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Set} object.
    */
   public Set<Character> getSeparators() {
@@ -112,7 +112,7 @@ public class CsvFormat {
    * <p>
    * Getter for the field <code>delimiter</code>.
    * </p>
-   * 
+   *
    * @return a char.
    */
   public char getDelimiter() {
@@ -123,7 +123,7 @@ public class CsvFormat {
    * <p>
    * Getter for the field <code>escape</code>.
    * </p>
-   * 
+   *
    * @return a char.
    */
   public char getEscape() {
@@ -134,7 +134,7 @@ public class CsvFormat {
    * <p>
    * defaultSeparator.
    * </p>
-   * 
+   *
    * @return a char.
    */
   public char defaultSeparator() {

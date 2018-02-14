@@ -1,0 +1,16 @@
+
+CodeMeta=Code Meta
+CodeMeta.name=Name
+CodeMeta.title=Title
+CodeMeta.className=Class Name
+CodeMeta.category=Category
+
+CodeCategory=Code Category
+CodeCategory.name=Name
+
+CodeScript=Code Script
+CodeScript.codeName=Code Name
+CodeScript.attr=Attr
+CodeScript.codeClassName=Code Class Name
+CodeScript.script=Script
+CodeScript.description=Description

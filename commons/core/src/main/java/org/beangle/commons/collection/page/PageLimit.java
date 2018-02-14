@@ -1,26 +1,26 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.collection.page;
 
 /**
  * 查询分页限制
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -43,7 +43,7 @@ public class PageLimit implements Limit {
    * <p>
    * Constructor for PageLimit.
    * </p>
-   * 
+   *
    * @param pageNo
    *          a int.
    * @param pageSize
@@ -58,7 +58,7 @@ public class PageLimit implements Limit {
    * <p>
    * Getter for the field <code>pageSize</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getPageSize() {
@@ -69,7 +69,7 @@ public class PageLimit implements Limit {
    * <p>
    * Setter for the field <code>pageSize</code>.
    * </p>
-   * 
+   *
    * @param pageSize
    *          a int.
    */
@@ -81,7 +81,7 @@ public class PageLimit implements Limit {
    * <p>
    * Getter for the field <code>pageNo</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getPageNo() {
@@ -92,7 +92,7 @@ public class PageLimit implements Limit {
    * <p>
    * Setter for the field <code>pageNo</code>.
    * </p>
-   * 
+   *
    * @param pageNo
    *          a int.
    */
@@ -104,7 +104,7 @@ public class PageLimit implements Limit {
    * <p>
    * isValid.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isValid() {
@@ -115,7 +115,7 @@ public class PageLimit implements Limit {
    * <p>
    * toString.
    * </p>
-   * 
+   *
    * @see java.lang.Object#toString()
    * @return a {@link java.lang.String} object.
    */

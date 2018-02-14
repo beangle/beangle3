@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.collection.page;
 
@@ -24,7 +24,7 @@ import java.util.List;
  * <p>
  * PagedList class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -42,7 +42,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * Constructor for PagedList.
    * </p>
-   * 
+   *
    * @param datas a {@link java.util.List} object.
    * @param pageSize a int.
    */
@@ -54,7 +54,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * Constructor for PagedList.
    * </p>
-   * 
+   *
    * @param datas a {@link java.util.List} object.
    * @param limit a {@link org.beangle.commons.collection.page.PageLimit} object.
    */
@@ -77,7 +77,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * Getter for the field <code>maxPageNo</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getMaxPageNo() {
@@ -88,7 +88,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * Getter for the field <code>pageNo</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getPageNo() {
@@ -99,7 +99,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * Getter for the field <code>pageSize</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getPageSize() {
@@ -110,7 +110,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * getTotal.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getTotal() {
@@ -121,7 +121,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * getNextPageNo.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public final int getNextPageNo() {
@@ -132,7 +132,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * getPreviousPageNo.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public final int getPreviousPageNo() {
@@ -143,7 +143,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * hasNext.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean hasNext() {
@@ -154,7 +154,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * hasPrevious.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean hasPrevious() {
@@ -165,7 +165,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * next.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
   public Page<E> next() {
@@ -176,7 +176,7 @@ public class PagedList<E> extends PageWapper<E> {
    * <p>
    * previous.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
   public Page<E> previous() {

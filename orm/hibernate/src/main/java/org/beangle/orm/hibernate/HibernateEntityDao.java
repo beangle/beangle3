@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.orm.hibernate;
 
@@ -190,7 +190,7 @@ public class HibernateEntityDao implements EntityDao {
 
   /**
    * 依据自构造的查询语句进行查询
-   * 
+   *
    * @see #buildCountQueryStr(Query)
    * @see org.beangle.commons.collection.page.Page
    */
@@ -210,7 +210,7 @@ public class HibernateEntityDao implements EntityDao {
 
   /**
    * 查询hql语句
-   * 
+   *
    * @param <T>
    * @param builder
    * @return data list
@@ -252,7 +252,7 @@ public class HibernateEntityDao implements EntityDao {
 
   /**
    * Support "@named-query" or "from object" styles query
-   * 
+   *
    * @param queryString
    * @return Hibernate query
    */
@@ -591,7 +591,7 @@ public class HibernateEntityDao implements EntityDao {
 
   /**
    * 检查持久化对象是否存在
-   * 
+   *
    * @param clazz
    * @param id
    * @param codeName
@@ -643,7 +643,7 @@ public class HibernateEntityDao implements EntityDao {
 
   /**
    * 构造查询记录数目的查询字符串
-   * 
+   *
    * @param query
    * @return query string
    */
@@ -694,7 +694,7 @@ public class HibernateEntityDao implements EntityDao {
 
     /**
      * 统计该查询的记录数
-     * 
+     *
      * @param limitQuery
      * @param hibernateSession
      * @return data count
@@ -718,7 +718,7 @@ public class HibernateEntityDao implements EntityDao {
 
     /**
      * 查询结果集
-     * 
+     *
      * @param query
      * @param session
      * @return result list
@@ -743,7 +743,7 @@ public class HibernateEntityDao implements EntityDao {
 
     /**
      * 为query设置JPA style参数
-     * 
+     *
      * @param query
      * @param argument
      */
@@ -757,7 +757,7 @@ public class HibernateEntityDao implements EntityDao {
 
     /**
      * 为query设置参数
-     * 
+     *
      * @param query
      * @param parameterMap
      * @return query
@@ -786,7 +786,7 @@ public class HibernateEntityDao implements EntityDao {
 
     /**
      * 针对查询条件绑定查询的值
-     * 
+     *
      * @param query
      * @param conditions
      */

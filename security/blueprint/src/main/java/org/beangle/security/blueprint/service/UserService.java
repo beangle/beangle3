@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.security.blueprint.service;
 
@@ -26,14 +26,14 @@ import org.beangle.security.blueprint.model.UserBean;
 
 /**
  * User service
- * 
+ *
  * @author chaostone
  * @since 2.0
  */
 public interface UserService {
   /**
    * 根据用户名和密码查找用户
-   * 
+   *
    * @param name
    * @param password
    */
@@ -41,35 +41,35 @@ public interface UserService {
 
   /**
    * 根据登陆名查找用户
-   * 
+   *
    * @param name
    */
   User get(String name);
 
   /**
    * 查询指定id的用户，不存在时返回null
-   * 
+   *
    * @param id
    */
   User get(Long id);
 
   /**
    * 保存新用户，用户存在时，抛出异常
-   * 
+   *
    * @param user
    */
   void saveOrUpdate(User user);
 
   /**
    * 返回userIds指定的用户
-   * 
+   *
    * @param userIds
    */
   List<User> getUsers(Long userIds[]);
 
   /**
    * 查找关联组关系
-   * 
+   *
    * @param user
    * @param ship
    */
@@ -78,7 +78,7 @@ public interface UserService {
   /**
    * 设置用户状态
    * 不能禁用或激活自己和非管理范围内的用户
-   * 
+   *
    * @param manager
    * @param userIds
    * @param enabled
@@ -87,7 +87,7 @@ public interface UserService {
 
   /**
    * 创建帐户
-   * 
+   *
    * @param creator
    * @param newUser
    */
@@ -95,7 +95,7 @@ public interface UserService {
 
   /**
    * 删除creator与managed的管理关系，如该用户为creator所创建，则删除user
-   * 
+   *
    * @param creator
    * @param user
    */
@@ -103,7 +103,7 @@ public interface UserService {
 
   /**
    * 是否属于管理关系
-   * 
+   *
    * @param manager
    * @param user
    */
@@ -111,14 +111,14 @@ public interface UserService {
 
   /**
    * 是否是超级管理员
-   * 
+   *
    * @param user
    */
   boolean isRoot(User user);
 
   /**
    * 是否是超级管理员
-   * 
+   *
    * @param userId
    */
   boolean isRoot(String userCode);

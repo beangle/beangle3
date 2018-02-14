@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.dao.query.builder;
 
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 条件提取辅助类
- * 
+ *
  * @author chaostone
  */
 public final class Conditions {
@@ -100,7 +100,7 @@ public final class Conditions {
    * 提取对象中的条件<br>
    * 提取的属性仅限"平面"属性(允许包括component)<br>
    * 过滤掉属性:null,或者空Collection
-   * 
+   *
    * @param alias
    * @param entity
    */
@@ -127,7 +127,7 @@ public final class Conditions {
 
   /**
    * 获得条件的绑定参数映射
-   * 
+   *
    * @param conditions
    */
   public static Map<String, Object> getParamMap(final Collection<Condition> conditions) {
@@ -140,7 +140,7 @@ public final class Conditions {
 
   /**
    * 获得条件的绑定参数映射
-   * 
+   *
    * @param condition
    */
   public static Map<String, Object> getParamMap(final Condition condition) {
@@ -163,7 +163,7 @@ public final class Conditions {
 
   /**
    * 为extractConditions使用的私有方法<br>
-   * 
+   *
    * @param conditions
    * @param name
    * @param value

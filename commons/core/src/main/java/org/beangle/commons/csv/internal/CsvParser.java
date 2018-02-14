@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.csv.internal;
 
@@ -27,7 +27,7 @@ import org.beangle.commons.csv.CsvFormat;
 /**
  * A very simple CSV parser released under a commercial-friendly license. This
  * just implements splitting a single line into fields.
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -48,7 +48,7 @@ public class CsvParser {
    * <p>
    * Constructor for CsvParser.
    * </p>
-   * 
+   *
    * @param format a {@link org.beangle.commons.csv.CsvFormat} object.
    */
   public CsvParser(CsvFormat format) {
@@ -59,7 +59,7 @@ public class CsvParser {
    * <p>
    * isPending.
    * </p>
-   * 
+   *
    * @return true if something was left over from last call(s)
    */
   public boolean isPending() {
@@ -70,7 +70,7 @@ public class CsvParser {
    * <p>
    * parseLineMulti.
    * </p>
-   * 
+   *
    * @param nextLine a {@link java.lang.String} object.
    * @return an array of {@link java.lang.String} objects.
    */
@@ -82,7 +82,7 @@ public class CsvParser {
    * <p>
    * parseLine.
    * </p>
-   * 
+   *
    * @param nextLine a {@link java.lang.String} object.
    * @return an array of {@link java.lang.String} objects.
    */
@@ -92,7 +92,7 @@ public class CsvParser {
 
   /**
    * Parses an incoming String and returns an array of elements.
-   * 
+   *
    * @param nextLine
    *          the string to parse
    * @param multi
@@ -193,7 +193,7 @@ public class CsvParser {
 
   /**
    * precondition: the current character is a quote or an escape
-   * 
+   *
    * @param nextLine the current line
    * @param inQuotes true if the current context is quoted
    * @param i current index in line
@@ -209,7 +209,7 @@ public class CsvParser {
 
   /**
    * precondition: the current character is an escape
-   * 
+   *
    * @param nextLine the current line
    * @param inQuotes true if the current context is quoted
    * @param i current index in line
@@ -225,7 +225,7 @@ public class CsvParser {
 
   /**
    * precondition: sb.length() > 0
-   * 
+   *
    * @param sb A sequence of characters to examine
    * @return true if every character in the sequence is whitespace
    */

@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.beangle.orm</groupId>
     <artifactId>beangle-orm-parent</artifactId>
-    <version>3.5.3</version>
+    <version>3.6.0.M1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.beangle.orm</groupId>
@@ -100,7 +100,7 @@
     <dependency>
       <groupId>org.freemarker</groupId>
       <artifactId>freemarker</artifactId>
-      <version>2.3.20</version>
+      <version>${freemarker.version}</version>
       <optional>true</optional>
     </dependency>
   </dependencies>

@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.dao.query.limit;
 
@@ -30,7 +30,7 @@ import org.beangle.commons.dao.query.LimitQuery;
  * 基于查询的分页。<br>
  * 当使用或导出大批量数据时，使用者仍以List的方式进行迭代。<br>
  * 该实现则是内部采用分页方式。
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -58,7 +58,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * <p>
    * Constructor for AbstractQueryPage.
    * </p>
-   * 
+   *
    * @param query a {@link org.beangle.commons.dao.query.LimitQuery} object.
    */
   public AbstractQueryPage(LimitQuery<T> query) {
@@ -74,7 +74,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
 
   /**
    * 按照单个分页数据设置.
-   * 
+   *
    * @param page a {@link org.beangle.commons.collection.page.SinglePage} object.
    */
   protected void setPageData(SinglePage<T> page) {
@@ -87,7 +87,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * <p>
    * next.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
   public Page<T> next() {
@@ -98,7 +98,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * <p>
    * previous.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
   public Page<T> previous() {
@@ -109,7 +109,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * <p>
    * hasNext.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean hasNext() {
@@ -120,7 +120,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * <p>
    * hasPrevious.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean hasPrevious() {
@@ -131,7 +131,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * <p>
    * getFirstPageNo.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getFirstPageNo() {
@@ -142,7 +142,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * <p>
    * Getter for the field <code>maxPageNo</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getMaxPageNo() {
@@ -153,7 +153,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * <p>
    * getNextPageNo.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getNextPageNo() {
@@ -164,7 +164,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * <p>
    * Getter for the field <code>pageNo</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getPageNo() {
@@ -175,7 +175,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * <p>
    * getPageSize.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getPageSize() {
@@ -186,7 +186,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * <p>
    * getPreviousPageNo.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getPreviousPageNo() {
@@ -197,7 +197,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * <p>
    * getTotal.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getTotal() {
@@ -208,7 +208,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * <p>
    * iterator.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Iterator} object.
    */
   public Iterator<T> iterator() {

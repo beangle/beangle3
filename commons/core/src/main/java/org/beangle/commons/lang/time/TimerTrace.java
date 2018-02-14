@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.lang.time;
 
@@ -66,7 +66,7 @@ public final class TimerTrace {
   /**
    * Create and start a performance profiling with the <code>name</code> given. Deal with
    * profile hierarchy automatically, so caller don't have to be concern about it.
-   * 
+   *
    * @param name profile name
    */
   public static void start(String name) {
@@ -109,7 +109,7 @@ public final class TimerTrace {
 
   /**
    * Do a log (at INFO level) of the time taken for this particular profiling.
-   * 
+   *
    * @param currentTimer profiling timer bean
    */
   private static void printTimes(TimerNode currentTimer) {
@@ -120,7 +120,7 @@ public final class TimerTrace {
   /**
    * Get the min time for this profiling, it searches for a System property
    * 'beangle.profile.mintime' and default to 0.
-   * 
+   *
    * @return long
    */
   public static int getMinTime() {
@@ -129,7 +129,7 @@ public final class TimerTrace {
 
   /**
    * Change mintime
-   * 
+   *
    * @param mintime
    */
   public static void setMinTime(int mintime) {
@@ -140,7 +140,7 @@ public final class TimerTrace {
   /**
    * Determine if profiling is being activated, by searching for a system property
    * 'beangle.profile.activate', default to false (profiling is off).
-   * 
+   *
    * @return <tt>true</tt>, if active, <tt>false</tt> otherwise.
    */
   public static boolean isActive() {
@@ -149,7 +149,7 @@ public final class TimerTrace {
 
   /**
    * Turn profiling on or off.
-   * 
+   *
    * @param active
    */
   public static void setActive(boolean active) {

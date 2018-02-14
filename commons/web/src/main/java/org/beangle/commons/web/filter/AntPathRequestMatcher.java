@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.web.filter;
 
@@ -29,7 +29,7 @@ import org.beangle.commons.text.regex.AntPathPattern;
  * Matcher which compares a pre-defined ant-style pattern against the URL (
  * {@code servletPath + pathInfo}) of an {@code HttpServletRequest}. The query
  * string of the URL is ignored and matching is case-insensitive.
- * 
+ *
  * @see AntPathMatcher
  */
 public final class AntPathRequestMatcher implements RequestMatcher {
@@ -41,7 +41,7 @@ public final class AntPathRequestMatcher implements RequestMatcher {
   /**
    * Creates a matcher with the specific pattern which will match all HTTP
    * methods.
-   * 
+   *
    * @param pattern
    *          the ant pattern to use for matching
    */
@@ -52,7 +52,7 @@ public final class AntPathRequestMatcher implements RequestMatcher {
   /**
    * Creates a matcher with the supplied pattern which will match all HTTP
    * methods.
-   * 
+   *
    * @param pattern
    *          the ant pattern to use for matching
    * @param httpMethod
@@ -68,7 +68,7 @@ public final class AntPathRequestMatcher implements RequestMatcher {
   /**
    * Returns true if the configured pattern (and HTTP-Method) match those of
    * the supplied request.
-   * 
+   *
    * @param request
    *          the request to match against. The ant pattern will be matched
    *          against the {@code servletPath} + {@code pathInfo} of the

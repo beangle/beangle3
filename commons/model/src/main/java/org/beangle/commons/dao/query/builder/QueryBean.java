@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.dao.query.builder;
 
@@ -30,7 +30,7 @@ import org.beangle.commons.lang.Strings;
  * <p>
  * QueryBean class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -72,7 +72,7 @@ public class QueryBean<T> implements LimitQuery<T> {
    * <p>
    * Getter for the field <code>countStatement</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getCountStatement() {
@@ -83,7 +83,7 @@ public class QueryBean<T> implements LimitQuery<T> {
    * <p>
    * Getter for the field <code>limit</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.collection.page.PageLimit} object.
    */
   public PageLimit getLimit() {
@@ -94,7 +94,7 @@ public class QueryBean<T> implements LimitQuery<T> {
    * <p>
    * Getter for the field <code>params</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Map} object.
    */
   public Map<String, Object> getParams() {
@@ -105,7 +105,7 @@ public class QueryBean<T> implements LimitQuery<T> {
    * <p>
    * Setter for the field <code>statement</code>.
    * </p>
-   * 
+   *
    * @param statement a {@link java.lang.String} object.
    */
   public void setStatement(String statement) {
@@ -116,7 +116,7 @@ public class QueryBean<T> implements LimitQuery<T> {
    * <p>
    * Setter for the field <code>countStatement</code>.
    * </p>
-   * 
+   *
    * @param countStatement a {@link java.lang.String} object.
    */
   public void setCountStatement(String countStatement) {
@@ -127,7 +127,7 @@ public class QueryBean<T> implements LimitQuery<T> {
    * <p>
    * Setter for the field <code>limit</code>.
    * </p>
-   * 
+   *
    * @param limit a {@link org.beangle.commons.collection.page.PageLimit} object.
    */
   public void setLimit(PageLimit limit) {
@@ -144,7 +144,7 @@ public class QueryBean<T> implements LimitQuery<T> {
    * <p>
    * Setter for the field <code>cacheable</code>.
    * </p>
-   * 
+   *
    * @param cacheable a boolean.
    */
   public void setCacheable(boolean cacheable) {
@@ -155,7 +155,7 @@ public class QueryBean<T> implements LimitQuery<T> {
    * <p>
    * Setter for the field <code>params</code>.
    * </p>
-   * 
+   *
    * @param params a {@link java.util.Map} object.
    */
   public void setParams(Map<String, Object> params) {
@@ -166,7 +166,7 @@ public class QueryBean<T> implements LimitQuery<T> {
    * <p>
    * isCacheable.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isCacheable() {
@@ -177,7 +177,7 @@ public class QueryBean<T> implements LimitQuery<T> {
    * <p>
    * Getter for the field <code>lang</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.dao.query.Lang} object.
    */
   public Lang getLang() {
@@ -188,7 +188,7 @@ public class QueryBean<T> implements LimitQuery<T> {
    * <p>
    * Setter for the field <code>lang</code>.
    * </p>
-   * 
+   *
    * @param lang a {@link org.beangle.commons.dao.query.Lang} object.
    */
   public void setLang(Lang lang) {

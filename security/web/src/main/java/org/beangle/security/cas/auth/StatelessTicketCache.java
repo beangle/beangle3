@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.security.cas.auth;
 
@@ -48,7 +48,7 @@ package org.beangle.security.cas.auth;
  * Implementations should provide a reasonable timeout on stored entries, such that the stateless
  * caller are not required to unnecessarily acquire fresh CAS service tickets or proxy tickets.
  * </p>
- * 
+ *
  * @author chaostone
  */
 public interface StatelessTicketCache {
@@ -59,7 +59,7 @@ public interface StatelessTicketCache {
    * <P>
    * If not found, returns a <code>null</code><code>CasAuthentication</code>.
    * </p>
-   * 
+   *
    * @return the fully populated authentication token
    */
   CasAuthentication get(String serviceTicket);
@@ -70,7 +70,7 @@ public interface StatelessTicketCache {
    * The {@link CasAuthentication#getCredentials()} method is used to retrieve the service ticket
    * number.
    * </p>
-   * 
+   *
    * @param token
    *          to be added to the cache
    */
@@ -82,7 +82,7 @@ public interface StatelessTicketCache {
    * Implementations should use {@link CasAuthentication#getCredentials()} to obtain the ticket and
    * then delegate to to the {@link #remove(String)} method.
    * </p>
-   * 
+   *
    * @param token
    *          to be removed
    */
@@ -95,7 +95,7 @@ public interface StatelessTicketCache {
    * This is in case applications wish to provide a session termination capability for their
    * stateless clients.
    * </p>
-   * 
+   *
    * @param serviceTicket
    *          to be removed
    */

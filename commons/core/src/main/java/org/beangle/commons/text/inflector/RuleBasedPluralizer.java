@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.text.inflector;
 
@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  * <p>
  * RuleBasedPluralizer class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -69,7 +69,7 @@ public class RuleBasedPluralizer implements Pluralizer {
    * Constructs a pluralizer that uses a list of rules then an identity {@link Pluralizer} if none
    * of the rules match. This is useful to build your own {@link Pluralizer} from scratch.
    * </p>
-   * 
+   *
    * @param rules
    *          the rules to apply in order
    * @param locale
@@ -84,7 +84,7 @@ public class RuleBasedPluralizer implements Pluralizer {
    * Constructs a pluralizer that uses first a list of rules then a fallback {@link Pluralizer}.
    * This is useful to override the behaviour of an existing {@link Pluralizer}.
    * </p>
-   * 
+   *
    * @param rules
    *          the rules to apply in order
    * @param locale
@@ -102,7 +102,7 @@ public class RuleBasedPluralizer implements Pluralizer {
    * <p>
    * Getter for the field <code>fallbackPluralizer</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.text.inflector.Pluralizer} object.
    */
   public Pluralizer getFallbackPluralizer() {
@@ -113,7 +113,7 @@ public class RuleBasedPluralizer implements Pluralizer {
    * <p>
    * Setter for the field <code>fallbackPluralizer</code>.
    * </p>
-   * 
+   *
    * @param fallbackPluralizer a {@link org.beangle.commons.text.inflector.Pluralizer} object.
    */
   public void setFallbackPluralizer(Pluralizer fallbackPluralizer) {
@@ -124,7 +124,7 @@ public class RuleBasedPluralizer implements Pluralizer {
    * <p>
    * Getter for the field <code>locale</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Locale} object.
    */
   public Locale getLocale() {
@@ -135,7 +135,7 @@ public class RuleBasedPluralizer implements Pluralizer {
    * <p>
    * Setter for the field <code>locale</code>.
    * </p>
-   * 
+   *
    * @param locale a {@link java.util.Locale} object.
    */
   public void setLocale(Locale locale) {
@@ -146,7 +146,7 @@ public class RuleBasedPluralizer implements Pluralizer {
    * <p>
    * Getter for the field <code>rules</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   public List<Rule> getRules() {
@@ -157,7 +157,7 @@ public class RuleBasedPluralizer implements Pluralizer {
    * <p>
    * Setter for the field <code>rules</code>.
    * </p>
-   * 
+   *
    * @param rules a {@link java.util.List} object.
    */
   public void setRules(List<Rule> rules) {
@@ -209,7 +209,7 @@ public class RuleBasedPluralizer implements Pluralizer {
    * Goes through the rules in turn until a match is found at which point the rule is applied and
    * the result returned. If no rule matches, returns <code>null</code>.
    * </p>
-   * 
+   *
    * @param word
    *          a singular noun
    * @return the plural form of the noun, or <code>null</code> if no rule
@@ -231,7 +231,7 @@ public class RuleBasedPluralizer implements Pluralizer {
    * If <code>trimmedWord</code> is all uppercase, then <code>pluralizedWord</code> is uppercased.
    * If <code>trimmedWord</code> is titlecase, then <code>pluralizedWord</code> is titlecased.
    * </p>
-   * 
+   *
    * @param trimmedWord
    *          the input word, with leading and trailing whitespace removed
    * @param pluralizedWord

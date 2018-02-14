@@ -1,24 +1,28 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.web.util;
 
+import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +39,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Request Utility
- * 
+ *
  * @author chaostone
  * @since 2.0
  */
@@ -52,7 +56,7 @@ public final class RequestUtils {
    * <li>First,it lookup request header("x-forwarded-for"->"Proxy-Client-IP"->"WL-Proxy-Client-IP")
    * <li>Second,invoke request.getRemoteAddr()
    * </ul>
-   * 
+   *
    * @param request
    */
   public static String getIpAddr(HttpServletRequest request) {
@@ -123,7 +127,7 @@ public final class RequestUtils {
 
   /**
    * Return {@code Useragent} of request.
-   * 
+   *
    * @param request
    */
   public static Useragent getUserAgent(HttpServletRequest request) {
@@ -133,5 +137,80 @@ public final class RequestUtils {
       logger.info("Cannot parser user agent:{}", request.getHeader("USER-AGENT"));
     }
     return agent;
+  }
+
+  public static Map getParams(HttpServletRequest request, String prefix) {
+    return getParamsMap(request, prefix, null, true);
+  }
+
+  public static Map getParams(HttpServletRequest request, String prefix, String exclusiveAttrNames) {
+    return getParamsMap(request, prefix, exclusiveAttrNames, true);
+  }
+
+  public static Map getParamsMap(HttpServletRequest request, String prefix, String exclusiveAttrNames) {
+    return getParamsMap(request, prefix, exclusiveAttrNames, false);
+  }
+
+  public static Map getParamsMap(HttpServletRequest request, String prefix, String exclusiveAttrNames,
+      boolean stripPrefix) {
+    Map params = new HashMap();
+    if (Strings.isNotEmpty(exclusiveAttrNames)) exclusiveAttrNames = "," + exclusiveAttrNames + ",";
+    else exclusiveAttrNames = null;
+    Enumeration names = request.getParameterNames();
+    do {
+      if (!names.hasMoreElements()) break;
+      String attr = (String) names.nextElement();
+      if (attr.indexOf(prefix + ".") == 0
+          && (null == exclusiveAttrNames || !Strings.contains(exclusiveAttrNames, "," + attr + ",")))
+        params.put(stripPrefix ? ((Object) (attr.substring(prefix.length() + 1))) : ((Object) (attr)),
+            request.getParameter(attr));
+    } while (true);
+    String queryString = request.getQueryString();
+    if (Strings.isNotEmpty(queryString)) {
+      String paramPairs[] = Strings.split(queryString, "&");
+      for (int i = 0; i < paramPairs.length; i++) {
+        String paramPair = paramPairs[i];
+        if (paramPair.indexOf(prefix + ".") != 0) continue;
+        int equalIndex = paramPair.indexOf("=");
+        if (-1 == equalIndex) continue;
+        String param = paramPair.substring(0, equalIndex);
+        if (Strings.contains(exclusiveAttrNames, "," + param + ",")) continue;
+        try {
+          params.put(stripPrefix ? ((Object) (param.substring(prefix.length() + 1))) : ((Object) (param)),
+              URLDecoder.decode(paramPair.substring(equalIndex + 1), "UTF-8"));
+        } catch (Exception e) {
+        }
+      }
+
+    }
+    return params;
+  }
+
+  public static Float getFloat(HttpServletRequest request, String name) {
+    String v = request.getParameter(name);
+    return (v == null) ? null : Float.valueOf(v);
+  }
+
+  public static Integer getInteger(HttpServletRequest request, String name) {
+    String v = request.getParameter(name);
+    return (v == null) ? null : Integer.valueOf(v);
+  }
+
+  public static Long getLong(HttpServletRequest request, String name) {
+    String v = request.getParameter(name);
+    return (v == null) ? null : Long.valueOf(v);
+  }
+
+  public static Boolean getBoolean(HttpServletRequest request, String name) {
+    String v = request.getParameter(name);
+    if (v == null) {
+      return null;
+    } else {
+      if (v.equals("1") || v.equals("true") || v.equals("yes") || v.equals("on")) {
+        return Boolean.TRUE;
+      } else {
+        return Boolean.FALSE;
+      }
+    }
   }
 }

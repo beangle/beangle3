@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.config;
 
@@ -22,7 +22,7 @@ package org.beangle.commons.config;
  * <p>
  * Version class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  * @since 3.2.0
@@ -43,7 +43,7 @@ public class Version {
    * <p>
    * Getter for the field <code>name</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getName() {
@@ -59,7 +59,7 @@ public class Version {
    * <p>
    * Getter for the field <code>vendor</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getVendor() {
@@ -75,7 +75,7 @@ public class Version {
    * <p>
    * Getter for the field <code>version</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getVersion() {
@@ -91,7 +91,7 @@ public class Version {
    * <p>
    * Getter for the field <code>majorVersion</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getMajorVersion() {
@@ -107,7 +107,7 @@ public class Version {
    * <p>
    * Getter for the field <code>minorVersion</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getMinorVersion() {

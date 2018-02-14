@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.collection;
 
@@ -80,12 +80,12 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
    * newly created map has a capacity set to the specified map's size.
    * The copy has the same order as the original, regardless of the original
    * map's implementation:
-   * 
+   *
    * <pre>
    *     TreeMap dictionary = ...;
    *     FastMap dictionaryLookup = new FastMap(dictionary);
    * </pre>
-   * 
+   *
    * @param map the map whose mappings are to be placed in this map.
    */
   public FastHashMap(Map<K, V> map) {
@@ -99,7 +99,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
    * capacity is exceeded, operations on this map do not allocate entries.
    * For optimum performance, the capacity should be of the same order
    * of magnitude or larger than the expected map's size.
-   * 
+   *
    * @param capacity the number of buckets in the hash table; it also
    *          defines the number of pre-allocated entries.
    */
@@ -109,7 +109,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
   /**
    * Returns the number of key-value mappings in this {@link FastMap}.
-   * 
+   *
    * @return this map's size.
    */
   public int size() {
@@ -120,7 +120,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
    * Returns the capacity of this {@link FastMap}. The capacity defines
    * the number of buckets in the hash table, as well as the maximum number
    * of entries the map may contain without allocating memory.
-   * 
+   *
    * @return this map's capacity.
    */
   public int capacity() {
@@ -129,7 +129,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
   /**
    * Indicates if this {@link FastMap} contains no key-value mappings.
-   * 
+   *
    * @return <code>true</code> if this map contains no key-value mappings; <code>false</code>
    *         otherwise.
    */
@@ -140,7 +140,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
   /**
    * Indicates if this {@link FastMap} contains a mapping for the specified
    * key.
-   * 
+   *
    * @param key the key whose presence in this map is to be tested.
    * @return <code>true</code> if this map contains a mapping for the
    *         specified key; <code>false</code> otherwise.
@@ -158,7 +158,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
   /**
    * Indicates if this {@link FastMap} maps one or more keys to the
    * specified value.
-   * 
+   *
    * @param value the value whose presence in this map is to be tested.
    * @return <code>true</code> if this map maps one or more keys to the
    *         specified value.
@@ -175,7 +175,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
   /**
    * Returns the value to which this {@link FastMap} maps the specified key.
-   * 
+   *
    * @param key the key whose associated value is to be returned.
    * @return the value to which this map maps the specified key,
    *         or <code>null</code> if there is no mapping for the key.
@@ -192,7 +192,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
   /**
    * Returns the entry with the specified key.
-   * 
+   *
    * @param key the key whose associated entry is to be returned.
    * @return the entry for the specified key or <code>null</code> if none.
    */
@@ -209,7 +209,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
    * Associates the specified value with the specified key in this {@link FastMap}. If the
    * {@link FastMap} previously contained a mapping
    * for this key, the old value is replaced.
-   * 
+   *
    * @param key the key with which the specified value is to be associated.
    * @param value the value to be associated with the specified key.
    * @return the previous value associated with specified key,
@@ -235,7 +235,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
   /**
    * Copies all of the mappings from the specified map to this {@link FastMap}.
-   * 
+   *
    * @param map the mappings to be stored in this map.
    * @throws NullPointerException the specified map is <code>null</code>, or
    *           the specified map contains <code>null</code> keys.
@@ -248,7 +248,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
   /**
    * Removes the mapping for this key from this {@link FastMap} if present.
-   * 
+   *
    * @param key the key whose mapping is to be removed from the map.
    * @return previous value associated with specified key,
    *         or <code>null</code> if there was no mapping for key.
@@ -303,7 +303,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
    * If the capacity is decreased, entries from the pool are deallocated
    * (and are eventually garbage collected). The capacity also determined
    * the number of buckets for the hash table.
-   * 
+   *
    * @param newCapacity the new capacity of this map.
    */
   @SuppressWarnings("unchecked")
@@ -356,7 +356,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
   /**
    * Returns a shallow copy of this {@link FastMap}. The keys and
    * the values themselves are not cloned.
-   * 
+   *
    * @return a shallow copy of this map.
    */
   @SuppressWarnings("unchecked")
@@ -377,7 +377,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
    * Returns <code>true</code> if the given object is also a map and the two
    * maps represent the same mappings (regardless of collection iteration
    * order).
-   * 
+   *
    * @param obj the object to be compared for equality with this map.
    * @return <code>true</code> if the specified object is equal to this map; <code>false</code>
    *         otherwise.
@@ -405,7 +405,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
   /**
    * Returns the hash code value for this {@link FastMap}.
-   * 
+   *
    * @return the hash code value for this map.
    */
   public int hashCode() {
@@ -420,7 +420,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
   /**
    * Returns a <code>String</code> representation of this {@link FastMap}.
-   * 
+   *
    * @return <code>this.entrySet().toString();</code>
    */
   public String toString() {
@@ -436,7 +436,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
    * <code>removeAll</code>, <code>retainAll</code>,
    * and <code>clear</code> operations. It does not support the <code>add</code> or
    * <code>addAll</code> operations.
-   * 
+   *
    * @return a collection view of the values contained in this map.
    */
   public Collection<V> values() {
@@ -489,7 +489,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
    * <code>removeAll</code>, <code>retainAll</code>,
    * and <code>clear</code> operations. It does not support the <code>add</code> or
    * <code>addAll</code> operations.
-   * 
+   *
    * @return a collection view of the mappings contained in this map.
    */
   public Set<Map.Entry<K, V>> entrySet() {
@@ -557,7 +557,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
    * <code>Collection.remove</code>, <code>removeAll</code>, <code>retainAll</code>,
    * and <code>clear</code> operations. It does not support the <code>add</code> or
    * <code>addAll</code> operations.
-   * 
+   *
    * @return a set view of the keys contained in this map.
    */
   public Set<K> keySet() {
@@ -611,7 +611,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
    * when the map's size reaches the current map's capacity.
    * Sub-class may override this method to implement custom resizing
    * policies or to disable automatic resizing. For example:
-   * 
+   *
    * <pre>
    * Map fixedCapacityMap = new FastMap(256) {
    *   protected sizeChanged() {
@@ -619,7 +619,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
    *   }
    * };
    * </pre>
-   * 
+   *
    * @see #setCapacity
    */
   protected void sizeChanged() {
@@ -630,7 +630,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
   /**
    * Returns the the key's hash code.
-   * 
+   *
    * @param key the key to calculate the hashcode for.
    * @return the hash code for the specified key.
    */
@@ -641,7 +641,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
   /**
    * Adds a new entry for the specified key and value.
-   * 
+   *
    * @param key the entry's key.
    * @param value the entry's value.
    */
@@ -684,7 +684,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
   /**
    * Removes the specified entry from the map.
-   * 
+   *
    * @param entry the entry to be removed.
    */
   private void removeEntry(EntryImpl<K, V> entry) {
@@ -735,7 +735,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
    * Initializes this instance for the specified capacity.
    * Once initialized, operations on this map should not create new objects
    * (unless the map's size exceeds the specified capacity).
-   * 
+   *
    * @param capacity the initial capacity.
    */
   @SuppressWarnings("unchecked")
@@ -768,7 +768,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
   /**
    * Requires special handling during de-serialization process.
-   * 
+   *
    * @param stream the object input stream.
    * @throws IOException if an I/O error occurs.
    * @throws ClassNotFoundException if the class for the object de-serialized
@@ -786,7 +786,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
   /**
    * Requires special handling during serialization process.
-   * 
+   *
    * @param stream the object output stream.
    * @throws IOException if an I/O error occurs.
    */
@@ -847,7 +847,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
     /**
      * Returns the key for this entry.
-     * 
+     *
      * @return the entry's key.
      */
     public K getKey() {
@@ -856,7 +856,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
     /**
      * Returns the value for this entry.
-     * 
+     *
      * @return the entry's value.
      */
     public V getValue() {
@@ -865,7 +865,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
     /**
      * Sets the value for this entry.
-     * 
+     *
      * @param value the new value.
      * @return the previous value.
      */
@@ -878,7 +878,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
     /**
      * Indicates if this entry is considered equals to the specified
      * entry.
-     * 
+     *
      * @param that the object to test for equality.
      * @return <code>true<code> if both entry are considered equal;
      *         <code>false<code> otherwise.
@@ -896,7 +896,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
     /**
      * Returns the hash code for this entry.
-     * 
+     *
      * @return this entry's hash code.
      */
     public int hashCode() {
@@ -905,7 +905,7 @@ public final class FastHashMap<K, V> implements Map<K, V>, Cloneable, Serializab
 
     /**
      * Returns the text representation of this entry.
-     * 
+     *
      * @return this entry's textual representation.
      */
     public String toString() {

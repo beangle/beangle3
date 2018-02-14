@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.security.web.access.intercept;
 
@@ -45,7 +45,7 @@ public class FilterSecurityInterceptor extends AbstractSecurityInterceptor imple
 
   /**
    * Not used (we rely on IoC container lifecycle services instead)
-   * 
+   *
    * @param arg0 ignored
    * @throws ServletException never thrown
    */
@@ -61,7 +61,7 @@ public class FilterSecurityInterceptor extends AbstractSecurityInterceptor imple
   /**
    * Method that is actually called by the filter chain. Simply delegates to
    * the {@link #invoke(FilterInvocation)} method.
-   * 
+   *
    * @param request the servlet request
    * @param response the servlet response
    * @param chain the filter chain
@@ -106,7 +106,7 @@ public class FilterSecurityInterceptor extends AbstractSecurityInterceptor imple
    * once-per-request. Sometimes users may wish it to execute more than once
    * per request, such as when JSP forwards are being used and filter security
    * is desired on each included fragment of the HTTP request.
-   * 
+   *
    * @return <code>true</code> (the default) if once-per-request is honoured,
    *         otherwise <code>false</code> if <code>FilterSecurityInterceptor</code> will enforce
    *         authorizations for each and every fragment of the HTTP request.

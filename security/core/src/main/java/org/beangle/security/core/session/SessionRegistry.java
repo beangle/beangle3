@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.security.core.session;
 
@@ -24,14 +24,14 @@ import org.beangle.security.core.Authentication;
 
 /**
  * 记录session信息的注册表
- * 
+ *
  * @author chaostone
  */
 public interface SessionRegistry {
 
   /**
    * 注册
-   * 
+   *
    * @param authentication
    * @param sessionid
    */
@@ -39,7 +39,7 @@ public interface SessionRegistry {
 
   /**
    * 注销指定sessionid
-   * 
+   *
    * @param sessionid
    */
   Sessioninfo remove(String sessionid);
@@ -47,14 +47,14 @@ public interface SessionRegistry {
   /**
    * 过期指定会话
    * Return true is expire success
-   * 
+   *
    * @param sessionid
    */
   boolean expire(String sessionid);
 
   /**
    * 查询某帐号的在线信息
-   * 
+   *
    * @param principal
    * @param includeExpiredSessions
    */
@@ -62,21 +62,21 @@ public interface SessionRegistry {
 
   /**
    * 查询对应sessionid的信息
-   * 
+   *
    * @param sessionid
    */
   Sessioninfo getSessioninfo(String sessionid);
 
   /**
    * 查询会话状态
-   * 
+   *
    * @param sessionid
    */
   SessionStatus getSessionStatus(String sessionid);
 
   /**
    * 查询帐号是否还有没有过期的在线记录
-   * 
+   *
    * @param principal
    */
   boolean isRegisted(String principal);
@@ -88,7 +88,7 @@ public interface SessionRegistry {
 
   /**
    * 更新对应sessionId的最后访问时间
-   * 
+   *
    * @param sessionid
    */
   void access(String sessionid, long accessAt);

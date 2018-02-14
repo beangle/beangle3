@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.bean;
 
@@ -38,7 +38,7 @@ package org.beangle.commons.bean;
  * <li><strong>Nested (<code>name1.name2[index].name3(key)</code>)</strong> - Combining mapped,
  * nested, and indexed references is also supported.</li>
  * </ul>
- * 
+ *
  * @author chaostone
  * @since 3.2.0
  */
@@ -52,7 +52,7 @@ public class PropertyNameResolver {
 
   /**
    * Return the index value from the property expression or -1.
-   * 
+   *
    * @param expression The property expression
    * @return The index value or -1 if the property is not indexed
    * @throws IllegalArgumentException If the indexed property is illegally
@@ -83,7 +83,7 @@ public class PropertyNameResolver {
 
   /**
    * Return the map key from the property expression or <code>null</code>.
-   * 
+   *
    * @param expression The property expression
    * @return The index value
    * @throws IllegalArgumentException If the mapped property is illegally formed.
@@ -105,7 +105,7 @@ public class PropertyNameResolver {
 
   /**
    * Return the property name from the property expression.
-   * 
+   *
    * @param expression The property expression
    * @return The property name
    */
@@ -122,7 +122,7 @@ public class PropertyNameResolver {
 
   /**
    * Indicates whether or not the expression contains nested property expressions or not.
-   * 
+   *
    * @param expression The property expression
    * @return The next property expression
    */
@@ -134,7 +134,7 @@ public class PropertyNameResolver {
 
   /**
    * Indicate whether the expression is for an indexed property or not.
-   * 
+   *
    * @param expression The property expression
    * @return <code>true</code> if the expresion is indexed,
    *         otherwise <code>false</code>
@@ -152,7 +152,7 @@ public class PropertyNameResolver {
 
   /**
    * Indicate whether the expression is for a mapped property or not.
-   * 
+   *
    * @param expression The property expression
    * @return <code>true</code> if the expresion is mapped,
    *         otherwise <code>false</code>
@@ -170,7 +170,7 @@ public class PropertyNameResolver {
 
   /**
    * Extract the next property expression from the current expression.
-   * 
+   *
    * @param expression The property expression
    * @return The next property expression
    */
@@ -199,7 +199,7 @@ public class PropertyNameResolver {
 
   /**
    * Remove the last property expresson from the current expression.
-   * 
+   *
    * @param expression The property expression
    * @return The new expression value, with first property
    *         expression removed - null if there are no more expressions

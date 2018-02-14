@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.security.web.auth;
 
@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * request for a resource used the <code>HTTP</code> protocol. When this happens, after a successful
  * login (via HTTPS), the original resource will still be accessed as HTTP, via the original request
  * URL.
- * 
+ *
  * @author chaostone
  */
 public class LoginUrlEntryPoint implements UrlEntryPoint, Initializing {
@@ -60,7 +60,7 @@ public class LoginUrlEntryPoint implements UrlEntryPoint, Initializing {
   /**
    * Allows subclasses to modify the login form URL that should be applicable
    * for a given request.
-   * 
+   *
    * @param request the request
    * @param response the response
    * @param exception the exception
@@ -114,7 +114,7 @@ public class LoginUrlEntryPoint implements UrlEntryPoint, Initializing {
   /**
    * Tells if we are to do a server side include of the <code>loginFormUrl</code> instead of a 302
    * redirect.
-   * 
+   *
    * @param serverSideRedirect
    */
   public void setServerSideRedirect(boolean serverSideRedirect) {

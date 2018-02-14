@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.dao.query.builder;
 
@@ -33,7 +33,7 @@ import org.beangle.commons.lang.Strings;
  * <p>
  * Abstract AbstractQueryBuilder class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -96,7 +96,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * <p>
    * isCacheable.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isCacheable() {
@@ -107,7 +107,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * <p>
    * Getter for the field <code>limit</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.collection.page.PageLimit} object.
    */
   public PageLimit getLimit() {
@@ -118,7 +118,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * <p>
    * build.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.dao.query.Query} object.
    */
   public Query<T> build() {
@@ -138,7 +138,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * <p>
    * getLang.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.dao.query.Lang} object.
    */
   abstract protected Lang getLang();
@@ -155,7 +155,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * <p>
    * genCountStatement.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   abstract protected String genCountStatement();
@@ -164,7 +164,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
    * <p>
    * genQueryStatement.
    * </p>
-   * 
+   *
    * @param hasOrder a boolean.
    * @return a {@link java.lang.String} object.
    */
@@ -188,6 +188,10 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
 
   public List<Condition> getConditions() {
     return conditions;
+  }
+
+  public String getFrom() {
+    return from;
   }
 
 }

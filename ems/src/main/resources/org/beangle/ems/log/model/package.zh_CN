@@ -1,0 +1,14 @@
+
+BusinessLogDetailBean=业务日志明细
+BusinessLogDetailBean.content=操作参数
+BusinessLogDetailBean.log=操作日志
+
+BusinessLogBean=业务日志实现
+BusinessLogBean.operator=操作用户
+BusinessLogBean.operation=操作内容
+BusinessLogBean.resource=操作资源
+BusinessLogBean.entry=操作资源
+BusinessLogBean.operateAt=操作时间
+BusinessLogBean.ip=操作IP
+BusinessLogBean.agent=操作客户端代理
+BusinessLogBean.detail=操作明细

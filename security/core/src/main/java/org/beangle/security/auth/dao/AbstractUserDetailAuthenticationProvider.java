@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.security.auth.dao;
 
@@ -45,7 +45,7 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
 
   /**
    * 从token中找出用户名
-   * 
+   *
    * @param authentication
    */
   protected String determinePrincipal(Authentication authentication) {
@@ -117,7 +117,7 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
    * performing it in {@link #additionalAuthenticationChecks(UserDetail, Authentication)} so that
    * code related to credentials validation need not be duplicated across two methods.
    * </p>
-   * 
+   *
    * @param username
    *          The username to retrieve
    * @param authentication
@@ -149,7 +149,7 @@ public abstract class AbstractUserDetailAuthenticationProvider implements Authen
    * Sets the policy will be used to verify the status of the loaded <tt>UserDetails</tt>
    * <em>before</em> validation of the credentials takes
    * place.
-   * 
+   *
    * @param preAuthenticationChecks
    *          strategy to be invoked prior to authentication.
    */

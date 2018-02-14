@@ -31,7 +31,7 @@ public class ConversionTest {
     Assert.assertEquals(con.convert("", Boolean.class),null);
     Assert.assertEquals((boolean)con.convert(null, boolean.class),false);
   }
-  
+
   public void testConvertArray() {
     DefaultConversion con = new DefaultConversion();
     Assert.assertEquals(con.convert(new String[] { "2", "3" }, Integer[].class), new Integer[] { 2, 3 });

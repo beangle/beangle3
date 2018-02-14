@@ -1,0 +1,6 @@
+
+PropertyConfigItemBean=系统配置项
+PropertyConfigItemBean.name=名称
+PropertyConfigItemBean.value=值
+PropertyConfigItemBean.description=描述
+PropertyConfigItemBean.type=类型

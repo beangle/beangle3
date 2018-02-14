@@ -1,6 +1,0 @@
-[#ftl]
-[@b.form name="a" action="!a" target="b" theme="list"]
- [@b.formfoot]
-  [@b.submit value="save" /]
- [/@]
-[/@]

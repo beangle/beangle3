@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.dao;
 
@@ -33,13 +33,13 @@ import org.beangle.commons.entity.Entity;
 
 /**
  * dao 查询辅助类
- * 
+ *
  * @author chaostone
  */
 public interface EntityDao {
   /**
    * 查询指定id的对象
-   * 
+   *
    * @param clazz 类型
    * @param id 唯一标识
    * @return null
@@ -48,7 +48,7 @@ public interface EntityDao {
 
   /**
    * Returns model by identifier,null when not found.
-   * 
+   *
    * @param entityName
    * @param id
    */
@@ -56,14 +56,14 @@ public interface EntityDao {
 
   /**
    * Returns a list of all entity of clazz.
-   * 
+   *
    * @param clazz
    */
   <T extends Entity<?>> List<T> getAll(Class<T> clazz);
 
   /**
    * 根据属性列举实体
-   * 
+   *
    * @param entityClass
    * @param values
    */
@@ -71,7 +71,7 @@ public interface EntityDao {
 
   /**
    * 根据属性列举实体
-   * 
+   *
    * @param entityClass
    * @param values
    */
@@ -79,7 +79,7 @@ public interface EntityDao {
 
   /**
    * 根据属性列举实体
-   * 
+   *
    * @param clazz
    * @param keyName
    * @param values
@@ -88,7 +88,7 @@ public interface EntityDao {
 
   /**
    * 根据属性列举实体
-   * 
+   *
    * @param <T>
    * @param clazz
    * @param keyName
@@ -113,7 +113,7 @@ public interface EntityDao {
 
   /**
    * 根据属性列举实体
-   * 
+   *
    * @param entityName
    * @param keyName
    * @param values
@@ -122,14 +122,14 @@ public interface EntityDao {
 
   /**
    * 执行查询
-   * 
+   *
    * @param query
    */
   <T> List<T> search(Query<T> query);
 
   /**
    * 查询hql语句
-   * 
+   *
    * @param <T>
    * @param builder
    */
@@ -137,7 +137,7 @@ public interface EntityDao {
 
   /**
    * 查询hql语句
-   * 
+   *
    * @param <T>
    * @param builder
    */
@@ -146,7 +146,7 @@ public interface EntityDao {
   /**
    * JPQL/NamedQuery<br>
    * query语句中使用?1表示参数.NamedQuery使用@Named-Query-Name
-   * 
+   *
    * @param query
    * @param params
    */
@@ -154,7 +154,7 @@ public interface EntityDao {
 
   /**
    * JPQL/NamedQuery<br>
-   * 
+   *
    * @param query
    * @param params
    */
@@ -163,7 +163,7 @@ public interface EntityDao {
   /**
    * 支持缓存的JPQL/NamedQuery<br>
    * 查询
-   * 
+   *
    * @param query
    * @param params
    * @param limit
@@ -173,7 +173,7 @@ public interface EntityDao {
 
   /**
    * 执行JPQL/NamedQuery 进行更新或者删除
-   * 
+   *
    * @param query
    * @param arguments
    */
@@ -181,7 +181,7 @@ public interface EntityDao {
 
   /**
    * 重复执行单个JPQL/NamedQuery语句
-   * 
+   *
    * @param query
    * @param arguments
    */
@@ -189,7 +189,7 @@ public interface EntityDao {
 
   /**
    * 执行JPQL/NamedQuery进行更新或者删除
-   * 
+   *
    * @param query
    * @param parameterMap
    */
@@ -207,14 +207,14 @@ public interface EntityDao {
 
   /**
    * Save Collection
-   * 
+   *
    * @param entities
    */
   void saveOrUpdate(Collection<?> entities);
 
   /**
    * 按照实体名称，保存单个或多个实体.
-   * 
+   *
    * @param entityName
    * @param entities
    */
@@ -222,7 +222,7 @@ public interface EntityDao {
 
   /**
    * Save collection of given entity name.
-   * 
+   *
    * @param entityName
    * @param entities
    */
@@ -231,7 +231,7 @@ public interface EntityDao {
   /**
    * Update entity's property value describe in upateParams where attr in
    * values.
-   * 
+   *
    * @param entityClass
    * @param attr
    * @param values
@@ -241,7 +241,7 @@ public interface EntityDao {
 
   /**
    * Update entity set argumentName=argumentValue where attr in values.
-   * 
+   *
    * @param entityClass
    * @param attr
    * @param values
@@ -252,21 +252,21 @@ public interface EntityDao {
 
   /**
    * 删除单个对象
-   * 
+   *
    * @param entities
    */
   void remove(Object... entities);
 
   /**
    * 删除集合内的所有对象
-   * 
+   *
    * @param entities
    */
   void remove(Collection<?> entities);
 
   /**
    * 批量删除对象
-   * 
+   *
    * @param entityClass 对象对应的类
    * @param attr 得到对象的key
    * @param values 要修改的values的值集合
@@ -276,7 +276,7 @@ public interface EntityDao {
 
   /**
    * 批量删除对象
-   * 
+   *
    * @param entityClass
    *          (对象对应的类)
    * @param attr
@@ -289,7 +289,7 @@ public interface EntityDao {
 
   /**
    * 批量删除对象
-   * 
+   *
    * @param entityClass
    * @param parameterMap
    *          (取得对象的key的name和value对应的Map)
@@ -309,7 +309,7 @@ public interface EntityDao {
 
   /**
    * Initialize entity whenever session close or open
-   * 
+   *
    * @param <T>
    * @param entity
    */
@@ -335,14 +335,14 @@ public interface EntityDao {
 
   /**
    * 在同一个session保存、删除
-   * 
+   *
    * @param opts
    */
   void execute(Operation... opts);
 
   /**
    * 执行一个操作构建者提供的一系列操作
-   * 
+   *
    * @param builder
    */
   void execute(Operation.Builder builder);

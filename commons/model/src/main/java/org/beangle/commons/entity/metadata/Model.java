@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.entity.metadata;
 
@@ -30,7 +30,7 @@ import org.beangle.commons.entity.metadata.impl.SimpleEntityContext;
  * <p>
  * Model class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -53,7 +53,7 @@ public final class Model {
    * <p>
    * newInstance.
    * </p>
-   * 
+   *
    * @param clazz
    * @param <T> a T object.
    * @return a T object.
@@ -75,7 +75,7 @@ public final class Model {
    * <p>
    * getEntityType.
    * </p>
-   * 
+   *
    * @param entityName a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.entity.metadata.EntityType} object.
    */
@@ -87,7 +87,7 @@ public final class Model {
    * <p>
    * getEntityName.
    * </p>
-   * 
+   *
    * @param obj a {@link java.lang.Object} object.
    * @return a {@link java.lang.String} object.
    */
@@ -99,7 +99,7 @@ public final class Model {
    * <p>
    * getEntityType.
    * </p>
-   * 
+   *
    * @param clazz a {@link java.lang.Class} object.
    * @return a {@link org.beangle.commons.entity.metadata.EntityType} object.
    */
@@ -112,7 +112,7 @@ public final class Model {
    * 如果引用到了别的实体，那么<br>
    * 如果params中的id为null，则将该实体的置为null.<br>
    * 否则新生成一个实体，将其id设为params中指定的值。 空字符串按照null处理
-   * 
+   *
    * @param params a {@link java.util.Map} object.
    * @param entity a {@link java.lang.Object} object.
    */

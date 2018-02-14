@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.inject.spring.web;
 
@@ -51,7 +51,7 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
    * The Servlet spec requires that resource paths start with a slash, even if many containers
    * accept paths without leading slash too. Consequently, the given path will be prepended with a
    * slash if it doesn't already start with one.
-   * 
+   *
    * @param servletContext the ServletContext to load from
    * @param path the path of the resource
    */
@@ -85,7 +85,7 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
 
   /**
    * This implementation checks <code>ServletContext.getResource</code>.
-   * 
+   *
    * @see javax.servlet.ServletContext#getResource(String)
    */
   @Override
@@ -101,7 +101,7 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
   /**
    * This implementation delegates to <code>ServletContext.getResourceAsStream</code>,
    * but throws a FileNotFoundException if no resource found.
-   * 
+   *
    * @see javax.servlet.ServletContext#getResourceAsStream(String)
    */
   public InputStream getInputStream() throws IOException {
@@ -113,7 +113,7 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
   /**
    * This implementation delegates to <code>ServletContext.getResource</code>,
    * but throws a FileNotFoundException if no resource found.
-   * 
+   *
    * @see javax.servlet.ServletContext#getResource(String)
    */
   @Override
@@ -127,7 +127,7 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
   /**
    * This implementation delegates to <code>ServletContext.getRealPath</code>,
    * but throws a FileNotFoundException if not found or not resolvable.
-   * 
+   *
    * @see javax.servlet.ServletContext#getRealPath(String)
    */
   @Override

@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.config.property;
 
@@ -23,7 +23,7 @@ import java.util.Set;
 
 /**
  * 系统属性
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -33,7 +33,7 @@ public interface PropertyConfig {
    * <p>
    * get.
    * </p>
-   * 
+   *
    * @param name a {@link java.lang.String} object.
    * @return a {@link java.lang.Object} object.
    */
@@ -43,7 +43,7 @@ public interface PropertyConfig {
    * <p>
    * set.
    * </p>
-   * 
+   *
    * @param name a {@link java.lang.String} object.
    * @param value a {@link java.lang.Object} object.
    */
@@ -53,7 +53,7 @@ public interface PropertyConfig {
    * <p>
    * get.
    * </p>
-   * 
+   *
    * @param clazz a {@link java.lang.Class} object.
    * @param name a {@link java.lang.String} object.
    * @param <T> a T object.
@@ -65,7 +65,7 @@ public interface PropertyConfig {
    * <p>
    * add.
    * </p>
-   * 
+   *
    * @param properties a {@link java.util.Properties} object.
    */
   void add(Properties properties);
@@ -74,7 +74,7 @@ public interface PropertyConfig {
    * <p>
    * getNames.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Set} object.
    */
   Set<String> getNames();
@@ -83,7 +83,7 @@ public interface PropertyConfig {
    * <p>
    * addConfigListener.
    * </p>
-   * 
+   *
    * @param listener a {@link org.beangle.commons.config.property.PropertyConfigListener} object.
    */
   void addListener(PropertyConfigListener listener);
@@ -92,7 +92,7 @@ public interface PropertyConfig {
    * <p>
    * removeConfigListener.
    * </p>
-   * 
+   *
    * @param listener a {@link org.beangle.commons.config.property.PropertyConfigListener} object.
    */
   void removeListener(PropertyConfigListener listener);
@@ -115,7 +115,7 @@ public interface PropertyConfig {
    * <p>
    * addConfigProvider.
    * </p>
-   * 
+   *
    * @param provider a {@link org.beangle.commons.config.property.PropertyConfig.Provider} object.
    */
   void addProvider(Provider provider);

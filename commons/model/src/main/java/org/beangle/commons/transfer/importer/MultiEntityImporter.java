@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.transfer.importer;
 
@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * MultiEntityImporter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -96,7 +96,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
 
   /**
    * Populate single attribute
-   * 
+   *
    * @param entity
    * @param type
    * @param attr
@@ -135,7 +135,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * <p>
    * getEntityClass.
    * </p>
-   * 
+   *
    * @param attr a {@link java.lang.String} object.
    * @return a {@link java.lang.Class} object.
    */
@@ -147,7 +147,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * <p>
    * getEntityType.
    * </p>
-   * 
+   *
    * @param attr a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.entity.metadata.EntityType} object.
    */
@@ -162,7 +162,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * <p>
    * addEntity.
    * </p>
-   * 
+   *
    * @param alias a {@link java.lang.String} object.
    * @param entityClass a {@link java.lang.Class} object.
    */
@@ -176,7 +176,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * <p>
    * addEntity.
    * </p>
-   * 
+   *
    * @param alias a {@link java.lang.String} object.
    * @param entityName a {@link java.lang.String} object.
    */
@@ -190,7 +190,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * <p>
    * getEntityName.
    * </p>
-   * 
+   *
    * @param attr a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
    */
@@ -202,7 +202,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * <p>
    * Getter for the field <code>current</code>.
    * </p>
-   * 
+   *
    * @param attr a {@link java.lang.String} object.
    * @return a {@link java.lang.Object} object.
    */
@@ -227,7 +227,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * <p>
    * Getter for the field <code>current</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Object} object.
    */
   public Object getCurrent() {
@@ -243,7 +243,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * <p>
    * getDataName.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getDataName() {
@@ -268,7 +268,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * <p>
    * Getter for the field <code>foreignerKeys</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Set} object.
    */
   public Set<String> getForeignerKeys() {
@@ -279,7 +279,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * <p>
    * Setter for the field <code>foreignerKeys</code>.
    * </p>
-   * 
+   *
    * @param foreignerKeys a {@link java.util.Set} object.
    */
   public void setForeignerKeys(Set<String> foreignerKeys) {
@@ -298,7 +298,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * <p>
    * Getter for the field <code>entityTypes</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Map} object.
    */
   public Map<String, EntityType> getEntityTypes() {
@@ -309,7 +309,7 @@ public class MultiEntityImporter extends AbstractItemImporter implements EntityI
    * <p>
    * Setter for the field <code>entityTypes</code>.
    * </p>
-   * 
+   *
    * @param entityTypes a {@link java.util.Map} object.
    */
   public void setEntityTypes(Map<String, EntityType> entityTypes) {

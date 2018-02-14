@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.security.cas;
 
@@ -29,7 +29,7 @@ import org.beangle.commons.lang.Assert;
  * Each web application capable of processing CAS tickets is known as a service. This class stores
  * the properties that are relevant to the local CAS service, being the application that is being
  * secured by Beangle Security.
- * 
+ *
  * @author chaostone
  * @version $Id: ServiceProperties.java $
  */
@@ -96,7 +96,7 @@ public class CasConfig implements Initializing {
   /**
    * The enterprise-wide CAS login URL. Usually something like
    * <code>https://www.mycompany.com/cas/login</code>.
-   * 
+   *
    * @return the enterprise-wide CAS login URL
    */
   public String getLoginUrl() {
@@ -111,7 +111,7 @@ public class CasConfig implements Initializing {
    * previously authenticated). During ticket validation it will require the ticket was generated as
    * a consequence of an explicit login. High security applications would probably set this to
    * <code>true</code>. Defaults to <code>false</code>, providing automated single sign on.
-   * 
+   *
    * @return whether to send the <code>renew</code> parameter to CAS
    */
   public boolean isRenew() {

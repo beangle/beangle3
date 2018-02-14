@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.text.seq;
 
@@ -29,7 +29,7 @@ import org.beangle.commons.lang.Strings;
  * <p>
  * SeqPattern class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -52,7 +52,7 @@ public class SeqPattern {
    * <p>
    * Constructor for SeqPattern.
    * </p>
-   * 
+   *
    * @param seqStyle a {@link org.beangle.commons.text.seq.SeqNumStyle} object.
    * @param pattern a {@link java.lang.String} object.
    */
@@ -80,7 +80,7 @@ public class SeqPattern {
    * <p>
    * curSeqText.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String curSeqText() {
@@ -91,7 +91,7 @@ public class SeqPattern {
    * <p>
    * next.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String next() {
@@ -117,7 +117,7 @@ public class SeqPattern {
    * <p>
    * Getter for the field <code>level</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getLevel() {
@@ -128,7 +128,7 @@ public class SeqPattern {
    * <p>
    * Setter for the field <code>level</code>.
    * </p>
-   * 
+   *
    * @param level a int.
    */
   public void setLevel(int level) {
@@ -139,7 +139,7 @@ public class SeqPattern {
    * <p>
    * Getter for the field <code>seqNumStyle</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.text.seq.SeqNumStyle} object.
    */
   public SeqNumStyle getSeqNumStyle() {
@@ -150,7 +150,7 @@ public class SeqPattern {
    * <p>
    * Setter for the field <code>seqNumStyle</code>.
    * </p>
-   * 
+   *
    * @param seqNumStyle a {@link org.beangle.commons.text.seq.SeqNumStyle} object.
    */
   public void setSeqNumStyle(SeqNumStyle seqNumStyle) {
@@ -161,7 +161,7 @@ public class SeqPattern {
    * <p>
    * Setter for the field <code>pattern</code>.
    * </p>
-   * 
+   *
    * @param pattern a {@link java.lang.String} object.
    */
   public void setPattern(String pattern) {
@@ -172,7 +172,7 @@ public class SeqPattern {
    * <p>
    * Getter for the field <code>pattern</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getPattern() {
@@ -183,7 +183,7 @@ public class SeqPattern {
    * <p>
    * Getter for the field <code>generator</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.text.seq.MultiLevelSeqGenerator} object.
    */
   public MultiLevelSeqGenerator getGenerator() {
@@ -194,7 +194,7 @@ public class SeqPattern {
    * <p>
    * Setter for the field <code>generator</code>.
    * </p>
-   * 
+   *
    * @param generator a {@link org.beangle.commons.text.seq.MultiLevelSeqGenerator} object.
    */
   public void setGenerator(MultiLevelSeqGenerator generator) {

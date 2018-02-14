@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.io;
 
@@ -32,7 +32,7 @@ import java.util.List;
 
 /**
  * Simple IO Utility
- * 
+ *
  * @author chaostone
  * @since 3.1
  */
@@ -42,7 +42,7 @@ public class IOs {
 
   /**
    * Copy bytes from a <code>InputStream</code> to an <code>OutputStream</code>.
-   * 
+   *
    * @param input the <code>InputStream</code> to read from
    * @param output the <code>OutputStream</code> to write to
    * @return the number of bytes copied
@@ -63,7 +63,7 @@ public class IOs {
 
   /**
    * Copy chars from a <code>Reader</code> to a <code>Writer</code>.
-   * 
+   *
    * @param input the <code>Reader</code> to read from
    * @param output the <code>Writer</code> to write to
    * @return the number of characters copied
@@ -86,7 +86,7 @@ public class IOs {
    * Get the contents of a <code>Reader</code> as a list of Strings,
    * one entry per line.
    * <p>
-   * 
+   *
    * @param input the <code>Reader</code> to read from, not null
    * @return the list of Strings, never null
    * @throws IOException if an I/O error occurs

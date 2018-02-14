@@ -4,4 +4,3 @@
  * Most useful information can be found in http://www.useragentstring.com
  */
 package org.beangle.commons.http.agent;
-

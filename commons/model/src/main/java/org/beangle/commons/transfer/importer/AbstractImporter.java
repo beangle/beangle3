@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.transfer.importer;
 
@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 导入的抽象和缺省实现
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -135,7 +135,7 @@ public abstract class AbstractImporter implements Importer {
    * <p>
    * Getter for the field <code>success</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getSuccess() {
@@ -146,7 +146,7 @@ public abstract class AbstractImporter implements Importer {
    * <p>
    * Getter for the field <code>reader</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.transfer.io.Reader} object.
    */
   public Reader getReader() {
@@ -161,7 +161,7 @@ public abstract class AbstractImporter implements Importer {
    * <p>
    * ignoreNull.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean ignoreNull() {
@@ -172,7 +172,7 @@ public abstract class AbstractImporter implements Importer {
    * <p>
    * getLocale.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Locale} object.
    */
   public Locale getLocale() {
@@ -183,7 +183,7 @@ public abstract class AbstractImporter implements Importer {
    * <p>
    * getFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public TransferFormat getFormat() {
@@ -194,7 +194,7 @@ public abstract class AbstractImporter implements Importer {
    * <p>
    * getTranferIndex.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getTranferIndex() {
@@ -211,7 +211,7 @@ public abstract class AbstractImporter implements Importer {
    * <p>
    * Getter for the field <code>prepare</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.transfer.importer.ImportPrepare} object.
    */
   public ImportPrepare getPrepare() {

@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.dao.query.builder;
 
@@ -40,7 +40,7 @@ import org.beangle.commons.lang.Strings;
 
 /**
  * 实体类查询 Object Query Language Builder
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -58,7 +58,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * hql.
-   * 
+   *
    * @param hql a {@link java.lang.String} object.
    * @param <E> a E object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
@@ -71,7 +71,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * from.
-   * 
+   *
    * @param from a {@link java.lang.String} object.
    * @param <E> a E object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
@@ -84,7 +84,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * from.
-   * 
+   *
    * @param entityName a {@link java.lang.String} object.
    * @param alias a {@link java.lang.String} object.
    * @param <E> a E object.
@@ -103,7 +103,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * from.
-   * 
+   *
    * @param entityClass a {@link java.lang.Class} object.
    * @param <E> a E object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
@@ -116,7 +116,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * from.
-   * 
+   *
    * @param entityClass a {@link java.lang.Class} object.
    * @param alias a {@link java.lang.String} object.
    * @param <E> a E object.
@@ -136,7 +136,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * alias.
-   * 
+   *
    * @param alias a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
@@ -147,7 +147,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * join.
-   * 
+   *
    * @param path a {@link java.lang.String} object.
    * @param alias a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
@@ -159,7 +159,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * join.
-   * 
+   *
    * @param joinMode a {@link java.lang.String} object.
    * @param path a {@link java.lang.String} object.
    * @param alias a {@link java.lang.String} object.
@@ -177,7 +177,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * param.
-   * 
+   *
    * @param name a {@link java.lang.String} object.
    * @param value a {@link java.lang.Object} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
@@ -194,7 +194,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * limit.
-   * 
+   *
    * @param pageNo a int.
    * @param pageSize a int.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
@@ -206,7 +206,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * cacheable.
-   * 
+   *
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
   public OqlBuilder<T> cacheable() {
@@ -216,7 +216,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * cacheable.
-   * 
+   *
    * @param cacheable a boolean.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
@@ -227,7 +227,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * where.
-   * 
+   *
    * @param condition a {@link org.beangle.commons.dao.query.builder.Condition} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
@@ -260,7 +260,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * 为了接受数组作为参数，防止java将数组展开为可变参数特定以下几个重致where函数，
-   * 
+   *
    * @param content
    * @param param1
    * @param param2
@@ -287,7 +287,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   /**
    * 添加一组条件<br>
    * query中不能添加条件集合作为一个条件,因此这里命名没有采用有区别性的addAll
-   * 
+   *
    * @param cons a {@link java.util.Collection} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
@@ -298,7 +298,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * 声明排序字符串
-   * 
+   *
    * @param orderBy 排序字符串
    * @return 查询构建器
    */
@@ -308,7 +308,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * 指定排序字符串的位置
-   * 
+   *
    * @param index 从0开始
    * @param orderBy 排序字符串
    * @return 查询构建器
@@ -323,7 +323,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * orderBy.
-   * 
+   *
    * @param order a {@link org.beangle.commons.collection.Order} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
@@ -334,7 +334,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * cleanOrders.
-   * 
+   *
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
   public OqlBuilder<T> clearOrders() {
@@ -344,7 +344,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * orderBy.
-   * 
+   *
    * @param orders a {@link java.util.List} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
@@ -360,7 +360,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
    * <p>
    * select.
    * </p>
-   * 
+   *
    * @param what a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
@@ -379,7 +379,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * newFrom.
-   * 
+   *
    * @param from a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
@@ -398,7 +398,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * groupBy.
-   * 
+   *
    * @param what a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
@@ -413,7 +413,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
    * <p>
    * Having subclause.
    * </p>
-   * 
+   *
    * @param what having subclause
    * @return this
    */
@@ -425,7 +425,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * 形成计数查询语句，如果不能形成，则返回""
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   protected String genCountStatement() {
@@ -459,7 +459,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * Find index of from
-   * 
+   *
    * @param query
    * @return -1 or from index
    */
@@ -488,7 +488,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * forEntity.
-   * 
+   *
    * @param entityClass a {@link java.lang.Class} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
@@ -504,7 +504,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
 
   /**
    * Getter for the field <code>entityClass</code>.
-   * 
+   *
    * @return a {@link java.lang.Class} object.
    */
   public Class<T> getEntityClass() {

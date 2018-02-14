@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.transfer.excel;
 
@@ -38,7 +38,7 @@ import org.beangle.commons.transfer.io.TransferFormat;
  * <p>
  * ExcelItemWriter class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -71,7 +71,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * Constructor for ExcelItemWriter.
    * </p>
-   * 
+   *
    * @param outputStream a {@link java.io.OutputStream} object.
    */
   public ExcelItemWriter(OutputStream outputStream) {
@@ -83,7 +83,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * Getter for the field <code>countPerSheet</code>.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getCountPerSheet() {
@@ -94,7 +94,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * Setter for the field <code>countPerSheet</code>.
    * </p>
-   * 
+   *
    * @param dataNumPerSheet a int.
    */
   public void setCountPerSheet(int dataNumPerSheet) {
@@ -132,7 +132,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * getFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public TransferFormat getFormat() {
@@ -143,7 +143,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * writeItem.
    * </p>
-   * 
+   *
    * @param datas a {@link java.lang.Object} object.
    */
   protected void writeItem(Object datas) {
@@ -228,7 +228,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * getDateFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   protected String getDateFormat() {
@@ -239,7 +239,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * getDateTimeFormat.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   protected String getDateTimeFormat() {
@@ -250,7 +250,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * <p>
    * getTitleStyle.
    * </p>
-   * 
+   *
    * @return a {@link org.apache.poi.hssf.usermodel.HSSFCellStyle} object.
    */
   protected HSSFCellStyle getTitleStyle() {

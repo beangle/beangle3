@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.codec.net;
 
@@ -33,7 +33,7 @@ import org.beangle.commons.lang.Charsets;
  * encoding of non-ASCII text in various portions of a RFC 822 [2] message header, in a manner which
  * is unlikely to confuse existing message handling software.
  * </p>
- * 
+ *
  * @see <a href="http://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose Internet Mail Extensions)
  *      Part Two: Message Header Extensions for Non-ASCII Text</a>
  * @author chaostone
@@ -69,7 +69,7 @@ public final class BCoder {
 
   /**
    * Constructor which allows for the selection of a default charset
-   * 
+   *
    * @param charset the default charset to use.
    * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html">Standard
    *      charsets</a>
@@ -85,7 +85,7 @@ public final class BCoder {
 
   /**
    * Encodes a string into its Base64 form using the default charset. Unsafe characters are escaped.
-   * 
+   *
    * @param value string to convert to Base64 form
    * @return Base64 string
    */
@@ -106,7 +106,7 @@ public final class BCoder {
    * Decodes a Base64 string into its original form. Escaped characters are converted back to their
    * original
    * representation.
-   * 
+   *
    * @param value Base64 string to convert into its original form
    * @return original string
    */

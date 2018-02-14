@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.bean.comparators;
 
@@ -26,7 +26,7 @@ import org.beangle.commons.lang.Strings;
 
 /**
  * 属性比较器。<br>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -50,7 +50,7 @@ public class PropertyComparator implements Comparator<Object> {
    * new OrderedBeanComparator("id") or<br>
    * new OrderedBeanComparator("name desc"); new
    * OrderedBeanComparator("[0].name desc");
-   * 
+   *
    * @param cmpStr a {@link java.lang.String} object.
    */
   public PropertyComparator(final String cmpStr) {
@@ -82,7 +82,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * Constructor for PropertyComparator.
    * </p>
-   * 
+   *
    * @param cmpWhat a {@link java.lang.String} object.
    * @param asc a boolean.
    */
@@ -136,7 +136,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * Getter for the field <code>comparator</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Comparator} object.
    */
   @SuppressWarnings("rawtypes")
@@ -148,7 +148,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * Setter for the field <code>comparator</code>.
    * </p>
-   * 
+   *
    * @param comparator a {@link java.util.Comparator} object.
    */
   @SuppressWarnings("rawtypes")
@@ -160,7 +160,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * Getter for the field <code>stringComparator</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.bean.comparators.StringComparator} object.
    */
   public StringComparator getStringComparator() {
@@ -171,7 +171,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * Setter for the field <code>stringComparator</code>.
    * </p>
-   * 
+   *
    * @param stringComparator a {@link org.beangle.commons.bean.comparators.StringComparator} object.
    */
   public void setStringComparator(final StringComparator stringComparator) {
@@ -182,7 +182,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * Getter for the field <code>cmpWhat</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getCmpWhat() {
@@ -193,7 +193,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * isAsc.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isAsc() {
@@ -204,7 +204,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * isNullFirst.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isNullFirst() {
@@ -215,7 +215,7 @@ public class PropertyComparator implements Comparator<Object> {
    * <p>
    * Setter for the field <code>nullFirst</code>.
    * </p>
-   * 
+   *
    * @param nullFirst a boolean.
    */
   public void setNullFirst(boolean nullFirst) {

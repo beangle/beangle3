@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.text.i18n.impl;
 
@@ -147,7 +147,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
 
   /**
    * Load java properties bundle with iso-8859-1
-   * 
+   *
    * @param bundleName
    * @param locale
    * @return None or bundle corresponding bindleName.locale.properties
@@ -169,7 +169,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
 
   /**
    * java properties bundle name
-   * 
+   *
    * @param bundleName
    * @param locale
    * @return convented properties ended file path.
@@ -186,7 +186,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
 
   /**
    * Generater resource name like bundleName.zh_CN
-   * 
+   *
    * @param bundleName
    * @param locale
    * @return resource name end with locale
@@ -203,7 +203,7 @@ public class DefaultTextBundleRegistry implements TextBundleRegistry {
 
   /**
    * Convert locale to string with language_country[_variant]
-   * 
+   *
    * @param locale
    * @return locale string
    */

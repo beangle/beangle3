@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.orm.hibernate;
 
@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 类似Rails的数据库表名、列名命名策略
- * 
+ *
  * @see DefaultNamingStrategy the default strategy
  * @author chaostone
  */
@@ -44,7 +44,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 
   /**
    * 根据实体名(entityName)命名表
-   * 
+   *
    * @param className
    */
   public String classToTableName(String className) {
@@ -61,7 +61,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 
   /**
    * 对自动起名和使体内集合配置的表名，添加前缀
-   * 
+   *
    * <pre>
    * 配置好的实体表名和关联表的名字都会经过此方法。
    * </re>
@@ -78,7 +78,7 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 
   /**
    * 数据列的逻辑名
-   * 
+   *
    * <pre>
    * 如果有列名，不做处理，否则按照属性自动起名.
    * 该策略保证columnName=logicalColumnName
@@ -90,12 +90,12 @@ public class RailsNamingStrategy implements NamingStrategy, Serializable {
 
   /**
    * 根据属性名自动起名
-   * 
+   *
    * <pre>
    * 将混合大小写，带有.分割的属性描述，转换成下划线分割的名称。
    * 属性名字包括：简单属性、集合属性、组合属性(component.name)
    * </pre>
-   * 
+   *
    * @param propertyName
    */
   public String propertyToColumnName(String propertyName) {

@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.lang;
 
@@ -22,7 +22,7 @@ package org.beangle.commons.lang;
  * <p>
  * BitStrings class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -33,7 +33,7 @@ public class BitStrings {
 
   /**
    * 比较两个等长字符串的每一位，若都大于0，则返回结果的相应位为1，否则为0;
-   * 
+   *
    * @param first a {@link java.lang.String} object.
    * @param second a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
@@ -53,7 +53,7 @@ public class BitStrings {
   /**
    * 比较两个等长字符串的每一位，相或<br>
    * 适用于仅含有1和0的字符串.
-   * 
+   *
    * @param first a {@link java.lang.String} object.
    * @param second a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
@@ -72,7 +72,7 @@ public class BitStrings {
 
   /**
    * 将一个字符串，按照boolString的形式进行变化. 如果boolString[i]!=0则保留str[i],否则置0
-   * 
+   *
    * @param str a {@link java.lang.String} object.
    * @param boolString a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
@@ -92,7 +92,7 @@ public class BitStrings {
 
   /**
    * 将"314213421340asdf"转换成"1111111111101111"
-   * 
+   *
    * @param first a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
    */
@@ -111,7 +111,7 @@ public class BitStrings {
 
   /**
    * 返回零一串的整型值
-   * 
+   *
    * @param binaryStr a {@link java.lang.String} object.
    * @return a long.
    */
@@ -133,7 +133,7 @@ public class BitStrings {
    * <p>
    * reverse.
    * </p>
-   * 
+   *
    * @param binaryStr a {@link java.lang.String} object.
    * @return a {@link java.lang.String} object.
    */

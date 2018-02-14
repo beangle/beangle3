@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.collection;
 
@@ -41,7 +41,7 @@ import org.beangle.commons.lang.functor.Transformer;
  * <p>
  * CollectUtils class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -51,7 +51,7 @@ public final class CollectUtils {
    * <p>
    * newArrayList.
    * </p>
-   * 
+   *
    * @param <E> a E object.
    * @return a {@link java.util.List} object.
    */
@@ -63,7 +63,7 @@ public final class CollectUtils {
    * <p>
    * newArrayList.
    * </p>
-   * 
+   *
    * @param initialCapacity a int.
    * @param <E> a E object.
    * @return a {@link java.util.List} object.
@@ -76,7 +76,7 @@ public final class CollectUtils {
    * <p>
    * newArrayList.
    * </p>
-   * 
+   *
    * @param c a {@link java.util.Collection} object.
    * @param <E> a E object.
    * @return a {@link java.util.List} object.
@@ -89,7 +89,7 @@ public final class CollectUtils {
    * <p>
    * newArrayList.
    * </p>
-   * 
+   *
    * @param values a E object.
    * @param <E> a E object.
    * @return a {@link java.util.List} object.
@@ -104,7 +104,7 @@ public final class CollectUtils {
 
   /**
    * 将一个集合按照固定大小查分成若干个集合。
-   * 
+   *
    * @param list a {@link java.util.List} object.
    * @param count a int.
    * @param <T> a T object.
@@ -132,7 +132,7 @@ public final class CollectUtils {
    * <p>
    * newHashMap.
    * </p>
-   * 
+   *
    * @param <K> a K object.
    * @param <V> a V object.
    * @return a {@link java.util.Map} object.
@@ -153,7 +153,7 @@ public final class CollectUtils {
    * <p>
    * newConcurrentHashMap.
    * </p>
-   * 
+   *
    * @param <K> a K object.
    * @param <V> a V object.
    * @return a {@link java.util.Map} object.
@@ -166,7 +166,7 @@ public final class CollectUtils {
    * <p>
    * newConcurrentLinkedQueue.
    * </p>
-   * 
+   *
    * @param <E> a E object.
    * @return a {@link java.util.Queue} object.
    */
@@ -178,7 +178,7 @@ public final class CollectUtils {
    * <p>
    * newHashMap.
    * </p>
-   * 
+   *
    * @param m a {@link java.util.Map} object.
    * @param <K> a K object.
    * @param <V> a V object.
@@ -192,7 +192,7 @@ public final class CollectUtils {
    * <p>
    * newLinkedHashMap.
    * </p>
-   * 
+   *
    * @param m a {@link java.util.Map} object.
    * @param <K> a K object.
    * @param <V> a V object.
@@ -206,7 +206,7 @@ public final class CollectUtils {
    * <p>
    * newLinkedHashMap.
    * </p>
-   * 
+   *
    * @param size a int.
    * @param <K> a K object.
    * @param <V> a V object.
@@ -220,7 +220,7 @@ public final class CollectUtils {
    * <p>
    * newHashSet.
    * </p>
-   * 
+   *
    * @param <E> a E object.
    * @return a {@link java.util.Set} object.
    */
@@ -232,7 +232,7 @@ public final class CollectUtils {
    * <p>
    * newHashSet.
    * </p>
-   * 
+   *
    * @param values a E object.
    * @param <E> a E object.
    * @return a {@link java.util.Set} object.
@@ -249,7 +249,7 @@ public final class CollectUtils {
    * <p>
    * newHashSet.
    * </p>
-   * 
+   *
    * @param c a {@link java.util.Collection} object.
    * @param <E> a E object.
    * @return a {@link java.util.Set} object.
@@ -262,7 +262,7 @@ public final class CollectUtils {
    * <p>
    * convertToMap.
    * </p>
-   * 
+   *
    * @param coll a {@link java.util.Collection} object.
    * @param keyProperty a {@link java.lang.String} object.
    * @return a {@link java.util.Map} object.
@@ -285,7 +285,7 @@ public final class CollectUtils {
    * <p>
    * convertToMap.
    * </p>
-   * 
+   *
    * @param coll a {@link java.util.Collection} object.
    * @param keyProperty a {@link java.lang.String} object.
    * @param valueProperty a {@link java.lang.String} object.
@@ -305,7 +305,7 @@ public final class CollectUtils {
    * <p>
    * toMap.
    * </p>
-   * 
+   *
    * @param wordMappings an array of {@link java.lang.String} objects.
    * @return a {@link java.util.Map} object.
    */
@@ -323,7 +323,7 @@ public final class CollectUtils {
    * Null-safe check if the specified collection is empty.
    * <p>
    * Null returns true.
-   * 
+   *
    * @param coll the collection to check, may be null
    * @return true if empty or null
    * @since 3.1
@@ -336,7 +336,7 @@ public final class CollectUtils {
    * Null-safe check if the specified collection is not empty.
    * <p>
    * Null returns false.
-   * 
+   *
    * @param coll the collection to check, may be null
    * @return true if non-null and non-empty
    * @since 3.1

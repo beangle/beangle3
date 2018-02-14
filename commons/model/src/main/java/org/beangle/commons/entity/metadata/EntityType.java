@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.entity.metadata;
 
@@ -30,7 +30,7 @@ import org.beangle.commons.lang.Assert;
  * <p>
  * EntityType class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -48,7 +48,7 @@ public class EntityType extends AbstractType {
    * <p>
    * Constructor for EntityType.
    * </p>
-   * 
+   *
    * @param entityName a {@link java.lang.String} object.
    * @param entityClass a {@link java.lang.Class} object.
    */
@@ -81,7 +81,7 @@ public class EntityType extends AbstractType {
    * <p>
    * Constructor for EntityType.
    * </p>
-   * 
+   *
    * @param entityClass a {@link java.lang.Class} object.
    */
   public EntityType(Class<?> entityClass) {
@@ -92,7 +92,7 @@ public class EntityType extends AbstractType {
    * <p>
    * isEntityType.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isEntityType() {
@@ -103,7 +103,7 @@ public class EntityType extends AbstractType {
    * <p>
    * Getter for the field <code>entityClass</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Class} object.
    */
   public Class<?> getEntityClass() {
@@ -114,7 +114,7 @@ public class EntityType extends AbstractType {
    * <p>
    * Setter for the field <code>entityClass</code>.
    * </p>
-   * 
+   *
    * @param entityClass a {@link java.lang.Class} object.
    */
   public void setEntityClass(Class<?> entityClass) {
@@ -125,7 +125,7 @@ public class EntityType extends AbstractType {
    * <p>
    * Getter for the field <code>propertyTypes</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Map} object.
    */
   public Map<String, Type> getPropertyTypes() {
@@ -136,7 +136,7 @@ public class EntityType extends AbstractType {
    * <p>
    * Setter for the field <code>propertyTypes</code>.
    * </p>
-   * 
+   *
    * @param propertyTypes a {@link java.util.Map} object.
    */
   public void setPropertyTypes(Map<String, Type> propertyTypes) {
@@ -147,7 +147,7 @@ public class EntityType extends AbstractType {
    * <p>
    * Setter for the field <code>entityName</code>.
    * </p>
-   * 
+   *
    * @param entityName a {@link java.lang.String} object.
    */
   public void setEntityName(String entityName) {
@@ -173,7 +173,7 @@ public class EntityType extends AbstractType {
 
   /**
    * The name of the entity
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getEntityName() {
@@ -184,7 +184,7 @@ public class EntityType extends AbstractType {
    * <p>
    * getName.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getName() {
@@ -195,7 +195,7 @@ public class EntityType extends AbstractType {
    * <p>
    * getReturnedClass.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Class} object.
    */
   public Class<?> getReturnedClass() {
@@ -214,7 +214,7 @@ public class EntityType extends AbstractType {
    * <p>
    * getIdClass.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Class} object.
    */
   @SuppressWarnings("unchecked")

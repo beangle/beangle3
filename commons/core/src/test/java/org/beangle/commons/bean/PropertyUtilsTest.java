@@ -20,7 +20,6 @@ package org.beangle.commons.bean;
 
 import static org.testng.Assert.assertEquals;
 
-import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.testbean.TestBean;
 import org.testng.annotations.Test;
 
@@ -36,15 +35,6 @@ public class PropertyUtilsTest {
     assertEquals(PropertyUtils.getProperty(bean, "nested.datas(key)"), "value");
 
     PropertyUtils.setProperty(bean, "nested.id", 4L);
-    assertEquals(PropertyUtils.getProperty(bean, "nested.id"), 4L);
-  }
-
-  public static void main(String[] args) {
-    TestBean bean = new TestBean();
-    PropertyUtils.setProperty(bean, "nested.datas(key)", "value");
-    Assert.isTrue("value".equals(PropertyUtils.getProperty(bean, "nested.datas(key)")));
-
-    PropertyUtils.setProperty(bean, "nested.id", 4L);
-    Assert.isTrue(PropertyUtils.getProperty(bean, "nested.id").equals(4L));
+    assertEquals(PropertyUtils.getProperty(bean, "nested.id"), Long.valueOf(4));
   }
 }

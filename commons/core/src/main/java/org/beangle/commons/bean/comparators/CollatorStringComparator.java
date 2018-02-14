@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.bean.comparators;
 
@@ -24,7 +24,7 @@ import java.text.Collator;
  * <p>
  * CollatorStringComparator class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -47,7 +47,7 @@ public class CollatorStringComparator implements StringComparator {
    * <p>
    * Constructor for CollatorStringComparator.
    * </p>
-   * 
+   *
    * @param asc a boolean.
    */
   public CollatorStringComparator(final boolean asc) {
@@ -59,7 +59,7 @@ public class CollatorStringComparator implements StringComparator {
    * <p>
    * Constructor for CollatorStringComparator.
    * </p>
-   * 
+   *
    * @param asc a boolean.
    * @param collator a {@link java.text.Collator} object.
    */
@@ -72,7 +72,7 @@ public class CollatorStringComparator implements StringComparator {
    * <p>
    * compare.
    * </p>
-   * 
+   *
    * @param what0 a {@link java.lang.String} object.
    * @param what1 a {@link java.lang.String} object.
    * @return a int.
@@ -85,7 +85,7 @@ public class CollatorStringComparator implements StringComparator {
    * <p>
    * isAsc.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isAsc() {
@@ -96,7 +96,7 @@ public class CollatorStringComparator implements StringComparator {
    * <p>
    * Setter for the field <code>asc</code>.
    * </p>
-   * 
+   *
    * @param asc a boolean.
    */
   public void setAsc(final boolean asc) {
@@ -107,7 +107,7 @@ public class CollatorStringComparator implements StringComparator {
    * <p>
    * Getter for the field <code>collator</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.text.Collator} object.
    */
   public Collator getCollator() {
@@ -118,7 +118,7 @@ public class CollatorStringComparator implements StringComparator {
    * <p>
    * Setter for the field <code>collator</code>.
    * </p>
-   * 
+   *
    * @param collator a {@link java.text.Collator} object.
    */
   public void setCollator(final Collator collator) {

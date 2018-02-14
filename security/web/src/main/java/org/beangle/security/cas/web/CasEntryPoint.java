@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.security.cas.web;
 
@@ -46,7 +46,7 @@ import org.beangle.security.web.AuthenticationEntryPoint;
  * redirect to the page indicated by the <code>service</code> property. The <code>service</code> is
  * a HTTP URL belonging to the current application. The <code>service</code> URL is monitored by the
  * {@link CasPreauthFilter}, which will validate the CAS login was successful.
- * 
+ *
  * @author chaostone
  * @version $Id: CasProcessingFilterEntryPoint.java $
  */
@@ -100,7 +100,7 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
 
   /**
    * Construct local login Service Url
-   * 
+   *
    * @param request
    * @param response
    * @param service
@@ -128,7 +128,7 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
    * Constructs a service url from the HttpServletRequest or from the given
    * serviceUrl. Prefers the serviceUrl provided if both a serviceUrl and a
    * serviceName.
-   * 
+   *
    * @param request the HttpServletRequest
    * @param response the HttpServletResponse
    * @param service the configured service url (this will be used if not null)
@@ -173,7 +173,7 @@ public class CasEntryPoint implements AuthenticationEntryPoint, Initializing {
 
   /**
    * Constructs the URL to use to redirect to the CAS server.
-   * 
+   *
    * @param casServerLoginUrl the CAS Server login url.
    * @param serviceParameterName the name of the parameter that defines the service.
    * @param serviceUrl the actual service's url.

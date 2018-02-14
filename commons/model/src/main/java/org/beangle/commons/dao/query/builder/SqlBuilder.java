@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.dao.query.builder;
 
@@ -33,7 +33,7 @@ import org.beangle.commons.lang.Strings;
 
 /**
  * sql查询
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -42,7 +42,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * sql.
    * </p>
-   * 
+   *
    * @param queryStr a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
@@ -56,7 +56,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * genCountStatement.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   protected String genCountStatement() {
@@ -73,7 +73,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * alias.
    * </p>
-   * 
+   *
    * @param alias a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
@@ -86,7 +86,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * join.
    * </p>
-   * 
+   *
    * @param path a {@link java.lang.String} object.
    * @param alias a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
@@ -100,7 +100,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * join.
    * </p>
-   * 
+   *
    * @param joinMode a {@link java.lang.String} object.
    * @param path a {@link java.lang.String} object.
    * @param alias a {@link java.lang.String} object.
@@ -120,7 +120,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * param.
    * </p>
-   * 
+   *
    * @param name a {@link java.lang.String} object.
    * @param value a {@link java.lang.Object} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
@@ -140,7 +140,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * limit.
    * </p>
-   * 
+   *
    * @param pageNo a int.
    * @param pageSize a int.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
@@ -154,7 +154,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * cacheable.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
   public SqlBuilder cacheable() {
@@ -166,7 +166,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * cacheable.
    * </p>
-   * 
+   *
    * @param cacheable a boolean.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
@@ -177,7 +177,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
 
   /**
    * where.
-   * 
+   *
    * @param condition a {@link org.beangle.commons.dao.query.builder.Condition} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
@@ -188,7 +188,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
 
   /**
    * where.
-   * 
+   *
    * @param content a {@link java.lang.String} object.
    * @param param1 a {@link java.lang.Object} object.
    * @param param2 a {@link java.lang.Object} object.
@@ -204,7 +204,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
   /**
    * 添加一组条件<br>
    * query中不能添加条件集合作为一个条件,因此这里命名没有采用有区别性的addAll
-   * 
+   *
    * @param cons a {@link java.util.Collection} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
@@ -217,7 +217,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * orderBy.
    * </p>
-   * 
+   *
    * @param orderBy a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
@@ -230,7 +230,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * orderBy.
    * </p>
-   * 
+   *
    * @param order a {@link org.beangle.commons.collection.Order} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
@@ -245,7 +245,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * cleanOrders.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
   public SqlBuilder clearOrders() {
@@ -257,7 +257,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * orderBy.
    * </p>
-   * 
+   *
    * @param orders a {@link java.util.List} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
@@ -272,7 +272,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * select.
    * </p>
-   * 
+   *
    * @param what a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
@@ -293,7 +293,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * newFrom.
    * </p>
-   * 
+   *
    * @param from a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
@@ -314,7 +314,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * groupBy.
    * </p>
-   * 
+   *
    * @param what a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
@@ -327,7 +327,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * <p>
    * Having subclause.
    * </p>
-   * 
+   *
    * @param what having subclause
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */

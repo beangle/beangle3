@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.entity.pojo;
 
@@ -36,7 +36,7 @@ import org.beangle.commons.lang.Objects;
  * </p>
  * 很对基础代码数据成员结构相似，仅在数据库中表名和列名 不一样，带都含有这些基类中规定的数据类型，所以把这种结构相似性抽出来，
  * 节省代码的编制量.每个子类代码仍要有自己的类型定义和数据库映射定义. 基类和数据库表没有映射关系，仅仅是数据抽象.
- * 
+ *
  * @author chaostone
  * @version $Id: BaseCode.java May 4, 2011 7:28:27 PM chaostone $
  */
@@ -111,7 +111,7 @@ public abstract class Code<T extends Number> extends NumberIdObject<T>
 
   /**
    * 获得代码
-   * 
+   *
    * @return 代码
    */
   public String getCode() {
@@ -120,7 +120,7 @@ public abstract class Code<T extends Number> extends NumberIdObject<T>
 
   /**
    * 设置代码
-   * 
+   *
    * @param code 代码
    */
   public void setCode(String code) {
@@ -129,7 +129,7 @@ public abstract class Code<T extends Number> extends NumberIdObject<T>
 
   /**
    * 获得名称
-   * 
+   *
    * @return 名称
    */
   public String getName() {
@@ -138,7 +138,7 @@ public abstract class Code<T extends Number> extends NumberIdObject<T>
 
   /**
    * 设置名称
-   * 
+   *
    * @param name 名称
    */
   public void setName(String name) {

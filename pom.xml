@@ -2,13 +2,13 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.beangle</groupId>
-    <artifactId>beangle-java-parent</artifactId>
-    <version>10</version>
+    <artifactId>beangle-java</artifactId>
+    <version>24.7</version>
   </parent>
   <groupId>org.beangle</groupId>
   <artifactId>beangle-library-parent</artifactId>
   <packaging>pom</packaging>
-  <version>3.5.3</version>
+  <version>3.6.0.M1</version>
   <name>Beangle Library Parent</name>
 
   <url>https://github.com/beangle/library</url>
@@ -25,7 +25,18 @@
   </scm>
 
   <properties>
-    <spring.version>3.1.1.RELEASE</spring.version>
+    <spring.version>4.3.14.RELEASE</spring.version>
+    <freemarker.version>2.3.27-incubating</freemarker.version>
+    <struts.version>2.5.14.1</struts.version>
+    <ognl.version>3.1.15</ognl.version>
+    <hibernate.version>4.2.21.Final</hibernate.version>
+    <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
+    <javassist.version>3.20.0-GA</javassist.version>
+    <ehcache.version>2.5.2</ehcache.version>
+    <javax.validation.version>1.0.0.GA</javax.validation.version>
+    <jxls.version>1.0.3</jxls.version>
+    <poi.version>3.9</poi.version>
+    <fileupload.version>1.3.3</fileupload.version>
   </properties>
 
   <modules>
@@ -33,7 +44,30 @@
     <module>ioc</module>
     <module>orm</module>
     <module>security</module>
-    <module>struts2</module>
-    <module>test</module>
+    <module>struts</module>
+	<module>ems</module>
   </modules>
+
+  <dependencies>
+    <dependency>
+	  <groupId>org.slf4j</groupId>
+	  <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+	  <groupId>ch.qos.logback</groupId>
+	  <artifactId>logback-core</artifactId>
+    </dependency>
+    <dependency>
+	  <groupId>ch.qos.logback</groupId>
+	  <artifactId>logback-classic</artifactId>
+    </dependency>
+    <dependency>
+	  <groupId>org.testng</groupId>
+	  <artifactId>testng</artifactId>
+    </dependency>
+    <dependency>
+	  <groupId>org.mockito</groupId>
+	  <artifactId>mockito-core</artifactId>
+    </dependency>
+  </dependencies>
 </project>

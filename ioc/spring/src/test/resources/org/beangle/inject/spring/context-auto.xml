@@ -2,13 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-  
+
   <bean id="autoConfigProcessor" class="org.beangle.inject.spring.config.SpringConfigProcessor" >
     <property name="reconfigResources" value=";classpath*:spring-config-test.xml"/>
   </bean>
 
   <bean id="spring.common.test" class="org.beangle.inject.spring.bean.TestModule"/>
-  
+
   <bean id="baseTransactionProxy" class="org.beangle.inject.spring.bean.ProxyFactoryBean"   abstract="true"> </bean>
 
   <bean id="entityDao" parent="baseTransactionProxy">

@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.text.i18n;
 
@@ -25,7 +25,7 @@ import java.util.List;
  * <p>
  * Message class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -39,7 +39,7 @@ public class Message {
    * <p>
    * Constructor for Message.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    * @param params a {@link java.util.List} object.
    */
@@ -53,7 +53,7 @@ public class Message {
    * <p>
    * Constructor for Message.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    * @param objs an array of {@link java.lang.Object} objects.
    */
@@ -72,7 +72,7 @@ public class Message {
    * <p>
    * Constructor for Message.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    */
   public Message(String key) {
@@ -84,7 +84,7 @@ public class Message {
    * <p>
    * Getter for the field <code>key</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String getKey() {
@@ -95,7 +95,7 @@ public class Message {
    * <p>
    * Getter for the field <code>params</code>.
    * </p>
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   public List<Object> getParams() {
@@ -106,7 +106,7 @@ public class Message {
    * <p>
    * Setter for the field <code>key</code>.
    * </p>
-   * 
+   *
    * @param key a {@link java.lang.String} object.
    */
   public void setKey(String key) {
@@ -117,7 +117,7 @@ public class Message {
    * <p>
    * Setter for the field <code>params</code>.
    * </p>
-   * 
+   *
    * @param params a {@link java.util.List} object.
    */
   public void setParams(List<Object> params) {

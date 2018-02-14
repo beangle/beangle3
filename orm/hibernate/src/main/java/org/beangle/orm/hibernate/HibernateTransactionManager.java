@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.orm.hibernate;
 
@@ -54,7 +54,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 /**
  * Simplify HibernateTransactionManager in spring-orm bundle.
  * Just add SessionUtils.isEnableThreadBinding() support in doGetTranscation
- * 
+ *
  * @author chaostone
  * @version $Id: HibernateTransactionManager.java Feb 28, 2012 10:32:50 PM chaostone $
  */
@@ -76,7 +76,7 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
   /**
    * Create a new HibernateTransactionManager instance.
    * A SessionFactory has to be set to be able to use it.
-   * 
+   *
    * @see #setSessionFactory
    */
   public HibernateTransactionManager() {
@@ -84,7 +84,7 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
 
   /**
    * Create a new HibernateTransactionManager instance.
-   * 
+   *
    * @param sessionFactory SessionFactory to manage transactions for
    */
   public HibernateTransactionManager(SessionFactory sessionFactory) {
@@ -124,7 +124,7 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
    * <code>Connection.setReadOnly(true)</code> for read-only transactions anymore either. If this
    * flag is turned off, no cleanup of a JDBC Connection is required after a transaction, since no
    * Connection settings will get modified.
-   * 
+   *
    * @see java.sql.Connection#setTransactionIsolation
    * @see java.sql.Connection#setReadOnly
    */
@@ -429,7 +429,7 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
    * Default implementation checks the Session's connection release mode to be "on_close".
    * Unfortunately, this requires casting to SessionImpl, as of Hibernate 3.1. If that cast doesn't
    * work, we'll simply assume we're safe and return <code>true</code>.
-   * 
+   *
    * @param session the Hibernate Session to check
    * @see org.hibernate.impl.SessionImpl#getConnectionReleaseMode()
    * @see org.hibernate.ConnectionReleaseMode#ON_CLOSE
@@ -447,7 +447,7 @@ public class HibernateTransactionManager extends AbstractPlatformTransactionMana
    * <p>
    * Will automatically apply a specified SQLExceptionTranslator to a Hibernate JDBCException, else
    * rely on Hibernate's default translation.
-   * 
+   *
    * @param ex HibernateException that occured
    * @return a corresponding DataAccessException
    */

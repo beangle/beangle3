@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.lang.tuple;
 
@@ -27,7 +27,7 @@ import org.beangle.commons.lang.Objects;
  * <p>
  * A immutable pair consisting of two elements.
  * </p>
- * 
+ *
  * @author chaostone
  * @param <L> the left element type
  * @param <R> the right element type
@@ -48,7 +48,7 @@ public class Pair<L, R> implements Map.Entry<L, R>, Serializable {
    * <p>
    * This factory allows the pair to be created using inference to obtain the generic types.
    * </p>
-   * 
+   *
    * @param <L> the left element type
    * @param <R> the right element type
    * @param left the left element, may be null
@@ -61,7 +61,7 @@ public class Pair<L, R> implements Map.Entry<L, R>, Serializable {
 
   /**
    * Create a new pair instance.
-   * 
+   *
    * @param left the left value, may be null
    * @param right the right value, may be null
    */
@@ -86,7 +86,7 @@ public class Pair<L, R> implements Map.Entry<L, R>, Serializable {
    * <p>
    * This pair is immutable, so this operation is not supported.
    * </p>
-   * 
+   *
    * @param value the value to set
    * @return never
    * @throws UnsupportedOperationException as this operation is not supported
@@ -110,7 +110,7 @@ public class Pair<L, R> implements Map.Entry<L, R>, Serializable {
    * <p>
    * This method implements the {@code Map.Entry} interface returning the left element as the key.
    * </p>
-   * 
+   *
    * @return the left element as the key, may be null
    */
   public final L getKey() {
@@ -125,7 +125,7 @@ public class Pair<L, R> implements Map.Entry<L, R>, Serializable {
    * This method implements the {@code Map.Entry} interface returning the right element as the
    * value.
    * </p>
-   * 
+   *
    * @return the right element as the value, may be null
    */
   public R getValue() {
@@ -136,7 +136,7 @@ public class Pair<L, R> implements Map.Entry<L, R>, Serializable {
    * <p>
    * Compares this pair to another based on the two elements.
    * </p>
-   * 
+   *
    * @param obj the object to compare to, null returns false
    * @return true if the elements of the pair are equal
    */
@@ -154,7 +154,7 @@ public class Pair<L, R> implements Map.Entry<L, R>, Serializable {
    * <p>
    * Returns a suitable hash code. The hash code follows the definition in {@code Map.Entry}.
    * </p>
-   * 
+   *
    * @return the hash code
    */
   @Override

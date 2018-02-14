@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.inject.spring.config;
 
@@ -69,7 +69,7 @@ import org.springframework.core.io.UrlResource;
 
 /**
  * 完成springbean的自动注册和再配置
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -145,7 +145,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * <p>
    * lifecycle.
    * </p>
-   * 
+   *
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    * @param definitionRegistry a
    *          {@link org.springframework.beans.factory.support.BeanDefinitionRegistry} object.
@@ -174,7 +174,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * <p>
    * registerBuildins.
    * </p>
-   * 
+   *
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    */
   protected void registerBuildins(BindRegistry registry) {
@@ -188,7 +188,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
 
   /**
    * 合并bean定义
-   * 
+   *
    * @param target a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @param source a
    *          {@link org.beangle.inject.spring.config.context.spring.ReconfigBeanDefinitionHolder}
@@ -223,7 +223,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * <p>
    * findRegistedModules.
    * </p>
-   * 
+   *
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    * @return a {@link java.util.Map} object.
    */
@@ -268,8 +268,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
         if (value instanceof List<?>) {
           List<Object> list = new ManagedList<Object>();
           for (Object item : ((List<?>) value)) {
-            if (item instanceof ReferenceValue) list
-                .add(new RuntimeBeanReference(((ReferenceValue) item).ref));
+            if (item instanceof ReferenceValue)
+              list.add(new RuntimeBeanReference(((ReferenceValue) item).ref));
             else list.add(item);
           }
           value = list;
@@ -277,8 +277,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
         if (value instanceof Set<?>) {
           Set<Object> set = new ManagedSet<Object>();
           for (Object item : (Set<?>) value) {
-            if (item instanceof ReferenceValue) set
-                .add(new RuntimeBeanReference(((ReferenceValue) item).ref));
+            if (item instanceof ReferenceValue)
+              set.add(new RuntimeBeanReference(((ReferenceValue) item).ref));
             else set.add(item);
           }
           value = set;
@@ -294,8 +294,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
       } else if (value instanceof Map<?, ?>) {
         Map<Object, Object> maps = new ManagedMap<Object, Object>();
         for (Map.Entry<?, ?> item : ((Map<?, ?>) value).entrySet()) {
-          if (item.getValue() instanceof ReferenceValue) maps.put(item.getKey(), new RuntimeBeanReference(
-              ((ReferenceValue) item.getValue()).ref));
+          if (item.getValue() instanceof ReferenceValue)
+            maps.put(item.getKey(), new RuntimeBeanReference(((ReferenceValue) item.getValue()).ref));
           else maps.put(item.getKey(), item.getValue());
         }
         value = maps;
@@ -325,7 +325,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * <p>
    * registerBean.
    * </p>
-   * 
+   *
    * @param def bean definition.
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    * @return a {@link org.springframework.beans.factory.config.BeanDefinition} object.
@@ -336,8 +336,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
       try {
         Class<?> target = def.targetClass;
 
-        if (null == target && def.clazz != null) target = ((FactoryBean<?>) def.clazz.newInstance())
-            .getObjectType();
+        if (null == target && def.clazz != null)
+          target = ((FactoryBean<?>) def.clazz.newInstance()).getObjectType();
         Assert.isTrue(null != target || def.isAbstract(), "Concrete bean [%1$s] should has class.",
             def.beanName);
 
@@ -358,7 +358,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * <p>
    * autowire.
    * </p>
-   * 
+   *
    * @param newBeanDefinitions a {@link java.util.Map} object.
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    */
@@ -374,7 +374,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * <p>
    * autowireBean.
    * </p>
-   * 
+   *
    * @param beanName a {@link java.lang.String} object.
    * @param mbd a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
@@ -385,6 +385,11 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
       String propertyName = entry.getKey();
       Class<?> propertyType = entry.getValue();
       List<String> beanNames = registry.getBeanNames(propertyType);
+      List<String> innerNames = CollectUtils.newArrayList();
+      for (String n : beanNames) {
+        if (n.contains("#")) innerNames.add(n);
+      }
+      beanNames.removeAll(innerNames);
       boolean binded = false;
       if (beanNames.size() == 1) {
         mbd.getPropertyValues().add(propertyName, new RuntimeBeanReference(beanNames.get(0)));
@@ -413,8 +418,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
         if (beanNames.isEmpty()) {
           logger.debug("{}'s {} cannot found candidate beans.", beanName, propertyName);
         } else {
-          logger.warn("{}'s {} expected single bean but found {} : {}", new Object[] { beanName,
-              propertyName, beanNames.size(), beanNames });
+          logger.warn("{}'s {} expected single bean but found {} : {}",
+              new Object[] { beanName, propertyName, beanNames.size(), beanNames });
         }
       }
     }
@@ -425,7 +430,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * Find unsatisfied properties
    * </p>
    * Unsatisfied property is empty value and not primary type and not starts with java.
-   * 
+   *
    * @param mbd
    */
   private Map<String, Class<?>> unsatisfiedNonSimpleProperties(BeanDefinition mbd) {

@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.lang;
 
@@ -27,7 +27,7 @@ import org.beangle.commons.collection.CollectUtils;
 /**
  * Represents optional values. Instances of Option are either an instance of Some or the object
  * None.
- * 
+ *
  * @author chaostone
  * @since 3.0.0
  */
@@ -65,7 +65,7 @@ public abstract class Option<T>{
   /**
    * Returns the contained instance, which must be present. If the instance might be
    * absent, use {@link #getOrElse(Object)} or {@link #orNull} instead.
-   * 
+   *
    * @throws IllegalStateException if the instance is absent
    */
   public abstract T get();
@@ -74,7 +74,7 @@ public abstract class Option<T>{
    * Returns the contained instance if it is present; {@code defaultValue} otherwise. If
    * no default value should be required because the instance is known to be present, use
    * {@link #get()} instead.
-   * 
+   *
    * @param defaultValue
    */
   public abstract T getOrElse(T defaultValue);
@@ -112,7 +112,7 @@ public abstract class Option<T>{
 
   /**
    * Return all value from Option Collection
-   * 
+   *
    * @param values
    */
   public static <T> List<T> getAll(Collection<Option<T>> values) {
@@ -126,7 +126,7 @@ public abstract class Option<T>{
 
 /**
  * Represents existing values of type T.
- * 
+ *
  * @author chaostone
  * @param <T>
  * @since 3.0.0

@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.security.core.context;
 
@@ -46,7 +46,7 @@ import org.beangle.commons.lang.Throwables;
  * incompatibilities and is appropriate on servers (whereas {@link #MODE_GLOBAL} is definitely
  * inappropriate for server use).
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: SecurityContextHolder.java 2217 2007-10-27 00:45:30Z $
  */
@@ -73,7 +73,7 @@ public class SecurityContextHolder {
 
   /**
    * Obtain the current <code>SecurityContext</code>.
-   * 
+   *
    * @return the security context (never <code>null</code>)
    */
   public static SecurityContext getContext() {
@@ -83,7 +83,7 @@ public class SecurityContextHolder {
   /**
    * Primarily for troubleshooting purposes, this method shows how many times
    * the class has reinitialized its <code>SecurityContextHolderStrategy</code>.
-   * 
+   *
    * @return the count (should be one unless you've called {@link #setStrategyName(String)} to
    *         switch to an alternate
    *         strategy.
@@ -122,7 +122,7 @@ public class SecurityContextHolder {
   /**
    * Associates a new <code>SecurityContext</code> with the current thread of
    * execution.
-   * 
+   *
    * @param context
    *          the new <code>SecurityContext</code> (may not be <code>null</code>)
    */
@@ -134,7 +134,7 @@ public class SecurityContextHolder {
    * Changes the preferred strategy. Do <em>NOT</em> call this method more
    * than once for a given JVM, as it will reinitialize the strategy and
    * adversely affect any existing threads using the old strategy.
-   * 
+   *
    * @param strategyName
    *          the fully qualified classname of the strategy that should be
    *          used.

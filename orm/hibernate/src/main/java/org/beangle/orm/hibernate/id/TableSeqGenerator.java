@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.orm.hibernate.id;
 
@@ -35,13 +35,13 @@ import org.slf4j.LoggerFactory;
  * 按照表明进行命名序列<br>
  * 依据命名模式进行，默认模式{table}_seq<br>
  * 该生成器可以
- * 
+ *
  * <pre>
  * 1)具有较好的数据库移植性，支持没有sequence的数据库。
  * 2)可以通过设置优化起进行优化
  * 3)可以按照表名进行自动命名序列名，模式{table}_seq
  * </pre>
- * 
+ *
  * @author chaostone
  */
 public class TableSeqGenerator extends SequenceStyleGenerator {

@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.lang;
 
@@ -28,7 +28,7 @@ public final class Objects {
    * <p>
    * Compares two objects for equality, where either one or both objects may be {@code null}.
    * </p>
-   * 
+   *
    * <pre>
    * equals(null, null)                  = true
    * equals(null, "")                    = false
@@ -39,7 +39,7 @@ public final class Objects {
    * equals(Boolean.TRUE, Boolean.TRUE)  = true
    * equals(Boolean.TRUE, Boolean.FALSE) = false
    * </pre>
-   * 
+   *
    * @param a the first object, may be {@code null}
    * @param b the second object, may be {@code null}
    * @return {@code true} if the values of both objects are the same
@@ -70,14 +70,14 @@ public final class Objects {
    * Gets the {@code toString} of an {@code Object} returning an empty string ("") if {@code null}
    * input.
    * </p>
-   * 
+   *
    * <pre>
    * toString(null)         = ""
    * toString("")           = ""
    * toString("bat")        = "bat"
    * toString(Boolean.TRUE) = "true"
    * </pre>
-   * 
+   *
    * @see String#valueOf(Object)
    * @param obj the Object to {@code toString}, may be null
    * @return the passed in Object's toString, or nullStr if {@code null} input
@@ -92,7 +92,7 @@ public final class Objects {
    * <p>
    * Returns a default value if the object passed is {@code null}.
    * </p>
-   * 
+   *
    * <pre>
    * defaultIfNull(null, null)      = null
    * defaultIfNull(null, "")        = ""
@@ -100,7 +100,7 @@ public final class Objects {
    * defaultIfNull("abc", *)        = "abc"
    * defaultIfNull(Boolean.TRUE, *) = Boolean.TRUE
    * </pre>
-   * 
+   *
    * @param <T> the type of the object
    * @param object the {@code Object} to test, may be {@code null}
    * @param defaultValue the default value to return, may be {@code null}
@@ -125,7 +125,7 @@ public final class Objects {
 
   /**
    * Return a hex String form of an object's identity hash code.
-   * 
+   *
    * @param obj the object
    * @return the object's identity code in hex notation
    */
@@ -145,30 +145,30 @@ public final class Objects {
    * Creates an instance of {@link ToStringBuilder}.
    * <p>
    * This is helpful for implementing {@link Object#toString()}. Specification by example:
-   * 
+   *
    * <pre>
    * {@code
    *   // Returns "ClassName{}"
    *   Objects.toStringBuilder(this)
    *       .toString();
-   * 
+   *
    *   // Returns "ClassName{x=1}"
    *   Objects.toStringBuilder(this)
    *       .add("x", 1)
    *       .toString();
-   * 
+   *
    *   // Returns "MyObject{x=1}"
    *   Objects.toStringBuilder("MyObject")
    *       .add("x", 1)
    *       .toString();
-   * 
+   *
    *   // Returns "ClassName{x=1, y=foo}"
    *   Objects.toStringBuilder(this)
    *       .add("x", 1)
    *       .add("y", "foo")
    *       .toString();
    *   }}
-   * 
+   *
    *   // Returns "ClassName{x=1}"
    *   Objects.toStringBuilder(this)
    *       .omitNullValues()
@@ -177,7 +177,7 @@ public final class Objects {
    *       .toString();
    *   }}
    * </pre>
-   * 
+   *
    * @param self the object to generate the string for (typically {@code this}),
    *          used only for its class name
    * @since 3.1
@@ -192,7 +192,7 @@ public final class Objects {
    * an
    * instance's {@link Object#getClass()}.
    * <p>
-   * 
+   *
    * @param clazz the {@link Class} of the instance
    */
   public static ToStringBuilder toStringBuilder(Class<?> clazz) {
@@ -203,7 +203,7 @@ public final class Objects {
    * Creates an instance of {@link ToStringBuilder} in the same manner as
    * {@link Objects#toStringBuilder(Object)}, but using {@code className} instead
    * of using an instance's {@link Object#getClass()}.
-   * 
+   *
    * @param className the name of the instance type
    */
   public static ToStringBuilder toStringBuilder(String className) {
@@ -608,7 +608,7 @@ public final class Objects {
 
   /**
    * Equals Builder
-   * 
+   *
    * @author chaostone
    * @since 3.1.0
    */

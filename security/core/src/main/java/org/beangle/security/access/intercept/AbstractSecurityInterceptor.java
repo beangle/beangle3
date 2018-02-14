@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.security.access.intercept;
 
@@ -91,7 +91,7 @@ public abstract class AbstractSecurityInterceptor implements Initializing {
   /**
    * Completes the work of the <tt>AbstractSecurityInterceptor</tt> after the
    * secure object invocation has been completed.
-   * 
+   *
    * @param token as returned by the {@link #beforeInvocation(Object)} method
    * @param returnedObject any object returned from the secure object invocation (may be
    *          <tt>null</tt>)
@@ -156,7 +156,7 @@ public abstract class AbstractSecurityInterceptor implements Initializing {
    * AuthenticationManager if {@link org.beangle.security.core.Authentication#isAuthenticated()}
    * returns false or the property <tt>alwaysReauthenticate</tt> has been set
    * to true.
-   * 
+   *
    * @return an authenticated <tt>Authentication</tt> object.
    */
   private Authentication authenticateIfRequired() {
@@ -184,7 +184,7 @@ public abstract class AbstractSecurityInterceptor implements Initializing {
    * the abstract parent for processing. This is used to ensure collaborators
    * wired to the <code>AbstractSecurityInterceptor</code> all support the
    * indicated secure object class.
-   * 
+   *
    * @return the type of secure object the subclass provides services for
    */
   public abstract Class<?> getSecureObjectClass();
@@ -211,7 +211,7 @@ public abstract class AbstractSecurityInterceptor implements Initializing {
    * meaning by default the <code>Authentication.isAuthenticated()</code> property is trusted and
    * re-authentication will not occur if the principal has already been
    * authenticated.
-   * 
+   *
    * @param alwaysReauthenticate
    *          <code>true</code> to force <code>AbstractSecurityInterceptor</code> to disregard
    *          the
@@ -236,7 +236,7 @@ public abstract class AbstractSecurityInterceptor implements Initializing {
    * thrown by the <tt>AbstractSecurityInterceptor</tt> if you set this
    * property to <tt>true</tt> and an attempt is made to invoke a secure
    * object that has no configuration attributes.
-   * 
+   *
    * @param rejectPublicInvocations
    *          set to <code>true</code> to reject invocations of secure
    *          objects that have no configuration attributes (by default it

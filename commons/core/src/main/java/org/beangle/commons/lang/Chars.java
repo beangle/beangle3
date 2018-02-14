@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.lang;
 
@@ -24,7 +24,7 @@ public final class Chars {
    * <p>
    * Checks whether the character is ASCII 7 bit alphabetic.
    * </p>
-   * 
+   *
    * <pre>
    *   isAsciiAlpha('a')  = true
    *   isAsciiAlpha('A')  = true
@@ -33,7 +33,7 @@ public final class Chars {
    *   isAsciiAlpha('\n') = false
    *   isAsciiAlpha('&copy;') = false
    * </pre>
-   * 
+   *
    * @param ch the character to check
    * @return true if between 65 and 90 or 97 and 122 inclusive
    * @since 3.0

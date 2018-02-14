@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.security.web.util;
 
@@ -29,7 +29,7 @@ import java.util.TreeMap;
 /**
  * Handler for analyzing {@link Throwable} instances. Can be subclassed to
  * customize its behavior.
- * 
+ *
  * @author chaostone
  * @since 2.0
  * @version $Id: ThrowableAnalyzer.java 2559 2008-01-30 16:15:02Z $
@@ -39,7 +39,7 @@ public class ThrowableAnalyzer {
 
   /**
    * Default extractor for {@link Throwable} instances.
-   * 
+   *
    * @see Throwable#getCause()
    */
   public static final ThrowableCauseExtractor DEFAULT_EXTRACTOR = new ThrowableCauseExtractor() {
@@ -50,7 +50,7 @@ public class ThrowableAnalyzer {
 
   /**
    * Default extractor for {@link InvocationTargetException} instances.
-   * 
+   *
    * @see InvocationTargetException#getTargetException()
    */
   public static final ThrowableCauseExtractor INVOCATIONTARGET_EXTRACTOR = new ThrowableCauseExtractor() {
@@ -101,7 +101,7 @@ public class ThrowableAnalyzer {
   /**
    * Registers a <code>ThrowableCauseExtractor</code> for the specified type.
    * <i>Can be used in subclasses overriding {@link #initExtractorMap()}.</i>
-   * 
+   *
    * @param throwableType
    *          the type (has to be a subclass of <code>Throwable</code>)
    * @param extractor
@@ -131,7 +131,7 @@ public class ThrowableAnalyzer {
    * be resolved first. So in the default case InvocationTargetExceptions will be handled by
    * {@link #INVOCATIONTARGET_EXTRACTOR} while all other throwables are handled by
    * {@link #DEFAULT_EXTRACTOR}.
-   * 
+   *
    * @see #registerExtractor(Class, ThrowableCauseExtractor)
    */
   protected void initExtractorMap() {
@@ -143,7 +143,7 @@ public class ThrowableAnalyzer {
    * Returns an array containing the classes for which extractors are
    * registered. The order of the classes is the order in which comparisons
    * will occur for resolving a matching extractor.
-   * 
+   *
    * @return the types for which extractors are registered
    */
   final Class[] getRegisteredTypes() {
@@ -161,7 +161,7 @@ public class ThrowableAnalyzer {
    * <p>
    * Note: If no {@link ThrowableCauseExtractor} is registered for this instance then the returned
    * array will always only contain the passed in throwable.
-   * 
+   *
    * @param throwable
    *          the <code>Throwable</code> to analyze
    * @return an array of all determined throwables from the stacktrace
@@ -185,7 +185,7 @@ public class ThrowableAnalyzer {
 
   /**
    * Extracts the cause of the given throwable using an appropriate extractor.
-   * 
+   *
    * @param throwable
    *          the <code>Throwable</code> (not <code>null</code>
    * @return the cause, may be <code>null</code> if none could be resolved
@@ -210,7 +210,7 @@ public class ThrowableAnalyzer {
    * specified type.
    * <p>
    * If the passed in array is null or empty this method returns <code>null</code>.
-   * 
+   *
    * @param throwableType
    *          the type to look for
    * @param chain
@@ -236,7 +236,7 @@ public class ThrowableAnalyzer {
   /**
    * Convenience method for verifying that the passed in class refers to a
    * valid subclass of <code>Throwable</code>.
-   * 
+   *
    * @param throwableType
    *          the type to check
    * @throws IllegalArgumentException
@@ -257,7 +257,7 @@ public class ThrowableAnalyzer {
    * <p>
    * Can be used for verification purposes in implementations of {@link ThrowableCauseExtractor
    * extractors}.
-   * 
+   *
    * @param throwable
    *          the <code>Throwable</code> to check
    * @param expectedBaseType

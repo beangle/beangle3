@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.entity.metadata;
 
@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Abstract AbstractType class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -38,7 +38,7 @@ public abstract class AbstractType implements Type {
    * <p>
    * isCollectionType.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isCollectionType() {
@@ -49,7 +49,7 @@ public abstract class AbstractType implements Type {
    * <p>
    * isComponentType.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isComponentType() {
@@ -60,7 +60,7 @@ public abstract class AbstractType implements Type {
    * <p>
    * isEntityType.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isEntityType() {
@@ -80,7 +80,7 @@ public abstract class AbstractType implements Type {
    * <p>
    * hashCode.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int hashCode() {
@@ -91,7 +91,7 @@ public abstract class AbstractType implements Type {
    * <p>
    * toString.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public String toString() {
@@ -102,7 +102,7 @@ public abstract class AbstractType implements Type {
    * <p>
    * getName.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.String} object.
    */
   public abstract String getName();
@@ -111,7 +111,7 @@ public abstract class AbstractType implements Type {
    * <p>
    * getReturnedClass.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Class} object.
    */
   public abstract Class<?> getReturnedClass();
@@ -120,7 +120,7 @@ public abstract class AbstractType implements Type {
    * <p>
    * newInstance.
    * </p>
-   * 
+   *
    * @return a {@link java.lang.Object} object.
    */
   public Object newInstance() {

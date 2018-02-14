@@ -1,20 +1,20 @@
 /*
- * Beangle, Agile Development Scaffold and Toolkit
+ * Beangle, Agile Development Scaffold and Toolkits.
  *
- * Copyright (c) 2005-2016, Beangle Software.
+ * Copyright © 2005, The Beangle Software.
  *
- * Beangle is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Beangle is distributed in the hope that it will be useful.
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Beangle.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.beangle.commons.collection.page;
 
@@ -27,7 +27,7 @@ import java.util.ListIterator;
  * <p>
  * Abstract PageWapper class.
  * </p>
- * 
+ *
  * @author chaostone
  * @version $Id: $
  */
@@ -39,7 +39,7 @@ public abstract class PageWapper<E> implements Page<E> {
    * <p>
    * getFirstPageNo.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int getFirstPageNo() {
@@ -50,7 +50,7 @@ public abstract class PageWapper<E> implements Page<E> {
    * <p>
    * Getter for the field <code>page</code>.
    * </p>
-   * 
+   *
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
   public Page<E> getPage() {
@@ -61,7 +61,7 @@ public abstract class PageWapper<E> implements Page<E> {
    * <p>
    * Setter for the field <code>page</code>.
    * </p>
-   * 
+   *
    * @param page a {@link org.beangle.commons.collection.page.Page} object.
    */
   public void setPage(Page<E> page) {
@@ -72,7 +72,7 @@ public abstract class PageWapper<E> implements Page<E> {
    * <p>
    * getItems.
    * </p>
-   * 
+   *
    * @return a {@link java.util.List} object.
    */
   public List<E> getItems() {
@@ -83,7 +83,7 @@ public abstract class PageWapper<E> implements Page<E> {
    * <p>
    * iterator.
    * </p>
-   * 
+   *
    * @return a {@link java.util.Iterator} object.
    */
   public Iterator<E> iterator() {
@@ -94,7 +94,7 @@ public abstract class PageWapper<E> implements Page<E> {
    * <p>
    * add.
    * </p>
-   * 
+   *
    * @param obj a E object.
    * @return a boolean.
    */
@@ -130,7 +130,7 @@ public abstract class PageWapper<E> implements Page<E> {
    * <p>
    * isEmpty.
    * </p>
-   * 
+   *
    * @return a boolean.
    */
   public boolean isEmpty() {
@@ -141,7 +141,7 @@ public abstract class PageWapper<E> implements Page<E> {
    * <p>
    * size.
    * </p>
-   * 
+   *
    * @return a int.
    */
   public int size() {
@@ -152,7 +152,7 @@ public abstract class PageWapper<E> implements Page<E> {
    * <p>
    * toArray.
    * </p>
-   * 
+   *
    * @return an array of {@link java.lang.Object} objects.
    */
   public Object[] toArray() {
@@ -163,7 +163,7 @@ public abstract class PageWapper<E> implements Page<E> {
    * <p>
    * toArray.
    * </p>
-   * 
+   *
    * @param datas an array of T objects.
    * @param <T> a T object.
    * @return an array of T objects.
@@ -191,7 +191,7 @@ public abstract class PageWapper<E> implements Page<E> {
    * <p>
    * add.
    * </p>
-   * 
+   *
    * @param index a int.
    * @param arg1 a E object.
    */
@@ -218,7 +218,7 @@ public abstract class PageWapper<E> implements Page<E> {
    * <p>
    * listIterator.
    * </p>
-   * 
+   *
    * @return a {@link java.util.ListIterator} object.
    */
   public ListIterator<E> listIterator() {
@@ -234,7 +234,7 @@ public abstract class PageWapper<E> implements Page<E> {
    * <p>
    * remove.
    * </p>
-   * 
+   *
    * @param index a int.
    * @return a E object.
    */
@@ -246,7 +246,7 @@ public abstract class PageWapper<E> implements Page<E> {
    * <p>
    * set.
    * </p>
-   * 
+   *
    * @param index a int.
    * @param arg1 a E object.
    * @return a E object.
