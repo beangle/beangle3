@@ -37,6 +37,7 @@
     <jxls.version>1.0.3</jxls.version>
     <poi.version>3.9</poi.version>
     <fileupload.version>1.3.3</fileupload.version>
+    <dwr.version>3.0.2-RELEASE</dwr.version>
   </properties>
 
   <modules>

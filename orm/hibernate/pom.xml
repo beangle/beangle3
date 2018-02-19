@@ -103,5 +103,11 @@
       <version>${freemarker.version}</version>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.directwebremoting</groupId>
+      <artifactId>dwr</artifactId>
+      <version>${dwr.version}</version>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 </project>
