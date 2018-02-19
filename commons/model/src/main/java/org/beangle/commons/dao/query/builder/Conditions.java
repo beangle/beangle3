@@ -104,12 +104,13 @@ public final class Conditions {
    * @param alias
    * @param entity
    */
-  public static List<Condition> extractConditions(final String alias, final Entity<?> entity) {
+  public static List<Condition> extractConditions(String alias, final Entity<?> entity) {
     if (null == entity) { return Collections.emptyList(); }
     final List<Condition> conditions = new ArrayList<Condition>();
 
     StringBuilder aliasBuilder = new StringBuilder(alias == null ? "" : alias);
     if (aliasBuilder.length() > 0 && !alias.endsWith(".")) aliasBuilder.append(".");
+    alias = aliasBuilder.toString();
     String attr = "";
     try {
       final Set<String> props = PropertyUtils.getWritableProperties(entity.getClass());

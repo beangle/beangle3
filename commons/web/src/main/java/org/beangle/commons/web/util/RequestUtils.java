@@ -186,6 +186,10 @@ public final class RequestUtils {
     return params;
   }
 
+  public static String get(HttpServletRequest request, String name) {
+    return request.getParameter(name);
+  }
+
   public static Float getFloat(HttpServletRequest request, String name) {
     String v = request.getParameter(name);
     return (v == null) ? null : Float.valueOf(v);
@@ -211,6 +215,15 @@ public final class RequestUtils {
       } else {
         return Boolean.FALSE;
       }
+    }
+  }
+
+  public static java.sql.Date getDate(HttpServletRequest request, String name) {
+    String dateStr = get(request, name);
+    if (Strings.isBlank(dateStr)) {
+      return null;
+    } else {
+      return java.sql.Date.valueOf(name);
     }
   }
 }
