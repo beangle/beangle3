@@ -31,7 +31,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.conversion.Conversion;
 import org.beangle.commons.conversion.impl.DefaultConversion;
 import org.beangle.commons.lang.Strings;
-import org.beangle.security.blueprint.Dimension;
+import org.beangle.security.blueprint.model.Dimension;
 import org.beangle.security.blueprint.service.UserDataProvider;
 import org.beangle.security.blueprint.service.UserDataResolver;
 

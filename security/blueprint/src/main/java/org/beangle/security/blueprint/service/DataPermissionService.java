@@ -20,48 +20,42 @@ package org.beangle.security.blueprint.service;
 
 import java.util.List;
 
-import org.beangle.security.blueprint.model.Dimension;
-import org.beangle.security.blueprint.model.FuncResource;
+import org.beangle.commons.dao.query.builder.OqlBuilder;
+import org.beangle.security.blueprint.model.DataPermission;
 import org.beangle.security.blueprint.model.Profile;
 import org.beangle.security.blueprint.model.User;
 
-public interface ProfileService {
+/**
+ * 资源访问约束服务
+ *
+ * @author chaostone
+ */
+public interface DataPermissionService {
   /**
-   * Get field enumerated values.
+   * 获得该权限范围适用的数据权限
    *
-   * @param field
-   * @param profile
+   * @param userId 访问用户Id 不能为空
+   * @param dataResource 数据资源名 不能为空
+   * @param functionResource 数据资源名 不能为空
    */
-  Object getProperty(Profile profile, Dimension field);
+  DataPermission getPermission(User user, String dataResource, String functionResource);
 
   /**
-   * 查找用户在指定资源上对应的数据配置
+   * 应用数据权限
    *
-   * @param user
+   * @param builder
+   * @param permission
+   * @param profiles
    */
-  List<Profile> getProfiles(User user, FuncResource resource);
+  void apply(OqlBuilder<?> builder, DataPermission permission, Profile... profiles);
 
   /**
-   * Search field values
+   * 应用数据权限
    *
-   * @param field
-   * @param keys
+   * @param builder
+   * @param permission
+   * @param profiles
    */
-  List<?> getDimensionValues(Dimension field, Object... keys);
-
-  /**
-   * Search field
-   *
-   * @param fieldName
-   */
-  Dimension getDimension(String fieldName);
-
-  /**
-   * find profile
-   *
-   * @param id
-   * @return
-   */
-  Profile get(Long id);
+  void apply(OqlBuilder<?> builder, DataPermission permission, List<Profile> profiles);
 
 }

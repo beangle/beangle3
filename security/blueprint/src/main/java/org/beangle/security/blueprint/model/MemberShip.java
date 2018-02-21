@@ -16,30 +16,34 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.service;
+package org.beangle.security.blueprint.model;
 
-import java.util.List;
-
-import org.beangle.security.blueprint.model.Dimension;
-
-/**
- * @author chaostone
- * @version $Id: UserDataProvider.java Nov 9, 2010 7:18:38 PM chaostone $
- */
-public interface UserDataProvider {
-
+public enum MemberShip {
   /**
-   * extract data from source
-   *
-   * @param <T>
-   * @param field
-   * @param source
-   * @param keys
+   * just role member
+   * 成员关系可以等价于读权限
    */
-  <T> List<T> getData(Dimension field, String source, Object... keys);
-
+  MEMBER,
   /**
-   * provider's unique name
+   * Can grant/revoke role to/from member
    */
-  String getName();
+  GRANTER,
+  /**
+   * manage role perperties and permissions
+   * 对组可管理意为<br>
+   * <ul>
+   * <li>建立下级组
+   * <li>移动下级组顺序
+   * <li>功能权限
+   * <li>直接成员
+   * </ul>
+   * 不能改变组的
+   * <ul>
+   * <li>删除组
+   * <li>重命名.
+   * </ul>
+   * 只要拥有上级组的管理权限，才能变更这些，这些称之为写权限(admin)。
+   * 拥有某组的管理权限，不意味拥有下级组的管理权限。新建组情况自动授予该组的其他管理者管理权限。
+   */
+  MANAGER;
 }

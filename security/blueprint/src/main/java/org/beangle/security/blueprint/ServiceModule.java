@@ -19,20 +19,12 @@
 package org.beangle.security.blueprint;
 
 import org.beangle.commons.inject.bind.AbstractBindModule;
-import org.beangle.security.blueprint.data.service.internal.DataPermissionServiceImpl;
-import org.beangle.security.blueprint.function.service.internal.CacheableAuthorityManager;
-import org.beangle.security.blueprint.function.service.internal.FuncPermissionServiceImpl;
-import org.beangle.security.blueprint.nav.service.MenuServiceImpl;
 import org.beangle.security.blueprint.service.impl.CsvDataResolver;
+import org.beangle.security.blueprint.service.impl.DataPermissionServiceImpl;
 import org.beangle.security.blueprint.service.impl.IdentifierDataResolver;
 import org.beangle.security.blueprint.service.impl.OqlDataProvider;
+import org.beangle.security.blueprint.service.impl.ProfileServiceImpl;
 import org.beangle.security.blueprint.service.impl.SqlDataProvider;
-import org.beangle.security.blueprint.service.internal.DaoUserDetailServiceImpl;
-import org.beangle.security.blueprint.service.internal.ProfileServiceImpl;
-import org.beangle.security.blueprint.service.internal.RoleServiceImpl;
-import org.beangle.security.blueprint.service.internal.UserServiceImpl;
-import org.beangle.security.blueprint.session.service.WebSessioninfoBuilder;
-import org.beangle.security.blueprint.session.service.internal.SessionProfileServiceImpl;
 
 /**
  * 权限缺省服务配置
@@ -44,14 +36,10 @@ public class ServiceModule extends AbstractBindModule {
 
   @Override
   protected void doBinding() {
-    bind("userService", UserServiceImpl.class);
-    bind("roleService", RoleServiceImpl.class);
-    bind("funcPermissionService", FuncPermissionServiceImpl.class);
-    bind("menuService", MenuServiceImpl.class);
-    bind("userDetailService", DaoUserDetailServiceImpl.class);
-    bind("authorityManager", CacheableAuthorityManager.class);
-    bind(SessionProfileServiceImpl.class).shortName();
-    bind(WebSessioninfoBuilder.class);
+    // bind("userService", UserServiceImpl.class);
+    // bind("roleService", RoleServiceImpl.class);
+    // bind("funcPermissionService", FuncPermissionServiceImpl.class);
+    // bind("menuService", MenuServiceImpl.class);
 
     bind(IdentifierDataResolver.class, CsvDataResolver.class, OqlDataProvider.class, SqlDataProvider.class)
         .shortName();
@@ -59,11 +47,11 @@ public class ServiceModule extends AbstractBindModule {
     bind("restrictionService", DataPermissionServiceImpl.class).property("dataResolver",
         ref(IdentifierDataResolver.class));
 
-    bind("userProfileService", ProfileServiceImpl.class).property(
-        "providers",
-        map(entry("csv", ref(CsvDataResolver.class)), entry("oql", ref(OqlDataProvider.class)),
-            entry("sql", ref(SqlDataProvider.class)))).property("dataResolver",
-        ref(IdentifierDataResolver.class));
+    bind("userProfileService", ProfileServiceImpl.class)
+        .property("providers",
+            map(entry("csv", ref(CsvDataResolver.class)), entry("oql", ref(OqlDataProvider.class)),
+                entry("sql", ref(SqlDataProvider.class))))
+        .property("dataResolver", ref(IdentifierDataResolver.class));
   }
 
 }

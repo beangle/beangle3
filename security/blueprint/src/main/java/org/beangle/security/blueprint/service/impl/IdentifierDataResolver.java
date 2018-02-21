@@ -29,7 +29,7 @@ import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.metadata.EntityType;
 import org.beangle.commons.entity.metadata.Model;
 import org.beangle.commons.lang.Strings;
-import org.beangle.security.blueprint.Dimension;
+import org.beangle.security.blueprint.model.Dimension;
 import org.beangle.security.blueprint.service.UserDataResolver;
 
 public class IdentifierDataResolver implements UserDataResolver {

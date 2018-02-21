@@ -1,0 +1,191 @@
+/*
+ * Beangle, Agile Development Scaffold and Toolkits.
+ *
+ * Copyright © 2005, The Beangle Software.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package org.beangle.security.blueprint.model;
+
+import java.security.Principal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.persistence.Cacheable;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.beangle.commons.entity.TemporalAt;
+import org.beangle.commons.entity.pojo.IntegerIdObject;
+
+import com.google.gson.GsonBuilder;
+
+/**
+ * 数据授权实体
+ *
+ * @author chaostone
+ * @since 3.0.0
+ */
+public class DataPermission extends IntegerIdObject implements TemporalAt, Permission {
+
+  private static final long serialVersionUID = -8956079356245507990L;
+
+  /** 角色 */
+  protected Role role;
+
+  /** 数据资源 */
+  protected DataResource resource;
+
+  /** 功能资源 */
+  protected FuncResource funcResource;
+
+  /** 授权的操作 */
+  protected String actions;
+
+  /** 资源过滤器 */
+  protected String filters;
+
+  /** 访问满足的检查(入口\人员等) */
+  protected String restrictions;
+
+  /** 能够访问哪些属性 */
+  protected String attrs;
+
+  /** 生效时间 */
+  protected Date beginAt;
+
+  /** 失效时间 */
+  protected Date endAt;
+
+  /** 备注 */
+  @Size(max = 100)
+  protected String remark;
+
+  public DataPermission() {
+    super();
+  }
+
+  public DataPermission(Integer id) {
+    super(id);
+  }
+
+  public DataPermission(Role role, DataResource resource, String actions) {
+    super();
+    this.role = role;
+    this.resource = resource;
+    this.actions = actions;
+  }
+
+  public Role getRole() {
+    return role;
+  }
+
+  public void setRole(Role role) {
+    this.role = role;
+  }
+
+  public Object clone() {
+    return new DataPermission(role, resource, actions);
+  }
+
+  public String getActions() {
+    return actions;
+  }
+
+  public void setActions(String actions) {
+    this.actions = actions;
+  }
+
+  public Date getBeginAt() {
+    return beginAt;
+  }
+
+  public void setBeginAt(Date beginAt) {
+    this.beginAt = beginAt;
+  }
+
+  public Date getEndAt() {
+    return endAt;
+  }
+
+  public void setEndAt(Date endAt) {
+    this.endAt = endAt;
+  }
+
+  public DataResource getResource() {
+    return resource;
+  }
+
+  public void setResource(DataResource resource) {
+    this.resource = resource;
+  }
+
+  public String getFilters() {
+    return filters;
+  }
+
+  public void setFilters(String filters) {
+    this.filters = filters;
+  }
+
+  public boolean validate(Map<String, String> conditions) {
+    @SuppressWarnings("unchecked")
+    Map<String, String> guardMap = new GsonBuilder().create().fromJson(getRestrictions(), HashMap.class);
+    for (String key : guardMap.keySet()) {
+      if (!guardMap.get(key).equals(conditions.get(key))) return false;
+    }
+    return true;
+  }
+
+  public String getRestrictions() {
+    return restrictions;
+  }
+
+  public void setRestrictions(String restrictions) {
+    this.restrictions = restrictions;
+  }
+
+  public String getAttrs() {
+    return attrs;
+  }
+
+  public void setAttrs(String attrs) {
+    this.attrs = attrs;
+  }
+
+  public Principal getPrincipal() {
+    return role;
+  }
+
+  public FuncResource getFuncResource() {
+    return funcResource;
+  }
+
+  public void setFuncResource(FuncResource funcResource) {
+    this.funcResource = funcResource;
+  }
+
+  public String getRemark() {
+    return remark;
+  }
+
+  public void setRemark(String remark) {
+    this.remark = remark;
+  }
+
+}

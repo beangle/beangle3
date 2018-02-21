@@ -27,7 +27,7 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.conversion.impl.DefaultConversion;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.lang.ClassLoaders;
-import org.beangle.security.blueprint.Dimension;
+import org.beangle.security.blueprint.model.Dimension;
 import org.beangle.security.blueprint.service.UserDataProvider;
 
 public class OqlDataProvider extends BaseServiceImpl implements UserDataProvider {

@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.dao.query.builder.SqlBuilder;
-import org.beangle.security.blueprint.Dimension;
+import org.beangle.security.blueprint.model.Dimension;
 import org.beangle.security.blueprint.service.UserDataProvider;
 
 public class SqlDataProvider extends BaseServiceImpl implements UserDataProvider {

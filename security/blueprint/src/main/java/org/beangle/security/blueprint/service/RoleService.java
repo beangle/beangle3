@@ -20,8 +20,8 @@ package org.beangle.security.blueprint.service;
 
 import java.util.List;
 
-import org.beangle.security.blueprint.Role;
-import org.beangle.security.blueprint.User;
+import org.beangle.security.blueprint.model.Role;
+import org.beangle.security.blueprint.model.User;
 
 /**
  * @author chaostone

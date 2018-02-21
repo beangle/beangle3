@@ -16,30 +16,41 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.service;
+package org.beangle.security.blueprint.model;
 
-import java.util.List;
+import java.security.Principal;
 
-import org.beangle.security.blueprint.model.Dimension;
+import org.beangle.commons.entity.Entity;
+import org.beangle.commons.entity.TemporalAt;
 
 /**
- * @author chaostone
- * @version $Id: UserDataProvider.java Nov 9, 2010 7:18:38 PM chaostone $
+ * 权限
+ *
+ * @author chaostone 2005-9-26
  */
-public interface UserDataProvider {
+public interface Permission extends Entity<Integer>, Cloneable, TemporalAt {
+  /**
+   * 系统资源
+   */
+  Resource getResource();
 
   /**
-   * extract data from source
-   *
-   * @param <T>
-   * @param field
-   * @param source
-   * @param keys
+   * 获得授权对象
    */
-  <T> List<T> getData(Dimension field, String source, Object... keys);
+  Principal getPrincipal();
 
   /**
-   * provider's unique name
+   * 授权的操作
    */
-  String getName();
+  String getActions();
+
+  /**
+   * 访问资源时执行的检查条件
+   */
+  String getRestrictions();
+
+  /**
+   * 说明
+   */
+  String getRemark();
 }

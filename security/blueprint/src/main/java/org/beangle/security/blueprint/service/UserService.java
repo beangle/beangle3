@@ -20,9 +20,9 @@ package org.beangle.security.blueprint.service;
 
 import java.util.List;
 
-import org.beangle.security.blueprint.RoleMember;
-import org.beangle.security.blueprint.User;
-import org.beangle.security.blueprint.model.UserBean;
+import org.beangle.security.blueprint.model.MemberShip;
+import org.beangle.security.blueprint.model.RoleMember;
+import org.beangle.security.blueprint.model.User;
 
 /**
  * User service
@@ -73,7 +73,7 @@ public interface UserService {
    * @param user
    * @param ship
    */
-  List<RoleMember> getMembers(User user, RoleMember.Ship ship);
+  List<RoleMember> getMembers(User user, MemberShip ship);
 
   /**
    * 设置用户状态
@@ -91,7 +91,7 @@ public interface UserService {
    * @param creator
    * @param newUser
    */
-  void createUser(User creator, UserBean newUser);
+  void createUser(User creator, User newUser);
 
   /**
    * 删除creator与managed的管理关系，如该用户为creator所创建，则删除user

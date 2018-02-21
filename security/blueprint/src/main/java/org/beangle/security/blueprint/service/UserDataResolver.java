@@ -21,7 +21,7 @@ package org.beangle.security.blueprint.service;
 import java.util.Collection;
 import java.util.List;
 
-import org.beangle.security.blueprint.Dimension;
+import org.beangle.security.blueprint.model.Dimension;
 
 public interface UserDataResolver {
 

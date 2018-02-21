@@ -17,23 +17,18 @@
   <dependencies>
     <dependency>
       <groupId>org.beangle.security</groupId>
-      <artifactId>beangle-security-web</artifactId>
+      <artifactId>beangle-security-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.beangle.commons</groupId>
+      <artifactId>beangle-commons-model</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
       <version>2.2.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.beangle.orm</groupId>
-      <artifactId>beangle-orm-hibernate</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
