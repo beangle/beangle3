@@ -16,30 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.service;
+package org.beangle.security.data;
 
-import java.util.List;
+public interface Permission {
 
-import org.beangle.security.blueprint.model.Dimension;
+  public String getFilters();
 
-/**
- * @author chaostone
- * @version $Id: UserDataProvider.java Nov 9, 2010 7:18:38 PM chaostone $
- */
-public interface UserDataProvider {
+  public String getActions();
 
-  /**
-   * extract data from source
-   *
-   * @param <T>
-   * @param field
-   * @param source
-   * @param keys
-   */
-  <T> List<T> getData(Dimension field, String source, Object... keys);
-
-  /**
-   * provider's unique name
-   */
-  String getName();
+  public String getRestrictions();
 }

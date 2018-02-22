@@ -16,9 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.model;
+package org.beangle.security.data;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
@@ -29,27 +32,39 @@ import org.beangle.commons.lang.Strings;
  * @author chaostone
  * @version $Id: Profile.java Oct 21, 2011 8:43:35 AM chaostone $
  */
-public interface Profile {
+public interface Profile extends Serializable {
 
   static final String AllValue = "*";
 
-  String getProperty(Dimension field);
+  Map<String, Object> getProperties();
 
-  String getProperty(String name);
+  public default Object getProperty(String name) {
+    return getProperties().get(name);
+  }
 
   public default boolean matches(Profile other) {
     boolean matched = true;
     if (!other.getProperties().isEmpty()) {
-      for (Map.Entry<Dimension, String> property : other.getProperties().entrySet()) {
-        String target = property.getValue();
-        String op = getProperty(property.getKey());
-        String source = "";
-        if (null != op) source = op;
-        if (target.equals(Profile.AllValue)) {
-          matched = source.equals(Profile.AllValue);
-        } else {
-          matched = CollectUtils.newHashSet(Strings.split(source, ","))
-              .contains(CollectUtils.newHashSet(Strings.split(target, ",")));
+      for (Map.Entry<String, Object> property : other.getProperties().entrySet()) {
+        Object target = property.getValue();
+        Object source = getProperty(property.getKey());
+        if (null == source) {
+          matched = false;
+          break;
+        }
+        matched = Profile.AllValue.equals(source);
+        if (matched) continue;
+
+        if (!target.equals(Profile.AllValue)) {
+          if (target instanceof Collection) {
+            if (source instanceof Collection) {
+              matched = ((Collection<?>) source).containsAll(((Collection<?>) target));
+            }
+          } else {
+            Set<String> targetValues = CollectUtils.newHashSet(Strings.split(target.toString(), ","));
+            Set<String> sourceValues = CollectUtils.newHashSet(Strings.split(source.toString(), ","));
+            matched = sourceValues.containsAll(targetValues);
+          }
         }
         if (!matched) break;
       }
@@ -57,5 +72,4 @@ public interface Profile {
     return matched;
   }
 
-  Map<Dimension, String> getProperties();
 }

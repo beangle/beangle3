@@ -17,7 +17,6 @@
   <modules>
     <module>core</module>
     <module>web</module>
-    <module>blueprint</module>
   </modules>
 
   <dependencies>

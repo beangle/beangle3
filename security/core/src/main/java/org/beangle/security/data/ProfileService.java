@@ -16,34 +16,27 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.model;
+package org.beangle.security.data;
 
-public enum MemberShip {
+import java.util.List;
+
+public interface ProfileService {
+
   /**
-   * just role member
-   * 成员关系可以等价于读权限
+   * 查找用户在指定资源上对应的数据配置
+   *
+   * @param user
+   * @param function
    */
-  MEMBER,
+  List<Profile> getProfiles(String user, String function);
+
   /**
-   * Can grant/revoke role to/from member
+   * 查找符合固定资源的数据权限
+   *
+   * @param user
+   * @param dataName
+   * @param function
+   * @return
    */
-  GRANTER,
-  /**
-   * manage role perperties and permissions
-   * 对组可管理意为<br>
-   * <ul>
-   * <li>建立下级组
-   * <li>移动下级组顺序
-   * <li>功能权限
-   * <li>直接成员
-   * </ul>
-   * 不能改变组的
-   * <ul>
-   * <li>删除组
-   * <li>重命名.
-   * </ul>
-   * 只要拥有上级组的管理权限，才能变更这些，这些称之为写权限(admin)。
-   * 拥有某组的管理权限，不意味拥有下级组的管理权限。新建组情况自动授予该组的其他管理者管理权限。
-   */
-  MANAGER;
+  Permission getPermission(String user, String dataName, String function);
 }
