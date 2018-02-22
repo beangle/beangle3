@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.beangle.orm</groupId>
     <artifactId>beangle-orm-parent</artifactId>
-    <version>3.6.0.M2</version>
+    <version>3.6.0.M3</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.beangle.orm</groupId>
@@ -101,6 +101,12 @@
       <groupId>org.freemarker</groupId>
       <artifactId>freemarker</artifactId>
       <version>${freemarker.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.directwebremoting</groupId>
+      <artifactId>dwr</artifactId>
+      <version>${dwr.version}</version>
       <optional>true</optional>
     </dependency>
   </dependencies>

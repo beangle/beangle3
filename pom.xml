@@ -8,7 +8,7 @@
   <groupId>org.beangle</groupId>
   <artifactId>beangle-library-parent</artifactId>
   <packaging>pom</packaging>
-  <version>3.6.0.M2</version>
+  <version>3.6.0.M3</version>
   <name>Beangle Library V3 Parent</name>
 
   <url>https://github.com/beangle/beangle3</url>
@@ -37,6 +37,7 @@
     <jxls.version>1.0.3</jxls.version>
     <poi.version>3.9</poi.version>
     <fileupload.version>1.3.3</fileupload.version>
+    <dwr.version>3.0.2-RELEASE</dwr.version>
   </properties>
 
   <modules>

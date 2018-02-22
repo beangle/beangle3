@@ -91,9 +91,9 @@ public class BeangleFreemarkerManager extends FreemarkerManager {
    * disable configuration using theme temploader
    * because only tag based on theme ,common pages don't based on theme
    */
-//  protected void configureTemplateLoader(TemplateLoader templateLoader) {
-//    config.setTemplateLoader(templateLoader);
-//  }
+  protected void configureTemplateLoader(TemplateLoader templateLoader) {
+    config.setTemplateLoader(templateLoader);
+  }
 
   /**
    * The default template loader is a MultiTemplateLoader which includes
@@ -177,6 +177,11 @@ public class BeangleFreemarkerManager extends FreemarkerManager {
           sb.append(key).append("->").append(value);
           if (iter.hasNext()) sb.append(',');
         }
+      }
+      // 5 support beangle profiles
+      String profiles = System.getProperty("beangle.cdi.profiles");
+      if (Strings.contains(profiles, "dev")) {
+        config.setTemplateUpdateDelayMilliseconds(0);
       }
       logger.info("Freemarker properties:{} ", sb);
     } catch (TemplateException e) {
