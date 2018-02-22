@@ -16,21 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.function;
+package org.beangle.security.data;
 
-import org.beangle.security.blueprint.Permission;
+public interface Permission {
 
-/**
- * 功能权限
- *
- * @author chaostone
- * @since 3.0.0
- */
-public interface FuncPermission extends Permission {
+  public String getFilters();
 
-  /**
-   * 系统资源
-   */
-  FuncResource getResource();
+  public String getActions();
 
+  public String getRestrictions();
 }

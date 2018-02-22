@@ -16,23 +16,27 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.blueprint.event;
+package org.beangle.security.data;
 
 import java.util.List;
 
-import org.beangle.security.Securities;
-import org.beangle.security.blueprint.User;
+public interface ProfileService {
 
-/**
- * @author chaostone
- * @version $Id: UserRemoveEvent.java Jul 27, 2011 10:24:33 AM chaostone $
- */
-public class UserRemoveEvent extends UserEvent {
-  private static final long serialVersionUID = -6477958983678067472L;
+  /**
+   * 查找用户在指定资源上对应的数据配置
+   *
+   * @param user
+   * @param function
+   */
+  List<Profile> getProfiles(String user, String function);
 
-  public UserRemoveEvent(List<User> users) {
-    super(users);
-    setSubject(Securities.getUsername() + " 删除了" + getUserNames() + " 用户");
-  }
-
+  /**
+   * 查找符合固定资源的数据权限
+   *
+   * @param user
+   * @param dataName
+   * @param function
+   * @return
+   */
+  Permission getPermission(String user, String dataName, String function);
 }

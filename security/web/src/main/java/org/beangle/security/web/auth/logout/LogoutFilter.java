@@ -47,7 +47,6 @@ import org.beangle.security.core.context.SecurityContextHolder;
  * </p>
  */
 public class LogoutFilter extends GenericHttpFilter {
-  private String filterProcessesUrl = "/logout";
   private String logoutSuccessUrl;
   private LogoutHandlerStack handlerStack;
 
@@ -55,12 +54,12 @@ public class LogoutFilter extends GenericHttpFilter {
     Assert.notNull(handlerStack, "LogoutHandlerStack are required");
     this.handlerStack = stack;
     this.logoutSuccessUrl = logoutSuccessUrl;
-    Assert.isTrue(RedirectUtils.isValidRedirectUrl(logoutSuccessUrl), logoutSuccessUrl
-        + " isn't a valid redirect URL");
+    Assert.isTrue(RedirectUtils.isValidRedirectUrl(logoutSuccessUrl),
+        logoutSuccessUrl + " isn't a valid redirect URL");
   }
 
-  public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
-      ServletException {
+  public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+      throws IOException, ServletException {
     HttpServletRequest request = (HttpServletRequest) req;
     HttpServletResponse response = (HttpServletResponse) res;
 
@@ -85,24 +84,7 @@ public class LogoutFilter extends GenericHttpFilter {
    * @return <code>true</code> if logout should occur, <code>false</code> otherwise
    */
   protected boolean requiresLogout(HttpServletRequest request, HttpServletResponse response) {
-    String uri = request.getRequestURI();
-    int pathParamIndex = uri.indexOf(';');
-
-    if (pathParamIndex > 0) {
-      // strip everything from the first semi-colon
-      uri = uri.substring(0, pathParamIndex);
-    }
-
-    int queryParamIndex = uri.indexOf('?');
-
-    if (queryParamIndex > 0) {
-      // strip everything from the first question mark
-      uri = uri.substring(0, queryParamIndex);
-    }
-
-    if ("".equals(request.getContextPath())) { return uri.endsWith(filterProcessesUrl); }
-
-    return uri.endsWith(request.getContextPath() + filterProcessesUrl);
+    return (request.getParameterMap().containsKey("logoutRequest"));
   }
 
   /**
@@ -130,18 +112,8 @@ public class LogoutFilter extends GenericHttpFilter {
     return targetUrl;
   }
 
-  public void setFilterProcessesUrl(String filterProcessesUrl) {
-    Assert.notEmpty(filterProcessesUrl, "FilterProcessesUrl required");
-    Assert.isTrue(RedirectUtils.isValidRedirectUrl(filterProcessesUrl), filterProcessesUrl
-        + " isn't a valid redirect URL");
-    this.filterProcessesUrl = filterProcessesUrl;
-  }
-
   protected String getLogoutSuccessUrl() {
     return logoutSuccessUrl;
   }
 
-  protected String getFilterProcessesUrl() {
-    return filterProcessesUrl;
-  }
 }
