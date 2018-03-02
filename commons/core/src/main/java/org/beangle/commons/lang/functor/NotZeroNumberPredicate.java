@@ -29,7 +29,7 @@ package org.beangle.commons.lang.functor;
 public class NotZeroNumberPredicate implements Predicate<Number> {
 
   public Boolean apply(final Number value) {
-    return 0 != ((Number) value).intValue();
+    return (null != value) && 0 != ((Number) value).intValue();
   }
 
   /** Constant <code>INSTANCE</code> */

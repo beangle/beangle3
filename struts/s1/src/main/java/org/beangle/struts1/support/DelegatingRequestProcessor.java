@@ -59,6 +59,11 @@ public class DelegatingRequestProcessor extends RequestProcessor {
     return super.processActionCreate(request, response, mapping);
   }
 
+  @Override
+  protected HttpServletRequest processMultipart(HttpServletRequest request) {
+    return request;
+  }
+
   public static String determineActionBeanName(ActionMapping mapping) {
     String prefix = mapping.getModuleConfig().getPrefix();
     String path = mapping.getPath();

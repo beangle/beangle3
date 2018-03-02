@@ -54,10 +54,5 @@
       <artifactId>spring-web</artifactId>
       <version>${spring.version}</version>
     </dependency>
-    <dependency>
-      <groupId>commons-fileupload</groupId>
-      <artifactId>commons-fileupload</artifactId>
-      <version>${fileupload.version}</version>
-    </dependency>
   </dependencies>
 </project>

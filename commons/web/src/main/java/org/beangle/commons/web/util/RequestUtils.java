@@ -223,7 +223,7 @@ public final class RequestUtils {
     if (Strings.isBlank(dateStr)) {
       return null;
     } else {
-      return java.sql.Date.valueOf(name);
+      return java.sql.Date.valueOf(dateStr);
     }
   }
 }
