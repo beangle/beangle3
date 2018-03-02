@@ -18,6 +18,7 @@
  */
 package org.beangle.struts1.action;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
@@ -25,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,7 +34,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.MessageResources;
+import org.apache.struts.util.ModuleUtils;
 import org.beangle.commons.collection.page.Page;
 import org.beangle.commons.collection.page.PageLimit;
 import org.beangle.commons.dao.EntityDao;
@@ -49,8 +53,8 @@ import org.beangle.commons.transfer.excel.ExcelTemplateWriter;
 import org.beangle.commons.transfer.exporter.Context;
 import org.beangle.commons.transfer.exporter.DefaultPropertyExtractor;
 import org.beangle.commons.transfer.exporter.Exporter;
-import org.beangle.commons.transfer.exporter.MultiEntityExporter;
 import org.beangle.commons.transfer.exporter.PropertyExtractor;
+import org.beangle.commons.transfer.exporter.SimpleEntityExporter;
 import org.beangle.commons.transfer.exporter.SimpleItemExporter;
 import org.beangle.commons.transfer.exporter.TemplateExporter;
 import org.beangle.commons.web.util.RequestUtils;
@@ -92,7 +96,8 @@ public class BaseAction extends DispatchAction {
   }
 
   public static String get(HttpServletRequest request, String name) {
-    return request.getParameter(name);
+    String v = request.getParameter(name);
+    return (Strings.isBlank(v)) ? null : v;
   }
 
   public static Integer getInteger(HttpServletRequest request, String name) {
@@ -146,6 +151,7 @@ public class BaseAction extends DispatchAction {
         EntityUtils.evictEmptyProperty(entity);
       } else {
         entity = (Entity) entityDao.get(entityClass, entityId);
+        params.remove("id");
         populate(params, entity);
       }
     } catch (Exception e) {
@@ -274,23 +280,24 @@ public class BaseAction extends DispatchAction {
       if (first.getClass().isArray()) isArray = true;
     }
     Exporter exporter;
+    context.put("keys", getExportKeys(request));
     String template = (String) context.getDatas().get("templatePath");
     if (isArray) {
       exporter = new SimpleItemExporter();
     } else if (Strings.isNotBlank(template)) {
       exporter = new TemplateExporter();
     } else {
-      exporter = new MultiEntityExporter();
-      MultiEntityExporter.Metadata md = new MultiEntityExporter.Metadata("data",
-          Strings.split(getExportKeys(request), ","), Strings.split(getExportTitles(request), ","));
-      context.put("metadatas", md);
-      ((MultiEntityExporter) exporter).setPropertyExtractor(getPropertyExtractor(request));
+      exporter = new SimpleEntityExporter();
+      ((SimpleEntityExporter) exporter).setPropertyExtractor(getPropertyExtractor(request));
     }
     if (exporter instanceof SimpleItemExporter) {
       ((SimpleItemExporter) exporter).setTitles(Strings.split(getExportTitles(request), ","));
       exporter.setWriter(new ExcelItemWriter(response.getOutputStream()));
     } else {
-      exporter.setWriter(new ExcelTemplateWriter(response.getOutputStream()));
+      ExcelTemplateWriter writer = new ExcelTemplateWriter(response.getOutputStream());
+      writer.setTemplate(new File(template).toURI().toURL());
+      writer.setContext(context);
+      exporter.setWriter(writer);
     }
     return exporter;
   }
@@ -331,6 +338,12 @@ public class BaseAction extends DispatchAction {
       String titles = request.getParameter("titles");
       return titles;
     }
+  }
+
+  protected MessageResources getResources(HttpServletRequest request, String key) {
+    ServletContext context = request.getServletContext();
+    ModuleConfig moduleConfig = ModuleUtils.getInstance().getModuleConfig(request, context);
+    return (MessageResources) context.getAttribute(key + moduleConfig.getPrefix());
   }
 
   protected EntityDao entityDao;

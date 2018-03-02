@@ -86,7 +86,6 @@ public abstract class AbstractSecurityInterceptor implements Initializing {
         "access denied"); }
     logger.debug("Authorization successful");
 
-
     return new InterceptorStatusToken(authenticated, false, object);
 
   }

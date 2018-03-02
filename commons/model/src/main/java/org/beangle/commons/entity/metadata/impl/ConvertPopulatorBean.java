@@ -27,6 +27,7 @@ import java.util.Map;
 import org.beangle.commons.conversion.Conversion;
 import org.beangle.commons.conversion.impl.DefaultConversion;
 import org.beangle.commons.entity.metadata.EntityType;
+import org.beangle.commons.entity.metadata.IdentifierType;
 import org.beangle.commons.entity.metadata.ObjectAndType;
 import org.beangle.commons.entity.metadata.Populator;
 import org.beangle.commons.entity.metadata.Type;
@@ -83,12 +84,16 @@ public class ConvertPopulatorBean implements Populator {
     while (index < attrs.length) {
       try {
         property = getProperty(propObj, attrs[index]);
-        Type propertyType = type.getPropertyType(attrs[index]);
-        // 初始化
-        if (null == propertyType) {
-          logger.error("Cannot find property type [{}] of {}", attrs[index], propObj.getClass());
-          throw new RuntimeException("Cannot find property type " + attrs[index] + " of "
-              + propObj.getClass().getName());
+        Type propertyType = null;
+        if (attrs[index].contains("[") && null != property) {
+          propertyType = new IdentifierType(property.getClass());
+        } else {
+          propertyType = type.getPropertyType(attrs[index]);
+          if (null == propertyType) {
+            logger.error("Cannot find property type [{}] of {}", attrs[index], propObj.getClass());
+            throw new RuntimeException(
+                "Cannot find property type " + attrs[index] + " of " + propObj.getClass().getName());
+          }
         }
         if (null == property) {
           property = propertyType.newInstance();
@@ -118,8 +123,9 @@ public class ConvertPopulatorBean implements Populator {
       }
       return true;
     } catch (Exception e) {
-      logger.warn("copy property failure:[class:" + type.getEntityName() + " attr:" + attr + " value:"
-          + value + "]:", e);
+      logger.warn(
+          "copy property failure:[class:" + type.getEntityName() + " attr:" + attr + " value:" + value + "]:",
+          e);
       return false;
     }
   }
