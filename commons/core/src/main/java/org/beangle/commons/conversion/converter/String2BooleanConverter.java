@@ -43,13 +43,13 @@ public class String2BooleanConverter implements Converter<String, Boolean> {
     trueValues.add("true");
     trueValues.add("on");
     trueValues.add("yes");
-    trueValues.add("Y");
+    trueValues.add("y");
     trueValues.add("1");
 
     falseValues.add("false");
     falseValues.add("off");
     falseValues.add("no");
-    falseValues.add("N");
+    falseValues.add("n");
     falseValues.add("0");
   }
 

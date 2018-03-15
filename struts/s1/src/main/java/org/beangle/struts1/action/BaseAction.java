@@ -241,8 +241,10 @@ public class BaseAction extends DispatchAction {
     Context context = new Context();
     context.getDatas().put("format", format);
     context.getDatas().put("exportFile", fileName);
-    if (Strings.isNotBlank(template)) template = resolveTemplatePath(request, template);
-    context.getDatas().put("templatePath", template);
+    if (Strings.isNotBlank(template)) {
+      template = resolveTemplatePath(request, template);
+      context.getDatas().put("templatePath", template);
+    }
     configExportContext(request, context);
     Exporter exporter = getExporter(request, response, context);
     if (format.equals("excel")) {
