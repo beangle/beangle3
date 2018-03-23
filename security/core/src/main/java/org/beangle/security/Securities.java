@@ -48,4 +48,8 @@ public final class Securities {
       return session.getPrincipal();
     }
   }
+
+  public static boolean isRoot() {
+    return SecurityContext.get().isRoot();
+  }
 }
