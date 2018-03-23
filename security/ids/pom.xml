@@ -10,8 +10,8 @@
   <name>Beangle Security Ids</name>
 
   <properties>
-    <bundle.symbolicName>org.beangle.security.ids</bundle.symbolicName>
-    <bundle.namespace>org.beangle.security.ids</bundle.namespace>
+    <bundle.symbolicName>org.beangle.security</bundle.symbolicName>
+    <bundle.namespace>org.beangle.security</bundle.namespace>
   </properties>
 
   <dependencies>

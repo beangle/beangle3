@@ -20,9 +20,7 @@ package org.beangle.security.ids;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.util.List;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -31,7 +29,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.beangle.commons.lang.Option;
 import org.beangle.commons.web.filter.GenericCompositeFilter;
-import org.beangle.security.access.AccessDeniedException;
+import org.beangle.commons.web.security.RequestConvertor;
+import org.beangle.commons.web.util.CookieUtils;
+import org.beangle.security.access.AuthorityManager;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.context.SecurityContext;
 import org.beangle.security.core.session.Session;
@@ -41,66 +41,56 @@ import org.beangle.security.ids.session.SessionIdReader;
 
 public class FilterChainProxy extends GenericCompositeFilter {
 
-  /** Compiled pattern version of the filter chain map */
-  private List<Filter> filters;
   private SessionRepo sessionRepo;
   private AccessDeniedHandler accessDeniedHandler;
   private EntryPoint entryPoint;
+  private RequestConvertor requestConvertor;
   private SessionIdReader sessionIdReader;
+  private AuthorityManager authorityManager;
 
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+  public void doFilter(ServletRequest req, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
+    HttpServletRequest request = (HttpServletRequest) req;
     Option<String> os = sessionIdReader.getId((HttpServletRequest) request);
+    Session session = null;
     if (os.isDefined()) {
       String sessionId = os.get();
-      Session session = sessionRepo.get(sessionId);
+      session = sessionRepo.get(sessionId);
       if (null != session) {
         sessionRepo.access(sessionId, Instant.now());
       }
-      SecurityContext.setSession(session);
-    }
-    try {
-      if (!filters.isEmpty()) {
-        new VirtualFilterChain(chain, filters).doFilter(request, response);
-      }
-    } catch (SecurityException bae) {
-      try {
-        handleException(request, response, bae);
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
     }
 
-  }
+    boolean isRoot = false;
+    if (null != session) {
+      isRoot = authorityManager.isRoot(session.getPrincipal().getName());
+    }
+    String runAs = null;
+    if (isRoot) {
+      runAs = CookieUtils.getCookieValue(request, "beangle.security.runAs");
+    }
+    SecurityContext context = new SecurityContext(session, requestConvertor.convert(request), isRoot, runAs);
+    SecurityContext.set(context);
 
-  private void handleException(ServletRequest request, ServletResponse response, Exception exception)
-      throws Exception {
-    if (exception instanceof AuthenticationException) {
-      sendStartAuthentication(request, response, (AuthenticationException) exception);
-    } else if (exception instanceof AccessDeniedException) {
-      accessDeniedHandler.handle(request, response, (AccessDeniedException) exception);
+    if (authorityManager.isAuthorized(context)) {
+      chain.doFilter(request, response);
     } else {
-      sendStartAuthentication(request, response, new AuthenticationException("access denied", exception));
+      SecurityContext.clear();
+      if (context.getSession() == null) {
+        sendStartAuthentication(request, response, null);
+      } else {
+        accessDeniedHandler.handle(request, response, null);
+      }
     }
   }
 
   private void sendStartAuthentication(ServletRequest request, ServletResponse response,
-      AuthenticationException reason) throws Exception {
-    SecurityContext.clear();
+      AuthenticationException reason) throws IOException, ServletException {
     entryPoint.commence(request, response, reason);
   }
 
   public FilterChainProxy() {
     super();
-  }
-
-  public FilterChainProxy(List<Filter> filters) {
-    super();
-    this.setFilters(filters);
-  }
-
-  public void setFilters(List<Filter> filters) {
-    this.filters = filters;
   }
 
   public void setSessionRepo(SessionRepo sessionRepo) {
@@ -114,5 +104,18 @@ public class FilterChainProxy extends GenericCompositeFilter {
   public void setEntryPoint(EntryPoint entryPoint) {
     this.entryPoint = entryPoint;
   }
+
+  public void setRequestConvertor(RequestConvertor requestConvertor) {
+    this.requestConvertor = requestConvertor;
+  }
+
+  public void setSessionIdReader(SessionIdReader sessionIdReader) {
+    this.sessionIdReader = sessionIdReader;
+  }
+
+  public void setAuthorityManager(AuthorityManager authorityManager) {
+    this.authorityManager = authorityManager;
+  }
+
 
 }

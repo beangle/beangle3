@@ -21,7 +21,6 @@ package org.beangle.security.authc;
 import java.util.Collection;
 
 import org.beangle.commons.lang.Objects;
-import org.beangle.security.core.GrantedAuthority;
 
 public class AnonymousAuthentication extends AbstractAuthentication {
 
@@ -34,7 +33,7 @@ public class AnonymousAuthentication extends AbstractAuthentication {
    */
   public static AnonymousAuthentication Instance = new AnonymousAuthentication("anonymous", null);
 
-  public AnonymousAuthentication(Object principal, Collection<? extends GrantedAuthority> authorities) {
+  public AnonymousAuthentication(Object principal, Collection<?> authorities) {
     super(authorities);
     this.principal = principal;
     setAuthenticated(true);

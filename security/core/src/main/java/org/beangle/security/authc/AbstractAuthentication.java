@@ -26,7 +26,6 @@ import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Objects;
 import org.beangle.security.core.Authentication;
-import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.userdetail.Account;
 
 public abstract class AbstractAuthentication implements Authentication {
@@ -34,10 +33,10 @@ public abstract class AbstractAuthentication implements Authentication {
   private static final long serialVersionUID = 3966615358056184985L;
 
   private Object details;
-  private final Collection<GrantedAuthority> authorities;
+  private final Collection<?> authorities;
   private boolean authenticated = false;
 
-  public AbstractAuthentication(Collection<? extends GrantedAuthority> authorities) {
+  public AbstractAuthentication(Collection<?> authorities) {
     if (authorities == null) {
       this.authorities = Collections.emptyList();
     } else {
@@ -54,7 +53,7 @@ public abstract class AbstractAuthentication implements Authentication {
     this.details = details;
   }
 
-  public Collection<GrantedAuthority> getAuthorities() {
+  public Collection<?> getAuthorities() {
     return authorities;
   }
 

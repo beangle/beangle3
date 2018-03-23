@@ -26,14 +26,26 @@ import org.beangle.security.core.session.Session;
 public final class Securities {
 
   public static String getUsername() {
-    Session session = SecurityContext.getSession();
-    if (null != session && null != session.getPrincipal()) {
-      return session.getPrincipal().getName();
-    } else return null;
+    SecurityContext context = SecurityContext.get();
+    return context.getUser();
+  }
+
+  public static String getResource() {
+    return SecurityContext.get().getRequest().getResource().toString();
+  }
+
+  public static Session getSession() {
+    SecurityContext context = SecurityContext.get();
+    return context.getSession();
   }
 
   public static Principal getPrincipal() {
-    Session session = SecurityContext.getSession();
-    return (null != session) ? session.getPrincipal() : null;
+    SecurityContext context = SecurityContext.get();
+    Session session = context.getSession();
+    if (null == session) {
+      return null;
+    } else {
+      return session.getPrincipal();
+    }
   }
 }

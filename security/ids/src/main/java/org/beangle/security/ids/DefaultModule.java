@@ -19,7 +19,6 @@
 package org.beangle.security.ids;
 
 import org.beangle.commons.inject.bind.AbstractBindModule;
-import org.beangle.security.ids.access.AuthorizationFilter;
 import org.beangle.security.ids.access.DefaultAccessDeniedHandler;
 
 /**
@@ -32,9 +31,9 @@ public class DefaultModule extends AbstractBindModule {
 
   @Override
   protected void doBinding() {
-    bind(AuthorizationFilter.class, DefaultAccessDeniedHandler.class).shortName();
+    bind( DefaultAccessDeniedHandler.class).shortName();
 
-    bind("securityFilterChain", FilterChainProxy.class).property("filters", list(ref("authorizationFilter")));
+    bind("securityFilterChain", FilterChainProxy.class);
 
     bind(IdsConfig.class, IdsEntryPoint.class).shortName();
   }

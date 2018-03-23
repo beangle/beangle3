@@ -18,8 +18,7 @@
  */
 package org.beangle.security.access;
 
-import org.beangle.commons.security.Request;
-import org.beangle.security.core.session.Session;
+import org.beangle.security.core.context.SecurityContext;
 
 /**
  * 授权判断服务
@@ -28,5 +27,7 @@ import org.beangle.security.core.session.Session;
  */
 public interface AuthorityManager {
 
-  boolean isAuthorized(Session session, Request resource);
+  boolean isAuthorized(SecurityContext context);
+
+  boolean isRoot(String user);
 }

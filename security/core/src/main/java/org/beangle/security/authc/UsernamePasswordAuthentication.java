@@ -20,8 +20,6 @@ package org.beangle.security.authc;
 
 import java.util.Collection;
 
-import org.beangle.security.core.GrantedAuthority;
-
 public class UsernamePasswordAuthentication extends AbstractAuthentication {
 
   private static final long serialVersionUID = 1L;
@@ -36,7 +34,7 @@ public class UsernamePasswordAuthentication extends AbstractAuthentication {
   }
 
   public UsernamePasswordAuthentication(Object principal, Object credentials,
-      Collection<? extends GrantedAuthority> authorities) {
+      Collection<?> authorities) {
     super(authorities);
     this.principal = principal;
     this.credentials = credentials;

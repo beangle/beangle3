@@ -18,9 +18,7 @@
  */
 package org.beangle.security.core.context;
 
-import java.security.Principal;
-
-import org.beangle.commons.lang.Assert;
+import org.beangle.commons.security.Request;
 import org.beangle.security.core.session.Session;
 
 /**
@@ -35,7 +33,23 @@ import org.beangle.security.core.session.Session;
  */
 public class SecurityContext {
 
-  private static ThreadLocal<Session> holder = new ThreadLocal<Session>();
+  private static ThreadLocal<SecurityContext> holder = new ThreadLocal<SecurityContext>();
+
+  private final Session session;
+
+  private final Request request;
+
+  private final boolean root;
+
+  private final String runAs;
+
+  public SecurityContext(Session session, Request request, boolean root, String runAs) {
+    super();
+    this.session = session;
+    this.request = request;
+    this.root = root;
+    this.runAs = runAs;
+  }
 
   /**
    * Explicitly clears the context value from the current thread.
@@ -44,17 +58,45 @@ public class SecurityContext {
     holder.set(null);
   }
 
-  public static Session getSession() {
+  public static void set(SecurityContext context) {
+    holder.set(context);
+  }
+
+  public static SecurityContext get() {
     return holder.get();
   }
 
-  public static void setSession(Session session) {
-    Assert.notNull(session, "Only non-null SecurityContext instances are permitted");
-    holder.set(session);
+  public static ThreadLocal<SecurityContext> getHolder() {
+    return holder;
   }
 
-  public Principal getPrincipal() {
-    return (null == holder.get()) ? null : holder.get().getPrincipal();
+  public static void setHolder(ThreadLocal<SecurityContext> holder) {
+    SecurityContext.holder = holder;
+  }
+
+  public Session getSession() {
+    return session;
+  }
+
+  public Request getRequest() {
+    return request;
+  }
+
+  public String getUser() {
+    if (root && null != runAs) {
+      return runAs;
+    } else {
+      if (null == session) return "anonymous";
+      else return session.getPrincipal().getName();
+    }
+  }
+
+  public boolean isRoot() {
+    return root;
+  }
+
+  public String getRunAs() {
+    return runAs;
   }
 
 }

@@ -29,6 +29,7 @@ import org.beangle.commons.event.EventListener;
 import org.beangle.commons.lang.Strings;
 import org.beangle.ems.log.model.BusinessLogBean;
 import org.beangle.ems.log.model.BusinessLogDetailBean;
+import org.beangle.security.Securities;
 import org.beangle.security.core.context.SecurityContext;
 import org.beangle.security.core.session.Session;
 
@@ -39,7 +40,7 @@ import org.beangle.security.core.session.Session;
 public class BusinessEventLogger extends BaseServiceImpl implements EventListener<Event> {
 
   public void onEvent(Event event) {
-    Session session = SecurityContext.getSession();
+    Session session = Securities.getSession();
     if (null == session) return;
     BusinessLogBean log = new BusinessLogBean();
     log.setOperateAt(new Date(event.getTimestamp()));
@@ -50,7 +51,7 @@ public class BusinessEventLogger extends BaseServiceImpl implements EventListene
     if (null != agent) {
       log.setIp(agent.getIp());
       log.setAgent(agent.getOs() + " " + agent.getName());
-      // log.setEntry(Strings.defaultIfBlank((String) getProperty(details, "lastAccessUri"), "--"));
+      log.setEntry(Strings.defaultIfBlank(SecurityContext.get().getRequest().getResource().toString(), "--"));
     }
     if (null != event.getDetail()) {
       log.setDetail(new BusinessLogDetailBean(log, event.getDetail()));
