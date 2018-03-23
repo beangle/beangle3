@@ -16,22 +16,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.commons.cache.concurrent;
+package org.beangle.security.ids.session;
 
-import org.beangle.commons.cache.AbstractCacheManager;
-import org.beangle.commons.cache.Cache;
+import javax.servlet.http.HttpServletRequest;
 
-/**
- * Concurrent Map Cache Manager.
- *
- * @author chaostone
- * @since 3.2.0
- */
-public class ConcurrentMapCacheManager extends AbstractCacheManager {
+import org.beangle.commons.lang.Option;
+import org.beangle.commons.web.util.CookieUtils;
+
+public class CookieSessionIdReader implements SessionIdReader {
+
+  private String idName;
+
+  public CookieSessionIdReader(String idName) {
+    super();
+    this.idName = idName;
+  }
+
+  public String idName() {
+    return idName;
+  }
 
   @Override
-  protected <K, V> Cache<K, V> newCache(String name, Class<K> keyType, Class<V> valueType) {
-    return new ConcurrentMapCache<K, V>();
+  public Option<String> getId(HttpServletRequest request) {
+    return Option.from(CookieUtils.getCookieValue(request, idName));
   }
 
 }

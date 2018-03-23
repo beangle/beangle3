@@ -27,7 +27,9 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
+import org.beangle.commons.lang.Option;
 import org.beangle.commons.web.filter.GenericCompositeFilter;
 import org.beangle.security.access.AccessDeniedException;
 import org.beangle.security.core.AuthenticationException;
@@ -35,6 +37,7 @@ import org.beangle.security.core.context.SecurityContext;
 import org.beangle.security.core.session.Session;
 import org.beangle.security.core.session.SessionRepo;
 import org.beangle.security.ids.access.AccessDeniedHandler;
+import org.beangle.security.ids.session.SessionIdReader;
 
 public class FilterChainProxy extends GenericCompositeFilter {
 
@@ -43,11 +46,13 @@ public class FilterChainProxy extends GenericCompositeFilter {
   private SessionRepo sessionRepo;
   private AccessDeniedHandler accessDeniedHandler;
   private EntryPoint entryPoint;
+  private SessionIdReader sessionIdReader;
 
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
-    String sessionId = "";
-    if (null != sessionId) {
+    Option<String> os = sessionIdReader.getId((HttpServletRequest) request);
+    if (os.isDefined()) {
+      String sessionId = os.get();
       Session session = sessionRepo.get(sessionId);
       if (null != session) {
         sessionRepo.access(sessionId, Instant.now());
