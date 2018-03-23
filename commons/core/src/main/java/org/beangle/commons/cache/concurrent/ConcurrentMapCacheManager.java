@@ -18,12 +18,8 @@
  */
 package org.beangle.commons.cache.concurrent;
 
-import java.util.Collection;
-import java.util.Map;
-
+import org.beangle.commons.cache.AbstractCacheManager;
 import org.beangle.commons.cache.Cache;
-import org.beangle.commons.cache.CacheManager;
-import org.beangle.commons.collection.CollectUtils;
 
 /**
  * Concurrent Map Cache Manager.
@@ -31,29 +27,13 @@ import org.beangle.commons.collection.CollectUtils;
  * @author chaostone
  * @since 3.2.0
  */
-public class ConcurrentMapCacheManager implements CacheManager {
-
-  private final Map<String, Cache<?, ?>> caches = CollectUtils.newConcurrentHashMap();
-
-  @SuppressWarnings("unchecked")
-  @Override
-  public <K, V> Cache<K, V> getCache(String name) {
-    Cache<?, ?> cache = caches.get(name);
-    if (cache == null) {
-      synchronized (caches) {
-        cache = caches.get(name);
-        if (cache == null) {
-          cache = new ConcurrentMapCache<K, V>(name);
-          caches.put(name, cache);
-        }
-      }
-    }
-    return (Cache<K, V>) cache;
-  }
+public class ConcurrentMapCacheManager extends AbstractCacheManager {
 
   @Override
-  public Collection<String> getCacheNames() {
-    return null;
+  protected <K, V> Cache<K, V> newCache(String name, Class<K> keyType, Class<V> valueType) {
+    return new ConcurrentMapCache<K, V>();
   }
+
+
 
 }

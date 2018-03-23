@@ -24,6 +24,7 @@ import static org.testng.Assert.fail;
 
 import java.util.Iterator;
 
+import org.beangle.security.authc.UsernamePasswordAuthentication;
 import org.beangle.security.core.GrantedAuthority;
 import org.beangle.security.core.authority.GrantedAuthorityBean;
 import org.testng.annotations.Test;

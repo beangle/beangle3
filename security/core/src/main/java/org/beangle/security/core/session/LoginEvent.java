@@ -29,11 +29,11 @@ public class LoginEvent extends Event {
 
   private static final long serialVersionUID = -6802410177820837015L;
 
-  public LoginEvent(Sessioninfo source) {
+  public LoginEvent(Session source) {
     super(source);
   }
 
-  public Sessioninfo getSessioninfo() {
-    return (Sessioninfo) source;
+  public Session getSessioninfo() {
+    return (Session) source;
   }
 }

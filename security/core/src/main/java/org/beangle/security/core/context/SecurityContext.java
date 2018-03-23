@@ -18,39 +18,43 @@
  */
 package org.beangle.security.core.context;
 
-import java.io.Serializable;
+import java.security.Principal;
 
-import org.beangle.security.core.Authentication;
+import org.beangle.commons.lang.Assert;
+import org.beangle.security.core.session.Session;
 
 /**
  * Interface defining the minimum security information associated with the
  * current thread of execution.
  * <p>
- * The security context is stored in a {@link SecurityContextHolder}.
+ * The security context is stored in a {@link ThreadLocalHolder}.
  * </p>
  *
  * @author chaostone
  * @version $Id: SecurityContext.java 2217 2007-10-27 00:45:30Z $
  */
-public interface SecurityContext extends Serializable {
+public class SecurityContext {
+
+  private static ThreadLocal<Session> holder = new ThreadLocal<Session>();
 
   /**
-   * Obtains the currently authenticated principal, or an authentication
-   * request token.
-   *
-   * @return the <code>Authentication</code> or <code>null</code> if no
-   *         authentication information is available
+   * Explicitly clears the context value from the current thread.
    */
-  Authentication getAuthentication();
+  public static void clear() {
+    holder.set(null);
+  }
 
-  /**
-   * Changes the currently authenticated principal, or removes the
-   * authentication information.
-   *
-   * @param authentication
-   *          the new <code>Authentication</code> token, or <code>null</code> if no further
-   *          authentication information
-   *          should be stored
-   */
-  void setAuthentication(Authentication authentication);
+  public static Session getSession() {
+    return holder.get();
+  }
+
+  public static void setSession(Session session) {
+    Assert.notNull(session, "Only non-null SecurityContext instances are permitted");
+    holder.set(session);
+  }
+
+  public Principal getPrincipal() {
+    return (null == holder.get()) ? null : holder.get().getPrincipal();
+  }
+
 }

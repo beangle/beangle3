@@ -31,7 +31,7 @@ public interface CacheManager {
   /**
    * Return the cache associated with the given name.
    */
-  <K, V> Cache<K, V> getCache(String name);
+  <K, V> Cache<K, V> getCache(String name, Class<K> keyClazz, Class<V> valueClass);
 
   /**
    * Return a collection of the caches known by this cache manager.

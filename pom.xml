@@ -37,6 +37,8 @@
     <jxls.version>1.0.3</jxls.version>
     <poi.version>3.9</poi.version>
     <dwr.version>3.0.2-RELEASE</dwr.version>
+    <caffeine.version>2.6.2</caffeine.version>
+    <protobuf.version>3.5.1</protobuf.version>
   </properties>
 
   <modules>

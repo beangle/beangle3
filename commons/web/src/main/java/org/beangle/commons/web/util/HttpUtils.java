@@ -19,6 +19,7 @@
 package org.beangle.commons.web.util;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -28,6 +29,8 @@ import java.net.URL;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
+
+import org.beangle.commons.io.IOs;
 
 public final class HttpUtils {
 
@@ -83,4 +86,26 @@ public final class HttpUtils {
     }
   }
 
+  public static byte[] getData(String urlString) {
+    HttpURLConnection conn = null;
+    try {
+      URL url = new URL(urlString);
+      conn = (HttpURLConnection) url.openConnection();
+      conn.setConnectTimeout(5 * 1000);
+      conn.setReadTimeout(5 * 1000);
+      conn.setRequestMethod("GET");
+      conn.setDoOutput(true);
+      if (conn.getResponseCode() == 200) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        IOs.copy(conn.getInputStream(), bos);
+        return bos.toByteArray();
+      } else {
+        return new byte[0];
+      }
+    } catch (Exception e) {
+      return new byte[0];
+    } finally {
+      if (null != conn) conn.disconnect();
+    }
+  }
 }

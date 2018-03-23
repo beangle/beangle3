@@ -18,9 +18,10 @@
  */
 package org.beangle.ems.log.service;
 
+import static org.beangle.commons.bean.PropertyUtils.getProperty;
+
 import java.util.Date;
 
-import static org.beangle.commons.bean.PropertyUtils.*;
 import org.beangle.commons.dao.impl.BaseServiceImpl;
 import org.beangle.commons.event.BusinessEvent;
 import org.beangle.commons.event.Event;
@@ -28,8 +29,8 @@ import org.beangle.commons.event.EventListener;
 import org.beangle.commons.lang.Strings;
 import org.beangle.ems.log.model.BusinessLogBean;
 import org.beangle.ems.log.model.BusinessLogDetailBean;
-import org.beangle.security.Securities;
-import org.beangle.security.core.Authentication;
+import org.beangle.security.core.context.SecurityContext;
+import org.beangle.security.core.session.Session;
 
 /**
  * @author chaostone
@@ -38,19 +39,18 @@ import org.beangle.security.core.Authentication;
 public class BusinessEventLogger extends BaseServiceImpl implements EventListener<Event> {
 
   public void onEvent(Event event) {
-    Authentication auth = Securities.getAuthentication();
-    if (null == auth) return;
+    Session session = SecurityContext.getSession();
+    if (null == session) return;
     BusinessLogBean log = new BusinessLogBean();
     log.setOperateAt(new Date(event.getTimestamp()));
     log.setOperation(Strings.defaultIfBlank(event.getSubject(), "  "));
     log.setResource(Strings.defaultIfBlank(event.getResource(), "  "));
-    log.setOperator(auth.getName());
-    Object details = auth.getDetails();
-    Object agent = getProperty(details, "agent");
+    log.setOperator(session.getPrincipal().getName());
+    Session.Agent agent = session.getAgent();
     if (null != agent) {
-      log.setIp((String) getProperty(agent, "ip"));
-      log.setAgent(getProperty(agent, "os") + " " + getProperty(agent, "browser"));
-      log.setEntry(Strings.defaultIfBlank((String) getProperty(details, "lastAccessUri"), "--"));
+      log.setIp(agent.getIp());
+      log.setAgent(agent.getOs() + " " + agent.getName());
+      // log.setEntry(Strings.defaultIfBlank((String) getProperty(details, "lastAccessUri"), "--"));
     }
     if (null != event.getDetail()) {
       log.setDetail(new BusinessLogDetailBean(log, event.getDetail()));

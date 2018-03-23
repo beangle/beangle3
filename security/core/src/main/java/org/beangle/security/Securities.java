@@ -18,30 +18,22 @@
  */
 package org.beangle.security;
 
-import org.beangle.security.auth.AnonymousAuthentication;
-import org.beangle.security.core.Authentication;
+import java.security.Principal;
+
 import org.beangle.security.core.context.SecurityContext;
-import org.beangle.security.core.context.SecurityContextHolder;
+import org.beangle.security.core.session.Session;
 
 public final class Securities {
 
-  public static boolean isValid(Authentication auth) {
-    return (null != auth && !AnonymousAuthentication.class.isAssignableFrom(auth.getClass()));
-  }
-
-  public static boolean hasValidAuthentication() {
-    return isValid(SecurityContextHolder.getContext().getAuthentication());
-  }
-
   public static String getUsername() {
-    SecurityContext context = SecurityContextHolder.getContext();
-    if (null != context && null != context.getAuthentication()) {
-      return context.getAuthentication().getName();
+    Session session = SecurityContext.getSession();
+    if (null != session && null != session.getPrincipal()) {
+      return session.getPrincipal().getName();
     } else return null;
   }
 
-  public static Authentication getAuthentication() {
-    SecurityContext context = SecurityContextHolder.getContext();
-    return (null != context) ? context.getAuthentication() : null;
+  public static Principal getPrincipal() {
+    Session session = SecurityContext.getSession();
+    return (null != session) ? session.getPrincipal() : null;
   }
 }

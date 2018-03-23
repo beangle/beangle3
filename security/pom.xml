@@ -16,7 +16,7 @@
 
   <modules>
     <module>core</module>
-    <module>web</module>
+    <module>ids</module>
   </modules>
 
   <dependencies>

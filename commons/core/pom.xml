@@ -14,4 +14,12 @@
     <bundle.symbolicName>org.beangle.commons.core</bundle.symbolicName>
     <bundle.namespace>org.beangle.commons</bundle.namespace>
   </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.github.ben-manes.caffeine</groupId>
+      <artifactId>caffeine</artifactId>
+      <version>${caffeine.version}</version>
+    </dependency>
+  </dependencies>
 </project>

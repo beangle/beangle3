@@ -18,11 +18,12 @@
  */
 package org.beangle.security.access;
 
-import org.beangle.security.core.Authentication;
+import org.beangle.commons.security.Request;
+import org.beangle.security.core.session.Session;
 
 public class MockAuthorityManager implements AuthorityManager {
 
-  public boolean isAuthorized(Authentication auth, Object resource) {
+  public boolean isAuthorized(Session session, Request resource) {
     return false;
   }
 
