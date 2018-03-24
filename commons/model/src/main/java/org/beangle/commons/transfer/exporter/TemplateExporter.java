@@ -134,7 +134,7 @@ public class TemplateExporter implements Exporter {
   /** {@inheritDoc} */
   public void transfer(TransferResult tr) {
     writer.write();
-    writer.close();
+    writer.flush();
   }
 
   /**

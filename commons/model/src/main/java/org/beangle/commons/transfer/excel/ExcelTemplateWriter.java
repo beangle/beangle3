@@ -119,7 +119,7 @@ public class ExcelTemplateWriter implements TemplateWriter {
    * close.
    * </p>
    */
-  public void close() {
+  public void flush() {
     try {
       workbook.write(outputStream);
     } catch (Exception e) {

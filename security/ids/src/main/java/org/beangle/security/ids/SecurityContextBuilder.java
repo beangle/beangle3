@@ -16,21 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.access;
+package org.beangle.security.ids;
 
-import org.beangle.commons.security.Request;
+import javax.servlet.http.HttpServletRequest;
+
 import org.beangle.security.core.context.SecurityContext;
 
-/**
- * 授权判断服务
- *
- * @author chaostone
- */
-public interface AuthorityManager {
+public interface SecurityContextBuilder {
 
-  boolean isAuthorized(SecurityContext context);
-
-  boolean isAuthorized(SecurityContext context, Request request);
-
-  boolean isRoot(String user);
+  SecurityContext build(HttpServletRequest request);
 }

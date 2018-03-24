@@ -19,7 +19,6 @@
 package org.beangle.security.ids;
 
 import java.io.IOException;
-import java.time.Instant;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -27,49 +26,23 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.beangle.commons.lang.Option;
 import org.beangle.commons.web.filter.GenericCompositeFilter;
-import org.beangle.commons.web.security.RequestConvertor;
-import org.beangle.commons.web.util.CookieUtils;
 import org.beangle.security.access.AuthorityManager;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.context.SecurityContext;
-import org.beangle.security.core.session.Session;
-import org.beangle.security.core.session.SessionRepo;
 import org.beangle.security.ids.access.AccessDeniedHandler;
-import org.beangle.security.ids.session.SessionIdReader;
 
 public class FilterChainProxy extends GenericCompositeFilter {
 
-  private SessionRepo sessionRepo;
   private AccessDeniedHandler accessDeniedHandler;
   private EntryPoint entryPoint;
-  private RequestConvertor requestConvertor;
-  private SessionIdReader sessionIdReader;
+  private SecurityContextBuilder securityContextBuilder;
   private AuthorityManager authorityManager;
 
   public void doFilter(ServletRequest req, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
     HttpServletRequest request = (HttpServletRequest) req;
-    Option<String> os = sessionIdReader.getId((HttpServletRequest) request);
-    Session session = null;
-    if (os.isDefined()) {
-      String sessionId = os.get();
-      session = sessionRepo.get(sessionId);
-      if (null != session) {
-        sessionRepo.access(sessionId, Instant.now());
-      }
-    }
-
-    boolean isRoot = false;
-    if (null != session) {
-      isRoot = authorityManager.isRoot(session.getPrincipal().getName());
-    }
-    String runAs = null;
-    if (isRoot) {
-      runAs = CookieUtils.getCookieValue(request, "beangle.security.runAs");
-    }
-    SecurityContext context = new SecurityContext(session, requestConvertor.convert(request), isRoot, runAs);
+    SecurityContext context = securityContextBuilder.build(request);
     SecurityContext.set(context);
 
     if (authorityManager.isAuthorized(context)) {
@@ -93,10 +66,6 @@ public class FilterChainProxy extends GenericCompositeFilter {
     super();
   }
 
-  public void setSessionRepo(SessionRepo sessionRepo) {
-    this.sessionRepo = sessionRepo;
-  }
-
   public void setAccessDeniedHandler(AccessDeniedHandler accessDeniedHandler) {
     this.accessDeniedHandler = accessDeniedHandler;
   }
@@ -105,17 +74,12 @@ public class FilterChainProxy extends GenericCompositeFilter {
     this.entryPoint = entryPoint;
   }
 
-  public void setRequestConvertor(RequestConvertor requestConvertor) {
-    this.requestConvertor = requestConvertor;
-  }
-
-  public void setSessionIdReader(SessionIdReader sessionIdReader) {
-    this.sessionIdReader = sessionIdReader;
-  }
-
   public void setAuthorityManager(AuthorityManager authorityManager) {
     this.authorityManager = authorityManager;
   }
 
+  public void setSecurityContextBuilder(SecurityContextBuilder securityContextBuilder) {
+    this.securityContextBuilder = securityContextBuilder;
+  }
 
 }
