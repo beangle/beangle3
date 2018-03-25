@@ -34,6 +34,10 @@ public final class Securities {
     return SecurityContext.get().getRequest().getResource().toString();
   }
 
+  public static String getIp() {
+    return SecurityContext.get().getSession().getAgent().getIp();
+  }
+
   public static Session getSession() {
     SecurityContext context = SecurityContext.get();
     return context.getSession();

@@ -91,4 +91,13 @@ public class HttpSessionRepo extends CacheSessionRepo {
       return true;
     }
   }
+
+  public void setGeturl(String geturl) {
+    this.geturl = geturl;
+  }
+
+  public void setAccessUrl(String accessUrl) {
+    this.accessUrl = accessUrl;
+  }
+
 }
