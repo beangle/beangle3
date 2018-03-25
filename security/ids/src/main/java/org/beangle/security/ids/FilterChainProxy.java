@@ -48,7 +48,6 @@ public class FilterChainProxy extends GenericCompositeFilter {
     if (authorityManager.isAuthorized(context)) {
       chain.doFilter(request, response);
     } else {
-      SecurityContext.clear();
       if (context.getSession() == null) {
         sendStartAuthentication(request, response, null);
       } else {

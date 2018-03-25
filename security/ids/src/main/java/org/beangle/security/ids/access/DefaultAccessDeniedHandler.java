@@ -59,16 +59,17 @@ public class DefaultAccessDeniedHandler implements AccessDeniedHandler {
 
     }
     if (errorPage != null) {
-      // Put exception into request scope (perhaps of use to a view)
-      ((HttpServletRequest) request).setAttribute(ACCESS_DENIED_EXCEPTION_KEY, exception);
-      // Perform RequestDispatcher "forward"
+      if (null != exception)
+        ((HttpServletRequest) request).setAttribute(ACCESS_DENIED_EXCEPTION_KEY, exception);
       RequestDispatcher rd = request.getRequestDispatcher(errorPage);
       rd.forward(request, response);
     }
 
+    String msg = "access denied";
+    if (null != exception) msg = exception.getMessage();
     if (!response.isCommitted()) {
       // Send 403 (we do this after response has been written)
-      ((HttpServletResponse) response).sendError(HttpServletResponse.SC_FORBIDDEN, exception.getMessage());
+      ((HttpServletResponse) response).sendError(HttpServletResponse.SC_FORBIDDEN, msg);
     }
   }
 
@@ -80,8 +81,8 @@ public class DefaultAccessDeniedHandler implements AccessDeniedHandler {
    * @throws IllegalArgumentException if the argument doesn't comply with the above limitations
    */
   public void setErrorPage(String errorPage) {
-    if ((errorPage != null) && !errorPage.startsWith("/")) { throw new IllegalArgumentException(
-        "errorPage must begin with '/'"); }
+    if ((errorPage != null) && !errorPage
+        .startsWith("/")) { throw new IllegalArgumentException("errorPage must begin with '/'"); }
     this.errorPage = errorPage;
   }
 

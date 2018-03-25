@@ -34,6 +34,7 @@ import org.beangle.commons.lang.Strings;
 import org.beangle.security.authc.AccountStatusException;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.userdetail.UsernameNotFoundException;
+import org.beangle.security.ids.session.SessionIdReader;
 
 /**
  * Used by the <code>ExceptionTranslationFilter</code> to commence
@@ -53,6 +54,8 @@ public class IdsEntryPoint implements EntryPoint, Initializing {
   private IdsConfig config;
   /** 本地登录地址 */
   private String localLogin;
+
+  private SessionIdReader sessionIdReader;
 
   public IdsEntryPoint() {
     super();
@@ -184,7 +187,8 @@ public class IdsEntryPoint implements EntryPoint, Initializing {
     try {
       return casServerLoginUrl + (casServerLoginUrl.indexOf("?") != -1 ? "&" : "?") + serviceParameterName
           + "=" + URLEncoder.encode(serviceUrl, "UTF-8") + (renew ? "&renew=true" : "")
-          + (gateway ? "&gateway=true" : "");
+          + (gateway ? "&gateway=true" : "") + "&" + SessionIdReader.SessionIdName + "="
+          + sessionIdReader.idName();
     } catch (final UnsupportedEncodingException e) {
       throw new RuntimeException(e);
     }
@@ -204,6 +208,10 @@ public class IdsEntryPoint implements EntryPoint, Initializing {
 
   public void setLocalLogin(String localLogin) {
     this.localLogin = localLogin;
+  }
+
+  public void setSessionIdReader(SessionIdReader sessionIdReader) {
+    this.sessionIdReader = sessionIdReader;
   }
 
 }
