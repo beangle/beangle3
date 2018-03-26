@@ -32,7 +32,7 @@ import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.context.SecurityContext;
 import org.beangle.security.ids.access.AccessDeniedHandler;
 
-public class FilterChainProxy extends GenericCompositeFilter {
+public class SecurityFilterChain extends GenericCompositeFilter {
 
   private AccessDeniedHandler accessDeniedHandler;
   private EntryPoint entryPoint;
@@ -61,7 +61,7 @@ public class FilterChainProxy extends GenericCompositeFilter {
     entryPoint.commence(request, response, reason);
   }
 
-  public FilterChainProxy() {
+  public SecurityFilterChain() {
     super();
   }
 

@@ -20,6 +20,7 @@
   <constant name="struts.mapper.class" value="beangle"/>
   <constant name="struts.objectFactory" value="beangle" />
   <constant name="struts.staticContentLoader" value="beangle" />
+  <constant name="struts.enable.DynamicMethodInvocation" value="true" />
 
   <package name="beangle" extends="struts-default">
     <interceptors>

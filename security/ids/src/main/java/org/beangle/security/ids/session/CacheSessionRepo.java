@@ -61,8 +61,12 @@ abstract class CacheSessionRepo implements SessionRepo, Initializing {
     Option<Session> data = sessions.get(sessionId);
     if (data.isEmpty()) {
       Option<Session> newData = getInternal(sessionId);
-      if (!newData.isEmpty()) sessions.put(sessionId, newData.get());
-      return newData.get();
+      if (!newData.isEmpty()) {
+        sessions.put(sessionId, newData.get());
+        return newData.get();
+      } else {
+        return null;
+      }
     } else {
       return data.get();
     }

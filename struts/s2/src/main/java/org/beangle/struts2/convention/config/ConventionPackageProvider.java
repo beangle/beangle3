@@ -213,13 +213,13 @@ public class ConventionPackageProvider implements PackageProvider {
       }
     }
     templateFinder = null;
-    logger.info("Action scan completed,create {} new action(override {}) in {}.", new Object[] { newActions,
-        overrideActions, watch });
+    logger.info("Action scan completed,create {} new action(override {}) in {}.",
+        new Object[] { newActions, overrideActions, watch });
   }
 
   protected void initReloadClassLoader() {
-    if (isReloadEnabled() && reloadingClassLoader == null) reloadingClassLoader = new ReloadingClassLoader(
-        getClassLoader());
+    if (isReloadEnabled() && reloadingClassLoader == null)
+      reloadingClassLoader = new ReloadingClassLoader(getClassLoader());
   }
 
   protected ClassLoader getClassLoader() {
@@ -231,8 +231,8 @@ public class ConventionPackageProvider implements PackageProvider {
     else {
       ClassLoaderInterface classLoaderInterface = null;
       ActionContext ctx = ActionContext.getContext();
-      if (ctx != null) classLoaderInterface = (ClassLoaderInterface) ctx
-          .get(ClassLoaderInterface.CLASS_LOADER_INTERFACE);
+      if (ctx != null)
+        classLoaderInterface = (ClassLoaderInterface) ctx.get(ClassLoaderInterface.CLASS_LOADER_INTERFACE);
       return Objects.defaultIfNull(classLoaderInterface, new ClassLoaderInterfaceDelegate(getClassLoader()));
     }
   }
@@ -249,7 +249,8 @@ public class ConventionPackageProvider implements PackageProvider {
     PackageConfig existedPkg = configuration.getPackageConfig(pkgCfg.getName());
     if (null == existedPkg || null == existedPkg.getActionConfigs().get(actionName)) {
       acb = new ActionConfig.Builder(pkgCfg.getName(), action.getName(), beanName);
-      acb.methodName(action.getMethod());
+      acb.methodName("*");
+      acb.setStrictMethodInvocation(false);
       acb.addResultConfigs(buildResultConfigs(actionClass, pkgCfg));
       pkgCfg.addActionConfig(actionName, acb.build());
       logger.debug("Add {}/{} for {} in {}",
@@ -311,8 +312,8 @@ public class ConventionPackageProvider implements PackageProvider {
       if (!annotationResults.contains(methodName) && shouldGenerateResult(m)) {
         String path = templateFinder.find(clazz, methodName, methodName, extention);
         if (null != path) {
-          configs.add(new ResultConfig.Builder(m.getName(), rtc.getClassName()).addParam(
-              rtc.getDefaultResultParam(), path).build());
+          configs.add(new ResultConfig.Builder(m.getName(), rtc.getClassName())
+              .addParam(rtc.getDefaultResultParam(), path).build());
         }
       }
     }
@@ -348,13 +349,14 @@ public class ConventionPackageProvider implements PackageProvider {
         else newPkg = actionClass.getName();
       } else {
         PackageConfig.Builder newly = packageConfigs.get(newPkg);
-        if (null != newly && !newly.getNamespace().equals(action.getNamespace())) newPkg = actionClass
-            .getName();
+        if (null != newly && !newly.getNamespace().equals(action.getNamespace()))
+          newPkg = actionClass.getName();
       }
       if (null == pcb) {
         pcb = new PackageConfig.Builder(newPkg).namespace(action.getNamespace()).addParent(parent);
         logger.debug("Created package config {} under {}", actionPackage, action.getNamespace());
       }
+      pcb.strictMethodInvocation(false);
       packageConfigs.put(newPkg, pcb);
     }
     return pcb;
