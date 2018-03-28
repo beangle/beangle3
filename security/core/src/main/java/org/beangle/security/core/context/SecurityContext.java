@@ -18,39 +18,85 @@
  */
 package org.beangle.security.core.context;
 
-import java.io.Serializable;
-
-import org.beangle.security.core.Authentication;
+import org.beangle.commons.security.Request;
+import org.beangle.security.core.session.Session;
 
 /**
  * Interface defining the minimum security information associated with the
  * current thread of execution.
  * <p>
- * The security context is stored in a {@link SecurityContextHolder}.
+ * The security context is stored in a {@link ThreadLocalHolder}.
  * </p>
  *
  * @author chaostone
  * @version $Id: SecurityContext.java 2217 2007-10-27 00:45:30Z $
  */
-public interface SecurityContext extends Serializable {
+public class SecurityContext {
+
+  private static ThreadLocal<SecurityContext> holder = new ThreadLocal<SecurityContext>();
+
+  private final Session session;
+
+  private final Request request;
+
+  private final boolean root;
+
+  private final String runAs;
+
+  public SecurityContext(Session session, Request request, boolean root, String runAs) {
+    super();
+    this.session = session;
+    this.request = request;
+    this.root = root;
+    this.runAs = runAs;
+  }
 
   /**
-   * Obtains the currently authenticated principal, or an authentication
-   * request token.
-   *
-   * @return the <code>Authentication</code> or <code>null</code> if no
-   *         authentication information is available
+   * Explicitly clears the context value from the current thread.
    */
-  Authentication getAuthentication();
+  public static void clear() {
+    holder.set(null);
+  }
 
-  /**
-   * Changes the currently authenticated principal, or removes the
-   * authentication information.
-   *
-   * @param authentication
-   *          the new <code>Authentication</code> token, or <code>null</code> if no further
-   *          authentication information
-   *          should be stored
-   */
-  void setAuthentication(Authentication authentication);
+  public static void set(SecurityContext context) {
+    holder.set(context);
+  }
+
+  public static SecurityContext get() {
+    return holder.get();
+  }
+
+  public static ThreadLocal<SecurityContext> getHolder() {
+    return holder;
+  }
+
+  public static void setHolder(ThreadLocal<SecurityContext> holder) {
+    SecurityContext.holder = holder;
+  }
+
+  public Session getSession() {
+    return session;
+  }
+
+  public Request getRequest() {
+    return request;
+  }
+
+  public String getUser() {
+    if (root && null != runAs) {
+      return runAs;
+    } else {
+      if (null == session) return "anonymous";
+      else return session.getPrincipal().getName();
+    }
+  }
+
+  public boolean isRoot() {
+    return root;
+  }
+
+  public String getRunAs() {
+    return runAs;
+  }
+
 }

@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.beangle</groupId>
     <artifactId>beangle-library-parent</artifactId>
-    <version>3.6.0.M5-SNAPSHOT</version>
+    <version>3.6.0.M5</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.beangle.security</groupId>
@@ -16,7 +16,7 @@
 
   <modules>
     <module>core</module>
-    <module>web</module>
+    <module>ids</module>
   </modules>
 
   <dependencies>

@@ -29,11 +29,11 @@ import org.beangle.commons.event.Event;
 public class LogoutEvent extends Event {
   private static final long serialVersionUID = 5562102005395894399L;
 
-  public LogoutEvent(Sessioninfo source) {
+  public LogoutEvent(Session source) {
     super(source);
   }
 
-  public Sessioninfo getSessioninfo() {
-    return (Sessioninfo) source;
+  public Session getSessioninfo() {
+    return (Session) source;
   }
 }

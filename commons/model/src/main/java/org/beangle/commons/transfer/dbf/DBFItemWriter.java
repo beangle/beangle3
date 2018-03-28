@@ -81,7 +81,7 @@ public class DBFItemWriter extends AbstractItemWriter {
    * close.
    * </p>
    */
-  public void close() {
+  public void flush() {
     try {
       writer.write(outputStream);
     } catch (DBFException e) {

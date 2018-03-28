@@ -47,7 +47,7 @@ public class DBFItemWriterTest {
     for (Object[] data : datas) {
       writer.write(data);
     }
-    writer.close();
+    writer.flush();
     fos.close();
 
     InputStream inputStream = new FileInputStream(dbfile);

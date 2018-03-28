@@ -170,7 +170,7 @@ public abstract class AbstractItemExporter implements Exporter {
       listener.onFinish(tr);
     }
     // 告诉输出者,输出完成
-    writer.close();
+    writer.flush();
   }
 
   /**

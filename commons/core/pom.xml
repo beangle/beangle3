@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.beangle.commons</groupId>
     <artifactId>beangle-commons-parent</artifactId>
-    <version>3.6.0.M5-SNAPSHOT</version>
+    <version>3.6.0.M5</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.beangle.commons</groupId>
@@ -14,4 +14,12 @@
     <bundle.symbolicName>org.beangle.commons.core</bundle.symbolicName>
     <bundle.namespace>org.beangle.commons</bundle.namespace>
   </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.github.ben-manes.caffeine</groupId>
+      <artifactId>caffeine</artifactId>
+      <version>${caffeine.version}</version>
+    </dependency>
+  </dependencies>
 </project>

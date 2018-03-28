@@ -19,10 +19,8 @@
 package org.beangle.security;
 
 import org.beangle.commons.inject.bind.AbstractBindModule;
-import org.beangle.security.auth.dao.DaoAuthenticationProvider;
-import org.beangle.security.auth.encoding.DigestPasswordEncoder;
-import org.beangle.security.auth.encoding.PlaintextPasswordEncoder;
-import org.beangle.security.core.session.impl.MemSessionRegistry;
+import org.beangle.security.authc.encoding.DigestPasswordEncoder;
+import org.beangle.security.authc.encoding.PlaintextPasswordEncoder;
 
 /**
  * @author chaostone
@@ -33,9 +31,6 @@ public class DefaultModule extends AbstractBindModule {
   @Override
   protected void doBinding() {
     bind(DigestPasswordEncoder.class).primary();
-    bind(MemSessionRegistry.class).shortName();
-
-    bind(DaoAuthenticationProvider.class).shortName();
     bind(PlaintextPasswordEncoder.class);
   }
 }

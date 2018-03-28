@@ -1,6 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<sso:serviceResponse xmlns:sso="sso-namespace">
-  <sso:authenticationFailure code='INVALID_TICKET'>
-    ticket 'ST_portal1_-458698-1IBoJaTT8rVVf99hhy' not recognized
-  </sso:authenticationFailure>
-</sso:serviceResponse>
