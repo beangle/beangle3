@@ -35,17 +35,9 @@ public class ConcurrentMapCache<K, V> implements Cache<K, V> {
 
   private final ConcurrentMap<K, V> store;
 
-  private final String name;
-
-  public ConcurrentMapCache(String name) {
+  public ConcurrentMapCache() {
     super();
-    this.name = name;
     store = CollectUtils.newConcurrentHashMap();
-  }
-
-  @Override
-  public String name() {
-    return name;
   }
 
   @Override
@@ -63,11 +55,6 @@ public class ConcurrentMapCache<K, V> implements Cache<K, V> {
   @Override
   public void evict(K key) {
     store.remove(key);
-  }
-
-  @Override
-  public Set<K> keys() {
-    return store.keySet();
   }
 
   @Override

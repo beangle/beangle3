@@ -96,7 +96,7 @@ public class CsvItemWriter extends AbstractItemWriter {
    * close.
    * </p>
    */
-  public void close() {
+  public void flush() {
     try {
       csvr.close();
     } catch (Exception e) {

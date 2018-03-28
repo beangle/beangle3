@@ -73,5 +73,5 @@ public interface Writer {
    * close.
    * </p>
    */
-  void close();
+  void flush();
 }

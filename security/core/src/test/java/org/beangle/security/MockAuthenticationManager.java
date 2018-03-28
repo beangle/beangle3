@@ -18,8 +18,8 @@
  */
 package org.beangle.security;
 
-import org.beangle.security.auth.AbstractAuthenticationManager;
-import org.beangle.security.auth.BadCredentialsException;
+import org.beangle.security.authc.AbstractAuthenticationManager;
+import org.beangle.security.authc.BadCredentialsException;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
 

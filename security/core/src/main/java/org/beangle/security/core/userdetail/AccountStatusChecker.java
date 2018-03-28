@@ -20,10 +20,10 @@ package org.beangle.security.core.userdetail;
 
 import org.beangle.commons.text.i18n.TextResource;
 import org.beangle.commons.text.i18n.impl.NullTextResource;
-import org.beangle.security.auth.AccountExpiredException;
-import org.beangle.security.auth.CredentialsExpiredException;
-import org.beangle.security.auth.DisabledException;
-import org.beangle.security.auth.LockedException;
+import org.beangle.security.authc.AccountExpiredException;
+import org.beangle.security.authc.CredentialsExpiredException;
+import org.beangle.security.authc.DisabledException;
+import org.beangle.security.authc.LockedException;
 
 /**
  * @author chaostone
@@ -32,7 +32,7 @@ public class AccountStatusChecker implements UserDetailChecker {
 
   protected TextResource textResource = new NullTextResource();
 
-  public void check(UserDetail user) {
+  public void check(Account user) {
     if (user.isAccountLocked()) { throw new LockedException(textResource.getText(
         "AbstractUserDetailsAuthenticationProvider.locked", "User account is locked"), user); }
 
@@ -42,7 +42,7 @@ public class AccountStatusChecker implements UserDetailChecker {
     if (user.isAccountExpired()) { throw new AccountExpiredException(textResource.getText(
         "AbstractUserDetailsAuthenticationProvider.expired", "User account has expired"), user); }
 
-    if (user.isCredentialsExpired()) { throw new CredentialsExpiredException(textResource.getText(
+    if (user.isCredentialExpired()) { throw new CredentialsExpiredException(textResource.getText(
         "AbstractUserDetailsAuthenticationProvider.credentialsExpired", "User credentials have expired"),
         user); }
   }

@@ -36,12 +36,16 @@ public class ExcelItemWriterTest {
     if (!file.exists()) {
       file.createNewFile();
     }
-    ExcelItemWriter writer = new ExcelItemWriter(new FileOutputStream(file));
+    FileOutputStream fos = new FileOutputStream(file);
+    ExcelItemWriter writer = new ExcelItemWriter(fos);
     writer.writeTitle("人员信息", new String[] { "姓名", "性别", "身份证号", "政治面貌" });
     writer.write(new String[] { "张三", "男", "xxxx", "无党派人士" });
-    writer.close();
-    read();
+    writer.flush();
+    fos.close();
+    // read();
     file.delete();
+    file.deleteOnExit();
+    System.out.println(file.exists());
   }
 
   private void read() throws Exception {

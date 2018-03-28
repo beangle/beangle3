@@ -18,8 +18,8 @@
  */
 package org.beangle.security;
 
-import org.beangle.security.auth.AuthenticationProvider;
-import org.beangle.security.auth.UsernamePasswordAuthentication;
+import org.beangle.security.authc.AuthenticationProvider;
+import org.beangle.security.authc.UsernamePasswordAuthentication;
 import org.beangle.security.core.Authentication;
 import org.beangle.security.core.AuthenticationException;
 

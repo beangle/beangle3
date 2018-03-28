@@ -185,7 +185,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * close.
    * </p>
    */
-  public void close() {
+  public void flush() {
     try {
       workbook.write(outputStream);
     } catch (Exception e) {

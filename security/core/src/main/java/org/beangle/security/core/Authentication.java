@@ -33,7 +33,7 @@ public interface Authentication extends Principal, Serializable {
 
   Object getCredentials();
 
-  Collection<? extends GrantedAuthority> getAuthorities();
+  Collection<?> getAuthorities();
 
   Object getDetails();
 

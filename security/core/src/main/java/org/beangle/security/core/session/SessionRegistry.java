@@ -18,8 +18,6 @@
  */
 package org.beangle.security.core.session;
 
-import java.util.List;
-
 import org.beangle.security.core.Authentication;
 
 /**
@@ -27,7 +25,7 @@ import org.beangle.security.core.Authentication;
  *
  * @author chaostone
  */
-public interface SessionRegistry {
+public interface SessionRegistry extends SessionRepo{
 
   /**
    * 注册
@@ -42,59 +40,5 @@ public interface SessionRegistry {
    *
    * @param sessionid
    */
-  Sessioninfo remove(String sessionid);
-
-  /**
-   * 过期指定会话
-   * Return true is expire success
-   *
-   * @param sessionid
-   */
-  boolean expire(String sessionid);
-
-  /**
-   * 查询某帐号的在线信息
-   *
-   * @param principal
-   * @param includeExpiredSessions
-   */
-  List<Sessioninfo> getSessioninfos(String principal, boolean includeExpiredSessions);
-
-  /**
-   * 查询对应sessionid的信息
-   *
-   * @param sessionid
-   */
-  Sessioninfo getSessioninfo(String sessionid);
-
-  /**
-   * 查询会话状态
-   *
-   * @param sessionid
-   */
-  SessionStatus getSessionStatus(String sessionid);
-
-  /**
-   * 查询帐号是否还有没有过期的在线记录
-   *
-   * @param principal
-   */
-  boolean isRegisted(String principal);
-
-  /**
-   * session count
-   */
-  int count();
-
-  /**
-   * 更新对应sessionId的最后访问时间
-   *
-   * @param sessionid
-   */
-  void access(String sessionid, long accessAt);
-
-  /**
-   * 查询控制器
-   */
-  SessionController getController();
+  Session remove(String sessionid);
 }
