@@ -113,21 +113,22 @@ public class Files {
   public static void copyFile(File srcFile, File destFile) throws IOException {
     Assert.isTrue(null != srcFile, "Source must not be null");
     Assert.isTrue(null != destFile, "Destination must not be null");
-    if (srcFile.exists() == false) { throw new FileNotFoundException("Source '" + srcFile
-        + "' does not exist"); }
-    if (srcFile.isDirectory()) { throw new IOException("Source '" + srcFile + "' exists but is a directory"); }
-    if (srcFile.getCanonicalPath().equals(destFile.getCanonicalPath())) { throw new IOException("Source '"
-        + srcFile + "' and destination '" + destFile + "' are the same"); }
+    if (srcFile
+        .exists() == false) { throw new FileNotFoundException("Source '" + srcFile + "' does not exist"); }
+    if (srcFile
+        .isDirectory()) { throw new IOException("Source '" + srcFile + "' exists but is a directory"); }
+    if (srcFile.getCanonicalPath().equals(destFile.getCanonicalPath())) { throw new IOException(
+        "Source '" + srcFile + "' and destination '" + destFile + "' are the same"); }
     File parentFile = destFile.getParentFile();
     if (parentFile != null) {
-      if (!parentFile.mkdirs() && !parentFile.isDirectory()) { throw new IOException("Destination '"
-          + parentFile + "' directory cannot be created"); }
+      if (!parentFile.mkdirs() && !parentFile.isDirectory()) { throw new IOException(
+          "Destination '" + parentFile + "' directory cannot be created"); }
     }
     if (destFile.exists()) {
-      if (destFile.isDirectory()) { throw new IOException("Destination '" + destFile
-          + "' exists but is a directory"); }
-      if (!destFile.canWrite()) throw new IOException("Destination '" + destFile
-          + "' exists but is read-only");
+      if (destFile.isDirectory()) { throw new IOException(
+          "Destination '" + destFile + "' exists but is a directory"); }
+      if (!destFile.canWrite())
+        throw new IOException("Destination '" + destFile + "' exists but is read-only");
     }
     doCopyFile(srcFile, destFile, true);
   }
@@ -156,8 +157,8 @@ public class Files {
       IOs.close(fis);
     }
 
-    if (srcFile.length() != destFile.length()) { throw new IOException("Failed to copy full contents from '"
-        + srcFile + "' to '" + destFile + "'"); }
+    if (srcFile.length() != destFile.length()) { throw new IOException(
+        "Failed to copy full contents from '" + srcFile + "' to '" + destFile + "'"); }
     if (preserveFileDate) {
       destFile.setLastModified(srcFile.lastModified());
     }
@@ -233,4 +234,23 @@ public class Files {
     }
   }
 
+  public static void touch(File file) throws IOException {
+    if (!file.exists()) IOs.close(writeOpen(file));
+    boolean success = file.setLastModified(System.currentTimeMillis());
+    if (!success) throw new IOException("Unable to set the last modification time for " + file.getName());
+  }
+
+  private static FileOutputStream writeOpen(File file) throws IOException {
+    if (file.exists()) {
+      if (file.isDirectory()) throw new IOException("File '" + file + "' exists but is a directory");
+      if (!file.canWrite()) throw new IOException("File '" + file + "' cannot be written to");
+    } else {
+      File parent = file.getParentFile();
+      if (parent != null) {
+        if (!parent.mkdirs() && !parent.isDirectory())
+          throw new IOException("Directory '" + parent + "' could not be created");
+      }
+    }
+    return new FileOutputStream(file, false);
+  }
 }

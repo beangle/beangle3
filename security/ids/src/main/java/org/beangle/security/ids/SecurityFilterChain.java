@@ -25,6 +25,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.beangle.commons.web.filter.GenericCompositeFilter;
 import org.beangle.security.access.AuthorityManager;
@@ -39,10 +40,11 @@ public class SecurityFilterChain extends GenericCompositeFilter {
   private SecurityContextBuilder securityContextBuilder;
   private AuthorityManager authorityManager;
 
-  public void doFilter(ServletRequest req, ServletResponse response, FilterChain chain)
+  public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
       throws IOException, ServletException {
     HttpServletRequest request = (HttpServletRequest) req;
-    SecurityContext context = securityContextBuilder.build(request);
+    HttpServletResponse response = (HttpServletResponse) res;
+    SecurityContext context = securityContextBuilder.build(request, response);
     SecurityContext.set(context);
 
     if (authorityManager.isAuthorized(context)) {

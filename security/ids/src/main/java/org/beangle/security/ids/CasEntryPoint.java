@@ -49,19 +49,19 @@ import org.beangle.security.ids.session.SessionIdReader;
  * @author chaostone
  * @version $Id: CasProcessingFilterEntryPoint.java $
  */
-public class IdsEntryPoint implements EntryPoint, Initializing {
+public class CasEntryPoint implements EntryPoint, Initializing {
 
-  private IdsConfig config;
+  private CasConfig config;
   /** 本地登录地址 */
   private String localLogin;
 
   private SessionIdReader sessionIdReader;
 
-  public IdsEntryPoint() {
+  public CasEntryPoint() {
     super();
   }
 
-  public IdsEntryPoint(IdsConfig config) {
+  public CasEntryPoint(CasConfig config) {
     super();
     this.config = config;
   }
@@ -74,6 +74,7 @@ public class IdsEntryPoint implements EntryPoint, Initializing {
       final AuthenticationException ae) throws IOException, ServletException {
     final HttpServletRequest request = (HttpServletRequest) servletRequest;
     final HttpServletResponse response = (HttpServletResponse) servletResponse;
+    Cas.cleanup(config, request, response);
     if (null != ae && (ae instanceof UsernameNotFoundException || ae instanceof AccountStatusException)) {
       response.getWriter().append(String.valueOf(ae.getAuthentication().getPrincipal()))
           .append(ae.getMessage());
@@ -85,14 +86,14 @@ public class IdsEntryPoint implements EntryPoint, Initializing {
         throw ae;
       } else {
         final String encodedServiceUrl = constructLocalLoginServiceUrl(request, response, null,
-            IdsConfig.getLocalServer(request), config.getArtifactName(), config.isEncode());
+            CasConfig.getLocalServer(request), config.getArtifactName(), config.isEncode());
         final String redirectUrl = constructRedirectUrl(config.getLoginUrl(), "service", encodedServiceUrl,
             config.isRenew(), false);
         response.sendRedirect(redirectUrl + "&isLoginService=11");
       }
     } else {
       final String encodedServiceUrl = constructServiceUrl(request, response, null,
-          IdsConfig.getLocalServer(request), config.getArtifactName(), config.isEncode());
+          CasConfig.getLocalServer(request), config.getArtifactName(), config.isEncode());
       final String redirectUrl = constructRedirectUrl(config.getLoginUrl(), "service", encodedServiceUrl,
           config.isRenew(), false);
       response.sendRedirect(redirectUrl);
@@ -194,11 +195,11 @@ public class IdsEntryPoint implements EntryPoint, Initializing {
     }
   }
 
-  public IdsConfig getConfig() {
+  public CasConfig getConfig() {
     return this.config;
   }
 
-  public void setConfig(IdsConfig config) {
+  public void setConfig(CasConfig config) {
     this.config = config;
   }
 

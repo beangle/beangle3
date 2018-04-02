@@ -19,9 +19,9 @@
 package org.beangle.security.ids.session;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.beangle.commons.lang.Option;
-import org.beangle.commons.web.util.CookieUtils;
 
 public interface SessionIdReader {
 
@@ -29,5 +29,5 @@ public interface SessionIdReader {
 
   String idName();
 
-  Option<String> getId(HttpServletRequest request);
+  Option<String> getId(HttpServletRequest request, HttpServletResponse response);
 }

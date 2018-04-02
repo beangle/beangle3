@@ -18,12 +18,26 @@
  */
 package org.beangle.security.ids;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.beangle.security.core.context.SecurityContext;
+public class Cas {
 
-public interface SecurityContextBuilder {
-
-  SecurityContext build(HttpServletRequest request, HttpServletResponse response);
+  public static final String cleanup(CasConfig config, HttpServletRequest request,
+      HttpServletResponse response) {
+    Cookie[] cookies = request.getCookies();
+    if (null != cookies) {
+      for (Cookie c : cookies) {
+        if (c.getMaxAge() < 0) {
+          String domain = c.getDomain();
+          if (null == domain || domain.equals(request.getServerName())) {
+            c.setMaxAge(0);
+            response.addCookie(c);
+          }
+        }
+      }
+    }
+    return config.getCasServer() + "/logout";
+  }
 }
