@@ -33,7 +33,7 @@ import org.beangle.commons.lang.Assert;
  * @author chaostone
  * @version $Id: ServiceProperties.java $
  */
-public class IdsConfig implements Initializing {
+public class CasConfig implements Initializing {
 
   private String casServer;
 
@@ -49,11 +49,11 @@ public class IdsConfig implements Initializing {
 
   private String checkAliveUri = "/checkAlive";
 
-  public IdsConfig() {
+  public CasConfig() {
     super();
   }
 
-  public IdsConfig(String casServer) {
+  public CasConfig(String casServer) {
     super();
     this.casServer = casServer;
   }

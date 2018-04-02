@@ -21,6 +21,7 @@ package org.beangle.security.ids;
 import java.time.Instant;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.beangle.commons.lang.Option;
 import org.beangle.commons.web.security.RequestConvertor;
@@ -42,8 +43,8 @@ public class WebSecurityContextBuilder implements SecurityContextBuilder {
   private RequestConvertor requestConvertor;
 
   @Override
-  public SecurityContext build(HttpServletRequest request) {
-    Option<String> os = sessionIdReader.getId((HttpServletRequest) request);
+  public SecurityContext build(HttpServletRequest request, HttpServletResponse response) {
+    Option<String> os = sessionIdReader.getId(request, response);
     Session session = null;
     if (os.isDefined()) {
       String sessionId = os.get();

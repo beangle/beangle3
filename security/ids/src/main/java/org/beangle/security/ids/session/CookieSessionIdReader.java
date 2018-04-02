@@ -19,6 +19,7 @@
 package org.beangle.security.ids.session;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.beangle.commons.lang.Option;
 import org.beangle.commons.web.util.CookieUtils;
@@ -37,8 +38,15 @@ public class CookieSessionIdReader implements SessionIdReader {
   }
 
   @Override
-  public Option<String> getId(HttpServletRequest request) {
-    return Option.from(CookieUtils.getCookieValue(request, idName));
+  public Option<String> getId(HttpServletRequest request, HttpServletResponse response) {
+    String sid = CookieUtils.getCookieValue(request, idName);
+    if (null == sid) {
+      sid = request.getParameter(idName);
+      if (null != sid) {
+        CookieUtils.addCookie(request, response, idName, sid, -1);
+      }
+    }
+    return Option.from(sid);
   }
 
 }
