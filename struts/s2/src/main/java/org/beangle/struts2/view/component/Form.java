@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
+import org.apache.commons.collections.MapUtils;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
@@ -98,8 +99,7 @@ public class Form extends ClosingUIBean {
 
   public String getValidate() {
     if (null == validate) {
-      if (!elementChecks.isEmpty()) validate = "true";
-      else validate = "false";
+      validate = String.valueOf(MapUtils.isNotEmpty(elementChecks) || StringUtils.isNotBlank(extraChecks));
     }
     return validate;
   }
