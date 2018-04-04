@@ -22,7 +22,6 @@ import java.util.Map;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
-import org.apache.commons.collections.MapUtils;
 
 import com.opensymphony.xwork2.util.ValueStack;
 
@@ -99,7 +98,8 @@ public class Form extends ClosingUIBean {
 
   public String getValidate() {
     if (null == validate) {
-      validate = String.valueOf(MapUtils.isNotEmpty(elementChecks) || StringUtils.isNotBlank(extraChecks));
+      validate = String
+          .valueOf(null != elementChecks && !elementChecks.isEmpty() || Strings.isNotBlank(extraChecks));
     }
     return validate;
   }
@@ -133,8 +133,8 @@ public class Form extends ClosingUIBean {
 
   public String getValidity() {
     // every element initial validity buffer is 80 chars.
-    StringBuilder sb = new StringBuilder((elementChecks.size() * 80)
-        + ((null == extraChecks) ? 0 : extraChecks.length()));
+    StringBuilder sb = new StringBuilder(
+        (elementChecks.size() * 80) + ((null == extraChecks) ? 0 : extraChecks.length()));
     for (Map.Entry<String, StringBuilder> check : elementChecks.entrySet()) {
       sb.append("jQuery('#").append(Strings.replace(check.getKey(), ".", "\\\\.")).append("')")
           .append(check.getValue()).append(";\n");
