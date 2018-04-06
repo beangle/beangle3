@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.beangle</groupId>
     <artifactId>beangle-java</artifactId>
-    <version>24.8</version>
+    <version>24.9</version>
   </parent>
   <groupId>org.beangle</groupId>
   <artifactId>beangle-library-parent</artifactId>
