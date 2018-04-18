@@ -39,14 +39,16 @@ public class CookieSessionIdReader implements SessionIdReader {
 
   @Override
   public Option<String> getId(HttpServletRequest request, HttpServletResponse response) {
-    String sid = CookieUtils.getCookieValue(request, idName);
-    if (null == sid) {
-      sid = request.getParameter(idName);
-      if (null != sid) {
-        CookieUtils.addCookie(request, response, idName, sid, -1);
-      }
-    }
-    return Option.from(sid);
-  }
+    String csid = CookieUtils.getCookieValue(request, idName);
+    String psid = request.getParameter(idName);
 
+    if (null != psid) {
+      if (null == csid || !psid.equals(csid)) {
+        CookieUtils.addCookie(request, response, idName, psid, -1);
+      }
+      return Option.some(psid);
+    } else {
+      return Option.from(csid);
+    }
+  }
 }

@@ -42,8 +42,8 @@ public class CodeServiceImpl extends BaseServiceImpl implements CodeService {
 
   public <T extends Code<Integer>> List<T> getCodes(Class<T> codeClass) {
     OqlBuilder<T> builder = OqlBuilder.from(codeClass, "Code").where(
-        "Code.effectiveAt <= :now and (Code.invalidAt is null or Code.invalidAt >= :now)",
-        new java.util.Date());
+        "Code.beginOn <= :now and (Code.endOn is null or Code.endOn >= :now)",
+        new java.sql.Date(System.currentTimeMillis()));
     builder.orderBy("Code.code");
     return entityDao.search(builder);
   }

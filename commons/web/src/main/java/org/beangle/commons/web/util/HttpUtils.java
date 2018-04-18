@@ -61,6 +61,8 @@ public final class HttpUtils {
       if (conn instanceof HttpsURLConnection && null != hostnameVerifier) {
         ((HttpsURLConnection) conn).setHostnameVerifier(hostnameVerifier);
       }
+      conn.setConnectTimeout(5 * 1000);
+      conn.setReadTimeout(5 * 1000);
       BufferedReader in = null;
       if (null == encoding) {
         in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
