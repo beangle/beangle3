@@ -21,6 +21,8 @@ package org.beangle.security.ids;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -29,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.beangle.commons.bean.Initializing;
+import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.lang.Strings;
 import org.beangle.security.authc.AccountStatusException;
@@ -93,7 +96,7 @@ public class CasEntryPoint implements EntryPoint, Initializing {
       }
     } else {
       final String encodedServiceUrl = constructServiceUrl(request, response, null,
-          CasConfig.getLocalServer(request), config.getArtifactName(), config.isEncode());
+          CasConfig.getLocalServer(request));
       final String redirectUrl = constructRedirectUrl(config.getLoginUrl(), "service", encodedServiceUrl,
           config.isRenew(), false);
       response.sendRedirect(redirectUrl);
@@ -139,10 +142,9 @@ public class CasEntryPoint implements EntryPoint, Initializing {
    * @param encode whether to encode the url or not (i.e. Jsession).
    * @return the service url to use.
    */
-  public static String constructServiceUrl(final HttpServletRequest request,
-      final HttpServletResponse response, final String service, final String serverName,
-      final String artifactParameterName, final boolean encode) {
-    if (Strings.isNotBlank(service)) { return encode ? response.encodeURL(service) : service; }
+  public String constructServiceUrl(final HttpServletRequest request, final HttpServletResponse response,
+      final String service, final String serverName) {
+    if (Strings.isNotBlank(service)) { return response.encodeURL(service); }
 
     final StringBuilder buffer = new StringBuilder();
     if (!serverName.startsWith("https://") && !serverName.startsWith("http://")) {
@@ -152,25 +154,32 @@ public class CasEntryPoint implements EntryPoint, Initializing {
     buffer.append(serverName);
     buffer.append(request.getRequestURI());
 
-    if (Strings.isNotBlank(request.getQueryString())) {
-      final int location = request.getQueryString().indexOf(artifactParameterName + "=");
-
-      if (location == 0) {
-        final String returnValue = encode ? response.encodeURL(buffer.toString()) : buffer.toString();
-        return returnValue;
+    Set<String> reservedKeys = CollectUtils.newHashSet();
+    reservedKeys.add(config.getArtifactName());
+    if (null != sessionIdReader) {
+      reservedKeys.add(sessionIdReader.idName());
+    }
+    String queryString = request.getQueryString();
+    if (Strings.isNotBlank(queryString)) {
+      String[] parts = Strings.split(queryString, "&");
+      Arrays.sort(parts);
+      StringBuilder paramBuf = new StringBuilder();
+      for (String part : parts) {
+        int equIdx = part.indexOf('=');
+        if (equIdx > 0) {
+          String key = part.substring(0, equIdx);
+          if (!reservedKeys.contains(key)) {
+            paramBuf.append('&').append(key).append(part.substring(equIdx));
+          }
+        }
       }
-      buffer.append("?");
-      if (location == -1) {
-        buffer.append(request.getQueryString());
-      } else if (location > 0) {
-        final int actualLocation = request.getQueryString().indexOf("&" + artifactParameterName + "=");
-        if (actualLocation == -1) buffer.append(request.getQueryString());
-        else if (actualLocation > 0) buffer.append(request.getQueryString().substring(0, actualLocation));
+      if (paramBuf.length() > 0) {
+        paramBuf.setCharAt(0, '?');
+        buffer.append(paramBuf);
       }
     }
 
-    final String returnValue = encode ? response.encodeURL(buffer.toString()) : buffer.toString();
-    return returnValue;
+    return response.encodeURL(buffer.toString());
   }
 
   /**

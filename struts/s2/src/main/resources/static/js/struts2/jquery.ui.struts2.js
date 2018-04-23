@@ -1079,4 +1079,3 @@
     $.struts2_jquery_ui.debugPrefix = "[struts2_jquery_ui] ";
 
 })(jQuery);
-
