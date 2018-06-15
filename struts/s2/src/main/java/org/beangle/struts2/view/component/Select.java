@@ -21,7 +21,7 @@ package org.beangle.struts2.view.component;
 import java.util.Collections;
 import java.util.Map;
 
-import org.beangle.commons.bean.PropertyUtils;
+import static org.beangle.commons.bean.PropertyUtils.getProperty;
 import org.beangle.commons.lang.Strings;
 
 import com.opensymphony.xwork2.util.ValueStack;
@@ -85,16 +85,16 @@ public class Select extends ClosingUIBean {
       if (obj instanceof Map.Entry<?, ?>) {
         nobj = ((Map.Entry<?, ?>) obj).getKey();
         if (keyName.equals("key")) {
-          return value.equals(nobj)||value.toString().equals(nobj.toString());
+          return value.equals(nobj) || value.toString().equals(nobj.toString());
         } else {
-          boolean rs = value.equals(nobj) || value.equals(PropertyUtils.getProperty(nobj, keyName));
+          boolean rs = value.equals(nobj) || value.equals((Object) getProperty(nobj, keyName));
           return rs || value.toString().equals(nobj.toString())
-              || value.toString().equals(String.valueOf(PropertyUtils.getProperty(nobj, keyName)));
+              || value.toString().equals(String.valueOf((Object) getProperty(nobj, keyName)));
         }
       } else {
-        boolean rs = value.equals(nobj) || value.equals(PropertyUtils.getProperty(nobj, keyName));
+        boolean rs = value.equals(nobj) || value.equals((Object) getProperty(nobj, keyName));
         return rs || value.toString().equals(nobj.toString())
-            || value.toString().equals(String.valueOf(PropertyUtils.getProperty(nobj, keyName)));
+            || value.toString().equals(String.valueOf((Object) getProperty(nobj, keyName)));
       }
     } catch (Exception e) {
       e.printStackTrace();
