@@ -20,13 +20,14 @@ package org.beangle.commons.transfer.excel;
 
 import java.io.OutputStream;
 import java.net.URL;
-
-import net.sf.jxls.transformer.XLSTransformer;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.beangle.commons.transfer.exporter.Context;
 import org.beangle.commons.transfer.exporter.TemplateWriter;
 import org.beangle.commons.transfer.io.TransferFormat;
+import org.jxls.transform.poi.PoiTransformer;
+import org.jxls.util.JxlsHelper;
 
 /**
  * <p>
@@ -40,7 +41,7 @@ public class ExcelTemplateWriter implements TemplateWriter {
 
   protected URL template;
 
-  protected XLSTransformer transformer = new XLSTransformer();
+  protected PoiTransformer transformer;
 
   protected Context context;
 
@@ -49,18 +50,14 @@ public class ExcelTemplateWriter implements TemplateWriter {
   protected Workbook workbook;
 
   /**
-   * <p>
    * Constructor for ExcelTemplateWriter.
-   * </p>
    */
   public ExcelTemplateWriter() {
     super();
   }
 
   /**
-   * <p>
    * Constructor for ExcelTemplateWriter.
-   * </p>
    *
    * @param outputStream a {@link java.io.OutputStream} object.
    */
@@ -70,9 +67,7 @@ public class ExcelTemplateWriter implements TemplateWriter {
   }
 
   /**
-   * <p>
    * getFormat.
-   * </p>
    *
    * @return a {@link java.lang.String} object.
    */
@@ -91,47 +86,37 @@ public class ExcelTemplateWriter implements TemplateWriter {
     return template;
   }
 
-  /** {@inheritDoc} */
   public void setTemplate(URL template) {
     this.template = template;
   }
 
-  /** {@inheritDoc} */
   public void setContext(Context context) {
     this.context = context;
   }
 
   /**
-   * <p>
    * write.
-   * </p>
    */
   public void write() {
     try {
-      workbook = transformer.transformXLS(template.openStream(), context.getDatas());
+      org.jxls.common.Context ctx = new org.jxls.common.Context();
+      for (Map.Entry<String, Object> entry : context.getDatas().entrySet()) {
+        ctx.putVar(entry.getKey(), entry.getValue());
+      }
+      JxlsHelper.getInstance().processTemplate(template.openStream(), outputStream, ctx);
     } catch (Exception e) {
       throw new RuntimeException(e.getMessage());
     }
   }
 
   /**
-   * <p>
    * close.
-   * </p>
    */
   public void flush() {
-    try {
-      workbook.write(outputStream);
-    } catch (Exception e) {
-      throw new RuntimeException(e.getMessage());
-    }
-
   }
 
   /**
-   * <p>
    * Getter for the field <code>outputStream</code>.
-   * </p>
    *
    * @return a {@link java.io.OutputStream} object.
    */

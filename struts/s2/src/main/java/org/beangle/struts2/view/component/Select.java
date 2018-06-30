@@ -80,7 +80,7 @@ public class Select extends ClosingUIBean {
 
   public boolean isSelected(Object obj) {
     if (null == value) return false;
-    else try {
+    else {
       Object nobj = obj;
       if (obj instanceof Map.Entry<?, ?>) {
         nobj = ((Map.Entry<?, ?>) obj).getKey();
@@ -96,9 +96,6 @@ public class Select extends ClosingUIBean {
         return rs || value.toString().equals(nobj.toString())
             || value.toString().equals(String.valueOf((Object) getProperty(nobj, keyName)));
       }
-    } catch (Exception e) {
-      e.printStackTrace();
-      return false;
     }
   }
 
