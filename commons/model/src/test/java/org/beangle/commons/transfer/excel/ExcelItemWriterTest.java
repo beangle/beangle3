@@ -25,6 +25,7 @@ import java.io.FileOutputStream;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -53,9 +54,7 @@ public class ExcelItemWriterTest {
     FileInputStream in = new FileInputStream(file);
     HSSFWorkbook wb = new HSSFWorkbook(in);
     HSSFCell cell = wb.getSheetAt(0).getRow(0).getCell(0);
-    // HSSFFont f = cell.getCellStyle().getFont(wb);
-    // Assert.assertEquals(f.getBoldweight(), HSSFFont.BOLDWEIGHT_BOLD);
-    Assert.assertEquals(cell.getCellStyle().getAlignment(), HSSFCellStyle.ALIGN_CENTER);
+    Assert.assertEquals(cell.getCellStyle().getAlignmentEnum(), HorizontalAlignment.CENTER);
     in.close();
   }
 }

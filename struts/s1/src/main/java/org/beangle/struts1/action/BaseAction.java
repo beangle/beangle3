@@ -30,7 +30,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -277,7 +276,7 @@ public class BaseAction extends DispatchAction {
       throws IOException {
     Collection datas = (Collection) context.getDatas().get("items");
     boolean isArray = false;
-    if (!CollectionUtils.isEmpty(datas)) {
+    if (null != datas && !datas.isEmpty()) {
       Object first = datas.iterator().next();
       if (first.getClass().isArray()) isArray = true;
     }
