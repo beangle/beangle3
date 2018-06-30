@@ -54,7 +54,6 @@ public class ActionServlet extends HttpServlet {
     InitOperations init = new InitOperations();
     try {
       ServletHostConfig config = new ServletHostConfig(sc);
-      init.initLogging(config);
       ActionContext.setContext(new ActionContext(new HashMap<String, Object>()));
       ServletActionContext.setServletContext(config.getServletContext());
       Dispatcher dispatcher = init.initDispatcher(config);

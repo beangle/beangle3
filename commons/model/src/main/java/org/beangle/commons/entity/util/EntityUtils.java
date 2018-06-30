@@ -234,7 +234,6 @@ public final class EntityUtils {
    * @see ValidEntityPredicate
    * @param entity
    */
-  @SuppressWarnings("unchecked")
   public static void evictEmptyProperty(Object entity) {
     if (null == entity) { return; }
     boolean isEntity = false;
@@ -243,7 +242,9 @@ public final class EntityUtils {
     }
     BeanMap map = new BeanMap(entity);
     List<String> attList = new ArrayList<String>();
-    attList.addAll(map.keySet());
+    for (Object o : map.keySet()) {
+      attList.add((String) o);
+    }
     attList.remove("class");
     for (String attr : attList) {
       if (!PropertyUtils.isWriteable(entity, attr)) {
@@ -300,7 +301,7 @@ public final class EntityUtils {
   public static void merge(Object dest, Object orig) {
     String attr = "";
     try {
-      Set attrs =  org.apache.commons.beanutils.PropertyUtils.describe(orig).keySet();
+      Set attrs = org.apache.commons.beanutils.PropertyUtils.describe(orig).keySet();
       attrs.remove("class");
       for (Iterator it = attrs.iterator(); it.hasNext();) {
         attr = (String) it.next();

@@ -8,7 +8,7 @@
   <groupId>org.beangle</groupId>
   <artifactId>beangle-library-parent</artifactId>
   <packaging>pom</packaging>
-  <version>3.6.0.M7</version>
+  <version>3.6.0.M8</version>
   <name>Beangle Library V3 Parent</name>
 
   <url>https://github.com/beangle/beangle3</url>
@@ -26,7 +26,7 @@
 
   <properties>
     <spring.version>4.3.14.RELEASE</spring.version>
-    <freemarker.version>2.3.27-incubating</freemarker.version>
+    <freemarker.version>2.3.28</freemarker.version>
     <struts.version>2.5.16</struts.version>
     <ognl.version>3.1.15</ognl.version>
     <hibernate.version>4.2.21.Final</hibernate.version>
@@ -34,8 +34,9 @@
     <javassist.version>3.20.0-GA</javassist.version>
     <ehcache.version>2.5.2</ehcache.version>
     <javax.validation.version>1.0.0.GA</javax.validation.version>
-    <jxls.version>1.0.3</jxls.version>
-    <poi.version>3.9</poi.version>
+    <jxls.version>2.4.5</jxls.version>
+    <jxls-poi.version>1.0.15</jxls-poi.version>
+    <poi.version>3.17</poi.version>
     <dwr.version>3.0.2-RELEASE</dwr.version>
     <caffeine.version>2.6.2</caffeine.version>
     <protobuf.version>3.5.1</protobuf.version>

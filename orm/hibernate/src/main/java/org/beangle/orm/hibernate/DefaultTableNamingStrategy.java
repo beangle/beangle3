@@ -135,7 +135,7 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
       TableNamePattern pattern = getPattern(Class.forName(clazzName));
       return (null == pattern) ? null : pattern.schema;
     } catch (ClassNotFoundException e) {
-      e.printStackTrace();
+      System.out.println("Cannot find class " + clazzName);
     }
     return null;
   }

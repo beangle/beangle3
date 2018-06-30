@@ -28,7 +28,10 @@ import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.transfer.exporter.Context;
 import org.beangle.commons.transfer.io.AbstractItemWriter;
@@ -255,10 +258,10 @@ public class ExcelItemWriter extends AbstractItemWriter {
    */
   protected HSSFCellStyle getTitleStyle() {
     HSSFCellStyle style = workbook.createCellStyle();
-    style.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 左右居中
-    style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);// 上下居中
-    style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-    style.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+    style.setAlignment(HorizontalAlignment.CENTER);// 左右居中
+    style.setVerticalAlignment(VerticalAlignment.CENTER);// 上下居中
+    style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+    style.setFillForegroundColor(HSSFColorPredefined.GREY_25_PERCENT.getIndex());
     return style;
   }
 }
