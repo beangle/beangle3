@@ -26,6 +26,7 @@ import java.util.Set;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.ClassLoaders;
+import org.beangle.commons.lang.Strings;
 import org.beangle.orm.hibernate.RailsNamingStrategy;
 import org.beangle.orm.hibernate.TableNamingStrategy;
 import org.beangle.orm.hibernate.id.AutoIncrementGenerator;
@@ -120,15 +121,19 @@ public class OverrideConfiguration extends Configuration {
 
     if (namingStrategy.isMultiSchema()) {
       for (PersistentClass clazz : classes.values()) {
-        String schema = namingStrategy.getSchema(clazz.getEntityName());
-        if (null != schema) clazz.getTable().setSchema(schema);
+        if (Strings.isEmpty(clazz.getTable().getSchema())) {
+          String schema = namingStrategy.getSchema(clazz.getEntityName());
+          if (null != schema) clazz.getTable().setSchema(schema);
+        }
       }
 
       for (Collection collection : collections.values()) {
         final Table table = collection.getCollectionTable();
         if (null == table) continue;
-        String schema = namingStrategy.getSchema(collection.getOwnerEntityName());
-        if (null != schema) table.setSchema(schema);
+        if (Strings.isBlank(table.getSchema())) {
+          String schema = namingStrategy.getSchema(collection.getOwnerEntityName());
+          if (null != schema) table.setSchema(schema);
+        }
       }
     }
   }

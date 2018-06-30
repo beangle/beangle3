@@ -95,6 +95,7 @@ public abstract class AbstractItemImporter extends AbstractImporter implements I
       setCurData(null);
       return false;
     } else {
+      values.clear();
       for (int i = 0; i < curData.length; i++) {
         values.put(attrs[i], curData[i]);
       }
