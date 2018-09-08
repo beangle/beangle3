@@ -1,7 +1,7 @@
 /**
  * Beangle, Agile Java/Scala Development Scaffold and Toolkit
  *
- * Copyright (c) 2005-2013, Beangle Software.
+ * Copyright (c) 2005-2017, Beangle Software.
  *
  * Beangle is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -272,13 +272,13 @@
       }
       var menu=div.lastElementChild || div.lastChild;
       if(null==menu || menu.tagName.toLowerCase()!='table'){alert('menu is null then return and target is '+div);return;}
-      if(menu.style.visibility!=""&&menu.style.visibility!="hidden"){
+      if(menu.style.display!=""&&menu.style.display!="none"){
         for(var i = 0;i < menu.rows.length;i++){
           if(menu.rows[i].cells[0].className=='toolbar-menuitem-transfer'){
             return;
           }
         }
-        menu.style.visibility="hidden";
+        menu.style.display="none";
       }
     }
 
@@ -289,11 +289,11 @@
       }
       var menu=div.lastElementChild || div.lastChild;
       if(null==menu){alert('menu is null then return and target is '+div);return;}
-      if(menu.style.visibility!=""&&menu.style.visibility!="hidden"){
-        menu.style.visibility="hidden";
+      if(menu.style.display!=""&&menu.style.display!="none"){
+        menu.style.display="none";
         div.className="toolbar-item-transfer";
       }else{
-        menu.style.visibility="visible";
+        menu.style.display="block";
         div.className="toolbar-item-selected";
       }
     }
