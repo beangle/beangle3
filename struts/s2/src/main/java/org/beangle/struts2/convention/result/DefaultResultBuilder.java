@@ -153,7 +153,7 @@ public class DefaultResultBuilder implements ResultBuilder {
 
         // add special param and ajax tag for redirect
         HttpServletRequest request = ServletActionContext.getRequest();
-        String[] redirectParamStrs = request.getParameterValues("params");
+        String[] redirectParamStrs = request.getParameterValues("_params");
         if (null != redirectParamStrs) {
           for (String redirectParamStr : redirectParamStrs)
             action.params(redirectParamStr);

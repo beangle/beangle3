@@ -20,11 +20,11 @@ package org.beangle.struts1.dispatch;
 
 public class MatchInfo {
 
-    public MatchInfo(int startIndex) {
-        reserved = new StringBuffer(0);
-        this.startIndex = startIndex;
-    }
+  public MatchInfo(int startIndex) {
+    reserved = new StringBuffer(0);
+    this.startIndex = startIndex;
+  }
 
-    int startIndex;
-    StringBuffer reserved;
+  int startIndex;
+  StringBuffer reserved;
 }

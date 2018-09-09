@@ -91,24 +91,21 @@ public class Action {
   }
 
   public void addParams(Map paramMap) {
-        if (null == params)
-            params = new StringBuffer();
-        if (null != paramMap && !paramMap.isEmpty()) {
-            Iterator iter = paramMap.keySet().iterator();
-            do {
-                if (!iter.hasNext())
-                    break;
-                String key = (String) iter.next();
-                String value = (String) paramMap.get(key);
-                if (Strings.isNotEmpty(value))
-                    try {
-                        params.append("&").append(key).append("=").append(URLEncoder.encode(value ,"UTF-8"));
-                    } catch (Exception e) {
-                        throw new RuntimeException(e.getMessage());
-                    }
-            } while (true);
+    if (null == params) params = new StringBuffer();
+    if (null != paramMap && !paramMap.isEmpty()) {
+      Iterator iter = paramMap.keySet().iterator();
+      do {
+        if (!iter.hasNext()) break;
+        String key = (String) iter.next();
+        String value = (String) paramMap.get(key);
+        if (Strings.isNotEmpty(value)) try {
+          params.append("&").append(key).append("=").append(URLEncoder.encode(value, "UTF-8"));
+        } catch (Exception e) {
+          throw new RuntimeException(e.getMessage());
         }
+      } while (true);
     }
+  }
 
   public void addParams(String paramStr) {
     if (null == params) params = new StringBuffer();
@@ -149,9 +146,8 @@ public class Action {
     if (Strings.isNotEmpty(parameters)) {
       String params[] = Strings.split(parameters, "&");
       for (int i = 0; i < params.length; i++)
-        if (-1 != params[i].indexOf('='))
-          buf.append("&" + params[i].substring(0, params[i].indexOf('='))).append("=")
-              .append(URLEncoder.encode(params[i].substring(params[i].indexOf('=') + 1), "utf-8"));
+        if (-1 != params[i].indexOf('=')) buf.append("&" + params[i].substring(0, params[i].indexOf('=')))
+            .append("=").append(URLEncoder.encode(params[i].substring(params[i].indexOf('=') + 1), "utf-8"));
         else buf.append("&" + params[i]);
 
     }
@@ -162,6 +158,6 @@ public class Action {
   String method;
   StringBuffer params;
   boolean redirectUseParams;
-  public static String redirectParamName = "params";
+  public static String redirectParamName = "_params";
 
 }

@@ -30,34 +30,33 @@ import org.slf4j.LoggerFactory;
 
 public class ForwardSupport {
 
-    public ForwardSupport() {
+  public ForwardSupport() {
+  }
+
+  public static ActionForward forward(Class actionClass, HttpServletRequest request, String pagePath) {
+    StringBuffer buf = Conventions.getViewName(request, actionClass, pagePath);
+    buf.append(Conventions.getProfile(actionClass).getPagePostfix());
+    if (logger.isDebugEnabled()) logger.debug(buf.toString());
+    return new ActionForward(buf.toString());
+  }
+
+  public static ActionMessages buildMessages(String messages[]) {
+    ActionMessages actionMessages = new ActionMessages();
+    if (null != messages && messages.length > 0) {
+      for (int i = 0; i < messages.length; i++)
+        actionMessages.add("org.apache.struts.action.GLOBAL_MESSAGE", new ActionMessage(messages[i]));
+
     }
+    return actionMessages;
+  }
 
-    public static ActionForward forward(Class actionClass, HttpServletRequest request, String pagePath) {
-        StringBuffer buf = Conventions.getViewName(request, actionClass, pagePath);
-        buf.append(Conventions.getProfile(actionClass).getPagePostfix());
-        if (logger.isDebugEnabled())
-            logger.debug(buf.toString());
-        return new ActionForward(buf.toString());
-    }
+  public static ActionForward forward(HttpServletRequest request, Action action) {
+    return new ActionForward(action.getURL(request).toString());
+  }
 
-    public static ActionMessages buildMessages(String messages[]) {
-        ActionMessages actionMessages = new ActionMessages();
-        if (null != messages && messages.length > 0) {
-            for (int i = 0; i < messages.length; i++)
-                actionMessages.add("org.apache.struts.action.GLOBAL_MESSAGE", new ActionMessage(messages[i]));
+  protected static final Logger logger;
 
-        }
-        return actionMessages;
-    }
-
-    public static ActionForward forward(HttpServletRequest request, Action action) {
-        return new ActionForward(action.getURL(request).toString());
-    }
-
-    protected static final Logger logger;
-
-    static {
-        logger = LoggerFactory.getLogger(org.beangle.struts1.support.ForwardSupport.class);
-    }
+  static {
+    logger = LoggerFactory.getLogger(org.beangle.struts1.support.ForwardSupport.class);
+  }
 }
