@@ -30,7 +30,6 @@ import org.beangle.struts2.view.component.Anchor;
 import org.beangle.struts2.view.component.Checkbox;
 import org.beangle.struts2.view.component.Checkboxes;
 import org.beangle.struts2.view.component.Component;
-import org.beangle.struts2.view.component.Css;
 import org.beangle.struts2.view.component.Date;
 import org.beangle.struts2.view.component.Dialog;
 import org.beangle.struts2.view.component.Div;
@@ -87,6 +86,26 @@ public class BeangleModels extends AbstractModels {
     return render.render(req.getRequestURI(), url);
   }
 
+  public String static_base() {
+    String p = System.getProperty("beangle.webmvc.static_base");
+    if (null == p) return req.getContextPath() + "/static";
+    else return p;
+  }
+
+  public String static_url(String bundle, String file) {
+    return Static.Default.url(static_base(), bundle, file);
+  }
+
+  public String script(String bundle, String fileName) {
+    String url = static_url(bundle, fileName);
+    return "<script type=\"text/javascript\" crossorigin=\"anonymous\" src=\"" + url + "\"></script>";
+  }
+
+  public String css(String bundle, String fileName) {
+    String url = static_url(bundle, fileName);
+    return "<link rel=\"stylesheet\" crossorigin=\"anonymous\" href=\"" + url + "\"/>";
+  }
+
   public java.util.Date getNow() {
     return new java.util.Date();
   }
@@ -99,6 +118,7 @@ public class BeangleModels extends AbstractModels {
     Enumeration<?> em = req.getParameterNames();
     while (em.hasMoreElements()) {
       String attr = (String) em.nextElement();
+      if (attr.equals("method")) continue;
       String value = req.getParameter(attr);
       if (attr.equals("x-requested-with")) continue;
       sw.write(attr);
@@ -138,10 +158,6 @@ public class BeangleModels extends AbstractModels {
 
   public TagModel getDialog() {
     return get(Dialog.class);
-  }
-
-  public TagModel getCss() {
-    return get(Css.class);
   }
 
   public TagModel getIframe() {

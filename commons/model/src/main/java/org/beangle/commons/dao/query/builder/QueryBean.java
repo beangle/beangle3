@@ -136,7 +136,7 @@ public class QueryBean<T> implements LimitQuery<T> {
 
   /** {@inheritDoc} */
   public LimitQuery<T> limit(PageLimit limit) {
-    this.limit = new PageLimit(limit.getPageNo(), limit.getPageSize());
+    this.limit = new PageLimit(limit.getPageIndex(), limit.getPageSize());
     return this;
   }
 

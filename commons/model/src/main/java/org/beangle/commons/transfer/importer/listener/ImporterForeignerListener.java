@@ -113,22 +113,23 @@ public class ImporterForeignerListener extends ItemImporterListener {
             foreigersMap.put(className, foreignerMap);
           }
           if (foreignerMap.size() > CACHE_SIZE) foreignerMap.clear();
-          foreiger = foreignerMap.get(codeValue);
-          if (foreiger == null) {
-            @SuppressWarnings("unchecked")
-            List<?> foreigners = entityDao.get((Class<Entity<?>>)Class.forName(className), foreigerKeys[foreigerKeyIndex],
-                new Object[] { codeValue });
-            if (!foreigners.isEmpty()) {
-              foreiger = foreigners.iterator().next();
-              foreignerMap.put(codeValue, foreiger);
-            } else {
-              tr.addFailure("error.model.notExist", codeValue);
+          if (!codeValue.equals("null")) {
+            foreiger = foreignerMap.get(codeValue);
+            if (foreiger == null) {
+              @SuppressWarnings("unchecked")
+              List<?> foreigners = entityDao.get((Class<Entity<?>>) Class.forName(className),
+                  foreigerKeys[foreigerKeyIndex], new Object[] { codeValue });
+              if (!foreigners.isEmpty()) {
+                foreiger = foreigners.iterator().next();
+                foreignerMap.put(codeValue, foreiger);
+              } else {
+                tr.addFailure("error.model.notExist", codeValue);
+              }
             }
           }
         }
         String parentAttr = Strings.substring(attr, 0, attr.lastIndexOf("."));
-        Model.getPopulator().populateValue(entity, Model.getType(entity.getClass()), parentAttr,
-            foreiger);
+        Model.getPopulator().populateValue(entity, Model.getType(entity.getClass()), parentAttr, foreiger);
       } catch (Exception e) {
         throw new RuntimeException(e);
       }

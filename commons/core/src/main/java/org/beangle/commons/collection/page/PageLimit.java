@@ -26,7 +26,7 @@ package org.beangle.commons.collection.page;
  */
 public class PageLimit implements Limit {
 
-  private int pageNo;
+  private int pageIndex;
 
   private int pageSize;
 
@@ -44,13 +44,13 @@ public class PageLimit implements Limit {
    * Constructor for PageLimit.
    * </p>
    *
-   * @param pageNo
+   * @param pageIndex
    *          a int.
    * @param pageSize
    *          a int.
    */
-  public PageLimit(final int pageNo, final int pageSize) {
-    this.pageNo = pageNo;
+  public PageLimit(final int pageIndex, final int pageSize) {
+    this.pageIndex = pageIndex;
     this.pageSize = pageSize;
   }
 
@@ -79,25 +79,25 @@ public class PageLimit implements Limit {
 
   /**
    * <p>
-   * Getter for the field <code>pageNo</code>.
+   * Getter for the field <code>pageIndex</code>.
    * </p>
    *
    * @return a int.
    */
-  public int getPageNo() {
-    return pageNo;
+  public int getPageIndex() {
+    return pageIndex;
   }
 
   /**
    * <p>
-   * Setter for the field <code>pageNo</code>.
+   * Setter for the field <code>pageIndex</code>.
    * </p>
    *
-   * @param pageNo
+   * @param pageIndex
    *          a int.
    */
-  public void setPageNo(final int pageNo) {
-    this.pageNo = pageNo;
+  public void setPageIndex(final int pageIndex) {
+    this.pageIndex = pageIndex;
   }
 
   /**
@@ -108,7 +108,7 @@ public class PageLimit implements Limit {
    * @return a boolean.
    */
   public boolean isValid() {
-    return pageNo > 0 && pageSize > 0;
+    return pageIndex > 0 && pageSize > 0;
   }
 
   /**
@@ -120,7 +120,7 @@ public class PageLimit implements Limit {
    * @return a {@link java.lang.String} object.
    */
   public String toString() {
-    return new StringBuilder().append("pageNo:").append(pageNo).append(" pageSize:").append(pageSize)
+    return new StringBuilder().append("pageIndex:").append(pageIndex).append(" pageSize:").append(pageSize)
         .toString();
   }
 

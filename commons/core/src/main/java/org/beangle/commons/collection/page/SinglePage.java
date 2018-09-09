@@ -31,11 +31,11 @@ import java.util.ListIterator;
  */
 public class SinglePage<E> implements Page<E> {
 
-  private int pageNo;
+  private int pageIndex;
 
   private int pageSize;
 
-  private int total;
+  private int totalItems;
 
   private List<E> items;
 
@@ -53,93 +53,93 @@ public class SinglePage<E> implements Page<E> {
    * Constructor for SinglePage.
    * </p>
    *
-   * @param pageNo a int.
+   * @param pageIndex a int.
    * @param pageSize a int.
    * @param total a int.
    * @param dataItems a {@link java.util.List} object.
    */
-  public SinglePage(int pageNo, int pageSize, int total, List<E> dataItems) {
+  public SinglePage(int pageIndex, int pageSize, int total, List<E> dataItems) {
     this.items = dataItems;
     if (pageSize < 1) {
       this.pageSize = 2;
     } else {
       this.pageSize = pageSize;
     }
-    if (pageNo < 1) {
-      this.pageNo = 1;
+    if (pageIndex < 1) {
+      this.pageIndex = 1;
     } else {
-      this.pageNo = pageNo;
+      this.pageIndex = pageIndex;
     }
-    this.total = total;
+    this.totalItems = total;
   }
 
   /**
    * <p>
-   * getFirstPageNo.
+   * getFirstPageIndex.
    * </p>
    *
    * @return a int.
    */
-  public final int getFirstPageNo() {
+  public final int getFirstPageIndex() {
     return 1;
   }
 
   /**
    * <p>
-   * getMaxPageNo.
+   * getTotalPages.
    * </p>
    *
    * @return a int.
    */
-  public final int getMaxPageNo() {
-    if (getTotal() < getPageSize()) {
+  public final int getTotalPages() {
+    if (getTotalItems() < getPageSize()) {
       return 1;
     } else {
-      final int remainder = getTotal() % getPageSize();
-      final int quotient = getTotal() / getPageSize();
+      final int remainder = getTotalItems() % getPageSize();
+      final int quotient = getTotalItems() / getPageSize();
       return (0 == remainder) ? quotient : (quotient + 1);
     }
   }
 
   /**
    * <p>
-   * getNextPageNo.
+   * getNextPageIndex.
    * </p>
    *
    * @return a int.
    */
-  public final int getNextPageNo() {
-    if (getPageNo() == getMaxPageNo()) {
-      return getMaxPageNo();
+  public final int getNextPageIndex() {
+    if (getPageIndex() == getTotalPages()) {
+      return getTotalPages();
     } else {
-      return getPageNo() + 1;
+      return getPageIndex() + 1;
     }
   }
 
   /**
    * <p>
-   * getPreviousPageNo.
+   * getPreviousPageIndex.
    * </p>
    *
    * @return a int.
    */
-  public final int getPreviousPageNo() {
-    if (getPageNo() == 1) {
-      return getPageNo();
+  public final int getPreviousPageIndex() {
+    if (getPageIndex() == 1) {
+      return getPageIndex();
     } else {
-      return getPageNo() - 1;
+      return getPageIndex() - 1;
     }
   }
 
   /**
    * <p>
-   * Getter for the field <code>pageNo</code>.
+   * Getter for the field <code>pageIndex</code>.
    * </p>
    *
    * @return a int.
    */
-  public final int getPageNo() {
-    return pageNo;
+  public final int getPageIndex() {
+    return pageIndex;
   }
 
   /**
@@ -171,8 +171,8 @@ public class SinglePage<E> implements Page<E> {
    *
    * @return a int.
    */
-  public final int getTotal() {
-    return total;
+  public final int getTotalItems() {
+    return totalItems;
   }
 
   /** {@inheritDoc} */
@@ -278,13 +278,13 @@ public class SinglePage<E> implements Page<E> {
 
   /**
    * <p>
-   * Setter for the field <code>pageNo</code>.
+   * Setter for the field <code>pageIndex</code>.
    * </p>
    *
-   * @param pageNo a int.
+   * @param pageIndex a int.
    */
-  public void setPageNo(final int pageNo) {
-    this.pageNo = pageNo;
+  public void setPageIndex(final int pageIndex) {
+    this.pageIndex = pageIndex;
   }
 
   /**
@@ -305,8 +305,8 @@ public class SinglePage<E> implements Page<E> {
    *
    * @param total a int.
    */
-  public void setTotal(final int total) {
-    this.total = total;
+  public void setTotalItems(final int total) {
+    this.totalItems = total;
   }
 
   /**
@@ -329,7 +329,7 @@ public class SinglePage<E> implements Page<E> {
    * @return a boolean.
    */
   public boolean hasNext() {
-    return getMaxPageNo() > pageNo;
+    return getTotalPages() > pageIndex;
   }
 
   /**
@@ -340,7 +340,7 @@ public class SinglePage<E> implements Page<E> {
    * @return a boolean.
    */
   public boolean hasPrevious() {
-    return pageNo > 1;
+    return pageIndex > 1;
   }
 
   /**
@@ -366,7 +366,7 @@ public class SinglePage<E> implements Page<E> {
   }
 
   /** {@inheritDoc} */
-  public Page<E> moveTo(int pageNo) {
+  public Page<E> moveTo(int pageIndex) {
     return this;
   }
 

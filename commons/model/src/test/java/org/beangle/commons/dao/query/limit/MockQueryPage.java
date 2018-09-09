@@ -36,16 +36,16 @@ public class MockQueryPage extends AbstractQueryPage<String> {
     next();
   }
 
-  public Page<String> moveTo(int pageNo) {
+  public Page<String> moveTo(int pageIndex) {
     SinglePage<String> page = new SinglePage<String>();
-    page.setPageNo(pageNo);
+    page.setPageIndex(pageIndex);
     page.setPageSize(super.getPageSize());
     List<String> datas = new ArrayList<String>(getPageSize());
     for (int i = 0; i < getPageSize(); i++) {
-      datas.add(String.valueOf(i) + " of " + pageNo);
+      datas.add(String.valueOf(i) + " of " + pageIndex);
     }
     page.setItems(datas);
-    page.setTotal(100);
+    page.setTotalItems(100);
     setPageData(page);
     return this;
   }

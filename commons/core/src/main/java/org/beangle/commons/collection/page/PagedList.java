@@ -32,9 +32,9 @@ public class PagedList<E> extends PageWapper<E> {
 
   private final List<E> datas;
 
-  private int pageNo = 0;
+  private int pageIndex = 0;
 
-  private int maxPageNo;
+  private int totalPages;
 
   private int pageSize;
 
@@ -62,37 +62,35 @@ public class PagedList<E> extends PageWapper<E> {
     super();
     this.datas = datas;
     this.pageSize = limit.getPageSize();
-    this.pageNo = limit.getPageNo() - 1;
+    this.pageIndex = limit.getPageIndex() - 1;
     if (datas.size() <= pageSize) {
-      this.maxPageNo = 1;
+      this.totalPages = 1;
     } else {
       final int remainder = datas.size() % pageSize;
       final int quotient = datas.size() / pageSize;
-      this.maxPageNo = (0 == remainder) ? quotient : (quotient + 1);
+      this.totalPages = (0 == remainder) ? quotient : (quotient + 1);
     }
     this.next();
   }
 
   /**
    * <p>
-   * Getter for the field <code>maxPageNo</code>.
+   * Getter for the field <code>totalPages</code>.
    * </p>
    *
    * @return a int.
    */
-  public int getMaxPageNo() {
-    return maxPageNo;
+  public int getTotalPages() {
+    return totalPages;
   }
 
   /**
-   * <p>
-   * Getter for the field <code>pageNo</code>.
-   * </p>
+   * Getter for the field <code>pageIndex</code>.
    *
    * @return a int.
    */
-  public int getPageNo() {
-    return pageNo;
+  public int getPageIndex() {
+    return pageIndex;
   }
 
   /**
@@ -107,36 +105,34 @@ public class PagedList<E> extends PageWapper<E> {
   }
 
   /**
-   * <p>
    * getTotal.
-   * </p>
    *
    * @return a int.
    */
-  public int getTotal() {
+  public int getTotalItems() {
     return datas.size();
   }
 
   /**
    * <p>
-   * getNextPageNo.
+   * getNextPageIndex.
    * </p>
    *
    * @return a int.
    */
-  public final int getNextPageNo() {
-    return getPage().getNextPageNo();
+  public final int getNextPageIndex() {
+    return getPage().getNextPageIndex();
   }
 
   /**
    * <p>
-   * getPreviousPageNo.
+   * getPreviousPageIndex.
    * </p>
    *
    * @return a int.
    */
-  public final int getPreviousPageNo() {
-    return getPage().getPreviousPageNo();
+  public final int getPreviousPageIndex() {
+    return getPage().getPreviousPageIndex();
   }
 
   /**
@@ -147,7 +143,7 @@ public class PagedList<E> extends PageWapper<E> {
    * @return a boolean.
    */
   public boolean hasNext() {
-    return getPageNo() < getMaxPageNo();
+    return getPageIndex() < getTotalPages();
   }
 
   /**
@@ -158,7 +154,7 @@ public class PagedList<E> extends PageWapper<E> {
    * @return a boolean.
    */
   public boolean hasPrevious() {
-    return getPageNo() > 1;
+    return getPageIndex() > 1;
   }
 
   /**
@@ -169,7 +165,7 @@ public class PagedList<E> extends PageWapper<E> {
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
   public Page<E> next() {
-    return moveTo(pageNo + 1);
+    return moveTo(pageIndex + 1);
   }
 
   /**
@@ -180,15 +176,15 @@ public class PagedList<E> extends PageWapper<E> {
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
   public Page<E> previous() {
-    return moveTo(pageNo - 1);
+    return moveTo(pageIndex - 1);
   }
 
   /** {@inheritDoc} */
-  public Page<E> moveTo(int pageNo) {
-    if (pageNo < 1) { throw new RuntimeException("error pageNo:" + pageNo); }
-    this.pageNo = pageNo;
-    int toIndex = pageNo * pageSize;
-    SinglePage<E> newPage = new SinglePage<E>(pageNo, pageSize, datas.size(), datas.subList((pageNo - 1)
+  public Page<E> moveTo(int pageIndex) {
+    if (pageIndex < 1) { throw new RuntimeException("error pageIndex:" + pageIndex); }
+    this.pageIndex = pageIndex;
+    int toIndex = pageIndex * pageSize;
+    SinglePage<E> newPage = new SinglePage<E>(pageIndex, pageSize, datas.size(), datas.subList((pageIndex - 1)
         * pageSize, (toIndex < datas.size()) ? toIndex : datas.size()));
     setPage(newPage);
     return this;

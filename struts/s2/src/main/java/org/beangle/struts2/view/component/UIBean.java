@@ -51,6 +51,8 @@ public abstract class UIBean extends Component {
 
   protected Theme theme;
 
+  protected String cssClass;
+
   private static final String NumberFormat = "{0,number,#.##}";
 
   public UIBean(ValueStack stack) {
@@ -98,6 +100,14 @@ public abstract class UIBean extends Component {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public String getCssClass() {
+    return cssClass;
+  }
+
+  public void setCssClass(String cssClass) {
+    this.cssClass = cssClass;
   }
 
   protected Theme getTheme() {
@@ -173,6 +183,7 @@ public abstract class UIBean extends Component {
 
   /**
    * Process label,convert empty to null
+   *
    * @param label
    * @param name
    * @return

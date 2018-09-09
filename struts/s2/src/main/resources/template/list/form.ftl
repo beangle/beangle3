@@ -1,8 +1,8 @@
 [#ftl]
 [@b.messages slash="4"/]
-<form id="${tag.id}" [#if !tag.parameters['cssClass']??]class="listform"[/#if] name="${tag.name}" action="${tag.action}" method="post" [#if tag.target??]target="${tag.target}"[/#if]${tag.parameterString}
+<form id="${tag.id}" class="${tag.cssClass!'listform'}" name="${tag.name}" action="${tag.action}" method="post" [#if tag.target??]target="${tag.target}"[/#if]${tag.parameterString}
 [#if tag.validate=="true" || tag.onsubmit??]onsubmit="return onsubmit${tag.id}()"[/#if]>
-[#if Parameters['params']??]<input name="params" type="hidden" value="${Parameters['params']?html}" />[/#if]
+[#if Parameters['_params']??]<input name="_params" type="hidden" value="${Parameters['_params']?html}" />[/#if]
 <fieldset[#if !tag.title??] class="emptytitle"[/#if]>
 [#if tag.title??]<legend>${tag.title}</legend>[/#if]
 <ol>${tag.body}</ol>

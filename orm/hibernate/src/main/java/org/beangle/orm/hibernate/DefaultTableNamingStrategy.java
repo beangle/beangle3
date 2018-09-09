@@ -64,6 +64,7 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
     Collections.sort(patterns);
   }
 
+  @SuppressWarnings("unchecked")
   private void loadProperties(URL url) {
     try {
       logger.debug("loading {}", url);
@@ -135,7 +136,7 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
       TableNamePattern pattern = getPattern(Class.forName(clazzName));
       return (null == pattern) ? null : pattern.schema;
     } catch (ClassNotFoundException e) {
-      System.out.println("Cannot find class " + clazzName);
+      logger.info("Cannot find class " + clazzName);
     }
     return null;
   }

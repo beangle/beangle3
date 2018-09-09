@@ -195,12 +195,12 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   /**
    * limit.
    *
-   * @param pageNo a int.
+   * @param pageIndex a int.
    * @param pageSize a int.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
-  public OqlBuilder<T> limit(final int pageNo, final int pageSize) {
-    this.limit = new PageLimit(pageNo, pageSize);
+  public OqlBuilder<T> limit(final int pageIndex, final int pageSize) {
+    this.limit = new PageLimit(pageIndex, pageSize);
     return this;
   }
 

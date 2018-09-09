@@ -35,7 +35,7 @@ public class Theme {
 
   public static final String ThemeStack = ".beangle_theme_stack";
 
-  public static final String DefaultTheme = "xml";
+  public static final String DefaultTheme = "html";
 
   /**
    * Default tagName corresponding TagClass

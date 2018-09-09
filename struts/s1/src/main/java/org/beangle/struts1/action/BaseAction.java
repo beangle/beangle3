@@ -204,8 +204,8 @@ public class BaseAction extends DispatchAction {
     return entityDao.get(modelClass, "id", ids);
   }
 
-  public static int getPageNo(HttpServletRequest request) {
-    return QueryRequestSupport.getPageNo(request);
+  public static int getPageIndex(HttpServletRequest request) {
+    return QueryRequestSupport.getPageIndex(request);
   }
 
   public static int getPageSize(HttpServletRequest request) {

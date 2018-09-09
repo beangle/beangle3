@@ -76,8 +76,8 @@ public class QueryPage<T> extends AbstractQueryPage<T> {
   }
 
   /** {@inheritDoc} */
-  public Page<T> moveTo(int pageNo) {
-    query.getLimit().setPageNo(pageNo);
+  public Page<T> moveTo(int pageIndex) {
+    query.getLimit().setPageIndex(pageIndex);
     SinglePage<T> datas = (SinglePage<T>) entityDao.search(query);
     setPageData(datas);
     return this;

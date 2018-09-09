@@ -36,14 +36,14 @@ import org.beangle.commons.dao.query.LimitQuery;
  */
 public abstract class AbstractQueryPage<T> extends PageWapper<T> {
 
-  protected int pageNo = 0;
+  protected int pageIndex = 0;
 
-  protected int maxPageNo = 0;
+  protected int totalPages = 0;
 
   protected LimitQuery<T> query;
 
   /** {@inheritDoc} */
-  abstract public Page<T> moveTo(int pageNo);
+  abstract public Page<T> moveTo(int pageIndex);
 
   /**
    * <p>
@@ -65,9 +65,9 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
     this.query = query;
     if (null != query) {
       if (null == query.getLimit()) {
-        query.limit(new PageLimit(pageNo, Page.DEFAULT_PAGE_SIZE));
+        query.limit(new PageLimit(pageIndex, Page.DEFAULT_PAGE_SIZE));
       } else {
-        pageNo = query.getLimit().getPageNo() - 1;
+        pageIndex = query.getLimit().getPageIndex() - 1;
       }
     }
   }
@@ -79,8 +79,8 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    */
   protected void setPageData(SinglePage<T> page) {
     setPage(page);
-    this.pageNo = page.getPageNo();
-    this.maxPageNo = page.getMaxPageNo();
+    this.pageIndex = page.getPageIndex();
+    this.totalPages = page.getTotalPages();
   }
 
   /**
@@ -91,7 +91,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
   public Page<T> next() {
-    return moveTo(pageNo + 1);
+    return moveTo(pageIndex + 1);
   }
 
   /**
@@ -102,7 +102,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
   public Page<T> previous() {
-    return moveTo(pageNo - 1);
+    return moveTo(pageIndex - 1);
   }
 
   /**
@@ -113,7 +113,7 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * @return a boolean.
    */
   public boolean hasNext() {
-    return maxPageNo > pageNo;
+    return totalPages > pageIndex;
   }
 
   /**
@@ -124,51 +124,51 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
    * @return a boolean.
    */
   public boolean hasPrevious() {
-    return pageNo > 1;
+    return pageIndex > 1;
   }
 
   /**
    * <p>
-   * getFirstPageNo.
+   * getFirstPageIndex.
    * </p>
    *
    * @return a int.
    */
-  public int getFirstPageNo() {
+  public int getFirstPageIndex() {
     return 1;
   }
 
   /**
    * <p>
-   * Getter for the field <code>maxPageNo</code>.
+   * Getter for the field <code>totalPages</code>.
    * </p>
    *
    * @return a int.
    */
-  public int getMaxPageNo() {
-    return maxPageNo;
+  public int getTotalPages() {
+    return totalPages;
   }
 
   /**
    * <p>
-   * getNextPageNo.
+   * getNextPageIndex.
    * </p>
    *
    * @return a int.
    */
-  public int getNextPageNo() {
-    return getPage().getNextPageNo();
+  public int getNextPageIndex() {
+    return getPage().getNextPageIndex();
   }
 
   /**
    * <p>
-   * Getter for the field <code>pageNo</code>.
+   * Getter for the field <code>pageIndex</code>.
    * </p>
    *
    * @return a int.
    */
-  public int getPageNo() {
-    return pageNo;
+  public int getPageIndex() {
+    return pageIndex;
   }
 
   /**
@@ -184,24 +184,22 @@ public abstract class AbstractQueryPage<T> extends PageWapper<T> {
 
   /**
    * <p>
-   * getPreviousPageNo.
+   * getPreviousPageIndex.
    * </p>
    *
    * @return a int.
    */
-  public int getPreviousPageNo() {
-    return getPage().getPreviousPageNo();
+  public int getPreviousPageIndex() {
+    return getPage().getPreviousPageIndex();
   }
 
   /**
-   * <p>
    * getTotal.
-   * </p>
    *
    * @return a int.
    */
-  public int getTotal() {
-    return getPage().getTotal();
+  public int getTotalItems() {
+    return getPage().getTotalItems();
   }
 
   /**

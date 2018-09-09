@@ -1,7 +1,7 @@
 /**
  * Beangle, Agile Java/Scala Development Scaffold and Toolkit
  *
- * Copyright (c) 2005-2013, Beangle Software.
+ * Copyright (c) 2005-2017, Beangle Software.
  *
  * Beangle is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,44 +20,18 @@
  * Beangle UI CSS Framework
  * LGPL version 3.
  */
-
-body {font-size: 13px;margin:0;font-family: Verdana, Arial, sans-serif;}
-
-select,input,textarea {font-size: 13px;}
-
-input[type="text"],input[type="reset"],input[type="submit"]  {
-    border: 1px solid #CCC;
-}
-select {
-    border: 1px solid #CCC;
-}
-
-input[type="text"]:focus,select:focus{
-     outline: 1px solid #3399ff;
-     outline-radius: 3px;
-}
-
-form {
-    padding:0px;
-    margin:0px;
-}
-
-a:link {color: #000080;text-decoration: none;}
-a:visited {text-decoration: none;}
-a:hover {color: red;}
-
 /* grid */
-.grid{border-color:#006CB2;margin: 0px 0px 0px 0px ;font-size: 13px;}
+.grid{border-color:#006CB2;margin: 0px 0px 0px 0px ;}
 
 .grid-caption{background-color: #333333;color: #FFFFFF;margin-bottom: 0;padding: 5px;font-weight: bold;}
 
 .gridempty{border:solid;border-width:1px;border-top-width:0px;border-color:#006CB2;text-align:center;}
 
-.gridtable {width:100%;border-collapse: collapse;border:solid;border-width:1px;border-color:#006CB2;vertical-align: middle;table-layout:fixed}
+.gridtable {width:100%;border-collapse: collapse;border:solid;border-width:1px 0px 0px 0px;border-color:#006CB2;vertical-align: middle;table-layout:fixed}
 
-.gridtable td{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;overflow:hidden;word-wrap:break-word;}
+.gridtable td{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;overflow:hidden;word-wrap:break-word;text-align:center;}
 
-.gridtable th{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;}
+.gridtable th{border-color:#006CB2;border-style:solid;border-width:0 1px 1px 0;text-align:center;}
 
 .grid-filter-submit {background-image: url(icons/16x16/actions/edit-find.png);background-repeat: no-repeat;background-color:transparent;width:16px;height:16px;border-style:none}
 
@@ -65,7 +39,7 @@ a:hover {color: red;}
 
 .gridselect-top{text-align:center;}
 
-.gridhead{color: #000000;text-decoration: none;text-align:center;letter-spacing:0;background-color: #c7dbff;}
+.gridhead{color: #000000;letter-spacing:0;background-color: #c7dbff;}
 
 .gridhead-icon{background-image: url(icons/16x16/actions.png);display:inline-block;}
 
@@ -75,27 +49,27 @@ a:hover {color: red;}
 
 .gridhead-sortable{cursor:pointer;}
 
-.griddata{text-align:center;}
+.griddata{}
 
-.griddata-odd{text-align:center;text-decoration: none;letter-spacing:0;background-color: #EBEBEB;}
+.griddata-odd{text-decoration: none;letter-spacing:0;background-color: #f9f9f9;}
 
-.griddata-even{text-align:center;text-decoration: none;letter-spacing:0;background-color: white;}
+.griddata-even{text-decoration: none;letter-spacing:0;background-color: white;}
 
 .griddata-selected{background-color: #BFFFBF;}
 
 .griddata-over{background-color: #BFFFBF;}
 
 .gridbar{
-    height:22px;
+    height:23px;
     background-color: #c7dbff;
     border:solid;
     border-color:#006CB2;
     border-width:0px;
 }
 
-.gridbar-items{float:left;}
+.gridbar-items{float:left;clear:both;}
 
-.girdbar-pgbar{height:22px;float:right;margin:0px 5px 0px 0px;line-height: 22px;}
+.girdbar-pgbar{height:22px;float:right;margin:0px 5px 0px 0px;padding-top:1px;line-height: 22px;}
 
 .pgbar-label{background-color:#e9f2f8;}
 
@@ -103,12 +77,12 @@ a:hover {color: red;}
 
 .pgbar-input{text-align:center;width:35px;height:16px;border-collapse: collapse;border:solid;border-width:1px;border-color:#006CB2;padding:0px;margin:0px 2px 0px 0px;}
 
-.pgbar-selbox{vertical-align: bottom;width:75px;height:21px;font-size: 0.8em;margin:0px 2px 0px 0px;}
+.pgbar-selbox{vertical-align: top;width:75px;height:21px;font-size: 0.8em;margin:0px 2px 0px 0px;border:0px;}
 
-.pgbar-go{width:30px;height:18px;font-size: 0.8em;text-align:center;margin:0px;padding:0px 0px 2px 0px;border:solid;border-width:1px;border-color:#006CB2;}
+.pgbar-go{width:30px;height:18px;font-size: 0.8em;text-align:center;margin:0px;padding:0px 0px 2px 0px;border:solid;border-width:1px;border-color:#006CB2;display:none;}
 
 /*toolbar*/
-.toolbar{height:22px;border-collapse:separate;display:block;font-size: 13px;}
+.toolbar{height:23px;border-collapse:separate;display:block;}
 
 .toolbar-icon{
     background-image: url(icons/16x16/actions.png);
@@ -124,13 +98,13 @@ a:hover {color: red;}
 
 .toolbar-separator{padding-left:0px;width:1px;float:left;}
 
-.toolbar-title{float:left;}
+.toolbar-title{float:left;line-height: 100%;}
 
-.toolbar-msg{float:left;height:15px;padding:2px 3px 2px 3px; margin:2px 0px 1px 10px;background-color:#F9EDBE;border-top-left-radius:5px;border-top-right-radius:5px;border-bottom-left-radius:5px;border-bottom-right-radius:5px}
+.toolbar-msg{float:left;height:21px;padding:2px 3px 2px 3px; margin:1px 0px 1px 10px;background-color:#F9EDBE;border-top-left-radius:5px;border-top-right-radius:5px;border-bottom-left-radius:5px;border-bottom-right-radius:5px}
 
 .toolbar-items{float:right;}
 
-.toolbar-item{float:left;padding:2px 3px 2px 3px;cursor:pointer;}
+.toolbar-item{float:left;padding:2px 3px 2px 3px;cursor:pointer;line-height: 100%;}
 
 .toolbar-item-ge0{}
 
@@ -144,9 +118,9 @@ a:hover {color: red;}
 
 .toolbar-item-selected{background-color:#4791C5;float:left;padding:2px 3px 2px 3px;cursor:pointer;}
 
-.toolbar-item-transfer{float:left;padding:1px 2px 1px 2px;background-color:#e9f2f8;border:1px solid #336699;cursor:pointer;}
+.toolbar-item-transfer{float:left;padding:1px 2px 1px 2px;background-color:#e9f2f8;border:1px solid #336699;cursor:pointer;line-height: 100%;}
 
-.toolbar-menu{margin-top:1px;margin-left:0px;background-color:#e9f2f8;visibility:hidden;position:absolute;z-index:100;padding:1px;overflow:visible;border:solid 1px #4791C5;white-space:nowrap;}
+.toolbar-menu{margin-top:1px;margin-left:0px;background-color:#e9f2f8;display:none;position:absolute;z-index:100;padding:1px;overflow:visible;border:solid 1px #4791C5;white-space:nowrap;}
 
 .toolbar-menuitem{padding:1px 2px 1px 2px;cursor:pointer;}
 
@@ -212,15 +186,23 @@ div.message img.icon {
     border-collapse: collapse;
     border-width:0px;
     margin:auto;
+    width:100%;
 }
 .search-widget .search-item{
     text-align:right;
+}
+.search-widget label{
+    font-weight: normal;
+    margin:0px 0px;
+}
+.search-widget tbody> tr > td{
+    padding:1px;
 }
 .search-item input{
     width:100px;
 }
 .search-item select{
-    width:105px;
+    width:100px;
 }
 
 .V {height:1px;font-size:0pt;padding:0px;border-top:1px solid #4791C5;}
@@ -280,13 +262,13 @@ table.infoTable {
     background-color: #EEEEEE;
 }
 
-table.infoTable td {
+table.infoTable > tbody > td {
     border: 1px solid #FFFFFF;
     overflow:hidden;
     word-wrap:break-word;
 }
 
-table.infoTable th {
+table.infoTable > thead > th {
     background-color: #E1ECFF;
     height: 22px;
 }
@@ -299,8 +281,7 @@ table.infoTable th {
     text-align:right;
 }
 .infoTable .content{
-    padding-left: 1px;
-    padding-right: 1px;
+    padding: 0px 1px;
 }
 .infoTitle{
 }
@@ -357,7 +338,6 @@ table.settingTable td{
     font-weight: bold;
     color: red;
     background-color: #EBEBEB;
-    /*text-align: right;*/
 }
 .tfvNormal {
     font-weight: normal;
@@ -423,6 +403,7 @@ table.settingTable td{
 
 form.listform {
     font-size: 12px;
+    line-height: normal;
 }
 form.listform label.title{
     clear: left;
@@ -447,16 +428,13 @@ form.listform em{
 form.listform legend {
     font-weight: bold;
     padding: 0 2px;
+    margin: 0px 0px;
+    font-size: inherit;
 }
 
 form.listform fieldset{
     border-style: solid none none;
-    margin: 10px 0px 0px 10px;
-}
-
-form.listform fieldset.emptytitle{
-    border-style: none;
-    margin: 0px 0px 0px 0px;
+    margin: 0px 0px;
 }
 
 form.listform fieldset ol {
