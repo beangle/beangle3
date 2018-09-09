@@ -35,10 +35,11 @@ ${tag.body}
   ${b.script("bootstrap","js/bootstrap.min.js")}
   <script type="text/javascript">
   var App = {contextPath:"${base}"};
+  beangle.base='${b.static_base()}/bui/0.0.5';
+  beangle.renderAs("struts");
+
   jQuery(document).ready(function () {
     jQuery.struts2_jquery.version="3.6.1";
-    beangle.base='${b.static_base()}/bui/0.0.5';
-    beangle.renderAs("struts");
     jQuery.scriptPath = App.contextPath+"/static/";
     jQuery.struts2_jquerySuffix = "";
     jQuery.ajaxSettings.traditional = true;
