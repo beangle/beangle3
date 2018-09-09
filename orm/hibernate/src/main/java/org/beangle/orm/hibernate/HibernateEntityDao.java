@@ -200,7 +200,7 @@ public class HibernateEntityDao implements EntityDao {
       if (null == limitQuery.getLimit()) {
         return QuerySupport.find(limitQuery, getSession());
       } else {
-        return new SinglePage<T>(limitQuery.getLimit().getPageNo(), limitQuery.getLimit().getPageSize(),
+        return new SinglePage<T>(limitQuery.getLimit().getPageIndex(), limitQuery.getLimit().getPageSize(),
             QuerySupport.count(limitQuery, getSession()), QuerySupport.find(query, getSession()));
       }
     } else {
@@ -330,7 +330,7 @@ public class HibernateEntityDao implements EntityDao {
   @SuppressWarnings("unchecked")
   private <T> Page<T> paginateQuery(Query query, Map<String, Object> params, PageLimit limit) {
     QuerySupport.setParameter(query, params);
-    query.setFirstResult((limit.getPageNo() - 1) * limit.getPageSize()).setMaxResults(limit.getPageSize());
+    query.setFirstResult((limit.getPageIndex() - 1) * limit.getPageSize()).setMaxResults(limit.getPageSize());
     List<T> targetList = query.list();
     String queryStr = buildCountQueryStr(query);
     Query countQuery = null;
@@ -341,7 +341,7 @@ public class HibernateEntityDao implements EntityDao {
     }
     QuerySupport.setParameter(countQuery, params);
     // 返回结果
-    return new SinglePage<T>(limit.getPageNo(), limit.getPageSize(),
+    return new SinglePage<T>(limit.getPageIndex(), limit.getPageSize(),
         ((Number) (countQuery.uniqueResult())).intValue(), targetList);
   }
 
@@ -732,7 +732,7 @@ public class HibernateEntityDao implements EntityDao {
           return hibernateQuery.list();
         } else {
           final PageLimit limit = limitQuery.getLimit();
-          hibernateQuery.setFirstResult((limit.getPageNo() - 1) * limit.getPageSize()).setMaxResults(
+          hibernateQuery.setFirstResult((limit.getPageIndex() - 1) * limit.getPageSize()).setMaxResults(
               limit.getPageSize());
           return hibernateQuery.list();
         }

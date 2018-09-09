@@ -143,8 +143,8 @@ public class EntityActionSupport extends ActionSupport {
   }
 
   // query------------------------------------------------------
-  protected final int getPageNo() {
-    return QueryHelper.getPageNo();
+  protected final int getPageIndex() {
+    return QueryHelper.getPageIndex();
   }
 
   protected final int getPageSize() {

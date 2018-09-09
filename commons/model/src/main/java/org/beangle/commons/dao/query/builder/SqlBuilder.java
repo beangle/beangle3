@@ -141,12 +141,12 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * limit.
    * </p>
    *
-   * @param pageNo a int.
+   * @param pageIndex a int.
    * @param pageSize a int.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
-  public SqlBuilder limit(final int pageNo, final int pageSize) {
-    this.limit = new PageLimit(pageNo, pageSize);
+  public SqlBuilder limit(final int pageIndex, final int pageSize) {
+    this.limit = new PageLimit(pageIndex, pageSize);
     return this;
   }
 

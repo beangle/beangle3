@@ -66,6 +66,7 @@ public class TagModel implements TemplateTransformModel {
     for (Iterator iterator = params.entrySet().iterator(); iterator.hasNext();) {
       Map.Entry<String, Object> entry = (Map.Entry<String, Object>) iterator.next();
       String key = entry.getKey();
+      key = (key.equals("class")) ? "cssClass" : key;
       Object value = entry.getValue();
       if (value != null) {
         if (PropertyUtils.isWriteable(bean, key)) {

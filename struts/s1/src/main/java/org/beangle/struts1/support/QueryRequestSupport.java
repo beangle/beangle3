@@ -101,14 +101,14 @@ public class QueryRequestSupport {
 
   public static PageLimit getPageLimit(HttpServletRequest request) {
     PageLimit limit = new PageLimit();
-    limit.setPageNo(getPageNo(request));
+    limit.setPageIndex(getPageIndex(request));
     limit.setPageSize(getPageSize(request));
     return limit;
   }
 
-  public static int getPageNo(HttpServletRequest request) {
-    String pageNo = request.getParameter("pageNo");
-    if (Strings.isNotEmpty(pageNo)) return Integer.valueOf(pageNo).intValue();
+  public static int getPageIndex(HttpServletRequest request) {
+    String pageIndex = request.getParameter("pageIndex");
+    if (Strings.isNotEmpty(pageIndex)) return Integer.valueOf(pageIndex).intValue();
     else return 1;
   }
 
@@ -123,13 +123,13 @@ public class QueryRequestSupport {
   public static void addPage(HttpServletRequest request, Collection objs) {
     if (objs instanceof Page) {
       Page page = (Page) objs;
-      request.setAttribute("pageNo", new Integer(page.getPageNo()));
+      request.setAttribute("pageIndex", new Integer(page.getPageIndex()));
       request.setAttribute("pageSize", new Integer(page.getPageSize()));
-      request.setAttribute("previousPageNo", new Integer(page.getPreviousPageNo()));
-      request.setAttribute("nextPageNo", new Integer(page.getNextPageNo()));
-      request.setAttribute("maxPageNo", new Integer(page.getMaxPageNo()));
+      request.setAttribute("previousPageIndex", new Integer(page.getPreviousPageIndex()));
+      request.setAttribute("nextPageIndex", new Integer(page.getNextPageIndex()));
+      request.setAttribute("totalPages", new Integer(page.getTotalPages()));
       request.setAttribute("thisPageSize", new Integer(page.size()));
-      request.setAttribute("totalSize", new Integer(page.getTotal()));
+      request.setAttribute("totalSize", new Integer(page.getTotalItems()));
     }
   }
 
@@ -169,7 +169,7 @@ public class QueryRequestSupport {
   }
 
   protected static final Logger logger;
-  public static final String PAGENO = "pageNo";
+  public static final String PAGENO = "pageIndex";
   public static final String PAGESIZE = "pageSize";
   public static boolean RESERVED_NULL = true;
 

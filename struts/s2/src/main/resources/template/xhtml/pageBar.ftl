@@ -1,15 +1,15 @@
 [#ftl]
 <tr [#if extra['cssClass']??]class="${extra['cssClass']}"[/#if] [#if extra['cssStyle']??]style="${extra['style']}"[/#if]>
   <td align="center" id="${pageId})_bar">
-    [#if curPage.pageNo==1][@msg.text name="page.first"/]&nbsp;[#else]
+    [#if curPage.pageIndex==1][@msg.text name="page.first"/]&nbsp;[#else]
     <a href="#" onclick="goPage('${pageId}',1)">[@msg.text name="page.first"/]</a>
-    <a href="#" onclick="goPage('${pageId}',${curPage.previousPageNo})" >[@msg.text name="page.previous"/]</a>
+    <a href="#" onclick="goPage('${pageId}',${curPage.previousPageIndex})" >[@msg.text name="page.previous"/]</a>
     [/#if]
-    <input type="text" name="pageNo" value="${curPage.pageNo}" title="当前页"
+    <input type="text" name="pageIndex" value="${curPage.pageIndex}" title="当前页"
     onchange="goPage('${pageId}',this.value)" style="width:30px;background-color:#CDD6ED">
-    [#if !(curPage.hasNext())]共${curPage.maxPageNo}页[#else]
-    <a href="#" onclick="goPage('${pageId}',${curPage.nextPageNo})" >[@msg.text name="page.next" /]</a>
-    <a href="#" onclick="goPage('${pageId}',${curPage.maxPageNo})" title="[@msg.text name="page.last"/]">共${curPage.maxPageNo}页</a>
+    [#if !(curPage.hasNext())]共${curPage.totalPages}页[#else]
+    <a href="#" onclick="goPage('${pageId}',${curPage.nextPageIndex})" >[@msg.text name="page.next" /]</a>
+    <a href="#" onclick="goPage('${pageId}',${curPage.totalPages})" title="[@msg.text name="page.last"/]">共${curPage.totalPages}页</a>
     [/#if]
     [#if !fixPageSize!false]
     每页[#assign pageRank=[10,15,20,25,30,50,70,90,100,150,300,100]]
@@ -33,5 +33,5 @@ if(typeof parentEle.tBodies[0].rows[0].cells.length!=undefined){
   colspanNumber=parentEle.tBodies[0].rows[0].cells.length;
 }
 pageBarTd.colSpan=colspanNumber;
-pages["${pageId}"].maxPageNo=${curPage.maxPageNo};
+pages["${pageId}"].totalPages=${curPage.totalPages};
 </script>

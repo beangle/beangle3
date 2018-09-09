@@ -38,35 +38,35 @@ public interface Page<E> extends List<E> {
    *
    * @return 1
    */
-  int getFirstPageNo();
+  int getFirstPageIndex();
 
   /**
    * 最大页码
    *
    * @return a int.
    */
-  int getMaxPageNo();
+  int getTotalPages();
 
   /**
    * 下一页页码
    *
    * @return a int.
    */
-  int getNextPageNo();
+  int getNextPageIndex();
 
   /**
    * 上一页页码
    *
    * @return a int.
    */
-  int getPreviousPageNo();
+  int getPreviousPageIndex();
 
   /**
    * 当前页码
    *
    * @return a int.
    */
-  int getPageNo();
+  int getPageIndex();
 
   /**
    * 每页大小
@@ -80,7 +80,7 @@ public interface Page<E> extends List<E> {
    *
    * @return a int.
    */
-  int getTotal();
+  int getTotalItems();
 
   /**
    * 下一页
@@ -109,14 +109,14 @@ public interface Page<E> extends List<E> {
    * @return a boolean.
    */
   boolean hasPrevious();
-
   /**
+
    * 调转到指定页
    *
-   * @param pageNo a int.
+   * @param pageIndex a int.
    * @return a {@link org.beangle.commons.collection.page.Page} object.
    */
-  Page<E> moveTo(int pageNo);
+  Page<E> moveTo(int pageIndex);
 
   /**
    * <p>

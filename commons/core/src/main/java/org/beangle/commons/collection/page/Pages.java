@@ -49,19 +49,19 @@ public class Pages {
 
   private static class EmptyPage<E> extends AbstractList<E> implements Page<E> {
 
-    public int getFirstPageNo() {
+    public int getFirstPageIndex() {
       return 0;
     }
 
-    public int getMaxPageNo() {
+    public int getTotalPages() {
       return 0;
     }
 
-    public int getNextPageNo() {
+    public int getNextPageIndex() {
       return 0;
     }
 
-    public int getPageNo() {
+    public int getPageIndex() {
       return 0;
     }
 
@@ -69,11 +69,11 @@ public class Pages {
       return 0;
     }
 
-    public int getPreviousPageNo() {
+    public int getPreviousPageIndex() {
       return 0;
     }
 
-    public int getTotal() {
+    public int getTotalItems() {
       return 0;
     }
 
@@ -101,7 +101,7 @@ public class Pages {
       return 0;
     }
 
-    public Page<E> moveTo(int pageNo) {
+    public Page<E> moveTo(int pageIndex) {
       return this;
     }
 

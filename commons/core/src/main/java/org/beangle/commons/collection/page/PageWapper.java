@@ -37,12 +37,12 @@ public abstract class PageWapper<E> implements Page<E> {
 
   /**
    * <p>
-   * getFirstPageNo.
+   * getFirstPageIndex.
    * </p>
    *
    * @return a int.
    */
-  public int getFirstPageNo() {
+  public int getFirstPageIndex() {
     return 1;
   }
 

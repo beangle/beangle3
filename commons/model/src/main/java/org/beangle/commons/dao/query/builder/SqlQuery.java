@@ -355,7 +355,7 @@ public class SqlQuery extends AbstractQuery<Object> {
     queryBean.setStatement(toQueryString());
     queryBean.setParams(CollectUtils.newHashMap(getParams()));
     if (null != limit) {
-      queryBean.setLimit(new PageLimit(limit.getPageNo(), limit.getPageSize()));
+      queryBean.setLimit(new PageLimit(limit.getPageIndex(), limit.getPageSize()));
     }
     queryBean.setCountStatement(toCountString());
     queryBean.setCacheable(cacheable);

@@ -47,7 +47,7 @@ public class QueryHelper {
 
   protected static final Logger logger = LoggerFactory.getLogger(QueryHelper.class);
 
-  public static final String PAGENO = "pageNo";
+  public static final String PAGENO = "pageIndex";
 
   public static final String PAGESIZE = "pageSize";
 
@@ -120,16 +120,16 @@ public class QueryHelper {
    * 从的参数或者cookie中(参数优先)取得分页信息
    */
   public static PageLimit getPageLimit() {
-    return new PageLimit(getPageNo(), getPageSize());
+    return new PageLimit(getPageIndex(), getPageSize());
   }
 
   /**
    * 获得请求中的页码
    */
-  public static int getPageNo() {
-    String pageNo = Params.get(PAGENO);
+  public static int getPageIndex() {
+    String pageIndex = Params.get(PAGENO);
     int resultno = 1;
-    if (Strings.isNotBlank(pageNo)) resultno = Numbers.toInt(pageNo.trim());
+    if (Strings.isNotBlank(pageIndex)) resultno = Numbers.toInt(pageIndex.trim());
     if (resultno < 1) resultno = Page.DEFAULT_PAGE_NUM;
     return resultno;
   }

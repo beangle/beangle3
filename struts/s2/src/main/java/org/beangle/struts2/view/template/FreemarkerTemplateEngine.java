@@ -43,6 +43,7 @@ import freemarker.core.ParseException;
 import freemarker.template.Configuration;
 import freemarker.template.SimpleHash;
 import freemarker.template.Template;
+import freemarker.template.Version;
 
 /**
  * Freemarker Template Engine
@@ -85,15 +86,15 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
         config = (Configuration) freemarkerManager.getConfig().clone();
         config.setTemplateLoader(new HierarchicalTemplateLoader(this, config.getTemplateLoader()));
       } else {
-        config = new Configuration();
+        config = new Configuration(Configuration.VERSION_2_3_28);
         config.setTemplateLoader(new HierarchicalTemplateLoader(this, new BeangleClassTemplateLoader(null)));
       }
       // Disable freemarker localized lookup
       config.setLocalizedLookup(false);
       config.setEncoding(config.getLocale(), "UTF-8");
-
+      config.setTagSyntax(Configuration.SQUARE_BRACKET_TAG_SYNTAX);
       // Cache one hour(7200s) and Strong cache
-      config.setTemplateUpdateDelay(7200);
+      config.setTemplateUpdateDelayMilliseconds(7200 * 1000);
       // config.setCacheStorage(new MruCacheStorage(100,250));
       config.setCacheStorage(new StrongCacheStorage());
 
@@ -115,8 +116,8 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
     } catch (ParseException e) {
       throw e;
     } catch (IOException e) {
-      logger.error("Couldn't load template '{}',loader is {}", templateName, config.getTemplateLoader()
-          .getClass());
+      logger.error("Couldn't load template '{}',loader is {}", templateName,
+          config.getTemplateLoader().getClass());
       throw Throwables.propagate(e);
     }
   }

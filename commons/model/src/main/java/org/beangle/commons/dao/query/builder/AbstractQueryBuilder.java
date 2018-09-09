@@ -126,7 +126,7 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
     queryBean.setStatement(genStatement());
     queryBean.setParams(getParams());
     if (null != limit) {
-      queryBean.setLimit(new PageLimit(limit.getPageNo(), limit.getPageSize()));
+      queryBean.setLimit(new PageLimit(limit.getPageIndex(), limit.getPageSize()));
     }
     queryBean.setCountStatement(genCountStatement());
     queryBean.setCacheable(cacheable);
