@@ -183,7 +183,7 @@ public abstract class UIBean extends Component {
 
   /**
    * Process label,convert empty to null
-   * 
+   *
    * @param label
    * @param name
    * @return
