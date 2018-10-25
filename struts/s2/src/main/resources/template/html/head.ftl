@@ -35,7 +35,7 @@ ${tag.body}
   ${b.script("bootstrap","js/bootstrap.min.js")}
   <script type="text/javascript">
   var App = {contextPath:"${base}"};
-  beangle.base='${b.static_base()}/bui/0.0.5';
+  beangle.base='${b.static_base()}/bui/0.0.6';
   beangle.renderAs("struts");
 
   jQuery(document).ready(function () {

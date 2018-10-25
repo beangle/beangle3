@@ -32,6 +32,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.dispatcher.multipart.UploadedFile;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
 import org.beangle.commons.config.property.PropertyConfig;
@@ -402,13 +403,13 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
    */
   protected EntityImporter buildEntityImporter(String upload, Class<?> clazz) {
     try {
-      File file = get(upload, File.class);
+      UploadedFile file = get(upload, UploadedFile.class);
       if (null == file) {
         logger.error("cannot get upload file {}.", upload);
         return null;
       }
       String fileName = get(upload + "FileName");
-      InputStream is = new FileInputStream(file);
+      InputStream is = new FileInputStream((File) file.getContent());
       String formatName = Strings.capitalize(Strings.substringAfterLast(fileName, "."));
       Option<TransferFormat> format = Enums.get(TransferFormat.class, formatName);
       return (format.isDefined()) ? ImporterFactory.getEntityImporter(format.get(), is, clazz, null) : null;
