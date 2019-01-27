@@ -19,7 +19,7 @@
   [/#if]
   ${tag.body}
  </head>
- <body>
+ <bodystyle="font-size:13px">
 [/#if]
 
 [#macro beangle_uijs_head]
@@ -47,9 +47,10 @@
   </script>
   ${b.css("bootstrap","css/bootstrap.min.css")}
   ${b.css("bootstrap","css/bootstrap-theme.min.css")}
+  ${b.css("font-awesome","css/font-awesome.css")}
   ${b.css("jquery-ui","css/jquery-ui.css")}
-  ${b.css("jquery-ui","css/colorbox.css")}
-  ${b.css("jquery-ui","css/chosen.css")}
+  ${b.css("jquery-ui","css/jquery.colorbox.css")}
+  ${b.css("jquery-ui","css/jquery.chosen.css")}
   ${b.css("bui","css/beangle-ui.css")}
 [/#macro]
 
