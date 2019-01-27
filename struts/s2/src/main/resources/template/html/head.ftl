@@ -19,13 +19,13 @@
   [/#if]
   ${tag.body}
  </head>
- <bodystyle="font-size:13px">
+ <body style="font-size:13px">
 [/#if]
 
 [#macro beangle_uijs_head]
   ${b.script("jquery","jquery.min.js")}
   ${b.script("jquery-ui","js/base/jquery.ui.core.js")}
-  ${b.script("jquery-ui","js/plugins/jquery-form.js")}
+  ${b.script("jquery-ui","js/plugins/jquery.form.js")}
   ${b.script("jquery-ui","js/plugins/jquery-colorbox.js")}
   ${b.script("jquery-ui","js/plugins/jquery-chosen.js")}
   ${b.script("jquery-ui","js/plugins/jquery.subscribe.js")}
@@ -39,11 +39,11 @@
   <script type="text/javascript">
   jQuery(document).ready(function () {
     jQuery.struts2_jquery.version="3.6.1";
-    jQuery.scriptPath ="${b.static_url('jquery-ui','')}"
+    jQuery.scriptPath ="${b.static_url('jquery-ui','/')}"[#--这个最后一个slash是必须的--]
     jQuery.struts2_jquerySuffix = "";
     jQuery.ajaxSettings.traditional = true;
     jQuery.ajaxSetup ({cache: false});});
-    beangle.base="${b.static_url('bui','')}"
+    beangle.base="${b.static_url('bui','/')}"
   </script>
   ${b.css("bootstrap","css/bootstrap.min.css")}
   ${b.css("bootstrap","css/bootstrap-theme.min.css")}
