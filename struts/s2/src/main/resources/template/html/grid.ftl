@@ -56,7 +56,7 @@
   bar.addPage(page_${tag.id},[#if tag.parameters['fixPageSize']??][][#else]null[/#if],{${b.text('page.description')}});
   [/#if]
   [#if tag.hasbar && tag.notFullPage]bg.ui.grid.fillEmpty('${tag.id}_empty',[#if tag.pageable]${tag.items.pageSize}[#else]10[/#if],${tag.items?size},'${tag.emptyMsg!b.text("page.noData")}');[/#if]
-  [#if tag.var??]action=bar.addEntityAction('${tag.var}',page_${tag.id});[/#if]
+  [#if tag.var??]action=bar.addEntityAction('${tag.var}',page_${tag.id});action.renderAs('struts');[/#if]
   ${tag.bar!}
   [/#if]
   [#-- refresh interval --]
