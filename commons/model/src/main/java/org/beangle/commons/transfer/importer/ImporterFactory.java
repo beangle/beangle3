@@ -39,7 +39,7 @@ public final class ImporterFactory {
       Map<String, Object> params) {
     EntityImporter importer = new DefaultEntityImporter(clazz);
     if (format.equals(TransferFormat.Xls)) {
-      importer.setReader(new ExcelItemReader(is, 1));
+      importer.setReader(new ExcelItemReader(is));
     } else {
       LineNumberReader reader = new LineNumberReader(new InputStreamReader(is));
       importer.setReader(new CsvItemReader(reader));

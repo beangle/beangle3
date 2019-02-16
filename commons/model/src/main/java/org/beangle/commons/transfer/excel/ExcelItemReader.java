@@ -24,6 +24,7 @@ import java.text.NumberFormat;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFComment;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -156,7 +157,7 @@ public class ExcelItemReader implements ItemReader {
       return new String[0];
     } else {
       HSSFSheet sheet = workbook.getSheetAt(0);
-      return readLine(sheet, 0);
+      return readLine(sheet, headIndex);
     }
   }
 
@@ -172,10 +173,41 @@ public class ExcelItemReader implements ItemReader {
       return new String[0];
     } else {
       HSSFSheet sheet = workbook.getSheetAt(0);
-      String[] attrs = readLine(sheet, headIndex);
+      String[] attrs = readComments(sheet, headIndex);
       attrCount = attrs.length;
       return attrs;
     }
+  }
+
+  public static String[] readComments(HSSFSheet sheet, int rowIndex) {
+    HSSFRow row = sheet.getRow(rowIndex);
+    logger.debug("values count:{}", row.getLastCellNum());
+    List<String> attrList = CollectUtils.newArrayList();
+    for (int i = 0; i < row.getLastCellNum(); i++) {
+      HSSFCell cell = row.getCell(i);
+      if (null != cell) {
+        HSSFComment comment = cell.getCellComment();
+        if (null == comment) {
+          break;
+        } else {
+          String commentStr = comment.getString().getString();
+          if (Strings.isEmpty(commentStr)) {
+            break;
+          } else {
+            if (commentStr.indexOf(':') > 0) {
+              commentStr = Strings.substringAfterLast(commentStr, ":");
+            }
+            attrList.add(commentStr.trim());
+          }
+        }
+      } else {
+        break;
+      }
+    }
+
+    String[] attrs = new String[attrList.size()];
+    attrList.toArray(attrs);
+    return attrs;
   }
 
   /**
@@ -240,18 +272,18 @@ public class ExcelItemReader implements ItemReader {
    */
   public static Object getCellValue(HSSFCell cell) {
     if ((cell == null)) return null;
-    switch (cell.getCellType()) {
-    case HSSFCell.CELL_TYPE_BLANK:
+    switch (cell.getCellTypeEnum()) {
+    case BLANK:
       return null;
-    case HSSFCell.CELL_TYPE_STRING:
+    case STRING:
       return Strings.trim(cell.getRichStringCellValue().getString());
-    case HSSFCell.CELL_TYPE_NUMERIC:
+    case NUMERIC:
       if (DateUtil.isCellDateFormatted(cell)) {
         return cell.getDateCellValue();
       } else {
         return numberFormat.format(cell.getNumericCellValue());
       }
-    case HSSFCell.CELL_TYPE_BOOLEAN:
+    case BOOLEAN:
       return (cell.getBooleanCellValue()) ? Boolean.TRUE : Boolean.FALSE;
     default:
       // cannot handle HSSFCell.CELL_TYPE_ERROR,HSSFCell.CELL_TYPE_FORMULA

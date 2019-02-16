@@ -31,7 +31,6 @@ import javax.servlet.http.HttpSession;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.text.i18n.TextResource;
 import org.beangle.commons.text.i18n.TextResourceProvider;
-import org.beangle.struts2.view.UITheme;
 import org.beangle.struts2.view.bean.ActionUriRender;
 import org.beangle.struts2.view.bean.IndexableIdGenerator;
 import org.beangle.struts2.view.component.Component;
@@ -55,8 +54,6 @@ public abstract class AbstractModels {
 
   protected final HttpServletResponse res;
 
-  protected final UITheme theme;
-
   protected final ActionUriRender render;
 
   protected final TextResource textResource;
@@ -71,8 +68,6 @@ public abstract class AbstractModels {
     this.stack = stack;
     this.req = req;
     this.res = res;
-
-    theme = UITheme.getTheme(getUitheme(), req.getContextPath());
 
     Map<String, Object> ctx = stack.getContext();
     if (null == ctx.get(Theme.Theme)) ctx.put(Theme.Theme, Theme.getTheme(Theme.DefaultTheme));
@@ -122,10 +117,6 @@ public abstract class AbstractModels {
       models.put(clazz, model);
     }
     return model;
-  }
-
-  public UITheme getTheme() {
-    return theme;
   }
 
 }
