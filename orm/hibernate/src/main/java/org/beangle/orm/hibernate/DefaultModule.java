@@ -33,7 +33,7 @@ public class DefaultModule extends AbstractBindModule {
         "sa", "");
 
     bind("hibernateConfig", PropertiesFactoryBean.class).property("properties",
-        props("hibernate.max_fetch_depth=1", "hibernate.default_batch_fetch_size=64",
+        props("hibernate.max_fetch_depth=1", "hibernate.default_batch_fetch_size=800",
             "hibernate.batch_fetch_style=dynamic", "hibernate.jdbc.fetch_size=8",
             "hibernate.jdbc.batch_size=20", "hibernate.jdbc.batch_versioned_data=true",
             "hibernate.jdbc.use_streams_for_binary=true", "hibernate.jdbc.use_get_generated_keys=true",
