@@ -56,7 +56,7 @@ public class ImporterServletSupport {
         wb = new HSSFWorkbook(is);
         if (wb.getNumberOfSheets() < 1 || wb.getSheetAt(0).getLastRowNum() == 0) return null;
         importer = new DefaultEntityImporter(clazz);
-        importer.setReader(new ExcelItemReader(wb, 1));
+        importer.setReader(new ExcelItemReader(wb, 0));
         request.setAttribute("importer", importer);
         request.setAttribute("importResult", tr);
         return importer;

@@ -101,6 +101,7 @@ public class UriRender {
       sb.append(referer);
       return sb;
     }
+    if(uri.startsWith("http")) return new StringBuilder(uri);
     // query string
     String queryStr = null;
     int questIndex = uri.indexOf('?');
