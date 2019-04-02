@@ -29,6 +29,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -157,7 +158,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
         for (int i = 0; i < values.length; i++) {
           HSSFCell cell = row.createCell(i);
           if (values[i] instanceof Number) {
-            cell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+            cell.setCellType(CellType.NUMERIC);
             cell.setCellValue(((Number) values[i]).doubleValue());
           } else if (values[i] instanceof java.sql.Date) {
             cell.setCellValue((Date) values[i]);
@@ -174,9 +175,8 @@ public class ExcelItemWriter extends AbstractItemWriter {
         }
       } else {
         HSSFCell cell = row.createCell(0);
-        // cell.setEncoding(HSSFCell.ENCODING_UTF_16);
         if (datas instanceof Number) {
-          cell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+          cell.setCellType(CellType.NUMERIC);
         }
         cell.setCellValue(new HSSFRichTextString(datas.toString()));
       }
