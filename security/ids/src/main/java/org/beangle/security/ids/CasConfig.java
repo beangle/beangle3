@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.lang.Assert;
+import org.beangle.commons.web.util.RequestUtils;
 
 /**
  * Stores properties related to this CAS service.
@@ -76,8 +77,8 @@ public class CasConfig implements Initializing {
 
   public static String getLocalServer(HttpServletRequest request) {
     StringBuilder sb = new StringBuilder();
-    String scheme = request.getScheme();
-    int port = request.getServerPort();
+    String scheme = RequestUtils.isHttps(request) ? "https" : "http";
+    int port = RequestUtils.getServerPort(request);
     String serverName = request.getServerName();
     boolean includePort = true;
     if (null != scheme) {

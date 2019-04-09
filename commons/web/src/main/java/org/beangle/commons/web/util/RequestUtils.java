@@ -104,8 +104,10 @@ public final class RequestUtils {
     if (!path.startsWith("/")) path = "/" + path;
 
     String realPath = servletContext.getRealPath(path);
-    if (realPath == null) { throw new RuntimeException("ServletContext resource [" + path
-        + "] cannot be resolved to absolute file path - " + "web application archive not expanded?"); }
+    if (realPath == null) {
+      throw new RuntimeException("ServletContext resource [" + path
+          + "] cannot be resolved to absolute file path - " + "web application archive not expanded?");
+    }
     return realPath;
   }
 
@@ -224,6 +226,19 @@ public final class RequestUtils {
       return null;
     } else {
       return java.sql.Date.valueOf(dateStr);
+    }
+  }
+
+  public static boolean isHttps(HttpServletRequest req) {
+    return (req.getScheme() == "https" || "https" == req.getHeader("X-Forwarded-Proto"));
+  }
+
+  public static int getServerPort(HttpServletRequest req) {
+    String headPort = req.getHeader("X-Forwarded-Port");
+    if (Strings.isEmpty(headPort)) {
+      return req.getServerPort();
+    } else {
+      return Integer.parseInt(headPort);
     }
   }
 }
