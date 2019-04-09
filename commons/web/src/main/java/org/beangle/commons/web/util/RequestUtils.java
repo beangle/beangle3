@@ -53,7 +53,8 @@ public final class RequestUtils {
   /**
    * Returns remote ip address.
    * <ul>
-   * <li>First,it lookup request header("x-forwarded-for"->"Proxy-Client-IP"->"WL-Proxy-Client-IP")
+   * <li>First,it lookup request
+   * header("x-forwarded-for"->"Proxy-Client-IP"->"WL-Proxy-Client-IP")
    * <li>Second,invoke request.getRemoteAddr()
    * </ul>
    *
@@ -74,8 +75,8 @@ public final class RequestUtils {
   }
 
   /**
-   * Return the true servlet path.
-   * When servletPath provided by container is empty,It will return requestURI'
+   * Return the true servlet path. When servletPath provided by container is
+   * empty,It will return requestURI'
    * <p>
    * 查找当前调用的action对应的.do<br>
    * 例如http://localhost/myapp/dd.do 返回/dd.do<br>
@@ -230,7 +231,7 @@ public final class RequestUtils {
   }
 
   public static boolean isHttps(HttpServletRequest req) {
-    return (req.getScheme() == "https" || "https" == req.getHeader("X-Forwarded-Proto"));
+    return (req.getScheme().equals("https") || "https".equals(req.getHeader("X-Forwarded-Proto")));
   }
 
   public static int getServerPort(HttpServletRequest req) {
