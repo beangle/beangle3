@@ -29,6 +29,7 @@ import java.util.Map;
 import org.beangle.commons.lang.Option;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.web.util.HttpUtils;
+import org.beangle.commons.web.util.Https;
 import org.beangle.security.core.session.DefaultSession;
 import org.beangle.security.core.session.Session;
 import org.beangle.security.core.userdetail.DefaultAccount;
@@ -85,6 +86,7 @@ public class HttpSessionRepo extends CacheSessionRepo {
       URL url = new URL(surl);
       HttpURLConnection hc = (HttpURLConnection) url.openConnection();
       hc.setRequestMethod("GET");
+      Https.noverify(hc);
       return hc.getResponseCode() == 200;
     } catch (Exception e) {
       e.printStackTrace();

@@ -27,9 +27,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-
 import org.beangle.commons.io.IOs;
 
 public final class HttpUtils {
@@ -50,17 +47,10 @@ public final class HttpUtils {
   }
 
   public static String getResponseText(URL constructedUrl, String encoding) {
-    return getResponseText(constructedUrl, null, encoding);
-  }
-
-  public static String getResponseText(URL constructedUrl, final HostnameVerifier hostnameVerifier,
-      String encoding) {
     HttpURLConnection conn = null;
     try {
       conn = (HttpURLConnection) constructedUrl.openConnection();
-      if (conn instanceof HttpsURLConnection && null != hostnameVerifier) {
-        ((HttpsURLConnection) conn).setHostnameVerifier(hostnameVerifier);
-      }
+      Https.noverify(conn);
       conn.setConnectTimeout(5 * 1000);
       conn.setReadTimeout(5 * 1000);
       BufferedReader in = null;
@@ -97,6 +87,7 @@ public final class HttpUtils {
       conn.setReadTimeout(5 * 1000);
       conn.setRequestMethod("GET");
       conn.setDoOutput(true);
+      Https.noverify(conn);
       if (conn.getResponseCode() == 200) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         IOs.copy(conn.getInputStream(), bos);
