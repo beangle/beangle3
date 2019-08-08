@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/commons" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/commons/core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/commons/model" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/commons/notification" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/commons/web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ems" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ioc" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ioc/spring" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/orm" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/orm/hibernate" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/security" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/security/core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/security/ids" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/struts" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/struts/s1" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/struts/s2" charset="UTF-8" />
+  </component>
+</project>

@@ -74,17 +74,17 @@ public final class CookieUtils {
   /**
    * Convenience method to get a cookie by name
    *
-   * @param request
-   *          the current request
-   * @param name
-   *          the name of the cookie to find
+   * @param request the current request
+   * @param name    the name of the cookie to find
    * @return the cookie (if found), null if not found
    */
   public static Cookie getCookie(HttpServletRequest request, String name) {
     Cookie[] cookies = request.getCookies();
     Cookie returnCookie = null;
 
-    if (cookies == null) { return returnCookie; }
+    if (cookies == null) {
+      return returnCookie;
+    }
     for (int i = 0; i < cookies.length; i++) {
       Cookie thisCookie = cookies[i];
       if (thisCookie.getName().equals(name) && !thisCookie.getValue().equals("")) {
@@ -105,8 +105,8 @@ public final class CookieUtils {
    * @param path
    */
   public static void addCookie(HttpServletRequest request, HttpServletResponse response, String name,
-      String value, String path, int age) {
-    LOG.debug("add cookie[name:{},value={},path={}]", new String[] { name, value, path });
+                               String value, String path, int age) {
+    LOG.debug("add cookie[name:{},value={},path={}]", name, value, path);
     Cookie cookie = null;
     try {
       cookie = new Cookie(name, URLEncoder.encode(value, "utf-8"));
@@ -131,7 +131,7 @@ public final class CookieUtils {
    * @throws Exception
    */
   public static void addCookie(HttpServletRequest request, HttpServletResponse response, String name,
-      String value, int age) {
+                               String value, int age) {
     String contextPath = request.getContextPath();
     if (!contextPath.endsWith("/")) {
       contextPath += "/";
@@ -146,12 +146,9 @@ public final class CookieUtils {
   /**
    * Convenience method for deleting a cookie by name
    *
-   * @param response
-   *          the current web response
-   * @param cookie
-   *          the cookie to delete
-   * @param path
-   *          the path on which the cookie was set (i.e. /appfuse)
+   * @param response the current web response
+   * @param cookie   the cookie to delete
+   * @param path     the path on which the cookie was set (i.e. /appfuse)
    */
   public static void deleteCookie(HttpServletResponse response, Cookie cookie, String path) {
     if (cookie != null) {
