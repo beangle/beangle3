@@ -36,8 +36,6 @@ public class DefaultModule extends AbstractBindModule {
         props("hibernate.max_fetch_depth=1", "hibernate.default_batch_fetch_size=800",
             "hibernate.batch_fetch_style=dynamic", "hibernate.jdbc.fetch_size=800",
             "hibernate.jdbc.batch_size=100", "hibernate.jdbc.batch_versioned_data=true",
-            "hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect",
-            "hibernate.temp.use_jdbc_metadata_defaults=false",
             "hibernate.jdbc.use_streams_for_binary=true", "hibernate.jdbc.use_get_generated_keys=true",
             "hibernate.cache.region.factory_class=org.hibernate.cache.EhCacheRegionFactory",
             "hibernate.cache.use_second_level_cache=true", "hibernate.cache.use_query_cache=true",
