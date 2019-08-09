@@ -920,7 +920,7 @@ public class Strings {
           numSet.add(Integer.valueOf(j));
         }
       } else {
-        numSet.add(new Integer(num));
+        numSet.add(Integer.valueOf(num));
       }
     }
     Integer[] nums = new Integer[numSet.size()];
@@ -1059,7 +1059,7 @@ public class Strings {
     if (ids == null) return new Integer[0];
     Integer[] idsOfInteger = new Integer[ids.length];
     for (int i = 0; i < ids.length; i++) {
-      idsOfInteger[i] = new Integer(ids[i]);
+      idsOfInteger[i] = Integer.valueOf(ids[i]);
     }
     return idsOfInteger;
   }
@@ -1079,7 +1079,7 @@ public class Strings {
     if (null == ids) return new Long[0];
     Long[] idsOfLong = new Long[ids.length];
     for (int i = 0; i < ids.length; i++) {
-      idsOfLong[i] = new Long(ids[i]);
+      idsOfLong[i] = Long.valueOf(ids[i]);
     }
     return idsOfLong;
   }

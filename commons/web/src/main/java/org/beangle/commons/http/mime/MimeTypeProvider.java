@@ -47,7 +47,7 @@ public class MimeTypeProvider {
   /**
    * META-INF/mimetypes.properties
    *
-   * @param url
+   * @param url url
    */
   private void loadMimeType(URL url) {
     try {

@@ -17,3 +17,4 @@ Servers
 work
 .#webclasspath
 *.iml
+.idea
