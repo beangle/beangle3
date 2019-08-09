@@ -30,7 +30,6 @@ import org.beangle.commons.text.regex.AntPathPattern;
  * {@code servletPath + pathInfo}) of an {@code HttpServletRequest}. The query
  * string of the URL is ignored and matching is case-insensitive.
  *
- * @see AntPathMatcher
  */
 public final class AntPathRequestMatcher implements RequestMatcher {
 
