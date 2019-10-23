@@ -15,8 +15,8 @@
 
   <issueManagement>
     <system>github</system>
-    <url>https://github.com/beangle/beangle3/issues</url>
-  </issueManagement>
+  <url>https://github.com/beangle/beangle3/issues</url>
+</issueManagement>
 
   <scm>
     <connection>scm:git:git://github.com/beangle/beangle3.git</connection>
