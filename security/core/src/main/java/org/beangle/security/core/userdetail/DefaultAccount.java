@@ -36,6 +36,7 @@ public class DefaultAccount implements Account {
   private String remoteToken;
   private String authorities;
   private String permissions;
+  private int categoryId;
 
   private Map<String, Object> details = CollectUtils.newHashMap();
   private int status;
@@ -186,4 +187,11 @@ public class DefaultAccount implements Account {
     this.permissions = permissions;
   }
 
+  public int getCategoryId() {
+    return categoryId;
+  }
+
+  public void setCategoryId(int categoryId) {
+    this.categoryId = categoryId;
+  }
 }

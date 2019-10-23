@@ -30,6 +30,8 @@ public class DefaultSession implements Session {
   private Instant lastAccessAt;
   private Session.Agent agent;
 
+  private int ttiMinutes;
+
   public DefaultSession() {
     super();
   }
@@ -82,4 +84,12 @@ public class DefaultSession implements Session {
     this.agent = agent;
   }
 
+  @Override
+  public int getTtiMinutes() {
+    return ttiMinutes;
+  }
+
+  public void setTtiMinutes(int ttiMinutes) {
+    this.ttiMinutes = ttiMinutes;
+  }
 }

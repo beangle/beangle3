@@ -49,6 +49,7 @@ public class HttpSessionRepo extends CacheSessionRepo {
         s = Model.Session.parseFrom(is);
         DefaultSession session = new DefaultSession(s.getId(), toAccount(s.getPrincipal()),
             Instant.ofEpochSecond(s.getLoginAt()), toAgent(s.getAgent()));
+        session.setTtiMinutes(s.getTtiMinutes());
         session.setLastAccessAt(Instant.ofEpochSecond(s.getLastAccessAt()));
         return Option.some(session);
       } catch (IOException e) {
@@ -70,6 +71,7 @@ public class HttpSessionRepo extends CacheSessionRepo {
     account.setAuthorities(pa.getAuthorities());
     account.setPermissions(pa.getPermissions());
     account.setRemoteToken(pa.getRemoteToken());
+    account.setCategoryId(pa.getCategoryId());
     Iterator<Map.Entry<String, String>> dk = pa.getDetailsMap().entrySet().iterator();
     while (dk.hasNext()) {
       Map.Entry<String, String> entry = dk.next();
