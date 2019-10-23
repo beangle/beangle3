@@ -43,6 +43,9 @@
    jQuery.ajaxSettings.traditional = true;
    jQuery.ajaxSetup ({cache: false});
    beangle.base="${b.static_url('bui','/')}"
+   beangle.getContextPath=function(){
+      return "${base}";
+   }
   </script>
   ${b.css("bootstrap","css/bootstrap.min.css")}
   ${b.css("bootstrap","css/bootstrap-theme.min.css")}
