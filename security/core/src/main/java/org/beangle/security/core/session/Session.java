@@ -47,6 +47,8 @@ public interface Session {
 
   void setLastAccessAt(Instant d);
 
+  int getTtiMinutes();
+
   Agent getAgent();
 
   public static class Agent {

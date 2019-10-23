@@ -72,4 +72,6 @@ public interface Account extends Serializable, Principal {
    * @return <code>true</code> if the user is enabled, <code>false</code> otherwise
    */
   boolean isEnabled();
+
+  int getCategoryId();
 }

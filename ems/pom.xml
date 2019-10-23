@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.beangle</groupId>
     <artifactId>beangle-library-parent</artifactId>
-    <version>3.6.8</version>
+    <version>3.6.9</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.beangle.ems</groupId>
@@ -13,7 +13,7 @@
   <properties>
     <bundle.symbolicName>org.beangle.ems.core</bundle.symbolicName>
     <bundle.namespace>org.beangle.ems</bundle.namespace>
-    <commonscompress.version>1.18</commonscompress.version>
+    <commonscompress.version>1.19</commonscompress.version>
   </properties>
 
   <dependencies>

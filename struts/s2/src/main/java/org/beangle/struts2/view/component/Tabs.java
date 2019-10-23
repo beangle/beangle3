@@ -32,6 +32,8 @@ public class Tabs extends ClosingUIBean {
 
   private String selectedTab;
 
+  private String style="font-size:1em;font-family: inherit;";
+
   private List<Tab> tabs = CollectUtils.newArrayList();
 
   void addTab(Tab tab) {
@@ -55,6 +57,12 @@ public class Tabs extends ClosingUIBean {
     this.selectedTab = selectedTab;
   }
 
+  public String getStyle(){
+	  return style;
+  }
+  public void setStyle(String s){
+	  this.style=s;
+  }
   public List<Tab> getTabs() {
     return tabs;
   }

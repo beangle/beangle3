@@ -92,6 +92,9 @@ public class Anchor extends ClosingUIBean {
         if (null != onclick) {
           writer.append(" onclick=\"").append(onclick).append("\"");
         }
+        if (null != cssClass) {
+          writer.append(" class=\"").append(cssClass).append("\"");
+        }
         writer.append(getParameterString());
         writer.append(">").append(body).append("</a>");
       } catch (Exception e) {
