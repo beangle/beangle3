@@ -18,9 +18,6 @@
  */
 package org.beangle.security.ids.session;
 
-import java.time.Instant;
-import java.util.Random;
-
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.cache.Cache;
 import org.beangle.commons.cache.CacheManager;
@@ -30,6 +27,9 @@ import org.beangle.security.core.session.Session;
 import org.beangle.security.core.session.SessionRepo;
 import org.beangle.security.ids.util.SessionDaemon;
 
+import java.time.Instant;
+import java.util.Random;
+
 abstract class CacheSessionRepo implements SessionRepo, Initializing {
   private CacheManager cacheManager = new CaffeineCacheManager();
 
@@ -37,18 +37,18 @@ abstract class CacheSessionRepo implements SessionRepo, Initializing {
 
   private final int accessDelaySeconds = genDelay(60, 120);
 
-  protected HeartbeatReporter reporter;
+  protected AccessReporter reporter;
 
   /**
    * interval (5 min) report heartbeat.
    */
-  int heartbeatIntervalMillis = 5 * 60 * 1000;
+  int flushInterval = 5 * 60;
 
   @Override
   public void init() {
     sessions = cacheManager.getCache("sessions", String.class, Session.class);
-    reporter = new HeartbeatReporter(sessions, this);
-    SessionDaemon.start(heartbeatIntervalMillis, reporter);
+    reporter = new AccessReporter(sessions, this);
+    SessionDaemon.start(flushInterval, reporter);
   }
 
   private int genDelay(int minDelay, int maxDelay) {
@@ -75,25 +75,35 @@ abstract class CacheSessionRepo implements SessionRepo, Initializing {
   @Override
   public Session access(String sessionId, Instant accessAt) {
     Session s = get(sessionId);
-    if (null != s) {
-      if ((accessAt.getEpochSecond() - s.getLastAccessAt().getEpochSecond()) > accessDelaySeconds) {
-        s.setLastAccessAt(accessAt);
-        reporter.addSessionId(s.getId());
+    if (null == s) {
+      return null;
+    }
+    Long elapse = s.access(accessAt);
+    if (elapse > accessDelaySeconds) {
+      reporter.addSessionId(s.getId());
+      return s;
+    } else {
+      if (elapse == -1) {
+        this.expire(s.getId());
+        return null;
+      } else {
+        return s;
       }
     }
-    return s;
   }
 
   protected abstract Option<Session> getInternal(String sessionId);
 
-  abstract boolean heartbeat(Session session);
+  abstract boolean flush(Session session);
+
+  abstract void expire(String sid);
 
   public void setCacheManager(CacheManager cacheManager) {
     this.cacheManager = cacheManager;
   }
 
-  public void setHeartbeatIntervalMillis(int heartbeatIntervalMillis) {
-    this.heartbeatIntervalMillis = heartbeatIntervalMillis;
+  public void setFlushInterval(int flushInterval) {
+    this.flushInterval = flushInterval;
   }
 
 }

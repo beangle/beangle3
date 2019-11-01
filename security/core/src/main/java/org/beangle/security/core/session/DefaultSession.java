@@ -18,9 +18,9 @@
  */
 package org.beangle.security.core.session;
 
-import java.time.Instant;
-
 import org.beangle.security.core.userdetail.DefaultAccount;
+
+import java.time.Instant;
 
 public class DefaultSession implements Session {
 
@@ -30,7 +30,7 @@ public class DefaultSession implements Session {
   private Instant lastAccessAt;
   private Session.Agent agent;
 
-  private int ttiMinutes;
+  private int ttiSeconds;
 
   public DefaultSession() {
     super();
@@ -84,12 +84,26 @@ public class DefaultSession implements Session {
     this.agent = agent;
   }
 
-  @Override
-  public int getTtiMinutes() {
-    return ttiMinutes;
+  public int getTtiSeconds() {
+    return ttiSeconds;
   }
 
-  public void setTtiMinutes(int ttiMinutes) {
-    this.ttiMinutes = ttiMinutes;
+  public void setTtiSeconds(int ttiSeconds) {
+    this.ttiSeconds = ttiSeconds;
+  }
+
+  public Long access(Instant accessAt) {
+    Boolean expired = lastAccessAt.plusSeconds(ttiSeconds).isBefore(accessAt);
+    if (expired) {
+      return -1L;
+    } else {
+      var elapse = accessAt.getEpochSecond() - this.lastAccessAt.getEpochSecond();
+      if (elapse < 0) {
+        elapse = 0;
+      } else {
+        lastAccessAt = accessAt;
+      }
+      return elapse;
+    }
   }
 }
