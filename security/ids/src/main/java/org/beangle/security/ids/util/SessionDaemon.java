@@ -24,11 +24,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SessionDaemon extends TimerTask {
-  public static void start(int interval, Task... tasks) {
-    System.out.println("Starting Beangle Session Daemon after " + interval / 1000 + " seconds");
+  public static void start(int intervalSeconds, Task... tasks) {
+    System.out.println("Starting Beangle Session Daemon after " + intervalSeconds  + " seconds");
     SessionDaemon daemon = new SessionDaemon(Arrays.asList(tasks));
     new Timer("Beangle Session Daemon", true).schedule(daemon,
-        new java.util.Date(System.currentTimeMillis() + interval), interval);
+        new java.util.Date(System.currentTimeMillis() + intervalSeconds * 1000), intervalSeconds*1000);
   }
 
   private final List<Task> tasks;

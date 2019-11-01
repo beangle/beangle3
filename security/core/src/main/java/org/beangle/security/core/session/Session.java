@@ -47,9 +47,11 @@ public interface Session {
 
   void setLastAccessAt(Instant d);
 
-  int getTtiMinutes();
+  int getTtiSeconds();
 
   Agent getAgent();
+
+  public Long access(Instant accessAt);
 
   public static class Agent {
     private final String name;

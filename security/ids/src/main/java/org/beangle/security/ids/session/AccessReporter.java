@@ -32,13 +32,13 @@ import org.beangle.security.ids.util.Task;
 /**
  * Report heartbeat every 5 min.
  */
-class HeartbeatReporter implements Task {
+class AccessReporter implements Task {
 
   private final Cache<String, Session> sessions;
 
   private final CacheSessionRepo repo;
 
-  public HeartbeatReporter(Cache<String, Session> sessions, CacheSessionRepo repo) {
+  public AccessReporter(Cache<String, Session> sessions, CacheSessionRepo repo) {
     super();
     this.sessions = sessions;
     this.repo = repo;
@@ -64,7 +64,7 @@ class HeartbeatReporter implements Task {
         expired.add(sessionId);
       } else {
         Session s = rs.get();
-        if (s.getLastAccessAt().isAfter(last) && !repo.heartbeat(s)) {
+        if (s.getLastAccessAt().isAfter(last) && !repo.flush(s)) {
           expired.add(sessionId);
         }
       }

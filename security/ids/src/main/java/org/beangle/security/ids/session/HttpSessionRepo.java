@@ -18,14 +18,6 @@
  */
 package org.beangle.security.ids.session;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.time.Instant;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.beangle.commons.lang.Option;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.web.util.HttpUtils;
@@ -35,10 +27,19 @@ import org.beangle.security.core.session.Session;
 import org.beangle.security.core.userdetail.DefaultAccount;
 import org.beangle.security.session.protobuf.Model;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.time.Instant;
+import java.util.Iterator;
+import java.util.Map;
+
 public class HttpSessionRepo extends CacheSessionRepo {
 
   private String geturl;
   private String accessUrl;
+  private String expireUrl;
 
   protected Option<Session> getInternal(String sessionId) {
     byte[] data = HttpUtils.getData(Strings.replace(geturl, "{id}", sessionId));
@@ -48,8 +49,8 @@ public class HttpSessionRepo extends CacheSessionRepo {
       try {
         s = Model.Session.parseFrom(is);
         DefaultSession session = new DefaultSession(s.getId(), toAccount(s.getPrincipal()),
-            Instant.ofEpochSecond(s.getLoginAt()), toAgent(s.getAgent()));
-        session.setTtiMinutes(s.getTtiMinutes());
+          Instant.ofEpochSecond(s.getLoginAt()), toAgent(s.getAgent()));
+        session.setTtiSeconds(s.getTtiSeconds());
         session.setLastAccessAt(Instant.ofEpochSecond(s.getLastAccessAt()));
         return Option.some(session);
       } catch (IOException e) {
@@ -81,7 +82,7 @@ public class HttpSessionRepo extends CacheSessionRepo {
   }
 
   @Override
-  boolean heartbeat(Session session) {
+  boolean flush(Session session) {
     String surl = Strings.replace(accessUrl, "{id}", session.getId());
     surl = Strings.replace(surl, "{time}", String.valueOf(session.getLastAccessAt().getEpochSecond()));
     try {
@@ -96,12 +97,30 @@ public class HttpSessionRepo extends CacheSessionRepo {
     }
   }
 
+  @Override
+  void expire(String sid) {
+    String surl = Strings.replace(expireUrl, "{id}", sid);
+    try {
+      URL url = new URL(surl);
+      HttpURLConnection hc = (HttpURLConnection) url.openConnection();
+      hc.setRequestMethod("GET");
+      Https.noverify(hc);
+      hc.getResponseCode();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   public void setGeturl(String geturl) {
     this.geturl = geturl;
   }
 
   public void setAccessUrl(String accessUrl) {
     this.accessUrl = accessUrl;
+  }
+
+  public void setExpireUrl(String expireUrl) {
+    this.expireUrl = expireUrl;
   }
 
 }
