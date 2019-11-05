@@ -18,9 +18,9 @@
  */
 package org.beangle.struts2.view.component;
 
-import java.io.Writer;
-
 import com.opensymphony.xwork2.util.ValueStack;
+
+import java.io.Writer;
 
 /**
  * @author chaostone
@@ -29,8 +29,6 @@ import com.opensymphony.xwork2.util.ValueStack;
 public class Tab extends ClosingUIBean {
 
   private String href;
-
-  private String target;
 
   private String label;
 
@@ -51,12 +49,7 @@ public class Tab extends ClosingUIBean {
 
   @Override
   public boolean doEnd(Writer writer, String body) {
-    if (null == target) {
-      this.target = id + "_target";
-      return super.doEnd(writer, body);
-    } else {
-      return false;
-    }
+    return super.doEnd(writer, body);
   }
 
   public String getHref() {
@@ -65,14 +58,6 @@ public class Tab extends ClosingUIBean {
 
   public void setHref(String href) {
     this.href = href;
-  }
-
-  public String getTarget() {
-    return target;
-  }
-
-  public void setTarget(String target) {
-    this.target = target;
   }
 
   public String getLabel() {

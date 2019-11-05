@@ -38,7 +38,7 @@
   ${b.script("my97","WdatePicker.js")}
   <script type="text/javascript">
    jQuery.struts2_jquery.version="3.6.1";
-   jQuery.scriptPath ="${b.static_url('jquery-ui','/')}"[#--这个最后一个slash是必须的--]
+   jQuery.scriptPath ="${b.static_url('jquery-ui','/')}"[#--Terminal slash is required--]
    jQuery.struts2_jquerySuffix = "";
    jQuery.ajaxSettings.traditional = true;
    jQuery.ajaxSetup ({cache: false});
@@ -46,6 +46,7 @@
    beangle.getContextPath=function(){
       return "${base}";
    }
+   var App = {contextPath:'${base}'}
   </script>
   ${b.css("bootstrap","css/bootstrap.min.css")}
   ${b.css("bootstrap","css/bootstrap-theme.min.css")}

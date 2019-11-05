@@ -1,7 +1,7 @@
 [#ftl/]
 [#if tag.href??]
-<div id="${tag.target}" class="ajax_container"></div>
-<script>bg.ready(function(){bg.Go('${tag.href}','${tag.target}');});</script>
+<div id="${tag.id}" class="tab-pane"></div>
+<script>bg.ready(function(){bg.Go('${tag.href}','${tag.id}');});</script>
 [#else]
-<div id="${tag.target}">${tag.body}</div>
+<div id="${tag.id}" class="tab-pane">${tag.body}</div>
 [/#if]
