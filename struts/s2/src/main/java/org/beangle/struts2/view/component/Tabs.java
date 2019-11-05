@@ -18,11 +18,10 @@
  */
 package org.beangle.struts2.view.component;
 
-import java.util.List;
-
+import com.opensymphony.xwork2.util.ValueStack;
 import org.beangle.commons.collection.CollectUtils;
 
-import com.opensymphony.xwork2.util.ValueStack;
+import java.util.List;
 
 /**
  * @author chaostone
@@ -31,8 +30,6 @@ import com.opensymphony.xwork2.util.ValueStack;
 public class Tabs extends ClosingUIBean {
 
   private String selectedTab;
-
-  private String style="font-size:1em;font-family: inherit;";
 
   private List<Tab> tabs = CollectUtils.newArrayList();
 
@@ -49,20 +46,21 @@ public class Tabs extends ClosingUIBean {
     generateIdIfEmpty();
   }
 
-  public String getSelectedTab() {
-    return selectedTab;
+  public int getSelected() {
+    int i = 0;
+    for (Tab tab : tabs) {
+      if (tab.id.equals(selectedTab)) {
+        return i;
+      }
+      i += 1;
+    }
+    return 0;
   }
 
   public void setSelectedTab(String selectedTab) {
     this.selectedTab = selectedTab;
   }
 
-  public String getStyle(){
-	  return style;
-  }
-  public void setStyle(String s){
-	  this.style=s;
-  }
   public List<Tab> getTabs() {
     return tabs;
   }
