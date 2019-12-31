@@ -58,6 +58,8 @@ public class Grid extends ClosingUIBean {
   /** 重新载入的时间间隔（以秒为单位） */
   private String refresh;
 
+  private String overflow;
+
   /** 没有数据时显示的文本 */
   private String emptyMsg;
 
@@ -156,6 +158,14 @@ public class Grid extends ClosingUIBean {
 
   public void setSortable(String sortable) {
     this.sortable = sortable;
+  }
+
+  public String getOverflow() {
+    return overflow;
+  }
+
+  public void setOverflow(String overflow) {
+    this.overflow = overflow;
   }
 
   public String getFilterable() {
