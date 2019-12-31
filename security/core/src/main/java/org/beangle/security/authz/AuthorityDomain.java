@@ -16,21 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.access;
+package org.beangle.security.authz;
 
-import org.beangle.commons.security.Request;
-import org.beangle.security.core.context.SecurityContext;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
 
-/**
- * 授权判断服务
- *
- * @author chaostone
- */
-public interface AuthorityManager {
+public class AuthorityDomain {
+  final Set<String> roots;
+  final Map<String,Authority> authorities;
 
-  boolean isAuthorized(SecurityContext context);
+  public AuthorityDomain(Set<String> roots, Map<String, Authority> authorities) {
+    this.roots = roots;
+    this.authorities = authorities;
+  }
 
-  boolean isAuthorized(SecurityContext context, Request request);
-
-  boolean isRoot(String user);
+  public static AuthorityDomain empty(){
+    return new AuthorityDomain(Collections.emptySet(),Collections.emptyMap());
+  }
 }

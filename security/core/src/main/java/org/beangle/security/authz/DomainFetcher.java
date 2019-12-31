@@ -16,27 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.access;
+package org.beangle.security.authz;
 
-import org.beangle.security.BeangleSecurityException;
+import org.beangle.security.util.Task;
 
-/**
- * 授权异常
- *
- * @author chaostone
- */
-public class AccessDeniedException extends BeangleSecurityException {
-  private static final long serialVersionUID = -2403784040888146039L;
+public class DomainFetcher implements Task {
+  private final AbstractRoleBasedAuthorizer authorizer;
 
-  private Object resource;
-
-  public AccessDeniedException(Object resource, String message) {
-    super(message);
-    this.resource = resource;
+  public DomainFetcher(AbstractRoleBasedAuthorizer authorizer) {
+    this.authorizer = authorizer;
   }
 
-  public Object getResource() {
-    return resource;
+  @Override
+  public void run() {
+    authorizer.setDomain(authorizer.fetchDomain());
   }
-
 }

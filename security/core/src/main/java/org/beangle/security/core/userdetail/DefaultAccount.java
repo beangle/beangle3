@@ -33,10 +33,10 @@ public class DefaultAccount implements Account {
   private static final long serialVersionUID = 1L;
   private String name;
   private String description;
-  private String remoteToken;
-  private String authorities;
-  private String permissions;
   private int categoryId;
+  private String remoteToken;
+  private String[] authorities;
+  private String[] permissions;
 
   private Map<String, Object> details = CollectUtils.newHashMap();
   private int status;
@@ -91,6 +91,14 @@ public class DefaultAccount implements Account {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public int getCategoryId() {
+    return categoryId;
+  }
+
+  public void setCategoryId(int categoryId) {
+    this.categoryId = categoryId;
   }
 
   public String getRemoteToken() {
@@ -171,27 +179,20 @@ public class DefaultAccount implements Account {
     return sb.toString();
   }
 
-  public String getAuthorities() {
+  public String[] getAuthorities() {
     return authorities;
   }
 
-  public void setAuthorities(String authorities) {
+  public void setAuthorities(String[] authorities) {
     this.authorities = authorities;
   }
 
-  public String getPermissions() {
+  public String[] getPermissions() {
     return permissions;
   }
 
-  public void setPermissions(String permissions) {
+  public void setPermissions(String[] permissions) {
     this.permissions = permissions;
   }
 
-  public int getCategoryId() {
-    return categoryId;
-  }
-
-  public void setCategoryId(int categoryId) {
-    this.categoryId = categoryId;
-  }
 }

@@ -91,6 +91,10 @@ public class SecurityContext {
     }
   }
 
+  public boolean isValid() {
+    return null != session;
+  }
+
   public boolean isRoot() {
     return root;
   }

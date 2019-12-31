@@ -25,7 +25,7 @@ import org.beangle.commons.cache.caffeine.CaffeineCacheManager;
 import org.beangle.commons.lang.Option;
 import org.beangle.security.core.session.Session;
 import org.beangle.security.core.session.SessionRepo;
-import org.beangle.security.ids.util.SessionDaemon;
+import org.beangle.security.util.SessionDaemon;
 
 import java.time.Instant;
 import java.util.Random;
@@ -48,7 +48,7 @@ abstract class CacheSessionRepo implements SessionRepo, Initializing {
   public void init() {
     sessions = cacheManager.getCache("sessions", String.class, Session.class);
     reporter = new AccessReporter(sessions, this);
-    SessionDaemon.start(flushInterval, reporter);
+    SessionDaemon.start("Beangle Security",flushInterval, reporter);
   }
 
   private int genDelay(int minDelay, int maxDelay) {

@@ -1,6 +1,7 @@
-<div class="grid">[@b.messages slash="4"/]
+<div class="grid" id="${tag.id}_div">[@b.messages slash="4"/]
 [#if tag.caption??]<div class="grid-caption">${tag.caption?html}</div>[/#if]
 [#if tag.hasbar]<div id="${tag.id}_bar1" class="gridbar"></div>[/#if]
+<div id="${tag.id}_content" [#if tag.overflow??]style="overflow-x:hidden"[/#if]>
 <table id="${tag.id}" class="gridtable" ${tag.parameterString}>
 [#if tag.cols?size>0]
 <thead class="gridhead">
@@ -37,6 +38,7 @@
 
 <tbody id="${tag.id}_data">${tag.body}</tbody>
 </table>
+</div>
 [#if tag.hasbar]
 [#if tag.notFullPage]
 <div class="gridempty" id="${tag.id}_empty"></div>
@@ -63,5 +65,16 @@
   [#if tag.refresh??]
   if(typeof ${tag.id}_timer !="undefined"){clearTimeout(${tag.id}_timer)}
   var ${tag.id}_timer=setTimeout(function(){if(document.getElementById('${tag.id}')) page_${tag.id}.goPage()},${tag.refresh}*1000);
+  [/#if]
+  [#if tag.overflow??]
+  function adjustGrid(){
+     $('#${tag.id}_content').css("width", "0px");
+     $('#${tag.id}_content').css("width", $("#${tag.id}_div").outerWidth(true));
+     $('#${tag.id}_content').css("overflow", "auto");
+  }
+  $(document).ready(function() {
+    adjustGrid();
+  });
+  window.onresize = adjustGrid
   [/#if]
 </script>

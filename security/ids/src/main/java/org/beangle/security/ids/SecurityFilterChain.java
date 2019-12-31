@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.beangle.commons.web.filter.GenericCompositeFilter;
-import org.beangle.security.access.AuthorityManager;
+import org.beangle.security.authz.Authorizer;
 import org.beangle.security.core.AuthenticationException;
 import org.beangle.security.core.context.SecurityContext;
 import org.beangle.security.ids.access.AccessDeniedHandler;
@@ -38,7 +38,7 @@ public class SecurityFilterChain extends GenericCompositeFilter {
   private AccessDeniedHandler accessDeniedHandler;
   private EntryPoint entryPoint;
   private SecurityContextBuilder securityContextBuilder;
-  private AuthorityManager authorityManager;
+  private Authorizer authorizer;
 
   public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
       throws IOException, ServletException {
@@ -47,7 +47,7 @@ public class SecurityFilterChain extends GenericCompositeFilter {
     SecurityContext context = securityContextBuilder.build(request, response);
     SecurityContext.set(context);
 
-    if (authorityManager.isAuthorized(context)) {
+    if (authorizer.isPermitted(context)) {
       chain.doFilter(request, response);
     } else {
       if (context.getSession() == null) {
@@ -75,8 +75,8 @@ public class SecurityFilterChain extends GenericCompositeFilter {
     this.entryPoint = entryPoint;
   }
 
-  public void setAuthorityManager(AuthorityManager authorityManager) {
-    this.authorityManager = authorityManager;
+  public void setAuthorizer(Authorizer authorizer) {
+    this.authorizer = authorizer;
   }
 
   public void setSecurityContextBuilder(SecurityContextBuilder securityContextBuilder) {
