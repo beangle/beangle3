@@ -16,8 +16,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.ids.util;
+package org.beangle.security.authz;
 
-public interface Task {
-  void run();
+import org.beangle.commons.security.Request;
+import org.beangle.security.core.context.SecurityContext;
+
+/**
+ * 授权判断服务
+ *
+ * @author chaostone
+ */
+public interface Authorizer {
+
+  boolean isPermitted(SecurityContext context);
+
+  boolean isPermitted(SecurityContext context, Request request);
+
+  boolean isRoot(String user);
 }

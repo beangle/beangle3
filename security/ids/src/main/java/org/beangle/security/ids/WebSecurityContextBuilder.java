@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.beangle.commons.lang.Option;
 import org.beangle.commons.web.security.RequestConvertor;
 import org.beangle.commons.web.util.CookieUtils;
-import org.beangle.security.access.AuthorityManager;
+import org.beangle.security.authz.Authorizer;
 import org.beangle.security.core.context.SecurityContext;
 import org.beangle.security.core.session.Session;
 import org.beangle.security.core.session.SessionRepo;
@@ -36,7 +36,7 @@ public class WebSecurityContextBuilder implements SecurityContextBuilder {
 
   private SessionIdReader sessionIdReader;
 
-  private AuthorityManager authorityManager;
+  private Authorizer authorizer;
 
   private SessionRepo sessionRepo;
 
@@ -56,7 +56,7 @@ public class WebSecurityContextBuilder implements SecurityContextBuilder {
 
     boolean isRoot = false;
     if (null != session) {
-      isRoot = authorityManager.isRoot(session.getPrincipal().getName());
+      isRoot = authorizer.isRoot(session.getPrincipal().getName());
     }
     String runAs = null;
     if (isRoot) {
@@ -69,8 +69,8 @@ public class WebSecurityContextBuilder implements SecurityContextBuilder {
     this.sessionIdReader = sessionIdReader;
   }
 
-  public void setAuthorityManager(AuthorityManager authorityManager) {
-    this.authorityManager = authorityManager;
+  public void setAuthorizer(Authorizer authorizer) {
+    this.authorizer = authorizer;
   }
 
   public void setSessionRepo(SessionRepo sessionRepo) {

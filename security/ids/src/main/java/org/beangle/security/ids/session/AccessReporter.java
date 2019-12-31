@@ -27,7 +27,7 @@ import org.beangle.commons.cache.Cache;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Option;
 import org.beangle.security.core.session.Session;
-import org.beangle.security.ids.util.Task;
+import org.beangle.security.util.Task;
 
 /**
  * Report heartbeat every 5 min.

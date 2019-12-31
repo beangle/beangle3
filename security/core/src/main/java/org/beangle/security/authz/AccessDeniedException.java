@@ -16,23 +16,27 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.access;
+package org.beangle.security.authz;
 
-import org.beangle.commons.security.Request;
-import org.beangle.security.core.context.SecurityContext;
+import org.beangle.security.BeangleSecurityException;
 
-public class MockAuthorityManager implements AuthorityManager {
+/**
+ * 授权异常
+ *
+ * @author chaostone
+ */
+public class AccessDeniedException extends BeangleSecurityException {
+  private static final long serialVersionUID = -2403784040888146039L;
 
-  public boolean isAuthorized(SecurityContext context) {
-    return false;
+  private Object resource;
+
+  public AccessDeniedException(Object resource, String message) {
+    super(message);
+    this.resource = resource;
   }
 
-  public boolean isAuthorized(SecurityContext context, Request request) {
-    return false;
-  }
-
-  public boolean isRoot(String user) {
-    return false;
+  public Object getResource() {
+    return resource;
   }
 
 }

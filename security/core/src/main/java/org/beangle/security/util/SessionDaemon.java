@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.ids.util;
+package org.beangle.security.util;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,11 +24,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SessionDaemon extends TimerTask {
-  public static void start(int intervalSeconds, Task... tasks) {
-    System.out.println("Starting Beangle Session Daemon after " + intervalSeconds  + " seconds");
+  public static void start(String name,int intervalSeconds, Task... tasks) {
+    System.out.println("Starting "+name+" Daemon after " + intervalSeconds  + " seconds");
     SessionDaemon daemon = new SessionDaemon(Arrays.asList(tasks));
-    new Timer("Beangle Session Daemon", true).schedule(daemon,
-        new java.util.Date(System.currentTimeMillis() + intervalSeconds * 1000), intervalSeconds*1000);
+    new Timer(name+" Daemon", true).schedule(daemon,
+        new java.util.Date(System.currentTimeMillis()), intervalSeconds*1000);
   }
 
   private final List<Task> tasks;
@@ -41,7 +41,11 @@ public class SessionDaemon extends TimerTask {
   @Override
   public void run() {
     for (Task task : tasks) {
-      task.run();
+      try {
+        task.run();
+      }catch(Exception e){
+        e.printStackTrace();
+      }
     }
   }
 

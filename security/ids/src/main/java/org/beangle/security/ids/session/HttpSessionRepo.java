@@ -68,11 +68,28 @@ public class HttpSessionRepo extends CacheSessionRepo {
 
   private DefaultAccount toAccount(Model.Account pa) {
     DefaultAccount account = new DefaultAccount(pa.getName(), pa.getDescription());
-    account.setStatus(pa.getStatus());
-    account.setAuthorities(pa.getAuthorities());
-    account.setPermissions(pa.getPermissions());
-    account.setRemoteToken(pa.getRemoteToken());
     account.setCategoryId(pa.getCategoryId());
+    account.setStatus(pa.getStatus());
+    String[] authorities=null;
+    if(pa.getAuthoritiesCount()>0){
+      authorities = new String[pa.getAuthoritiesCount()];
+      for(int i=0;i < pa.getAuthoritiesCount();i++){
+        authorities[i] = pa.getAuthorities(i);
+      }
+    }
+    account.setAuthorities(authorities);
+
+
+    String[] permissions=null;
+    if(pa.getPermissionsCount()>0){
+      permissions = new String[pa.getPermissionsCount()];
+      for(int i=0;i < pa.getPermissionsCount();i++){
+        permissions[i] = pa.getPermissions(i);
+      }
+    }
+    account.setPermissions(permissions);
+
+    account.setRemoteToken(pa.getRemoteToken());
     Iterator<Map.Entry<String, String>> dk = pa.getDetailsMap().entrySet().iterator();
     while (dk.hasNext()) {
       Map.Entry<String, String> entry = dk.next();
