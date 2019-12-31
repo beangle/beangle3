@@ -25,7 +25,7 @@
   </scm>
 
   <properties>
-    <spring.version>4.3.22.RELEASE</spring.version>
+    <spring.version>4.3.25.RELEASE</spring.version>
     <freemarker.version>2.3.28</freemarker.version>
     <struts.version>2.5.20</struts.version>
     <ognl.version>3.1.21</ognl.version>
