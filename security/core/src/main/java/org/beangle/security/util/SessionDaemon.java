@@ -25,7 +25,7 @@ import java.util.TimerTask;
 
 public class SessionDaemon extends TimerTask {
   public static void start(String name,int intervalSeconds, Task... tasks) {
-    System.out.println("Starting "+name+" Daemon after " + intervalSeconds  + " seconds");
+    System.out.println("Starting "+name+" Daemon, Running within every " + intervalSeconds  + " seconds");
     SessionDaemon daemon = new SessionDaemon(Arrays.asList(tasks));
     new Timer(name+" Daemon", true).schedule(daemon,
         new java.util.Date(System.currentTimeMillis()), intervalSeconds*1000);
