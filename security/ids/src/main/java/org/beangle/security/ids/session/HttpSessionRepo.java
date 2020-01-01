@@ -70,7 +70,7 @@ public class HttpSessionRepo extends CacheSessionRepo {
     DefaultAccount account = new DefaultAccount(pa.getName(), pa.getDescription());
     account.setCategoryId(pa.getCategoryId());
     account.setStatus(pa.getStatus());
-    String[] authorities=null;
+    String[] authorities=new String[0];
     if(pa.getAuthoritiesCount()>0){
       authorities = new String[pa.getAuthoritiesCount()];
       for(int i=0;i < pa.getAuthoritiesCount();i++){
@@ -79,8 +79,7 @@ public class HttpSessionRepo extends CacheSessionRepo {
     }
     account.setAuthorities(authorities);
 
-
-    String[] permissions=null;
+    String[] permissions=new String[0];
     if(pa.getPermissionsCount()>0){
       permissions = new String[pa.getPermissionsCount()];
       for(int i=0;i < pa.getPermissionsCount();i++){
