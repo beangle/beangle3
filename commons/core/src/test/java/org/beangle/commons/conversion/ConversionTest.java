@@ -27,7 +27,7 @@ public class ConversionTest {
 
   public void testConvert() {
     DefaultConversion con = new DefaultConversion();
-    Assert.assertEquals(con.convert(2.5f, Integer.class), new Integer(2));
+    Assert.assertEquals(con.convert(2.5f, Integer.class), Integer.valueOf(2));
     Assert.assertEquals(con.convert("", Boolean.class),null);
     Assert.assertEquals((boolean)con.convert(null, boolean.class),false);
   }
@@ -41,7 +41,7 @@ public class ConversionTest {
     DefaultConversion con = new DefaultConversion();
     Assert.assertEquals((int) con.convert("2", int.class), 2);
 
-    Assert.assertEquals(con.convert(3, Integer.class), new Integer(3));
+    Assert.assertEquals(con.convert(3, Integer.class), Integer.valueOf(3));
   }
 
   public void testConvertPrimitiveArray() {

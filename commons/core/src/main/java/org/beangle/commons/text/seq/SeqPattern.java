@@ -66,7 +66,7 @@ public class SeqPattern {
         break;
       }
       if (Numbers.isDigits(p)) {
-        params.add(new Integer(p));
+        params.add(Integer.valueOf(p));
       }
       remainder = Strings.substringAfter(remainder, "{" + p + "}");
     }
