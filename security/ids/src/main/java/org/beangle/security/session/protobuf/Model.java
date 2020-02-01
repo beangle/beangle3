@@ -38,78 +38,98 @@ public final class Model {
 
     /**
      * <code>string name = 1;</code>
+     * @return The name.
      */
     java.lang.String getName();
     /**
      * <code>string name = 1;</code>
+     * @return The bytes for name.
      */
     com.google.protobuf.ByteString
     getNameBytes();
 
     /**
      * <code>string description = 2;</code>
+     * @return The description.
      */
     java.lang.String getDescription();
     /**
      * <code>string description = 2;</code>
+     * @return The bytes for description.
      */
     com.google.protobuf.ByteString
     getDescriptionBytes();
 
     /**
      * <code>int32 categoryId = 3;</code>
+     * @return The categoryId.
      */
     int getCategoryId();
 
     /**
      * <code>string remoteToken = 4;</code>
+     * @return The remoteToken.
      */
     java.lang.String getRemoteToken();
     /**
      * <code>string remoteToken = 4;</code>
+     * @return The bytes for remoteToken.
      */
     com.google.protobuf.ByteString
     getRemoteTokenBytes();
 
     /**
      * <code>int32 status = 5;</code>
+     * @return The status.
      */
     int getStatus();
 
     /**
      * <code>repeated string authorities = 6;</code>
+     * @return A list containing the authorities.
      */
     java.util.List<java.lang.String>
     getAuthoritiesList();
     /**
      * <code>repeated string authorities = 6;</code>
+     * @return The count of authorities.
      */
     int getAuthoritiesCount();
     /**
      * <code>repeated string authorities = 6;</code>
+     * @param index The index of the element to return.
+     * @return The authorities at the given index.
      */
     java.lang.String getAuthorities(int index);
     /**
      * <code>repeated string authorities = 6;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the authorities at the given index.
      */
     com.google.protobuf.ByteString
     getAuthoritiesBytes(int index);
 
     /**
      * <code>repeated string permissions = 7;</code>
+     * @return A list containing the permissions.
      */
     java.util.List<java.lang.String>
     getPermissionsList();
     /**
      * <code>repeated string permissions = 7;</code>
+     * @return The count of permissions.
      */
     int getPermissionsCount();
     /**
      * <code>repeated string permissions = 7;</code>
+     * @param index The index of the element to return.
+     * @return The permissions at the given index.
      */
     java.lang.String getPermissions(int index);
     /**
      * <code>repeated string permissions = 7;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the permissions at the given index.
      */
     com.google.protobuf.ByteString
     getPermissionsBytes(int index);
@@ -163,11 +183,16 @@ public final class Model {
     private Account() {
       name_ = "";
       description_ = "";
-      categoryId_ = 0;
       remoteToken_ = "";
-      status_ = 0;
       authorities_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       permissions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+      UnusedPrivateParameter unused) {
+      return new Account();
     }
 
     @java.lang.Override
@@ -224,27 +249,27 @@ public final class Model {
             }
             case 50: {
               java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 authorities_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000020;
+                mutable_bitField0_ |= 0x00000001;
               }
               authorities_.add(s);
               break;
             }
             case 58: {
               java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
                 permissions_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000040;
+                mutable_bitField0_ |= 0x00000002;
               }
               permissions_.add(s);
               break;
             }
             case 66: {
-              if (!((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+              if (!((mutable_bitField0_ & 0x00000004) != 0)) {
                 details_ = com.google.protobuf.MapField.newMapField(
                   DetailsDefaultEntryHolder.defaultEntry);
-                mutable_bitField0_ |= 0x00000080;
+                mutable_bitField0_ |= 0x00000004;
               }
               com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
                 details__ = input.readMessage(
@@ -254,7 +279,7 @@ public final class Model {
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -268,10 +293,10 @@ public final class Model {
         throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
           authorities_ = authorities_.getUnmodifiableView();
         }
-        if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+        if (((mutable_bitField0_ & 0x00000002) != 0)) {
           permissions_ = permissions_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
@@ -303,11 +328,11 @@ public final class Model {
           org.beangle.security.session.protobuf.Model.Account.class, org.beangle.security.session.protobuf.Model.Account.Builder.class);
     }
 
-    private int bitField0_;
     public static final int NAME_FIELD_NUMBER = 1;
     private volatile java.lang.Object name_;
     /**
      * <code>string name = 1;</code>
+     * @return The name.
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
@@ -323,6 +348,7 @@ public final class Model {
     }
     /**
      * <code>string name = 1;</code>
+     * @return The bytes for name.
      */
     public com.google.protobuf.ByteString
     getNameBytes() {
@@ -342,6 +368,7 @@ public final class Model {
     private volatile java.lang.Object description_;
     /**
      * <code>string description = 2;</code>
+     * @return The description.
      */
     public java.lang.String getDescription() {
       java.lang.Object ref = description_;
@@ -357,6 +384,7 @@ public final class Model {
     }
     /**
      * <code>string description = 2;</code>
+     * @return The bytes for description.
      */
     public com.google.protobuf.ByteString
     getDescriptionBytes() {
@@ -376,6 +404,7 @@ public final class Model {
     private int categoryId_;
     /**
      * <code>int32 categoryId = 3;</code>
+     * @return The categoryId.
      */
     public int getCategoryId() {
       return categoryId_;
@@ -385,6 +414,7 @@ public final class Model {
     private volatile java.lang.Object remoteToken_;
     /**
      * <code>string remoteToken = 4;</code>
+     * @return The remoteToken.
      */
     public java.lang.String getRemoteToken() {
       java.lang.Object ref = remoteToken_;
@@ -400,6 +430,7 @@ public final class Model {
     }
     /**
      * <code>string remoteToken = 4;</code>
+     * @return The bytes for remoteToken.
      */
     public com.google.protobuf.ByteString
     getRemoteTokenBytes() {
@@ -419,6 +450,7 @@ public final class Model {
     private int status_;
     /**
      * <code>int32 status = 5;</code>
+     * @return The status.
      */
     public int getStatus() {
       return status_;
@@ -428,6 +460,7 @@ public final class Model {
     private com.google.protobuf.LazyStringList authorities_;
     /**
      * <code>repeated string authorities = 6;</code>
+     * @return A list containing the authorities.
      */
     public com.google.protobuf.ProtocolStringList
     getAuthoritiesList() {
@@ -435,18 +468,23 @@ public final class Model {
     }
     /**
      * <code>repeated string authorities = 6;</code>
+     * @return The count of authorities.
      */
     public int getAuthoritiesCount() {
       return authorities_.size();
     }
     /**
      * <code>repeated string authorities = 6;</code>
+     * @param index The index of the element to return.
+     * @return The authorities at the given index.
      */
     public java.lang.String getAuthorities(int index) {
       return authorities_.get(index);
     }
     /**
      * <code>repeated string authorities = 6;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the authorities at the given index.
      */
     public com.google.protobuf.ByteString
     getAuthoritiesBytes(int index) {
@@ -457,6 +495,7 @@ public final class Model {
     private com.google.protobuf.LazyStringList permissions_;
     /**
      * <code>repeated string permissions = 7;</code>
+     * @return A list containing the permissions.
      */
     public com.google.protobuf.ProtocolStringList
     getPermissionsList() {
@@ -464,18 +503,23 @@ public final class Model {
     }
     /**
      * <code>repeated string permissions = 7;</code>
+     * @return The count of permissions.
      */
     public int getPermissionsCount() {
       return permissions_.size();
     }
     /**
      * <code>repeated string permissions = 7;</code>
+     * @param index The index of the element to return.
+     * @return The permissions at the given index.
      */
     public java.lang.String getPermissions(int index) {
       return permissions_.get(index);
     }
     /**
      * <code>repeated string permissions = 7;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the permissions at the given index.
      */
     public com.google.protobuf.ByteString
     getPermissionsBytes(int index) {
@@ -666,25 +710,24 @@ public final class Model {
       }
       org.beangle.security.session.protobuf.Model.Account other = (org.beangle.security.session.protobuf.Model.Account) obj;
 
-      boolean result = true;
-      result = result && getName()
-        .equals(other.getName());
-      result = result && getDescription()
-        .equals(other.getDescription());
-      result = result && (getCategoryId()
-        == other.getCategoryId());
-      result = result && getRemoteToken()
-        .equals(other.getRemoteToken());
-      result = result && (getStatus()
-        == other.getStatus());
-      result = result && getAuthoritiesList()
-        .equals(other.getAuthoritiesList());
-      result = result && getPermissionsList()
-        .equals(other.getPermissionsList());
-      result = result && internalGetDetails().equals(
-        other.internalGetDetails());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getName()
+        .equals(other.getName())) return false;
+      if (!getDescription()
+        .equals(other.getDescription())) return false;
+      if (getCategoryId()
+        != other.getCategoryId()) return false;
+      if (!getRemoteToken()
+        .equals(other.getRemoteToken())) return false;
+      if (getStatus()
+        != other.getStatus()) return false;
+      if (!getAuthoritiesList()
+        .equals(other.getAuthoritiesList())) return false;
+      if (!getPermissionsList()
+        .equals(other.getPermissionsList())) return false;
+      if (!internalGetDetails().equals(
+        other.internalGetDetails())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -882,9 +925,9 @@ public final class Model {
         status_ = 0;
 
         authorities_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000001);
         permissions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000040);
+        bitField0_ = (bitField0_ & ~0x00000002);
         internalGetMutableDetails().clear();
         return this;
       }
@@ -913,60 +956,58 @@ public final class Model {
       public org.beangle.security.session.protobuf.Model.Account buildPartial() {
         org.beangle.security.session.protobuf.Model.Account result = new org.beangle.security.session.protobuf.Model.Account(this);
         int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
         result.name_ = name_;
         result.description_ = description_;
         result.categoryId_ = categoryId_;
         result.remoteToken_ = remoteToken_;
         result.status_ = status_;
-        if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
           authorities_ = authorities_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000020);
+          bitField0_ = (bitField0_ & ~0x00000001);
         }
         result.authorities_ = authorities_;
-        if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        if (((bitField0_ & 0x00000002) != 0)) {
           permissions_ = permissions_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000040);
+          bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.permissions_ = permissions_;
         result.details_ = internalGetDetails();
         result.details_.makeImmutable();
-        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -1001,7 +1042,7 @@ public final class Model {
         if (!other.authorities_.isEmpty()) {
           if (authorities_.isEmpty()) {
             authorities_ = other.authorities_;
-            bitField0_ = (bitField0_ & ~0x00000020);
+            bitField0_ = (bitField0_ & ~0x00000001);
           } else {
             ensureAuthoritiesIsMutable();
             authorities_.addAll(other.authorities_);
@@ -1011,7 +1052,7 @@ public final class Model {
         if (!other.permissions_.isEmpty()) {
           if (permissions_.isEmpty()) {
             permissions_ = other.permissions_;
-            bitField0_ = (bitField0_ & ~0x00000040);
+            bitField0_ = (bitField0_ & ~0x00000002);
           } else {
             ensurePermissionsIsMutable();
             permissions_.addAll(other.permissions_);
@@ -1053,6 +1094,7 @@ public final class Model {
       private java.lang.Object name_ = "";
       /**
        * <code>string name = 1;</code>
+       * @return The name.
        */
       public java.lang.String getName() {
         java.lang.Object ref = name_;
@@ -1068,6 +1110,7 @@ public final class Model {
       }
       /**
        * <code>string name = 1;</code>
+       * @return The bytes for name.
        */
       public com.google.protobuf.ByteString
       getNameBytes() {
@@ -1084,6 +1127,8 @@ public final class Model {
       }
       /**
        * <code>string name = 1;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
        */
       public Builder setName(
         java.lang.String value) {
@@ -1097,6 +1142,7 @@ public final class Model {
       }
       /**
        * <code>string name = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearName() {
 
@@ -1106,6 +1152,8 @@ public final class Model {
       }
       /**
        * <code>string name = 1;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
        */
       public Builder setNameBytes(
         com.google.protobuf.ByteString value) {
@@ -1122,6 +1170,7 @@ public final class Model {
       private java.lang.Object description_ = "";
       /**
        * <code>string description = 2;</code>
+       * @return The description.
        */
       public java.lang.String getDescription() {
         java.lang.Object ref = description_;
@@ -1137,6 +1186,7 @@ public final class Model {
       }
       /**
        * <code>string description = 2;</code>
+       * @return The bytes for description.
        */
       public com.google.protobuf.ByteString
       getDescriptionBytes() {
@@ -1153,6 +1203,8 @@ public final class Model {
       }
       /**
        * <code>string description = 2;</code>
+       * @param value The description to set.
+       * @return This builder for chaining.
        */
       public Builder setDescription(
         java.lang.String value) {
@@ -1166,6 +1218,7 @@ public final class Model {
       }
       /**
        * <code>string description = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearDescription() {
 
@@ -1175,6 +1228,8 @@ public final class Model {
       }
       /**
        * <code>string description = 2;</code>
+       * @param value The bytes for description to set.
+       * @return This builder for chaining.
        */
       public Builder setDescriptionBytes(
         com.google.protobuf.ByteString value) {
@@ -1191,12 +1246,15 @@ public final class Model {
       private int categoryId_ ;
       /**
        * <code>int32 categoryId = 3;</code>
+       * @return The categoryId.
        */
       public int getCategoryId() {
         return categoryId_;
       }
       /**
        * <code>int32 categoryId = 3;</code>
+       * @param value The categoryId to set.
+       * @return This builder for chaining.
        */
       public Builder setCategoryId(int value) {
 
@@ -1206,6 +1264,7 @@ public final class Model {
       }
       /**
        * <code>int32 categoryId = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearCategoryId() {
 
@@ -1217,6 +1276,7 @@ public final class Model {
       private java.lang.Object remoteToken_ = "";
       /**
        * <code>string remoteToken = 4;</code>
+       * @return The remoteToken.
        */
       public java.lang.String getRemoteToken() {
         java.lang.Object ref = remoteToken_;
@@ -1232,6 +1292,7 @@ public final class Model {
       }
       /**
        * <code>string remoteToken = 4;</code>
+       * @return The bytes for remoteToken.
        */
       public com.google.protobuf.ByteString
       getRemoteTokenBytes() {
@@ -1248,6 +1309,8 @@ public final class Model {
       }
       /**
        * <code>string remoteToken = 4;</code>
+       * @param value The remoteToken to set.
+       * @return This builder for chaining.
        */
       public Builder setRemoteToken(
         java.lang.String value) {
@@ -1261,6 +1324,7 @@ public final class Model {
       }
       /**
        * <code>string remoteToken = 4;</code>
+       * @return This builder for chaining.
        */
       public Builder clearRemoteToken() {
 
@@ -1270,6 +1334,8 @@ public final class Model {
       }
       /**
        * <code>string remoteToken = 4;</code>
+       * @param value The bytes for remoteToken to set.
+       * @return This builder for chaining.
        */
       public Builder setRemoteTokenBytes(
         com.google.protobuf.ByteString value) {
@@ -1286,12 +1352,15 @@ public final class Model {
       private int status_ ;
       /**
        * <code>int32 status = 5;</code>
+       * @return The status.
        */
       public int getStatus() {
         return status_;
       }
       /**
        * <code>int32 status = 5;</code>
+       * @param value The status to set.
+       * @return This builder for chaining.
        */
       public Builder setStatus(int value) {
 
@@ -1301,6 +1370,7 @@ public final class Model {
       }
       /**
        * <code>int32 status = 5;</code>
+       * @return This builder for chaining.
        */
       public Builder clearStatus() {
 
@@ -1311,13 +1381,14 @@ public final class Model {
 
       private com.google.protobuf.LazyStringList authorities_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureAuthoritiesIsMutable() {
-        if (!((bitField0_ & 0x00000020) == 0x00000020)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           authorities_ = new com.google.protobuf.LazyStringArrayList(authorities_);
-          bitField0_ |= 0x00000020;
+          bitField0_ |= 0x00000001;
         }
       }
       /**
        * <code>repeated string authorities = 6;</code>
+       * @return A list containing the authorities.
        */
       public com.google.protobuf.ProtocolStringList
       getAuthoritiesList() {
@@ -1325,18 +1396,23 @@ public final class Model {
       }
       /**
        * <code>repeated string authorities = 6;</code>
+       * @return The count of authorities.
        */
       public int getAuthoritiesCount() {
         return authorities_.size();
       }
       /**
        * <code>repeated string authorities = 6;</code>
+       * @param index The index of the element to return.
+       * @return The authorities at the given index.
        */
       public java.lang.String getAuthorities(int index) {
         return authorities_.get(index);
       }
       /**
        * <code>repeated string authorities = 6;</code>
+       * @param index The index of the value to return.
+       * @return The bytes of the authorities at the given index.
        */
       public com.google.protobuf.ByteString
       getAuthoritiesBytes(int index) {
@@ -1344,6 +1420,9 @@ public final class Model {
       }
       /**
        * <code>repeated string authorities = 6;</code>
+       * @param index The index to set the value at.
+       * @param value The authorities to set.
+       * @return This builder for chaining.
        */
       public Builder setAuthorities(
         int index, java.lang.String value) {
@@ -1357,6 +1436,8 @@ public final class Model {
       }
       /**
        * <code>repeated string authorities = 6;</code>
+       * @param value The authorities to add.
+       * @return This builder for chaining.
        */
       public Builder addAuthorities(
         java.lang.String value) {
@@ -1370,6 +1451,8 @@ public final class Model {
       }
       /**
        * <code>repeated string authorities = 6;</code>
+       * @param values The authorities to add.
+       * @return This builder for chaining.
        */
       public Builder addAllAuthorities(
         java.lang.Iterable<java.lang.String> values) {
@@ -1381,15 +1464,18 @@ public final class Model {
       }
       /**
        * <code>repeated string authorities = 6;</code>
+       * @return This builder for chaining.
        */
       public Builder clearAuthorities() {
         authorities_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
       /**
        * <code>repeated string authorities = 6;</code>
+       * @param value The bytes of the authorities to add.
+       * @return This builder for chaining.
        */
       public Builder addAuthoritiesBytes(
         com.google.protobuf.ByteString value) {
@@ -1405,13 +1491,14 @@ public final class Model {
 
       private com.google.protobuf.LazyStringList permissions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensurePermissionsIsMutable() {
-        if (!((bitField0_ & 0x00000040) == 0x00000040)) {
+        if (!((bitField0_ & 0x00000002) != 0)) {
           permissions_ = new com.google.protobuf.LazyStringArrayList(permissions_);
-          bitField0_ |= 0x00000040;
+          bitField0_ |= 0x00000002;
         }
       }
       /**
        * <code>repeated string permissions = 7;</code>
+       * @return A list containing the permissions.
        */
       public com.google.protobuf.ProtocolStringList
       getPermissionsList() {
@@ -1419,18 +1506,23 @@ public final class Model {
       }
       /**
        * <code>repeated string permissions = 7;</code>
+       * @return The count of permissions.
        */
       public int getPermissionsCount() {
         return permissions_.size();
       }
       /**
        * <code>repeated string permissions = 7;</code>
+       * @param index The index of the element to return.
+       * @return The permissions at the given index.
        */
       public java.lang.String getPermissions(int index) {
         return permissions_.get(index);
       }
       /**
        * <code>repeated string permissions = 7;</code>
+       * @param index The index of the value to return.
+       * @return The bytes of the permissions at the given index.
        */
       public com.google.protobuf.ByteString
       getPermissionsBytes(int index) {
@@ -1438,6 +1530,9 @@ public final class Model {
       }
       /**
        * <code>repeated string permissions = 7;</code>
+       * @param index The index to set the value at.
+       * @param value The permissions to set.
+       * @return This builder for chaining.
        */
       public Builder setPermissions(
         int index, java.lang.String value) {
@@ -1451,6 +1546,8 @@ public final class Model {
       }
       /**
        * <code>repeated string permissions = 7;</code>
+       * @param value The permissions to add.
+       * @return This builder for chaining.
        */
       public Builder addPermissions(
         java.lang.String value) {
@@ -1464,6 +1561,8 @@ public final class Model {
       }
       /**
        * <code>repeated string permissions = 7;</code>
+       * @param values The permissions to add.
+       * @return This builder for chaining.
        */
       public Builder addAllPermissions(
         java.lang.Iterable<java.lang.String> values) {
@@ -1475,15 +1574,18 @@ public final class Model {
       }
       /**
        * <code>repeated string permissions = 7;</code>
+       * @return This builder for chaining.
        */
       public Builder clearPermissions() {
         permissions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000040);
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
       /**
        * <code>repeated string permissions = 7;</code>
+       * @param value The bytes of the permissions to add.
+       * @return This builder for chaining.
        */
       public Builder addPermissionsBytes(
         com.google.protobuf.ByteString value) {
@@ -1622,7 +1724,7 @@ public final class Model {
       @java.lang.Override
       public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
@@ -1678,30 +1780,36 @@ public final class Model {
 
     /**
      * <code>string name = 1;</code>
+     * @return The name.
      */
     java.lang.String getName();
     /**
      * <code>string name = 1;</code>
+     * @return The bytes for name.
      */
     com.google.protobuf.ByteString
     getNameBytes();
 
     /**
      * <code>string ip = 2;</code>
+     * @return The ip.
      */
     java.lang.String getIp();
     /**
      * <code>string ip = 2;</code>
+     * @return The bytes for ip.
      */
     com.google.protobuf.ByteString
     getIpBytes();
 
     /**
      * <code>string os = 3;</code>
+     * @return The os.
      */
     java.lang.String getOs();
     /**
      * <code>string os = 3;</code>
+     * @return The bytes for os.
      */
     com.google.protobuf.ByteString
     getOsBytes();
@@ -1725,6 +1833,13 @@ public final class Model {
     }
 
     @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+      UnusedPrivateParameter unused) {
+      return new Agent();
+    }
+
+    @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -1737,7 +1852,6 @@ public final class Model {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
-      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
         com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -1767,7 +1881,7 @@ public final class Model {
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -1802,6 +1916,7 @@ public final class Model {
     private volatile java.lang.Object name_;
     /**
      * <code>string name = 1;</code>
+     * @return The name.
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
@@ -1817,6 +1932,7 @@ public final class Model {
     }
     /**
      * <code>string name = 1;</code>
+     * @return The bytes for name.
      */
     public com.google.protobuf.ByteString
     getNameBytes() {
@@ -1836,6 +1952,7 @@ public final class Model {
     private volatile java.lang.Object ip_;
     /**
      * <code>string ip = 2;</code>
+     * @return The ip.
      */
     public java.lang.String getIp() {
       java.lang.Object ref = ip_;
@@ -1851,6 +1968,7 @@ public final class Model {
     }
     /**
      * <code>string ip = 2;</code>
+     * @return The bytes for ip.
      */
     public com.google.protobuf.ByteString
     getIpBytes() {
@@ -1870,6 +1988,7 @@ public final class Model {
     private volatile java.lang.Object os_;
     /**
      * <code>string os = 3;</code>
+     * @return The os.
      */
     public java.lang.String getOs() {
       java.lang.Object ref = os_;
@@ -1885,6 +2004,7 @@ public final class Model {
     }
     /**
      * <code>string os = 3;</code>
+     * @return The bytes for os.
      */
     public com.google.protobuf.ByteString
     getOsBytes() {
@@ -1956,15 +2076,14 @@ public final class Model {
       }
       org.beangle.security.session.protobuf.Model.Agent other = (org.beangle.security.session.protobuf.Model.Agent) obj;
 
-      boolean result = true;
-      result = result && getName()
-        .equals(other.getName());
-      result = result && getIp()
-        .equals(other.getIp());
-      result = result && getOs()
-        .equals(other.getOs());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getName()
+        .equals(other.getName())) return false;
+      if (!getIp()
+        .equals(other.getIp())) return false;
+      if (!getOs()
+        .equals(other.getOs())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -2154,35 +2273,35 @@ public final class Model {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -2240,6 +2359,7 @@ public final class Model {
       private java.lang.Object name_ = "";
       /**
        * <code>string name = 1;</code>
+       * @return The name.
        */
       public java.lang.String getName() {
         java.lang.Object ref = name_;
@@ -2255,6 +2375,7 @@ public final class Model {
       }
       /**
        * <code>string name = 1;</code>
+       * @return The bytes for name.
        */
       public com.google.protobuf.ByteString
       getNameBytes() {
@@ -2271,6 +2392,8 @@ public final class Model {
       }
       /**
        * <code>string name = 1;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
        */
       public Builder setName(
         java.lang.String value) {
@@ -2284,6 +2407,7 @@ public final class Model {
       }
       /**
        * <code>string name = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearName() {
 
@@ -2293,6 +2417,8 @@ public final class Model {
       }
       /**
        * <code>string name = 1;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
        */
       public Builder setNameBytes(
         com.google.protobuf.ByteString value) {
@@ -2309,6 +2435,7 @@ public final class Model {
       private java.lang.Object ip_ = "";
       /**
        * <code>string ip = 2;</code>
+       * @return The ip.
        */
       public java.lang.String getIp() {
         java.lang.Object ref = ip_;
@@ -2324,6 +2451,7 @@ public final class Model {
       }
       /**
        * <code>string ip = 2;</code>
+       * @return The bytes for ip.
        */
       public com.google.protobuf.ByteString
       getIpBytes() {
@@ -2340,6 +2468,8 @@ public final class Model {
       }
       /**
        * <code>string ip = 2;</code>
+       * @param value The ip to set.
+       * @return This builder for chaining.
        */
       public Builder setIp(
         java.lang.String value) {
@@ -2353,6 +2483,7 @@ public final class Model {
       }
       /**
        * <code>string ip = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearIp() {
 
@@ -2362,6 +2493,8 @@ public final class Model {
       }
       /**
        * <code>string ip = 2;</code>
+       * @param value The bytes for ip to set.
+       * @return This builder for chaining.
        */
       public Builder setIpBytes(
         com.google.protobuf.ByteString value) {
@@ -2378,6 +2511,7 @@ public final class Model {
       private java.lang.Object os_ = "";
       /**
        * <code>string os = 3;</code>
+       * @return The os.
        */
       public java.lang.String getOs() {
         java.lang.Object ref = os_;
@@ -2393,6 +2527,7 @@ public final class Model {
       }
       /**
        * <code>string os = 3;</code>
+       * @return The bytes for os.
        */
       public com.google.protobuf.ByteString
       getOsBytes() {
@@ -2409,6 +2544,8 @@ public final class Model {
       }
       /**
        * <code>string os = 3;</code>
+       * @param value The os to set.
+       * @return This builder for chaining.
        */
       public Builder setOs(
         java.lang.String value) {
@@ -2422,6 +2559,7 @@ public final class Model {
       }
       /**
        * <code>string os = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearOs() {
 
@@ -2431,6 +2569,8 @@ public final class Model {
       }
       /**
        * <code>string os = 3;</code>
+       * @param value The bytes for os to set.
+       * @return This builder for chaining.
        */
       public Builder setOsBytes(
         com.google.protobuf.ByteString value) {
@@ -2446,7 +2586,7 @@ public final class Model {
       @java.lang.Override
       public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
@@ -2502,20 +2642,24 @@ public final class Model {
 
     /**
      * <code>string id = 1;</code>
+     * @return The id.
      */
     java.lang.String getId();
     /**
      * <code>string id = 1;</code>
+     * @return The bytes for id.
      */
     com.google.protobuf.ByteString
     getIdBytes();
 
     /**
      * <code>.Account principal = 2;</code>
+     * @return Whether the principal field is set.
      */
     boolean hasPrincipal();
     /**
      * <code>.Account principal = 2;</code>
+     * @return The principal.
      */
     org.beangle.security.session.protobuf.Model.Account getPrincipal();
     /**
@@ -2525,20 +2669,24 @@ public final class Model {
 
     /**
      * <code>int64 loginAt = 3;</code>
+     * @return The loginAt.
      */
     long getLoginAt();
 
     /**
      * <code>int64 lastAccessAt = 4;</code>
+     * @return The lastAccessAt.
      */
     long getLastAccessAt();
 
     /**
      * <code>.Agent agent = 5;</code>
+     * @return Whether the agent field is set.
      */
     boolean hasAgent();
     /**
      * <code>.Agent agent = 5;</code>
+     * @return The agent.
      */
     org.beangle.security.session.protobuf.Model.Agent getAgent();
     /**
@@ -2548,6 +2696,7 @@ public final class Model {
 
     /**
      * <code>int32 ttiSeconds = 6;</code>
+     * @return The ttiSeconds.
      */
     int getTtiSeconds();
   }
@@ -2565,9 +2714,13 @@ public final class Model {
     }
     private Session() {
       id_ = "";
-      loginAt_ = 0L;
-      lastAccessAt_ = 0L;
-      ttiSeconds_ = 0;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+      UnusedPrivateParameter unused) {
+      return new Session();
     }
 
     @java.lang.Override
@@ -2583,7 +2736,6 @@ public final class Model {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
-      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
         com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -2642,7 +2794,7 @@ public final class Model {
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -2677,6 +2829,7 @@ public final class Model {
     private volatile java.lang.Object id_;
     /**
      * <code>string id = 1;</code>
+     * @return The id.
      */
     public java.lang.String getId() {
       java.lang.Object ref = id_;
@@ -2692,6 +2845,7 @@ public final class Model {
     }
     /**
      * <code>string id = 1;</code>
+     * @return The bytes for id.
      */
     public com.google.protobuf.ByteString
     getIdBytes() {
@@ -2711,12 +2865,14 @@ public final class Model {
     private org.beangle.security.session.protobuf.Model.Account principal_;
     /**
      * <code>.Account principal = 2;</code>
+     * @return Whether the principal field is set.
      */
     public boolean hasPrincipal() {
       return principal_ != null;
     }
     /**
      * <code>.Account principal = 2;</code>
+     * @return The principal.
      */
     public org.beangle.security.session.protobuf.Model.Account getPrincipal() {
       return principal_ == null ? org.beangle.security.session.protobuf.Model.Account.getDefaultInstance() : principal_;
@@ -2732,6 +2888,7 @@ public final class Model {
     private long loginAt_;
     /**
      * <code>int64 loginAt = 3;</code>
+     * @return The loginAt.
      */
     public long getLoginAt() {
       return loginAt_;
@@ -2741,6 +2898,7 @@ public final class Model {
     private long lastAccessAt_;
     /**
      * <code>int64 lastAccessAt = 4;</code>
+     * @return The lastAccessAt.
      */
     public long getLastAccessAt() {
       return lastAccessAt_;
@@ -2750,12 +2908,14 @@ public final class Model {
     private org.beangle.security.session.protobuf.Model.Agent agent_;
     /**
      * <code>.Agent agent = 5;</code>
+     * @return Whether the agent field is set.
      */
     public boolean hasAgent() {
       return agent_ != null;
     }
     /**
      * <code>.Agent agent = 5;</code>
+     * @return The agent.
      */
     public org.beangle.security.session.protobuf.Model.Agent getAgent() {
       return agent_ == null ? org.beangle.security.session.protobuf.Model.Agent.getDefaultInstance() : agent_;
@@ -2771,6 +2931,7 @@ public final class Model {
     private int ttiSeconds_;
     /**
      * <code>int32 ttiSeconds = 6;</code>
+     * @return The ttiSeconds.
      */
     public int getTtiSeconds() {
       return ttiSeconds_;
@@ -2855,27 +3016,26 @@ public final class Model {
       }
       org.beangle.security.session.protobuf.Model.Session other = (org.beangle.security.session.protobuf.Model.Session) obj;
 
-      boolean result = true;
-      result = result && getId()
-        .equals(other.getId());
-      result = result && (hasPrincipal() == other.hasPrincipal());
+      if (!getId()
+        .equals(other.getId())) return false;
+      if (hasPrincipal() != other.hasPrincipal()) return false;
       if (hasPrincipal()) {
-        result = result && getPrincipal()
-          .equals(other.getPrincipal());
+        if (!getPrincipal()
+          .equals(other.getPrincipal())) return false;
       }
-      result = result && (getLoginAt()
-        == other.getLoginAt());
-      result = result && (getLastAccessAt()
-        == other.getLastAccessAt());
-      result = result && (hasAgent() == other.hasAgent());
+      if (getLoginAt()
+        != other.getLoginAt()) return false;
+      if (getLastAccessAt()
+        != other.getLastAccessAt()) return false;
+      if (hasAgent() != other.hasAgent()) return false;
       if (hasAgent()) {
-        result = result && getAgent()
-          .equals(other.getAgent());
+        if (!getAgent()
+          .equals(other.getAgent())) return false;
       }
-      result = result && (getTtiSeconds()
-        == other.getTtiSeconds());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (getTtiSeconds()
+        != other.getTtiSeconds()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
     @java.lang.Override
@@ -3102,35 +3262,35 @@ public final class Model {
 
       @java.lang.Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
       @java.lang.Override
       public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+        return super.setField(field, value);
       }
       @java.lang.Override
       public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
       @java.lang.Override
       public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
       @java.lang.Override
       public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
       @java.lang.Override
       public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -3195,6 +3355,7 @@ public final class Model {
       private java.lang.Object id_ = "";
       /**
        * <code>string id = 1;</code>
+       * @return The id.
        */
       public java.lang.String getId() {
         java.lang.Object ref = id_;
@@ -3210,6 +3371,7 @@ public final class Model {
       }
       /**
        * <code>string id = 1;</code>
+       * @return The bytes for id.
        */
       public com.google.protobuf.ByteString
       getIdBytes() {
@@ -3226,6 +3388,8 @@ public final class Model {
       }
       /**
        * <code>string id = 1;</code>
+       * @param value The id to set.
+       * @return This builder for chaining.
        */
       public Builder setId(
         java.lang.String value) {
@@ -3239,6 +3403,7 @@ public final class Model {
       }
       /**
        * <code>string id = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearId() {
 
@@ -3248,6 +3413,8 @@ public final class Model {
       }
       /**
        * <code>string id = 1;</code>
+       * @param value The bytes for id to set.
+       * @return This builder for chaining.
        */
       public Builder setIdBytes(
         com.google.protobuf.ByteString value) {
@@ -3261,17 +3428,19 @@ public final class Model {
         return this;
       }
 
-      private org.beangle.security.session.protobuf.Model.Account principal_ = null;
+      private org.beangle.security.session.protobuf.Model.Account principal_;
       private com.google.protobuf.SingleFieldBuilderV3<
         org.beangle.security.session.protobuf.Model.Account, org.beangle.security.session.protobuf.Model.Account.Builder, org.beangle.security.session.protobuf.Model.AccountOrBuilder> principalBuilder_;
       /**
        * <code>.Account principal = 2;</code>
+       * @return Whether the principal field is set.
        */
       public boolean hasPrincipal() {
         return principalBuilder_ != null || principal_ != null;
       }
       /**
        * <code>.Account principal = 2;</code>
+       * @return The principal.
        */
       public org.beangle.security.session.protobuf.Model.Account getPrincipal() {
         if (principalBuilder_ == null) {
@@ -3381,12 +3550,15 @@ public final class Model {
       private long loginAt_ ;
       /**
        * <code>int64 loginAt = 3;</code>
+       * @return The loginAt.
        */
       public long getLoginAt() {
         return loginAt_;
       }
       /**
        * <code>int64 loginAt = 3;</code>
+       * @param value The loginAt to set.
+       * @return This builder for chaining.
        */
       public Builder setLoginAt(long value) {
 
@@ -3396,6 +3568,7 @@ public final class Model {
       }
       /**
        * <code>int64 loginAt = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearLoginAt() {
 
@@ -3407,12 +3580,15 @@ public final class Model {
       private long lastAccessAt_ ;
       /**
        * <code>int64 lastAccessAt = 4;</code>
+       * @return The lastAccessAt.
        */
       public long getLastAccessAt() {
         return lastAccessAt_;
       }
       /**
        * <code>int64 lastAccessAt = 4;</code>
+       * @param value The lastAccessAt to set.
+       * @return This builder for chaining.
        */
       public Builder setLastAccessAt(long value) {
 
@@ -3422,6 +3598,7 @@ public final class Model {
       }
       /**
        * <code>int64 lastAccessAt = 4;</code>
+       * @return This builder for chaining.
        */
       public Builder clearLastAccessAt() {
 
@@ -3430,17 +3607,19 @@ public final class Model {
         return this;
       }
 
-      private org.beangle.security.session.protobuf.Model.Agent agent_ = null;
+      private org.beangle.security.session.protobuf.Model.Agent agent_;
       private com.google.protobuf.SingleFieldBuilderV3<
         org.beangle.security.session.protobuf.Model.Agent, org.beangle.security.session.protobuf.Model.Agent.Builder, org.beangle.security.session.protobuf.Model.AgentOrBuilder> agentBuilder_;
       /**
        * <code>.Agent agent = 5;</code>
+       * @return Whether the agent field is set.
        */
       public boolean hasAgent() {
         return agentBuilder_ != null || agent_ != null;
       }
       /**
        * <code>.Agent agent = 5;</code>
+       * @return The agent.
        */
       public org.beangle.security.session.protobuf.Model.Agent getAgent() {
         if (agentBuilder_ == null) {
@@ -3550,12 +3729,15 @@ public final class Model {
       private int ttiSeconds_ ;
       /**
        * <code>int32 ttiSeconds = 6;</code>
+       * @return The ttiSeconds.
        */
       public int getTtiSeconds() {
         return ttiSeconds_;
       }
       /**
        * <code>int32 ttiSeconds = 6;</code>
+       * @param value The ttiSeconds to set.
+       * @return This builder for chaining.
        */
       public Builder setTtiSeconds(int value) {
 
@@ -3565,6 +3747,7 @@ public final class Model {
       }
       /**
        * <code>int32 ttiSeconds = 6;</code>
+       * @return This builder for chaining.
        */
       public Builder clearTtiSeconds() {
 
@@ -3575,7 +3758,7 @@ public final class Model {
       @java.lang.Override
       public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
       @java.lang.Override
@@ -3668,18 +3851,10 @@ public final class Model {
         "ngle.security.session.protobufB\005Modelb\006p" +
         "roto3"
     };
-    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-          com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          return null;
-        }
-      };
-    com.google.protobuf.Descriptors.FileDescriptor
+    descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        }, assigner);
+        });
     internal_static_Account_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_Account_fieldAccessorTable = new

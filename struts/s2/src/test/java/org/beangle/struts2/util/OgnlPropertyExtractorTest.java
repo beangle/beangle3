@@ -46,7 +46,7 @@ public class OgnlPropertyExtractorTest {
   public void testGet2() throws Exception {
     OgnlPropertyExtractor extractor = new OgnlPropertyExtractor();
     Map<String, Object> data = CollectUtils.newHashMap();
-    Float age = new Float(22);
+    Float age = Float.valueOf(22);
     data.put("jack", age);
     Map<?, ?>[] datas1 = new Map[] { null };
     Map<?, ?>[] datas = new Map[] { data };
