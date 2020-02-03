@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.beangle.commons</groupId>
     <artifactId>beangle-commons-parent</artifactId>
-    <version>3.6.15-SNAPSHOT</version>
+    <version>3.6.15</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.beangle.commons</groupId>
@@ -30,12 +30,24 @@
       <artifactId>jxls</artifactId>
       <version>${jxls.version}</version>
       <optional>true</optional>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jxls</groupId>
       <artifactId>jxls-poi</artifactId>
       <version>${jxls-poi.version}</version>
       <optional>true</optional>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.poi</groupId>
