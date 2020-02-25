@@ -31,7 +31,8 @@ public abstract class AbstractRoleBasedAuthorizer implements Authorizer, Initial
 
   protected boolean unknownIsProtected = true;
 
-  protected int refreshSeconds = 5*60;
+  protected int refreshSeconds = 5 * 60;
+
   /**
    * 资源是否被授权<br>
    * 1)检查是否是属于公有资源<br>
@@ -69,13 +70,28 @@ public abstract class AbstractRoleBasedAuthorizer implements Authorizer, Initial
   }
 
   @Override
+  public String getScope(String resourceName) {
+    Authority au = domain.authorities.get(resourceName);
+    if (null == au) {
+      if (unknownIsProtected) {
+        return "Protected";
+      } else {
+        return "Private";
+      }
+    } else {
+      return au.scope;
+    }
+  }
+
+
+  @Override
   public boolean isRoot(String user) {
     return domain.roots.contains(user);
   }
 
   @Override
   public void init() throws Exception {
-    SessionDaemon.start("Beangle Authority",refreshSeconds,new DomainFetcher(this));
+    SessionDaemon.start("Beangle Authority", refreshSeconds, new DomainFetcher(this));
   }
 
   protected abstract AuthorityDomain fetchDomain();

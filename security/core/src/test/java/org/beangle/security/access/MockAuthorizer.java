@@ -36,4 +36,8 @@ public class MockAuthorizer implements Authorizer {
     return false;
   }
 
+  @Override
+  public String getScope(String resourceName) {
+    return "Public";
+  }
 }
