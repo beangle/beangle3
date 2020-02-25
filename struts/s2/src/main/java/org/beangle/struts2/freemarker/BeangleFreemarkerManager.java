@@ -18,28 +18,6 @@
  */
 package org.beangle.struts2.freemarker;
 
-import static org.beangle.commons.lang.Strings.split;
-import static org.beangle.commons.lang.Strings.substringAfter;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
-
-import javax.servlet.ServletContext;
-
-import org.apache.struts2.views.freemarker.FreemarkerManager;
-import org.beangle.commons.collection.CollectUtils;
-import org.beangle.commons.lang.ClassLoaders;
-import org.beangle.commons.lang.Strings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
@@ -47,6 +25,22 @@ import freemarker.cache.WebappTemplateLoader;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateException;
+import org.apache.struts2.views.freemarker.FreemarkerManager;
+import org.beangle.commons.collection.CollectUtils;
+import org.beangle.commons.lang.ClassLoaders;
+import org.beangle.commons.lang.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletContext;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.*;
+
+import static org.beangle.commons.lang.Strings.split;
+import static org.beangle.commons.lang.Strings.substringAfter;
 
 /**
  * BeangleFreemarkerManager provide:
@@ -93,6 +87,7 @@ public class BeangleFreemarkerManager extends FreemarkerManager {
    */
   protected void configureTemplateLoader(TemplateLoader templateLoader) {
     config.setTemplateLoader(templateLoader);
+    config.setSharedVariable("include_if_exists", new IncludeIfExistsModel());
   }
 
   /**
@@ -124,7 +119,7 @@ public class BeangleFreemarkerManager extends FreemarkerManager {
         loaders.add(new WebappTemplateLoader(servletContext, substringAfter(path, "webapp://")));
       } else {
         throw new RuntimeException("templatePath: " + path
-            + " is not well-formed. Use [class://|file://|webapp://] seperated with ,");
+                + " is not well-formed. Use [class://|file://|webapp://] seperated with ,");
       }
 
     }
@@ -136,7 +131,7 @@ public class BeangleFreemarkerManager extends FreemarkerManager {
    * /freemarker.properties file on the classpath
    *
    * @see freemarker.template.Configuration#setSettings for the definition of
-   *      valid settings
+   * valid settings
    */
   @SuppressWarnings("unchecked")
   @Override
@@ -169,7 +164,7 @@ public class BeangleFreemarkerManager extends FreemarkerManager {
       @SuppressWarnings("rawtypes")
       List keys = CollectUtils.newArrayList(properties.keySet());
       Collections.sort(keys);
-      for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
+      for (Iterator<String> iter = keys.iterator(); iter.hasNext(); ) {
         String key = iter.next();
         String value = (String) properties.get(key);
         if (null != key && null != value) {

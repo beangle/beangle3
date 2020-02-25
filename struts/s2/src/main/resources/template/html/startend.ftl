@@ -1,4 +1,4 @@
-<script type="text/javascript">beangle.ui.load("My97DatePicker");</script>
+<script type="text/javascript">beangle.load(["my97"]);</script>
 [#list tag.dates as date]
 [#if date.label??]
 <label for="${date.id}" class="title">

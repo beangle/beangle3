@@ -31,6 +31,7 @@ import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Throwables;
 import org.beangle.struts2.freemarker.BeangleClassTemplateLoader;
+import org.beangle.struts2.freemarker.IncludeIfExistsModel;
 import org.beangle.struts2.view.component.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,6 +94,7 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
       config.setLocalizedLookup(false);
       config.setEncoding(config.getLocale(), "UTF-8");
       config.setTagSyntax(Configuration.SQUARE_BRACKET_TAG_SYNTAX);
+      config.setSharedVariable("include_if_exists",new IncludeIfExistsModel());
       // Cache one hour(7200s) and Strong cache
       config.setTemplateUpdateDelayMilliseconds(7200 * 1000);
       // config.setCacheStorage(new MruCacheStorage(100,250));

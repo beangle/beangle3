@@ -1,5 +1,5 @@
 [#ftl/]
-<script type="text/javascript">beangle.ui.load("My97DatePicker");</script>
+<script type="text/javascript">beangle.load(["my97"]);</script>
 [#list tag.dates as date]
 <tr>
 <td class="search-item">

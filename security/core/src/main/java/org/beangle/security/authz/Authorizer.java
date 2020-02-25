@@ -33,4 +33,6 @@ public interface Authorizer {
   boolean isPermitted(SecurityContext context, Request request);
 
   boolean isRoot(String user);
+
+  public String getScope(String resourceName);
 }
