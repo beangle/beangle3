@@ -228,7 +228,7 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   /**
    * where.
    *
-   * @param condition a {@link org.beangle.commons.dao.query.builder.Condition} object.
+   * @param conditions a {@link org.beangle.commons.dao.query.builder.Condition} object.
    * @return a {@link org.beangle.commons.dao.query.builder.OqlBuilder} object.
    */
   public OqlBuilder<T> where(final Condition... conditions) {
@@ -294,6 +294,16 @@ public class OqlBuilder<T> extends AbstractQueryBuilder<T> {
   public OqlBuilder<T> where(final Collection<Condition> cons) {
     conditions.addAll(cons);
     return params(Conditions.getParamMap(cons));
+  }
+
+  public OqlBuilder<T> tailOrder(final String orderBy) {
+    List<Order> os=Order.parse(orderBy);
+    if(os.isEmpty()){
+      this.tailOrder=null;
+    }else{
+      this.tailOrder=os.get(0);
+    }
+    return this;
   }
 
   /**

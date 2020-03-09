@@ -18,18 +18,18 @@
  */
 package org.beangle.commons.dao.query.builder;
 
-import static org.beangle.commons.lang.Strings.isNotEmpty;
+import org.beangle.commons.collection.Order;
+import org.beangle.commons.collection.page.PageLimit;
+import org.beangle.commons.dao.query.Lang;
+import org.beangle.commons.lang.Assert;
+import org.beangle.commons.lang.Strings;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.beangle.commons.collection.Order;
-import org.beangle.commons.collection.page.PageLimit;
-import org.beangle.commons.dao.query.Lang;
-import org.beangle.commons.lang.Assert;
-import org.beangle.commons.lang.Strings;
+import static org.beangle.commons.lang.Strings.isNotEmpty;
 
 /**
  * sql查询
@@ -63,7 +63,9 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
     return "select count(*) from (" + genQueryStatement(false) + ")";
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected Lang getLang() {
     return Lang.SQL;
@@ -87,7 +89,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * join.
    * </p>
    *
-   * @param path a {@link java.lang.String} object.
+   * @param path  a {@link java.lang.String} object.
    * @param alias a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
@@ -102,8 +104,8 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * </p>
    *
    * @param joinMode a {@link java.lang.String} object.
-   * @param path a {@link java.lang.String} object.
-   * @param alias a {@link java.lang.String} object.
+   * @param path     a {@link java.lang.String} object.
+   * @param alias    a {@link java.lang.String} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
   public SqlBuilder join(final String joinMode, final String path, final String alias) {
@@ -121,7 +123,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * param.
    * </p>
    *
-   * @param name a {@link java.lang.String} object.
+   * @param name  a {@link java.lang.String} object.
    * @param value a {@link java.lang.Object} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
@@ -130,7 +132,9 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
     return this;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   public SqlBuilder limit(final PageLimit limit) {
     this.limit = limit;
     return this;
@@ -142,7 +146,7 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * </p>
    *
    * @param pageIndex a int.
-   * @param pageSize a int.
+   * @param pageSize  a int.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
   public SqlBuilder limit(final int pageIndex, final int pageSize) {
@@ -190,9 +194,9 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
    * where.
    *
    * @param content a {@link java.lang.String} object.
-   * @param param1 a {@link java.lang.Object} object.
-   * @param param2 a {@link java.lang.Object} object.
-   * @param param3 a {@link java.lang.Object} object.
+   * @param param1  a {@link java.lang.Object} object.
+   * @param param2  a {@link java.lang.Object} object.
+   * @param param3  a {@link java.lang.Object} object.
    * @return a {@link org.beangle.commons.dao.query.builder.SqlBuilder} object.
    */
   public SqlBuilder where(final String content, Object... varparams) {
@@ -211,6 +215,16 @@ public class SqlBuilder extends AbstractQueryBuilder<Object[]> {
   public SqlBuilder where(final Collection<Condition> cons) {
     conditions.addAll(cons);
     return params(Conditions.getParamMap(cons));
+  }
+
+  public SqlBuilder tailOrder(final String orderBy) {
+    List<Order> os = Order.parse(orderBy);
+    if (os.isEmpty()) {
+      this.tailOrder = null;
+    } else {
+      this.tailOrder = os.get(0);
+    }
+    return this;
   }
 
   /**
