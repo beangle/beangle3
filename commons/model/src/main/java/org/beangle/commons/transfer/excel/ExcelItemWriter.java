@@ -18,25 +18,23 @@
  */
 package org.beangle.commons.transfer.excel;
 
-import java.io.OutputStream;
-import java.util.Calendar;
-import java.util.Date;
-
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRichTextString;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.streaming.SXSSFCell;
+import org.apache.poi.xssf.streaming.SXSSFRow;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.beangle.commons.lang.Numbers;
 import org.beangle.commons.transfer.exporter.Context;
 import org.beangle.commons.transfer.io.AbstractItemWriter;
 import org.beangle.commons.transfer.io.TransferFormat;
+
+import java.io.OutputStream;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * <p>
@@ -50,15 +48,15 @@ public class ExcelItemWriter extends AbstractItemWriter {
 
   protected int countPerSheet = 50000;
 
-  protected HSSFWorkbook workbook = new HSSFWorkbook(); // 建立新HSSFWorkbook对象
+  protected SXSSFWorkbook workbook = new SXSSFWorkbook(); // 建立新SXSSFWorkbook对象
 
   protected int index = 0;
 
-  protected HSSFSheet sheet;
+  protected SXSSFSheet sheet;
 
-  protected HSSFCellStyle dateStyle = null;
+  protected CellStyle dateStyle = null;
 
-  protected HSSFCellStyle timeStyle = null;
+  protected CellStyle timeStyle = null;
 
   private Object title;
 
@@ -105,7 +103,9 @@ public class ExcelItemWriter extends AbstractItemWriter {
     this.countPerSheet = dataNumPerSheet;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   public void write(Object obj) {
     if (index + 1 >= countPerSheet) {
       writeTitle(null, title);
@@ -114,7 +114,9 @@ public class ExcelItemWriter extends AbstractItemWriter {
     index++;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * {@inheritDoc}
+   */
   public void writeTitle(String titleName, Object data) {
     if (null != titleName) {
       sheet = workbook.createSheet(titleName);
@@ -124,8 +126,8 @@ public class ExcelItemWriter extends AbstractItemWriter {
     title = data;
     index = 0;
     writeItem(data);
-    HSSFRow titleRow = sheet.getRow(index);
-    HSSFCellStyle titleStyle = getTitleStyle();
+    SXSSFRow titleRow = sheet.getRow(index);
+    CellStyle titleStyle = getTitleStyle();
     for (int i = 0; i < titleRow.getLastCellNum(); i++) {
       titleRow.getCell(i).setCellStyle(titleStyle);
     }
@@ -151,12 +153,12 @@ public class ExcelItemWriter extends AbstractItemWriter {
    * @param datas a {@link java.lang.Object} object.
    */
   protected void writeItem(Object datas) {
-    HSSFRow row = sheet.createRow(index); // 建立新行
+    SXSSFRow row = sheet.createRow(index); // 建立新行
     if (datas != null) {
       if (datas.getClass().isArray()) {
         Object[] values = (Object[]) datas;
         for (int i = 0; i < values.length; i++) {
-          HSSFCell cell = row.createCell(i);
+          SXSSFCell cell = row.createCell(i);
           if (values[i] instanceof Number) {
             cell.setCellType(CellType.NUMERIC);
             cell.setCellValue(((Number) values[i]).doubleValue());
@@ -170,15 +172,15 @@ public class ExcelItemWriter extends AbstractItemWriter {
             cell.setCellValue((Calendar) values[i]);
             cell.setCellStyle(getTimeStyle());
           } else {
-            cell.setCellValue(new HSSFRichTextString((values[i] == null) ? "" : values[i].toString()));
+            cell.setCellValue(new XSSFRichTextString((values[i] == null) ? "" : values[i].toString()));
           }
         }
       } else {
-        HSSFCell cell = row.createCell(0);
+        SXSSFCell cell = row.createCell(0);
         if (datas instanceof Number) {
           cell.setCellType(CellType.NUMERIC);
         }
-        cell.setCellValue(new HSSFRichTextString(datas.toString()));
+        cell.setCellValue(new XSSFRichTextString(datas.toString()));
       }
     }
   }
@@ -195,6 +197,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
       e.printStackTrace();
       throw new RuntimeException(e.getMessage());
     }
+    workbook.dispose();
   }
 
   /**
@@ -211,7 +214,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
     }
   }
 
-  private HSSFCellStyle getDateStyle() {
+  private CellStyle getDateStyle() {
     if (null == dateStyle) {
       dateStyle = workbook.createCellStyle();
       dateStyle.setDataFormat(workbook.createDataFormat().getFormat(getDateFormat()));
@@ -219,7 +222,7 @@ public class ExcelItemWriter extends AbstractItemWriter {
     return dateStyle;
   }
 
-  private HSSFCellStyle getTimeStyle() {
+  private CellStyle getTimeStyle() {
     if (null == timeStyle) {
       timeStyle = workbook.createCellStyle();
       timeStyle.setDataFormat(workbook.createDataFormat().getFormat(getDateTimeFormat()));
@@ -250,18 +253,15 @@ public class ExcelItemWriter extends AbstractItemWriter {
   }
 
   /**
-   * <p>
    * getTitleStyle.
-   * </p>
-   *
-   * @return a {@link org.apache.poi.hssf.usermodel.HSSFCellStyle} object.
    */
-  protected HSSFCellStyle getTitleStyle() {
-    HSSFCellStyle style = workbook.createCellStyle();
-    style.setAlignment(HorizontalAlignment.CENTER);// 左右居中
-    style.setVerticalAlignment(VerticalAlignment.CENTER);// 上下居中
+  protected CellStyle getTitleStyle() {
+    XSSFCellStyle style = (XSSFCellStyle) workbook.createCellStyle();
+    style.setAlignment(HorizontalAlignment.CENTER); // 左右居中
+    style.setVerticalAlignment(VerticalAlignment.CENTER); // 上下居中
     style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-    style.setFillForegroundColor(HSSFColorPredefined.GREY_25_PERCENT.getIndex());
+    byte[] rgb = new byte[]{(byte) 221, (byte) 217, (byte) 196};
+    style.setFillForegroundColor(new XSSFColor(rgb, new DefaultIndexedColorMap()));
     return style;
   }
 }

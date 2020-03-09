@@ -18,43 +18,28 @@
  */
 package org.beangle.commons.transfer.excel;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 @Test
 public class ExcelItemWriterTest {
 
   public void testWrite() throws Exception {
-    File file = new File("src/test/resources/tmp.xls");
+    File file = new File("src/test/resources/tmp.xlsx");
     if (!file.exists()) {
       file.createNewFile();
     }
     FileOutputStream fos = new FileOutputStream(file);
     ExcelItemWriter writer = new ExcelItemWriter(fos);
-    writer.writeTitle("人员信息", new String[] { "姓名", "性别", "身份证号", "政治面貌" });
-    writer.write(new String[] { "张三", "男", "xxxx", "无党派人士" });
+    writer.writeTitle("人员信息", new String[]{"姓名", "性别", "身份证号", "政治面貌"});
+    writer.write(new String[]{"张三", "男", "xxxx", "无党派人士"});
     writer.flush();
     fos.close();
-    // read();
     file.delete();
     file.deleteOnExit();
     System.out.println(file.exists());
   }
 
-  private void read() throws Exception {
-    File file = new File("src/test/resources/tmp.xls");
-    FileInputStream in = new FileInputStream(file);
-    HSSFWorkbook wb = new HSSFWorkbook(in);
-    HSSFCell cell = wb.getSheetAt(0).getRow(0).getCell(0);
-    Assert.assertEquals(cell.getCellStyle().getAlignmentEnum(), HorizontalAlignment.CENTER);
-    in.close();
-  }
 }

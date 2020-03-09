@@ -18,19 +18,6 @@
  */
 package org.beangle.struts2.action;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.multipart.UploadedFile;
 import org.beangle.commons.collection.CollectUtils;
@@ -38,6 +25,7 @@ import org.beangle.commons.collection.Order;
 import org.beangle.commons.config.property.PropertyConfig;
 import org.beangle.commons.dao.EntityDao;
 import org.beangle.commons.dao.query.QueryBuilder;
+import org.beangle.commons.dao.query.QueryPage;
 import org.beangle.commons.dao.query.builder.OqlBuilder;
 import org.beangle.commons.entity.Entity;
 import org.beangle.commons.entity.TimeEntity;
@@ -62,6 +50,10 @@ import org.beangle.commons.transfer.io.TransferFormat;
 import org.beangle.commons.web.util.RequestUtils;
 import org.beangle.struts2.helper.Params;
 import org.beangle.struts2.util.OgnlPropertyExtractor;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.util.*;
 
 /**
  * @author chaostone
@@ -126,16 +118,22 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
   protected Collection<?> getExportDatas() {
     // 自动会考虑页面是否传入id
     if (Strings.isNotBlank(getEntityName())) {
-      @SuppressWarnings("unchecked")
       Class<Entity<Serializable>> entityClass = (Class<Entity<Serializable>>) Model.getType(getEntityName())
-          .getEntityClass();
+              .getEntityClass();
       if (entityClass != null) {
         ClassInfo clazzInfo = ClassInfo.get(entityClass);
         Serializable[] ids = (Serializable[]) getIds(getShortName(), clazzInfo.getPropertyType("id"));
         if (ids != null && ids.length > 0) return entityDao.get(entityClass, Arrays.asList(ids));
       }
     }
-    return search(getQueryBuilder().limit(null));
+
+    OqlBuilder builder = getQueryBuilder();
+    if (builder.hasGroupBy()) {
+      return search(builder.limit(null));
+    } else {
+      return new QueryPage(builder.limit(1, 500), entityDao);
+    }
+
   }
 
   /**
@@ -276,7 +274,9 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
   protected <T extends Entity<?>> OqlBuilder<T> getQueryBuilder() {
     OqlBuilder<T> builder = OqlBuilder.from(getEntityName(), getShortName());
     populateConditions(builder);
-    builder.orderBy(get(Order.ORDER_STR)).limit(getPageLimit());
+    builder.orderBy(get(Order.ORDER_STR));
+    builder.tailOrder(builder.getAlias() + ".id");
+    builder.limit(getPageLimit());
     return builder;
   }
 
@@ -309,8 +309,11 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
    * @throws Exception
    */
   public String export() throws Exception {
-    TransferFormat format = Enums.get(TransferFormat.class, Strings.capitalize(get("format", "Xls")))
-        .getOrElse(TransferFormat.Xls);
+    TransferFormat format = Enums.get(TransferFormat.class, Strings.capitalize(get("format", "Xlsx")))
+            .getOrElse(TransferFormat.Xlsx);
+    if (format.equals(TransferFormat.Xls)) {
+      format = TransferFormat.Xlsx;
+    }
     String fileName = get("fileName");
     String template = get("template");
     if (Strings.isEmpty(fileName)) fileName = "exportResult";
@@ -344,14 +347,14 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
     HttpServletResponse response = ServletActionContext.getResponse();
     Exporter exporter = buildExporter(format, context);
     configExporter(exporter, context);
-    if (format.equals(TransferFormat.Xls)) {
-      response.setContentType("application/vnd.ms-excel;charset=GBK");
+    if (format.equals(TransferFormat.Xlsx)) {
+      response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     } else {
       response.setContentType("application/x-msdownload");
     }
     response.setHeader("Content-Disposition",
-        "attachment;filename=" + RequestUtils.encodeAttachName(ServletActionContext.getRequest(),
-            fileName + "." + Strings.uncapitalize(format.name())));
+            "attachment;filename=" + RequestUtils.encodeAttachName(ServletActionContext.getRequest(),
+                    fileName + "." + Strings.uncapitalize(format.name())));
     // 进行输出
     exporter.setContext(context);
     exporter.transfer(new TransferResult());
@@ -425,7 +428,9 @@ public abstract class EntityDrivenAction extends EntityActionSupport {
   public String importData() {
     TransferResult tr = new TransferResult();
     EntityImporter importer = buildEntityImporter();
-    if (null == importer) { return forward("/components/importData/error"); }
+    if (null == importer) {
+      return forward("/components/importData/error");
+    }
     try {
       configImporter(importer);
       importer.transfer(tr);

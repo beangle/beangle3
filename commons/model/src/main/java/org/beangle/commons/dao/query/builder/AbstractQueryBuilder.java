@@ -18,9 +18,6 @@
  */
 package org.beangle.commons.dao.query.builder;
 
-import java.util.List;
-import java.util.Map;
-
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.collection.Order;
 import org.beangle.commons.collection.page.PageLimit;
@@ -28,6 +25,10 @@ import org.beangle.commons.dao.query.Lang;
 import org.beangle.commons.dao.query.Query;
 import org.beangle.commons.dao.query.QueryBuilder;
 import org.beangle.commons.lang.Strings;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -39,32 +40,48 @@ import org.beangle.commons.lang.Strings;
  */
 public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
 
-  /** Constant <code>INNER_JOIN=" left join "</code> */
+  /**
+   * Constant <code>INNER_JOIN=" left join "</code>
+   */
   public static final String INNER_JOIN = " left join ";
 
-  /** Constant <code>OUTER_JOIN=" outer join "</code> */
+  /**
+   * Constant <code>OUTER_JOIN=" outer join "</code>
+   */
   public static final String OUTER_JOIN = " outer join ";
 
-  /** Constant <code>LEFT_OUTER_JOIN=" left outer join "</code> */
+  /**
+   * Constant <code>LEFT_OUTER_JOIN=" left outer join "</code>
+   */
   public static final String LEFT_OUTER_JOIN = " left outer join ";
 
-  /** Constant <code>RIGHT_OUTER_JOIN=" right outer join "</code> */
+  /**
+   * Constant <code>RIGHT_OUTER_JOIN=" right outer join "</code>
+   */
   public static final String RIGHT_OUTER_JOIN = " right outer join ";
 
-  /** query 查询语句 */
+  /**
+   * query 查询语句
+   */
   protected String statement;
 
-  /** 分页 */
+  /**
+   * 分页
+   */
   protected PageLimit limit;
 
-  /** 参数 */
+  /**
+   * 参数
+   */
   protected Map<String, Object> params = CollectUtils.newHashMap();
 
   protected String select;
 
   protected String from;
 
-  /** 别名 */
+  /**
+   * 别名
+   */
   protected String alias;
 
   protected List<Condition> conditions = CollectUtils.newArrayList();
@@ -75,7 +92,10 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
 
   protected String having;
 
-  /** 缓存查询结果 */
+  protected Order tailOrder;
+  /**
+   * 缓存查询结果
+   */
   protected boolean cacheable = false;
 
   /**
@@ -180,7 +200,27 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
         buf.append(groupBy).append(',');
       buf.deleteCharAt(buf.length() - 1);
     }
-    if (hasOrder && !CollectUtils.isEmpty(orders)) buf.append(' ').append(Order.toSortString(orders));
+    if (hasOrder && (CollectUtils.isNotEmpty(orders) || null != tailOrder)) {
+      if (hasGroupBy()) {
+        if (CollectUtils.isNotEmpty(orders)) {
+          buf.append(' ').append(Order.toSortString(orders));
+        }
+      } else {
+        if (null == tailOrder) {
+          buf.append(' ').append(Order.toSortString(orders));
+        } else {
+          if (orders.isEmpty()) {
+            buf.append(' ').append(Order.toSortString(Collections.singletonList(tailOrder)));
+          } else {
+            String originOrderBy = Order.toSortString(orders);
+            buf.append(' ').append(originOrderBy);
+            if (!originOrderBy.contains(tailOrder.getProperty())) {
+              buf.append(',').append(tailOrder.toString());
+            }
+          }
+        }
+      }
+    }
 
     if (null != having) buf.append(" having ").append(having);
     return buf.toString();
@@ -194,4 +234,11 @@ public abstract class AbstractQueryBuilder<T> implements QueryBuilder<T> {
     return from;
   }
 
+  public boolean hasGroupBy() {
+    return !groups.isEmpty();
+  }
+
+  public boolean hasOrderBy() {
+    return !orders.isEmpty();
+  }
 }
