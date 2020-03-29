@@ -125,15 +125,11 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
   }
 
   /**
-   * This implementation delegates to <code>ServletContext.getRealPath</code>,
    * but throws a FileNotFoundException if not found or not resolvable.
-   *
-   * @see javax.servlet.ServletContext#getRealPath(String)
    */
   @Override
   public File getFile() throws IOException {
-    String realPath = RequestUtils.getRealPath(this.servletContext, this.path);
-    return new File(realPath);
+    throw new RuntimeException("GetRealPath is not supported!");
   }
 
   /**
