@@ -101,17 +101,6 @@ public final class RequestUtils {
     }
   }
 
-  public static String getRealPath(ServletContext servletContext, String path) {
-    if (!path.startsWith("/")) path = "/" + path;
-
-    String realPath = servletContext.getRealPath(path);
-    if (realPath == null) {
-      throw new RuntimeException("ServletContext resource [" + path
-          + "] cannot be resolved to absolute file path - " + "web application archive not expanded?");
-    }
-    return realPath;
-  }
-
   public static String encodeAttachName(HttpServletRequest request, String attach_name) {
     String agent = request.getHeader("USER-AGENT");
     String newName = attach_name;
