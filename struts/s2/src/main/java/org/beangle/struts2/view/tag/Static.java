@@ -27,16 +27,16 @@ public class Static {
 
   public static Static Default = new Static();
   static {
-    Default.resources.put("bui", "0.2.0");
-    Default.resources.put("bootstrap", "3.3.7");
-    Default.resources.put("jquery", "1.10.2");
+    Default.resources.put("bui", "0.3.0");
+    Default.resources.put("bootstrap", "4.5.0");
+    Default.resources.put("jquery", "3.5.1");
     Default.resources.put("requirejs", "2.3.6");
     Default.resources.put("my97", "4.8");
     Default.resources.put("kindeditor", "4.1.12");
     Default.resources.put("jquery-form", "4.2.2");
     Default.resources.put("jquery-colorbox", "1.6.4");
     Default.resources.put("jquery-ui", "1.12.1");
-    Default.resources.put("font-awesome", "4.7.0");
+    Default.resources.put("font-awesome", "5.13.0");
     Default.resources.put("struts2-jquery", "3.6.1");
   }
 

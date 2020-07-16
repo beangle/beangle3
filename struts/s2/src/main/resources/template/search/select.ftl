@@ -1,5 +1,5 @@
 [#if tag.option??][#assign optionTemplate=tag.option?interpret][/#if]
-<tr><td class="search-item"><label for="${tag.id}">${tag.label}:</label>
+<div class="search-item"><label for="${tag.id}">${tag.label}:</label>
 [#assign selected=false/]
 <select id="${tag.id}" name="${tag.name}"${tag.parameterString}>
 ${tag.body}
@@ -10,7 +10,7 @@ ${tag.body}
 [/#list]
 [#if tag.value?? && !selected]<option value="${tag.value}" selected="selected">${tag.value}</option>[/#if]
 [/#if]
-</select></td></tr>
+</select></div>
 [#if !(tag.items??) && tag.href??]
 <script type="text/javascript">
 jQuery.ajax({
