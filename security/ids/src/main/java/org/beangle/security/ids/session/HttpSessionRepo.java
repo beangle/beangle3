@@ -25,6 +25,7 @@ import org.beangle.commons.web.util.Https;
 import org.beangle.security.core.session.DefaultSession;
 import org.beangle.security.core.session.Session;
 import org.beangle.security.core.userdetail.DefaultAccount;
+import org.beangle.security.core.userdetail.Profile;
 import org.beangle.security.session.protobuf.Model;
 
 import java.io.ByteArrayInputStream;
@@ -70,24 +71,33 @@ public class HttpSessionRepo extends CacheSessionRepo {
     DefaultAccount account = new DefaultAccount(pa.getName(), pa.getDescription());
     account.setCategoryId(pa.getCategoryId());
     account.setStatus(pa.getStatus());
-    String[] authorities=new String[0];
-    if(pa.getAuthoritiesCount()>0){
+    String[] authorities = new String[0];
+    if (pa.getAuthoritiesCount() > 0) {
       authorities = new String[pa.getAuthoritiesCount()];
-      for(int i=0;i < pa.getAuthoritiesCount();i++){
+      for (int i = 0; i < pa.getAuthoritiesCount(); i++) {
         authorities[i] = pa.getAuthorities(i);
       }
     }
     account.setAuthorities(authorities);
 
-    String[] permissions=new String[0];
-    if(pa.getPermissionsCount()>0){
+    String[] permissions = new String[0];
+    if (pa.getPermissionsCount() > 0) {
       permissions = new String[pa.getPermissionsCount()];
-      for(int i=0;i < pa.getPermissionsCount();i++){
+      for (int i = 0; i < pa.getPermissionsCount(); i++) {
         permissions[i] = pa.getPermissions(i);
       }
     }
     account.setPermissions(permissions);
 
+    if (pa.getProfilesCount() == 0) {
+      account.setProfiles(new Profile[0]);
+    } else {
+      Profile[] profiles = new Profile[pa.getProfilesCount()];
+      for (int i = 0; i < profiles.length; i++) {
+        profiles[i] = toProfile(pa.getProfiles(i));
+      }
+      account.setProfiles(profiles);
+    }
     account.setRemoteToken(pa.getRemoteToken());
     Iterator<Map.Entry<String, String>> dk = pa.getDetailsMap().entrySet().iterator();
     while (dk.hasNext()) {
@@ -95,6 +105,10 @@ public class HttpSessionRepo extends CacheSessionRepo {
       account.getDetails().put(entry.getKey(), entry.getValue());
     }
     return account;
+  }
+
+  private Profile toProfile(Model.Profile p) {
+    return new Profile(p.getId(), p.getName(), p.getPropertiesMap());
   }
 
   @Override
