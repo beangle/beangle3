@@ -1,30 +1,25 @@
-[#ftl/]
 [#if tag.id??]
-<div class="ui-widget" id="${tag.id}">
+<div id="${tag.id}" [#if tag.parameters['slash']??]style="position: fixed;margin: 0px 0px 0px 30%;z-index:999;"[/#if]>
 [#if tag.hasActionMessages()]
-<div class="actionMessage">
-  <div class="ui-state-highlight ui-corner-all">
+  <div class="alert alert-info alert-dismissible compact">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
     [#list tag.actionMessages as message]
-    <span class="ui-icon ui-icon-info" style="float: left; margin-right: 0.3em;"></span>
     <span>${message!}</span>[#if message_has_next]<br/>[/#if]
     [/#list]
   </div>
-</div>
 [/#if]
 [#if tag.hasActionErrors()]
-<div class="actionError">
-  <div class="ui-state-error ui-corner-all" style="padding: 0.3em 0.7em;">
+  <div class="alert alert-danger alert-dismissible compact">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
     [#list tag.actionErrors as message]
-    <span class="ui-icon ui-icon-alert" style="float: left; margin-right: 0.3em;"></span>
     <span>${message!}</span>[#if message_has_next]<br/>[/#if]
     [/#list]
   </div>
-</div>
 [/#if]
 </div>
-[#if tag.parameters['slash']??]
+[#if tag.parameters['slash']?? && !tag.hasActionErrors()]
 <script>
-  setTimeout(function(){var msgdiv=document.getElementById('${tag.id}');if(msgdiv) msgdiv.style.display="none";},${tag.parameters['slash']}*1000);
+  setTimeout(function(){jQuery('#${tag.id}').fadeOut();},${tag.parameters['slash']}*1000);
 </script>
 [/#if]
 [/#if]

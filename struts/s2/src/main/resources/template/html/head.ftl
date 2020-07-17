@@ -43,9 +43,7 @@
         "requirejs":{js:"requirejs/2.3.6/require.js"},
         "sj-jquery":{js:"struts2-jquery/3.6.1/js/struts2/jquery.struts2.js",deps:["sj-jquery-subscribe"]},
         "sj-jquery-subscribe":{js:"struts2-jquery/3.6.1/js/plugins/jquery.subscribe.js"},
-        "sj-jquery-ui":{js:"struts2-jquery/3.6.1/js/struts2/jquery.ui.struts2.js",deps:["sj-jquery"]},
-        "urp":{js:"openurp-default/0.4.0/js/urp.js"},
-        "urpnav":{js:"openurp-default/0.4.0/js/urpnav.js",css:["openurp-default/0.4.0/css/urpnav.css"],deps:["adminlte","urp"]}
+        "sj-jquery-ui":{js:"struts2-jquery/3.6.1/js/struts2/jquery.ui.struts2.js",deps:["sj-jquery"]}
     });
     bg.load(["jquery-form","bootstrap","font-awesome","adminlte"])
     bg.load(["jquery-ui","chosen","jquery-colorbox","my97"]);

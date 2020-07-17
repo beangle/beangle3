@@ -18,10 +18,9 @@
  */
 package org.beangle.struts2.view.component;
 
+import com.opensymphony.xwork2.util.ValueStack;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;
-
-import com.opensymphony.xwork2.util.ValueStack;
 
 public class Div extends ClosingUIBean {
 
@@ -41,11 +40,14 @@ public class Div extends ClosingUIBean {
       href = render(this.href);
     }
     if (!Objects.equals(astarget, "false")) {
-      String className = "ajax_container";
-      if (null != parameters.get("class")) {
-        className = Strings.concat(className, " ", parameters.get("class").toString());
+      String ajax = "ajax_container";
+      if (null == cssClass) {
+        cssClass = ajax;
+      } else {
+        if (!cssClass.contains(ajax)) {
+          cssClass = Strings.concat(ajax, " ", cssClass);
+        }
       }
-      parameters.put("class", className);
     }
   }
 

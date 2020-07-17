@@ -16,29 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.data;
+package org.beangle.struts2.view.component;
 
-import org.beangle.security.core.userdetail.Profile;
+import com.opensymphony.xwork2.util.ValueStack;
 
-import java.util.List;
+public class Fieldset extends ClosingUIBean {
+  private String title;
 
-public interface ProfileService {
+  public Fieldset(ValueStack stack) {
+    super(stack);
+  }
 
-  /**
-   * 查找用户在指定资源上对应的数据配置
-   *
-   * @param user
-   * @param function
-   */
-  List<Profile> getProfiles(String user, String function);
+  public String getTitle() {
+    return title;
+  }
 
-  /**
-   * 查找符合固定资源的数据权限
-   *
-   * @param user
-   * @param dataName
-   * @param function
-   * @return
-   */
-  Permission getPermission(String user, String dataName, String function);
+  public void setTitle(String title) {
+    this.title = title;
+  }
 }
