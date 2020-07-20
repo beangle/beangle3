@@ -18,15 +18,15 @@
  */
 package org.beangle.struts2.view.component;
 
-import java.util.Collection;
-import java.util.List;
-
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.util.ValueStack;
+import org.apache.struts2.ServletActionContext;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.struts2.convention.ActionMessages;
 import org.beangle.struts2.convention.Flash;
 
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.util.ValueStack;
+import java.util.Collection;
+import java.util.List;
 
 public class Messages extends UIBean {
 
@@ -43,7 +43,9 @@ public class Messages extends UIBean {
     Flash flash = (Flash) ActionContext.getContext().getSession().get("flash");
     if (null == flash) {
       flash = new Flash();
-      ActionContext.getContext().getSession().put("flash", flash);
+      if(!ServletActionContext.getResponse().isCommitted()) {
+        ActionContext.getContext().getSession().put("flash", flash);
+      }
     }
     return flash;
   }

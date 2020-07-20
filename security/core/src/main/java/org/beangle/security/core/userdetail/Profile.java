@@ -16,36 +16,35 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.data;
-
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
+package org.beangle.security.core.userdetail;
 
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
 
-/**
- * 属性配置
- *
- * @author chaostone
- * @version $Id: Profile.java Oct 21, 2011 8:43:35 AM chaostone $
- */
-public interface Profile extends Serializable {
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
-  static final String AllValue = "*";
+public class Profile {
+  public final long id;
+  public final String name;
+  public final Map<String, String> properties;
+  public static final String AllValue = "*";
 
-  Map<String, Object> getProperties();
-
-  public default Object getProperty(String name) {
-    return getProperties().get(name);
+  public Profile(long id, String name, Map<String, String> properties) {
+    this.id = id;
+    this.name = name;
+    this.properties = properties;
   }
 
-  public default boolean matches(Profile other) {
+  public String getProperty(String name) {
+    return properties.get(name);
+  }
+
+  public boolean matches(Profile other) {
     boolean matched = true;
-    if (!other.getProperties().isEmpty()) {
-      for (Map.Entry<String, Object> property : other.getProperties().entrySet()) {
+    if (!other.properties.isEmpty()) {
+      for (Map.Entry<String, String> property : other.properties.entrySet()) {
         Object target = property.getValue();
         Object source = getProperty(property.getKey());
         if (null == source) {
@@ -71,5 +70,4 @@ public interface Profile extends Serializable {
     }
     return matched;
   }
-
 }

@@ -18,53 +18,16 @@
  */
 package org.beangle.struts2.view.tag;
 
-import java.io.StringWriter;
-import java.util.Enumeration;
+import com.opensymphony.xwork2.util.ValueStack;
+import freemarker.template.utility.StringUtil;
+import org.beangle.commons.collection.page.Page;
+import org.beangle.struts2.view.component.Module;
+import org.beangle.struts2.view.component.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.beangle.commons.collection.page.Page;
-import org.beangle.struts2.view.component.Agent;
-import org.beangle.struts2.view.component.Anchor;
-import org.beangle.struts2.view.component.Checkbox;
-import org.beangle.struts2.view.component.Checkboxes;
-import org.beangle.struts2.view.component.Component;
-import org.beangle.struts2.view.component.Date;
-import org.beangle.struts2.view.component.Dialog;
-import org.beangle.struts2.view.component.Div;
-import org.beangle.struts2.view.component.Email;
-import org.beangle.struts2.view.component.Field;
-import org.beangle.struts2.view.component.Foot;
-import org.beangle.struts2.view.component.Form;
-import org.beangle.struts2.view.component.Formfoot;
-import org.beangle.struts2.view.component.Grid;
-import org.beangle.struts2.view.component.Head;
-import org.beangle.struts2.view.component.Iframe;
-import org.beangle.struts2.view.component.Messages;
-import org.beangle.struts2.view.component.Module;
-import org.beangle.struts2.view.component.Navitem;
-import org.beangle.struts2.view.component.Navmenu;
-import org.beangle.struts2.view.component.Pagebar;
-import org.beangle.struts2.view.component.Password;
-import org.beangle.struts2.view.component.Radio;
-import org.beangle.struts2.view.component.Radios;
-import org.beangle.struts2.view.component.Reset;
-import org.beangle.struts2.view.component.Select;
-import org.beangle.struts2.view.component.Select2;
-import org.beangle.struts2.view.component.Startend;
-import org.beangle.struts2.view.component.Submit;
-import org.beangle.struts2.view.component.Tab;
-import org.beangle.struts2.view.component.Tabs;
-import org.beangle.struts2.view.component.Textarea;
-import org.beangle.struts2.view.component.Textfield;
-import org.beangle.struts2.view.component.Textfields;
-import org.beangle.struts2.view.component.Toolbar;
-import org.beangle.struts2.view.component.Validity;
-
-import com.opensymphony.xwork2.util.ValueStack;
-
-import freemarker.template.utility.StringUtil;
+import java.io.StringWriter;
+import java.util.Enumeration;
 
 /**
  * beangle tag models
@@ -330,5 +293,9 @@ public class BeangleModels extends AbstractModels {
 
   public TagModel getValidity() {
     return get(Validity.class);
+  }
+
+  public TagModel getFieldset() {
+    return get(Fieldset.class);
   }
 }

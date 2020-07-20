@@ -39,6 +39,7 @@ public class DefaultAccount implements Account {
   private String[] permissions;
 
   private Map<String, Object> details = CollectUtils.newHashMap();
+  private Profile[] profiles;
   private int status;
 
   private void change(boolean value, int mask) {
@@ -195,4 +196,11 @@ public class DefaultAccount implements Account {
     this.permissions = permissions;
   }
 
+  public Profile[] getProfiles() {
+    return profiles;
+  }
+
+  public void setProfiles(Profile[] profiles) {
+    this.profiles = profiles;
+  }
 }

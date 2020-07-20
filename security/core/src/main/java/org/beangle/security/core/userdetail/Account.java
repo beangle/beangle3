@@ -74,4 +74,6 @@ public interface Account extends Serializable, Principal {
   boolean isEnabled();
 
   int getCategoryId();
+
+  Profile[] getProfiles() ;
 }
