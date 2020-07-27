@@ -173,6 +173,7 @@ public class BeangleTagLibraryTest {
     Container container = buildContainer();
     ValueStack stack = container.getInstance(ValueStackFactory.class).createValueStack();
     stack.getContext().put(StrutsStatics.HTTP_REQUEST, request);
+    stack.getContext().put(StrutsStatics.HTTP_RESPONSE, response);
     stack.getContext().put(ServletActionContext.SERVLET_CONTEXT, servletContext);
 
     when(servletContext.getInitParameter("TemplatePath")).thenReturn("class://");
