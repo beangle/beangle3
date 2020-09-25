@@ -18,7 +18,7 @@
  */
 package org.beangle.commons.web.util;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

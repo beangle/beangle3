@@ -18,8 +18,8 @@
  */
 package org.beangle.commons.web.filter;
 
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
 
 /**
  * Once per request filter.

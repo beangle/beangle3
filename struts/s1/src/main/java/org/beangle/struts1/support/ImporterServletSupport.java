@@ -21,8 +21,8 @@ package org.beangle.struts1.support;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Part;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.beangle.commons.transfer.TransferResult;

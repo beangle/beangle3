@@ -51,7 +51,7 @@ import org.beangle.commons.web.util.RequestUtils;
 import org.beangle.struts2.helper.Params;
 import org.beangle.struts2.util.OgnlPropertyExtractor;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.*;
 

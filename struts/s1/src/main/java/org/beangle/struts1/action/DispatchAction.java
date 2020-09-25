@@ -20,7 +20,7 @@ package org.beangle.struts1.action;
 
 import java.util.Iterator;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.net.URLCodec;
 import org.apache.struts.action.ActionForward;

@@ -18,7 +18,7 @@
  */
 package org.beangle.commons.web.security;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.beangle.commons.security.DefaultRequest;
 import org.beangle.commons.security.Request;

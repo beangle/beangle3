@@ -22,10 +22,10 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
 
 import org.beangle.commons.bean.Disposable;
 import org.beangle.commons.bean.Initializing;
@@ -62,7 +62,7 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    * <code>init(FilterConfig)</code> method won't be called.
    *
    * @see #initFilterBean()
-   * @see #init(javax.servlet.FilterConfig)
+   * @see #init(jakarta.servlet.FilterConfig)
    */
   public void init() throws Exception {
     initFilterBean();
@@ -139,7 +139,7 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    * shipped with WebLogic 6.1.
    *
    * @return the FilterConfig instance, or <code>null</code> if none available
-   * @see javax.servlet.GenericServlet#getServletConfig()
+   * @see jakarta.servlet.GenericServlet#getServletConfig()
    */
   public final FilterConfig getFilterConfig() {
     return this.filterConfig;
@@ -153,8 +153,8 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    * it falls back to the bean name as defined in the bean factory.
    *
    * @return the filter name, or <code>null</code> if none available
-   * @see javax.servlet.GenericServlet#getServletName()
-   * @see javax.servlet.FilterConfig#getFilterName()
+   * @see jakarta.servlet.GenericServlet#getServletName()
+   * @see jakarta.servlet.FilterConfig#getFilterName()
    */
   protected final String getFilterName() {
     return (this.filterConfig != null ? this.filterConfig.getFilterName() : "None");
@@ -169,8 +169,8 @@ public abstract class GenericHttpFilter implements Filter, Initializing, Disposa
    *
    * @return the ServletContext instance, or <code>null</code> if none
    *         available
-   * @see javax.servlet.GenericServlet#getServletContext()
-   * @see javax.servlet.FilterConfig#getServletContext()
+   * @see jakarta.servlet.GenericServlet#getServletContext()
+   * @see jakarta.servlet.FilterConfig#getServletContext()
    */
   protected final ServletContext getServletContext() {
     return (this.filterConfig != null ? this.filterConfig.getServletContext() : this.servletContext);

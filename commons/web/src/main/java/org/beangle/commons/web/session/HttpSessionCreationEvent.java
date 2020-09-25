@@ -18,7 +18,7 @@
  */
 package org.beangle.commons.web.session;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 import org.beangle.commons.event.Event;
 

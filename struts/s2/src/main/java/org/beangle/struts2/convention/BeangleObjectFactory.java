@@ -20,7 +20,7 @@ package org.beangle.struts2.convention;
 
 import java.util.Map;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import org.apache.struts2.StrutsConstants;
 import org.beangle.commons.inject.Container;

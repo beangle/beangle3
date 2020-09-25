@@ -25,7 +25,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import org.beangle.commons.lang.Assert;
 import org.beangle.commons.web.util.RequestUtils;
@@ -86,7 +86,7 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
   /**
    * This implementation checks <code>ServletContext.getResource</code>.
    *
-   * @see javax.servlet.ServletContext#getResource(String)
+   * @see jakarta.servlet.ServletContext#getResource(String)
    */
   @Override
   public boolean exists() {
@@ -102,7 +102,7 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
    * This implementation delegates to <code>ServletContext.getResourceAsStream</code>,
    * but throws a FileNotFoundException if no resource found.
    *
-   * @see javax.servlet.ServletContext#getResourceAsStream(String)
+   * @see jakarta.servlet.ServletContext#getResourceAsStream(String)
    */
   public InputStream getInputStream() throws IOException {
     InputStream is = this.servletContext.getResourceAsStream(this.path);
@@ -114,7 +114,7 @@ public class ServletContextResource extends AbstractFileResolvingResource implem
    * This implementation delegates to <code>ServletContext.getResource</code>,
    * but throws a FileNotFoundException if no resource found.
    *
-   * @see javax.servlet.ServletContext#getResource(String)
+   * @see jakarta.servlet.ServletContext#getResource(String)
    */
   @Override
   public URL getURL() throws IOException {

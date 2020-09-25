@@ -23,9 +23,10 @@
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>org.apache.struts</groupId>
-      <artifactId>struts2-core</artifactId>
+      <groupId>org.beangle.jakarta</groupId>
+      <artifactId>beangle-jakarta-struts2</artifactId>
       <version>${struts.version}</version>
     </dependency>
   </dependencies>
+
 </project>

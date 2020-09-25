@@ -18,7 +18,7 @@
  */
 package org.beangle.inject.spring.web;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import org.beangle.commons.inject.Container;
 import org.beangle.commons.inject.ContainerHook;

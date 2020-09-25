@@ -24,8 +24,8 @@ import org.beangle.commons.collection.page.Page;
 import org.beangle.struts2.view.component.Module;
 import org.beangle.struts2.view.component.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.StringWriter;
 import java.util.Enumeration;
 

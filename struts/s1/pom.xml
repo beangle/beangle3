@@ -7,7 +7,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.beangle.struts</groupId>
   <artifactId>beangle-struts-s1</artifactId>
-  <packaging>jar<!--bundle--></packaging>
+  <packaging>jar</packaging>
   <name>Beangle Struts Version 1</name>
 
   <properties>
@@ -17,8 +17,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>struts</groupId>
-      <artifactId>struts</artifactId>
+      <groupId>org.beangle.jakarta</groupId>
+      <artifactId>beangle-jakarta-struts1</artifactId>
       <version>1.2.9</version>
     </dependency>
     <dependency>
@@ -53,4 +53,5 @@
       <version>${project.version}</version>
     </dependency>
   </dependencies>
+
 </project>
