@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.beangle.orm</groupId>
     <artifactId>beangle-orm-parent</artifactId>
-    <version>3.7.2-SNAPSHOT</version>
+    <version>3.8.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.beangle.orm</groupId>
