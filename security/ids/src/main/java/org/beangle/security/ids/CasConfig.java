@@ -18,7 +18,7 @@
  */
 package org.beangle.security.ids;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.lang.Assert;

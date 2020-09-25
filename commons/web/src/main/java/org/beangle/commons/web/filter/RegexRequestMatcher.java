@@ -20,7 +20,7 @@ package org.beangle.commons.web.filter;
 
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.beangle.commons.http.HttpMethod;
 import org.beangle.commons.lang.Strings;

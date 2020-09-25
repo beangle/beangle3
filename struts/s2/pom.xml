@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.beangle.struts</groupId>
     <artifactId>beangle-struts-parent</artifactId>
-    <version>3.7.1</version>
+    <version>3.8.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.beangle.struts</groupId>
@@ -23,9 +23,10 @@
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>org.apache.struts</groupId>
-      <artifactId>struts2-core</artifactId>
+      <groupId>org.beangle.jakarta</groupId>
+      <artifactId>beangle-jakarta-struts2</artifactId>
       <version>${struts.version}</version>
     </dependency>
   </dependencies>
+
 </project>

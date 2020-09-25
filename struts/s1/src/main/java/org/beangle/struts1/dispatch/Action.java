@@ -23,7 +23,7 @@ import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.Strings;

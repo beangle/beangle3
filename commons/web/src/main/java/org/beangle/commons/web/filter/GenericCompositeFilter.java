@@ -21,11 +21,11 @@ package org.beangle.commons.web.filter;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 /**
  *
  * @author chaostone
@@ -34,7 +34,7 @@ import javax.servlet.ServletResponse;
 public abstract class GenericCompositeFilter extends GenericHttpFilter {
   /**
    * A <code>FilterChain</code> that records whether or not
-   * {@link FilterChain#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse)} is
+   * {@link FilterChain#doFilter(jakarta.servlet.ServletRequest, jakarta.servlet.ServletResponse)} is
    * called.
    */
   protected static class VirtualFilterChain implements FilterChain {

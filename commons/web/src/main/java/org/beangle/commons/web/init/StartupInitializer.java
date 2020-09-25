@@ -18,8 +18,8 @@
  */
 package org.beangle.commons.web.init;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
 
 public interface StartupInitializer {
   /**

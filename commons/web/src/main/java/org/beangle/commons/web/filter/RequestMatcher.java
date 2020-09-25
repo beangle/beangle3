@@ -18,7 +18,7 @@
  */
 package org.beangle.commons.web.filter;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Simple strategy to match an <tt>HttpServletRequest</tt>.

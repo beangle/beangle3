@@ -29,7 +29,7 @@ import static org.beangle.commons.web.util.RequestUtils.getServletPath;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.result.ServletRedirectResult;

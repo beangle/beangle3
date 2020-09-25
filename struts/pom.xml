@@ -2,12 +2,12 @@
   <parent>
     <groupId>org.beangle</groupId>
     <artifactId>beangle-library-parent</artifactId>
-    <version>3.7.1</version>
+    <version>3.8.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.beangle.struts</groupId>
   <artifactId>beangle-struts-parent</artifactId>
-  <packaging>pom<!--bundle--></packaging>   
+  <packaging>pom<!--bundle--></packaging>
   <name>Beangle Struts Parent</name>
 
   <modules>
@@ -27,13 +27,13 @@
      <version>${project.version}</version>
    </dependency>
     <dependency>
-      <groupId>org.freemarker</groupId>
-      <artifactId>freemarker</artifactId>
+      <groupId>org.beangle.jakarta</groupId>
+      <artifactId>beangle-jakarta-freemarker</artifactId>
       <version>${freemarker.version}</version>
     </dependency>
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
       <optional>true</optional>
     </dependency>
   </dependencies>
