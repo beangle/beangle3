@@ -84,6 +84,7 @@ abstract class CacheSessionRepo implements SessionRepo, Initializing {
       return s;
     } else {
       if (elapse == -1) {
+        sessions.evict(s.getId());
         this.expire(s.getId());
         return null;
       } else {
