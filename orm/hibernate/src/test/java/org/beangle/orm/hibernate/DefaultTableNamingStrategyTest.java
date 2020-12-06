@@ -32,6 +32,7 @@ public class DefaultTableNamingStrategyTest {
   public void testGetSchemaName() {
     DefaultTableNamingStrategy config = new DefaultTableNamingStrategy();
     Resources resources = new Resources();
+    //System.setProperty("beangle.data.orm.global_schema","test");
     resources.setGlobal(ClassLoaders.getResource("META-INF/beangle/table.properties", getClass()));
     config.setResources(resources);
     Assert.assertTrue(Strings.isEmpty(config.getSchema(TestUser.class.getName())));

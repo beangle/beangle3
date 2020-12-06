@@ -18,18 +18,6 @@
  */
 package org.beangle.orm.hibernate;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.annotation.Annotation;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.inject.Resources;
 import org.beangle.commons.lang.Strings;
@@ -37,6 +25,12 @@ import org.beangle.commons.text.inflector.Pluralizer;
 import org.beangle.commons.text.inflector.en.EnNounPluralizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.annotation.Annotation;
+import java.net.URL;
+import java.util.*;
 
 /**
  * 根据报名动态设置schema,prefix名字
@@ -47,10 +41,14 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
 
   private static final Logger logger = LoggerFactory.getLogger(DefaultTableNamingStrategy.class);
 
-  /** 实体表表名长度限制 */
+  /**
+   * 实体表表名长度限制
+   */
   private int entityTableMaxLength = 25;
 
-  /** 关联表表名长度限制 */
+  /**
+   * 关联表表名长度限制
+   */
   private int relationTableMaxLength = 30;
 
   private Pluralizer pluralizer = new EnNounPluralizer();
@@ -73,7 +71,7 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
       if (null != is) {
         props.load(is);
       }
-      for (Iterator<Object> iter = props.keySet().iterator(); iter.hasNext();) {
+      for (Iterator<Object> iter = props.keySet().iterator(); iter.hasNext(); ) {
         String packageName = (String) iter.next();
         String schemaPrefix = props.getProperty(packageName).trim();
 
@@ -89,6 +87,9 @@ public class DefaultTableNamingStrategy implements TableNamingStrategy {
         } else {
           schema = Strings.substringBefore(schemaPrefix, ",");
           prefix = Strings.substringAfter(schemaPrefix, ",");
+        }
+        if (null != System.getProperty("beangle.data.orm.global_schema")) {
+          schema = System.getProperty("beangle.data.orm.global_schema");
         }
         if (Strings.contains(prefix, ",")) {
           abbreviationStr = Strings.substringAfter(prefix, ",").toLowerCase();
