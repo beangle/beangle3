@@ -35,4 +35,6 @@ public interface SessionRepo {
    * @param sessionid
    */
   Session access(String sessionid, Instant accessAt);
+
+  void expire(String sid);
 }

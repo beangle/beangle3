@@ -93,11 +93,13 @@ abstract class CacheSessionRepo implements SessionRepo, Initializing {
     }
   }
 
+  public final void evict(String sid) {
+    sessions.evict(sid);
+  }
+
   protected abstract Option<Session> getInternal(String sessionId);
 
   abstract boolean flush(Session session);
-
-  abstract void expire(String sid);
 
   public void setCacheManager(CacheManager cacheManager) {
     this.cacheManager = cacheManager;
