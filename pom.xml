@@ -3,12 +3,12 @@
   <parent>
     <groupId>org.beangle</groupId>
     <artifactId>beangle-java</artifactId>
-    <version>28.0</version>
+    <version>28.2</version>
   </parent>
   <groupId>org.beangle</groupId>
   <artifactId>beangle-library-parent</artifactId>
   <packaging>pom</packaging>
-  <version>3.8.3</version>
+  <version>3.8.4</version>
   <name>Beangle Library V3 Parent</name>
 
   <url>https://github.com/beangle/beangle3</url>

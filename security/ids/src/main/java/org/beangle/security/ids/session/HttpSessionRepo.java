@@ -50,7 +50,7 @@ public class HttpSessionRepo extends CacheSessionRepo {
       try {
         s = Model.Session.parseFrom(is);
         DefaultSession session = new DefaultSession(s.getId(), toAccount(s.getPrincipal()),
-          Instant.ofEpochSecond(s.getLoginAt()), toAgent(s.getAgent()));
+            Instant.ofEpochSecond(s.getLoginAt()), toAgent(s.getAgent()));
         session.setTtiSeconds(s.getTtiSeconds());
         session.setLastAccessAt(Instant.ofEpochSecond(s.getLastAccessAt()));
         return Option.some(session);
@@ -128,7 +128,8 @@ public class HttpSessionRepo extends CacheSessionRepo {
   }
 
   @Override
-  void expire(String sid) {
+  public void expire(String sid) {
+    evict(sid);
     String surl = Strings.replace(expireUrl, "{id}", sid);
     try {
       URL url = new URL(surl);
