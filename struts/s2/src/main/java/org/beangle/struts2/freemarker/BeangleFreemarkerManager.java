@@ -102,9 +102,16 @@ public class BeangleFreemarkerManager extends FreemarkerManager {
    * The WebappTemplateLoader attempts to resolve templates relative to the web root folder
    */
   @Override
-  protected TemplateLoader createTemplateLoader(ServletContext servletContext, String templatePath) {
+  protected TemplateLoader createTemplateLoader(ServletContext context, String templatePath) {
     // construct a FileTemplateLoader for the init-param 'TemplatePath'
     String[] paths = split(templatePath, ",");
+
+    String templatePathInContext = (String) context.getAttribute("templatePath");
+    if (null != templatePathInContext) {
+      context.removeAttribute("templatePath");
+      paths = split(templatePathInContext, ",");
+    }
+
     List<TemplateLoader> loaders = CollectUtils.newArrayList();
     for (String path : paths) {
       if (path.startsWith("class://")) {
@@ -116,9 +123,9 @@ public class BeangleFreemarkerManager extends FreemarkerManager {
           throw new RuntimeException("templatePath: " + path + " cannot be accessed", e);
         }
       } else if (path.startsWith("webapp://")) {
-        loaders.add(new WebappTemplateLoader(servletContext, substringAfter(path, "webapp://")));
-      } else if (path.startsWith("http://")) {
-        loaders.add(new HttpTemplateLoader(substringAfter(path, "http://"), true));
+        loaders.add(new WebappTemplateLoader(context, substringAfter(path, "webapp://")));
+      } else if (path.startsWith("http://") || path.startsWith("https://")) {
+        loaders.add(new HttpTemplateLoader(path, true));
       } else {
         throw new RuntimeException("templatePath: " + path
             + " is not well-formed. Use [class://|file://|webapp://] seperated with ,");
