@@ -66,6 +66,11 @@ public interface Account extends Serializable, Principal {
   boolean isCredentialExpired();
 
   /**
+   * Check whether credential is ReadOnly
+   * @return
+   */
+  boolean isCredentialReadOnly();
+  /**
    * Indicates whether the user is enabled or disabled. A disabled user cannot
    * be authenticated.
    *
