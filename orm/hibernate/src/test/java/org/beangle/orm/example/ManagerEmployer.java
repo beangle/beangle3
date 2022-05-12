@@ -18,17 +18,13 @@
  */
 package org.beangle.orm.example;
 
-import java.util.Map;
-import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapKeyColumn;
-
 import org.beangle.commons.entity.pojo.NumberIdTimeObject;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import java.util.Map;
+import java.util.Set;
 
 @Entity(name = "org.beangle.orm.example.Employer")
 @DynamicUpdate
@@ -47,6 +43,9 @@ public class ManagerEmployer extends NumberIdTimeObject<Integer> implements Empl
 
   @ManyToMany
   Set<Skill> oskills;
+
+  @Type(type = "org.beangle.orm.hibernate.udt.IDEnumType")
+  Gender gender;
 
   public Map<Long, Skill> getSkills() {
     return skills;
@@ -80,4 +79,11 @@ public class ManagerEmployer extends NumberIdTimeObject<Integer> implements Empl
     this.oskills = oskills;
   }
 
+  public Gender getGender() {
+    return gender;
+  }
+
+  public void setGender(Gender gender) {
+    this.gender = gender;
+  }
 }

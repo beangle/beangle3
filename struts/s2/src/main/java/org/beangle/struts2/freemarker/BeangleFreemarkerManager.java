@@ -25,6 +25,7 @@ import freemarker.cache.WebappTemplateLoader;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateException;
+import jakarta.servlet.ServletContext;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.ClassLoaders;
@@ -32,7 +33,6 @@ import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jakarta.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -117,11 +117,12 @@ public class BeangleFreemarkerManager extends FreemarkerManager {
         }
       } else if (path.startsWith("webapp://")) {
         loaders.add(new WebappTemplateLoader(servletContext, substringAfter(path, "webapp://")));
+      } else if (path.startsWith("http://")) {
+        loaders.add(new HttpTemplateLoader(substringAfter(path, "http://"), true));
       } else {
         throw new RuntimeException("templatePath: " + path
-                + " is not well-formed. Use [class://|file://|webapp://] seperated with ,");
+            + " is not well-formed. Use [class://|file://|webapp://] seperated with ,");
       }
-
     }
     return new MultiTemplateLoader(loaders.toArray(new TemplateLoader[loaders.size()]));
   }
