@@ -25,8 +25,6 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-;
-
 public class WeekState implements Serializable, Comparable<WeekState> {
 
   private static final long serialVersionUID = 1L;

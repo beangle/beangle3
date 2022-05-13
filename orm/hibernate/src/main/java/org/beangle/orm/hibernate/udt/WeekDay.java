@@ -18,6 +18,7 @@
  */
 package org.beangle.orm.hibernate.udt;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  * 一周内，星期名称于其标号的实体类
  */
-public class WeekDay implements Comparable<WeekDay> {
+public class WeekDay implements Serializable, Comparable<WeekDay> {
   private static final long serialVersionUID = -7003967188245072343L;
   private final int id;
   /**
