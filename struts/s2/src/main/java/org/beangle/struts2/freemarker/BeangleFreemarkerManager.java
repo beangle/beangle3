@@ -25,6 +25,7 @@ import freemarker.cache.WebappTemplateLoader;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateException;
+import jakarta.servlet.ServletContext;
 import org.apache.struts2.views.freemarker.FreemarkerManager;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.ClassLoaders;
@@ -32,7 +33,6 @@ import org.beangle.commons.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jakarta.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -102,9 +102,16 @@ public class BeangleFreemarkerManager extends FreemarkerManager {
    * The WebappTemplateLoader attempts to resolve templates relative to the web root folder
    */
   @Override
-  protected TemplateLoader createTemplateLoader(ServletContext servletContext, String templatePath) {
+  protected TemplateLoader createTemplateLoader(ServletContext context, String templatePath) {
     // construct a FileTemplateLoader for the init-param 'TemplatePath'
     String[] paths = split(templatePath, ",");
+
+    String templatePathInContext = (String) context.getAttribute("templatePath");
+    if (null != templatePathInContext) {
+      context.removeAttribute("templatePath");
+      paths = split(templatePathInContext, ",");
+    }
+
     List<TemplateLoader> loaders = CollectUtils.newArrayList();
     for (String path : paths) {
       if (path.startsWith("class://")) {
@@ -116,12 +123,13 @@ public class BeangleFreemarkerManager extends FreemarkerManager {
           throw new RuntimeException("templatePath: " + path + " cannot be accessed", e);
         }
       } else if (path.startsWith("webapp://")) {
-        loaders.add(new WebappTemplateLoader(servletContext, substringAfter(path, "webapp://")));
+        loaders.add(new WebappTemplateLoader(context, substringAfter(path, "webapp://")));
+      } else if (path.startsWith("http://") || path.startsWith("https://")) {
+        loaders.add(new HttpTemplateLoader(path, true));
       } else {
         throw new RuntimeException("templatePath: " + path
-                + " is not well-formed. Use [class://|file://|webapp://] seperated with ,");
+            + " is not well-formed. Use [class://|file://|webapp://] seperated with ,");
       }
-
     }
     return new MultiTemplateLoader(loaders.toArray(new TemplateLoader[loaders.size()]));
   }

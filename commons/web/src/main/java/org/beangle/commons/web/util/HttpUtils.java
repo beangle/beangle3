@@ -18,16 +18,12 @@
  */
 package org.beangle.commons.web.util;
 
+import org.beangle.commons.io.IOs;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-
-import org.beangle.commons.io.IOs;
+import java.net.*;
 
 public final class HttpUtils {
 
@@ -43,6 +39,36 @@ public final class HttpUtils {
       throw new RuntimeException(e);
     } catch (URISyntaxException e) {
       throw new RuntimeException(e);
+    }
+  }
+
+  public static boolean access(URL url) {
+    try {
+      HttpURLConnection hc = followRedirect(url.openConnection(), "HEAD");
+      int rc = hc.getResponseCode();
+      return rc == HttpURLConnection.HTTP_OK;
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+  private static HttpURLConnection followRedirect(URLConnection c, String method) {
+    try {
+      HttpURLConnection conn = (HttpURLConnection) c;
+      conn.setRequestMethod(method);
+      conn.setInstanceFollowRedirects(false);
+      Https.noverify(conn);
+      int rc = conn.getResponseCode();
+      if (rc == HttpURLConnection.HTTP_OK) {
+        return conn;
+      } else if (rc == HttpURLConnection.HTTP_MOVED_TEMP || rc == HttpURLConnection.HTTP_MOVED_PERM) {
+        String newLoc = conn.getHeaderField("location");
+        return followRedirect(new URL(newLoc).openConnection(), method);
+      } else {
+        return conn;
+      }
+    } catch (Exception e) {
+      return null;
     }
   }
 

@@ -18,10 +18,10 @@
  */
 package org.beangle.security.core.userdetail;
 
-import java.util.Map;
-
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Objects;
+
+import java.util.Map;
 
 public class DefaultAccount implements Account {
 
@@ -29,6 +29,8 @@ public class DefaultAccount implements Account {
   private static int Disabled = 2;
   private static int AccountExpired = 4;
   private static int CredentialExpired = 8;
+
+  private static int CredentialReadOnly = 16;
 
   private static final long serialVersionUID = 1L;
   private String name;
@@ -60,8 +62,10 @@ public class DefaultAccount implements Account {
   }
 
   public DefaultAccount(String name, String description) throws IllegalArgumentException {
-    if (((name == null) || "".equals(name))) { throw new IllegalArgumentException(
-        "Cannot pass null or empty values to constructor"); }
+    if (((name == null) || "".equals(name))) {
+      throw new IllegalArgumentException(
+          "Cannot pass null or empty values to constructor");
+    }
     this.name = name;
     this.description = description;
     this.setAccountExpired(false);
@@ -71,7 +75,9 @@ public class DefaultAccount implements Account {
   }
 
   public boolean equals(Object rhs) {
-    if (!(rhs instanceof DefaultAccount) || (rhs == null)) { return false; }
+    if (!(rhs instanceof DefaultAccount) || (rhs == null)) {
+      return false;
+    }
     DefaultAccount user = (DefaultAccount) rhs;
     return Objects.equalsBuilder().add(getName(), user.getName()).add(getDescription(), user.getDescription())
         .add(isAccountExpired(), user.isAccountLocked()).add(isAccountLocked(), user.isAccountLocked())
@@ -156,6 +162,10 @@ public class DefaultAccount implements Account {
 
   public boolean isAccountLocked() {
     return get(Locked);
+  }
+
+  public boolean isCredentialReadOnly() {
+    return get(CredentialReadOnly);
   }
 
   public boolean isEnabled() {
