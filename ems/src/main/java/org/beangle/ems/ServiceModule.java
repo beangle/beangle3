@@ -21,7 +21,6 @@ package org.beangle.ems;
 import org.beangle.commons.config.property.MultiProviderPropertyConfig;
 import org.beangle.commons.config.property.UrlPropertyConfigProvider;
 import org.beangle.commons.inject.bind.AbstractBindModule;
-import org.beangle.ems.avatar.service.FileSystemAvatarBase;
 import org.beangle.ems.config.service.DaoPropertyConfigProvider;
 import org.beangle.ems.dictionary.service.impl.CodeServiceImpl;
 import org.beangle.ems.dictionary.service.impl.SeqCodeGenerator;
@@ -35,7 +34,6 @@ public class ServiceModule extends AbstractBindModule {
 
   @Override
   protected void doBinding() {
-    bind(FileSystemAvatarBase.class);
     bind(ClasspathDocLoader.class).shortName();
     bind("baseCodeService", CodeServiceImpl.class);
     bind(SeqCodeGenerator.class);
