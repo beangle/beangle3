@@ -18,6 +18,9 @@
  */
 package org.beangle.struts2.freemarker;
 
+import org.beangle.commons.web.util.Https;
+
+import javax.net.ssl.HttpsURLConnection;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,9 +40,12 @@ class URLTemplateSource {
   /**
    * @param useCaches {@code null} if this aspect wasn't set in the parent {@link TemplateLoader}.
    */
-  URLTemplateSource(URL url ) throws IOException {
+  URLTemplateSource(URL url) throws IOException {
     this.url = url;
     this.conn = url.openConnection();
+    if (this.conn instanceof HttpsURLConnection) {
+      Https.noverify((HttpsURLConnection) conn);
+    }
   }
 
   @Override
@@ -82,7 +88,8 @@ class URLTemplateSource {
         } finally {
           try {
             if (jarConn != null) jarConn.getInputStream().close();
-          } catch (IOException e) { }
+          } catch (IOException e) {
+          }
         }
       }
     } else {
