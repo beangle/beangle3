@@ -16,26 +16,25 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.ems.app.security.service;
+package org.beangle.commons.entity.pojo;
 
-import org.beangle.commons.bean.Initializing;
-import org.beangle.security.ids.CasConfig;
-import org.beangle.security.ids.session.HttpSessionRepo;
+import java.sql.Date;
 
-public class CasHttpSessionRepo extends HttpSessionRepo implements Initializing {
+/**
+ * 有时效性的实体
+ * </p>
+ * 指有具体生效时间和失效时间的实体。一般生效时间不能为空，失效时间可以为空。 具体时间采用时间时间格式便于比对。
+ *
+ * @version $Id: $
+ */
+public interface TemporalEntity {
 
-  private CasConfig config;
+  Date getBeginOn();
 
-  @Override
-  public void init() {
-    this.setGeturl(config.getCasServer() + "/session/{id}?format=application/x-protobuf");
-    this.setAccessUrl(config.getCasServer() + "/session/{id}/access?time={time}");
-    this.setExpireUrl(config.getCasServer() + "/session/{id}/expire");
-    super.init();
-  }
+  Date getEndOn();
 
-  public void setConfig(CasConfig config) {
-    this.config = config;
-  }
+  void setBeginOn(Date endOn);
+
+  void setEndOn(Date endOn);
 
 }
