@@ -83,7 +83,6 @@ public abstract class AbstractRoleBasedAuthorizer implements Authorizer, Initial
     }
   }
 
-
   @Override
   public boolean isRoot(String user) {
     return domain.roots.contains(user);
@@ -100,11 +99,9 @@ public abstract class AbstractRoleBasedAuthorizer implements Authorizer, Initial
     this.domain = domain;
   }
 
-
   public void setUnknownIsProtected(boolean unknownIsProtected) {
     this.unknownIsProtected = unknownIsProtected;
   }
-
 
   public void setRefreshSeconds(int refreshSeconds) {
     this.refreshSeconds = refreshSeconds;

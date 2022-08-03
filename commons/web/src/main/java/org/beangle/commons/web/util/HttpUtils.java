@@ -23,6 +23,7 @@ import org.beangle.commons.io.IOs;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.*;
 
 public final class HttpUtils {
@@ -127,4 +128,33 @@ public final class HttpUtils {
       if (null != conn) conn.disconnect();
     }
   }
+
+
+  public static int invoke(URL url, byte[] body, String contentType) {
+    HttpURLConnection conn = null;
+    try {
+      conn = (HttpURLConnection) url.openConnection();
+      Https.noverify(conn);
+      conn.setDoOutput(true);
+      conn.setRequestMethod("POST");
+      conn.setRequestProperty("Content-Type", contentType);
+
+      OutputStream os = conn.getOutputStream();
+      os.write(body);
+      os.flush();
+      os.close(); //don't forget to close the OutputStream
+      conn.connect();
+      return conn.getResponseCode();
+    } catch (Exception e) {
+      try {
+        System.out.println("access url:" + conn.getResponseCode() + " " + url);
+        return conn.getResponseCode();
+      } catch (Exception e2) {
+        return 500;
+      }
+    } finally {
+      if (null != conn) conn.disconnect();
+    }
+  }
+
 }

@@ -8,7 +8,7 @@
   <groupId>org.beangle</groupId>
   <artifactId>beangle-library-parent</artifactId>
   <packaging>pom</packaging>
-  <version>3.8.9</version>
+  <version>3.9.0</version>
   <name>Beangle Library V3 Parent</name>
 
   <url>https://github.com/beangle/beangle3</url>
@@ -40,6 +40,9 @@
     <dwr.version>3.0.4-RELEASE</dwr.version>
     <caffeine.version>3.0.6</caffeine.version>
     <protobuf.version>3.20.0</protobuf.version>
+    <HikariCP.version>5.0.1</HikariCP.version>
+    <dom4j.version>1.6.1</dom4j.version>
+    <gson.version>2.9.0</gson.version>
   </properties>
 
   <modules>

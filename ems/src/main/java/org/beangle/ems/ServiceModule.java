@@ -21,11 +21,12 @@ package org.beangle.ems;
 import org.beangle.commons.config.property.MultiProviderPropertyConfig;
 import org.beangle.commons.config.property.UrlPropertyConfigProvider;
 import org.beangle.commons.inject.bind.AbstractBindModule;
-import org.beangle.ems.avatar.service.FileSystemAvatarBase;
+import org.beangle.ems.app.Ems;
 import org.beangle.ems.config.service.DaoPropertyConfigProvider;
 import org.beangle.ems.dictionary.service.impl.CodeServiceImpl;
 import org.beangle.ems.dictionary.service.impl.SeqCodeGenerator;
 import org.beangle.ems.io.ClasspathDocLoader;
+import org.beangle.ems.log.RemoteLogger;
 import org.beangle.ems.log.service.BusinessEventLogger;
 import org.beangle.ems.rule.engine.impl.DefaultRuleExecutorBuilder;
 import org.beangle.ems.rule.impl.RuleBaseImpl;
@@ -35,7 +36,6 @@ public class ServiceModule extends AbstractBindModule {
 
   @Override
   protected void doBinding() {
-    bind(FileSystemAvatarBase.class);
     bind(ClasspathDocLoader.class).shortName();
     bind("baseCodeService", CodeServiceImpl.class);
     bind(SeqCodeGenerator.class);
@@ -52,6 +52,8 @@ public class ServiceModule extends AbstractBindModule {
 
     bind(MultiProviderPropertyConfig.class).property("providers",
         list(ref(UrlPropertyConfigProvider.class), DaoPropertyConfigProvider.class));
+
+    bind(RemoteLogger.class).property("url", Ems.getInstance().getApi() + "/platform/log/push");
   }
 
 }
