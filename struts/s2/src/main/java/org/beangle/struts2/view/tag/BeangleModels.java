@@ -20,12 +20,12 @@ package org.beangle.struts2.view.tag;
 
 import com.opensymphony.xwork2.util.ValueStack;
 import freemarker.template.utility.StringUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.beangle.commons.collection.page.Page;
 import org.beangle.struts2.view.component.Module;
 import org.beangle.struts2.view.component.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.StringWriter;
 import java.util.Enumeration;
 
@@ -43,6 +43,10 @@ public class BeangleModels extends AbstractModels {
 
   public Object getFreemarkerModels(ValueStack stack, HttpServletRequest req, HttpServletResponse res) {
     return new BeangleModels(stack, req, res);
+  }
+
+  public String getBase() {
+    return req.getContextPath();
   }
 
   public String url(String url) {
