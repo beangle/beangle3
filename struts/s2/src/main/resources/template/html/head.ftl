@@ -12,6 +12,8 @@
     <meta http-equiv="expires" content="0"/>
     <meta http-equiv="content-style-type" content="text/css"/>
     <meta http-equiv="content-script-type" content="text/javascript"/>
+    <link rel="icon" href="data:;base64,=">
+    <base href="${b.base}/"/>
   ${b.css("bui","css/beangle-ui.css")}
   ${b.script("requirejs","require.js")}
   ${b.script("jquery","jquery.min.js")}
