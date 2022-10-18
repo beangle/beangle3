@@ -18,16 +18,15 @@
  */
 package org.beangle.commons.web.util;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 /**
  * Cookie manipulate utility
@@ -133,14 +132,14 @@ public final class CookieUtils {
   public static void addCookie(HttpServletRequest request, HttpServletResponse response, String name,
                                String value, int age) {
     String contextPath = request.getContextPath();
-    if (!contextPath.endsWith("/")) {
-      contextPath += "/";
-    }
+    if (contextPath.length() == 0) contextPath = "/";
     addCookie(request, response, name, value, contextPath, age);
   }
 
   public static void deleteCookieByName(HttpServletRequest request, HttpServletResponse response, String name) {
-    deleteCookie(response, getCookie(request, name), "");
+    String contextPath = request.getContextPath();
+    if (contextPath.length() == 0) contextPath = "/";
+    deleteCookie(response, getCookie(request, name), contextPath);
   }
 
   /**

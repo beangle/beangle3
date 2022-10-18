@@ -25,14 +25,18 @@ import jakarta.servlet.http.HttpServletResponse;
 public class Cas {
 
   public static final String cleanup(CasConfig config, HttpServletRequest request,
-      HttpServletResponse response) {
+                                     HttpServletResponse response) {
     Cookie[] cookies = request.getCookies();
+    String contextPath = request.getContextPath();
+    if (contextPath.length() == 0) contextPath = "/";
+
     if (null != cookies) {
       for (Cookie c : cookies) {
         if (c.getMaxAge() < 0) {
           String domain = c.getDomain();
           if (null == domain || domain.equals(request.getServerName())) {
             c.setMaxAge(0);
+            c.setPath(contextPath);
             response.addCookie(c);
           }
         }
