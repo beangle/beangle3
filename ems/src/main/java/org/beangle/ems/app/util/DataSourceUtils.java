@@ -173,6 +173,12 @@ public class DataSourceUtils {
     }
     return new DatasourceConfig(result);
   }
+
+  public static void main(String[] args) {
+    ScriptEngineManager sem = new ScriptEngineManager();
+    ScriptEngine engine = sem.getEngineByName("javascript");
+    System.out.println(engine);
+  }
 }
 
 class DriverInfo {
