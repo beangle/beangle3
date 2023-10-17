@@ -447,7 +447,7 @@ public class Grid extends ClosingUIBean {
     public boolean doEnd(Writer writer, String body) {
       if (getTheme().equals(Theme.DefaultTheme)) {
         try {
-          writer.append("<td class=\"gridselect\"");
+          writer.append("<td class=\"grid-select\"");
           if (null != id) writer.append(" id=\"").append(id).append("\"");
           writer.append(getParameterString()).append(">");
           if (display) {

@@ -27,7 +27,7 @@ public class Static {
 
   public static Static Default = new Static();
   static {
-    Default.resources.put("bui", "0.5.2");
+    Default.resources.put("bui", "0.6.1");
     Default.resources.put("bootstrap", "4.6.1");
     Default.resources.put("jquery", "3.6.0");
     Default.resources.put("requirejs", "2.3.6");
