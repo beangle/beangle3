@@ -21,6 +21,7 @@ package org.beangle.ems.app.util;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
+import org.beangle.commons.inject.bind.BindRegistry;
 import org.beangle.ems.app.Ems;
 import org.beangle.ems.app.EmsApp;
 
@@ -45,6 +46,7 @@ public class EmsPropertiesExporter implements ServletContextListener {
     context.setAttribute("templatePath", ems.getApi() + "/platform/config/files/" + EmsApp.getName() + "/{path},webapp://pages,class://");
     context.setAttribute("static_base", ems.getStatic());
     System.setProperty("beangle.webmvc.static_base", ems.getStatic());
+    context.setAttribute(BindRegistry.ReconfigUrlProperty, Ems.Instance.getApi() + "/platform/config/files/" + EmsApp.getName() + "/spring-config.xml");
   }
 
   @Override

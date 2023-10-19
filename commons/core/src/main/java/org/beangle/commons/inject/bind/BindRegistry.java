@@ -30,6 +30,7 @@ import java.util.Set;
  * @version $Id: $
  */
 public interface BindRegistry {
+  String ReconfigUrlProperty = "beangle.cdi.reconfig_url";
 
   /**
    * <p>

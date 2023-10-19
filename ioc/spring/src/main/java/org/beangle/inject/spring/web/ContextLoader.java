@@ -23,9 +23,11 @@ import jakarta.servlet.ServletContext;
 import org.beangle.commons.inject.Container;
 import org.beangle.commons.inject.ContainerHook;
 import org.beangle.commons.inject.Containers;
+import org.beangle.commons.inject.bind.BindRegistry;
 import org.beangle.commons.lang.Objects;
 import org.beangle.commons.lang.reflect.Reflections;
 import org.beangle.inject.spring.SpringContainer;
+import org.beangle.inject.spring.config.SpringConfigProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -73,8 +75,10 @@ public class ContextLoader {
     logger.info("Root ApplicationContext: initialization started");
     long startTime = System.currentTimeMillis();
     try {
+      String reconfigUrl = (String)servletContext.getAttribute(BindRegistry.ReconfigUrlProperty);
+      if(null!=reconfigUrl) SpringConfigProcessor.reconfigUrl = reconfigUrl;
       ConfigurableApplicationContext context = createApplicationContext(servletContext);
-      configureAndRefreshApplicationContext((ConfigurableApplicationContext) context, servletContext);
+      configureAndRefreshApplicationContext(context, servletContext);
       servletContext.setAttribute(ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, context);
       Container container = new SpringContainer(context);
       Containers.setRoot(container);

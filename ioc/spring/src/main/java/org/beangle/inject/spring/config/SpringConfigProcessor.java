@@ -18,15 +18,6 @@
  */
 package org.beangle.inject.spring.config;
 
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
 import org.beangle.commons.bean.Disposable;
 import org.beangle.commons.bean.Initializing;
 import org.beangle.commons.collection.CollectUtils;
@@ -43,6 +34,7 @@ import org.beangle.commons.lang.ClassLoaders;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.lang.reflect.Reflections;
 import org.beangle.commons.lang.time.Stopwatch;
+import org.beangle.commons.web.util.HttpUtils;
 import org.beangle.inject.spring.SpringEventMulticaster;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,21 +43,13 @@ import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.FactoryBean;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.config.BeanDefinitionHolder;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.config.ConstructorArgumentValues;
-import org.springframework.beans.factory.config.RuntimeBeanReference;
-import org.springframework.beans.factory.config.TypedStringValue;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
-import org.springframework.beans.factory.support.GenericBeanDefinition;
-import org.springframework.beans.factory.support.ManagedList;
-import org.springframework.beans.factory.support.ManagedMap;
-import org.springframework.beans.factory.support.ManagedProperties;
-import org.springframework.beans.factory.support.ManagedSet;
+import org.springframework.beans.factory.config.*;
+import org.springframework.beans.factory.support.*;
 import org.springframework.core.io.UrlResource;
+
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.*;
 
 /**
  * 完成springbean的自动注册和再配置
@@ -78,6 +62,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
   private static final Logger logger = LoggerFactory.getLogger(SpringConfigProcessor.class);
 
   private Resources reconfigResources;
+
+  public static String reconfigUrl = null;
 
   /**
    * Automate register and wire bean<br/>
@@ -102,10 +88,25 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
 
   private void reconfig(BeanDefinitionRegistry registry, BindRegistry bindRegistry) {
     Stopwatch watch = new Stopwatch(true);
+    if (!Strings.isBlank(SpringConfigProcessor.reconfigUrl)) {
+      try {
+        if (null == reconfigResources) reconfigResources = new Resources();
+        reconfigResources.getLocals().add(new URL(SpringConfigProcessor.reconfigUrl));
+      } catch (Exception e) {
+      }
+    }
     if (null == reconfigResources || reconfigResources.isEmpty()) return;
     Set<String> beanNames = CollectUtils.newHashSet();
     BeanDefinitionReader reader = new BeanDefinitionReader();
     for (URL url : reconfigResources.getAllPaths()) {
+      if (url.getProtocol().contains("http")) {
+        if (HttpUtils.access(url)) {
+          logger.info("loading remote config {}", url);
+        } else {
+          logger.info("ignore remote config {}", url);
+          continue;
+        }
+      }
       List<ReconfigBeanDefinitionHolder> holders = reader.load(new UrlResource(url));
       for (ReconfigBeanDefinitionHolder holder : holders) {
         // choose primary key
@@ -121,7 +122,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
               }
             }
           }
-          // lets do property update and merge.
+          // let's do property update and merge.
           holder.setConfigType(ReconfigType.UPDATE);
           holder.getBeanDefinition().setBeanClassName(null);
         }
@@ -146,9 +147,9 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * lifecycle.
    * </p>
    *
-   * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
+   * @param registry           a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    * @param definitionRegistry a
-   *          {@link org.springframework.beans.factory.support.BeanDefinitionRegistry} object.
+   *                           {@link org.springframework.beans.factory.support.BeanDefinitionRegistry} object.
    */
   protected void lifecycle(BindRegistry registry, BeanDefinitionRegistry definitionRegistry) {
     for (String name : registry.getBeanNames()) {
@@ -191,8 +192,8 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    *
    * @param target a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @param source a
-   *          {@link org.beangle.inject.spring.config.context.spring.ReconfigBeanDefinitionHolder}
-   *          object.
+   *               {@link org.beangle.inject.spring.config.context.spring.ReconfigBeanDefinitionHolder}
+   *               object.
    * @return a {@link java.lang.String} object.
    */
   protected String mergeDefinition(BeanDefinition target, ReconfigBeanDefinitionHolder source) {
@@ -213,7 +214,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
     for (PropertyValue pv : pvs.getPropertyValueList()) {
       String name = pv.getName();
       target.getPropertyValues().addPropertyValue(name, pv.getValue());
-      logger.debug("config {}.{} = {}", new Object[] { source.getBeanName(), name, pv.getValue() });
+      logger.debug("config {}.{} = {}", new Object[]{source.getBeanName(), name, pv.getValue()});
     }
     logger.debug("Reconfig bean {} ", source.getBeanName());
     return source.getBeanName();
@@ -326,7 +327,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * registerBean.
    * </p>
    *
-   * @param def bean definition.
+   * @param def      bean definition.
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    * @return a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    */
@@ -360,7 +361,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * </p>
    *
    * @param newBeanDefinitions a {@link java.util.Map} object.
-   * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
+   * @param registry           a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    */
   protected void autowire(Map<String, BeanDefinition> newBeanDefinitions, BindRegistry registry) {
     Stopwatch watch = new Stopwatch(true);
@@ -376,7 +377,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
    * </p>
    *
    * @param beanName a {@link java.lang.String} object.
-   * @param mbd a {@link org.springframework.beans.factory.config.BeanDefinition} object.
+   * @param mbd      a {@link org.springframework.beans.factory.config.BeanDefinition} object.
    * @param registry a {@link org.beangle.commons.inject.bind.BindRegistry} object.
    */
   protected void autowireBean(String beanName, BeanDefinition mbd, BindRegistry registry) {
@@ -419,7 +420,7 @@ public class SpringConfigProcessor implements BeanDefinitionRegistryPostProcesso
           logger.debug("{}'s {} cannot found candidate beans.", beanName, propertyName);
         } else {
           logger.warn("{}'s {} expected single bean but found {} : {}",
-              new Object[] { beanName, propertyName, beanNames.size(), beanNames });
+              new Object[]{beanName, propertyName, beanNames.size(), beanNames});
         }
       }
     }
