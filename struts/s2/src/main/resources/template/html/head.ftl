@@ -26,7 +26,7 @@
         "adminlte":{js:"AdminLTE/3.2.0/dist/js/adminlte.min.js",css:["AdminLTE/3.2.0/dist/css/adminlte.min.css"]},
         "beangle":{js:"bui/0.6.1/js/beangle.js"},
         "bootstrap":{js:"bootstrap/4.6.1/js/bootstrap.bundle.min.js",css:["bootstrap/4.6.1/css/bootstrap.min.css"]},
-        "bui":{js:"bui/0.6.1/js/beangle-ui.js",css:["bui/0.6.1/css/beangle-ui.css"]},
+        "bui":{js:"bui/0.6.5/js/beangle-ui.js",css:["bui/0.6.5/css/beangle-ui.css"]},
         "bui-ajaxchosen":{js:"bui/0.6.1/js/beangle-ui-ajaxchosen.js",deps:["chosen"]},
         "chosen":{js:"chosen/1.8.7/chosen.jquery.min.js",css:["chosen/1.8.7/chosen.min.css"]},
         "echarts":{js:"echarts/5.3.1/dist/echarts.min.js"},

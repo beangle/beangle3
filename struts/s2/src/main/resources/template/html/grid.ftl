@@ -36,7 +36,7 @@
 </thead>
 [/#if]
 
-<tbody id="${tag.id}_data">${tag.body}</tbody>
+<tbody id="${tag.id}_data" class="grid-body">${tag.body}</tbody>
 </table>
 </div>
 [#if tag.hasbar]
