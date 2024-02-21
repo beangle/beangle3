@@ -13,7 +13,7 @@
   <properties>
     <bundle.symbolicName>org.beangle.ems.core</bundle.symbolicName>
     <bundle.namespace>org.beangle.ems</bundle.namespace>
-    <commonscompress.version>1.21</commonscompress.version>
+    <commonscompress.version>1.26.0</commonscompress.version>
   </properties>
 
   <dependencies>
