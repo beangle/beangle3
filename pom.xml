@@ -11,7 +11,23 @@
   <version>3.11.4</version>
   <name>Beangle Library V3 Parent</name>
 
-  <url>https://github.com/beangle/beangle3</url>
+  <description>
+    Beangle provides agile development scaffold and toolkits.
+  </description>
+
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License</name>
+      <url>http://www.gnu.org/licenses/lgpl.txt</url>
+    </license>
+  </licenses>
+
+  <organization>
+    <name>The Beangle Software</name>
+    <url>https://github.com/beangle/beangle-java</url>
+  </organization>
+
+  <url>https://github.com/beangle/beangle-java</url>
 
   <issueManagement>
     <system>github</system>
@@ -23,6 +39,17 @@
     <developerConnection>scm:git:git@github.com:beangle/beangle3.git</developerConnection>
     <url>https://github.com/beangle/beangle3</url>
   </scm>
+
+  <developers>
+    <developer>
+      <name>Tihua Duan</name>
+      <id>chaostone</id>
+      <email>duantihua@gmail.com</email>
+      <roles>
+        <role>Committer</role>
+      </roles>
+    </developer>
+  </developers>
 
   <properties>
     <java.version>17</java.version>
