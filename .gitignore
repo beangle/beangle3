@@ -18,3 +18,6 @@ work
 .#webclasspath
 *.iml
 .idea
+.vscode
+.bloop
+.metals

@@ -20,9 +20,11 @@ package org.beangle.ems.app;
 
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.web.util.HttpUtils;
-import org.beangle.ems.app.util.AesEncryptor;
 import org.beangle.ems.app.util.DataSourceUtils;
 import org.beangle.ems.app.util.DatasourceConfig;
+import org.beangle.ems.app.util.PBEEncryptor;
+import org.beangle.ems.app.util.PBEEncryptors;
+import org.beangle.security.codec.EncryptUtil;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -71,8 +73,9 @@ public class AppDataSourceFactory implements FactoryBean<DataSource>, Initializi
     if (appFile.exists()) {
       this.url = EmsApp.getAppFile().getAbsolutePath();
     } else {
+      String digest = EncryptUtil.encode(Ems.Instance.getKey() + EmsApp.getName());
       this.url =
-        Ems.getInstance().getApi() + "/platform/config/datasources/" + EmsApp.getName() + "/" + this.name + ".json?secret=" + EmsApp.Instance.getSecret();
+          Ems.getInstance().getApi() + "/platform/config/datasources/" + EmsApp.getName() + "/" + this.name + ".json?digest=" + digest;
     }
     try {
       postInit();
@@ -107,8 +110,20 @@ public class AppDataSourceFactory implements FactoryBean<DataSource>, Initializi
         merge(readConf(urlAddr.openStream(), this.name, isXML));
       }
     }
-    if (password != null && password.startsWith("?")) {
-      this.password = new AesEncryptor(Ems.Instance.getKey()).decrypt(password.substring(1));
+    PBEEncryptor encryptor = PBEEncryptors.random(Ems.Instance.getKey());
+    this.password = decrypt(encryptor, this.password);
+    this.user = decrypt(encryptor, this.user);
+    this.url = decrypt(encryptor, this.url);
+  }
+
+  String decrypt(PBEEncryptor encryptor, String text) {
+    String head = "ENC(";
+    String tail = ")";
+    if (null == text) return text;
+    if (text.startsWith(head) && text.endsWith(tail)) {
+      return encryptor.decrypt(Strings.substringBetween(text, head, tail));
+    } else {
+      return text;
     }
   }
 

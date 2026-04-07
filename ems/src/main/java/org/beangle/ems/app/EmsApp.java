@@ -86,12 +86,6 @@ public class EmsApp {
     return appPath;
   }
 
-  public String getSecret() {
-    String secret = properties.get("secret");
-    if (null == secret) return name;
-    else return secret;
-  }
-
   public static File getAppFile() {
     File file= new File(Ems.getInstance().getHome() + EmsApp.Instance.getPath() + ".xml");
     if(!file.exists()){
