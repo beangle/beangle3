@@ -114,6 +114,25 @@ public class AppDataSourceFactory implements FactoryBean<DataSource>, Initializi
     this.password = decrypt(encryptor, this.password);
     this.user = decrypt(encryptor, this.user);
     this.url = decrypt(encryptor, this.url);
+
+    setApplicationName(EmsApp.getName());
+    setPoolName(EmsApp.getName() + ":" + this.name);
+  }
+
+  protected void setApplicationName(String appName) {
+    String k = "";
+    if (driver.equals("oracle")) {
+      k = "oracle.jdbc.moduleName";
+    } else if (driver.equals("mysql")) {
+      k = "programName";
+    } else {
+      k = "applicationName";
+    }
+    props.put(k, appName);
+  }
+
+  protected void setPoolName(String poolName) {
+    props.put("poolName", poolName);
   }
 
   String decrypt(PBEEncryptor encryptor, String text) {

@@ -61,6 +61,15 @@ public class DataSourceUtils {
       properties.put(key, e.getValue());
     }
 
+    //如果没有设置最小连接数，设置为1，防止占用过多链接，这里不是性能优先
+    if (!properties.containsKey("minimumIdle")) properties.put("minimumIdle", "1");
+    //如果没有设置最大连接数，默认为5
+    if (!properties.containsKey("maximumPoolSize")) properties.put("maximumPoolSize", "5");
+    //如果没有设置闲置超时，则设置为1分钟
+    if (!properties.containsKey("idleTimeout") && properties.get("minimumIdle") != properties.get("maximumPoolSize")) {
+      properties.put("idleTimeout", "60000");
+    }
+
     if (driver.equals("oracle") && !properties.containsKey("jdbcUrl") && !props.containsKey("driverType")) {
       properties.put("dataSource.driverType", "thin");
     }
@@ -172,12 +181,6 @@ public class DataSourceUtils {
       result.put(key, value);
     }
     return new DatasourceConfig(result);
-  }
-
-  public static void main(String[] args) {
-    ScriptEngineManager sem = new ScriptEngineManager();
-    ScriptEngine engine = sem.getEngineByName("javascript");
-    System.out.println(engine);
   }
 }
 
