@@ -149,9 +149,20 @@ public class Ems {
     if (home == null) {
       String profile = System.getProperty("ems.profile");
       if (null == profile) {
-        home = SystemInfo.getUser().getHome() + "/.ems";
+        var base = SystemInfo.getUser().getHome() + File.separator + ".ems";
+        var baseDir = new File(base);
+        if (baseDir.exists()) {
+          var profiles = new File(base).list();
+          if (profiles != null && profiles.length == 1) {
+            home = base + File.separator + profiles[0];
+          } else {
+            throw new RuntimeException("cannot find ems profile under " + base);
+          }
+        } else {
+          throw new RuntimeException("cannot find ems home " + base);
+        }
       } else {
-        home = SystemInfo.getUser().getHome() + "/.ems/" + profile;
+        home = SystemInfo.getUser().getHome() + File.separator + ".ems" + File.separator + profile;
       }
     }
     return home;
