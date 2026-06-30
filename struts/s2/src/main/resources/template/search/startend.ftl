@@ -1,5 +1,5 @@
 [#ftl/]
-<script type="text/javascript">beangle.load(["my97"]);</script>
+<script type="text/javascript">beangle.require(["my97"]);</script>
 [#list tag.dates as date]
 <div class="search-item">
 <label for="${date.id}" style="font-weight:inherit">${date.label}:</label>

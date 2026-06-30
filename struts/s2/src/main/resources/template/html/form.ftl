@@ -5,7 +5,7 @@ ${tag.body}
 </form>
 [#if (tag.validate!"")=="true" ||tag.onsubmit??]
 <script>
-beangle.load(["jquery-validity"]);
+beangle.require(["jquery-validity"]);
 function onsubmit${tag.id}(){
   var res=null;
 [#if (tag.validate!"")=="true"]
