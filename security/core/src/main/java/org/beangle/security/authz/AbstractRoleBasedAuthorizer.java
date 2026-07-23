@@ -84,11 +84,6 @@ public abstract class AbstractRoleBasedAuthorizer implements Authorizer, Initial
   }
 
   @Override
-  public boolean isRoot(String user) {
-    return domain.roots.contains(user);
-  }
-
-  @Override
   public void init() throws Exception {
     SessionDaemon.start("Beangle Authority", refreshSeconds, new DomainFetcher(this));
   }

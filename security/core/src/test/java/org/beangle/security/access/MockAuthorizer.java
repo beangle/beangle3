@@ -32,10 +32,6 @@ public class MockAuthorizer implements Authorizer {
     return false;
   }
 
-  public boolean isRoot(String user) {
-    return false;
-  }
-
   @Override
   public String getScope(String resourceName) {
     return "Public";

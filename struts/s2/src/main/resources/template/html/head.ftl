@@ -29,7 +29,7 @@
         "bui-ajaxchosen":{js:"bui/0.8.3/js/beangle-ui-ajaxchosen.js",deps:["chosen"]},
         "chosen":{js:"chosen/1.8.7/chosen.jquery.js",css:["chosen/1.8.7/chosen.min.css"]},
         "echarts":{js:"echarts/5.3.1/dist/echarts.min.js"},
-        "ems-shell":{js:"ems-shell/0.0.5/js/ems-shell-min.js",css:["ems-shell/0.0.5/css/ems-shell-min.css"],deps:["wujie"]},
+        "ems-shell":{js:"ems-shell/0.0.8/js/ems-shell-min.js",css:["ems-shell/0.0.8/css/ems-shell-min.css"],deps:["wujie"]},
         "font-awesome":{css:["font-awesome/7.2.0/css/all.min.css"]},
         "fullcalendar":{js:"fullcalendar/5.10.2/main.min.js",css:["fullcalendar/5.10.2/main.min.css"]},
         "fullcalendar-locale":{js:"fullcalendar/5.10.2/locales-all.min.js",deps:["fullcalendar"]},

@@ -81,4 +81,6 @@ public interface Account extends Serializable, Principal {
   int getCategoryId();
 
   Profile[] getProfiles() ;
+
+  boolean isRoot();
 }

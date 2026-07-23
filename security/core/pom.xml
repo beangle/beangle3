@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.beangle.security</groupId>
     <artifactId>beangle-security-parent</artifactId>
-    <version>3.11.8</version>
+    <version>3.11.9</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>beangle-security-core</artifactId>
@@ -13,4 +13,11 @@
     <bundle.symbolicName>org.beangle.security</bundle.symbolicName>
     <bundle.namespace>org.beangle.security</bundle.namespace>
   </properties>
+  <dependencies>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>${gson.version}</version>
+    </dependency>
+  </dependencies>
 </project>

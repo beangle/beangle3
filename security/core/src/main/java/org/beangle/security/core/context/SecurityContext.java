@@ -20,6 +20,8 @@ package org.beangle.security.core.context;
 
 import org.beangle.commons.security.Request;
 import org.beangle.security.core.session.Session;
+import org.beangle.security.core.userdetail.Account;
+import org.beangle.security.core.userdetail.Profile;
 
 /**
  * Interface defining the minimum security information associated with the
@@ -39,15 +41,15 @@ public class SecurityContext {
 
   private final Request request;
 
-  private final boolean root;
+  private final Profile profile;
 
   private final String runAs;
 
-  public SecurityContext(Session session, Request request, boolean root, String runAs) {
+  public SecurityContext(Session session, Request request, Profile profile, String runAs) {
     super();
     this.session = session;
     this.request = request;
-    this.root = root;
+    this.profile = profile;
     this.runAs = runAs;
   }
 
@@ -83,7 +85,7 @@ public class SecurityContext {
   }
 
   public String getUser() {
-    if (root && null != runAs) {
+    if (isRoot() && null != runAs) {
       return runAs;
     } else {
       if (null == session) return "anonymous";
@@ -96,11 +98,14 @@ public class SecurityContext {
   }
 
   public boolean isRoot() {
-    return root;
+    return null != session && ((Account) session.getPrincipal()).isRoot() && runAs == null;
   }
 
   public String getRunAs() {
     return runAs;
   }
 
+  public Profile getProfile() {
+    return profile;
+  }
 }
