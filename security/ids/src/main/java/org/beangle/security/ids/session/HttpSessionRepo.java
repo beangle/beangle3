@@ -71,6 +71,7 @@ public class HttpSessionRepo extends CacheSessionRepo {
     DefaultAccount account = new DefaultAccount(pa.getName(), pa.getDescription());
     account.setCategoryId(pa.getCategoryId());
     account.setStatus(pa.getStatus());
+    account.setRoot(pa.getRoot());
     String[] authorities = new String[0];
     if (pa.getAuthoritiesCount() > 0) {
       authorities = new String[pa.getAuthoritiesCount()];

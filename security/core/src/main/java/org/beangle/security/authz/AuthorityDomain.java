@@ -20,18 +20,15 @@ package org.beangle.security.authz;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 
 public class AuthorityDomain {
-  final Set<String> roots;
-  final Map<String,Authority> authorities;
+  final Map<String, Authority> authorities;
 
-  public AuthorityDomain(Set<String> roots, Map<String, Authority> authorities) {
-    this.roots = roots;
+  public AuthorityDomain(Map<String, Authority> authorities) {
     this.authorities = authorities;
   }
 
-  public static AuthorityDomain empty(){
-    return new AuthorityDomain(Collections.emptySet(),Collections.emptyMap());
+  public static AuthorityDomain empty() {
+    return new AuthorityDomain(Collections.emptyMap());
   }
 }

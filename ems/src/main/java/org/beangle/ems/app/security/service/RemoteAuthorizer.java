@@ -22,15 +22,18 @@ import com.google.gson.Gson;
 import org.beangle.commons.collection.CollectUtils;
 import org.beangle.commons.lang.Strings;
 import org.beangle.commons.web.util.HttpUtils;
+import org.beangle.ems.app.Ems;
+import org.beangle.ems.app.EmsApp;
 import org.beangle.security.authz.AbstractRoleBasedAuthorizer;
 import org.beangle.security.authz.Authority;
 import org.beangle.security.authz.AuthorityDomain;
-import org.beangle.ems.app.Ems;
-import org.beangle.ems.app.EmsApp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -43,25 +46,12 @@ public class RemoteAuthorizer extends AbstractRoleBasedAuthorizer {
 
   @Override
   protected AuthorityDomain fetchDomain() {
-    Set<String> roots = getRoots();
     List<Authority> authorityList = getResources();
     Map<String, Authority> authorities = CollectUtils.newHashMap();
     for (Authority a : authorityList) {
       authorities.put(a.getResourceName(), a);
     }
-    return new AuthorityDomain(roots, authorities);
-  }
-
-  public static Set<String> getRoots() {
-    String url = Ems.Instance.getApi() + "/platform/user/roots.json?app=" + EmsApp.getName();
-    try {
-      String resources = HttpUtils.getResponseText(url);
-      List rs = new Gson().fromJson(resources, List.class);
-      return new HashSet<String>(rs);
-    } catch (Exception e) {
-      logger.error("Cannot access {}", url);
-      return Collections.emptySet();
-    }
+    return new AuthorityDomain(authorities);
   }
 
   public static List<Authority> getResources() {
@@ -76,7 +66,7 @@ public class RemoteAuthorizer extends AbstractRoleBasedAuthorizer {
   }
 
   public static List<Authority> toAuthorities(String resources) {
-    if(Strings.isEmpty(resources)){
+    if (Strings.isEmpty(resources)) {
       return Collections.emptyList();
     }
     List rs = new Gson().fromJson(resources, List.class);

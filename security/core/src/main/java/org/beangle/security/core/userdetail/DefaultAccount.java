@@ -43,6 +43,7 @@ public class DefaultAccount implements Account {
   private Map<String, Object> details = CollectUtils.newHashMap();
   private Profile[] profiles;
   private int status;
+  private boolean root;
 
   private void change(boolean value, int mask) {
     if (value) {
@@ -212,5 +213,13 @@ public class DefaultAccount implements Account {
 
   public void setProfiles(Profile[] profiles) {
     this.profiles = profiles;
+  }
+
+  public boolean isRoot() {
+    return root;
+  }
+
+  public void setRoot(boolean root) {
+    this.root = root;
   }
 }

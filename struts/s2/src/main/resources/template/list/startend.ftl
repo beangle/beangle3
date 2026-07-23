@@ -1,5 +1,5 @@
 [#ftl/]
-<script type="text/javascript">beangle.load(["my97"]);</script>
+<script type="text/javascript">beangle.require(["my97"]);</script>
 <li>
 <label for="${tag.dates?first.id}" class="title">${tag.dates?first.label}:</label>
 [#list tag.dates as date]

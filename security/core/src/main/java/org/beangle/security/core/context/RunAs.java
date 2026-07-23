@@ -16,21 +16,24 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.beangle.security.authz;
+package org.beangle.security.core.context;
 
-import org.beangle.commons.security.Request;
-import org.beangle.security.core.context.SecurityContext;
+import org.beangle.security.core.userdetail.Profile;
 
-/**
- * 授权判断服务
- *
- * @author chaostone
- */
-public interface Authorizer {
+public class RunAs {
+  private final String name;
+  private final Profile[] profiles;
 
-  boolean isPermitted(SecurityContext context);
+  public RunAs(String name, Profile[] profiles) {
+    this.name = name;
+    this.profiles = profiles;
+  }
 
-  boolean isPermitted(SecurityContext context, Request request);
+  public String getName() {
+    return name;
+  }
 
-  public String getScope(String resourceName);
+  public Profile[] getProfiles() {
+    return profiles;
+  }
 }
